@@ -903,7 +903,7 @@
         const li = document.querySelector(`#qOptions li[data-letter="${letter}"]`);
         if (li && !state.quiz.revealed[q.id]) li.click();
         e.preventDefault();
-      } else if (k === "enter") {
+      } else if (k === "enter" || k === " " || k === "arrowright") {
         const submit = document.getElementById("submitBtn");
         const next   = document.getElementById("nextBtn");
         if (!next.hidden) next.click();
@@ -918,8 +918,21 @@
         toggleRefs();
       } else if (k === "arrowleft") {
         navOffset(-1);
-      } else if (k === "arrowright") {
-        navOffset(+1);
+        e.preventDefault();
+      } else if (k === "arrowup" || k === "arrowdown") {
+        if (state.quiz.revealed[q.id]) { e.preventDefault(); return; }
+        const items = Array.from(document.querySelectorAll("#qOptions li"));
+        if (!items.length) { e.preventDefault(); return; }
+        const n = items.length;
+        const cur = items.findIndex(li => li.classList.contains("selected"));
+        let nextIdx;
+        if (cur === -1) {
+          nextIdx = k === "arrowdown" ? 0 : n - 1;
+        } else {
+          nextIdx = k === "arrowdown" ? (cur + 1) % n : (cur - 1 + n) % n;
+        }
+        items[nextIdx].click();
+        e.preventDefault();
       }
     };
   }
