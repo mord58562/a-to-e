@@ -88,6 +88,8 @@ body {
   -webkit-tap-highlight-color: rgba(15, 202, 212, 0.18);
 }
 .brand { cursor: pointer; }
+.t-short { display: none; }
+.t-long { display: inline; }
 
 /* ── Access gate ──────────────────────────────────────────────────── */
 /* Until the password is entered, the body is `.locked` and everything
@@ -941,12 +943,14 @@ body[data-screen="summary"] main { max-width: 760px; }
     padding-left: max(14px, env(safe-area-inset-left));
     padding-right: max(14px, env(safe-area-inset-right));
   }
-  .masthead-left { gap: 10px; min-width: 0; flex: 1; }
+  .masthead-left { gap: 10px; min-width: 0; flex: 0 1 auto; }
   .brand { gap: 9px; min-width: 0; }
   .brand-title { font-size: 15.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .session-meta { display: none; }
-  .masthead-tools { gap: 0; flex-shrink: 0; }
-  .masthead-tools .link-btn { padding: 8px 9px; font-size: 12.5px; }
+  .t-long { display: none; }
+  .t-short { display: inline; }
+  .masthead-tools { gap: 0; flex-shrink: 0; flex-wrap: nowrap; }
+  .masthead-tools .link-btn { padding: 8px 9px; font-size: 12.5px; white-space: nowrap; }
 
   main { padding: 18px 14px 56px; }
   body[data-screen="quiz"] main { padding-top: 12px; }
