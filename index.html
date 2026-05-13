@@ -625,6 +625,41 @@ Before outputting, run a self-audit pass:
   6. Confirm no grammatical-agreement cueing: each option must read
      naturally after the same lead-in.
 
+============================
+8. AUTO-UPLOAD TO THE LIVE SITE
+============================
+
+The Y4 Pocket Companion site has an automatic intake pipeline. If
+you can write files, do this:
+
+  (a) Save your JSON array to:
+        data/inbox/<descriptive-filename>.json
+      where <descriptive-filename> describes the cluster
+      (e.g. paeds-renal-uti-batch.json, obgyn-multiple-pregnancy.json).
+      Use lowercase, hyphens, no spaces.
+
+  (b) Append the filename to data/inbox_manifest.json:
+        { "inbox": ["inbox/your-new-file.json", ...other existing] }
+      Keep all existing entries; add yours at the end.
+
+  (c) Commit + push (if you have git access) or notify the
+      maintainer that the file is ready.
+
+The site loader will serve your questions on the next page refresh.
+
+The project maintainer audits the inbox before launching new
+generation. Your questions will be checked against bell-distribution,
+stem-length floors, source-citation, distractor hooks, length-
+balanced options, randomised correct-letter, em-dash count, AU units,
+and no-uni-references rules. Passing batches move to
+data/inbox/_merged/ and into the main questions_paeds.json /
+questions_obgyn.json files. Failing batches move to
+data/inbox/_rejected/ with a one-line reason.
+
+If you CANNOT write files directly (you are a chat-only LLM with no
+file access), just output the JSON array as your reply and the user
+will paste it into the inbox manually.
+
 Output the final JSON array. Nothing else.
 </script>
 
