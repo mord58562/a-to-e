@@ -349,7 +349,7 @@
     if (s.mode === "study") {
       el.textContent = `${n} questions match · Study mode shuffles through them all; end whenever.`;
     } else {
-      const take = Math.min(s.count, n);
+      const take = s.count === 0 ? n : Math.min(s.count, n);
       const time = s.timer ? ` · ${s.timer} min` : " · untimed";
       el.textContent = `${take} of ${n} matching questions${time}.`;
     }
@@ -361,7 +361,10 @@
     const s = state.settings;
     const pool = shuffle(getPool());
     if (!pool.length) return;
-    const take = s.mode === "study" ? pool.length : Math.min(s.count, pool.length);
+    // count === 0 means "All" - take every matching question.
+    const take = (s.mode === "study" || s.count === 0)
+      ? pool.length
+      : Math.min(s.count, pool.length);
     state.quiz = {
       pool: pool.slice(0, take),
       idx: 0,
