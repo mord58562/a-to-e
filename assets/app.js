@@ -1,4 +1,4 @@
-/* Y4 Pocket Companion - SPA driver.
+/* A to E - SPA driver.
  *
  * Layout: centred 720px reading column always.
  * Top progress strip + question dropdown (no AMBOSS-style sidebar).
@@ -14,9 +14,36 @@
 
   const HISTORY_KEY  = "y4mcq.history.v1";
   const FLAGS_KEY    = "y4mcq.flags.v1";
-  const THEME_KEY    = "y4mcq.theme.v1";
+  const THEME_KEY    = "y4mcq.theme.v1";     // shared across profiles
   const SETTINGS_KEY = "y4mcq.settings.v3";
   const REMINDER_DISMISS_KEY = "y4mcq.reminder.dismissed";
+  const LOCAL_QUESTIONS_KEY  = "y4mcq.local_questions.v1";
+  const PROFILE_CURRENT_KEY  = "y4mcq.profile.current";
+  const PROFILE_MIGRATED_KEY = "y4mcq.profile.migrated.v1";
+
+  // Profile registry. Each entry has a stable `id` (used as the
+  // localStorage namespace), a human `name` (shown in the UI), and the
+  // SHA-256 hash of the password. The plaintext password is never in
+  // source. To add a new profile (e.g. Tom):
+  //   1. Compute the hash:  printf '%s' 'tompassword' | shasum -a 256
+  //   2. Append:  { id: "tom", name: "Tom", hash: "<hex>" }
+  // Profile ids should be short, lowercase, and never reused.
+  const PROFILES = [
+    {
+      id:   "rob",
+      name: "the maintainer",
+      hash: "REDACTED",
+    },
+  ];
+
+  let currentProfile = null;
+  // Namespace a storage key by the current profile so each user has
+  // their own history / flags / settings / reminders / pasted questions.
+  // Falls back to the bare key if no profile is loaded yet (only happens
+  // pre-gate, where we never actually read state-bearing keys).
+  function ns(key) {
+    return currentProfile ? `${key}.${currentProfile.id}` : key;
+  }
 
   const DEFAULT_SETTINGS = {
     mode: "study",
@@ -31,9 +58,9 @@
     questions: [],
     ranges: null,
     meta: null,
-    history: load(HISTORY_KEY, {}),
-    flags:   load(FLAGS_KEY, {}),
-    settings: Object.assign({}, DEFAULT_SETTINGS, load(SETTINGS_KEY, {})),
+    history: {},
+    flags:   {},
+    settings: Object.assign({}, DEFAULT_SETTINGS),
     quiz: null,
     sessionStart: 0,
     questionStart: 0,
@@ -44,15 +71,46 @@
 
   function load(k, d) { try { return JSON.parse(localStorage.getItem(k)) || d; } catch { return d; } }
   function save(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
-  function saveSettings() { save(SETTINGS_KEY, state.settings); }
+  function saveSettings() { save(ns(SETTINGS_KEY), state.settings); }
 
-  // SHA-256 of the access password. The plaintext password is never
-  // present in the source; only this hash is. Inspecting source reveals
-  // only the hash. Client-side gates are theatre on a static site -
-  // determined visitors can still fetch /data/*.json directly - but the
-  // gate filters casual access.
-  const GATE_HASH = "REDACTED";
-  const GATE_STORAGE = "y4mcq.gate.passed";
+  // Hydrate per-profile state after the gate has set currentProfile.
+  // Pre-gate, state.history/flags/settings are empty defaults.
+  function loadProfileState() {
+    state.history  = load(ns(HISTORY_KEY), {});
+    state.flags    = load(ns(FLAGS_KEY), {});
+    state.settings = Object.assign({}, DEFAULT_SETTINGS, load(ns(SETTINGS_KEY), {}));
+  }
+
+  // One-time legacy migration. Older builds used unscoped keys (one
+  // profile per browser). If we detect leftover unscoped data the first
+  // time a profile signs in on this browser, move it into that
+  // profile's namespace so existing history/flags/settings/questions
+  // don't appear lost.
+  function migrateLegacyIfNeeded() {
+    if (!currentProfile) return;
+    if (localStorage.getItem(PROFILE_MIGRATED_KEY)) return;
+    const legacy = [
+      HISTORY_KEY, FLAGS_KEY, SETTINGS_KEY,
+      REMINDER_DISMISS_KEY, LOCAL_QUESTIONS_KEY,
+    ];
+    for (const base of legacy) {
+      const raw = localStorage.getItem(base);
+      if (raw == null) continue;
+      const scoped = ns(base);
+      if (localStorage.getItem(scoped) == null) {
+        localStorage.setItem(scoped, raw);
+      }
+      localStorage.removeItem(base);
+    }
+    // Old single-password gate flag is obsolete.
+    localStorage.removeItem("y4mcq.gate.passed");
+    localStorage.setItem(PROFILE_MIGRATED_KEY, "1");
+  }
+
+  // Client-side gate. Plaintext passwords are never in source - we ship
+  // only the SHA-256 of each profile's password. A static-site gate is
+  // theatre (anyone can fetch /data/*.json directly) but it filters
+  // casual access and provides the profile-routing hook.
 
   async function sha256Hex(s) {
     const buf = new TextEncoder().encode(s);
@@ -72,14 +130,23 @@
         resolve();
       };
       if (!gate) { document.body.classList.remove("locked"); return resolve(); }
-      if (localStorage.getItem(GATE_STORAGE) === GATE_HASH) return unlock();
-      // gate stays visible (body.locked still set); main content stays hidden
+
+      const savedId = localStorage.getItem(PROFILE_CURRENT_KEY);
+      if (savedId) {
+        const p = PROFILES.find(p => p.id === savedId);
+        if (p) { currentProfile = p; return unlock(); }
+        // Saved id no longer matches any known profile - clear it.
+        localStorage.removeItem(PROFILE_CURRENT_KEY);
+      }
+
       setTimeout(() => input.focus(), 50);
       form.addEventListener("submit", async e => {
         e.preventDefault();
         const h = await sha256Hex((input.value || "").trim());
-        if (h === GATE_HASH) {
-          localStorage.setItem(GATE_STORAGE, GATE_HASH);
+        const p = PROFILES.find(p => p.hash === h);
+        if (p) {
+          currentProfile = p;
+          localStorage.setItem(PROFILE_CURRENT_KEY, p.id);
           unlock();
         } else {
           err.hidden = false;
@@ -90,9 +157,17 @@
     });
   }
 
+  function signOut() {
+    localStorage.removeItem(PROFILE_CURRENT_KEY);
+    // Hard reload so all in-memory state resets to the gate flow.
+    location.reload();
+  }
+
   document.addEventListener("DOMContentLoaded", async () => {
     applyTheme(localStorage.getItem(THEME_KEY) || "light");
     await passGate();
+    migrateLegacyIfNeeded();
+    loadProfileState();
     await loadData();
     wireMasthead();
     wireColophon();
@@ -124,10 +199,14 @@
     );
     const extraQuestions = extra.flat();
 
+    // Locally pasted questions live only in this browser's localStorage.
+    // They merge into the bank the same way as inbox files.
+    const localQuestions = load(ns(LOCAL_QUESTIONS_KEY), []);
+
     // Deduplicate by id - if a question is later merged into the main
     // file, the main-file entry wins (it appears first in `all`).
     const seen = new Set();
-    const all = [...paeds, ...obgyn, ...extraQuestions];
+    const all = [...paeds, ...obgyn, ...extraQuestions, ...localQuestions];
     state.questions = all.filter(q => {
       if (!q || !q.id) return false;
       if (seen.has(q.id)) return false;
@@ -161,6 +240,17 @@
     document.getElementById("homeBtn").onclick = () => goHome();
     const brand = document.querySelector(".masthead .brand");
     if (brand) brand.onclick = goHome;
+    const chip = document.getElementById("profileChip");
+    const nameEl = document.getElementById("profileName");
+    if (chip && currentProfile) {
+      chip.hidden = false;
+      nameEl.textContent = currentProfile.name;
+    }
+    const signOutBtn = document.getElementById("signOutBtn");
+    if (signOutBtn) signOutBtn.onclick = e => {
+      e.stopPropagation();
+      if (confirm(`Sign out ${currentProfile ? currentProfile.name : ""}? Your progress stays saved against this profile.`)) signOut();
+    };
   }
 
   function wireColophon() {
@@ -199,7 +289,7 @@
     const text = document.getElementById("reminderText");
     const meta = state.meta || {};
     const today = new Date().toISOString().slice(0, 10);
-    if (localStorage.getItem(REMINDER_DISMISS_KEY) === today) return;
+    if (localStorage.getItem(ns(REMINDER_DISMISS_KEY)) === today) return;
     const total = state.questions.length;
     const updated = meta.last_added || meta.updated;
     if (!updated) {
@@ -217,7 +307,7 @@
     }
     document.getElementById("reminderHowTo").onclick = openHowTo;
     document.getElementById("reminderDismiss").onclick = () => {
-      localStorage.setItem(REMINDER_DISMISS_KEY, today);
+      localStorage.setItem(ns(REMINDER_DISMISS_KEY), today);
       banner.hidden = true;
     };
   }
@@ -231,6 +321,12 @@
     app.innerHTML = "";
     app.appendChild(document.getElementById("tpl-home").content.cloneNode(true));
     document.getElementById("sessionMeta").textContent = "";
+
+    const greet = document.getElementById("homeGreeting");
+    if (greet && currentProfile) {
+      greet.textContent = `Hi, ${currentProfile.name}.`;
+      greet.hidden = false;
+    }
 
     applySettingsToOptions();
 
@@ -563,7 +659,7 @@
     document.getElementById("labsBtn").classList.toggle("active", state.refsOpen);
     document.getElementById("flagBtn").onclick = () => {
       state.flags[q.id] = !state.flags[q.id];
-      save(FLAGS_KEY, state.flags);
+      save(ns(FLAGS_KEY), state.flags);
       document.getElementById("flagBtn").classList.toggle("active flag", !!state.flags[q.id]);
       renderTopbar();
     };
@@ -592,7 +688,7 @@
     if (!state.quiz.answers[q.id]) return;
     const isC = _shuffledOptions(q).find(o => o.letter === state.quiz.answers[q.id])?.correct;
     state.history[q.id] = { lastCorrect: !!isC, count: (state.history[q.id]?.count || 0) + 1 };
-    save(HISTORY_KEY, state.history);
+    save(ns(HISTORY_KEY), state.history);
     if (state.quiz.mode === "test") { onNext(); return; }
     state.quiz.revealed[q.id] = true;
     revealAnswer(q);
@@ -946,9 +1042,259 @@
       if (!document.getElementById("howToModal").hidden) closeHowTo();
       else if (state.refsOpen) closeRefs();
     });
+
+    // Populate the LLM prompt + copy button.
+    const promptTpl = document.getElementById("addQuestionsPromptTemplate");
+    const promptText = document.getElementById("promptText");
+    if (promptTpl && promptText) promptText.textContent = promptTpl.textContent.trim();
+    const copyBtn = document.getElementById("copyPromptBtn");
+    const copyStatus = document.getElementById("copyPromptStatus");
+    const COPY_LABEL = copyBtn ? copyBtn.textContent : "";
+    let copyResetTimer = null;
+    if (copyBtn) copyBtn.onclick = async () => {
+      let ok = false;
+      try {
+        await navigator.clipboard.writeText(promptText.textContent);
+        ok = true;
+      } catch {
+        // Fallback: select the <pre> so the user can Cmd-C.
+        const r = document.createRange();
+        r.selectNodeContents(promptText);
+        const sel = window.getSelection();
+        sel.removeAllRanges(); sel.addRange(r);
+      }
+      if (ok) {
+        copyBtn.classList.add("copied");
+        copyBtn.textContent = "Copied  ✓";
+        copyStatus.textContent = "Now paste it into Claude / ChatGPT / Gemini.";
+        copyStatus.classList.add("ok");
+      } else {
+        copyBtn.classList.add("copy-failed");
+        copyBtn.textContent = "Select & copy manually";
+        copyStatus.textContent = "Clipboard blocked - the prompt is selected; press Cmd-C.";
+      }
+      clearTimeout(copyResetTimer);
+      copyResetTimer = setTimeout(() => {
+        copyBtn.classList.remove("copied", "copy-failed");
+        copyBtn.textContent = COPY_LABEL;
+        copyStatus.textContent = "";
+        copyStatus.classList.remove("ok");
+      }, 2200);
+    };
+
+    // Paste-questions flow.
+    document.getElementById("pasteAddBtn").onclick = pasteAdd;
+    document.getElementById("pasteDownloadBtn").onclick = pasteDownload;
+    document.getElementById("localBankClear").onclick = clearLocalBank;
+    document.getElementById("localBankExport").onclick = exportLocalBank;
+    refreshLocalBankSummary();
   }
-  function openHowTo()  { document.getElementById("howToModal").hidden = false; }
+  function openHowTo()  {
+    document.getElementById("howToModal").hidden = false;
+    refreshLocalBankSummary();
+  }
   function closeHowTo() { document.getElementById("howToModal").hidden = true; }
+
+  // ── Paste questions ─────────────────────────────────────────────────────
+  async function pasteAdd() {
+    const box    = document.getElementById("pasteBox");
+    const status = document.getElementById("pasteStatus");
+    const btn    = document.getElementById("pasteAddBtn");
+    const raw    = (box.value || "").trim();
+    status.className = "dim small";
+    if (!raw) {
+      status.textContent = "Paste a JSON array first.";
+      status.classList.add("bad");
+      return;
+    }
+    const parsed = parseQuestionsPayload(raw);
+    if (parsed.error) {
+      status.textContent = parsed.error;
+      status.classList.remove("dim"); status.classList.add("bad");
+      return;
+    }
+
+    // De-duplicate against everything currently in the in-memory pool
+    // (which already includes file-shipped + manifest-listed + locally-
+    // pasted entries).
+    const existingIds = new Set(state.questions.map(q => q.id));
+    const added = [], skipped = [];
+    for (const q of parsed.questions) {
+      if (existingIds.has(q.id)) skipped.push(q.id);
+      else { added.push(q); existingIds.add(q.id); }
+    }
+    if (!added.length) {
+      status.textContent = `0 added. All ${parsed.questions.length} IDs already in the bank.`;
+      status.classList.remove("dim"); status.classList.add("bad");
+      refreshLocalBankSummary();
+      return;
+    }
+
+    btn.disabled = true;
+    status.textContent = "Saving…";
+
+    // First try the local backend (scripts/server.py). On success, the
+    // file lands in data/inbox/ where the audit flow finds it on the
+    // next question-generation pass. Fall back to localStorage if there
+    // is no backend (e.g., GitHub Pages or plain `python -m http.server`).
+    let savedToInbox = null;
+    try {
+      const r = await fetch("api/paste", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ questions: added }),
+      });
+      if (r.ok) {
+        const j = await r.json().catch(() => ({}));
+        savedToInbox = j.saved || true;
+      }
+    } catch (_) {
+      // network error / no backend / file:// origin - fall through
+    }
+
+    if (!savedToInbox) {
+      const existing = load(ns(LOCAL_QUESTIONS_KEY), []);
+      save(ns(LOCAL_QUESTIONS_KEY), existing.concat(added));
+    }
+    state.questions = state.questions.concat(added);
+    box.value = "";
+    btn.disabled = false;
+
+    let msg = `Added ${added.length} question${added.length === 1 ? "" : "s"}.`;
+    if (skipped.length) msg += ` Skipped ${skipped.length} duplicate ID${skipped.length === 1 ? "" : "s"}.`;
+    if (savedToInbox && typeof savedToInbox === "string") {
+      msg += ` Saved to data/${savedToInbox} for the next audit pass.`;
+    } else if (savedToInbox) {
+      msg += " Saved to the repo inbox.";
+    } else {
+      msg += " Saved in this browser only (no local backend detected - run scripts/start.sh for auto-audit).";
+    }
+    status.textContent = msg;
+    status.classList.remove("dim", "bad"); status.classList.add("ok");
+    refreshLocalBankSummary();
+    setTimeout(() => { if (status.classList.contains("ok")) status.textContent = ""; }, 7000);
+  }
+
+  function pasteDownload() {
+    const box    = document.getElementById("pasteBox");
+    const status = document.getElementById("pasteStatus");
+    const raw    = (box.value || "").trim();
+    status.className = "dim small";
+    if (!raw) {
+      status.textContent = "Paste a JSON array first.";
+      status.classList.add("bad");
+      return;
+    }
+    const parsed = parseQuestionsPayload(raw);
+    if (parsed.error) {
+      status.textContent = parsed.error;
+      status.classList.add("bad");
+      return;
+    }
+    const stamp = new Date().toISOString().slice(0, 10);
+    const guess = parsed.questions[0].id ? String(parsed.questions[0].id).split(/[-_]/).slice(0, 3).join("-") : "batch";
+    const filename = `${guess}-${stamp}.json`;
+    const blob = new Blob(
+      [JSON.stringify(parsed.questions, null, 2) + "\n"],
+      { type: "application/json" }
+    );
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    status.textContent = `Downloaded ${filename}. Drop into data/inbox/ and add to inbox_manifest.json to ship via the repo.`;
+    status.classList.add("ok");
+  }
+
+  function exportLocalBank() {
+    const local = load(ns(LOCAL_QUESTIONS_KEY), []);
+    if (!local.length) return;
+    const stamp = new Date().toISOString().slice(0, 10);
+    const filename = `local-export-${stamp}.json`;
+    const blob = new Blob(
+      [JSON.stringify(local, null, 2) + "\n"],
+      { type: "application/json" }
+    );
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    const status = document.getElementById("pasteStatus");
+    status.textContent = `Exported ${local.length} question${local.length === 1 ? "" : "s"} to ${filename}. Drop into data/inbox/ for the next audit pass.`;
+    status.className = "dim small ok";
+  }
+
+  function clearLocalBank() {
+    const existing = load(ns(LOCAL_QUESTIONS_KEY), []);
+    if (!existing.length) return;
+    if (!confirm(`Remove all ${existing.length} locally-pasted question${existing.length === 1 ? "" : "s"} from this browser? File-shipped questions are untouched.`)) return;
+    const removedIds = new Set(existing.map(q => q.id));
+    save(ns(LOCAL_QUESTIONS_KEY), []);
+    state.questions = state.questions.filter(q => !removedIds.has(q.id));
+    refreshLocalBankSummary();
+    const status = document.getElementById("pasteStatus");
+    status.textContent = "Local additions cleared.";
+    status.className = "dim small ok";
+    setTimeout(() => { status.textContent = ""; }, 4000);
+  }
+
+  function refreshLocalBankSummary() {
+    const row = document.getElementById("localBankRow");
+    const sum = document.getElementById("localBankSummary");
+    if (!row || !sum) return;
+    const local = load(ns(LOCAL_QUESTIONS_KEY), []);
+    if (!local.length) { row.hidden = true; return; }
+    row.hidden = false;
+    sum.textContent = `${local.length} locally-pasted question${local.length === 1 ? "" : "s"} stored in this browser.`;
+  }
+
+  // Permissive validator. Accepts a JSON array, a single object, or an
+  // object with a top-level `questions` array. Strips ```json fences if
+  // the user pasted a code block. Returns { questions, error }.
+  function parseQuestionsPayload(raw) {
+    let s = raw.trim();
+    if (s.startsWith("```")) {
+      s = s.replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/, "").trim();
+    }
+    let data;
+    try { data = JSON.parse(s); }
+    catch (e) { return { error: `JSON parse failed: ${e.message}` }; }
+    let arr;
+    if (Array.isArray(data)) arr = data;
+    else if (data && Array.isArray(data.questions)) arr = data.questions;
+    else if (data && typeof data === "object" && data.id && data.options) arr = [data];
+    else return { error: "Expected a JSON array of questions, or an object with a `questions` array." };
+    if (!arr.length) return { error: "Array is empty." };
+
+    const problems = [];
+    arr.forEach((q, i) => {
+      const tag = `Q${i + 1}${q && q.id ? ` (${q.id})` : ""}`;
+      if (!q || typeof q !== "object") return problems.push(`${tag}: not an object`);
+      if (!q.id || typeof q.id !== "string") return problems.push(`${tag}: missing string \`id\``);
+      if (!q.topic) return problems.push(`${tag}: missing \`topic\``);
+      if (!q.lead_in) return problems.push(`${tag}: missing \`lead_in\``);
+      if (!Array.isArray(q.options) || q.options.length < 2)
+        return problems.push(`${tag}: \`options\` must be an array (>= 2 entries)`);
+      // Auto-fill letters if missing.
+      const letters = "ABCDE";
+      q.options.forEach((opt, oi) => {
+        if (!opt || typeof opt !== "object") return;
+        if (!opt.letter) opt.letter = letters[oi] || String(oi + 1);
+      });
+      const correct = q.options.filter(o => o && o.correct === true);
+      if (correct.length !== 1)
+        return problems.push(`${tag}: exactly one option must have \`correct: true\` (found ${correct.length})`);
+      if (typeof q.difficulty !== "number") q.difficulty = 3;
+    });
+    if (problems.length) {
+      return { error: "Validation failed:\n  - " + problems.slice(0, 6).join("\n  - ") + (problems.length > 6 ? `\n  - ...and ${problems.length - 6} more` : "") };
+    }
+    return { questions: arr };
+  }
 
   // ── Utility ─────────────────────────────────────────────────────────────
   function shuffle(arr) {

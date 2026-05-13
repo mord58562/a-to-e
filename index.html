@@ -7,15 +7,16 @@
 <meta name="theme-color" content="#f3f6fa" media="(prefers-color-scheme: light)" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Y4 MCQ" />
+<meta name="apple-mobile-web-app-title" content="A to E" />
 <meta name="format-detection" content="telephone=no" />
-<title>Y4 MCQ Bank</title>
+<title>A to E - a Y4 MCQ bank</title>
+<meta name="description" content="A to E - a practice MCQ bank for end-of-medical-school clinical reasoning." />
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 <link rel="apple-touch-icon" href="assets/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260513d" />
+<link rel="stylesheet" href="assets/styles.css?v=20260513i" />
 </head>
 <body data-screen="home" class="locked">
 
@@ -23,9 +24,9 @@
   <form id="gateForm" class="gate-card" autocomplete="off">
     <div class="gate-brand">
       <span class="brand-mark"><span class="cross"></span></span>
-      <span class="gate-title">Y4 Pocket Companion</span>
+      <span class="gate-title">A to E</span>
     </div>
-    <p class="gate-sub">Enter access password to continue.</p>
+    <p class="gate-sub">Enter your profile password.</p>
     <input id="gateInput" class="gate-input" type="password" autocomplete="off"
            autocorrect="off" autocapitalize="off" spellcheck="false"
            placeholder="password" aria-label="Access password" />
@@ -46,8 +47,8 @@
       <span class="brand-mark"><span class="cross"></span></span>
       <span class="brand-words">
         <span class="brand-title">
-          <span class="t-long">Y4 Pocket Companion</span>
-          <span class="t-short">Y4 MCQ</span>
+          <span class="t-long">A to E <span class="brand-glucose">(+ glucose)</span></span>
+          <span class="t-short">A to E</span>
         </span>
         <span class="brand-sub">A practice MCQ bank</span>
       </span>
@@ -58,6 +59,10 @@
     <button id="rangesBtn" class="link-btn" title="Reference values (L)"><span class="t-long">Reference values</span><span class="t-short">Values</span></button>
     <button id="themeBtn" class="link-btn" title="Toggle theme">Theme</button>
     <button id="homeBtn" class="link-btn" title="Index">Index</button>
+    <span class="profile-chip" id="profileChip" hidden>
+      <span class="profile-name" id="profileName"></span>
+      <button id="signOutBtn" class="ghost-link" title="Sign out">sign out</button>
+    </span>
   </nav>
 </header>
 
@@ -106,7 +111,8 @@
 
 <template id="tpl-home">
   <section class="prose">
-    <h1 class="display">Y4 Pocket Companion</h1>
+    <p class="greeting" id="homeGreeting" hidden></p>
+    <h1 class="display">A to E</h1>
     <p class="subhead">A practice MCQ bank for end-of-medical-school clinical reasoning. Australian SI units. Every claim attributed to a free-tier source you can verify.</p>
 
     <div class="setup">
@@ -280,8 +286,23 @@
       <button id="howToClose" class="ghost-x" aria-label="Close">×</button>
     </div>
     <div class="modal-body">
-      <p>The question bank is a static JSON file. Copy the prompt below into any LLM (Claude, ChatGPT, Gemini, etc.) - it is fully self-contained, so an LLM with no prior knowledge of this project can produce questions at the same standard as the existing ones.</p>
-      <p>After it returns the JSON, append the new entries to <code>data/questions_paeds.json</code> or <code>data/questions_obgyn.json</code>, set <code>data/meta.json</code>'s <code>last_added</code> to today, and refresh this page.</p>
+      <p>Two-step flow. <strong>1.</strong> Copy the prompt and paste it into any LLM (Claude, ChatGPT, Gemini) - it is fully self-contained. <strong>2.</strong> Paste the LLM's JSON output into the box below. Questions go straight into your bank - no file editing required.</p>
+
+      <h3 class="paste-head">Paste new questions</h3>
+      <p class="dim small paste-hint">Paste the JSON array the LLM produced. It is validated, then stored in this browser and merged into the bank on the next page load. Anything you add here lives only on this device.</p>
+      <textarea id="pasteBox" class="paste-box" placeholder='[ { "id": "paeds-batch-renal-001", "topic": "Paediatrics", ... } ]' spellcheck="false" autocomplete="off"></textarea>
+      <div class="prompt-actions">
+        <button id="pasteAddBtn" class="primary">Add to my bank</button>
+        <button id="pasteDownloadBtn" class="link-btn" title="Save as data/inbox/*.json for the repo">Download as JSON file</button>
+        <span id="pasteStatus" class="dim small"></span>
+      </div>
+      <div class="local-bank-row" id="localBankRow" hidden>
+        <span id="localBankSummary" class="dim small"></span>
+        <button id="localBankExport" class="ghost-link" title="Download all locally-pasted questions for repo audit">Export for audit</button>
+        <button id="localBankClear" class="ghost-link">Clear local additions</button>
+      </div>
+
+      <h3 class="paste-head">Generation prompt</h3>
       <div class="prompt-actions">
         <button id="copyPromptBtn" class="primary">Copy prompt to clipboard</button>
         <span id="copyPromptStatus" class="dim small"></span>
@@ -669,43 +690,46 @@ Before outputting, run a self-audit pass:
      difficulty floor, RELABEL the difficulty - don't pad it back up.
 
 ============================
-8. AUTO-UPLOAD TO THE LIVE SITE
+8. HOW THESE QUESTIONS REACH THE SITE
 ============================
 
-The Y4 Pocket Companion site has an automatic intake pipeline. If
-you can write files, do this:
+PRIMARY PATH - paste box (works for any LLM, including chat-only
+LLMs with no file access). This is the default flow:
 
-  (a) Save your JSON array to:
-        data/inbox/<descriptive-filename>.json
-      where <descriptive-filename> describes the cluster
-      (e.g. paeds-renal-uti-batch.json, obgyn-multiple-pregnancy.json).
-      Use lowercase, hyphens, no spaces.
+  Just output a clean JSON array as your reply. The user pastes it
+  into the "Paste new questions" box on the A to E site
+  (Index banner -> "how to add", or the Index page link). The site
+  validates and merges the questions directly into the in-browser
+  bank - no file editing, no manifest editing, no page reload required.
+  They are available immediately for the user's next session.
 
-  (b) Append the filename to data/inbox_manifest.json:
-        { "inbox": ["inbox/your-new-file.json", ...other existing] }
-      Keep all existing entries; add yours at the end.
+  Because of this, your output MUST be a single valid JSON array and
+  NOTHING ELSE - no prose, no Markdown fences, no commentary. The
+  paste box tolerates ```json fences but a raw array is cleanest.
 
-  (c) Commit + push (if you have git access) or notify the
-      maintainer that the file is ready.
+OPTIONAL PATH - inbox file (only if you have repo file-write access
+AND the maintainer has explicitly asked you to commit to the repo):
 
-The site loader will serve your questions on the next page refresh.
+  (a) Save the JSON array to data/inbox/<descriptive-filename>.json
+      (lowercase, hyphens, no spaces; e.g.
+      paeds-renal-uti-batch.json).
+  (b) Append "inbox/<filename>.json" to data/inbox_manifest.json.
+  (c) Commit + push, or notify the maintainer.
 
-The project maintainer audits the inbox before launching new
-generation. Your questions will be checked against bell-distribution,
-stem-length floors, source-citation, distractor hooks, length-
-balanced options, randomised correct-letter, em-dash count, AU units,
-and no-uni-references rules. Passing batches move to
-data/inbox/_merged/ and into the main questions_paeds.json /
-questions_obgyn.json files. Failing batches move to
-data/inbox/_rejected/ with a one-line reason.
-
-If you CANNOT write files directly (you are a chat-only LLM with no
-file access), just output the JSON array as your reply and the user
-will paste it into the inbox manually.
+Audit guarantee: locally-pasted questions are audited by the
+maintainer's next question-generation pass (the maintainer exports
+them from the site's "Export for audit" button, drops the file into
+data/inbox/, and audits before generating new batches). Your batch
+will be checked against: bell-distribution, stem-length floors,
+source-citation, distractor hooks, length-balanced options,
+randomised correct-letter, em-dash count, AU units, and
+no-uni-references rules. Passing questions are promoted into the
+main questions_paeds.json / questions_obgyn.json files. Failing ones
+move to data/inbox/_rejected/ with a one-line reason.
 
 Output the final JSON array. Nothing else.
 </script>
 
-<script src="assets/app.js?v=20260513d" defer></script>
+<script src="assets/app.js?v=20260513i" defer></script>
 </body>
 </html>

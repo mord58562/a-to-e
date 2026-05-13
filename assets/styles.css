@@ -238,7 +238,21 @@ a:hover { text-decoration: underline; }
   text-transform: uppercase;
   color: var(--ink-mute);
 }
-.masthead-tools { display: flex; gap: 6px; }
+.masthead-tools { display: flex; gap: 6px; align-items: center; }
+.profile-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-left: 12px;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-2, var(--surface));
+  font-size: 12.5px;
+  color: var(--ink-2);
+}
+.profile-chip[hidden] { display: none; }
+.profile-name { font-weight: 600; color: var(--ink); letter-spacing: 0.01em; }
+.profile-chip .ghost-link { font-size: 11.5px; color: var(--ink-mute); }
+.profile-chip .ghost-link:hover { color: var(--accent); }
 .link-btn {
   background: transparent;
   border: none;
@@ -288,6 +302,16 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   margin: 0 0 8px;
   color: var(--ink);
 }
+.greeting {
+  font-family: var(--display);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 10px;
+}
+.greeting[hidden] { display: none; }
 .subhead {
   font-size: 15px;
   color: var(--ink-mute);
@@ -320,6 +344,7 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   padding: 11px 18px;
   margin-top: 18px;
 }
+.quiz-topbar[hidden], .colophon[hidden] { display: none !important; }
 .qt-inner { display: contents; }
 .qt-step, .qt-counter {
   background: transparent;
@@ -891,7 +916,71 @@ body[data-screen="summary"] main { max-width: 760px; }
 }
 .modal-body ol { padding-left: 20px; }
 .modal-body li { margin-bottom: 8px; }
-.prompt-actions { display: flex; align-items: center; gap: 12px; margin: 12px 0 8px; }
+.prompt-actions { display: flex; align-items: center; gap: 12px; margin: 12px 0 8px; flex-wrap: wrap; }
+.paste-head {
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 22px 0 6px;
+}
+.paste-hint { margin: 0 0 8px; }
+.paste-box {
+  width: 100%;
+  min-height: 140px;
+  max-height: 260px;
+  resize: vertical;
+  background: var(--bg);
+  color: var(--ink-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+.paste-box:focus {
+  outline: none;
+  border-color: var(--accent-bd);
+  background: var(--bg-2);
+}
+.local-bank-row {
+  display: flex; align-items: center; gap: 14px;
+  margin: 4px 0 6px;
+}
+#pasteStatus.ok    { color: var(--good); }
+#pasteStatus.bad   { color: var(--bad); }
+#copyPromptStatus.ok { color: var(--good); }
+#copyPromptBtn.copied {
+  background: var(--good);
+  border-color: var(--good);
+  color: #0a1929;
+  box-shadow: 0 0 0 3px var(--good-bg);
+  transition: background 120ms ease, box-shadow 120ms ease;
+}
+#copyPromptBtn.copy-failed {
+  background: var(--bad);
+  border-color: var(--bad);
+  color: #0a1929;
+}
+
+/* "(+ glucose)" - the joke parenthetical, used only in the masthead
+   logo. The whole bit is the med-student joke about forgetting BSL on
+   the primary survey; we treat it like an aside, not a co-equal
+   wordmark. App title everywhere else is "A to E". */
+.brand-glucose {
+  font-family: var(--serif, var(--display));
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink-mute);
+  letter-spacing: 0;
+  font-size: 0.78em;
+  margin-left: 4px;
+}
+
 .prompt-pre {
   background: var(--bg);
   border: 1px solid var(--line);

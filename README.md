@@ -1,8 +1,15 @@
-# Y4 Pocket Companion
+# A to E
 
 A free, open practice MCQ bank for end-of-medical-school clinical reasoning - paediatrics and obstetrics & gynaecology, Australian units and Australian guideline sources throughout.
 
 **Live: <https://mord58562.github.io/y4-pocket-companion/>**
+
+## What's new in 1.3.0
+
+- Renamed from *Y4 Pocket Companion* to **A to E** (the resus letters; doubled with the MCQ option letters).
+- **Paste new questions** straight into the bank from the "how to add" modal - no JSON file editing. Run `./scripts/start.sh` and pasted batches auto-write to `data/inbox/` for the next audit pass; otherwise they live in your browser and can be exported on demand.
+- **Profiles**: each password maps to a named profile with its own progress, flags, settings, and pasted questions. Existing data migrates automatically the first time you sign in.
+- Visible confirmation when the LLM prompt is copied. Quiz chrome no longer bleeds onto the home screen.
 
 ## What it is
 
@@ -33,18 +40,20 @@ Fully client-side. Question history, marks, and theme preference live only in yo
 
 ## Adding your own questions
 
-The question bank is a static JSON file. To add more questions:
+No JSON file editing required:
 
-1. Click **how to add** on the welcome banner (or just click the link in the index) to open the full copy-paste prompt.
-2. Paste it into any capable LLM (Claude, ChatGPT, Gemini) with your topic and count.
-3. The output JSON appends to `data/questions_paeds.json` or `data/questions_obgyn.json`.
+1. Open **how to add** (welcome banner or index link).
+2. Click **Copy prompt to clipboard**, paste into any capable LLM (Claude, ChatGPT, Gemini), and tell it your topic and count.
+3. Paste the JSON it returns into the **Paste new questions** box and click **Add to my bank**. The site validates, merges, and serves the questions immediately - they live in `localStorage` and survive page reloads on the same browser.
 
 The in-app prompt embeds every quality rule the bundled questions follow: stem-length floors per difficulty, distractor hooks, length-balanced options, Australian source citation, randomised correct-letter placement, self-audit pass.
+
+If you want a pasted batch to ship in the public repo (rather than just live in your browser), use **Export for audit** on the same modal - it downloads a JSON file you can drop into `data/inbox/` and add to `data/inbox_manifest.json`.
 
 ## Project structure
 
 ```
-y4-pocket-companion/
+abcde/
 ├── index.html
 ├── assets/
 │   ├── styles.css

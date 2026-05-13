@@ -12,7 +12,10 @@ if lsof -nP -iTCP:${PORT} -sTCP:LISTEN >/dev/null 2>&1; then
   echo "Server already running on port ${PORT}."
 else
   echo "Starting server on port ${PORT}..."
-  python3 -m http.server ${PORT} --bind 127.0.0.1 >/tmp/y4-mcq.log 2>&1 &
+  # Custom server: static files + POST /api/paste -> data/inbox/. The
+  # paste-questions UI uses this so new content auto-lands in the
+  # auditable inbox. Falls back to localStorage if not running.
+  python3 "$(dirname "$0")/server.py" >/tmp/y4-mcq.log 2>&1 &
   sleep 0.6
 fi
 
