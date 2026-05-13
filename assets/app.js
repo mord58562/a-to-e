@@ -151,12 +151,16 @@
   function wireMasthead() {
     document.getElementById("rangesBtn").onclick = () => toggleRefs();
     document.getElementById("themeBtn").onclick = toggleTheme;
-    document.getElementById("homeBtn").onclick = () => {
+    const goHome = e => {
+      if (e) e.preventDefault();
       if (state.quiz && !state.quiz.finished &&
           !confirm("End this session and return to the index?")) return;
       stopSessionTimer();
       showHome();
     };
+    document.getElementById("homeBtn").onclick = () => goHome();
+    const brand = document.querySelector(".masthead .brand");
+    if (brand) brand.onclick = goHome;
   }
 
   function wireColophon() {

@@ -80,6 +80,15 @@
 
 * { box-sizing: border-box; }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  -webkit-tap-highlight-color: rgba(15, 202, 212, 0.18);
+}
+.brand { cursor: pointer; }
+
 /* ── Access gate ──────────────────────────────────────────────────── */
 /* Until the password is entered, the body is `.locked` and everything
  * except the gate is hidden. Pre-JS render therefore shows only the
@@ -91,7 +100,8 @@ body.locked > *:not(#gate):not(script) { display: none !important; }
   z-index: 1000;
   display: grid;
   place-items: center;
-  padding: 20px;
+  padding: max(20px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right))
+           max(20px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
 }
 .gate[hidden] { display: none !important; }
 .gate-card {
@@ -123,13 +133,13 @@ body.locked > *:not(#gate):not(script) { display: none !important; }
 }
 .gate-input {
   width: 100%;
-  padding: 11px 14px;
+  padding: 12px 14px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface-2);
   color: var(--ink);
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px;
   letter-spacing: 0.05em;
 }
 .gate-input:focus { outline: 1px solid var(--accent); outline-offset: -1px; }
@@ -182,6 +192,9 @@ a:hover { text-decoration: underline; }
   align-items: center;
   justify-content: space-between;
   padding: 14px 28px;
+  padding-top: calc(14px + env(safe-area-inset-top));
+  padding-left: max(28px, env(safe-area-inset-left));
+  padding-right: max(28px, env(safe-area-inset-right));
   background: var(--bg);
   border-bottom: 1px solid var(--line);
   position: sticky;
@@ -694,6 +707,7 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   position: fixed;
   top: 0; right: 0;
   height: 100vh;
+  height: 100dvh;
   width: 420px;
   max-width: 92vw;
   background: var(--bg-2);
@@ -704,6 +718,9 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   transform: translateX(100%);
   transition: transform 0.22s ease;
   box-shadow: -8px 0 24px rgba(0, 0, 0, 0.25);
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-right: env(safe-area-inset-right);
 }
 .ref-panel[hidden] { display: flex !important; visibility: hidden; pointer-events: none; }
 .ref-panel:not([hidden]) { transform: translateX(0); visibility: visible; pointer-events: auto; }
@@ -722,9 +739,9 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   width: 100%;
   border: 1px solid var(--line);
   background: var(--surface-2);
-  padding: 8px 12px;
+  padding: 10px 12px;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 16px;
   color: var(--ink);
   border-radius: 6px;
 }
@@ -757,6 +774,9 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   border-top: 1px solid var(--line);
   background: var(--bg);
   padding: 11px 28px;
+  padding-bottom: calc(11px + env(safe-area-inset-bottom));
+  padding-left: max(28px, env(safe-area-inset-left));
+  padding-right: max(28px, env(safe-area-inset-right));
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
@@ -888,15 +908,169 @@ body[data-screen="summary"] main { max-width: 760px; }
 
 /* ── Responsive ───────────────────────────────────────────────────── */
 @media (max-width: 820px) {
-  .masthead { padding: 12px 18px; }
+  .masthead {
+    padding: 12px 18px;
+    padding-top: calc(12px + env(safe-area-inset-top));
+    padding-left: max(18px, env(safe-area-inset-left));
+    padding-right: max(18px, env(safe-area-inset-right));
+  }
   main { padding: 22px 16px 60px; }
-  .reading { padding: 18px 16px; }
+  .reading { padding: 18px 16px; border-radius: 0 0 8px 8px; }
   .setup-row { grid-template-columns: 1fr; gap: 8px; }
   .setup-label { padding-top: 0; }
-  .colophon { padding: 10px 18px; grid-template-columns: 1fr 1fr; }
+  .colophon {
+    padding: 10px 18px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    grid-template-columns: auto 1fr auto;
+    gap: 8px;
+  }
+  .colophon-center { justify-content: center; }
   .colophon-right { justify-content: flex-end; }
   .ref-panel { width: 100%; max-width: 100%; }
   .score-strip { grid-template-columns: 1fr; }
   .quiz-topbar { border-radius: 8px 8px 0 0; padding: 10px 12px; }
-  .reading { border-radius: 0 0 8px 8px; }
+}
+
+/* ── Phone-tight (iPhone 13 mini at 375pt and similar) ───────────── */
+@media (max-width: 480px) {
+  /* Compact masthead: keep the brand mark + a shorter title, give the
+     three tool buttons enough room without wrapping. */
+  .masthead { padding: 10px 14px; gap: 8px; }
+  .masthead {
+    padding-top: calc(10px + env(safe-area-inset-top));
+    padding-left: max(14px, env(safe-area-inset-left));
+    padding-right: max(14px, env(safe-area-inset-right));
+  }
+  .masthead-left { gap: 10px; min-width: 0; flex: 1; }
+  .brand { gap: 9px; min-width: 0; }
+  .brand-title { font-size: 15.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .session-meta { display: none; }
+  .masthead-tools { gap: 0; flex-shrink: 0; }
+  .masthead-tools .link-btn { padding: 8px 9px; font-size: 12.5px; }
+
+  main { padding: 18px 14px 56px; }
+  body[data-screen="quiz"] main { padding-top: 12px; }
+
+  .display { font-size: 26px; }
+  .subhead { font-size: 14px; margin-bottom: 22px; }
+
+  /* Quiz card: shrink margins, keep stems readable. */
+  .reading { padding: 16px 14px; }
+  .stem { font-size: 16px; line-height: 1.6; }
+  .lead-in { font-size: 15px; }
+  .patient-table {
+    grid-template-columns: 1fr;
+    gap: 4px 0;
+    padding: 12px 14px;
+    font-size: 13.5px;
+  }
+  .patient-table dt { margin-top: 6px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .patient-table dt:first-child { margin-top: 0; }
+
+  /* Options: bigger tap targets, eliminator button hits 32x32 min. */
+  .options li {
+    grid-template-columns: 30px 1fr 36px;
+    gap: 10px;
+    padding: 13px 12px;
+    font-size: 14.5px;
+  }
+  .options li .opt-letter { font-size: 15px; }
+  .options li .opt-strike {
+    width: 32px; height: 32px; font-size: 14px;
+  }
+
+  /* Buttons that act as primary tap targets need ~44pt height. */
+  .primary, .secondary {
+    padding: 12px 18px;
+    font-size: 14px;
+    min-height: 44px;
+  }
+  .action-row { gap: 8px; }
+  .action-link {
+    padding: 10px 12px;
+    font-size: 12.5px;
+    min-height: 40px;
+  }
+  .action-row-spacer { flex-basis: 100%; height: 0; }
+
+  /* Quiz topbar: keep prev / counter / next legible, larger taps. */
+  .quiz-topbar { padding: 8px 10px; }
+  .qt-step, .qt-counter { padding: 8px 10px; font-size: 13px; min-height: 40px; }
+  .qt-counter { gap: 4px; }
+  #qtNumber { font-size: 13px; }
+
+  /* Question-list dropdown: single column, taller rows. */
+  .qt-list { margin: 0 10px; max-height: 60vh; }
+  .qt-list ol { grid-template-columns: 1fr; padding: 6px 10px 10px; }
+  .qt-list li { padding: 9px 6px; font-size: 13.5px; }
+
+  /* Setup: keep options easily tappable, prevent crowding. */
+  .setup-options { gap: 7px; }
+  .opt { padding: 10px 14px; font-size: 13.5px; min-height: 40px; }
+  .setup-options.narrow .opt { padding: 9px 14px; }
+  .setup-collapse > summary { padding: 12px 0; }
+
+  /* Colophon: 3 columns at narrow widths is too much. Stack a
+     compact two-row layout: top row = exit + end, bottom = timers. */
+  .colophon {
+    padding: 8px 14px;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+    grid-template-columns: 1fr auto 1fr;
+    gap: 6px;
+  }
+  .colophon .link-btn { padding: 8px 10px; font-size: 12.5px; min-height: 40px; }
+  .colophon-block { gap: 8px; }
+  #sessionTime, #questionTime { font-size: 12px; }
+
+  /* Ghost-x bigger on touch. */
+  .ghost-x { width: 36px; height: 36px; font-size: 20px; }
+
+  /* Modal: full-bleed on phones, scrollable. */
+  .modal { padding: 0; align-items: stretch; }
+  .modal-card, .modal-card-wide {
+    max-width: 100%;
+    max-height: 100dvh;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .modal-card-wide .modal-body { flex: 1; }
+  .modal-head {
+    padding: 14px 16px;
+    padding-top: calc(14px + env(safe-area-inset-top));
+  }
+  .modal-body {
+    padding: 16px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+  .prompt-pre { font-size: 11px; max-height: 50vh; }
+
+  /* Reference panel: full bleed, native-app feel. */
+  .ref-panel { box-shadow: none; }
+
+  /* Reminder strip wraps cleanly. */
+  .reminder { padding: 8px 14px; flex-wrap: wrap; }
+
+  /* Summary review rows: tighter, full-width stems. */
+  .review-list li { grid-template-columns: 22px 1fr; gap: 10px; }
+  .review-list .rv-id { display: none; }
+  .score-num { font-size: 40px; }
+}
+
+/* ── Disable hover restyles on touch-only devices to prevent
+     "stuck" hover states after a tap. ─────────────────────── */
+@media (hover: none) {
+  .options li:hover:not(.revealed) { border-color: var(--line); }
+  .opt:hover { border-color: var(--line); color: var(--ink-2); }
+  .setup-options.multi .opt:not(.selected):hover { color: var(--ink-mute); }
+  .link-btn:hover { background: transparent; color: var(--ink-2); }
+  .qt-step:hover, .qt-counter:hover { background: transparent; color: var(--ink-2); }
+  .ghost-x:hover { background: transparent; color: var(--ink-mute); }
+  .ghost-link:hover { color: var(--ink-mute); }
+  .action-link:hover { border-color: var(--line); color: var(--ink-2); }
+  .qt-list li:hover { background: transparent; }
+  .review-list li:hover { background: transparent; }
 }
