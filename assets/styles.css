@@ -79,6 +79,62 @@
 }
 
 * { box-sizing: border-box; }
+
+/* ── Access gate ──────────────────────────────────────────────────── */
+.gate {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+.gate[hidden] { display: none !important; }
+.gate-card {
+  width: 100%;
+  max-width: 360px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: center;
+}
+.gate-brand {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  margin-bottom: 4px;
+}
+.gate-title {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.gate-sub {
+  color: var(--ink-mute);
+  font-size: 13.5px;
+  margin: 0;
+}
+.gate-input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 15px;
+  letter-spacing: 0.05em;
+}
+.gate-input:focus { outline: 1px solid var(--accent); outline-offset: -1px; }
+.gate-err {
+  color: var(--bad);
+  font-size: 12.5px;
+  margin: 0;
+}
+.gate-card .primary { width: 100%; }
 html, body {
   margin: 0;
   padding: 0;

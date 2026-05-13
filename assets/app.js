@@ -46,8 +46,49 @@
   function save(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
   function saveSettings() { save(SETTINGS_KEY, state.settings); }
 
+  // SHA-256 of the access password. The plaintext password is never
+  // present in the source; only this hash is. Inspecting source reveals
+  // only the hash. Client-side gates are theatre on a static site -
+  // determined visitors can still fetch /data/*.json directly - but the
+  // gate filters casual access.
+  const GATE_HASH = "REDACTED";
+  const GATE_STORAGE = "y4mcq.gate.passed";
+
+  async function sha256Hex(s) {
+    const buf = new TextEncoder().encode(s);
+    const hash = await crypto.subtle.digest("SHA-256", buf);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  async function passGate() {
+    return new Promise(resolve => {
+      const gate = document.getElementById("gate");
+      const form = document.getElementById("gateForm");
+      const input = document.getElementById("gateInput");
+      const err = document.getElementById("gateErr");
+      if (!gate) return resolve();
+      if (localStorage.getItem(GATE_STORAGE) === GATE_HASH) return resolve();
+      gate.hidden = false;
+      setTimeout(() => input.focus(), 50);
+      form.addEventListener("submit", async e => {
+        e.preventDefault();
+        const h = await sha256Hex((input.value || "").trim());
+        if (h === GATE_HASH) {
+          localStorage.setItem(GATE_STORAGE, GATE_HASH);
+          gate.hidden = true;
+          resolve();
+        } else {
+          err.hidden = false;
+          input.value = "";
+          input.focus();
+        }
+      });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", async () => {
     applyTheme(localStorage.getItem(THEME_KEY) || "light");
+    await passGate();
     await loadData();
     wireMasthead();
     wireColophon();
@@ -687,7 +728,14 @@
     if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
   }
   function tick() {
-    if (state.paused || !state.quiz) return;
+    if (!state.quiz) return;
+    // Pause button is only shown when meaningful: a countdown timer is
+    // running, or we're currently paused (so the user can resume).
+    const pauseBtn = document.getElementById("pauseBtn");
+    if (pauseBtn) {
+      pauseBtn.hidden = !(state.quiz.deadline || state.paused);
+    }
+    if (state.paused) return;
     const sessMs = Date.now() - state.sessionStart;
     document.getElementById("sessionTime").textContent = "session " + fmtClock(sessMs);
     const qEl = document.getElementById("questionTime");

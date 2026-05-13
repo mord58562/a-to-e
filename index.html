@@ -13,6 +13,21 @@
 </head>
 <body data-screen="home">
 
+<div id="gate" class="gate" hidden>
+  <form id="gateForm" class="gate-card" autocomplete="off">
+    <div class="gate-brand">
+      <span class="brand-mark"><span class="cross"></span></span>
+      <span class="gate-title">Y4 Pocket Companion</span>
+    </div>
+    <p class="gate-sub">Enter access password to continue.</p>
+    <input id="gateInput" class="gate-input" type="password" autocomplete="off"
+           autocorrect="off" autocapitalize="off" spellcheck="false"
+           placeholder="password" aria-label="Access password" />
+    <button id="gateSubmit" class="primary" type="submit">Continue</button>
+    <p id="gateErr" class="gate-err" hidden>Incorrect password.</p>
+  </form>
+</div>
+
 <div id="reminderBanner" class="reminder" hidden>
   <span id="reminderText"></span>
   <button id="reminderHowTo" class="ghost-link">how to add</button>
