@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Y4 MCQ Bank</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="apple-touch-icon" href="assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css?v=20260513" />
+</head>
+<body data-screen="home">
+
+<div id="reminderBanner" class="reminder" hidden>
+  <span id="reminderText"></span>
+  <button id="reminderHowTo" class="ghost-link">how to add</button>
+  <button id="reminderDismiss" class="ghost-x" aria-label="Dismiss">×</button>
+</div>
+
+<header class="masthead">
+  <div class="masthead-left">
+    <a class="brand" href="#">
+      <span class="brand-mark"><span class="cross"></span></span>
+      <span class="brand-words">
+        <span class="brand-title">Y4 Pocket Companion</span>
+        <span class="brand-sub">A practice MCQ bank</span>
+      </span>
+    </a>
+    <span class="session-meta" id="sessionMeta"></span>
+  </div>
+  <nav class="masthead-tools">
+    <button id="rangesBtn" class="link-btn" title="Reference values (L)">Reference values</button>
+    <button id="themeBtn" class="link-btn" title="Toggle theme">Theme</button>
+    <button id="homeBtn" class="link-btn" title="Index">Index</button>
+  </nav>
+</header>
+
+<div id="quizTopbar" class="quiz-topbar" hidden>
+  <div class="qt-inner">
+    <button id="qtPrev" class="qt-step" title="Previous (←)">‹ Previous</button>
+    <button id="qtCounter" class="qt-counter" title="Open question list">
+      <span id="qtNumber">Question 1 of 50</span>
+      <span class="qt-caret">▾</span>
+    </button>
+    <button id="qtNext" class="qt-step" title="Next (→)">Next ›</button>
+  </div>
+  <div id="qtList" class="qt-list" hidden></div>
+</div>
+
+<main id="app"></main>
+
+<footer class="colophon" id="colophon" hidden>
+  <span class="colophon-block">
+    <button class="link-btn" id="exitBtn">Exit session</button>
+  </span>
+  <span class="colophon-block colophon-center">
+    <span id="sessionTime"></span>
+    <span class="colophon-sep" id="qTimerSep" hidden>·</span>
+    <span id="questionTime"></span>
+    <button class="ghost-x" id="pauseBtn" title="Pause">⏸</button>
+  </span>
+  <span class="colophon-block colophon-right">
+    <button class="link-btn" id="endNowBtn">End &amp; see results</button>
+  </span>
+</footer>
+
+<aside id="refPanel" class="ref-panel" hidden aria-hidden="true">
+  <div class="ref-head">
+    <span class="ref-title">Reference values</span>
+    <button class="ghost-x" id="refClose" aria-label="Close">×</button>
+  </div>
+  <div class="ref-search">
+    <input id="rangesSearch" type="search" placeholder="filter (e.g. paeds, hb, ctg)" autocomplete="off" />
+  </div>
+  <div id="rangesBody" class="ref-body"></div>
+  <p class="ref-foot">Sources: RCPA Manual, RCH CPG, KEMH, Therapeutic Guidelines, NHMRC. Always check your local lab.</p>
+</aside>
+
+<!-- ── HOME ─────────────────────────────────────────────────────────── -->
+
+<template id="tpl-home">
+  <section class="prose">
+    <h1 class="display">Y4 Pocket Companion</h1>
+    <p class="subhead">A practice MCQ bank for end-of-medical-school clinical reasoning. Australian SI units. Every claim attributed to a free-tier source you can verify.</p>
+
+    <div class="setup">
+      <div class="setup-row">
+        <span class="setup-label">Mode</span>
+        <div class="setup-options" data-name="mode">
+          <button class="opt" data-value="study">
+            <span class="opt-head">Study</span>
+            <span class="opt-note">continuous · instant explanations</span>
+          </button>
+          <button class="opt" data-value="test">
+            <span class="opt-head">Test</span>
+            <span class="opt-note">no answers until the end · optional timer</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="setup-row" data-show-for="test" hidden>
+        <span class="setup-label">Questions</span>
+        <div class="setup-options narrow" data-name="count">
+          <button class="opt" data-value="10">10</button>
+          <button class="opt" data-value="20">20</button>
+          <button class="opt" data-value="40">40</button>
+          <button class="opt" data-value="60">60</button>
+          <button class="opt" data-value="100">100</button>
+        </div>
+      </div>
+
+      <div class="setup-row" data-show-for="test" hidden>
+        <span class="setup-label">Timer</span>
+        <div class="setup-options narrow" data-name="timer">
+          <button class="opt" data-value="0">Off</button>
+          <button class="opt" data-value="15">15</button>
+          <button class="opt" data-value="30">30</button>
+          <button class="opt" data-value="45">45</button>
+          <button class="opt" data-value="60">60</button>
+          <button class="opt" data-value="90">90</button>
+          <button class="opt" data-value="120">120 min</button>
+        </div>
+      </div>
+
+      <div class="setup-row">
+        <span class="setup-label">Discipline</span>
+        <div class="setup-options multi" data-name="disciplines">
+          <button class="opt" data-value="Paediatrics">Paediatrics</button>
+          <button class="opt" data-value="Obstetrics &amp; Gynaecology">Obstetrics &amp; Gynaecology</button>
+        </div>
+      </div>
+
+      <div class="setup-row">
+        <span class="setup-label">Filter</span>
+        <div class="setup-options narrow" data-name="filter">
+          <button class="opt" data-value="all">All</button>
+          <button class="opt" data-value="unseen">Unseen</button>
+          <button class="opt" data-value="incorrect">Previously incorrect</button>
+          <button class="opt" data-value="flagged">Flagged</button>
+        </div>
+      </div>
+
+      <details class="setup-collapse" id="tagSection">
+        <summary>
+          <span>Learning points <span class="dim" id="tagCountLabel"></span></span>
+          <span class="setup-collapse-actions">
+            <button class="ghost-link" id="tagsAll">all</button>
+            <button class="ghost-link" id="tagsNone">none</button>
+          </span>
+        </summary>
+        <div class="setup-options multi tag-row" data-name="subtopics" id="subtopicChips"></div>
+      </details>
+    </div>
+
+    <div class="run-row">
+      <button id="startBtn" class="primary">Begin →</button>
+      <span class="dim small" id="poolSize"></span>
+    </div>
+
+  </section>
+</template>
+
+<!-- ── QUIZ ─────────────────────────────────────────────────────────── -->
+
+<template id="tpl-quiz">
+  <article class="reading">
+    <header class="reading-head">
+      <span class="folio" id="folio"></span>
+      <span class="folio-sep">·</span>
+      <span class="folio-subject" id="folioSubject"></span>
+    </header>
+
+    <p class="stem" id="qStem"></p>
+    <div id="qDataTable" class="patient-table" hidden></div>
+    <p class="lead-in" id="qLeadIn"></p>
+
+    <ol class="options" id="qOptions"></ol>
+
+    <div class="action-row">
+      <button id="submitBtn" class="primary" disabled>Show answer</button>
+      <button id="nextBtn" class="primary" hidden>Next →</button>
+      <span class="action-row-spacer"></span>
+      <button id="labsBtn" class="action-link" title="Reference values (L)">Reference values</button>
+      <button id="flagBtn" class="action-link" title="Mark for review (F)">⚐ Mark</button>
+    </div>
+
+    <section id="explainBlock" class="commentary" hidden>
+      <h2 class="section-eyebrow">Commentary</h2>
+
+      <div class="comm-block">
+        <p class="comm-label">Why this is correct</p>
+        <div id="explainCorrect"></div>
+      </div>
+
+      <div class="comm-block">
+        <p class="comm-label">Why the others are not</p>
+        <div id="explainDistractors"></div>
+      </div>
+
+      <div class="comm-block">
+        <p class="comm-label">In context</p>
+        <div id="explainSummary"></div>
+      </div>
+
+      <div class="comm-block">
+        <p class="comm-label">Sources</p>
+        <ol id="explainSources" class="sources"></ol>
+      </div>
+
+      <div id="explainRanges" class="comm-block comm-aside"></div>
+    </section>
+  </article>
+</template>
+
+<!-- ── SUMMARY ──────────────────────────────────────────────────────── -->
+
+<template id="tpl-summary">
+  <section class="prose">
+    <h1 class="display">Session report</h1>
+    <p class="subhead" id="scoreLine"></p>
+
+    <div class="score-strip">
+      <div class="score-figure">
+        <span class="score-num" id="scorePct"></span>
+        <span class="score-cap">correct</span>
+      </div>
+      <div class="score-breakdown" id="topicBreakdown"></div>
+    </div>
+
+    <hr class="rule" />
+
+    <h2 class="section-eyebrow">Review</h2>
+    <div class="review-filters" id="reviewFilters">
+      <button class="opt" data-review="all">All</button>
+      <button class="opt" data-review="incorrect">Incorrect</button>
+      <button class="opt" data-review="flagged">Flagged</button>
+    </div>
+    <ol id="reviewList" class="review-list"></ol>
+
+    <div class="run-row">
+      <button id="retryBtn" class="link-btn">Retry incorrect</button>
+      <button id="newQuizBtn" class="primary">New session</button>
+    </div>
+  </section>
+</template>
+
+<!-- ── HOW-TO ───────────────────────────────────────────────────────── -->
+
+<div id="howToModal" class="modal" hidden>
+  <div class="modal-card modal-card-wide">
+    <div class="modal-head">
+      <h2>Adding more questions</h2>
+      <button id="howToClose" class="ghost-x" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <p>The question bank is a static JSON file. Copy the prompt below into any LLM (Claude, ChatGPT, Gemini, etc.) - it is fully self-contained, so an LLM with no prior knowledge of this project can produce questions at the same standard as the existing ones.</p>
+      <p>After it returns the JSON, append the new entries to <code>data/questions_paeds.json</code> or <code>data/questions_obgyn.json</code>, set <code>data/meta.json</code>'s <code>last_added</code> to today, and refresh this page.</p>
+      <div class="prompt-actions">
+        <button id="copyPromptBtn" class="primary">Copy prompt to clipboard</button>
+        <span id="copyPromptStatus" class="dim small"></span>
+      </div>
+      <pre id="promptText" class="prompt-pre"></pre>
+    </div>
+  </div>
+</div>
+
+<script type="text/template" id="addQuestionsPromptTemplate">
+You are generating high-quality single-best-answer MCQs for a Year 4
+Australian medical student preparing for their final-year MCQ exams
+(end of MD program). Output ONLY a JSON array conforming to the schema
+below, with no surrounding prose.
+
+============================
+1. DIFFICULTY CALIBRATION
+============================
+
+Target the upper end of end-of-Australian-MD standard. Anchor points:
+
+* "Recall what Kawasaki is treated with" = 1/5. TOO EASY. Reject.
+* "What is the most likely diagnosis?" where one phrase in the stem
+  gives it away = 1-2/5. TOO EASY. Reject.
+* AMBOSS-style 100-250 word vignettes that require integrating 5+
+  data points (history + vitals + exam + labs + meds) and asking
+  for NEXT-BEST-STEP or RISK-STRATIFICATION or DISCRIMINATION between
+  plausible differentials = 4/5. THIS IS THE TARGET.
+
+Per batch of N questions, distribute according to a normal curve
+N(mu=3, sigma=1) clipped to integers 1-5:
+  -  ~6% at level 1
+  -  ~24% at level 2
+  -  ~40% at level 3
+  -  ~24% at level 4
+  -  ~6% at level 5
+
+(For 25 questions that is approximately 2 / 6 / 9 / 6 / 2.)
+
+Self-rating heuristic (STRICT - agents have historically inflated by 1):
+
+  1/5  Student recognises the pattern, answer obvious in <5 seconds.
+       Equivalent to a Y4 Anki recall flashcard.
+  2/5  Pattern recognition + minor distractor elimination. 10-30 sec.
+       e.g. "ASD red flags vignette, which is the red flag?" - pattern
+       handed in the stem, lead-in tests recognition.
+  3/5  Integrate 2-3 data points and pick between PLAUSIBLE options.
+       30-60 sec of reasoning. Lead-in is "most appropriate next step"
+       not "what is it".
+  4/5  Integrate 4+ data points PLUS a guideline-specific cut-off or
+       calculation. Trade-offs to weigh. 60-90 sec. AMBOSS standard.
+  5/5  Atypical presentation, multi-step reasoning, contradictory
+       data, calculation under uncertainty. Top 5% USMLE Step 2.
+
+KEY RULE: if the answer is recognisable from any single phrase in the
+stem, the question is 2/5 or lower regardless of stem length.
+
+Worked example. The following is a 2/5, NOT a 3/5:
+  Stem: 18-month-old with solitary play, doesn't share interest by
+  pointing, doesn't respond to name, fascinated by spinning wheels.
+  Lead-in: which is the most concerning red flag?
+  Correct: lack of joint attention + name non-response.
+  Why only 2/5: the ASD red-flag pattern IS the vignette; the lead-in
+  is pattern recognition; a Y4 student answers in <10 seconds.
+
+To make the same scenario 3/5: change lead-in to "What is the most
+appropriate next step?" with plausible distractors (urgent paeds
+referral, watchful waiting, formal M-CHAT-R/F, audiology referral,
+speech pathology referral) - student must rank by priority.
+
+To make it 4/5: add Australian-funding context (NDIS early intervention
+age cut-off), a complicating factor (recurrent OM now resolved, parent
+a clinician minimising concerns), and a guideline-specific cut-off.
+
+============================
+2. STEM REQUIREMENTS (HARD FLOORS BY DIFFICULTY)
+============================
+
+Stem length MUST match the assigned difficulty level. These are hard
+floors verified with the maintainer - shorter stems are auto-rejected as below
+the labelled difficulty.
+
+  Level 1/5:  90 - 130 words   2-3 data fields  (vitals + exam)
+  Level 2/5:  110 - 160 words  3 data fields
+  Level 3/5:  140 - 200 words  3-4 data fields  (+ investigations)
+  Level 4/5:  180 - 260 words  4-5 data fields  (+ meds + history)
+  Level 5/5:  220 - 320 words  5+ data fields   (+ social context)
+
+Include ALL of the following at increasing depth as level rises:
+  - Patient demographics + relevant past medical / obstetric / surgical
+    history that affects the answer
+  - Presenting complaint with full timeline (hours/days/weeks)
+  - Multiple exam findings: vitals + focal findings + secondary signs
+  - Investigations already done with specific numeric values (AUSTRALIAN
+    SI units only - mmol/L, micromol/L, g/L, x10^9/L, mmHg, deg C, kg)
+  - Current medications + drug allergies where relevant
+  - Social / family / occupational / immunisation / travel / contact
+    context if it informs the answer (level 4-5)
+
+CLINICAL-RELEVANCE RULE (HARD):
+  Every sentence, data point, history element, and exam finding in the
+  stem must serve one of:
+    (a) act as a HOOK for a specific distractor,
+    (b) be the key feature pointing to the correct answer,
+    (c) be a red herring the student must recognise as irrelevant
+        (this is a teaching feature, used sparingly),
+    (d) provide essential context (age, gestation, comorbidity, meds)
+        needed to interpret the question.
+  If a sentence could be deleted without changing which option is
+  correct AND without changing the reasoning the student must do,
+  delete it. Length comes from depth of clinical scenario, not filler.
+
+ANTI-TRICK RULE (HARD):
+  Difficulty MUST come from clinical reasoning challenge - integrating
+  findings, weighing trade-offs, applying guideline cut-offs, choosing
+  the safe next step among plausible alternatives. NOT from:
+    - Niche guideline exceptions 99% of clinicians wouldn't know.
+    - Single-word red-herring traps.
+    - Obscure pharmacological mechanism trivia.
+    - Statistical / epidemiology trivia ("second most common cause").
+    - Reverse-engineering rare diagnosis from one atypical sign.
+    - Textual gotchas / contradiction-spotting.
+  A 5/5 question should leave the student thinking "that was hard but
+  the right answer is defensible", not "I'd never get that without the
+  specific 2023 RANZCOG amendment".
+
+REJECTED EXAMPLE (47-word stem labelled 4/5 - actually below 1/5 floor):
+  "A 4-year-old girl presents with 12 hours of fever, headache,
+  vomiting, and increasing drowsiness. She is fully immunised. T 39.4,
+  HR 150, RR 28, BP 90/55, SpO2 97%. GCS 13, neck stiffness,
+  photophobia, no rash, cap refill 3s. After blood cultures, what is
+  the single most appropriate empirical therapy?"
+
+  Why it fails: hands the diagnosis (classic meningitis), lead-in
+  hands the management framework (already-cultured, asking for
+  empirical), one obvious answer (ceftriaxone + dexamethasone).
+
+  4/5 version adds: full immunisation history with specific catch-up
+  status, drug allergies, social context (sibling with URTI, daycare
+  cohort, recent travel), more specific bloods (WCC, neutrophils, CRP,
+  lactate, sodium with SIADH implication), neuroimaging-decision
+  context (raised-ICP signs), corticosteroid-timing context,
+  Indigenous-status-specific protocol consideration.
+
+Lead-in questions should test ONE of:
+  - "What is the most appropriate NEXT step in management?" (not first)
+  - "Which is the most appropriate INITIAL investigation given X?"
+  - "What is the SINGLE BEST next intervention?"
+  - "Which of these is CONTRAINDICATED?"
+  - "Which finding most strongly suggests X over Y?"
+  - Risk-stratification / severity classification
+  - Drug dose calculation with specific weight/age
+
+Avoid: "What is the most likely diagnosis?" unless the question requires
+discriminating between four genuinely plausible look-alikes (e.g.
+placenta praevia vs abruption vs vasa praevia vs uterine rupture).
+
+============================
+3. OPTIONS REQUIREMENTS
+============================
+
+  - Exactly FIVE options labelled A-E.
+  - Exactly ONE correct.
+  - Distractors must be genuinely plausible - each should be a real
+    answer to a related but subtly different question. No obvious-wrong
+    distractors.
+  - DO NOT always put the correct answer at letter A. Randomly assign
+    the correct answer to any of A-E. The site shuffles at render but
+    new content should still be balanced in the raw JSON.
+  - Each option has a per-option rationale (1-3 sentences) explaining
+    WHY that option is correct or incorrect, with explicit source
+    attribution at the end (see Section 4).
+  - LENGTH-BALANCE THE OPTIONS (critical). All five must be within
+    +/- 25% of each other in word count. Never write a correct answer
+    that is markedly longer or more qualified than the distractors -
+    test-takers learn to pick the longest most-hedged option without
+    engaging. If the correct answer genuinely needs detail (dose, route,
+    qualifier), match that detail level on all four distractors. e.g.
+    if correct = "IM ergometrine 250 mcg + IV tranexamic acid 1 g",
+    distractors should also include dose + route ("IM carboprost 250
+    mcg q15min", "IV oxytocin 40 U infusion", "Syntometrine 1 mL IM
+    stat", "Misoprostol 800 mcg PR") - not single-word answers.
+  - Avoid the "all of the above / none of the above" anti-pattern.
+  - Avoid grammatical-cueing (correct option agreeing in number /
+    article with the lead-in; distractors not).
+  - EMBED DISTRACTOR HOOKS IN THE STEM (critical for >=3/5). Each
+    distractor must be supported by at least one specific feature in
+    the stem - the student should be able to point to a finding that
+    makes that distractor genuinely plausible, then reason about why
+    the correct answer outweighs it. Examples:
+      * Meningitis vignette with hypoglycaemia + lactate elevation
+        (supports sepsis distractor), preceding URTI (supports viral
+        meningitis distractor), no rash (rules out meningococcaemia
+        but doesn't exclude pneumococcal), recent travel to a TB-
+        endemic country (supports TB meningitis distractor), known
+        VP shunt (supports shunt-related infection distractor).
+      * APH vignette with painless bleeding + low-lying placenta on
+        20-week scan (placenta praevia hook), tetanic uterus +
+        smoking history (abruption hook), prior CS with anterior
+        praevia history (accreta hook), sudden bleeding after ROM
+        with foetal bradycardia (vasa praevia hook).
+    Without embedded hooks, distractors are obviously implausible and
+    the question collapses to recognition.
+
+============================
+4. SOURCE CITATION (CRITICAL)
+============================
+
+  - Each question has a top-level `sources` array of 2+ entries.
+    Format: { "label": "...", "url": "https://..." }
+  - Australian sources first wherever they cover the topic:
+      RCH CPG (https://www.rch.org.au/clinicalguide/),
+      RANZCOG (https://ranzcog.edu.au/),
+      KEMH (https://www.kemh.health.wa.gov.au/For-health-professionals/Clinical-guidelines),
+      The Royal Women's (Vic),
+      NSW Health / SA Health / Vic Health maternity,
+      Therapeutic Guidelines (https://tgldcdp.tg.org.au/),
+      Australian Medicines Handbook (AMH),
+      NHMRC,
+      ADIPS (gestational diabetes; https://adips.org/),
+      NCSP / Cancer Council Australia (https://www.cancer.org.au/cervical-screening),
+      ANZCOR (https://resus.org.au/),
+      ASCIA (https://www.allergy.org.au/),
+      NCIRS (immunisation),
+      CDNA.
+    International acceptable: NICE, BMJ Best Practice, StatPearls
+    (https://www.ncbi.nlm.nih.gov/books/NBK430685/), Cochrane,
+    AAP/RCPCH, KDIGO, FIGO. UpToDate citations OK but never the only
+    source (paywalled).
+
+  - Every option's `rationale` MUST end with explicit source
+    attribution by name. e.g. "...as per RCH CPG: Bronchiolitis" or
+    "(Source: Therapeutic Guidelines: Respiratory)".
+
+  - Every option has an array `source_refs` whose entries are the
+    `label` strings (from the question's `sources`) that back that
+    option's rationale. e.g. `"source_refs": ["RCH CPG: Bronchiolitis",
+    "Therapeutic Guidelines: Respiratory"]`.
+
+  - The same rule for `explanation.summary`, every entry in
+    `explanation.key_points`, and `explanation.pearls`.
+
+  - Every numeric claim must be verifiable in a cited source. Before
+    finalising each question, re-read each rationale and check every
+    dose, threshold, percentage, age cut-off, gestational-age cut-off
+    against the cited source. If you cannot verify a claim, drop the
+    claim or drop the question. Do NOT ship hedged or fabricated
+    statistics.
+
+============================
+5. AUSTRALIAN-SPECIFIC CALIBRATION
+============================
+
+Where Australian guidance differs from international, USE AUSTRALIAN:
+  - Anti-D 625 IU (AU) NOT 1500 IU (UK).
+  - ADIPS GDM thresholds 75g OGTT: fasting >=5.1, 1h >=10.0, 2h >=8.5
+    mmol/L (NOT IADPSG older or NICE thresholds).
+  - NCSP cervical screening: HPV-based, 5-yearly, from age 25, oncogenic
+    16/18 -> direct colposcopy, other oncogenic -> reflex LBC.
+  - eTG antibiotic regimens (e.g. AOM amoxicillin 15 mg/kg BD, GAS
+    pharyngitis phenoxymethylpenicillin 15 mg/kg BD x 10 days).
+  - RCH paediatric dosing.
+  - ANZCOR resuscitation algorithms (not AHA/ERC).
+  - RANZCOG / KEMH obstetric protocols.
+  - Listeria, Rh-D, Group B Strep AU protocols.
+
+============================
+6. JSON SCHEMA (exact)
+============================
+
+[
+  {
+    "id": "<paeds-NNN | obgyn-NNN | batch-name-NNN>",
+    "topic": "Paediatrics" | "Obstetrics & Gynaecology",
+    "subtopic": "<specific learning point; e.g. Respiratory, Early pregnancy>",
+    "difficulty": 3 | 4 | 5,
+    "tags": ["<learning-point tag>", "<condition tag>", ...],
+    "stem": "<120-220 word clinical vignette>",
+    "data_table": {
+      "Vital signs": "<...>",
+      "Examination": "<...>",
+      "Investigations": "<specific values with units>",
+      "Medications": "<...>"            // include any subset relevant
+    },
+    "lead_in": "<bolded question that tests reasoning>",
+    "options": [
+      { "letter": "A", "text": "<...>", "correct": false,
+        "rationale": "<1-3 sentences ending with explicit source attribution>",
+        "source_refs": ["<label matching a sources[].label>", ...] },
+      { "letter": "B", "text": "<...>", "correct": true,
+        "rationale": "...",
+        "source_refs": [...] },
+      ... five total, exactly one correct, RANDOMLY POSITIONED ...
+    ],
+    "explanation": {
+      "summary":     "<2-4 sentence integrative summary with source>",
+      "key_points":  ["<bullet 1>", "<bullet 2>", ...],
+      "pearls":      "<optional one-line clinical pearl>"
+    },
+    "sources": [
+      { "label": "<concise human-readable label>", "url": "<https://...>" },
+      ...
+    ],
+    "reference_ranges": [
+      "<one or more of: paeds_vitals_infant, paeds_vitals_child, fbc,
+       uec, lfts, abg, vbg, bsl_paeds, ketones, csf, paeds_jaundice,
+       iron_studies, thyroid, glucose_hba1c, ogtt_pregnancy,
+       beta_hcg_pregnancy, obs_pregnancy_vitals, pre_eclampsia_bloods,
+       ctg_baseline, apgar, bishop_score, gcs, lipids, calcium_corrected,
+       inflammatory_markers, coags, vitamins, paeds_fbc, paeds_uec>"
+    ],
+    "created": "YYYY-MM-DD"
+  }
+]
+
+============================
+7. FINAL RULES
+============================
+
+  - NO em-dashes (U+2014). Use space-hyphen-space ` - ` only.
+  - NO emojis.
+  - NO references to any specific university, course code, OSCE rubric,
+    Joint Medical Program, UNE, or similar uni-specific framing.
+  - Each question is FULLY STANDALONE - assume the renderer shuffles
+    option order at runtime, so don't refer to "option C" in rationales.
+  - Valid JSON only. Validate with `python3 -c "import json; json.load(open('FILE'))"`.
+
+============================
+INPUT FROM ME
+============================
+
+Generate {{N}} new MCQs at the above standard.
+
+Discipline focus: {{paeds | obgyn | both}}
+Topic / theme:    {{free text - e.g. "intrapartum emergencies and
+                  decision-making at decision-to-delivery"}}
+ID prefix:        {{e.g. paeds-batch-emerg- and continue numbering from
+                  the highest existing ID}}
+
+Before outputting, run a self-audit pass:
+  1. Re-read every rationale; check every numeric claim against the
+     cited source.
+  2. Re-read every stem and confirm a Y4 Australian medical student
+     would find it genuinely challenging (not 1-2/5 recall).
+  3. Check the correct-answer distribution across the batch - should
+     NOT cluster at any one letter.
+  4. Drop any question you cannot fully source.
+  5. For each question, count the words in each option. The correct
+     answer must NOT be noticeably longer than the distractors. If it
+     is, rewrite all five to the same length / detail level.
+  6. Confirm no grammatical-agreement cueing: each option must read
+     naturally after the same lead-in.
+
+Output the final JSON array. Nothing else.
+</script>
+
+<script src="assets/app.js?v=20260513" defer></script>
+</body>
+</html>
