@@ -81,6 +81,10 @@
 * { box-sizing: border-box; }
 
 /* ── Access gate ──────────────────────────────────────────────────── */
+/* Until the password is entered, the body is `.locked` and everything
+ * except the gate is hidden. Pre-JS render therefore shows only the
+ * gate, never the app behind it. */
+body.locked > *:not(#gate):not(script) { display: none !important; }
 .gate {
   position: fixed; inset: 0;
   background: var(--bg);

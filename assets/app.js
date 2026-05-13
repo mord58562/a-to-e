@@ -66,17 +66,21 @@
       const form = document.getElementById("gateForm");
       const input = document.getElementById("gateInput");
       const err = document.getElementById("gateErr");
-      if (!gate) return resolve();
-      if (localStorage.getItem(GATE_STORAGE) === GATE_HASH) return resolve();
-      gate.hidden = false;
+      const unlock = () => {
+        if (gate) gate.hidden = true;
+        document.body.classList.remove("locked");
+        resolve();
+      };
+      if (!gate) { document.body.classList.remove("locked"); return resolve(); }
+      if (localStorage.getItem(GATE_STORAGE) === GATE_HASH) return unlock();
+      // gate stays visible (body.locked still set); main content stays hidden
       setTimeout(() => input.focus(), 50);
       form.addEventListener("submit", async e => {
         e.preventDefault();
         const h = await sha256Hex((input.value || "").trim());
         if (h === GATE_HASH) {
           localStorage.setItem(GATE_STORAGE, GATE_HASH);
-          gate.hidden = true;
-          resolve();
+          unlock();
         } else {
           err.hidden = false;
           input.value = "";
@@ -100,27 +104,30 @@
   });
 
   async function loadData() {
-    const [paeds, obgyn, ranges, meta, batchManifest] = await Promise.all([
+    const [paeds, obgyn, ranges, meta, batchManifest, inboxManifest] = await Promise.all([
       fetchJson("data/questions_paeds.json").catch(() => []),
       fetchJson("data/questions_obgyn.json").catch(() => []),
       fetchJson("data/reference_ranges.json").catch(() => null),
       fetchJson("data/meta.json").catch(() => ({})),
       fetchJson("data/batches_manifest.json").catch(() => ({ batches: [] })),
+      fetchJson("data/inbox_manifest.json").catch(() => ({ inbox: [] })),
     ]);
 
-    // Pull every staging batch listed in the manifest. Each batch is its
-    // own JSON array of questions in the same schema. Failures are silent
-    // so the manifest can list in-flight batches that don't yet exist.
+    // Pull every staging batch listed in the manifests. Each is its own
+    // JSON array of question objects matching the canonical schema.
+    // Failures are silent so the manifests can list files that don't
+    // yet exist (in-flight batches, expected inbox drops).
     const batchPaths = (batchManifest && batchManifest.batches) || [];
-    const batches = await Promise.all(
-      batchPaths.map(p => fetchJson("data/" + p).catch(() => []))
+    const inboxPaths = (inboxManifest && inboxManifest.inbox) || [];
+    const extra = await Promise.all(
+      [...batchPaths, ...inboxPaths].map(p => fetchJson("data/" + p).catch(() => []))
     );
-    const batchQuestions = batches.flat();
+    const extraQuestions = extra.flat();
 
-    // Deduplicate by id - if a batch is later merged into the main file,
-    // the main-file entry wins.
+    // Deduplicate by id - if a question is later merged into the main
+    // file, the main-file entry wins (it appears first in `all`).
     const seen = new Set();
-    const all = [...paeds, ...obgyn, ...batchQuestions];
+    const all = [...paeds, ...obgyn, ...extraQuestions];
     state.questions = all.filter(q => {
       if (!q || !q.id) return false;
       if (seen.has(q.id)) return false;
