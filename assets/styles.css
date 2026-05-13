@@ -258,25 +258,56 @@ a:hover { text-decoration: underline; }
 .profile-chip .ghost-link { font-size: 11.5px; color: var(--ink-mute); line-height: 1; }
 .profile-chip .ghost-link:hover { color: var(--accent); }
 
-/* Per-profile colour. the maintainer's chip is gold (uses the existing --warn
-   variable so it adapts to both light and dark theme). Future profiles
-   get their own block here. */
+/* Per-profile colour. the maintainer's chip is gold - a warm metallic look with
+   a subtle gradient + inner highlight so it reads as polished metal,
+   not just a yellow rectangle. Tuned separately for dark and light
+   themes (gold needs different chroma on each background to feel
+   "real"). Future profiles get their own block here. */
 .profile-chip[data-profile-id="rob"] {
-  border-color: var(--warn);
-  background: var(--warn-bg);
-  color: var(--warn);
+  --gold-1:  #ffd770;
+  --gold-2:  #d9a020;
+  --gold-bd: #c9941c;
+  --gold-ink: #2a1d05;
+  border-color: var(--gold-bd);
+  background:
+    linear-gradient(135deg,
+      rgba(255, 223, 130, 0.95) 0%,
+      rgba(243, 196, 75, 0.95) 45%,
+      rgba(196, 145, 30, 0.95) 100%);
+  color: var(--gold-ink);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 246, 210, 0.7),
+    inset 0 -1px 0 rgba(120, 80, 10, 0.35),
+    0 1px 2px rgba(0, 0, 0, 0.25);
 }
 .profile-chip[data-profile-id="rob"] .profile-name {
-  color: var(--warn);
+  color: var(--gold-ink);
+  text-shadow: 0 1px 0 rgba(255, 248, 220, 0.45);
 }
 .profile-chip[data-profile-id="rob"] .ghost-link {
-  color: var(--warn);
-  opacity: 0.8;
+  color: var(--gold-ink);
+  opacity: 0.75;
 }
 .profile-chip[data-profile-id="rob"] .ghost-link:hover {
-  color: var(--warn);
+  color: var(--gold-ink);
   opacity: 1;
   text-decoration: underline;
+}
+
+[data-theme="light"] .profile-chip[data-profile-id="rob"] {
+  /* Slightly deeper, more saturated gold on white so it doesn't wash
+     out. Keeps the same metallic gradient shape. */
+  --gold-bd: #a67510;
+  --gold-ink: #3a2604;
+  background:
+    linear-gradient(135deg,
+      #fbe089 0%,
+      #e6b94a 45%,
+      #b9831a 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 251, 220, 0.85),
+    inset 0 -1px 0 rgba(120, 80, 10, 0.30),
+    0 1px 2px rgba(140, 100, 30, 0.20);
 }
 .link-btn {
   background: transparent;
