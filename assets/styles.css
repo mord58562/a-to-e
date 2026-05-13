@@ -989,13 +989,29 @@ body[data-screen="summary"] main { max-width: 760px; }
     font-size: 14px;
     min-height: 44px;
   }
-  .action-row { gap: 8px; }
+
+  /* Primary actions (Submit, Next, Begin, New session, Copy prompt,
+     etc.) live on the RIGHT of the screen on phones - right-thumb
+     reach when holding the phone one-handed. */
+  .action-row { gap: 8px; flex-wrap: wrap; }
+  .action-row #submitBtn,
+  .action-row #nextBtn {
+    order: -1;
+    margin-left: auto;
+  }
+  .action-row-spacer { flex-basis: 100%; height: 0; order: 0; }
   .action-link {
     padding: 10px 12px;
     font-size: 12.5px;
     min-height: 40px;
+    order: 1;
   }
-  .action-row-spacer { flex-basis: 100%; height: 0; }
+
+  .run-row { flex-wrap: wrap; gap: 12px; }
+  .run-row .primary { margin-left: auto; }
+
+  .prompt-actions { flex-wrap: wrap; }
+  .prompt-actions .primary { margin-left: auto; }
 
   /* Quiz topbar: keep prev / counter / next legible, larger taps. */
   .quiz-topbar { padding: 8px 10px; }
