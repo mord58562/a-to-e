@@ -244,6 +244,7 @@
     const nameEl = document.getElementById("profileName");
     if (chip && currentProfile) {
       chip.hidden = false;
+      chip.dataset.profileId = currentProfile.id;
       nameEl.textContent = currentProfile.name;
     }
     const signOutBtn = document.getElementById("signOutBtn");

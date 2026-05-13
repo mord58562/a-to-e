@@ -203,8 +203,8 @@ a:hover { text-decoration: underline; }
   top: 0;
   z-index: 50;
 }
-.masthead-left { display: flex; align-items: center; gap: 18px; }
-.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+.masthead-left { display: flex; align-items: center; gap: 18px; line-height: 1; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; line-height: 1; }
 .brand-mark {
   width: 30px;
   height: 30px;
@@ -223,36 +223,61 @@ a:hover { text-decoration: underline; }
   letter-spacing: -0.02em;
 }
 .brand-mark .cross { display: none; }
-.brand-words { display: flex; flex-direction: column; line-height: 1.1; }
+.brand-words { display: flex; flex-direction: column; line-height: 1; }
 .brand-title {
   font-family: var(--display);
   font-weight: 700;
   font-size: 18px;
   letter-spacing: -0.015em;
   color: var(--ink);
+  line-height: 1;
 }
 .brand-sub { display: none; }
 .session-meta {
   font-size: 11px;
+  line-height: 1;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-mute);
 }
-.masthead-tools { display: flex; gap: 6px; align-items: center; }
+.masthead-tools { display: flex; gap: 6px; align-items: center; line-height: 1; }
+.masthead-tools .link-btn { display: inline-flex; align-items: center; line-height: 1; }
 .profile-chip {
   display: inline-flex; align-items: center; gap: 8px;
   margin-left: 12px;
-  padding: 4px 10px;
+  padding: 5px 11px;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--surface-2, var(--surface));
   font-size: 12.5px;
+  line-height: 1;
   color: var(--ink-2);
 }
 .profile-chip[hidden] { display: none; }
-.profile-name { font-weight: 600; color: var(--ink); letter-spacing: 0.01em; }
-.profile-chip .ghost-link { font-size: 11.5px; color: var(--ink-mute); }
+.profile-name { font-weight: 600; color: var(--ink); letter-spacing: 0.01em; line-height: 1; }
+.profile-chip .ghost-link { font-size: 11.5px; color: var(--ink-mute); line-height: 1; }
 .profile-chip .ghost-link:hover { color: var(--accent); }
+
+/* Per-profile colour. the maintainer's chip is gold (uses the existing --warn
+   variable so it adapts to both light and dark theme). Future profiles
+   get their own block here. */
+.profile-chip[data-profile-id="rob"] {
+  border-color: var(--warn);
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+.profile-chip[data-profile-id="rob"] .profile-name {
+  color: var(--warn);
+}
+.profile-chip[data-profile-id="rob"] .ghost-link {
+  color: var(--warn);
+  opacity: 0.8;
+}
+.profile-chip[data-profile-id="rob"] .ghost-link:hover {
+  color: var(--warn);
+  opacity: 1;
+  text-decoration: underline;
+}
 .link-btn {
   background: transparent;
   border: none;
