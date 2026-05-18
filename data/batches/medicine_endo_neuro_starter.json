@@ -5,7 +5,13 @@
     "subtopic": "Type 2 diabetes diagnosis (ADS / RACGP)",
     "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["T2DM", "HbA1c", "diagnosis", "ADS", "RACGP"],
+    "tags": [
+      "T2DM",
+      "HbA1c",
+      "diagnosis",
+      "ADS",
+      "RACGP"
+    ],
     "stem": "A 56-year-old man attends his GP for review of fatigue and nocturia over the last three months. He has hypertension treated with perindopril 5 mg daily and a BMI of 31 kg/m^2. He is asymptomatic of polyuria today and denies weight loss, vomiting or thirst beyond mild dry mouth. His father has type 2 diabetes. He has no acute illness and is not on glucocorticoids. The GP performs opportunistic screening. A fasting venous plasma glucose taken in a NATA-accredited laboratory two weeks ago was 7.3 mmol/L; today's HbA1c on a standardised laboratory assay is 50 mmol/mol (6.7 percent). A random venous glucose taken today is 9.4 mmol/L. He has no features of intercurrent illness, sepsis or recent steroid use that would invalidate the HbA1c. He has never had a previous diabetes diagnosis recorded.",
     "data_table": {
       "Vital signs": "BP 138/84 mmHg, HR 78 bpm, BMI 31 kg/m^2.",
@@ -16,38 +22,50 @@
     "options": [
       {
         "letter": "A",
-        "text": "The single random venous glucose of 9.4 mmol/L confirms diabetes",
+        "text": "The single random venous glucose of 9.4 mmol/L on its own confirms diabetes",
         "correct": false,
         "rationale": "A random glucose only confirms diabetes if it is at least 11.1 mmol/L AND accompanied by classic symptoms; 9.4 mmol/L is below threshold (RACGP Management of T2D 2024; ADS Position Statement 2020).",
-        "source_refs": ["RACGP Management of type 2 diabetes 2024", "Australian Diabetes Society Position Statement"]
+        "source_refs": [
+          "RACGP Management of type 2 diabetes 2024",
+          "Australian Diabetes Society Position Statement"
+        ]
       },
       {
         "letter": "B",
-        "text": "Two separate abnormal results meet the criteria: a fasting glucose of 7.3 mmol/L and an HbA1c of 50 mmol/mol",
+        "text": "Two separate abnormal results meet the criteria: fasting glucose 7.3 and HbA1c 50 mmol/mol",
         "correct": true,
         "rationale": "In an asymptomatic patient Australian diagnosis requires two abnormal tests, either two of the same or two different. Fasting venous glucose at least 7.0 mmol/L and HbA1c at least 48 mmol/mol (6.5 percent) on a standardised assay are each diagnostic when confirmed on a separate occasion (RACGP 2024; ADS 2020).",
-        "source_refs": ["RACGP Management of type 2 diabetes 2024", "Australian Diabetes Society Position Statement"]
+        "source_refs": [
+          "RACGP Management of type 2 diabetes 2024",
+          "Australian Diabetes Society Position Statement"
+        ]
       },
       {
         "letter": "C",
         "text": "He does not meet criteria because no oral glucose tolerance test has been performed",
         "correct": false,
         "rationale": "OGTT is one of several diagnostic options but is not mandatory; HbA1c at least 48 mmol/mol or fasting glucose at least 7.0 mmol/L are equally accepted in asymptomatic adults (RACGP 2024).",
-        "source_refs": ["RACGP Management of type 2 diabetes 2024"]
+        "source_refs": [
+          "RACGP Management of type 2 diabetes 2024"
+        ]
       },
       {
         "letter": "D",
-        "text": "He has impaired fasting glucose only and should be reviewed in 12 months",
+        "text": "He has impaired fasting glucose only and should simply be reviewed in 12 months",
         "correct": false,
         "rationale": "Impaired fasting glucose is 6.1 to 6.9 mmol/L; a fasting glucose of 7.0 mmol/L or greater meets the diabetes threshold and his HbA1c is above 48 mmol/mol (RACGP 2024).",
-        "source_refs": ["RACGP Management of type 2 diabetes 2024"]
+        "source_refs": [
+          "RACGP Management of type 2 diabetes 2024"
+        ]
       },
       {
         "letter": "E",
-        "text": "HbA1c cannot be used because acanthosis nigricans is a confounder",
+        "text": "HbA1c cannot be used here because acanthosis nigricans acts as a confounder",
         "correct": false,
         "rationale": "HbA1c is invalid in haemoglobinopathy, recent transfusion, haemolysis, pregnancy and rapidly evolving glycaemia; acanthosis nigricans is a clinical sign of insulin resistance and does not interfere with HbA1c (ADS 2020).",
-        "source_refs": ["Australian Diabetes Society Position Statement"]
+        "source_refs": [
+          "Australian Diabetes Society Position Statement"
+        ]
       }
     ],
     "explanation": {
@@ -61,10 +79,18 @@
       "pearls": "Avoid HbA1c if haemoglobinopathy, recent blood loss, transfusion, pregnancy or rapidly changing glycaemia."
     },
     "sources": [
-      { "label": "RACGP Management of type 2 diabetes 2024", "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/management-of-type-2-diabetes" },
-      { "label": "Australian Diabetes Society Position Statement", "url": "https://www.diabetessociety.com.au/" }
+      {
+        "label": "RACGP Management of type 2 diabetes 2024",
+        "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/management-of-type-2-diabetes"
+      },
+      {
+        "label": "Australian Diabetes Society Position Statement",
+        "url": "https://www.diabetessociety.com.au/"
+      }
     ],
-    "reference_ranges": ["glucose_hba1c"],
+    "reference_ranges": [
+      "glucose_hba1c"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -73,8 +99,15 @@
     "subtopic": "T2DM escalation - cardiorenal indication for SGLT2 inhibitor",
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["T2DM", "SGLT2", "GLP1", "heart failure", "CKD", "ADS"],
-    "stem": "A 64-year-old man with type 2 diabetes for 9 years attends his GP for diabetes review. He is on metformin XR 2 g daily and has been adherent for 18 months. He has heart failure with reduced ejection fraction (LVEF 35 percent) on echocardiography after an anterior STEMI two years ago, treated with stented LAD, and is on perindopril 8 mg, bisoprolol 5 mg, atorvastatin 80 mg and aspirin 100 mg. He has chronic kidney disease with eGFR 48 mL/min/1.73m^2 and ACR 6.4 mg/mmol on two occasions. He has no symptoms of urinary tract infection, no recurrent thrush and no history of diabetic foot ulceration. BMI is 29 kg/m^2 and he is normotensive. His most recent HbA1c is 62 mmol/mol (7.8 percent), up from 56 mmol/mol six months ago. He denies hypoglycaemic episodes and is keen to optimise his cardiovascular and renal protection in addition to glycaemic control. He has no history of pancreatitis and no personal or family history of medullary thyroid carcinoma or MEN2.",
+    "tags": [
+      "T2DM",
+      "SGLT2",
+      "GLP1",
+      "heart failure",
+      "CKD",
+      "ADS"
+    ],
+    "stem": "A 64-year-old man with type 2 diabetes for 9 years attends his GP for diabetes review. He is on metformin XR 2 g daily and has been adherent for 18 months. He has heart failure with reduced ejection fraction (LVEF 35 percent) on echocardiography after an anterior STEMI two years ago, treated with stented LAD, and is on perindopril 8 mg, bisoprolol 5 mg, atorvastatin 80 mg and aspirin 100 mg. He has chronic kidney disease with eGFR 48 mL/min/1.73m^2 and ACR 6.4 mg/mmol on two occasions. He has no symptoms of urinary tract infection, no recurrent thrush and no history of diabetic foot ulceration. BMI is 29 kg/m^2 and he is normotensive. His most recent HbA1c is 62 mmol/mol (7.8 percent), up from 56 mmol/mol six months ago. He denies hypoglycaemic episodes and is keen to optimise his cardiovascular and renal protection in addition to glycaemic control. He has no history of pancreatitis and no personal or family history of medullary thyroid carcinoma or MEN2. He has never had a diabetic foot ulcer, retinal laser or amputation. He is on no NSAID, no potassium-sparing diuretic and has no documented contrast allergy. He fully understands sick-day rules and is independently mobile, performs his own injections if needed and has reliable transport for monitoring bloods.",
     "data_table": {
       "Vital signs": "BP 124/72 mmHg, HR 64 bpm.",
       "Examination": "JVP not elevated. Chest clear. No peripheral oedema. Feet warm, pulses present, monofilament intact.",
@@ -88,35 +121,50 @@
         "text": "Add a sulfonylurea such as gliclazide MR 30 mg daily",
         "correct": false,
         "rationale": "Sulfonylureas lower HbA1c but carry hypoglycaemia risk, do not improve cardiorenal outcomes and offer no benefit in heart failure or CKD progression (RACGP 2024; ADS-ADEA Position Statement on T2DM).",
-        "source_refs": ["RACGP Management of type 2 diabetes 2024", "ADS-ADEA Australian T2DM Algorithm"]
+        "source_refs": [
+          "RACGP Management of type 2 diabetes 2024",
+          "ADS-ADEA Australian T2DM Algorithm"
+        ]
       },
       {
         "letter": "B",
         "text": "Add an SGLT2 inhibitor such as empagliflozin 10 mg daily",
         "correct": true,
         "rationale": "SGLT2 inhibitors reduce cardiovascular death and heart failure hospitalisation in HFrEF and slow CKD progression with albuminuria; they are first-choice add-on for T2DM with established HFrEF and CKD with eGFR within approved range (ADS-ADEA Algorithm; Heart Foundation HFrEF guideline 2022; KHA-CARI / KDIGO 2022).",
-        "source_refs": ["ADS-ADEA Australian T2DM Algorithm", "Heart Foundation / CSANZ HFrEF Guideline 2022", "KDIGO Diabetes in CKD 2022"]
+        "source_refs": [
+          "ADS-ADEA Australian T2DM Algorithm",
+          "Heart Foundation / CSANZ HFrEF Guideline 2022",
+          "KDIGO Diabetes in CKD 2022"
+        ]
       },
       {
         "letter": "C",
         "text": "Add basal insulin glargine starting 10 units nocte",
         "correct": false,
         "rationale": "Basal insulin reduces HbA1c but is not the first-choice add-on when cardiorenal protection is the priority and the patient is not glucotoxic; insulin offers no cardiovascular outcome benefit (ADS-ADEA Algorithm).",
-        "source_refs": ["ADS-ADEA Australian T2DM Algorithm"]
+        "source_refs": [
+          "ADS-ADEA Australian T2DM Algorithm"
+        ]
       },
       {
         "letter": "D",
         "text": "Add a DPP4 inhibitor such as sitagliptin 100 mg daily",
         "correct": false,
         "rationale": "DPP4 inhibitors are weight neutral and well tolerated but do not improve cardiovascular or renal outcomes; saxagliptin specifically increases heart failure hospitalisation (ADS-ADEA Algorithm; AMH).",
-        "source_refs": ["ADS-ADEA Australian T2DM Algorithm", "Australian Medicines Handbook"]
+        "source_refs": [
+          "ADS-ADEA Australian T2DM Algorithm",
+          "Australian Medicines Handbook"
+        ]
       },
       {
         "letter": "E",
         "text": "Add pioglitazone 15 mg daily for insulin sensitisation",
         "correct": false,
         "rationale": "Thiazolidinediones cause fluid retention and are contraindicated in heart failure; they are not appropriate in HFrEF (AMH; ADS-ADEA Algorithm).",
-        "source_refs": ["Australian Medicines Handbook", "ADS-ADEA Australian T2DM Algorithm"]
+        "source_refs": [
+          "Australian Medicines Handbook",
+          "ADS-ADEA Australian T2DM Algorithm"
+        ]
       }
     ],
     "explanation": {
@@ -130,13 +178,31 @@
       "pearls": "Hold SGLT2 inhibitor during intercurrent illness, fasting, or pre-operatively to reduce euglycaemic DKA risk."
     },
     "sources": [
-      { "label": "ADS-ADEA Australian T2DM Algorithm", "url": "https://t2d.diabetessociety.com.au/" },
-      { "label": "Heart Foundation / CSANZ HFrEF Guideline 2022", "url": "https://www.heartfoundation.org.au/" },
-      { "label": "KDIGO Diabetes in CKD 2022", "url": "https://kdigo.org/guidelines/diabetes-ckd/" },
-      { "label": "RACGP Management of type 2 diabetes 2024", "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/management-of-type-2-diabetes" },
-      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+      {
+        "label": "ADS-ADEA Australian T2DM Algorithm",
+        "url": "https://t2d.diabetessociety.com.au/"
+      },
+      {
+        "label": "Heart Foundation / CSANZ HFrEF Guideline 2022",
+        "url": "https://www.heartfoundation.org.au/"
+      },
+      {
+        "label": "KDIGO Diabetes in CKD 2022",
+        "url": "https://kdigo.org/guidelines/diabetes-ckd/"
+      },
+      {
+        "label": "RACGP Management of type 2 diabetes 2024",
+        "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/management-of-type-2-diabetes"
+      },
+      {
+        "label": "Australian Medicines Handbook",
+        "url": "https://amhonline.amh.net.au/"
+      }
     ],
-    "reference_ranges": ["glucose_hba1c", "uec"],
+    "reference_ranges": [
+      "glucose_hba1c",
+      "uec"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -145,7 +211,12 @@
     "subtopic": "T2DM insulin initiation - basal regimen choice",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["T2DM", "insulin", "basal", "RACGP"],
+    "tags": [
+      "T2DM",
+      "insulin",
+      "basal",
+      "RACGP"
+    ],
     "stem": "A 71-year-old woman with type 2 diabetes for 14 years attends her GP. She is on metformin XR 2 g, empagliflozin 25 mg and dulaglutide 1.5 mg weekly. She has tolerated triple therapy for 18 months without hypoglycaemia, weight loss has plateaued and her HbA1c has risen from 58 to 76 mmol/mol (9.1 percent) over the last six months. She has no acute illness, drinks no alcohol and lives independently with her husband who can assist with injections. She is willing to start insulin but anxious about night-time hypoglycaemia. Her eGFR is 62 mL/min/1.73m^2, weight 78 kg, and she has retinopathy on annual review. Fasting capillary glucose self-monitoring shows readings of 11 to 14 mmol/L; pre-dinner readings are 8 to 10 mmol/L. There is no significant post-prandial glucose excursion documented. She drives a private car only and her vision is corrected to 6/9. She is up to date with her sick-day plan for the SGLT2 inhibitor.",
     "data_table": {
       "Vital signs": "BP 134/78 mmHg, HR 72 bpm, weight 78 kg.",
@@ -160,35 +231,46 @@
         "text": "Premixed biphasic insulin (e.g. NovoMix 30) twice daily before breakfast and dinner",
         "correct": false,
         "rationale": "Premixed regimens cover both basal and prandial needs but carry the highest hypoglycaemia risk and least flexibility; they are not first line when only fasting glucose is elevated (RACGP 2024).",
-        "source_refs": ["RACGP Management of type 2 diabetes 2024"]
+        "source_refs": [
+          "RACGP Management of type 2 diabetes 2024"
+        ]
       },
       {
         "letter": "B",
         "text": "Basal-bolus regimen with insulin glargine nocte and rapid-acting insulin with each meal",
         "correct": false,
         "rationale": "Basal-bolus is reserved for failure of basal alone or significant prandial excursions; this patient has isolated fasting hyperglycaemia and no major post-prandial excursion (RACGP 2024).",
-        "source_refs": ["RACGP Management of type 2 diabetes 2024"]
+        "source_refs": [
+          "RACGP Management of type 2 diabetes 2024"
+        ]
       },
       {
         "letter": "C",
-        "text": "Long-acting basal insulin glargine U100 starting 10 units nocte with titration by 2 units every 3 days to target fasting glucose 6 to 8 mmol/L",
+        "text": "Long-acting basal insulin glargine 10 units nocte titrated by 2 units every 3 days",
         "correct": true,
         "rationale": "Once-daily long-acting basal insulin is the preferred initiation strategy in T2DM with elevated fasting glucose; start 10 units (or 0.1 to 0.2 units/kg) nocte and titrate to fasting target, continuing metformin, SGLT2i and GLP1 RA (RACGP 2024; ADS-ADEA Algorithm).",
-        "source_refs": ["RACGP Management of type 2 diabetes 2024", "ADS-ADEA Australian T2DM Algorithm"]
+        "source_refs": [
+          "RACGP Management of type 2 diabetes 2024",
+          "ADS-ADEA Australian T2DM Algorithm"
+        ]
       },
       {
         "letter": "D",
-        "text": "Twice-daily NPH insulin in equal doses morning and night",
+        "text": "Twice-daily NPH insulin in equal split doses administered each morning and again each night",
         "correct": false,
         "rationale": "NPH has a pronounced peak at 4 to 8 hours and higher nocturnal hypoglycaemia risk compared with long-acting analogues; long-acting analogues are preferred in older patients fearful of hypoglycaemia (RACGP 2024).",
-        "source_refs": ["RACGP Management of type 2 diabetes 2024"]
+        "source_refs": [
+          "RACGP Management of type 2 diabetes 2024"
+        ]
       },
       {
         "letter": "E",
-        "text": "Prandial-only rapid-acting insulin aspart with the largest meal of the day",
+        "text": "Prandial-only rapid-acting insulin aspart given with only the largest carbohydrate meal of the day",
         "correct": false,
         "rationale": "Prandial-only insulin addresses post-prandial excursions, not fasting hyperglycaemia, and would not correct her dominant abnormality (RACGP 2024).",
-        "source_refs": ["RACGP Management of type 2 diabetes 2024"]
+        "source_refs": [
+          "RACGP Management of type 2 diabetes 2024"
+        ]
       }
     ],
     "explanation": {
@@ -202,10 +284,18 @@
       "pearls": "Always counsel on hypoglycaemia recognition, glucagon access, sick-day rules and Austroads driving guidance before starting insulin."
     },
     "sources": [
-      { "label": "RACGP Management of type 2 diabetes 2024", "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/management-of-type-2-diabetes" },
-      { "label": "ADS-ADEA Australian T2DM Algorithm", "url": "https://t2d.diabetessociety.com.au/" }
+      {
+        "label": "RACGP Management of type 2 diabetes 2024",
+        "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/management-of-type-2-diabetes"
+      },
+      {
+        "label": "ADS-ADEA Australian T2DM Algorithm",
+        "url": "https://t2d.diabetessociety.com.au/"
+      }
     ],
-    "reference_ranges": ["glucose_hba1c"],
+    "reference_ranges": [
+      "glucose_hba1c"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -214,7 +304,13 @@
     "subtopic": "DKA initial management - fluid before insulin",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["DKA", "T1DM", "fluid resuscitation", "potassium", "eTG"],
+    "tags": [
+      "DKA",
+      "T1DM",
+      "fluid resuscitation",
+      "potassium",
+      "eTG"
+    ],
     "stem": "A 22-year-old woman with type 1 diabetes presents to ED with 18 hours of vomiting, polyuria and abdominal pain after running out of insulin glargine three days ago. She is alert and oriented but exhausted. Her usual basal-bolus regimen is glargine 18 units nocte and aspart with meals. She has no chest pain and no focal sepsis. On arrival she is tachycardic, hypotensive and breathing deeply. Capillary glucose is high (off the meter), capillary ketones are 5.8 mmol/L and a venous blood gas shows pH 7.10, bicarbonate 7 mmol/L, anion gap 28. Serum potassium on the gas is 5.4 mmol/L. Sodium is 132 mmol/L, creatinine 118 micromol/L, eGFR 52 mL/min/1.73m^2. She has voided 200 mL since arrival 30 minutes ago. ECG shows sinus tachycardia without peaked T waves. Urinalysis confirms ketonuria and glycosuria; there is no leucocyte esterase or nitrites and her CXR is clear.",
     "data_table": {
       "Vital signs": "BP 92/58 mmHg, HR 122 bpm, RR 28 (Kussmaul), T 36.8, SpO2 99 percent on RA, GCS 15.",
@@ -225,38 +321,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "Commence IV 0.9 percent sodium chloride bolus 500 mL over 15 to 30 minutes then reassess perfusion",
+        "text": "IV 0.9 percent sodium chloride 500 mL bolus over 15 to 30 minutes then reassess",
         "correct": true,
         "rationale": "Fluid resuscitation precedes insulin in DKA. Adult Australian and JBDS-IP guidance recommend an initial 500 to 1000 mL crystalloid bolus when systolic BP is below 90 mmHg, with reassessment before further boluses (eTG Endocrinology; JBDS DKA 2023).",
-        "source_refs": ["eTG Endocrinology - DKA", "JBDS Inpatient Care DKA 2023"]
+        "source_refs": [
+          "eTG Endocrinology - DKA",
+          "JBDS Inpatient Care DKA 2023"
+        ]
       },
       {
         "letter": "B",
-        "text": "Commence fixed-rate IV insulin infusion at 0.1 units/kg/hour without IV fluid",
+        "text": "Commence fixed-rate IV insulin infusion at 0.1 units/kg/hour without any IV fluid",
         "correct": false,
         "rationale": "Starting insulin before volume restoration worsens hypotension, accelerates potassium shift and can precipitate cardiovascular collapse; fluid is the priority (eTG Endocrinology).",
-        "source_refs": ["eTG Endocrinology - DKA"]
+        "source_refs": [
+          "eTG Endocrinology - DKA"
+        ]
       },
       {
         "letter": "C",
-        "text": "Administer IV sodium bicarbonate 50 mmol stat",
+        "text": "Administer IV sodium bicarbonate 50 mmol as an immediate stat bolus dose",
         "correct": false,
         "rationale": "Bicarbonate is not recommended in DKA except in severe acidaemia with pH below 6.9 or life-threatening hyperkalaemia, because it worsens intracellular acidosis and risks cerebral oedema (eTG Endocrinology).",
-        "source_refs": ["eTG Endocrinology - DKA"]
+        "source_refs": [
+          "eTG Endocrinology - DKA"
+        ]
       },
       {
         "letter": "D",
-        "text": "Give IV potassium chloride 40 mmol prior to any insulin",
+        "text": "Give IV potassium chloride 40 mmol prior to any insulin or other therapy",
         "correct": false,
         "rationale": "Potassium replacement is withheld while serum potassium is above 5.5 mmol/L; her potassium is 5.4 mmol/L. Insulin will shift K+ intracellularly, so K+ replacement is added once K+ falls below 5.5 (eTG Endocrinology).",
-        "source_refs": ["eTG Endocrinology - DKA"]
+        "source_refs": [
+          "eTG Endocrinology - DKA"
+        ]
       },
       {
         "letter": "E",
-        "text": "Subcutaneous long-acting insulin glargine 18 units immediately",
+        "text": "Subcutaneous long-acting insulin glargine 18 units administered immediately without IV fluid",
         "correct": false,
         "rationale": "Restarting basal insulin is recommended early but does not replace IV insulin infusion in established DKA and does not address the priority of volume resuscitation in shock (JBDS DKA 2023).",
-        "source_refs": ["JBDS Inpatient Care DKA 2023"]
+        "source_refs": [
+          "JBDS Inpatient Care DKA 2023"
+        ]
       }
     ],
     "explanation": {
@@ -270,10 +377,21 @@
       "pearls": "Resolution criteria: ketones <0.6 mmol/L AND venous pH >=7.30 AND HCO3 >=18 mmol/L."
     },
     "sources": [
-      { "label": "eTG Endocrinology - DKA", "url": "https://tgldcdp.tg.org.au/" },
-      { "label": "JBDS Inpatient Care DKA 2023", "url": "https://abcd.care/joint-british-diabetes-societies-jbds-inpatient-care-group" }
+      {
+        "label": "eTG Endocrinology - DKA",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "JBDS Inpatient Care DKA 2023",
+        "url": "https://abcd.care/joint-british-diabetes-societies-jbds-inpatient-care-group"
+      }
     ],
-    "reference_ranges": ["glucose_hba1c", "uec", "vbg", "ketones"],
+    "reference_ranges": [
+      "glucose_hba1c",
+      "uec",
+      "vbg",
+      "ketones"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -282,8 +400,13 @@
     "subtopic": "Paediatric DKA cerebral oedema - risk recognition in young adult",
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["DKA", "cerebral oedema", "fluid rate", "complications"],
-    "stem": "An 18-year-old woman with newly diagnosed type 1 diabetes is admitted to a regional ED with severe DKA. Capillary glucose is 38 mmol/L, ketones 6.4 mmol/L, venous pH 6.98, HCO3 5 mmol/L, sodium 128 mmol/L, potassium 3.6 mmol/L, urea 11 mmol/L, creatinine 132 micromol/L. She received 2 L of 0.9 percent saline over the first hour for shock, followed by 0.9 percent saline at 500 mL/hour and a fixed-rate insulin infusion at 0.1 units/kg/hour. Five hours into treatment, blood glucose has fallen to 12 mmol/L and bicarbonate has risen to 11 mmol/L, but she develops a worsening frontal headache, increasing drowsiness with a GCS drop from 15 to 11, a single episode of vomiting and a slowing heart rate. Her blood pressure has risen from 102/64 to 142/86 mmHg. Capillary glucose is now 11 mmol/L and ketones 2.4 mmol/L. The receiving consultant is concerned about a deteriorating neurological picture. A bedside neurological exam reveals sluggish pupils and brisk lower limb reflexes.",
+    "tags": [
+      "DKA",
+      "cerebral oedema",
+      "fluid rate",
+      "complications"
+    ],
+    "stem": "An 18-year-old woman with newly diagnosed type 1 diabetes is admitted to a regional ED with severe DKA. Capillary glucose is 38 mmol/L, ketones 6.4 mmol/L, venous pH 6.98, HCO3 5 mmol/L, sodium 128 mmol/L, potassium 3.6 mmol/L, urea 11 mmol/L, creatinine 132 micromol/L. She received 2 L of 0.9 percent saline over the first hour for shock, followed by 0.9 percent saline at 500 mL/hour and a fixed-rate insulin infusion at 0.1 units/kg/hour. Five hours into treatment, blood glucose has fallen to 12 mmol/L and bicarbonate has risen to 11 mmol/L, but she develops a worsening frontal headache, increasing drowsiness with a GCS drop from 15 to 11, a single episode of vomiting and a slowing heart rate. Her blood pressure has risen from 102/64 to 142/86 mmHg. Capillary glucose is now 11 mmol/L and ketones 2.4 mmol/L. The receiving consultant is concerned about a deteriorating neurological picture. A bedside neurological exam reveals sluggish pupils and brisk lower limb reflexes. She has no haemoglobinopathy, no known intracranial pathology and no history of seizures. There was no head injury or fall before the deterioration. Retrieval to a tertiary paediatric ICU is being considered and the airway tray, mannitol, hypertonic saline and intubation drugs are at the bedside.",
     "data_table": {
       "Vital signs": "BP 142/86 mmHg (up from 102/64), HR 58 bpm (down from 118), RR 18, SpO2 99 percent, T 36.6, GCS 11 (E3 V3 M5).",
       "Examination": "Drowsy. Sluggish pupillary response, no focal weakness. Brisk LL reflexes.",
@@ -293,38 +416,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "Increase the IV fluid rate to correct her remaining deficit faster",
+        "text": "Increase the IV fluid infusion rate to correct the remaining estimated deficit much faster",
         "correct": false,
         "rationale": "Excessive fluid administration is a contributor to cerebral oedema in DKA; the appropriate response to suspected cerebral oedema is to halve or pause maintenance fluids, not increase them (BSPED / RCH CPG DKA).",
-        "source_refs": ["RCH CPG: Diabetic ketoacidosis"]
+        "source_refs": [
+          "RCH CPG: Diabetic ketoacidosis"
+        ]
       },
       {
         "letter": "B",
-        "text": "Administer IV 3 percent hypertonic saline 5 mL/kg over 10 to 15 minutes, halve the fluid rate, elevate head of bed, urgent CT head and notify retrieval",
+        "text": "Hypertonic saline 5 mL/kg over 10 minutes, halve fluids, head up, CT and retrieval",
         "correct": true,
         "rationale": "Hypertonic saline (or mannitol 0.5 to 1 g/kg) is first-line for suspected cerebral oedema in DKA. Halving fluids, head-up positioning, securing airway and urgent imaging plus retrieval to a tertiary centre are concurrent priorities (RCH CPG: DKA; BSPED 2020).",
-        "source_refs": ["RCH CPG: Diabetic ketoacidosis", "BSPED Paediatric DKA Guideline 2020"]
+        "source_refs": [
+          "RCH CPG: Diabetic ketoacidosis",
+          "BSPED Paediatric DKA Guideline 2020"
+        ]
       },
       {
         "letter": "C",
-        "text": "Stop the insulin infusion and observe for spontaneous improvement",
+        "text": "Stop the IV insulin infusion entirely and simply observe her for any spontaneous improvement",
         "correct": false,
         "rationale": "Stopping insulin allows ketogenesis to resume and does not treat the rising intracranial pressure; insulin should be continued (often reduced) while neuroprotective measures are delivered (RCH CPG: DKA).",
-        "source_refs": ["RCH CPG: Diabetic ketoacidosis"]
+        "source_refs": [
+          "RCH CPG: Diabetic ketoacidosis"
+        ]
       },
       {
         "letter": "D",
         "text": "Give IV 50 percent dextrose 50 mL because the cause of drowsiness is hypoglycaemia",
         "correct": false,
         "rationale": "Glucose 11 mmol/L is not hypoglycaemic; when DKA glucose falls below 14 mmol/L, the correct action is to add 5 or 10 percent dextrose to the maintenance fluid rather than push concentrated dextrose (RCH CPG: DKA).",
-        "source_refs": ["RCH CPG: Diabetic ketoacidosis"]
+        "source_refs": [
+          "RCH CPG: Diabetic ketoacidosis"
+        ]
       },
       {
         "letter": "E",
         "text": "Administer IV ceftriaxone 2 g and dexamethasone 10 mg for presumed bacterial meningitis",
         "correct": false,
         "rationale": "While headache and drowsiness raise meningitis as a differential, the pattern of Cushing reflex (hypertension, bradycardia) and timing in DKA make cerebral oedema the most likely diagnosis; empirical antibiotics should not delay osmotherapy (RCH CPG: DKA).",
-        "source_refs": ["RCH CPG: Diabetic ketoacidosis"]
+        "source_refs": [
+          "RCH CPG: Diabetic ketoacidosis"
+        ]
       }
     ],
     "explanation": {
@@ -338,11 +472,25 @@
       "pearls": "Late teens with first presentation DKA, severe acidosis and hyponatraemia carry the highest risk - low threshold for retrieval to a paediatric ICU."
     },
     "sources": [
-      { "label": "RCH CPG: Diabetic ketoacidosis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Diabetic_Ketoacidosis/" },
-      { "label": "BSPED Paediatric DKA Guideline 2020", "url": "https://www.bsped.org.uk/clinical-resources/guidelines/" },
-      { "label": "eTG Endocrinology - DKA", "url": "https://tgldcdp.tg.org.au/" }
+      {
+        "label": "RCH CPG: Diabetic ketoacidosis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Diabetic_Ketoacidosis/"
+      },
+      {
+        "label": "BSPED Paediatric DKA Guideline 2020",
+        "url": "https://www.bsped.org.uk/clinical-resources/guidelines/"
+      },
+      {
+        "label": "eTG Endocrinology - DKA",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["glucose_hba1c", "vbg", "uec", "gcs"],
+    "reference_ranges": [
+      "glucose_hba1c",
+      "vbg",
+      "uec",
+      "gcs"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -351,7 +499,13 @@
     "subtopic": "HHS vs DKA - discrimination",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["HHS", "DKA", "T2DM", "fluid", "osmolality"],
+    "tags": [
+      "HHS",
+      "DKA",
+      "T2DM",
+      "fluid",
+      "osmolality"
+    ],
     "stem": "A 78-year-old man with type 2 diabetes is brought from his nursing home with one week of progressive confusion and reduced oral intake. He has hypertension, chronic kidney disease and a recent UTI treated with trimethoprim. His regular medications include metformin 500 mg BD, gliclazide MR 60 mg and lisinopril 10 mg. Staff report he has been refusing to drink for the last two days. On arrival he is drowsy, severely dehydrated and has a temperature of 38.4 degrees. Capillary glucose is 48 mmol/L. Venous gas shows pH 7.34, bicarbonate 20 mmol/L, anion gap 14, lactate 1.8. Capillary ketones are 0.6 mmol/L. Sodium 152 mmol/L, potassium 4.1, urea 24, creatinine 198 micromol/L (baseline 110), corrected sodium for glucose 158 mmol/L. Calculated effective serum osmolality is 348 mosm/kg. Urinalysis confirms leucocytes and nitrites; he is on no SGLT2 inhibitor. There are no Kussmaul respirations and no ketotic breath.",
     "data_table": {
       "Vital signs": "BP 96/56 mmHg, HR 112, RR 18, T 38.4, SpO2 96 percent on RA, GCS 13.",
@@ -362,38 +516,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "The blood glucose of 48 mmol/L",
+        "text": "The blood glucose level of 48 mmol/L on bedside capillary testing today",
         "correct": false,
         "rationale": "Severe hyperglycaemia occurs in both HHS and DKA; glucose level alone does not distinguish them (eTG Endocrinology - HHS).",
-        "source_refs": ["eTG Endocrinology - HHS"]
+        "source_refs": [
+          "eTG Endocrinology - HHS"
+        ]
       },
       {
         "letter": "B",
-        "text": "The combination of effective osmolality >320 mosm/kg, ketones <3 mmol/L and pH >=7.30 without significant acidosis",
+        "text": "Effective osmolality above 320, capillary ketones under 3 and pH above 7.30 without acidosis",
         "correct": true,
         "rationale": "Diagnostic features of HHS are marked hyperglycaemia (typically >30 mmol/L), effective osmolality >320 mosm/kg, minimal ketosis (capillary ketones <3 mmol/L) and absence of significant acidosis (pH >=7.30, HCO3 >=15) (JBDS HHS 2022; eTG Endocrinology).",
-        "source_refs": ["JBDS Inpatient Care HHS 2022", "eTG Endocrinology - HHS"]
+        "source_refs": [
+          "JBDS Inpatient Care HHS 2022",
+          "eTG Endocrinology - HHS"
+        ]
       },
       {
         "letter": "C",
-        "text": "The acute kidney injury with creatinine rise from 110 to 198 micromol/L",
+        "text": "The acute kidney injury with creatinine rising from baseline 110 to 198 micromol/L",
         "correct": false,
         "rationale": "AKI is common in both DKA and HHS from volume depletion and does not differentiate them (KDIGO; eTG).",
-        "source_refs": ["eTG Endocrinology - HHS"]
+        "source_refs": [
+          "eTG Endocrinology - HHS"
+        ]
       },
       {
         "letter": "D",
-        "text": "The presence of a urinary tract infection as precipitant",
+        "text": "The presence of a urinary tract infection acting as the precipitating event here",
         "correct": false,
         "rationale": "Infection precipitates both HHS and DKA; the precipitant is not the discriminator (eTG Endocrinology).",
-        "source_refs": ["eTG Endocrinology - HHS"]
+        "source_refs": [
+          "eTG Endocrinology - HHS"
+        ]
       },
       {
         "letter": "E",
-        "text": "The reduced GCS",
+        "text": "The reduced Glasgow Coma Scale score on arrival to the emergency department",
         "correct": false,
         "rationale": "Drowsiness can occur in both, although depressed consciousness correlates more closely with osmolality. The defining feature remains the biochemistry pattern, not GCS alone (JBDS HHS 2022).",
-        "source_refs": ["JBDS Inpatient Care HHS 2022"]
+        "source_refs": [
+          "JBDS Inpatient Care HHS 2022"
+        ]
       }
     ],
     "explanation": {
@@ -407,10 +572,21 @@
       "pearls": "If ketones are >3 mmol/L and there is acidosis, treat as mixed DKA/HHS using DKA pathway."
     },
     "sources": [
-      { "label": "JBDS Inpatient Care HHS 2022", "url": "https://abcd.care/joint-british-diabetes-societies-jbds-inpatient-care-group" },
-      { "label": "eTG Endocrinology - HHS", "url": "https://tgldcdp.tg.org.au/" }
+      {
+        "label": "JBDS Inpatient Care HHS 2022",
+        "url": "https://abcd.care/joint-british-diabetes-societies-jbds-inpatient-care-group"
+      },
+      {
+        "label": "eTG Endocrinology - HHS",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["glucose_hba1c", "uec", "vbg", "ketones"],
+    "reference_ranges": [
+      "glucose_hba1c",
+      "uec",
+      "vbg",
+      "ketones"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -419,7 +595,13 @@
     "subtopic": "Hypoglycaemia in T2DM on insulin - precipitant identification",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["hypoglycaemia", "insulin", "sulfonylurea", "T2DM", "ED"],
+    "tags": [
+      "hypoglycaemia",
+      "insulin",
+      "sulfonylurea",
+      "T2DM",
+      "ED"
+    ],
     "stem": "A 74-year-old woman with T2DM on metformin 1 g BD, gliclazide MR 120 mg daily and insulin glargine 22 units nocte is brought to ED by paramedics after her daughter found her diaphoretic and confused. Capillary glucose was 1.8 mmol/L pre-hospital. She received IM glucagon 1 mg followed by oral juice with rapid clinical improvement; her glucose now is 6.4 mmol/L and she is fully oriented. Over the last week she has reported anorexia, fatigue and unintentional weight loss of 2 kg. She started cefalexin five days ago for a urinary tract infection and the same day her GP added trimethoprim 300 mg daily after sensitivities returned. She has CKD stage 3b (eGFR 38 mL/min/1.73m^2 baseline). She lives alone and reports occasional missed meals. Her last HbA1c three months ago was 49 mmol/mol (6.6 percent). She has no chest pain. ECG shows sinus rhythm rate 78 with no acute ischaemic changes.",
     "data_table": {
       "Vital signs": "BP 124/72 mmHg, HR 78, T 36.6, SpO2 98 percent, GCS 15.",
@@ -430,38 +612,50 @@
     "options": [
       {
         "letter": "A",
-        "text": "The basal insulin glargine dose, which should be reduced as default first action",
+        "text": "The basal insulin glargine dose, which should be reduced as the default first action",
         "correct": false,
         "rationale": "Insulin glargine alone is unlikely to cause this severity of hypoglycaemia in a patient who has been stable on it. Identification of new precipitants takes priority over reflexive dose reduction (RACGP 2024; AMH).",
-        "source_refs": ["RACGP Management of type 2 diabetes 2024", "Australian Medicines Handbook"]
+        "source_refs": [
+          "RACGP Management of type 2 diabetes 2024",
+          "Australian Medicines Handbook"
+        ]
       },
       {
         "letter": "B",
-        "text": "Trimethoprim displacing gliclazide from albumin and reducing sulfonylurea clearance in CKD, compounded by reduced oral intake",
+        "text": "Trimethoprim potentiating gliclazide via reduced clearance in CKD plus the reduced oral intake",
         "correct": true,
         "rationale": "Trimethoprim potentiates sulfonylureas (CYP2C9 inhibition and competitive renal tubular secretion) and gliclazide accumulates with reduced eGFR; together with poor intake and weight loss, this is the most likely precipitant. Sulfonylureas should be reviewed in CKD and with new interacting antibiotics (AMH; eTG Antibiotic).",
-        "source_refs": ["Australian Medicines Handbook", "eTG Antibiotic - Drug interactions"]
+        "source_refs": [
+          "Australian Medicines Handbook",
+          "eTG Antibiotic - Drug interactions"
+        ]
       },
       {
         "letter": "C",
-        "text": "Metformin-induced hypoglycaemia",
+        "text": "Direct metformin-induced hypoglycaemia from her usual twice-daily 1 g metformin dose",
         "correct": false,
         "rationale": "Metformin does not cause hypoglycaemia in monotherapy and only rarely contributes in combination; it is not the driver here (AMH).",
-        "source_refs": ["Australian Medicines Handbook"]
+        "source_refs": [
+          "Australian Medicines Handbook"
+        ]
       },
       {
         "letter": "D",
-        "text": "Cefalexin-induced hypoglycaemia",
+        "text": "Cefalexin-induced hypoglycaemia from the recently started urinary tract infection antibiotic",
         "correct": false,
         "rationale": "Cefalexin is not a recognised cause of hypoglycaemia; among antibiotics, fluoroquinolones and trimethoprim are the main offenders with sulfonylureas (AMH).",
-        "source_refs": ["Australian Medicines Handbook"]
+        "source_refs": [
+          "Australian Medicines Handbook"
+        ]
       },
       {
         "letter": "E",
-        "text": "Inadequate glucagon dose pre-hospital",
+        "text": "Inadequate paramedic glucagon dose given prior to her arrival in the emergency department",
         "correct": false,
         "rationale": "1 mg IM glucagon is the standard adult dose and her glucose responded; this is not the cause of the original event (ANZCOR; AMH).",
-        "source_refs": ["Australian Medicines Handbook"]
+        "source_refs": [
+          "Australian Medicines Handbook"
+        ]
       }
     ],
     "explanation": {
@@ -475,11 +669,23 @@
       "pearls": "Hypoglycaemia unawareness develops with recurrent lows - target a slightly higher HbA1c in frail older adults (53 to 64 mmol/mol)."
     },
     "sources": [
-      { "label": "RACGP Management of type 2 diabetes 2024", "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/management-of-type-2-diabetes" },
-      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" },
-      { "label": "eTG Antibiotic - Drug interactions", "url": "https://tgldcdp.tg.org.au/" }
+      {
+        "label": "RACGP Management of type 2 diabetes 2024",
+        "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/management-of-type-2-diabetes"
+      },
+      {
+        "label": "Australian Medicines Handbook",
+        "url": "https://amhonline.amh.net.au/"
+      },
+      {
+        "label": "eTG Antibiotic - Drug interactions",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["glucose_hba1c", "uec"],
+    "reference_ranges": [
+      "glucose_hba1c",
+      "uec"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -488,8 +694,13 @@
     "subtopic": "Thyroid storm vs myxoedema coma - recognition",
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["thyroid storm", "Burch-Wartofsky", "myxoedema coma", "endocrine emergency"],
-    "stem": "A 38-year-old woman is brought to ED with two days of worsening agitation, vomiting and fever after stopping carbimazole 10 days ago because she ran out of her script. She was diagnosed with Graves disease six months ago. On arrival she is agitated, sweaty and tremulous. She is in atrial fibrillation at 152 bpm with a blood pressure of 96/52 mmHg. Temperature is 39.6 degrees and she has had one episode of vomiting in ED. She has bilateral exophthalmos and a smooth diffuse goitre. Her last TSH four weeks ago was <0.01 mIU/L with free T4 48 pmol/L. She is alert but confused (GCS 14) and not following commands consistently. There is no chest pain. Bedside echo at the bedside shows preserved LV function. Capillary glucose is 7.2 mmol/L. She has no recent travel, no respiratory symptoms and clear chest on auscultation. Beta-hCG is negative. CRP is 18 mg/L and white cell count is 11.2 x10^9/L without left shift.",
+    "tags": [
+      "thyroid storm",
+      "Burch-Wartofsky",
+      "myxoedema coma",
+      "endocrine emergency"
+    ],
+    "stem": "A 38-year-old woman is brought to ED with two days of worsening agitation, vomiting and fever after stopping carbimazole 10 days ago because she ran out of her script. She was diagnosed with Graves disease six months ago. On arrival she is agitated, sweaty and tremulous. She is in atrial fibrillation at 152 bpm with a blood pressure of 96/52 mmHg. Temperature is 39.6 degrees and she has had one episode of vomiting in ED. She has bilateral exophthalmos and a smooth diffuse goitre. Her last TSH four weeks ago was <0.01 mIU/L with free T4 48 pmol/L. She is alert but confused (GCS 14) and not following commands consistently. There is no chest pain. Bedside echo at the bedside shows preserved LV function. Capillary glucose is 7.2 mmol/L. She has no recent travel, no respiratory symptoms and clear chest on auscultation. Beta-hCG is negative. CRP is 18 mg/L and white cell count is 11.2 x10^9/L without left shift. She has no recent travel, no known infectious contacts and her urinalysis is negative. There is no rash and no neck stiffness. The endocrinology registrar has been called. She has no documented allergy to iodine, propranolol, propylthiouracil, carbimazole or hydrocortisone.",
     "data_table": {
       "Vital signs": "BP 96/52 mmHg, HR 152 (AF), RR 28, T 39.6 degC, SpO2 97 percent, GCS 14.",
       "Examination": "Agitated, tremulous, diaphoretic. Lid lag, exophthalmos, smooth goitre with bruit. Warm peripheries.",
@@ -499,38 +710,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "IV propranolol 1 mg slow bolus, oral propylthiouracil (PTU) 200 mg every 4 hours, then Lugol's iodine 8 drops every 6 hours starting at least 1 hour after PTU, IV hydrocortisone 100 mg every 8 hours, paracetamol and active cooling",
+        "text": "IV propranolol, oral propylthiouracil, Lugol's iodine after PTU, hydrocortisone, paracetamol and active cooling",
         "correct": true,
         "rationale": "Thyroid storm (Burch-Wartofsky >=45) requires beta blockade, an antithyroid drug (PTU preferred for additional T4-to-T3 conversion blockade), iodine started AFTER the antithyroid drug to prevent substrate loading, hydrocortisone (blocks conversion and treats relative adrenal insufficiency) and supportive care including cooling and treatment of the precipitant (eTG Endocrinology; AMH).",
-        "source_refs": ["eTG Endocrinology - Thyroid emergencies", "Australian Medicines Handbook"]
+        "source_refs": [
+          "eTG Endocrinology - Thyroid emergencies",
+          "Australian Medicines Handbook"
+        ]
       },
       {
         "letter": "B",
-        "text": "IV amiodarone 300 mg for rate control of atrial fibrillation",
+        "text": "IV amiodarone 300 mg for prompt rate control of her new atrial fibrillation",
         "correct": false,
         "rationale": "Amiodarone is high in iodine and worsens thyroid storm; beta blockade is preferred for rate control. Amiodarone is contraindicated (AMH).",
-        "source_refs": ["Australian Medicines Handbook"]
+        "source_refs": [
+          "Australian Medicines Handbook"
+        ]
       },
       {
         "letter": "C",
         "text": "Empirical IV ceftriaxone 2 g and acyclovir 10 mg/kg for presumed sepsis or encephalitis",
         "correct": false,
         "rationale": "The clinical picture fits thyroid storm with a clear precipitant (medication non-adherence); empirical antimicrobials may be reasonable if infection is suspected but they do not address the thyroid emergency (eTG Endocrinology).",
-        "source_refs": ["eTG Endocrinology - Thyroid emergencies"]
+        "source_refs": [
+          "eTG Endocrinology - Thyroid emergencies"
+        ]
       },
       {
         "letter": "D",
         "text": "IV levothyroxine 200 microgram and IV hydrocortisone 100 mg for presumed myxoedema coma",
         "correct": false,
         "rationale": "Myxoedema coma presents with hypothermia, bradycardia, hypoventilation and depressed consciousness; this patient has hyperthermia, tachyarrhythmia and tremor - the opposite picture (eTG Endocrinology).",
-        "source_refs": ["eTG Endocrinology - Thyroid emergencies"]
+        "source_refs": [
+          "eTG Endocrinology - Thyroid emergencies"
+        ]
       },
       {
         "letter": "E",
-        "text": "Oral carbimazole 60 mg single dose only and discharge home with endocrinology outpatient follow-up",
+        "text": "Oral carbimazole 60 mg single dose only and immediate discharge home with outpatient endocrinology follow-up",
         "correct": false,
         "rationale": "Thyroid storm has a mortality of 10 to 30 percent without aggressive inpatient management; discharge is unsafe regardless of antithyroid drug given (eTG Endocrinology).",
-        "source_refs": ["eTG Endocrinology - Thyroid emergencies"]
+        "source_refs": [
+          "eTG Endocrinology - Thyroid emergencies"
+        ]
       }
     ],
     "explanation": {
@@ -544,10 +766,19 @@
       "pearls": "Myxoedema coma classically: hypothermia, bradycardia, hyponatraemia, hypoglycaemia, hypoventilation, depressed GCS - mirror image of storm."
     },
     "sources": [
-      { "label": "eTG Endocrinology - Thyroid emergencies", "url": "https://tgldcdp.tg.org.au/" },
-      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+      {
+        "label": "eTG Endocrinology - Thyroid emergencies",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "Australian Medicines Handbook",
+        "url": "https://amhonline.amh.net.au/"
+      }
     ],
-    "reference_ranges": ["thyroid", "uec"],
+    "reference_ranges": [
+      "thyroid",
+      "uec"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -556,8 +787,14 @@
     "subtopic": "Graves disease - definitive treatment choice",
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["Graves disease", "radioactive iodine", "carbimazole", "thyroidectomy", "ophthalmopathy"],
-    "stem": "A 34-year-old woman is referred by her GP for definitive management of Graves disease diagnosed 14 months ago. She was treated with carbimazole 20 mg daily for 12 months, achieving biochemical euthyroidism, but TSH-receptor antibody titres remain markedly elevated (TRAb 8 IU/L) and she relapsed within six weeks of stopping carbimazole. She has moderate active Graves orbitopathy with proptosis, mild diplopia on upgaze and intermittent retro-orbital pain; CAS (Clinical Activity Score) is 4/7. She has not yet completed her family and would like to conceive within the next 12 months. She is a non-smoker now (ex-smoker, ceased six months ago). Her thyroid is moderately enlarged without nodularity, and ultrasound shows no discrete nodules. She has no compressive symptoms. She has no contraindication to glucocorticoid prophylaxis. She lives with a partner and two pre-school children.",
+    "tags": [
+      "Graves disease",
+      "radioactive iodine",
+      "carbimazole",
+      "thyroidectomy",
+      "ophthalmopathy"
+    ],
+    "stem": "A 34-year-old woman is referred by her GP for definitive management of Graves disease diagnosed 14 months ago. She was treated with carbimazole 20 mg daily for 12 months, achieving biochemical euthyroidism, but TSH-receptor antibody titres remain markedly elevated (TRAb 8 IU/L) and she relapsed within six weeks of stopping carbimazole. She has moderate active Graves orbitopathy with proptosis, mild diplopia on upgaze and intermittent retro-orbital pain; CAS (Clinical Activity Score) is 4/7. She has not yet completed her family and would like to conceive within the next 12 months. She is a non-smoker now (ex-smoker, ceased six months ago). Her thyroid is moderately enlarged without nodularity, and ultrasound shows no discrete nodules. She has no compressive symptoms. She has no contraindication to glucocorticoid prophylaxis. She lives with a partner and two pre-school children. She has no documented allergy to carbimazole or propylthiouracil, no prior neck surgery and no compressive symptoms. Her thyroid function tests are biochemically euthyroid on her current dose and her last full blood count and liver enzymes are normal. She has discussed all three options (long-term antithyroid drug, radioactive iodine and total thyroidectomy) with her endocrinologist. There is access to a high-volume thyroid surgeon at her local tertiary referral hospital, and pre-operative steroid prophylaxis is available if needed.",
     "data_table": {
       "Vital signs": "BP 118/72 mmHg, HR 88, weight 62 kg.",
       "Examination": "Diffuse smooth goitre, no nodules, no compressive symptoms. Proptosis with diplopia on upgaze, CAS 4/7.",
@@ -568,38 +805,51 @@
     "options": [
       {
         "letter": "A",
-        "text": "Radioactive iodine 131I ablation within the next month",
+        "text": "Radioactive iodine 131I ablation arranged within the next month as definitive therapy",
         "correct": false,
         "rationale": "RAI can worsen active Graves orbitopathy, especially with moderate-to-severe disease, smoking history and high TRAb; pregnancy must be avoided for 6 months after RAI, conflicting with her conception plans (ESA / ETA 2021).",
-        "source_refs": ["European Thyroid Association Graves Orbitopathy 2021", "Endocrine Society of Australia Position"]
+        "source_refs": [
+          "European Thyroid Association Graves Orbitopathy 2021",
+          "Endocrine Society of Australia Position"
+        ]
       },
       {
         "letter": "B",
-        "text": "Total thyroidectomy after pre-operative preparation with carbimazole and Lugol's iodine, with calcium and vitamin D loading",
+        "text": "Total thyroidectomy after pre-operative carbimazole and Lugol's iodine plus calcium and vitamin D loading",
         "correct": true,
         "rationale": "In Graves disease with moderate-to-severe active orbitopathy, large goitre, plans for pregnancy within 12 months, or patient preference, total thyroidectomy is preferred. It removes the antigenic stimulus, does not worsen orbitopathy and allows immediate trial of conception once levothyroxine is stable. Pre-operative preparation and a high-volume surgeon reduce complications (ETA 2021; eTG Endocrinology).",
-        "source_refs": ["European Thyroid Association Graves Orbitopathy 2021", "eTG Endocrinology - Hyperthyroidism"]
+        "source_refs": [
+          "European Thyroid Association Graves Orbitopathy 2021",
+          "eTG Endocrinology - Hyperthyroidism"
+        ]
       },
       {
         "letter": "C",
-        "text": "Indefinite low-dose carbimazole 5 mg daily monotherapy",
+        "text": "Indefinite low-dose carbimazole 5 mg once daily as long-term outpatient monotherapy",
         "correct": false,
         "rationale": "Long-term low-dose carbimazole is an emerging option for selected patients but is less effective at definitive cure; high TRAb, relapse history and active orbitopathy favour definitive treatment, and carbimazole carries teratogenicity risk in early pregnancy (eTG; AMH).",
-        "source_refs": ["eTG Endocrinology - Hyperthyroidism", "Australian Medicines Handbook"]
+        "source_refs": [
+          "eTG Endocrinology - Hyperthyroidism",
+          "Australian Medicines Handbook"
+        ]
       },
       {
         "letter": "D",
-        "text": "Switch to propylthiouracil 100 mg three times daily indefinitely",
+        "text": "Switch to propylthiouracil 100 mg three times daily continued indefinitely for ongoing control",
         "correct": false,
         "rationale": "PTU has a higher risk of severe hepatotoxicity than carbimazole and is reserved for first trimester of pregnancy or thyroid storm; it is not preferred for long-term outpatient management (AMH).",
-        "source_refs": ["Australian Medicines Handbook"]
+        "source_refs": [
+          "Australian Medicines Handbook"
+        ]
       },
       {
         "letter": "E",
-        "text": "High-dose IV methylprednisolone 500 mg weekly for 6 weeks alone",
+        "text": "High-dose IV methylprednisolone 500 mg weekly for 6 weeks given alone as definitive treatment",
         "correct": false,
         "rationale": "IV methylprednisolone treats active moderate-to-severe orbitopathy but does not treat the underlying hyperthyroidism; it complements but does not replace definitive thyroid management (ETA 2021).",
-        "source_refs": ["European Thyroid Association Graves Orbitopathy 2021"]
+        "source_refs": [
+          "European Thyroid Association Graves Orbitopathy 2021"
+        ]
       }
     ],
     "explanation": {
@@ -613,12 +863,26 @@
       "pearls": "Smoking strongly worsens Graves orbitopathy and RAI outcomes - cessation is mandatory."
     },
     "sources": [
-      { "label": "European Thyroid Association Graves Orbitopathy 2021", "url": "https://www.eurothyroid.com/guidelines/eta-guidelines.html" },
-      { "label": "eTG Endocrinology - Hyperthyroidism", "url": "https://tgldcdp.tg.org.au/" },
-      { "label": "Endocrine Society of Australia Position", "url": "https://www.endocrinesociety.org.au/" },
-      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+      {
+        "label": "European Thyroid Association Graves Orbitopathy 2021",
+        "url": "https://www.eurothyroid.com/guidelines/eta-guidelines.html"
+      },
+      {
+        "label": "eTG Endocrinology - Hyperthyroidism",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "Endocrine Society of Australia Position",
+        "url": "https://www.endocrinesociety.org.au/"
+      },
+      {
+        "label": "Australian Medicines Handbook",
+        "url": "https://amhonline.amh.net.au/"
+      }
     ],
-    "reference_ranges": ["thyroid"],
+    "reference_ranges": [
+      "thyroid"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -627,7 +891,12 @@
     "subtopic": "Subclinical hypothyroidism (Hashimoto) - treatment threshold",
     "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["hypothyroidism", "Hashimoto", "TSH", "subclinical"],
+    "tags": [
+      "hypothyroidism",
+      "Hashimoto",
+      "TSH",
+      "subclinical"
+    ],
     "stem": "A 48-year-old woman attends her GP after blood tests ordered for tiredness 8 weeks ago showed TSH 7.2 mIU/L with normal free T4. A repeat panel today shows TSH 6.8 mIU/L, free T4 14 pmol/L (normal), and TPO antibodies markedly elevated at 540 IU/mL. She has no thyroid pain, no neck swelling and no family history of thyroid cancer. She has hypercholesterolaemia treated with atorvastatin and is otherwise well. She is not pregnant and is not planning pregnancy. Symptoms of fatigue have improved spontaneously over the last month. She has no constipation, no weight change beyond 1 kg and no menstrual irregularity. She has no goitre on examination, and there are no compressive symptoms. Her cardiovascular risk assessment is moderate (5-year CVD risk 7 percent). She is not on amiodarone or lithium. She does not smoke.",
     "data_table": {
       "Vital signs": "BP 122/76, HR 68, weight 72 kg.",
@@ -641,35 +910,47 @@
         "text": "Commence levothyroxine 50 microgram daily and review TFTs in 6 to 8 weeks",
         "correct": false,
         "rationale": "Treatment of subclinical hypothyroidism is recommended when TSH is persistently >=10 mIU/L, or 4 to 10 mIU/L with significant symptoms attributable to hypothyroidism, pregnancy planning, infertility, goitre or strong patient preference. None of these apply (ESA position; RACGP).",
-        "source_refs": ["Endocrine Society of Australia Position", "RACGP Red Book"]
+        "source_refs": [
+          "Endocrine Society of Australia Position",
+          "RACGP Red Book"
+        ]
       },
       {
         "letter": "B",
-        "text": "Repeat TFTs and TPO antibodies in 6 to 12 months, no treatment now",
+        "text": "Repeat TFTs and TPO antibodies in 6 to 12 months, with no treatment now",
         "correct": true,
         "rationale": "With TSH between 4 and 10 mIU/L, minimal symptoms, no goitre and no pregnancy plans, observation with annual TFT monitoring is recommended in Hashimoto thyroiditis; ~25 to 50 percent progress to overt hypothyroidism (ESA position; RACGP Red Book).",
-        "source_refs": ["Endocrine Society of Australia Position", "RACGP Red Book"]
+        "source_refs": [
+          "Endocrine Society of Australia Position",
+          "RACGP Red Book"
+        ]
       },
       {
         "letter": "C",
-        "text": "Refer for fine needle aspiration of the thyroid",
+        "text": "Refer for ultrasound-guided fine needle aspiration of the thyroid for cytology",
         "correct": false,
         "rationale": "FNA is indicated for suspicious thyroid nodules; there is no nodule on examination or imaging here (RACGP).",
-        "source_refs": ["RACGP Red Book"]
+        "source_refs": [
+          "RACGP Red Book"
+        ]
       },
       {
         "letter": "D",
-        "text": "Commence triiodothyronine (T3, liothyronine) 20 microgram daily",
+        "text": "Commence triiodothyronine (T3, liothyronine) 20 microgram daily as primary thyroid replacement",
         "correct": false,
         "rationale": "T3 monotherapy is not recommended for primary hypothyroidism; levothyroxine T4 is the standard if treatment is initiated (AMH; ESA).",
-        "source_refs": ["Australian Medicines Handbook"]
+        "source_refs": [
+          "Australian Medicines Handbook"
+        ]
       },
       {
         "letter": "E",
-        "text": "Order thyroid ultrasound and TSH receptor antibodies",
+        "text": "Order thyroid ultrasound today and add TSH receptor antibodies to her bloods",
         "correct": false,
         "rationale": "TSH receptor antibodies are useful in suspected Graves disease, not Hashimoto; ultrasound is reserved for palpable nodules or compressive symptoms (RACGP).",
-        "source_refs": ["RACGP Red Book"]
+        "source_refs": [
+          "RACGP Red Book"
+        ]
       }
     ],
     "explanation": {
@@ -683,11 +964,22 @@
       "pearls": "In pregnancy, treat subclinical hypothyroidism if TSH is above the trimester-specific upper limit (typically >4.0 mIU/L)."
     },
     "sources": [
-      { "label": "Endocrine Society of Australia Position", "url": "https://www.endocrinesociety.org.au/" },
-      { "label": "RACGP Red Book", "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/red-book" },
-      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+      {
+        "label": "Endocrine Society of Australia Position",
+        "url": "https://www.endocrinesociety.org.au/"
+      },
+      {
+        "label": "RACGP Red Book",
+        "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/red-book"
+      },
+      {
+        "label": "Australian Medicines Handbook",
+        "url": "https://amhonline.amh.net.au/"
+      }
     ],
-    "reference_ranges": ["thyroid"],
+    "reference_ranges": [
+      "thyroid"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -696,7 +988,12 @@
     "subtopic": "Acute symptomatic hypocalcaemia post-thyroidectomy",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["hypocalcaemia", "thyroidectomy", "calcium gluconate", "tetany"],
+    "tags": [
+      "hypocalcaemia",
+      "thyroidectomy",
+      "calcium gluconate",
+      "tetany"
+    ],
     "stem": "A 52-year-old woman is reviewed on the surgical ward 14 hours after total thyroidectomy for a multinodular goitre with compressive symptoms. She reports peri-oral and finger tingling for the last hour and one episode of carpal spasm when the cuff was inflated. She is otherwise well, with no airway compromise and no haematoma at the wound. She is on regular paracetamol and prophylactic enoxaparin. Bloods drawn at the onset of symptoms show: corrected calcium 1.78 mmol/L (corrected for albumin 38 g/L), ionised calcium 0.92 mmol/L, magnesium 0.74 mmol/L, phosphate 1.6 mmol/L, parathyroid hormone 0.4 pmol/L (low), 25-OH vitamin D 64 nmol/L, potassium 4.1, creatinine 76. Her ECG shows a prolonged QTc of 510 ms. She has no history of renal stones, no malignancy and her pre-operative calcium was 2.34 mmol/L. She is alert with GCS 15. There is no respiratory distress.",
     "data_table": {
       "Vital signs": "BP 128/78 mmHg, HR 84, RR 16, SpO2 98 percent on RA, T 36.7.",
@@ -710,35 +1007,47 @@
         "text": "Oral calcium carbonate 1.5 g elemental calcium with calcitriol 0.5 microgram and clinical review in 4 hours",
         "correct": false,
         "rationale": "Oral therapy is appropriate for asymptomatic mild hypocalcaemia or as maintenance after IV correction, but symptomatic acute hypocalcaemia with tetany or QT prolongation requires IV calcium (eTG Endocrinology).",
-        "source_refs": ["eTG Endocrinology - Hypocalcaemia"]
+        "source_refs": [
+          "eTG Endocrinology - Hypocalcaemia"
+        ]
       },
       {
         "letter": "B",
-        "text": "IV 10 percent calcium gluconate 10 mL (2.2 mmol Ca) in 100 mL of 5 percent dextrose over 10 minutes, followed by infusion (e.g. 100 mL of 10 percent in 1 L over 6 to 8 hours), check magnesium and start oral calcium plus calcitriol once stable",
+        "text": "IV 10 percent calcium gluconate 10 mL bolus followed by infusion, replace magnesium, then oral calcium plus calcitriol",
         "correct": true,
-        "rationale": "Symptomatic hypocalcaemia with tetany or QT prolongation requires IV 10 percent calcium gluconate bolus followed by infusion to prevent rebound. Magnesium replacement is required if low because it perpetuates hypocalcaemia. Oral calcium and active vitamin D (calcitriol) are added for maintenance, with active D needed because of low PTH (eTG Endocrinology; AMH).",
-        "source_refs": ["eTG Endocrinology - Hypocalcaemia", "Australian Medicines Handbook"]
+        "rationale": "Symptomatic hypocalcaemia with tetany or QT prolongation requires IV 10 percent calcium gluconate bolus followed by infusion to prevent rebound. Magnesium replacement is required if low because it perpetuates hypocalcaemia. Oral calcium and active vitamin D (calcitriol) are added for maintenance, with active D needed because of low PTH (eTG Endocrinology; AMH). Practically: 10 mL of 10 percent calcium gluconate (2.2 mmol Ca) in 100 mL of 5 percent dextrose over 10 minutes, then infusion such as 100 mL of 10 percent calcium gluconate in 1 L over 6 to 8 hours, with active vitamin D needed because PTH is low.",
+        "source_refs": [
+          "eTG Endocrinology - Hypocalcaemia",
+          "Australian Medicines Handbook"
+        ]
       },
       {
         "letter": "C",
-        "text": "IV 10 percent calcium chloride 10 mL via peripheral cannula stat",
+        "text": "IV 10 percent calcium chloride 10 mL given via a peripheral cannula stat dose",
         "correct": false,
         "rationale": "Calcium chloride contains three times more elemental calcium per mL but is highly irritant and risks severe extravasation injury via a peripheral line; calcium gluconate is preferred for peripheral administration (AMH; eTG).",
-        "source_refs": ["eTG Endocrinology - Hypocalcaemia", "Australian Medicines Handbook"]
+        "source_refs": [
+          "eTG Endocrinology - Hypocalcaemia",
+          "Australian Medicines Handbook"
+        ]
       },
       {
         "letter": "D",
-        "text": "IV magnesium sulfate 10 mmol over 20 minutes only",
+        "text": "IV magnesium sulfate 10 mmol over 20 minutes given as the only acute therapy",
         "correct": false,
         "rationale": "Magnesium 0.74 mmol/L is borderline and replacement is appropriate, but magnesium alone will not correct her acute symptomatic hypocalcaemia in this timeframe (eTG Endocrinology).",
-        "source_refs": ["eTG Endocrinology - Hypocalcaemia"]
+        "source_refs": [
+          "eTG Endocrinology - Hypocalcaemia"
+        ]
       },
       {
         "letter": "E",
-        "text": "IV cinacalcet 30 mg single dose",
+        "text": "IV cinacalcet 30 mg given as a single calcimimetic dose for acute symptom control",
         "correct": false,
         "rationale": "Cinacalcet is a calcimimetic that LOWERS calcium in hyperparathyroidism; it is contraindicated in hypocalcaemia (AMH).",
-        "source_refs": ["Australian Medicines Handbook"]
+        "source_refs": [
+          "Australian Medicines Handbook"
+        ]
       }
     ],
     "explanation": {
@@ -752,10 +1061,19 @@
       "pearls": "Post-thyroidectomy hypocalcaemia: check Ca at 6, 12 and 24 hours; transient post-op hypoparathyroidism is common, permanent in 1 to 3 percent."
     },
     "sources": [
-      { "label": "eTG Endocrinology - Hypocalcaemia", "url": "https://tgldcdp.tg.org.au/" },
-      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+      {
+        "label": "eTG Endocrinology - Hypocalcaemia",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "Australian Medicines Handbook",
+        "url": "https://amhonline.amh.net.au/"
+      }
     ],
-    "reference_ranges": ["calcium_corrected", "uec"],
+    "reference_ranges": [
+      "calcium_corrected",
+      "uec"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -764,8 +1082,14 @@
     "subtopic": "Hyperkalaemia with ECG changes - treatment ladder",
     "difficulty": 3,
     "model": "Medicine",
-    "tags": ["hyperkalaemia", "ECG", "calcium gluconate", "insulin dextrose", "ANZCOR"],
-    "stem": "A 68-year-old man with diabetic nephropathy (eGFR 22 mL/min/1.73m^2) attends ED after his GP found hyperkalaemia on routine bloods. He takes perindopril 8 mg, spironolactone 25 mg (started two weeks ago for resistant hypertension) and metformin which was stopped on his GP's advice. He feels generally fatigued and has had mild palpitations but no syncope. He is haemodynamically stable. ED bloods confirm potassium 7.2 mmol/L (venous, repeat 7.0), creatinine 268 micromol/L (baseline 220), bicarbonate 18 mmol/L, glucose 8.4 mmol/L, calcium 2.31 mmol/L. ECG shows peaked T waves in V2 to V5, PR interval 220 ms and QRS 110 ms with normal axis; there are no ischaemic changes. He is on no other K-sparing medication and has not used potassium-containing salt substitutes. Urine output is preserved. There is no evidence of haemolysis on the sample.",
+    "tags": [
+      "hyperkalaemia",
+      "ECG",
+      "calcium gluconate",
+      "insulin dextrose",
+      "ANZCOR"
+    ],
+    "stem": "A 68-year-old man with diabetic nephropathy (eGFR 22 mL/min/1.73m^2) attends ED after his GP found hyperkalaemia on routine bloods. He takes perindopril 8 mg, spironolactone 25 mg (started two weeks ago for resistant hypertension) and metformin which was stopped on his GP's advice. He feels generally fatigued and has had mild palpitations but no syncope. He is haemodynamically stable. ED bloods confirm potassium 7.2 mmol/L (venous, repeat 7.0), creatinine 268 micromol/L (baseline 220), bicarbonate 18 mmol/L, glucose 8.4 mmol/L, calcium 2.31 mmol/L. ECG shows peaked T waves in V2 to V5, PR interval 220 ms and QRS 110 ms with normal axis; there are no ischaemic changes. He is on no other K-sparing medication and has not used potassium-containing salt substitutes. Urine output is preserved. There is no evidence of haemolysis on the sample. He has no salt substitute use at home, no recent NSAID use and no missed dialysis sessions. He has no pre-existing pacemaker.",
     "data_table": {
       "Vital signs": "BP 146/86, HR 72, RR 14, T 36.5, SpO2 97 percent.",
       "Examination": "Comfortable. No focal weakness. No pericardial rub.",
@@ -778,35 +1102,46 @@
         "text": "IV 10 percent calcium gluconate 10 mL over 2 to 3 minutes to stabilise the myocardium",
         "correct": true,
         "rationale": "When hyperkalaemia is accompanied by ECG changes, the first action is calcium (gluconate 10 mL of 10 percent IV, or chloride if central access) to stabilise cardiac membranes; effect within minutes, duration 30 to 60 minutes. Repeat after 5 minutes if ECG not improved (eTG Endocrinology; ANZCOR ALS).",
-        "source_refs": ["eTG Endocrinology - Hyperkalaemia", "ANZCOR Adult Advanced Life Support"]
+        "source_refs": [
+          "eTG Endocrinology - Hyperkalaemia",
+          "ANZCOR Adult Advanced Life Support"
+        ]
       },
       {
         "letter": "B",
-        "text": "IV insulin actrapid 10 units with 50 mL of 50 percent dextrose",
+        "text": "IV insulin actrapid 10 units with 50 mL of 50 percent dextrose to shift potassium",
         "correct": false,
         "rationale": "Insulin-dextrose shifts potassium intracellularly and is part of the standard regimen, but it is given AFTER calcium when ECG changes are present; it does not stabilise the myocardium and takes 15 to 30 minutes for peak effect (eTG Endocrinology).",
-        "source_refs": ["eTG Endocrinology - Hyperkalaemia"]
+        "source_refs": [
+          "eTG Endocrinology - Hyperkalaemia"
+        ]
       },
       {
         "letter": "C",
-        "text": "Nebulised salbutamol 10 to 20 mg",
+        "text": "Nebulised salbutamol 10 to 20 mg via continuous oxygen-driven nebuliser at the bedside",
         "correct": false,
         "rationale": "Beta-2 agonists shift K+ intracellularly and complement insulin-dextrose, but again do not stabilise the myocardium and act in 15 to 30 minutes (eTG Endocrinology).",
-        "source_refs": ["eTG Endocrinology - Hyperkalaemia"]
+        "source_refs": [
+          "eTG Endocrinology - Hyperkalaemia"
+        ]
       },
       {
         "letter": "D",
-        "text": "Oral resonium A (sodium polystyrene sulfonate) 30 g",
+        "text": "Oral resonium A (sodium polystyrene sulfonate) 30 g as the immediate priority intervention",
         "correct": false,
         "rationale": "Cation exchange resins remove K+ from the body but act over hours; they are useful for ongoing removal alongside dialysis planning but not as the immediate priority (eTG Endocrinology).",
-        "source_refs": ["eTG Endocrinology - Hyperkalaemia"]
+        "source_refs": [
+          "eTG Endocrinology - Hyperkalaemia"
+        ]
       },
       {
         "letter": "E",
-        "text": "Urgent haemodialysis after a CT to exclude obstructive uropathy",
+        "text": "Urgent haemodialysis arranged after a CT scan to exclude obstructive uropathy first",
         "correct": false,
         "rationale": "Dialysis is definitive for refractory hyperkalaemia or fluid overload but takes time to arrange; emergency medical therapy must not be delayed for imaging or vascular access (eTG Endocrinology).",
-        "source_refs": ["eTG Endocrinology - Hyperkalaemia"]
+        "source_refs": [
+          "eTG Endocrinology - Hyperkalaemia"
+        ]
       }
     ],
     "explanation": {
@@ -820,10 +1155,19 @@
       "pearls": "Peaked T waves first, then PR prolongation, then widened QRS, then sine-wave - call for help at any of the later stages."
     },
     "sources": [
-      { "label": "eTG Endocrinology - Hyperkalaemia", "url": "https://tgldcdp.tg.org.au/" },
-      { "label": "ANZCOR Adult Advanced Life Support", "url": "https://resus.org.au/" }
+      {
+        "label": "eTG Endocrinology - Hyperkalaemia",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "ANZCOR Adult Advanced Life Support",
+        "url": "https://resus.org.au/"
+      }
     ],
-    "reference_ranges": ["uec", "vbg"],
+    "reference_ranges": [
+      "uec",
+      "vbg"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -832,8 +1176,13 @@
     "subtopic": "Hyponatraemia - SIADH vs cerebral salt wasting after SAH",
     "difficulty": 5,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["hyponatraemia", "SIADH", "cerebral salt wasting", "SAH"],
-    "stem": "A 52-year-old man is on day 7 of his admission to neurosurgery after a Hunt-Hess 3 aneurysmal subarachnoid haemorrhage clipped on day 1. On the morning ward round his nurse reports increased confusion and lethargy. His urine output over the last 24 hours has been 4.2 L. He has been on free water orally without IV fluids since day 4. Bloods today: sodium 122 mmol/L (was 134 on day 4), potassium 3.6, urea 9.4 mmol/L, creatinine 96 micromol/L, serum osmolality 258 mosm/kg, glucose 5.4 mmol/L. Urine: sodium 95 mmol/L, osmolality 540 mosm/kg, specific gravity 1.022. He is on nimodipine. Clinically he has dry mucous membranes, BP 102/64 mmHg (was 128/74 yesterday) lying with a 14 mmHg systolic drop on standing, HR 96, normal JVP and no oedema. Bedside lung ultrasound shows A-lines bilaterally. Weight is down 2 kg from admission. He has no haematuria, no glycosuria and no recent contrast.",
+    "tags": [
+      "hyponatraemia",
+      "SIADH",
+      "cerebral salt wasting",
+      "SAH"
+    ],
+    "stem": "A 52-year-old man is on day 7 of his admission to neurosurgery after a Hunt-Hess 3 aneurysmal subarachnoid haemorrhage clipped on day 1. On the morning ward round his nurse reports increased confusion and lethargy. His urine output over the last 24 hours has been 4.2 L. He has been on free water orally without IV fluids since day 4. Bloods today: sodium 122 mmol/L (was 134 on day 4), potassium 3.6, urea 9.4 mmol/L, creatinine 96 micromol/L, serum osmolality 258 mosm/kg, glucose 5.4 mmol/L. Urine: sodium 95 mmol/L, osmolality 540 mosm/kg, specific gravity 1.022. He is on nimodipine. Clinically he has dry mucous membranes, BP 102/64 mmHg (was 128/74 yesterday) lying with a 14 mmHg systolic drop on standing, HR 96, normal JVP and no oedema. Bedside lung ultrasound shows A-lines bilaterally. Weight is down 2 kg from admission. He has no haematuria, no glycosuria and no recent contrast. He is being managed on the neurosurgery ward under a neurosurgery-led delayed cerebral ischaemia protocol that targets euvolaemia and avoids hypotonic fluids. His transcranial Doppler velocities yesterday were not elevated and he has had no new focal neurological deficit. His preceding bloods on day 4 had been normal apart from mild hypokalaemia. He has had no diuretic, no mannitol, and no recent IV contrast load. Cortisol stimulation is normal, thyroid function is normal, and he has not received DDAVP. The team are considering whether the underlying mechanism is SIADH or cerebral salt wasting, because the management of these two conditions is opposite and the wrong choice risks delayed cerebral ischaemia, rebleeding or osmotic demyelination.",
     "data_table": {
       "Vital signs": "BP 102/64 lying with 14 mmHg systolic postural drop, HR 96, T 36.7, SpO2 98 percent.",
       "Examination": "Dry mucous membranes, JVP not visible, no oedema, weight down 2 kg.",
@@ -843,38 +1192,50 @@
     "options": [
       {
         "letter": "A",
-        "text": "Fluid restriction to 800 mL per day with daily sodium monitoring",
+        "text": "Fluid restriction to 800 mL per day with daily sodium monitoring on the ward",
         "correct": false,
         "rationale": "Fluid restriction is appropriate for SIADH (euvolaemic), but this patient is hypovolaemic with polyuria, weight loss and postural hypotension after SAH - restricting fluid would worsen cerebral hypoperfusion and the risk of delayed cerebral ischaemia (Australasian Stroke Foundation Guidelines; ENLS 2023).",
-        "source_refs": ["Australian Stroke Foundation Living Guidelines", "Emergency Neurological Life Support 2023"]
+        "source_refs": [
+          "Australian Stroke Foundation Living Guidelines",
+          "Emergency Neurological Life Support 2023"
+        ]
       },
       {
         "letter": "B",
-        "text": "IV 0.9 percent sodium chloride at 125 mL/hour with consideration of oral salt tablets or 3 percent saline if sodium fails to rise",
+        "text": "IV 0.9 percent sodium chloride 125 mL/hour with oral salt or 3 percent saline if sodium fails to rise",
         "correct": true,
         "rationale": "The clinical picture (polyuria, weight loss, postural hypotension, dry mucous membranes after SAH) plus high urine sodium fits cerebral salt wasting (CSW), where treatment is volume and sodium replacement, not restriction. Maintaining euvolaemia and avoiding hyponatraemia reduces delayed cerebral ischaemia in SAH (Australian Stroke Foundation; ENLS 2023).",
-        "source_refs": ["Australian Stroke Foundation Living Guidelines", "Emergency Neurological Life Support 2023"]
+        "source_refs": [
+          "Australian Stroke Foundation Living Guidelines",
+          "Emergency Neurological Life Support 2023"
+        ]
       },
       {
         "letter": "C",
-        "text": "IV tolvaptan 15 mg orally with hourly sodium monitoring",
+        "text": "IV tolvaptan 15 mg orally given today with hourly sodium monitoring on the ward",
         "correct": false,
         "rationale": "Tolvaptan (vasopressin V2 antagonist) treats SIADH by increasing free water clearance; it would worsen hypovolaemic hyponatraemia and is not appropriate here (AMH).",
-        "source_refs": ["Australian Medicines Handbook"]
+        "source_refs": [
+          "Australian Medicines Handbook"
+        ]
       },
       {
         "letter": "D",
-        "text": "IV 3 percent hypertonic saline 150 mL bolus over 10 minutes only, no further fluid",
+        "text": "IV 3 percent hypertonic saline 150 mL bolus over 10 minutes only, with no further fluid",
         "correct": false,
         "rationale": "Hypertonic saline bolus is appropriate for severe symptomatic hyponatraemia with seizures or coma (target rise 4 to 6 mmol/L), but a single bolus without ongoing maintenance volume in CSW will under-treat the volume depletion and risk overshooting sodium correction (ENLS 2023).",
-        "source_refs": ["Emergency Neurological Life Support 2023"]
+        "source_refs": [
+          "Emergency Neurological Life Support 2023"
+        ]
       },
       {
         "letter": "E",
-        "text": "IV 5 percent dextrose at 100 mL/hour to lower osmotic stress on the brain",
+        "text": "IV 5 percent dextrose at 100 mL/hour to reduce osmotic stress on the brain",
         "correct": false,
         "rationale": "Free water in 5 percent dextrose worsens hyponatraemia and is contraindicated; in any neurocritical patient it also increases intracranial water content (ENLS 2023).",
-        "source_refs": ["Emergency Neurological Life Support 2023"]
+        "source_refs": [
+          "Emergency Neurological Life Support 2023"
+        ]
       }
     ],
     "explanation": {
@@ -888,11 +1249,22 @@
       "pearls": "If sodium overcorrects, re-lower with DDAVP and 5 percent dextrose - cerebral pontine myelinolysis is devastating and preventable."
     },
     "sources": [
-      { "label": "Australian Stroke Foundation Living Guidelines", "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management" },
-      { "label": "Emergency Neurological Life Support 2023", "url": "https://enls.neurocriticalcare.org/" },
-      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+      {
+        "label": "Australian Stroke Foundation Living Guidelines",
+        "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"
+      },
+      {
+        "label": "Emergency Neurological Life Support 2023",
+        "url": "https://enls.neurocriticalcare.org/"
+      },
+      {
+        "label": "Australian Medicines Handbook",
+        "url": "https://amhonline.amh.net.au/"
+      }
     ],
-    "reference_ranges": ["uec"],
+    "reference_ranges": [
+      "uec"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -901,8 +1273,15 @@
     "subtopic": "Acute ischaemic stroke - thrombolysis and thrombectomy eligibility",
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["stroke", "thrombolysis", "thrombectomy", "NIHSS", "ASPECTS", "Stroke Foundation"],
-    "stem": "A 68-year-old right-handed man is brought to a metropolitan ED by ambulance. He was last seen well at 0815 by his wife; she returned at 1005 to find him slumped on the kitchen floor with right-sided weakness and aphasia. Time of arrival is 1110 (2 hours 55 minutes after last seen well). He has hypertension, ischaemic heart disease, atrial fibrillation (CHA2DS2-VA 4) on apixaban 5 mg BD with his last dose at 0700. He has no history of recent surgery, head injury, bleeding or stroke. On arrival his blood pressure is 198/112 mmHg, glucose 6.8 mmol/L, GCS 12 (E3 V3 M6) and NIHSS is 18 (gaze preference, right hemiplegia, global aphasia, left neglect). Non-contrast CT brain shows no haemorrhage and an ASPECTS of 8 in the left MCA territory. CT angiography demonstrates a proximal left M1 occlusion with reasonable collaterals. There is a comprehensive stroke centre with thrombectomy capability 15 minutes away by road.",
+    "tags": [
+      "stroke",
+      "thrombolysis",
+      "thrombectomy",
+      "NIHSS",
+      "ASPECTS",
+      "Stroke Foundation"
+    ],
+    "stem": "A 68-year-old right-handed man is brought to a metropolitan ED by ambulance. He was last seen well at 0815 by his wife; she returned at 1005 to find him slumped on the kitchen floor with right-sided weakness and aphasia. Time of arrival is 1110 (2 hours 55 minutes after last seen well). He has hypertension, ischaemic heart disease, atrial fibrillation (CHA2DS2-VA 4) on apixaban 5 mg BD with his last dose at 0700. He has no history of recent surgery, head injury, bleeding or stroke. On arrival his blood pressure is 198/112 mmHg, glucose 6.8 mmol/L, GCS 12 (E3 V3 M6) and NIHSS is 18 (gaze preference, right hemiplegia, global aphasia, left neglect). Non-contrast CT brain shows no haemorrhage and an ASPECTS of 8 in the left MCA territory. CT angiography demonstrates a proximal left M1 occlusion with reasonable collaterals. There is a comprehensive stroke centre with thrombectomy capability 15 minutes away by road. There is no recent gastrointestinal bleeding, no recent intracranial surgery, no platelet count below 100 and no documented INR above 1.7. He has consented for thrombectomy through his next of kin and the neurointerventional team have been activated. He has no known iodinated contrast allergy.",
     "data_table": {
       "Vital signs": "BP 198/112, HR 92 (AF), T 36.8, SpO2 97 percent on RA, GCS 12.",
       "Examination": "Right hemiplegia, global aphasia, left gaze preference. NIHSS 18.",
@@ -912,38 +1291,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "Administer IV alteplase now and transfer for thrombectomy",
+        "text": "Administer IV alteplase immediately and then transfer for mechanical thrombectomy at the comprehensive stroke centre",
         "correct": false,
         "rationale": "IV thrombolysis is contraindicated within 48 hours of a direct oral anticoagulant unless DOAC levels are confirmed sub-therapeutic; his last apixaban dose was at 0700. Transfer for mechanical thrombectomy is preferred without thrombolysis (Australian Stroke Foundation Living Guidelines).",
-        "source_refs": ["Australian Stroke Foundation Living Guidelines"]
+        "source_refs": [
+          "Australian Stroke Foundation Living Guidelines"
+        ]
       },
       {
         "letter": "B",
-        "text": "Lower BP to <140/90 mmHg with IV labetalol before any reperfusion decision",
+        "text": "Lower BP to under 140/90 mmHg with IV labetalol before making any reperfusion decision",
         "correct": false,
         "rationale": "BP target prior to thrombolysis is <185/110 mmHg; before thrombectomy without thrombolysis higher BP is tolerated. Aggressive lowering risks penumbral hypoperfusion (Australian Stroke Foundation; ENLS).",
-        "source_refs": ["Australian Stroke Foundation Living Guidelines"]
+        "source_refs": [
+          "Australian Stroke Foundation Living Guidelines"
+        ]
       },
       {
         "letter": "C",
-        "text": "Activate stroke team and arrange urgent transfer for mechanical thrombectomy without IV thrombolysis, controlling BP to <185/110 mmHg",
+        "text": "Activate stroke team and arrange urgent transfer for thrombectomy without thrombolysis, BP <185/110",
         "correct": true,
         "rationale": "Within 6 hours of last seen well, with a proximal M1 occlusion, NIHSS >=6 and ASPECTS >=6, mechanical thrombectomy is indicated. IV thrombolysis is contraindicated due to recent apixaban; proceed directly to thrombectomy. BP target pre-procedure is <185/110 (Australian Stroke Foundation Living Guidelines).",
-        "source_refs": ["Australian Stroke Foundation Living Guidelines"]
+        "source_refs": [
+          "Australian Stroke Foundation Living Guidelines"
+        ]
       },
       {
         "letter": "D",
         "text": "Administer aspirin 300 mg orally and admit to the stroke unit for conservative management",
         "correct": false,
         "rationale": "Antiplatelet within 24 hours of thrombolysis is contraindicated and antiplatelet alone is not the reperfusion treatment for a proximal LVO; thrombectomy is the standard of care (Australian Stroke Foundation).",
-        "source_refs": ["Australian Stroke Foundation Living Guidelines"]
+        "source_refs": [
+          "Australian Stroke Foundation Living Guidelines"
+        ]
       },
       {
         "letter": "E",
-        "text": "Administer IV idarucizumab to reverse apixaban, then thrombolyse",
+        "text": "Administer IV idarucizumab to reverse apixaban first, then proceed to IV thrombolysis with alteplase",
         "correct": false,
         "rationale": "Idarucizumab reverses dabigatran, not apixaban; andexanet alfa partially reverses factor Xa inhibitors but is not generally used to enable thrombolysis. Direct transfer to thrombectomy is preferred (AMH; Australian Stroke Foundation).",
-        "source_refs": ["Australian Medicines Handbook", "Australian Stroke Foundation Living Guidelines"]
+        "source_refs": [
+          "Australian Medicines Handbook",
+          "Australian Stroke Foundation Living Guidelines"
+        ]
       }
     ],
     "explanation": {
@@ -957,10 +1347,18 @@
       "pearls": "Door-to-needle target 60 minutes; door-to-groin target 90 minutes - process matters more than algorithm minutiae."
     },
     "sources": [
-      { "label": "Australian Stroke Foundation Living Guidelines", "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management" },
-      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+      {
+        "label": "Australian Stroke Foundation Living Guidelines",
+        "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"
+      },
+      {
+        "label": "Australian Medicines Handbook",
+        "url": "https://amhonline.amh.net.au/"
+      }
     ],
-    "reference_ranges": ["gcs"],
+    "reference_ranges": [
+      "gcs"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -969,7 +1367,12 @@
     "subtopic": "TIA - ABCD2 risk stratification and disposition",
     "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["TIA", "ABCD2", "secondary prevention", "Stroke Foundation"],
+    "tags": [
+      "TIA",
+      "ABCD2",
+      "secondary prevention",
+      "Stroke Foundation"
+    ],
     "stem": "A 72-year-old woman attends her GP three hours after an episode of left arm and face weakness lasting 35 minutes that has now completely resolved. She has hypertension treated with amlodipine, type 2 diabetes on metformin and a long-standing 20 pack-year smoking history (current smoker). She has no atrial fibrillation on a previous Holter. Examination is now normal. Her BP today is 168/96 mmHg, blood glucose 9.2 mmol/L, ECG shows sinus rhythm. She has had no prior stroke or TIA. There is no carotid bruit. She has no recent head injury, no anticoagulation and no known bleeding tendency. She has no chest pain or palpitations. Her ABCD2 score is calculated. The GP is considering whether to manage her in primary care with same-week clinic follow-up or to refer urgently to the ED stroke pathway today.",
     "data_table": {
       "Vital signs": "BP 168/96, HR 78, weight 76 kg.",
@@ -980,38 +1383,48 @@
     "options": [
       {
         "letter": "A",
-        "text": "Same-day urgent referral to ED for imaging (CT brain, CT angiography, carotid imaging), aspirin 300 mg loading dose, and admission per the stroke pathway",
+        "text": "Same-day urgent ED referral for brain and vessel imaging, aspirin 300 mg loading and stroke pathway admission",
         "correct": true,
         "rationale": "Current Australian Stroke Foundation guidance recommends urgent (same-day) assessment for all patients with suspected TIA, regardless of ABCD2 score, due to high early stroke risk especially in the first 48 hours. Imaging of brain and vessels and immediate antiplatelet (or DAPT for 21 days after minor TIA / stroke) reduces recurrence (Australian Stroke Foundation Living Guidelines).",
-        "source_refs": ["Australian Stroke Foundation Living Guidelines"]
+        "source_refs": [
+          "Australian Stroke Foundation Living Guidelines"
+        ]
       },
       {
         "letter": "B",
         "text": "Reassure and arrange outpatient TIA clinic review in 2 weeks with aspirin 100 mg daily started today",
         "correct": false,
         "rationale": "Two-week deferral risks recurrent stroke; modern Australian guidance recommends same-day specialist assessment regardless of ABCD2 (Australian Stroke Foundation).",
-        "source_refs": ["Australian Stroke Foundation Living Guidelines"]
+        "source_refs": [
+          "Australian Stroke Foundation Living Guidelines"
+        ]
       },
       {
         "letter": "C",
-        "text": "Arrange carotid Doppler within one month and review again",
+        "text": "Arrange a carotid Doppler within the next one month and review her again after that",
         "correct": false,
         "rationale": "Carotid imaging is appropriate but delays reperfusion-relevant decisions; urgent imaging same day is the standard (Australian Stroke Foundation).",
-        "source_refs": ["Australian Stroke Foundation Living Guidelines"]
+        "source_refs": [
+          "Australian Stroke Foundation Living Guidelines"
+        ]
       },
       {
         "letter": "D",
-        "text": "Commence clopidogrel 75 mg daily and refer for cardiology rhythm monitoring only",
+        "text": "Commence clopidogrel 75 mg daily and refer for cardiology rhythm monitoring only without imaging",
         "correct": false,
         "rationale": "While rhythm monitoring is important, clopidogrel alone in primary care without urgent imaging misses the time-critical window for recurrent stroke prevention (Australian Stroke Foundation).",
-        "source_refs": ["Australian Stroke Foundation Living Guidelines"]
+        "source_refs": [
+          "Australian Stroke Foundation Living Guidelines"
+        ]
       },
       {
         "letter": "E",
         "text": "Calculate ABCD2 first; if 3 or less manage in primary care, if 4 or more refer urgently",
         "correct": false,
         "rationale": "ABCD2 is no longer used in current Australian guidance to decide disposition; all suspected TIAs warrant urgent (same-day) specialist assessment because lower scores still carry meaningful early stroke risk (Australian Stroke Foundation).",
-        "source_refs": ["Australian Stroke Foundation Living Guidelines"]
+        "source_refs": [
+          "Australian Stroke Foundation Living Guidelines"
+        ]
       }
     ],
     "explanation": {
@@ -1025,9 +1438,14 @@
       "pearls": "ABCD2 is still useful as a teaching tool but does not safely triage TIA to deferred care."
     },
     "sources": [
-      { "label": "Australian Stroke Foundation Living Guidelines", "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management" }
+      {
+        "label": "Australian Stroke Foundation Living Guidelines",
+        "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"
+      }
     ],
-    "reference_ranges": ["glucose_hba1c"],
+    "reference_ranges": [
+      "glucose_hba1c"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -1036,7 +1454,14 @@
     "subtopic": "First seizure in adult - workup and Australian driving advice",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["first seizure", "epilepsy", "Austroads", "driving", "EEG", "MRI"],
+    "tags": [
+      "first seizure",
+      "epilepsy",
+      "Austroads",
+      "driving",
+      "EEG",
+      "MRI"
+    ],
     "stem": "A 34-year-old man is brought to ED by his partner after a witnessed generalised tonic-clonic seizure lasting 90 seconds while watching television. He has no prior seizures, no head injury, no drug or alcohol use and takes no medications. He was confused for about 20 minutes after the event and bit the side of his tongue. On arrival he is back to his baseline. Capillary glucose, electrolytes, calcium, magnesium and a urine drug screen are normal. ECG is normal sinus rhythm. He works as a self-employed delivery driver using a standard private licence (no commercial endorsement). His non-contrast CT brain is normal. He wants to know when he can drive and what investigations are needed. He has no fever, no headache, no neck stiffness and no focal neurology. He has no family history of epilepsy and no recent travel. He is otherwise well and has not started any new medications.",
     "data_table": {
       "Vital signs": "BP 124/78, HR 76, T 36.8, SpO2 99 percent, GCS 15.",
@@ -1047,38 +1472,50 @@
     "options": [
       {
         "letter": "A",
-        "text": "MRI brain and EEG as outpatient, no driving for at least 6 months (Austroads private vehicle standard)",
+        "text": "MRI brain and EEG as outpatient; no driving for at least 6 months (Austroads private standard)",
         "correct": true,
         "rationale": "First unprovoked seizure workup includes outpatient MRI brain (preferred over CT for structural lesions) and EEG to assess recurrence risk. Austroads Assessing Fitness to Drive 2022 requires a minimum 6-month non-driving period after a first seizure for private licence, longer for commercial. The treating doctor must counsel and document this (Austroads AFTD 2022; eTG Neurology).",
-        "source_refs": ["Austroads Assessing Fitness to Drive 2022", "eTG Neurology - First seizure"]
+        "source_refs": [
+          "Austroads Assessing Fitness to Drive 2022",
+          "eTG Neurology - First seizure"
+        ]
       },
       {
         "letter": "B",
         "text": "Commence sodium valproate immediately and clear him to return to driving in 1 month",
         "correct": false,
         "rationale": "Antiepileptic medication after a single unprovoked seizure with no abnormalities is not routinely recommended; reduction in recurrence is offset by drug burden. 1-month driving suspension is insufficient under Australian standards and valproate is teratogenic (eTG Neurology; Austroads).",
-        "source_refs": ["eTG Neurology - First seizure", "Austroads Assessing Fitness to Drive 2022"]
+        "source_refs": [
+          "eTG Neurology - First seizure",
+          "Austroads Assessing Fitness to Drive 2022"
+        ]
       },
       {
         "letter": "C",
-        "text": "Lumbar puncture and IV ceftriaxone for presumed meningitis",
+        "text": "Lumbar puncture today and start IV ceftriaxone for presumed bacterial meningitis empirically",
         "correct": false,
         "rationale": "There are no features of meningitis (no fever, headache, neck stiffness, altered consciousness); LP is not indicated (eTG Antibiotic).",
-        "source_refs": ["eTG Antibiotic - CNS infections"]
+        "source_refs": [
+          "eTG Antibiotic - CNS infections"
+        ]
       },
       {
         "letter": "D",
-        "text": "Continuous video-EEG admission for 72 hours starting today",
+        "text": "Continuous video-EEG admission for 72 hours starting today as the immediate next investigation",
         "correct": false,
         "rationale": "Continuous video-EEG is for diagnostic uncertainty (PNES vs epilepsy) or pre-surgical evaluation, not standard first-seizure workup (eTG Neurology).",
-        "source_refs": ["eTG Neurology - First seizure"]
+        "source_refs": [
+          "eTG Neurology - First seizure"
+        ]
       },
       {
         "letter": "E",
-        "text": "Cleared to return to commercial driving as soon as he feels well, with neurology review in 6 weeks",
+        "text": "Cleared to return to commercial driving as soon as he feels well, neurology in 6 weeks",
         "correct": false,
         "rationale": "Commercial driving requires longer abstinence (typically 5 years seizure-free off medication or 10 years with conditions) under Austroads; immediate return is unsafe and legally non-compliant (Austroads AFTD 2022).",
-        "source_refs": ["Austroads Assessing Fitness to Drive 2022"]
+        "source_refs": [
+          "Austroads Assessing Fitness to Drive 2022"
+        ]
       }
     ],
     "explanation": {
@@ -1092,10 +1529,20 @@
       "pearls": "Counselling and documentation of driving restriction is the doctor's legal and professional duty - patients self-report to road authority."
     },
     "sources": [
-      { "label": "Austroads Assessing Fitness to Drive 2022", "url": "https://austroads.com.au/publications/assessing-fitness-to-drive" },
-      { "label": "eTG Neurology - First seizure", "url": "https://tgldcdp.tg.org.au/" }
+      {
+        "label": "Austroads Assessing Fitness to Drive 2022",
+        "url": "https://austroads.com.au/publications/assessing-fitness-to-drive"
+      },
+      {
+        "label": "eTG Neurology - First seizure",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["uec", "calcium_corrected", "glucose_hba1c"],
+    "reference_ranges": [
+      "uec",
+      "calcium_corrected",
+      "glucose_hba1c"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -1104,7 +1551,13 @@
     "subtopic": "Status epilepticus - second-line management",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["status epilepticus", "benzodiazepine", "levetiracetam", "midazolam", "eTG"],
+    "tags": [
+      "status epilepticus",
+      "benzodiazepine",
+      "levetiracetam",
+      "midazolam",
+      "eTG"
+    ],
     "stem": "A 56-year-old man with known epilepsy on sodium valproate is brought to ED in convulsive status epilepticus. The seizure started 25 minutes ago in the ambulance. Paramedics gave 10 mg IM midazolam at 12 minutes and another 10 mg IV at 20 minutes without resolution; he continues to have generalised tonic-clonic activity. On arrival his airway is maintained with nasopharyngeal airway and SpO2 96 percent on 15 L non-rebreather. BP is 156/92, HR 124, temperature 37.1. Capillary glucose is 7.4 mmol/L. He has IV access and is now 27 minutes into the seizure. He has no recent head injury and his valproate level is pending. There is no fever, no rash, and no obvious focal sepsis. His airway position is maintained and there is no audible stridor. His pupils are equal and reactive. Bedside ECG shows sinus tachycardia without ischaemic changes.",
     "data_table": {
       "Vital signs": "BP 156/92, HR 124, RR 18 (assisted), T 37.1, SpO2 96 percent on 15 L NRB, GCS 3 during seizure.",
@@ -1115,38 +1568,50 @@
     "options": [
       {
         "letter": "A",
-        "text": "Repeat IV midazolam 10 mg bolus",
+        "text": "Repeat a further IV midazolam 10 mg bolus dose as third benzodiazepine attempt",
         "correct": false,
         "rationale": "He has already received two adequate benzodiazepine doses with no response; further benzodiazepine risks respiratory depression without added benefit. Escalate to a second-line agent (eTG Neurology; ANZCOR).",
-        "source_refs": ["eTG Neurology - Status epilepticus"]
+        "source_refs": [
+          "eTG Neurology - Status epilepticus"
+        ]
       },
       {
         "letter": "B",
-        "text": "IV levetiracetam 60 mg/kg (maximum 4.5 g) over 10 minutes as a second-line agent",
+        "text": "IV levetiracetam 60 mg/kg (maximum 4.5 g) given over 10 minutes as second-line agent",
         "correct": true,
         "rationale": "After two adequate doses of a benzodiazepine, second-line therapy in convulsive status epilepticus is IV levetiracetam, phenytoin (or fos-phenytoin), or sodium valproate. Levetiracetam at 60 mg/kg over 10 minutes is recommended by ESETT and current Australian eTG and NSW Health guidance (eTG Neurology; ESETT 2019).",
-        "source_refs": ["eTG Neurology - Status epilepticus", "ESETT 2019"]
+        "source_refs": [
+          "eTG Neurology - Status epilepticus",
+          "ESETT 2019"
+        ]
       },
       {
         "letter": "C",
-        "text": "IV propofol 2 mg/kg induction and intubate without further antiepileptic",
+        "text": "IV propofol 2 mg/kg induction and intubate without any further antiepileptic drug given",
         "correct": false,
         "rationale": "Anaesthetic induction is third-line, after a second-line antiepileptic has failed; jumping to anaesthesia first risks underestimating refractory disease and committing to ICU intubation unnecessarily (eTG Neurology).",
-        "source_refs": ["eTG Neurology - Status epilepticus"]
+        "source_refs": [
+          "eTG Neurology - Status epilepticus"
+        ]
       },
       {
         "letter": "D",
-        "text": "Oral phenytoin 300 mg via nasogastric tube",
+        "text": "Oral phenytoin 300 mg administered via nasogastric tube as the next antiepileptic agent",
         "correct": false,
         "rationale": "Oral phenytoin via NG tube has unpredictable absorption and is too slow for acute status; IV phenytoin (20 mg/kg, max rate 50 mg/min) is the parenteral option (eTG Neurology; AMH).",
-        "source_refs": ["eTG Neurology - Status epilepticus", "Australian Medicines Handbook"]
+        "source_refs": [
+          "eTG Neurology - Status epilepticus",
+          "Australian Medicines Handbook"
+        ]
       },
       {
         "letter": "E",
-        "text": "IV thiamine 200 mg and 50 mL of 50 percent dextrose",
+        "text": "IV thiamine 200 mg and 50 mL of 50 percent dextrose given as the next intervention",
         "correct": false,
         "rationale": "Empirical glucose is reserved for hypoglycaemia; his glucose is 7.4 mmol/L. Thiamine is appropriate if alcohol use disorder is suspected but does not terminate the seizure (eTG Neurology).",
-        "source_refs": ["eTG Neurology - Status epilepticus"]
+        "source_refs": [
+          "eTG Neurology - Status epilepticus"
+        ]
       }
     ],
     "explanation": {
@@ -1160,11 +1625,23 @@
       "pearls": "Do not delay treatment for imaging in convulsive status - terminate the seizure first, image when safe."
     },
     "sources": [
-      { "label": "eTG Neurology - Status epilepticus", "url": "https://tgldcdp.tg.org.au/" },
-      { "label": "ESETT 2019", "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa1905795" },
-      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+      {
+        "label": "eTG Neurology - Status epilepticus",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "ESETT 2019",
+        "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa1905795"
+      },
+      {
+        "label": "Australian Medicines Handbook",
+        "url": "https://amhonline.amh.net.au/"
+      }
     ],
-    "reference_ranges": ["uec", "glucose_hba1c"],
+    "reference_ranges": [
+      "uec",
+      "glucose_hba1c"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -1173,7 +1650,13 @@
     "subtopic": "Giant cell arteritis - recognition and management",
     "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["GCA", "temporal arteritis", "prednisolone", "ESR", "biopsy"],
+    "tags": [
+      "GCA",
+      "temporal arteritis",
+      "prednisolone",
+      "ESR",
+      "biopsy"
+    ],
     "stem": "A 74-year-old woman presents to her GP with a three-week history of new bilateral temporal headache that has progressively worsened. She describes scalp tenderness when brushing her hair and jaw pain when chewing tough food that resolves with rest. She has had transient blurring of vision in her right eye for about 5 minutes yesterday that has now resolved. She has no rash, no fever and no neck stiffness. She has hypertension and osteoarthritis. She has lost 2 kg over the last month with night sweats. On examination her temporal arteries are tender and pulsatile bilaterally. There is no scalp ulceration. Her visual acuity is 6/9 right and 6/6 left with normal fundoscopy today and intact visual fields. Bloods: ESR 92 mm/hr, CRP 84 mg/L, Hb 108 g/L (normochromic normocytic), platelets 484 x10^9/L. There is no family history of vasculitis or other rheumatological disease. She has had no recent trauma.",
     "data_table": {
       "Vital signs": "BP 142/82, HR 72, T 36.9, SpO2 98 percent.",
@@ -1184,38 +1667,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "Reassure, prescribe simple analgesia and arrange neurology review in 4 weeks",
+        "text": "Reassure, prescribe simple analgesia and arrange neurology review in 4 weeks time",
         "correct": false,
         "rationale": "Untreated GCA can cause permanent monocular blindness from anterior ischaemic optic neuropathy; delayed treatment is contraindicated. Transient visual disturbance is a red flag (eTG Rheumatology; ARA position).",
-        "source_refs": ["eTG Rheumatology - Vasculitis"]
+        "source_refs": [
+          "eTG Rheumatology - Vasculitis"
+        ]
       },
       {
         "letter": "B",
-        "text": "Commence oral prednisolone 60 mg daily today and refer for temporal artery biopsy within the next 1 to 2 weeks",
+        "text": "Commence oral prednisolone 60 mg today and arrange temporal artery biopsy within 1 to 2 weeks",
         "correct": true,
         "rationale": "Clinical suspicion of GCA mandates immediate high-dose corticosteroid before biopsy confirmation (40 to 60 mg prednisolone daily, or 1 g IV methylprednisolone for visual loss) to prevent blindness. Biopsy should occur within 1 to 2 weeks before steroid alters histology (eTG Rheumatology).",
-        "source_refs": ["eTG Rheumatology - Vasculitis", "Australian Rheumatology Association"]
+        "source_refs": [
+          "eTG Rheumatology - Vasculitis",
+          "Australian Rheumatology Association"
+        ]
       },
       {
         "letter": "C",
-        "text": "Order CT brain and discharge home pending results",
+        "text": "Order CT brain today and discharge her home pending the imaging results being reported",
         "correct": false,
         "rationale": "CT brain does not diagnose GCA and delaying corticosteroid risks visual loss within hours to days (eTG Rheumatology).",
-        "source_refs": ["eTG Rheumatology - Vasculitis"]
+        "source_refs": [
+          "eTG Rheumatology - Vasculitis"
+        ]
       },
       {
         "letter": "D",
-        "text": "Treat empirically as migraine with sumatriptan 50 mg orally",
+        "text": "Treat empirically as a migraine attack with oral sumatriptan 50 mg given immediately",
         "correct": false,
         "rationale": "New severe headache in a person over 50 with raised inflammatory markers, jaw claudication and visual symptoms is not migraine; triptans are contraindicated in suspected ischaemic disease (eTG Neurology).",
-        "source_refs": ["eTG Neurology - Headache"]
+        "source_refs": [
+          "eTG Neurology - Headache"
+        ]
       },
       {
         "letter": "E",
-        "text": "Commence azathioprine 2 mg/kg as steroid-sparing first line",
+        "text": "Commence azathioprine 2 mg/kg as the steroid-sparing first-line monotherapy from today onwards",
         "correct": false,
         "rationale": "Steroid-sparing agents (methotrexate, tocilizumab) are added later for relapse or steroid toxicity; they do not replace immediate high-dose corticosteroid (eTG Rheumatology).",
-        "source_refs": ["eTG Rheumatology - Vasculitis"]
+        "source_refs": [
+          "eTG Rheumatology - Vasculitis"
+        ]
       }
     ],
     "explanation": {
@@ -1230,11 +1724,23 @@
       "pearls": "ESR and CRP are usually both elevated; isolated normal CRP makes GCA very unlikely."
     },
     "sources": [
-      { "label": "eTG Rheumatology - Vasculitis", "url": "https://tgldcdp.tg.org.au/" },
-      { "label": "Australian Rheumatology Association", "url": "https://rheumatology.org.au/" },
-      { "label": "eTG Neurology - Headache", "url": "https://tgldcdp.tg.org.au/" }
+      {
+        "label": "eTG Rheumatology - Vasculitis",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "Australian Rheumatology Association",
+        "url": "https://rheumatology.org.au/"
+      },
+      {
+        "label": "eTG Neurology - Headache",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["inflammatory_markers", "fbc"],
+    "reference_ranges": [
+      "inflammatory_markers",
+      "fbc"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -1243,7 +1749,13 @@
     "subtopic": "Subarachnoid haemorrhage - investigation pathway",
     "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["SAH", "thunderclap headache", "CT", "lumbar puncture", "xanthochromia"],
+    "tags": [
+      "SAH",
+      "thunderclap headache",
+      "CT",
+      "lumbar puncture",
+      "xanthochromia"
+    ],
     "stem": "A 48-year-old previously well woman presents to ED 3 hours after the abrupt onset of the worst headache of her life while gardening. The headache reached maximum intensity within seconds and was associated with one episode of vomiting. She has no neurological deficits now, GCS 15, no neck stiffness, no rash and no photophobia. BP is 162/94 mmHg. She is not anticoagulated and has no recent trauma. She has no significant past medical history and is on no medications. There is no family history of intracranial aneurysm or polycystic kidney disease. Her examination including cranial nerves, fundi, motor and sensory testing is normal. Capillary glucose is normal. ECG shows sinus rhythm. She has had similar but less severe headaches with exertion before, never investigated.",
     "data_table": {
       "Vital signs": "BP 162/94, HR 88, T 36.8, SpO2 99 percent, GCS 15.",
@@ -1254,38 +1766,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "Non-contrast CT brain within 6 hours of headache onset",
+        "text": "Non-contrast CT brain performed within 6 hours of headache onset",
         "correct": true,
         "rationale": "Non-contrast CT brain within 6 hours of headache onset, reported by an experienced radiologist using a modern (third generation) scanner, has sensitivity approaching 100 percent for subarachnoid haemorrhage and is the first-line investigation. If negative beyond 6 hours, lumbar puncture for xanthochromia (after 12 hours) is added (eTG Neurology; ACEM).",
-        "source_refs": ["eTG Neurology - Headache", "ACEM Neurology Position"]
+        "source_refs": [
+          "eTG Neurology - Headache",
+          "ACEM Neurology Position"
+        ]
       },
       {
         "letter": "B",
-        "text": "Lumbar puncture for xanthochromia as first-line investigation",
+        "text": "Lumbar puncture for xanthochromia performed as the first-line acute investigation",
         "correct": false,
         "rationale": "Xanthochromia takes at least 12 hours to develop after subarachnoid bleeding; LP first is invasive and lower yield. CT brain is the first investigation (eTG Neurology).",
-        "source_refs": ["eTG Neurology - Headache"]
+        "source_refs": [
+          "eTG Neurology - Headache"
+        ]
       },
       {
         "letter": "C",
-        "text": "MRI brain with gadolinium as first-line investigation",
+        "text": "MRI brain with gadolinium performed as the first-line acute investigation",
         "correct": false,
         "rationale": "MRI is sensitive for subacute SAH (FLAIR) but is not the first-line acute test; access and time make CT first-line (eTG Neurology).",
-        "source_refs": ["eTG Neurology - Headache"]
+        "source_refs": [
+          "eTG Neurology - Headache"
+        ]
       },
       {
         "letter": "D",
-        "text": "Empirical IV ceftriaxone 2 g and dexamethasone 10 mg for presumed meningitis",
+        "text": "Empirical IV ceftriaxone 2 g and dexamethasone 10 mg for presumed bacterial meningitis",
         "correct": false,
         "rationale": "There are no features of meningitis (no fever, neck stiffness, photophobia). The presentation is classical thunderclap headache and requires imaging for SAH (eTG Antibiotic).",
-        "source_refs": ["eTG Antibiotic - CNS infections"]
+        "source_refs": [
+          "eTG Antibiotic - CNS infections"
+        ]
       },
       {
         "letter": "E",
         "text": "Discharge with simple analgesia and outpatient neurology review in 1 week",
         "correct": false,
         "rationale": "Thunderclap headache is a red flag for SAH and other secondary causes; discharge without imaging is unsafe (eTG Neurology).",
-        "source_refs": ["eTG Neurology - Headache"]
+        "source_refs": [
+          "eTG Neurology - Headache"
+        ]
       }
     ],
     "explanation": {
@@ -1300,11 +1823,23 @@
       "pearls": "Nimodipine 60 mg orally every 4 hours reduces delayed cerebral ischaemia after confirmed aneurysmal SAH."
     },
     "sources": [
-      { "label": "eTG Neurology - Headache", "url": "https://tgldcdp.tg.org.au/" },
-      { "label": "ACEM Neurology Position", "url": "https://acem.org.au/" },
-      { "label": "eTG Antibiotic - CNS infections", "url": "https://tgldcdp.tg.org.au/" }
+      {
+        "label": "eTG Neurology - Headache",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "ACEM Neurology Position",
+        "url": "https://acem.org.au/"
+      },
+      {
+        "label": "eTG Antibiotic - CNS infections",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["uec", "coags"],
+    "reference_ranges": [
+      "uec",
+      "coags"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -1313,7 +1848,12 @@
     "subtopic": "Adult anaphylaxis - ED management",
     "difficulty": 1,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["anaphylaxis", "adrenaline", "ASCIA", "ANZCOR"],
+    "tags": [
+      "anaphylaxis",
+      "adrenaline",
+      "ASCIA",
+      "ANZCOR"
+    ],
     "stem": "A 28-year-old woman is brought to ED after eating a peanut-containing dessert at a restaurant 25 minutes ago. She has a known peanut allergy and forgot her EpiPen at home. On arrival she is stridulous and dyspnoeic with widespread urticaria over her trunk and limbs and lip swelling. BP is 78/42 mmHg, HR 132, SpO2 91 percent on 15 L non-rebreather, RR 28. She is alert but distressed. She has no chest pain. There is no past history of cardiac disease and she is on no regular medications. She has had two previous milder reactions to nuts treated with oral antihistamines. She has not eaten any new foods, taken any new medications or had any recent insect stings. She has IV access in the right antecubital fossa. She has no documented contraindication to intramuscular adrenaline.",
     "data_table": {
       "Vital signs": "BP 78/42, HR 132, RR 28, SpO2 91 percent on 15 L NRB, T 36.6, GCS 15.",
@@ -1324,38 +1864,51 @@
     "options": [
       {
         "letter": "A",
-        "text": "IV hydrocortisone 200 mg",
+        "text": "IV hydrocortisone 200 mg given as a single bolus dose now",
         "correct": false,
         "rationale": "Corticosteroids do not reverse acute anaphylaxis and have no proven benefit in preventing biphasic reactions; they are not first-line and must not delay adrenaline (ASCIA Guidelines 2024; ANZCOR).",
-        "source_refs": ["ASCIA Acute Management of Anaphylaxis 2024", "ANZCOR Anaphylaxis Guideline"]
+        "source_refs": [
+          "ASCIA Acute Management of Anaphylaxis 2024",
+          "ANZCOR Anaphylaxis Guideline"
+        ]
       },
       {
         "letter": "B",
-        "text": "IM adrenaline 1:1000 0.5 mg into the anterolateral mid-thigh, repeated every 5 minutes as needed",
+        "text": "IM adrenaline 1:1000 0.5 mg into the anterolateral mid-thigh, repeated every 5 minutes",
         "correct": true,
         "rationale": "IM adrenaline 1:1000 0.5 mg (10 microgram/kg, max 0.5 mg per dose) into the anterolateral mid-thigh is the first-line and life-saving treatment for anaphylaxis. Repeat every 5 minutes if no response; the doses are anchored to the ASCIA and ANZCOR algorithms (ASCIA 2024; ANZCOR).",
-        "source_refs": ["ASCIA Acute Management of Anaphylaxis 2024", "ANZCOR Anaphylaxis Guideline"]
+        "source_refs": [
+          "ASCIA Acute Management of Anaphylaxis 2024",
+          "ANZCOR Anaphylaxis Guideline"
+        ]
       },
       {
         "letter": "C",
-        "text": "IV promethazine 25 mg",
+        "text": "IV promethazine 25 mg as a slow intravenous bolus dose now",
         "correct": false,
         "rationale": "IV promethazine can cause hypotension and is not recommended in acute anaphylaxis; antihistamines treat skin features only (ASCIA 2024; AMH).",
-        "source_refs": ["ASCIA Acute Management of Anaphylaxis 2024", "Australian Medicines Handbook"]
+        "source_refs": [
+          "ASCIA Acute Management of Anaphylaxis 2024",
+          "Australian Medicines Handbook"
+        ]
       },
       {
         "letter": "D",
-        "text": "Nebulised salbutamol 5 mg",
+        "text": "Nebulised salbutamol 5 mg via oxygen-driven nebuliser at the bedside",
         "correct": false,
         "rationale": "Salbutamol is an adjunct for persistent wheeze after adrenaline but does not treat the systemic mediator release or upper airway oedema; IM adrenaline is the priority (ASCIA 2024).",
-        "source_refs": ["ASCIA Acute Management of Anaphylaxis 2024"]
+        "source_refs": [
+          "ASCIA Acute Management of Anaphylaxis 2024"
+        ]
       },
       {
         "letter": "E",
-        "text": "IV 0.9 percent saline 1 L bolus alone",
+        "text": "IV 0.9 percent saline 1 L bolus given alone without any adrenaline",
         "correct": false,
         "rationale": "IV fluid is essential adjunctive therapy for distributive shock but does not reverse the underlying mediator release; adrenaline must be given first or simultaneously (ASCIA 2024).",
-        "source_refs": ["ASCIA Acute Management of Anaphylaxis 2024"]
+        "source_refs": [
+          "ASCIA Acute Management of Anaphylaxis 2024"
+        ]
       }
     ],
     "explanation": {
@@ -1369,11 +1922,22 @@
       "pearls": "If the patient is on a beta blocker and refractory, glucagon 1 to 5 mg IV may help by bypassing the beta receptor."
     },
     "sources": [
-      { "label": "ASCIA Acute Management of Anaphylaxis 2024", "url": "https://www.allergy.org.au/hp/papers/acute-management-of-anaphylaxis-guidelines" },
-      { "label": "ANZCOR Anaphylaxis Guideline", "url": "https://resus.org.au/" },
-      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+      {
+        "label": "ASCIA Acute Management of Anaphylaxis 2024",
+        "url": "https://www.allergy.org.au/hp/papers/acute-management-of-anaphylaxis-guidelines"
+      },
+      {
+        "label": "ANZCOR Anaphylaxis Guideline",
+        "url": "https://resus.org.au/"
+      },
+      {
+        "label": "Australian Medicines Handbook",
+        "url": "https://amhonline.amh.net.au/"
+      }
     ],
-    "reference_ranges": ["uec"],
+    "reference_ranges": [
+      "uec"
+    ],
     "created": "2026-05-18"
   }
 ]
