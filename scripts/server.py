@@ -40,6 +40,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self._handle_report()
         if self.path == "/api/apply-audit":
             return self._handle_apply_audit()
+        if self.path == "/api/apply-live-audit":
+            return self._handle_apply_live_audit()
         if self.path == "/api/apply-report":
             return self._handle_apply_report()
         self.send_error(404, "Not found")
@@ -204,6 +206,40 @@ class Handler(SimpleHTTPRequestHandler):
                 f.write("**Dropped:**\n" + "\n".join(f"- `{d.get('id','?')}` - {d.get('reason','')}" for d in dropped) + "\n")
 
         return self._json(200, {"ok": True, "moved": moved, "dropped": len(dropped)})
+
+    def _handle_apply_live_audit(self):
+        payload, err = self._read_json()
+        if err:
+            return self._json(400, {"ok": False, "error": err})
+        file_path = payload.get("file_path") or ""
+        audit = payload.get("audit") or {}
+        allowed_main = {
+            "data/questions_paeds.json", "data/questions_obgyn.json",
+            "data/questions_psych.json", "data/questions_medicine.json",
+        }
+        is_batch = (file_path.startswith("data/batches/")
+                    and file_path.endswith(".json")
+                    and ".." not in file_path
+                    and "/_" not in file_path)
+        is_main = file_path in allowed_main
+        if not (is_batch or is_main):
+            return self._json(400, {"ok": False, "error": "file_path must be data/batches/*.json or a main questions file"})
+        kept = audit.get("kept") or []
+        dropped = audit.get("dropped") or []
+        if not isinstance(kept, list) or not isinstance(dropped, list):
+            return self._json(400, {"ok": False, "error": "audit.kept and audit.dropped must be arrays"})
+        full = os.path.join(ROOT, file_path)
+        with open(full, "w", encoding="utf-8") as f:
+            json.dump(kept, f, indent=2, ensure_ascii=False)
+            f.write("\n")
+        stamp = datetime.now(timezone.utc).isoformat()
+        with open(os.path.join(ROOT, "data", "audit_log.md"), "a", encoding="utf-8") as f:
+            f.write(f"\n## {stamp} - live audit of {file_path} by {payload.get('profile') or 'rob'}\n\n")
+            f.write((audit.get("summary") or "(no summary)") + "\n\n")
+            f.write(f"**Kept:** {len(kept)}\n\n")
+            if dropped:
+                f.write("**Dropped:**\n" + "\n".join(f"- `{d.get('id','?')}` - {d.get('reason','')}" for d in dropped) + "\n")
+        return self._json(200, {"ok": True, "kept": len(kept), "dropped": len(dropped)})
 
     def _handle_apply_report(self):
         payload, err = self._read_json()

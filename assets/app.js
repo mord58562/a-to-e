@@ -248,7 +248,7 @@
     state.reports = (reportsFile && reportsFile.reports) || [];
 
     // Pull every staging batch listed in the manifests. Each is its own
-    // JSON array of question objects matching the canonical schema.
+    // JSON array of question objects matching the live schema.
     // Failures are silent so the manifests can list files that don't
     // yet exist (in-flight batches, expected inbox drops).
     const batchPaths = (batchManifest && batchManifest.batches) || [];
@@ -1284,6 +1284,13 @@
     });
     const bulkBtn = document.getElementById("auditBulkReports");
     if (bulkBtn) bulkBtn.onclick = startBulkReportAudit;
+    document.querySelectorAll('#reportsAdminModal [data-live-filter]').forEach(b => {
+      b.onclick = () => {
+        document.querySelectorAll('#reportsAdminModal [data-live-filter]').forEach(x => x.classList.remove("selected"));
+        b.classList.add("selected");
+        renderAuditLive(b.dataset.liveFilter);
+      };
+    });
   }
   function updateReportsAdminBadge() {
     const btn = document.getElementById("reportsAdminBtn");
@@ -1309,6 +1316,7 @@
       p.hidden = p.dataset.tabPanel !== name;
     });
     if (name === "inbox") renderAuditInbox();
+    else if (name === "live") loadAndRenderAuditLive();
     else renderReportsAdminList("open");
   }
 
@@ -1337,7 +1345,7 @@
     const list = document.getElementById("auditInboxList");
     list.innerHTML = "";
     if (!_inboxBatches.length) {
-      list.innerHTML = `<li class="dim small">No inbox batches awaiting audit. Pasted content goes through this list before being promoted to the canonical files.</li>`;
+      list.innerHTML = `<li class="dim small">No inbox batches awaiting audit. Pasted content goes through this list before being promoted to the live per-topic files.</li>`;
       return;
     }
     for (const b of _inboxBatches) {
@@ -1525,7 +1533,7 @@ Markdown fences, no commentary outside the JSON.
 Every kept entry MUST include every original field (id, topic,
 subtopic, difficulty, model, tags, stem, data_table, lead_in,
 options[5], explanation, sources[], reference_ranges[], created)
-because the site replaces the canonical entry wholesale on apply.`;
+because the site replaces the live entry wholesale on apply.`;
   }
 
   function validateInboxAuditResponse(raw) {
@@ -1550,6 +1558,142 @@ because the site replaces the canonical entry wholesale on apply.`;
       if (!d || !d.id || !d.reason) throw new Error(`dropped[${i}] missing id/reason`);
     });
     return obj;
+  }
+
+  // ── Live content tab (audit any already-promoted file in place) ───────
+  let _liveFiles = [];   // [{ path, questions }]
+  async function loadAndRenderAuditLive() {
+    const manifest = await fetchJson("data/batches_manifest.json").catch(() => ({ batches: [] }));
+    const batchPaths = ((manifest && manifest.batches) || []).map(p => "data/" + p);
+    const mainPaths = [
+      "data/questions_paeds.json",
+      "data/questions_obgyn.json",
+      "data/questions_psych.json",
+      "data/questions_medicine.json",
+    ];
+    const all = mainPaths.concat(batchPaths);
+    _liveFiles = await Promise.all(all.map(async (p) => {
+      const qs = await fetchJson(p).catch(() => []);
+      return { path: p, questions: Array.isArray(qs) ? qs : [] };
+    }));
+    _liveFiles = _liveFiles.filter(f => f.questions.length > 0);
+    const c = document.getElementById("auditLiveCount");
+    if (c) c.textContent = _liveFiles.length ? String(_liveFiles.length) : "";
+    renderAuditLive("all");
+  }
+  function renderAuditLive(filter) {
+    const list = document.getElementById("auditLiveList");
+    list.innerHTML = "";
+    const visible = _liveFiles.filter(f => {
+      if (filter === "all") return true;
+      if (filter === "batches") return f.path.startsWith("data/batches/");
+      if (filter === "main")    return !f.path.startsWith("data/batches/");
+      if (filter === "paeds")    return f.path.includes("paeds") || f.path.includes("_paeds");
+      if (filter === "obgyn")    return f.path.includes("obgyn");
+      if (filter === "psych")    return f.path.includes("psych");
+      if (filter === "medicine") return f.path.includes("med") && !f.path.includes("paeds");
+      return true;
+    });
+    if (!visible.length) {
+      list.innerHTML = `<li class="dim small">No files match this filter.</li>`;
+      return;
+    }
+    for (const f of visible) {
+      const li = document.createElement("li");
+      li.className = "audit-row";
+      const isMain = !f.path.startsWith("data/batches/");
+      const subjects = {};
+      for (const q of f.questions) subjects[q.subtopic || q.topic || "?"] = (subjects[q.subtopic || q.topic || "?"] || 0) + 1;
+      const topSubjects = Object.entries(subjects).sort((a,b) => b[1]-a[1]).slice(0, 3)
+        .map(([k, n]) => `${esc(k)}×${n}`).join(", ");
+      const models = {};
+      for (const q of f.questions) models[q.model || "unknown"] = (models[q.model || "unknown"] || 0) + 1;
+      const modelSummary = Object.entries(models).map(([m, n]) => `${esc(m)}×${n}`).join(", ");
+      li.innerHTML = `
+        <div class="audit-row-head">
+          <span class="audit-row-name">${isMain ? "★ " : ""}${esc(f.path)}</span>
+          <span class="audit-row-meta dim small">${f.questions.length} Q · top: ${topSubjects} · author(s): ${modelSummary}</span>
+          <button class="link-btn audit-row-toggle">Audit this file</button>
+        </div>
+        <div class="audit-flow" hidden>${auditFlowMarkup(`live-${esc(f.path)}`)}</div>
+      `;
+      list.appendChild(li);
+      const toggle = li.querySelector(".audit-row-toggle");
+      const flow = li.querySelector(".audit-flow");
+      toggle.onclick = () => {
+        flow.hidden = !flow.hidden;
+        toggle.textContent = flow.hidden ? "Audit this file" : "Hide";
+      };
+      wireAuditFlow(flow, {
+        kind: "live",
+        buildPrompt: () => buildLiveAuditPrompt(f),
+        parse: validateInboxAuditResponse,   // same shape as inbox audit
+        apply: async (parsed) => applyLiveAudit(f.path, parsed),
+      });
+    }
+  }
+  function buildLiveAuditPrompt(file) {
+    const qb = _qualityBarText();
+    const filename = file.path.split("/").pop();
+    return `You are re-auditing an already-live file in the A to E Australian Y4 MCQ bank.
+
+File: \`${file.path}\` (${file.questions.length} questions)
+
+Apply the quality bar below. For each question:
+  (1) Pass with no fix → keep as-is.
+  (2) Has fixable issues (option imbalance, US spellings, em-dashes,
+      stem below floor, weak rationale, missing source attribution,
+      inflated difficulty) → fix and keep, output corrected JSON with
+      all original fields preserved.
+  (3) Violates a hard rule (weight-based dose math in lead-in, trick
+      question, fundamentally wrong clinical content) → DROP.
+
+Special attention for live audit:
+  - This file is already serving users. Drops should be rare and only
+    for genuinely-broken questions. Prefer fix over drop.
+  - The correct-answer-is-longest tell is the #1 historical issue -
+    trim correct options to mean distractor word count or expand
+    distractors to match. Target all 5 options within +/- 25% word count.
+  - The original LLM's self-declared model is on each question
+    (\`model\` field) so you can correlate patterns by author.
+
+${qb}
+
+============================
+INPUT - the live file to re-audit (${file.questions.length} questions)
+============================
+
+${JSON.stringify(file.questions, null, 2)}
+
+============================
+OUTPUT FORMAT (strict, no prose)
+============================
+
+Output ONLY this JSON object. Start with \`{\`. End with \`}\`. No
+Markdown fences, no commentary outside the JSON.
+
+{
+  "summary": "<2-4 sentences on patterns + actions taken>",
+  "kept": [ <full corrected question JSON, schema unchanged>, ... ],
+  "dropped": [ { "id": "<question id>", "reason": "<one sentence>" }, ... ]
+}
+
+Every kept entry MUST include every original field (id, topic,
+subtopic, difficulty, model, tags, stem, data_table, lead_in,
+options[5], explanation, sources[], reference_ranges[], created) -
+the file is replaced wholesale on apply.`;
+  }
+  async function applyLiveAudit(filePath, audit) {
+    const res = await postBackend("apply-live-audit", {
+      file_path: filePath,
+      audit,
+      profile: currentProfile ? currentProfile.id : "rob",
+    });
+    if (!res) return { ok: false, error: "backend unreachable" };
+    if (res.ok) {
+      return { ok: true, note: `${audit.kept.length} kept, ${audit.dropped.length} dropped. File rewritten in place.` };
+    }
+    return res;
   }
 
   async function applyInboxAudit(batchPath, audit) {
