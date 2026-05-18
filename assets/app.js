@@ -388,6 +388,12 @@
       greet.textContent = `Hi, ${currentProfile.name}.`;
       greet.hidden = false;
     }
+    // Randomise the closing well-wish: 1/3 English, 1/3 Latin, 1/3 Greek.
+    const luck = document.getElementById("luckPhrase");
+    if (luck) {
+      const phrases = ["Good luck.", "dī bene vertant.", "τύχῃ ἀγαθῇ"];
+      luck.textContent = phrases[Math.floor(Math.random() * 3)];
+    }
 
     applySettingsToOptions();
 
