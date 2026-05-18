@@ -22,6 +22,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 INBOX_DIR = os.path.join(ROOT, "data", "inbox")
 MANIFEST = os.path.join(ROOT, "data", "inbox_manifest.json")
+REPORTS  = os.path.join(ROOT, "data", "reports.json")
 PORT = int(os.environ.get("Y4MCQ_PORT", "8765"))
 
 
@@ -33,19 +34,32 @@ class Handler(SimpleHTTPRequestHandler):
         sys.stderr.write("[y4mcq] " + (fmt % args) + "\n")
 
     def do_POST(self):
-        if self.path != "/api/paste":
-            self.send_error(404, "Not found")
-            return
+        if self.path == "/api/paste":
+            return self._handle_paste()
+        if self.path == "/api/report":
+            return self._handle_report()
+        self.send_error(404, "Not found")
+
+    def _read_json(self):
         length = int(self.headers.get("Content-Length") or 0)
         body = self.rfile.read(length).decode("utf-8", errors="replace")
         try:
-            payload = json.loads(body)
+            return json.loads(body), None
         except json.JSONDecodeError as e:
-            return self._json(400, {"ok": False, "error": f"invalid JSON: {e}"})
+            return None, f"invalid JSON: {e}"
 
+    def _handle_paste(self):
+        payload, err = self._read_json()
+        if err:
+            return self._json(400, {"ok": False, "error": err})
         questions = payload.get("questions")
         if not isinstance(questions, list) or not questions:
             return self._json(400, {"ok": False, "error": "expected non-empty `questions` array"})
+        model = payload.get("model")
+        if model:
+            for q in questions:
+                if isinstance(q, dict) and not q.get("model"):
+                    q["model"] = model
 
         os.makedirs(INBOX_DIR, exist_ok=True)
         stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d-%H%M%S")
@@ -73,6 +87,38 @@ class Handler(SimpleHTTPRequestHandler):
             "saved": rel,
             "count": len(questions),
         })
+
+    def _handle_report(self):
+        payload, err = self._read_json()
+        if err:
+            return self._json(400, {"ok": False, "error": err})
+        qid = payload.get("question_id")
+        issue = payload.get("issue")
+        if not isinstance(qid, str) or not qid:
+            return self._json(400, {"ok": False, "error": "missing question_id"})
+        if not isinstance(issue, str) or len(issue.strip()) < 3:
+            return self._json(400, {"ok": False, "error": "issue text too short"})
+        import secrets
+        entry = {
+            "id":           f"report-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}-{secrets.token_hex(2)}",
+            "question_id":  qid[:200],
+            "issue":        issue[:4000],
+            "profile":      (payload.get("profile") or "guest")[:40],
+            "model":        payload.get("model"),
+            "created":      datetime.now(timezone.utc).isoformat(),
+            "status":       "open",
+            "resolution":   None,
+        }
+        try:
+            with open(REPORTS, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            data = {"reports": []}
+        data.setdefault("reports", []).append(entry)
+        with open(REPORTS, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+            f.write("\n")
+        return self._json(200, {"ok": True, "id": entry["id"]})
 
     def _json(self, status, obj):
         data = json.dumps(obj).encode("utf-8")
