@@ -78,22 +78,22 @@
 
   // Substitute today's date-driven focus directive into a prompt
   // template that contains {{FOCUS_DIRECTIVE}}. Rob's directive:
-  // - until 1 July 2026: paste-flow LLMs generate only Paediatrics +
+  // - until 6 June 2026: paste-flow LLMs generate only Paediatrics +
   //   Obstetrics & Gynaecology questions.
-  // - from 1 July 2026: paste-flow LLMs generate primarily Medicine
+  // - from 6 June 2026: paste-flow LLMs generate primarily Medicine
   //   and Psychiatry. Paeds/O&G still acceptable in small numbers.
   function seasonalFocusDirective(now) {
     now = now || new Date();
-    const flip = new Date("2026-07-01T00:00:00");
+    const flip = new Date("2026-06-06T00:00:00");
     if (now < flip) {
       return [
-        "**Until 1 July 2026 (today is " + now.toISOString().slice(0, 10) + ")**: generate ONLY Paediatrics or Obstetrics & Gynaecology questions.",
+        "**Until 6 June 2026 (today is " + now.toISOString().slice(0, 10) + ")**: generate ONLY Paediatrics or Obstetrics & Gynaecology questions.",
         "Do NOT generate Psychiatry or Medicine questions in this period - they will be dropped from the bank.",
         "The site already has enough psych/medicine seed content; the maintainer is prioritising paeds + O&G coverage to 500 each before the next exam window.",
       ].join("\n");
     }
     return [
-      "**From 1 July 2026 onwards (today is " + now.toISOString().slice(0, 10) + ")**: generate PRIMARILY Psychiatry and Medicine questions.",
+      "**From 6 June 2026 onwards (today is " + now.toISOString().slice(0, 10) + ")**: generate PRIMARILY Psychiatry and Medicine questions.",
       "Paediatrics and Obstetrics & Gynaecology questions are still acceptable but in much smaller numbers - no more than 1 in 5.",
       "The bank's paeds + O&G coverage is mature; psych + medicine are the current under-served disciplines.",
     ].join("\n");
