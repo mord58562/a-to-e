@@ -296,7 +296,6 @@
       stopSessionTimer();
       showHome();
     };
-    document.getElementById("homeBtn").onclick = () => goHome();
     const brand = document.querySelector(".masthead .brand");
     if (brand) brand.onclick = goHome;
     const chip = document.getElementById("profileChip");
