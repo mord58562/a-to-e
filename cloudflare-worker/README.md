@@ -46,11 +46,22 @@ see a new commit on main updating `data/reports.json`.
 
 ## Endpoints
 
-- `POST /paste`  - body `{ questions: [...], model?: "Claude 3.5" }` -
+- `POST /paste`         - body `{ questions: [...], model?: "Claude 3.5" }` -
   writes `data/inbox/pasted-<stamp>-<id>.json` and appends to
   `data/inbox_manifest.json`.
-- `POST /report` - body `{ question_id, issue, profile?, model? }` -
-  appends to `data/reports.json` (creates the file if missing).
+- `POST /report`        - body `{ question_id, issue, profile?, model? }` -
+  appends to `data/reports.json`.
+- `POST /apply-audit`   - body `{ batch_path, audit: { summary, kept[], dropped[] }, profile }` -
+  promotes the audited batch's kept[] questions into the canonical
+  per-topic files (paeds/obgyn/psych/medicine, bucketed by `topic`),
+  removes the batch from `data/inbox_manifest.json` and zeroes the
+  inbox file, appends to `data/audit_log.md`. Called by the in-app
+  Audit Dashboard after Rob pastes Claude.ai's audit response.
+- `POST /apply-report`  - body `{ resolutions: [ { report_id, question_id, action, resolution, fixed_question? } ] }` -
+  updates `data/reports.json` status/resolution, and for fix/drop
+  actions also edits the question in its containing canonical file.
+  Called by the in-app Audit Dashboard after Rob pastes Claude.ai's
+  report-audit response.
 
 CORS is locked to `https://mord58562.github.io` by default. Change
 `ALLOW_ORIGIN` in `wrangler.toml` for dev.

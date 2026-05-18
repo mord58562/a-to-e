@@ -76,6 +76,32 @@
     reports: [],
   };
 
+  // Substitute today's date-driven focus directive into a prompt
+  // template that contains {{FOCUS_DIRECTIVE}}. Rob's directive:
+  // - until 1 July 2026: paste-flow LLMs generate only Paediatrics +
+  //   Obstetrics & Gynaecology questions.
+  // - from 1 July 2026: paste-flow LLMs generate primarily Medicine
+  //   and Psychiatry. Paeds/O&G still acceptable in small numbers.
+  function seasonalFocusDirective(now) {
+    now = now || new Date();
+    const flip = new Date("2026-07-01T00:00:00");
+    if (now < flip) {
+      return [
+        "**Until 1 July 2026 (today is " + now.toISOString().slice(0, 10) + ")**: generate ONLY Paediatrics or Obstetrics & Gynaecology questions.",
+        "Do NOT generate Psychiatry or Medicine questions in this period - they will be dropped from the bank.",
+        "The site already has enough psych/medicine seed content; the maintainer is prioritising paeds + O&G coverage to 500 each before the next exam window.",
+      ].join("\n");
+    }
+    return [
+      "**From 1 July 2026 onwards (today is " + now.toISOString().slice(0, 10) + ")**: generate PRIMARILY Psychiatry and Medicine questions.",
+      "Paediatrics and Obstetrics & Gynaecology questions are still acceptable but in much smaller numbers - no more than 1 in 5.",
+      "The bank's paeds + O&G coverage is mature; psych + medicine are the current under-served disciplines.",
+    ].join("\n");
+  }
+  function renderPrompt(tpl) {
+    return tpl.replace(/\{\{FOCUS_DIRECTIVE\}\}/g, seasonalFocusDirective());
+  }
+
   // POST to the remote worker first, then local backend, then null.
   // Returns the parsed response on success, or null if both failed.
   async function postBackend(endpoint, body) {
@@ -1119,15 +1145,23 @@
       else if (state.refsOpen) closeRefs();
     });
 
-    // Populate the LLM prompt + copy button.
+    // Populate the LLM prompt + copy button. The prompt text has
+    // placeholders ({{FOCUS_DIRECTIVE}}) that are substituted at
+    // copy time so today's date controls which discipline(s) are in
+    // scope - see seasonalFocusDirective() below.
     const promptTpl = document.getElementById("addQuestionsPromptTemplate");
     const promptText = document.getElementById("promptText");
-    if (promptTpl && promptText) promptText.textContent = promptTpl.textContent.trim();
+    if (promptTpl && promptText) {
+      promptText.textContent = renderPrompt(promptTpl.textContent.trim());
+    }
     const copyBtn = document.getElementById("copyPromptBtn");
     const copyStatus = document.getElementById("copyPromptStatus");
     const COPY_LABEL = copyBtn ? copyBtn.textContent : "";
     let copyResetTimer = null;
     if (copyBtn) copyBtn.onclick = async () => {
+      // Re-render in case the calendar rolled past 1 July since the
+      // modal was last opened.
+      promptText.textContent = renderPrompt(promptTpl.textContent.trim());
       let ok = false;
       try {
         await navigator.clipboard.writeText(promptText.textContent);
@@ -1227,7 +1261,10 @@
     }
   }
 
-  // ── Reports admin (Rob only) ───────────────────────────────────────────
+  // ── Audit dashboard (Rob only) ─────────────────────────────────────────
+  // Two tabs: Inbox (pending batches) and Reports (user-submitted issues).
+  // Each row offers a copy-prompt → paste-response → apply workflow that
+  // works on a free Claude.ai plan (no Claude Code needed).
   function wireReportsAdmin() {
     const btn = document.getElementById("reportsAdminBtn");
     const m = document.getElementById("reportsAdminModal");
@@ -1242,6 +1279,11 @@
         renderReportsAdminList(b.dataset.repFilter);
       };
     });
+    document.querySelectorAll('#reportsAdminModal .audit-tab').forEach(b => {
+      b.onclick = () => switchAuditTab(b.dataset.tab);
+    });
+    const bulkBtn = document.getElementById("auditBulkReports");
+    if (bulkBtn) bulkBtn.onclick = startBulkReportAudit;
   }
   function updateReportsAdminBadge() {
     const btn = document.getElementById("reportsAdminBtn");
@@ -1254,13 +1296,393 @@
     badge.textContent = open > 0 ? String(open) : "";
     btn.classList.toggle("has-pending", open > 0);
   }
-  function openReportsAdmin() {
+  async function openReportsAdmin() {
     document.getElementById("reportsAdminModal").hidden = false;
-    renderReportsAdminList("open");
+    await refreshAuditInboxList();
+    switchAuditTab("inbox");
+  }
+  function switchAuditTab(name) {
+    document.querySelectorAll('#reportsAdminModal .audit-tab').forEach(b => {
+      b.classList.toggle("selected", b.dataset.tab === name);
+    });
+    document.querySelectorAll('#reportsAdminModal .audit-tab-panel').forEach(p => {
+      p.hidden = p.dataset.tabPanel !== name;
+    });
+    if (name === "inbox") renderAuditInbox();
+    else renderReportsAdminList("open");
+  }
+
+  // The list of pending inbox batches, hydrated from inbox_manifest.json
+  // at modal-open time (the user may have just pasted, so this is the
+  // freshest source of truth).
+  let _inboxBatches = [];   // [{ path: "inbox/...json", questions: [...], _fetched: bool }]
+  async function refreshAuditInboxList() {
+    const manifest = await fetchJson("data/inbox_manifest.json").catch(() => ({ inbox: [] }));
+    const paths = (manifest && manifest.inbox) || [];
+    _inboxBatches = await Promise.all(paths.map(async (p) => {
+      const qs = await fetchJson("data/" + p).catch(() => []);
+      return { path: p, questions: Array.isArray(qs) ? qs : [] };
+    }));
+    // Filter out empty batches (already audited and cleared).
+    _inboxBatches = _inboxBatches.filter(b => b.questions.length > 0);
+    const ic = document.getElementById("auditInboxCount");
+    if (ic) ic.textContent = _inboxBatches.length ? String(_inboxBatches.length) : "";
+    const rc = document.getElementById("auditReportsCount");
+    if (rc) {
+      const open = state.reports.filter(r => r.status === "open").length;
+      rc.textContent = open ? String(open) : "";
+    }
+  }
+  function renderAuditInbox() {
+    const list = document.getElementById("auditInboxList");
+    list.innerHTML = "";
+    if (!_inboxBatches.length) {
+      list.innerHTML = `<li class="dim small">No inbox batches awaiting audit. Pasted content goes through this list before being promoted to the canonical files.</li>`;
+      return;
+    }
+    for (const b of _inboxBatches) {
+      const li = document.createElement("li");
+      li.className = "audit-row";
+      const topicsCount = {};
+      for (const q of b.questions) topicsCount[q.topic || "?"] = (topicsCount[q.topic || "?"] || 0) + 1;
+      const topicSummary = Object.entries(topicsCount).map(([t, n]) => `${esc(t)}=${n}`).join(", ");
+      const modelsCount = {};
+      for (const q of b.questions) modelsCount[q.model || "unknown"] = (modelsCount[q.model || "unknown"] || 0) + 1;
+      const modelSummary = Object.entries(modelsCount).map(([m, n]) => `${esc(m)}×${n}`).join(", ");
+      li.innerHTML = `
+        <div class="audit-row-head">
+          <span class="audit-row-name">${esc(b.path)}</span>
+          <span class="audit-row-meta dim small">${b.questions.length} Q · ${topicSummary} · author(s): ${modelSummary}</span>
+          <button class="link-btn audit-row-toggle">Audit this batch</button>
+        </div>
+        <div class="audit-flow" hidden>
+          ${auditFlowMarkup(`inbox-${esc(b.path)}`)}
+        </div>
+      `;
+      list.appendChild(li);
+      const toggle = li.querySelector(".audit-row-toggle");
+      const flow = li.querySelector(".audit-flow");
+      toggle.onclick = () => {
+        flow.hidden = !flow.hidden;
+        toggle.textContent = flow.hidden ? "Audit this batch" : "Hide";
+      };
+      wireAuditFlow(flow, {
+        kind: "inbox",
+        buildPrompt: () => buildInboxAuditPrompt(b),
+        parse: validateInboxAuditResponse,
+        apply: async (parsed) => applyInboxAudit(b.path, parsed),
+      });
+    }
+  }
+
+  function auditFlowMarkup(_keyHint) {
+    return `
+      <ol class="audit-steps">
+        <li><b>Copy the prompt</b> <button class="audit-copy primary">Copy audit prompt</button>
+          <a class="link-btn audit-open-claude" href="https://claude.ai" target="_blank" rel="noopener">open claude.ai</a>
+          <span class="audit-copy-status dim small"></span></li>
+        <li><b>Paste Claude's full JSON response</b>
+          <textarea class="audit-response paste-box" rows="8" spellcheck="false" autocomplete="off" placeholder='{ "summary": "...", "kept": [ ... ], "dropped": [ ... ] }'></textarea>
+        </li>
+        <li><b>Validate &amp; apply</b>
+          <button class="audit-apply primary">Validate &amp; apply</button>
+          <span class="audit-apply-status dim small"></span>
+        </li>
+      </ol>
+    `;
+  }
+
+  function wireAuditFlow(flowEl, opts) {
+    const copyBtn = flowEl.querySelector(".audit-copy");
+    const copyStatus = flowEl.querySelector(".audit-copy-status");
+    const respEl = flowEl.querySelector(".audit-response");
+    const applyBtn = flowEl.querySelector(".audit-apply");
+    const applyStatus = flowEl.querySelector(".audit-apply-status");
+    copyBtn.onclick = async () => {
+      const text = opts.buildPrompt();
+      try {
+        await navigator.clipboard.writeText(text);
+        copyStatus.textContent = "Copied. Paste into Claude on claude.ai.";
+        copyStatus.className = "audit-copy-status dim small ok";
+      } catch {
+        // Fallback: drop into the response textarea reversed? No - put in a
+        // hidden textarea and select it.
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); } catch {}
+        document.body.removeChild(ta);
+        copyStatus.textContent = "Clipboard blocked - copied via fallback. If it didn't take, hit copy again.";
+        copyStatus.className = "audit-copy-status dim small";
+      }
+    };
+    applyBtn.onclick = async () => {
+      applyStatus.textContent = "Validating…";
+      applyStatus.className = "audit-apply-status dim small";
+      const raw = (respEl.value || "").trim();
+      if (!raw) {
+        applyStatus.textContent = "Paste Claude's JSON response first.";
+        applyStatus.classList.add("bad");
+        return;
+      }
+      let parsed;
+      try {
+        parsed = opts.parse(raw);
+      } catch (e) {
+        applyStatus.textContent = "Validation failed: " + (e && e.message);
+        applyStatus.classList.remove("dim", "ok"); applyStatus.classList.add("bad");
+        return;
+      }
+      applyBtn.disabled = true;
+      applyStatus.textContent = "Applying via backend…";
+      try {
+        const res = await opts.apply(parsed);
+        if (res && res.ok) {
+          applyStatus.textContent = "Applied. " + (res.note || "Reloading state.");
+          applyStatus.classList.remove("bad"); applyStatus.classList.add("ok");
+          // Refresh in-memory state + re-render dashboard.
+          await loadData();
+          await refreshAuditInboxList();
+          updateReportsAdminBadge();
+          if (opts.kind === "inbox") renderAuditInbox();
+          else renderReportsAdminList("open");
+        } else {
+          applyStatus.textContent = "Backend rejected: " + (res && res.error || "unknown");
+          applyStatus.classList.add("bad");
+        }
+      } catch (e) {
+        applyStatus.textContent = "Apply failed: " + (e && e.message);
+        applyStatus.classList.add("bad");
+      } finally {
+        applyBtn.disabled = false;
+      }
+    };
+  }
+
+  // Build the audit prompt for a single inbox batch. Reuses the
+  // generation prompt template's quality bar (sections 1-7), strips
+  // Section 0 (focus directive  -  partial applicability) and Section 8
+  // (how reach the site), and wraps with audit-specific intro + output
+  // spec.
+  function _qualityBarText() {
+    const tpl = document.getElementById("addQuestionsPromptTemplate");
+    let t = renderPrompt(tpl.textContent.trim());
+    // Strip the "INPUT FROM ME" trailing block (everything from
+    // "============================\nINPUT FROM ME" onwards).
+    t = t.split(/={5,}\s*\nINPUT FROM ME/i)[0].trim();
+    // Strip Section 8 (how questions reach the site) if present
+    // before INPUT FROM ME (it isn't, in the current template, but be
+    // defensive in case the template moves things).
+    t = t.split(/={5,}\s*\n8\.\s+HOW THESE QUESTIONS REACH THE SITE/i)[0].trim();
+    return t;
+  }
+  function buildInboxAuditPrompt(batch) {
+    const qb = _qualityBarText();
+    const batchJson = JSON.stringify(batch.questions, null, 2);
+    return `You are auditing a batch of MCQs for the A to E Australian Y4 MCQ bank.
+
+Apply the quality bar below to every question in the batch. For each:
+  (1) If it passes with no fix, keep as-is (output unchanged JSON).
+  (2) If it has fixable issues, fix and keep (output the corrected JSON
+      with all original fields preserved).
+  (3) If it violates a hard rule (weight-based dose math in lead-in,
+      off-focus discipline given the current period, irretrievable
+      trick question, uncalibrated difficulty that can't be saved),
+      DROP it.
+
+Also: dedupe WITHIN this batch  -  if two questions test essentially the
+same scenario / decision, keep the better-written one and drop the
+other.
+
+The original LLM's self-declared model is shown on each question
+(\`model\` field) so you can correlate patterns. Be especially strict
+on the correct-answer-detail anti-pattern (correct option markedly
+longer than distractors  -  fix by trimming the correct option or
+expanding distractors to match detail level, NOT by leaving as-is).
+
+${qb}
+
+============================
+INPUT - the batch to audit (${batch.questions.length} questions)
+============================
+
+${batchJson}
+
+============================
+OUTPUT FORMAT (strict, no prose)
+============================
+
+Output ONLY this JSON object. Start with \`{\`. End with \`}\`. No
+Markdown fences, no commentary outside the JSON.
+
+{
+  "summary": "<2-4 sentences on biggest patterns + actions taken>",
+  "kept": [ <full corrected question JSON, schema unchanged>, ... ],
+  "dropped": [ { "id": "<question id>", "reason": "<one sentence>" }, ... ]
+}
+
+Every kept entry MUST include every original field (id, topic,
+subtopic, difficulty, model, tags, stem, data_table, lead_in,
+options[5], explanation, sources[], reference_ranges[], created)
+because the site replaces the canonical entry wholesale on apply.`;
+  }
+
+  function validateInboxAuditResponse(raw) {
+    let s = raw.trim();
+    if (s.startsWith("```")) s = s.replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/, "").trim();
+    let obj;
+    try { obj = JSON.parse(s); }
+    catch (e) { throw new Error("not valid JSON: " + e.message); }
+    if (!obj || typeof obj !== "object") throw new Error("response must be an object");
+    if (typeof obj.summary !== "string") throw new Error("missing string `summary`");
+    if (!Array.isArray(obj.kept)) throw new Error("missing array `kept`");
+    if (!Array.isArray(obj.dropped)) throw new Error("missing array `dropped`");
+    obj.kept.forEach((q, i) => {
+      if (!q || typeof q !== "object") throw new Error(`kept[${i}] not an object`);
+      if (!q.id || typeof q.id !== "string") throw new Error(`kept[${i}].id missing`);
+      if (!q.topic) throw new Error(`kept[${i}].topic missing`);
+      if (!Array.isArray(q.options) || q.options.length < 2) throw new Error(`kept[${i}].options invalid`);
+      const correct = q.options.filter(o => o && o.correct === true);
+      if (correct.length !== 1) throw new Error(`kept[${i}] needs exactly one correct option (found ${correct.length})`);
+    });
+    obj.dropped.forEach((d, i) => {
+      if (!d || !d.id || !d.reason) throw new Error(`dropped[${i}] missing id/reason`);
+    });
+    return obj;
+  }
+
+  async function applyInboxAudit(batchPath, audit) {
+    const res = await postBackend("apply-audit", {
+      batch_path: batchPath,
+      audit,
+      profile: currentProfile ? currentProfile.id : "rob",
+    });
+    if (!res) return { ok: false, error: "backend unreachable" };
+    if (res.ok) {
+      const moved = res.moved || {};
+      const movedSummary = Object.entries(moved).filter(([_, n]) => n > 0).map(([k, n]) => `${k}=${n}`).join(", ");
+      return { ok: true, note: `${audit.kept.length} kept (${movedSummary || "0"}), ${audit.dropped.length} dropped.` };
+    }
+    return res;
+  }
+
+  // ── Report audit (single + bulk) ──────────────────────────────────────
+  let _selectedReportIds = new Set();
+  function startBulkReportAudit() {
+    if (!_selectedReportIds.size) return;
+    const reports = state.reports.filter(r => _selectedReportIds.has(r.id));
+    showReportAuditFlow(reports);
+  }
+  function showReportAuditFlow(reports) {
+    // Build an inline flow row at the top of the reports list.
+    const list = document.getElementById("reportsAdminList");
+    const wrap = document.createElement("li");
+    wrap.className = "audit-row";
+    wrap.innerHTML = `
+      <div class="audit-row-head">
+        <span class="audit-row-name">Auditing ${reports.length} report${reports.length === 1 ? "" : "s"}</span>
+        <button class="link-btn audit-row-toggle">Hide</button>
+      </div>
+      <div class="audit-flow">${auditFlowMarkup("reports")}</div>
+    `;
+    list.prepend(wrap);
+    const toggle = wrap.querySelector(".audit-row-toggle");
+    toggle.onclick = () => wrap.remove();
+    const flow = wrap.querySelector(".audit-flow");
+    // Override placeholder for reports response shape.
+    flow.querySelector(".audit-response").placeholder = '{ "summary": "...", "resolutions": [ { "report_id": "...", "question_id": "...", "action": "fix|dismiss|drop", "resolution": "...", "fixed_question": { ... } | null } ] }';
+    wireAuditFlow(flow, {
+      kind: "reports",
+      buildPrompt: () => buildReportAuditPrompt(reports),
+      parse: validateReportAuditResponse,
+      apply: applyReportAudit,
+    });
+  }
+  function buildReportAuditPrompt(reports) {
+    const qb = _qualityBarText();
+    // Pair each report with its current question so Claude has context.
+    const cases = reports.map((r, i) => {
+      const q = state.questions.find(x => x.id === r.question_id);
+      return `### Case ${i + 1}\n\nQUESTION (currently live):\n${q ? JSON.stringify(q, null, 2) : '(question not found in current bank - probably dropped already; resolution should be "dismiss" with note)'}\n\nREPORT:\n${JSON.stringify({ id: r.id, profile: r.profile, created: r.created, issue: r.issue, model: r.model }, null, 2)}`;
+    }).join("\n\n");
+    return `You are auditing user-submitted reports on questions in the
+A to E Australian Y4 MCQ bank.
+
+For each report, decide:
+  - "dismiss" if the user's complaint is wrong (the question is
+    factually correct). Provide a resolution explaining why.
+  - "fix" if the user is right and there's a fixable issue. Provide the
+    FULL corrected question JSON (every field) in fixed_question, plus a
+    resolution explaining what changed.
+  - "drop" if the question is fundamentally broken and cannot be
+    salvaged (trick question, irretrievably wrong). Provide a resolution.
+
+Edge case: if the complaint is "too hard", check the question for trick
+anti-patterns (single-phrase recognition + giveaway answer, weight-based
+dose arithmetic in the lead-in, etc.). If it's a legitimately hard but
+valid question, action="dismiss" with resolution "valid 4/5 or 5/5
+question; difficulty is appropriate".
+
+${qb}
+
+============================
+INPUT - ${reports.length} report${reports.length === 1 ? "" : "s"} to audit
+============================
+
+${cases}
+
+============================
+OUTPUT FORMAT (strict, no prose)
+============================
+
+Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
+
+{
+  "summary": "<2-4 sentences>",
+  "resolutions": [
+    {
+      "report_id":     "<id matching INPUT>",
+      "question_id":   "<question id>",
+      "action":        "dismiss" | "fix" | "drop",
+      "resolution":    "<2-3 sentences>",
+      "fixed_question": <full question JSON if action=='fix', else null>
+    }
+  ]
+}`;
+  }
+  function validateReportAuditResponse(raw) {
+    let s = raw.trim();
+    if (s.startsWith("```")) s = s.replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/, "").trim();
+    let obj;
+    try { obj = JSON.parse(s); } catch (e) { throw new Error("not valid JSON: " + e.message); }
+    if (!Array.isArray(obj.resolutions) || !obj.resolutions.length) throw new Error("missing resolutions array");
+    obj.resolutions.forEach((r, i) => {
+      if (!r.report_id) throw new Error(`resolutions[${i}].report_id missing`);
+      if (!r.question_id) throw new Error(`resolutions[${i}].question_id missing`);
+      if (!["dismiss", "fix", "drop"].includes(r.action)) throw new Error(`resolutions[${i}].action invalid`);
+      if (r.action === "fix") {
+        if (!r.fixed_question || !r.fixed_question.id || !r.fixed_question.topic) {
+          throw new Error(`resolutions[${i}] is a fix but fixed_question is missing/invalid`);
+        }
+      }
+    });
+    return obj;
+  }
+  async function applyReportAudit(parsed) {
+    const res = await postBackend("apply-report", { resolutions: parsed.resolutions });
+    if (!res) return { ok: false, error: "backend unreachable" };
+    if (res.ok) {
+      return { ok: true, note: `Fixed: ${res.fixed || 0}, dropped: ${res.dropped || 0}, dismissed: ${res.dismissed || 0}.` };
+    }
+    return res;
   }
   function renderReportsAdminList(filter) {
     const list = document.getElementById("reportsAdminList");
     list.innerHTML = "";
+    _selectedReportIds = new Set();   // reset selection on re-render
+    const bulkBtn = document.getElementById("auditBulkReports");
+    if (bulkBtn) bulkBtn.disabled = true;
     const reports = state.reports
       .filter(r => filter === "all" ? true : r.status === filter)
       .slice().reverse();   // newest first
@@ -1275,24 +1697,36 @@
       const when = (r.created || "").replace("T", " ").slice(0, 16);
       const qStem = q ? esc(q.stem.slice(0, 140)) + (q.stem.length > 140 ? "…" : "") : "<em>question not found in current bank</em>";
       const qModel = q && q.model ? `<span class="model-tag">${esc(q.model)}</span>` : "";
+      const open = (r.status || "open") === "open";
       li.innerHTML = `
         <div class="report-head">
+          ${open ? `<input type="checkbox" class="report-select" data-rep-id="${esc(r.id)}" title="Select for bulk audit" />` : ""}
           <span class="report-id">${esc(r.id)}</span>
           <span class="report-status status-${esc(r.status || "open")}">${esc(r.status || "open")}</span>
           <span class="report-when dim small">${esc(when)} · ${esc(r.profile || "guest")}</span>
           ${qModel}
+          ${open ? `<button class="link-btn report-audit-one">Audit this report</button>` : ""}
+          ${q ? `<button class="link-btn report-jump">Open Q</button>` : ""}
         </div>
         <div class="report-q"><b>Q: ${esc(r.question_id)}</b> - ${qStem}</div>
         <div class="report-issue">${esc(r.issue)}</div>
         ${r.resolution ? `<div class="report-resolution dim small">Resolution: ${esc(r.resolution)}</div>` : ""}
       `;
-      if (q) {
-        li.style.cursor = "pointer";
-        li.onclick = () => {
-          document.getElementById("reportsAdminModal").hidden = true;
-          jumpToQuestionStandalone(q);
-        };
-      }
+      const cb = li.querySelector(".report-select");
+      if (cb) cb.onclick = (e) => {
+        e.stopPropagation();
+        if (cb.checked) _selectedReportIds.add(r.id);
+        else _selectedReportIds.delete(r.id);
+        if (bulkBtn) bulkBtn.disabled = _selectedReportIds.size === 0;
+      };
+      const auditBtn = li.querySelector(".report-audit-one");
+      if (auditBtn) auditBtn.onclick = (e) => { e.stopPropagation(); showReportAuditFlow([r]); };
+      const jumpBtn = li.querySelector(".report-jump");
+      if (jumpBtn && q) jumpBtn.onclick = (e) => {
+        e.stopPropagation();
+        document.getElementById("reportsAdminModal").hidden = true;
+        jumpToQuestionStandalone(q);
+      };
       list.appendChild(li);
     }
   }

@@ -34,8 +34,10 @@ export default {
       return json({ ok: false, error: "POST only" }, 405, cors);
     }
     try {
-      if (url.pathname === "/paste")   return await handlePaste(request, env, cors);
-      if (url.pathname === "/report")  return await handleReport(request, env, cors);
+      if (url.pathname === "/paste")        return await handlePaste(request, env, cors);
+      if (url.pathname === "/report")       return await handleReport(request, env, cors);
+      if (url.pathname === "/apply-audit")  return await handleApplyAudit(request, env, cors);
+      if (url.pathname === "/apply-report") return await handleApplyReport(request, env, cors);
       return json({ ok: false, error: "not found" }, 404, cors);
     } catch (e) {
       return json({ ok: false, error: String(e && e.message || e) }, 500, cors);
@@ -124,8 +126,256 @@ async function handleReport(request, env, cors) {
   return json({ ok: true, id: entry.id }, 200, cors);
 }
 
+/* ── /apply-audit ────────────────────────────────────────────────────
+ *  body: { batch_path, audit: { summary, kept[], dropped[] }, profile }
+ *  - Merges kept[] into the appropriate main file by topic.
+ *  - Drops the batch from inbox_manifest.json (and physically removes
+ *    the inbox file by overwriting it with an empty array - safer than
+ *    contents-delete which requires SHA roundtrip).
+ *  - Appends a one-line summary + per-Q decisions to audit_log.md.
+ *
+ *  Only Rob's profile should call this; the worker doesn't enforce
+ *  that, but the frontend does.
+ */
+const TOPIC_TO_FILE = {
+  "Paediatrics":               "data/questions_paeds.json",
+  "Obstetrics & Gynaecology":  "data/questions_obgyn.json",
+  "Psychiatry":                "data/questions_psych.json",
+  "Medicine":                  "data/questions_medicine.json",
+};
+
+async function handleApplyAudit(request, env, cors) {
+  const body = await request.json().catch(() => null);
+  const audit = body && body.audit;
+  const batchPath = body && body.batch_path;   // e.g. "inbox/pasted-...json"
+  if (!audit || !Array.isArray(audit.kept) || !Array.isArray(audit.dropped)) {
+    return json({ ok: false, error: "expected { batch_path, audit: { kept[], dropped[] } }" }, 400, cors);
+  }
+  const moved = { Paediatrics: 0, "Obstetrics & Gynaecology": 0, Psychiatry: 0, Medicine: 0, _unknown: 0 };
+
+  // Bucket kept questions by topic.
+  const buckets = {};
+  for (const q of audit.kept) {
+    const t = q && q.topic;
+    const target = TOPIC_TO_FILE[t];
+    if (!target) { moved._unknown++; continue; }
+    buckets[target] = buckets[target] || [];
+    buckets[target].push(q);
+    moved[t]++;
+  }
+
+  // For each affected main file: read, merge by id (audit version
+  // wins on collision), write back.
+  for (const [path, addQs] of Object.entries(buckets)) {
+    await ghMergeArray(env, path, addQs, "id",
+      `Promote ${addQs.length} audited q(s) from ${batchPath || "(unspecified)"}`);
+  }
+
+  // Drop batch_path from inbox_manifest.json if present.
+  if (batchPath) {
+    await ghRemoveFromManifest(env, "data/inbox_manifest.json", "inbox", batchPath);
+    // Empty the inbox file so dedup-by-id during load doesn't double-show.
+    await ghPutFile(env, "data/" + batchPath, "[]\n",
+      `Clear ${batchPath} after audit promotion`);
+  }
+
+  // Append summary to data/audit_log.md.
+  const stamp = new Date().toISOString();
+  const summaryLine = `\n## ${stamp} - audit of ${batchPath || "(report batch)"} by ${body.profile || "rob"}\n\n` +
+    `${audit.summary || "(no summary)"}\n\n` +
+    `**Kept:** ${audit.kept.length} - ` +
+    Object.entries(moved).filter(([_, n]) => n > 0).map(([t, n]) => `${t}=${n}`).join(", ") + "\n\n" +
+    (audit.dropped.length
+      ? "**Dropped:**\n" + audit.dropped.map(d => `- \`${d.id}\` - ${d.reason}`).join("\n") + "\n"
+      : "");
+  await ghAppendText(env, "data/audit_log.md", summaryLine,
+    `Append audit log entry`);
+
+  return json({ ok: true, moved, dropped: audit.dropped.length }, 200, cors);
+}
+
+/* ── /apply-report ───────────────────────────────────────────────────
+ *  body: { resolutions: [ { report_id, question_id, action, resolution, fixed_question? } ] }
+ *  - For each resolution: edit reports.json (status + resolution),
+ *    and if action=='fix' replace the question in its containing file,
+ *    or if action=='drop' remove the question.
+ */
+async function handleApplyReport(request, env, cors) {
+  const body = await request.json().catch(() => null);
+  const resolutions = body && body.resolutions;
+  if (!Array.isArray(resolutions) || !resolutions.length) {
+    return json({ ok: false, error: "expected non-empty `resolutions` array" }, 400, cors);
+  }
+
+  // 1. Update reports.json by report_id - one pass.
+  await ghMutateJson(env, "data/reports.json", (data) => {
+    const reports = (data && data.reports) || [];
+    for (const r of resolutions) {
+      const found = reports.find(x => x.id === r.report_id);
+      if (found) {
+        found.status = r.action === "fix" ? "fixed"
+                     : r.action === "drop" ? "dropped"
+                     : "dismissed";
+        found.resolution = r.resolution || "";
+        found.resolved_at = new Date().toISOString();
+      }
+    }
+    return { reports };
+  }, `Resolve ${resolutions.length} report(s)`);
+
+  // 2. Apply fixes / drops per resolution. To avoid re-reading every
+  //    main file once per resolution, bucket by file path.
+  const byPath = {};
+  for (const r of resolutions) {
+    if (r.action !== "fix" && r.action !== "drop") continue;
+    const target = r.fixed_question && r.fixed_question.topic && TOPIC_TO_FILE[r.fixed_question.topic];
+    // For drops we don't know the topic from the resolution alone; we
+    // look it up by question_id below.
+    const path = target || null;
+    byPath[path || "_lookup"] = byPath[path || "_lookup"] || [];
+    byPath[path || "_lookup"].push(r);
+  }
+
+  // For "_lookup" entries (mostly drops + fixes without topic), search
+  // each main file for the id.
+  const allMainFiles = Object.values(TOPIC_TO_FILE);
+  const lookups = byPath["_lookup"] || [];
+  delete byPath["_lookup"];
+  if (lookups.length) {
+    // Pull each main file once, find the resolutions whose ids are in
+    // it, then route them to that path's bucket.
+    for (const path of allMainFiles) {
+      const r = await fetch(`https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}?ref=${env.GITHUB_BRANCH || "main"}`,
+        { headers: ghHeaders(env) });
+      if (r.status !== 200) continue;
+      const meta = await r.json();
+      let arr;
+      try { arr = JSON.parse(base64ToUtf8(meta.content)); } catch { continue; }
+      if (!Array.isArray(arr)) continue;
+      const idSet = new Set(arr.map(q => q.id));
+      const here = lookups.filter(rr => idSet.has(rr.question_id));
+      if (here.length) {
+        byPath[path] = (byPath[path] || []).concat(here);
+      }
+    }
+  }
+
+  // Now mutate each main file once.
+  const result = { fixed: 0, dropped: 0, dismissed: resolutions.filter(r => r.action === "dismiss").length };
+  for (const [path, items] of Object.entries(byPath)) {
+    await ghMutateJsonArray(env, path, (arr) => {
+      const out = arr.slice();
+      for (const r of items) {
+        const idx = out.findIndex(q => q.id === r.question_id);
+        if (r.action === "fix" && r.fixed_question) {
+          if (idx >= 0) out[idx] = r.fixed_question;
+          else out.push(r.fixed_question);
+          result.fixed++;
+        } else if (r.action === "drop") {
+          if (idx >= 0) out.splice(idx, 1);
+          result.dropped++;
+        }
+      }
+      return out;
+    }, `Apply ${items.length} report resolution(s) to ${path}`);
+  }
+
+  return json({ ok: true, ...result }, 200, cors);
+}
+
 /* ── GitHub helpers (Contents API; one PUT per file with optimistic
  *    SHA-based retry on 409). ─────────────────────────────────────────── */
+
+// Read JSON, run mutator, write back. Retries on SHA collision.
+async function ghMutateJson(env, path, mutator, message) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const branch = env.GITHUB_BRANCH || "main";
+    const url = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}?ref=${encodeURIComponent(branch)}`;
+    const r = await fetch(url, { headers: ghHeaders(env) });
+    let data = null;
+    let sha;
+    if (r.status === 200) {
+      const meta = await r.json();
+      sha = meta.sha;
+      try { data = JSON.parse(base64ToUtf8(meta.content)); } catch {}
+    }
+    const next = mutator(data);
+    const put = await fetch(`https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}`, {
+      method: "PUT",
+      headers: { ...ghHeaders(env), "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message,
+        branch,
+        content: utf8ToBase64(JSON.stringify(next, null, 2) + "\n"),
+        ...(sha ? { sha } : {}),
+      }),
+    });
+    if (put.ok) return;
+    if (put.status !== 409) throw new Error(`PUT ${path} (${put.status}): ${await put.text()}`);
+  }
+  throw new Error(`mutate ${path}: too many SHA collisions`);
+}
+
+// Specialisation: same as ghMutateJson but the file is a top-level
+// JSON array (not an object with a key).
+async function ghMutateJsonArray(env, path, mutator, message) {
+  return ghMutateJson(env, path, (data) => mutator(Array.isArray(data) ? data : []), message);
+}
+
+// Read JSON array, append items deduped by `key`, write back.
+async function ghMergeArray(env, path, items, key, message) {
+  return ghMutateJsonArray(env, path, (arr) => {
+    const out = arr.slice();
+    const idx = new Map(out.map((q, i) => [q[key], i]));
+    for (const it of items) {
+      const k = it[key];
+      if (idx.has(k)) out[idx.get(k)] = it;     // audit version wins
+      else { idx.set(k, out.length); out.push(it); }
+    }
+    return out;
+  }, message);
+}
+
+// Remove `value` from `obj[key]` (a string array) in a JSON file.
+async function ghRemoveFromManifest(env, path, key, value) {
+  return ghMutateJson(env, path, (data) => {
+    data = data || {};
+    if (!Array.isArray(data[key])) data[key] = [];
+    data[key] = data[key].filter(v => v !== value);
+    return data;
+  }, `Remove ${value} from ${path}`);
+}
+
+// Append text to a UTF-8 file (creates if missing). Retries on SHA collision.
+async function ghAppendText(env, path, text, message) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const branch = env.GITHUB_BRANCH || "main";
+    const url = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}?ref=${encodeURIComponent(branch)}`;
+    const r = await fetch(url, { headers: ghHeaders(env) });
+    let existing = "";
+    let sha;
+    if (r.status === 200) {
+      const meta = await r.json();
+      sha = meta.sha;
+      try { existing = base64ToUtf8(meta.content); } catch {}
+    } else if (r.status !== 404) {
+      throw new Error(`GET ${path} (${r.status})`);
+    }
+    const put = await fetch(`https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}`, {
+      method: "PUT",
+      headers: { ...ghHeaders(env), "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message,
+        branch,
+        content: utf8ToBase64(existing + text),
+        ...(sha ? { sha } : {}),
+      }),
+    });
+    if (put.ok) return;
+    if (put.status !== 409) throw new Error(`PUT ${path} (${put.status}): ${await put.text()}`);
+  }
+  throw new Error(`append ${path}: too many SHA collisions`);
+}
 
 async function ghPutFile(env, path, content, message) {
   const url = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${encodeURIComponent(path).replace(/%2F/g, "/")}`;

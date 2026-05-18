@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260518a" />
+<link rel="stylesheet" href="assets/styles.css?v=20260518b" />
 </head>
 <body data-screen="home" class="locked">
 
@@ -57,7 +57,7 @@
   </div>
   <nav class="masthead-tools">
     <button id="rangesBtn" class="link-btn" title="Reference values (L)"><span class="t-long">Reference values</span><span class="t-short">Values</span></button>
-    <button id="reportsAdminBtn" class="link-btn admin-only" title="Open reports admin" hidden>Reports <span id="reportsAdminCount" class="badge"></span></button>
+    <button id="reportsAdminBtn" class="link-btn admin-only" title="Open audit dashboard" hidden>Audit <span id="reportsAdminCount" class="badge"></span></button>
     <button id="themeBtn" class="link-btn" title="Toggle theme">Theme</button>
     <button id="homeBtn" class="link-btn" title="Index">Index</button>
     <span class="profile-chip" id="profileChip" data-profile-id="" hidden>
@@ -303,23 +303,43 @@
   </div>
 </div>
 
-<!-- ── REPORTS ADMIN (Rob only) ─────────────────────────────────────── -->
+<!-- ── AUDIT DASHBOARD (Rob only) ───────────────────────────────────── -->
 
 <div id="reportsAdminModal" class="modal" hidden>
   <div class="modal-card modal-card-wide">
     <div class="modal-head">
-      <h2>Question reports</h2>
+      <h2>Audit dashboard</h2>
       <button id="reportsAdminClose" class="ghost-x" aria-label="Close">×</button>
     </div>
     <div class="modal-body">
-      <div class="reports-filters">
-        <button class="opt selected" data-rep-filter="open">Open</button>
-        <button class="opt" data-rep-filter="all">All</button>
-        <button class="opt" data-rep-filter="fixed">Fixed</button>
-        <button class="opt" data-rep-filter="dismissed">Dismissed</button>
+      <div class="audit-intro">
+        <p>The two tabs below let you audit pending content using Claude on the free plan - no Claude Code needed. For each row: <b>(1)</b> click <em>Copy audit prompt</em>, <b>(2)</b> open <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> in a new tab and paste the prompt, <b>(3)</b> copy Claude's full JSON response back into the textarea here, <b>(4)</b> click <em>Validate &amp; apply</em>. The site validates the schema and commits the changes via the live backend.</p>
       </div>
-      <ol id="reportsAdminList" class="reports-list"></ol>
-      <p class="dim small">Reports are resolved during the next audit pass (Claude reads <code>data/reports.json</code>, fixes/dismisses, commits back).</p>
+      <div class="audit-tabs">
+        <button class="audit-tab selected" data-tab="inbox">Inbox <span id="auditInboxCount" class="badge"></span></button>
+        <button class="audit-tab" data-tab="reports">Reports <span id="auditReportsCount" class="badge"></span></button>
+      </div>
+
+      <!-- Inbox tab -->
+      <div class="audit-tab-panel" data-tab-panel="inbox">
+        <p class="dim small">Pending batches uploaded via the paste box. Each batch needs a quality-bar audit before promotion into the canonical files.</p>
+        <ol id="auditInboxList" class="audit-list"></ol>
+      </div>
+
+      <!-- Reports tab -->
+      <div class="audit-tab-panel" data-tab-panel="reports" hidden>
+        <div class="reports-filters">
+          <button class="opt selected" data-rep-filter="open">Open</button>
+          <button class="opt" data-rep-filter="all">All</button>
+          <button class="opt" data-rep-filter="fixed">Fixed</button>
+          <button class="opt" data-rep-filter="dismissed">Dismissed</button>
+          <button class="opt" data-rep-filter="dropped">Dropped</button>
+          <span class="audit-bulk">
+            <button id="auditBulkReports" class="link-btn" disabled>Bulk-audit selected</button>
+          </span>
+        </div>
+        <ol id="reportsAdminList" class="reports-list"></ol>
+      </div>
     </div>
   </div>
 </div>
@@ -382,6 +402,18 @@ You are generating high-quality single-best-answer MCQs for a Year 4
 Australian medical student preparing for their final-year MCQ exams
 (end of MD program). Output ONLY a JSON array conforming to the schema
 below, with no surrounding prose.
+
+============================
+0. CURRENT FOCUS (time-bound)
+============================
+
+{{FOCUS_DIRECTIVE}}
+
+Generate ONLY in the discipline(s) listed above for this period.
+Questions in non-focus disciplines are dropped during audit, so don't
+waste your generation budget on them. The framework topic lists in
+Section 5B include all four disciplines for reference, but ONLY pick
+scenarios from the disciplines named in this Current Focus block.
 
 ============================
 1. DIFFICULTY CALIBRATION
@@ -967,6 +999,6 @@ visible to the maintainer in the commentary view.
 Output the final JSON array. Nothing else.
 </script>
 
-<script src="assets/app.js?v=20260518a" defer></script>
+<script src="assets/app.js?v=20260518b" defer></script>
 </body>
 </html>
