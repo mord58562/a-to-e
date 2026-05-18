@@ -1946,18 +1946,16 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     btn.disabled = true;
     status.textContent = "Saving…";
 
-    // Tag every pasted question with the LLM the user picked, so
-    // audit can see "who made what" across the bank.
-    const modelSel = document.getElementById("pasteModel");
-    const model = modelSel ? modelSel.value : null;
-    if (model) {
-      for (const q of added) { if (!q.model) q.model = model; }
-    }
+    // The LLM is supposed to self-declare its model in each question's
+    // top-level `model` field (the prompt instructs this). Anything
+    // missing falls back to "unknown" so audit can flag the generator
+    // for not following the rule.
+    for (const q of added) { if (!q.model) q.model = "unknown"; }
 
     // Try the remote worker first, then local backend. Both write
     // to data/inbox/ so the audit flow picks it up. Fall back to
     // localStorage only if both fail (offline / no backend / no worker).
-    const res = await postBackend("paste", { questions: added, model });
+    const res = await postBackend("paste", { questions: added });
     const savedToInbox = res && res.ok ? (res.saved || true) : null;
 
     if (!savedToInbox) {
