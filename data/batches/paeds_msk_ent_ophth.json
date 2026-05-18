@@ -5,8 +5,14 @@
     "subtopic": "Paediatric orthopaedics - septic arthritis vs transient synovitis",
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["septic arthritis", "transient synovitis", "Kocher criteria", "limp", "hip"],
-    "stem": "A 5-year-old previously well boy is brought to a metropolitan paediatric emergency department because of right hip pain and refusal to weight-bear for the past 18 hours. His mother reports a coryzal illness that resolved 10 days ago and no history of trauma. Immunisations are up to date and he is not Aboriginal or Torres Strait Islander. On arrival he is alert, holds his right hip in slight flexion, abduction and external rotation, and cries with passive internal rotation. He has no rash, no other joint involvement and no overlying erythema or warmth at the hip. Capillary refill is 2 seconds and peripheral pulses are normal. He was given paracetamol 2 hours ago at triage. The ED registrar performs an ultrasound which demonstrates a moderate right hip effusion. Bloods and a plain pelvic radiograph have been arranged. The orthopaedic registrar asks for risk stratification using the Kocher criteria before deciding on theatre versus observation.",
+    "tags": [
+      "septic arthritis",
+      "transient synovitis",
+      "Kocher criteria",
+      "limp",
+      "hip"
+    ],
+    "stem": "A 5-year-old previously well boy is brought to a metropolitan paediatric emergency department because of right hip pain and refusal to weight-bear for the past 18 hours. His mother reports a coryzal illness that resolved 10 days ago and no history of trauma. Immunisations are up to date and he is not Aboriginal or Torres Strait Islander. On arrival he is alert, holds his right hip in slight flexion, abduction and external rotation, and cries with passive internal rotation. He has no rash, no other joint involvement and no overlying erythema or warmth at the hip. Capillary refill is 2 seconds and peripheral pulses are normal. He was given paracetamol 2 hours ago at triage. The ED registrar performs an ultrasound which demonstrates a moderate right hip effusion. Bloods and a plain pelvic radiograph have been arranged. The orthopaedic registrar asks for risk stratification using the Kocher criteria before deciding on theatre versus observation. The team specifically asks how to apply the Kocher criteria today, whether MRI should be obtained before any intervention, whether oral antibiotics with outpatient orthopaedic review would be acceptable, and whether observation with serial CRP at 12 hours would be safer than immediate aspiration. The on-call orthopaedic registrar is in theatre and can review within 30 minutes.",
     "data_table": {
       "Vital signs": "T 38.7 deg C, HR 128 bpm, RR 22 /min, BP 102/64 mmHg, SpO2 99 percent on room air",
       "Examination": "Holds right hip in flexion / abduction / external rotation, painful log-roll, no overlying erythema, refuses to bear weight even with paracetamol on board",
@@ -16,38 +22,52 @@
     "options": [
       {
         "letter": "A",
-        "text": "Discharge home with simple analgesia and GP review in 48 hours for likely transient synovitis",
+        "text": "Discharge home with paracetamol and ibuprofen for simple analgesia and arrange GP review in 48 hours for likely post-viral transient synovitis with planned reassessment",
         "correct": false,
         "rationale": "This child meets all four Kocher criteria (fever >38.5 deg C, refusal to bear weight, ESR >40 mm/h, WCC >12 x10^9/L), giving a predicted septic arthritis probability of approximately 99 percent; discharge without joint aspiration is unsafe per RCH CPG: Acute limp.",
-        "source_refs": ["RCH CPG: Acute limp", "Kocher et al. JBJS 1999"]
+        "source_refs": [
+          "RCH CPG: Acute limp",
+          "Kocher et al. JBJS 1999"
+        ]
       },
       {
         "letter": "B",
-        "text": "Admit for observation and serial examination with IV fluids, withholding antibiotics until repeat CRP at 12 hours",
+        "text": "Admit for observation and serial examinations with maintenance IV fluids, withholding empirical antibiotics until a repeat CRP and full blood count at 12 hours have been reviewed",
         "correct": false,
         "rationale": "Withholding antibiotics and aspiration in a 4 of 4 Kocher patient risks irreversible cartilage and femoral head damage; time to washout correlates with outcome, per RCH CPG: Acute limp and Therapeutic Guidelines: Bone and joint infections.",
-        "source_refs": ["RCH CPG: Acute limp", "Therapeutic Guidelines: Bone and joint infections"]
+        "source_refs": [
+          "RCH CPG: Acute limp",
+          "Therapeutic Guidelines: Bone and joint infections"
+        ]
       },
       {
         "letter": "C",
-        "text": "Commence empirical oral flucloxacillin and arrange outpatient orthopaedic review the following week",
+        "text": "Commence empirical oral flucloxacillin 25 mg/kg six-hourly and arrange outpatient orthopaedic clinic review the following week with safety-net advice for parents",
         "correct": false,
         "rationale": "Oral therapy and outpatient follow-up are inappropriate for high-probability septic arthritis of the hip; IV therapy after aspiration is mandated and oral switch is only considered once cultures and clinical course are reassuring, per Therapeutic Guidelines: Bone and joint infections.",
-        "source_refs": ["Therapeutic Guidelines: Bone and joint infections"]
+        "source_refs": [
+          "Therapeutic Guidelines: Bone and joint infections"
+        ]
       },
       {
         "letter": "D",
         "text": "Arrange urgent ultrasound-guided hip aspiration in theatre, send synovial fluid for cell count and culture, then commence empirical IV flucloxacillin after sampling",
         "correct": true,
         "rationale": "With four Kocher criteria positive and a sonographic effusion, the predicted probability of septic arthritis is approximately 99 percent; urgent aspiration (often combined with arthrotomy and washout) confirms the diagnosis and decompresses the joint, with empirical IV flucloxacillin started immediately after sampling to cover Staphylococcus aureus, per RCH CPG: Acute limp and Therapeutic Guidelines: Bone and joint infections.",
-        "source_refs": ["RCH CPG: Acute limp", "Therapeutic Guidelines: Bone and joint infections", "Kocher et al. JBJS 1999"]
+        "source_refs": [
+          "RCH CPG: Acute limp",
+          "Therapeutic Guidelines: Bone and joint infections",
+          "Kocher et al. JBJS 1999"
+        ]
       },
       {
         "letter": "E",
-        "text": "Order an urgent MRI hip and defer antibiotics or aspiration until imaging excludes osteomyelitis",
+        "text": "Order an urgent contrast MRI of the hip and pelvis and defer joint aspiration and antibiotics until imaging has formally excluded coexisting osteomyelitis or pelvic abscess",
         "correct": false,
         "rationale": "MRI has a role where osteomyelitis is suspected after equivocal initial assessment, but it should not delay aspiration and antibiotics in a 4 of 4 Kocher patient with a confirmed effusion, per RCH CPG: Acute limp.",
-        "source_refs": ["RCH CPG: Acute limp"]
+        "source_refs": [
+          "RCH CPG: Acute limp"
+        ]
       }
     ],
     "explanation": {
@@ -61,11 +81,24 @@
       "pearls": "Transient synovitis classically follows a viral URTI by 1-2 weeks but the child is afebrile and will mobilise with analgesia; fever plus refusal to weight-bear despite analgesia is a major red flag (Source: RCH CPG: Acute limp)."
     },
     "sources": [
-      {"label": "RCH CPG: Acute limp", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Acute_limp/"},
-      {"label": "Therapeutic Guidelines: Bone and joint infections", "url": "https://tgldcdp.tg.org.au/"},
-      {"label": "Kocher et al. JBJS 1999", "url": "https://www.ncbi.nlm.nih.gov/pubmed/10608376"}
+      {
+        "label": "RCH CPG: Acute limp",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Acute_limp/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Bone and joint infections",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "Kocher et al. JBJS 1999",
+        "url": "https://www.ncbi.nlm.nih.gov/pubmed/10608376"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child", "paeds_fbc", "inflammatory_markers"],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "paeds_fbc",
+      "inflammatory_markers"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -74,7 +107,13 @@
     "subtopic": "Paediatric orthopaedics - Perthes versus SUFE",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["Perthes", "SUFE", "limp", "hip", "imaging"],
+    "tags": [
+      "Perthes",
+      "SUFE",
+      "limp",
+      "hip",
+      "imaging"
+    ],
     "stem": "A 12-year-old boy with a BMI of 30 kg/m^2 presents to his GP with a 6-week history of intermittent left knee and anterior thigh pain that has progressed over the past week to an antalgic limp. He denies any specific injury and has been otherwise well. He is in the early stages of puberty (Tanner 2 pubic hair). On examination the left lower limb is held in slight external rotation with the patient supine. When the GP attempts to flex the left hip, the leg obligately externally rotates. Hip internal rotation and abduction are reduced compared with the right side, but there is no joint warmth, no effusion clinically and no overlying erythema. He is afebrile with normal observations. He weighs 78 kg. Plain anteroposterior pelvic radiographs are obtained and reported by the radiologist as showing a widened, irregular left proximal femoral physis.",
     "data_table": {
       "Vital signs": "T 36.7 deg C, HR 86 bpm, RR 16 /min, BP 118/72 mmHg, SpO2 99 percent on room air",
@@ -85,38 +124,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "Reassure, advise simple analgesia and review in 6 weeks if symptoms persist",
+        "text": "Reassure the family, advise simple oral analgesia with paracetamol and review the child in clinic in 6 weeks if symptoms persist or worsen with ongoing activity",
         "correct": false,
         "rationale": "Obligate external rotation on hip flexion and a widened proximal femoral physis are pathognomonic of slipped upper femoral epiphysis; delayed referral risks progression from stable to unstable slip and avascular necrosis, per RCH CPG: SUFE.",
-        "source_refs": ["RCH CPG: SUFE"]
+        "source_refs": [
+          "RCH CPG: SUFE"
+        ]
       },
       {
         "letter": "B",
-        "text": "Refer for orthopaedic outpatient assessment within 2 weeks and continue weight-bearing in the interim",
+        "text": "Refer for routine paediatric orthopaedic outpatient assessment within the next 2 weeks and allow continued partial weight-bearing on the affected limb in the interim period",
         "correct": false,
         "rationale": "Continued weight-bearing risks progression of a stable slip to an unstable slip, which carries a much higher risk of avascular necrosis; the child must be made non-weight-bearing and referred urgently, per RCH CPG: SUFE.",
-        "source_refs": ["RCH CPG: SUFE"]
+        "source_refs": [
+          "RCH CPG: SUFE"
+        ]
       },
       {
         "letter": "C",
-        "text": "Order an MRI hip in the next 7 days to exclude Perthes disease before referral",
+        "text": "Order an outpatient MRI of the left hip within the next 7 days to exclude Perthes disease before any orthopaedic referral or non-weight-bearing measures",
         "correct": false,
         "rationale": "Perthes typically affects 4-8 year olds and shows femoral head fragmentation, not physeal widening, in an underweight child; this 12-year-old with raised BMI and physeal widening has SUFE and MRI should not delay orthopaedic referral, per RCH CPG: Acute limp.",
-        "source_refs": ["RCH CPG: Acute limp"]
+        "source_refs": [
+          "RCH CPG: Acute limp"
+        ]
       },
       {
         "letter": "D",
         "text": "Make the child strictly non-weight-bearing (wheelchair or crutches), arrange immediate transfer to the nearest paediatric orthopaedic unit and request a frog-lateral pelvic radiograph",
         "correct": true,
         "rationale": "This is a stable SUFE with classic obligate external rotation and a widened physis on AP view; frog-lateral views improve sensitivity. The child must be made non-weight-bearing immediately and admitted for in-situ percutaneous pinning to prevent progression and avascular necrosis, per RCH CPG: SUFE.",
-        "source_refs": ["RCH CPG: SUFE", "RCH CPG: Acute limp"]
+        "source_refs": [
+          "RCH CPG: SUFE",
+          "RCH CPG: Acute limp"
+        ]
       },
       {
         "letter": "E",
-        "text": "Arrange knee MRI given the predominant knee pain to exclude meniscal injury",
+        "text": "Arrange an outpatient MRI of the left knee given the predominant knee pain to exclude meniscal injury or osteochondritis dissecans before any hip-focused intervention",
         "correct": false,
         "rationale": "Referred knee pain is classic for hip pathology in adolescents; the hip exam findings and pelvic XR have already localised the lesion, so knee MRI would delay definitive management, per RCH CPG: Acute limp.",
-        "source_refs": ["RCH CPG: Acute limp"]
+        "source_refs": [
+          "RCH CPG: Acute limp"
+        ]
       }
     ],
     "explanation": {
@@ -130,10 +180,18 @@
       "pearls": "Any adolescent with knee or thigh pain needs a hip examination; missed SUFE is a leading cause of preventable adolescent hip morbidity (Source: RCH CPG: SUFE)."
     },
     "sources": [
-      {"label": "RCH CPG: SUFE", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Slipped_capital_femoral_epiphysis/"},
-      {"label": "RCH CPG: Acute limp", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Acute_limp/"}
+      {
+        "label": "RCH CPG: SUFE",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Slipped_capital_femoral_epiphysis/"
+      },
+      {
+        "label": "RCH CPG: Acute limp",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Acute_limp/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child"],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -142,7 +200,12 @@
     "subtopic": "Paediatric orthopaedics - Osgood-Schlatter",
     "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["Osgood-Schlatter", "knee pain", "apophysitis", "sports"],
+    "tags": [
+      "Osgood-Schlatter",
+      "knee pain",
+      "apophysitis",
+      "sports"
+    ],
     "stem": "A 13-year-old male competitive basketballer presents to his GP with a 6-week history of bilateral anterior knee pain that is worse during and after training, jumping and stair climbing, and that settles with rest. He denies any acute injury and has had no swelling, locking or giving way. He has had a recent growth spurt of 8 cm over the past 12 months. On examination both knees demonstrate localised tenderness and palpable bony prominence at the tibial tuberosity, with reproduction of pain on resisted knee extension and on direct pressure over the tuberosity. There is no joint effusion, no warmth, no ligamentous laxity and no patellar grind. He is afebrile with normal observations and his weight is on the 60th centile.",
     "data_table": {
       "Vital signs": "T 36.7 deg C, HR 78 bpm, RR 14 /min, BP 112/68 mmHg",
@@ -156,35 +219,45 @@
         "text": "Reassure with the clinical diagnosis of Osgood-Schlatter, advise relative rest with activity modification and ice plus simple analgesia, and continue sport as tolerated",
         "correct": true,
         "rationale": "Bilateral tibial tuberosity tenderness in an adolescent during a growth spurt with reproducible pain on resisted knee extension is diagnostic of Osgood-Schlatter (traction apophysitis); imaging is not required for the typical presentation and management is conservative, per RCH CPG: Knee pain.",
-        "source_refs": ["RCH CPG: Knee pain"]
+        "source_refs": [
+          "RCH CPG: Knee pain"
+        ]
       },
       {
         "letter": "B",
-        "text": "Order bilateral knee MRI to exclude osteochondritis dissecans and refer to paediatric orthopaedics",
+        "text": "Order bilateral knee MRI to exclude osteochondritis dissecans and refer to paediatric orthopaedics for further assessment and consideration of arthroscopy if abnormalities are identified",
         "correct": false,
         "rationale": "MRI and orthopaedic referral are reserved for atypical presentations (unilateral, nocturnal pain, locking, persistent symptoms beyond skeletal maturity); typical bilateral apophysitis does not require imaging, per RCH CPG: Knee pain.",
-        "source_refs": ["RCH CPG: Knee pain"]
+        "source_refs": [
+          "RCH CPG: Knee pain"
+        ]
       },
       {
         "letter": "C",
-        "text": "Apply a long-leg plaster cast bilaterally for 6 weeks and reassess for fragmentation",
+        "text": "Apply long-leg plaster casts bilaterally for 6 weeks and reassess at the end of treatment for ongoing tibial tuberosity fragmentation or ossicle formation",
         "correct": false,
         "rationale": "Casting is not recommended for Osgood-Schlatter and risks deconditioning; relative rest with continued activity within pain tolerance preserves quadriceps strength and growth, per RCH CPG: Knee pain.",
-        "source_refs": ["RCH CPG: Knee pain"]
+        "source_refs": [
+          "RCH CPG: Knee pain"
+        ]
       },
       {
         "letter": "D",
-        "text": "Inject corticosteroid into the tibial tuberosity to reduce inflammation and accelerate return to sport",
+        "text": "Inject intralesional corticosteroid into the tibial tuberosity bilaterally to reduce traction apophysitis inflammation and accelerate return to competitive basketball training",
         "correct": false,
         "rationale": "Intralesional corticosteroid is contraindicated near an open apophysis because of risk of soft tissue atrophy, depigmentation and growth disturbance, per RCH CPG: Knee pain.",
-        "source_refs": ["RCH CPG: Knee pain"]
+        "source_refs": [
+          "RCH CPG: Knee pain"
+        ]
       },
       {
         "letter": "E",
-        "text": "Commence oral colchicine and arrange uric acid measurement for likely juvenile gout",
+        "text": "Commence oral colchicine and arrange urgent serum uric acid measurement plus joint aspiration for likely juvenile gout despite the bilateral apophysitis findings",
         "correct": false,
         "rationale": "Gout is exceedingly rare in adolescents and would not cause bilateral tibial tuberosity tenderness in a growth spurt; this presentation is classic Osgood-Schlatter, per RCH CPG: Knee pain.",
-        "source_refs": ["RCH CPG: Knee pain"]
+        "source_refs": [
+          "RCH CPG: Knee pain"
+        ]
       }
     ],
     "explanation": {
@@ -198,10 +271,18 @@
       "pearls": "Persistent unfused ossicle in the patellar tendon after skeletal maturity may need excision but is rare (Source: RCH CPG: Knee pain)."
     },
     "sources": [
-      {"label": "RCH CPG: Knee pain", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Knee_pain/"},
-      {"label": "RACGP - Adolescent knee pain", "url": "https://www.racgp.org.au/afp/2017/april/management-of-osgood-schlatter-disease/"}
+      {
+        "label": "RCH CPG: Knee pain",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Knee_pain/"
+      },
+      {
+        "label": "RACGP - Adolescent knee pain",
+        "url": "https://www.racgp.org.au/afp/2017/april/management-of-osgood-schlatter-disease/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child"],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -210,7 +291,12 @@
     "subtopic": "Adolescent scoliosis - referral cut-offs",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["scoliosis", "Cobb angle", "Adams forward bend", "adolescent"],
+    "tags": [
+      "scoliosis",
+      "Cobb angle",
+      "Adams forward bend",
+      "adolescent"
+    ],
     "stem": "A 13-year-old girl is brought to her GP after a school nurse noticed asymmetry of her back during a routine screening assessment. She has no back pain, no neurological symptoms and no functional limitation, and dances three times a week without difficulty. She had menarche 6 months ago. On examination, when she bends forward (Adams forward bend test) there is a clearly visible right thoracic rib prominence. Standing posture shows a right shoulder higher than the left and asymmetric flank crease. There is no leg-length discrepancy on examination. Neurological examination is normal, including abdominal reflexes and lower limb tone, power, reflexes and sensation. There are no skin stigmata of spinal dysraphism (no hairy patch, lipoma or sacral dimple). A standing posteroanterior spinal radiograph is ordered and reports a right thoracic curve with a Cobb angle of 28 degrees and Risser stage 2.",
     "data_table": {
       "Vital signs": "T 36.6 deg C, HR 72 bpm, RR 14 /min, BP 108/68 mmHg",
@@ -221,38 +307,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "Reassure and discharge with no follow-up as she is asymptomatic",
+        "text": "Reassure the patient and family, discharge with no follow-up arrangements as she is currently asymptomatic and reports no functional or postural concerns",
         "correct": false,
         "rationale": "A Cobb angle of 28 degrees in a skeletally immature girl (Risser 2, recent menarche) has a significant risk of progression and requires specialist orthopaedic follow-up rather than discharge, per RCH CPG: Scoliosis.",
-        "source_refs": ["RCH CPG: Scoliosis"]
+        "source_refs": [
+          "RCH CPG: Scoliosis"
+        ]
       },
       {
         "letter": "B",
-        "text": "Arrange routine GP review in 6 months and repeat the standing spinal radiograph at that time",
+        "text": "Arrange routine GP review in 6 months with a repeat standing posteroanterior spinal radiograph at that time to reassess Cobb angle and Risser stage progression",
         "correct": false,
         "rationale": "Curves of 20-40 degrees in a skeletally immature patient meet the threshold for paediatric orthopaedic referral and possible bracing; surveillance alone in primary care risks missing progression that crosses the 40-50 degree surgical threshold, per RCH CPG: Scoliosis.",
-        "source_refs": ["RCH CPG: Scoliosis"]
+        "source_refs": [
+          "RCH CPG: Scoliosis"
+        ]
       },
       {
         "letter": "C",
         "text": "Refer to a paediatric orthopaedic / spinal surgeon for consideration of bracing given a Cobb angle of 28 degrees in a skeletally immature patient",
         "correct": true,
         "rationale": "Australian guidelines refer skeletally immature adolescents with Cobb angles of 20 degrees or more to a spinal service; bracing is typically considered between 25 and 40 degrees in skeletally immature patients to prevent progression, per RCH CPG: Scoliosis.",
-        "source_refs": ["RCH CPG: Scoliosis", "Spine Society of Australia - AIS"]
+        "source_refs": [
+          "RCH CPG: Scoliosis",
+          "Spine Society of Australia - AIS"
+        ]
       },
       {
         "letter": "D",
-        "text": "Refer urgently for posterior spinal instrumentation and fusion given the visible deformity",
+        "text": "Refer urgently to spinal surgery for posterior spinal instrumentation and fusion given the visible deformity, asymmetric shoulders and a 28-degree thoracic Cobb angle",
         "correct": false,
         "rationale": "Surgery is generally considered for curves over 45-50 degrees that continue to progress, not 28 degrees; bracing is the appropriate first-line specialist intervention at this Cobb angle, per RCH CPG: Scoliosis.",
-        "source_refs": ["RCH CPG: Scoliosis"]
+        "source_refs": [
+          "RCH CPG: Scoliosis"
+        ]
       },
       {
         "letter": "E",
-        "text": "Order an urgent whole-spine MRI to exclude syringomyelia given the right thoracic curve",
+        "text": "Order an urgent whole-spine MRI under sedation to exclude syringomyelia given the visible right thoracic curve and shoulder-height asymmetry on standing examination",
         "correct": false,
         "rationale": "MRI is indicated for atypical features (left thoracic curve, rapid progression, neurological signs, painful curve, juvenile onset under 10, cutaneous spinal stigmata); a right thoracic curve in an otherwise neurologically normal adolescent is typical idiopathic and does not mandate MRI, per RCH CPG: Scoliosis.",
-        "source_refs": ["RCH CPG: Scoliosis"]
+        "source_refs": [
+          "RCH CPG: Scoliosis"
+        ]
       }
     ],
     "explanation": {
@@ -266,10 +363,18 @@
       "pearls": "A scoliometer reading of 7 degrees or more on the Adams forward bend roughly corresponds to a 20 degree Cobb angle and triggers radiographic assessment (Source: Spine Society of Australia)."
     },
     "sources": [
-      {"label": "RCH CPG: Scoliosis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Scoliosis/"},
-      {"label": "Spine Society of Australia - AIS", "url": "https://spinesociety.org.au/"}
+      {
+        "label": "RCH CPG: Scoliosis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Scoliosis/"
+      },
+      {
+        "label": "Spine Society of Australia - AIS",
+        "url": "https://spinesociety.org.au/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child"],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -278,7 +383,13 @@
     "subtopic": "Developmental dysplasia of the hip - neonatal exam",
     "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["DDH", "Barlow", "Ortolani", "neonatal exam", "hip screening"],
+    "tags": [
+      "DDH",
+      "Barlow",
+      "Ortolani",
+      "neonatal exam",
+      "hip screening"
+    ],
     "stem": "A term female infant is being examined on day 2 of life on the postnatal ward as part of the routine newborn examination. She was born by elective caesarean at 39+1 weeks for breech presentation that did not respond to external cephalic version. Birthweight was 3520 g. There is a family history of DDH in her older sister who required a Pavlik harness. She is breastfeeding well, has passed urine and meconium, and is otherwise normal on examination. During hip examination, the Ortolani manoeuvre on the left hip elicits a palpable clunk as the femoral head reduces into the acetabulum with abduction. The right hip is stable. There is no leg-length discrepancy or asymmetric thigh skin creases. Neurological examination including primitive reflexes is normal.",
     "data_table": {
       "Vital signs": "T 36.9 deg C, HR 142 bpm, RR 46 /min, SpO2 99 percent on room air",
@@ -289,38 +400,48 @@
     "options": [
       {
         "letter": "A",
-        "text": "Reassure parents that hip clunks are usually benign and arrange routine 6-week check",
+        "text": "Reassure the parents that hip clunks are usually benign at this age and arrange routine 6-week paediatric review without specific imaging or specialist input today",
         "correct": false,
         "rationale": "A positive Ortolani is a clinically dislocated and reducible hip and is not a benign click; immediate paediatric orthopaedic referral is indicated, per RCH CPG: DDH and NHMRC neonatal hip screening guidance.",
-        "source_refs": ["RCH CPG: DDH"]
+        "source_refs": [
+          "RCH CPG: DDH"
+        ]
       },
       {
         "letter": "B",
-        "text": "Order an immediate plain anteroposterior pelvic radiograph",
+        "text": "Order an immediate plain anteroposterior pelvic radiograph today to assess acetabular index and Shenton line before any specialist orthopaedic referral or harness fitting",
         "correct": false,
         "rationale": "Plain radiographs are unreliable before approximately 4-6 months of age because the femoral heads have not ossified; ultrasound is the imaging modality of choice in neonates, per RCH CPG: DDH.",
-        "source_refs": ["RCH CPG: DDH"]
+        "source_refs": [
+          "RCH CPG: DDH"
+        ]
       },
       {
         "letter": "C",
         "text": "Refer to a paediatric orthopaedic surgeon for assessment and harness application, and arrange a static plus dynamic hip ultrasound",
         "correct": true,
         "rationale": "A frankly positive Ortolani in the presence of risk factors (female, breech, family history) mandates urgent paediatric orthopaedic referral; ultrasound (Graf classification, static and dynamic) confirms morphology and a Pavlik harness is fitted under supervision, per RCH CPG: DDH.",
-        "source_refs": ["RCH CPG: DDH"]
+        "source_refs": [
+          "RCH CPG: DDH"
+        ]
       },
       {
         "letter": "D",
-        "text": "Apply double nappies and review in 4 weeks",
+        "text": "Apply double nappies between the legs to maintain abduction and review the child in 4 weeks with repeat clinical examination of both hips",
         "correct": false,
         "rationale": "Double-nappying is not evidence-based and delays definitive Pavlik harness treatment in a baby with a frankly dislocated hip, per RCH CPG: DDH.",
-        "source_refs": ["RCH CPG: DDH"]
+        "source_refs": [
+          "RCH CPG: DDH"
+        ]
       },
       {
         "letter": "E",
-        "text": "Arrange ultrasound only at 6 weeks of age as per the standard risk-factor screening protocol",
+        "text": "Arrange an outpatient hip ultrasound at 6 weeks of age as per the standard risk-factor screening protocol used for asymptomatic at-risk infants",
         "correct": false,
         "rationale": "Standard risk-factor screening ultrasound at 6 weeks applies to infants with risk factors but normal clinical examination; a positive Ortolani is a clinical diagnosis that requires immediate referral and harness, not delayed screening, per RCH CPG: DDH.",
-        "source_refs": ["RCH CPG: DDH"]
+        "source_refs": [
+          "RCH CPG: DDH"
+        ]
       }
     ],
     "explanation": {
@@ -334,10 +455,18 @@
       "pearls": "Asymmetric skin creases alone are NOT specific for DDH, but limited or asymmetric abduction beyond the neonatal period is the most reliable sign (Source: RCH CPG: DDH)."
     },
     "sources": [
-      {"label": "RCH CPG: DDH", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Developmental_dysplasia_of_the_hip/"},
-      {"label": "Healthy WA - DDH", "url": "https://www.healthywa.wa.gov.au/"}
+      {
+        "label": "RCH CPG: DDH",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Developmental_dysplasia_of_the_hip/"
+      },
+      {
+        "label": "Healthy WA - DDH",
+        "url": "https://www.healthywa.wa.gov.au/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_infant"],
+    "reference_ranges": [
+      "paeds_vitals_infant"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -346,8 +475,14 @@
     "subtopic": "DDH presenting late - imaging choice",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["DDH", "late presentation", "imaging", "ultrasound", "pelvic XR"],
-    "stem": "An 8-month-old girl is brought to her GP because her parents have noticed her left leg appears shorter than the right when they change her nappy. She was born at term, was not breech, and the newborn check was documented as normal. There is no family history of hip problems and she had no hip ultrasound. She is meeting developmental milestones, including sitting independently, and has not yet started cruising. On examination, with the infant supine and hips and knees flexed to 90 degrees, the left knee sits lower than the right (positive Galeazzi sign). Hip abduction is reduced on the left (60 degrees versus 80 degrees on the right). There is asymmetry of the thigh and gluteal skin creases. There is no warmth or tenderness and the infant is afebrile with normal neurology.",
+    "tags": [
+      "DDH",
+      "late presentation",
+      "imaging",
+      "ultrasound",
+      "pelvic XR"
+    ],
+    "stem": "An 8-month-old girl is brought to her GP because her parents have noticed her left leg appears shorter than the right when they change her nappy. She was born at term, was not breech, and the newborn check was documented as normal. There is no family history of hip problems and she had no hip ultrasound. She is meeting developmental milestones, including sitting independently, and has not yet started cruising. On examination, with the infant supine and hips and knees flexed to 90 degrees, the left knee sits lower than the right (positive Galeazzi sign). Hip abduction is reduced on the left (60 degrees versus 80 degrees on the right). There is asymmetry of the thigh and gluteal skin creases. There is no warmth or tenderness and the infant is afebrile with normal neurology. The mother asks whether ultrasound is still useful at 8 months and is anxious about radiation.",
     "data_table": {
       "Vital signs": "T 36.8 deg C, HR 126 bpm, RR 32 /min",
       "Examination": "Positive Galeazzi (apparent shortening of left thigh), reduced left hip abduction (60 vs 80 deg), asymmetric skin creases, no warmth, normal neurology",
@@ -360,35 +495,45 @@
         "text": "Static and dynamic Graf-classified hip ultrasound",
         "correct": false,
         "rationale": "Hip ultrasound is the imaging modality of choice up to approximately 4-6 months of age while the femoral heads are unossified; by 8 months the ossific nucleus obscures sonographic landmarks and plain radiography is preferred, per RCH CPG: DDH.",
-        "source_refs": ["RCH CPG: DDH"]
+        "source_refs": [
+          "RCH CPG: DDH"
+        ]
       },
       {
         "letter": "B",
         "text": "MRI pelvis under general anaesthetic",
         "correct": false,
         "rationale": "MRI is reserved for postoperative assessment of reduction or for atypical / complex cases; it is not the first-line investigation for suspected late-presenting DDH, per RCH CPG: DDH.",
-        "source_refs": ["RCH CPG: DDH"]
+        "source_refs": [
+          "RCH CPG: DDH"
+        ]
       },
       {
         "letter": "C",
         "text": "Plain anteroposterior pelvic radiograph",
         "correct": true,
         "rationale": "After approximately 4-6 months of age the proximal femoral epiphysis ossifies and plain AP pelvic radiography (assessing acetabular index, Shenton line, Hilgenreiner and Perkin lines) becomes the imaging of choice for DDH, per RCH CPG: DDH.",
-        "source_refs": ["RCH CPG: DDH"]
+        "source_refs": [
+          "RCH CPG: DDH"
+        ]
       },
       {
         "letter": "D",
         "text": "CT pelvis with three-dimensional reconstruction",
         "correct": false,
         "rationale": "CT carries unnecessary radiation exposure and is reserved for surgical planning in older children with complex deformity; it is not first-line for suspected DDH, per RCH CPG: DDH.",
-        "source_refs": ["RCH CPG: DDH"]
+        "source_refs": [
+          "RCH CPG: DDH"
+        ]
       },
       {
         "letter": "E",
         "text": "Bone scintigraphy with Tc-99m MDP",
         "correct": false,
         "rationale": "Bone scintigraphy has no routine role in DDH; it is used for osteomyelitis or occult bone pathology and would not characterise hip morphology, per RCH CPG: DDH.",
-        "source_refs": ["RCH CPG: DDH"]
+        "source_refs": [
+          "RCH CPG: DDH"
+        ]
       }
     ],
     "explanation": {
@@ -402,10 +547,18 @@
       "pearls": "All infants who fail to walk by 18 months or who walk with a Trendelenburg gait need a pelvic XR to exclude missed DDH (Source: RCH CPG: DDH)."
     },
     "sources": [
-      {"label": "RCH CPG: DDH", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Developmental_dysplasia_of_the_hip/"},
-      {"label": "RANZCR - Paediatric hip imaging", "url": "https://www.ranzcr.com/"}
+      {
+        "label": "RCH CPG: DDH",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Developmental_dysplasia_of_the_hip/"
+      },
+      {
+        "label": "RANZCR - Paediatric hip imaging",
+        "url": "https://www.ranzcr.com/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_infant"],
+    "reference_ranges": [
+      "paeds_vitals_infant"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -414,8 +567,15 @@
     "subtopic": "Paediatric limp - age-stratified differential",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["limp", "differential", "DDH", "Perthes", "SUFE", "age"],
-    "stem": "A 3-year-old previously well boy is brought to ED with a 4-day history of a painless intermittent limp affecting the right leg. He had a coryzal illness 2 weeks ago that has now resolved. He has had no fevers, no rashes and no recent trauma. He is fully immunised and not Aboriginal or Torres Strait Islander. On examination he ambulates with a Trendelenburg gait favouring the right side. Hip abduction and internal rotation are mildly reduced on the right compared with the left. He is afebrile and there is no warmth, swelling or tenderness at the right hip, knee, ankle or foot. He will bear weight, although with a limp, and engages happily with the toys in the cubicle. Bloods show WCC 8.4 x10^9/L (neutrophils 4.2), CRP 6 mg/L. Bedside hip ultrasound shows a small right hip effusion.",
+    "tags": [
+      "limp",
+      "differential",
+      "DDH",
+      "Perthes",
+      "SUFE",
+      "age"
+    ],
+    "stem": "A 3-year-old previously well boy is brought to ED with a 4-day history of a painless intermittent limp affecting the right leg. He had a coryzal illness 2 weeks ago that has now resolved. He has had no fevers, no rashes and no recent trauma. He is fully immunised and not Aboriginal or Torres Strait Islander. On examination he ambulates with a Trendelenburg gait favouring the right side. Hip abduction and internal rotation are mildly reduced on the right compared with the left. He is afebrile and there is no warmth, swelling or tenderness at the right hip, knee, ankle or foot. He will bear weight, although with a limp, and engages happily with the toys in the cubicle. Bloods show WCC 8.4 x10^9/L (neutrophils 4.2), CRP 6 mg/L. Bedside hip ultrasound shows a small right hip effusion. The mother asks whether ALL or Perthes need to be excluded today.",
     "data_table": {
       "Vital signs": "T 36.9 deg C, HR 104 bpm, RR 22 /min, BP 96/58 mmHg",
       "Examination": "Trendelenburg gait, mild reduction in right hip abduction and internal rotation, no warmth or swelling, weight-bearing, afebrile, alert and playful",
@@ -425,38 +585,48 @@
     "options": [
       {
         "letter": "A",
-        "text": "Septic arthritis of the right hip",
+        "text": "Septic arthritis of the right hip joint with bacterial synovitis",
         "correct": false,
         "rationale": "Kocher score is 0 of 4 (afebrile, weight-bearing, normal WCC and ESR / CRP) giving a predicted probability of septic arthritis of approximately 2 percent; this is clinically very unlikely, per RCH CPG: Acute limp.",
-        "source_refs": ["RCH CPG: Acute limp"]
+        "source_refs": [
+          "RCH CPG: Acute limp"
+        ]
       },
       {
         "letter": "B",
-        "text": "Transient (irritable hip) synovitis",
+        "text": "Transient (irritable hip) synovitis following recent viral upper respiratory tract illness",
         "correct": true,
         "rationale": "Mild post-viral limp in a 3-15 year old with low-grade or no fever, normal inflammatory markers, weight-bearing and a small effusion is classic for transient synovitis, the most common cause of atraumatic limp in this age group, per RCH CPG: Acute limp.",
-        "source_refs": ["RCH CPG: Acute limp"]
+        "source_refs": [
+          "RCH CPG: Acute limp"
+        ]
       },
       {
         "letter": "C",
-        "text": "Perthes disease of the right femoral head",
+        "text": "Perthes disease of the right femoral head with early epiphyseal involvement",
         "correct": false,
         "rationale": "Perthes typically presents in 4-8 year olds with a more insidious painless limp and characteristic XR changes (subchondral fracture, fragmentation); at age 3 with acute onset post-URTI it is much less likely than transient synovitis, per RCH CPG: Acute limp.",
-        "source_refs": ["RCH CPG: Acute limp"]
+        "source_refs": [
+          "RCH CPG: Acute limp"
+        ]
       },
       {
         "letter": "D",
-        "text": "Slipped upper femoral epiphysis",
+        "text": "Slipped upper femoral epiphysis of the right hip in an obese child",
         "correct": false,
         "rationale": "SUFE is an adolescent diagnosis (typically 10-15 years, often overweight, peripubertal) and would be exceptionally rare in a 3-year-old without endocrine or metabolic predisposition, per RCH CPG: SUFE.",
-        "source_refs": ["RCH CPG: SUFE"]
+        "source_refs": [
+          "RCH CPG: SUFE"
+        ]
       },
       {
         "letter": "E",
-        "text": "Acute lymphoblastic leukaemia",
+        "text": "Acute lymphoblastic leukaemia presenting with limp and disproportionate bone pain",
         "correct": false,
         "rationale": "ALL can present with limp, but typically with night pain, systemic symptoms (fatigue, weight loss, pallor), cytopenias and disproportionately raised inflammatory markers; this child has a benign blood film and clinical picture consistent with transient synovitis, per RCH CPG: Acute limp.",
-        "source_refs": ["RCH CPG: Acute limp"]
+        "source_refs": [
+          "RCH CPG: Acute limp"
+        ]
       }
     ],
     "explanation": {
@@ -470,10 +640,20 @@
       "pearls": "Transient synovitis settles within 7-10 days with rest and analgesia; persistent limp beyond 2 weeks should re-prompt imaging and bloods to exclude Perthes or chronic infection (Source: RCH CPG: Acute limp)."
     },
     "sources": [
-      {"label": "RCH CPG: Acute limp", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Acute_limp/"},
-      {"label": "RCH CPG: SUFE", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Slipped_capital_femoral_epiphysis/"}
+      {
+        "label": "RCH CPG: Acute limp",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Acute_limp/"
+      },
+      {
+        "label": "RCH CPG: SUFE",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Slipped_capital_femoral_epiphysis/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child", "paeds_fbc", "inflammatory_markers"],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "paeds_fbc",
+      "inflammatory_markers"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -482,8 +662,13 @@
     "subtopic": "Acute otitis media - Aboriginal and Torres Strait Islander child duration",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["acute otitis media", "antibiotic duration", "ATSI", "amoxicillin"],
-    "stem": "A 4-year-old Aboriginal girl living in a remote Northern Territory community presents to the clinic with 36 hours of right ear pain and fever. Her mother reports that she has had three episodes of ear discharge in the past year and frequent colds. She is up to date with immunisations including PCV. On examination she is alert, well-perfused and tolerating oral fluids. Otoscopy of the right ear shows a bulging, opaque, erythematous tympanic membrane with no perforation and no visible discharge. The left tympanic membrane is dull but intact with a visible air-fluid level. There is no mastoid tenderness, no facial nerve palsy and no postauricular swelling. She has no penicillin allergy. The clinic nurse has commenced paracetamol and the doctor is choosing antibiotic therapy in line with the current eTG and CARPA Standard Treatment Manual.",
+    "tags": [
+      "acute otitis media",
+      "antibiotic duration",
+      "ATSI",
+      "amoxicillin"
+    ],
+    "stem": "A 4-year-old Aboriginal girl living in a remote Northern Territory community presents to the clinic with 36 hours of right ear pain and fever. Her mother reports that she has had three episodes of ear discharge in the past year and frequent colds. She is up to date with immunisations including PCV. On examination she is alert, well-perfused and tolerating oral fluids. Otoscopy of the right ear shows a bulging, opaque, erythematous tympanic membrane with no perforation and no visible discharge. The left tympanic membrane is dull but intact with a visible air-fluid level. There is no mastoid tenderness, no facial nerve palsy and no postauricular swelling. She has no penicillin allergy. The clinic nurse has commenced paracetamol and the doctor is choosing antibiotic therapy in line with the current eTG and CARPA Standard Treatment Manual. The clinic nurse asks whether watchful waiting is appropriate.",
     "data_table": {
       "Vital signs": "T 38.4 deg C, HR 118 bpm, RR 22 /min, SpO2 99 percent on room air",
       "Examination": "Right TM bulging, opaque, erythematous, intact; left TM dull with air-fluid level; no mastoid tenderness; oropharynx clear",
@@ -493,38 +678,50 @@
     "options": [
       {
         "letter": "A",
-        "text": "Watchful waiting with analgesia and review in 48 hours",
+        "text": "Watchful waiting with regular paracetamol for analgesia and structured otoscopic review in 48 hours",
         "correct": false,
         "rationale": "Watchful waiting is appropriate in well, low-risk non-Indigenous children over 2 years; Aboriginal and Torres Strait Islander children carry a markedly elevated risk of chronic suppurative otitis media and complications and antibiotics are recommended without delay, per Therapeutic Guidelines: Antibiotic and CARPA Standard Treatment Manual.",
-        "source_refs": ["Therapeutic Guidelines: Antibiotic", "CARPA Standard Treatment Manual"]
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic",
+          "CARPA Standard Treatment Manual"
+        ]
       },
       {
         "letter": "B",
         "text": "Oral amoxicillin 15 mg/kg orally three times daily for 7 days",
         "correct": true,
         "rationale": "Australian guidelines recommend amoxicillin first-line for AOM in Aboriginal and Torres Strait Islander children, with a longer duration (typically 7 days) than the 5 day course used for low-risk non-Indigenous children, to reduce risk of progression to chronic suppurative otitis media, per Therapeutic Guidelines: Antibiotic and CARPA Standard Treatment Manual.",
-        "source_refs": ["Therapeutic Guidelines: Antibiotic", "CARPA Standard Treatment Manual"]
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic",
+          "CARPA Standard Treatment Manual"
+        ]
       },
       {
         "letter": "C",
-        "text": "Oral cefuroxime 15 mg/kg twice daily for 3 days",
+        "text": "Oral cefuroxime axetil 15 mg/kg twice daily for a 3-day short course",
         "correct": false,
         "rationale": "Oral cephalosporins are not preferred first-line for AOM in Australia; amoxicillin retains adequate Streptococcus pneumoniae cover and a short 3 day course is insufficient for high-risk children, per Therapeutic Guidelines: Antibiotic.",
-        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
       },
       {
         "letter": "D",
-        "text": "Topical ciprofloxacin ear drops for 7 days",
+        "text": "Topical ciprofloxacin 0.3% ear drops two drops twice daily for 7 days",
         "correct": false,
         "rationale": "Topical quinolone ear drops are indicated for acute otitis media with discharge through a perforation or tympanostomy tube, or for chronic suppurative otitis media, not for intact-tympanic-membrane AOM, per Therapeutic Guidelines: Antibiotic.",
-        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
       },
       {
         "letter": "E",
-        "text": "Intramuscular benzathine benzylpenicillin single dose",
+        "text": "Intramuscular benzathine benzylpenicillin single weight-based dose at the clinic today",
         "correct": false,
         "rationale": "IM benzathine benzylpenicillin is used for acute rheumatic fever secondary prophylaxis and group A Streptococcus syndromes, not as first-line AOM therapy, per Therapeutic Guidelines: Antibiotic.",
-        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
       }
     ],
     "explanation": {
@@ -538,11 +735,22 @@
       "pearls": "Document tympanic membrane appearance carefully; CSOM (discharge >2 weeks through perforation) carries lifelong hearing and language consequences and is a public health priority (Source: CARPA Standard Treatment Manual)."
     },
     "sources": [
-      {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/"},
-      {"label": "CARPA Standard Treatment Manual", "url": "https://www.carpa.org.au/"},
-      {"label": "RCH CPG: Acute otitis media", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Acute_otitis_media/"}
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "CARPA Standard Treatment Manual",
+        "url": "https://www.carpa.org.au/"
+      },
+      {
+        "label": "RCH CPG: Acute otitis media",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Acute_otitis_media/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child"],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -551,8 +759,13 @@
     "subtopic": "Acute otitis media complications - acute mastoiditis",
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["mastoiditis", "AOM complication", "ENT emergency", "CT temporal bone"],
-    "stem": "A 3-year-old girl presents to a tertiary paediatric ED with a 5-day history of left ear pain initially diagnosed as AOM by the GP and treated with oral amoxicillin. Over the past 24 hours her mother reports new posterior auricular swelling, displacement of the pinna and worsening fever despite the antibiotics. There is no history of recent travel and immunisations are up to date. On examination the left auricle is protruding outwards and downwards. There is a fluctuant, erythematous, tender swelling behind the left ear that obliterates the post-auricular sulcus. Otoscopy shows a bulging, erythematous left tympanic membrane with pus visible behind it; the right ear is normal. There is no facial nerve palsy, no neck stiffness, no photophobia and no neurological deficit. She is alert and interactive but in pain.",
+    "tags": [
+      "mastoiditis",
+      "AOM complication",
+      "ENT emergency",
+      "CT temporal bone"
+    ],
+    "stem": "A 3-year-old girl presents to a tertiary paediatric ED with a 5-day history of left ear pain initially diagnosed as AOM by the GP and treated with oral amoxicillin. Over the past 24 hours her mother reports new posterior auricular swelling, displacement of the pinna and worsening fever despite the antibiotics. There is no history of recent travel and immunisations are up to date. On examination the left auricle is protruding outwards and downwards. There is a fluctuant, erythematous, tender swelling behind the left ear that obliterates the post-auricular sulcus. Otoscopy shows a bulging, erythematous left tympanic membrane with pus visible behind it; the right ear is normal. There is no facial nerve palsy, no neck stiffness, no photophobia and no neurological deficit. She is alert and interactive but in pain. The ED registrar asks whether change to oral co-amoxiclav with 48-hour review would be safe, whether IV flucloxacillin alone provides adequate cover, whether immediate lumbar puncture is required given the fever, and whether MRI brain should precede antibiotics to exclude sigmoid sinus thrombosis before any intervention is commenced. Imaging is available immediately.",
     "data_table": {
       "Vital signs": "T 39.4 deg C, HR 152 bpm, RR 28 /min, BP 96/58 mmHg, SpO2 98 percent on room air",
       "Examination": "Left auricle protruding outwards and downwards, fluctuant tender postauricular erythematous swelling obliterating sulcus, bulging erythematous left TM with pus, GCS 15, no neck stiffness, no facial nerve palsy",
@@ -562,38 +775,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "Change oral amoxicillin to oral amoxicillin / clavulanate for 10 days and review in 48 hours",
+        "text": "Change current oral amoxicillin to oral amoxicillin/clavulanate 22.5 mg/kg twice daily for 10 days and arrange GP review in 48 hours to assess for improvement",
         "correct": false,
         "rationale": "This is acute mastoiditis with a fluctuant subperiosteal abscess; oral therapy is inadequate, urgent IV antibiotics, imaging and ENT surgical input are mandatory, per RCH CPG: Acute mastoiditis.",
-        "source_refs": ["RCH CPG: Acute mastoiditis"]
+        "source_refs": [
+          "RCH CPG: Acute mastoiditis"
+        ]
       },
       {
         "letter": "B",
-        "text": "Admit, commence IV flucloxacillin alone and arrange routine ENT outpatient review",
+        "text": "Admit, commence intravenous flucloxacillin 50 mg/kg six-hourly as monotherapy and arrange routine outpatient ENT clinic review within 1 week of discharge home",
         "correct": false,
         "rationale": "Flucloxacillin does not adequately cover Streptococcus pneumoniae and other AOM pathogens that drive mastoiditis; broader-spectrum cover and urgent (not routine) ENT input is required, per Therapeutic Guidelines: Antibiotic.",
-        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
       },
       {
         "letter": "C",
         "text": "Admit, commence IV ceftriaxone, request urgent CT temporal bones with contrast and urgent ENT review for consideration of cortical mastoidectomy and myringotomy",
         "correct": true,
         "rationale": "Acute mastoiditis with subperiosteal abscess requires admission, IV broad-spectrum cover (e.g. ceftriaxone, with metronidazole added if intracranial extension), contrast CT temporal bones to define abscess and exclude intracranial complications, and urgent ENT for cortical mastoidectomy +/- myringotomy +/- grommet, per RCH CPG: Acute mastoiditis and Therapeutic Guidelines: Antibiotic.",
-        "source_refs": ["RCH CPG: Acute mastoiditis", "Therapeutic Guidelines: Antibiotic"]
+        "source_refs": [
+          "RCH CPG: Acute mastoiditis",
+          "Therapeutic Guidelines: Antibiotic"
+        ]
       },
       {
         "letter": "D",
-        "text": "Perform urgent lumbar puncture in ED and commence IV ceftriaxone for suspected meningitis",
+        "text": "Perform urgent lumbar puncture in ED for cell count, protein, glucose and culture and commence empirical IV ceftriaxone for suspected bacterial meningitis complicating mastoiditis",
         "correct": false,
         "rationale": "There are no signs of meningitis (no neck stiffness, photophobia or altered conscious state); LP is not required, although intracranial complications must be excluded by CT and the patient examined neurologically, per RCH CPG: Acute mastoiditis.",
-        "source_refs": ["RCH CPG: Acute mastoiditis"]
+        "source_refs": [
+          "RCH CPG: Acute mastoiditis"
+        ]
       },
       {
         "letter": "E",
-        "text": "Arrange urgent MRI brain to exclude lateral sinus thrombosis before commencing antibiotics",
+        "text": "Arrange urgent MRI brain with MR venography to exclude lateral sinus thrombosis and intracranial abscess before commencing any intravenous antibiotic therapy or surgical input",
         "correct": false,
         "rationale": "Imaging is required, but it must not delay IV antibiotics and ENT input; CT temporal bones with contrast is the standard first-line imaging because it is rapidly available, characterises bony destruction and identifies abscess, with MRI / MR venography reserved for suspected intracranial extension or sinus thrombosis, per RCH CPG: Acute mastoiditis.",
-        "source_refs": ["RCH CPG: Acute mastoiditis"]
+        "source_refs": [
+          "RCH CPG: Acute mastoiditis"
+        ]
       }
     ],
     "explanation": {
@@ -607,10 +831,20 @@
       "pearls": "Always palpate and inspect behind the ear in any child with persistent fever despite AOM treatment - missing mastoiditis risks intracranial spread, sigmoid sinus thrombosis and facial nerve palsy (Source: RCH CPG: Acute mastoiditis)."
     },
     "sources": [
-      {"label": "RCH CPG: Acute mastoiditis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Acute_mastoiditis/"},
-      {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/"}
+      {
+        "label": "RCH CPG: Acute mastoiditis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Acute_mastoiditis/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child", "paeds_fbc", "inflammatory_markers"],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "paeds_fbc",
+      "inflammatory_markers"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -619,8 +853,14 @@
     "subtopic": "Otitis media with effusion - referral threshold",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["OME", "glue ear", "audiology", "grommets", "language delay"],
-    "stem": "A 4-year-old boy is brought to his GP by his mother because his preschool teacher reports he frequently says \"what?\" and is increasingly inattentive in group sessions. He has had four episodes of GP-diagnosed acute otitis media in the last 12 months, all treated and resolved. He has had no ear pain or discharge for the past 3 months. His speech and language are mildly behind peers but he is using full sentences. He is not Aboriginal or Torres Strait Islander and lives in a household with no smokers. On otoscopy both tympanic membranes appear retracted and dull with visible air-fluid levels and reduced mobility on pneumatic otoscopy. Tympanometry performed in the rooms shows bilateral type B (flat) tracings. The mother brings audiology results performed last week showing a bilateral conductive hearing loss of 35 dB.",
+    "tags": [
+      "OME",
+      "glue ear",
+      "audiology",
+      "grommets",
+      "language delay"
+    ],
+    "stem": "A 4-year-old boy is brought to his GP by his mother because his preschool teacher reports he frequently says \"what?\" and is increasingly inattentive in group sessions. He has had four episodes of GP-diagnosed acute otitis media in the last 12 months, all treated and resolved. He has had no ear pain or discharge for the past 3 months. His speech and language are mildly behind peers but he is using full sentences. He is not Aboriginal or Torres Strait Islander and lives in a household with no smokers. On otoscopy both tympanic membranes appear retracted and dull with visible air-fluid levels and reduced mobility on pneumatic otoscopy. Tympanometry performed in the rooms shows bilateral type B (flat) tracings. The mother brings audiology results performed last week showing a bilateral conductive hearing loss of 35 dB. His mother asks whether antibiotics or a steroid spray could resolve the effusion.",
     "data_table": {
       "Vital signs": "T 36.6 deg C, HR 92 bpm, RR 18 /min",
       "Examination": "Bilateral retracted dull TMs with air-fluid levels, reduced TM mobility, no perforation, no discharge, mildly delayed expressive language",
@@ -630,38 +870,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "Commence oral amoxicillin for 10 days and review",
+        "text": "Commence oral amoxicillin 15 mg/kg three times daily for 10 days as empirical treatment for chronic middle ear effusion and review at the end of the course",
         "correct": false,
         "rationale": "Otitis media with effusion is not an acute infection and routine antibiotics are not recommended; they do not change long-term outcomes, per RCH CPG: Otitis media with effusion.",
-        "source_refs": ["RCH CPG: Otitis media with effusion"]
+        "source_refs": [
+          "RCH CPG: Otitis media with effusion"
+        ]
       },
       {
         "letter": "B",
-        "text": "Prescribe intranasal corticosteroid and oral antihistamine for 3 months and review",
+        "text": "Prescribe intranasal fluticasone 50 microgram daily plus oral cetirizine 5 mg daily for 3 months to address presumed allergic contribution to chronic middle-ear effusion",
         "correct": false,
         "rationale": "Intranasal corticosteroids and antihistamines are not recommended for OME because evidence does not support meaningful improvement in hearing or effusion resolution, per RCH CPG: Otitis media with effusion.",
-        "source_refs": ["RCH CPG: Otitis media with effusion"]
+        "source_refs": [
+          "RCH CPG: Otitis media with effusion"
+        ]
       },
       {
         "letter": "C",
-        "text": "Watchful waiting for a further 6 months with no audiology review",
+        "text": "Watchful waiting for a further 6 months without repeat audiology, tympanometry or specialist review given the absence of acute ear pain or discharge",
         "correct": false,
         "rationale": "Bilateral OME persisting beyond 3 months with documented hearing loss >25 dB and emerging language and behavioural impact crosses the threshold for ENT referral; further watchful waiting risks language delay, per RCH CPG: Otitis media with effusion.",
-        "source_refs": ["RCH CPG: Otitis media with effusion"]
+        "source_refs": [
+          "RCH CPG: Otitis media with effusion"
+        ]
       },
       {
         "letter": "D",
         "text": "Refer to ENT for consideration of bilateral grommet insertion given persistent bilateral OME >3 months with bilateral conductive hearing loss >25 dB and emerging language and behavioural impact",
         "correct": true,
         "rationale": "Australian and international guidance refers children with bilateral OME persisting >=3 months with hearing loss >=25 dB or with developmental, language or behavioural concerns to ENT for tympanostomy tube consideration, per RCH CPG: Otitis media with effusion and NICE NG98.",
-        "source_refs": ["RCH CPG: Otitis media with effusion", "NICE NG98"]
+        "source_refs": [
+          "RCH CPG: Otitis media with effusion",
+          "NICE NG98"
+        ]
       },
       {
         "letter": "E",
-        "text": "Refer to a paediatric audiologist for hearing aid fitting as definitive treatment",
+        "text": "Refer to a paediatric audiologist for hearing aid fitting as definitive long-term management of the bilateral conductive hearing loss without ENT or grommet consideration",
         "correct": false,
         "rationale": "Hearing aids are an alternative for children in whom surgery is contraindicated or declined; grommets remain first-line surgical management for persistent bilateral OME with hearing loss and language concerns, per RCH CPG: Otitis media with effusion.",
-        "source_refs": ["RCH CPG: Otitis media with effusion"]
+        "source_refs": [
+          "RCH CPG: Otitis media with effusion"
+        ]
       }
     ],
     "explanation": {
@@ -675,10 +926,18 @@
       "pearls": "Always check the language and developmental trajectory in recurrent AOM - the indication for grommets is functional impact, not the eardrum appearance alone (Source: NICE NG98)."
     },
     "sources": [
-      {"label": "RCH CPG: Otitis media with effusion", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Otitis_media_with_effusion/"},
-      {"label": "NICE NG98", "url": "https://www.nice.org.uk/guidance/ng98"}
+      {
+        "label": "RCH CPG: Otitis media with effusion",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Otitis_media_with_effusion/"
+      },
+      {
+        "label": "NICE NG98",
+        "url": "https://www.nice.org.uk/guidance/ng98"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child"],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -687,7 +946,12 @@
     "subtopic": "Paediatric epistaxis - first aid and management",
     "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["epistaxis", "Little area", "cautery", "first aid"],
+    "tags": [
+      "epistaxis",
+      "Little area",
+      "cautery",
+      "first aid"
+    ],
     "stem": "A 6-year-old boy is brought to the GP after the third episode of right-sided nose bleeding this month. Each episode has been brief (5-10 minutes), stopped with pressure, and occurred when he was picking his nose. He is otherwise well, with no bruising, no other bleeding sites and no family history of bleeding disorders. He is not on any medication. On examination he is alert and well. Anterior rhinoscopy reveals a small visible vessel and a crust over Little area on the right side, with no active bleeding. The left nasal cavity is clear. There is no swelling, no septal haematoma, no obvious mass and no facial deformity. He has full eye movements, no proptosis, no neck masses and no lymphadenopathy. Full blood count and coagulation screen are normal.",
     "data_table": {
       "Vital signs": "T 36.7 deg C, HR 86 bpm, RR 18 /min, BP 102/64 mmHg",
@@ -698,38 +962,48 @@
     "options": [
       {
         "letter": "A",
-        "text": "Refer urgently to ENT for examination under anaesthetic to exclude juvenile nasopharyngeal angiofibroma",
+        "text": "Refer urgently to ENT for examination under general anaesthetic to exclude juvenile nasopharyngeal angiofibroma despite the typical anterior Little area bleeding pattern in this prepubertal child",
         "correct": false,
         "rationale": "Juvenile nasopharyngeal angiofibroma typically affects adolescent males with unilateral nasal obstruction and severe recurrent epistaxis often with a nasopharyngeal mass; isolated digit-trauma epistaxis at Little area in a 6-year-old does not warrant urgent EUA, per RCH CPG: Epistaxis.",
-        "source_refs": ["RCH CPG: Epistaxis"]
+        "source_refs": [
+          "RCH CPG: Epistaxis"
+        ]
       },
       {
         "letter": "B",
         "text": "Apply topical antiseptic ointment (e.g. chlorhexidine and neomycin or paraffin) twice daily for 2 weeks and reinforce first aid technique (pinch soft part of nose, lean forward, 10-15 minutes)",
         "correct": true,
         "rationale": "Recurrent anterior epistaxis at Little area in a child is most often due to mucosal trauma and dryness; topical antiseptic ointment (Naseptin or paraffin) plus reinforced first aid is first-line and reduces recurrence in randomised trials, per RCH CPG: Epistaxis.",
-        "source_refs": ["RCH CPG: Epistaxis"]
+        "source_refs": [
+          "RCH CPG: Epistaxis"
+        ]
       },
       {
         "letter": "C",
-        "text": "Perform bedside silver nitrate cautery to both sides of Little area simultaneously",
+        "text": "Perform bedside silver nitrate chemical cautery to both sides of Little area simultaneously today, with topical antibiotic ointment for 1 week and review at 2 weeks",
         "correct": false,
         "rationale": "Bilateral simultaneous septal cautery risks septal perforation; cautery should be unilateral when needed and is generally a second-line ENT intervention after failed conservative therapy, per RCH CPG: Epistaxis.",
-        "source_refs": ["RCH CPG: Epistaxis"]
+        "source_refs": [
+          "RCH CPG: Epistaxis"
+        ]
       },
       {
         "letter": "D",
-        "text": "Insert anterior nasal packing with a Merocel sponge and discharge home",
+        "text": "Insert an anterior nasal pack with a Merocel sponge into the right nostril and discharge home with planned pack removal at 48 hours by the GP",
         "correct": false,
         "rationale": "Nasal packing in children is uncomfortable, requires removal and is reserved for ongoing significant bleeding not controlled by first aid; it is not appropriate as outpatient initial management of recurrent self-limited bleeds, per RCH CPG: Epistaxis.",
-        "source_refs": ["RCH CPG: Epistaxis"]
+        "source_refs": [
+          "RCH CPG: Epistaxis"
+        ]
       },
       {
         "letter": "E",
-        "text": "Commence oral tranexamic acid for 6 weeks",
+        "text": "Commence oral tranexamic acid 25 mg/kg three times daily for 6 weeks as definitive antifibrinolytic therapy for recurrent paediatric anterior epistaxis at Little area",
         "correct": false,
         "rationale": "Oral tranexamic acid is not first-line outpatient management in a child with anterior digit-trauma epistaxis and normal coagulation; topical care and first aid are preferred, per RCH CPG: Epistaxis.",
-        "source_refs": ["RCH CPG: Epistaxis"]
+        "source_refs": [
+          "RCH CPG: Epistaxis"
+        ]
       }
     ],
     "explanation": {
@@ -743,10 +1017,20 @@
       "pearls": "Consider non-accidental injury or a coagulation disorder if multiple bruising sites or family history of bleeding are present (Source: RCH CPG: Epistaxis)."
     },
     "sources": [
-      {"label": "RCH CPG: Epistaxis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Epistaxis/"},
-      {"label": "BMJ Best Practice - Epistaxis", "url": "https://bestpractice.bmj.com/"}
+      {
+        "label": "RCH CPG: Epistaxis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Epistaxis/"
+      },
+      {
+        "label": "BMJ Best Practice - Epistaxis",
+        "url": "https://bestpractice.bmj.com/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child", "paeds_fbc", "coags"],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "paeds_fbc",
+      "coags"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -755,7 +1039,12 @@
     "subtopic": "Pre-auricular sinus - infected",
     "difficulty": 1,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["pre-auricular sinus", "abscess", "ENT", "antibiotics"],
+    "tags": [
+      "pre-auricular sinus",
+      "abscess",
+      "ENT",
+      "antibiotics"
+    ],
     "stem": "A 4-year-old girl is brought to her GP because of a tender red swelling in front of the right ear over the past 3 days. Her mother reports a small pit in front of the right ear since birth that has occasionally discharged a small amount of fluid but has never been red or swollen before. On examination there is a 1.5 cm tender, erythematous, fluctuant swelling immediately anterior to the right ear at the level of the helical root, centred over a visible pit. The pinna itself is normal. The ear canal and tympanic membrane are normal. There is no facial nerve weakness, no cervical lymphadenopathy and no parotid swelling. She is afebrile and otherwise well.",
     "data_table": {
       "Vital signs": "T 37.0 deg C, HR 96 bpm, RR 22 /min",
@@ -765,38 +1054,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "Commence oral di/flucloxacillin and refer to ENT for elective complete sinus excision once the infection has settled",
+        "text": "Commence oral di/flucloxacillin 25 mg/kg six-hourly for 7 days and refer to ENT for elective complete sinus excision once the acute infection has fully settled",
         "correct": true,
         "rationale": "An acutely infected pre-auricular sinus is treated with oral anti-staphylococcal antibiotic cover (e.g. di/flucloxacillin) and incision and drainage if abscess fails to settle; once inflammation resolves, definitive complete excision of the sinus tract is recommended because of high recurrence, per RCH CPG: Pre-auricular sinus and Therapeutic Guidelines: Antibiotic.",
-        "source_refs": ["RCH CPG: Pre-auricular sinus", "Therapeutic Guidelines: Antibiotic"]
+        "source_refs": [
+          "RCH CPG: Pre-auricular sinus",
+          "Therapeutic Guidelines: Antibiotic"
+        ]
       },
       {
         "letter": "B",
-        "text": "Refer urgently for parotidectomy under suspicion of first branchial cleft anomaly",
+        "text": "Refer urgently for total parotidectomy under suspicion of an infected first branchial cleft anomaly with facial nerve involvement",
         "correct": false,
         "rationale": "First branchial cleft anomalies are rare and present with peri-auricular sinus tracts intimately related to the facial nerve; this typical pre-auricular sinus does not warrant parotidectomy, per RCH CPG: Pre-auricular sinus.",
-        "source_refs": ["RCH CPG: Pre-auricular sinus"]
+        "source_refs": [
+          "RCH CPG: Pre-auricular sinus"
+        ]
       },
       {
         "letter": "C",
-        "text": "Reassure and arrange follow-up only if the lesion enlarges further",
+        "text": "Reassure the family that the swelling is self-limiting and arrange follow-up review only if the lesion enlarges or discharges",
         "correct": false,
         "rationale": "An infected pre-auricular sinus requires antibiotic treatment and ENT referral for definitive excision; observation alone risks abscess progression and ongoing recurrence, per RCH CPG: Pre-auricular sinus.",
-        "source_refs": ["RCH CPG: Pre-auricular sinus"]
+        "source_refs": [
+          "RCH CPG: Pre-auricular sinus"
+        ]
       },
       {
         "letter": "D",
-        "text": "Express the sinus contents by squeezing the lesion firmly and apply topical mupirocin",
+        "text": "Express the sinus contents by squeezing the lesion firmly today and apply topical mupirocin 2% ointment three times daily for 7 days",
         "correct": false,
         "rationale": "Squeezing risks spread of infection and damages adjacent tissues; appropriate management is systemic antibiotics plus surgical drainage when needed, not expression, per RCH CPG: Pre-auricular sinus.",
-        "source_refs": ["RCH CPG: Pre-auricular sinus"]
+        "source_refs": [
+          "RCH CPG: Pre-auricular sinus"
+        ]
       },
       {
         "letter": "E",
-        "text": "Commence oral acyclovir for suspected herpes zoster oticus",
+        "text": "Commence oral aciclovir 20 mg/kg five times daily for 7 days as empirical treatment for suspected herpes zoster oticus",
         "correct": false,
         "rationale": "Herpes zoster oticus (Ramsay Hunt) presents with vesicles in the external ear and facial nerve palsy, not a fluctuant preauricular swelling over a congenital pit, per RCH CPG: Pre-auricular sinus.",
-        "source_refs": ["RCH CPG: Pre-auricular sinus"]
+        "source_refs": [
+          "RCH CPG: Pre-auricular sinus"
+        ]
       }
     ],
     "explanation": {
@@ -810,10 +1110,18 @@
       "pearls": "Bilateral pre-auricular pits warrant renal ultrasound only if there are associated syndromal features or family history; the routine ultrasound for all isolated pits is not supported (Source: RCH CPG: Pre-auricular sinus)."
     },
     "sources": [
-      {"label": "RCH CPG: Pre-auricular sinus", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Pre_auricular_sinus/"},
-      {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/"}
+      {
+        "label": "RCH CPG: Pre-auricular sinus",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Pre_auricular_sinus/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child"],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -822,8 +1130,13 @@
     "subtopic": "Recurrent tonsillitis - Paradise criteria",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["tonsillitis", "Paradise criteria", "tonsillectomy", "ENT referral"],
-    "stem": "A 7-year-old boy is brought to the GP with his fourth episode of severe sore throat in 8 months. Each episode has lasted 5-7 days with fever above 38.5 deg C, white tonsillar exudate and tender anterior cervical lymphadenopathy. In total over the past 12 months he has had four documented episodes of tonsillitis. Each episode has been seen by a clinician with positive examination findings consistent with bacterial tonsillitis and treated with a course of oral antibiotics (phenoxymethylpenicillin). The family reports significant school absence and parental work disruption. There is no history of obstructive sleep apnoea, no failure to thrive and no immunodeficiency. He is not Aboriginal or Torres Strait Islander. Examination today shows large, partially scarred tonsils with no acute exudate. He is afebrile.",
+    "tags": [
+      "tonsillitis",
+      "Paradise criteria",
+      "tonsillectomy",
+      "ENT referral"
+    ],
+    "stem": "A 7-year-old boy is brought to the GP with his fourth episode of severe sore throat in 8 months. Each episode has lasted 5-7 days with fever above 38.5 deg C, white tonsillar exudate and tender anterior cervical lymphadenopathy. In total over the past 12 months he has had four documented episodes of tonsillitis. Each episode has been seen by a clinician with positive examination findings consistent with bacterial tonsillitis and treated with a course of oral antibiotics (phenoxymethylpenicillin). The family reports significant school absence and parental work disruption. There is no history of obstructive sleep apnoea, no failure to thrive and no immunodeficiency. He is not Aboriginal or Torres Strait Islander. Examination today shows large, partially scarred tonsils with no acute exudate. He is afebrile. The family asks specifically about tonsillectomy referral now, long-term penicillin prophylaxis, a throat swab for asymptomatic strep, and immunology workup for recurrent infections.",
     "data_table": {
       "Vital signs": "T 36.8 deg C, HR 88 bpm, RR 18 /min",
       "Examination": "Large scarred tonsils, no acute exudate, no cervical lymphadenopathy, well grown along 50th centile",
@@ -833,38 +1146,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "Refer to ENT for elective tonsillectomy given he meets Paradise criteria",
+        "text": "Refer to paediatric ENT for elective tonsillectomy given that he meets Paradise criteria for surgical management of recurrent severe bacterial tonsillitis in childhood",
         "correct": false,
         "rationale": "Paradise criteria require either 7 documented episodes in 12 months, 5 per year for 2 years, or 3 per year for 3 years; this child has 4 episodes in 12 months and does not yet meet the criteria, per RCH CPG: Sore throat.",
-        "source_refs": ["RCH CPG: Sore throat", "Paradise et al. NEJM 1984"]
+        "source_refs": [
+          "RCH CPG: Sore throat",
+          "Paradise et al. NEJM 1984"
+        ]
       },
       {
         "letter": "B",
         "text": "Continue watchful waiting with documented sore throat diary, treat acute episodes with phenoxymethylpenicillin and reassess against Paradise criteria over the next 12-24 months",
         "correct": true,
         "rationale": "He has 4 episodes in 12 months and is approaching but does not yet meet Paradise criteria for tonsillectomy; documented surveillance with episode characterisation over the next 1-2 years guides decision-making while avoiding surgery that may not change long-term course, per RCH CPG: Sore throat.",
-        "source_refs": ["RCH CPG: Sore throat"]
+        "source_refs": [
+          "RCH CPG: Sore throat"
+        ]
       },
       {
         "letter": "C",
-        "text": "Commence long-term oral phenoxymethylpenicillin prophylaxis for 12 months",
+        "text": "Commence long-term oral phenoxymethylpenicillin 250 mg twice daily prophylaxis for 12 months to suppress recurrent group A streptococcal pharyngitis episodes",
         "correct": false,
         "rationale": "Long-term penicillin prophylaxis is used for acute rheumatic fever secondary prevention, not for recurrent bacterial tonsillitis without rheumatic fever, per Therapeutic Guidelines: Antibiotic.",
-        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
       },
       {
         "letter": "D",
-        "text": "Take a throat swab today for group A streptococcus PCR and treat if positive",
+        "text": "Take a throat swab today for group A streptococcus PCR and treat with phenoxymethylpenicillin if positive despite the absence of acute pharyngitis symptoms",
         "correct": false,
         "rationale": "Asymptomatic carriage of group A streptococcus is common in children and does not warrant treatment; throat swabs are not indicated in asymptomatic children outside ARF-prevention pathways, per Therapeutic Guidelines: Antibiotic.",
-        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
       },
       {
         "letter": "E",
-        "text": "Refer to immunology for assessment of immunodeficiency given recurrent tonsillitis",
+        "text": "Refer to paediatric immunology for assessment of suspected primary immunodeficiency given the four episodes of bacterial tonsillitis in the past 12 months",
         "correct": false,
         "rationale": "Four episodes of tonsillitis in 12 months in a well grown child without other infection patterns does not meet criteria for immunodeficiency workup; the appropriate referral threshold is recurrent severe bacterial infection at multiple sites or with unusual organisms, per RCH CPG: Sore throat.",
-        "source_refs": ["RCH CPG: Sore throat"]
+        "source_refs": [
+          "RCH CPG: Sore throat"
+        ]
       }
     ],
     "explanation": {
@@ -878,11 +1202,22 @@
       "pearls": "Most children with recurrent tonsillitis improve over 1-2 years even without surgery; the Paradise trial showed only a modest absolute reduction in episodes at 2 years and the effect attenuates over time (Source: Paradise et al. NEJM 1984)."
     },
     "sources": [
-      {"label": "RCH CPG: Sore throat", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Sore_throat/"},
-      {"label": "Paradise et al. NEJM 1984", "url": "https://www.nejm.org/doi/full/10.1056/NEJM198403153101102"},
-      {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/"}
+      {
+        "label": "RCH CPG: Sore throat",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Sore_throat/"
+      },
+      {
+        "label": "Paradise et al. NEJM 1984",
+        "url": "https://www.nejm.org/doi/full/10.1056/NEJM198403153101102"
+      },
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child"],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -891,8 +1226,13 @@
     "subtopic": "Red reflex abnormality - leukocoria and retinoblastoma",
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["red reflex", "leukocoria", "retinoblastoma", "newborn examination"],
-    "stem": "A 9-month-old girl is brought to the GP for an opportunistic check after her grandmother noticed that the left pupil appeared white in a recent flash photograph. The mother reports that the eye otherwise looks normal, the baby fixes and follows in good light and reaches for toys with both hands. She was born at term by normal vaginal birth with an unremarkable antenatal course. She passed the newborn hearing screen but the parents do not recall whether the red reflex was specifically examined on the newborn check or 6-week check. There is no family history of eye disease in particular no family history of retinoblastoma. On examination today, with an ophthalmoscope held at arms length, the right pupil shows a normal red reflex but the left pupil shows a clearly visible white reflex (leukocoria). There is no strabismus on inspection, no nystagmus and no proptosis. The cornea is clear and the anterior chamber appears normal. Visual behaviour with the right eye is normal but appears reduced with the left eye occluded.",
+    "tags": [
+      "red reflex",
+      "leukocoria",
+      "retinoblastoma",
+      "newborn examination"
+    ],
+    "stem": "A 9-month-old girl is brought to the GP for an opportunistic check after her grandmother noticed that the left pupil appeared white in a recent flash photograph. The mother reports that the eye otherwise looks normal, the baby fixes and follows in good light and reaches for toys with both hands. She was born at term by normal vaginal birth with an unremarkable antenatal course. She passed the newborn hearing screen but the parents do not recall whether the red reflex was specifically examined on the newborn check or 6-week check. There is no family history of eye disease in particular no family history of retinoblastoma. On examination today, with an ophthalmoscope held at arms length, the right pupil shows a normal red reflex but the left pupil shows a clearly visible white reflex (leukocoria). There is no strabismus on inspection, no nystagmus and no proptosis. The cornea is clear and the anterior chamber appears normal. Visual behaviour with the right eye is normal but appears reduced with the left eye occluded. The mother asks whether MRI or ophthalmology should come first.",
     "data_table": {
       "Vital signs": "T 36.8 deg C, HR 122 bpm, RR 30 /min",
       "Examination": "Left leukocoria with absent red reflex on direct ophthalmoscopy; right red reflex normal; no strabismus; clear cornea; normal anterior chamber",
@@ -902,38 +1242,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "Reassure parents and review at the 12-month immunisation visit",
+        "text": "Reassure the parents that white reflex on flash photographs is usually benign and review the child at the next routine 12-month immunisation visit",
         "correct": false,
         "rationale": "Leukocoria is never normal and mandates same-day or next-day paediatric ophthalmology assessment to exclude sight-threatening or life-threatening pathology, including retinoblastoma, per RANZCO Position Statement on Red Reflex Testing.",
-        "source_refs": ["RANZCO - Red reflex testing"]
+        "source_refs": [
+          "RANZCO - Red reflex testing"
+        ]
       },
       {
         "letter": "B",
-        "text": "Refer routinely to an optometrist for vision testing in 4-6 weeks",
+        "text": "Refer routinely to a community optometrist for paediatric vision testing in 4-6 weeks before considering any specialist paediatric ophthalmology assessment for this finding",
         "correct": false,
         "rationale": "Routine optometry referral risks unacceptable delay; retinoblastoma is the most serious cause of leukocoria and requires urgent paediatric ophthalmology assessment, not deferred optometry review, per RANZCO and RCH CPG.",
-        "source_refs": ["RANZCO - Red reflex testing"]
+        "source_refs": [
+          "RANZCO - Red reflex testing"
+        ]
       },
       {
         "letter": "C",
         "text": "Refer urgently (within 24-48 hours) to a paediatric ophthalmologist for examination under anaesthetic to assess for retinoblastoma and other causes of leukocoria",
         "correct": true,
         "rationale": "Persistent unilateral leukocoria in an infant requires urgent paediatric ophthalmology referral; the most important diagnosis to exclude is retinoblastoma, which is curable when detected early but devastating when diagnosis is delayed. Differential also includes congenital cataract, persistent foetal vasculature, Coats disease and toxocariasis, per RANZCO Position Statement and RCH CPG.",
-        "source_refs": ["RANZCO - Red reflex testing", "RCH CPG: Vision screening"]
+        "source_refs": [
+          "RANZCO - Red reflex testing",
+          "RCH CPG: Vision screening"
+        ]
       },
       {
         "letter": "D",
-        "text": "Order an MRI brain and orbits under sedation as the initial investigation",
+        "text": "Order an outpatient MRI brain and orbits under general anaesthetic as the initial investigation to characterise any intraocular mass before specialist ophthalmology referral",
         "correct": false,
         "rationale": "MRI is an important part of staging once retinoblastoma is diagnosed (to assess optic nerve extension and exclude pinealoblastoma in trilateral disease), but the first step is paediatric ophthalmology assessment with examination under anaesthetic, per RANZCO.",
-        "source_refs": ["RANZCO - Red reflex testing"]
+        "source_refs": [
+          "RANZCO - Red reflex testing"
+        ]
       },
       {
         "letter": "E",
-        "text": "Patch the right (normal) eye for 2 hours daily for amblyopia management and review in 3 months",
+        "text": "Patch the right unaffected eye for 2 hours daily for amblyopia management of the left eye and review in 3 months for clinical progress",
         "correct": false,
         "rationale": "Patching is for amblyopia treatment after the underlying cause has been identified and treated; instituting occlusion without identifying the leukocoric pathology could delay diagnosis of retinoblastoma, per RANZCO.",
-        "source_refs": ["RANZCO - Red reflex testing"]
+        "source_refs": [
+          "RANZCO - Red reflex testing"
+        ]
       }
     ],
     "explanation": {
@@ -947,10 +1298,18 @@
       "pearls": "Parents often notice leukocoria first in flash photographs; never dismiss the parent who brings a photograph of a white pupil (Source: RANZCO)."
     },
     "sources": [
-      {"label": "RANZCO - Red reflex testing", "url": "https://ranzco.edu/"},
-      {"label": "RCH CPG: Vision screening", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Vision_screening/"}
+      {
+        "label": "RANZCO - Red reflex testing",
+        "url": "https://ranzco.edu/"
+      },
+      {
+        "label": "RCH CPG: Vision screening",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Vision_screening/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_infant"],
+    "reference_ranges": [
+      "paeds_vitals_infant"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -959,8 +1318,13 @@
     "subtopic": "Ophthalmia neonatorum - gonococcal conjunctivitis",
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["ophthalmia neonatorum", "gonococcal conjunctivitis", "STI", "neonatal"],
-    "stem": "A 3-day-old term male infant is brought to ED by his parents because of bilateral profuse purulent eye discharge that began 24 hours ago and is rapidly increasing. He was born by normal vaginal birth at 39+2 weeks weighing 3220 g. The pregnancy was unbooked because the mother (a 19-year-old who recently migrated and was lost to antenatal care) presented in labour at the nearest hospital. Antenatal STI screening was not performed. The baby has otherwise been feeding and behaving normally. On examination there is profuse yellow-green purulent discharge from both eyes with marked eyelid oedema (chemosis) so pronounced that the lids cannot be readily opened. The cornea on the small visible portion looks slightly hazy on the right. He is afebrile with normal observations. There is no other rash, no hepatosplenomegaly and no other focus of infection.",
+    "tags": [
+      "ophthalmia neonatorum",
+      "gonococcal conjunctivitis",
+      "STI",
+      "neonatal"
+    ],
+    "stem": "A 3-day-old term male infant is brought to ED by his parents because of bilateral profuse purulent eye discharge that began 24 hours ago and is rapidly increasing. He was born by normal vaginal birth at 39+2 weeks weighing 3220 g. The pregnancy was unbooked because the mother (a 19-year-old who recently migrated and was lost to antenatal care) presented in labour at the nearest hospital. Antenatal STI screening was not performed. The baby has otherwise been feeding and behaving normally. On examination there is profuse yellow-green purulent discharge from both eyes with marked eyelid oedema (chemosis) so pronounced that the lids cannot be readily opened. The cornea on the small visible portion looks slightly hazy on the right. He is afebrile with normal observations. There is no other rash, no hepatosplenomegaly and no other focus of infection. The ED registrar specifically asks whether topical chloramphenicol could be trialled first, whether oral azithromycin for chlamydial conjunctivitis would be adequate, whether the appearance represents chemical conjunctivitis from birth, and whether topical aciclovir for neonatal HSV keratoconjunctivitis should be applied empirically. The retrieval team is on the way.",
     "data_table": {
       "Vital signs": "T 36.9 deg C, HR 148 bpm, RR 48 /min, SpO2 99 percent on room air",
       "Examination": "Bilateral profuse purulent eye discharge, marked chemosis preventing easy lid opening, possible right corneal haze, no rash, no hepatosplenomegaly",
@@ -973,35 +1337,46 @@
         "text": "Send eye swab for Gram stain, bacterial culture and Chlamydia / Neisseria gonorrhoeae PCR, admit, commence IV ceftriaxone or cefotaxime, perform saline eye irrigation and request urgent paediatric ophthalmology review",
         "correct": true,
         "rationale": "Hyperacute purulent conjunctivitis with marked chemosis in the first week of life with maternal risk factors must be treated as Neisseria gonorrhoeae until proven otherwise; gonococcal ophthalmia can perforate the cornea within 24 hours. Management is admission, IV third-generation cephalosporin (cefotaxime preferred in jaundiced neonates over ceftriaxone), copious saline irrigation and urgent ophthalmology, per RCH CPG: Conjunctivitis and Therapeutic Guidelines: Antibiotic.",
-        "source_refs": ["RCH CPG: Conjunctivitis", "Therapeutic Guidelines: Antibiotic"]
+        "source_refs": [
+          "RCH CPG: Conjunctivitis",
+          "Therapeutic Guidelines: Antibiotic"
+        ]
       },
       {
         "letter": "B",
-        "text": "Prescribe topical chloramphenicol drops 6 hourly and review the next day",
+        "text": "Prescribe topical chloramphenicol 0.5% eye drops one drop to each eye six-hourly for 7 days and review at the GP clinic the following day to assess improvement",
         "correct": false,
         "rationale": "Topical chloramphenicol alone is inadequate for gonococcal ophthalmia, which requires systemic therapy because of penetration into the cornea and risk of disseminated infection, per Therapeutic Guidelines: Antibiotic.",
-        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
       },
       {
         "letter": "C",
-        "text": "Commence oral azithromycin for 3 days for likely Chlamydia trachomatis conjunctivitis",
+        "text": "Commence oral azithromycin 20 mg/kg once daily for 3 days as empirical therapy for likely Chlamydia trachomatis conjunctivitis without admission or specialist input",
         "correct": false,
         "rationale": "Chlamydial conjunctivitis typically presents at 5-14 days of life with mucopurulent discharge and less severe chemosis; this hyperacute first-week-of-life presentation with profuse purulence is gonococcal until disproven and requires IV cephalosporin, per Therapeutic Guidelines: Antibiotic.",
-        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
       },
       {
         "letter": "D",
-        "text": "Reassure as likely chemical (silver nitrate) conjunctivitis from birth and review in 48 hours",
+        "text": "Reassure the parents that this is most likely chemical (silver nitrate) conjunctivitis from birth, irrigate with normal saline, and review in 48 hours",
         "correct": false,
         "rationale": "Chemical conjunctivitis occurs in the first 24-48 hours and is mild and self-limiting; silver nitrate prophylaxis is not used in Australia, and this severe hyperacute purulent presentation cannot be attributed to a chemical cause, per RCH CPG: Conjunctivitis.",
-        "source_refs": ["RCH CPG: Conjunctivitis"]
+        "source_refs": [
+          "RCH CPG: Conjunctivitis"
+        ]
       },
       {
         "letter": "E",
-        "text": "Apply topical aciclovir ointment for suspected neonatal herpes simplex keratoconjunctivitis",
+        "text": "Apply topical aciclovir 3% eye ointment five times daily for suspected neonatal herpes simplex keratoconjunctivitis and arrange paediatric review the following day",
         "correct": false,
         "rationale": "Neonatal HSV typically presents with vesicular skin lesions (SEM disease), keratitis with dendritic ulcer or systemic illness, and is treated with IV high-dose aciclovir, not topical alone; the presentation here is bacterial gonococcal ophthalmia, per RCH CPG: Conjunctivitis.",
-        "source_refs": ["RCH CPG: Conjunctivitis"]
+        "source_refs": [
+          "RCH CPG: Conjunctivitis"
+        ]
       }
     ],
     "explanation": {
@@ -1015,10 +1390,18 @@
       "pearls": "Gonococcal ophthalmia can perforate the cornea within 24 hours; treat empirically while awaiting microbiology (Source: Therapeutic Guidelines: Antibiotic)."
     },
     "sources": [
-      {"label": "RCH CPG: Conjunctivitis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Conjunctivitis/"},
-      {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/"}
+      {
+        "label": "RCH CPG: Conjunctivitis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Conjunctivitis/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_infant"],
+    "reference_ranges": [
+      "paeds_vitals_infant"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -1027,8 +1410,13 @@
     "subtopic": "Periorbital cellulitis - Chandler I outpatient management",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["periorbital cellulitis", "preseptal", "Chandler", "outpatient"],
-    "stem": "A 5-year-old girl is brought to her GP with 24 hours of progressive left eyelid swelling and redness that started after an insect bite on the eyelid the previous afternoon. She has been afebrile, well, eating and drinking normally. There is no preceding sinusitis and no recent dental infection. On examination she has erythema and swelling of the left upper and lower eyelid with localised tenderness at the bite site, but she can open the eye spontaneously. Visual acuity is 6/6 in both eyes, pupillary responses are equal and brisk with no relative afferent pupillary defect, and full eye movements are present with no pain on movement. There is no proptosis, no chemosis and the conjunctiva is white. Otoscopy and oropharyngeal examination are normal. There is no facial nerve weakness and the contralateral eye is normal.",
+    "tags": [
+      "periorbital cellulitis",
+      "preseptal",
+      "Chandler",
+      "outpatient"
+    ],
+    "stem": "A 5-year-old girl is brought to her GP with 24 hours of progressive left eyelid swelling and redness that started after an insect bite on the eyelid the previous afternoon. She has been afebrile, well, eating and drinking normally. There is no preceding sinusitis and no recent dental infection. On examination she has erythema and swelling of the left upper and lower eyelid with localised tenderness at the bite site, but she can open the eye spontaneously. Visual acuity is 6/6 in both eyes, pupillary responses are equal and brisk with no relative afferent pupillary defect, and full eye movements are present with no pain on movement. There is no proptosis, no chemosis and the conjunctiva is white. Otoscopy and oropharyngeal examination are normal. There is no facial nerve weakness and the contralateral eye is normal. The mother specifically asks whether admission for IV antibiotics is needed today.",
     "data_table": {
       "Vital signs": "T 36.9 deg C, HR 96 bpm, RR 20 /min",
       "Examination": "Left upper and lower eyelid erythema and swelling, eye opens spontaneously, VA 6/6 bilateral, equal pupils no RAPD, full eye movements painless, no proptosis, no chemosis, white conjunctiva",
@@ -1038,38 +1426,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "Admit for IV ceftriaxone plus flucloxacillin plus metronidazole and arrange urgent CT sinuses and orbits with contrast",
+        "text": "Admit for intravenous ceftriaxone 50 mg/kg daily, flucloxacillin 50 mg/kg six-hourly and metronidazole 7.5 mg/kg eight-hourly with urgent contrast CT of sinuses and orbits",
         "correct": false,
         "rationale": "Admission, IV broad-spectrum cover and contrast CT are indicated for orbital (postseptal) cellulitis: pain on eye movement, restricted motility, proptosis, reduced acuity or RAPD; this child has none of those features, per RCH CPG: Periorbital and orbital cellulitis.",
-        "source_refs": ["RCH CPG: Periorbital and orbital cellulitis"]
+        "source_refs": [
+          "RCH CPG: Periorbital and orbital cellulitis"
+        ]
       },
       {
         "letter": "B",
         "text": "Commence oral cefalexin or amoxicillin/clavulanate and review at 24 hours with explicit safety-netting for pain on eye movement, restricted movement, proptosis, reduced visual acuity, fever or unwell appearance",
         "correct": true,
         "rationale": "This is preseptal (periorbital) cellulitis (Chandler stage I): normal acuity, full painless eye movements, no proptosis, no RAPD, no chemosis, child well. Outpatient oral antibiotics with strict safety-netting and 24 hour review is appropriate, per RCH CPG: Periorbital and orbital cellulitis and Therapeutic Guidelines: Antibiotic.",
-        "source_refs": ["RCH CPG: Periorbital and orbital cellulitis", "Therapeutic Guidelines: Antibiotic"]
+        "source_refs": [
+          "RCH CPG: Periorbital and orbital cellulitis",
+          "Therapeutic Guidelines: Antibiotic"
+        ]
       },
       {
         "letter": "C",
-        "text": "Apply warm compresses and topical chloramphenicol ointment only",
+        "text": "Apply warm compresses to the eyelid four-hourly and prescribe topical chloramphenicol 1% eye ointment three-hourly to the affected lid for 7 days without systemic antibiotics",
         "correct": false,
         "rationale": "Topical therapy and warm compresses do not penetrate the lid soft tissues adequately for cellulitis; systemic antibiotics are required, per Therapeutic Guidelines: Antibiotic.",
-        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
       },
       {
         "letter": "D",
-        "text": "Refer urgently to ophthalmology for incision and drainage of suspected lid abscess",
+        "text": "Refer urgently to paediatric ophthalmology for surgical incision and drainage of suspected lid abscess despite the absence of any fluctuant collection on examination today",
         "correct": false,
         "rationale": "There is no fluctuant collection described; preseptal cellulitis without abscess is managed medically with antibiotics and observation, per RCH CPG: Periorbital and orbital cellulitis.",
-        "source_refs": ["RCH CPG: Periorbital and orbital cellulitis"]
+        "source_refs": [
+          "RCH CPG: Periorbital and orbital cellulitis"
+        ]
       },
       {
         "letter": "E",
-        "text": "Prescribe oral prednisolone in addition to oral antibiotics to reduce eyelid swelling",
+        "text": "Prescribe oral prednisolone 1 mg/kg daily for 5 days alongside oral antibiotics to reduce eyelid swelling more rapidly and accelerate symptom resolution",
         "correct": false,
         "rationale": "Systemic corticosteroids are not indicated for periorbital cellulitis and may obscure clinical signs of progression to orbital cellulitis, per RCH CPG: Periorbital and orbital cellulitis.",
-        "source_refs": ["RCH CPG: Periorbital and orbital cellulitis"]
+        "source_refs": [
+          "RCH CPG: Periorbital and orbital cellulitis"
+        ]
       }
     ],
     "explanation": {
@@ -1083,10 +1482,18 @@
       "pearls": "Insect bite, hordeolum (stye) or contiguous skin infection are common preseptal triggers; sinusitis is the commonest postseptal trigger (Source: RCH CPG: Periorbital and orbital cellulitis)."
     },
     "sources": [
-      {"label": "RCH CPG: Periorbital and orbital cellulitis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Periorbital_and_orbital_cellulitis/"},
-      {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/"}
+      {
+        "label": "RCH CPG: Periorbital and orbital cellulitis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Periorbital_and_orbital_cellulitis/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child"],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -1095,7 +1502,13 @@
     "subtopic": "Childhood strabismus - true esotropia versus pseudoesotropia",
     "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["strabismus", "esotropia", "pseudoesotropia", "amblyopia", "Hirschberg"],
+    "tags": [
+      "strabismus",
+      "esotropia",
+      "pseudoesotropia",
+      "amblyopia",
+      "Hirschberg"
+    ],
     "stem": "An 18-month-old girl is brought to her GP because her grandmother thinks she has a squint, particularly when looking to either side. The mother is unsure. She was born at term, met all early milestones and has otherwise been well. There is no family history of strabismus, amblyopia or significant refractive error. On examination today she has a broad nasal bridge and prominent epicanthic folds. Hirschberg corneal light reflex test shows the light reflex centred symmetrically in both pupils. The cover-uncover test reveals no movement of either eye when the other is occluded. Eye movements are full in all directions of gaze. Red reflex is normal bilaterally and visual behaviour is age-appropriate with good fixation and following.",
     "data_table": {
       "Vital signs": "T 36.7 deg C, HR 108 bpm, RR 24 /min",
@@ -1105,38 +1518,50 @@
     "options": [
       {
         "letter": "A",
-        "text": "Refer urgently to paediatric ophthalmology for examination under anaesthesia and consideration of strabismus surgery",
+        "text": "Refer urgently to paediatric ophthalmology for examination under general anaesthesia and consideration of strabismus surgery despite normal Hirschberg and cover-uncover testing in the rooms today",
         "correct": false,
         "rationale": "There is no true strabismus on Hirschberg or cover-uncover testing; this is pseudoesotropia from epicanthic folds and a broad nasal bridge, which does not require surgical referral, per RANZCO and RCH CPG: Vision screening.",
-        "source_refs": ["RANZCO - Childhood strabismus", "RCH CPG: Vision screening"]
+        "source_refs": [
+          "RANZCO - Childhood strabismus",
+          "RCH CPG: Vision screening"
+        ]
       },
       {
         "letter": "B",
         "text": "Reassure parents that this is pseudoesotropia from epicanthic folds, document normal Hirschberg and cover-uncover testing, and advise to return for review if any change is noted or by the routine 4 year preschool vision screen",
         "correct": true,
         "rationale": "Symmetric corneal light reflex and a negative cover-uncover test in the presence of epicanthic folds is pseudoesotropia; the apparent squint is an optical illusion and resolves as facial features mature. Reassurance and routine vision screening is appropriate, per RANZCO and RCH CPG: Vision screening.",
-        "source_refs": ["RANZCO - Childhood strabismus", "RCH CPG: Vision screening"]
+        "source_refs": [
+          "RANZCO - Childhood strabismus",
+          "RCH CPG: Vision screening"
+        ]
       },
       {
         "letter": "C",
-        "text": "Patch the left eye for 2 hours daily for 3 months to prevent amblyopia",
+        "text": "Patch the left eye with an adhesive eye patch for 2 hours daily for 3 months to prevent amblyopia despite absent strabismus or amblyopia on objective testing today",
         "correct": false,
         "rationale": "Patching is indicated for amblyopia treatment when a true strabismus or refractive imbalance has been confirmed; instituting occlusion in a child without amblyopia is unnecessary and may worsen vision in the patched eye, per RANZCO.",
-        "source_refs": ["RANZCO - Childhood strabismus"]
+        "source_refs": [
+          "RANZCO - Childhood strabismus"
+        ]
       },
       {
         "letter": "D",
-        "text": "Commence topical atropine drops to the right eye to penalise vision and treat amblyopia",
+        "text": "Commence topical atropine 1% drops once daily to the right eye to penalise the dominant eye and treat presumed amblyopia in the left eye without confirmed specialist diagnosis",
         "correct": false,
         "rationale": "Atropine penalisation is an amblyopia treatment that requires a specialist diagnosis of amblyopia; it has no role in a child with normal vision and no strabismus, per RANZCO.",
-        "source_refs": ["RANZCO - Childhood strabismus"]
+        "source_refs": [
+          "RANZCO - Childhood strabismus"
+        ]
       },
       {
         "letter": "E",
-        "text": "Order MRI brain and orbits to exclude an intracranial mass causing a sixth nerve palsy",
+        "text": "Order an outpatient MRI brain and orbits under sedation to exclude an intracranial mass causing a sixth cranial nerve palsy despite the full painless eye movements documented today",
         "correct": false,
         "rationale": "A sixth nerve palsy would cause limitation of abduction and incomitant esotropia worse in the affected direction; this child has full eye movements and no true strabismus, so MRI is not indicated, per RANZCO.",
-        "source_refs": ["RANZCO - Childhood strabismus"]
+        "source_refs": [
+          "RANZCO - Childhood strabismus"
+        ]
       }
     ],
     "explanation": {
@@ -1150,10 +1575,18 @@
       "pearls": "Always document the test you used (Hirschberg, cover-uncover, cover-cross-cover) - parental and grandparental concern alone is enough to warrant active testing in any child (Source: RANZCO)."
     },
     "sources": [
-      {"label": "RANZCO - Childhood strabismus", "url": "https://ranzco.edu/"},
-      {"label": "RCH CPG: Vision screening", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Vision_screening/"}
+      {
+        "label": "RANZCO - Childhood strabismus",
+        "url": "https://ranzco.edu/"
+      },
+      {
+        "label": "RCH CPG: Vision screening",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Vision_screening/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child"],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -1162,8 +1595,13 @@
     "subtopic": "Septic arthritis in unwell child - resuscitation and source control",
     "difficulty": 5,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["septic arthritis", "paediatric sepsis", "Between the Flags", "Kingella kingae"],
-    "stem": "A 22-month-old previously well boy is brought to a tertiary paediatric ED by ambulance with a 24 hour history of refusing to crawl, increasing irritability and fever. The parents report that he had a viral upper respiratory tract illness 2 weeks ago with a small left buccal mucosal ulcer that healed. He has had a poor oral intake over the past 12 hours and last wet nappy was 8 hours ago. He is fully immunised including PCV13 and Hib. He is not Aboriginal or Torres Strait Islander. On arrival he is lethargic, lying very still with the left hip held in flexion, abduction and external rotation. Any movement of the left lower limb causes him to scream. There is a small ecchymotic area over the left knee that mother reports was from a fall last week. The right leg is normal. Bloods drawn at triage and a bedside hip ultrasound are now back.",
+    "tags": [
+      "septic arthritis",
+      "paediatric sepsis",
+      "Between the Flags",
+      "Kingella kingae"
+    ],
+    "stem": "A 22-month-old previously well boy is brought to a tertiary paediatric ED by ambulance with a 24 hour history of refusing to crawl, increasing irritability and fever. The parents report that he had a viral upper respiratory tract illness 2 weeks ago with a small left buccal mucosal ulcer that healed. He has had a poor oral intake over the past 12 hours and last wet nappy was 8 hours ago. He is fully immunised including PCV13 and Hib. He is not Aboriginal or Torres Strait Islander. On arrival he is lethargic, lying very still with the left hip held in flexion, abduction and external rotation. Any movement of the left lower limb causes him to scream. There is a small ecchymotic area over the left knee that mother reports was from a fall last week. The right leg is normal. Bloods drawn at triage and a bedside hip ultrasound are now back. The ED consultant specifically asks whether 20 mL/kg fluid boluses are still recommended, whether vancomycin and meropenem are required, whether MRI should precede antibiotics, whether observation with paracetamol is acceptable, and whether ceftriaxone monotherapy with delayed fluid resuscitation pending arterial line insertion is reasonable. The orthopaedic on-call is in theatre but can come down in 15 minutes for hip washout. The PICU bed coordinator has been notified and a bed is being made available.",
     "data_table": {
       "Vital signs": "T 39.6 deg C, HR 178 bpm, RR 44 /min, BP 78/40 mmHg, SpO2 97 percent on room air, cap refill 4 sec, mottled peripheries",
       "Examination": "Lethargic, lies still, left hip flexed / abducted / externally rotated, screams on any movement, small left knee bruise (parent-witnessed), dry mucous membranes",
@@ -1177,35 +1615,49 @@
         "text": "Activate the paediatric sepsis pathway with 10 mL/kg crystalloid bolus, draw blood culture and synovial fluid in theatre, then commence empirical IV flucloxacillin plus cefazolin (to cover Kingella kingae) and arrange urgent orthopaedic hip washout under general anaesthetic",
         "correct": true,
         "rationale": "This child is in compensated septic shock with septic arthritis of the left hip (4 of 4 Kocher, large effusion). Australian paediatric sepsis pathway recommends 10 mL/kg crystalloid boluses with reassessment between, blood culture before antibiotics where possible, and empirical IV anti-staphylococcal cover (flucloxacillin); in under-4s a second-generation cephalosporin such as cefazolin is added to cover Kingella kingae. Definitive management requires urgent surgical washout, per RCH CPG: Sepsis, RCH CPG: Acute limp and Therapeutic Guidelines: Bone and joint infections.",
-        "source_refs": ["RCH CPG: Sepsis", "RCH CPG: Acute limp", "Therapeutic Guidelines: Bone and joint infections"]
+        "source_refs": [
+          "RCH CPG: Sepsis",
+          "RCH CPG: Acute limp",
+          "Therapeutic Guidelines: Bone and joint infections"
+        ]
       },
       {
         "letter": "B",
-        "text": "Give 20 mL/kg crystalloid bolus, commence IV vancomycin and meropenem and admit to PICU before any aspiration or surgical intervention",
+        "text": "Give a 20 mL/kg crystalloid bolus over 10 minutes, commence empirical intravenous vancomycin 15 mg/kg six-hourly and meropenem 20 mg/kg eight-hourly, and admit to PICU before any orthopaedic intervention or joint aspiration",
         "correct": false,
         "rationale": "20 mL/kg boluses are now discouraged as initial paediatric resuscitation in many Australian centres in favour of 10 mL/kg with reassessment because of risk of fluid overload; vancomycin / meropenem are not first-line for septic arthritis without MRSA risk or central venous device, and surgical source control must not be delayed, per RCH CPG: Sepsis.",
-        "source_refs": ["RCH CPG: Sepsis", "Therapeutic Guidelines: Bone and joint infections"]
+        "source_refs": [
+          "RCH CPG: Sepsis",
+          "Therapeutic Guidelines: Bone and joint infections"
+        ]
       },
       {
         "letter": "C",
-        "text": "Transfuse 10 mL/kg packed red cells immediately and arrange MRI hip before antibiotics",
+        "text": "Transfuse 10 mL/kg of packed red cells immediately for presumed haemodynamic instability and arrange urgent MRI of the left hip and pelvis with contrast before commencing any intravenous antibiotics, fluids or surgical washout for joint source control",
         "correct": false,
         "rationale": "There is no evidence of anaemia or blood loss; crystalloid resuscitation is first-line. MRI may complement evaluation but must not delay antibiotics and source control in confirmed septic arthritis, per RCH CPG: Sepsis.",
-        "source_refs": ["RCH CPG: Sepsis"]
+        "source_refs": [
+          "RCH CPG: Sepsis"
+        ]
       },
       {
         "letter": "D",
-        "text": "Give oral paracetamol, observe for 4 hours and re-examine before deciding on aspiration",
+        "text": "Give oral paracetamol 15 mg/kg for analgesia, observe the child closely in the resuscitation bay for 4 hours and re-examine carefully before deciding on the need for joint aspiration, intravenous antibiotics, fluid resuscitation or surgical washout",
         "correct": false,
         "rationale": "This child has shock and confirmed septic arthritis on examination, bloods and ultrasound; observation delays time to antibiotics and source control and is unacceptable, per RCH CPG: Sepsis.",
-        "source_refs": ["RCH CPG: Sepsis"]
+        "source_refs": [
+          "RCH CPG: Sepsis"
+        ]
       },
       {
         "letter": "E",
-        "text": "Commence IV ceftriaxone monotherapy and defer fluid resuscitation pending arterial line insertion",
+        "text": "Commence intravenous ceftriaxone 50 mg/kg as empirical monotherapy and defer further fluid resuscitation pending insertion of an arterial line for invasive blood pressure monitoring in PICU before any orthopaedic involvement or aspiration is considered",
         "correct": false,
         "rationale": "Fluid resuscitation must not be deferred for line placement in a shocked child; ceftriaxone alone has gaps for severe staphylococcal infection and is not preferred monotherapy for septic arthritis in Australia, per RCH CPG: Sepsis and Therapeutic Guidelines: Bone and joint infections.",
-        "source_refs": ["RCH CPG: Sepsis", "Therapeutic Guidelines: Bone and joint infections"]
+        "source_refs": [
+          "RCH CPG: Sepsis",
+          "Therapeutic Guidelines: Bone and joint infections"
+        ]
       }
     ],
     "explanation": {
@@ -1219,11 +1671,25 @@
       "pearls": "Bacteraemia precedes joint seeding; always draw blood cultures with the first peripheral cannula before antibiotics where it does not delay therapy (Source: RCH CPG: Sepsis)."
     },
     "sources": [
-      {"label": "RCH CPG: Sepsis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Sepsis/"},
-      {"label": "RCH CPG: Acute limp", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Acute_limp/"},
-      {"label": "Therapeutic Guidelines: Bone and joint infections", "url": "https://tgldcdp.tg.org.au/"}
+      {
+        "label": "RCH CPG: Sepsis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Sepsis/"
+      },
+      {
+        "label": "RCH CPG: Acute limp",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Acute_limp/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Bone and joint infections",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child", "paeds_fbc", "inflammatory_markers", "vbg"],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "paeds_fbc",
+      "inflammatory_markers",
+      "vbg"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -1232,8 +1698,13 @@
     "subtopic": "Post-streptococcal reactive arthritis versus acute rheumatic fever",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["acute rheumatic fever", "post-streptococcal arthritis", "Jones criteria", "ATSI"],
-    "stem": "A 9-year-old Aboriginal boy from a remote community presents to the local clinic with a 10 day history of migratory arthritis affecting his right knee, then left ankle and now both wrists. The pain is severe enough to limit weight-bearing. He recalls a sore throat 3 weeks ago that resolved without medical review. He has not had any rash, no nodules and no chorea. On examination he has warm, tender, swollen wrists bilaterally with limited range of movement; the knee and ankle are no longer involved. There is no rash, no subcutaneous nodules and no abnormal involuntary movements. Cardiovascular examination reveals a soft apical pansystolic murmur radiating to the axilla that has not previously been documented. Investigations are back.",
+    "tags": [
+      "acute rheumatic fever",
+      "post-streptococcal arthritis",
+      "Jones criteria",
+      "ATSI"
+    ],
+    "stem": "A 9-year-old Aboriginal boy from a remote community presents to the local clinic with a 10 day history of migratory arthritis affecting his right knee, then left ankle and now both wrists. The pain is severe enough to limit weight-bearing. He recalls a sore throat 3 weeks ago that resolved without medical review. He has not had any rash, no nodules and no chorea. On examination he has warm, tender, swollen wrists bilaterally with limited range of movement; the knee and ankle are no longer involved. There is no rash, no subcutaneous nodules and no abnormal involuntary movements. Cardiovascular examination reveals a soft apical pansystolic murmur radiating to the axilla that has not previously been documented. Investigations are back. The clinic team asks whether this could be post-streptococcal reactive arthritis, JIA, HSP or Lyme arthritis given the migratory pattern and remote setting.",
     "data_table": {
       "Vital signs": "T 38.2 deg C, HR 124 bpm, RR 22 /min, BP 102/62 mmHg",
       "Examination": "Bilateral warm tender swollen wrists; cardiac apical pansystolic murmur radiating to axilla; no rash; no nodules; no chorea",
@@ -1244,38 +1715,48 @@
     "options": [
       {
         "letter": "A",
-        "text": "Post-streptococcal reactive arthritis",
+        "text": "Post-streptococcal reactive arthritis affecting multiple joints in additive pattern without convincing evidence of carditis on echocardiogram in this Aboriginal child from a remote community",
         "correct": false,
         "rationale": "Post-streptococcal reactive arthritis lacks evidence of carditis and has a more prolonged additive arthritis pattern; this child has objective carditis on echo and migratory polyarthritis, which fulfils ARF criteria in a high-risk population, per RHDAustralia 2020 guideline.",
-        "source_refs": ["RHDAustralia ARF/RHD guideline 2020"]
+        "source_refs": [
+          "RHDAustralia ARF/RHD guideline 2020"
+        ]
       },
       {
         "letter": "B",
-        "text": "Acute rheumatic fever (high-risk population, definite first episode)",
+        "text": "Acute rheumatic fever fulfilling Australian modified Jones criteria for a high-risk population with carditis and migratory polyarthritis as a definite first episode in this Aboriginal child",
         "correct": true,
         "rationale": "In an Aboriginal child from a remote community (high-risk population) the modified Australian Jones criteria require 2 major or 1 major + 2 minor with evidence of preceding GAS infection. This child has 2 majors (carditis on echo and polyarthritis) plus elevated inflammatory markers and ASOT, fulfilling definite ARF, per RHDAustralia 2020 guideline.",
-        "source_refs": ["RHDAustralia ARF/RHD guideline 2020"]
+        "source_refs": [
+          "RHDAustralia ARF/RHD guideline 2020"
+        ]
       },
       {
         "letter": "C",
-        "text": "Juvenile idiopathic arthritis (polyarticular)",
+        "text": "Juvenile idiopathic arthritis polyarticular subtype with incidental cardiac murmur and elevated streptococcal serology unrelated to the migratory arthritis presentation in this school-aged child",
         "correct": false,
         "rationale": "JIA typically requires 6 weeks of persistent arthritis in one or more joints and is not associated with a new pansystolic mitral murmur and elevated streptococcal serology with a sore throat history; ARF fits the picture better, per RHDAustralia guideline.",
-        "source_refs": ["RHDAustralia ARF/RHD guideline 2020"]
+        "source_refs": [
+          "RHDAustralia ARF/RHD guideline 2020"
+        ]
       },
       {
         "letter": "D",
-        "text": "Henoch-Schonlein purpura (IgA vasculitis)",
+        "text": "Henoch-Schonlein purpura (IgA vasculitis) presenting with arthritis as the dominant initial feature ahead of any palpable purpuric rash, abdominal pain or renal involvement",
         "correct": false,
         "rationale": "HSP requires palpable purpura on dependent areas plus arthritis, abdominal pain or renal involvement; this child has no rash, no abdominal pain and no haematuria, making HSP unlikely, per RCH CPG: HSP.",
-        "source_refs": ["RCH CPG: HSP"]
+        "source_refs": [
+          "RCH CPG: HSP"
+        ]
       },
       {
         "letter": "E",
-        "text": "Lyme arthritis",
+        "text": "Lyme arthritis from Borrelia burgdorferi infection acquired locally in the remote Australian setting despite the absence of erythema migrans rash or any relevant overseas travel",
         "correct": false,
         "rationale": "Indigenous Lyme disease (Borrelia burgdorferi) is not established in Australia; this child has no relevant travel history and the migratory polyarthritis with carditis and positive streptococcal serology points to ARF, per RHDAustralia guideline.",
-        "source_refs": ["RHDAustralia ARF/RHD guideline 2020"]
+        "source_refs": [
+          "RHDAustralia ARF/RHD guideline 2020"
+        ]
       }
     ],
     "explanation": {
@@ -1289,10 +1770,20 @@
       "pearls": "Even subclinical mitral regurgitation on echocardiogram now counts as carditis under the 2015 / 2020 Australian modified Jones criteria; always obtain echo when ARF is suspected (Source: RHDAustralia 2020)."
     },
     "sources": [
-      {"label": "RHDAustralia ARF/RHD guideline 2020", "url": "https://www.rhdaustralia.org.au/arf-rhd-guideline"},
-      {"label": "RCH CPG: HSP", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Henoch_Schonlein_Purpura/"}
+      {
+        "label": "RHDAustralia ARF/RHD guideline 2020",
+        "url": "https://www.rhdaustralia.org.au/arf-rhd-guideline"
+      },
+      {
+        "label": "RCH CPG: HSP",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Henoch_Schonlein_Purpura/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child", "paeds_fbc", "inflammatory_markers"],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "paeds_fbc",
+      "inflammatory_markers"
+    ],
     "created": "2026-05-18"
   },
   {
@@ -1301,7 +1792,13 @@
     "subtopic": "Adolescent epistaxis - red flags for juvenile nasopharyngeal angiofibroma",
     "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["epistaxis", "JNA", "red flags", "ENT referral", "adolescent"],
+    "tags": [
+      "epistaxis",
+      "JNA",
+      "red flags",
+      "ENT referral",
+      "adolescent"
+    ],
     "stem": "A 14-year-old boy presents to his GP with recurrent severe right-sided nose bleeds over the past 4 months. Each episode lasts more than 20 minutes and on two occasions has required attendance at an ED for anterior nasal packing. He also reports a 3 month history of progressive right-sided nasal obstruction and intermittent right-sided cheek fullness. There is no history of trauma, no significant nose picking and no family history of bleeding disorders. He is not on any medication. He is otherwise well, growing along the 50th centile, and has not lost weight. Anterior rhinoscopy reveals a pink-grey mass filling the posterior right nasal cavity that bled briskly on attempted swab. Full blood count and coagulation screen are normal.",
     "data_table": {
       "Vital signs": "T 36.8 deg C, HR 84 bpm, RR 16 /min, BP 116/72 mmHg",
@@ -1312,38 +1809,49 @@
     "options": [
       {
         "letter": "A",
-        "text": "Reassure as recurrent anterior epistaxis and prescribe topical Naseptin (chlorhexidine and neomycin) twice daily for 2 weeks",
+        "text": "Reassure as recurrent benign anterior epistaxis from Little area and prescribe topical Naseptin (chlorhexidine and neomycin) ointment twice daily for 2 weeks with first-aid advice",
         "correct": false,
         "rationale": "Severe recurrent unilateral epistaxis with nasal obstruction and a visible posterior mass in an adolescent male must not be treated as benign anterior epistaxis; topical antiseptic alone misses juvenile nasopharyngeal angiofibroma, per RCH CPG: Epistaxis.",
-        "source_refs": ["RCH CPG: Epistaxis"]
+        "source_refs": [
+          "RCH CPG: Epistaxis"
+        ]
       },
       {
         "letter": "B",
-        "text": "Attempt bedside biopsy of the mass to confirm histology before referral",
+        "text": "Attempt bedside biopsy of the visible posterior nasal mass with a cup forceps under topical lignocaine to confirm histology before any imaging or specialist ENT referral",
         "correct": false,
         "rationale": "JNA is exceptionally vascular and biopsy in the clinic can cause life-threatening haemorrhage; tissue diagnosis is made after contrast imaging in a controlled surgical environment, per RCH CPG: Epistaxis and ENT consensus.",
-        "source_refs": ["RCH CPG: Epistaxis"]
+        "source_refs": [
+          "RCH CPG: Epistaxis"
+        ]
       },
       {
         "letter": "C",
         "text": "Refer urgently to ENT and arrange contrast-enhanced MRI or CT of the nasopharynx given red flag features (recurrent severe unilateral epistaxis, progressive nasal obstruction and a visible mass in an adolescent male)",
         "correct": true,
         "rationale": "The triad of recurrent severe unilateral epistaxis, progressive nasal obstruction and a posterior nasal mass in an adolescent male is the classic presentation of juvenile nasopharyngeal angiofibroma; urgent ENT referral with contrast cross-sectional imaging is required and biopsy is avoided in clinic, per RCH CPG: Epistaxis.",
-        "source_refs": ["RCH CPG: Epistaxis", "BMJ Best Practice - JNA"]
+        "source_refs": [
+          "RCH CPG: Epistaxis",
+          "BMJ Best Practice - JNA"
+        ]
       },
       {
         "letter": "D",
-        "text": "Apply silver nitrate cautery to both sides of the septum and review in 2 weeks",
+        "text": "Apply silver nitrate chemical cautery to both sides of the nasal septum at Little area today, prescribe topical antibiotic ointment and arrange GP review in 2 weeks",
         "correct": false,
         "rationale": "Bilateral simultaneous septal cautery risks septal perforation; cautery does not address a posterior nasopharyngeal mass and would not treat JNA, per RCH CPG: Epistaxis.",
-        "source_refs": ["RCH CPG: Epistaxis"]
+        "source_refs": [
+          "RCH CPG: Epistaxis"
+        ]
       },
       {
         "letter": "E",
-        "text": "Commence oral tranexamic acid 1 g three times daily and review in 6 weeks",
+        "text": "Commence oral tranexamic acid 1 g three times daily for 6 weeks as definitive antifibrinolytic management for recurrent severe unilateral epistaxis with a posterior nasal mass",
         "correct": false,
         "rationale": "Oral tranexamic acid is an adjunct, not a substitute for definitive ENT assessment and imaging of a suspected vascular nasopharyngeal tumour, per RCH CPG: Epistaxis.",
-        "source_refs": ["RCH CPG: Epistaxis"]
+        "source_refs": [
+          "RCH CPG: Epistaxis"
+        ]
       }
     ],
     "explanation": {
@@ -1357,10 +1865,20 @@
       "pearls": "Adolescent boy with severe unilateral nose bleeds plus blocked nose equals JNA until proven otherwise (Source: BMJ Best Practice - JNA)."
     },
     "sources": [
-      {"label": "RCH CPG: Epistaxis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Epistaxis/"},
-      {"label": "BMJ Best Practice - JNA", "url": "https://bestpractice.bmj.com/"}
+      {
+        "label": "RCH CPG: Epistaxis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Epistaxis/"
+      },
+      {
+        "label": "BMJ Best Practice - JNA",
+        "url": "https://bestpractice.bmj.com/"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_child", "paeds_fbc", "coags"],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "paeds_fbc",
+      "coags"
+    ],
     "created": "2026-05-18"
   }
 ]
