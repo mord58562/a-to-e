@@ -1216,13 +1216,148 @@ body[data-screen="summary"] main { max-width: 760px; }
   /* Reference panel: full bleed, native-app feel. */
   .ref-panel { box-shadow: none; }
 
-  /* Reminder strip wraps cleanly. */
-  .reminder { padding: 8px 14px; flex-wrap: wrap; }
+  /* Reminder strip hidden on mobile - "how to add" is desktop-only. */
+  .reminder { display: none !important; }
 
   /* Summary review rows: tighter, full-width stems. */
   .review-list li { grid-template-columns: 22px 1fr; gap: 10px; }
   .review-list .rv-id { display: none; }
   .score-num { font-size: 40px; }
+}
+
+/* ── Question image (optional, e.g. dermatology / radiology) ────── */
+.q-image {
+  margin: 16px 0;
+  text-align: center;
+}
+.q-image img {
+  max-width: 100%;
+  max-height: 60vh;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  display: inline-block;
+}
+.q-image-caption {
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: var(--ink-mute);
+}
+
+/* ── Author / model tag (LLM attribution) ───────────────────────── */
+.model-tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-mute);
+  background: var(--surface-2);
+}
+
+/* ── Report button + modal ──────────────────────────────────────── */
+.action-link.has-report { color: var(--accent); }
+.report-text {
+  width: 100%;
+  min-height: 130px;
+  resize: vertical;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── Reports admin (Rob only) ───────────────────────────────────── */
+.admin-only.has-pending { color: var(--accent); }
+.admin-only .badge {
+  display: inline-block;
+  min-width: 18px;
+  padding: 1px 6px;
+  margin-left: 4px;
+  font-size: 11px;
+  line-height: 1.4;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--bg);
+  text-align: center;
+  font-weight: 600;
+}
+.admin-only .badge:empty { display: none; }
+
+.reports-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.reports-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.report-row {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.report-row:hover { background: var(--surface-2); }
+.report-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+  font-size: 12.5px;
+}
+.report-id { font-family: var(--font-mono, monospace); color: var(--ink-mute); }
+.report-status {
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.report-status.status-open      { background: var(--accent); color: var(--bg); }
+.report-status.status-fixed     { background: #2a7d44; color: #fff; }
+.report-status.status-dismissed { background: var(--ink-mute); color: var(--bg); }
+.report-q { margin: 4px 0 6px; font-size: 13px; }
+.report-issue {
+  white-space: pre-wrap;
+  font-size: 13.5px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--accent);
+  background: var(--surface-2);
+  border-radius: 0 6px 6px 0;
+}
+.report-resolution { margin-top: 6px; }
+
+/* ── Paste-flow LLM dropdown ────────────────────────────────────── */
+.paste-model-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0 10px;
+  flex-wrap: wrap;
+}
+.paste-model-label { font-size: 13px; color: var(--ink-2); }
+.paste-model-select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
 }
 
 /* ── Disable hover restyles on touch-only devices to prevent

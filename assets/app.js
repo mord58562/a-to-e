@@ -12,6 +12,12 @@
 (function () {
   "use strict";
 
+  // Remote backend (Cloudflare Worker). Set this to the URL printed by
+  // `wrangler deploy` from cloudflare-worker/. While null/empty, the
+  // site falls back to the local Python backend (scripts/server.py) for
+  // dev or to localStorage as a last resort.
+  const WORKER_URL = "";   // e.g. "https://a-to-e-inbox.<subdomain>.workers.dev"
+
   const HISTORY_KEY  = "y4mcq.history.v1";
   const FLAGS_KEY    = "y4mcq.flags.v1";
   const THEME_KEY    = "y4mcq.theme.v1";     // shared across profiles
@@ -67,7 +73,27 @@
     timerInterval: null,
     paused: false,
     refsOpen: false,
+    reports: [],
   };
+
+  // POST to the remote worker first, then local backend, then null.
+  // Returns the parsed response on success, or null if both failed.
+  async function postBackend(endpoint, body) {
+    const targets = [];
+    if (WORKER_URL) targets.push(WORKER_URL.replace(/\/$/, "") + "/" + endpoint.replace(/^\//, ""));
+    targets.push("api/" + endpoint.replace(/^\//, ""));
+    for (const url of targets) {
+      try {
+        const r = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        if (r.ok) return await r.json().catch(() => ({ ok: true }));
+      } catch (_) { /* try next */ }
+    }
+    return null;
+  }
 
   function load(k, d) { try { return JSON.parse(localStorage.getItem(k)) || d; } catch { return d; } }
   function save(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
@@ -174,19 +200,26 @@
     wireRefPanel();
     wireQuizTopbar();
     wireHowToModal();
+    wireReportModal();
+    wireReportsAdmin();
     maybeShowReminder();
+    updateReportsAdminBadge();
     showHome();
   });
 
   async function loadData() {
-    const [paeds, obgyn, ranges, meta, batchManifest, inboxManifest] = await Promise.all([
+    const [paeds, obgyn, psych, medicine, ranges, meta, batchManifest, inboxManifest, reportsFile] = await Promise.all([
       fetchJson("data/questions_paeds.json").catch(() => []),
       fetchJson("data/questions_obgyn.json").catch(() => []),
+      fetchJson("data/questions_psych.json").catch(() => []),
+      fetchJson("data/questions_medicine.json").catch(() => []),
       fetchJson("data/reference_ranges.json").catch(() => null),
       fetchJson("data/meta.json").catch(() => ({})),
       fetchJson("data/batches_manifest.json").catch(() => ({ batches: [] })),
       fetchJson("data/inbox_manifest.json").catch(() => ({ inbox: [] })),
+      fetchJson("data/reports.json").catch(() => ({ reports: [] })),
     ]);
+    state.reports = (reportsFile && reportsFile.reports) || [];
 
     // Pull every staging batch listed in the manifests. Each is its own
     // JSON array of question objects matching the canonical schema.
@@ -206,7 +239,7 @@
     // Deduplicate by id - if a question is later merged into the main
     // file, the main-file entry wins (it appears first in `all`).
     const seen = new Set();
-    const all = [...paeds, ...obgyn, ...extraQuestions, ...localQuestions];
+    const all = [...paeds, ...obgyn, ...psych, ...medicine, ...extraQuestions, ...localQuestions];
     state.questions = all.filter(q => {
       if (!q || !q.id) return false;
       if (seen.has(q.id)) return false;
@@ -289,8 +322,9 @@
     const banner = document.getElementById("reminderBanner");
     const text = document.getElementById("reminderText");
     const meta = state.meta || {};
-    const today = new Date().toISOString().slice(0, 10);
-    if (localStorage.getItem(ns(REMINDER_DISMISS_KEY)) === today) return;
+    // sessionStorage: dismiss persists for the page session only and
+    // resets on next reload, per Rob's spec.
+    if (sessionStorage.getItem("y4mcq.reminder.sessionDismissed")) return;
     const total = state.questions.length;
     const updated = meta.last_added || meta.updated;
     if (!updated) {
@@ -308,7 +342,7 @@
     }
     document.getElementById("reminderHowTo").onclick = openHowTo;
     document.getElementById("reminderDismiss").onclick = () => {
-      localStorage.setItem(ns(REMINDER_DISMISS_KEY), today);
+      sessionStorage.setItem("y4mcq.reminder.sessionDismissed", "1");
       banner.hidden = true;
     };
   }
@@ -448,7 +482,7 @@
     if (!el || !startBtn) return;
     const s = state.settings;
     if (s.mode === "study") {
-      el.textContent = `${n} questions match · Study mode shuffles through them all; end whenever.`;
+      el.textContent = `${n} questions match · Study mode shuffles through them all - end whenever.`;
     } else {
       const take = s.count === 0 ? n : Math.min(s.count, n);
       const time = s.timer ? ` · ${s.timer} min` : " · untimed";
@@ -597,6 +631,21 @@
 
     document.getElementById("qStem").textContent = q.stem;
 
+    // Optional question image (e.g. from a referenced AU image bank).
+    const imgFig = document.getElementById("qImage");
+    const imgEl = document.getElementById("qImageImg");
+    const imgCap = document.getElementById("qImageCaption");
+    if (q.image && q.image.url) {
+      imgFig.hidden = false;
+      imgEl.src = q.image.url;
+      imgEl.alt = q.image.alt || "Clinical image";
+      imgCap.textContent = q.image.caption || "";
+      imgCap.hidden = !q.image.caption;
+    } else {
+      imgFig.hidden = true;
+      imgEl.removeAttribute("src");
+    }
+
     const dtWrap = document.getElementById("qDataTable");
     if (q.data_table && Object.keys(q.data_table).length) {
       dtWrap.hidden = false;
@@ -666,6 +715,16 @@
     };
     document.getElementById("flagBtn").classList.toggle("active flag", !!state.flags[q.id]);
 
+    const repBtn = document.getElementById("reportBtn");
+    if (repBtn) {
+      repBtn.onclick = () => openReportModal(q.id, q.model);
+      const open = state.reports.filter(r => r.question_id === q.id && r.status === "open").length;
+      repBtn.classList.toggle("has-report", open > 0);
+      repBtn.title = open
+        ? `${open} open report${open === 1 ? "" : "s"} on this question (click to add another)`
+        : "Report an issue with this question";
+    }
+
     if (state.quiz.revealed[q.id]) revealAnswer(q);
   }
 
@@ -709,12 +768,15 @@
     const ex = document.getElementById("explainBlock");
     ex.hidden = false;
 
-    // The subtopic + difficulty go on the commentary eyebrow now, where
-    // they can be seen AFTER the user has committed to an answer.
+    // The subtopic + difficulty + author model go on the commentary
+    // eyebrow now, where they can be seen AFTER the user has committed
+    // to an answer. `model` tags who/what produced the question so
+    // audits can spot patterns by LLM.
     const eb = ex.querySelector(".section-eyebrow");
     eb.innerHTML = `Commentary` +
       (q.subtopic ? `<span class="topic-tag">${esc(q.subtopic)}</span>` : "") +
-      (q.difficulty ? `<span class="difficulty-tag">Difficulty ${q.difficulty}/5</span>` : "");
+      (q.difficulty ? `<span class="difficulty-tag">Difficulty ${q.difficulty}/5</span>` : "") +
+      (q.model ? `<span class="model-tag" title="Question author">${esc(q.model)}</span>` : "");
 
     const correct = _shuffledOptions(q).find(o => o.correct);
     const correctCite = correct.source_refs && correct.source_refs.length
@@ -1103,6 +1165,150 @@
     document.getElementById("localBankExport").onclick = exportLocalBank;
     refreshLocalBankSummary();
   }
+
+  // ── Report modal (per-question issue submission) ───────────────────────
+  let _reportingQId = null;
+  let _reportingModel = null;
+  function wireReportModal() {
+    const m = document.getElementById("reportModal"); if (!m) return;
+    document.getElementById("reportCancel").onclick = closeReportModal;
+    m.addEventListener("click", e => { if (e.target.id === "reportModal") closeReportModal(); });
+    document.getElementById("reportSubmit").onclick = submitReport;
+  }
+  function openReportModal(qid, model) {
+    _reportingQId = qid;
+    _reportingModel = model || null;
+    document.getElementById("reportQId").textContent = `Question: ${qid}`;
+    document.getElementById("reportText").value = "";
+    document.getElementById("reportStatus").textContent = "";
+    document.getElementById("reportStatus").className = "dim small";
+    document.getElementById("reportModal").hidden = false;
+    setTimeout(() => document.getElementById("reportText").focus(), 50);
+  }
+  function closeReportModal() {
+    document.getElementById("reportModal").hidden = true;
+  }
+  async function submitReport() {
+    const text = (document.getElementById("reportText").value || "").trim();
+    const status = document.getElementById("reportStatus");
+    const btn = document.getElementById("reportSubmit");
+    status.className = "dim small";
+    if (text.length < 3) {
+      status.textContent = "Add a short description of the issue.";
+      status.classList.add("bad");
+      return;
+    }
+    btn.disabled = true;
+    status.textContent = "Submitting…";
+    const res = await postBackend("report", {
+      question_id: _reportingQId,
+      issue: text,
+      profile: currentProfile ? currentProfile.id : "guest",
+      model: _reportingModel,
+    });
+    btn.disabled = false;
+    if (res && res.ok) {
+      status.textContent = "Submitted. Thanks - this gets checked on the next audit pass.";
+      status.classList.remove("bad"); status.classList.add("ok");
+      // Optimistically include in local in-memory list so the badge updates.
+      state.reports.push({
+        id: res.id, question_id: _reportingQId, issue: text,
+        profile: currentProfile ? currentProfile.id : "guest",
+        model: _reportingModel, created: new Date().toISOString(),
+        status: "open", resolution: null,
+      });
+      updateReportsAdminBadge();
+      const repBtn = document.getElementById("reportBtn");
+      if (repBtn) repBtn.classList.add("has-report");
+      setTimeout(closeReportModal, 1200);
+    } else {
+      status.textContent = "Couldn't reach the backend. Try again, or screenshot + email Rob.";
+      status.classList.add("bad");
+    }
+  }
+
+  // ── Reports admin (Rob only) ───────────────────────────────────────────
+  function wireReportsAdmin() {
+    const btn = document.getElementById("reportsAdminBtn");
+    const m = document.getElementById("reportsAdminModal");
+    if (!btn || !m) return;
+    btn.onclick = openReportsAdmin;
+    document.getElementById("reportsAdminClose").onclick = () => m.hidden = true;
+    m.addEventListener("click", e => { if (e.target.id === "reportsAdminModal") m.hidden = true; });
+    document.querySelectorAll('#reportsAdminModal [data-rep-filter]').forEach(b => {
+      b.onclick = () => {
+        document.querySelectorAll('#reportsAdminModal [data-rep-filter]').forEach(x => x.classList.remove("selected"));
+        b.classList.add("selected");
+        renderReportsAdminList(b.dataset.repFilter);
+      };
+    });
+  }
+  function updateReportsAdminBadge() {
+    const btn = document.getElementById("reportsAdminBtn");
+    const badge = document.getElementById("reportsAdminCount");
+    if (!btn) return;
+    const isAdmin = currentProfile && currentProfile.id === "rob";
+    if (!isAdmin) { btn.hidden = true; return; }
+    const open = state.reports.filter(r => r.status === "open").length;
+    btn.hidden = false;
+    badge.textContent = open > 0 ? String(open) : "";
+    btn.classList.toggle("has-pending", open > 0);
+  }
+  function openReportsAdmin() {
+    document.getElementById("reportsAdminModal").hidden = false;
+    renderReportsAdminList("open");
+  }
+  function renderReportsAdminList(filter) {
+    const list = document.getElementById("reportsAdminList");
+    list.innerHTML = "";
+    const reports = state.reports
+      .filter(r => filter === "all" ? true : r.status === filter)
+      .slice().reverse();   // newest first
+    if (!reports.length) {
+      list.innerHTML = `<li class="dim small">No ${esc(filter)} reports.</li>`;
+      return;
+    }
+    for (const r of reports) {
+      const q = state.questions.find(x => x.id === r.question_id);
+      const li = document.createElement("li");
+      li.className = "report-row report-" + esc(r.status || "open");
+      const when = (r.created || "").replace("T", " ").slice(0, 16);
+      const qStem = q ? esc(q.stem.slice(0, 140)) + (q.stem.length > 140 ? "…" : "") : "<em>question not found in current bank</em>";
+      const qModel = q && q.model ? `<span class="model-tag">${esc(q.model)}</span>` : "";
+      li.innerHTML = `
+        <div class="report-head">
+          <span class="report-id">${esc(r.id)}</span>
+          <span class="report-status status-${esc(r.status || "open")}">${esc(r.status || "open")}</span>
+          <span class="report-when dim small">${esc(when)} · ${esc(r.profile || "guest")}</span>
+          ${qModel}
+        </div>
+        <div class="report-q"><b>Q: ${esc(r.question_id)}</b> - ${qStem}</div>
+        <div class="report-issue">${esc(r.issue)}</div>
+        ${r.resolution ? `<div class="report-resolution dim small">Resolution: ${esc(r.resolution)}</div>` : ""}
+      `;
+      if (q) {
+        li.style.cursor = "pointer";
+        li.onclick = () => {
+          document.getElementById("reportsAdminModal").hidden = true;
+          jumpToQuestionStandalone(q);
+        };
+      }
+      list.appendChild(li);
+    }
+  }
+  function jumpToQuestionStandalone(q) {
+    // Start a tiny single-question study session for review.
+    state.quiz = {
+      pool: [q], idx: 0, mode: "study",
+      timerMins: 0, deadline: null,
+      answers: {}, struck: {}, revealed: {}, finished: false,
+    };
+    state.sessionStart = Date.now();
+    setScreen("quiz");
+    document.getElementById("sessionMeta").textContent = "Report review";
+    renderQuiz();
+    startSessionTimer();
+  }
   function openHowTo()  {
     document.getElementById("howToModal").hidden = false;
     refreshLocalBankSummary();
@@ -1147,24 +1353,19 @@
     btn.disabled = true;
     status.textContent = "Saving…";
 
-    // First try the local backend (scripts/server.py). On success, the
-    // file lands in data/inbox/ where the audit flow finds it on the
-    // next question-generation pass. Fall back to localStorage if there
-    // is no backend (e.g., GitHub Pages or plain `python -m http.server`).
-    let savedToInbox = null;
-    try {
-      const r = await fetch("api/paste", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ questions: added }),
-      });
-      if (r.ok) {
-        const j = await r.json().catch(() => ({}));
-        savedToInbox = j.saved || true;
-      }
-    } catch (_) {
-      // network error / no backend / file:// origin - fall through
+    // Tag every pasted question with the LLM the user picked, so
+    // audit can see "who made what" across the bank.
+    const modelSel = document.getElementById("pasteModel");
+    const model = modelSel ? modelSel.value : null;
+    if (model) {
+      for (const q of added) { if (!q.model) q.model = model; }
     }
+
+    // Try the remote worker first, then local backend. Both write
+    // to data/inbox/ so the audit flow picks it up. Fall back to
+    // localStorage only if both fail (offline / no backend / no worker).
+    const res = await postBackend("paste", { questions: added, model });
+    const savedToInbox = res && res.ok ? (res.saved || true) : null;
 
     if (!savedToInbox) {
       const existing = load(ns(LOCAL_QUESTIONS_KEY), []);
@@ -1177,11 +1378,11 @@
     let msg = `Added ${added.length} question${added.length === 1 ? "" : "s"}.`;
     if (skipped.length) msg += ` Skipped ${skipped.length} duplicate ID${skipped.length === 1 ? "" : "s"}.`;
     if (savedToInbox && typeof savedToInbox === "string") {
-      msg += ` Saved to data/${savedToInbox} for the next audit pass.`;
+      msg += ` Saved to the live bank at data/${savedToInbox}. Everyone sees these on next reload.`;
     } else if (savedToInbox) {
-      msg += " Saved to the repo inbox.";
+      msg += " Saved to the live bank inbox.";
     } else {
-      msg += " Saved in this browser only (no local backend detected - run scripts/start.sh for auto-audit).";
+      msg += " Saved in this browser only (backend unreachable - hit 'Export for audit' to share).";
     }
     status.textContent = msg;
     status.classList.remove("dim", "bad"); status.classList.add("ok");
