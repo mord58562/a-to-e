@@ -57,6 +57,7 @@
     timer: 0,
     disciplines: ["Paediatrics", "Obstetrics & Gynaecology", "Psychiatry", "Medicine"],
     filter: "all",
+    subtopics: null,   // null = all on; array of strings = subset
   };
 
   const state = {
@@ -410,8 +411,47 @@
         onSettingsChange();
       });
     });
+    renderSubtopicChips();
+    const stop = e => { e.preventDefault(); e.stopPropagation(); };
+    document.getElementById("tagsAll").onclick = e => {
+      stop(e);
+      document.querySelectorAll("#subtopicChips .opt").forEach(c => c.classList.add("selected"));
+      readMulti(document.getElementById("subtopicChips"));
+      onSettingsChange();
+    };
+    document.getElementById("tagsNone").onclick = e => {
+      stop(e);
+      document.querySelectorAll("#subtopicChips .opt").forEach(c => c.classList.remove("selected"));
+      readMulti(document.getElementById("subtopicChips"));
+      onSettingsChange();
+    };
     document.getElementById("startBtn").onclick = startQuiz;
     onSettingsChange();
+  }
+  function renderSubtopicChips() {
+    const wrap = document.getElementById("subtopicChips");
+    if (!wrap) return;
+    // Only show subtopic chips for currently-selected disciplines so the
+    // list doesn't bloat to 70+ chips when filters are narrow.
+    const visible = new Set(state.settings.disciplines);
+    const counts = {};
+    state.questions.forEach(q => {
+      if (!visible.has(q.topic)) return;
+      const k = q.subtopic || "Other";
+      counts[k] = (counts[k] || 0) + 1;
+    });
+    const sorted = Object.entries(counts).sort((a, b) => a[0].localeCompare(b[0]));
+    wrap.innerHTML = "";
+    const selected = state.settings.subtopics;
+    sorted.forEach(([k, n]) => {
+      const c = document.createElement("button");
+      c.className = "opt" + (!selected || selected.includes(k) ? " selected" : "");
+      c.dataset.value = k;
+      c.textContent = `${k} (${n})`;
+      wrap.appendChild(c);
+    });
+    document.getElementById("tagCountLabel").textContent =
+      sorted.length ? `· ${sorted.length} areas` : "";
   }
 
   function applySettingsToOptions() {
@@ -435,7 +475,14 @@
   function readMulti(row) {
     const name = row.dataset.name;
     const values = Array.from(row.querySelectorAll(".opt.selected")).map(o => o.dataset.value);
-    if (name === "disciplines") state.settings.disciplines = values;
+    if (name === "disciplines") {
+      state.settings.disciplines = values;
+      // Re-render the subtopic chips so they reflect the new discipline set.
+      renderSubtopicChips();
+    } else if (name === "subtopics") {
+      const total = row.querySelectorAll(".opt").length;
+      state.settings.subtopics = values.length === total ? null : values;
+    }
     saveSettings();
   }
 
@@ -450,6 +497,7 @@
     const s = state.settings;
     return state.questions.filter(q => {
       if (s.disciplines.length && !s.disciplines.includes(q.topic)) return false;
+      if (s.subtopics && !s.subtopics.includes(q.subtopic || "Other")) return false;
       const h = state.history[q.id];
       if (s.filter === "unseen" && h) return false;
       if (s.filter === "incorrect" && (!h || h.lastCorrect !== false)) return false;
