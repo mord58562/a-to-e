@@ -55,9 +55,8 @@
     mode: "study",
     count: 20,
     timer: 0,
-    disciplines: ["Paediatrics", "Obstetrics & Gynaecology"],
+    disciplines: ["Paediatrics", "Obstetrics & Gynaecology", "Psychiatry", "Medicine"],
     filter: "all",
-    subtopics: null,
   };
 
   const state = {
@@ -411,21 +410,6 @@
         onSettingsChange();
       });
     });
-    renderSubtopicChips();
-
-    const stop = e => { e.preventDefault(); e.stopPropagation(); };
-    document.getElementById("tagsAll").onclick = e => {
-      stop(e);
-      document.querySelectorAll("#subtopicChips .opt").forEach(c => c.classList.add("selected"));
-      readMulti(document.getElementById("subtopicChips"));
-      onSettingsChange();
-    };
-    document.getElementById("tagsNone").onclick = e => {
-      stop(e);
-      document.querySelectorAll("#subtopicChips .opt").forEach(c => c.classList.remove("selected"));
-      readMulti(document.getElementById("subtopicChips"));
-      onSettingsChange();
-    };
     document.getElementById("startBtn").onclick = startQuiz;
     onSettingsChange();
   }
@@ -451,35 +435,8 @@
   function readMulti(row) {
     const name = row.dataset.name;
     const values = Array.from(row.querySelectorAll(".opt.selected")).map(o => o.dataset.value);
-    if (name === "disciplines") {
-      state.settings.disciplines = values;
-    } else if (name === "subtopics") {
-      const total = row.querySelectorAll(".opt").length;
-      state.settings.subtopics = values.length === total ? null : values;
-    }
+    if (name === "disciplines") state.settings.disciplines = values;
     saveSettings();
-  }
-
-  function renderSubtopicChips() {
-    const wrap = document.getElementById("subtopicChips");
-    if (!wrap) return;
-    const counts = {};
-    state.questions.forEach(q => {
-      const k = q.subtopic || "Other";
-      counts[k] = (counts[k] || 0) + 1;
-    });
-    const sorted = Object.entries(counts).sort((a, b) => a[0].localeCompare(b[0]));
-    wrap.innerHTML = "";
-    const selected = state.settings.subtopics;
-    sorted.forEach(([k, n]) => {
-      const c = document.createElement("button");
-      c.className = "opt" + (!selected || selected.includes(k) ? " selected" : "");
-      c.dataset.value = k;
-      c.textContent = `${k} (${n})`;
-      wrap.appendChild(c);
-    });
-    document.getElementById("tagCountLabel").textContent =
-      `· ${sorted.length} subjects, all on by default`;
   }
 
   function onSettingsChange() {
@@ -493,7 +450,6 @@
     const s = state.settings;
     return state.questions.filter(q => {
       if (s.disciplines.length && !s.disciplines.includes(q.topic)) return false;
-      if (s.subtopics && !s.subtopics.includes(q.subtopic || "Other")) return false;
       const h = state.history[q.id];
       if (s.filter === "unseen" && h) return false;
       if (s.filter === "incorrect" && (!h || h.lastCorrect !== false)) return false;
@@ -798,9 +754,13 @@
     // eyebrow now, where they can be seen AFTER the user has committed
     // to an answer. `model` tags who/what produced the question so
     // audits can spot patterns by LLM.
+    // Prefer the granular subtopic_detail (set during the broad-area
+    // consolidation) for the post-reveal eyebrow - the broad q.subtopic
+    // bucket is used for stats/grouping, not display.
+    const subLabel = q.subtopic_detail || q.subtopic;
     const eb = ex.querySelector(".section-eyebrow");
     eb.innerHTML = `Commentary` +
-      (q.subtopic ? `<span class="topic-tag">${esc(q.subtopic)}</span>` : "") +
+      (subLabel ? `<span class="topic-tag">${esc(subLabel)}</span>` : "") +
       (q.difficulty ? `<span class="difficulty-tag">Difficulty ${q.difficulty}/5</span>` : "") +
       (q.model ? `<span class="model-tag" title="Question author">${esc(q.model)}</span>` : "");
 
