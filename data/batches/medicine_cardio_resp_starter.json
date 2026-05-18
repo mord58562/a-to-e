@@ -1,0 +1,1421 @@
+[
+  {
+    "id": "med-cardio-resp-001",
+    "topic": "Medicine",
+    "subtopic": "Acute coronary syndrome - reperfusion choice and timing in STEMI",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["STEMI", "PPCI", "fibrinolysis", "Heart Foundation", "ACS"],
+    "stem": "A 58-year-old man presents to a rural hospital ED with 90 minutes of crushing central chest pain radiating to the left jaw, associated with diaphoresis and nausea. He has a 30 pack-year smoking history, dyslipidaemia on atorvastatin 40 mg, and untreated hypertension. He took two GTN sprays at home with minimal relief. He has no prior bleeding history, no recent surgery, no stroke, and is not on anticoagulation. Initial ECG shows 3 mm ST elevation in V1 to V4 with reciprocal inferior ST depression. The nearest PCI-capable centre is 180 minutes away by road, and the local rural transfer team estimates first-medical-contact-to-balloon time of 200 minutes if transferred immediately. The local ED can administer fibrinolysis within 20 minutes. Troponin I has been sent; bedside echocardiogram shows anteroseptal hypokinesis.",
+    "data_table": {
+      "Vital signs": "BP 148/92 mmHg, HR 96 bpm, RR 20, SpO2 95% RA, T 36.7 degC.",
+      "Examination": "Diaphoretic, GCS 15, chest clear, S4 gallop, no murmur, calves soft.",
+      "Investigations": "ECG: 3 mm ST elevation V1 to V4 with reciprocal inferior ST depression. CXR clear.",
+      "Medications": "Atorvastatin 40 mg nocte. GTN spray PRN."
+    },
+    "lead_in": "Which is the most appropriate reperfusion strategy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Transfer immediately for primary PCI even though first-medical-contact-to-balloon time will exceed 120 minutes",
+        "correct": false,
+        "rationale": "Primary PCI is preferred only when first-medical-contact-to-balloon is within 120 minutes; beyond this window, prehospital or in-hospital fibrinolysis with rescue PCI capability gives superior outcomes (Heart Foundation/CSANZ ACS 2016 update).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016"]
+      },
+      {
+        "letter": "B",
+        "text": "Administer fibrinolysis with tenecteplase now and arrange transfer for angiography within 3 to 24 hours",
+        "correct": true,
+        "rationale": "When PCI cannot be delivered within 120 minutes of first medical contact and there are no contraindications, fibrinolysis should be given within 30 minutes of arrival followed by routine transfer for angiography 3 to 24 hours later (pharmaco-invasive strategy), as per the Heart Foundation/CSANZ STEMI pathway.",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016", "Therapeutic Guidelines Cardiovascular"]
+      },
+      {
+        "letter": "C",
+        "text": "Withhold reperfusion and load with ticagrelor and aspirin while awaiting troponin result",
+        "correct": false,
+        "rationale": "ST-elevation diagnosis of STEMI does not require troponin confirmation before reperfusion; delaying therapy increases myocardial loss and mortality (Heart Foundation/CSANZ).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016"]
+      },
+      {
+        "letter": "D",
+        "text": "Give intravenous unfractionated heparin alone and transfer for elective angiography next day",
+        "correct": false,
+        "rationale": "STEMI requires immediate reperfusion (fibrinolysis or PPCI); anticoagulation alone is not a reperfusion strategy and is associated with substantially higher mortality (Heart Foundation/CSANZ).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016"]
+      },
+      {
+        "letter": "E",
+        "text": "Treat conservatively with high-dose nitrates and beta-blockade given the small reciprocal change",
+        "correct": false,
+        "rationale": "Anti-ischaemic therapy without reperfusion is inadequate for STEMI; beta-blockers are also relatively contraindicated acutely if there are signs of incipient cardiogenic shock (Heart Foundation/CSANZ; AMH).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016", "Australian Medicines Handbook"]
+      }
+    ],
+    "explanation": {
+      "summary": "In STEMI, the choice of reperfusion is driven by the time interval from first medical contact to balloon inflation. If PPCI cannot be delivered within 120 minutes, fibrinolysis within 30 minutes of arrival followed by routine transfer for angiography 3 to 24 hours later (pharmaco-invasive strategy) is the recommended Australian approach (Heart Foundation/CSANZ).",
+      "key_points": [
+        "PPCI preferred if FMC-to-balloon less than 120 minutes",
+        "Fibrinolysis within 30 minutes of arrival if PPCI delayed",
+        "Pharmaco-invasive: routine angiography 3 to 24 hours post-lysis",
+        "Absolute contraindications to lysis: prior ICH, ischaemic stroke less than 3 months, active bleeding, suspected dissection",
+        "Adjunctive therapy: aspirin 300 mg + clopidogrel (or ticagrelor if PPCI) + anticoagulation"
+      ],
+      "pearls": "Rural Australia: 120-minute rule trumps the theoretical superiority of PPCI - lyse and transfer."
+    },
+    "sources": [
+      { "label": "Heart Foundation/CSANZ ACS Guideline 2016", "url": "https://www.heartfoundation.org.au/" },
+      { "label": "Therapeutic Guidelines Cardiovascular", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-002",
+    "topic": "Medicine",
+    "subtopic": "NSTEMI - 0/1 hour high-sensitivity troponin algorithm",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["NSTEMI", "hs-troponin", "0/1 hour algorithm", "ESC", "ACS"],
+    "stem": "A 64-year-old woman presents with 4 hours of intermittent retrosternal chest tightness, worse on exertion, partially relieved by rest. She has type 2 diabetes on metformin, hypertension on perindopril, and is a current smoker. She has had two similar episodes in the past week. On arrival she is pain-free. Her ECG is in sinus rhythm with non-specific T-wave flattening in the lateral leads, no ST elevation or depression, no Q-waves, and is unchanged from a tracing 6 months ago. Initial high-sensitivity cardiac troponin I (hs-cTnI) drawn 4 hours after pain onset is 14 ng/L (99th percentile cut-off 16 ng/L; algorithm low-rule-out less than 5, rule-in greater than 52). A 1-hour repeat is 18 ng/L (absolute change 4 ng/L; algorithm rule-in delta greater than 6). Her renal function is normal, and she has no prior cardiac history or stress test.",
+    "data_table": {
+      "Vital signs": "BP 138/82 mmHg, HR 78 bpm, RR 16, SpO2 98% RA, T 36.5 degC.",
+      "Examination": "Pain-free, chest clear, heart sounds dual no murmur, calves soft.",
+      "Investigations": "ECG: SR, non-specific lateral T-wave flattening, unchanged from 6 months ago. hs-cTnI 0h 14 ng/L, 1h 18 ng/L (delta 4). Creatinine 72 micromol/L, Hb 132 g/L, eGFR greater than 90.",
+      "Medications": "Metformin 1 g BD, perindopril 5 mg daily."
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Discharge home with GP follow-up - the 0/1 hour algorithm rules out NSTEMI",
+        "correct": false,
+        "rationale": "She is in the observe zone (not low rule-out and not rule-in), so discharge without further workup is unsafe; a third troponin and provocative testing or CTCA are required (ESC 0/1h algorithm; Heart Foundation/CSANZ ACS).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016", "ESC NSTE-ACS Guideline 2020"]
+      },
+      {
+        "letter": "B",
+        "text": "Diagnose NSTEMI and proceed to invasive coronary angiography within 24 hours",
+        "correct": false,
+        "rationale": "Diagnosis of NSTEMI on the 0/1 hour algorithm requires absolute delta above the rule-in cut-off (greater than 6 ng/L for hs-cTnI in this assay) or a value above the rule-in threshold; her delta is 4 ng/L and absolute value 18 ng/L is below the rule-in (ESC; Heart Foundation/CSANZ).",
+        "source_refs": ["ESC NSTE-ACS Guideline 2020"]
+      },
+      {
+        "letter": "C",
+        "text": "Repeat troponin at 3 hours from presentation and admit to a cardiac observation unit pending the result and further risk stratification",
+        "correct": true,
+        "rationale": "Patients in the observe zone require a third hs-cTnI at 3 hours; if values plateau without rule-in delta, intermediate-risk pathways (CTCA or exercise/stress testing) apply, with admission for observation until a diagnosis is made (Heart Foundation/CSANZ ACS; ESC 0/1h algorithm).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016", "ESC NSTE-ACS Guideline 2020"]
+      },
+      {
+        "letter": "D",
+        "text": "Commence fibrinolysis with tenecteplase given high cardiovascular risk profile",
+        "correct": false,
+        "rationale": "Fibrinolysis is contraindicated in NSTE-ACS - it increases bleeding without improving outcomes; reperfusion in NSTE-ACS is invasive (Heart Foundation/CSANZ).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016"]
+      },
+      {
+        "letter": "E",
+        "text": "Refer for outpatient exercise stress echocardiogram in 2 weeks and discharge home tonight",
+        "correct": false,
+        "rationale": "Deferring testing for 2 weeks while in the observe zone risks missed evolving infarction; she requires inpatient repeat troponin and provocative or anatomical testing before discharge (Heart Foundation/CSANZ ACS).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016"]
+      }
+    ],
+    "explanation": {
+      "summary": "The 0/1 hour high-sensitivity troponin algorithm rules out NSTEMI if the baseline value is very low (less than 5 ng/L for hs-cTnI) and chest pain onset was more than 3 hours ago, or if the 1-hour delta is below a defined threshold. Rule-in requires either a baseline above the rule-in cut-off (greater than 52 ng/L) or a 1-hour delta above the rule-in delta (greater than 6 ng/L). All others fall into the observe zone and need a 3-hour repeat plus further risk stratification.",
+      "key_points": [
+        "0/1h algorithm: rule-out, rule-in, or observe",
+        "Observe zone: repeat at 3h + CTCA or stress testing",
+        "Rule-in delta cut-offs are assay-specific - read your lab",
+        "Fibrinolysis is contraindicated in NSTE-ACS",
+        "Invasive angiography in NSTEMI: less than 2h if high-risk, less than 24h if intermediate"
+      ],
+      "pearls": "An 'observe zone' troponin pattern is not reassurance - it's a mandate for further workup."
+    },
+    "sources": [
+      { "label": "Heart Foundation/CSANZ ACS Guideline 2016", "url": "https://www.heartfoundation.org.au/" },
+      { "label": "ESC NSTE-ACS Guideline 2020", "url": "https://www.escardio.org/Guidelines/Clinical-Practice-Guidelines/Acute-Coronary-Syndromes-ACS-Guidelines" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-003",
+    "topic": "Medicine",
+    "subtopic": "Posterior STEMI - ECG recognition with isolated ST depression in V1 to V3",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["posterior STEMI", "ECG", "reciprocal changes", "PPCI", "right coronary"],
+    "stem": "A 67-year-old man presents with 2 hours of severe central chest pain radiating to the back, associated with diaphoresis and nausea. He has a history of hypertension on amlodipine and a 40 pack-year smoking history. He has no prior cardiac history. On arrival he is in pain, clammy and pale. The 12-lead ECG shows horizontal ST depression of 2 mm in V1, V2 and V3 with prominent upright R-waves in V1 and V2 (R/S greater than 1), tall upright T waves in V1 to V3, and no ST elevation or depression in any other lead. There is no Q-wave. A posterior 15-lead ECG with leads V7, V8 and V9 placed below the left scapula shows 1 mm ST elevation in V8 and V9. Troponin I is pending. Bedside echocardiogram shows inferolateral wall hypokinesis.",
+    "data_table": {
+      "Vital signs": "BP 102/64 mmHg, HR 88 bpm, RR 22, SpO2 96% RA, T 36.6 degC.",
+      "Examination": "Pale, diaphoretic, JVP not elevated, chest clear, dual heart sounds no murmur.",
+      "Investigations": "ECG: 2 mm horizontal ST depression V1 to V3, dominant R in V1/V2, upright T waves. Posterior leads V8, V9: 1 mm ST elevation.",
+      "Medications": "Amlodipine 10 mg daily."
+    },
+    "lead_in": "Which is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Manage as NSTEMI with conservative pathway and angiography within 24 hours",
+        "correct": false,
+        "rationale": "The ECG meets posterior STEMI criteria (greater than 0.5 mm ST elevation in posterior leads V7 to V9 plus reciprocal anterior ST depression with dominant R-waves); this is a STEMI equivalent and warrants emergency reperfusion (Heart Foundation/CSANZ; ANZCOR).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016"]
+      },
+      {
+        "letter": "B",
+        "text": "Activate the cath lab for emergency primary PCI as a STEMI equivalent",
+        "correct": true,
+        "rationale": "Isolated posterior STEMI presents with ST depression in V1 to V3 (reciprocal), dominant R in V1, and is confirmed by ST elevation greater than 0.5 mm in posterior leads V7 to V9. It carries equivalent prognosis to anterior STEMI and mandates emergency reperfusion within the standard PPCI window (Heart Foundation/CSANZ ACS Guideline; eTG Cardiovascular).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016", "Therapeutic Guidelines Cardiovascular"]
+      },
+      {
+        "letter": "C",
+        "text": "Treat as Wellens syndrome with urgent outpatient cardiology referral",
+        "correct": false,
+        "rationale": "Wellens syndrome shows biphasic or deeply inverted T waves in V2 to V3 in a pain-free patient with prior chest pain; this ECG shows reciprocal ST depression and posterior ST elevation, not Wellens (LITFL; Heart Foundation).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016"]
+      },
+      {
+        "letter": "D",
+        "text": "Diagnose right bundle branch block and arrange echocardiogram in the morning",
+        "correct": false,
+        "rationale": "RBBB shows an rSR pattern in V1 with discordant T-wave inversion and a broad QRS; this ECG has a narrow QRS with dominant R and upright T, not an RBBB morphology (Heart Foundation; LITFL).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016"]
+      },
+      {
+        "letter": "E",
+        "text": "Diagnose digoxin effect and check digoxin level urgently",
+        "correct": false,
+        "rationale": "Digoxin effect shows scooped or sagging ST depression with shortened QT, typically in lateral leads, in a patient on digoxin; he is not on digoxin and the pattern is acute ischaemic, not chronic strain (AMH).",
+        "source_refs": ["Australian Medicines Handbook"]
+      }
+    ],
+    "explanation": {
+      "summary": "Isolated posterior STEMI is missed on the standard 12-lead because the infarct vector points away from the anterior precordial leads. Recognising horizontal ST depression in V1 to V3 with dominant upright R-waves and upright T-waves should prompt a posterior 15-lead ECG; ST elevation greater than 0.5 mm in V7 to V9 confirms posterior STEMI, which is a STEMI equivalent requiring emergency PPCI.",
+      "key_points": [
+        "Posterior STEMI: ST depression V1-V3, dominant R V1/V2, upright T V1-V3",
+        "Confirm with posterior leads V7, V8, V9 (less than 1 mm threshold: 0.5 mm)",
+        "Most commonly from circumflex or dominant RCA occlusion",
+        "STEMI-equivalent: emergency PPCI within standard window",
+        "Other STEMI equivalents: LBBB with Sgarbossa criteria, aVR elevation with diffuse ST depression"
+      ],
+      "pearls": "Anterior ST depression with dominant R-wave is posterior STEMI until proven otherwise - flip the ECG upside down and backwards to see the elevation."
+    },
+    "sources": [
+      { "label": "Heart Foundation/CSANZ ACS Guideline 2016", "url": "https://www.heartfoundation.org.au/" },
+      { "label": "Therapeutic Guidelines Cardiovascular", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-004",
+    "topic": "Medicine",
+    "subtopic": "ACS - DAPT choice and duration post-PCI",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["DAPT", "ticagrelor", "clopidogrel", "post-PCI", "ACS"],
+    "stem": "A 62-year-old woman undergoes successful primary PCI with a single drug-eluting stent to the proximal LAD for an anterior STEMI. She has hypertension on perindopril, dyslipidaemia, no diabetes, and no prior bleeding. Pre-procedure haemoglobin was 138 g/L and platelets 240 x 10^9/L. She was loaded with aspirin 300 mg and ticagrelor 180 mg in the ED. Post-procedurally she is haemodynamically stable, has no ongoing chest pain, and an echocardiogram shows an LVEF of 42 percent with anteroseptal hypokinesis. She has no history of stroke, intracranial haemorrhage, peptic ulcer disease, or anticoagulant use. The cardiology team plans discharge on day 3.",
+    "data_table": {
+      "Vital signs": "BP 124/76 mmHg, HR 72 bpm, RR 14, SpO2 98% RA.",
+      "Examination": "Chest clear, dual heart sounds, no signs of heart failure.",
+      "Investigations": "Hb 132 g/L, platelets 232 x 10^9/L, creatinine 76 micromol/L, LVEF 42 percent.",
+      "Medications": "Loaded with aspirin 300 mg and ticagrelor 180 mg; ramipril 5 mg, atorvastatin 80 mg, bisoprolol 2.5 mg started inpatient."
+    },
+    "lead_in": "Which is the most appropriate ongoing antiplatelet regimen?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Aspirin 100 mg daily plus ticagrelor 90 mg twice daily for 12 months, then aspirin alone indefinitely",
+        "correct": true,
+        "rationale": "Default DAPT post-ACS-PCI is aspirin 100 mg daily plus ticagrelor 90 mg BD for 12 months (or prasugrel as an alternative), then aspirin alone indefinitely, unless bleeding risk dictates otherwise (Heart Foundation/CSANZ ACS Guideline; eTG Cardiovascular).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016", "Therapeutic Guidelines Cardiovascular"]
+      },
+      {
+        "letter": "B",
+        "text": "Aspirin 100 mg daily plus clopidogrel 75 mg daily for 12 months, then aspirin alone",
+        "correct": false,
+        "rationale": "Clopidogrel is the alternative P2Y12 inhibitor when ticagrelor or prasugrel are contraindicated (e.g. high bleeding risk, prior intracranial bleed, on anticoagulation); it is less potent and reserved for these indications (Heart Foundation/CSANZ; AMH).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "C",
+        "text": "Aspirin 100 mg daily alone, with clopidogrel added only if recurrent ischaemia occurs",
+        "correct": false,
+        "rationale": "Single antiplatelet therapy post-ACS-PCI substantially increases stent thrombosis risk; DAPT for at least 12 months is the standard (Heart Foundation/CSANZ).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016"]
+      },
+      {
+        "letter": "D",
+        "text": "Aspirin 100 mg daily plus prasugrel 10 mg daily for 6 months, then aspirin alone",
+        "correct": false,
+        "rationale": "Prasugrel is an alternative to ticagrelor but is contraindicated in patients with prior stroke/TIA and not recommended over age 75 or in patients under 60 kg; default duration in ACS-PCI is 12 months (Heart Foundation/CSANZ; AMH).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "E",
+        "text": "Aspirin 100 mg daily plus apixaban 5 mg twice daily for 12 months",
+        "correct": false,
+        "rationale": "DOAC plus aspirin is not standard post-ACS-PCI in sinus rhythm; DOACs are reserved for patients with concurrent AF and require careful triple therapy minimisation (Heart Foundation/CSANZ; AMH).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016", "Australian Medicines Handbook"]
+      }
+    ],
+    "explanation": {
+      "summary": "Default DAPT after ACS with PCI in Australia is aspirin 100 mg daily indefinitely plus a P2Y12 inhibitor (ticagrelor 90 mg BD or prasugrel) for 12 months. Clopidogrel substitutes when more potent agents are contraindicated. Shorter or longer DAPT can be tailored to bleeding/ischaemic risk using validated scores (DAPT, PRECISE-DAPT).",
+      "key_points": [
+        "Aspirin + ticagrelor (or prasugrel) x 12 months post-ACS-PCI",
+        "Clopidogrel if high bleeding risk, prior ICH, or on oral anticoagulant",
+        "Prasugrel: avoid if prior stroke/TIA, age greater than 75, weight less than 60 kg",
+        "Lifelong aspirin after DAPT period unless contraindicated",
+        "Tailor with DAPT/PRECISE-DAPT scores"
+      ],
+      "pearls": "Ticagrelor causes dyspnoea in about 1 in 7 patients - reassure but do not stop unless severe."
+    },
+    "sources": [
+      { "label": "Heart Foundation/CSANZ ACS Guideline 2016", "url": "https://www.heartfoundation.org.au/" },
+      { "label": "Therapeutic Guidelines Cardiovascular", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-005",
+    "topic": "Medicine",
+    "subtopic": "Acute decompensated heart failure - initial management priorities",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["acute heart failure", "frusemide", "NIV", "ADHF", "Heart Foundation"],
+    "stem": "A 74-year-old man with known HFrEF (LVEF 32 percent) presents to the ED with 2 days of progressive dyspnoea, orthopnoea, and 3 kg weight gain. He admits to non-adherence with his frusemide for 1 week. He has a background of ischaemic cardiomyopathy, hypertension, and CKD stage 3 (baseline creatinine 140 micromol/L). On arrival he is sitting upright, working hard to breathe, and unable to complete sentences. He has bibasal crackles to the mid-zones and elevated JVP. He has no chest pain and his ECG shows old anterior Q-waves without acute ischaemic changes. His usual medications are frusemide 40 mg BD, perindopril 5 mg, bisoprolol 5 mg, spironolactone 25 mg, and dapagliflozin 10 mg.",
+    "data_table": {
+      "Vital signs": "BP 162/94 mmHg, HR 108 bpm, RR 32, SpO2 88% RA improving to 94% on 6 L Hudson, T 36.5 degC.",
+      "Examination": "Sitting upright, accessory muscle use, bibasal crackles to mid-zones, JVP 8 cm, peripheral oedema to mid-shins.",
+      "Investigations": "ECG: SR with old anterior Q-waves. Troponin I 28 ng/L (cut-off less than 16). NT-proBNP 4200 ng/L. Creatinine 175 micromol/L, potassium 4.2 mmol/L.",
+      "Medications": "Frusemide 40 mg BD, perindopril 5 mg, bisoprolol 5 mg, spironolactone 25 mg, dapagliflozin 10 mg."
+    },
+    "lead_in": "Which is the most appropriate initial management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "IV frusemide 80 mg bolus, GTN infusion, and non-invasive ventilation with CPAP",
+        "correct": true,
+        "rationale": "Acute pulmonary oedema with hypertensive blood pressure and severe respiratory distress is managed with IV loop diuretic (typically 1 to 2.5 times the home oral dose), IV nitrate to reduce preload/afterload, and non-invasive ventilation (CPAP or BiPAP) to reduce work of breathing and improve oxygenation (Heart Foundation/CSANZ HF Guideline 2018; eTG Cardiovascular).",
+        "source_refs": ["Heart Foundation/CSANZ Heart Failure Guideline 2018", "Therapeutic Guidelines Cardiovascular"]
+      },
+      {
+        "letter": "B",
+        "text": "IV fluid bolus 500 mL Hartmann's and IV metoprolol 5 mg for the tachycardia",
+        "correct": false,
+        "rationale": "Fluid loading worsens pulmonary oedema; IV beta-blockade is contraindicated in acute decompensation as it precipitates cardiogenic shock (Heart Foundation/CSANZ; AMH).",
+        "source_refs": ["Heart Foundation/CSANZ Heart Failure Guideline 2018", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "C",
+        "text": "IV morphine 5 mg with high-flow nasal cannula oxygen at 60 L/min and observation",
+        "correct": false,
+        "rationale": "Routine opioid use in ADHF is associated with worse outcomes and is no longer recommended; HFNO has not been shown superior to NIV in cardiogenic pulmonary oedema (Heart Foundation/CSANZ).",
+        "source_refs": ["Heart Foundation/CSANZ Heart Failure Guideline 2018"]
+      },
+      {
+        "letter": "D",
+        "text": "Withhold his ACE inhibitor and beta-blocker indefinitely and start a dobutamine infusion",
+        "correct": false,
+        "rationale": "Inotropes are reserved for cardiogenic shock with hypotension and end-organ hypoperfusion; he is hypertensive and not in shock. Chronic ACE inhibitor and beta-blocker should be continued where possible during decompensation (Heart Foundation/CSANZ).",
+        "source_refs": ["Heart Foundation/CSANZ Heart Failure Guideline 2018"]
+      },
+      {
+        "letter": "E",
+        "text": "Oral frusemide 80 mg, oral metolazone 5 mg, and admit to a monitored bed",
+        "correct": false,
+        "rationale": "Oral diuretic onset is too slow for acute severe pulmonary oedema with respiratory failure; IV diuretic is required for reliable bioavailability (Heart Foundation/CSANZ; AMH).",
+        "source_refs": ["Heart Foundation/CSANZ Heart Failure Guideline 2018", "Australian Medicines Handbook"]
+      }
+    ],
+    "explanation": {
+      "summary": "Acute pulmonary oedema with respiratory failure and elevated BP is managed with IV loop diuretic, IV nitrate, and non-invasive ventilation. Inotropes are restricted to cardiogenic shock. Routine morphine is now avoided. Chronic disease-modifying therapy (beta-blocker, RAAS inhibitor) is generally continued at reduced dose where tolerated.",
+      "key_points": [
+        "IV frusemide dose: 1 to 2.5 x oral home dose",
+        "GTN reduces preload and afterload - useful if BP is preserved",
+        "NIV (CPAP/BiPAP) reduces intubation rate in cardiogenic APO",
+        "Inotropes only if hypotensive with end-organ hypoperfusion",
+        "Avoid routine morphine - increased mortality signal"
+      ],
+      "pearls": "Hypertensive flash pulmonary oedema needs nitrates more than it needs diuretics - venous redistribution buys minutes."
+    },
+    "sources": [
+      { "label": "Heart Foundation/CSANZ Heart Failure Guideline 2018", "url": "https://www.heartfoundation.org.au/" },
+      { "label": "Therapeutic Guidelines Cardiovascular", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-006",
+    "topic": "Medicine",
+    "subtopic": "Chronic HFrEF - guideline-directed medical therapy escalation",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["HFrEF", "ARNI", "SGLT2", "MRA", "GDMT", "Heart Foundation"],
+    "stem": "A 66-year-old woman with HFrEF (LVEF 28 percent, ischaemic aetiology) attends the heart failure clinic. She is NYHA class II to III with mild exertional dyspnoea climbing one flight. She has type 2 diabetes (HbA1c 7.2 percent), hypertension, and CKD stage 3a (eGFR 52, baseline). She has been on stable doses for 3 months of perindopril 8 mg daily, bisoprolol 7.5 mg daily, frusemide 40 mg daily, and atorvastatin 80 mg. Her BP is 118/72 mmHg, HR 64 bpm, potassium 4.4 mmol/L, sodium 138 mmol/L, creatinine 118 micromol/L. She has no symptomatic hypotension. She is keen to optimise prognosis-modifying therapy and has private cover for medication cost.",
+    "data_table": {
+      "Vital signs": "BP 118/72 mmHg, HR 64 bpm, RR 16, SpO2 97% RA.",
+      "Examination": "JVP not elevated, chest clear, dual heart sounds with soft S3, trace ankle oedema.",
+      "Investigations": "LVEF 28 percent. eGFR 52, potassium 4.4 mmol/L, sodium 138 mmol/L, HbA1c 7.2 percent, NT-proBNP 980 ng/L.",
+      "Medications": "Perindopril 8 mg, bisoprolol 7.5 mg, frusemide 40 mg, atorvastatin 80 mg."
+    },
+    "lead_in": "Which is the most appropriate next step to optimise prognosis?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Add spironolactone 25 mg daily and dapagliflozin 10 mg daily, and plan switch of perindopril to sacubitril/valsartan after a 36-hour washout",
+        "correct": true,
+        "rationale": "The four pillars of HFrEF GDMT are ACEi/ARNI, beta-blocker, MRA, and SGLT2 inhibitor; she is already on ACEi and beta-blocker and needs the remaining two pillars added, with ACEi-to-ARNI switch (after 36-hour washout to avoid angioedema) for additional mortality benefit (Heart Foundation/CSANZ HF Guideline; eTG Cardiovascular).",
+        "source_refs": ["Heart Foundation/CSANZ Heart Failure Guideline 2018", "Therapeutic Guidelines Cardiovascular"]
+      },
+      {
+        "letter": "B",
+        "text": "Add digoxin 125 microg daily for prognostic benefit",
+        "correct": false,
+        "rationale": "Digoxin reduces HF hospitalisations but has no mortality benefit and is not a prognosis pillar; it is reserved for symptomatic patients on full GDMT, particularly with concurrent AF (Heart Foundation/CSANZ; AMH).",
+        "source_refs": ["Heart Foundation/CSANZ Heart Failure Guideline 2018", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "C",
+        "text": "Increase frusemide to 80 mg daily and add amlodipine 5 mg for blood pressure",
+        "correct": false,
+        "rationale": "Loop diuretics are symptom-controlling not prognosis-modifying; amlodipine is neutral in HFrEF but does not improve survival (Heart Foundation/CSANZ).",
+        "source_refs": ["Heart Foundation/CSANZ Heart Failure Guideline 2018"]
+      },
+      {
+        "letter": "D",
+        "text": "Refer for cardiac resynchronisation therapy without further medical optimisation",
+        "correct": false,
+        "rationale": "CRT is indicated for LVEF less than or equal to 35 percent with LBBB and QRS greater than or equal to 130 ms after at least 3 months of optimised GDMT - she has not had GDMT optimised first (Heart Foundation/CSANZ).",
+        "source_refs": ["Heart Foundation/CSANZ Heart Failure Guideline 2018"]
+      },
+      {
+        "letter": "E",
+        "text": "Switch perindopril to candesartan and add ivabradine 5 mg twice daily",
+        "correct": false,
+        "rationale": "Ivabradine requires sinus rhythm with HR greater than or equal to 77 bpm on maximally tolerated beta-blocker; her HR is 64 bpm so she does not qualify. ARB is an alternative only if ACEi/ARNI intolerant (Heart Foundation/CSANZ).",
+        "source_refs": ["Heart Foundation/CSANZ Heart Failure Guideline 2018"]
+      }
+    ],
+    "explanation": {
+      "summary": "Modern HFrEF GDMT comprises four prognosis pillars: ACE inhibitor or ARNI, beta-blocker, mineralocorticoid receptor antagonist, and SGLT2 inhibitor. All four should be initiated and titrated in parallel where tolerated. ARNI switch from ACEi requires a 36-hour washout to reduce angioedema risk. Diuretics are symptom-controlling and do not improve survival.",
+      "key_points": [
+        "Four pillars: ACEi/ARNI + BB + MRA + SGLT2i",
+        "ARNI: 36 h washout from ACEi to avoid angioedema",
+        "SGLT2i benefit independent of diabetes status",
+        "Monitor potassium and renal function with MRA + ACEi/ARNI",
+        "CRT after at least 3 months of optimised GDMT if QRS criteria met"
+      ],
+      "pearls": "Start the SGLT2 inhibitor early - the survival curves separate within weeks, not years."
+    },
+    "sources": [
+      { "label": "Heart Foundation/CSANZ Heart Failure Guideline 2018", "url": "https://www.heartfoundation.org.au/" },
+      { "label": "Therapeutic Guidelines Cardiovascular", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-007",
+    "topic": "Medicine",
+    "subtopic": "Atrial fibrillation - rate vs rhythm control strategy",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["atrial fibrillation", "rate control", "rhythm control", "EAST-AFNET 4"],
+    "stem": "A 68-year-old woman is referred for symptomatic palpitations and exertional dyspnoea over the past 3 weeks. ECG confirms atrial fibrillation with a ventricular rate of 118 bpm at rest. She has hypertension on perindopril, no diabetes, no prior stroke, no vascular disease, and no heart failure. Her LVEF on echo done last week is 58 percent with a mildly dilated left atrium (44 mm) and no significant valvular disease. She is otherwise active and reports the palpitations are interfering with her hiking. She has no contraindications to anticoagulation, antiarrhythmics, or cardioversion. Her current symptom burden is EHRA class IIb. Her TSH and electrolytes are normal.",
+    "data_table": {
+      "Vital signs": "BP 138/82 mmHg, HR 118 bpm irregular, RR 16, SpO2 98% RA.",
+      "Examination": "Irregularly irregular pulse, dual heart sounds no murmur, chest clear, no peripheral oedema.",
+      "Investigations": "ECG: AF with rate 118. Echo: LVEF 58 percent, LA 44 mm. TSH 2.1 mIU/L, K 4.0 mmol/L.",
+      "Medications": "Perindopril 5 mg daily."
+    },
+    "lead_in": "Which is the most appropriate management strategy for her atrial fibrillation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Rate control only with bisoprolol; defer rhythm control until two recurrences despite optimal rate control",
+        "correct": false,
+        "rationale": "In symptomatic AF of recent onset (less than 1 year), early rhythm control reduces cardiovascular events compared with rate control alone (EAST-AFNET 4; CSANZ AF Guideline 2018).",
+        "source_refs": ["CSANZ/NHFA AF Guideline 2018", "EAST-AFNET 4 trial"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence apixaban and a rate-controlling beta-blocker, then refer for early electrical cardioversion with consideration of catheter ablation",
+        "correct": true,
+        "rationale": "Symptomatic AF within 12 months of diagnosis benefits from an early rhythm-control strategy (cardioversion plus antiarrhythmic or ablation), with appropriate anticoagulation based on CHA2DS2-VA score; she meets criteria (symptomatic, recent onset, suitable candidate) (CSANZ AF Guideline; eTG; EAST-AFNET 4).",
+        "source_refs": ["CSANZ/NHFA AF Guideline 2018", "Therapeutic Guidelines Cardiovascular", "EAST-AFNET 4 trial"]
+      },
+      {
+        "letter": "C",
+        "text": "Anticoagulation alone with apixaban; AF often spontaneously reverts without further intervention",
+        "correct": false,
+        "rationale": "She is symptomatic with EHRA IIb and tachycardic at 118 bpm; she requires rate or rhythm control beyond anticoagulation alone (CSANZ AF).",
+        "source_refs": ["CSANZ/NHFA AF Guideline 2018"]
+      },
+      {
+        "letter": "D",
+        "text": "Digoxin monotherapy for rate control without anticoagulation as her CHA2DS2-VA score is 1",
+        "correct": false,
+        "rationale": "Digoxin monotherapy is poor for exertional rate control (acts via vagal tone) and her CHA2DS2-VA is 2 (age 65 to 74 plus female plus hypertension scores 2 under CHA2DS2-VA), requiring anticoagulation (CSANZ AF).",
+        "source_refs": ["CSANZ/NHFA AF Guideline 2018"]
+      },
+      {
+        "letter": "E",
+        "text": "Amiodarone loading orally for 4 weeks followed by maintenance, with no anticoagulation given low stroke risk",
+        "correct": false,
+        "rationale": "Anticoagulation is required regardless of antiarrhythmic strategy when CHA2DS2-VA reaches the treatment threshold; amiodarone is generally reserved for structural heart disease or failed first-line antiarrhythmics due to toxicity (CSANZ AF; AMH).",
+        "source_refs": ["CSANZ/NHFA AF Guideline 2018", "Australian Medicines Handbook"]
+      }
+    ],
+    "explanation": {
+      "summary": "Symptomatic AF diagnosed within the past 12 months should be considered for early rhythm control (cardioversion, antiarrhythmics, or catheter ablation) alongside anticoagulation, as this reduces cardiovascular events compared with rate control alone (EAST-AFNET 4 incorporated into CSANZ guidance). Anticoagulation is governed by CHA2DS2-VA, not by rhythm vs rate strategy.",
+      "key_points": [
+        "Early rhythm control improves outcomes in recent-onset symptomatic AF",
+        "Anticoagulation is independent of rate vs rhythm strategy",
+        "CHA2DS2-VA replaces CHA2DS2-VASc in Australia (drops sex modifier)",
+        "Catheter ablation first-line for paroxysmal AF in suitable candidates",
+        "Amiodarone reserved for structural heart disease or refractory cases"
+      ],
+      "pearls": "EAST-AFNET 4 shifted the paradigm - rhythm-control benefits accrue when started within the first year, not after years of failed rate control."
+    },
+    "sources": [
+      { "label": "CSANZ/NHFA AF Guideline 2018", "url": "https://www.heartfoundation.org.au/" },
+      { "label": "Therapeutic Guidelines Cardiovascular", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "EAST-AFNET 4 trial", "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2019422" },
+      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-008",
+    "topic": "Medicine",
+    "subtopic": "Atrial fibrillation - CHA2DS2-VA scoring and DOAC selection",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["CHA2DS2-VA", "DOAC", "apixaban", "warfarin", "anticoagulation"],
+    "stem": "A 76-year-old woman with newly diagnosed persistent non-valvular atrial fibrillation attends a cardiology clinic. She has type 2 diabetes on metformin, hypertension on amlodipine, and a transient ischaemic attack 3 years ago with full recovery. She has CKD stage 3b with creatinine 138 micromol/L, eGFR 32 mL/min/1.73 m2, and weighs 58 kg. Her haemoglobin is 122 g/L, platelets 230 x 10^9/L, and she has no history of GI bleeding or peptic ulcer. She is community-dwelling, manages her own medications, and has no plans for elective surgery. She takes no interacting medications (no rifampicin, no azoles, no anticonvulsants). She prefers fewer monitoring visits and is reliable with twice-daily dosing.",
+    "data_table": {
+      "Vital signs": "BP 132/78 mmHg, HR 82 bpm irregular, RR 14.",
+      "Examination": "Irregularly irregular pulse, chest clear, no neurological deficit, no peripheral oedema.",
+      "Investigations": "Creatinine 138 micromol/L, eGFR 32 mL/min/1.73 m2, weight 58 kg, Hb 122 g/L, platelets 230 x 10^9/L, ALT/AST normal.",
+      "Medications": "Metformin 1 g BD, amlodipine 5 mg daily."
+    },
+    "lead_in": "Which is the most appropriate anticoagulation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Apixaban 2.5 mg twice daily indefinitely",
+        "correct": true,
+        "rationale": "CHA2DS2-VA = 6 (age greater than or equal to 75 = 2, diabetes = 1, hypertension = 1, prior TIA = 2). Apixaban dose-reduction criteria require any 2 of: age greater than or equal to 80, weight less than or equal to 60 kg, creatinine greater than or equal to 133 micromol/L. She meets weight and creatinine criteria, so 2.5 mg BD is correct (CSANZ AF Guideline; AMH).",
+        "source_refs": ["CSANZ/NHFA AF Guideline 2018", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "B",
+        "text": "Apixaban 5 mg twice daily indefinitely",
+        "correct": false,
+        "rationale": "She meets two apixaban dose-reduction criteria (weight 58 kg and creatinine 138 micromol/L), mandating the 2.5 mg BD dose; the 5 mg dose would lead to over-anticoagulation and increased bleeding risk (AMH; CSANZ AF).",
+        "source_refs": ["Australian Medicines Handbook", "CSANZ/NHFA AF Guideline 2018"]
+      },
+      {
+        "letter": "C",
+        "text": "Dabigatran 150 mg twice daily indefinitely",
+        "correct": false,
+        "rationale": "Dabigatran is contraindicated in CrCl less than 30 mL/min; with eGFR 32 her CrCl is borderline and dabigatran is not preferred when other DOACs (apixaban) have a wider renal safety margin (AMH; CSANZ AF).",
+        "source_refs": ["Australian Medicines Handbook", "CSANZ/NHFA AF Guideline 2018"]
+      },
+      {
+        "letter": "D",
+        "text": "Warfarin titrated to INR 2.0 to 3.0 indefinitely",
+        "correct": false,
+        "rationale": "Warfarin is acceptable but not preferred for non-valvular AF in the absence of mechanical valve, moderate-severe mitral stenosis, or antiphospholipid syndrome; DOACs have lower intracranial bleeding rates and do not require INR monitoring (CSANZ AF).",
+        "source_refs": ["CSANZ/NHFA AF Guideline 2018"]
+      },
+      {
+        "letter": "E",
+        "text": "Aspirin 100 mg daily plus clopidogrel 75 mg daily",
+        "correct": false,
+        "rationale": "Dual antiplatelet therapy is inferior to anticoagulation for stroke prevention in AF (ACTIVE-W) and is not recommended for stroke prophylaxis (CSANZ AF).",
+        "source_refs": ["CSANZ/NHFA AF Guideline 2018"]
+      }
+    ],
+    "explanation": {
+      "summary": "Australian practice uses CHA2DS2-VA (not VASc - sex modifier removed). Score greater than or equal to 2 in women or greater than or equal to 1 in men warrants anticoagulation. DOACs are preferred over warfarin for non-valvular AF. Apixaban dose-reduction criteria require any 2 of: age greater than or equal to 80, weight less than or equal to 60 kg, creatinine greater than or equal to 133 micromol/L.",
+      "key_points": [
+        "CHA2DS2-VA: CHF 1, HTN 1, Age 65-74 1 or greater than or equal to 75 2, DM 1, Stroke/TIA 2, Vasc 1",
+        "Apixaban dose-reduce if any 2 of age greater than or equal to 80, weight less than or equal to 60 kg, Cr greater than or equal to 133",
+        "Dabigatran contraindicated CrCl less than 30 mL/min",
+        "Rivaroxaban dose-reduce to 15 mg if CrCl 15-49",
+        "Warfarin remains required for mechanical valves and moderate-severe MS"
+      ],
+      "pearls": "Always check the apixaban triad - 80/60/133 - before defaulting to the standard 5 mg BD dose."
+    },
+    "sources": [
+      { "label": "CSANZ/NHFA AF Guideline 2018", "url": "https://www.heartfoundation.org.au/" },
+      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" },
+      { "label": "Therapeutic Guidelines Cardiovascular", "url": "https://tgldcdp.tg.org.au/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-009",
+    "topic": "Medicine",
+    "subtopic": "Supraventricular tachycardia - acute termination",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["SVT", "adenosine", "vagal manoeuvres", "ANZCOR"],
+    "stem": "A 28-year-old woman presents with sudden-onset palpitations 45 minutes ago while at her desk. She has had similar self-terminating episodes once or twice yearly since her teens. She has no chest pain, dyspnoea, syncope, or signs of poor perfusion. She has no past cardiac, thyroid, or pulmonary disease, takes only the oral contraceptive pill, and consumes 2 to 3 coffees daily. She has no asthma. On arrival she is anxious but well-perfused with warm peripheries and normal mentation. Her ECG shows a narrow-complex regular tachycardia at 184 bpm with no clearly visible P waves and a normal QRS axis. A modified Valsalva manoeuvre with leg elevation is unsuccessful at converting the rhythm after two attempts.",
+    "data_table": {
+      "Vital signs": "BP 118/72 mmHg, HR 184 bpm regular, RR 18, SpO2 99% RA.",
+      "Examination": "Warm well-perfused peripheries, GCS 15, chest clear, no signs of heart failure.",
+      "Investigations": "ECG: narrow-complex regular tachycardia 184 bpm, no clear P waves, normal axis. K 4.2 mmol/L, TSH normal.",
+      "Medications": "Combined oral contraceptive pill."
+    },
+    "lead_in": "Which is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Synchronised DC cardioversion at 50 J",
+        "correct": false,
+        "rationale": "Synchronised cardioversion is reserved for haemodynamically unstable SVT (hypotension, shock, ischaemia, severe heart failure); she is stable (ANZCOR Guideline 11.10; eTG).",
+        "source_refs": ["ANZCOR Guideline 11.10", "Therapeutic Guidelines Cardiovascular"]
+      },
+      {
+        "letter": "B",
+        "text": "IV adenosine 6 mg rapid push followed by 20 mL saline flush, with continuous ECG recording",
+        "correct": true,
+        "rationale": "After failed vagal manoeuvres, IV adenosine 6 mg rapid bolus followed by saline flush is the first-line pharmacological step for stable SVT, with escalation to 12 mg then 12 mg if needed; continuous rhythm strip helps differentiate the underlying mechanism (ANZCOR; eTG Cardiovascular; AMH).",
+        "source_refs": ["ANZCOR Guideline 11.10", "Therapeutic Guidelines Cardiovascular", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "C",
+        "text": "IV verapamil 5 mg over 2 minutes",
+        "correct": false,
+        "rationale": "Verapamil is a reasonable alternative for known SVT in stable patients without heart failure, but adenosine remains first-line after vagal manoeuvres because of its diagnostic value and very short half-life; verapamil is also contraindicated if the rhythm is actually VT (eTG; AMH).",
+        "source_refs": ["Therapeutic Guidelines Cardiovascular", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "D",
+        "text": "Oral metoprolol 25 mg and discharge home with cardiology outpatient follow-up",
+        "correct": false,
+        "rationale": "Oral beta-blockade does not acutely terminate SVT and discharge with an active tachyarrhythmia is unsafe (ANZCOR; eTG).",
+        "source_refs": ["ANZCOR Guideline 11.10"]
+      },
+      {
+        "letter": "E",
+        "text": "IV amiodarone 300 mg over 60 minutes",
+        "correct": false,
+        "rationale": "Amiodarone is reserved for wide-complex tachycardia or refractory arrhythmias; first-line therapy for stable narrow-complex SVT after vagal manoeuvres is adenosine (ANZCOR; eTG).",
+        "source_refs": ["ANZCOR Guideline 11.10", "Therapeutic Guidelines Cardiovascular"]
+      }
+    ],
+    "explanation": {
+      "summary": "Stable narrow-complex SVT is treated with vagal manoeuvres (modified Valsalva preferred) followed by IV adenosine 6 mg, then 12 mg, then 12 mg if needed. Unstable SVT requires synchronised DC cardioversion. Verapamil or beta-blockers are alternatives in patients without contraindications.",
+      "key_points": [
+        "Modified Valsalva (REVERT trial position) more effective than standard",
+        "Adenosine: 6 mg, 12 mg, 12 mg rapid push with saline flush",
+        "Warn patient about transient flushing/chest discomfort/sense of impending doom",
+        "Avoid adenosine in asthma (bronchospasm) and prefer alternatives",
+        "Unstable SVT: synchronised cardioversion 50 to 100 J"
+      ],
+      "pearls": "Always run a rhythm strip during adenosine - the brief AV block can unmask the underlying atrial activity (flutter waves, P-wave morphology)."
+    },
+    "sources": [
+      { "label": "ANZCOR Guideline 11.10", "url": "https://resus.org.au/guidelines/" },
+      { "label": "Therapeutic Guidelines Cardiovascular", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-010",
+    "topic": "Medicine",
+    "subtopic": "Valvular DDx - aortic stenosis vs HCM vs mitral regurgitation",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["aortic stenosis", "HCM", "mitral regurgitation", "echocardiography", "syncope"],
+    "stem": "A 72-year-old man presents with exertional dyspnoea, one episode of syncope while climbing stairs last week, and a 2-month history of chest tightness on hills. He has hypertension on amlodipine, hyperlipidaemia on atorvastatin, and is otherwise well. On auscultation there is an ejection systolic murmur best heard at the right second intercostal space, radiating to both carotids, with a soft S2 and a slow-rising carotid pulse. The murmur is intensity grade 3/6, peaks late in systole, and is louder on squatting. There is no S3, no opening snap, no MR jet, and no pulmonary congestion clinically. His ECG shows left ventricular hypertrophy with strain pattern. CXR shows a borderline-enlarged cardiac silhouette without pulmonary oedema. He has never had an echocardiogram.",
+    "data_table": {
+      "Vital signs": "BP 142/72 mmHg (narrow pulse pressure), HR 76 bpm regular, RR 16, SpO2 97% RA.",
+      "Examination": "Slow-rising carotid pulse, soft S2, late-peaking ejection systolic murmur 3/6 RUSB radiating to carotids, louder on squatting. No S3. No mid-systolic click. JVP not elevated. No peripheral oedema.",
+      "Investigations": "ECG: LVH with strain. CXR: borderline cardiomegaly, clear lungs. Normal troponin and TSH."
+    },
+    "lead_in": "Which finding most strongly distinguishes severe aortic stenosis from hypertrophic obstructive cardiomyopathy in this patient?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Murmur intensity increases on squatting",
+        "correct": true,
+        "rationale": "In AS, increased venous return on squatting augments LV stroke volume and thus murmur intensity, whereas HOCM murmur diminishes on squatting (more LV filling reduces outflow tract obstruction). This dynamic response is the most reliable bedside discriminator (Heart Foundation/CSANZ Valvular Heart Disease; eTG Cardiovascular).",
+        "source_refs": ["Heart Foundation/CSANZ Valvular Heart Disease Statement", "Therapeutic Guidelines Cardiovascular"]
+      },
+      {
+        "letter": "B",
+        "text": "Presence of an ejection systolic murmur at the right upper sternal edge",
+        "correct": false,
+        "rationale": "Both AS and HOCM produce systolic murmurs in the precordial/parasternal area; location alone does not discriminate (Heart Foundation/CSANZ).",
+        "source_refs": ["Heart Foundation/CSANZ Valvular Heart Disease Statement"]
+      },
+      {
+        "letter": "C",
+        "text": "ECG showing left ventricular hypertrophy",
+        "correct": false,
+        "rationale": "LVH occurs in both severe AS and HCM; ECG cannot reliably differentiate them (Heart Foundation/CSANZ).",
+        "source_refs": ["Heart Foundation/CSANZ Valvular Heart Disease Statement"]
+      },
+      {
+        "letter": "D",
+        "text": "Exertional syncope as a presenting symptom",
+        "correct": false,
+        "rationale": "Exertional syncope occurs in both severe AS and HOCM and is a high-risk feature in both (Heart Foundation/CSANZ).",
+        "source_refs": ["Heart Foundation/CSANZ Valvular Heart Disease Statement"]
+      },
+      {
+        "letter": "E",
+        "text": "Presence of a slow-rising carotid pulse and narrow pulse pressure",
+        "correct": false,
+        "rationale": "Pulsus parvus et tardus does favour AS, but the question asks the strongest discriminator and is asking for a dynamic manoeuvre; squatting response is more specific and is reproducible at the bedside in the same exam (Heart Foundation/CSANZ).",
+        "source_refs": ["Heart Foundation/CSANZ Valvular Heart Disease Statement"]
+      }
+    ],
+    "explanation": {
+      "summary": "Dynamic auscultation distinguishes fixed valvular outflow obstruction (AS) from dynamic LVOT obstruction (HOCM). Manoeuvres that decrease LV preload or afterload (Valsalva strain phase, standing) increase the HOCM murmur and decrease the AS murmur; manoeuvres that increase preload/afterload (squatting, handgrip) decrease the HOCM murmur and increase or maintain the AS murmur. Echocardiography confirms with peak velocity, mean gradient, AVA (severe AS: less than 1.0 cm2, peak velocity greater than or equal to 4 m/s, mean gradient greater than or equal to 40 mmHg).",
+      "key_points": [
+        "AS murmur: louder with squatting, softer with Valsalva",
+        "HOCM murmur: softer with squatting, louder with Valsalva",
+        "Severe AS echo: AVA less than 1.0 cm2, peak velocity greater than or equal to 4 m/s, mean gradient greater than or equal to 40 mmHg",
+        "MR is holosystolic at apex radiating to axilla, with S3 if severe",
+        "Pulsus parvus et tardus favours AS but is insensitive in elderly with stiff vessels"
+      ],
+      "pearls": "Ask the patient to squat then stand during your exam - the murmur change tells you the lesion before the echo does."
+    },
+    "sources": [
+      { "label": "Heart Foundation/CSANZ Valvular Heart Disease Statement", "url": "https://www.heartfoundation.org.au/" },
+      { "label": "Therapeutic Guidelines Cardiovascular", "url": "https://tgldcdp.tg.org.au/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-011",
+    "topic": "Medicine",
+    "subtopic": "COPD - GOLD group classification and inhaler escalation",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["COPD", "GOLD", "LAMA", "LABA", "ICS", "Lung Foundation Australia"],
+    "stem": "A 68-year-old man with a 50 pack-year smoking history attends his GP for review. Spirometry 4 weeks ago confirmed COPD with post-bronchodilator FEV1/FVC 0.58 and FEV1 62 percent predicted (GOLD 2). Over the past year he has had 2 exacerbations managed in the community with prednisolone and amoxicillin, and no hospital admissions. His mMRC dyspnoea score is 2 (stops for breath after about 100 m on the flat) and CAT score is 18. He is currently on as-needed salbutamol inhaler only. He stopped smoking 6 months ago, is up to date with influenza and pneumococcal vaccines, and is enrolled in a pulmonary rehabilitation program. He has no diagnosis of asthma, no significant atopy, and a blood eosinophil count of 120 cells/microL.",
+    "data_table": {
+      "Vital signs": "BP 132/78 mmHg, HR 78 bpm, RR 18, SpO2 95% RA.",
+      "Examination": "Mild barrel chest, reduced air entry bilaterally, prolonged expiration, no peripheral oedema.",
+      "Investigations": "Post-bronchodilator FEV1 62 percent predicted, FEV1/FVC 0.58. Eosinophils 120 cells/microL. CXR hyperinflation without infiltrate.",
+      "Medications": "Salbutamol 100 microg pMDI PRN."
+    },
+    "lead_in": "Which is the most appropriate next inhaled therapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Add tiotropium 18 microg daily (LAMA)",
+        "correct": false,
+        "rationale": "Single long-acting bronchodilator (LAMA or LABA) is appropriate for low-symptom, low-exacerbation patients; he has both a high symptom burden (mMRC 2, CAT 18) and 2 exacerbations in 12 months, requiring dual bronchodilation (Lung Foundation Australia COPD-X; GOLD).",
+        "source_refs": ["Lung Foundation Australia COPD-X Plan", "GOLD 2024 Report"]
+      },
+      {
+        "letter": "B",
+        "text": "Add a LAMA/LABA combination inhaler",
+        "correct": true,
+        "rationale": "Symptomatic COPD patients with exacerbations (greater than or equal to 2 moderate/year or any hospitalisation) and CAT greater than or equal to 10 should escalate from SABA to dual long-acting bronchodilator (LAMA/LABA) per Australian COPD-X; ICS is added only if eosinophils greater than or equal to 300 cells/microL or asthma overlap, and his eosinophils are 120 (Lung Foundation Australia COPD-X; eTG Respiratory).",
+        "source_refs": ["Lung Foundation Australia COPD-X Plan", "Therapeutic Guidelines Respiratory"]
+      },
+      {
+        "letter": "C",
+        "text": "Add a fixed-dose LABA/ICS combination",
+        "correct": false,
+        "rationale": "ICS adds pneumonia risk and should be reserved for patients with blood eosinophils greater than or equal to 300 cells/microL, asthma-COPD overlap, or those still exacerbating on dual bronchodilator therapy (COPD-X; GOLD).",
+        "source_refs": ["Lung Foundation Australia COPD-X Plan", "GOLD 2024 Report"]
+      },
+      {
+        "letter": "D",
+        "text": "Triple therapy with LAMA/LABA/ICS in a single inhaler",
+        "correct": false,
+        "rationale": "Triple therapy is escalated to from dual bronchodilation when exacerbations persist; he has not yet trialled dual bronchodilator therapy and his eosinophils are not in the ICS-favouring range (COPD-X; GOLD).",
+        "source_refs": ["Lung Foundation Australia COPD-X Plan", "GOLD 2024 Report"]
+      },
+      {
+        "letter": "E",
+        "text": "Add oral theophylline 200 mg twice daily",
+        "correct": false,
+        "rationale": "Theophylline has a narrow therapeutic index, significant drug interactions, and limited efficacy; it is a last-line agent in stable COPD (AMH; COPD-X).",
+        "source_refs": ["Australian Medicines Handbook", "Lung Foundation Australia COPD-X Plan"]
+      }
+    ],
+    "explanation": {
+      "summary": "Australian COPD-X escalation is: SABA PRN, then LAMA or LABA monotherapy for low-symptom/low-exacerbation patients, then LAMA/LABA dual for higher symptom burden or exacerbators, then triple therapy (LAMA/LABA/ICS) for persistent exacerbators or those with eosinophilia or asthma overlap. Blood eosinophil count greater than or equal to 300 cells/microL favours ICS addition.",
+      "key_points": [
+        "SABA PRN at all stages",
+        "LAMA or LABA monotherapy for mild symptomatic COPD",
+        "LAMA/LABA dual for greater than or equal to 2 exacerbations/year or high symptom burden",
+        "ICS adds pneumonia risk; eosinophil-guided (greater than or equal to 300) or ACO",
+        "Smoking cessation and pulmonary rehab provide the largest mortality benefits"
+      ],
+      "pearls": "Australian COPD-X is regularly updated by Lung Foundation Australia - check the latest version before deciding ICS escalation."
+    },
+    "sources": [
+      { "label": "Lung Foundation Australia COPD-X Plan", "url": "https://copdx.org.au/" },
+      { "label": "Therapeutic Guidelines Respiratory", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "GOLD 2024 Report", "url": "https://goldcopd.org/" },
+      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-012",
+    "topic": "Medicine",
+    "subtopic": "COPD exacerbation - acute management and ABG interpretation",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["COPD exacerbation", "T2RF", "NIV", "controlled oxygen", "ABG"],
+    "stem": "A 71-year-old woman with severe COPD (FEV1 38 percent predicted) is brought to ED by ambulance with worsening dyspnoea, productive cough with greenish sputum, and confusion over the past 24 hours. She is a current smoker. On arrival she was placed on 8 L/min Hudson mask oxygen by paramedics; SpO2 is now 98 percent. She is drowsy with bounding peripheral pulses, flapping tremor, and warm sweaty palms. She is using salbutamol/ipratropium nebulisers continuously since arrival. An arterial blood gas is taken on the current oxygen flow rate. Her usual inhalers are tiotropium and salmeterol/fluticasone, and she has had 3 prior admissions for COPD exacerbations in the past year, two requiring non-invasive ventilation.",
+    "data_table": {
+      "Vital signs": "BP 148/86 mmHg, HR 108 bpm, RR 22, SpO2 98% on 8 L Hudson mask, T 37.4 degC, GCS 13.",
+      "Examination": "Drowsy, flapping tremor, warm peripheries, accessory muscle use, widespread polyphonic wheeze, prolonged expiration.",
+      "Investigations": "ABG (on 8 L Hudson): pH 7.21, pCO2 88 mmHg, pO2 110 mmHg, HCO3 32 mmol/L, BE +3. CXR: hyperinflation, no consolidation or pneumothorax.",
+      "Medications": "Tiotropium 18 microg daily, salmeterol/fluticasone 50/500 BD."
+    },
+    "lead_in": "Which is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Titrate oxygen down to a target SpO2 of 88 to 92 percent and initiate non-invasive ventilation with BiPAP",
+        "correct": true,
+        "rationale": "She has acute on chronic hypercapnic respiratory failure with respiratory acidosis (pH 7.21, pCO2 88) precipitated by hyperoxia; controlled oxygen to a target SpO2 88 to 92 percent and BiPAP (e.g. IPAP 12 to 15, EPAP 4 to 5) is the standard management for COPD with pH less than 7.35 despite optimal medical therapy (Lung Foundation Australia COPD-X; eTG Respiratory; BTS NIV).",
+        "source_refs": ["Lung Foundation Australia COPD-X Plan", "Therapeutic Guidelines Respiratory", "BTS/ICS NIV Guideline 2016"]
+      },
+      {
+        "letter": "B",
+        "text": "Maintain current oxygen flow and proceed straight to intubation",
+        "correct": false,
+        "rationale": "Intubation is indicated for failure of NIV, severe agitation precluding mask tolerance, copious secretions, or cardiopulmonary arrest; NIV is the first-line ventilatory support in hypercapnic COPD exacerbation (COPD-X; BTS NIV).",
+        "source_refs": ["Lung Foundation Australia COPD-X Plan", "BTS/ICS NIV Guideline 2016"]
+      },
+      {
+        "letter": "C",
+        "text": "Reduce oxygen to nasal prongs 2 L/min and observe without ventilatory support",
+        "correct": false,
+        "rationale": "Reducing oxygen alone will not correct the respiratory acidosis quickly enough in a drowsy patient; NIV is needed to reverse hypercapnia and respiratory acidosis (COPD-X; BTS NIV).",
+        "source_refs": ["Lung Foundation Australia COPD-X Plan", "BTS/ICS NIV Guideline 2016"]
+      },
+      {
+        "letter": "D",
+        "text": "Administer IV doxapram infusion to stimulate respiration",
+        "correct": false,
+        "rationale": "Doxapram is rarely used now and has been superseded by NIV; it has significant adverse effects including agitation, arrhythmia, and seizure (AMH; BTS NIV).",
+        "source_refs": ["Australian Medicines Handbook", "BTS/ICS NIV Guideline 2016"]
+      },
+      {
+        "letter": "E",
+        "text": "Switch to nasal high-flow oxygen at 60 L/min, FiO2 0.6, and continue nebulisers",
+        "correct": false,
+        "rationale": "Nasal high-flow oxygen can be used in selected COPD patients but NIV (BiPAP) has stronger evidence and is first-line in hypercapnic respiratory failure with acidosis (COPD-X; BTS NIV).",
+        "source_refs": ["Lung Foundation Australia COPD-X Plan", "BTS/ICS NIV Guideline 2016"]
+      }
+    ],
+    "explanation": {
+      "summary": "Acute hypercapnic respiratory failure (Type 2) in COPD with pH less than 7.35 despite optimal pharmacological therapy is treated with BiPAP. Oxygen is titrated to target SpO2 88 to 92 percent to avoid worsening hypercapnia from loss of hypoxic drive and Haldane effect. Standard COPD exacerbation bundle: controlled oxygen, salbutamol + ipratropium nebs, prednisolone 30 to 50 mg daily for 5 days, antibiotics if increased purulence/dyspnoea/sputum volume.",
+      "key_points": [
+        "Target SpO2 88-92% in COPD (avoid hyperoxia-induced CO2 retention)",
+        "NIV (BiPAP) for pH less than 7.35 with hypercapnia despite optimal therapy",
+        "Steroids: prednisolone 30-50 mg PO for 5 days",
+        "Antibiotics if Anthonisen criteria met: increased dyspnoea + sputum volume + sputum purulence",
+        "Intubation if NIV fails, GCS rapidly falling, or cardiopulmonary arrest"
+      ],
+      "pearls": "Bounding pulses, flap, and warm sweaty palms are the bedside triad of hypercapnia - they predict the ABG before it returns."
+    },
+    "sources": [
+      { "label": "Lung Foundation Australia COPD-X Plan", "url": "https://copdx.org.au/" },
+      { "label": "Therapeutic Guidelines Respiratory", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "BTS/ICS NIV Guideline 2016", "url": "https://www.brit-thoracic.org.uk/quality-improvement/guidelines/niv-in-acute-respiratory-failure/" },
+      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+    ],
+    "reference_ranges": ["abg"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-013",
+    "topic": "Medicine",
+    "subtopic": "Acute adult asthma - severity assessment",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["asthma", "severity", "TSANZ", "salbutamol", "Australian Asthma Handbook"],
+    "stem": "A 24-year-old woman with known moderate persistent asthma presents to ED with 6 hours of progressively worsening dyspnoea, wheeze, and dry cough. She had a viral URTI 3 days ago. She has been using her salbutamol inhaler every 30 minutes for the last 2 hours with minimal relief. She has a background of eczema and rhinitis, no other medical history, and her usual inhaler is budesonide/formoterol 200/6 maintenance and reliever. Her best-ever PEF is 460 L/min. On arrival she can only speak in short phrases, is sitting upright, and is using accessory muscles. There is widespread polyphonic expiratory wheeze without focal crackles. There is no chest pain, no haemoptysis, and no calf swelling.",
+    "data_table": {
+      "Vital signs": "BP 128/78 mmHg, HR 124 bpm, RR 30, SpO2 91% RA, T 37.0 degC.",
+      "Examination": "Sitting upright, accessory muscle use, short-phrase speech, widespread polyphonic wheeze, prolonged expiration.",
+      "Investigations": "PEF 180 L/min (39 percent of personal best). CXR: hyperinflation, no consolidation/pneumothorax. K 3.6 mmol/L.",
+      "Medications": "Budesonide/formoterol 200/6 BD maintenance and reliever."
+    },
+    "lead_in": "Which is the most appropriate classification of severity and corresponding initial treatment?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Mild to moderate exacerbation - salbutamol pMDI 4 to 12 puffs via spacer and reassess in 20 minutes",
+        "correct": false,
+        "rationale": "Mild to moderate exacerbation has PEF greater than 60 percent, can speak in sentences, no accessory muscle use; her PEF 39 percent of best, short-phrase speech, RR 30, and SpO2 91 percent meet severe criteria (Australian Asthma Handbook; National Asthma Council).",
+        "source_refs": ["Australian Asthma Handbook (National Asthma Council Australia)"]
+      },
+      {
+        "letter": "B",
+        "text": "Severe exacerbation - continuous salbutamol nebulisers with ipratropium, IV hydrocortisone, and oxygen titrated to SpO2 93 to 95 percent",
+        "correct": true,
+        "rationale": "Severe acute asthma in adults is defined by inability to complete sentences, PEF 40 to 60 percent of best, RR greater than or equal to 25, HR greater than or equal to 110, or SpO2 less than 92 percent; treatment is back-to-back salbutamol nebulisers, ipratropium, systemic corticosteroid, and controlled oxygen to SpO2 93 to 95 percent (Australian Asthma Handbook; eTG Respiratory).",
+        "source_refs": ["Australian Asthma Handbook (National Asthma Council Australia)", "Therapeutic Guidelines Respiratory"]
+      },
+      {
+        "letter": "C",
+        "text": "Life-threatening exacerbation - immediate intubation and mechanical ventilation",
+        "correct": false,
+        "rationale": "Life-threatening features include silent chest, cyanosis, bradycardia, exhaustion, confusion, or PEF less than 33 percent; she does not yet meet these criteria. Intubation is reserved for failure of medical therapy or imminent respiratory arrest (Australian Asthma Handbook).",
+        "source_refs": ["Australian Asthma Handbook (National Asthma Council Australia)"]
+      },
+      {
+        "letter": "D",
+        "text": "Moderate exacerbation - oral prednisolone 50 mg and discharge home with safety-net advice",
+        "correct": false,
+        "rationale": "Discharge without observation in a severe exacerbation is unsafe; she requires intensive bronchodilation, systemic steroid, and reassessment over hours to confirm response (Australian Asthma Handbook).",
+        "source_refs": ["Australian Asthma Handbook (National Asthma Council Australia)"]
+      },
+      {
+        "letter": "E",
+        "text": "Severe exacerbation - IV magnesium sulfate 2 g as first-line and observe response before bronchodilators",
+        "correct": false,
+        "rationale": "IV magnesium 2 g over 20 minutes is a useful adjunct in severe asthma not responding to maximal bronchodilation, but bronchodilators and corticosteroids are first-line (Australian Asthma Handbook; eTG Respiratory).",
+        "source_refs": ["Australian Asthma Handbook (National Asthma Council Australia)", "Therapeutic Guidelines Respiratory"]
+      }
+    ],
+    "explanation": {
+      "summary": "Australian Asthma Handbook severity in adults uses speech, work of breathing, RR, HR, SpO2, and PEF percent best. Severe exacerbation criteria include any of: cannot complete sentences, accessory muscle use, RR greater than or equal to 25, HR greater than or equal to 110, SpO2 less than 92 percent, or PEF 40 to 60 percent of best. Treatment escalates from salbutamol pMDI plus spacer through nebulised salbutamol plus ipratropium, systemic corticosteroid, IV magnesium, and ICU referral for life-threatening features.",
+      "key_points": [
+        "Severe: short-phrase speech, RR greater than or equal to 25, HR greater than or equal to 110, SpO2 less than 92, PEF 40 to 60 percent best",
+        "Life-threatening: silent chest, cyanosis, exhaustion, PEF less than 33 percent",
+        "Steroids: prednisolone 50 mg PO or hydrocortisone 100 mg IV",
+        "Target SpO2 93-95 percent (avoid over-oxygenation)",
+        "Magnesium 2 g IV over 20 min if severe and not responding"
+      ],
+      "pearls": "A normal pCO2 in a severe asthmatic is ominous - it signals fatigue and impending respiratory failure."
+    },
+    "sources": [
+      { "label": "Australian Asthma Handbook (National Asthma Council Australia)", "url": "https://www.asthmahandbook.org.au/" },
+      { "label": "Therapeutic Guidelines Respiratory", "url": "https://tgldcdp.tg.org.au/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-014",
+    "topic": "Medicine",
+    "subtopic": "Chronic asthma - AIR/MART step-up therapy",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["chronic asthma", "ICS-formoterol", "AIR", "MART", "Australian Asthma Handbook"],
+    "stem": "A 31-year-old woman with mild persistent asthma reviewed by her GP. Over the past 3 months she has had daytime symptoms 3 to 4 times per week, nocturnal waking once weekly, and uses her salbutamol inhaler approximately 4 times per week. She has had no exacerbations requiring oral steroids in the past year and no hospital presentations. She is a non-smoker, has no other medical conditions, and her inhaler technique is excellent on observation. Her current therapy is salbutamol 100 microg pMDI as needed only. She is planning pregnancy in the next 12 months and is keen to optimise control. There is no known trigger such as occupational allergen, and she has no symptomatic rhinitis or reflux. Her FEV1 is 88 percent predicted with bronchodilator reversibility of 14 percent.",
+    "data_table": {
+      "Vital signs": "BP 118/72 mmHg, HR 76 bpm, RR 14, SpO2 99% RA.",
+      "Examination": "Chest clear, no wheeze, no signs of allergic rhinitis.",
+      "Investigations": "FEV1 88 percent predicted, BDR 14 percent, normal CXR.",
+      "Medications": "Salbutamol 100 microg pMDI PRN only."
+    },
+    "lead_in": "Which is the most appropriate next step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Continue salbutamol PRN and add an asthma action plan with no controller therapy",
+        "correct": false,
+        "rationale": "She meets criteria for uncontrolled mild asthma (symptoms greater than 2 days/week, nocturnal waking, SABA use greater than 2/week); SABA monotherapy is no longer recommended at any step in adult asthma (Australian Asthma Handbook).",
+        "source_refs": ["Australian Asthma Handbook (National Asthma Council Australia)"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence low-dose budesonide/formoterol as needed only (anti-inflammatory reliever)",
+        "correct": true,
+        "rationale": "Australian Asthma Handbook Step 1 (and 2) for adults is now low-dose ICS-formoterol used as anti-inflammatory reliever (AIR) only, which reduces severe exacerbations versus SABA-only and is preferred over daily ICS plus SABA at this severity (Australian Asthma Handbook; eTG Respiratory).",
+        "source_refs": ["Australian Asthma Handbook (National Asthma Council Australia)", "Therapeutic Guidelines Respiratory"]
+      },
+      {
+        "letter": "C",
+        "text": "Commence daily montelukast 10 mg with salbutamol PRN",
+        "correct": false,
+        "rationale": "Leukotriene receptor antagonists are an option in selected patients (exercise-induced symptoms, allergic rhinitis) but are not first-line; ICS-based therapy gives superior asthma control (Australian Asthma Handbook).",
+        "source_refs": ["Australian Asthma Handbook (National Asthma Council Australia)"]
+      },
+      {
+        "letter": "D",
+        "text": "Commence high-dose fluticasone/salmeterol twice daily with salbutamol PRN",
+        "correct": false,
+        "rationale": "High-dose ICS-LABA over-treats mild persistent asthma; stepwise escalation starts with low-dose AIR therapy (Australian Asthma Handbook).",
+        "source_refs": ["Australian Asthma Handbook (National Asthma Council Australia)"]
+      },
+      {
+        "letter": "E",
+        "text": "Commence oral prednisolone 25 mg daily for 2 weeks then taper",
+        "correct": false,
+        "rationale": "Oral corticosteroids are reserved for acute exacerbations or severe poorly controlled asthma; chronic oral steroids should be avoided when inhaled options are appropriate (Australian Asthma Handbook; AMH).",
+        "source_refs": ["Australian Asthma Handbook (National Asthma Council Australia)", "Australian Medicines Handbook"]
+      }
+    ],
+    "explanation": {
+      "summary": "Australian Asthma Handbook 2024 abandons SABA-only treatment in adults. The preferred reliever at all steps is low-dose ICS-formoterol (anti-inflammatory reliever, AIR). At higher severity it becomes maintenance and reliever therapy (MART). This reduces severe exacerbations and oral steroid bursts compared with SABA-only or daily ICS plus SABA reliever.",
+      "key_points": [
+        "Adult asthma: no SABA-only at any step",
+        "Step 1-2: low-dose budesonide/formoterol PRN (AIR)",
+        "Step 3: low-dose budesonide/formoterol maintenance + reliever (MART)",
+        "Step 4: medium-dose MART",
+        "Step 5: high-dose ICS-LABA + add-on (LAMA, biologic) + specialist review"
+      ],
+      "pearls": "Reach for the brown puffer first, not the blue one - that's the headline shift in modern Australian asthma management."
+    },
+    "sources": [
+      { "label": "Australian Asthma Handbook (National Asthma Council Australia)", "url": "https://www.asthmahandbook.org.au/" },
+      { "label": "Therapeutic Guidelines Respiratory", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-015",
+    "topic": "Medicine",
+    "subtopic": "Pulmonary embolism - Wells score and age-adjusted D-dimer",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["PE", "Wells score", "age-adjusted D-dimer", "CTPA", "VTE"],
+    "stem": "A 78-year-old woman presents with 2 days of progressively worsening dyspnoea and pleuritic right-sided chest pain. She had a right total knee replacement 4 weeks ago with delayed mobilisation. She has hypertension on amlodipine, osteoarthritis, and no prior VTE. She is on no anticoagulation since stopping enoxaparin 1 week post-op. She has had no haemoptysis but her right calf is mildly swollen with 2 cm difference compared with the left. On arrival she is haemodynamically stable, SpO2 92 percent RA improving to 96 percent on 2 L. ECG shows sinus tachycardia at 102 bpm with no S1Q3T3 and no right heart strain pattern. CXR is unremarkable. D-dimer is 720 microg/L (laboratory standard cut-off 500 microg/L; age-adjusted cut-off age x 10 microg/L for age greater than 50).",
+    "data_table": {
+      "Vital signs": "BP 132/78 mmHg, HR 102 bpm, RR 22, SpO2 92% RA improving to 96% on 2 L NP, T 36.8 degC.",
+      "Examination": "Right calf swollen with 2 cm circumference difference, chest clear, no JVP elevation, S1 S2 no S3.",
+      "Investigations": "ECG: sinus tachycardia 102 bpm, no S1Q3T3. CXR: unremarkable. D-dimer 720 microg/L. Troponin pending. Creatinine 84 micromol/L.",
+      "Medications": "Amlodipine 5 mg daily."
+    },
+    "lead_in": "Based on Wells score and D-dimer interpretation, which is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Discharge home - D-dimer is below the age-adjusted threshold of 780 microg/L so PE is excluded",
+        "correct": false,
+        "rationale": "Age-adjusted D-dimer (age x 10) is only applied in patients with LOW pretest probability (Wells less than or equal to 4, or two-tier 'PE unlikely'). Her Wells score is 7.5 (clinical DVT signs 3, PE likely as most probable diagnosis 3, HR greater than 100 1.5, recent surgery 1.5), so the D-dimer is not applicable and CTPA is required (eTG; Thrombosis & Haemostasis Society of Australia; BTS).",
+        "source_refs": ["Therapeutic Guidelines Cardiovascular", "Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) VTE guidance"]
+      },
+      {
+        "letter": "B",
+        "text": "Order CT pulmonary angiogram and commence empirical therapeutic anticoagulation while awaiting imaging",
+        "correct": true,
+        "rationale": "Her Wells score is high (greater than 4, 'PE likely'); D-dimer should not be used as a rule-out and CTPA is the first-line imaging. Empirical anticoagulation (LMWH or DOAC) is recommended while awaiting imaging if it is delayed beyond a few hours and bleeding risk is acceptable (eTG; THANZ; BTS).",
+        "source_refs": ["Therapeutic Guidelines Cardiovascular", "Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) VTE guidance"]
+      },
+      {
+        "letter": "C",
+        "text": "Order V/Q scan as first-line imaging given the normal CXR",
+        "correct": false,
+        "rationale": "V/Q is appropriate when CTPA is contraindicated (severe contrast allergy, severe renal impairment, pregnancy where it may be preferred), but CTPA is first-line when available (eTG; THANZ).",
+        "source_refs": ["Therapeutic Guidelines Cardiovascular", "Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) VTE guidance"]
+      },
+      {
+        "letter": "D",
+        "text": "Repeat D-dimer in 24 hours and arrange outpatient CTPA if it rises",
+        "correct": false,
+        "rationale": "Delaying imaging in a high-probability patient is unsafe; PE mortality is concentrated in the first 24 hours (eTG; THANZ).",
+        "source_refs": ["Therapeutic Guidelines Cardiovascular", "Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) VTE guidance"]
+      },
+      {
+        "letter": "E",
+        "text": "Arrange bilateral lower-limb compression ultrasound first and only proceed to CTPA if positive",
+        "correct": false,
+        "rationale": "Lower-limb US is useful when imaging the chest is contraindicated, or to add evidence of VTE in equivocal cases, but it is not the first-line test when PE is the principal clinical concern (eTG; THANZ).",
+        "source_refs": ["Therapeutic Guidelines Cardiovascular", "Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) VTE guidance"]
+      }
+    ],
+    "explanation": {
+      "summary": "Wells score for PE risk-stratifies into 'PE unlikely' (less than or equal to 4) and 'PE likely' (greater than 4). In 'PE unlikely', age-adjusted D-dimer (age x 10 microg/L if greater than 50) safely excludes PE if below threshold. In 'PE likely', proceed directly to CTPA; D-dimer is not applicable. Empirical anticoagulation while awaiting imaging is recommended if delay is expected and bleeding risk is acceptable.",
+      "key_points": [
+        "Wells PE score: DVT signs 3, PE most likely dx 3, HR greater than 100 1.5, immobilisation/surgery 1.5, prior VTE 1.5, haemoptysis 1, malignancy 1",
+        "Wells greater than 4: PE likely - go to CTPA",
+        "Wells less than or equal to 4: PE unlikely - use D-dimer (age-adjusted if greater than 50)",
+        "V/Q if CTPA contraindicated",
+        "Empirical anticoagulation while awaiting CTPA if delay and acceptable bleeding risk"
+      ],
+      "pearls": "Age-adjusted D-dimer is only valid in 'PE unlikely' - using it in a high-probability patient gives false reassurance."
+    },
+    "sources": [
+      { "label": "Therapeutic Guidelines Cardiovascular", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) VTE guidance", "url": "https://www.thanz.org.au/resources/thanz-guidelines" },
+      { "label": "BTS PE Guideline 2018", "url": "https://www.brit-thoracic.org.uk/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-016",
+    "topic": "Medicine",
+    "subtopic": "Pulmonary embolism - risk stratification and outpatient management",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["PE", "sPESI", "DOAC", "outpatient PE", "rivaroxaban", "apixaban"],
+    "stem": "A 52-year-old man is diagnosed with acute segmental pulmonary embolism on CTPA, performed for pleuritic chest pain and mild dyspnoea after a long-haul flight from London 5 days ago. He has no prior VTE, no malignancy, no chronic cardiopulmonary disease, and no recent surgery. On arrival he is haemodynamically stable, ambulating, eating, and drinking. His vital signs are stable as below. His troponin I and NT-proBNP are normal, and the CTPA reports no right heart strain. He has stable home circumstances, lives 10 minutes from the hospital, and has a partner at home. He is not pregnant. He has no significant bleeding history and is not on antiplatelets or NSAIDs. His haemoglobin is 142 g/L, platelets 230 x 10^9/L, and creatinine 78 micromol/L.",
+    "data_table": {
+      "Vital signs": "BP 132/78 mmHg, HR 86 bpm, RR 18, SpO2 96% RA, T 36.7 degC.",
+      "Examination": "Comfortable at rest, chest clear, calves soft, no peripheral oedema.",
+      "Investigations": "CTPA: right segmental PE, no right heart strain. Troponin I normal. NT-proBNP normal. Hb 142 g/L, platelets 230, creatinine 78."
+    },
+    "lead_in": "Which is the most appropriate management strategy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Outpatient management with apixaban 10 mg twice daily for 7 days then 5 mg twice daily for 3 months",
+        "correct": true,
+        "rationale": "sPESI score of 0 (no malignancy, no chronic cardiopulmonary disease, age less than 80, HR less than 110, SBP greater than or equal to 100, SpO2 greater than or equal to 90 percent) indicates low-risk PE suitable for outpatient management with a DOAC; apixaban regimen is 10 mg BD for 7 days then 5 mg BD for at least 3 months (eTG; THANZ).",
+        "source_refs": ["Therapeutic Guidelines Cardiovascular", "Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) VTE guidance"]
+      },
+      {
+        "letter": "B",
+        "text": "Inpatient management on a therapeutic enoxaparin bridge to warfarin INR 2.0 to 3.0",
+        "correct": false,
+        "rationale": "Warfarin is no longer first-line for unprovoked PE in patients without contraindications to DOACs; DOAC monotherapy avoids parenteral bridging and INR monitoring (THANZ; eTG).",
+        "source_refs": ["Therapeutic Guidelines Cardiovascular", "Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) VTE guidance"]
+      },
+      {
+        "letter": "C",
+        "text": "Systemic thrombolysis with alteplase 100 mg over 2 hours",
+        "correct": false,
+        "rationale": "Thrombolysis is reserved for high-risk PE with haemodynamic instability or selected intermediate-high-risk PE with deterioration; he is haemodynamically stable with no RV strain (eTG; THANZ).",
+        "source_refs": ["Therapeutic Guidelines Cardiovascular", "Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) VTE guidance"]
+      },
+      {
+        "letter": "D",
+        "text": "Inferior vena cava filter insertion without anticoagulation",
+        "correct": false,
+        "rationale": "IVC filters are reserved for patients with absolute contraindications to anticoagulation or recurrent PE despite therapeutic anticoagulation; he has neither (eTG; THANZ).",
+        "source_refs": ["Therapeutic Guidelines Cardiovascular", "Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) VTE guidance"]
+      },
+      {
+        "letter": "E",
+        "text": "Aspirin 100 mg daily indefinitely without anticoagulation",
+        "correct": false,
+        "rationale": "Aspirin alone is inadequate for acute treatment of PE; therapeutic anticoagulation is mandatory for at least 3 months (eTG; THANZ).",
+        "source_refs": ["Therapeutic Guidelines Cardiovascular", "Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) VTE guidance"]
+      }
+    ],
+    "explanation": {
+      "summary": "Risk stratification of acute PE uses haemodynamic status, sPESI, RV dysfunction (echo or CT), and cardiac biomarkers. Low-risk PE (sPESI 0, no RV strain, normal biomarkers) can be managed as an outpatient with DOAC monotherapy. Intermediate and high-risk PE require admission, and high-risk (shock) PE may need thrombolysis.",
+      "key_points": [
+        "sPESI: age greater than 80, malignancy, chronic cardiopulmonary disease, HR greater than or equal to 110, SBP less than 100, SpO2 less than 90 percent",
+        "sPESI 0 = low risk, suitable for outpatient management",
+        "DOAC monotherapy first-line: apixaban or rivaroxaban (no bridging)",
+        "Apixaban 10 mg BD x 7 days then 5 mg BD",
+        "Rivaroxaban 15 mg BD x 21 days then 20 mg daily",
+        "Minimum 3 months anticoagulation; consider extended therapy if unprovoked"
+      ],
+      "pearls": "A long-haul flight makes the PE provoked, which typically caps anticoagulation duration at 3 months once the risk factor has resolved."
+    },
+    "sources": [
+      { "label": "Therapeutic Guidelines Cardiovascular", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) VTE guidance", "url": "https://www.thanz.org.au/resources/thanz-guidelines" },
+      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-017",
+    "topic": "Medicine",
+    "subtopic": "Community-acquired pneumonia - SMART-COP severity and antibiotic choice",
+    "difficulty": 4,
+    "model": "Medicine",
+    "tags": ["CAP", "SMART-COP", "CURB-65", "ceftriaxone", "azithromycin", "eTG"],
+    "stem": "A 64-year-old man presents to ED with 3 days of fever, productive cough with rusty sputum, right-sided pleuritic chest pain, and progressive dyspnoea. He has a 25 pack-year smoking history, hypertension on perindopril, and no known drug allergies. He has not travelled recently and has had no contact with unwell people. He has not had a pneumococcal or influenza vaccine in the past 12 months. On arrival he is alert but unwell-looking. His CXR shows dense right middle lobe consolidation with a small parapneumonic effusion. Bloods show WCC 18.4 x 10^9/L with neutrophilia, CRP 280 mg/L, albumin 28 g/L, creatinine 96 micromol/L, urea 9.2 mmol/L, glucose 7.8 mmol/L. ABG on room air shows pH 7.42, pO2 58 mmHg, pCO2 36 mmHg, HCO3 24 mmol/L.",
+    "data_table": {
+      "Vital signs": "BP 96/64 mmHg, HR 116 bpm, RR 28, SpO2 90% RA, T 38.6 degC.",
+      "Examination": "Alert, dehydrated, dullness and bronchial breathing right lower zone, no neck stiffness, no focal neurology.",
+      "Investigations": "CXR: dense right middle lobe consolidation with small effusion. WCC 18.4, CRP 280, albumin 28 g/L, creatinine 96, urea 9.2, glucose 7.8. ABG: pH 7.42, pO2 58, pCO2 36, HCO3 24.",
+      "Medications": "Perindopril 5 mg daily."
+    },
+    "lead_in": "Which is the most appropriate disposition and initial empirical antibiotic therapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Admit to general ward; oral amoxicillin 1 g TDS plus doxycycline 100 mg BD",
+        "correct": false,
+        "rationale": "His SMART-COP score is 6 (SBP less than 90 = 2, multilobar/effusion 1, RR greater than or equal to 25 1, tachycardia greater than or equal to 125 0, confusion 0, oxygenation pO2 less than 70 = 2, pH normal 0, albumin less than 35 = 1; SBP scores 2). With SMART-COP greater than or equal to 5 (high risk of needing intensive respiratory or vasopressor support), oral therapy and general ward are inadequate (eTG Respiratory).",
+        "source_refs": ["Therapeutic Guidelines Respiratory"]
+      },
+      {
+        "letter": "B",
+        "text": "Admit to high-dependency or ICU; IV ceftriaxone 1 g daily plus IV azithromycin 500 mg daily, with empirical cover for atypicals",
+        "correct": true,
+        "rationale": "SMART-COP greater than or equal to 5 indicates a high risk of needing intensive respiratory or vasopressor support and warrants HDU/ICU-level care. Empirical therapy for severe CAP in Australia is IV ceftriaxone plus IV azithromycin (Therapeutic Guidelines Respiratory).",
+        "source_refs": ["Therapeutic Guidelines Respiratory"]
+      },
+      {
+        "letter": "C",
+        "text": "Discharge home with oral moxifloxacin 400 mg daily as CURB-65 is only 1",
+        "correct": false,
+        "rationale": "Even if CURB-65 underestimates severity in this case, his hypotension, hypoxia, and metabolic derangements meet inpatient criteria; SMART-COP is more sensitive for need for intensive support in younger patients (eTG Respiratory).",
+        "source_refs": ["Therapeutic Guidelines Respiratory"]
+      },
+      {
+        "letter": "D",
+        "text": "Admit to general ward; IV benzylpenicillin 1.2 g 6-hourly monotherapy",
+        "correct": false,
+        "rationale": "Benzylpenicillin monotherapy does not cover Mycoplasma, Legionella, or atypicals and is inadequate empirical therapy for severe CAP requiring ICU-level support (eTG Respiratory).",
+        "source_refs": ["Therapeutic Guidelines Respiratory"]
+      },
+      {
+        "letter": "E",
+        "text": "Admit to ICU; IV vancomycin 1.5 g 12-hourly plus IV meropenem 1 g 8-hourly for empirical cover",
+        "correct": false,
+        "rationale": "Broad-spectrum antipseudomonal and MRSA cover is reserved for patients with risk factors (structural lung disease, recent hospitalisation, recent broad-spectrum antibiotics, MRSA colonisation); he has none (eTG Respiratory).",
+        "source_refs": ["Therapeutic Guidelines Respiratory"]
+      }
+    ],
+    "explanation": {
+      "summary": "Australian severity scoring for CAP uses SMART-COP (intensive-support prediction) alongside CURB-65 (mortality prediction). SMART-COP greater than or equal to 5 indicates high risk of needing inotropic or respiratory support, warranting HDU/ICU. Severe CAP empirical therapy in Australia is IV ceftriaxone plus IV azithromycin (or doxycycline) to cover Streptococcus pneumoniae plus atypicals.",
+      "key_points": [
+        "SMART-COP: S BP less than 90 (2), M ultilobar (1), A lbumin less than 35 (1), R R greater than or equal to 25 (greater than or equal to 50 yo) (1), T achycardia greater than or equal to 125 (1), C onfusion (1), O xygen low (2), P H less than 7.35 (2)",
+        "SMART-COP greater than or equal to 5 = high risk of intensive support",
+        "CURB-65: Confusion, Urea greater than 7, RR greater than or equal to 30, BP less than 90 sys or less than or equal to 60 dia, age greater than or equal to 65",
+        "Severe CAP: IV ceftriaxone + IV azithromycin (or doxycycline)",
+        "Step down to oral after 48 hours of clinical improvement"
+      ],
+      "pearls": "SMART-COP outperforms CURB-65 for predicting ICU need in younger patients - use both."
+    },
+    "sources": [
+      { "label": "Therapeutic Guidelines Respiratory", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+    ],
+    "reference_ranges": ["abg"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-018",
+    "topic": "Medicine",
+    "subtopic": "Aspiration pneumonia - antibiotic choice and risk factors",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["aspiration pneumonia", "amoxicillin-clavulanate", "anaerobic cover", "eTG"],
+    "stem": "An 82-year-old nursing home resident with advanced Parkinson disease and known dysphagia is brought to ED with 24 hours of fever, productive cough, and confusion. Her swallow has been deteriorating, and on her last speech pathology review 2 weeks ago she was advised to take texture-modified diet (Level 5 minced and moist) with mildly thick fluids. The nursing home reports she was found coughing during dinner the previous evening. She has no recent hospitalisation, no prior multi-drug-resistant organism, and no recent antibiotics. On examination she is febrile and tachypnoeic. CXR shows right lower lobe consolidation. Bloods show neutrophilic leukocytosis. She has no penicillin allergy.",
+    "data_table": {
+      "Vital signs": "BP 122/72 mmHg, HR 102 bpm, RR 24, SpO2 92% on 2 L NP, T 38.4 degC, GCS 14.",
+      "Examination": "Right lower zone crackles and dullness, no neck stiffness, mild dehydration.",
+      "Investigations": "CXR: right lower lobe consolidation. WCC 14.6 x 10^9/L. CRP 180 mg/L. Creatinine 96 micromol/L.",
+      "Medications": "Levodopa/carbidopa 100/25 mg QID, no antibiotics in past 6 months."
+    },
+    "lead_in": "Which is the most appropriate empirical antibiotic therapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "IV amoxicillin-clavulanate 1.2 g 8-hourly",
+        "correct": true,
+        "rationale": "Aspiration pneumonia in a community/nursing-home resident without recent hospitalisation or broad-spectrum antibiotics is empirically treated with amoxicillin-clavulanate to cover typical respiratory pathogens plus oral anaerobes (Therapeutic Guidelines Antibiotic; eTG Respiratory).",
+        "source_refs": ["Therapeutic Guidelines Antibiotic", "Therapeutic Guidelines Respiratory"]
+      },
+      {
+        "letter": "B",
+        "text": "IV piperacillin-tazobactam 4.5 g 8-hourly",
+        "correct": false,
+        "rationale": "Antipseudomonal cover is reserved for patients with risk factors such as recent hospitalisation, structural lung disease, MDRO colonisation, or recent broad-spectrum antibiotics; she has none (eTG Respiratory).",
+        "source_refs": ["Therapeutic Guidelines Respiratory"]
+      },
+      {
+        "letter": "C",
+        "text": "Oral amoxicillin 1 g TDS as monotherapy",
+        "correct": false,
+        "rationale": "Amoxicillin alone lacks beta-lactamase coverage for oral anaerobes implicated in aspiration; clavulanate addition is preferred (eTG Respiratory).",
+        "source_refs": ["Therapeutic Guidelines Respiratory"]
+      },
+      {
+        "letter": "D",
+        "text": "IV ceftriaxone 1 g daily plus IV metronidazole 500 mg 12-hourly",
+        "correct": false,
+        "rationale": "Routine addition of metronidazole is no longer recommended for aspiration pneumonia by Australian guidance - amoxicillin-clavulanate provides sufficient anaerobic cover (Therapeutic Guidelines Antibiotic).",
+        "source_refs": ["Therapeutic Guidelines Antibiotic"]
+      },
+      {
+        "letter": "E",
+        "text": "IV vancomycin 1.5 g 12-hourly plus IV ciprofloxacin 400 mg 12-hourly",
+        "correct": false,
+        "rationale": "Empirical vancomycin and fluoroquinolone combination is excessively broad and lacks the anaerobic coverage that beta-lactam/beta-lactamase inhibitors provide; not first-line (eTG Respiratory).",
+        "source_refs": ["Therapeutic Guidelines Respiratory"]
+      }
+    ],
+    "explanation": {
+      "summary": "Aspiration pneumonia empirical therapy in Australian guidelines is amoxicillin-clavulanate (IV or oral depending on severity), which covers typical respiratory pathogens plus oral anaerobes. Routine addition of metronidazole is no longer recommended. Severity escalates to broader cover only with structural lung disease, recent hospitalisation, or prior MDRO. Address modifiable risk factors: dysphagia management, oral care, head-of-bed elevation, medication review for sedatives.",
+      "key_points": [
+        "Empirical: amoxicillin-clavulanate (IV 1.2 g 8-hourly, oral 875+125 mg BD)",
+        "Routine metronidazole addition no longer recommended",
+        "Broaden if recent hospitalisation, structural lung disease, MDRO risk",
+        "Address dysphagia, oral hygiene, sedative review",
+        "Aspiration pneumonitis (chemical) does not need antibiotics unless secondary infection"
+      ],
+      "pearls": "Distinguish aspiration pneumonitis (acute chemical injury, no antibiotics) from aspiration pneumonia (clinical infection, antibiotics) - the time course matters."
+    },
+    "sources": [
+      { "label": "Therapeutic Guidelines Antibiotic", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Therapeutic Guidelines Respiratory", "url": "https://tgldcdp.tg.org.au/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-019",
+    "topic": "Medicine",
+    "subtopic": "Atrial fibrillation - cardioversion timing and anticoagulation",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["AF", "cardioversion", "TOE", "anticoagulation timing"],
+    "stem": "A 58-year-old man presents to ED with palpitations and mild dyspnoea that began approximately 32 hours ago. He has hypertension on perindopril and no other medical history. He is haemodynamically stable. ECG confirms atrial fibrillation at a ventricular rate of 102 bpm. Bedside transthoracic echocardiogram shows preserved LV function (LVEF 60 percent), mild left atrial dilatation (LA diameter 42 mm), and no significant valvular disease. He has no history of stroke, no peripheral vascular disease, no diabetes, no heart failure, and no prior anticoagulation. His CHA2DS2-VA score is 1 (hypertension only). He has been pain-free, neurologically intact, and is otherwise well. He has had no prior episodes of AF.",
+    "data_table": {
+      "Vital signs": "BP 138/82 mmHg, HR 102 bpm irregular, RR 16, SpO2 98% RA.",
+      "Examination": "Irregularly irregular pulse, chest clear, no neurological deficit, no peripheral oedema.",
+      "Investigations": "ECG: AF rate 102. Echo: LVEF 60 percent, LA 42 mm, no valve disease. TSH normal, K 4.2 mmol/L.",
+      "Medications": "Perindopril 5 mg daily."
+    },
+    "lead_in": "Which is the most appropriate management with respect to cardioversion?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Proceed to immediate electrical cardioversion without anticoagulation or transoesophageal echocardiogram",
+        "correct": false,
+        "rationale": "AF duration is uncertain or greater than 48 hours requires either greater than 3 weeks therapeutic anticoagulation pre-cardioversion or a TOE to exclude left atrial appendage thrombus before cardioversion; even when duration is less than 48 hours, anticoagulation should still be commenced peri-procedurally (CSANZ AF Guideline; eTG).",
+        "source_refs": ["CSANZ/NHFA AF Guideline 2018", "Therapeutic Guidelines Cardiovascular"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence therapeutic anticoagulation now and perform transoesophageal echocardiogram-guided cardioversion, then continue anticoagulation for at least 4 weeks post-cardioversion",
+        "correct": true,
+        "rationale": "AF duration greater than 48 hours (or uncertain) requires either 3 weeks of therapeutic anticoagulation or a TOE-guided approach before cardioversion to reduce thromboembolic risk. Anticoagulation must continue for at least 4 weeks post-cardioversion regardless of CHA2DS2-VA, with longer-term anticoagulation guided by the score (CSANZ AF; eTG Cardiovascular).",
+        "source_refs": ["CSANZ/NHFA AF Guideline 2018", "Therapeutic Guidelines Cardiovascular"]
+      },
+      {
+        "letter": "C",
+        "text": "Commence aspirin 100 mg daily and proceed to cardioversion in 24 hours",
+        "correct": false,
+        "rationale": "Aspirin does not provide adequate stroke protection peri-cardioversion; therapeutic anticoagulation (heparin/LMWH/DOAC/warfarin) is required (CSANZ AF; THANZ).",
+        "source_refs": ["CSANZ/NHFA AF Guideline 2018"]
+      },
+      {
+        "letter": "D",
+        "text": "Defer cardioversion indefinitely and use rate control with metoprolol alone, no anticoagulation",
+        "correct": false,
+        "rationale": "Indefinite deferral of cardioversion is not appropriate in a first symptomatic episode without contraindication; rate control alone misses the opportunity for early rhythm control benefit (EAST-AFNET 4; CSANZ AF).",
+        "source_refs": ["CSANZ/NHFA AF Guideline 2018", "EAST-AFNET 4 trial"]
+      },
+      {
+        "letter": "E",
+        "text": "Cardioversion now without anticoagulation, since CHA2DS2-VA is only 1",
+        "correct": false,
+        "rationale": "CHA2DS2-VA guides long-term anticoagulation but does not exempt patients from peri-cardioversion anticoagulation, which is required for at least 4 weeks post-procedure regardless of score (CSANZ AF).",
+        "source_refs": ["CSANZ/NHFA AF Guideline 2018"]
+      }
+    ],
+    "explanation": {
+      "summary": "Cardioversion of AF requires either 3 weeks of therapeutic anticoagulation pre-procedure, or TOE-guided cardioversion to exclude left atrial appendage thrombus if duration is greater than 48 hours or uncertain. Even with less than 48 hour duration, peri-cardioversion anticoagulation is recommended and must continue for at least 4 weeks post-cardioversion (atrial stunning); longer-term continuation is governed by CHA2DS2-VA score.",
+      "key_points": [
+        "AF greater than 48 hours or uncertain: 3 weeks anticoagulation OR TOE-guided cardioversion",
+        "Minimum 4 weeks anticoagulation post-cardioversion (atrial stunning)",
+        "Long-term continuation by CHA2DS2-VA",
+        "TOE is alternative when early cardioversion preferred",
+        "Aspirin is inadequate peri-cardioversion"
+      ],
+      "pearls": "The 48-hour window is widely misquoted - if duration is uncertain, treat as greater than 48 hours and either anticoagulate for 3 weeks or get a TOE."
+    },
+    "sources": [
+      { "label": "CSANZ/NHFA AF Guideline 2018", "url": "https://www.heartfoundation.org.au/" },
+      { "label": "Therapeutic Guidelines Cardiovascular", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "EAST-AFNET 4 trial", "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa2019422" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "med-cardio-resp-020",
+    "topic": "Medicine",
+    "subtopic": "Acute breathlessness - integrative diagnosis between PE, ADHF, and CAP",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["dyspnoea", "diagnostic reasoning", "PE", "HF", "pneumonia", "POCUS"],
+    "stem": "A 76-year-old woman presents at 3 am with 8 hours of progressive dyspnoea, orthopnoea, and a dry cough. She has HFrEF (LVEF 35 percent) on perindopril, bisoprolol, frusemide, and dapagliflozin; type 2 diabetes on metformin; and known paroxysmal AF on apixaban 5 mg twice daily. She was discharged 10 days ago after a 5-day admission for cellulitis. Since then she has been less mobile, sitting in her chair most of the day. She denies fever, chest pain, or haemoptysis. On arrival she is afebrile but distressed. JVP is elevated to the angle of the jaw at 60 degrees. There are fine bibasal crackles to the mid-zones and trace ankle oedema bilaterally. Her ECG shows AF at 118 bpm without acute ischaemic changes. CXR shows bilateral interstitial opacities with upper lobe blood diversion. Troponin I is 22 ng/L (cut-off less than 16, stable on repeat). NT-proBNP is 6800 ng/L. D-dimer is 1800 microg/L. Bedside lung ultrasound shows bilateral B-lines and small bilateral pleural effusions. Right calf circumference is 1 cm greater than left without erythema. Creatinine 142 micromol/L (baseline 110).",
+    "data_table": {
+      "Vital signs": "BP 158/92 mmHg, HR 118 bpm AF, RR 28, SpO2 89% RA improving to 94% on 6 L Hudson, T 36.7 degC.",
+      "Examination": "Sitting upright, JVP elevated, bibasal crackles to mid-zones, trace ankle oedema bilaterally, right calf 1 cm greater than left.",
+      "Investigations": "ECG: AF rate 118, no acute ischaemia. CXR: bilateral interstitial opacities with upper lobe diversion. Troponin I 22 ng/L (stable). NT-proBNP 6800 ng/L. D-dimer 1800 microg/L. POCUS: bilateral B-lines and small pleural effusions. Creatinine 142 (baseline 110).",
+      "Medications": "Perindopril 5 mg, bisoprolol 5 mg, frusemide 40 mg, dapagliflozin 10 mg, apixaban 5 mg BD, metformin 1 g BD."
+    },
+    "lead_in": "Which is the most appropriate initial diagnostic and management step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Treat as acute decompensated heart failure with IV frusemide and GTN, and arrange CT pulmonary angiogram only if response is inadequate within 6 hours",
+        "correct": true,
+        "rationale": "Clinical, biochemical, and POCUS evidence (elevated JVP, NT-proBNP greater than 4000, B-lines, upper lobe diversion, congestion) points to ADHF as the primary problem; the elevated D-dimer is non-specific in HF and AF on apixaban makes PE unlikely. Initial management is decongestion with IV diuretic and nitrate, with CTPA reserved for inadequate response or evolving features of PE (Heart Foundation/CSANZ HF; eTG; THANZ).",
+        "source_refs": ["Heart Foundation/CSANZ Heart Failure Guideline 2018", "Therapeutic Guidelines Cardiovascular", "Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) VTE guidance"]
+      },
+      {
+        "letter": "B",
+        "text": "Treat as suspected PE with immediate CT pulmonary angiogram and empirical therapeutic-dose LMWH, withholding diuretics",
+        "correct": false,
+        "rationale": "She is on therapeutic apixaban, has no haemodynamic instability, and her presentation is dominated by congestive features rather than pleuritic chest pain or focal hypoxia. D-dimer is elevated as expected in HF/inflammation and is not a rule-in test (THANZ; eTG).",
+        "source_refs": ["Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) VTE guidance", "Therapeutic Guidelines Cardiovascular"]
+      },
+      {
+        "letter": "C",
+        "text": "Treat as severe CAP with IV ceftriaxone and azithromycin, admit to HDU",
+        "correct": false,
+        "rationale": "She is afebrile with no productive cough or focal consolidation; CXR pattern and BNP favour congestion not infection. Antibiotics are not first-line in cardiogenic pulmonary oedema (eTG Respiratory).",
+        "source_refs": ["Therapeutic Guidelines Respiratory"]
+      },
+      {
+        "letter": "D",
+        "text": "Activate the cath lab for primary PCI given the troponin elevation",
+        "correct": false,
+        "rationale": "The minor troponin elevation is stable and likely demand-related from the AF with rapid ventricular response and decompensated HF; there is no ECG evidence of STEMI and no NSTEMI dynamic rise. Primary PCI is not indicated (Heart Foundation/CSANZ ACS).",
+        "source_refs": ["Heart Foundation/CSANZ ACS Guideline 2016"]
+      },
+      {
+        "letter": "E",
+        "text": "Defer all imaging and start broad empirical therapy for PE, CAP, and ADHF simultaneously",
+        "correct": false,
+        "rationale": "Shotgun therapy without diagnostic clarity exposes her to harm (broad antibiotics in non-infection, bleeding from triple-pathway anticoagulation on apixaban). The clinical picture is dominated by congestion and warrants targeted decongestion first (Heart Foundation/CSANZ HF; eTG).",
+        "source_refs": ["Heart Foundation/CSANZ Heart Failure Guideline 2018", "Therapeutic Guidelines Cardiovascular"]
+      }
+    ],
+    "explanation": {
+      "summary": "Acute breathlessness in the elderly with multiple plausible aetiologies is best disambiguated by integrating bedside POCUS (B-lines, pleural effusion, RV size), biomarkers (NT-proBNP very high favours HF; troponin minor elevation often demand), CXR pattern (upper lobe diversion, Kerley B), and pretest probability for PE (already on therapeutic DOAC reduces probability). Treat the dominant diagnosis first; reassess at 4 to 6 hours and escalate imaging if response is inadequate.",
+      "key_points": [
+        "NT-proBNP greater than 4000 ng/L strongly favours HF as the dominant problem",
+        "D-dimer is non-specific in HF, AF, recent infection - do not over-interpret",
+        "POCUS B-lines plus elevated JVP plus upper lobe diversion = cardiogenic congestion",
+        "Therapeutic DOAC compliance significantly reduces PE probability",
+        "Demand troponin in AF with RVR and HF is common and stable"
+      ],
+      "pearls": "Reach for the diuretic first, the CTPA second - reassess at 6 hours and pivot if her congestion improves but hypoxia persists."
+    },
+    "sources": [
+      { "label": "Heart Foundation/CSANZ Heart Failure Guideline 2018", "url": "https://www.heartfoundation.org.au/" },
+      { "label": "Therapeutic Guidelines Cardiovascular", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) VTE guidance", "url": "https://www.thanz.org.au/resources/thanz-guidelines" },
+      { "label": "Therapeutic Guidelines Respiratory", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Heart Foundation/CSANZ ACS Guideline 2016", "url": "https://www.heartfoundation.org.au/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  }
+]
