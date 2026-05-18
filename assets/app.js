@@ -750,9 +750,10 @@
     };
     document.getElementById("flagBtn").classList.toggle("active flag", !!state.flags[q.id]);
 
+    // The click handler is delegated globally (see wireReportModal).
+    // Here we just update the button's visual state for the current Q.
     const repBtn = document.getElementById("reportBtn");
     if (repBtn) {
-      repBtn.onclick = () => openReportModal(q.id, q.model);
       const open = state.reports.filter(r => r.question_id === q.id && r.status === "open").length;
       repBtn.classList.toggle("has-report", open > 0);
       repBtn.title = open
@@ -1223,6 +1224,17 @@
     document.getElementById("reportCancel").onclick = closeReportModal;
     m.addEventListener("click", e => { if (e.target.id === "reportModal") closeReportModal(); });
     document.getElementById("reportSubmit").onclick = submitReport;
+    // Delegated click handler. The Report button lives inside the
+    // tpl-quiz template that gets re-cloned on each question render,
+    // so per-render onclick binding is brittle - delegate from body.
+    document.body.addEventListener("click", e => {
+      const btn = e.target && e.target.closest && e.target.closest("#reportBtn");
+      if (!btn) return;
+      e.preventDefault();
+      const q = state.quiz && state.quiz.pool && state.quiz.pool[state.quiz.idx];
+      if (!q) return;
+      openReportModal(q.id, q.model);
+    });
   }
   function openReportModal(qid, model) {
     _reportingQId = qid;
