@@ -1192,7 +1192,7 @@
       if (ok) {
         copyBtn.classList.add("copied");
         copyBtn.textContent = "Copied  ✓";
-        copyStatus.textContent = "Now paste it into Claude / ChatGPT / Gemini.";
+        copyStatus.textContent = `Now paste it into ${auditLlmLabel()}.`;
         copyStatus.classList.add("ok");
       } else {
         copyBtn.classList.add("copy-failed");
@@ -1291,7 +1291,37 @@
   // ── Audit dashboard (Rob only) ─────────────────────────────────────────
   // Two tabs: Inbox (pending batches) and Reports (user-submitted issues).
   // Each row offers a copy-prompt → paste-response → apply workflow that
-  // works on a free Claude.ai plan (no Claude Code needed).
+  // works on any LLM's free tier (no API key, no Claude Code needed).
+  const AUDIT_LLMS = {
+    claude:   { label: "Claude",   url: "https://claude.ai" },
+    chatgpt:  { label: "ChatGPT",  url: "https://chatgpt.com" },
+    gemini:   { label: "Gemini",   url: "https://gemini.google.com" },
+    grok:     { label: "Grok",     url: "https://grok.com" },
+    deepseek: { label: "DeepSeek", url: "https://chat.deepseek.com" },
+    mistral:  { label: "Le Chat",  url: "https://chat.mistral.ai" },
+    copilot:  { label: "Copilot",  url: "https://copilot.microsoft.com" }
+  };
+  const AUDIT_LLM_KEY = "y4mcq.audit.llm.v1";
+  function auditLlmId() {
+    const id = localStorage.getItem(AUDIT_LLM_KEY);
+    return (id && AUDIT_LLMS[id]) ? id : "claude";
+  }
+  function auditLlmEntry() { return AUDIT_LLMS[auditLlmId()]; }
+  function auditLlmUrl() { return auditLlmEntry().url; }
+  function auditLlmLabel() { return auditLlmEntry().label; }
+  function setAuditLlm(id) {
+    if (!AUDIT_LLMS[id]) return;
+    localStorage.setItem(AUDIT_LLM_KEY, id);
+    refreshAuditLlmLinks();
+  }
+  function refreshAuditLlmLinks() {
+    const label = auditLlmLabel();
+    const url = auditLlmUrl();
+    document.querySelectorAll(".audit-open-llm").forEach(a => {
+      a.href = url;
+      a.textContent = `Open ${label}`;
+    });
+  }
   function wireReportsAdmin() {
     const btn = document.getElementById("reportsAdminBtn");
     const m = document.getElementById("reportsAdminModal");
@@ -1299,6 +1329,11 @@
     btn.onclick = openReportsAdmin;
     document.getElementById("reportsAdminClose").onclick = () => m.hidden = true;
     m.addEventListener("click", e => { if (e.target.id === "reportsAdminModal") m.hidden = true; });
+    const llmSel = document.getElementById("auditLlmSelect");
+    if (llmSel) {
+      llmSel.value = auditLlmId();
+      llmSel.onchange = () => setAuditLlm(llmSel.value);
+    }
     document.querySelectorAll('#reportsAdminModal [data-rep-filter]').forEach(b => {
       b.onclick = () => {
         document.querySelectorAll('#reportsAdminModal [data-rep-filter]').forEach(x => x.classList.remove("selected"));
@@ -1331,6 +1366,7 @@
     btn.classList.toggle("has-pending", open > 0);
   }
   async function openReportsAdmin() {
+    if (!currentProfile || currentProfile.id !== "rob") return;
     document.getElementById("reportsAdminModal").hidden = false;
     await refreshAuditInboxList();
     switchAuditTab("inbox");
@@ -1413,10 +1449,10 @@
   function auditFlowMarkup(_keyHint) {
     return `
       <ol class="audit-steps">
-        <li><b>Copy the prompt</b> <button class="audit-copy primary">Copy audit prompt</button>
-          <a class="link-btn audit-open-claude" href="https://claude.ai" target="_blank" rel="noopener">open claude.ai</a>
+        <li><b>Copy the prompt</b> <button class="audit-copy primary">Copy prompt</button>
+          <a class="link-btn audit-open-llm" href="${auditLlmUrl()}" target="_blank" rel="noopener">Open ${auditLlmLabel()}</a>
           <span class="audit-copy-status dim small"></span></li>
-        <li><b>Paste Claude's full JSON response</b>
+        <li><b>Paste the LLM's full JSON reply</b>
           <textarea class="audit-response paste-box" rows="8" spellcheck="false" autocomplete="off" placeholder='{ "summary": "...", "kept": [ ... ], "dropped": [ ... ] }'></textarea>
         </li>
         <li><b>Validate &amp; apply</b>
@@ -1437,7 +1473,7 @@
       const text = opts.buildPrompt();
       try {
         await navigator.clipboard.writeText(text);
-        copyStatus.textContent = "Copied. Paste into Claude on claude.ai.";
+        copyStatus.textContent = `Copied. Paste into ${auditLlmLabel()}.`;
         copyStatus.className = "audit-copy-status dim small ok";
       } catch {
         // Fallback: drop into the response textarea reversed? No - put in a
@@ -1457,7 +1493,7 @@
       applyStatus.className = "audit-apply-status dim small";
       const raw = (respEl.value || "").trim();
       if (!raw) {
-        applyStatus.textContent = "Paste Claude's JSON response first.";
+        applyStatus.textContent = "Paste the LLM's JSON reply first.";
         applyStatus.classList.add("bad");
         return;
       }

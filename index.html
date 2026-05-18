@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260518o" />
+<link rel="stylesheet" href="assets/styles.css?v=20260518p" />
 </head>
 <body data-screen="home" class="locked">
 
@@ -295,7 +295,7 @@
     </div>
     <div class="modal-body">
       <p class="dim small" id="reportQId"></p>
-      <p>Describe what is wrong with this question. Be specific: factual error, contradicted by a guideline, ambiguous lead-in, distractor is actually correct, etc.</p>
+      <p>Describe what is wrong with this question. Be specific.</p>
       <textarea id="reportText" class="report-text" placeholder="e.g. 'The correct answer says first-line is amoxicillin, but eTG recommends co-amoxiclav for this scenario because...'" rows="6" maxlength="4000"></textarea>
       <div class="prompt-actions">
         <button id="reportSubmit" class="primary">Submit report</button>
@@ -315,7 +315,20 @@
     </div>
     <div class="modal-body">
       <div class="audit-intro">
-        <p>The two tabs below let you audit pending content using Claude on the free plan - no Claude Code needed. For each row: <b>(1)</b> click <em>Copy audit prompt</em>, <b>(2)</b> open <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> in a new tab and paste the prompt, <b>(3)</b> copy Claude's full JSON response back into the textarea here, <b>(4)</b> click <em>Validate &amp; apply</em>. The site validates the schema and commits the changes via the live backend.</p>
+        <p>Audit pending content using any LLM with a free tier - no API key, no Claude Code. Pick your LLM, then for each row: <b>(1)</b> <em>Copy prompt</em>, <b>(2)</b> <em>Open</em> the LLM in a new tab and paste, <b>(3)</b> paste its full JSON reply back into the textarea, <b>(4)</b> <em>Validate &amp; apply</em>. The site validates the schema and commits via the live backend.</p>
+        <div class="audit-llm-picker">
+          <label for="auditLlmSelect">LLM:</label>
+          <select id="auditLlmSelect">
+            <option value="claude">Claude (claude.ai)</option>
+            <option value="chatgpt">ChatGPT (chatgpt.com)</option>
+            <option value="gemini">Gemini (gemini.google.com)</option>
+            <option value="grok">Grok (grok.com)</option>
+            <option value="deepseek">DeepSeek (chat.deepseek.com)</option>
+            <option value="mistral">Le Chat (chat.mistral.ai)</option>
+            <option value="copilot">Copilot (copilot.microsoft.com)</option>
+          </select>
+          <span class="dim small">Your choice is remembered.</span>
+        </div>
       </div>
       <div class="audit-tabs">
         <button class="audit-tab selected" data-tab="inbox">Inbox <span id="auditInboxCount" class="badge"></span></button>
@@ -1040,6 +1053,6 @@ visible to the maintainer in the commentary view.
 Output the final JSON array. Nothing else.
 </script>
 
-<script src="assets/app.js?v=20260518o" defer></script>
+<script src="assets/app.js?v=20260518p" defer></script>
 </body>
 </html>
