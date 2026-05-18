@@ -36,8 +36,9 @@ export default {
     try {
       if (url.pathname === "/paste")        return await handlePaste(request, env, cors);
       if (url.pathname === "/report")       return await handleReport(request, env, cors);
-      if (url.pathname === "/apply-audit")  return await handleApplyAudit(request, env, cors);
-      if (url.pathname === "/apply-report") return await handleApplyReport(request, env, cors);
+      if (url.pathname === "/apply-audit")           return await handleApplyAudit(request, env, cors);
+      if (url.pathname === "/apply-live-audit") return await handleApplyLiveAudit(request, env, cors);
+      if (url.pathname === "/apply-report")          return await handleApplyReport(request, env, cors);
       return json({ ok: false, error: "not found" }, 404, cors);
     } catch (e) {
       return json({ ok: false, error: String(e && e.message || e) }, 500, cors);
@@ -192,6 +193,52 @@ async function handleApplyAudit(request, env, cors) {
     `Append audit log entry`);
 
   return json({ ok: true, moved, dropped: audit.dropped.length }, 200, cors);
+}
+
+/* ── /apply-live-audit ──────────────────────────────────────────
+ *  body: { file_path, audit: { summary, kept[], dropped[] }, profile }
+ *  - file_path must start with "data/batches/" or be one of the four
+ *    main questions_*.json paths. Other paths are rejected.
+ *  - Replaces the file at file_path with the kept[] array (the audit
+ *    is authoritative for that file's contents).
+ *  - Appends summary + dropped[] to data/audit_log.md.
+ */
+const ALLOWED_LIVE_FILES = new Set([
+  "data/questions_paeds.json",
+  "data/questions_obgyn.json",
+  "data/questions_psych.json",
+  "data/questions_medicine.json",
+]);
+async function handleApplyLiveAudit(request, env, cors) {
+  const body = await request.json().catch(() => null);
+  const filePath = body && body.file_path;
+  const audit = body && body.audit;
+  if (!filePath || typeof filePath !== "string") {
+    return json({ ok: false, error: "missing file_path" }, 400, cors);
+  }
+  const isBatch = filePath.startsWith("data/batches/") && filePath.endsWith(".json")
+                  && !filePath.includes("..") && !filePath.includes("/_");
+  const isMain = ALLOWED_LIVE_FILES.has(filePath);
+  if (!isBatch && !isMain) {
+    return json({ ok: false, error: "file_path must be data/batches/*.json or a main questions file" }, 400, cors);
+  }
+  if (!audit || !Array.isArray(audit.kept) || !Array.isArray(audit.dropped)) {
+    return json({ ok: false, error: "expected audit.kept[] and audit.dropped[]" }, 400, cors);
+  }
+  await ghPutFile(env, filePath,
+    JSON.stringify(audit.kept, null, 2) + "\n",
+    `Live-audit ${filePath}: ${audit.kept.length} kept, ${audit.dropped.length} dropped`);
+
+  const stamp = new Date().toISOString();
+  const summary = `\n## ${stamp} - live audit of ${filePath} by ${body.profile || "rob"}\n\n` +
+    `${audit.summary || "(no summary)"}\n\n` +
+    `**Kept:** ${audit.kept.length}\n\n` +
+    (audit.dropped.length
+      ? "**Dropped:**\n" + audit.dropped.map(d => `- \`${d.id}\` - ${d.reason}`).join("\n") + "\n"
+      : "");
+  await ghAppendText(env, "data/audit_log.md", summary, "Append live-audit log entry");
+
+  return json({ ok: true, kept: audit.kept.length, dropped: audit.dropped.length }, 200, cors);
 }
 
 /* ── /apply-report ───────────────────────────────────────────────────

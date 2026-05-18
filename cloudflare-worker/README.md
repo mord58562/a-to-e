@@ -51,15 +51,20 @@ see a new commit on main updating `data/reports.json`.
   `data/inbox_manifest.json`.
 - `POST /report`        - body `{ question_id, issue, profile?, model? }` -
   appends to `data/reports.json`.
-- `POST /apply-audit`   - body `{ batch_path, audit: { summary, kept[], dropped[] }, profile }` -
-  promotes the audited batch's kept[] questions into the canonical
+- `POST /apply-audit`         - body `{ batch_path, audit: { summary, kept[], dropped[] }, profile }` -
+  promotes the audited batch's kept[] questions into the live
   per-topic files (paeds/obgyn/psych/medicine, bucketed by `topic`),
   removes the batch from `data/inbox_manifest.json` and zeroes the
   inbox file, appends to `data/audit_log.md`. Called by the in-app
   Audit Dashboard after Rob pastes Claude.ai's audit response.
+- `POST /apply-live-audit`    - body `{ file_path, audit: { summary, kept[], dropped[] }, profile }` -
+  re-audits an existing batch file or main questions file in place.
+  Overwrites the file with the kept[] array, appends summary +
+  dropped[] to `data/audit_log.md`. Used by the Live tab of the
+  Audit Dashboard to audit content already in the bank.
 - `POST /apply-report`  - body `{ resolutions: [ { report_id, question_id, action, resolution, fixed_question? } ] }` -
   updates `data/reports.json` status/resolution, and for fix/drop
-  actions also edits the question in its containing canonical file.
+  actions also edits the question in its containing live file.
   Called by the in-app Audit Dashboard after Rob pastes Claude.ai's
   report-audit response.
 

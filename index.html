@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260518b" />
+<link rel="stylesheet" href="assets/styles.css?v=20260518c" />
 </head>
 <body data-screen="home" class="locked">
 
@@ -318,12 +318,28 @@
       <div class="audit-tabs">
         <button class="audit-tab selected" data-tab="inbox">Inbox <span id="auditInboxCount" class="badge"></span></button>
         <button class="audit-tab" data-tab="reports">Reports <span id="auditReportsCount" class="badge"></span></button>
+        <button class="audit-tab" data-tab="live">Live content <span id="auditLiveCount" class="badge"></span></button>
       </div>
 
       <!-- Inbox tab -->
       <div class="audit-tab-panel" data-tab-panel="inbox">
-        <p class="dim small">Pending batches uploaded via the paste box. Each batch needs a quality-bar audit before promotion into the canonical files.</p>
+        <p class="dim small">Pending batches uploaded via the paste box. Each batch needs a quality-bar audit before promotion into the live per-topic files.</p>
         <ol id="auditInboxList" class="audit-list"></ol>
+      </div>
+
+      <!-- Live content tab - audit anything already in the bank -->
+      <div class="audit-tab-panel" data-tab-panel="live" hidden>
+        <p class="dim small">Every batch file and main per-topic file in the bank. Use this to re-audit already-promoted content. Apply rewrites the file in place via the live-audit endpoint.</p>
+        <div class="audit-live-filters">
+          <button class="opt selected" data-live-filter="all">All</button>
+          <button class="opt" data-live-filter="batches">Batches</button>
+          <button class="opt" data-live-filter="main">Main files</button>
+          <button class="opt" data-live-filter="paeds">Paediatrics</button>
+          <button class="opt" data-live-filter="obgyn">O&amp;G</button>
+          <button class="opt" data-live-filter="psych">Psychiatry</button>
+          <button class="opt" data-live-filter="medicine">Medicine</button>
+        </div>
+        <ol id="auditLiveList" class="audit-list"></ol>
       </div>
 
       <!-- Reports tab -->
@@ -970,7 +986,7 @@ file-writing). The default flow:
   within ~30 s, so EVERY visitor to the site sees the new questions on
   their next reload - not just the user who pasted them. The
   maintainer's next audit pass picks them up from data/inbox/, applies
-  fixes, and promotes passing questions to the canonical files.
+  fixes, and promotes passing questions to the live files.
 
   Because of this, your output MUST be a single valid JSON array and
   NOTHING ELSE - no prose, no Markdown fences, no commentary. The
@@ -990,7 +1006,7 @@ Your batch will be checked against: bell-distribution, stem-length
 floors, source-citation, distractor hooks, length-balanced options,
 randomised correct-letter, em-dash count, AU units + spellings,
 no-uni-references, and difficulty-honesty. Passing questions are
-promoted into the canonical files. Failing ones move to
+promoted into the live files. Failing ones move to
 data/inbox/_rejected/ with a one-line reason. Generators whose batches
 consistently fail (correct-answer-too-detailed, US spellings,
 inflated difficulty) will be flagged in the per-question `model` tag
@@ -999,6 +1015,6 @@ visible to the maintainer in the commentary view.
 Output the final JSON array. Nothing else.
 </script>
 
-<script src="assets/app.js?v=20260518b" defer></script>
+<script src="assets/app.js?v=20260518c" defer></script>
 </body>
 </html>
