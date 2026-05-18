@@ -1360,6 +1360,113 @@ body[data-screen="summary"] main { max-width: 760px; }
   font-size: 13px;
 }
 
+/* ── Audit dashboard ────────────────────────────────────────────── */
+.audit-intro {
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.audit-intro p { margin: 0; }
+
+.audit-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 14px;
+}
+.audit-tab {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 14px;
+  font: inherit;
+  font-size: 13.5px;
+  color: var(--ink-mute);
+  cursor: pointer;
+  margin-bottom: -1px;
+}
+.audit-tab:hover { color: var(--ink-2); }
+.audit-tab.selected {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+.audit-tab .badge {
+  display: inline-block;
+  min-width: 18px;
+  padding: 1px 6px;
+  margin-left: 4px;
+  font-size: 11px;
+  line-height: 1.4;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--bg);
+  text-align: center;
+  font-weight: 600;
+}
+.audit-tab .badge:empty { display: none; }
+
+.audit-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.audit-row {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 10px 14px;
+}
+.audit-row-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.audit-row-name {
+  font-family: var(--font-mono, monospace);
+  font-size: 13px;
+  font-weight: 600;
+}
+.audit-row-meta { flex: 1 1 auto; }
+.audit-flow {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+}
+.audit-steps {
+  list-style: decimal inside;
+  padding: 0;
+  margin: 0;
+}
+.audit-steps > li {
+  margin-bottom: 14px;
+  font-size: 13.5px;
+}
+.audit-steps > li > b { margin-right: 8px; }
+.audit-copy, .audit-apply { margin-right: 8px; }
+.audit-open-claude { margin-left: 4px; font-size: 12.5px; }
+.audit-response {
+  width: 100%;
+  min-height: 160px;
+  margin-top: 8px;
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+}
+.audit-copy-status.ok, .audit-apply-status.ok { color: var(--accent); }
+.audit-copy-status.bad, .audit-apply-status.bad { color: #c44; }
+
+.audit-bulk { margin-left: auto; }
+.report-select { cursor: pointer; transform: translateY(1px); }
+.report-audit-one, .report-jump { margin-left: auto; font-size: 12px; }
+
 /* ── Disable hover restyles on touch-only devices to prevent
      "stuck" hover states after a tap. ─────────────────────── */
 @media (hover: none) {

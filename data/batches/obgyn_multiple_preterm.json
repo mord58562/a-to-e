@@ -1,0 +1,961 @@
+[
+  {
+    "id": "obgyn-multpre-001",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Multiple pregnancy - chorionicity",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["twins", "chorionicity", "first trimester ultrasound"],
+    "stem": "A 29-year-old G1P0 attends her first obstetric ultrasound at 9 weeks and 4 days by certain LMP. She conceived spontaneously after three months off the combined oral contraceptive. She has a family history of dizygotic twins on her mother's side. She has no medical problems and takes only iodine-supplemented pregnancy multivitamins and folate 500 micrograms daily. Ultrasound demonstrates two viable intrauterine gestations with synchronous foetal heart activity, two distinct gestational sacs, two yolk sacs, and a thick echogenic membrane between the sacs with a clear wedge of placental tissue extending into the base of the inter-twin membrane. Both crown-rump lengths are concordant.",
+    "data_table": {
+      "Examination": "Soft abdomen, fundus not yet palpable",
+      "Investigations": "TVS at 9+4: two sacs, two yolk sacs, lambda sign present, CRL twin 1 28 mm, CRL twin 2 27 mm",
+      "Medications": "Folate 500 mcg daily, pregnancy multivitamin"
+    },
+    "lead_in": "Which is the most accurate chorionicity assignment?",
+    "options": [
+      { "letter": "A", "text": "Monochorionic monoamniotic twins", "correct": false,
+        "rationale": "MCMA twins show a single sac, single yolk sac in many cases, and no inter-twin membrane; the lambda sign is incompatible with MCMA per RANZCOG twin guidance.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] },
+      { "letter": "B", "text": "Dichorionic diamniotic twins", "correct": true,
+        "rationale": "Two sacs, two yolk sacs, and a lambda (twin peak) sign of placental tissue into the membrane base before 14 weeks is diagnostic of dichorionicity, per RANZCOG.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy", "ISUOG Practice Guidelines: Twin pregnancy"] },
+      { "letter": "C", "text": "Monochorionic diamniotic twins", "correct": false,
+        "rationale": "MCDA twins show a thin membrane with the T-sign (membrane meeting placenta at 90 degrees) and a single placental mass, not a wedge of placenta into the membrane.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] },
+      { "letter": "D", "text": "Dichorionic monoamniotic twins (a real entity)", "correct": false,
+        "rationale": "Dichorionic monoamniotic pregnancy does not exist as a natural entity; chorion always forms before or with amnion in splitting.",
+        "source_refs": ["ISUOG Practice Guidelines: Twin pregnancy"] },
+      { "letter": "E", "text": "Cannot be reliably assigned until 11 to 14 weeks", "correct": false,
+        "rationale": "Chorionicity is most accurate between 7 and 14 weeks; at 9+4 the lambda sign and two yolk sacs reliably confirm DCDA per RANZCOG and ISUOG.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy", "ISUOG Practice Guidelines: Twin pregnancy"] }
+    ],
+    "explanation": {
+      "summary": "First-trimester chorionicity is the single most important determinant of twin pregnancy surveillance. Lambda (twin peak) sign before 14 weeks indicates DCDA; T-sign indicates MCDA. Per RANZCOG, chorionicity should be documented and an image saved at the dating scan.",
+      "key_points": [
+        "Best window: 7 to 14 weeks gestation (RANZCOG, ISUOG)",
+        "Lambda sign = DCDA; T-sign = MCDA; absent membrane with single yolk sac = MCMA",
+        "Number of yolk sacs usually reflects amnionicity (typically one per amnion)",
+        "Misassigning MCDA as DCDA loses the chance to screen for TTTS and sIUGR"
+      ],
+      "pearls": "If chorionicity is uncertain at booking, manage as monochorionic until proven otherwise."
+    },
+    "sources": [
+      { "label": "RANZCOG: Management of Monochorionic Twin Pregnancy", "url": "https://ranzcog.edu.au/wp-content/uploads/Management-of-Monochorionic-Twin-Pregnancy.pdf" },
+      { "label": "ISUOG Practice Guidelines: Twin pregnancy", "url": "https://www.isuog.org/clinical-resources/isuog-guidelines.html" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-002",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "TTTS - screening and recognition",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["twins", "TTTS", "monochorionic", "fetoscopy"],
+    "stem": "A 32-year-old G2P1 with a confirmed MCDA twin pregnancy at 19 weeks and 5 days attends fortnightly twin surveillance. Booking was uneventful. The 16-week scan showed concordant growth, normal liquor in both sacs, and no membrane folding. Today's TAS and TVS demonstrate twin 1 (presumed donor) with EFW on the 22nd centile, deepest vertical pocket (DVP) of 1.6 cm, and the bladder not visualised on three sweeps over 30 minutes. Twin 2 (presumed recipient) has EFW on the 56th centile, DVP 9.2 cm, distended bladder, and a normal middle cerebral artery PSV. Both umbilical artery Dopplers are within normal limits and both cardiac four-chamber views appear structurally normal. The woman is well, has no contractions, and her cervix is 38 mm on TVS.",
+    "data_table": {
+      "Vital signs": "BP 118/72, HR 84, T 36.8",
+      "Examination": "Soft non-tender uterus appropriate for 24 weeks size",
+      "Investigations": "Twin 1: EFW 22nd centile, DVP 1.6 cm, bladder not seen. Twin 2: EFW 56th centile, DVP 9.2 cm, bladder distended, MCA-PSV normal. UA Dopplers normal both twins. Cervix 38 mm closed."
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      { "letter": "A", "text": "Reassurance and routine fortnightly scan in two weeks", "correct": false,
+        "rationale": "Discordant DVP with oligohydramnios in one sac and polyhydramnios in the other meets criteria for TTTS; routine surveillance alone misses the treatment window per RANZCOG.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] },
+      { "letter": "B", "text": "Urgent referral to a fetal medicine unit for fetoscopic laser ablation assessment", "correct": true,
+        "rationale": "DVP under 2 cm in one twin with DVP over 8 cm in the co-twin before 20 weeks defines Quintero stage I TTTS; fetoscopic laser is first-line for stage II or higher and stage I with progression, ideally before 26 weeks.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy", "NICE NG137: Twin and triplet pregnancy"] },
+      { "letter": "C", "text": "Therapeutic amnioreduction of the recipient sac in the local maternity unit", "correct": false,
+        "rationale": "Amnioreduction is inferior to laser for stages II to IV before 26 weeks per the Eurofoetus trial; it is used only when laser is unavailable or contraindicated, and not in a local unit.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] },
+      { "letter": "D", "text": "Admit for betamethasone and plan delivery this week", "correct": false,
+        "rationale": "Delivery at 19+5 is non-viable at most Australian centres and would not treat the underlying placental shunting; corticosteroids are not indicated this early.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids", "RANZCOG: Management of Monochorionic Twin Pregnancy"] },
+      { "letter": "E", "text": "Selective foetal reduction of the donor twin by cord occlusion", "correct": false,
+        "rationale": "Selective reduction is reserved for cases such as sIUGR with imminent demise threatening the co-twin, not for stage I TTTS where laser preserves both twins.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] }
+    ],
+    "explanation": {
+      "summary": "TTTS complicates around 10 to 15 percent of MCDA pregnancies and is diagnosed by discordant amniotic fluid (DVP under 2 and over 8 cm) before 20 weeks. Fetoscopic laser ablation of placental anastomoses is first-line.",
+      "key_points": [
+        "Fortnightly TVS and US from 16 weeks for MCDA (RANZCOG)",
+        "Quintero staging: I fluid only; II absent bladder donor; III abnormal Dopplers; IV hydrops; V demise",
+        "Laser ablation reduces perinatal death and neurological injury vs amnioreduction"
+      ],
+      "pearls": "DVP, not AFI, is the standard discordance measure in twins."
+    },
+    "sources": [
+      { "label": "RANZCOG: Management of Monochorionic Twin Pregnancy", "url": "https://ranzcog.edu.au/wp-content/uploads/Management-of-Monochorionic-Twin-Pregnancy.pdf" },
+      { "label": "NICE NG137: Twin and triplet pregnancy", "url": "https://www.nice.org.uk/guidance/ng137" },
+      { "label": "RANZCOG: Antenatal corticosteroids", "url": "https://ranzcog.edu.au/wp-content/uploads/Antenatal-Corticosteroids-Given-to-Women-Prior-to-Birth.pdf" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-003",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Selective IUGR in monochorionic twins",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["sIUGR", "twins", "monochorionic", "umbilical artery Doppler"],
+    "stem": "A 27-year-old G1P0 with an MCDA twin pregnancy is reviewed at 26 weeks. Booking, anatomy scan, and TTTS surveillance to date have been unremarkable. Today the smaller twin has an EFW on the 4th centile with a 28 percent inter-twin weight discordance. The larger twin tracks the 48th centile. Amniotic fluid is normal in both sacs. Umbilical artery Doppler of the smaller twin shows intermittently absent end-diastolic flow that alternates with normal forward flow within a single tracing; the larger twin's UA Doppler is normal. Both ductus venosus a-waves are positive. The cardiotocograph of both twins is reactive. The woman is well with a closed cervix of 34 mm.",
+    "data_table": {
+      "Investigations": "Smaller twin EFW 4th centile, discordance 28%, UA Doppler intermittent AEDF (Type III). Larger twin EFW 48th centile, UA Doppler normal. DV a-waves positive both. CTG reactive both. Cervix 34 mm."
+    },
+    "lead_in": "Which classification and surveillance plan best fits this pattern?",
+    "options": [
+      { "letter": "A", "text": "Type I sIUGR; fortnightly scans, aim delivery 36 weeks", "correct": false,
+        "rationale": "Type I has persistently positive UA end-diastolic flow with good prognosis; the intermittent AEDF here is Type III, not Type I, per Gratacos classification.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] },
+      { "letter": "B", "text": "Type II sIUGR; weekly Dopplers, plan delivery 32 weeks", "correct": false,
+        "rationale": "Type II has persistently absent or reversed UA flow with progressive deterioration; the intermittent pattern here is Type III.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] },
+      { "letter": "C", "text": "Type III sIUGR; twice-weekly Dopplers, corticosteroids if delivery anticipated, multidisciplinary planning for delivery around 32 to 34 weeks", "correct": true,
+        "rationale": "Intermittent AEDF in the smaller MCDA twin defines Type III, which carries unpredictable risk of sudden co-twin demise from large anastomoses; close surveillance and planned preterm delivery are recommended.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy", "ISUOG Practice Guidelines: Twin pregnancy"] },
+      { "letter": "D", "text": "Discordant growth without sIUGR; reassure and rescan in 2 weeks", "correct": false,
+        "rationale": "EFW under the 10th centile in either twin with discordance over 25 percent meets the consensus definition of sIUGR, so this is not benign discordance.",
+        "source_refs": ["ISUOG Practice Guidelines: Twin pregnancy"] },
+      { "letter": "E", "text": "Stage I TTTS; refer for laser ablation", "correct": false,
+        "rationale": "TTTS requires discordant fluid (DVP under 2 and over 8 cm); fluid is normal in both sacs here, so this is sIUGR rather than TTTS.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] }
+    ],
+    "explanation": {
+      "summary": "sIUGR in MCDA twins is classified by UA Doppler: Type I positive EDF, Type II persistent AEDF or REDF, Type III intermittent AEDF. Type III carries a particular risk of unexpected single-twin demise.",
+      "key_points": [
+        "Definition: EFW under 10th centile in one twin or inter-twin discordance over 25% (ISUOG)",
+        "MCDA Type III: large arterio-arterial anastomoses cause unpredictable shunt reversal",
+        "Plan delivery 32 to 34 weeks with corticosteroids per RANZCOG"
+      ],
+      "pearls": "Co-twin demise risk and neurological injury risk rise sharply in MCDA Type III sIUGR."
+    },
+    "sources": [
+      { "label": "RANZCOG: Management of Monochorionic Twin Pregnancy", "url": "https://ranzcog.edu.au/wp-content/uploads/Management-of-Monochorionic-Twin-Pregnancy.pdf" },
+      { "label": "ISUOG Practice Guidelines: Twin pregnancy", "url": "https://www.isuog.org/clinical-resources/isuog-guidelines.html" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-004",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Vanishing twin",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["vanishing twin", "early pregnancy", "twins"],
+    "stem": "A 30-year-old G1P0 with a spontaneous DCDA twin pregnancy seen at 7+1 (two viable embryos with cardiac activity) re-presents at 9+3 with a single episode of minimal pink spotting yesterday that has now stopped. She has no pain and no passage of tissue. She is well and haemodynamically normal. TAS and TVS today show twin A with normal cardiac activity and CRL appropriate for 9+3 within its own sac. Twin B's sac is collapsed, the embryo measures equivalent to 7+5 with no cardiac activity, and there is no retained sac fluid or significant haematoma. Her blood group is O Rh-positive. She has no risk factors for preterm birth.",
+    "data_table": {
+      "Vital signs": "BP 112/70, HR 76, T 36.6",
+      "Examination": "Soft non-tender abdomen, closed cervical os, scant brown discharge",
+      "Investigations": "TVS: twin A viable, twin B demised (CRL 7+5, no FH). Blood group O Rh-positive."
+    },
+    "lead_in": "What is the most appropriate counselling and management?",
+    "options": [
+      { "letter": "A", "text": "Reassure that the surviving twin is at minimally increased risk and continue routine antenatal care", "correct": true,
+        "rationale": "First-trimester single foetal demise (vanishing twin) carries minimal additional risk for the surviving co-twin beyond a slightly higher singleton miscarriage rate; routine care is appropriate per RANZCOG guidance on early pregnancy loss.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy", "RANZCOG: Early Pregnancy Loss"] },
+      { "letter": "B", "text": "Admit for serial coagulation studies given the risk of maternal DIC", "correct": false,
+        "rationale": "Maternal DIC from a retained dead foetus requires a singleton demise retained for weeks, not a first-trimester vanishing twin; serial coags are not indicated.",
+        "source_refs": ["RANZCOG: Early Pregnancy Loss"] },
+      { "letter": "C", "text": "Offer surgical evacuation to remove the demised gestational sac", "correct": false,
+        "rationale": "Operating risks loss of the surviving twin; vanishing twin tissue resorbs spontaneously and intervention is not warranted.",
+        "source_refs": ["RANZCOG: Early Pregnancy Loss"] },
+      { "letter": "D", "text": "Give anti-D immunoglobulin 625 IU IM now because of the spotting", "correct": false,
+        "rationale": "The patient is Rh-positive; anti-D is unnecessary regardless of bleeding (NBA guidelines).",
+        "source_refs": ["NBA: Anti-D Guidelines (Australia)"] },
+      { "letter": "E", "text": "Refer for chorionic villus sampling to confirm karyotype of the surviving twin", "correct": false,
+        "rationale": "Vanishing twin alone is not an indication for CVS; routine combined first-trimester screening or NIPT may be offered but invasive testing is not warranted.",
+        "source_refs": ["RANZCOG: Prenatal screening and diagnostic testing for genetic conditions"] }
+    ],
+    "explanation": {
+      "summary": "Vanishing twin in a DCDA pregnancy diagnosed in the first trimester is associated with a marginally higher singleton miscarriage rate but generally a good prognosis for the surviving foetus. Risk is considerably higher in monochorionic pregnancies due to shared circulation.",
+      "key_points": [
+        "DCDA vanishing twin in T1: routine antenatal care, no specific intervention",
+        "MC vanishing twin: risk of neurological injury or co-twin demise via shared anastomoses",
+        "Anti-D only if Rh-negative per NBA guidance"
+      ],
+      "pearls": "Always re-check chorionicity from the original dating scan when one twin is lost."
+    },
+    "sources": [
+      { "label": "RANZCOG: Early Pregnancy Loss", "url": "https://ranzcog.edu.au/wp-content/uploads/Early-pregnancy-loss.pdf" },
+      { "label": "NBA: Anti-D Guidelines (Australia)", "url": "https://www.blood.gov.au/anti-d" },
+      { "label": "RANZCOG: Management of Monochorionic Twin Pregnancy", "url": "https://ranzcog.edu.au/wp-content/uploads/Management-of-Monochorionic-Twin-Pregnancy.pdf" },
+      { "label": "RANZCOG: Prenatal screening and diagnostic testing for genetic conditions", "url": "https://ranzcog.edu.au/wp-content/uploads/Prenatal-screening_1.pdf" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals", "beta_hcg_pregnancy"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-005",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Mode and timing of delivery - MCDA twins",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["twins", "timing of delivery", "MCDA", "mode of birth"],
+    "stem": "A 31-year-old G2P1 with an uncomplicated MCDA twin pregnancy is reviewed at 35+4. Her previous birth was an uncomplicated spontaneous vaginal birth of a singleton at term. Both twins have grown along the 40th to 55th centiles with concordant growth, normal Dopplers, normal amniotic fluid, and no evidence of TTTS or sIUGR throughout the pregnancy. Both twins are cephalic on today's presentation scan. Estimated foetal weights are 2.45 kg and 2.38 kg. The cervix on speculum is closed; she has no contractions. Her booking BMI was 24. She has expressed a preference for vaginal birth and has no contraindications to labour.",
+    "data_table": {
+      "Examination": "Abdomen soft, no tenderness, both twins cephalic on US",
+      "Investigations": "Both EFW 40 to 55 centile, concordant, normal Dopplers, normal AF both sacs, cervix closed"
+    },
+    "lead_in": "Which delivery plan is most consistent with current RANZCOG and KEMH guidance?",
+    "options": [
+      { "letter": "A", "text": "Planned vaginal birth at 38 to 39 weeks gestation", "correct": false,
+        "rationale": "Uncomplicated MCDA twins should not be carried beyond 36+6 due to rising stillbirth risk from shared circulation; expectant management to 38 weeks increases perinatal mortality.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy", "KEMH: Twin Pregnancy"] },
+      { "letter": "B", "text": "Planned vaginal birth between 36+0 and 36+6 weeks", "correct": true,
+        "rationale": "For uncomplicated MCDA twins both cephalic, RANZCOG recommends planned birth at 36+0 to 36+6 with vaginal birth acceptable when twin 1 is cephalic and there are no other contraindications.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy", "KEMH: Twin Pregnancy"] },
+      { "letter": "C", "text": "Elective caesarean section at 36+0 weeks", "correct": false,
+        "rationale": "MCDA chorionicity alone does not mandate caesarean; with both twins cephalic and no complications, planned vaginal birth is appropriate per RANZCOG.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] },
+      { "letter": "D", "text": "Elective caesarean section at 32+0 weeks with corticosteroid cover", "correct": false,
+        "rationale": "Iatrogenic delivery at 32 weeks for an uncomplicated MCDA pregnancy causes major prematurity morbidity without benefit.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] },
+      { "letter": "E", "text": "Elective caesarean at 37+0 weeks regardless of presentation", "correct": false,
+        "rationale": "37+0 is later than the recommended planned-birth window for MCDA and elective caesarean is not required when twin 1 is cephalic.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] }
+    ],
+    "explanation": {
+      "summary": "RANZCOG recommends planned birth at 36+0 to 36+6 for uncomplicated MCDA and 37+0 to 37+6 for uncomplicated DCDA. Vaginal birth is appropriate when twin 1 is cephalic and there are no other contraindications.",
+      "key_points": [
+        "MCDA uncomplicated: birth 36+0 to 36+6 (RANZCOG, KEMH)",
+        "DCDA uncomplicated: birth 37+0 to 37+6",
+        "MCMA: planned caesarean 32+0 to 34+0 after steroids",
+        "Vaginal birth acceptable if twin 1 cephalic, no other contraindication"
+      ],
+      "pearls": "Earlier planned birth in MCDA reflects rising stillbirth risk after 36 weeks."
+    },
+    "sources": [
+      { "label": "RANZCOG: Management of Monochorionic Twin Pregnancy", "url": "https://ranzcog.edu.au/wp-content/uploads/Management-of-Monochorionic-Twin-Pregnancy.pdf" },
+      { "label": "KEMH: Twin Pregnancy", "url": "https://www.kemh.health.wa.gov.au/-/media/HSPs/NMHS/Hospitals/WNHS/Documents/Clinical-guidelines/Obs-Gyn-Guidelines/Twin-Pregnancy.pdf" },
+      { "label": "NICE NG137: Twin and triplet pregnancy", "url": "https://www.nice.org.uk/guidance/ng137" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-006",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Mode and timing of delivery - MCMA twins",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["twins", "MCMA", "timing of delivery", "monoamniotic"],
+    "stem": "A 28-year-old G1P0 with a confirmed MCMA twin pregnancy is reviewed at 31+4. Booking confirmed a single placental mass, no inter-twin membrane on serial scans, and entangled cords on colour Doppler. Growth has tracked the 35th to 45th centiles concordantly, Dopplers are normal, and there is no evidence of TTTS. She has been an inpatient since 26 weeks for daily CTG monitoring. Both twins are presently non-cephalic on today's presentation scan. The cervix is closed at 32 mm on TVS. She received a complete course of antenatal corticosteroids at 26 weeks and an additional rescue course was given two weeks ago.",
+    "data_table": {
+      "Examination": "Inpatient, comfortable, daily CTG reactive for both twins",
+      "Investigations": "Concordant growth, normal Dopplers, no TTTS, both non-cephalic, cervix 32 mm"
+    },
+    "lead_in": "Which delivery plan is most appropriate?",
+    "options": [
+      { "letter": "A", "text": "Planned caesarean between 32+0 and 34+0 weeks after corticosteroids", "correct": true,
+        "rationale": "MCMA twins are recommended to deliver by planned caesarean at 32+0 to 34+0 weeks due to risk of cord entanglement and intrauterine death rising sharply after 32 weeks (RANZCOG, KEMH).",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy", "KEMH: Twin Pregnancy"] },
+      { "letter": "B", "text": "Planned caesarean at 36+0 to 36+6 after steroids", "correct": false,
+        "rationale": "36 weeks is the planned-birth window for MCDA, not MCMA; the cord entanglement risk in MCMA does not allow safe expectant management to 36 weeks.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] },
+      { "letter": "C", "text": "Planned vaginal birth at 32+0 to 34+0 with continuous CTG", "correct": false,
+        "rationale": "Cord entanglement makes labour unsafe in MCMA; planned caesarean is recommended regardless of presentation.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] },
+      { "letter": "D", "text": "Continue inpatient monitoring and aim for vaginal birth at 37+0", "correct": false,
+        "rationale": "Aiming for 37 weeks in MCMA accepts an unjustifiable cord entanglement stillbirth risk and vaginal birth is contraindicated.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] },
+      { "letter": "E", "text": "Immediate caesarean today at 31+4 regardless of stability", "correct": false,
+        "rationale": "Without a deterioration trigger (abnormal CTG, sIUGR progression, TTTS), iatrogenic birth at 31+4 adds prematurity morbidity over the recommended 32 to 34 week window.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] }
+    ],
+    "explanation": {
+      "summary": "MCMA twins share a single amniotic sac with high cord entanglement risk. Inpatient surveillance from around 26 weeks and planned caesarean at 32+0 to 34+0 after corticosteroids is the Australian standard.",
+      "key_points": [
+        "MCMA delivery: planned caesarean 32+0 to 34+0 (RANZCOG, KEMH)",
+        "Inpatient daily CTG often offered from 26 to 28 weeks",
+        "Cord entanglement risk underlies the early delivery decision"
+      ],
+      "pearls": "MCMA is rare (around 1 percent of MC twins) but high-risk; centralise care."
+    },
+    "sources": [
+      { "label": "RANZCOG: Management of Monochorionic Twin Pregnancy", "url": "https://ranzcog.edu.au/wp-content/uploads/Management-of-Monochorionic-Twin-Pregnancy.pdf" },
+      { "label": "KEMH: Twin Pregnancy", "url": "https://www.kemh.health.wa.gov.au/-/media/HSPs/NMHS/Hospitals/WNHS/Documents/Clinical-guidelines/Obs-Gyn-Guidelines/Twin-Pregnancy.pdf" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-007",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Preterm labour - tocolysis choice",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["preterm labour", "tocolysis", "nifedipine", "indomethacin", "atosiban"],
+    "stem": "A 25-year-old G1P0 at 28+3 presents to the birth suite with regular painful contractions every 4 minutes for the past 2 hours. She has had no bleeding, no rupture of membranes, and no fever. Her booking and pregnancy have been uncomplicated. She has well-controlled chronic hypertension on labetalol 200 mg BD with booking BP averaging 130/82 and today 134/86. She has known mild aortic stenosis (peak gradient 22 mmHg, asymptomatic) and is followed by cardiology. Examination shows a soft tender uterus with palpable tightenings, cephalic presentation, and the cervix is 2 cm dilated and 50 percent effaced on speculum. Foetal heart is reassuring. Foetal fibronectin is not available at this hour. The plan is to give corticosteroids and MgSO4 for neuroprotection and transfer to a tertiary unit.",
+    "data_table": {
+      "Vital signs": "BP 134/86, HR 92, T 36.7, RR 18",
+      "Examination": "Uterus contracting q4min, cephalic, cervix 2 cm 50% effaced, membranes intact",
+      "Investigations": "Foetal heart reassuring, MSU pending, FBC and UEC normal",
+      "Medications": "Labetalol 200 mg BD"
+    },
+    "lead_in": "Which is the most appropriate tocolytic to commence while corticosteroids and transfer are organised?",
+    "options": [
+      { "letter": "A", "text": "Oral nifedipine immediate-release", "correct": false,
+        "rationale": "Nifedipine is a calcium channel blocker; combining with antihypertensives such as labetalol increases the risk of severe maternal hypotension and is relatively contraindicated per Therapeutic Guidelines.",
+        "source_refs": ["Therapeutic Guidelines: Obstetric (preterm labour)", "RANZCOG: Tocolysis"] },
+      { "letter": "B", "text": "Intravenous atosiban (oxytocin receptor antagonist)", "correct": true,
+        "rationale": "Atosiban is the preferred tocolytic when there are maternal cardiovascular concerns, is effective and has a favourable maternal safety profile vs nifedipine, and avoids the hypotensive interaction with antihypertensives.",
+        "source_refs": ["RANZCOG: Tocolysis", "Therapeutic Guidelines: Obstetric (preterm labour)"] },
+      { "letter": "C", "text": "Oral indomethacin 50 mg loading then 25 mg six-hourly", "correct": false,
+        "rationale": "Indomethacin is generally avoided after 32 weeks (ductus arteriosus constriction, oligohydramnios) and is not first-line; at 28+3 it can be considered but is not preferred over atosiban here.",
+        "source_refs": ["RANZCOG: Tocolysis", "Therapeutic Guidelines: Obstetric (preterm labour)"] },
+      { "letter": "D", "text": "Intravenous magnesium sulfate as a tocolytic infusion", "correct": false,
+        "rationale": "Magnesium sulfate is not recommended as a tocolytic; it is used for foetal neuroprotection at gestations under 30 weeks (RANZCOG).",
+        "source_refs": ["RANZCOG: Magnesium sulfate for neuroprotection of the fetus", "Cochrane: Magnesium for preventing preterm birth"] },
+      { "letter": "E", "text": "Salbutamol intravenous infusion", "correct": false,
+        "rationale": "Beta-agonists are no longer recommended for tocolysis in Australia because of maternal cardiovascular and metabolic adverse effects.",
+        "source_refs": ["RANZCOG: Tocolysis", "Therapeutic Guidelines: Obstetric (preterm labour)"] }
+    ],
+    "explanation": {
+      "summary": "Tocolysis aims to delay birth for 48 hours to allow corticosteroid effect and in-utero transfer. Nifedipine and atosiban are equally effective overall, but choice depends on maternal comorbidity. Atosiban is preferred over nifedipine where there are cardiovascular concerns or concurrent antihypertensives.",
+      "key_points": [
+        "First-line: nifedipine or atosiban (RANZCOG, eTG)",
+        "Atosiban preferred where antihypertensives, cardiac disease, or hypovolaemia",
+        "Indomethacin: avoid after 32 weeks (ductal constriction)",
+        "Beta-agonists no longer routinely used"
+      ],
+      "pearls": "Tocolysis is only justified when corticosteroids or transfer will meaningfully change neonatal outcome."
+    },
+    "sources": [
+      { "label": "RANZCOG: Tocolysis", "url": "https://ranzcog.edu.au/wp-content/uploads/Tocolysis.pdf" },
+      { "label": "Therapeutic Guidelines: Obstetric (preterm labour)", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "RANZCOG: Magnesium sulfate for neuroprotection of the fetus", "url": "https://ranzcog.edu.au/wp-content/uploads/Magnesium-Sulphate-to-improve-outcomes-for-babies.pdf" },
+      { "label": "Cochrane: Magnesium for preventing preterm birth", "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD001060.pub2/full" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-008",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Indomethacin tocolysis - gestational limit",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["preterm labour", "tocolysis", "indomethacin", "ductus arteriosus"],
+    "stem": "A 32-year-old G3P2 at 33+1 presents with painful tightenings every 6 minutes for 4 hours. She had a previous preterm birth at 31 weeks. She has no rupture of membranes or bleeding. Examination shows a cephalic presentation, cervix 1 cm dilated and 30 percent effaced; CTG is reactive. She has no maternal medical comorbidities and is on no regular medication. Her registrar suggests indomethacin tocolysis to allow corticosteroid effect, citing its rapid onset.",
+    "data_table": {
+      "Vital signs": "BP 120/74, HR 86, T 36.6",
+      "Examination": "Cervix 1 cm/30%, cephalic, FH reassuring",
+      "Investigations": "CTG reactive, FBC and UEC normal"
+    },
+    "lead_in": "Which is the strongest reason to avoid indomethacin in this patient?",
+    "options": [
+      { "letter": "A", "text": "Risk of foetal ductus arteriosus constriction and oligohydramnios at this gestation", "correct": true,
+        "rationale": "Indomethacin is generally avoided from around 32 weeks because of dose-dependent foetal ductal constriction and oligohydramnios; nifedipine or atosiban is preferred at 33+1.",
+        "source_refs": ["RANZCOG: Tocolysis", "Therapeutic Guidelines: Obstetric (preterm labour)"] },
+      { "letter": "B", "text": "Increased risk of maternal pulmonary oedema with indomethacin", "correct": false,
+        "rationale": "Pulmonary oedema is a recognised concern with beta-agonists and prolonged combination tocolysis, not specifically indomethacin.",
+        "source_refs": ["RANZCOG: Tocolysis"] },
+      { "letter": "C", "text": "Indomethacin causes maternal hypotension via vasodilation", "correct": false,
+        "rationale": "Maternal hypotension is a class effect of calcium channel blockers such as nifedipine, not indomethacin.",
+        "source_refs": ["Therapeutic Guidelines: Obstetric (preterm labour)"] },
+      { "letter": "D", "text": "Indomethacin is contraindicated with any prior preterm birth", "correct": false,
+        "rationale": "Prior preterm birth is not a specific contraindication to indomethacin; the gestational age is the key consideration.",
+        "source_refs": ["RANZCOG: Tocolysis"] },
+      { "letter": "E", "text": "Indomethacin reduces the efficacy of antenatal corticosteroids", "correct": false,
+        "rationale": "There is no evidence that indomethacin reduces betamethasone effect; the concern at this gestation is foetal not steroid related.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids"] }
+    ],
+    "explanation": {
+      "summary": "Indomethacin is an option for tocolysis at very preterm gestations but is generally avoided after about 32 weeks due to risk of ductus arteriosus constriction and oligohydramnios.",
+      "key_points": [
+        "Indomethacin upper limit ~32 weeks (RANZCOG, eTG)",
+        "Nifedipine and atosiban are alternatives 32+ weeks",
+        "Foetal renal and ductal effects are dose- and duration-dependent"
+      ],
+      "pearls": "Always document gestation when prescribing indomethacin for tocolysis."
+    },
+    "sources": [
+      { "label": "RANZCOG: Tocolysis", "url": "https://ranzcog.edu.au/wp-content/uploads/Tocolysis.pdf" },
+      { "label": "Therapeutic Guidelines: Obstetric (preterm labour)", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "RANZCOG: Antenatal corticosteroids", "url": "https://ranzcog.edu.au/wp-content/uploads/Antenatal-Corticosteroids-Given-to-Women-Prior-to-Birth.pdf" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-009",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Antenatal corticosteroids - gestational window",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["preterm labour", "antenatal corticosteroids", "betamethasone"],
+    "stem": "A 30-year-old G2P1 at 36+2 presents with regular contractions and a Bishop score of 8 with the cervix 3 cm dilated. The presentation is cephalic and CTG is reassuring. Her previous birth was at term. She has no other risk factors. The covering registrar asks whether antenatal corticosteroids should be administered before delivery.",
+    "data_table": {
+      "Vital signs": "BP 118/76, HR 88, T 36.8",
+      "Examination": "Cephalic, cervix 3 cm dilated, Bishop 8, contractions q3min",
+      "Investigations": "CTG reassuring, FBC and UEC normal"
+    },
+    "lead_in": "Which statement most accurately reflects current RANZCOG guidance?",
+    "options": [
+      { "letter": "A", "text": "Give betamethasone 11.4 mg IM, repeat in 24 hours, regardless of imminent birth", "correct": false,
+        "rationale": "RANZCOG recommends antenatal corticosteroids when preterm birth is anticipated under 34+6 weeks; routine use at 36+2 is not supported and benefits do not outweigh harms here.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids"] },
+      { "letter": "B", "text": "Do not give corticosteroids; the gestation is beyond the recommended window for routine use", "correct": true,
+        "rationale": "RANZCOG recommends a single course of antenatal corticosteroids when preterm birth is likely within 7 days at gestations of 24+0 to 34+6; routine use beyond 35 weeks is not recommended in Australia.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids", "KEMH: Antenatal Corticosteroids"] },
+      { "letter": "C", "text": "Give dexamethasone 6 mg IM every 12 hours for 4 doses if birth expected in 7 days", "correct": false,
+        "rationale": "The RANZCOG-recommended dexamethasone regimen is 12 mg IM 24 hours apart; this dose schedule is incorrect.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids"] },
+      { "letter": "D", "text": "Give betamethasone only if birth is expected within 1 hour", "correct": false,
+        "rationale": "Corticosteroids need at least several hours to act; giving them within an hour of birth provides minimal benefit and is not the rationale for the gestational window cutoff.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids"] },
+      { "letter": "E", "text": "Give a single dose of dexamethasone 12 mg IM as a rescue course", "correct": false,
+        "rationale": "Rescue courses are considered before 34+0 when a prior course was given more than 7 days ago and birth is imminent, not at 36+2.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids"] }
+    ],
+    "explanation": {
+      "summary": "Australian guidance recommends antenatal corticosteroids when birth is anticipated within 7 days at gestations 24+0 to 34+6. Use beyond 35 weeks is not routine in Australia.",
+      "key_points": [
+        "Window: 24+0 to 34+6 weeks if birth likely within 7 days (RANZCOG, KEMH)",
+        "Betamethasone 11.4 mg IM q24h x 2, or dexamethasone 12 mg IM q24h x 2",
+        "Rescue course considered before 34+0 if prior course >7 days ago"
+      ],
+      "pearls": "Do not delay imminent delivery for corticosteroids when maternal or foetal indication for birth is acute."
+    },
+    "sources": [
+      { "label": "RANZCOG: Antenatal corticosteroids", "url": "https://ranzcog.edu.au/wp-content/uploads/Antenatal-Corticosteroids-Given-to-Women-Prior-to-Birth.pdf" },
+      { "label": "KEMH: Antenatal Corticosteroids", "url": "https://www.kemh.health.wa.gov.au/-/media/HSPs/NMHS/Hospitals/WNHS/Documents/Clinical-guidelines/Obs-Gyn-Guidelines/Antenatal-Corticosteroids.pdf" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals", "bishop_score"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-010",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Antenatal corticosteroids - rescue dosing",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["preterm labour", "antenatal corticosteroids", "rescue course"],
+    "stem": "A 33-year-old G2P1 at 31+5 presents with threatened preterm labour. She had a complete course of betamethasone 11.4 mg IM two doses 24 hours apart at 26+0 for an earlier admission with threatened preterm labour that subsequently settled. Today she is contracting every 3 minutes, has a cervix 3 cm dilated and 70 percent effaced on speculum, and a foetal fibronectin from 4 weeks ago was positive. The CTG is reactive. The team plans to start tocolysis, transfer to a tertiary unit, and give magnesium sulfate for neuroprotection. She has no other comorbidities.",
+    "data_table": {
+      "Vital signs": "BP 124/78, HR 92, T 36.7",
+      "Examination": "Cervix 3 cm/70% effaced, cephalic, contractions q3min",
+      "Investigations": "CTG reactive, FBC and UEC normal"
+    },
+    "lead_in": "Regarding antenatal corticosteroids, which is most appropriate now?",
+    "options": [
+      { "letter": "A", "text": "Give a single rescue dose of betamethasone 11.4 mg IM now", "correct": true,
+        "rationale": "RANZCOG supports a single rescue dose when the initial course was given over 7 days ago, gestation is under 34+0, and birth is anticipated within the next 7 days.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids", "KEMH: Antenatal Corticosteroids"] },
+      { "letter": "B", "text": "Give a full repeat course of betamethasone (two doses 24 h apart)", "correct": false,
+        "rationale": "Australian guidance recommends a single rescue dose rather than a full repeat course; multiple repeats are associated with reduced birth weight.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids"] },
+      { "letter": "C", "text": "Do not give further corticosteroids as one course is sufficient lifetime exposure", "correct": false,
+        "rationale": "A single rescue dose is supported when birth is now imminent and the prior course was over 7 days ago; outright omission misses meaningful neonatal benefit.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids"] },
+      { "letter": "D", "text": "Give dexamethasone 6 mg IM as a single rescue dose", "correct": false,
+        "rationale": "The dose of dexamethasone in Australian practice is 12 mg IM per dose, not 6 mg; a single rescue dose of betamethasone 11.4 mg IM is preferred per RANZCOG.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids"] },
+      { "letter": "E", "text": "Withhold steroids until cervix is more than 5 cm dilated", "correct": false,
+        "rationale": "Steroids are given before imminent birth, not delayed until advanced dilation, because the foetal benefit takes hours to develop.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids"] }
+    ],
+    "explanation": {
+      "summary": "Rescue dosing is a single 11.4 mg betamethasone (or 12 mg dexamethasone) given before 34+0 when the original course was over 7 days previously and birth is anticipated within 7 days.",
+      "key_points": [
+        "Rescue: single dose, not a repeat full course (RANZCOG)",
+        "Eligibility: prior course >7 days ago, gestation <34+0, birth likely within 7 days",
+        "Multiple repeats associated with lower birthweight"
+      ],
+      "pearls": "Document time of every steroid dose precisely; it drives later rescue decisions."
+    },
+    "sources": [
+      { "label": "RANZCOG: Antenatal corticosteroids", "url": "https://ranzcog.edu.au/wp-content/uploads/Antenatal-Corticosteroids-Given-to-Women-Prior-to-Birth.pdf" },
+      { "label": "KEMH: Antenatal Corticosteroids", "url": "https://www.kemh.health.wa.gov.au/-/media/HSPs/NMHS/Hospitals/WNHS/Documents/Clinical-guidelines/Obs-Gyn-Guidelines/Antenatal-Corticosteroids.pdf" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-011",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "MgSO4 neuroprotection - gestational window",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["preterm labour", "magnesium sulfate", "neuroprotection"],
+    "stem": "A 29-year-old G1P0 at 29+4 with a singleton pregnancy has progressed in spontaneous preterm labour despite atosiban tocolysis. She is now 7 cm dilated, contracting every 2 minutes, and birth is expected within the next 2 hours. She has had a complete course of betamethasone 36 hours ago. She has no contraindication to magnesium sulfate, has normal renal function, and no neuromuscular disease.",
+    "data_table": {
+      "Vital signs": "BP 122/78, HR 100, T 37.0",
+      "Examination": "Cervix 7 cm, cephalic, contractions q2min",
+      "Investigations": "FBC normal, UEC normal (creat 60), CTG reactive"
+    },
+    "lead_in": "Which is the most appropriate plan for foetal neuroprotection?",
+    "options": [
+      { "letter": "A", "text": "Commence magnesium sulfate IV loading then infusion, aiming for at least 4 hours before birth where possible", "correct": true,
+        "rationale": "RANZCOG and SOMANZ recommend antenatal MgSO4 for neuroprotection at gestations under 30 weeks when birth is anticipated within 24 hours; ideally given at least 4 hours pre-birth.",
+        "source_refs": ["RANZCOG: Magnesium sulfate for neuroprotection of the fetus", "SOMANZ: Hypertension in pregnancy guideline"] },
+      { "letter": "B", "text": "Do not give magnesium sulfate; it is only used in pre-eclampsia for seizure prevention", "correct": false,
+        "rationale": "MgSO4 has a specific neuroprotection role independent of pre-eclampsia, with NNT around 50 to prevent cerebral palsy at very preterm gestations.",
+        "source_refs": ["RANZCOG: Magnesium sulfate for neuroprotection of the fetus", "Cochrane: Magnesium for neuroprotection of the preterm fetus"] },
+      { "letter": "C", "text": "Give a single IM dose of magnesium sulfate", "correct": false,
+        "rationale": "Magnesium sulfate for neuroprotection is given as an IV bolus then infusion; IM is not the recommended route.",
+        "source_refs": ["RANZCOG: Magnesium sulfate for neuroprotection of the fetus"] },
+      { "letter": "D", "text": "Withhold magnesium sulfate because corticosteroids have already been given", "correct": false,
+        "rationale": "Corticosteroids and MgSO4 act on different pathways (lung maturation vs neuroprotection); both should be given when indicated.",
+        "source_refs": ["RANZCOG: Magnesium sulfate for neuroprotection of the fetus"] },
+      { "letter": "E", "text": "Defer magnesium sulfate as gestation is over 28 weeks", "correct": false,
+        "rationale": "Australian guidance offers MgSO4 up to under 30 weeks; some centres extend to under 32 weeks, so 29+4 is squarely within the recommended window.",
+        "source_refs": ["RANZCOG: Magnesium sulfate for neuroprotection of the fetus"] }
+    ],
+    "explanation": {
+      "summary": "Antenatal magnesium sulfate reduces cerebral palsy at very preterm gestations. Australian guidance recommends use when birth is anticipated within 24 hours at under 30 weeks, ideally with at least 4 hours of infusion before birth.",
+      "key_points": [
+        "Window: <30 weeks Australian standard; some centres <32 weeks (RANZCOG)",
+        "Loading dose 4 g IV over 20 to 30 minutes then 1 g/hour infusion",
+        "Monitor reflexes, RR, urine output, magnesium level if prolonged"
+      ],
+      "pearls": "Do not delay birth for MgSO4 if maternal or foetal compromise demands urgent delivery."
+    },
+    "sources": [
+      { "label": "RANZCOG: Magnesium sulfate for neuroprotection of the fetus", "url": "https://ranzcog.edu.au/wp-content/uploads/Magnesium-Sulphate-to-improve-outcomes-for-babies.pdf" },
+      { "label": "Cochrane: Magnesium for neuroprotection of the preterm fetus", "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD004661.pub2/full" },
+      { "label": "SOMANZ: Hypertension in pregnancy guideline", "url": "https://www.somanz.org/content/uploads/2020/07/HTguidelineupdatedJune2015.pdf" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals", "uec"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-012",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "PPROM - latency antibiotics",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["PPROM", "antibiotics", "erythromycin", "co-amoxiclav"],
+    "stem": "A 27-year-old G1P0 at 28+2 presents with a sudden gush of clear fluid 2 hours ago, followed by ongoing leakage. She has no contractions, no fever, no abdominal tenderness, and the foetal heart is reassuring. Speculum confirms a pool of clear amniotic fluid in the posterior fornix and the cervix appears closed. There is no offensive odour. Maternal observations are normal. Her GBS status from a 26-week swab is negative. She is admitted for expectant management with corticosteroids, MgSO4, and close maternal-foetal surveillance.",
+    "data_table": {
+      "Vital signs": "BP 116/74, HR 84, T 36.7",
+      "Examination": "Pool of clear AF on speculum, cervix closed, no contractions, abdomen non-tender, FH reassuring",
+      "Investigations": "FBC normal, CRP 6, MSU pending, GBS negative at 26 weeks"
+    },
+    "lead_in": "Which antibiotic regimen is most appropriate to prolong latency?",
+    "options": [
+      { "letter": "A", "text": "Oral erythromycin 250 mg four times daily for 10 days (or until birth)", "correct": true,
+        "rationale": "RANZCOG and the ORACLE I evidence support oral erythromycin in PPROM to prolong latency and reduce neonatal morbidity; co-amoxiclav is avoided due to increased necrotising enterocolitis risk.",
+        "source_refs": ["RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes", "Therapeutic Guidelines: Obstetric"] },
+      { "letter": "B", "text": "Oral co-amoxiclav 875/125 mg twice daily for 10 days", "correct": false,
+        "rationale": "Co-amoxiclav is associated with an increased rate of neonatal necrotising enterocolitis in the ORACLE I trial and is not recommended for PPROM.",
+        "source_refs": ["RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"] },
+      { "letter": "C", "text": "IV benzylpenicillin 1.2 g six-hourly for 48 hours only", "correct": false,
+        "rationale": "Benzylpenicillin is GBS intrapartum prophylaxis, not a latency regimen; alone it does not provide the prolongation seen with erythromycin.",
+        "source_refs": ["RANZCOG: Maternal Group B Streptococcus in pregnancy"] },
+      { "letter": "D", "text": "Oral azithromycin 1 g stat", "correct": false,
+        "rationale": "Single-dose azithromycin is used as adjunct prophylaxis at caesarean in some settings, not as the latency regimen of choice for PPROM.",
+        "source_refs": ["Therapeutic Guidelines: Obstetric"] },
+      { "letter": "E", "text": "No antibiotics; antibiotics are only indicated if chorioamnionitis develops", "correct": false,
+        "rationale": "Latency antibiotics are routinely given in PPROM under 34 weeks to prolong pregnancy and reduce neonatal infection independent of clinical chorioamnionitis.",
+        "source_refs": ["RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"] }
+    ],
+    "explanation": {
+      "summary": "Erythromycin is the latency antibiotic of choice in PPROM under 34 weeks. Co-amoxiclav is contraindicated due to the NEC signal in ORACLE I. Antibiotics complement corticosteroids and MgSO4 in expectant PPROM management.",
+      "key_points": [
+        "Erythromycin 250 mg QID x 10 days or until birth (RANZCOG, eTG)",
+        "Avoid co-amoxiclav (NEC risk)",
+        "Add GBS intrapartum prophylaxis once labour established",
+        "Monitor for chorioamnionitis: fever, tachycardia, uterine tenderness, FHR"
+      ],
+      "pearls": "Erythromycin allergy: clarithromycin is a reasonable alternative; check with senior."
+    },
+    "sources": [
+      { "label": "RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes", "url": "https://ranzcog.edu.au/wp-content/uploads/Term-Prelabour-Rupture-of-Membranes.pdf" },
+      { "label": "Therapeutic Guidelines: Obstetric", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "RANZCOG: Maternal Group B Streptococcus in pregnancy", "url": "https://ranzcog.edu.au/wp-content/uploads/Maternal-Group-B-Streptococcus-in-pregnancy.pdf" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals", "inflammatory_markers"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-013",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "PPROM near term - expectant vs delivery",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["PPROM", "term PROM", "GBS", "induction"],
+    "stem": "A 34-year-old G2P1 at 36+5 presents 3 hours after a gush of clear fluid. She has no contractions, the foetal heart is reassuring, and she is afebrile. Speculum confirms PROM with a pool of clear fluid; the cervix appears favourable. She is GBS positive on a 36-week swab. Her last birth was a spontaneous vaginal birth at term without complication. She is otherwise well and has no allergies. The unit's neonatal services routinely accept babies from 35 weeks.",
+    "data_table": {
+      "Vital signs": "BP 118/72, HR 80, T 36.6",
+      "Examination": "Pool of clear AF, cervix favourable, no contractions, FH reassuring",
+      "Investigations": "GBS positive at 36 weeks, FBC normal, CRP normal"
+    },
+    "lead_in": "Which is the most appropriate management?",
+    "options": [
+      { "letter": "A", "text": "Plan induction of labour now with intrapartum benzylpenicillin for GBS", "correct": true,
+        "rationale": "PPROM at or beyond 36+0 with a GBS-positive mother is managed by induction rather than expectant care to limit chorioamnionitis and neonatal early-onset GBS sepsis (RANZCOG).",
+        "source_refs": ["RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes", "RANZCOG: Maternal Group B Streptococcus in pregnancy"] },
+      { "letter": "B", "text": "Expectant management at home for 96 hours with daily review", "correct": false,
+        "rationale": "Outpatient expectant management at near-term PPROM with GBS positivity is unsafe due to early-onset neonatal sepsis risk and inability to start timely intrapartum prophylaxis.",
+        "source_refs": ["RANZCOG: Maternal Group B Streptococcus in pregnancy"] },
+      { "letter": "C", "text": "Tocolysis with nifedipine and a course of corticosteroids", "correct": false,
+        "rationale": "At 36+5 corticosteroids are not routinely indicated and tocolysis would prolong rupture of membranes without benefit while increasing infection risk.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids", "RANZCOG: Tocolysis"] },
+      { "letter": "D", "text": "Caesarean section now due to PPROM beyond 36 weeks", "correct": false,
+        "rationale": "PPROM at this gestation is not itself an indication for caesarean; vaginal birth after induction is preferred when there are no other contraindications.",
+        "source_refs": ["RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"] },
+      { "letter": "E", "text": "Expectant management as an inpatient until 39+0 weeks", "correct": false,
+        "rationale": "Delaying birth to 39 weeks with PPROM and GBS positivity is contrary to RANZCOG guidance and significantly raises infectious morbidity.",
+        "source_refs": ["RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"] }
+    ],
+    "explanation": {
+      "summary": "At or beyond 36+0 with PPROM, prompt induction with appropriate intrapartum antibiotic prophylaxis (penicillin if GBS positive) is preferred to expectant management to reduce neonatal sepsis and chorioamnionitis.",
+      "key_points": [
+        "PPROM 36+0 or more: plan induction rather than expectant care (RANZCOG)",
+        "Use benzylpenicillin 1.2 g IV q4h intrapartum for GBS positivity",
+        "Steroids not routinely indicated 35+0 or more in Australia"
+      ],
+      "pearls": "Time of rupture is the clock that drives chorioamnionitis risk and antibiotic decisions."
+    },
+    "sources": [
+      { "label": "RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes", "url": "https://ranzcog.edu.au/wp-content/uploads/Term-Prelabour-Rupture-of-Membranes.pdf" },
+      { "label": "RANZCOG: Maternal Group B Streptococcus in pregnancy", "url": "https://ranzcog.edu.au/wp-content/uploads/Maternal-Group-B-Streptococcus-in-pregnancy.pdf" },
+      { "label": "RANZCOG: Antenatal corticosteroids", "url": "https://ranzcog.edu.au/wp-content/uploads/Antenatal-Corticosteroids-Given-to-Women-Prior-to-Birth.pdf" },
+      { "label": "RANZCOG: Tocolysis", "url": "https://ranzcog.edu.au/wp-content/uploads/Tocolysis.pdf" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals", "inflammatory_markers"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-014",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Cervical insufficiency - cerclage",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["cervical insufficiency", "cerclage", "preterm birth"],
+    "stem": "A 30-year-old G3P0 attends preconception clinic having recently had a third painless mid-trimester loss at 19 weeks. The two prior losses were at 18 and 20 weeks; on each occasion she presented with bulging membranes and minimal contractions, and the cervix was widely dilated on speculum. Anatomy scans had been normal, there was no antepartum bleeding, and she has had no infections or instrumentation between pregnancies. She has no chronic medical conditions and takes only folate and iodine. Her last cervical screening is up to date and normal. She is keen to conceive again and asks how the next pregnancy will be managed.",
+    "data_table": {
+      "Examination": "Soft abdomen, no abnormalities",
+      "Investigations": "Previous losses at 18, 20, 19 weeks; anatomy scans normal; no infection or instrumentation"
+    },
+    "lead_in": "Which is the most appropriate plan for her next pregnancy?",
+    "options": [
+      { "letter": "A", "text": "History-indicated cervical cerclage at 12 to 14 weeks gestation", "correct": true,
+        "rationale": "Three or more prior second-trimester losses or preterm births consistent with cervical insufficiency is the classic indication for history-indicated (elective) cerclage at 12 to 14 weeks per RANZCOG.",
+        "source_refs": ["RANZCOG: Cervical insufficiency and cerclage", "KEMH: Cervical Insufficiency and Cerclage"] },
+      { "letter": "B", "text": "Vaginal progesterone from 16 weeks without cerclage", "correct": false,
+        "rationale": "Vaginal progesterone is offered for short cervix on TVS but is not the standard for women with three prior second-trimester losses; cerclage is preferred in this history.",
+        "source_refs": ["RANZCOG: Cervical insufficiency and cerclage"] },
+      { "letter": "C", "text": "Serial cervical length scans from 16 weeks with rescue cerclage if cervix shortens", "correct": false,
+        "rationale": "Ultrasound-indicated (and rescue) cerclage are reasonable for women with one prior preterm birth, not three losses; elective cerclage outperforms watchful waiting here.",
+        "source_refs": ["RANZCOG: Cervical insufficiency and cerclage"] },
+      { "letter": "D", "text": "Abdominal cerclage placed pre-conception", "correct": false,
+        "rationale": "Trans-abdominal cerclage is reserved for failed transvaginal cerclage or anatomical contraindication to vaginal cerclage, not first-line.",
+        "source_refs": ["RANZCOG: Cervical insufficiency and cerclage"] },
+      { "letter": "E", "text": "Cervical pessary placement at 14 to 16 weeks", "correct": false,
+        "rationale": "Pessary evidence is mixed and not first-line in Australia for women with this history; transvaginal cerclage is the standard.",
+        "source_refs": ["RANZCOG: Cervical insufficiency and cerclage"] }
+    ],
+    "explanation": {
+      "summary": "Cervical insufficiency presents as painless mid-trimester loss with dilation and bulging membranes. Three or more such losses warrant history-indicated cerclage at 12 to 14 weeks in the next pregnancy, with subsequent cervical length surveillance.",
+      "key_points": [
+        "History-indicated cerclage: 3+ prior mid-trimester losses / early PTB",
+        "Ultrasound-indicated cerclage: 1+ prior PTB and TVS cervix <25 mm before 24 weeks",
+        "Rescue cerclage: cervix dilated with intact membranes <24 weeks"
+      ],
+      "pearls": "Always exclude acute infection and contractions before placing rescue cerclage."
+    },
+    "sources": [
+      { "label": "RANZCOG: Cervical insufficiency and cerclage", "url": "https://ranzcog.edu.au/wp-content/uploads/Cervical-Insufficiency-and-Cerclage.pdf" },
+      { "label": "KEMH: Cervical Insufficiency and Cerclage", "url": "https://www.kemh.health.wa.gov.au/-/media/HSPs/NMHS/Hospitals/WNHS/Documents/Clinical-guidelines/Obs-Gyn-Guidelines/Cervical-Cerclage.pdf" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-015",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Preterm birth prediction - TVS cervix",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["TVS cervical length", "preterm birth prediction", "progesterone"],
+    "stem": "A 33-year-old G2P1 at 22+0 with a singleton pregnancy attends for a planned TVS cervical length assessment because of one prior spontaneous preterm birth at 32 weeks. She has no symptoms today: no bleeding, no fluid loss, and no contractions. Anatomy scan was normal at 20+1. TVS today shows a cervix of 18 mm with no funnelling. Foetal fibronectin is not routinely used at her unit at this gestation. She has no contraindications to progesterone.",
+    "data_table": {
+      "Examination": "No contractions, no PV bleed or fluid",
+      "Investigations": "TVS cervix 18 mm, no funnelling, FH and AF normal"
+    },
+    "lead_in": "Which is the most appropriate intervention?",
+    "options": [
+      { "letter": "A", "text": "Commence vaginal progesterone 200 mg nightly until 36 weeks", "correct": true,
+        "rationale": "Vaginal progesterone reduces preterm birth and perinatal morbidity in women with TVS cervix under 25 mm before 24 weeks, particularly with a prior preterm birth, per RANZCOG.",
+        "source_refs": ["RANZCOG: Use of progesterone to prevent preterm birth", "KEMH: Preterm birth prevention"] },
+      { "letter": "B", "text": "Intramuscular 17-hydroxyprogesterone caproate weekly until 34 weeks", "correct": false,
+        "rationale": "IM 17OHPC is not the standard of care in Australia and was withdrawn from major international markets after lack of efficacy was confirmed; vaginal progesterone is preferred.",
+        "source_refs": ["RANZCOG: Use of progesterone to prevent preterm birth"] },
+      { "letter": "C", "text": "Rescue cerclage now", "correct": false,
+        "rationale": "Rescue cerclage is for cervical dilation with exposed membranes, not a short closed cervix; an ultrasound-indicated cerclage could be considered if the cervix shortens further despite progesterone.",
+        "source_refs": ["RANZCOG: Cervical insufficiency and cerclage"] },
+      { "letter": "D", "text": "Bedrest at home until 34 weeks", "correct": false,
+        "rationale": "Bedrest does not reduce preterm birth and is associated with VTE and deconditioning; it is not recommended.",
+        "source_refs": ["RANZCOG: Use of progesterone to prevent preterm birth"] },
+      { "letter": "E", "text": "Foetal fibronectin testing now to guide decision", "correct": false,
+        "rationale": "qfFN has best predictive value in symptomatic women; in this asymptomatic woman the short TVS cervix already justifies progesterone without fFN.",
+        "source_refs": ["RANZCOG: Preterm labour and birth"] }
+    ],
+    "explanation": {
+      "summary": "TVS cervix under 25 mm before 24 weeks identifies women at high risk of preterm birth. Vaginal progesterone (200 mg nightly) reduces preterm birth and improves neonatal outcomes; cerclage is reserved for those with prior preterm birth whose cervix shortens despite progesterone or who present with dilation.",
+      "key_points": [
+        "TVS cervix <25 mm before 24 weeks: vaginal progesterone (RANZCOG)",
+        "Continue progesterone until 36 weeks",
+        "Consider US-indicated cerclage if cervix <25 mm and prior PTB"
+      ],
+      "pearls": "TVS is the standard cervical length method; transabdominal underestimates true length."
+    },
+    "sources": [
+      { "label": "RANZCOG: Use of progesterone to prevent preterm birth", "url": "https://ranzcog.edu.au/wp-content/uploads/Use-of-progesterone-to-prevent-preterm-birth.pdf" },
+      { "label": "RANZCOG: Cervical insufficiency and cerclage", "url": "https://ranzcog.edu.au/wp-content/uploads/Cervical-Insufficiency-and-Cerclage.pdf" },
+      { "label": "RANZCOG: Preterm labour and birth", "url": "https://ranzcog.edu.au/wp-content/uploads/Preterm-Labour-and-Birth.pdf" },
+      { "label": "KEMH: Preterm birth prevention", "url": "https://www.kemh.health.wa.gov.au/-/media/HSPs/NMHS/Hospitals/WNHS/Documents/Clinical-guidelines/Obs-Gyn-Guidelines/Preterm-Birth-Prevention.pdf" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-016",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Foetal fibronectin in threatened preterm labour",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["fetal fibronectin", "qfFN", "preterm labour prediction"],
+    "stem": "A 26-year-old G1P0 at 29+2 attends pregnancy assessment with intermittent abdominal tightening over 8 hours and pelvic pressure. She has no bleeding, no rupture of membranes, no fever, and a reassuring CTG. Examination shows no fluid pooling on speculum and the cervix appears long and closed; TVS measures the cervix at 22 mm. Quantitative foetal fibronectin (qfFN) returns at 12 ng/mL. She has no obstetric history of preterm birth and no infections.",
+    "data_table": {
+      "Vital signs": "BP 120/72, HR 88, T 36.7",
+      "Examination": "No pooling, cervix long/closed on speculum",
+      "Investigations": "TVS cervix 22 mm, qfFN 12 ng/mL, CTG reactive, MSU pending"
+    },
+    "lead_in": "Which management approach best reflects current evidence?",
+    "options": [
+      { "letter": "A", "text": "Reassure, discharge home with safety-netting and outpatient follow up", "correct": true,
+        "rationale": "qfFN below 50 ng/mL combined with a TVS cervix in the lower range still has a very high negative predictive value for birth within 7 days; admission, tocolysis, and steroids are unnecessary.",
+        "source_refs": ["RANZCOG: Preterm labour and birth", "NICE NG25: Preterm labour and birth"] },
+      { "letter": "B", "text": "Admit, give antenatal corticosteroids, and commence tocolysis", "correct": false,
+        "rationale": "A negative qfFN result with no cervical dilation predicts very low risk of preterm birth within 7 days, so steroids and tocolysis are not indicated.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids", "RANZCOG: Preterm labour and birth"] },
+      { "letter": "C", "text": "Admit and start prophylactic MgSO4 for neuroprotection", "correct": false,
+        "rationale": "MgSO4 neuroprotection requires birth anticipated within 24 hours, which is not the case here; prophylactic use is not recommended.",
+        "source_refs": ["RANZCOG: Magnesium sulfate for neuroprotection of the fetus"] },
+      { "letter": "D", "text": "Repeat qfFN in 24 hours and admit until then", "correct": false,
+        "rationale": "Repeat testing in 24 hours is not standard and would not change management for a low qfFN value with low-risk cervix.",
+        "source_refs": ["RANZCOG: Preterm labour and birth"] },
+      { "letter": "E", "text": "Insert rescue cervical cerclage now", "correct": false,
+        "rationale": "Rescue cerclage is reserved for advanced cervical dilation with intact membranes, not for asymptomatic short cervix with low qfFN.",
+        "source_refs": ["RANZCOG: Cervical insufficiency and cerclage"] }
+    ],
+    "explanation": {
+      "summary": "qfFN under 50 ng/mL with reassuring TVS cervix has a very high negative predictive value for birth within 7 days. The greatest clinical value of qfFN is in safely discharging women with threatened preterm labour.",
+      "key_points": [
+        "qfFN NPV for PTB within 7 days >95% when <50 ng/mL",
+        "Combine with TVS cervical length for best discrimination",
+        "Positive qfFN raises risk; manage clinically with steroids, MgSO4, tocolysis as indicated"
+      ],
+      "pearls": "Avoid vaginal exam, intercourse, or speculum lubrication before fFN sampling."
+    },
+    "sources": [
+      { "label": "RANZCOG: Preterm labour and birth", "url": "https://ranzcog.edu.au/wp-content/uploads/Preterm-Labour-and-Birth.pdf" },
+      { "label": "NICE NG25: Preterm labour and birth", "url": "https://www.nice.org.uk/guidance/ng25" },
+      { "label": "RANZCOG: Antenatal corticosteroids", "url": "https://ranzcog.edu.au/wp-content/uploads/Antenatal-Corticosteroids-Given-to-Women-Prior-to-Birth.pdf" },
+      { "label": "RANZCOG: Magnesium sulfate for neuroprotection of the fetus", "url": "https://ranzcog.edu.au/wp-content/uploads/Magnesium-Sulphate-to-improve-outcomes-for-babies.pdf" },
+      { "label": "RANZCOG: Cervical insufficiency and cerclage", "url": "https://ranzcog.edu.au/wp-content/uploads/Cervical-Insufficiency-and-Cerclage.pdf" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-017",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Late preterm / early term decisions",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["late preterm", "early term", "elective birth timing"],
+    "stem": "A 31-year-old G1P0 at 37+1 with well-controlled gestational diabetes on diet alone is reviewed at her routine antenatal clinic. Foetal growth is on the 50th centile, amniotic fluid is normal, CTG is reactive, and self-monitored capillary glucose has stayed within target. She has no hypertension, no IUGR, and no other complication. She has booked into a private hospital and asks whether elective induction at 37 to 38 weeks would be safer than waiting.",
+    "data_table": {
+      "Vital signs": "BP 116/74, HR 76, T 36.6",
+      "Examination": "Cephalic, FH reassuring",
+      "Investigations": "EFW 50th centile, AFI normal, BSL diary within target"
+    },
+    "lead_in": "Which is the most appropriate plan?",
+    "options": [
+      { "letter": "A", "text": "Continue routine antenatal care with delivery planned around 40+0 to 40+6 weeks", "correct": true,
+        "rationale": "ADIPS and RANZCOG support birth by around 40+6 for diet-controlled GDM with no complications; routine early term induction does not improve outcomes and increases neonatal respiratory morbidity.",
+        "source_refs": ["ADIPS Consensus Guidelines on GDM", "RANZCOG: Diagnosis of GDM"] },
+      { "letter": "B", "text": "Elective induction at 37+0 weeks", "correct": false,
+        "rationale": "Routine induction at 37+0 in well-controlled diet-only GDM is not recommended; it increases iatrogenic late preterm morbidity without clear benefit.",
+        "source_refs": ["ADIPS Consensus Guidelines on GDM"] },
+      { "letter": "C", "text": "Elective caesarean at 38+0 weeks", "correct": false,
+        "rationale": "Elective caesarean is not indicated in well-controlled diet-only GDM without other obstetric reasons.",
+        "source_refs": ["ADIPS Consensus Guidelines on GDM"] },
+      { "letter": "D", "text": "Plan induction at 39+0 with cervical ripening regardless of Bishop", "correct": false,
+        "rationale": "Insulin-treated or complicated GDM may warrant earlier induction; for diet-controlled uncomplicated GDM, ADIPS supports expectant management to around 40+6.",
+        "source_refs": ["ADIPS Consensus Guidelines on GDM"] },
+      { "letter": "E", "text": "Defer delivery to 41+5 with daily CTG from 39 weeks", "correct": false,
+        "rationale": "Even uncomplicated GDM is generally not allowed to progress beyond 40+6; deferring to 41+5 increases stillbirth risk above the accepted threshold.",
+        "source_refs": ["ADIPS Consensus Guidelines on GDM"] }
+    ],
+    "explanation": {
+      "summary": "ADIPS guidance supports delivery by around 40+6 in uncomplicated diet-controlled GDM. Earlier elective birth is reserved for insulin treatment, macrosomia, poor control, or other complications. Late preterm and early term iatrogenic births carry meaningful neonatal respiratory morbidity.",
+      "key_points": [
+        "Diet-controlled uncomplicated GDM: birth by ~40+6 (ADIPS)",
+        "Insulin-treated GDM: consider birth 38+0 to 39+0",
+        "Complicated GDM (poor control, IUGR, hypertension): individualise earlier"
+      ],
+      "pearls": "Avoid elective non-medical birth before 39+0 due to neonatal respiratory morbidity."
+    },
+    "sources": [
+      { "label": "ADIPS Consensus Guidelines on GDM", "url": "https://adips.org/wp-content/uploads/2021/03/ADIPS-2014-GDM-Guidelines.pdf" },
+      { "label": "RANZCOG: Diagnosis of GDM", "url": "https://ranzcog.edu.au/wp-content/uploads/Diagnosis-of-Gestational-diabetes-mellitus.pdf" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals", "ogtt_pregnancy"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-018",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Term PROM management",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["term PROM", "PROM at term", "induction"],
+    "stem": "A 28-year-old G1P0 at 39+3 presents 2 hours after a gush of clear fluid followed by ongoing leakage. She is not contracting, the CTG is reactive, and observations are normal. Speculum confirms a pool of clear amniotic fluid and a closed soft cervix. She is GBS negative on her 36-week swab. She is well and has no risk factors for infection. She asks about waiting at home for spontaneous labour.",
+    "data_table": {
+      "Vital signs": "BP 118/72, HR 76, T 36.6",
+      "Examination": "Pool of clear AF on speculum, soft closed cervix, no contractions",
+      "Investigations": "CTG reactive, GBS negative at 36 weeks"
+    },
+    "lead_in": "Which option is most consistent with RANZCOG term PROM guidance?",
+    "options": [
+      { "letter": "A", "text": "Offer immediate induction of labour or expectant management for up to 24 hours", "correct": true,
+        "rationale": "At term PROM, RANZCOG supports either prompt induction or expectant management up to about 24 hours; beyond that period chorioamnionitis risk rises and induction is recommended.",
+        "source_refs": ["RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"] },
+      { "letter": "B", "text": "Mandatory immediate caesarean section", "correct": false,
+        "rationale": "Term PROM is not an indication for caesarean section in the absence of other obstetric reasons.",
+        "source_refs": ["RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"] },
+      { "letter": "C", "text": "Wait at home for up to 5 days for spontaneous labour", "correct": false,
+        "rationale": "Outpatient expectant management beyond around 24 hours increases chorioamnionitis and neonatal infection risk; this duration is unsafe.",
+        "source_refs": ["RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"] },
+      { "letter": "D", "text": "Start oral erythromycin to prolong latency", "correct": false,
+        "rationale": "Latency antibiotics are used for PPROM under 34 weeks, not term PROM; routine antibiotics are not given to GBS-negative term women.",
+        "source_refs": ["RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"] },
+      { "letter": "E", "text": "Administer betamethasone before labour", "correct": false,
+        "rationale": "Antenatal corticosteroids are not used at 39+3; the gestational window is up to 34+6 in Australia.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids"] }
+    ],
+    "explanation": {
+      "summary": "Term PROM (>=37+0) is managed by shared decision between prompt induction and limited expectant management up to around 24 hours, after which induction is recommended to reduce infection risk.",
+      "key_points": [
+        "Either induction or expectant management for ~24 h is reasonable",
+        "GBS positivity tips management toward earlier induction with intrapartum penicillin",
+        "Document time of rupture"
+      ],
+      "pearls": "Avoid vaginal exams unless necessary before active labour to limit infection risk."
+    },
+    "sources": [
+      { "label": "RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes", "url": "https://ranzcog.edu.au/wp-content/uploads/Term-Prelabour-Rupture-of-Membranes.pdf" },
+      { "label": "RANZCOG: Antenatal corticosteroids", "url": "https://ranzcog.edu.au/wp-content/uploads/Antenatal-Corticosteroids-Given-to-Women-Prior-to-Birth.pdf" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-019",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Chorioamnionitis in PPROM - delivery trigger",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["PPROM", "chorioamnionitis", "intra-amniotic infection"],
+    "stem": "A 24-year-old G1P0 at 29+0 is on day 9 of expectant PPROM management. She completed corticosteroids 7 days ago and erythromycin is ongoing. She has been afebrile with normal observations until this evening, when she reports increased uterine tenderness and chills. Observations: T 38.4, HR 118, BP 108/64, RR 18, SpO2 98 on RA. Her uterus is tender on palpation. CTG shows a baseline foetal heart rate of 175 bpm with reduced variability and no decelerations. WCC has risen to 18.6 x10^9/L, neutrophils 16.2 x10^9/L, CRP 92 mg/L (from 18 mg/L two days ago). She has no offensive vaginal discharge but the speculum view shows turbid amniotic fluid pooling. Maternal lactate is 2.1 mmol/L. There are no other localising features of infection.",
+    "data_table": {
+      "Vital signs": "BP 108/64, HR 118, T 38.4, RR 18, SpO2 98%",
+      "Examination": "Uterine tenderness, turbid AF on speculum, no other localising findings",
+      "Investigations": "WCC 18.6, neutrophils 16.2, CRP 92 (up from 18), lactate 2.1, MSU pending, CTG: baseline 175, reduced variability"
+    },
+    "lead_in": "Which is the most appropriate next step?",
+    "options": [
+      { "letter": "A", "text": "Commence intravenous broad-spectrum antibiotics and expedite delivery", "correct": true,
+        "rationale": "Clinical chorioamnionitis in PPROM at 29 weeks is an indication for prompt delivery alongside IV broad-spectrum antibiotics, irrespective of gestation, per RANZCOG.",
+        "source_refs": ["RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes", "Therapeutic Guidelines: Obstetric"] },
+      { "letter": "B", "text": "Continue expectant management with IV antibiotics, aim to reach 32 weeks", "correct": false,
+        "rationale": "Expectant management is contraindicated once chorioamnionitis is established because of maternal sepsis and foetal injury risk; prolonging pregnancy is unsafe.",
+        "source_refs": ["RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"] },
+      { "letter": "C", "text": "Repeat steroids and reassess clinical status in 12 hours", "correct": false,
+        "rationale": "Delaying delivery for steroids during overt intra-amniotic infection raises sepsis risk; the foetus is already affected and steroids will not change the trajectory in time.",
+        "source_refs": ["RANZCOG: Antenatal corticosteroids", "RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"] },
+      { "letter": "D", "text": "Add tocolysis to allow transfer to a tertiary unit", "correct": false,
+        "rationale": "Tocolysis is contraindicated in chorioamnionitis because it delays definitive treatment (delivery) and masks deterioration.",
+        "source_refs": ["RANZCOG: Tocolysis", "RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"] },
+      { "letter": "E", "text": "Amniocentesis for Gram stain and glucose before deciding", "correct": false,
+        "rationale": "With clear clinical chorioamnionitis (fever, maternal and foetal tachycardia, tender uterus, rising CRP, turbid AF), delaying for amniocentesis is unnecessary and unsafe.",
+        "source_refs": ["RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"] }
+    ],
+    "explanation": {
+      "summary": "Clinical chorioamnionitis (maternal fever, maternal tachycardia, foetal tachycardia, uterine tenderness, foul or turbid fluid, leukocytosis) ends expectant PPROM management. Treatment is IV broad-spectrum antibiotics and prompt delivery regardless of gestation.",
+      "key_points": [
+        "Triad-plus signs of chorioamnionitis = deliver (RANZCOG, eTG)",
+        "Broad-spectrum IV antibiotics started immediately on suspicion",
+        "Mode of birth depends on obstetric factors; chorioamnionitis itself is not a caesarean indication",
+        "Continue antibiotics intrapartum and postpartum until afebrile"
+      ],
+      "pearls": "Foetal tachycardia is often the earliest objective sign of intra-amniotic infection."
+    },
+    "sources": [
+      { "label": "RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes", "url": "https://ranzcog.edu.au/wp-content/uploads/Term-Prelabour-Rupture-of-Membranes.pdf" },
+      { "label": "Therapeutic Guidelines: Obstetric", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "RANZCOG: Tocolysis", "url": "https://ranzcog.edu.au/wp-content/uploads/Tocolysis.pdf" },
+      { "label": "RANZCOG: Antenatal corticosteroids", "url": "https://ranzcog.edu.au/wp-content/uploads/Antenatal-Corticosteroids-Given-to-Women-Prior-to-Birth.pdf" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals", "inflammatory_markers", "fbc"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "obgyn-multpre-020",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Co-twin demise in monochorionic pregnancy",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["twins", "monochorionic", "single twin demise", "neuroprotection"],
+    "stem": "A 31-year-old G2P1 with an MCDA twin pregnancy at 27+4 presents with reduced foetal movements over 24 hours. Pregnancy has been uncomplicated; serial scans have shown concordant growth and no TTTS. Today's ultrasound confirms intrauterine demise of twin A with absent cardiac activity and small pericardial effusion. Twin B has a foetal heart rate of 148 bpm with reactive CTG, normal amniotic fluid, normal umbilical artery Doppler, and a peak systolic velocity in the middle cerebral artery of 1.8 multiples of the median. Maternal observations and coagulation profile are normal. She has no contractions and the cervix is 35 mm closed on TVS.",
+    "data_table": {
+      "Vital signs": "BP 118/72, HR 84, T 36.7",
+      "Examination": "Soft uterus, no contractions, no PV bleeding",
+      "Investigations": "Twin A demised. Twin B: HR 148, reactive CTG, UA Doppler normal, MCA-PSV 1.8 MoM. Maternal coags normal. Cervix 35 mm."
+    },
+    "lead_in": "Which is the most appropriate immediate next step?",
+    "options": [
+      { "letter": "A", "text": "Urgent transfer to a fetal medicine unit for assessment for foetal anaemia (intrauterine transfusion)", "correct": true,
+        "rationale": "MCA-PSV above 1.5 MoM in the surviving twin after MC co-twin demise suggests acute foetal anaemia from feto-foetal transfusion across shared anastomoses; intrauterine transfusion may reduce neurological injury (RANZCOG, ISUOG).",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy", "ISUOG Practice Guidelines: Twin pregnancy"] },
+      { "letter": "B", "text": "Immediate caesarean section of the surviving twin", "correct": false,
+        "rationale": "Iatrogenic birth at 27+4 inflicts severe prematurity morbidity and does not reverse hypotensive injury already sustained; intrauterine resuscitation is preferred first.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] },
+      { "letter": "C", "text": "Expectant management with weekly Dopplers as outpatient", "correct": false,
+        "rationale": "MCA-PSV >1.5 MoM is a red flag for foetal anaemia and requires urgent tertiary assessment; weekly outpatient surveillance is too slow.",
+        "source_refs": ["ISUOG Practice Guidelines: Twin pregnancy"] },
+      { "letter": "D", "text": "Maternal IV heparin to prevent DIC", "correct": false,
+        "rationale": "Maternal coagulopathy after single twin demise is rare in the short term; this woman has normal coagulation and prophylactic heparin is not indicated.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] },
+      { "letter": "E", "text": "Selective foetal reduction of the surviving twin", "correct": false,
+        "rationale": "Termination of the surviving healthy twin is not appropriate; the goal is to assess and rescue the survivor.",
+        "source_refs": ["RANZCOG: Management of Monochorionic Twin Pregnancy"] }
+    ],
+    "explanation": {
+      "summary": "After single twin demise in a monochorionic pregnancy, acute feto-foetal transfusion via placental anastomoses can cause severe anaemia in the survivor. MCA-PSV above 1.5 MoM signals foetal anaemia and warrants urgent fetal medicine assessment for in-utero transfusion. Iatrogenic preterm birth at 27 weeks rarely improves outcome and adds severe prematurity morbidity.",
+      "key_points": [
+        "Surviving MC twin: ~15% risk of death, ~25% risk of neurological injury",
+        "MCA-PSV >1.5 MoM = significant risk of foetal anaemia (ISUOG)",
+        "Urgent neuroimaging (MRI) 4 to 6 weeks later if survival",
+        "Birth timing individualised; not routinely immediate"
+      ],
+      "pearls": "MCA-PSV is the same screening tool used in red cell alloimmunisation; same threshold."
+    },
+    "sources": [
+      { "label": "RANZCOG: Management of Monochorionic Twin Pregnancy", "url": "https://ranzcog.edu.au/wp-content/uploads/Management-of-Monochorionic-Twin-Pregnancy.pdf" },
+      { "label": "ISUOG Practice Guidelines: Twin pregnancy", "url": "https://www.isuog.org/clinical-resources/isuog-guidelines.html" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals", "coags"],
+    "created": "2026-05-18"
+  }
+]

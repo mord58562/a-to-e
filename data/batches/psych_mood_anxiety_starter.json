@@ -1,0 +1,1404 @@
+[
+  {
+    "id": "psych-mood-001",
+    "topic": "Psychiatry",
+    "subtopic": "Major depressive disorder - DSM-5 diagnosis and severity threshold",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["MDD", "DSM-5", "K-10", "primary care"],
+    "stem": "A 34-year-old primary school teacher attends her general practitioner reporting six weeks of persistent low mood after the end of a long-term relationship. She describes early morning waking by 0400, weight loss of 4 kg without dieting, and pervasive anhedonia: she has stopped attending her weekly netball game and no longer enjoys her two cats. She finds herself crying at work and struggles to plan lessons. She denies hallucinations, sustained elevated mood, or hypomanic episodes. She drinks two standard drinks weekly and uses no other substances. She has had passive thoughts of being better off dead in the past fortnight but no plan or intent and identifies her sister as a strong protective factor. She has no medical comorbidities, is on no regular medications, and her TSH, FBC and UEC last month were unremarkable. Her K-10 today is 32.",
+    "data_table": {
+      "Examination": "Tearful, congruent affect, slowed thought tempo, no thought disorder, no psychotic features.",
+      "Investigations": "K-10 score 32. TSH 1.4 mIU/L, Hb 132 g/L, Na 139 mmol/L (all within reference)."
+    },
+    "lead_in": "Which classification best describes her current presentation under DSM-5?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Persistent depressive disorder (dysthymia)",
+        "correct": false,
+        "rationale": "Persistent depressive disorder requires depressed mood for most of the day, more days than not, for at least 2 years in adults; her 6-week course does not meet this threshold (DSM-5; RANZCP Mood Disorders CPG).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "B",
+        "text": "Adjustment disorder with depressed mood",
+        "correct": false,
+        "rationale": "Adjustment disorder is diagnosed when symptoms develop within 3 months of an identifiable stressor and do NOT meet full criteria for another disorder such as MDD; her presentation satisfies MDD criteria so this is excluded (DSM-5; eTG Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "C",
+        "text": "Major depressive disorder, single episode, moderate severity",
+        "correct": true,
+        "rationale": "She meets at least 5 of 9 SIGECAPS criteria (depressed mood, anhedonia, weight loss, early waking, psychomotor change, passive death thoughts) for over 2 weeks with functional impairment; K-10 of 30-50 represents severe distress but with moderate functional impact and absence of psychosis this is best coded moderate (RANZCP Mood Disorders CPG 2020; Australian K-10 banding via beyondblue).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020", "beyondblue: K-10 interpretation"]
+      },
+      {
+        "letter": "D",
+        "text": "Major depressive disorder with melancholic features",
+        "correct": false,
+        "rationale": "Melancholic features require loss of pleasure in nearly all activities PLUS at least three of distinct quality of depressed mood, diurnal variation worse in morning, marked psychomotor retardation, significant weight loss, or excessive guilt; she has some features but only psychomotor slowing and early waking are clearly documented, insufficient to meet the specifier (DSM-5; RANZCP CPG).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020"]
+      },
+      {
+        "letter": "E",
+        "text": "Bipolar II disorder, currently depressed",
+        "correct": false,
+        "rationale": "Bipolar II requires at least one prior hypomanic episode lasting 4 or more days plus a major depressive episode; she explicitly denies elevated mood episodes (DSM-5; RANZCP Bipolar CPG).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020"]
+      }
+    ],
+    "explanation": {
+      "summary": "Sustained depressed mood plus anhedonia with neurovegetative features for 6 weeks meeting at least 5 SIGECAPS criteria with functional impairment satisfies DSM-5 major depressive episode; absence of psychosis, mania or markedly impaired self-care places severity as moderate. RANZCP and eTG anchor management decisions to severity bands.",
+      "key_points": [
+        "MDD = 5+ of 9 SIGECAPS for >=2 weeks with functional impact and one of depressed mood OR anhedonia",
+        "K-10: 10-19 likely well, 20-24 mild, 25-29 moderate, 30-50 severe distress",
+        "Melancholic specifier needs anhedonia plus 3+ qualifying features",
+        "Adjustment disorder is excluded once MDD criteria are met"
+      ],
+      "pearls": "Distress score (K-10) and functional impact are separate axes; use both, not one in isolation, when grading severity (beyondblue, RANZCP)."
+    },
+    "sources": [
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "beyondblue: K-10 interpretation", "url": "https://www.beyondblue.org.au/"}
+    ],
+    "reference_ranges": ["thyroid", "fbc", "uec"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-002",
+    "topic": "Psychiatry",
+    "subtopic": "MDD - first-line SSRI choice in a young adult",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["SSRI", "first-line", "antidepressant choice", "eTG"],
+    "stem": "A 22-year-old apprentice electrician presents to his general practitioner with an 8-week history of low mood, anhedonia, broken sleep with 2 hours of night waking, poor concentration on the worksite and a 3 kg weight loss. He has had no manic or hypomanic episodes, no psychotic symptoms, and denies suicidal ideation. He smokes 10 cigarettes daily, drinks 4 standard drinks on weekends, and uses cannabis once a month socially. He is otherwise well, on no regular medications, and family history is notable for an older sister whose depression remitted well with sertraline. His K-10 is 28 and PHQ-9 is 16. Bloods including TSH, FBC, EUC, LFTs and B12 are unremarkable. After psychoeducation, lifestyle measures and discussion of psychological therapy through a GP Mental Health Treatment Plan, he and his GP agree to commence an antidepressant.",
+    "data_table": {
+      "Examination": "Flat affect, no psychomotor agitation, no psychotic features, MSE otherwise unremarkable.",
+      "Investigations": "PHQ-9 16, K-10 28, TSH 1.8 mIU/L, Hb 145 g/L, ALT 22 U/L, B12 360 pmol/L (all reference)."
+    },
+    "lead_in": "Which is the most appropriate first-line antidepressant choice?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Sertraline 50 mg orally daily",
+        "correct": true,
+        "rationale": "Sertraline is recommended as one of the preferred SSRIs in eTG Psychotropic for moderate MDD in young adults given its favourable tolerability, low drug-interaction profile, and family history of response (predictive of personal response); standard initiation is 50 mg mane (Therapeutic Guidelines: Psychotropic; AMH).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "B",
+        "text": "Mirtazapine 30 mg orally nocte",
+        "correct": false,
+        "rationale": "Mirtazapine causes weight gain and sedation; it can be useful when weight loss and insomnia dominate but is not first-line for a young, normotensive man with weight loss and is reserved as a second-line or adjunctive option in eTG (Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "C",
+        "text": "Venlafaxine XR 75 mg orally daily",
+        "correct": false,
+        "rationale": "SNRIs are an alternative first-line option but have a higher discontinuation-syndrome risk and dose-dependent hypertension; SSRIs are preferred initial therapy in uncomplicated MDD per eTG and the RANZCP Mood Disorders CPG (Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "RANZCP CPG: Mood Disorders 2020"]
+      },
+      {
+        "letter": "D",
+        "text": "Amitriptyline 25 mg orally nocte",
+        "correct": false,
+        "rationale": "Tricyclics are not first-line for MDD due to anticholinergic effects, cardiac toxicity, and lethality in overdose; reserved for refractory cases or specific indications such as chronic pain (Australian Medicines Handbook; eTG Psychotropic).",
+        "source_refs": ["Australian Medicines Handbook", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "E",
+        "text": "Fluoxetine 20 mg orally daily",
+        "correct": false,
+        "rationale": "Fluoxetine is a reasonable SSRI but its long half-life and CYP2D6 inhibition complicate later switching and interact with future medicines; in this young adult with a family member who responded to sertraline, sertraline is preferred (Therapeutic Guidelines: Psychotropic; AMH).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "Australian Medicines Handbook"]
+      }
+    ],
+    "explanation": {
+      "summary": "eTG Psychotropic positions SSRIs as first-line for moderate MDD in adults, with sertraline, escitalopram and citalopram all reasonable starting choices. Family-history response is a soft predictor of personal response and is a clinically reasonable tiebreaker. Combine medication with psychological therapy via a Mental Health Treatment Plan.",
+      "key_points": [
+        "First-line for MDD: SSRI; sertraline, escitalopram, citalopram all reasonable",
+        "Sertraline: low interactions, broad therapeutic index, safe in young men",
+        "Mirtazapine helpful when insomnia + weight loss BUT not first-line if BMI normal",
+        "TCAs reserved due to overdose toxicity",
+        "MBS Mental Health Treatment Plan funds up to 10 sessions psychology per calendar year"
+      ],
+      "pearls": "Warn of an early agitation/anxiety phase in the first 1-2 weeks and arrange review in 1-2 weeks then 4 weeks; suicide risk monitoring is required especially in under-25s (Black Dog Institute)."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/"},
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"},
+      {"label": "Black Dog Institute: Antidepressant prescribing", "url": "https://www.blackdoginstitute.org.au/"}
+    ],
+    "reference_ranges": ["thyroid", "fbc", "uec", "lfts"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-003",
+    "topic": "Psychiatry",
+    "subtopic": "Serotonin syndrome - recognition and initial management",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["serotonin syndrome", "Hunter criteria", "tramadol", "SSRI interaction"],
+    "stem": "A 42-year-old woman is brought to the emergency department by her partner with 6 hours of agitation, sweating and shivering. She was started on sertraline 100 mg daily six weeks ago for moderate depression. Two days ago she was prescribed tramadol 50 mg QID by another GP for acute lower back pain, and yesterday she began linezolid for a complicated skin infection at a sexual health clinic. On arrival she is restless and diaphoretic. She has spontaneous clonus in both ankles which is more pronounced on the right, mild rigidity in the lower limbs, hyperreflexia, mydriasis 5 mm bilaterally and an oral temperature of 38.6 deg C. There are no rashes, no neck stiffness and no focal neurological deficits. She has had no haloperidol or other antipsychotics. Her observations and bloods are recorded below.",
+    "data_table": {
+      "Vital signs": "BP 158/96 mmHg, HR 122 bpm, T 38.6 deg C, RR 22, SpO2 98% RA, GCS 14 (E4 V4 M6).",
+      "Examination": "Diaphoretic, mydriasis 5 mm, lower-limb hyperreflexia, spontaneous clonus right > left, mild rigidity legs > arms, bowel sounds hyperactive.",
+      "Investigations": "Na 138 mmol/L, K 4.1, creatinine 78 micromol/L, CK 540 U/L, WCC 11.2 x10^9/L, lactate 2.1 mmol/L. ECG: sinus tachycardia, QTc 430 ms."
+    },
+    "lead_in": "Which is the single most appropriate initial step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Cease all serotonergic agents, commence IV fluids and titrated benzodiazepines, and admit for active cooling and monitoring",
+        "correct": true,
+        "rationale": "She meets Hunter Serotonin Toxicity Criteria (serotonergic agent + spontaneous clonus + agitation + diaphoresis + hyperthermia); cornerstone management is removal of all serotonergic drugs, IV fluids, benzodiazepines for agitation and autonomic features, and active cooling for temperature >38.5 deg C (eTG Toxicology; Therapeutic Guidelines).",
+        "source_refs": ["Therapeutic Guidelines: Toxicology", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "B",
+        "text": "Give IV dantrolene 2.5 mg/kg and intubate empirically",
+        "correct": false,
+        "rationale": "Dantrolene is used for malignant hyperthermia and is not recommended in serotonin syndrome; intubation is reserved for refractory hyperthermia or airway compromise, neither yet present (Therapeutic Guidelines: Toxicology).",
+        "source_refs": ["Therapeutic Guidelines: Toxicology"]
+      },
+      {
+        "letter": "C",
+        "text": "Give IM haloperidol 5 mg for agitation and observe",
+        "correct": false,
+        "rationale": "Antipsychotics with dopamine antagonism can worsen autonomic instability and risk neuroleptic malignant syndrome; benzodiazepines are the preferred sedative in serotonin toxicity (eTG Toxicology; AMH).",
+        "source_refs": ["Therapeutic Guidelines: Toxicology", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "D",
+        "text": "Withhold sertraline only, continue tramadol and linezolid, and observe with paracetamol",
+        "correct": false,
+        "rationale": "ALL serotonergic agents must be ceased (SSRI, tramadol, linezolid); paracetamol does not lower temperature in serotonin syndrome because hyperthermia is from muscle hyperactivity, not central set-point change (Therapeutic Guidelines: Toxicology).",
+        "source_refs": ["Therapeutic Guidelines: Toxicology"]
+      },
+      {
+        "letter": "E",
+        "text": "Lumbar puncture and empirical IV ceftriaxone for suspected meningoencephalitis",
+        "correct": false,
+        "rationale": "There is no neck stiffness, no headache, no focal neurology and the clonus + serotonergic drug history meets Hunter criteria; LP is not the priority and would delay specific treatment (Therapeutic Guidelines: Toxicology).",
+        "source_refs": ["Therapeutic Guidelines: Toxicology"]
+      }
+    ],
+    "explanation": {
+      "summary": "Hunter Serotonin Toxicity Criteria (Sternbach is obsolete in Australia) identify serotonin syndrome when serotonergic exposure is combined with spontaneous clonus, or inducible clonus + agitation/diaphoresis, or ocular clonus + agitation/diaphoresis, or tremor + hyperreflexia, or hyperthermia >38 deg C + ocular/inducible clonus + rigidity. First-line treatment is cessation of all serotonergic drugs, supportive care, benzodiazepines and active cooling.",
+      "key_points": [
+        "Lower-limb hyperreflexia and clonus > upper limb is characteristic (vs NMS which has lead-pipe rigidity)",
+        "Linezolid is a reversible MAOI - high-risk combination with any SSRI/SNRI",
+        "Tramadol is serotonergic AND lowers seizure threshold",
+        "Cyproheptadine is an option for refractory cases (specialist-led) but is not first-line",
+        "Hyperthermia in serotonin syndrome is from muscle hyperactivity, not central set-point - antipyretics ineffective"
+      ],
+      "pearls": "Symmetric lower-limb-predominant clonus + diaphoresis in a patient on multiple serotonergics is the textbook triad - look it up if you find a tremor that goes on after you let go of the foot."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Toxicology", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/"},
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"}
+    ],
+    "reference_ranges": ["uec", "inflammatory_markers", "fbc"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-004",
+    "topic": "Psychiatry",
+    "subtopic": "Treatment-resistant depression - augmentation strategy",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["TRD", "augmentation", "aripiprazole", "STAR*D"],
+    "stem": "A 48-year-old woman with a 9-month episode of MDD attends her psychiatrist for review. She started sertraline at 50 mg and titrated to 200 mg daily over 12 weeks with full adherence confirmed; she completed an adequate trial with only partial response (PHQ-9 fell from 22 to 16). She was switched to venlafaxine XR titrated to 225 mg daily over a further 10 weeks, again with partial response (PHQ-9 14). She has engaged with a clinical psychologist for CBT throughout. There has been no hypomania, no psychotic features and no substance use. She has hypertension treated with perindopril 5 mg daily (BP today 128/82) and recent fasting lipids and HbA1c are normal. She has not had ECT. She and her psychiatrist agree she meets criteria for treatment-resistant depression and discuss next steps. She is keen to avoid hospital admission. Her TSH is 1.6 mIU/L and B12 is 410 pmol/L.",
+    "data_table": {
+      "Vital signs": "BP 128/82 mmHg, HR 78, weight 72 kg, BMI 25.",
+      "Examination": "MSE: depressed mood, congruent affect, no psychomotor change, no psychotic features, passive death wishes only.",
+      "Investigations": "PHQ-9 14 on venlafaxine XR 225 mg. TSH 1.6 mIU/L, HbA1c 5.4%, fasting lipids normal."
+    },
+    "lead_in": "Which is the most appropriate next pharmacological step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Cross-titrate venlafaxine to another SSRI (paroxetine 20 mg daily)",
+        "correct": false,
+        "rationale": "She has already failed adequate trials of two antidepressant monotherapies including an SSRI and an SNRI; a third monotherapy switch is less likely to produce remission than augmentation per STAR*D-style sequencing and RANZCP TRD guidance (RANZCP Mood Disorders CPG 2020).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020"]
+      },
+      {
+        "letter": "B",
+        "text": "Augment venlafaxine with low-dose aripiprazole 2 to 5 mg daily",
+        "correct": true,
+        "rationale": "Augmentation of an SSRI/SNRI with a second-generation antipsychotic (aripiprazole, quetiapine or olanzapine) is supported by the RANZCP Mood Disorders CPG and eTG Psychotropic for partial response after two adequate trials; aripiprazole has the best metabolic profile of these options and is started at low dose (Therapeutic Guidelines: Psychotropic; RANZCP CPG).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "C",
+        "text": "Add tranylcypromine 10 mg twice daily to venlafaxine",
+        "correct": false,
+        "rationale": "Combining an MAOI with an SNRI is contraindicated due to high risk of serotonin syndrome and hypertensive crisis; an SNRI must be ceased and a washout of at least 1 week observed before an MAOI is commenced (Australian Medicines Handbook).",
+        "source_refs": ["Australian Medicines Handbook", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "D",
+        "text": "Add St John's wort 900 mg daily to venlafaxine",
+        "correct": false,
+        "rationale": "St John's wort is serotonergic and combining with an SNRI risks serotonin syndrome; it also induces CYP3A4 with multiple interactions and is not recommended as an augmentation strategy in TRD (Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "E",
+        "text": "Cease venlafaxine abruptly and start moclobemide 300 mg twice daily",
+        "correct": false,
+        "rationale": "Abrupt cessation of venlafaxine causes severe discontinuation symptoms and immediate switch to any MAOI without an adequate washout (at least 1 week for venlafaxine) risks serotonin syndrome (AMH; eTG).",
+        "source_refs": ["Australian Medicines Handbook"]
+      }
+    ],
+    "explanation": {
+      "summary": "Treatment-resistant depression in Australia is commonly defined as failure of two adequate antidepressant trials. After two failed trials, evidence supports augmentation with a second-generation antipsychotic (aripiprazole, quetiapine, olanzapine) or lithium, switching antidepressant class, or moving to brain stimulation (ECT, rTMS). Aripiprazole augmentation is favoured for its metabolic profile.",
+      "key_points": [
+        "Adequate trial = therapeutic dose, adequate duration (typically 4-8 weeks), confirmed adherence",
+        "First augmentation options: aripiprazole 2-5 mg, quetiapine XR 150-300 mg, lithium (target 0.6-0.8 mmol/L)",
+        "MAOI requires washout: 2 weeks from most SSRIs, 5 weeks from fluoxetine, 1+ week from venlafaxine",
+        "ECT remains the most effective treatment for severe/psychotic/treatment-resistant MDD (RANZCP)",
+        "rTMS PBS-funded for TRD in adults (2021)"
+      ],
+      "pearls": "Always reconfirm adherence and dose adequacy before labelling TRD - apparent non-response is often under-dosing or covert non-adherence."
+    },
+    "sources": [
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/"}
+    ],
+    "reference_ranges": ["thyroid", "lipids", "glucose_hba1c"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-005",
+    "topic": "Psychiatry",
+    "subtopic": "ECT - indications and pre-treatment evaluation",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["ECT", "psychotic depression", "RANZCP", "consent"],
+    "stem": "A 71-year-old retired engineer is admitted involuntarily with severe major depression with psychotic features. He has held a fixed nihilistic delusion that his bowels have rotted for the past 5 weeks, refuses food and fluids, has lost 9 kg, and has required IV rehydration. He has had two adequate trials of antidepressants (sertraline 200 mg for 8 weeks, then mirtazapine 45 mg for 6 weeks with olanzapine 10 mg added for 4 weeks) without meaningful response, and his consultant proposes electroconvulsive therapy. He has well-controlled hypertension on amlodipine, an old uncomplicated inferior STEMI six years ago treated with primary PCI (most recent stress echo unremarkable), and a remote history of TIA with normal carotid imaging. He has no intracranial mass, no recent stroke, and no aneurysm. He is currently considered to lack capacity to consent to ECT and his adult daughter is the substitute decision-maker. Routine pre-ECT bloods are normal.",
+    "data_table": {
+      "Vital signs": "BP 138/82 mmHg, HR 76, T 36.7 deg C, SpO2 97% RA.",
+      "Examination": "MSE: profound psychomotor retardation, nihilistic delusion, no perceptual disturbance, MMSE 24/30 (registration and recall affected).",
+      "Investigations": "Na 138 mmol/L, K 4.2, creatinine 88 micromol/L, Hb 121 g/L, INR 1.0. ECG: sinus rhythm, old inferior Q waves, no ischaemia. Recent TTE: LVEF 55%."
+    },
+    "lead_in": "Which is the most accurate statement regarding ECT in this patient?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "ECT is absolutely contraindicated due to his prior myocardial infarction",
+        "correct": false,
+        "rationale": "ECT has NO absolute contraindications according to RANZCP; recent MI (<3 months), raised intracranial pressure and unstable aneurysms are relative contraindications requiring cardiology/neurosurgical liaison, but a remote stable MI is not (RANZCP ECT Position Statement 76).",
+        "source_refs": ["RANZCP Position Statement 74/76 ECT"]
+      },
+      {
+        "letter": "B",
+        "text": "ECT is a first-line treatment for severe MDD with psychotic features and life-threatening malnutrition",
+        "correct": true,
+        "rationale": "RANZCP designates ECT as a first-line treatment for major depression with psychotic features, severe suicidality, life-threatening physical deterioration (refusal to eat/drink), catatonia, and treatment-resistant depression; this patient meets multiple indications (RANZCP Position Statement 74/76; Mood Disorders CPG 2020).",
+        "source_refs": ["RANZCP Position Statement 74/76 ECT", "RANZCP CPG: Mood Disorders 2020"]
+      },
+      {
+        "letter": "C",
+        "text": "ECT cannot proceed because he lacks capacity to consent",
+        "correct": false,
+        "rationale": "Lack of capacity does not preclude ECT; substitute decision-makers and tribunal authorisation pathways exist under each state's Mental Health Act and Guardianship legislation, with additional safeguards specific to ECT (RANZCP Position Statement 74/76; NSW/Vic Mental Health Acts).",
+        "source_refs": ["RANZCP Position Statement 74/76 ECT"]
+      },
+      {
+        "letter": "D",
+        "text": "Antidepressants must be ceased before ECT to avoid serotonin syndrome",
+        "correct": false,
+        "rationale": "Antidepressants are typically continued during ECT, with case-by-case decisions for agents that lower seizure threshold or interact with anaesthesia; routine cessation is not required (RANZCP Position Statement 74/76).",
+        "source_refs": ["RANZCP Position Statement 74/76 ECT"]
+      },
+      {
+        "letter": "E",
+        "text": "Cognitive screening is unnecessary because he has no documented dementia",
+        "correct": false,
+        "rationale": "Pre-ECT cognitive assessment (MMSE or MoCA) is standard and should be repeated through the course to monitor cognitive adverse effects; his MMSE of 24 establishes a baseline (RANZCP Position Statement 74/76).",
+        "source_refs": ["RANZCP Position Statement 74/76 ECT"]
+      }
+    ],
+    "explanation": {
+      "summary": "ECT is a first-line option for severe MDD with psychotic features, severe suicidality, food refusal/dehydration, catatonia, or after two failed adequate trials. There are no absolute contraindications; relative contraindications include recent MI, raised ICP, unstable aneurysm, and severe arrhythmia. Capacity issues are managed via state Mental Health Acts.",
+      "key_points": [
+        "RANZCP first-line indications: psychotic depression, suicidal crisis, malnutrition/dehydration, catatonia, TRD",
+        "Pre-ECT workup: ECG, baseline cognition (MMSE/MoCA), anaesthetic review, medication reconciliation",
+        "Continue most antidepressants; lithium often held/reduced; benzodiazepines reduced (they raise seizure threshold)",
+        "Common adverse effects: short-term memory loss (anterograde > retrograde), headache, myalgia",
+        "Bilateral ECT more effective but more cognitive impact than right unilateral"
+      ],
+      "pearls": "Cotard's nihilistic delusions (the patient believes they are dead or rotting) classically respond rapidly to ECT (RANZCP Mood Disorders CPG)."
+    },
+    "sources": [
+      {"label": "RANZCP Position Statement 74/76 ECT", "url": "https://www.ranzcp.org/news-policy/policy-and-position-statements"},
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["uec", "fbc", "coags"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-006",
+    "topic": "Psychiatry",
+    "subtopic": "Suicide risk assessment and safety planning",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["suicide risk", "safety plan", "means restriction", "Black Dog"],
+    "stem": "A 27-year-old man presents to the emergency department at 0200 brought by police after his housemate found him writing letters to family members and packing personal effects into labelled boxes. He recently separated from his fiancee and was dismissed from his job in mining 3 weeks ago. He has a 6-month history of worsening depression treated by his GP with escitalopram 20 mg daily. Tonight he tells you he obtained his late father's licensed firearm from his mother's garage on the weekend and stored it under his bed. He has researched suicide methods online for the past fortnight, has selected a remote bush location, and has chosen tomorrow as the day. He denies prior attempts, has no current intoxication (breath alcohol 0.00), and identifies his younger sister and his dog as the only things keeping him alive at present. He has no psychotic features and no medical comorbidities. Mental health triage rates him as Category 2 and the consultation-liaison registrar is on the way.",
+    "data_table": {
+      "Vital signs": "BP 122/76 mmHg, HR 84, T 36.5 deg C, breath alcohol 0.00%, GCS 15.",
+      "Examination": "MSE: anxious, restricted affect, future plans focused only on death, no psychosis, insight partial, judgment impaired by hopelessness.",
+      "Investigations": "Bloods unremarkable. Risk assessment summarised in stem."
+    },
+    "lead_in": "What is the single most important immediate intervention?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Discharge with a written safety plan, beyondblue helpline number and follow-up in 48 hours with his GP",
+        "correct": false,
+        "rationale": "Multiple high-risk features (specific plan, access to lethal means, chosen date/location, recent stressors, hopelessness, final acts) make discharge unsafe; written safety planning alone is not sufficient when imminent risk is high (Black Dog Institute; LIFE in Mind National Suicide Prevention Framework).",
+        "source_refs": ["Black Dog Institute: Suicide Prevention", "LIFE in Mind"]
+      },
+      {
+        "letter": "B",
+        "text": "Arrange immediate means restriction by removing the firearm with police assistance and arrange involuntary admission under the state Mental Health Act for further assessment",
+        "correct": true,
+        "rationale": "Means restriction (especially of firearms) is the single most evidence-based intervention to reduce suicide death; combined with assessment and management in a safe environment under the relevant state Mental Health Act when capacity-limited and at imminent risk, this is the priority action (Black Dog Institute; RANZCP Mood Disorders CPG; NSW/Vic Mental Health Acts).",
+        "source_refs": ["Black Dog Institute: Suicide Prevention", "RANZCP CPG: Mood Disorders 2020", "LIFE in Mind"]
+      },
+      {
+        "letter": "C",
+        "text": "Increase escitalopram to 30 mg daily and reassess in clinic in 1 week",
+        "correct": false,
+        "rationale": "Dose escalation does not address acute suicide risk in the next 24 hours; the maximum recommended escitalopram dose is 20 mg (10 mg in elderly) and antidepressants can transiently worsen agitation in under-25s (Australian Medicines Handbook; eTG Psychotropic).",
+        "source_refs": ["Australian Medicines Handbook", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "D",
+        "text": "Administer IM olanzapine 10 mg for sedation and chemical restraint",
+        "correct": false,
+        "rationale": "He is not currently agitated, aggressive or psychotic; chemical restraint is reserved for behavioural emergencies and is inappropriate as primary suicide-prevention strategy (eTG Psychotropic; RANZCP).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "E",
+        "text": "Ask him to sign a no-suicide contract and discharge with his housemate to supervise overnight",
+        "correct": false,
+        "rationale": "No-suicide contracts have no evidence of efficacy and may give false reassurance; lay supervision in the community does not equate to clinical safety with a loaded firearm at home (Black Dog Institute; Beyondblue).",
+        "source_refs": ["Black Dog Institute: Suicide Prevention"]
+      }
+    ],
+    "explanation": {
+      "summary": "Highest evidence interventions to prevent suicide are restriction of access to lethal means (firearms, pesticides, large medication supplies, jumping points), assessment and management of underlying disorders, and structured follow-up. A safety plan is a useful adjunct but not a substitute for means restriction or admission when risk is imminent.",
+      "key_points": [
+        "Suicide-risk-magnifiers: specific plan, access to means, chosen date/location, final acts, hopelessness, prior attempt, male, recent stressor, substance use, psychotic depression",
+        "Means restriction is the single most evidence-based intervention",
+        "Safety plan (Stanley/Brown): personal warning signs, internal coping, social distractions, contacts, professional/crisis services, means-restriction",
+        "Australian crisis: Lifeline 13 11 14, 13YARN 13 92 76, Suicide Call Back 1300 659 467, Kids Helpline 1800 55 1800",
+        "MHA admission criteria differ by state but include presence of mental illness + risk to self/others + lack of less restrictive option"
+      ],
+      "pearls": "Always ask specifically about firearms in rural and ex-defence/police patients - they are the most lethal Australian suicide method per capita."
+    },
+    "sources": [
+      {"label": "Black Dog Institute: Suicide Prevention", "url": "https://www.blackdoginstitute.org.au/resources-support/suicide-self-harm/"},
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"},
+      {"label": "LIFE in Mind", "url": "https://lifeinmind.org.au/"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-007",
+    "topic": "Psychiatry",
+    "subtopic": "Bipolar I vs Bipolar II - diagnostic distinction",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["bipolar II", "hypomania", "DSM-5", "collateral history"],
+    "stem": "A 31-year-old graphic designer presents to her GP seeking help for recurring low mood. She describes three previous depressive episodes since age 22, each lasting 3 to 4 months and treated symptomatically. On detailed questioning she also describes recurrent 5-day periods in which she sleeps only 3 hours per night without fatigue, becomes unusually talkative, takes on new freelance projects she later abandons, spends $1500 to $2000 on art supplies, and is uncharacteristically socially disinhibited at parties. Her partner confirms these episodes are clearly different from her baseline, are noticeable to friends, and recur every 6 to 9 months. She has never been hospitalised for mental health issues, has never been psychotic, and has never required time off work during these elevated periods, which she actually finds productive. She uses no substances. TFTs, FBC and EUC are normal. She has no medical comorbidities and is not pregnant.",
+    "data_table": {
+      "Examination": "Currently euthymic-to-mildly low mood, reactive affect, no psychomotor change, no psychotic features, MMSE 30/30.",
+      "Investigations": "TSH 1.5 mIU/L, Hb 132 g/L, urine beta-hCG negative. Urine drug screen negative."
+    },
+    "lead_in": "Which diagnosis best fits her presentation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Bipolar I disorder",
+        "correct": false,
+        "rationale": "Bipolar I requires at least one manic episode lasting 7 or more days OR requiring hospitalisation, often with marked functional impairment or psychosis; her elevated episodes are 5 days, non-impairing and never hospitalised, which is hypomania not mania (DSM-5; RANZCP Mood Disorders CPG).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020", "Australasian Society for Bipolar Disorders"]
+      },
+      {
+        "letter": "B",
+        "text": "Bipolar II disorder",
+        "correct": true,
+        "rationale": "Bipolar II requires at least one hypomanic episode (>=4 consecutive days of elevated/irritable mood plus >=3 B-criteria, observable change to others, not severe enough to require hospitalisation or cause marked impairment) AND at least one major depressive episode, with no history of mania - all met here (DSM-5; ASBD; RANZCP CPG).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020", "Australasian Society for Bipolar Disorders"]
+      },
+      {
+        "letter": "C",
+        "text": "Cyclothymic disorder",
+        "correct": false,
+        "rationale": "Cyclothymia requires 2 years of numerous hypomanic and depressive symptoms that do NOT meet full criteria for hypomanic or major depressive episodes; she has full hypomanic and full depressive episodes (DSM-5).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020"]
+      },
+      {
+        "letter": "D",
+        "text": "Recurrent major depressive disorder",
+        "correct": false,
+        "rationale": "The clear, observable, recurrent episodes of decreased need for sleep, increased goal-directed activity, talkativeness and disinhibition exceed the threshold for hypomania and require a bipolar-spectrum diagnosis (DSM-5; RANZCP).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020"]
+      },
+      {
+        "letter": "E",
+        "text": "Borderline personality disorder",
+        "correct": false,
+        "rationale": "BPD features pervasive emotional instability lasting hours-to-days, not discrete 5-day mood states, and is associated with identity disturbance, abandonment fears and self-harm; not the dominant pattern described (RANZCP BPD CPG).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020"]
+      }
+    ],
+    "explanation": {
+      "summary": "Bipolar II diagnosis requires identifying hypomanic episodes that are often missed because they are ego-syntonic; specific collateral history is the key. Diagnostic confusion with recurrent MDD delays correct treatment, which materially changes pharmacological choice (mood stabiliser plus antidepressant cover, not antidepressant alone).",
+      "key_points": [
+        "Hypomania: >=4 days, observable change, no severe impairment, no hospitalisation, no psychosis",
+        "Mania: >=7 days OR hospitalisation, severe impairment +/- psychosis",
+        "Bipolar II = hypomania + MDE; never manic episode",
+        "Antidepressant monotherapy in bipolar II risks mood switching - mood stabiliser cover preferred",
+        "Quetiapine, lithium, lamotrigine are first-line maintenance options in bipolar II (RANZCP/ASBD)"
+      ],
+      "pearls": "Always ask the partner: hypomania is most reliably detected by an outside observer, not the patient."
+    },
+    "sources": [
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"},
+      {"label": "Australasian Society for Bipolar Disorders", "url": "https://www.bipolardisorders.org.au/"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["thyroid", "fbc"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-008",
+    "topic": "Psychiatry",
+    "subtopic": "Acute mania - pharmacological management",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["acute mania", "mood stabiliser", "antipsychotic", "involuntary"],
+    "stem": "A 38-year-old man with known bipolar I disorder is brought to the emergency department by his wife and police after 6 days of escalating behaviour. He has slept 90 minutes per night, has not eaten meaningfully for 3 days, has spent over $40,000 on cryptocurrency, has been propositioning strangers in shopping centres, and tonight stripped naked in the front yard while preaching to neighbours. In the ED he is loud, intrusive and grandiose, claiming to have been appointed Pope by direct revelation. He stopped taking his lithium 750 mg nocte six months ago because he felt better. He uses no illicit substances. His wife reports that during previous severe episodes a mood stabiliser plus an antipsychotic worked well. He has no medical comorbidities and no antipsychotic allergies. He has been placed on an emergency assessment order under the state Mental Health Act.",
+    "data_table": {
+      "Vital signs": "BP 142/88 mmHg, HR 108, T 36.9 deg C, RR 22, SpO2 98% RA.",
+      "Examination": "MSE: elevated mood, pressured speech, flight of ideas, grandiose delusions, religious in content, no auditory hallucinations confirmed.",
+      "Investigations": "Na 142 mmol/L, K 4.4, creatinine 78 micromol/L, eGFR >90, TSH 1.8 mIU/L, lithium level <0.1 mmol/L. ECG: sinus tachycardia, QTc 410 ms. Urine drug screen negative."
+    },
+    "lead_in": "Which is the most appropriate initial pharmacological management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Restart lithium 750 mg nocte monotherapy and review in 5 days",
+        "correct": false,
+        "rationale": "Lithium has a slow onset of antimanic effect (around 5-7 days) and monotherapy is inadequate for severe acute mania with psychosis; a second-generation antipsychotic provides faster behavioural control (RANZCP Mood Disorders CPG; eTG Psychotropic; ASBD).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020", "Therapeutic Guidelines: Psychotropic", "Australasian Society for Bipolar Disorders"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence olanzapine 10 mg orally daily plus lithium 750 mg nocte and admit",
+        "correct": true,
+        "rationale": "RANZCP and eTG recommend combination of a mood stabiliser (lithium or valproate) with a second-generation antipsychotic (olanzapine, quetiapine, risperidone, aripiprazole) for severe acute mania, especially when psychotic features are present; this provides faster symptom control than monotherapy (RANZCP Mood Disorders CPG 2020; eTG; ASBD).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020", "Therapeutic Guidelines: Psychotropic", "Australasian Society for Bipolar Disorders"]
+      },
+      {
+        "letter": "C",
+        "text": "Sertraline 100 mg daily plus diazepam 10 mg TDS",
+        "correct": false,
+        "rationale": "Antidepressants are contraindicated in acute mania and can prolong or worsen the episode; benzodiazepine monotherapy does not treat the underlying illness (RANZCP CPG; Australian Medicines Handbook).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "D",
+        "text": "Sodium valproate 1500 mg daily monotherapy",
+        "correct": false,
+        "rationale": "Valproate monotherapy is an option for moderate mania but combination with an antipsychotic is preferred for severe psychotic mania; in addition, valproate is high-risk in any patient of reproductive potential and a patient-specific risk-acknowledgement form is required in Australia (AMH; RANZCP CPG).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "E",
+        "text": "Lamotrigine 25 mg daily titrated weekly",
+        "correct": false,
+        "rationale": "Lamotrigine has no efficacy in acute mania; it is used for prevention of bipolar depression with very slow titration to mitigate SJS/TEN risk (RANZCP CPG; AMH).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020", "Australian Medicines Handbook"]
+      }
+    ],
+    "explanation": {
+      "summary": "Severe acute mania with psychosis is treated with a mood stabiliser (lithium or valproate) combined with a second-generation antipsychotic for rapid behavioural control. Antidepressants are withheld during a manic episode. Admission, usually involuntary, is often required given impaired insight and disinhibition.",
+      "key_points": [
+        "First-line acute mania: lithium OR valproate PLUS atypical antipsychotic",
+        "Antipsychotic monotherapy options: olanzapine, quetiapine, risperidone, aripiprazole, asenapine",
+        "Stop any antidepressants (risk of prolonging or destabilising)",
+        "Adjunct benzodiazepine acceptable for agitation/insomnia short-term",
+        "Maintenance: continue mood stabiliser; consider lithium for suicide-protective effect (NNT ~14)"
+      ],
+      "pearls": "Always check a lithium level and a TFT on presentation - subtherapeutic levels often explain relapse, and lithium-induced hypothyroidism can mimic depressive relapse."
+    },
+    "sources": [
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/"},
+      {"label": "Australasian Society for Bipolar Disorders", "url": "https://www.bipolardisorders.org.au/"}
+    ],
+    "reference_ranges": ["uec", "thyroid"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-009",
+    "topic": "Psychiatry",
+    "subtopic": "Lithium initiation - baseline workup and monitoring schedule",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["lithium", "monitoring", "TFT", "renal"],
+    "stem": "A 29-year-old woman with bipolar I disorder has been stabilised on olanzapine 10 mg nocte and valproate 1000 mg daily following an inpatient admission for acute mania three months ago. She wishes to come off valproate because she and her partner plan to conceive in the next year, and her psychiatrist proposes substituting lithium for long-term maintenance. She has no renal disease, no cardiac history, no thyroid disorder, and is on no other medications. She drinks one cup of coffee per day and no alcohol. The psychiatrist plans to commence lithium carbonate 250 mg nocte and titrate to a serum level of 0.6 to 0.8 mmol/L for maintenance. Before initiation, baseline tests are ordered.",
+    "data_table": {
+      "Vital signs": "BP 116/74 mmHg, HR 70, weight 64 kg, BMI 22.",
+      "Examination": "MSE: euthymic, reactive affect, no psychomotor change, no psychotic features.",
+      "Investigations": "Pre-lithium baseline pending."
+    },
+    "lead_in": "Which combination of baseline investigations is most appropriate before commencing lithium?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "FBC, UEC, eGFR, calcium, TFTs, urine pregnancy test, and ECG",
+        "correct": true,
+        "rationale": "Australian Medicines Handbook and eTG Psychotropic require renal function (UEC, eGFR), thyroid function, calcium (lithium-induced hyperparathyroidism), pregnancy test (lithium is Category D, teratogenic for Ebstein anomaly), and ECG if cardiac risk factors or age > 40; FBC is reasonable as a baseline (AMH; eTG Psychotropic).",
+        "source_refs": ["Australian Medicines Handbook", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "B",
+        "text": "Lithium level, TFTs and pregnancy test only",
+        "correct": false,
+        "rationale": "Baseline lithium is irrelevant before initiation, and renal function plus calcium plus ECG must also be obtained (AMH; eTG Psychotropic).",
+        "source_refs": ["Australian Medicines Handbook", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "C",
+        "text": "FBC and EUC only - thyroid and calcium are only checked annually after initiation",
+        "correct": false,
+        "rationale": "Baseline TFTs and calcium are required at initiation to establish a reference; both are monitored at 6-12 monthly intervals thereafter (eTG Psychotropic; AMH).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "D",
+        "text": "Echocardiogram, 24-hour urinary creatinine clearance and dexamethasone suppression test",
+        "correct": false,
+        "rationale": "These are not routine pre-lithium investigations; standard serum creatinine/eGFR is adequate for renal screening (AMH; eTG Psychotropic).",
+        "source_refs": ["Australian Medicines Handbook", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "E",
+        "text": "Liver function tests and serum ammonia only",
+        "correct": false,
+        "rationale": "Lithium is renally cleared, not hepatically metabolised; LFTs and ammonia are not required (AMH).",
+        "source_refs": ["Australian Medicines Handbook"]
+      }
+    ],
+    "explanation": {
+      "summary": "Pre-lithium baseline includes UEC/eGFR, TFTs, calcium, FBC, pregnancy test, and an ECG (mandatory > 40 years or with cardiac risk factors). Maintenance monitoring includes 12-hour post-dose lithium level at 5-7 days after initiation/dose change, then 3-6 monthly once stable, plus 6-12 monthly renal/thyroid/calcium.",
+      "key_points": [
+        "Therapeutic level: 0.6-0.8 mmol/L maintenance, 0.8-1.0 mmol/L for refractory mania",
+        "Toxic > 1.5 mmol/L; severe > 2.0 mmol/L",
+        "Standard sample: trough level 12 hours after last dose",
+        "Lithium is Category D in pregnancy (Ebstein anomaly risk in T1) - foetal cardiac echo at 20 weeks if continued",
+        "ACE inhibitors, NSAIDs, thiazides, dehydration all raise lithium levels"
+      ],
+      "pearls": "Counsel patients to maintain consistent salt and fluid intake and to seek review if any vomiting, diarrhoea, fever, or new medication; subtle tremor, coarse tremor or ataxia signal toxicity."
+    },
+    "sources": [
+      {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"}
+    ],
+    "reference_ranges": ["uec", "thyroid", "calcium_corrected", "fbc"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-010",
+    "topic": "Psychiatry",
+    "subtopic": "Lithium toxicity precipitated by drug interaction",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["lithium toxicity", "thiazide", "NSAID", "ACE inhibitor"],
+    "stem": "A 64-year-old woman maintained on lithium carbonate 500 mg nocte for bipolar I disorder for 12 years is brought to the emergency department by her daughter after 4 days of worsening coarse hand tremor, unsteady gait with two falls, slurred speech and confusion. Her usual psychiatrist documented her last lithium level 4 months ago as 0.7 mmol/L with normal renal function. Two weeks ago her GP commenced indapamide 2.5 mg daily for newly diagnosed hypertension and naproxen 500 mg BD for an osteoarthritic knee flare. She has been drinking less water than usual during a current heatwave (37 deg C ambient). She has no fever, no diarrhoea, no infective symptoms, and no chest pain. On arrival she is drowsy but rousable and has a coarse postural tremor, ataxic gait and mild dysarthria. There is no clonus, no rigidity, no diaphoresis and no mydriasis. ECG shows sinus rhythm with T-wave flattening.",
+    "data_table": {
+      "Vital signs": "BP 138/82 mmHg, HR 62, T 36.7 deg C, RR 16, SpO2 98% RA, GCS 14 (E3 V5 M6).",
+      "Examination": "Coarse tremor, mild dysarthria, broad-based ataxic gait, hyporeflexia bilaterally, no clonus, no rigidity.",
+      "Investigations": "Lithium level 2.4 mmol/L. Na 134 mmol/L, K 3.6, urea 9.4 mmol/L, creatinine 142 micromol/L (baseline 78), eGFR 38. TSH 2.1 mIU/L. Calcium 2.42 mmol/L. VBG: pH 7.39, lactate 1.8. ECG: sinus rhythm, T-wave flattening, QTc 420 ms."
+    },
+    "lead_in": "Which is the most appropriate next step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Withhold lithium, indapamide and naproxen, give IV 0.9% sodium chloride, and arrange urgent dialysis with nephrology",
+        "correct": true,
+        "rationale": "Severe lithium toxicity (level > 2.5 mmol/L, OR > 2.0 mmol/L with neurological symptoms, OR > 1.5 mmol/L with renal impairment) is an indication for haemodialysis per Therapeutic Guidelines and Australian poisons centres; she has neurological compromise, AKI from precipitants, and a level of 2.4 mmol/L - withholding offending agents, IV hydration and dialysis is the standard pathway (Therapeutic Guidelines: Toxicology; Austin Health Poisons Information; AMH).",
+        "source_refs": ["Therapeutic Guidelines: Toxicology", "Australian Medicines Handbook", "Austin Health Poisons Information"]
+      },
+      {
+        "letter": "B",
+        "text": "Give activated charcoal 50 g orally and continue lithium at half dose",
+        "correct": false,
+        "rationale": "Activated charcoal does NOT bind lithium and is not used in lithium toxicity; lithium must be withheld, not dose-reduced (Therapeutic Guidelines: Toxicology).",
+        "source_refs": ["Therapeutic Guidelines: Toxicology"]
+      },
+      {
+        "letter": "C",
+        "text": "Administer IV sodium bicarbonate 1 mmol/kg and observe",
+        "correct": false,
+        "rationale": "Urinary alkalinisation has minimal effect on lithium elimination; aggressive volume replacement with normal saline is the supportive treatment of choice when dialysis is not immediately required, but dialysis is indicated here (eTG Toxicology).",
+        "source_refs": ["Therapeutic Guidelines: Toxicology"]
+      },
+      {
+        "letter": "D",
+        "text": "Continue lithium and recheck a level in 6 hours",
+        "correct": false,
+        "rationale": "Continuing lithium in the setting of severe toxicity is dangerous; the priority is removal of the agent and renal protection (Therapeutic Guidelines: Toxicology; AMH).",
+        "source_refs": ["Therapeutic Guidelines: Toxicology", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "E",
+        "text": "Stop only the naproxen, continue indapamide and lithium, give IV fluids and recheck in 24 hours",
+        "correct": false,
+        "rationale": "All three of indapamide (thiazide-like), NSAID and lithium-precipitating dehydration must be addressed; thiazides increase proximal tubular lithium reabsorption and significantly raise levels (AMH; eTG).",
+        "source_refs": ["Australian Medicines Handbook", "Therapeutic Guidelines: Toxicology"]
+      }
+    ],
+    "explanation": {
+      "summary": "Chronic lithium toxicity is precipitated by reduced clearance (NSAIDs, thiazides, ACE inhibitors, dehydration, AKI). Severity is judged by clinical features and level. Haemodialysis indications: level > 4.0 mmol/L regardless of symptoms; > 2.5 mmol/L with severe neurological features or renal impairment; > 1.5 mmol/L with severe features and inability to excrete (e.g. ESRF).",
+      "key_points": [
+        "Mild toxicity (1.5-2.5 mmol/L): tremor, GI upset, weakness - withhold drug, IV saline, monitor",
+        "Severe (> 2.5 mmol/L or symptomatic with renal failure): dialysis",
+        "Common precipitants: NSAIDs, thiazides, ACEi/ARB, dehydration, low-salt diet, AKI",
+        "Lithium also causes nephrogenic DI, hypothyroidism, hyperparathyroidism with chronic use",
+        "Levels rebound post-dialysis: serial levels and often a second session required"
+      ],
+      "pearls": "In a heatwave, counsel lithium patients to maintain hydration and consider holding the dose if vomiting or diarrhoea; brief medication breaks are far safer than waiting until they're ataxic."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Toxicology", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/"},
+      {"label": "Austin Health Poisons Information", "url": "https://www.austin.org.au/poisonsinformation/"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["uec", "thyroid", "calcium_corrected", "vbg"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-011",
+    "topic": "Psychiatry",
+    "subtopic": "Perinatal psychiatry - postnatal depression vs postpartum psychosis",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["postpartum psychosis", "PND", "EPDS", "infanticide risk"],
+    "stem": "A 31-year-old primipara is brought to the emergency department by her partner on day 9 postpartum following a normal vaginal birth at 39+5 weeks of a healthy girl. Over the past 36 hours her partner reports rapid escalation of symptoms: she has slept only 2 hours in 48 hours despite the baby sleeping, is convinced the midwives implanted a tracker in the baby's umbilical stump, hears her late mother's voice instructing her, and at times is bright and over-talkative, at other times tearful and withdrawn. This morning she said the baby was sent by spirits and should be returned to them. She has not been violent but is intermittently dishevelled. She has no past psychiatric history but her older sister has bipolar I. She had no antenatal mental health concerns and EPDS at 28 weeks was 5. She is breastfeeding intermittently. There are no infective symptoms, no headache, no neurological signs and recent obstetric review and bloods are unremarkable.",
+    "data_table": {
+      "Vital signs": "BP 124/78 mmHg, HR 92, T 36.8 deg C, RR 18, SpO2 99% RA.",
+      "Examination": "MSE: labile affect, pressured speech alternating with whispering, paranoid and bizarre delusions, second-person auditory hallucinations, partial insight.",
+      "Investigations": "FBC normal, UEC normal, CRP 4 mg/L, TSH 1.8 mIU/L, calcium normal, urine MCS no growth, urine drug screen negative."
+    },
+    "lead_in": "Which is the most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Reassurance, increase community midwife visits and start sertraline 50 mg daily with GP follow-up in 1 week",
+        "correct": false,
+        "rationale": "This presentation is postpartum psychosis, NOT postnatal depression; SSRI monotherapy and outpatient management do not address the imminent risk of harm to mother and baby (COPE Perinatal Guidelines; RANZCP Perinatal).",
+        "source_refs": ["COPE Perinatal Mental Health Guidelines", "RANZCP CPG: Mood Disorders 2020"]
+      },
+      {
+        "letter": "B",
+        "text": "Urgent admission to a Mother-Baby Unit or psychiatric ward with treatment of postpartum psychosis as a psychiatric emergency, with antipsychotic +/- mood stabiliser and immediate safety planning for the infant",
+        "correct": true,
+        "rationale": "Postpartum psychosis is a psychiatric emergency with high risk of suicide and infanticide; immediate admission (ideally to a Mother-Baby Unit, but to a general psychiatric ward if MBU not available) and treatment with antipsychotic (e.g. olanzapine, quetiapine, risperidone) plus a mood stabiliser if bipolar features and safety planning are standard of care (COPE Perinatal Guidelines; RANZCP; Black Dog Institute).",
+        "source_refs": ["COPE Perinatal Mental Health Guidelines", "RANZCP CPG: Mood Disorders 2020", "Black Dog Institute: Perinatal"]
+      },
+      {
+        "letter": "C",
+        "text": "Lumbar puncture and IV aciclovir for suspected postpartum HSV encephalitis",
+        "correct": false,
+        "rationale": "She has no fever, no headache, no neurological deficit, normal CRP and a strong family history of bipolar disorder making postpartum psychosis the most likely diagnosis; LP is not the first step although organic differentials must always be considered (Therapeutic Guidelines: Antibiotic).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "D",
+        "text": "Diazepam 10 mg orally and discharge home with her partner overnight",
+        "correct": false,
+        "rationale": "Discharge of a psychotic mother with an infant present at home is unsafe; benzodiazepine monotherapy does not treat psychosis (RANZCP; COPE).",
+        "source_refs": ["COPE Perinatal Mental Health Guidelines", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "E",
+        "text": "Repeat EPDS in 2 weeks and refer to a perinatal psychologist for non-urgent assessment",
+        "correct": false,
+        "rationale": "EPDS screens for depression and is not the right tool for psychosis; non-urgent referral is unsafe given imminent risk (COPE Perinatal Guidelines).",
+        "source_refs": ["COPE Perinatal Mental Health Guidelines"]
+      }
+    ],
+    "explanation": {
+      "summary": "Postpartum psychosis affects 1-2 per 1000 births, typically presents in the first 2 weeks postpartum with rapid onset, fluctuating mood, confusion, paranoia and bizarre delusions often involving the baby. It is a psychiatric emergency with significant suicide and infanticide risk. Family history of bipolar disorder is a strong risk factor. Distinguish from baby blues (peaks day 3-5, self-limiting) and PND (gradual onset, mood-predominant).",
+      "key_points": [
+        "Postpartum psychosis: onset typically days 3-14, abrupt, fluctuating, mixed mood/psychotic features",
+        "Bipolar family history is the strongest risk factor",
+        "Treatment: admit (MBU preferred), antipsychotic +/- mood stabiliser, ECT if severe/refractory",
+        "Postnatal depression: gradual onset, mood-predominant, screen with EPDS",
+        "Baby blues: peaks day 3-5, self-limiting <2 weeks, no specific treatment"
+      ],
+      "pearls": "Any new-onset psychosis in the first month postpartum is postpartum psychosis until proven otherwise - never discharge home overnight pending review."
+    },
+    "sources": [
+      {"label": "COPE Perinatal Mental Health Guidelines", "url": "https://www.cope.org.au/health-professionals/health-professionals-3/clinical-practice-guidelines/"},
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"},
+      {"label": "Black Dog Institute: Perinatal", "url": "https://www.blackdoginstitute.org.au/"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["fbc", "uec", "thyroid", "inflammatory_markers"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-012",
+    "topic": "Psychiatry",
+    "subtopic": "EPDS interpretation in routine postnatal screening",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["EPDS", "screening", "primary care", "COPE"],
+    "stem": "A 33-year-old G1P1 woman attends her general practitioner for her 6-week postnatal check. Her infant son is feeding and growing well. She delivered by uncomplicated vaginal birth at 40+1 and breastfeeding is established. She acknowledges tiredness and intermittent tearfulness but denies any thoughts of harming herself or her baby. She has no past psychiatric history. As part of routine COPE-aligned postnatal screening her GP administers the Edinburgh Postnatal Depression Scale. Her total score is 14. Item 10 (self-harm question) is scored zero. She is engaged, future-oriented and looking forward to a planned trip to visit her mother next month. There is no overt psychomotor change, no psychotic features, no perceptual disturbance and no functional collapse. There are no medical comorbidities.",
+    "data_table": {
+      "Vital signs": "BP 116/72 mmHg, HR 72, weight 67 kg, BMI 24.",
+      "Examination": "MSE: mildly tired, mood low, affect reactive, no psychosis, no thoughts of self-harm.",
+      "Investigations": "EPDS total 14 (item 10 = 0). TSH 1.9 mIU/L, Hb 124 g/L, ferritin 38 micrograms/L."
+    },
+    "lead_in": "Which is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Reassure her this is normal tiredness and review in 3 months",
+        "correct": false,
+        "rationale": "An EPDS score >=13 indicates probable depression and warrants further assessment and intervention, not simple reassurance (COPE Perinatal Guidelines; beyondblue).",
+        "source_refs": ["COPE Perinatal Mental Health Guidelines", "beyondblue: EPDS"]
+      },
+      {
+        "letter": "B",
+        "text": "Arrange clinical diagnostic interview, offer evidence-based psychological therapy and consider antidepressant pharmacotherapy with shared decision-making, and arrange repeat EPDS in 2-4 weeks",
+        "correct": true,
+        "rationale": "An EPDS score >=13 with item-10 score 0 indicates probable depression without acute self-harm risk; COPE recommends diagnostic interview, evidence-based psychological therapy (CBT or IPT), discussion of antidepressants (sertraline is the preferred SSRI in breastfeeding), and active follow-up with repeat EPDS (COPE Perinatal Mental Health Guidelines).",
+        "source_refs": ["COPE Perinatal Mental Health Guidelines", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "C",
+        "text": "Refer urgently to crisis mental health team for same-day assessment",
+        "correct": false,
+        "rationale": "Same-day crisis review is indicated when item 10 (self-harm) is positive or there are imminent safety concerns; her item 10 is 0 and she has no acute risk markers (COPE Perinatal Guidelines).",
+        "source_refs": ["COPE Perinatal Mental Health Guidelines"]
+      },
+      {
+        "letter": "D",
+        "text": "Stop breastfeeding and commence venlafaxine 75 mg daily",
+        "correct": false,
+        "rationale": "Sertraline and paroxetine are the SSRIs of choice in breastfeeding (low milk transfer); stopping breastfeeding is not necessary and SNRI is not first-line (COPE; AMH; LactMed).",
+        "source_refs": ["COPE Perinatal Mental Health Guidelines", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "E",
+        "text": "Repeat EPDS in 2 weeks before any further action",
+        "correct": false,
+        "rationale": "Delaying assessment for 2 weeks after a clearly elevated score does not align with COPE recommendations for prompt diagnostic clarification and treatment offer (COPE Perinatal Guidelines).",
+        "source_refs": ["COPE Perinatal Mental Health Guidelines"]
+      }
+    ],
+    "explanation": {
+      "summary": "COPE recommends routine antenatal and postnatal EPDS screening. EPDS >=13 indicates probable depression; 10-12 indicates possible depression warranting repeat in 2-4 weeks. Any positive item 10 (self-harm) requires same-day risk assessment regardless of total score. Treatment options align with severity, breastfeeding status, and patient preference.",
+      "key_points": [
+        "EPDS >=13: probable depression - clinical interview, treatment offer, follow-up",
+        "EPDS 10-12: possible depression - repeat in 2-4 weeks plus supportive measures",
+        "EPDS item 10 positive: same-day risk assessment regardless of total",
+        "Sertraline = preferred SSRI in pregnancy and breastfeeding (AU consensus)",
+        "Always pair pharmacotherapy with psychological therapy + practical supports"
+      ],
+      "pearls": "EPDS misses anxiety-predominant presentations; supplement with a focused anxiety screen if symptoms include panic, intrusive thoughts or constant worry."
+    },
+    "sources": [
+      {"label": "COPE Perinatal Mental Health Guidelines", "url": "https://www.cope.org.au/health-professionals/health-professionals-3/clinical-practice-guidelines/"},
+      {"label": "beyondblue: EPDS", "url": "https://www.beyondblue.org.au/"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/"}
+    ],
+    "reference_ranges": ["thyroid", "iron_studies", "fbc"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-013",
+    "topic": "Psychiatry",
+    "subtopic": "Generalised anxiety disorder - first-line management",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["GAD", "CBT", "SSRI", "first-line"],
+    "stem": "A 26-year-old accountant attends her GP for 9 months of persistent excessive worry about work performance, finances, her parents' health, and her partner's commute safety. She describes feeling \"wound up\" most days, struggling to relax even on weekends, irritability that her partner has noticed, broken sleep with difficulty falling asleep due to ruminating, muscle tension across her shoulders, and difficulty concentrating at work. She drinks one or two glasses of wine on weekends, no smoking, and exercises three times weekly. There has been no discrete panic episode, no avoidance pattern fitting agoraphobia or social anxiety, no obsessions or compulsions, no trauma history, and no low mood or anhedonia. K-10 is 24 and GAD-7 is 15. Bloods (TSH, FBC, EUC) are normal and her caffeine intake is moderate (two coffees a day).",
+    "data_table": {
+      "Examination": "MSE: mildly anxious, no psychomotor change, no psychotic features, insight good.",
+      "Investigations": "GAD-7 15 (moderate), K-10 24, TSH 1.7 mIU/L, Hb 134 g/L, Na 140 mmol/L."
+    },
+    "lead_in": "Which is the most appropriate first-line management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Diazepam 5 mg twice daily for 6 weeks while she organises psychological therapy",
+        "correct": false,
+        "rationale": "Benzodiazepines are not first-line for GAD due to dependence, tolerance, cognitive effects and withdrawal; eTG Psychotropic recommends short-term (<2 weeks) use only for severe acute distress (Therapeutic Guidelines: Psychotropic; AMH).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "B",
+        "text": "Cognitive behavioural therapy as first-line with a Mental Health Treatment Plan, and discuss SSRI (e.g. escitalopram 10 mg daily) if no improvement at 6-8 weeks or if patient preference",
+        "correct": true,
+        "rationale": "eTG Psychotropic and RANZCP recommend evidence-based psychological therapy (CBT) as first-line for mild-to-moderate GAD, with SSRI/SNRI added if no response or if patient prefers medication first; a Mental Health Treatment Plan funds up to 10 psychology sessions per calendar year (Therapeutic Guidelines: Psychotropic; RANZCP).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "RANZCP CPG: Mood Disorders 2020"]
+      },
+      {
+        "letter": "C",
+        "text": "Propranolol 40 mg as required",
+        "correct": false,
+        "rationale": "Propranolol can reduce peripheral autonomic symptoms in performance/social anxiety but is not a treatment for generalised worry of GAD (AMH; eTG).",
+        "source_refs": ["Australian Medicines Handbook", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "D",
+        "text": "Mirtazapine 30 mg nocte",
+        "correct": false,
+        "rationale": "Mirtazapine has weight gain and sedation as primary effects and is not first-line for GAD; first-line pharmacotherapy when chosen is an SSRI (e.g. escitalopram, sertraline) or SNRI (e.g. venlafaxine, duloxetine) (eTG Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "E",
+        "text": "Avoid caffeine and review in 6 months",
+        "correct": false,
+        "rationale": "Lifestyle modification alone is insufficient for moderate GAD with functional impact; structured psychological therapy and review at a shorter interval are required (eTG; RANZCP).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      }
+    ],
+    "explanation": {
+      "summary": "GAD = excessive, hard-to-control worry on most days for at least 6 months PLUS at least 3 of restlessness, fatigue, concentration difficulty, irritability, muscle tension, sleep disturbance PLUS functional impairment. First-line treatment is CBT; first-line pharmacotherapy when medication is indicated is an SSRI or SNRI, started at low dose because of initial anxiogenic effect.",
+      "key_points": [
+        "CBT first-line for mild-moderate GAD",
+        "First-line drug: SSRI (escitalopram, sertraline) or SNRI (venlafaxine, duloxetine)",
+        "Start at half the usual depression-starting dose to mitigate initial agitation",
+        "Benzodiazepines: <2 weeks only and not first-line",
+        "Online CBT (e.g. This Way Up, MindSpot) is PBS-aligned and effective"
+      ],
+      "pearls": "GAD-7 cut-offs: 5 mild, 10 moderate, 15 severe; pair with functional impact when choosing intensity of intervention."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"},
+      {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/"}
+    ],
+    "reference_ranges": ["thyroid", "fbc", "uec"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-014",
+    "topic": "Psychiatry",
+    "subtopic": "Panic disorder - diagnosis and discrimination from medical causes",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["panic disorder", "agoraphobia", "phaeochromocytoma", "DSM-5"],
+    "stem": "A 28-year-old marketing manager has been to the emergency department three times in the past 8 weeks with episodes of sudden palpitations, chest tightness, shortness of breath, dizziness, paraesthesia in her hands and a feeling of impending doom. Each episode peaks within 10 minutes and resolves within 30. She is increasingly avoiding shopping centres and her work commute on the train, and now drives only short familiar routes. Her ECGs in the ED have been normal, troponins negative, TSH 1.8 mIU/L, electrolytes normal, plasma metanephrines (sent at her GP's request after the second presentation) normal, 24-hour Holter monitor normal, and a recent echocardiogram unremarkable. She drinks one coffee daily, no alcohol, no illicit drugs, no recent medication changes, and has no past medical history. She is normotensive at every visit (highest 128/82), euthyroid clinically, and has no tremor, no flushing, no headaches between episodes.",
+    "data_table": {
+      "Vital signs": "BP 124/78 mmHg, HR 78, T 36.6 deg C, RR 16, SpO2 99% RA.",
+      "Examination": "MSE: anxious about future episodes, no psychotic features. Cardiorespiratory exam normal.",
+      "Investigations": "Multiple normal ECGs, troponins, TSH 1.8 mIU/L, EUC, plasma free metanephrines normal, Holter normal, TTE normal."
+    },
+    "lead_in": "Which diagnosis best fits her presentation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Panic disorder with agoraphobia",
+        "correct": true,
+        "rationale": "DSM-5 panic disorder = recurrent unexpected panic attacks (peak within minutes, 4+ symptoms) PLUS at least 1 month of persistent worry about further attacks OR maladaptive behaviour change; agoraphobia is the marked fear/avoidance of 2+ of 5 situations (public transport, open spaces, enclosed spaces, queues/crowds, being alone outside home) (DSM-5; eTG Psychotropic; RANZCP).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "RANZCP CPG: Mood Disorders 2020"]
+      },
+      {
+        "letter": "B",
+        "text": "Phaeochromocytoma",
+        "correct": false,
+        "rationale": "Plasma free metanephrines are the screening test of choice and are normal; sustained or paroxysmal hypertension, headaches and flushing are also typical and absent here (eTG Endocrinology).",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "C",
+        "text": "Generalised anxiety disorder",
+        "correct": false,
+        "rationale": "GAD is characterised by pervasive worry on most days for at least 6 months across multiple domains, not discrete episodic surges of panic with phobic avoidance (DSM-5; eTG).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "D",
+        "text": "Paroxysmal atrial fibrillation",
+        "correct": false,
+        "rationale": "A 24-hour Holter and multiple ECGs in symptomatic ED visits have been normal; while a single Holter does not rule out infrequent paroxysmal AF, in the absence of any ECG documentation panic disorder is the most likely diagnosis (eTG Cardiovascular).",
+        "source_refs": ["Therapeutic Guidelines: Cardiovascular"]
+      },
+      {
+        "letter": "E",
+        "text": "Hyperthyroidism",
+        "correct": false,
+        "rationale": "TSH is normal (1.8 mIU/L), and there are no clinical features (tremor, heat intolerance, weight loss) to support thyrotoxicosis (eTG Endocrinology).",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+      }
+    ],
+    "explanation": {
+      "summary": "Panic disorder is diagnosed clinically once medical mimics (arrhythmia, thyrotoxicosis, phaeochromocytoma, substance intoxication/withdrawal) have been reasonably excluded. Agoraphobia commonly co-exists and shapes treatment (exposure-based CBT critical). First-line treatment is CBT; first-line pharmacotherapy is an SSRI started at low dose.",
+      "key_points": [
+        "Panic attack = abrupt surge of intense fear peaking within minutes, 4+ of 13 symptoms",
+        "Panic disorder = recurrent unexpected attacks + 1 month of worry or behaviour change",
+        "Agoraphobia: 2+ situations from public transport, open/enclosed spaces, queues/crowds, alone outside home",
+        "First-line: CBT with interoceptive and in vivo exposure; SSRI (sertraline, escitalopram) if drug indicated",
+        "Avoid PRN benzodiazepines - they undermine exposure learning"
+      ],
+      "pearls": "Patients with panic disorder frequently present to ED with chest pain; document the screening already done so future ED clinicians can move efficiently to reassurance and follow-up."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"},
+      {"label": "Therapeutic Guidelines: Endocrinology", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Therapeutic Guidelines: Cardiovascular", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["thyroid", "uec"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-015",
+    "topic": "Psychiatry",
+    "subtopic": "OCD vs OCPD vs PTSD discrimination",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["OCD", "OCPD", "PTSD", "differential diagnosis"],
+    "stem": "A 35-year-old paramedic presents to a psychologist for assessment. She describes spending 2 to 3 hours each evening repeatedly checking that the front door is locked, the gas is off, and that her ambulance bag is fully stocked. She acknowledges that the checking is excessive and irrational, finds the urge intensely distressing, and the rituals interfere with her sleep and family life. She also describes recurrent intrusive images of a fatal paediatric resuscitation she attended 18 months ago, occasional flashbacks triggered by sirens, and avoidance of certain suburbs where the call occurred. She no longer enjoys her work and has been on light duties for 4 months. She is not perfectionistic at baseline, does not collect lists or rules, is socially warm and flexible. She has no past psychiatric history, drinks 4 standard drinks per week, no illicit substances. Sleep is broken by both nightmares and rituals; mood is low but secondary to the above.",
+    "data_table": {
+      "Examination": "MSE: anxious, congruent affect, intrusive thoughts and avoidance, insight preserved, no psychotic features.",
+      "Investigations": "K-10 27, PCL-5 49 (above clinical threshold). Bloods unremarkable."
+    },
+    "lead_in": "Which combination of diagnoses best fits her presentation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Obsessive-compulsive disorder AND post-traumatic stress disorder",
+        "correct": true,
+        "rationale": "She meets DSM-5 OCD (intrusive, ego-dystonic obsessions and time-consuming compulsions with insight) AND PTSD (intrusive re-experiencing, avoidance, negative cognitions/mood, hyperarousal lasting > 1 month after an index trauma); the conditions are commonly comorbid in emergency-services workers (Phoenix Australia PTSD Guidelines; RANZCP).",
+        "source_refs": ["Phoenix Australia PTSD Guidelines 2020", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "B",
+        "text": "Obsessive-compulsive personality disorder only",
+        "correct": false,
+        "rationale": "OCPD is a pervasive lifelong pattern of perfectionism, rigidity and preoccupation with rules/order with limited insight and is ego-syntonic; she lacks baseline perfectionism and her checking is ego-dystonic and distressing (DSM-5; RANZCP BPD/PD).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "C",
+        "text": "Generalised anxiety disorder",
+        "correct": false,
+        "rationale": "GAD features broad worry about everyday matters without ritualised compulsions or trauma-related re-experiencing; does not fully account for her presentation (DSM-5; eTG).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "D",
+        "text": "Post-traumatic stress disorder only",
+        "correct": false,
+        "rationale": "PTSD captures her re-experiencing, avoidance and hyperarousal but not the ritualised, time-consuming compulsions which fit OCD; both are present (Phoenix Australia PTSD Guidelines).",
+        "source_refs": ["Phoenix Australia PTSD Guidelines 2020"]
+      },
+      {
+        "letter": "E",
+        "text": "Adjustment disorder with anxious mood",
+        "correct": false,
+        "rationale": "Adjustment disorder applies when a stressor causes symptoms not meeting another disorder; she meets criteria for at least two specific DSM-5 disorders (DSM-5).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      }
+    ],
+    "explanation": {
+      "summary": "OCD features ego-dystonic obsessions and time-consuming compulsions with preserved insight, while OCPD is an ego-syntonic personality style of rigidity and perfectionism. PTSD requires an identifiable index trauma plus re-experiencing, avoidance, negative cognition/mood, and hyperarousal for > 1 month. Comorbidity is high in first responders.",
+      "key_points": [
+        "OCD: ego-dystonic, time-consuming (>1 hr/day) compulsions, insight usually preserved",
+        "OCPD: ego-syntonic personality style, perfectionism, rigidity, present since young adulthood",
+        "PTSD: index trauma + 4 symptom clusters (re-experiencing, avoidance, negative cognition/mood, hyperarousal) > 1 month",
+        "Acute stress disorder: same features as PTSD but 3 days - 1 month",
+        "Phoenix Australia (formerly ACPMH) is the Australian PTSD authority"
+      ],
+      "pearls": "Always screen first responders, defence and police for both PTSD AND OCD plus AUD - comorbidity is the rule, not the exception."
+    },
+    "sources": [
+      {"label": "Phoenix Australia PTSD Guidelines 2020", "url": "https://www.phoenixaustralia.org/australian-guidelines-for-ptsd/"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-016",
+    "topic": "Psychiatry",
+    "subtopic": "PTSD - first-line treatment choice",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["PTSD", "TF-CBT", "EMDR", "Phoenix Australia"],
+    "stem": "A 41-year-old former soldier presents to his GP 14 months after returning from a deployment where he witnessed a fatal IED incident. He describes nightly nightmares, intrusive images on most days, marked avoidance of news and crowds, persistent negative beliefs that the world is dangerous, hypervigilance, exaggerated startle, insomnia and irritability. He has a PCL-5 score of 54 (above clinical threshold). He is not currently suicidal, is engaged in work part-time, drinks 6 standard drinks per evening (AUDIT 16) and uses no illicit substances. He is engaged with Open Arms Veterans and Families Counselling and is keen to consider trauma-focused therapy. He has not previously had pharmacotherapy or psychological treatment for PTSD. He has hypertension treated with amlodipine 5 mg daily (BP 132/82). He has no allergies, no cardiac disease and no significant past psychiatric history.",
+    "data_table": {
+      "Vital signs": "BP 132/82 mmHg, HR 76, BMI 28.",
+      "Examination": "MSE: anxious, hypervigilant, mood low, no psychotic features, no current SI.",
+      "Investigations": "PCL-5 54, AUDIT 16, K-10 31, TSH 2.1 mIU/L, LFTs ALT 38 (normal)."
+    },
+    "lead_in": "Which is the most appropriate first-line treatment?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Diazepam 5 mg as required for nightmares and hypervigilance",
+        "correct": false,
+        "rationale": "Benzodiazepines are not recommended in PTSD; they impair fear extinction learning critical to trauma-focused therapy and worsen long-term outcomes (Phoenix Australia PTSD Guidelines; AMH).",
+        "source_refs": ["Phoenix Australia PTSD Guidelines 2020", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "B",
+        "text": "Trauma-focused psychological therapy (trauma-focused CBT or eye movement desensitisation and reprocessing) and address alcohol use concurrently",
+        "correct": true,
+        "rationale": "Phoenix Australia and RANZCP rank trauma-focused CBT (including prolonged exposure and cognitive processing therapy) and EMDR as equally strong first-line treatments for PTSD with stronger evidence than pharmacotherapy; co-occurring alcohol use disorder needs concurrent management (Phoenix Australia PTSD Guidelines 2020).",
+        "source_refs": ["Phoenix Australia PTSD Guidelines 2020", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "C",
+        "text": "Sertraline 50 mg daily as first-line monotherapy",
+        "correct": false,
+        "rationale": "SSRIs (sertraline, paroxetine) and venlafaxine are second-line behind trauma-focused psychotherapy and are reserved for cases where psychotherapy is unavailable, ineffective or declined, or as adjunct (Phoenix Australia PTSD Guidelines; eTG Psychotropic).",
+        "source_refs": ["Phoenix Australia PTSD Guidelines 2020", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "D",
+        "text": "Quetiapine 25 mg nocte and lifestyle advice only",
+        "correct": false,
+        "rationale": "Antipsychotics are not first-line for core PTSD symptoms; low-dose quetiapine for sleep is unsupported and carries metabolic and movement-disorder risks (Phoenix Australia; AMH).",
+        "source_refs": ["Phoenix Australia PTSD Guidelines 2020", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "E",
+        "text": "Critical incident stress debriefing within the next 2 weeks",
+        "correct": false,
+        "rationale": "Single-session debriefing is not recommended and may worsen outcomes in established PTSD; structured trauma-focused therapy delivered over multiple sessions is required (Phoenix Australia PTSD Guidelines).",
+        "source_refs": ["Phoenix Australia PTSD Guidelines 2020"]
+      }
+    ],
+    "explanation": {
+      "summary": "Phoenix Australia ranks trauma-focused CBT (prolonged exposure, cognitive processing therapy) and EMDR as equally strong first-line treatments for PTSD. Pharmacotherapy (SSRIs sertraline or paroxetine, or SNRI venlafaxine) is second-line or adjunctive. Co-occurring substance use disorder must be managed concurrently, not as a barrier to trauma therapy.",
+      "key_points": [
+        "First-line PTSD: trauma-focused CBT OR EMDR",
+        "Second-line pharmacotherapy: sertraline, paroxetine, venlafaxine",
+        "Benzodiazepines: avoid (impair extinction learning)",
+        "Antipsychotics: not first-line; consider only for refractory psychotic symptoms",
+        "Open Arms Veterans and Families Counselling is the major Australian veteran service"
+      ],
+      "pearls": "Prazosin 1-15 mg nocte may help trauma nightmares in selected cases when therapy alone is insufficient (Phoenix Australia)."
+    },
+    "sources": [
+      {"label": "Phoenix Australia PTSD Guidelines 2020", "url": "https://www.phoenixaustralia.org/australian-guidelines-for-ptsd/"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/"}
+    ],
+    "reference_ranges": ["thyroid", "lfts"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-017",
+    "topic": "Psychiatry",
+    "subtopic": "Social anxiety disorder - performance subtype management",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["social anxiety", "propranolol", "performance", "CBT"],
+    "stem": "A 24-year-old violinist auditioning for an orchestral position presents to her GP 4 weeks before her audition. She describes intense fear of trembling hands, sweating and a quavering voice during public performance, but is socially comfortable in everyday interactions, meeting new people, and giving casual presentations at her teaching work. She has never had a panic attack outside performance situations, and has no avoidance of social settings, no generalised worry, no obsessive-compulsive features and no trauma history. She has previously taken a beta blocker borrowed from a colleague before one audition with good effect but is unsure of the dose. She has no asthma, no diabetes, no heart block, no hypotension and no medication allergies. She has access to a psychologist through a Mental Health Treatment Plan and is open to longer-term therapy after the audition. Resting HR 78, BP 116/74.",
+    "data_table": {
+      "Vital signs": "BP 116/74 mmHg, HR 78, RR 14, SpO2 99% RA, BMI 22.",
+      "Examination": "MSE: mildly anxious about audition, otherwise normal. Cardiorespiratory exam normal.",
+      "Investigations": "Resting ECG sinus rhythm rate 78, PR 152 ms. TSH 1.6 mIU/L, EUC normal."
+    },
+    "lead_in": "Which is the most appropriate management for the audition?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Propranolol 10-40 mg orally approximately 1 hour before the performance as required, plus referral for cognitive behavioural therapy for longer-term management",
+        "correct": true,
+        "rationale": "Performance-only social anxiety responds well to short-term beta blockade (propranolol 10-40 mg approximately 1 hour pre-event) which blunts peripheral autonomic symptoms (tremor, tachycardia) without affecting cognition; CBT is first-line for longer-term and generalised social anxiety (eTG Psychotropic; AMH).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "B",
+        "text": "Diazepam 5 mg orally 1 hour before the performance as required",
+        "correct": false,
+        "rationale": "Benzodiazepines impair fine motor performance and cognition and are not preferred for performance anxiety where a clear sensorimotor task is required (AMH; eTG Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "C",
+        "text": "Sertraline 50 mg daily commencing immediately",
+        "correct": false,
+        "rationale": "SSRIs are first-line for generalised social anxiety disorder but take 4-6 weeks to act and can paradoxically worsen anxiety in the first 1-2 weeks; not appropriate when the symptoms are situation-specific and the trigger is in 4 weeks (eTG Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "D",
+        "text": "Quetiapine 25 mg orally as required pre-performance",
+        "correct": false,
+        "rationale": "Quetiapine is not indicated for performance anxiety; sedation impairs fine motor control and metabolic side effects outweigh benefit (AMH; eTG Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "E",
+        "text": "Cannabidiol oil prior to performance",
+        "correct": false,
+        "rationale": "CBD does not have established evidence for performance anxiety in Australian guidelines and is not first-line; quality control and PBS access are also limiting (eTG Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      }
+    ],
+    "explanation": {
+      "summary": "DSM-5 social anxiety disorder has a performance-only specifier when fear is restricted to public performance. Episodic, situation-specific symptoms with no general social impairment respond well to beta blockade (propranolol) used as required prior to events. Generalised social anxiety is treated with CBT first-line; SSRIs (paroxetine, sertraline, escitalopram) are first-line pharmacotherapy.",
+      "key_points": [
+        "Performance subtype: propranolol 10-40 mg orally 30-60 min pre-event PRN",
+        "Generalised social anxiety: CBT first-line; SSRI/SNRI if drug indicated",
+        "Avoid beta blockers in asthma, heart block, hypotension, decompensated heart failure",
+        "Avoid benzodiazepines for performance (motor/cognitive impairment)",
+        "Always pair short-term symptomatic relief with referral for ongoing therapy"
+      ],
+      "pearls": "Trial the propranolol at a similar low-stakes event before the actual audition - some patients get marked bradycardia or fatigue at higher doses."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/"},
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"}
+    ],
+    "reference_ranges": ["thyroid", "uec"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-018",
+    "topic": "Psychiatry",
+    "subtopic": "Antidepressant discontinuation syndrome - recognition",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["discontinuation syndrome", "venlafaxine", "SNRI", "tapering"],
+    "stem": "A 36-year-old man presents to his GP 4 days after stopping venlafaxine XR 150 mg daily, which he had taken for 8 months for moderate depression. He stopped abruptly while on a 5-day camping trip after forgetting to pack his medication. Over the past 48 hours he has developed flu-like symptoms with no fever, dizziness on standing, brief electric-shock sensations in his head when he turns it (\"brain zaps\"), nausea, insomnia with vivid dreams, low mood, irritability and anxiety. He has not had any new infectious contacts, no head trauma, no headache and no neurological deficit. He has no chest pain, no palpitations, no diarrhoea or vomiting. He still has his original venlafaxine prescription at home. His depression had remitted well on treatment and he had not yet discussed planned cessation with his GP.",
+    "data_table": {
+      "Vital signs": "BP 120/78 mmHg lying, 108/70 standing, HR 80 lying, 96 standing, T 36.6 deg C, RR 16, SpO2 99% RA.",
+      "Examination": "Mildly tremulous, normal neurological exam, no neck stiffness, no rash.",
+      "Investigations": "FBC, UEC, CRP unremarkable. ECG sinus rhythm QTc 410 ms."
+    },
+    "lead_in": "Which is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Restart venlafaxine XR 150 mg daily, monitor for symptom resolution within 24 to 72 hours, and plan a gradual taper with his GP over several weeks once stable",
+        "correct": true,
+        "rationale": "These features (FINISH: Flu-like, Insomnia, Nausea, Imbalance, Sensory disturbance/brain zaps, Hyperarousal) within days of stopping a short-half-life serotonergic agent are classic antidepressant discontinuation syndrome; restarting the original drug typically resolves symptoms within 24-72 hours, then a slow taper over several weeks reduces recurrence (Therapeutic Guidelines: Psychotropic; AMH).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "B",
+        "text": "Reassure him that this is depressive relapse and start mirtazapine 30 mg nocte",
+        "correct": false,
+        "rationale": "Onset within days of cessation, prominent somatic and sensory features (brain zaps, dizziness) and short timeframe fit discontinuation syndrome, not relapse which typically takes weeks to months; switching antidepressant is unnecessary (eTG Psychotropic; AMH).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "C",
+        "text": "Lumbar puncture and IV antibiotics for suspected meningitis",
+        "correct": false,
+        "rationale": "He is afebrile with no neck stiffness, no headache, no rash and a clear pharmacological explanation (eTG; clinical exclusion).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "D",
+        "text": "Admit for IV fluids and treat as viral gastroenteritis",
+        "correct": false,
+        "rationale": "Mild nausea without vomiting or diarrhoea and normal bloods do not warrant admission, and this misses the diagnosis (eTG Gastrointestinal).",
+        "source_refs": ["Therapeutic Guidelines: Gastrointestinal"]
+      },
+      {
+        "letter": "E",
+        "text": "Increase venlafaxine to 225 mg daily once restarted",
+        "correct": false,
+        "rationale": "There is no evidence of inadequate treatment response; reinstating the previous effective dose is appropriate and avoids dose-related adverse effects (eTG Psychotropic; AMH).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "Australian Medicines Handbook"]
+      }
+    ],
+    "explanation": {
+      "summary": "Discontinuation syndrome occurs within days of stopping or markedly reducing a serotonergic antidepressant, especially short-half-life agents (paroxetine, venlafaxine). The FINISH mnemonic captures the clinical picture: Flu-like, Insomnia, Nausea, Imbalance, Sensory disturbance (brain zaps), Hyperarousal/anxiety. Distinguish from relapse by onset within days, sensory features, and rapid resolution on reinstating the drug.",
+      "key_points": [
+        "Highest risk: paroxetine, venlafaxine (short half-lives); lowest: fluoxetine",
+        "FINISH features begin within 1-7 days, peak within 1 week",
+        "Restart same drug at previous dose; resolves within 24-72 hours",
+        "Taper over weeks (longer for paroxetine, venlafaxine); slower in elderly and long-term users",
+        "Distinguish from relapse: relapse takes weeks-months and lacks sensory/flu-like features"
+      ],
+      "pearls": "Counsel every antidepressant patient at initiation that abrupt cessation can cause withdrawal-like symptoms; written advice and a planned taper at the time of discontinuation reduces unplanned cessation."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/"},
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"}
+    ],
+    "reference_ranges": ["fbc", "uec", "inflammatory_markers"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-019",
+    "topic": "Psychiatry",
+    "subtopic": "MDD with melancholic features in older adult",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["melancholic depression", "older adult", "psychomotor retardation", "ECT"],
+    "stem": "A 74-year-old retired accountant is brought to clinic by his daughter with a 4-month history of progressively worsening low mood, total loss of interest in his lifelong hobby of bridge, marked early morning waking by 0330, 8 kg unintentional weight loss, profound guilt that he is \"ruining the family financially\" despite stable superannuation, and pervasive slowing of speech and movement noted by family. He describes his mood as distinctly worse in the morning, lifting somewhat by afternoon. He has had passive suicidal thoughts but no plan. He has not had hallucinations or delusions. He has had two previous depressive episodes in his 50s, both responding to escitalopram. His current medications are ramipril 5 mg, atorvastatin 20 mg, and metformin 1 g BD. Bloods including TSH, FBC, EUC, LFTs, B12, folate, calcium and HbA1c are unremarkable. MMSE today is 27/30 (lost 2 on serial sevens, 1 on recall, attributed to concentration not cognitive decline). His daughter is highly engaged.",
+    "data_table": {
+      "Vital signs": "BP 132/82 mmHg, HR 64, weight 68 kg (down from 76).",
+      "Examination": "MSE: severe psychomotor retardation, monotone speech, depressed affect, mood-congruent worthlessness; no psychosis. MMSE 27/30.",
+      "Investigations": "TSH 1.6, B12 410, folate 18, calcium 2.38, HbA1c 6.8%, eGFR 78. ECG sinus 60 QTc 420 ms."
+    },
+    "lead_in": "Which feature most specifically supports an MDD specifier of melancholic features?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Loss of pleasure in nearly all activities AND morning-worse diurnal mood variation, early morning waking, marked psychomotor retardation, and excessive guilt",
+        "correct": true,
+        "rationale": "DSM-5 melancholic features require loss of pleasure in nearly all activities (or lack of reactivity to pleasurable stimuli) PLUS at least three of: distinct quality of depressed mood, morning-worse mood, early morning waking >=2 hours, marked psychomotor change, significant weight loss/anorexia, excessive/inappropriate guilt - met multiple times (DSM-5; RANZCP Mood Disorders CPG).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "B",
+        "text": "Past responsiveness of his depression to escitalopram",
+        "correct": false,
+        "rationale": "Treatment response history informs choice but is not part of the melancholic specifier criteria (DSM-5).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020"]
+      },
+      {
+        "letter": "C",
+        "text": "Age over 65 and recent retirement",
+        "correct": false,
+        "rationale": "Demographic factors are not part of DSM-5 specifier criteria, although melancholic depression is more common in older adults (DSM-5; RANZCP CPG).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020"]
+      },
+      {
+        "letter": "D",
+        "text": "Presence of passive suicidal ideation without plan",
+        "correct": false,
+        "rationale": "Suicidal ideation contributes to severity assessment but is not a melancholic-specifier feature (DSM-5).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020"]
+      },
+      {
+        "letter": "E",
+        "text": "Hyperphagia and increased sleep with leaden paralysis",
+        "correct": false,
+        "rationale": "These describe atypical features (mood reactivity, increased appetite/weight, hypersomnia, leaden paralysis, interpersonal rejection sensitivity), the opposite specifier (DSM-5; RANZCP CPG).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020"]
+      }
+    ],
+    "explanation": {
+      "summary": "Melancholic depression is characterised by anhedonia + biological symptoms (early waking, morning-worse mood, weight loss, psychomotor change) + excessive guilt. It is more common in older adults, has a stronger biological substrate, less placebo response, and a relatively better response to TCAs and ECT compared to atypical features. Distinguish from pseudodementia (improves with treatment, no progressive cognitive decline).",
+      "key_points": [
+        "Melancholic specifier: anhedonia + >=3 of distinct quality of mood, AM-worse, EM waking >=2h, marked psychomotor change, weight loss/anorexia, excessive guilt",
+        "Atypical specifier: mood reactivity + >=2 of weight gain/appetite increase, hypersomnia, leaden paralysis, rejection sensitivity",
+        "Older-adult MDD: lower MMSE may reflect pseudodementia - reassess after treatment",
+        "ECT highly effective in melancholic and psychotic depression",
+        "Always rule out organic mimics (thyroid, B12, calcium, hypoactive delirium)"
+      ],
+      "pearls": "If MMSE rises by >=2 after successful treatment of depression, the original cognitive decline was likely pseudodementia (depressive cognitive impairment), not an early dementia."
+    },
+    "sources": [
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Black Dog Institute: Melancholic depression", "url": "https://www.blackdoginstitute.org.au/"}
+    ],
+    "reference_ranges": ["thyroid", "vitamins", "calcium_corrected", "glucose_hba1c"],
+    "created": "2026-05-18"
+  },
+  {
+    "id": "psych-mood-020",
+    "topic": "Psychiatry",
+    "subtopic": "Atypical depression - feature recognition and management",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["atypical depression", "mood reactivity", "rejection sensitivity", "MAOI"],
+    "stem": "A 28-year-old woman has had recurrent depression since adolescence. She describes that her mood lifts noticeably when good things happen (a friend visits, she gets praised at work) but plunges back within hours. She sleeps 11 hours daily including a 2-hour afternoon nap, has gained 12 kg in 9 months, experiences a profound \"leaden paralysis\" sensation in her limbs that makes physical activity feel impossible, and is acutely sensitive to perceived criticism or rejection (a tone of voice from her supervisor preoccupies her for days). She has had two prior trials of antidepressants: sertraline 100 mg for 10 weeks (partial response, PHQ-9 16 to 12) and escitalopram 20 mg for 12 weeks (no further improvement). She has no manic or hypomanic episodes, no psychotic features, no substance use, no eating disorder. She has well-controlled hypothyroidism on thyroxine 75 mcg with TSH 1.8. There are no other medical comorbidities, no allergies, and she does not drive and does not consume tyramine-rich foods often. She is in regular CBT with a psychologist for 4 months without major change.",
+    "data_table": {
+      "Vital signs": "BP 122/78 mmHg, HR 72, weight 84 kg, BMI 30.",
+      "Examination": "MSE: depressed mood with episodic brightening, weight gain, hypersomnolence, leaden affect; no psychotic features. MMSE 30/30.",
+      "Investigations": "PHQ-9 18, TSH 1.8 mIU/L, FBC, UEC, LFTs unremarkable, fasting BSL 5.2, HbA1c 5.6%."
+    },
+    "lead_in": "Which is the most appropriate next pharmacological step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Cross-taper to phenelzine, a monoamine oxidase inhibitor, with dietary tyramine restriction, washout from current SSRI (at least 2 weeks), and specialist supervision",
+        "correct": true,
+        "rationale": "Atypical depression features (mood reactivity + hypersomnia, hyperphagia/weight gain, leaden paralysis, interpersonal rejection sensitivity) classically respond preferentially to MAOIs (phenelzine, tranylcypromine) over SSRIs/TCAs, supported by historical RCT data; after two failed SSRI trials, escalation to an MAOI under specialist supervision with washout and dietary education is appropriate (Therapeutic Guidelines: Psychotropic; AMH; RANZCP Mood Disorders CPG 2020).",
+        "source_refs": ["RANZCP CPG: Mood Disorders 2020", "Therapeutic Guidelines: Psychotropic", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "B",
+        "text": "Add a tricyclic antidepressant (nortriptyline 50 mg nocte) to her current SSRI",
+        "correct": false,
+        "rationale": "Adding a TCA to an SSRI risks elevated TCA levels (especially CYP2D6-inhibited SSRIs) and is not the recommended next step in atypical depression; class evidence favours MAOI for atypical features (eTG Psychotropic; AMH).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "C",
+        "text": "Increase her SSRI dose beyond licensed maximum and add bupropion",
+        "correct": false,
+        "rationale": "Exceeding licensed maximum dose risks QT prolongation (escitalopram) without proven benefit; bupropion is not registered for depression in Australia (it is registered only for smoking cessation as Zyban) (AMH; eTG Psychotropic).",
+        "source_refs": ["Australian Medicines Handbook", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "D",
+        "text": "Substitute mirtazapine 30 mg nocte",
+        "correct": false,
+        "rationale": "Mirtazapine causes further weight gain and sedation, worsening her existing weight gain and hypersomnia, and lacks specific evidence for atypical features (AMH; eTG Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "E",
+        "text": "Add levothyroxine 25 mcg to her current dose despite normal TSH",
+        "correct": false,
+        "rationale": "Thyroid augmentation (T3) is sometimes used in TRD but adding T4 in a euthyroid patient does not have evidence for atypical features and risks iatrogenic thyrotoxicosis (AMH; eTG Endocrinology).",
+        "source_refs": ["Australian Medicines Handbook", "Therapeutic Guidelines: Endocrinology"]
+      }
+    ],
+    "explanation": {
+      "summary": "Atypical depression (DSM-5 specifier) = mood reactivity + 2 or more of significant weight gain or appetite increase, hypersomnia, leaden paralysis, long-standing interpersonal rejection sensitivity. Historical RCTs (Liebowitz) demonstrated superior response to MAOIs over TCAs in atypical depression. After failure of two adequate SSRI trials, escalation to an MAOI under specialist supervision is a defensible next step, with strict attention to washout periods and dietary restriction.",
+      "key_points": [
+        "Atypical features: mood reactivity + >=2 of weight gain/hyperphagia, hypersomnia, leaden paralysis, rejection sensitivity",
+        "MAOIs: phenelzine, tranylcypromine, moclobemide (RIMA - less dietary restriction)",
+        "MAOI washouts: 2 weeks from most SSRIs, 5 weeks from fluoxetine, 1+ week from SNRI",
+        "Tyramine-rich foods to avoid with irreversible MAOIs: aged cheese, cured meats, fermented soy, broad bean pods, draught beer",
+        "Always check for occult bipolarity (look-alike for atypical depression in young women)"
+      ],
+      "pearls": "If atypical features are accompanied by hypomanic episodes, the diagnosis is bipolar II and an MAOI is inappropriate without mood stabiliser cover - re-screen carefully before initiation."
+    },
+    "sources": [
+      {"label": "RANZCP CPG: Mood Disorders 2020", "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/mood-disorders-cpg"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/"},
+      {"label": "Therapeutic Guidelines: Endocrinology", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["thyroid", "glucose_hba1c", "lfts"],
+    "created": "2026-05-18"
+  }
+]
