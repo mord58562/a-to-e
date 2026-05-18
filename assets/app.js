@@ -391,7 +391,7 @@
     // Randomise the closing well-wish: 1/3 English, 1/3 Latin, 1/3 Greek.
     const luck = document.getElementById("luckPhrase");
     if (luck) {
-      const phrases = ["Good luck.", "Dī bene vertant.", "Τύχῃ ἀγαθῇ"];
+      const phrases = ["Good luck.", "Dī bene vertant.", "Τύχῃ ἀγαθῇ."];
       luck.textContent = phrases[Math.floor(Math.random() * 3)];
     }
 
@@ -889,6 +889,7 @@
     const panel = document.getElementById("refPanel");
     panel.hidden = false;
     panel.setAttribute("aria-hidden", "false");
+    document.body.classList.add("refs-open");
     const lb = document.getElementById("labsBtn");
     if (lb) lb.classList.add("active");
     document.getElementById("rangesSearch").value = "";
@@ -899,6 +900,7 @@
     const panel = document.getElementById("refPanel");
     panel.hidden = true;
     panel.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("refs-open");
     const lb = document.getElementById("labsBtn");
     if (lb) lb.classList.remove("active");
   }

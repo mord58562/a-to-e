@@ -807,6 +807,29 @@ body[data-screen="quiz"] main { padding-top: 16px; }
 }
 .ref-panel[hidden] { display: flex !important; visibility: hidden; pointer-events: none; }
 .ref-panel:not([hidden]) { transform: translateX(0); visibility: visible; pointer-events: auto; }
+
+/* When the reference panel is open on a desktop-class viewport, shift
+ * the reading column left by half the panel width so it stays centred
+ * in the visible area to the left of the panel. The column doesn't
+ * resize - just slides - so reading width and rhythm are preserved.
+ * Below the threshold (1240px = 820 col + 420 panel) we don't shift,
+ * since the overlap is unavoidable and the user can close the panel.
+ */
+@media (min-width: 1240px) {
+  .reading,
+  main > .prose,
+  .reading-head,
+  .quiz-topbar .qt-inner,
+  #qtList {
+    transition: transform 0.22s ease;
+  }
+  body.refs-open .reading,
+  body.refs-open main > .prose,
+  body.refs-open .quiz-topbar .qt-inner,
+  body.refs-open #qtList {
+    transform: translateX(-210px);
+  }
+}
 .ref-head {
   padding: 14px 18px;
   border-bottom: 1px solid var(--line);
