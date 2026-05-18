@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260518l" />
+<link rel="stylesheet" href="assets/styles.css?v=20260518m" />
 </head>
 <body data-screen="home" class="locked">
 
@@ -375,24 +375,6 @@
 
       <h3 class="paste-head">Paste new questions</h3>
       <p class="dim small paste-hint">Paste the JSON array the LLM produced. The site validates, then submits it to the live bank for everyone (or, if the remote backend is unreachable, stores it in this browser).</p>
-      <div class="paste-model-row">
-        <label for="pasteModel" class="paste-model-label">Which LLM made these?</label>
-        <select id="pasteModel" class="paste-model-select">
-          <option value="Claude Opus 4.x">Claude Opus 4.x</option>
-          <option value="Claude Sonnet 4.x">Claude Sonnet 4.x</option>
-          <option value="Claude (other)">Claude (other / older)</option>
-          <option value="ChatGPT 5.x">ChatGPT 5.x</option>
-          <option value="ChatGPT 4.x">ChatGPT 4.x</option>
-          <option value="ChatGPT (other)">ChatGPT (other)</option>
-          <option value="Gemini 2.x">Gemini 2.x</option>
-          <option value="Gemini (other)">Gemini (other)</option>
-          <option value="Copilot">Copilot</option>
-          <option value="DeepSeek">DeepSeek</option>
-          <option value="Grok">Grok</option>
-          <option value="Other">Other</option>
-          <option value="unknown" selected>Unknown / not sure</option>
-        </select>
-      </div>
       <textarea id="pasteBox" class="paste-box" placeholder='[ { "id": "paeds-batch-renal-001", "topic": "Paediatrics", ... } ]' spellcheck="false" autocomplete="off"></textarea>
       <div class="prompt-actions">
         <button id="pasteAddBtn" class="primary">Add to the bank</button>
@@ -578,7 +560,9 @@ REJECTED EXAMPLE (47-word stem labelled 4/5 - actually below 1/5 floor):
   cohort, recent travel), more specific bloods (WCC, neutrophils, CRP,
   lactate, sodium with SIADH implication), neuroimaging-decision
   context (raised-ICP signs), corticosteroid-timing context,
-  Indigenous-status-specific protocol consideration.
+  Aboriginal and Torres Strait Islander health considerations where
+  relevant (e.g. ARF prophylaxis status, MeNZB cohort, regional
+  protocol).
 
 Lead-in questions should test ONE of:
   - "What is the most appropriate NEXT step in management?" (not first)
@@ -889,9 +873,10 @@ MEDICINE:
   {
     "id": "<paeds-NNN | obgyn-NNN | psych-NNN | med-NNN | batch-name-NNN>",
     "topic": "Paediatrics" | "Obstetrics & Gynaecology" | "Psychiatry" | "Medicine",
-    "subtopic": "<specific learning point; e.g. Respiratory, Early pregnancy, Mood, Cardiology>",
+    "subtopic": "<broad learning area, e.g. Respiratory, Early pregnancy, Mood: depression, Cardiology>",
+    "subtopic_detail": "<optional more granular learning point, e.g. 'Acute severe asthma - magnesium escalation'>",
     "difficulty": 3 | 4 | 5,
-    "model": "<your model name, e.g. Claude Opus 4.5 / ChatGPT 5 / Gemini 2.x - be specific>",
+    "model": "<MANDATORY: your model name, e.g. 'Claude Opus 4.7 (1M context)', 'ChatGPT 5', 'Gemini 2.5 Pro'. Do NOT leave blank or write 'unknown'.>",
     "tags": ["<learning-point tag>", "<condition tag>", ...],
     "stem": "<120-220 word clinical vignette>",
     "data_table": {
@@ -938,16 +923,42 @@ MEDICINE:
   - NO em-dashes (U+2014). Use space-hyphen-space ` - ` only.
   - NO emojis.
   - NO references to any specific university, course code, OSCE rubric,
-    Joint Medical Program, UNE, or similar uni-specific framing.
+    Joint Medical Program, UNE, or similar uni-specific framing in the
+    QUESTIONS. The site has a JMP-student audience framing in the UI
+    chrome; that does not change the rule for question content.
+  - NEVER use the abbreviation "ATSI". Spell out "Aboriginal and Torres
+    Strait Islander" in full for general references; use only the
+    applicable half ("Aboriginal" OR "Torres Strait Islander") when a
+    specific person's heritage is named. Applies to stems, options,
+    rationales, explanations, sources, tags, and subtopic labels.
+  - NEVER use the word "canonical" in any output (rationales,
+    explanations, summaries, descriptions of source content,
+    pearls). It is a permanently banned word for this maintainer.
+    Use "primary", "core", "main", "live", or "promoted" instead.
   - Each question is FULLY STANDALONE - assume the renderer shuffles
     option order at runtime, so don't refer to "option C" in rationales.
   - SELF-DECLARE your model in the top-level `model` field on every
-    question (e.g. "Claude Opus 4.5", "ChatGPT 5", "Gemini 2.x"). Be
-    SPECIFIC about the version. This is used by the maintainer to track
+    question, MANDATORY. e.g. "Claude Opus 4.7 (1M context)",
+    "ChatGPT 5", "Gemini 2.5 Pro". Be SPECIFIC about the version (not
+    just "Claude"). This is mandatory - the maintainer does NOT manually
+    set this; if you leave it blank or write "unknown", the user has
+    no way to recover the attribution. This is how the maintainer tracks
     which LLM is producing which calibre of question.
   - DIFFICULTY HONESTY: rate strictly per Section 1 - the maintainer
     re-rates every question and historical generators have over-rated
     by 1-2. If unsure, rate DOWN, not up.
+  - HIGH-YIELD ONLY: the bank exists for exam prep, NOT subspecialty
+    training. Cover bread-and-butter presentations deeply; cap niche
+    subspecialty topics at 1-2 questions per topic (e.g., don't write
+    deep paediatric haem-onc protocols, FIGO sub-stage management, or
+    rare genetic syndromes beyond top 10). When in doubt: is this
+    likely to appear on a Y4 exam OR in an intern's first year? If not,
+    skip it.
+  - AUDITABLE BY DESIGN: every question gets a "Report issue" button on
+    the live site. Reports trigger an audit pass that re-reads the stem,
+    options, rationales, and sources. Write so your batch survives audit
+    on first read: defensible distractors, traceable claims, calibrated
+    difficulty, no anti-patterns.
   - Valid JSON only. Validate with `python3 -c "import json; json.load(open('FILE'))"`.
 
 ============================
@@ -1029,6 +1040,6 @@ visible to the maintainer in the commentary view.
 Output the final JSON array. Nothing else.
 </script>
 
-<script src="assets/app.js?v=20260518l" defer></script>
+<script src="assets/app.js?v=20260518m" defer></script>
 </body>
 </html>
