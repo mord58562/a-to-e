@@ -397,7 +397,8 @@
         "सौभाग्यम्।",
         "Ни пýха ни перá.",
         "Sretno Ti Bilo.",
-        "Kila la kheri."
+        "Kila la kheri.",
+        "بالتوفيق."
       ];
       luck.textContent = phrases[Math.floor(Math.random() * phrases.length)];
     }
