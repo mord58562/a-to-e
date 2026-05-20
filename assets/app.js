@@ -399,7 +399,7 @@
         "祝你好运。",
         "幸運を祈ります。",
         "حظًا سعيدًا.",
-        "Удачи.",
+        "Ни пýха ни перá.",
         "Go n-éirí an t-ádh leat."
       ];
       luck.textContent = phrases[Math.floor(Math.random() * phrases.length)];
