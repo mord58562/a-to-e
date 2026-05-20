@@ -1,66 +1,68 @@
 [
   {
-    "id": "paeds-rash-001",
+    "id": "paeds-rash-001-l3",
     "topic": "Paediatrics",
     "subtopic": "Dermatology",
     "subtopic_detail": "Roseola - recognition of post-defervescence rash pattern",
-    "difficulty": 1,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "viral exanthem"
     ],
-    "stem": "A 14-month-old fully immunised boy is reviewed in a suburban general practice after his mother noticed a pink rash that appeared this morning. He had three days of high fever to 39.7 deg C that resolved overnight, during which he was irritable but feeding and alert between spikes. Today he is afebrile, playful, and back to baseline. There has been no cough, coryza, conjunctivitis, oral lesions, or diarrhoea. The rash is blanching and maculopapular over the neck and trunk with sparse spread to proximal limbs, sparing the face, palms, and soles. No lymphadenopathy is found. Capillary refill is under two seconds, mucous membranes are moist, and there is no nuchal rigidity. He attends family daycare. No household members have been unwell. He has no drug allergies. The MMR vaccine is due at 18 months and has not yet been given.",
+    "stem": "A 14-month-old fully immunised boy is reviewed in suburban general practice after three days of high fever to 39.7 deg C that resolved overnight. He is now afebrile and playful with a blanching, maculopapular, trunk-predominant rash that appeared this morning, sparing face, palms and soles. He has had no cough, coryza, conjunctivitis, oral lesions, or diarrhoea. There is no lymphadenopathy and no meningism, capillary refill is under two seconds, and mucous membranes are moist. He attends family daycare, where a 4-year-old sibling of another child has confirmed measles diagnosed yesterday by the public health unit and other children with similar fever-then-rash presentations have been seen at this practice in the past fortnight. The MMR vaccine is due at 18 months and has not yet been given. There is no household member who is immunocompromised or pregnant. The mother asks about diagnosis, time off daycare, and whether her son needs anything more.",
     "data_table": {
       "Vital signs": "T 36.8 deg C (previously 39.7), HR 118, RR 28, SpO2 99% RA",
       "Examination": "Blanching pink maculopapular rash on trunk/neck, sparing face/palms/soles; no Koplik spots, no conjunctivitis, no lymphadenopathy",
       "Immunisations": "Up to date for age (MMR not yet due)"
     },
-    "lead_in": "Which is the single most likely diagnosis?",
+    "lead_in": "Which combination of diagnosis and exclusion advice is most appropriate?",
     "options": [
       {
         "letter": "A",
-        "text": "Measles with the classic prodrome having now settled into the rash phase",
-        "correct": false,
-        "rationale": "Measles requires high fever PLUS cough, coryza, conjunctivitis, with Koplik spots and a rash starting on the face/hairline spreading caudally - none of which are present here (NCIRS: Measles).",
+        "text": "Roseola infantum; he may return to family daycare once afebrile and well, with no formal childcare exclusion period required under Australian guidance",
+        "correct": true,
+        "rationale": "Fever-then-rash in a well 6 to 24-month-old (trunk-predominant blanching rash after defervescence) is classical roseola (HHV-6). Under NHMRC Staying Healthy and RCH guidance, roseola does not require formal childcare exclusion; exclusion ends once the child is afebrile and well, per NHMRC Staying Healthy and RCH CPG: Viral exanthems.",
         "source_refs": [
-          "NCIRS: Measles fact sheet"
+          "RCH CPG: Viral exanthems",
+          "NHMRC Staying Healthy"
         ]
       },
       {
         "letter": "B",
-        "text": "Rubella with mild post-auricular lymphadenopathy that has been missed on examination",
+        "text": "Measles given the daycare contact; exclude from family daycare for 4 days from rash onset and notify the public health unit",
         "correct": false,
-        "rationale": "Rubella typically has tender suboccipital/post-auricular lymphadenopathy with a pink maculopapular rash starting on the face and spreading caudally, often with mild fever during the rash - this child has no lymphadenopathy and the rash spares the face (RCH CPG: Rubella).",
+        "rationale": "Measles requires fever PLUS cough, coryza or conjunctivitis with a cephalocaudal rash, none of which are present here; the well, post-defervescence trunk-predominant rash is roseola. Notification is required for measles but is not appropriate here, per NCIRS: Measles fact sheet and RCH CPG: Viral exanthems.",
+        "source_refs": [
+          "NCIRS: Measles fact sheet",
+          "RCH CPG: Viral exanthems"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Rubella; exclude from family daycare for 7 days from rash onset and arrange confirmatory serology before any return",
+        "correct": false,
+        "rationale": "Rubella shows tender suboccipital and post-auricular lymphadenopathy with a face-first cephalocaudal rash, not the trunk-predominant post-defervescence pattern seen here, per RCH CPG: Rubella.",
         "source_refs": [
           "RCH CPG: Rubella"
         ]
       },
       {
-        "letter": "C",
-        "text": "Roseola infantum due to human herpesvirus 6 with rash appearing after defervescence",
-        "correct": true,
-        "rationale": "The hallmark pattern of roseola (exanthem subitum) is 3 to 5 days of high fever in a well-appearing infant 6 to 24 months old, followed by a blanching maculopapular trunk-predominant rash appearing AS the fever resolves (RCH CPG: Viral exanthems; StatPearls: Roseola).",
-        "source_refs": [
-          "RCH CPG: Viral exanthems",
-          "StatPearls: Roseola"
-        ]
-      },
-      {
         "letter": "D",
-        "text": "Erythema infectiosum (slapped cheek) with the second-stage lacy rash phase",
+        "text": "Scarlet fever; commence oral phenoxymethylpenicillin 15 mg/kg twice daily for 10 days and exclude from daycare for 24 hours after starting antibiotics",
         "correct": false,
-        "rationale": "Parvovirus B19 starts with the characteristic facial erythema (slapped cheek), followed days later by a lacy reticular rash on the limbs - both features are absent here and the trunk-only distribution does not fit (RCH CPG: Viral exanthems).",
+        "rationale": "Scarlet fever has a sandpaper-textured rash with strawberry tongue, exudative pharyngitis and circumoral pallor; none are present and antibiotics are not indicated, per eTG: Group A streptococcal infection.",
         "source_refs": [
-          "RCH CPG: Viral exanthems"
+          "eTG: Group A streptococcal infection"
         ]
       },
       {
         "letter": "E",
-        "text": "Scarlet fever with sandpaper rash and circumoral pallor evolving over the trunk",
+        "text": "Roseola infantum; commence oral aciclovir 20 mg/kg four times daily for 5 days and exclude from daycare for the duration of treatment",
         "correct": false,
-        "rationale": "Scarlet fever has a sandpaper-textured rash, strawberry tongue, circumoral pallor and concurrent (not post) fever after a streptococcal pharyngitis - the texture and concurrent sore throat are absent (eTG: Group A streptococcal infection).",
+        "rationale": "Roseola is self-limiting; antivirals are not indicated in immunocompetent infants, and there is no daycare-exclusion requirement beyond being afebrile and well, per RCH CPG: Viral exanthems and NHMRC Staying Healthy.",
         "source_refs": [
-          "eTG: Group A streptococcal infection"
+          "RCH CPG: Viral exanthems",
+          "NHMRC Staying Healthy"
         ]
       }
     ],
@@ -101,69 +103,70 @@
     "created": "2026-05-19"
   },
   {
-    "id": "paeds-rash-002",
+    "id": "paeds-rash-002-l3",
     "topic": "Paediatrics",
     "subtopic": "Dermatology",
     "subtopic_detail": "Measles - prodrome and Koplik spots before rash onset",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "viral exanthem",
       "measles"
     ],
-    "stem": "A 3-year-old unimmunised boy presents to a regional Victorian emergency department with four days of progressive illness. He has had high fever to 39.8 deg C, a barking moist cough, profuse coryza and red watery eyes that are sensitive to light. He returned 10 days ago from a 3-week family trip to Vietnam, where he visited relatives in a rural province. He has had no rash to date. His parents declined the routine immunisations on personal grounds; he has had no MMR. He has no drug allergies and no significant past medical history. On examination he appears miserable, with a temperature of 39.6 deg C, heart rate 138, respiratory rate 32, SpO2 97% room air. He has bilateral non-purulent conjunctival injection, clear nasal discharge, and on close inspection of the buccal mucosa opposite the second molars there are several 1 to 2 mm bluish-white papules on an erythematous base. There is no rash on the skin, no lymphadenopathy, and chest examination is clear.",
+    "stem": "A 3-year-old unimmunised boy is brought to a regional Victorian emergency department with four days of fever to 39.8 deg C, barking moist cough, profuse coryza, and red watery photophobic eyes. He returned 10 days ago from a 3-week family trip to a rural province in Vietnam. He has no skin rash yet. On examination he is miserable with bilateral non-purulent conjunctivitis, clear nasal discharge, and several 1 to 2 mm bluish-white papules on an erythematous base on the buccal mucosa opposite the second molars. Temperature 39.6 deg C, HR 138, RR 32, SpO2 97 percent room air. He has no rash, no lymphadenopathy, chest is clear, and he is haemodynamically stable. He is currently in an open paediatric ED bay alongside other waiting children, including a 6-month-old infant and a pregnant accompanying parent. You strongly suspect measles based on Koplik spots and the three Cs.",
     "data_table": {
       "Vital signs": "T 39.6 deg C, HR 138, RR 32, SpO2 97% RA, BP 95/55",
       "Examination": "Bilateral conjunctivitis, coryza, productive cough, Koplik spots on buccal mucosa; no skin rash yet",
       "History": "Unimmunised; recent travel from Vietnam 10 days ago",
       "Investigations": "Pending"
     },
-    "lead_in": "Which feature in this presentation is most specific for the underlying diagnosis?",
+    "lead_in": "Which next step is most appropriate before laboratory confirmation?",
     "options": [
       {
         "letter": "A",
-        "text": "Bilateral non-purulent bulbar conjunctival injection with photophobia and clear discharge",
-        "correct": false,
-        "rationale": "Conjunctivitis is one of the 'three Cs' of measles but is non-specific and also occurs in adenovirus, Kawasaki disease, and other viral illnesses (NCIRS: Measles fact sheet).",
+        "text": "Move him to a negative-pressure single room with airborne and contact precautions, and phone the public health unit to begin notification now",
+        "correct": true,
+        "rationale": "Measles is a notifiable disease in all Australian jurisdictions and clinical suspicion (especially with Koplik spots and an epidemiological link) triggers immediate isolation in a negative-pressure room with airborne and contact precautions and same-day phone notification to the public health unit BEFORE laboratory confirmation, to enable rapid contact tracing and PEP within the windows (MMR within 72 h, NHIG within 7 days), per CDNA: Measles SoNG and NCIRS: Measles fact sheet.",
         "source_refs": [
+          "CDNA: Measles SoNG",
           "NCIRS: Measles fact sheet"
         ]
       },
       {
         "letter": "B",
-        "text": "Bluish-white papules on the buccal mucosa opposite the second molars",
-        "correct": true,
-        "rationale": "Koplik spots are pathognomonic for measles, appearing 1 to 2 days before the cutaneous rash on the buccal mucosa opposite the molars; they are virtually never seen in any other condition (NCIRS: Measles fact sheet; CDNA: Measles SoNG).",
+        "text": "Send measles IgM and PCR (throat swab and urine) and await laboratory confirmation before notifying public health or isolating",
+        "correct": false,
+        "rationale": "Waiting for laboratory confirmation before isolation and notification breaches Australian public health practice and delays contact tracing and post-exposure prophylaxis for susceptible contacts (the infant and pregnant parent in the bay), per CDNA: Measles SoNG.",
         "source_refs": [
-          "NCIRS: Measles fact sheet",
           "CDNA: Measles SoNG"
         ]
       },
       {
         "letter": "C",
-        "text": "Four days of persistent fever above 39 deg C in an unimmunised preschool child",
+        "text": "Place him in a standard single room with droplet precautions only and await senior review before any notification action",
         "correct": false,
-        "rationale": "Prolonged high fever in an unimmunised child raises concern for many infections including occult bacterial sepsis and Kawasaki disease, and is not specific for measles (RCH CPG: Fever in children).",
+        "rationale": "Measles is airborne; droplet precautions alone are inadequate and a negative-pressure room with N95 respirator entry is required, per CDNA: Measles SoNG.",
         "source_refs": [
-          "RCH CPG: Fever in children"
+          "CDNA: Measles SoNG"
         ]
       },
       {
         "letter": "D",
-        "text": "Recent return from a 3-week family trip to a measles-endemic country",
+        "text": "Administer stat MMR vaccine and oral vitamin A 200 000 IU now, then discharge with isolation advice and review tomorrow",
         "correct": false,
-        "rationale": "Travel is an important epidemiological risk factor that should prompt consideration of measles, but it is not itself diagnostically specific in an individual patient (CDNA: Measles SoNG).",
+        "rationale": "MMR is contraindicated in active suspected measles infection; vitamin A is recommended in confirmed cases of severe measles but does not replace isolation, notification, and inpatient assessment, and discharge before notification is unsafe, per WHO Measles guidelines and CDNA: Measles SoNG.",
         "source_refs": [
           "CDNA: Measles SoNG"
         ]
       },
       {
         "letter": "E",
-        "text": "Profuse coryza with a productive barking cough in a febrile child",
+        "text": "Commence empirical IV ceftriaxone 50 mg/kg and admit for full sepsis workup including lumbar puncture before any isolation measures",
         "correct": false,
-        "rationale": "Coryza and cough are part of the measles prodrome but are common to many respiratory viral infections (RSV, influenza, adenovirus, parainfluenza) and are not specific (NCIRS: Measles fact sheet).",
+        "rationale": "The clinical picture is classical measles, not bacterial sepsis or meningitis; antibiotics and LP are not indicated and isolation plus notification take priority, per RCH CPG: Febrile child and CDNA: Measles SoNG.",
         "source_refs": [
-          "NCIRS: Measles fact sheet"
+          "RCH CPG: Febrile child",
+          "CDNA: Measles SoNG"
         ]
       }
     ],
@@ -678,67 +681,68 @@
     "created": "2026-05-19"
   },
   {
-    "id": "paeds-rash-008",
+    "id": "paeds-rash-008-l3",
     "topic": "Paediatrics",
     "subtopic": "Dermatology",
     "subtopic_detail": "Scarlet fever - recognition and antibiotic selection",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "exanthem"
     ],
-    "stem": "A 7-year-old previously well girl is brought to general practice in Sydney with a 2-day history of fever and sore throat, and a rash that began today on her neck and chest before spreading to the trunk. She has no cough, coryza, or conjunctivitis. She is alert and well perfused. Temperature 38.6 deg C, heart rate 110, respiratory rate 22, SpO2 99% room air. Her tongue has prominent fungiform papillae visible against a coated background. Tonsils are enlarged with exudate, and there is tender anterior cervical lymphadenopathy. The rash is a fine, blanching, erythematous papular eruption with a sandpaper texture, accentuated in the antecubital and inguinal flexures, with relative sparing of the perioral area. She has no significant past medical history, no drug allergies, and is fully immunised. She has not travelled and lives in a non-remote setting with no Aboriginal or Torres Strait Islander identification recorded.",
+    "stem": "A 7-year-old previously well Aboriginal girl from a remote community in the Northern Territory is reviewed during a paediatric outreach clinic in her community with a 2-day history of fever, sore throat and a rash that began today on the neck and chest before spreading to the trunk. She has no cough, coryza, or conjunctivitis. Temperature 38.6 deg C, HR 110, RR 22, SpO2 99 percent room air, capillary refill under two seconds. On examination she has a fine, blanching, erythematous papular eruption with a sandpaper texture accentuated in the antecubital and inguinal flexures, prominent fungiform papillae against a coated tongue, exudative tonsillitis, tender anterior cervical lymphadenopathy, and circumoral pallor. She has no known drug allergies, is fully immunised, has no history of acute rheumatic fever, and the family confirms she will be staying in community for at least the next two weeks. Throat swab for group A streptococcus has been collected. There is no current penicillin shortage in the community pharmacy.",
     "data_table": {
       "Vital signs": "T 38.6 deg C, HR 110, RR 22, SpO2 99% RA",
       "Examination": "Sandpaper rash with flexural accentuation, strawberry tongue, exudative tonsillitis, tender cervical nodes, circumoral pallor",
       "History": "No allergies; non-remote setting; fully immunised"
     },
-    "lead_in": "Which is the most appropriate first-line antibiotic regimen?",
+    "lead_in": "Which first-line antibiotic regimen is most appropriate?",
     "options": [
       {
         "letter": "A",
-        "text": "Symptomatic care with paracetamol and reassurance, no antibiotics required at this stage",
+        "text": "Oral phenoxymethylpenicillin 15 mg/kg (up to 500 mg) twice daily for 10 days, with community follow-up at completion",
         "correct": false,
-        "rationale": "Confirmed or strongly suspected GAS pharyngitis with the scarlatiniform exanthem warrants antibiotics in Australia to reduce suppurative and non-suppurative complications including acute rheumatic fever (eTG: Group A streptococcal pharyngitis).",
+        "rationale": "Oral phenoxymethylpenicillin 10 days is first-line in non-high-ARF-risk Australian settings, but in high-ARF-risk settings (Aboriginal and Torres Strait Islander children in remote/regional areas, Maori and Pacific children) the preferred regimen is a single dose of IM benzathine benzylpenicillin to ensure compliance and prevent acute rheumatic fever, per RHDAustralia ARF Guideline and eTG: Group A streptococcal pharyngitis.",
         "source_refs": [
+          "RHDAustralia ARF Guideline",
           "eTG: Group A streptococcal pharyngitis"
         ]
       },
       {
         "letter": "B",
-        "text": "Oral amoxicillin twice daily for 7 days as a more palatable alternative",
-        "correct": false,
-        "rationale": "Amoxicillin is an acceptable alternative when penicillin V palatability is an issue, but it is not first-line in eTG and the duration should still be 10 days for GAS eradication (eTG: Group A streptococcal pharyngitis).",
+        "text": "Single IM benzathine benzylpenicillin (900 mg if 20 kg or more, 450 mg if under 20 kg) administered now",
+        "correct": true,
+        "rationale": "In an Aboriginal child from a high-ARF-risk remote setting with clinical scarlet fever (group A streptococcal pharyngitis with toxin-mediated exanthem), a single dose of IM benzathine benzylpenicillin is the recommended Australian regimen to guarantee adherence and reduce ARF and post-streptococcal glomerulonephritis risk, per RHDAustralia ARF Guideline and eTG: Group A streptococcal pharyngitis.",
         "source_refs": [
+          "RHDAustralia ARF Guideline",
           "eTG: Group A streptococcal pharyngitis"
         ]
       },
       {
         "letter": "C",
-        "text": "Oral cefalexin up to 1 g twice daily for 10 days",
+        "text": "Oral amoxicillin 50 mg/kg once daily for 10 days as a more palatable equivalent to first-line oral penicillin",
         "correct": false,
-        "rationale": "Cefalexin is reserved for non-severe penicillin allergy and broader-spectrum than necessary for streptococcal pharyngitis (eTG: Group A streptococcal pharyngitis).",
+        "rationale": "Amoxicillin is acceptable where penicillin V is unpalatable, but in high-ARF-risk settings an IM regimen is preferred to remove adherence as a failure mode, per RHDAustralia ARF Guideline.",
         "source_refs": [
-          "eTG: Group A streptococcal pharyngitis"
+          "RHDAustralia ARF Guideline"
         ]
       },
       {
         "letter": "D",
-        "text": "Oral azithromycin once daily for 5 days as a macrolide alternative",
+        "text": "Oral cefalexin 25 mg/kg (up to 1 g) twice daily for 10 days as initial therapy",
         "correct": false,
-        "rationale": "Macrolides are reserved for severe (anaphylactic) penicillin allergy due to rising macrolide resistance in group A streptococcus (eTG: Group A streptococcal pharyngitis).",
+        "rationale": "Cefalexin is broader-spectrum than necessary and reserved for non-severe penicillin allergy; it is not first-line in either standard or high-ARF-risk Australian settings, per eTG: Group A streptococcal pharyngitis.",
         "source_refs": [
           "eTG: Group A streptococcal pharyngitis"
         ]
       },
       {
         "letter": "E",
-        "text": "Oral phenoxymethylpenicillin up to 500 mg twice daily for 10 days",
-        "correct": true,
-        "rationale": "Scarlet fever is a clinical diagnosis of group A streptococcal pharyngitis with the toxin-mediated exanthem; in non-remote Australia, first-line is phenoxymethylpenicillin 15 mg/kg (max 500 mg) BD for 10 days to eradicate the organism and reduce the risk of acute rheumatic fever and post-streptococcal sequelae (eTG: Group A streptococcal pharyngitis).",
+        "text": "Symptomatic care with paracetamol and reassurance, with antibiotics only if the throat swab returns positive in 48 hours",
+        "correct": false,
+        "rationale": "Clinical scarlet fever with high ARF risk warrants immediate empirical antibiotics; awaiting culture results delays prevention of ARF and is not consistent with Australian guidance, per RHDAustralia ARF Guideline.",
         "source_refs": [
-          "eTG: Group A streptococcal pharyngitis",
-          "RCH CPG: Group A streptococcal disease"
+          "RHDAustralia ARF Guideline"
         ]
       }
     ],
@@ -864,67 +868,68 @@
     "created": "2026-05-19"
   },
   {
-    "id": "paeds-rash-010",
+    "id": "paeds-rash-010-l3",
     "topic": "Paediatrics",
     "subtopic": "Dermatology",
     "subtopic_detail": "Hand-foot-and-mouth disease - recognition and discrimination from HSV",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "viral exanthem"
     ],
-    "stem": "A 22-month-old fully immunised girl is reviewed in general practice with three days of low-grade fever to 38.4 deg C and reduced oral intake. She has been miserable and drooling. Her mother noticed today that she has spots on her hands and feet and inside her mouth. There is a known outbreak of vesicular illness at her childcare centre. On examination she is alert and well-perfused. Temperature 37.6 deg C, heart rate 116, respiratory rate 28, SpO2 99% room air. There are scattered shallow ulcers on the tongue, buccal mucosa, and posterior pharynx, and several small grey-roofed oval vesicles on an erythematous base on the palms, soles, and the dorsa of the hands and feet. There is no clustering around the lips, no gingival inflammation, and no lymphadenopathy. The nappy area also shows a few similar vesicles. Mucous membranes are slightly dry. She has had no past episode of cold sores and no immunocompromising condition.",
+    "stem": "A 22-month-old fully immunised girl is reviewed in general practice with three days of low-grade fever to 38.4 deg C, drooling, and reduced oral intake. Her mother noticed today that she has spots on her hands, feet, and inside her mouth. On examination she is alert and well-perfused. Temperature 37.6 deg C, HR 116, RR 28, SpO2 99 percent room air. There are shallow ulcers on the tongue, buccal mucosa, and posterior pharynx, and several small grey-roofed oval vesicles on an erythematous base on the palms, soles, and dorsa of the hands and feet. There is no lip clustering, no gingival inflammation, and no lymphadenopathy. The nappy area shows a few similar vesicles. Mucous membranes are slightly dry but she has just taken 50 mL of cold water in clinic. There is a known outbreak of vesicular illness at her childcare centre that includes one recent admission to the local children's hospital. You diagnose hand-foot-and-mouth disease. Her mother asks what to do about childcare attendance and what warning signs would warrant urgent return.",
     "data_table": {
       "Vital signs": "T 37.6 deg C, HR 116, RR 28, SpO2 99% RA",
       "Examination": "Oval grey-roofed vesicles on palms/soles/dorsa of hands and feet, shallow oral ulcers including posterior pharynx, sparse nappy-area lesions",
       "History": "Childcare outbreak; fully immunised; no prior cold sores"
     },
-    "lead_in": "Which is the single most likely diagnosis?",
+    "lead_in": "Which combination of childcare exclusion advice and red-flag escalation criteria is most appropriate?",
     "options": [
       {
         "letter": "A",
-        "text": "Primary herpes simplex gingivostomatitis with secondary autoinoculation to the hands",
-        "correct": false,
-        "rationale": "Primary HSV gingivostomatitis causes painful gingivitis with anterior oral vesicles and lip clustering, marked systemic illness, and tender cervical lymphadenopathy - the gum-sparing, posterior-predominant ulcers and acral vesicular distribution here are wrong for HSV (RCH CPG: Viral exanthems; eTG: Herpes simplex).",
-        "source_refs": [
-          "RCH CPG: Viral exanthems",
-          "eTG: Herpes simplex"
-        ]
-      },
-      {
-        "letter": "B",
-        "text": "Varicella with mucosal involvement and acral spread from secondary scratching",
-        "correct": false,
-        "rationale": "Varicella produces crops of lesions in different stages (macule, papule, vesicle, crust) spread mainly over the trunk and face, with much less acral predilection and no characteristic involvement of the palms and soles (RCH CPG: Varicella).",
-        "source_refs": [
-          "RCH CPG: Varicella"
-        ]
-      },
-      {
-        "letter": "C",
-        "text": "Hand-foot-and-mouth disease due to enterovirus, most often coxsackievirus A16 subtype",
+        "text": "Exclude from childcare until all blisters have dried; return urgently for vomiting, ataxia, myoclonus, or reduced wet nappies",
         "correct": true,
-        "rationale": "Oval grey-roofed vesicles on palms, soles, and dorsa of hands and feet, with shallow posterior-predominant oral ulcers, low-grade fever, in a toddler from a childcare outbreak is the classic picture of HFMD due to enterovirus (RCH CPG: Viral exanthems).",
+        "rationale": "Australian guidance (NHMRC Staying Healthy, RCH) recommends childcare exclusion until all blisters have dried (not just until afebrile). Red flags for severe enterovirus disease (especially EV71) include neurological signs (ataxia, myoclonus, irritability), persistent high fever beyond 3 days, persistent vomiting, and inability to maintain hydration, all of which warrant urgent reassessment, per NHMRC Staying Healthy and RCH CPG: Viral exanthems.",
         "source_refs": [
+          "NHMRC Staying Healthy",
           "RCH CPG: Viral exanthems"
         ]
       },
       {
-        "letter": "D",
-        "text": "Herpangina due to coxsackievirus with secondary autoinoculation to the hands",
+        "letter": "B",
+        "text": "Exclude from childcare only until afebrile for 24 hours, then return regardless of any remaining skin lesions",
         "correct": false,
-        "rationale": "Herpangina causes posterior oral vesicles/ulcers WITHOUT acral skin lesions; the presence of typical palmar, plantar, and dorsal lesions makes hand-foot-and-mouth, not herpangina, the diagnosis (RCH CPG: Viral exanthems).",
+        "rationale": "Hand-foot-and-mouth disease requires exclusion until blisters have dried under NHMRC Staying Healthy, not merely until afebrile; the lesions remain shedding virus, per NHMRC Staying Healthy.",
         "source_refs": [
+          "NHMRC Staying Healthy"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "No childcare exclusion required as HFMD is self-limiting; return whenever the child is willing and able",
+        "correct": false,
+        "rationale": "Australian public health guidance does specify formal exclusion until blisters dry for hand-foot-and-mouth disease; no-exclusion advice is incorrect, per NHMRC Staying Healthy.",
+        "source_refs": [
+          "NHMRC Staying Healthy"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence oral aciclovir 20 mg/kg four times daily for 5 days and exclude from childcare for the duration of treatment",
+        "correct": false,
+        "rationale": "Aciclovir has no role in enteroviral HFMD; the diagnosis is not herpes simplex and antivirals are not indicated, per eTG: Herpes simplex and RCH CPG: Viral exanthems.",
+        "source_refs": [
+          "eTG: Herpes simplex",
           "RCH CPG: Viral exanthems"
         ]
       },
       {
         "letter": "E",
-        "text": "Scabies with secondary bacterial impetiginisation of the wrists and feet",
+        "text": "Admit now for IV fluids and serial neurological observations, given the childcare outbreak link to EV71",
         "correct": false,
-        "rationale": "Scabies presents as intensely itchy papules and burrows in finger webs, wrists, axillae, and groin, often with family contacts also itching - the lesion morphology and the oral ulcers here are not consistent (RCH CPG: Scabies).",
+        "rationale": "She is clinically well, alert, perfused, and tolerating oral fluids in clinic; routine admission is not required and supportive outpatient care with explicit red-flag advice is appropriate, per RCH CPG: Viral exanthems.",
         "source_refs": [
-          "RCH CPG: Scabies"
+          "RCH CPG: Viral exanthems"
         ]
       }
     ],
@@ -970,66 +975,66 @@
     "created": "2026-05-19"
   },
   {
-    "id": "paeds-rash-011",
+    "id": "paeds-rash-011-l3",
     "topic": "Paediatrics",
     "subtopic": "Dermatology",
     "subtopic_detail": "Pregnant contact of parvovirus B19 - obstetric implications",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "pregnancy",
       "parvovirus B19"
     ],
-    "stem": "A 32-year-old early childhood teacher who is 18 weeks pregnant attends her GP after multiple confirmed cases of erythema infectiosum (slapped cheek) were diagnosed in the kindergarten class she teaches over the last fortnight. She was in close prolonged indoor contact with two affected children one week ago, before they were excluded with their characteristic facial erythema and lacy peripheral rash. She is asymptomatic with no rash, arthralgia, or fever. This is her second pregnancy; her first was uncomplicated and the child is now in her class. Her morphology scan at 18 weeks last week was reported as structurally normal with appropriate growth and amniotic fluid volume, and she is up to date with routine antenatal care, including the first-trimester combined screen which was low risk. She has no past clinical history of slapped cheek and no documented parvovirus B19 serology on file.",
+    "stem": "A 32-year-old early childhood teacher at 18 weeks of her second pregnancy attends her GP after multiple confirmed cases of erythema infectiosum (slapped cheek) in the kindergarten class she teaches over the past fortnight. She had close prolonged indoor contact with two affected children one week ago, before they were excluded with their characteristic facial erythema and lacy peripheral rash. She is asymptomatic with no rash, arthralgia or fever. Her first pregnancy was uncomplicated and her 4-year-old is in her class. Her 18-week morphology scan last week showed structurally normal anatomy with appropriate growth and amniotic fluid volume, and her first-trimester combined screen was low risk. She has no documented past clinical history of slapped cheek and no parvovirus B19 serology on file. Vital signs are normal, fundal height is consistent with dates, and her physical examination is unremarkable. She specifically asks whether she needs immediate fetal medicine referral or whether further blood tests come first.",
     "data_table": {
       "Vital signs": "T 36.6 deg C, HR 80, RR 16, BP 115/72",
       "Examination": "Normal, no rash, gravid uterus at fundal height consistent with dates",
       "History": "18 weeks pregnant; significant occupational exposure to confirmed parvovirus B19 1 week ago; no documented prior serology"
     },
-    "lead_in": "Which is the most appropriate next investigation?",
+    "lead_in": "Which next investigation or referral is most appropriate?",
     "options": [
       {
         "letter": "A",
-        "text": "Administer normal human immunoglobulin (NHIG) intramuscularly within 7 days of exposure as post-exposure prophylaxis",
-        "correct": false,
-        "rationale": "NHIG is not indicated for parvovirus exposure in pregnancy; there is no proven prophylactic benefit and current Australian guidance recommends serological assessment and surveillance instead (Australian Immunisation Handbook).",
-        "source_refs": [
-          "Australian Immunisation Handbook: Measles"
-        ]
-      },
-      {
-        "letter": "B",
-        "text": "Arrange urgent amniocentesis for parvovirus B19 PCR to detect vertical foetal transmission",
-        "correct": false,
-        "rationale": "Amniocentesis is invasive and is reserved for confirmed maternal infection with evidence of foetal compromise; it is not a first-line investigation in an asymptomatic exposed contact (RANZCOG: Parvovirus in pregnancy).",
-        "source_refs": [
-          "RANZCOG: Parvovirus in pregnancy"
-        ]
-      },
-      {
-        "letter": "C",
-        "text": "Weekly foetal middle cerebral artery (MCA) Doppler velocimetry from now for 12 weeks",
-        "correct": false,
-        "rationale": "MCA Doppler surveillance for foetal anaemia is appropriate AFTER confirmed maternal infection (typically weekly for 8 to 12 weeks); routinely starting it before serology in an exposed but possibly already-immune woman is inappropriate use of resources (RANZCOG: Parvovirus in pregnancy).",
-        "source_refs": [
-          "RANZCOG: Parvovirus in pregnancy"
-        ]
-      },
-      {
-        "letter": "D",
-        "text": "Maternal parvovirus B19 IgG and IgM serology to determine immune status and acute infection",
+        "text": "Maternal parvovirus B19 IgG and IgM serology now, with further action determined by the IgG and IgM pattern",
         "correct": true,
-        "rationale": "Serology distinguishes pre-existing immunity (IgG positive, IgM negative - no further action), susceptible non-infected (both negative - repeat in 4 weeks), and recent infection (IgM positive +/- IgG seroconversion - escalate to MFM for serial foetal ultrasound looking for hydrops) (RANZCOG: Parvovirus in pregnancy; KEMH: Parvovirus B19).",
+        "rationale": "Australian (RANZCOG) and KEMH guidance: serology first is the AU-recommended pathway. IgG positive / IgM negative confirms pre-existing immunity (around 50 percent of women) and no further action is needed. IgG and IgM both negative means susceptible: repeat serology in 4 weeks. IgM positive (or IgG seroconversion) is confirmed recent infection and triggers MFM referral for serial fetal ultrasound and middle cerebral artery (MCA) Doppler velocimetry for at least 8 to 12 weeks, per RANZCOG: Parvovirus in pregnancy and KEMH: Parvovirus B19.",
         "source_refs": [
           "RANZCOG: Parvovirus in pregnancy",
           "KEMH: Parvovirus B19"
         ]
       },
       {
-        "letter": "E",
-        "text": "Reassure and discharge - parvovirus B19 has no documented effect on a pregnancy past 12 weeks",
+        "letter": "B",
+        "text": "Immediate referral to maternal fetal medicine for weekly MCA Doppler velocimetry from now for 12 weeks regardless of serology",
         "correct": false,
-        "rationale": "Maternal parvovirus B19 infection can cause foetal anaemia and hydrops fetalis with the highest risk in the second trimester (around 9 to 20 weeks); discharge without investigation is unsafe at 18 weeks (RANZCOG: Parvovirus in pregnancy).",
+        "rationale": "MCA Doppler surveillance is the correct AFTER-confirmation step but is unnecessary if she is already immune (around 50 percent prevalence) or if serology shows no infection; routine empirical Doppler before serology overcommits resources and is not the AU-recommended pathway, per RANZCOG: Parvovirus in pregnancy.",
+        "source_refs": [
+          "RANZCOG: Parvovirus in pregnancy"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Urgent amniocentesis with parvovirus B19 PCR on amniotic fluid now to confirm or exclude vertical fetal transmission",
+        "correct": false,
+        "rationale": "Amniocentesis is reserved for confirmed maternal infection with evidence of fetal compromise; it is invasive and inappropriate as a first-line investigation in an asymptomatic exposed contact, per RANZCOG: Parvovirus in pregnancy.",
+        "source_refs": [
+          "RANZCOG: Parvovirus in pregnancy"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Intramuscular normal human immunoglobulin (NHIG) administered within 7 days of exposure as parvovirus post-exposure prophylaxis",
+        "correct": false,
+        "rationale": "NHIG is not indicated for parvovirus B19 exposure in pregnancy; there is no proven prophylactic benefit and current Australian guidance recommends serology and surveillance instead, per Australian Immunisation Handbook.",
+        "source_refs": [
+          "Australian Immunisation Handbook"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Reassure and discharge as parvovirus B19 has no documented effect on a pregnancy past 12 weeks gestation",
+        "correct": false,
+        "rationale": "Maternal parvovirus B19 infection can cause fetal anaemia and hydrops fetalis with the highest risk in the second trimester (around 9 to 20 weeks); discharge without serology at 18 weeks is unsafe, per RANZCOG: Parvovirus in pregnancy.",
         "source_refs": [
           "RANZCOG: Parvovirus in pregnancy"
         ]

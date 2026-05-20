@@ -571,68 +571,69 @@
     "created": "2026-05-19"
   },
   {
-    "id": "paeds-haemonc-007",
+    "id": "paeds-haemonc-007-l3",
     "topic": "Paediatrics",
     "subtopic": "Haematology",
     "subtopic_detail": "Definition and recognition of febrile neutropenia",
-    "difficulty": 1,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "febrile neutropenia"
     ],
-    "stem": "A 9-year-old boy on maintenance chemotherapy for B-cell ALL (currently 14 months into therapy) is brought to ED 2 hours after a single recorded oral temperature of 38.4 degC at home. He has had mild coryza but no localising features, no rigors, no rash and no diarrhoea. He took oral paracetamol 1 hour ago. He has a tunnelled central venous access device with no overlying erythema or tenderness. His most recent FBC, taken 3 days ago at clinic, showed Hb 102 g/L, WCC 1.2 x10^9/L, neutrophils 0.3 x10^9/L and platelets 138 x10^9/L. Observations on arrival are T 37.9 degC, HR 116, RR 22, SpO2 98% RA, BP 104/64, capillary refill 2 s. The triage nurse asks whether he meets criteria for febrile neutropenia.",
+    "stem": "A 9-year-old boy on maintenance chemotherapy for B-cell ALL (14 months into therapy) is brought to a metropolitan paediatric ED 2 hours after a single recorded oral temperature of 38.4 deg C at home. He has had mild coryza but no localising features, no rigors, no rash, and no diarrhoea. He took oral paracetamol 1 hour ago. He has a tunnelled central venous access device with no overlying erythema or tenderness, and no recent admissions. He is fully immunised for age and has no known drug allergies. On arrival his temperature is 37.9 deg C, HR 116, RR 22, SpO2 98 percent room air, BP 104/64, capillary refill 2 seconds, and he looks well and is interacting normally. An FBC taken 3 days ago at clinic showed Hb 102 g/L, WCC 1.2, neutrophils 0.3 x10^9/L, platelets 138, and a repeat is in progress now. He meets the RCH definition of febrile neutropenia (single temperature 38.0 deg C or higher with ANC under 0.5). Peripheral and central line cultures are being collected.",
     "data_table": {
       "Vital signs": "T 37.9 degC (38.4 at home), HR 116, RR 22, SpO2 98% RA, BP 104/64.",
       "Examination": "Well-appearing, central line site clean, mild coryza, no localising features.",
       "Investigations": "FBC 3 days ago: Hb 102, WCC 1.2, neutrophils 0.3 x10^9/L, platelets 138.",
       "Medications": "Maintenance chemotherapy for ALL (oral 6-MP, weekly oral methotrexate, intermittent vincristine and steroid pulses)."
     },
-    "lead_in": "Which statement best describes whether he meets the definition of febrile neutropenia?",
+    "lead_in": "Which empirical antibiotic regimen and timing target is most appropriate?",
     "options": [
       {
         "letter": "A",
-        "text": "No - he needs two temperatures 38.0 degC or higher one hour apart",
-        "correct": false,
-        "rationale": "A single recorded temperature 38.0 degC or higher is sufficient under current Australian guidance; the two-temperature rule is outdated (RCH CPG: Febrile neutropenia).",
+        "text": "IV piperacillin-tazobactam within 60 minutes of arrival, adding vancomycin only if shock, suspected line infection, severe mucositis, or known resistant colonisation",
+        "correct": true,
+        "rationale": "Australian paediatric oncology guidance (RCH CPG: Febrile neutropenia, eviQ) recommends empirical anti-pseudomonal beta-lactam monotherapy (piperacillin-tazobactam or cefepime) within 60 minutes of arrival for low-risk well-appearing febrile neutropenia. Empirical vancomycin is reserved for shock, suspected central-line infection, severe mucositis or skin/soft tissue infection, or known resistant Gram-positive colonisation, per RCH CPG: Febrile neutropenia and eviQ Paediatric Fever and neutropenia.",
         "source_refs": [
-          "RCH CPG: Febrile neutropenia"
+          "RCH CPG: Febrile neutropenia",
+          "eviQ Paediatric Fever and neutropenia"
         ]
       },
       {
         "letter": "B",
-        "text": "No - the threshold for neutropenia is below 1.0 x10^9/L",
+        "text": "IV ceftriaxone 50 mg/kg once daily empirically within 60 minutes of arrival, with no anti-pseudomonal cover added",
         "correct": false,
-        "rationale": "The cut-off for neutropenia in the definition is an absolute neutrophil count below 0.5 x10^9/L (some protocols include patients expected to drop below 0.5); his count of 0.3 is below this (RCH CPG: Febrile neutropenia).",
+        "rationale": "Ceftriaxone has inadequate anti-pseudomonal activity for empirical paediatric febrile neutropenia; an anti-pseudomonal beta-lactam (piperacillin-tazobactam, cefepime, or meropenem) is required, per RCH CPG: Febrile neutropenia.",
         "source_refs": [
           "RCH CPG: Febrile neutropenia"
         ]
       },
       {
         "letter": "C",
-        "text": "No - paracetamol given at home invalidates the febrile reading",
+        "text": "IV piperacillin-tazobactam plus empirical IV vancomycin and IV gentamicin within 60 minutes given the indwelling central line in situ",
         "correct": false,
-        "rationale": "An antipyretic dose given at home does not exclude the diagnosis; the highest recorded temperature is used and empirical antibiotics are commenced regardless (RCH CPG: Febrile neutropenia).",
+        "rationale": "Empirical vancomycin and dual Gram-negative cover are not routine; the line is uninflamed and the patient is haemodynamically stable. Routine triple cover increases adverse effects without outcome benefit, per RCH CPG: Febrile neutropenia and eviQ.",
         "source_refs": [
-          "RCH CPG: Febrile neutropenia"
+          "RCH CPG: Febrile neutropenia",
+          "eviQ Paediatric Fever and neutropenia"
         ]
       },
       {
         "letter": "D",
-        "text": "No - he requires a positive blood culture to confirm the diagnosis",
+        "text": "Withhold antibiotics pending the repeat FBC to confirm ongoing neutropenia and pending the blood culture preliminary results",
         "correct": false,
-        "rationale": "Febrile neutropenia is an empirical clinical syndrome defined by temperature and neutrophil count and does not require culture confirmation (RCH CPG: Febrile neutropenia).",
+        "rationale": "Empirical antibiotics within 60 minutes are mandatory; waiting for repeat FBC or culture results delays treatment of a potentially life-threatening sepsis, per RCH CPG: Febrile neutropenia.",
         "source_refs": [
           "RCH CPG: Febrile neutropenia"
         ]
       },
       {
         "letter": "E",
-        "text": "Yes - a single temperature 38.0 degC or higher with ANC below 0.5",
-        "correct": true,
-        "rationale": "Australian paediatric oncology services define febrile neutropenia as a single recorded temperature 38.0 degC or higher in a child with an absolute neutrophil count below 0.5 x10^9/L (or expected to fall below this). This child qualifies and needs empirical IV antibiotics within 60 minutes (RCH CPG: Febrile neutropenia; eviQ).",
+        "text": "Discharge home on oral amoxicillin-clavulanate plus ciprofloxacin with outpatient FBC review tomorrow, given he is well and afebrile",
+        "correct": false,
+        "rationale": "Oral outpatient regimens for low-risk febrile neutropenia are an option only after a period of inpatient observation, stratification, and confirmed culture-negative trajectory in selected protocols; discharge from the ED on oral antibiotics at first contact is unsafe, per RCH CPG: Febrile neutropenia.",
         "source_refs": [
-          "RCH CPG: Febrile neutropenia",
-          "eviQ Paediatric Fever and neutropenia"
+          "RCH CPG: Febrile neutropenia"
         ]
       }
     ],
