@@ -387,7 +387,7 @@
       greet.textContent = `Hi, ${currentProfile.name}.`;
       greet.hidden = false;
     }
-    // Randomise the closing well-wish across ten languages.
+    // Randomise the closing well-wish across the available languages.
     const luck = document.getElementById("luckPhrase");
     if (luck) {
       const phrases = [
@@ -395,12 +395,8 @@
         "Dī bene vertant.",
         "Τύχῃ ἀγαθῇ.",
         "सौभाग्यम्।",
-        "בְּהַצְלָחָה.",
-        "祝你好运。",
-        "幸運を祈ります。",
-        "حظًا سعيدًا.",
         "Ни пýха ни перá.",
-        "Go n-éirí an t-ádh leat."
+        "Sretno Ti Bilo."
       ];
       luck.textContent = phrases[Math.floor(Math.random() * phrases.length)];
     }
