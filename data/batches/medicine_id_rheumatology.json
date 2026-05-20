@@ -752,64 +752,65 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-id-rheum-009",
+    "id": "med-id-rheum-009-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "QuantiFERON-TB Gold over Mantoux in BCG-vaccinated patients",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [],
-    "stem": "A 28-year-old woman who arrived from Vietnam 6 months ago is starting a graduate nursing programme at a metropolitan tertiary hospital. She received BCG vaccination in childhood. She is asymptomatic, with no fever, cough, weight loss or night sweats. She has no household TB contacts and no past TB diagnosis. Pre-employment screening requires assessment for latent tuberculosis infection. She is not immunocompromised, not pregnant and is on no medications. Examination is unremarkable. CXR is clear. She has no chronic medical conditions, no drug allergies and her travel history outside Vietnam is limited to one holiday in Thailand 4 years ago. The hospital infection prevention team requests the most appropriate screening test that performs reliably in BCG-vaccinated individuals. She is willing to undergo whichever investigation is recommended.",
+    "stem": "A 28-year-old woman who arrived from Vietnam 6 months ago is starting a graduate nursing programme at a metropolitan tertiary hospital. She received BCG vaccination in childhood. She is asymptomatic, with no fever, cough, weight loss or night sweats. She has no household TB contacts. She is not immunocompromised, not pregnant, and on no medications. Examination is unremarkable. Pre-employment screening with QuantiFERON-TB Gold returns a positive result. CXR is clear with no parenchymal abnormality, no apical scarring and no calcified granulomata. She has no symptoms or signs of active TB on review. LFTs and HIV serology are normal.",
     "data_table": {
       "Vital signs": "T 36.7, HR 74, BP 118/72.",
       "Examination": "No lymphadenopathy. Chest clear. No erythema nodosum.",
       "Investigations": "CXR clear. FBC normal, LFTs normal, HIV negative.",
       "Medications": "Nil. No allergies."
     },
-    "lead_in": "Which is the most appropriate screening test for latent TB infection in this BCG-vaccinated person?",
+    "lead_in": "Which is the most appropriate next step in management?",
     "options": [
       {
         "letter": "A",
-        "text": "QuantiFERON-TB Gold interferon-gamma release assay sent on venous blood",
-        "correct": false,
-        "rationale": "BAL is invasive and reserved for active disease where sputum is unobtainable. It is inappropriate for latent TB screening in an asymptomatic person (Therapeutic Guidelines: Antibiotic).",
+        "text": "Commence treatment for latent TB infection with rifampicin 600 mg daily for 4 months after baseline LFTs",
+        "correct": true,
+        "rationale": "Positive QuantiFERON with no clinical or radiographic features of active disease confirms latent TB infection. Australian National Tuberculosis Advisory Committee guidance offers 4 months rifampicin or 6 to 9 months isoniazid, with 4 months rifampicin preferred for younger patients due to better completion and lower hepatotoxicity (NTAC; eTG).",
         "source_refs": [
-          "Therapeutic Guidelines: Antibiotic"
+          "National Tuberculosis Advisory Committee",
+          "Therapeutic Guidelines: Antibiotic - Tuberculosis"
         ]
       },
       {
         "letter": "B",
-        "text": "Mantoux (tuberculin skin test) with 10 mm cut-off",
+        "text": "Confirm the positive result with a Mantoux tuberculin skin test before treating",
         "correct": false,
-        "rationale": "Mantoux gives false-positive reactions in BCG-vaccinated individuals and is less specific in this population; QuantiFERON is preferred (NTAC guidance).",
+        "rationale": "Repeat testing with Mantoux in a BCG-vaccinated patient adds no diagnostic value; interferon-gamma release assays are more specific in BCG-vaccinated populations and a single positive is sufficient to diagnose latent TB once active disease is excluded (NTAC).",
         "source_refs": [
           "National Tuberculosis Advisory Committee"
         ]
       },
       {
         "letter": "C",
-        "text": "A single induced sputum specimen sent for acid-fast bacilli microscopy",
+        "text": "Commence full 4-drug active TB therapy with rifampicin, isoniazid, pyrazinamide and ethambutol under directly observed therapy",
         "correct": false,
-        "rationale": "Sputum AFB tests for active pulmonary TB, not latent infection. She is asymptomatic with a normal CXR (Therapeutic Guidelines: Antibiotic).",
+        "rationale": "RIPE therapy treats active TB; she has no symptoms and a clear CXR with normal exam, so latent TB monotherapy is the correct intensity, avoiding pyrazinamide hepatotoxicity (NTAC; eTG).",
         "source_refs": [
-          "Therapeutic Guidelines: Antibiotic"
+          "National Tuberculosis Advisory Committee",
+          "Therapeutic Guidelines: Antibiotic - Tuberculosis"
         ]
       },
       {
         "letter": "D",
-        "text": "Bronchoalveolar lavage for mycobacterial culture under bronchoscopic guidance",
-        "correct": true,
-        "rationale": "Interferon-gamma release assays (QuantiFERON-TB Gold) are preferred over Mantoux in BCG-vaccinated individuals because they use antigens specific to M. tuberculosis (ESAT-6, CFP-10) that are absent from BCG, avoiding false positives (Therapeutic Guidelines: Antibiotic - Tuberculosis; NTAC).",
+        "text": "No treatment; arrange annual chest X-ray surveillance and clinical review for 5 years",
+        "correct": false,
+        "rationale": "Surveillance without preventive therapy misses the opportunity to reduce her lifetime reactivation risk (around 5 to 10 percent); preventive therapy is recommended in healthcare workers with recent migration from a high-incidence country (NTAC).",
         "source_refs": [
-          "Therapeutic Guidelines: Antibiotic",
           "National Tuberculosis Advisory Committee"
         ]
       },
       {
         "letter": "E",
-        "text": "Routine annual chest radiograph alone without any immunological screening test",
+        "text": "Repeat QuantiFERON in 8 weeks; treat only if the second test remains positive",
         "correct": false,
-        "rationale": "CXR alone misses latent TB because latent infection produces no radiographic abnormality. Latent screening requires QuantiFERON or Mantoux (NTAC).",
+        "rationale": "Serial testing is used for conversion surveillance, not to confirm a diagnostic positive in someone with clear epidemiological risk; delaying treatment risks her commencing nursing duties without latent TB control (NTAC).",
         "source_refs": [
           "National Tuberculosis Advisory Committee"
         ]
@@ -1121,67 +1122,69 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-id-rheum-013",
+    "id": "med-id-rheum-013-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "Early treatment of high-risk hospitalised patients",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "eTG"
     ],
-    "stem": "A 79-year-old woman with type 2 diabetes, COPD and chronic heart failure presents in early August (Australian winter) with 36 hours of sudden-onset fever 38.7 degrees C, myalgia, dry cough and progressive breathlessness. She had her annual quadrivalent influenza vaccination 6 weeks ago. Her chronic medications include metformin, perindopril, bisoprolol, frusemide and inhaled corticosteroids. She has no allergies. On arrival, T 38.7, HR 110, RR 24, BP 134/76, SpO2 92 percent on room air. Examination reveals bibasal crackles without focal consolidation. CXR shows no consolidation. She tests positive for influenza A on point-of-care PCR. Her renal function is preserved (eGFR 64). She is being admitted to the ward for supportive care and the treating team is considering antiviral therapy. There is no clinical evidence of bacterial superinfection at this stage. She has had no overseas travel and no household sick contacts other than a grandchild with a viral URTI 5 days ago.",
+    "stem": "A 79-year-old woman with type 2 diabetes, COPD and chronic heart failure presents in early August with 36 hours of fever 38.7 degrees C, myalgia, dry cough and progressive breathlessness. She had her annual quadrivalent influenza vaccination 6 weeks ago. Chronic medications include metformin, perindopril, bisoprolol, frusemide and inhaled corticosteroids. On arrival: T 38.7, HR 110, RR 24, BP 134/76, SpO2 92 percent on room air. Bibasal crackles without focal consolidation. CXR clear. Influenza A PCR positive. Bloods: WCC 8.2, CRP 56, eGFR 38 mL/min/1.73m^2, creatinine 134 micromol/L (was 96 last month). She is being admitted for supportive care.",
     "data_table": {
       "Vital signs": "T 38.7, HR 110, RR 24, BP 134/76, SpO2 92 percent room air.",
       "Examination": "Bibasal crackles, no consolidation, mild work of breathing.",
       "Investigations": "Influenza A PCR positive, CXR clear, eGFR 64, WCC 8.2, CRP 56.",
       "Medications": "Metformin, perindopril, bisoprolol, frusemide, ICS."
     },
-    "lead_in": "Which is the most appropriate antiviral management?",
+    "lead_in": "Which is the most appropriate antiviral and supportive management?",
     "options": [
       {
         "letter": "A",
-        "text": "Oral oseltamivir 75 mg twice daily for 5 days commenced today on the ward",
-        "correct": false,
-        "rationale": "Baloxavir is not first-line in Australia and is not typically used in hospitalised influenza; oseltamivir remains the recommended agent (Therapeutic Guidelines).",
+        "text": "Oral oseltamivir 75 mg once daily (renal-dose reduced) for 5 days, plus targeted supportive care without empirical antibiotics",
+        "correct": true,
+        "rationale": "eTG recommends oseltamivir for hospitalised influenza in high-risk patients started as early as possible, even if beyond 48 hours; her eGFR of 38 falls in the 30 to 60 band requiring once-daily dosing per AMH. No focal consolidation, normal WCC and CRP make bacterial superinfection unlikely, so empirical antibiotics are not first-line (eTG Antibiotic; AMH).",
         "source_refs": [
-          "Therapeutic Guidelines: Antibiotic"
+          "Therapeutic Guidelines: Antibiotic - Influenza",
+          "Australian Medicines Handbook - oseltamivir"
         ]
       },
       {
         "letter": "B",
-        "text": "No antiviral therapy because annual influenza vaccination provides adequate protection",
+        "text": "Oral oseltamivir 75 mg twice daily standard dose with concurrent IV ceftriaxone for empirical bacterial cover",
         "correct": false,
-        "rationale": "Vaccination reduces severity but does not eliminate the need for antiviral therapy in confirmed influenza in a high-risk hospitalised patient (Therapeutic Guidelines).",
+        "rationale": "Standard twice-daily dosing is inappropriate at eGFR 38 (accumulation and neuropsychiatric adverse effects); empirical ceftriaxone is unwarranted without focal consolidation, raised WCC, or other evidence of bacterial superinfection (AMH; eTG).",
         "source_refs": [
-          "Therapeutic Guidelines: Antibiotic"
+          "Australian Medicines Handbook - oseltamivir",
+          "Therapeutic Guidelines: Antibiotic - Influenza"
         ]
       },
       {
         "letter": "C",
-        "text": "A single oral dose of baloxavir marboxil 40 mg as one-off antiviral therapy",
-        "correct": true,
-        "rationale": "Oseltamivir is recommended for hospitalised patients and outpatients with risk factors when started within 48 hours of symptom onset, and may still be considered later in hospitalised severe disease. eTG explicitly supports its use in this high-risk hospitalised cohort (Therapeutic Guidelines: Antibiotic - Influenza).",
+        "text": "Single oral dose of baloxavir marboxil 40 mg as one-off antiviral therapy",
+        "correct": false,
+        "rationale": "Baloxavir is not first-line in Australia for hospitalised influenza; oseltamivir remains the recommended agent in hospitalised high-risk patients (eTG).",
         "source_refs": [
-          "Therapeutic Guidelines: Antibiotic"
+          "Therapeutic Guidelines: Antibiotic - Influenza"
         ]
       },
       {
         "letter": "D",
-        "text": "IV zanamivir 600 mg twice daily for 5 days as first-line antiviral therapy now",
+        "text": "No antiviral therapy because symptom onset is approaching 48 hours and she was vaccinated 6 weeks ago",
         "correct": false,
-        "rationale": "IV zanamivir is reserved for severely unwell or oseltamivir-resistant influenza and is not first-line for hospitalised ward-level cases (Therapeutic Guidelines).",
+        "rationale": "eTG explicitly extends oseltamivir use beyond 48 hours in hospitalised high-risk patients; vaccination reduces but does not eliminate severity and does not remove the indication for antivirals once influenza is confirmed (eTG).",
         "source_refs": [
-          "Therapeutic Guidelines: Antibiotic"
+          "Therapeutic Guidelines: Antibiotic - Influenza"
         ]
       },
       {
         "letter": "E",
-        "text": "IV ribavirin until symptoms resolve and inflammatory markers normalise on serial bloods",
+        "text": "IV zanamivir 600 mg twice daily as first-line antiviral therapy in renal impairment",
         "correct": false,
-        "rationale": "Ribavirin is not indicated for routine influenza; it is reserved for selected severe RSV or other viral infections (Therapeutic Guidelines).",
+        "rationale": "IV zanamivir is reserved for severely unwell patients or where oseltamivir resistance is suspected and is not first-line for ward-level hospitalised influenza (eTG).",
         "source_refs": [
-          "Therapeutic Guidelines: Antibiotic"
+          "Therapeutic Guidelines: Antibiotic - Influenza"
         ]
       }
     ],
@@ -1777,69 +1780,70 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-id-rheum-020",
+    "id": "med-id-rheum-020-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "Distinguishing PMR from GCA overlap and steroid dose",
-    "difficulty": 1,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "prednisolone",
       "ESR",
       "GCA"
     ],
-    "stem": "A 68-year-old woman presents to her GP with a 6 week history of bilateral shoulder and hip girdle pain and stiffness, worst in the mornings with stiffness lasting about 90 minutes and improving through the day. She has difficulty rising from a chair and lifting her arms above her head. There are no headache features, no jaw claudication, no scalp tenderness, no visual disturbance and no fevers. She has no skin rash, no joint swelling, no muscle weakness on examination. Past medical history includes hypertension on perindopril and well-controlled type 2 diabetes on metformin. She has no allergies. Examination: T 36.6, HR 76, BP 132/78. Shoulder and hip girdle tender to palpation, passive range of movement painful but full. Normal cranial nerve examination, normal fundoscopy, normal scalp examination, palpable non-tender temporal arteries. Bloods: ESR 62 mm/hr, CRP 48 mg/L, FBC normal, CK normal, TSH normal, anti-CCP and rheumatoid factor negative. The presentation fits ACR/EULAR provisional criteria for polymyalgia rheumatica without features of giant cell arteritis.",
+    "stem": "A 68-year-old woman presents to her GP with a 6 week history of bilateral shoulder and hip girdle pain and stiffness, worst in the mornings with 90 minutes of stiffness improving through the day. Over the past week she has developed a new left-sided temporal headache that is constant and aching, and yesterday her jaw ached after chewing toast. Her vision is normal and there is no scalp tenderness on direct questioning. She has no fevers, no rash, no joint swelling. Past medical history includes hypertension on perindopril and type 2 diabetes on metformin. Examination: T 36.6, BP 132/78. Shoulder and hip girdle tender, passive range of movement painful but full; temporal arteries palpable and slightly tender on the left; normal fundoscopy, normal visual acuity, no neurological deficit. Bloods: ESR 78 mm/hr, CRP 92 mg/L, CK normal, TSH normal, anti-CCP and rheumatoid factor negative.",
     "data_table": {
       "Vital signs": "T 36.6, HR 76, BP 132/78.",
       "Examination": "Shoulder/hip girdle tenderness, painful but full passive ROM, no synovitis, normal TAs.",
       "Investigations": "ESR 62, CRP 48, CK normal, TSH normal, anti-CCP/RF negative.",
       "Medications": "Perindopril, metformin. No allergies."
     },
-    "lead_in": "Which is the most appropriate initial therapy?",
+    "lead_in": "Which is the most appropriate initial management?",
     "options": [
       {
         "letter": "A",
-        "text": "Subcutaneous tocilizumab 162 mg weekly as initial therapy",
+        "text": "Oral prednisolone 15 mg daily with arrangement of an urgent rheumatology review",
         "correct": false,
-        "rationale": "Tocilizumab is used in giant cell arteritis as a steroid-sparing agent and is not first-line for PMR (ACR/EULAR PMR 2015).",
+        "rationale": "15 mg daily is the standard initial dose for uncomplicated PMR, but new temporal headache and jaw claudication indicate likely overlapping giant cell arteritis, which requires substantially higher dose corticosteroid promptly to prevent permanent vision loss (BMJ Best Practice; ACR/EULAR).",
         "source_refs": [
+          "BMJ Best Practice: Polymyalgia rheumatica",
           "ACR/EULAR PMR 2015"
         ]
       },
       {
         "letter": "B",
-        "text": "Oral prednisolone 1 mg/kg daily plus IV pulse methylprednisolone",
-        "correct": false,
-        "rationale": "High-dose and IV pulse steroid are reserved for suspected GCA with visual symptoms; uncomplicated PMR does not need this intensity (BMJ Best Practice).",
+        "text": "Oral prednisolone 1 mg/kg (60 mg) daily commenced immediately, with urgent temporal artery biopsy arranged within 1 to 2 weeks",
+        "correct": true,
+        "rationale": "Clinical features of GCA (new temporal headache, jaw claudication, tender temporal artery on a background of PMR) mandate immediate high-dose prednisolone (1 mg/kg, capped at 60 mg) without waiting for biopsy; biopsy remains useful within 1 to 2 weeks of steroid initiation. Steroid response confirms diagnosis and prevents visual loss (BMJ Best Practice GCA; ARA position statement).",
         "source_refs": [
-          "BMJ Best Practice: Polymyalgia rheumatica"
+          "BMJ Best Practice: Giant cell arteritis",
+          "Australian Rheumatology Association: GCA"
         ]
       },
       {
         "letter": "C",
-        "text": "Oral methotrexate 15 mg weekly as initial monotherapy",
+        "text": "IV pulse methylprednisolone 1 g daily for 3 days followed by oral prednisolone 60 mg daily",
         "correct": false,
-        "rationale": "Methotrexate is a steroid-sparing option added when steroid tapering is difficult or relapse occurs, not first-line monotherapy (ACR/EULAR PMR 2015).",
+        "rationale": "IV pulse methylprednisolone is reserved for GCA with visual loss or amaurosis fugax; her vision is intact so oral high-dose prednisolone is the appropriate starting intensity, with IV pulse held in reserve (BMJ Best Practice GCA).",
         "source_refs": [
-          "ACR/EULAR PMR 2015"
+          "BMJ Best Practice: Giant cell arteritis"
         ]
       },
       {
         "letter": "D",
-        "text": "NSAID monotherapy (e.g. naproxen 500 mg twice daily) with PPI",
+        "text": "NSAID monotherapy with naproxen 500 mg twice daily plus PPI cover and review in 2 weeks",
         "correct": false,
-        "rationale": "NSAID monotherapy is inadequate for PMR; low-dose corticosteroid produces dramatic symptomatic improvement (BMJ Best Practice).",
+        "rationale": "NSAID monotherapy is inadequate for PMR and would not prevent the catastrophic visual loss of untreated GCA; NSAIDs also worsen renal function and BP in her age group (BMJ Best Practice).",
         "source_refs": [
           "BMJ Best Practice: Polymyalgia rheumatica"
         ]
       },
       {
         "letter": "E",
-        "text": "Oral prednisolone 15 mg daily with planned slow taper over 12-18 months",
-        "correct": true,
-        "rationale": "Polymyalgia rheumatica without features of giant cell arteritis is treated with low-dose oral prednisolone (typically 12.5-25 mg daily) with rapid symptomatic improvement, then a slow taper over 12-18 months. Higher doses are reserved for suspected GCA (BMJ Best Practice: Polymyalgia rheumatica; ACR/EULAR PMR 2015).",
+        "text": "Oral methotrexate 15 mg weekly as initial steroid-sparing monotherapy with folate cover",
+        "correct": false,
+        "rationale": "Methotrexate is a steroid-sparing add-on for relapse or difficult tapers; it acts slowly and cannot prevent imminent GCA visual loss; corticosteroid is mandatory upfront (ACR/EULAR).",
         "source_refs": [
-          "BMJ Best Practice: Polymyalgia rheumatica",
           "ACR/EULAR PMR 2015"
         ]
       }

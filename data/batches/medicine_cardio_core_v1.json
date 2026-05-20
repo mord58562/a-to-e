@@ -183,63 +183,63 @@
     "created": "2026-05-20"
   },
   {
-    "id": "medicine-cardio-core-003",
+    "id": "medicine-cardio-core-003-l3",
     "topic": "Medicine",
     "subtopic": "Acute coronary syndromes",
     "subtopic_detail": "Dual antiplatelet therapy duration post-PCI",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [],
-    "stem": "A 61-year-old man underwent successful primary PCI with a single drug-eluting stent to the proximal LAD 6 weeks ago for anterior STEMI. He has been compliant with aspirin 100 mg daily, ticagrelor 90 mg twice daily, atorvastatin 80 mg, perindopril 5 mg, and metoprolol 50 mg twice daily. He has no atrial fibrillation, no prior bleeding, no prior stroke, and an eGFR of 78. He attends a routine cardiology review and asks how long he should remain on the two antiplatelets together. He has private health insurance, lives independently, and has no planned non-cardiac surgery. He has had no chest pain since the procedure and has commenced cardiac rehabilitation.",
+    "stem": "A 61-year-old man underwent successful primary PCI with a single drug-eluting stent to the proximal LAD 6 weeks ago for anterior STEMI. He has been compliant with aspirin 100 mg daily, ticagrelor 90 mg twice daily, atorvastatin 80 mg, perindopril 5 mg, and metoprolol 50 mg twice daily. He has no atrial fibrillation, no prior stroke, eGFR 78, and no prior bleeding. He attends cardiology review and asks about antiplatelet duration. Two weeks ago he was diagnosed with a 3 cm right colonic adenocarcinoma on screening colonoscopy and is scheduled for elective laparoscopic right hemicolectomy in 4 weeks. He has had no chest pain since the procedure.",
     "data_table": {
       "Procedure": "Primary PCI LAD, 1 DES, 6 weeks ago.",
       "Medications": "Aspirin 100 mg, ticagrelor 90 mg BD, atorvastatin 80 mg, perindopril 5 mg, metoprolol 50 mg BD.",
       "Risk factors": "No AF, no prior bleed/stroke, eGFR 78, no upcoming surgery."
     },
-    "lead_in": "Which is the single most appropriate planned duration of dual antiplatelet therapy from the date of his PCI?",
+    "lead_in": "Which is the most appropriate antiplatelet management plan around the upcoming hemicolectomy?",
     "options": [
       {
         "letter": "A",
-        "text": "1 month",
-        "correct": false,
-        "rationale": "1 month DAPT is the abbreviated regimen for very high bleeding risk after DES, not standard post-ACS PCI; routine ACS PCI requires substantially longer DAPT (Heart Foundation/CSANZ).",
-        "source_refs": [
-          "Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline"
-        ]
-      },
-      {
-        "letter": "B",
-        "text": "12 months, then continue aspirin indefinitely",
+        "text": "Continue aspirin perioperatively, stop ticagrelor 5 days before surgery, and restart ticagrelor as soon as surgical haemostasis allows (typically 24 to 72 hours postoperatively)",
         "correct": true,
-        "rationale": "After ACS with PCI, Heart Foundation/CSANZ and Therapeutic Guidelines: Cardiovascular recommend DAPT (aspirin plus a P2Y12 inhibitor, ticagrelor preferred over clopidogrel) for 12 months in the absence of high bleeding risk, followed by lifelong aspirin monotherapy. Extension beyond 12 months may be considered for selected high ischaemic/low bleeding risk patients but is not standard.",
+        "rationale": "Within the first 6 months after DES PCI for ACS, stent thrombosis risk is highest; CSANZ and NHFA guidance recommend continuing aspirin perioperatively for most non-cardiac surgery and pausing the P2Y12 inhibitor for the shortest possible window (ticagrelor 5 days), then restarting promptly once haemostasis allows. Delaying elective surgery is preferable to lengthening the off-DAPT window when possible (Heart Foundation/CSANZ ACS 2016; eTG).",
         "source_refs": [
           "Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline",
           "Therapeutic Guidelines: Cardiovascular - ACS"
         ]
       },
       {
-        "letter": "C",
-        "text": "6 months",
+        "letter": "B",
+        "text": "Stop both aspirin and ticagrelor 5 days before surgery and resume both after discharge",
         "correct": false,
-        "rationale": "6 months DAPT applies to stable coronary disease PCI (non-ACS), not post-ACS; post-ACS requires 12 months by default (Heart Foundation/CSANZ).",
+        "rationale": "Stopping both antiplatelets within 6 months of DES PCI for ACS substantially raises stent thrombosis risk; aspirin should generally be continued perioperatively if surgical bleeding risk is acceptable (CSANZ).",
+        "source_refs": [
+          "Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Continue both aspirin and ticagrelor throughout the perioperative period without interruption",
+        "correct": false,
+        "rationale": "Continuing both antiplatelets through colorectal surgery markedly raises bleeding risk; the recommended strategy is single antiplatelet (aspirin) during surgery (CSANZ).",
         "source_refs": [
           "Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline"
         ]
       },
       {
         "letter": "D",
-        "text": "3 months",
+        "text": "Bridge ticagrelor with prophylactic low molecular weight heparin from 5 days pre-op until restart of ticagrelor",
         "correct": false,
-        "rationale": "3 month DAPT is a shortened regimen for high bleeding risk in stable disease PCI; it is not the standard post-ACS duration (Heart Foundation/CSANZ).",
+        "rationale": "Heparin bridging does not protect against stent thrombosis (a platelet-driven event) and adds bleeding risk; bridging is for atrial fibrillation or mechanical valves on warfarin, not antiplatelets (CSANZ).",
         "source_refs": [
           "Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline"
         ]
       },
       {
         "letter": "E",
-        "text": "Lifelong dual antiplatelet therapy with annual review",
+        "text": "Proceed with surgery now without changing antiplatelet therapy because the stent was placed more than a month ago",
         "correct": false,
-        "rationale": "Lifelong DAPT is not standard; bleeding risk progressively outweighs ischaemic benefit beyond 12 months in most patients (Heart Foundation/CSANZ).",
+        "rationale": "Six weeks post-DES for ACS is still within the very high-risk window; the planned management must explicitly address P2Y12 inhibitor timing rather than ignore it (CSANZ).",
         "source_refs": [
           "Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline"
         ]
@@ -271,67 +271,68 @@
     "created": "2026-05-20"
   },
   {
-    "id": "medicine-cardio-core-004",
+    "id": "medicine-cardio-core-004-l3",
     "topic": "Medicine",
     "subtopic": "Atrial fibrillation",
     "subtopic_detail": "CHA2DS2-VASc threshold for anticoagulation",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "DOAC",
       "anticoagulation",
       "atrial fibrillation"
     ],
-    "stem": "A 67-year-old woman attends her regular general practice appointment for review of newly diagnosed non-valvular atrial fibrillation, which was identified on a 24 hour Holter monitor ordered for intermittent palpitations over the preceding 3 months. She has longstanding essential hypertension treated with perindopril/indapamide combination, and a past ischaemic stroke versus transient ischaemic attack 3 years ago with complete neurological recovery and no residual deficit on subsequent imaging. She has no diabetes mellitus, no heart failure, no peripheral or coronary vascular disease, normal renal function (eGFR 78, creatinine 64 micromol/L) and no prior major or minor bleeding episodes. Her current medications are perindopril/indapamide 5/1.25 mg daily, atorvastatin 40 mg, and paracetamol as required for occasional knee osteoarthritis. Blood pressure today is 132/80, HR 78 irregularly irregular, weight 72 kg. Her HAS-BLED score is 1 (hypertension alone, treated). She prefers an oral medication strategy without the need for routine INR blood monitoring and is keen on a once or twice daily regimen.",
+    "stem": "An 82-year-old woman attends her general practice for review of newly diagnosed non-valvular atrial fibrillation found on a 24 hour Holter for palpitations. Her history includes essential hypertension on perindopril-indapamide, ischaemic stroke 3 years ago with full recovery, and no diabetes or heart failure. She weighs 56 kg. Current medications: perindopril-indapamide 5/1.25 mg daily, atorvastatin 40 mg, paracetamol as required. BP 132/80, HR 78 irregularly irregular. Bloods today: creatinine 138 micromol/L, eGFR 38 mL/min/1.73m^2, HCO3 24. She has no prior bleeding and her HAS-BLED score is 2. She prefers an oral medication strategy without routine INR monitoring.",
     "data_table": {
       "Risk factors": "Age 67, female, HTN treated, prior TIA, no DM, no HF, no vascular disease.",
       "Renal/Bleeding": "eGFR 78, HAS-BLED 1, no prior bleed.",
       "Medications": "Perindopril/indapamide 5/1.25 mg, atorvastatin 40 mg, paracetamol PRN."
     },
-    "lead_in": "Which is the single most appropriate stroke-prevention recommendation?",
+    "lead_in": "Which is the most appropriate stroke-prevention prescription?",
     "options": [
       {
         "letter": "A",
-        "text": "Aspirin 100 mg orally once daily as sole long-term antithrombotic therapy in this patient",
+        "text": "Apixaban 5 mg twice daily as standard non-valvular AF dose",
         "correct": false,
-        "rationale": "Aspirin is no longer recommended for stroke prevention in non-valvular AF; it has minimal protective effect and similar bleeding risk to anticoagulation (NHFA/CSANZ 2018 AF Guideline).",
-        "source_refs": [
-          "NHFA/CSANZ 2018 Australian Atrial Fibrillation Guideline"
-        ]
-      },
-      {
-        "letter": "B",
-        "text": "No antithrombotic therapy at all; lifestyle modification only with cardiovascular risk factor optimisation",
-        "correct": false,
-        "rationale": "She has CHA2DS2-VASc of at least 4 (age 65 to 74 = 1, female = 1, HTN = 1, prior TIA = 2), well above the threshold for anticoagulation (NHFA/CSANZ).",
-        "source_refs": [
-          "NHFA/CSANZ 2018 Australian Atrial Fibrillation Guideline"
-        ]
-      },
-      {
-        "letter": "C",
-        "text": "Warfarin titrated to INR target 2.0 to 3.0, with weekly point-of-care monitoring initially",
-        "correct": false,
-        "rationale": "Warfarin is effective but DOACs are preferred first-line for non-valvular AF in patients without mechanical valves or moderate-severe mitral stenosis, especially when the patient prefers monitoring-free therapy (NHFA/CSANZ).",
-        "source_refs": [
-          "NHFA/CSANZ 2018 Australian Atrial Fibrillation Guideline"
-        ]
-      },
-      {
-        "letter": "D",
-        "text": "Apixaban 5 mg twice daily as standard non-valvular AF dose, with annual renal review and bleeding reassessment",
-        "correct": true,
-        "rationale": "Her CHA2DS2-VASc is 4 (age 65 to 74 = 1, female = 1, HTN = 1, prior TIA = 2), exceeding the threshold of >=2 in women (>=1 in men, excluding female sex alone) for anticoagulation under NHFA/CSANZ 2018. DOACs are first-line over warfarin in non-valvular AF. She has no dose-reduction criteria (age >=80, weight <=60 kg, or creatinine >=133 micromol/L: needs >=2 of these), so the standard 5 mg twice daily dose applies (NHFA/CSANZ; AMH).",
+        "rationale": "Apixaban dose reduction to 2.5 mg twice daily is mandated when any two of age over 80, weight under 60 kg, or creatinine over 133 micromol/L are present; she meets all three, so standard dosing would over-anticoagulate (NHFA/CSANZ; AMH).",
         "source_refs": [
           "NHFA/CSANZ 2018 Australian Atrial Fibrillation Guideline",
           "Australian Medicines Handbook - apixaban"
         ]
       },
       {
-        "letter": "E",
-        "text": "Dual antiplatelet therapy with aspirin and clopidogrel as a long-term stroke-prevention strategy instead of anticoagulation",
+        "letter": "B",
+        "text": "Apixaban 2.5 mg twice daily based on age, weight, and creatinine criteria",
+        "correct": true,
+        "rationale": "Per AMH and NHFA/CSANZ, apixaban is reduced to 2.5 mg BD when any two of age over 80, weight under 60 kg, or creatinine over 133 micromol/L are met; she fulfils all three, so the reduced dose is required to balance stroke prevention against bleeding (NHFA/CSANZ; AMH).",
+        "source_refs": [
+          "NHFA/CSANZ 2018 Australian Atrial Fibrillation Guideline",
+          "Australian Medicines Handbook - apixaban"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Warfarin titrated to INR 2.0 to 3.0 with point-of-care monitoring",
         "correct": false,
-        "rationale": "DAPT is inferior to anticoagulation for AF stroke prevention and carries comparable bleeding risk; it is not recommended (NHFA/CSANZ).",
+        "rationale": "Warfarin remains effective but DOACs are first-line for non-valvular AF in Australia, especially when the patient prefers monitoring-free therapy; warfarin would only be preferred for mechanical valves or moderate-to-severe mitral stenosis (NHFA/CSANZ).",
+        "source_refs": [
+          "NHFA/CSANZ 2018 Australian Atrial Fibrillation Guideline"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Rivaroxaban 20 mg once daily with the main meal of the day",
+        "correct": false,
+        "rationale": "Rivaroxaban requires dose reduction to 15 mg daily at CrCl 15 to 49 mL/min; her eGFR of 38 mandates the reduced dose, so 20 mg is incorrect (AMH).",
+        "source_refs": [
+          "Australian Medicines Handbook - rivaroxaban"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Aspirin 100 mg daily as sole long-term antithrombotic therapy",
+        "correct": false,
+        "rationale": "Aspirin is not recommended for stroke prevention in non-valvular AF; it has minimal protective effect against cardioembolic stroke with comparable bleeding risk to anticoagulation (NHFA/CSANZ).",
         "source_refs": [
           "NHFA/CSANZ 2018 Australian Atrial Fibrillation Guideline"
         ]
@@ -827,69 +828,69 @@
     "created": "2026-05-20"
   },
   {
-    "id": "medicine-cardio-core-010",
+    "id": "medicine-cardio-core-010-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "Cardiac vs vasovagal syncope - high-risk features",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "syncope"
     ],
-    "stem": "A 72-year-old man with hypertension and a 30 pack-year smoking history presents to ED after collapsing without warning while shopping. Bystanders report he became briefly stiff with a few jerks of the arms; he was unresponsive for around 30 seconds and recovered immediately on the floor with no confusion. He recalls no nausea, no warm or sweaty feeling, and no pre-syncopal symptoms. He has had two similar episodes in the last 2 months, one while sitting watching television. Examination shows BP 142/82 lying, 140/82 standing, HR 60 sinus, no postural drop. Cardiovascular and neurological examinations are unremarkable. ECG shows sinus rhythm at 58, PR 220 ms, QRS 110 ms, with bifascicular block (RBBB + left anterior fascicular block). Bloods including FBC, UEC, glucose, troponin, and TSH are within reference. He drives a private car daily.",
+    "stem": "A 72-year-old man with hypertension and a 30 pack-year smoking history presents to ED after collapsing without warning while shopping. Bystanders report he became briefly stiff with a few arm jerks; he was unresponsive for around 30 seconds and recovered immediately on the floor with no confusion. He had two similar episodes in the past 2 months, one while sitting watching television. Examination: BP 142/82 lying, 140/82 standing, HR 60 sinus, no postural drop, normal cardiovascular and neurological exam. ECG: sinus rhythm 58, PR 220 ms, QRS 110 ms, RBBB plus left anterior fascicular block. Bloods within reference. He drives a private car daily for his work as a courier.",
     "data_table": {
       "Vitals": "BP 142/82 lying, 140/82 standing, HR 60 sinus.",
       "ECG": "Sinus 58, PR 220 ms, QRS 110 ms, RBBB + LAFB (bifascicular block).",
       "Investigations": "FBC, UEC, glucose, hs-troponin, TSH all within reference."
     },
-    "lead_in": "Which is the single most appropriate next step?",
+    "lead_in": "Which combination is most appropriate as his next steps?",
     "options": [
       {
         "letter": "A",
-        "text": "Discharge with reassurance, advise hydration and counterpressure manoeuvres for presumed vasovagal syncope",
-        "correct": false,
-        "rationale": "His episodes lack prodrome, occur while sitting, and his ECG shows bifascicular block in an older man with vascular risk; these are high-risk features for cardiac syncope, not vasovagal (BMJ Best Practice; ESC Syncope).",
+        "text": "Admit for telemetry and TTE, advise him not to drive a private vehicle until cause is identified and treated, and notify him of his obligation to inform the licensing authority",
+        "correct": true,
+        "rationale": "High-risk cardiac syncope features (age over 60, no prodrome, syncope while sitting, recurrent episodes, bifascicular block) mandate admission with monitoring and echocardiography per ESC 2018. Austroads Assessing Fitness to Drive 2022 imposes a 4-week non-driving period for unexplained syncope at minimum, longer if cardiac, and the driver bears the duty to inform the licensing authority of any condition affecting fitness to drive (ESC; Austroads).",
         "source_refs": [
-          "BMJ Best Practice - Syncope evaluation",
-          "ESC 2018 Guidelines for the Diagnosis and Management of Syncope"
+          "ESC 2018 Guidelines for the Diagnosis and Management of Syncope",
+          "Austroads Assessing Fitness to Drive 2022"
         ]
       },
       {
         "letter": "B",
-        "text": "Arrange urgent outpatient CT brain and EEG for suspected new-onset seizure disorder",
+        "text": "Admit for telemetry and TTE but allow private driving once telemetry is normal for 48 hours",
         "correct": false,
-        "rationale": "Brief tonic-clonic jerks (convulsive syncope) are common in any cause of cerebral hypoperfusion and do not indicate seizure; rapid recovery without post-ictal confusion argues against seizure. Cardiac evaluation takes priority (BMJ Best Practice).",
+        "rationale": "Austroads requires defined non-driving periods after unexplained or cardiac syncope based on aetiology and treatment, not on a brief in-hospital telemetry result; this would breach the standard (Austroads).",
         "source_refs": [
-          "BMJ Best Practice - Syncope evaluation"
+          "Austroads Assessing Fitness to Drive 2022"
         ]
       },
       {
         "letter": "C",
-        "text": "Admit for telemetry, transthoracic echocardiogram, and inpatient cardiology review; advise driving restriction",
-        "correct": true,
-        "rationale": "Red flags for cardiac syncope are present: age >60, syncope while sitting/supine, absent prodrome, abnormal ECG with bifascicular block, and recurrent episodes. ESC 2018 Syncope and BMJ Best Practice mandate admission with cardiac monitoring and echocardiography. He must not drive: Austroads Assessing Fitness to Drive 2022 imposes a non-driving period (4 weeks for single episode without high-risk features; longer for recurrent or unexplained cardiac syncope until cause identified and treated).",
+        "text": "Discharge with reassurance, advise hydration and counterpressure manoeuvres for vasovagal syncope, and continue driving",
+        "correct": false,
+        "rationale": "His features are atypical for vasovagal (no prodrome, sitting, recurrent, abnormal ECG) and high-risk for cardiac syncope; discharge and continued driving are unsafe (ESC; Austroads).",
         "source_refs": [
           "ESC 2018 Guidelines for the Diagnosis and Management of Syncope",
-          "Austroads Assessing Fitness to Drive 2022",
-          "BMJ Best Practice - Syncope evaluation"
+          "Austroads Assessing Fitness to Drive 2022"
         ]
       },
       {
         "letter": "D",
-        "text": "Arrange outpatient 24-hour Holter monitor and tilt-table testing with autonomic function assessment",
+        "text": "Arrange outpatient CT brain and EEG for suspected new-onset seizure disorder and advise no driving for 6 months under epilepsy rules",
         "correct": false,
-        "rationale": "Holter and tilt are appropriate later workup but outpatient deferral is unsafe given his high-risk features; admission with monitoring is required (ESC).",
+        "rationale": "Brief myoclonic jerks during cerebral hypoperfusion (convulsive syncope) are common and do not indicate epilepsy; rapid recovery without confusion argues against seizure, so epilepsy driving rules are misapplied (BMJ Best Practice).",
         "source_refs": [
-          "ESC 2018 Guidelines for the Diagnosis and Management of Syncope"
+          "BMJ Best Practice - Syncope evaluation"
         ]
       },
       {
         "letter": "E",
-        "text": "Commence midodrine 2.5 mg three times daily for presumed orthostatic intolerance with reassessment",
+        "text": "Discharge home for outpatient 24-hour Holter and tilt-table testing within 4 weeks; continue driving in the interim",
         "correct": false,
-        "rationale": "He has no orthostatic drop and no orthostatic intolerance; midodrine is inappropriate and risks worsening hypertension (Therapeutic Guidelines).",
+        "rationale": "Outpatient deferral and continued driving with high-risk features and bifascicular block exposes him to in-vehicle syncope and third-party harm; admission with monitoring is the standard (ESC; Austroads).",
         "source_refs": [
-          "ESC 2018 Guidelines for the Diagnosis and Management of Syncope"
+          "ESC 2018 Guidelines for the Diagnosis and Management of Syncope",
+          "Austroads Assessing Fitness to Drive 2022"
         ]
       }
     ],
@@ -1111,66 +1112,66 @@
     "created": "2026-05-20"
   },
   {
-    "id": "medicine-cardio-core-013",
+    "id": "medicine-cardio-core-013-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "NHFA hypertension - lifestyle as first-line for grade 1 low-risk",
-    "difficulty": 1,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "hypertension",
       "primary prevention"
     ],
-    "stem": "A 38-year-old man presents to his GP for a workplace medical. He is asymptomatic, exercises twice a week, drinks 8 standard drinks per week, has BMI 28, does not smoke, has no diabetes, and has no family history of premature cardiovascular disease. Three separate clinic BP readings over 6 weeks average 146/92. Home BP averaged over 7 days is 142/88. Bloods: total cholesterol 4.6, LDL 2.8, HDL 1.4, triglycerides 1.2, fasting glucose 5.1, eGFR >90, normal UEC and urine ACR. ECG normal. His calculated Australian absolute 5-year CV risk (NVDPA) is 3%.",
+    "stem": "A 38-year-old man presents to his GP for a workplace medical. He is asymptomatic, exercises twice a week, drinks 8 standard drinks weekly, has BMI 28, does not smoke, has no diabetes, and no family history of premature CVD. Three separate clinic BP readings over 6 weeks average 156/96, and home BP averaged over 7 days is 152/94. Bloods: total cholesterol 4.6, LDL 2.8, HDL 1.4, triglycerides 1.2, fasting glucose 5.1, eGFR over 90, normal urea/electrolytes and urine ACR. ECG normal. His Australian absolute 5-year CV risk (NVDPA calculator) is 4 percent. He has tried 12 weeks of structured lifestyle change with his GP including reduced salt, DASH-style diet, alcohol reduction to 8 standard drinks per week, and increased exercise; BP today remains 154/94.",
     "data_table": {
       "BP": "Clinic average 146/92, home 7-day 142/88.",
       "Bloods": "Chol 4.6, LDL 2.8, HDL 1.4, TG 1.2, FBG 5.1, eGFR >90, ACR normal.",
       "Risk": "Absolute 5-year CV risk 3% (low)."
     },
-    "lead_in": "Which is the single most appropriate initial management?",
+    "lead_in": "Which is the most appropriate next step?",
     "options": [
       {
-        "letter": "E",
-        "text": "Lifestyle modification (reduce alcohol to <=10 standard drinks/week, increase aerobic exercise to >=30 minutes most days, DASH-style diet, weight reduction, salt <5 g/day) with reassessment in 3 to 6 months",
+        "letter": "A",
+        "text": "Commence perindopril 5 mg daily and continue ongoing lifestyle measures, with home BP review at 6 weeks",
         "correct": true,
-        "rationale": "NHFA 2016 (and subsequent updates) recommends lifestyle modification as first-line therapy for grade 1 hypertension (140 to 159/90 to 99) in patients at low absolute CV risk (<10% 5-year risk). Pharmacological therapy is added if BP remains uncontrolled at 3 to 6 months despite adherent lifestyle change, or earlier if absolute risk is moderate/high. His CV risk is 3% and his BP is mildly elevated, fitting first-line lifestyle.",
+        "rationale": "After an adequate trial of lifestyle change (3 to 6 months) without BP control, NHFA 2016 recommends adding pharmacotherapy in grade 1 to 2 hypertension even at low absolute CV risk. First-line agents are ACE inhibitor, ARB, dihydropyridine calcium channel blocker, or thiazide; perindopril is a reasonable first choice in a younger patient without contraindications (NHFA; eTG).",
         "source_refs": [
           "NHFA 2016 Guideline for the Diagnosis and Management of Hypertension in Adults",
           "Therapeutic Guidelines: Cardiovascular - Hypertension"
         ]
       },
       {
-        "letter": "A",
-        "text": "Commence perindopril 5 mg daily immediately as first-line pharmacotherapy, with home BP review and dose titration at 6-week intervals to target",
-        "correct": false,
-        "rationale": "Pharmacotherapy is added when low-risk grade 1 HTN fails to respond to lifestyle, or immediately when risk is moderate/high; not first-line for this low-risk patient (NHFA 2016).",
-        "source_refs": [
-          "NHFA 2016 Guideline for the Diagnosis and Management of Hypertension in Adults"
-        ]
-      },
-      {
         "letter": "B",
-        "text": "Commence amlodipine 5 mg daily immediately as a single-agent dihydropyridine calcium channel blocker, with review at 4 weeks for tolerance and BP response",
+        "text": "Continue lifestyle modification for another 6 months before considering pharmacotherapy",
         "correct": false,
-        "rationale": "Same reasoning - lifestyle is first-line in low-risk grade 1 HTN (NHFA 2016).",
+        "rationale": "An adequate 3 to 6 month lifestyle trial has already failed at sustained BP above 140/90; further deferral risks ongoing end-organ exposure without proportional benefit (NHFA 2016).",
         "source_refs": [
           "NHFA 2016 Guideline for the Diagnosis and Management of Hypertension in Adults"
         ]
       },
       {
         "letter": "C",
-        "text": "Refer for 24-hour ambulatory blood pressure monitoring to exclude white-coat hypertension before offering any intervention or lifestyle counselling, deferring further management until the result is available at 2 weeks",
+        "text": "Refer for 24-hour ambulatory BP monitoring to exclude white-coat hypertension before any pharmacotherapy",
         "correct": false,
-        "rationale": "ABPM is useful to exclude white-coat HTN when clinic and home readings disagree; here clinic and home readings are concordant for hypertension. Lifestyle does not need to wait for ABPM (NHFA 2016).",
+        "rationale": "Clinic and home readings are concordant for sustained hypertension; ABPM is unnecessary when these two agree, and adds delay (NHFA 2016).",
         "source_refs": [
           "NHFA 2016 Guideline for the Diagnosis and Management of Hypertension in Adults"
         ]
       },
       {
         "letter": "D",
-        "text": "Reassure that he is below any treatment threshold and review with repeat BP measurement in 12 months, without lifestyle counselling or further investigation",
+        "text": "Commence atorvastatin 20 mg daily for global CV risk reduction in addition to lifestyle",
         "correct": false,
-        "rationale": "His BP meets criteria for grade 1 hypertension and warrants intervention (lifestyle), not 12-month deferral (NHFA 2016).",
+        "rationale": "His absolute CV risk is low (4 percent) and lipids are unremarkable; statin is not indicated and does not address his uncontrolled BP (NVDPA; NHFA).",
+        "source_refs": [
+          "NHFA 2016 Guideline for the Diagnosis and Management of Hypertension in Adults"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Investigate for secondary hypertension with plasma aldosterone-renin ratio, renal artery imaging and 24-hour urinary metanephrines today",
+        "correct": false,
+        "rationale": "Secondary hypertension workup is reserved for resistant hypertension (BP uncontrolled on three agents including a diuretic), young-onset severe hypertension with red flags (hypokalaemia, episodic symptoms), or clinical clues; not first-line at this stage (NHFA 2016).",
         "source_refs": [
           "NHFA 2016 Guideline for the Diagnosis and Management of Hypertension in Adults"
         ]

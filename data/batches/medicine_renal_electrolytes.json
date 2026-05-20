@@ -497,69 +497,75 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-renal-006",
+    "id": "med-renal-006-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "Risk stratification and IV crystalloid",
-    "difficulty": 1,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "AKI"
     ],
-    "stem": "A 71-year-old woman with CKD stage 3b (eGFR 38 mL/min/1.73m^2) and T2DM (HbA1c 56 mmol/mol) is scheduled for an elective coronary angiogram for stable angina. She takes perindopril, atorvastatin, aspirin, metformin and empagliflozin. Her potassium is 4.1 mmol/L. She is euvolaemic on examination, with no peripheral oedema, JVP not raised, clear chest and BP 134/78 mmHg. She has no history of decompensated heart failure. There is no recent diuretic dose change and no current sepsis. The cardiologist plans to use iso-osmolar low-volume iodinated contrast. The renal team is asked about peri-procedural prevention of contrast-associated AKI.",
+    "stem": "A 71-year-old woman with CKD stage 3b (eGFR 38 mL/min/1.73m^2) and T2DM (HbA1c 56 mmol/mol) is scheduled tomorrow for an elective coronary angiogram for stable angina. She takes perindopril, atorvastatin, aspirin, metformin and empagliflozin. She is euvolaemic on examination with no peripheral oedema, JVP not raised, clear chest, BP 134/78 mmHg, K 4.1 mmol/L, creatinine 132 micromol/L. She has no decompensated heart failure or current sepsis. The cardiologist plans iso-osmolar low-volume iodinated contrast.",
     "data_table": {
       "Vital signs": "BP 134/78 mmHg, HR 72 bpm, SpO2 98% RA.",
       "Examination": "Euvolaemic, clear chest, no oedema, JVP not elevated.",
       "Investigations": "Cr 132 micromol/L, eGFR 38, K 4.1, HCO3 25, HbA1c 56 mmol/mol.",
       "Medications": "Perindopril, atorvastatin, aspirin, metformin, empagliflozin."
     },
-    "lead_in": "Which is the most evidence-based step to reduce her risk of contrast-associated AKI?",
+    "lead_in": "Which combined peri-procedural plan most appropriately reduces her risk of contrast-associated AKI and metabolic complications?",
     "options": [
       {
         "letter": "A",
-        "text": "Prophylactic IV frusemide 40 mg before contrast to maintain urine output",
+        "text": "Continue all current medications and prescribe IV 0.9 percent sodium chloride 1 mL/kg/h for 6 hours before and 6 hours after contrast",
         "correct": false,
-        "rationale": "Forced diuresis with loop diuretics increases the risk of contrast-associated AKI by causing volume depletion; it is contraindicated as prophylaxis (Source: KDIGO AKI 2012).",
+        "rationale": "Volume expansion is correct, but metformin should be withheld around contrast in advanced CKD (eGFR less than 45) due to lactic acidosis risk, and SGLT2 inhibitors should be paused peri-procedurally given dehydration and euglycaemic DKA risk (KDIGO; AMH; ADS).",
         "source_refs": [
-          "KDIGO AKI 2012"
+          "KDIGO AKI 2012",
+          "Australian Medicines Handbook",
+          "Australian Diabetes Society peri-procedural SGLT2i guidance"
         ]
       },
       {
         "letter": "B",
-        "text": "Oral N-acetylcysteine 1200 mg twice daily on the day of and after the procedure",
+        "text": "Withhold metformin and empagliflozin on the day of and 48 hours after contrast, give IV 0.9 percent sodium chloride 1 mL/kg/h pre and post, and recheck creatinine before reinstating",
+        "correct": true,
+        "rationale": "KDIGO recommends isotonic crystalloid volume expansion in eGFR less than 45 receiving iodinated contrast; metformin should be withheld in eGFR less than 45 around contrast and restarted only after stable renal function; SGLT2 inhibitors are paused peri-procedurally per ADS guidance to reduce euglycaemic DKA risk (KDIGO; AMH; ADS).",
+        "source_refs": [
+          "KDIGO AKI 2012",
+          "PRESERVE NEJM 2018",
+          "Australian Medicines Handbook",
+          "Australian Diabetes Society peri-procedural SGLT2i guidance"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence oral N-acetylcysteine 1200 mg twice daily on the day of and after the procedure, continue all usual medications",
         "correct": false,
-        "rationale": "NAC was thought to reduce contrast nephropathy but the large PRESERVE trial showed no benefit over placebo; current KDIGO guidance no longer recommends it (Source: PRESERVE NEJM 2018; KDIGO AKI 2012).",
+        "rationale": "PRESERVE showed no benefit from NAC and KDIGO no longer recommends it; continuing metformin and SGLT2 inhibitor through contrast also misses important medication holds (PRESERVE; KDIGO).",
         "source_refs": [
           "PRESERVE NEJM 2018",
           "KDIGO AKI 2012"
         ]
       },
       {
-        "letter": "C",
-        "text": "IV sodium bicarbonate infusion in preference to normal saline",
-        "correct": false,
-        "rationale": "PRESERVE showed sodium bicarbonate did not outperform sodium chloride; either is acceptable but bicarbonate offers no additional benefit (Source: PRESERVE NEJM 2018).",
-        "source_refs": [
-          "PRESERVE NEJM 2018"
-        ]
-      },
-      {
         "letter": "D",
-        "text": "IV isotonic sodium chloride 1 mL/kg/hour for several hours before and after the procedure",
-        "correct": true,
-        "rationale": "Peri-procedural volume expansion with isotonic crystalloid (saline or balanced) is the only intervention with consistent benefit in randomised trials (e.g. PRESERVE) for patients with eGFR < 45 receiving iodinated contrast (Source: KDIGO AKI 2012; PRESERVE trial 2018).",
+        "text": "Give IV sodium bicarbonate infusion in place of normal saline, with IV frusemide 40 mg before contrast to maintain urine output",
+        "correct": false,
+        "rationale": "PRESERVE showed bicarbonate offered no advantage over saline, and forced diuresis with loop diuretics worsens contrast-associated AKI by causing volume depletion (PRESERVE; KDIGO).",
         "source_refs": [
-          "KDIGO AKI 2012",
-          "PRESERVE NEJM 2018"
+          "PRESERVE NEJM 2018",
+          "KDIGO AKI 2012"
         ]
       },
       {
         "letter": "E",
-        "text": "Withhold all antihypertensives for 48 hours before the angiogram",
+        "text": "Withhold all antihypertensives for 48 hours before angiogram and recheck creatinine on the day",
         "correct": false,
-        "rationale": "Routine cessation of antihypertensives is not advised; some clinicians hold ACEi/ARB and SGLT2i around contrast in CKD but blanket cessation of antihypertensives risks uncontrolled BP and is not the most evidence-based prevention step (Source: KDIGO AKI 2012).",
+        "rationale": "Blanket cessation of antihypertensives is not evidence-based and risks uncontrolled BP; specific medication holds (metformin, SGLT2 inhibitor) are the priority while ACE inhibitor decisions are individualised (KDIGO; AMH).",
         "source_refs": [
-          "KDIGO AKI 2012"
+          "KDIGO AKI 2012",
+          "Australian Medicines Handbook"
         ]
       }
     ],
@@ -593,62 +599,63 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-renal-007",
+    "id": "med-renal-007-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "Nephrotic vs nephritic syndrome",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [],
-    "stem": "A 34-year-old man presents to his GP with two weeks of progressive ankle and periorbital swelling. He has gained 6 kg, noticed frothy urine and feels tired. He has no joint pains, no rashes, no recent sore throat or skin infection, and no haemoptysis. He takes no regular medications and has no allergies. Examination: BP 138/86 mmHg, HR 78, periorbital and pitting peripheral oedema to the knees, normal heart sounds, clear chest, soft abdomen with no organomegaly, no purpura. Bloods: albumin 22 g/L, total protein 52 g/L, cholesterol 8.8 mmol/L, LDL 5.4, creatinine 88 micromol/L, eGFR > 90, normal LFTs, normal FBC, complement C3 and C4 normal, ANA and ANCA negative, hepatitis B and C and HIV serology negative. Urinalysis: protein 4+, blood trace, no leucocytes or nitrites. Spot urine protein:creatinine ratio 480 mg/mmol. No active urinary sediment is reported. There is no haemoptysis or sinus disease.",
+    "stem": "A 34-year-old man presents to his GP with two weeks of progressive ankle and periorbital swelling, weight gain of 6 kg, and frothy urine. He has no joint pains, rashes, recent sore throat, skin infection, or haemoptysis. He takes no regular medications. Examination: BP 138/86 mmHg, periorbital and bilateral pitting peripheral oedema to the knees, chest clear, no purpura. Bloods: albumin 22 g/L, cholesterol 8.8 mmol/L, creatinine 88 micromol/L, eGFR over 90, normal FBC and LFTs, complement C3 and C4 normal, ANA and ANCA negative, hepatitis B and C and HIV negative, HbA1c 38 mmol/mol. Urinalysis: protein 4+, blood trace, no leucocytes or nitrites, no red cell casts on microscopy. Spot urine protein-creatinine ratio 480 mg/mmol.",
     "data_table": {
       "Vital signs": "BP 138/86, HR 78, afebrile.",
       "Examination": "Periorbital + bilateral pitting peripheral oedema; chest clear; no rash.",
       "Investigations": "Albumin 22 g/L, cholesterol 8.8 mmol/L, Cr 88, eGFR > 90, UPCR 480 mg/mmol, urinalysis protein 4+ blood trace, C3/C4 normal, ANA/ANCA/HBV/HCV/HIV negative."
     },
-    "lead_in": "Which feature most strongly supports a nephrotic rather than a nephritic process?",
+    "lead_in": "Which is the most appropriate next investigation to establish the underlying diagnosis?",
     "options": [
       {
         "letter": "A",
-        "text": "Normal serum complement C3 and C4 on initial screening bloods",
+        "text": "Renal biopsy with light microscopy, immunofluorescence and electron microscopy",
+        "correct": true,
+        "rationale": "In an adult with nephrotic-range proteinuria, normal complement, negative serology and excluded secondary causes (HBV, HCV, HIV, diabetes), the underlying glomerulopathy (membranous, FSGS, minimal change) cannot be determined without biopsy. KDIGO recommends renal biopsy in adult nephrotic syndrome where a treatable secondary cause has not been identified.",
+        "source_refs": [
+          "KDIGO Glomerular Diseases 2021",
+          "BMJ Best Practice - Nephrotic syndrome"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Serum and urine electrophoresis with free light chain assay to exclude paraprotein",
         "correct": false,
-        "rationale": "Normal complement is non-specific - membranous, minimal change and FSGS (nephrotic) and IgA nephropathy and ANCA vasculitis (nephritic) all have normal complement; this does not discriminate (Source: KDIGO Glomerular Diseases 2021).",
+        "rationale": "Paraprotein workup is reasonable adjunctive testing in older adults or those with hypercalcaemia or anaemia, but in a 34-year-old with classic nephrotic syndrome and a negative initial secondary screen, biopsy will give the diagnosis faster (KDIGO).",
         "source_refs": [
           "KDIGO Glomerular Diseases 2021"
         ]
       },
       {
-        "letter": "B",
-        "text": "Mildly elevated blood pressure (138/86 mmHg) on examination today",
-        "correct": false,
-        "rationale": "Hypertension can occur in both nephrotic and nephritic syndromes and tends to be more prominent in nephritic disease; it does not discriminate (Source: BMJ Best Practice - Glomerulonephritis).",
-        "source_refs": [
-          "BMJ Best Practice - Glomerulonephritis"
-        ]
-      },
-      {
         "letter": "C",
-        "text": "Trace haematuria on dipstick without dysmorphic red cells on microscopy",
+        "text": "Anti-phospholipase A2 receptor (anti-PLA2R) antibody titre as a standalone diagnostic test",
         "correct": false,
-        "rationale": "Microscopic haematuria can be seen in nephrotic-range disease (especially membranous and FSGS) but heavy haematuria with active sediment (red cell casts, dysmorphic RBCs) defines nephritic disease (Source: KDIGO Glomerular Diseases 2021).",
+        "rationale": "Anti-PLA2R is highly specific for primary membranous nephropathy but a negative result does not exclude membranous (about 30 percent are seronegative) or other nephrotic glomerulopathies, so it cannot replace biopsy in adults (KDIGO).",
         "source_refs": [
           "KDIGO Glomerular Diseases 2021"
         ]
       },
       {
         "letter": "D",
-        "text": "Heavy proteinuria (UPCR 480 mg/mmol) with serum albumin 22 g/L",
-        "correct": true,
-        "rationale": "Nephrotic syndrome is defined by proteinuria > 3.5 g/24h (approximately UPCR > 300 mg/mmol), serum albumin < 30 g/L, oedema and hyperlipidaemia. UPCR 480 mg/mmol exceeds the nephrotic threshold and aligns with the hypoalbuminaemia and dyslipidaemia (Source: BMJ Best Practice - Nephrotic syndrome).",
+        "text": "Renal tract ultrasound with Doppler to assess kidney size and vascular flow",
+        "correct": false,
+        "rationale": "Ultrasound is part of pre-biopsy workup (confirms two kidneys, normal size, excludes hydronephrosis) but does not establish the glomerular diagnosis required to guide immunosuppression (KDIGO).",
         "source_refs": [
-          "BMJ Best Practice - Nephrotic syndrome"
+          "KDIGO Glomerular Diseases 2021"
         ]
       },
       {
         "letter": "E",
-        "text": "Negative ANA and ANCA serology on the secondary cause screen",
+        "text": "Empirical trial of high-dose oral prednisolone 1 mg/kg daily and recheck in 8 weeks",
         "correct": false,
-        "rationale": "Negative serology rules out specific secondary causes but does not differentiate between nephrotic and nephritic patterns - it only narrows the differential within each (Source: KDIGO Glomerular Diseases 2021).",
+        "rationale": "Empirical steroid trials are reserved for paediatric minimal change disease; in adults this risks treating the wrong pathology (e.g. membranous, FSGS) and exposes the patient to corticosteroid toxicity without a histological diagnosis (KDIGO).",
         "source_refs": [
           "KDIGO Glomerular Diseases 2021"
         ]
@@ -1161,68 +1168,68 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-renal-013",
+    "id": "med-renal-013-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "ECG-driven escalation ladder",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "hyperkalaemia",
       "ECG",
       "calcium gluconate"
     ],
-    "stem": "A 74-year-old man with CKD stage 4 (eGFR 22 mL/min/1.73m^2) and heart failure attends ED with malaise and palpitations. Medications: irbesartan 300 mg, spironolactone 25 mg, frusemide 40 mg, metoprolol, atorvastatin. He was started on trimethoprim-sulfamethoxazole 5 days ago for a UTI by his GP. Examination: BP 138/82, HR 52 with a regular pulse, no syncope, alert. Bloods on arrival: K 7.3 mmol/L, Na 134, Cr 248 micromol/L (was 198 last month), HCO3 19, glucose 6.4, Hb 110. ECG shows sinus bradycardia with prolonged PR, broad QRS approximately 140 ms, and tall peaked T waves in V2-V5.",
+    "stem": "A 74-year-old man with CKD stage 4 (eGFR 22 mL/min/1.73m^2) and heart failure attends ED with malaise and palpitations. Medications: irbesartan 300 mg, spironolactone 25 mg, frusemide 40 mg, metoprolol, atorvastatin. He was started on trimethoprim-sulfamethoxazole 5 days ago for a UTI. Examination: BP 138/82, HR 52 regular, alert. Bloods on arrival: K 7.3 mmol/L, Na 134, Cr 248 micromol/L (was 198 last month), HCO3 19, glucose 6.4. ECG shows sinus bradycardia with prolonged PR, broad QRS approximately 140 ms, and tall peaked T waves in V2-V5. You have given IV calcium gluconate 10 percent 10 mL over 2 minutes and the QRS narrows on repeat ECG.",
     "data_table": {
       "Vital signs": "BP 138/82, HR 52, SpO2 97% RA.",
       "Examination": "Alert, well-perfused, mild peripheral oedema.",
       "Investigations": "K 7.3, Cr 248 (was 198), HCO3 19, ECG: peaked T waves, broad QRS 140 ms, prolonged PR.",
       "Medications": "Irbesartan, spironolactone, frusemide, metoprolol, TMP-SMX (5/7)."
     },
-    "lead_in": "Which is the single most appropriate immediate intervention?",
+    "lead_in": "Which combination is the most appropriate next set of interventions?",
     "options": [
       {
         "letter": "A",
-        "text": "IV calcium gluconate 10% 10 mL over 2-3 minutes to stabilise the myocardium",
+        "text": "Repeat IV calcium gluconate 10 percent 10 mL every 30 minutes while awaiting dialysis",
+        "correct": false,
+        "rationale": "Calcium stabilises the myocardium but does not lower potassium; repeated calcium without shift or removal therapy leaves the patient at ongoing arrhythmia risk once the calcium wanes (eTG Nephrology).",
+        "source_refs": [
+          "Therapeutic Guidelines: Nephrology - hyperkalaemia"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "IV actrapid insulin 10 units with 50 mL of 50 percent dextrose plus nebulised salbutamol 10 mg, stop irbesartan, spironolactone and trimethoprim-sulfamethoxazole, and arrange urgent renal review for dialysis",
         "correct": true,
-        "rationale": "ECG changes (peaked T waves, prolonged PR, broad QRS) with hyperkalaemia require immediate myocardial membrane stabilisation. IV calcium does not lower potassium but rapidly protects the heart while shift and removal strategies are arranged (Source: Therapeutic Guidelines: Nephrology - hyperkalaemia; UK Renal Association 2023).",
+        "rationale": "After calcium stabilisation, the priorities are shift therapy (insulin-dextrose plus salbutamol act synergistically), removal of the precipitating drugs (RAAS inhibitor, potassium-sparing diuretic, trimethoprim acts as a potassium-sparing diuretic via ENaC blockade), and arranging dialysis in CKD stage 4 with K 7.3 and ECG changes given temporary nature of shift therapy (eTG Nephrology; UK Renal Association 2023).",
         "source_refs": [
           "Therapeutic Guidelines: Nephrology - hyperkalaemia",
           "UK Renal Association Hyperkalaemia 2023"
         ]
       },
       {
-        "letter": "B",
-        "text": "IV actrapid insulin 10 units with 50 mL of 50% dextrose to shift potassium intracellularly",
-        "correct": false,
-        "rationale": "Insulin-dextrose is the next step but should follow calcium when there are ECG changes; shifting potassium without membrane stabilisation does not protect against arrhythmia in the short window before the shift takes effect (Source: Therapeutic Guidelines: Nephrology).",
-        "source_refs": [
-          "Therapeutic Guidelines: Nephrology - hyperkalaemia"
-        ]
-      },
-      {
         "letter": "C",
-        "text": "Nebulised salbutamol 10-20 mg via mask to shift potassium intracellularly",
+        "text": "Oral sodium polystyrene sulfonate 30 g and IV frusemide 80 mg bolus then admit for telemetry overnight",
         "correct": false,
-        "rationale": "Salbutamol shifts potassium intracellularly via beta-2 stimulation but is slower and less reliable than insulin-dextrose; like other shift therapies it does not precede membrane stabilisation when ECG changes are present (Source: Therapeutic Guidelines: Nephrology).",
+        "rationale": "Cation exchangers act over hours, are GI-tolerance limited, and do not protect against arrhythmia in the next 30 minutes; frusemide is of limited utility at eGFR 22 and does not substitute for shift therapy (eTG Nephrology).",
         "source_refs": [
           "Therapeutic Guidelines: Nephrology - hyperkalaemia"
         ]
       },
       {
         "letter": "D",
-        "text": "Oral sodium polystyrene sulfonate (resonium) 30 g as an enteral cation exchanger",
+        "text": "IV sodium bicarbonate 100 mmol over 30 minutes plus continue irbesartan and spironolactone at half dose",
         "correct": false,
-        "rationale": "Cation exchangers act over hours and do not protect against arrhythmia; they remove potassium from the body rather than stabilising myocardium or shifting potassium acutely (Source: Therapeutic Guidelines: Nephrology).",
+        "rationale": "Bicarbonate is only modestly effective in non-acidotic patients and is not first-line shift therapy; continuing RAAS inhibitor and potassium-sparing diuretic in active life-threatening hyperkalaemia is unsafe (eTG Nephrology).",
         "source_refs": [
           "Therapeutic Guidelines: Nephrology - hyperkalaemia"
         ]
       },
       {
         "letter": "E",
-        "text": "Urgent in-centre haemodialysis via a temporary internal jugular vascath",
+        "text": "Withhold further interventions and recheck potassium in 4 hours, planning shift therapy only if it remains above 6.5",
         "correct": false,
-        "rationale": "Dialysis is the definitive removal therapy in refractory or severe cases, but it takes time to set up; calcium and shift therapy come first, with dialysis arranged in parallel if there is no response (Source: Therapeutic Guidelines: Nephrology).",
+        "rationale": "Watchful waiting is unsafe with K 7.3 and persistent precipitants in place; calcium effect lasts only 30 to 60 minutes and rebound arrhythmia is likely (eTG Nephrology).",
         "source_refs": [
           "Therapeutic Guidelines: Nephrology - hyperkalaemia"
         ]
@@ -1433,70 +1440,71 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-renal-016",
+    "id": "med-renal-016-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "Outpatient SIADH workup - drug and paraneoplastic causes",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "SSRI",
       "hyponatraemia",
       "SIADH"
     ],
-    "stem": "A 72-year-old man is referred from his GP after an asymptomatic sodium of 124 mmol/L on a routine pre-operative panel. He has a 50-pack-year smoking history and a chronic cough for three months with mild weight loss. Medications: amlodipine, atorvastatin, sertraline (started six months ago) and carbamazepine (long-standing for trigeminal neuralgia). He drinks 2 cups of tea per day, denies polydipsia, and is otherwise well. Examination: BP 132/78 lying and standing, HR 76, JVP not raised, mucous membranes moist, no peripheral oedema, normal cardiovascular and respiratory exam. Bloods: Na 124, K 3.9, urea 3.0, creatinine 76 micromol/L, eGFR > 90, glucose 5.0, serum osmolality 258 mOsm/kg, urine osmolality 412 mOsm/kg, urine sodium 48 mmol/L, TSH 1.8 mIU/L, random cortisol 380 nmol/L. Chest X-ray is requested.",
+    "stem": "A 72-year-old man is referred from his GP after an asymptomatic sodium of 124 mmol/L on a routine pre-operative panel. He has a 50-pack-year smoking history and a chronic cough for three months with mild weight loss. Medications: amlodipine, atorvastatin, sertraline (started six months ago) and carbamazepine (long-standing for trigeminal neuralgia). He denies polydipsia and is otherwise well. Examination: BP 132/78 lying and standing, JVP not raised, mucous membranes moist, no peripheral oedema, normal CVS and respiratory exam. Bloods: Na 124, K 3.9, urea 3.0, creatinine 76 micromol/L, glucose 5.0, serum osmolality 258 mOsm/kg, urine osmolality 412 mOsm/kg, urine sodium 48 mmol/L, TSH 1.8 mIU/L, 9 am cortisol 380 nmol/L.",
     "data_table": {
       "Vital signs": "BP 132/78 lying and standing, HR 76.",
       "Examination": "Euvolaemic, no oedema, no postural BP drop.",
       "Investigations": "Na 124, serum osm 258, urine osm 412, urine Na 48, TSH 1.8, cortisol 380.",
       "Medications": "Amlodipine, atorvastatin, sertraline, carbamazepine."
     },
-    "lead_in": "Which is the most likely cause of his hyponatraemia and the most appropriate next step?",
+    "lead_in": "Which is the most appropriate next step in management?",
     "options": [
       {
         "letter": "A",
-        "text": "Adrenal insufficiency causing hyponatraemia - commence empirical IV hydrocortisone today",
+        "text": "Cease sertraline and carbamazepine simultaneously and recheck sodium in 2 weeks",
         "correct": false,
-        "rationale": "Random cortisol 380 nmol/L argues against primary adrenal insufficiency (consider AM cortisol and Synacthen test if uncertain); empirical glucocorticoid is not the immediate step (Source: European hyponatraemia clinical practice guideline 2014).",
+        "rationale": "Both drugs cause SIADH, but stopping carbamazepine that is controlling trigeminal neuralgia risks an uncontrolled pain flare and ceasing the SSRI abruptly risks discontinuation syndrome; in addition, his smoking history and chronic cough with weight loss must be investigated for paraneoplastic SIADH before assuming drugs are the sole cause (eTG endocrinology).",
         "source_refs": [
-          "European hyponatraemia clinical practice guideline 2014"
+          "European hyponatraemia clinical practice guideline 2014",
+          "Therapeutic Guidelines: Endocrinology - hyponatraemia"
         ]
       },
       {
         "letter": "B",
-        "text": "Hypovolaemic hyponatraemia from poor oral intake - start oral rehydration and recheck",
-        "correct": false,
-        "rationale": "He is clinically euvolaemic with no postural drop and a urine Na of 48 mmol/L. In hypovolaemic hyponatraemia the kidney avidly reabsorbs sodium, producing urine Na < 20 mmol/L (Source: European hyponatraemia clinical practice guideline 2014).",
+        "text": "Arrange CT chest with contrast and review medications with a structured taper plan",
+        "correct": true,
+        "rationale": "His euvolaemic hypotonic hyponatraemia with inappropriate urine concentration and natriuresis meets SIADH criteria, but the constellation of 50-pack-year smoking, chronic cough and weight loss mandates imaging for small cell lung cancer as a paraneoplastic cause; medication review with planned taper of contributing drugs is parallel rather than first-step empirical cessation (eTG endocrinology; European 2014).",
         "source_refs": [
-          "European hyponatraemia clinical practice guideline 2014"
+          "European hyponatraemia clinical practice guideline 2014",
+          "Therapeutic Guidelines: Endocrinology - hyponatraemia"
         ]
       },
       {
         "letter": "C",
-        "text": "Primary polydipsia driving hyponatraemia - restrict fluids to 1 L/day at home",
+        "text": "Commence tolvaptan 15 mg daily and titrate to sodium response over the next week",
         "correct": false,
-        "rationale": "Primary polydipsia produces dilute urine (urine osmolality < 100 mOsm/kg) as the kidney suppresses ADH. His urine osmolality of 412 is inappropriately concentrated (Source: European hyponatraemia clinical practice guideline 2014).",
+        "rationale": "Vaptans are reserved for chronic SIADH refractory to fluid restriction; using them as first-line risks rapid sodium correction with osmotic demyelination, and an underlying cause must be sought first (European 2014).",
         "source_refs": [
           "European hyponatraemia clinical practice guideline 2014"
         ]
       },
       {
         "letter": "D",
-        "text": "Hypothyroidism causing hyponatraemia - commence levothyroxine and recheck in 6 weeks",
+        "text": "Empirical hypertonic 3 percent saline 100 mL bolus and admit for ongoing infusion",
         "correct": false,
-        "rationale": "TSH is 1.8 mIU/L (within reference). Hypothyroidism is a recognised cause of euvolaemic hyponatraemia but is ruled out here (Source: European hyponatraemia clinical practice guideline 2014).",
+        "rationale": "Hypertonic saline is reserved for symptomatic hyponatraemia (seizures, coma, severe confusion); he is asymptomatic and rapid correction in chronic hyponatraemia risks osmotic demyelination (European 2014).",
         "source_refs": [
           "European hyponatraemia clinical practice guideline 2014"
         ]
       },
       {
         "letter": "E",
-        "text": "Drug-induced SIADH (SSRI/carbamazepine) - review medications and arrange a chest CT",
-        "correct": true,
-        "rationale": "Euvolaemic hyponatraemia with serum osmolality < 275, urine osmolality > 100 and urine sodium > 30 with normal thyroid and adrenal axes meets SIADH criteria. SSRIs and carbamazepine are common precipitants; the smoking history and chronic cough also raise concern for paraneoplastic SIADH from small cell lung cancer, mandating chest imaging (Source: European hyponatraemia guidelines 2014; eTG endocrinology).",
+        "text": "Restrict fluid intake to 800 mL daily and reassure that no further investigation is needed",
+        "correct": false,
+        "rationale": "Fluid restriction treats SIADH but missing a small cell lung cancer in a high-risk smoker would be a serious diagnostic error; investigation must accompany treatment (European 2014; eTG endocrinology).",
         "source_refs": [
-          "European hyponatraemia clinical practice guideline 2014",
-          "Therapeutic Guidelines: Endocrinology - hyponatraemia"
+          "European hyponatraemia clinical practice guideline 2014"
         ]
       }
     ],
@@ -1527,39 +1535,40 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-renal-017",
+    "id": "med-renal-017-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "Central vs nephrogenic - water deprivation + desmopressin",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "lithium",
       "desmopressin"
     ],
-    "stem": "A 45-year-old woman is referred to endocrine clinic with three months of polyuria and polydipsia (estimated 6-7 L/day), worse at night. She has bipolar disorder treated with lithium 750 mg daily for 12 years and is otherwise well. Medications: lithium, escitalopram. Examination: BP 116/72, HR 78, weight 64 kg, no postural drop, mucous membranes slightly dry, no focal neurology. Bloods: Na 148 mmol/L, K 4.2, urea 5.0, creatinine 92 micromol/L, eGFR 64, calcium corrected 2.34 mmol/L, glucose 5.2, HbA1c 38 mmol/mol, TSH 1.6, lithium level 0.7 mmol/L (therapeutic). Plasma osmolality 308 mOsm/kg, urine osmolality 198 mOsm/kg, urine specific gravity 1.005. A water deprivation test is performed: after 6 hours her urine osmolality remains 220 mOsm/kg, then desmopressin 2 microgram is given subcutaneously and urine osmolality rises only to 245 mOsm/kg.",
+    "stem": "A 45-year-old woman is referred to endocrine clinic with three months of polyuria and polydipsia (estimated 6 to 7 L per day), worse at night. She has bipolar disorder on lithium 750 mg daily for 12 years, stable, with no recent mood episodes. Medications: lithium, escitalopram. BP 116/72, weight 64 kg, mucous membranes slightly dry. Bloods: Na 148 mmol/L, K 4.2, creatinine 92 micromol/L, eGFR 64, corrected calcium 2.34 mmol/L, glucose 5.2, HbA1c 38, TSH 1.6, lithium 0.7 mmol/L. Plasma osmolality 308 mOsm/kg, urine osmolality 198 mOsm/kg. Water deprivation: urine osmolality 220 mOsm/kg after 6 hours, rising only to 245 mOsm/kg after subcutaneous desmopressin 2 microgram. Her psychiatrist has communicated that lithium remains the preferred mood stabiliser.",
     "data_table": {
       "Vital signs": "BP 116/72, HR 78, weight 64 kg.",
       "Examination": "Slightly dry mucous membranes, no focal neurology.",
       "Investigations": "Na 148, plasma osm 308, urine osm 198, water deprivation: urine osm 220 -> 245 after dDAVP, lithium 0.7, Ca 2.34.",
       "Medications": "Lithium 750 mg, escitalopram."
     },
-    "lead_in": "Which is the most likely diagnosis?",
+    "lead_in": "Which is the most appropriate ongoing management strategy?",
     "options": [
       {
         "letter": "A",
-        "text": "Central diabetes insipidus due to posterior pituitary ADH deficiency",
+        "text": "Discontinue lithium immediately and switch to sodium valproate, then reassess polyuria in 6 weeks",
         "correct": false,
-        "rationale": "Central DI shows a robust rise in urine osmolality (> 50%, often more than doubling) after exogenous desmopressin because the kidney responds normally. A minimal rise to 245 here excludes central DI (Source: BMJ Best Practice - Diabetes insipidus).",
+        "rationale": "Abrupt lithium cessation in stable bipolar disorder risks relapse; lithium nephrogenic DI often persists after cessation due to fixed collecting duct injury; valproate also has TGA black-box warnings and is not an equivalent substitute, especially in women of reproductive age (Therapeutic Guidelines: Psychotropic; AMH).",
         "source_refs": [
-          "BMJ Best Practice - Diabetes insipidus"
+          "Therapeutic Guidelines: Psychotropic",
+          "Australian Medicines Handbook"
         ]
       },
       {
         "letter": "B",
-        "text": "Nephrogenic diabetes insipidus, most likely lithium-induced collecting duct injury",
+        "text": "Continue lithium, add amiloride 5 to 10 mg daily, ensure free access to water and monitor sodium and lithium levels",
         "correct": true,
-        "rationale": "Hypotonic polyuria with hypernatraemia (Na 148), persistently dilute urine after water deprivation (220 mOsm/kg) and negligible response to exogenous desmopressin (rise < 50% to 245) localises the defect to the collecting duct. Lithium is the most common drug cause of nephrogenic DI (Source: BMJ Best Practice - Diabetes insipidus; eTG endocrinology).",
+        "rationale": "Amiloride blocks lithium entry into collecting duct principal cells via ENaC, reducing lithium-induced nephrogenic DI without compromising mood stabilisation; KDIGO and Australian psychiatric guidance support amiloride as the preferred renal-sparing adjunct when lithium is essential, with monitoring of sodium and lithium levels (BMJ Best Practice DI; eTG Endocrinology).",
         "source_refs": [
           "BMJ Best Practice - Diabetes insipidus",
           "Therapeutic Guidelines: Endocrinology"
@@ -1567,29 +1576,29 @@
       },
       {
         "letter": "C",
-        "text": "Primary polydipsia with secondary suppression of endogenous ADH",
+        "text": "Commence intranasal desmopressin 10 microgram twice daily and continue lithium unchanged",
         "correct": false,
-        "rationale": "Primary polydipsia produces a low or normal serum sodium and the urine concentrates appropriately during water deprivation; a sodium of 148 with persistently dilute urine after deprivation argues against this (Source: BMJ Best Practice - Diabetes insipidus).",
+        "rationale": "She has shown a negligible response to exogenous desmopressin confirming nephrogenic rather than central DI; desmopressin is therefore ineffective and risks fluid retention and hyponatraemia (BMJ Best Practice DI).",
         "source_refs": [
           "BMJ Best Practice - Diabetes insipidus"
         ]
       },
       {
         "letter": "D",
-        "text": "Osmotic diuresis from undiagnosed diabetes mellitus or glycosuria",
+        "text": "Restrict fluid intake to 1.5 L daily and recheck sodium and lithium level in 4 weeks",
         "correct": false,
-        "rationale": "HbA1c 38 mmol/mol and glucose 5.2 mmol/L exclude diabetes; osmotic diuresis would also produce a higher urine osmolality (Source: BMJ Best Practice - Diabetes insipidus).",
+        "rationale": "Fluid restriction in nephrogenic DI risks worsening hypernatraemia and acute kidney injury since the obligatory urine output cannot be reduced by reducing intake; lithium toxicity risk rises with dehydration (BMJ Best Practice DI).",
         "source_refs": [
           "BMJ Best Practice - Diabetes insipidus"
         ]
       },
       {
         "letter": "E",
-        "text": "Chronic kidney disease producing a generalised urinary concentration defect",
+        "text": "Start a high-protein high-sodium diet to enhance free water clearance and continue lithium",
         "correct": false,
-        "rationale": "Generalised CKD concentration defects rarely produce frank hypotonic polyuria with hypernatraemia; her eGFR is 64, and the pattern fits nephrogenic DI rather than a non-specific concentration defect (Source: BMJ Best Practice - Diabetes insipidus).",
+        "rationale": "Treatment of lithium nephrogenic DI uses a low-sodium diet (paradoxically reduces urine output via proximal sodium and water reabsorption) plus thiazide or amiloride, not a high-sodium diet (eTG Endocrinology).",
         "source_refs": [
-          "BMJ Best Practice - Diabetes insipidus"
+          "Therapeutic Guidelines: Endocrinology"
         ]
       }
     ],
@@ -1808,29 +1817,29 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-renal-020",
+    "id": "med-renal-020-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "Drug dose adjustment and avoidance in CKD",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "metformin"
     ],
-    "stem": "A 78-year-old woman with CKD stage 4 (eGFR 24 mL/min/1.73m^2) is reviewed in clinic. Her medications are perindopril 5 mg, metformin 1 g BD, gabapentin 600 mg three times a day for painful diabetic neuropathy, morphine MR 30 mg twice a day for chronic back pain, ciprofloxacin 500 mg BD (day 2) started by her GP for an uncomplicated UTI, and apixaban 5 mg BD for atrial fibrillation (CHA2DS2-VA 4). She reports increasing drowsiness, gait instability and one fall yesterday. There are no overtly focal neurological signs and no head injury. BP 132/76, HR 76. Bloods today: Cr 220 micromol/L (was 195 last month), eGFR 24, K 4.8, HCO3 21, INR 1.1.",
+    "stem": "A 78-year-old woman with CKD stage 4 (eGFR 24 mL/min/1.73m^2) is reviewed after a fall. Medications: perindopril 5 mg, metformin 1 g BD, gabapentin 600 mg three times daily, morphine MR 30 mg twice daily, ciprofloxacin 500 mg BD (day 2 of 5 for uncomplicated UTI started by her GP), and apixaban 5 mg BD for atrial fibrillation. She weighs 58 kg. She is drowsy and ataxic, but rousable, with no focal neurology and no head injury. BP 132/76. Bloods: Cr 220 micromol/L (was 195 last month), eGFR 24, K 4.8, HCO3 21, INR 1.1.",
     "data_table": {
       "Vital signs": "BP 132/76, HR 76.",
       "Examination": "Drowsy, ataxic gait, no focal neurology.",
       "Investigations": "Cr 220 (was 195), eGFR 24, K 4.8.",
       "Medications": "Perindopril 5 mg, metformin 1 g BD, gabapentin 600 mg TDS, morphine MR 30 mg BD, ciprofloxacin 500 mg BD (day 2), apixaban 5 mg BD."
     },
-    "lead_in": "Which medication change is most urgently required given her renal function?",
+    "lead_in": "Which combination of medication changes is most urgently required?",
     "options": [
       {
         "letter": "A",
-        "text": "Reduce gabapentin and switch morphine to a less renally-cleared opioid such as buprenorphine",
+        "text": "Reduce gabapentin dose, switch morphine to a less renally cleared opioid such as buprenorphine or fentanyl, and reduce apixaban to 2.5 mg BD given age over 80 and weight under 60 kg",
         "correct": true,
-        "rationale": "Gabapentin and morphine (via morphine-6-glucuronide) are both predominantly renally cleared and accumulate at low eGFR, producing sedation, ataxia and falls. Australian Medicines Handbook recommends dose reduction or alternative agents at eGFR < 30 - gabapentin reduced and titrated, and morphine substituted with an opioid such as buprenorphine or fentanyl that is less dependent on renal clearance (Source: Australian Medicines Handbook 2024 - prescribing in renal impairment; Therapeutic Guidelines: Palliative care).",
+        "rationale": "Gabapentin and morphine (via active metabolite M6G) are renally cleared and the drowsy ataxic picture is consistent with accumulation; AMH directs dose reduction or substitution for opioids in CKD with buprenorphine or fentanyl preferred. Apixaban dose reduction to 2.5 mg BD is mandated when any two of age over 80, weight under 60 kg, or creatinine over 133 micromol/L apply, and she meets all three.",
         "source_refs": [
           "Australian Medicines Handbook 2024 - prescribing in renal impairment",
           "Therapeutic Guidelines: Palliative care - opioids in renal impairment"
@@ -1838,27 +1847,27 @@
       },
       {
         "letter": "B",
-        "text": "Stop metformin permanently today because of the lactic acidosis risk at this eGFR",
+        "text": "Stop metformin permanently, continue gabapentin and morphine at current doses, and continue apixaban 5 mg BD",
         "correct": false,
-        "rationale": "AMH and ADS guidance allow metformin to be continued with dose reduction (typically maximum 1 g/day) at eGFR 30-45 and to be stopped or used with caution below 30; her eGFR is 24, so dose review is reasonable but the urgent driver of harm right now is opioid + gabapentin neurotoxicity (Source: Australian Medicines Handbook 2024).",
+        "rationale": "Metformin should be reviewed at eGFR under 30 but is not the cause of her drowsy ataxic presentation; missing the opioid and gabapentin accumulation and not dose-reducing apixaban risks ongoing falls and bleeding (AMH).",
         "source_refs": [
           "Australian Medicines Handbook 2024 - prescribing in renal impairment"
         ]
       },
       {
         "letter": "C",
-        "text": "Switch apixaban to warfarin titrated to an INR target of 2.0 to 3.0",
+        "text": "Switch apixaban to warfarin titrated to INR 2.0 to 3.0 and continue all other medications",
         "correct": false,
-        "rationale": "Apixaban can be used in CKD stage 4 with a dose reduction to 2.5 mg BD if any two of age >= 80, weight <= 60 kg or creatinine >= 133 micromol/L are present; warfarin in elderly CKD has worse outcomes than DOACs in most cohorts (Source: Australian Medicines Handbook 2024 - apixaban).",
+        "rationale": "Switching to warfarin in elderly CKD has worse bleeding outcomes than dose-adjusted DOAC and does not address the opioid and gabapentin neurotoxicity driving her symptoms (AMH).",
         "source_refs": [
           "Australian Medicines Handbook 2024 - prescribing in renal impairment"
         ]
       },
       {
         "letter": "D",
-        "text": "Stop ciprofloxacin and switch the UTI cover to oral nitrofurantoin instead",
+        "text": "Stop ciprofloxacin and switch to oral nitrofurantoin 100 mg BD for the remaining UTI course",
         "correct": false,
-        "rationale": "Nitrofurantoin is contraindicated at eGFR < 45 because of inadequate urinary concentrations and increased systemic toxicity; ciprofloxacin requires dose reduction but is not the most urgent change (Source: Therapeutic Guidelines: Antibiotic - UTI; AMH).",
+        "rationale": "Nitrofurantoin is contraindicated at eGFR under 45 due to inadequate urinary concentrations and increased systemic toxicity; ciprofloxacin can be dose-reduced if needed but is not the priority change (Therapeutic Guidelines: Antibiotic; AMH).",
         "source_refs": [
           "Therapeutic Guidelines: Antibiotic - UTI",
           "Australian Medicines Handbook 2024 - prescribing in renal impairment"
@@ -1866,9 +1875,9 @@
       },
       {
         "letter": "E",
-        "text": "Stop perindopril today given the small rise in creatinine over a month",
+        "text": "Stop perindopril today and recheck creatinine and potassium in 1 week",
         "correct": false,
-        "rationale": "A creatinine rise of < 30% on ACEi is acceptable; with K 4.8 and BP control, perindopril should be continued unless creatinine rises > 30% from baseline or potassium > 6.0 mmol/L (Source: Therapeutic Guidelines: Cardiovascular).",
+        "rationale": "A creatinine rise under 30 percent on an ACE inhibitor is acceptable; with potassium 4.8 and BP control, perindopril can continue with monitoring (Therapeutic Guidelines: Cardiovascular).",
         "source_refs": [
           "Therapeutic Guidelines: Cardiovascular"
         ]

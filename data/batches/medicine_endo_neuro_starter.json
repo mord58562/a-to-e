@@ -1,36 +1,36 @@
 [
   {
-    "id": "med-endo-neuro-001",
+    "id": "med-endo-neuro-001-l3",
     "topic": "Medicine",
     "subtopic": "Other",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "T2DM"
     ],
-    "stem": "A 56-year-old man attends his GP for review of fatigue and nocturia over the last three months. He has hypertension treated with perindopril 5 mg daily and a BMI of 31 kg/m^2. He is asymptomatic of polyuria today and denies weight loss, vomiting or thirst beyond mild dry mouth. His father has type 2 diabetes. He has no acute illness and is not on glucocorticoids. The GP performs opportunistic screening. A fasting venous plasma glucose taken in a NATA-accredited laboratory two weeks ago was 7.3 mmol/L; today's HbA1c on a standardised laboratory assay is 50 mmol/mol (6.7 percent). A random venous glucose taken today is 9.4 mmol/L. He has no features of intercurrent illness, sepsis or recent steroid use that would invalidate the HbA1c. He has never had a previous diabetes diagnosis recorded.",
+    "stem": "A 56-year-old man attends his GP for review of fatigue and nocturia over the last three months. He has hypertension on perindopril 5 mg, BMI 31, and his father has T2DM. He has had two haemoglobinopathy screens incidentally documented in the past (beta thalassaemia minor). He is not on glucocorticoids and has had no transfusions or recent illness. A fasting venous plasma glucose taken in a NATA-accredited laboratory two weeks ago was 7.3 mmol/L; today's laboratory HbA1c is 50 mmol/mol (6.7 percent); a random venous glucose today is 9.4 mmol/L. He has acanthosis nigricans and is otherwise well, with no polyuria, weight loss, or vomiting.",
     "data_table": {
       "Vital signs": "BP 138/84 mmHg, HR 78 bpm, BMI 31 kg/m^2.",
       "Examination": "Acanthosis nigricans over the posterior neck. No ketotic breath. Hydrated.",
       "Investigations": "Fasting venous glucose 7.3 mmol/L (two weeks ago, NATA lab); HbA1c 50 mmol/mol (6.7 percent) today, standardised assay; random glucose 9.4 mmol/L today; eGFR 78 mL/min/1.73m^2; ACR 1.2 mg/mmol."
     },
-    "lead_in": "Which statement best describes how this patient meets the Australian diagnostic criteria for type 2 diabetes?",
+    "lead_in": "Which is the most appropriate next step to establish or refute the diagnosis of type 2 diabetes?",
     "options": [
       {
         "letter": "A",
-        "text": "The single random venous glucose of 9.4 mmol/L on its own confirms diabetes",
+        "text": "Diagnose type 2 diabetes now on the basis of HbA1c 50 mmol/mol plus fasting glucose 7.3 mmol/L and commence metformin",
         "correct": false,
-        "rationale": "A random glucose only confirms diabetes if it is at least 11.1 mmol/L AND accompanied by classic symptoms; 9.4 mmol/L is below threshold (RACGP Management of T2D 2024; ADS Position Statement 2020).",
+        "rationale": "Beta thalassaemia minor alters red cell turnover and can falsely lower or raise HbA1c depending on the assay; Australian Diabetes Society guidance lists haemoglobinopathy as a setting where HbA1c should not be used, requiring confirmation by repeat glycaemic testing (ADS Position; RACGP).",
         "source_refs": [
-          "RACGP Management of type 2 diabetes 2024",
-          "Australian Diabetes Society Position Statement"
+          "Australian Diabetes Society Position Statement",
+          "RACGP Management of type 2 diabetes 2024"
         ]
       },
       {
         "letter": "B",
-        "text": "Two separate abnormal results meet the criteria: fasting glucose 7.3 and HbA1c 50 mmol/mol",
+        "text": "Repeat the fasting venous plasma glucose in a NATA-accredited laboratory on a separate day to confirm fasting glucose at least 7.0 mmol/L",
         "correct": true,
-        "rationale": "In an asymptomatic patient Australian diagnosis requires two abnormal tests, either two of the same or two different. Fasting venous glucose at least 7.0 mmol/L and HbA1c at least 48 mmol/mol (6.5 percent) on a standardised assay are each diagnostic when confirmed on a separate occasion (RACGP 2024; ADS 2020).",
+        "rationale": "Because his haemoglobinopathy invalidates HbA1c, Australian diagnosis must rely on two abnormal glycaemic tests on separate days (fasting glucose at least 7.0, OGTT 2-hour at least 11.1, or random at least 11.1 with classic symptoms); repeating the fasting glucose is the most direct confirmatory test (RACGP; ADS).",
         "source_refs": [
           "RACGP Management of type 2 diabetes 2024",
           "Australian Diabetes Society Position Statement"
@@ -38,28 +38,29 @@
       },
       {
         "letter": "C",
-        "text": "He does not meet criteria because no oral glucose tolerance test has been performed",
+        "text": "Discharge without diagnosis because the random glucose of 9.4 mmol/L is below 11.1 mmol/L",
         "correct": false,
-        "rationale": "OGTT is one of several diagnostic options but is not mandatory; HbA1c at least 48 mmol/mol or fasting glucose at least 7.0 mmol/L are equally accepted in asymptomatic adults (RACGP 2024).",
+        "rationale": "An isolated random glucose below 11.1 does not exclude diabetes; his fasting glucose of 7.3 mmol/L already meets the diabetes threshold and requires confirmatory testing, not discharge (RACGP).",
         "source_refs": [
           "RACGP Management of type 2 diabetes 2024"
         ]
       },
       {
         "letter": "D",
-        "text": "He has impaired fasting glucose only and should simply be reviewed in 12 months",
+        "text": "Order fructosamine as the primary diagnostic test since HbA1c is unreliable in haemoglobinopathy",
         "correct": false,
-        "rationale": "Impaired fasting glucose is 6.1 to 6.9 mmol/L; a fasting glucose of 7.0 mmol/L or greater meets the diabetes threshold and his HbA1c is above 48 mmol/mol (RACGP 2024).",
+        "rationale": "Fructosamine is not validated as a primary diagnostic test for diabetes in Australian guidelines; confirmation uses standard glycaemic tests (fasting glucose or OGTT) (ADS).",
         "source_refs": [
-          "RACGP Management of type 2 diabetes 2024"
+          "Australian Diabetes Society Position Statement"
         ]
       },
       {
         "letter": "E",
-        "text": "HbA1c cannot be used here because acanthosis nigricans acts as a confounder",
+        "text": "Order an oral glucose tolerance test with 2-hour glucose at 75 g load, but commence metformin today regardless of result",
         "correct": false,
-        "rationale": "HbA1c is invalid in haemoglobinopathy, recent transfusion, haemolysis, pregnancy and rapidly evolving glycaemia; acanthosis nigricans is a clinical sign of insulin resistance and does not interfere with HbA1c (ADS 2020).",
+        "rationale": "Initiating treatment before establishing diagnosis bypasses confirmation; OGTT is an acceptable confirmatory test but treatment must follow the diagnosis (RACGP; ADS).",
         "source_refs": [
+          "RACGP Management of type 2 diabetes 2024",
           "Australian Diabetes Society Position Statement"
         ]
       }
@@ -868,27 +869,27 @@
     "subtopic_detail": "definitive treatment choice"
   },
   {
-    "id": "med-endo-neuro-010",
+    "id": "med-endo-neuro-010-l3",
     "topic": "Medicine",
     "subtopic": "Other",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "hypothyroidism"
     ],
-    "stem": "A 48-year-old woman attends her GP after blood tests ordered for tiredness 8 weeks ago showed TSH 7.2 mIU/L with normal free T4. A repeat panel today shows TSH 6.8 mIU/L, free T4 14 pmol/L (normal), and TPO antibodies markedly elevated at 540 IU/mL. She has no thyroid pain, no neck swelling and no family history of thyroid cancer. She has hypercholesterolaemia treated with atorvastatin and is otherwise well. She is not pregnant and is not planning pregnancy. Symptoms of fatigue have improved spontaneously over the last month. She has no constipation, no weight change beyond 1 kg and no menstrual irregularity. She has no goitre on examination, and there are no compressive symptoms. Her cardiovascular risk assessment is moderate (5-year CVD risk 7 percent). She is not on amiodarone or lithium. She does not smoke.",
+    "stem": "A 32-year-old woman attends her GP for preconception counselling. She is planning pregnancy in the next 3 months. Blood tests ordered 8 weeks ago showed TSH 5.6 mIU/L with normal free T4. A repeat panel today shows TSH 5.4 mIU/L, free T4 13 pmol/L (normal), and TPO antibodies markedly elevated at 540 IU/mL. She has no goitre, no compressive symptoms, and no other thyroid history. She has hypercholesterolaemia on atorvastatin and is otherwise well. She has no constipation or weight change.",
     "data_table": {
       "Vital signs": "BP 122/76, HR 68, weight 72 kg.",
       "Examination": "No goitre. No dry skin. Reflexes normal.",
       "Investigations": "TSH 6.8 mIU/L (was 7.2); fT4 14 pmol/L; TPO Ab 540 IU/mL (positive); lipids stable."
     },
-    "lead_in": "What is the most appropriate next step?",
+    "lead_in": "Which is the most appropriate next step?",
     "options": [
       {
         "letter": "A",
-        "text": "Commence levothyroxine 50 microgram daily and review TFTs in 6 to 8 weeks",
-        "correct": false,
-        "rationale": "Treatment of subclinical hypothyroidism is recommended when TSH is persistently >=10 mIU/L, or 4 to 10 mIU/L with significant symptoms attributable to hypothyroidism, pregnancy planning, infertility, goitre or strong patient preference. None of these apply (ESA position; RACGP).",
+        "text": "Commence levothyroxine to target a pre-conception TSH below 2.5 mIU/L and review TFTs in 6 to 8 weeks",
+        "correct": true,
+        "rationale": "In women planning pregnancy or in early pregnancy, Australian and international endocrine guidance recommends treating subclinical hypothyroidism (TSH above 2.5 in pregnancy planning, above trimester-specific limits in pregnancy) particularly when TPO antibodies are positive, to reduce miscarriage and pregnancy complications; pre-conception TSH target is below 2.5 mIU/L (ESA position; RACGP Red Book; ATA pregnancy guidelines).",
         "source_refs": [
           "Endocrine Society of Australia Position",
           "RACGP Red Book"
@@ -896,39 +897,39 @@
       },
       {
         "letter": "B",
-        "text": "Repeat TFTs and TPO antibodies in 6 to 12 months, with no treatment now",
-        "correct": true,
-        "rationale": "With TSH between 4 and 10 mIU/L, minimal symptoms, no goitre and no pregnancy plans, observation with annual TFT monitoring is recommended in Hashimoto thyroiditis; ~25 to 50 percent progress to overt hypothyroidism (ESA position; RACGP Red Book).",
+        "text": "Repeat TFTs and TPO antibodies in 6 to 12 months with no treatment now and advise contraception until reassessed",
+        "correct": false,
+        "rationale": "Deferring treatment delays pre-conception optimisation; positive TPO antibodies plus TSH above 2.5 in a woman planning pregnancy is a treatment indication (ESA; ATA).",
         "source_refs": [
-          "Endocrine Society of Australia Position",
-          "RACGP Red Book"
+          "Endocrine Society of Australia Position"
         ]
       },
       {
         "letter": "C",
-        "text": "Refer for ultrasound-guided fine needle aspiration of the thyroid for cytology",
+        "text": "Stop atorvastatin and recheck thyroid function in 6 weeks since statin may interfere with the TSH assay",
         "correct": false,
-        "rationale": "FNA is indicated for suspicious thyroid nodules; there is no nodule on examination or imaging here (RACGP).",
-        "source_refs": [
-          "RACGP Red Book"
-        ]
-      },
-      {
-        "letter": "D",
-        "text": "Commence triiodothyronine (T3, liothyronine) 20 microgram daily as primary thyroid replacement",
-        "correct": false,
-        "rationale": "T3 monotherapy is not recommended for primary hypothyroidism; levothyroxine T4 is the standard if treatment is initiated (AMH; ESA).",
+        "rationale": "Statins do not interfere with TSH; atorvastatin should be ceased on confirmation of pregnancy due to fetal risk, but not for thyroid reasons (AMH).",
         "source_refs": [
           "Australian Medicines Handbook"
         ]
       },
       {
-        "letter": "E",
-        "text": "Order thyroid ultrasound today and add TSH receptor antibodies to her bloods",
+        "letter": "D",
+        "text": "Refer for ultrasound-guided fine needle aspiration of the thyroid for cytology",
         "correct": false,
-        "rationale": "TSH receptor antibodies are useful in suspected Graves disease, not Hashimoto; ultrasound is reserved for palpable nodules or compressive symptoms (RACGP).",
+        "rationale": "FNA is indicated for suspicious thyroid nodules; she has no nodule (RACGP).",
         "source_refs": [
           "RACGP Red Book"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Commence T3 (liothyronine) 20 microgram daily as primary thyroid replacement",
+        "correct": false,
+        "rationale": "T3 monotherapy is not recommended for primary hypothyroidism; levothyroxine T4 is the standard (AMH; ESA).",
+        "source_refs": [
+          "Australian Medicines Handbook",
+          "Endocrine Society of Australia Position"
         ]
       }
     ],
@@ -1332,61 +1333,61 @@
     "subtopic_detail": "thrombolysis and thrombectomy eligibility"
   },
   {
-    "id": "med-endo-neuro-015",
+    "id": "med-endo-neuro-015-l3",
     "topic": "Medicine",
     "subtopic": "Other",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [],
-    "stem": "A 72-year-old woman attends her GP three hours after an episode of left arm and face weakness lasting 35 minutes that has now completely resolved. She has hypertension treated with amlodipine, type 2 diabetes on metformin and a long-standing 20 pack-year smoking history (current smoker). She has no atrial fibrillation on a previous Holter. Examination is now normal. Her BP today is 168/96 mmHg, blood glucose 9.2 mmol/L, ECG shows sinus rhythm. She has had no prior stroke or TIA. There is no carotid bruit. She has no recent head injury, no anticoagulation and no known bleeding tendency. She has no chest pain or palpitations. Her ABCD2 score is calculated. The GP is considering whether to manage her in primary care with same-week clinic follow-up or to refer urgently to the ED stroke pathway today.",
+    "stem": "A 72-year-old woman attends her GP three hours after an episode of left arm and face weakness lasting 35 minutes, now completely resolved. She has hypertension on amlodipine, T2DM on metformin, current smoker (20 pack-years), and no prior atrial fibrillation. Examination is now normal. BP today 168/96, blood glucose 9.2, ECG sinus rhythm, no carotid bruit. She has no anticoagulation, no bleeding tendency, and no recent head injury.",
     "data_table": {
       "Vital signs": "BP 168/96, HR 78, weight 76 kg.",
       "Examination": "Normal neurological examination now. No carotid bruit. ECG sinus rhythm.",
       "Investigations": "Glucose 9.2 mmol/L."
     },
-    "lead_in": "Which is the most appropriate disposition?",
+    "lead_in": "Which is the most appropriate combination of management steps?",
     "options": [
       {
         "letter": "A",
-        "text": "Same-day urgent ED referral for brain and vessel imaging, aspirin 300 mg loading and stroke pathway admission",
+        "text": "Same-day ED transfer for non-contrast CT brain and CT angiography of head and neck, load with aspirin 300 mg now, and arrange admission to a stroke unit with cardiac monitoring",
         "correct": true,
-        "rationale": "Current Australian Stroke Foundation guidance recommends urgent (same-day) assessment for all patients with suspected TIA, regardless of ABCD2 score, due to high early stroke risk especially in the first 48 hours. Imaging of brain and vessels and immediate antiplatelet (or DAPT for 21 days after minor TIA / stroke) reduces recurrence (Australian Stroke Foundation Living Guidelines).",
+        "rationale": "Australian Stroke Foundation Living Guidelines mandate urgent same-day assessment for all suspected TIAs regardless of ABCD2 score, with same-day brain and vessel imaging to identify large-vessel stenosis that may warrant urgent intervention, initial antiplatelet load, and cardiac monitoring to detect occult AF. DAPT for 21 days (aspirin plus clopidogrel) is then recommended after high-risk TIA per CHANCE/POINT data, but the initial step is urgent referral with aspirin loading.",
         "source_refs": [
           "Australian Stroke Foundation Living Guidelines"
         ]
       },
       {
         "letter": "B",
-        "text": "Reassure and arrange outpatient TIA clinic review in 2 weeks with aspirin 100 mg daily started today",
+        "text": "Calculate ABCD2 and refer urgently only if 4 or more; otherwise manage in primary care with aspirin and review in 1 week",
         "correct": false,
-        "rationale": "Two-week deferral risks recurrent stroke; modern Australian guidance recommends same-day specialist assessment regardless of ABCD2 (Australian Stroke Foundation).",
+        "rationale": "Australian guidance has moved away from ABCD2-based triage because lower scores still carry meaningful early stroke risk; all suspected TIAs require same-day specialist assessment (Australian Stroke Foundation).",
         "source_refs": [
           "Australian Stroke Foundation Living Guidelines"
         ]
       },
       {
         "letter": "C",
-        "text": "Arrange a carotid Doppler within the next one month and review her again after that",
+        "text": "Reassure and arrange outpatient TIA clinic review in 2 weeks with aspirin 100 mg daily today",
         "correct": false,
-        "rationale": "Carotid imaging is appropriate but delays reperfusion-relevant decisions; urgent imaging same day is the standard (Australian Stroke Foundation).",
+        "rationale": "Two-week deferral risks recurrent stroke; same-day specialist assessment with same-day imaging is the standard (Australian Stroke Foundation).",
         "source_refs": [
           "Australian Stroke Foundation Living Guidelines"
         ]
       },
       {
         "letter": "D",
-        "text": "Commence clopidogrel 75 mg daily and refer for cardiology rhythm monitoring only without imaging",
+        "text": "Commence rivaroxaban 20 mg daily empirically for presumed paroxysmal AF and arrange outpatient Holter monitor",
         "correct": false,
-        "rationale": "While rhythm monitoring is important, clopidogrel alone in primary care without urgent imaging misses the time-critical window for recurrent stroke prevention (Australian Stroke Foundation).",
+        "rationale": "Empirical anticoagulation without documented AF exposes her to bleeding risk in the immediate post-TIA window before imaging excludes haemorrhage; rhythm monitoring is appropriate but not in place of urgent imaging (Australian Stroke Foundation).",
         "source_refs": [
           "Australian Stroke Foundation Living Guidelines"
         ]
       },
       {
         "letter": "E",
-        "text": "Calculate ABCD2 first; if 3 or less manage in primary care, if 4 or more refer urgently",
+        "text": "Arrange a carotid Doppler within the next 4 weeks and review her again after the result is back",
         "correct": false,
-        "rationale": "ABCD2 is no longer used in current Australian guidance to decide disposition; all suspected TIAs warrant urgent (same-day) specialist assessment because lower scores still carry meaningful early stroke risk (Australian Stroke Foundation).",
+        "rationale": "Carotid imaging is critical but must occur within 24 to 48 hours, not weeks; same-day referral with CTA is the standard pathway (Australian Stroke Foundation).",
         "source_refs": [
           "Australian Stroke Foundation Living Guidelines"
         ]
@@ -1608,68 +1609,69 @@
     "subtopic_detail": "second-line management"
   },
   {
-    "id": "med-endo-neuro-018",
+    "id": "med-endo-neuro-018-l3",
     "topic": "Medicine",
     "subtopic": "Other",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "prednisolone",
       "ESR",
       "GCA"
     ],
-    "stem": "A 74-year-old woman presents to her GP with a three-week history of new bilateral temporal headache that has progressively worsened. She describes scalp tenderness when brushing her hair and jaw pain when chewing tough food that resolves with rest. She has had transient blurring of vision in her right eye for about 5 minutes yesterday that has now resolved. She has no rash, no fever and no neck stiffness. She has hypertension and osteoarthritis. She has lost 2 kg over the last month with night sweats. On examination her temporal arteries are tender and pulsatile bilaterally. There is no scalp ulceration. Her visual acuity is 6/9 right and 6/6 left with normal fundoscopy today and intact visual fields. Bloods: ESR 92 mm/hr, CRP 84 mg/L, Hb 108 g/L (normochromic normocytic), platelets 484 x10^9/L. There is no family history of vasculitis or other rheumatological disease. She has had no recent trauma.",
+    "stem": "A 74-year-old woman presents to her GP with a three-week history of new bilateral temporal headache progressively worsening, with scalp tenderness on hair brushing and jaw pain with chewing tough food. Yesterday she had a 10-minute episode of curtain-like vision loss in her right eye that has now resolved. Today on examination her right eye visual acuity is 6/9 (was 6/6 four months ago at optometry) with a relative afferent pupillary defect; left eye 6/6. Temporal arteries tender and pulsatile bilaterally. Bloods: ESR 92 mm/hr, CRP 84 mg/L, Hb 108 g/L, platelets 484. She has hypertension on perindopril and T2DM on metformin (HbA1c 58 mmol/mol). Bone mineral density was T-score -1.4 at the lumbar spine 6 months ago.",
     "data_table": {
       "Vital signs": "BP 142/82, HR 72, T 36.9, SpO2 98 percent.",
       "Examination": "Tender pulsatile bilateral temporal arteries. Normal fundoscopy. VA 6/9 R, 6/6 L.",
       "Investigations": "ESR 92, CRP 84, Hb 108 (NCNC), platelets 484."
     },
-    "lead_in": "What is the most appropriate immediate management?",
+    "lead_in": "Which is the most appropriate immediate management?",
     "options": [
       {
         "letter": "A",
-        "text": "Reassure, prescribe simple analgesia and arrange neurology review in 4 weeks time",
-        "correct": false,
-        "rationale": "Untreated GCA can cause permanent monocular blindness from anterior ischaemic optic neuropathy; delayed treatment is contraindicated. Transient visual disturbance is a red flag (eTG Rheumatology; ARA position).",
-        "source_refs": [
-          "eTG Rheumatology - Vasculitis"
-        ]
-      },
-      {
-        "letter": "B",
-        "text": "Commence oral prednisolone 60 mg today and arrange temporal artery biopsy within 1 to 2 weeks",
+        "text": "Admit for IV methylprednisolone 1 g daily for 3 days followed by oral prednisolone 60 mg daily, with same-day ophthalmology and rheumatology review and arrangement of temporal artery biopsy within 1 to 2 weeks",
         "correct": true,
-        "rationale": "Clinical suspicion of GCA mandates immediate high-dose corticosteroid before biopsy confirmation (40 to 60 mg prednisolone daily, or 1 g IV methylprednisolone for visual loss) to prevent blindness. Biopsy should occur within 1 to 2 weeks before steroid alters histology (eTG Rheumatology).",
+        "rationale": "Amaurosis fugax and a new relative afferent pupillary defect with reduced visual acuity indicate ophthalmic involvement of giant cell arteritis, which is a sight-threatening emergency requiring IV pulse methylprednisolone rather than oral prednisolone alone. Biopsy can still be performed within 1 to 2 weeks of steroid initiation. Calcium, vitamin D and PJP and bone protection planning are needed but not immediate (eTG Rheumatology; ARA position).",
         "source_refs": [
           "eTG Rheumatology - Vasculitis",
           "Australian Rheumatology Association"
         ]
       },
       {
-        "letter": "C",
-        "text": "Order CT brain today and discharge her home pending the imaging results being reported",
+        "letter": "B",
+        "text": "Commence oral prednisolone 60 mg daily today and arrange temporal artery biopsy within 1 to 2 weeks",
         "correct": false,
-        "rationale": "CT brain does not diagnose GCA and delaying corticosteroid risks visual loss within hours to days (eTG Rheumatology).",
+        "rationale": "Oral prednisolone 60 mg is standard for GCA without visual involvement; the presence of amaurosis fugax and RAPD escalates to IV pulse methylprednisolone (eTG; ARA).",
+        "source_refs": [
+          "eTG Rheumatology - Vasculitis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Order CT brain today and start prednisolone only if temporal artery biopsy is positive within 2 weeks",
+        "correct": false,
+        "rationale": "CT brain does not diagnose GCA and waiting for biopsy risks permanent blindness within hours to days; steroid must be started on clinical suspicion (eTG).",
         "source_refs": [
           "eTG Rheumatology - Vasculitis"
         ]
       },
       {
         "letter": "D",
-        "text": "Treat empirically as a migraine attack with oral sumatriptan 50 mg given immediately",
+        "text": "Commence tocilizumab subcutaneous 162 mg weekly as first-line monotherapy",
         "correct": false,
-        "rationale": "New severe headache in a person over 50 with raised inflammatory markers, jaw claudication and visual symptoms is not migraine; triptans are contraindicated in suspected ischaemic disease (eTG Neurology).",
+        "rationale": "Tocilizumab is steroid-sparing add-on therapy for established disease; it does not replace acute high-dose corticosteroid in the emergency setting (eTG; ARA).",
         "source_refs": [
-          "eTG Neurology - Headache"
+          "eTG Rheumatology - Vasculitis",
+          "Australian Rheumatology Association"
         ]
       },
       {
         "letter": "E",
-        "text": "Commence azathioprine 2 mg/kg as the steroid-sparing first-line monotherapy from today onwards",
+        "text": "Treat empirically as migraine with sumatriptan 50 mg and arrange neurology follow-up in 2 weeks",
         "correct": false,
-        "rationale": "Steroid-sparing agents (methotrexate, tocilizumab) are added later for relapse or steroid toxicity; they do not replace immediate high-dose corticosteroid (eTG Rheumatology).",
+        "rationale": "New severe headache in someone over 50 with raised inflammatory markers, jaw claudication and visual loss is not migraine, and triptans are contraindicated in suspected ischaemic disease (eTG Neurology).",
         "source_refs": [
-          "eTG Rheumatology - Vasculitis"
+          "eTG Neurology - Headache"
         ]
       }
     ],
@@ -1706,27 +1708,27 @@
     "subtopic_detail": "recognition and management"
   },
   {
-    "id": "med-endo-neuro-019",
+    "id": "med-endo-neuro-019-l3",
     "topic": "Medicine",
     "subtopic": "Other",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "lumbar puncture"
     ],
-    "stem": "A 48-year-old previously well woman presents to ED 3 hours after the abrupt onset of the worst headache of her life while gardening. The headache reached maximum intensity within seconds and was associated with one episode of vomiting. She has no neurological deficits now, GCS 15, no neck stiffness, no rash and no photophobia. BP is 162/94 mmHg. She is not anticoagulated and has no recent trauma. She has no significant past medical history and is on no medications. There is no family history of intracranial aneurysm or polycystic kidney disease. Her examination including cranial nerves, fundi, motor and sensory testing is normal. Capillary glucose is normal. ECG shows sinus rhythm. She has had similar but less severe headaches with exertion before, never investigated.",
+    "stem": "A 48-year-old previously well woman presents to ED 14 hours after the abrupt onset of the worst headache of her life while gardening. The headache reached maximum intensity within seconds and was associated with one episode of vomiting. She now has no neurological deficits, GCS 15, no neck stiffness, no rash, no photophobia. BP 162/94. She is not anticoagulated and has no recent trauma. A non-contrast CT brain is performed and reported by an experienced radiologist as normal. She has had similar but less severe headaches with exertion previously, never investigated.",
     "data_table": {
       "Vital signs": "BP 162/94, HR 88, T 36.8, SpO2 99 percent, GCS 15.",
       "Examination": "Normal neurology including fundoscopy. No meningism.",
       "Investigations": "Capillary glucose normal; ECG sinus rhythm."
     },
-    "lead_in": "What is the most appropriate initial investigation?",
+    "lead_in": "Which is the most appropriate next step?",
     "options": [
       {
         "letter": "A",
-        "text": "Non-contrast CT brain performed within 6 hours of headache onset",
+        "text": "Perform lumbar puncture for CSF xanthochromia and red cell count",
         "correct": true,
-        "rationale": "Non-contrast CT brain within 6 hours of headache onset, reported by an experienced radiologist using a modern (third generation) scanner, has sensitivity approaching 100 percent for subarachnoid haemorrhage and is the first-line investigation. If negative beyond 6 hours, lumbar puncture for xanthochromia (after 12 hours) is added (eTG Neurology; ACEM).",
+        "rationale": "Non-contrast CT brain has near-100 percent sensitivity for SAH within 6 hours of onset but sensitivity falls beyond that window; her presentation 14 hours after onset means a normal CT does not exclude SAH, and lumbar puncture for xanthochromia (visible from 12 hours after bleed) is the next step. CT angiography is added if LP confirms SAH (eTG Neurology; ACEM).",
         "source_refs": [
           "eTG Neurology - Headache",
           "ACEM Neurology Position"
@@ -1734,36 +1736,37 @@
       },
       {
         "letter": "B",
-        "text": "Lumbar puncture for xanthochromia performed as the first-line acute investigation",
+        "text": "Discharge with simple analgesia since the CT brain is normal and arrange neurology follow-up in 1 week",
         "correct": false,
-        "rationale": "Xanthochromia takes at least 12 hours to develop after subarachnoid bleeding; LP first is invasive and lower yield. CT brain is the first investigation (eTG Neurology).",
+        "rationale": "Discharge after a normal CT brain done beyond 6 hours from onset for thunderclap headache is unsafe; CT sensitivity drops below 100 percent and SAH must still be excluded by LP (eTG).",
         "source_refs": [
           "eTG Neurology - Headache"
         ]
       },
       {
         "letter": "C",
-        "text": "MRI brain with gadolinium performed as the first-line acute investigation",
+        "text": "Proceed directly to CT angiography of intracranial vessels for unruptured aneurysm screening",
         "correct": false,
-        "rationale": "MRI is sensitive for subacute SAH (FLAIR) but is not the first-line acute test; access and time make CT first-line (eTG Neurology).",
+        "rationale": "CTA can miss a recently bled small aneurysm that has thrombosed, and identifies incidental aneurysms in around 3 percent of adults whose findings cannot be linked to the headache without confirming a bleed; LP is the correct next step (eTG; ACEM).",
         "source_refs": [
-          "eTG Neurology - Headache"
+          "eTG Neurology - Headache",
+          "ACEM Neurology Position"
         ]
       },
       {
         "letter": "D",
-        "text": "Empirical IV ceftriaxone 2 g and dexamethasone 10 mg for presumed bacterial meningitis",
+        "text": "Empirical IV ceftriaxone 2 g and IV dexamethasone 10 mg for presumed bacterial meningitis",
         "correct": false,
-        "rationale": "There are no features of meningitis (no fever, neck stiffness, photophobia). The presentation is classical thunderclap headache and requires imaging for SAH (eTG Antibiotic).",
+        "rationale": "No fever, neck stiffness, photophobia or rash; meningitis cover is not the priority and the headache pattern fits thunderclap rather than meningitic onset (eTG Antibiotic).",
         "source_refs": [
           "eTG Antibiotic - CNS infections"
         ]
       },
       {
         "letter": "E",
-        "text": "Discharge with simple analgesia and outpatient neurology review in 1 week",
+        "text": "Order MRI brain with gadolinium and FLAIR sequences as the definitive next investigation",
         "correct": false,
-        "rationale": "Thunderclap headache is a red flag for SAH and other secondary causes; discharge without imaging is unsafe (eTG Neurology).",
+        "rationale": "MRI with FLAIR or GRE can demonstrate subacute SAH but is less universally available and slower than LP; in Australian practice, LP is the recommended next step after a non-diagnostic CT beyond 6 hours (eTG).",
         "source_refs": [
           "eTG Neurology - Headache"
         ]
@@ -1802,28 +1805,28 @@
     "subtopic_detail": "investigation pathway"
   },
   {
-    "id": "med-endo-neuro-020",
+    "id": "med-endo-neuro-020-l3",
     "topic": "Medicine",
     "subtopic": "Other",
-    "difficulty": 1,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "anaphylaxis",
       "adrenaline"
     ],
-    "stem": "A 28-year-old woman is brought to ED after eating a peanut-containing dessert at a restaurant 25 minutes ago. She has a known peanut allergy and forgot her EpiPen at home. On arrival she is stridulous and dyspnoeic with widespread urticaria over her trunk and limbs and lip swelling. BP is 78/42 mmHg, HR 132, SpO2 91 percent on 15 L non-rebreather, RR 28. She is alert but distressed. She has no chest pain. There is no past history of cardiac disease and she is on no regular medications. She has had two previous milder reactions to nuts treated with oral antihistamines. She has not eaten any new foods, taken any new medications or had any recent insect stings. She has IV access in the right antecubital fossa. She has no documented contraindication to intramuscular adrenaline.",
+    "stem": "A 28-year-old woman is brought to ED 25 minutes after eating a peanut-containing dessert. She has a known peanut allergy. On arrival: stridor and dyspnoea, widespread urticaria and lip swelling, BP 78/42, HR 132, SpO2 91 percent on 15 L non-rebreather, RR 28, alert but distressed. You give IM adrenaline 0.5 mg into the anterolateral mid-thigh and lie her supine with legs elevated. Five minutes later, BP is 82/46, HR 130, RR 28, SpO2 92 percent, with persistent stridor. A second IM adrenaline 0.5 mg is given. Five minutes after that, BP is 84/48, HR 128, SpO2 92 percent, stridor persists. Two large-bore IVs are in. She has no past cardiac history and takes no regular medications.",
     "data_table": {
       "Vital signs": "BP 78/42, HR 132, RR 28, SpO2 91 percent on 15 L NRB, T 36.6, GCS 15.",
       "Examination": "Stridor, widespread urticaria, lip swelling, accessory muscle use.",
       "Investigations": "Bedside investigations pending."
     },
-    "lead_in": "What is the single most important immediate intervention?",
+    "lead_in": "Which is the most appropriate next step?",
     "options": [
       {
         "letter": "A",
-        "text": "IV hydrocortisone 200 mg given as a single bolus dose now",
-        "correct": false,
-        "rationale": "Corticosteroids do not reverse acute anaphylaxis and have no proven benefit in preventing biphasic reactions; they are not first-line and must not delay adrenaline (ASCIA Guidelines 2024; ANZCOR).",
+        "text": "Commence IV adrenaline infusion at 5 microgram per minute titrated to clinical response, give 20 mL/kg IV crystalloid bolus, and prepare for advanced airway management",
+        "correct": true,
+        "rationale": "After two doses of IM adrenaline without adequate response, ASCIA recommends IV adrenaline infusion (5 to 15 microgram per minute titrated) alongside aggressive fluid resuscitation; persistent stridor and shock require airway preparation including senior anaesthetic and ENT support, with surgical airway equipment ready (ASCIA 2024; ANZCOR).",
         "source_refs": [
           "ASCIA Acute Management of Anaphylaxis 2024",
           "ANZCOR Anaphylaxis Guideline"
@@ -1831,19 +1834,18 @@
       },
       {
         "letter": "B",
-        "text": "IM adrenaline 1:1000 0.5 mg into the anterolateral mid-thigh, repeated every 5 minutes",
-        "correct": true,
-        "rationale": "IM adrenaline 1:1000 0.5 mg (10 microgram/kg, max 0.5 mg per dose) into the anterolateral mid-thigh is the first-line and life-saving treatment for anaphylaxis. Repeat every 5 minutes if no response; the doses are anchored to the ASCIA and ANZCOR algorithms (ASCIA 2024; ANZCOR).",
+        "text": "Continue IM adrenaline 0.5 mg every 5 minutes indefinitely and avoid intravenous adrenaline",
+        "correct": false,
+        "rationale": "Refractory anaphylaxis (no response after two IM doses) is the indication for IV adrenaline infusion under monitored conditions; persisting with IM alone delays effective therapy (ASCIA 2024).",
         "source_refs": [
-          "ASCIA Acute Management of Anaphylaxis 2024",
-          "ANZCOR Anaphylaxis Guideline"
+          "ASCIA Acute Management of Anaphylaxis 2024"
         ]
       },
       {
         "letter": "C",
-        "text": "IV promethazine 25 mg as a slow intravenous bolus dose now",
+        "text": "Give IV hydrocortisone 200 mg and IV promethazine 25 mg and observe for further response",
         "correct": false,
-        "rationale": "IV promethazine can cause hypotension and is not recommended in acute anaphylaxis; antihistamines treat skin features only (ASCIA 2024; AMH).",
+        "rationale": "Steroids and antihistamines are adjuncts only and do not reverse acute anaphylaxis; promethazine can worsen hypotension; neither addresses refractory disease (ASCIA 2024; AMH).",
         "source_refs": [
           "ASCIA Acute Management of Anaphylaxis 2024",
           "Australian Medicines Handbook"
@@ -1851,18 +1853,18 @@
       },
       {
         "letter": "D",
-        "text": "Nebulised salbutamol 5 mg via oxygen-driven nebuliser at the bedside",
+        "text": "Give IV glucagon 1 to 5 mg bolus as the next escalation step",
         "correct": false,
-        "rationale": "Salbutamol is an adjunct for persistent wheeze after adrenaline but does not treat the systemic mediator release or upper airway oedema; IM adrenaline is the priority (ASCIA 2024).",
+        "rationale": "Glucagon is reserved for refractory anaphylaxis in patients on beta-blocker; she is on no medications, so IV adrenaline infusion is the next step (ASCIA 2024).",
         "source_refs": [
           "ASCIA Acute Management of Anaphylaxis 2024"
         ]
       },
       {
         "letter": "E",
-        "text": "IV 0.9 percent saline 1 L bolus given alone without any adrenaline",
+        "text": "Nebulised salbutamol 5 mg and nebulised adrenaline 5 mg via oxygen-driven nebuliser, then reassess",
         "correct": false,
-        "rationale": "IV fluid is essential adjunctive therapy for distributive shock but does not reverse the underlying mediator release; adrenaline must be given first or simultaneously (ASCIA 2024).",
+        "rationale": "Nebulised therapies are adjuncts for persistent bronchospasm or laryngeal oedema after systemic adrenaline; they do not replace IV adrenaline infusion in refractory shock (ASCIA 2024).",
         "source_refs": [
           "ASCIA Acute Management of Anaphylaxis 2024"
         ]
