@@ -1,0 +1,458 @@
+{
+  "revised_at": "2026-05-20",
+  "auditor": "Claude Opus 4.7 (1M context)",
+  "scope": "Obstetrics & Gynaecology L1+L2 -> L3 or discard",
+  "verdicts": [
+    {
+      "id": "obgyn-001",
+      "file": "data/questions_obgyn.json",
+      "verdict": "revise",
+      "reasoning_lever": "alternative-selection",
+      "new_difficulty": 3,
+      "new_stem": "A 31-year-old woman attends her GP. She had a Mirena 52 mg levonorgestrel intrauterine system inserted 4 years and 11 months ago for contraception and heavy menstrual bleeding. Insertion was via a private clinic that printed a removal-reminder card stating 'replace at 5 years'. She has had no bleeding for 18 months, no pain, threads visible at the routine 4-yearly check. She is in a stable monogamous relationship, has no plans to conceive for at least 5 more years and would prefer to keep this device as long as possible. She specifically asks whether the device must be replaced this month or whether she can defer. Cycles, partner, BMI and screening history are all unremarkable.",
+      "new_lead_in": "Which is the most appropriate advice regarding her current Mirena device?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Replace the device this month because the heavy-menstrual-bleeding indication caps duration at 5 years",
+          "correct": false,
+          "rationale": "The HMB indication is licensed for 5 years, but if her current need is contraception (HMB now resolved with amenorrhoea), the contraception licence governs duration. The device does not need replacement at 5 years for contraception (TGA PI Mirena 2023).",
+          "source_refs": [
+            "TGA Product Information - Mirena"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Replace the device this month because all LNG-IUS devices share a 5-year contraceptive licence in Australia",
+          "correct": false,
+          "rationale": "Mirena 52 mg LNG-IUS was extended to 8 years for contraception by the TGA in 2023; Kyleena 19.5 mg remains 5 years. The licences are not shared (TGA PI Mirena; AMH 2024).",
+          "source_refs": [
+            "TGA Product Information - Mirena",
+            "AMH 2024 - Hormonal contraceptives"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Continue the current device for contraception until 8 years from insertion, then replace",
+          "correct": true,
+          "rationale": "Mirena 52 mg LNG-IUS is now TGA-licensed in Australia for up to 8 years of contraception. Her HMB has resolved with amenorrhoea so the operative licence is contraception. She may safely defer replacement to the 8-year mark (TGA PI Mirena 2023; AMH 2024; Family Planning Australia).",
+          "source_refs": [
+            "TGA Product Information - Mirena",
+            "AMH 2024 - Hormonal contraceptives",
+            "Family Planning Australia - LARC"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Continue indefinitely as LNG-IUS devices are effective until menopause once inserted after age 25",
+          "correct": false,
+          "rationale": "There is no Australian licence for indefinite LNG-IUS use. A Mirena inserted at or after age 45 may be used until age 55 for endometrial protection on MHT, but that is a different scenario; this patient is 31 (Family Planning Australia; AMH).",
+          "source_refs": [
+            "Family Planning Australia - LARC"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Replace with a copper IUD now to take advantage of its 10-year licence",
+          "correct": false,
+          "rationale": "Switching to copper offers a longer interval but exposes her to heavier bleeding and removes the HMB benefit she may want preserved. There is no clinical indication to switch when the current LNG-IUS remains licensed for a further 3 years (Family Planning Australia).",
+          "source_refs": [
+            "Family Planning Australia - LARC"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "obgyn-002",
+      "file": "data/questions_obgyn.json",
+      "verdict": "revise",
+      "reasoning_lever": "alternative-selection",
+      "new_difficulty": 3,
+      "new_stem": "A 24-year-old woman attends a sexual-health clinic 96 hours after a single episode of condom failure. Her cycles are regular at 28 days; today is day 16 (intercourse occurred close to her predicted ovulation). She has a BMI of 33 and uses no regular medications. She declines an intrauterine device today because she is needle-phobic about the speculum/insertion. She has no allergies. She wants the oral option with the lowest failure rate given the 96-hour interval and her BMI, and she accepts that she will need to wait 5 days before resuming hormonal contraception if started on this method.",
+      "new_lead_in": "Which is the most appropriate oral emergency contraceptive in this scenario?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Levonorgestrel 1.5 mg orally as a single dose now",
+          "correct": false,
+          "rationale": "Levonorgestrel is licensed only up to 72 hours; she presents at 96 hours, so it is outside its window. Efficacy also declines with BMI above 26 and around ovulation (Family Planning Australia).",
+          "source_refs": [
+            "Family Planning Australia - Emergency contraception"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Levonorgestrel 3 mg orally as a single dose now, doubled for BMI",
+          "correct": false,
+          "rationale": "Although double-dose levonorgestrel is sometimes used off-label for higher BMI, it remains licensed only to 72 hours; at 96 hours it is outside the evidence-based window regardless of dose (Cochrane; Family Planning Australia).",
+          "source_refs": [
+            "Family Planning Australia - Emergency contraception"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Ulipristal acetate 30 mg orally as a single dose now",
+          "correct": true,
+          "rationale": "Ulipristal is licensed up to 120 hours, is more effective than levonorgestrel around ovulation, and has less BMI-related fall-off below 35. With the IUD declined, ulipristal is the best oral option at 96 hours (Family Planning Australia; Cochrane).",
+          "source_refs": [
+            "Family Planning Australia - Emergency contraception",
+            "Cochrane - Interventions for emergency contraception"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Yuzpe regimen using combined oral contraceptive pills now",
+          "correct": false,
+          "rationale": "The Yuzpe regimen is less effective than levonorgestrel or ulipristal and causes more nausea; it is now reserved for settings where dedicated emergency contraceptives are not available (Family Planning Australia).",
+          "source_refs": [
+            "Family Planning Australia - Emergency contraception"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Commence the combined oral contraceptive pill today and abstain for 7 days",
+          "correct": false,
+          "rationale": "Starting the COCP today is for ongoing contraception, not emergency contraception; it provides no rescue effect for the unprotected intercourse 96 hours ago (Family Planning Australia).",
+          "source_refs": [
+            "Family Planning Australia - Emergency contraception"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "obgyn-003",
+      "file": "data/questions_obgyn.json",
+      "verdict": "revise",
+      "reasoning_lever": "alternative-selection",
+      "new_difficulty": 3,
+      "new_stem": "A 26-year-old G1P0 woman at 9 weeks presents with three weeks of progressive nausea and vomiting, six to ten episodes daily, unable to keep down most fluids, 3.5 kg weight loss (5%), PUQE score 14. She has tried small frequent meals, ginger and oral pyridoxine 25 mg three times daily without benefit. BP 102/68 with a 15 mmHg postural drop, HR 104, dry mucous membranes, ketones 3+ on urinalysis. Na 134, K 3.3, urea 7.8. TSH normal. Ultrasound: single live intrauterine pregnancy. She has been admitted, IV fluids with thiamine have been commenced and the team is choosing the next antiemetic step.",
+      "new_lead_in": "Which is the most appropriate next antiemetic step?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Add oral doxylamine 12.5 mg with pyridoxine 25 mg four times daily as second-line therapy",
+          "correct": true,
+          "rationale": "Pyridoxine monotherapy has failed. RANZCOG and Therapeutic Guidelines recommend stepping up to doxylamine-pyridoxine combination as the next-line therapy before broader antiemetics, since safety data in pregnancy are best established (RANZCOG NVP/HG; eTG Pregnancy).",
+          "source_refs": [
+            "RANZCOG: Nausea and vomiting of pregnancy and hyperemesis gravidarum",
+            "Therapeutic Guidelines - Pregnancy"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Switch directly to oral ondansetron 8 mg three times daily as monotherapy",
+          "correct": false,
+          "rationale": "Ondansetron is reserved for cases unresponsive to first- and second-line agents because of small first-trimester risks (orofacial clefts) and maternal QT effects; doxylamine-pyridoxine has not yet been trialled (RANZCOG NVP/HG).",
+          "source_refs": [
+            "RANZCOG: Nausea and vomiting of pregnancy and hyperemesis gravidarum"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Commence IV methylprednisolone 16 mg three times daily today",
+          "correct": false,
+          "rationale": "Corticosteroids are last-line in refractory hyperemesis after failure of multiple antiemetics; using them now skips established earlier rungs of the ladder (RANZCOG NVP/HG).",
+          "source_refs": [
+            "RANZCOG: Nausea and vomiting of pregnancy and hyperemesis gravidarum"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Discharge home on oral ginger and reassure that symptoms typically improve by 12 weeks",
+          "correct": false,
+          "rationale": "She has dehydration, ketonuria, hypokalaemia and >=5% weight loss, meeting criteria for hyperemesis admission; discharge without escalation is unsafe (RANZCOG NVP/HG).",
+          "source_refs": [
+            "RANZCOG: Nausea and vomiting of pregnancy and hyperemesis gravidarum"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Commence intramuscular prochlorperazine 12.5 mg every 6 hours as monotherapy",
+          "correct": false,
+          "rationale": "Phenothiazines may be used adjunctively but doxylamine-pyridoxine is preferred next-line per RANZCOG given the better pregnancy safety profile; IM prochlorperazine monotherapy is not the next step (RANZCOG NVP/HG).",
+          "source_refs": [
+            "RANZCOG: Nausea and vomiting of pregnancy and hyperemesis gravidarum"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "obgyn-004",
+      "file": "data/questions_obgyn.json",
+      "verdict": "revise",
+      "reasoning_lever": "AU-cutoff",
+      "new_stem": "A 29-year-old G2P1 RhD-negative woman is at 13 weeks and 5 days gestation by certain LMP confirmed on first-trimester ultrasound. She presents with a 48-hour history of fresh red vaginal bleeding which has now settled, and has passed several small clots at home. She is haemodynamically stable. At booking she was confirmed Rh(D) negative with a negative antibody screen, and the screen remains negative today. The previous pregnancy ended in a term vaginal birth without complications and she did not receive routine antenatal anti-D in that pregnancy (declined at the time). TVUS today shows a single live intrauterine pregnancy of 13 weeks 5 days with appropriate growth. The decision is to manage expectantly with follow-up in one week.",
+      "new_lead_in": "What is the appropriate anti-D immunoglobulin regimen for this presentation in Australian practice?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "No anti-D is required as bleeding has settled and antibody screen is negative",
+          "correct": false,
+          "rationale": "Threatened miscarriage beyond 12 weeks in an RhD-negative non-sensitised woman is an indication for anti-D regardless of whether bleeding has settled (NBA Anti-D Ig Guidelines).",
+          "source_refs": [
+            "National Blood Authority: Anti-D Ig guidelines"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Anti-D 250 IU IM as a single dose now",
+          "correct": false,
+          "rationale": "250 IU is the dose for sensitising events before 12 weeks. From 13 weeks onwards, including threatened miscarriage, the recommended dose is 625 IU IM (NBA Anti-D Ig Guidelines).",
+          "source_refs": [
+            "National Blood Authority: Anti-D Ig guidelines"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Anti-D 625 IU IM as a single dose now",
+          "correct": true,
+          "rationale": "From 13 weeks gestation onwards, sensitising events including bleeding in early pregnancy require 625 IU IM anti-D in non-sensitised RhD-negative women. Routine 1500 IU prophylaxis is given at 28 and 34 weeks (NBA Anti-D Ig Guidelines; RANZCOG).",
+          "source_refs": [
+            "National Blood Authority: Anti-D Ig guidelines",
+            "RANZCOG: Anti-D in pregnancy"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Anti-D 1500 IU IM as a single dose now",
+          "correct": false,
+          "rationale": "1500 IU is the routine antenatal prophylaxis dose given at 28 and 34 weeks; it is not the dose for a sensitising event at 13 weeks (NBA Anti-D Ig Guidelines).",
+          "source_refs": [
+            "National Blood Authority: Anti-D Ig guidelines"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Withhold anti-D until Kleihauer testing confirms feto-maternal haemorrhage",
+          "correct": false,
+          "rationale": "Kleihauer testing is not required for sensitising events before 20 weeks; anti-D must be given within 72 hours regardless. Kleihauer is reserved for events from 20 weeks onwards to guide additional dosing (NBA Anti-D Ig Guidelines).",
+          "source_refs": [
+            "National Blood Authority: Anti-D Ig guidelines"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "obgyn-005",
+      "file": "data/questions_obgyn.json",
+      "verdict": "revise",
+      "reasoning_lever": "multi-step",
+      "new_stem": "A 33-year-old G3P2 woman attends her midwife at 35 weeks and 4 days. Her two prior births were uncomplicated term vaginal deliveries; her second neonate developed early-onset GBS sepsis confirmed on blood culture at 18 hours of life and recovered fully after IV benzylpenicillin. This pregnancy has been uncomplicated with normal antenatal serology and OGTT. There has been no preterm labour, no PROM, no fever and no GBS bacteriuria this pregnancy. The local maternity service offers either universal culture-based screening at 35-37 weeks or a risk-factor pathway, and her midwife is planning intrapartum management.",
+      "new_lead_in": "What is the most appropriate plan regarding GBS screening and intrapartum antibiotic prophylaxis for this woman?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Collect a low vaginal-anorectal swab now and only give intrapartum prophylaxis if positive",
+          "correct": false,
+          "rationale": "A previous infant with invasive GBS disease is a stand-alone indication for intrapartum antibiotic prophylaxis regardless of swab result; screening is not required for this woman (RANZCOG; CDC).",
+          "source_refs": [
+            "RANZCOG: Maternal group B streptococcus",
+            "CDC: Prevention of perinatal group B streptococcal disease"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Collect a low vaginal-anorectal swab at 36-37 weeks and decide prophylaxis on the result",
+          "correct": false,
+          "rationale": "Even with a swab inside the recommended 35-37 week window, a previous infant with invasive GBS disease still mandates intrapartum prophylaxis irrespective of the result (RANZCOG; CDC).",
+          "source_refs": [
+            "RANZCOG: Maternal group B streptococcus"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Do not screen; give intrapartum IV benzylpenicillin in labour regardless of swab status",
+          "correct": true,
+          "rationale": "A previous neonate with invasive early-onset GBS disease is an automatic indication for intrapartum antibiotic prophylaxis; screening adds no value and could falsely reassure if negative (RANZCOG; CDC).",
+          "source_refs": [
+            "RANZCOG: Maternal group B streptococcus",
+            "CDC: Prevention of perinatal group B streptococcal disease"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Do not screen and do not give intrapartum prophylaxis as she had no GBS bacteriuria this pregnancy",
+          "correct": false,
+          "rationale": "GBS bacteriuria in the index pregnancy is one indication but is not the only one. A prior infant with invasive GBS is an independent indication that overrides absence of bacteriuria (RANZCOG; CDC).",
+          "source_refs": [
+            "RANZCOG: Maternal group B streptococcus"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Screen on admission in labour using a rapid intrapartum PCR and treat if positive",
+          "correct": false,
+          "rationale": "Intrapartum PCR is not the standard pathway in Australia, and again, a previous infant with invasive GBS mandates prophylaxis regardless of the test (RANZCOG).",
+          "source_refs": [
+            "RANZCOG: Maternal group B streptococcus"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "obgyn-006",
+      "file": "data/questions_obgyn.json",
+      "verdict": "revise",
+      "reasoning_lever": "AU-cutoff",
+      "new_stem": "A 34-year-old woman has her routine 5-yearly cervical screening test through her GP using clinician-collected liquid-based cytology and HPV. She has had two previous CSTs, both negative for oncogenic HPV. She received the quadrivalent HPV vaccine series at age 14. She has no abnormal bleeding, no postcoital bleeding and no pelvic pain. Today's result: HPV oncogenic non-16/18 detected; reflex liquid-based cytology shows possible high-grade squamous intraepithelial lesion (pHSIL). She is not pregnant.",
+      "new_lead_in": "Under the Australian National Cervical Screening Program, what is the most appropriate next step?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Repeat HPV cervical screening test in 12 months",
+          "correct": false,
+          "rationale": "The 12-month repeat pathway applies to HPV non-16/18 with negative or pLSIL reflex cytology, not pHSIL or HSIL (NCSP).",
+          "source_refs": [
+            "Cancer Council Australia: National Cervical Screening Program clinical guidelines"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Repeat HPV cervical screening test in 5 years as her prior history is reassuring",
+          "correct": false,
+          "rationale": "A positive HPV result with high-grade cytology requires escalation not a return-to-routine interval, regardless of prior screening or vaccination history (NCSP).",
+          "source_refs": [
+            "Cancer Council Australia: National Cervical Screening Program clinical guidelines"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Refer directly for colposcopy",
+          "correct": true,
+          "rationale": "Under the NCSP, HPV non-16/18 with pHSIL or HSIL on reflex cytology mandates direct colposcopy referral, the same as any HPV 16/18 result (NCSP).",
+          "source_refs": [
+            "Cancer Council Australia: National Cervical Screening Program clinical guidelines"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Refer directly for diagnostic cone biopsy without colposcopy",
+          "correct": false,
+          "rationale": "Cone biopsy is a treatment after colposcopic diagnosis, not a primary diagnostic step from a screening result (NCSP).",
+          "source_refs": [
+            "Cancer Council Australia: National Cervical Screening Program clinical guidelines"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Offer a self-collected vaginal HPV swab in 12 months to confirm the result",
+          "correct": false,
+          "rationale": "Self-collection is for routine screening, not for follow-up of a high-grade result; colposcopy is required now (NCSP).",
+          "source_refs": [
+            "Cancer Council Australia: National Cervical Screening Program clinical guidelines"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "obgyn-007",
+      "file": "data/questions_obgyn.json",
+      "verdict": "revise",
+      "reasoning_lever": "multi-step",
+      "new_stem": "A 31-year-old G2P2 woman attends her child-health-nurse appointment 6 weeks after an uncomplicated term vaginal birth. She describes 4 weeks of low mood, poor sleep beyond infant needs, anhedonia and intrusive thoughts she is a 'bad mother'. She denies thoughts of self-harm or harm to the baby. She has a supportive partner and is breastfeeding well. There is no history of bipolar disorder, prior psychiatric admissions or postpartum psychosis. The nurse administers the COPE-recommended screening instrument: she scores 16 out of 30 with item 10 (self-harm thoughts) scored 0. There are no language or literacy barriers.",
+      "new_lead_in": "What is the most appropriate next step?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Repeat the EPDS in 2-4 weeks without GP referral as the score is below threshold",
+          "correct": false,
+          "rationale": "An EPDS score of 13 or more in the postnatal period meets the threshold for further clinical assessment under COPE guidance; 16 with persistent symptoms is not below threshold (COPE 2023).",
+          "source_refs": [
+            "COPE Australian Clinical Practice Guideline: Mental Health Care in the Perinatal Period"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Refer to her GP for clinical assessment for postnatal depression within 1-2 weeks",
+          "correct": true,
+          "rationale": "An EPDS score >=13 with item-10 zero (no acute self-harm risk) indicates probable depression requiring GP clinical assessment within a short window. Acute escalation is not needed; routine perinatal mental-health follow-up is not sufficient (COPE 2023).",
+          "source_refs": [
+            "COPE Australian Clinical Practice Guideline: Mental Health Care in the Perinatal Period"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Refer to the emergency department for acute psychiatric assessment today",
+          "correct": false,
+          "rationale": "ED referral is reserved for active suicidality, infanticidal ideation, psychotic features or rapid decline; item-10 zero with no risk features does not warrant ED (COPE 2023).",
+          "source_refs": [
+            "COPE Australian Clinical Practice Guideline: Mental Health Care in the Perinatal Period"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Commence sertraline 50 mg daily today without GP review as it is safe in breastfeeding",
+          "correct": false,
+          "rationale": "Antidepressant initiation is a medical decision after diagnostic assessment and informed consent; the child-health nurse should not prescribe without GP review (COPE 2023).",
+          "source_refs": [
+            "COPE Australian Clinical Practice Guideline: Mental Health Care in the Perinatal Period"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Reassure that this represents normal 'baby blues' and review at the 8-week immunisation visit",
+          "correct": false,
+          "rationale": "Baby blues resolve by 2 weeks postpartum; symptoms persisting beyond 4 weeks with EPDS 16 indicate probable postnatal depression, not blues (COPE 2023).",
+          "source_refs": [
+            "COPE Australian Clinical Practice Guideline: Mental Health Care in the Perinatal Period"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "obgyn-016",
+      "file": "data/questions_obgyn.json",
+      "verdict": "revise",
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 22-year-old nulligravid woman attends her GP with 18 months of oligomenorrhoea (cycles 45-90 days), facial and chest hair growth requiring weekly waxing, weight gain of 6 kg over 12 months, and acanthosis nigricans. BMI 29, modified Ferriman-Gallwey 12. Total testosterone is at the upper limit of normal, SHBG low, free androgen index elevated, 17-hydroxyprogesterone normal, TSH and prolactin normal, beta-hCG negative. Pelvic ultrasound is technically suboptimal due to bowel gas: each ovary appears to contain 'multiple small follicles' but follicle count cannot be quantified and ovarian volumes are not reported. Anti-Mullerian hormone is 58 pmol/L (markedly elevated).",
+      "new_lead_in": "What is the most appropriate next step under the 2023 International Evidence-Based PCOS Guideline?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Diagnose PCOS now on the basis of oligo-anovulation plus clinical and biochemical hyperandrogenism",
+          "correct": true,
+          "rationale": "The 2023 guideline confirms that any two of (oligo-anovulation, clinical or biochemical hyperandrogenism, polycystic ovaries on USS or elevated AMH) meet criteria in adults; this patient meets the first two so the diagnosis is established without USS or AMH (Teede 2023).",
+          "source_refs": [
+            "Teede HJ et al. 2023 International PCOS Guideline"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Defer diagnosis until a repeat pelvic ultrasound quantifies follicle count and ovarian volume",
+          "correct": false,
+          "rationale": "USS is not required once two other Rotterdam features are present, and the 2023 guideline accepts AMH as an alternative to ultrasound; further imaging adds no diagnostic value here (Teede 2023).",
+          "source_refs": [
+            "Teede HJ et al. 2023 International PCOS Guideline"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Defer diagnosis as elevated AMH alone is sufficient and other criteria are not required",
+          "correct": false,
+          "rationale": "AMH or polycystic morphology in isolation is not diagnostic; two of three Rotterdam-derived features remain required in adults (Teede 2023).",
+          "source_refs": [
+            "Teede HJ et al. 2023 International PCOS Guideline"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Defer diagnosis until LH:FSH ratio confirms elevated LH consistent with PCOS",
+          "correct": false,
+          "rationale": "LH:FSH ratio is not part of the Rotterdam-derived criteria and is not required for diagnosis (Teede 2023).",
+          "source_refs": [
+            "Teede HJ et al. 2023 International PCOS Guideline"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Defer diagnosis until adrenal hyperplasia is excluded with an ACTH stimulation test",
+          "correct": false,
+          "rationale": "17-hydroxyprogesterone is already normal which adequately excludes non-classic congenital adrenal hyperplasia; ACTH stimulation is unnecessary here (Teede 2023).",
+          "source_refs": [
+            "Teede HJ et al. 2023 International PCOS Guideline"
+          ]
+        }
+      ]
+    }
+  ]
+}
