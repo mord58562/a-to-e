@@ -399,7 +399,8 @@
         "Sretno Ti Bilo.",
         "Kila la kheri.",
         "بالتوفيق.",
-        "Gutpela lak."
+        "Gutpela lak.",
+        "Gōd wyrd sīe þē."
       ];
       luck.textContent = phrases[Math.floor(Math.random() * phrases.length)];
     }
