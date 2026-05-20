@@ -280,69 +280,70 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-haem-onc-004",
+    "id": "med-haem-onc-004-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "Warm AIHA - first-line corticosteroid",
-    "difficulty": 1,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "steroids"
     ],
-    "stem": "A 58-year-old woman presents with 10 days of progressive fatigue, exertional dyspnoea and dark urine. She noticed mild scleral icterus three days ago. She has no fever, no weight loss and no recent infections. Her past history includes well-controlled SLE on hydroxychloroquine 200 mg BD. She does not take new medications. She has no history of transfusion. Examination reveals pallor, mild scleral icterus, no lymphadenopathy and a 2 cm palpable spleen tip below the costal margin. There is no cold-induced acrocyanosis or livedo. There are no thrombotic features and no haematuria. She is haemodynamically stable on the ward, not in distress. The lab phones with critical results showing a positive direct antiglobulin test (DAT) strongly positive for IgG and weakly positive for C3d, raised reticulocytes, elevated LDH, low haptoglobin and unconjugated hyperbilirubinaemia. Blood film shows spherocytes and polychromasia. She has no significant cardiac or renal disease. She wants to know how this will be treated.",
+    "stem": "A 58-year-old woman with well-controlled SLE on hydroxychloroquine presents with 10 days of fatigue, exertional dyspnoea and dark urine, with mild scleral icterus for 3 days. She has no fever, weight loss or recent infections, has not started any new medications, and has never been transfused. Examination: pallor, scleral icterus, 2 cm spleen tip, no lymphadenopathy, no acrocyanosis. Bloods: Hb 62 g/L, MCV 102, reticulocytes 11 percent, LDH 920 U/L, haptoglobin under 0.1, unconjugated bilirubin 64 micromol/L, DAT IgG strongly positive and C3d weakly positive, blood film spherocytes and polychromasia, cold agglutinin titre negative. She is haemodynamically stable but has new exertional angina on transferring to the bed. ECG shows no ischaemic changes; troponin is mildly elevated (28 ng/L, normal under 14).",
     "data_table": {
       "Vital signs": "BP 118/72 mmHg, HR 102 bpm, RR 18, SpO2 97%, T 36.8 deg C.",
       "Examination": "Pale, scleral icterus, 2 cm palpable spleen tip, no lymphadenopathy, no acrocyanosis.",
       "Investigations": "Hb 72 g/L, MCV 102 fL, reticulocytes 11%, LDH 820 U/L, haptoglobin <0.1 g/L, unconjugated bilirubin 58 micromol/L, DAT IgG strongly positive C3d weakly positive, blood film spherocytes and polychromasia, cold agglutinin titre negative."
     },
-    "lead_in": "What is the most appropriate first-line treatment?",
+    "lead_in": "Which combination of treatments is most appropriate as first-line management?",
     "options": [
       {
         "letter": "A",
-        "text": "Urgent splenectomy",
-        "correct": false,
-        "rationale": "Splenectomy is second-line for steroid-refractory or relapsing warm AIHA, not first-line; vaccination against encapsulated organisms is required prior (BSH AIHA 2017).",
+        "text": "Oral prednisolone 1 mg/kg daily, transfuse the least incompatible packed red cells with close clinical and laboratory monitoring, and add folate replacement",
+        "correct": true,
+        "rationale": "Warm AIHA first-line therapy is prednisolone 1 mg/kg/day. Her Hb of 62 with exertional angina and troponin rise reflects symptomatic anaemia threatening end-organ perfusion, which is an indication to transfuse despite cross-match difficulty; least incompatible units are given with close monitoring. Folate supports the marrow response (BSH AIHA 2017; eTG Haematology; ANZSBT).",
         "source_refs": [
-          "BSH Guidelines on AIHA in Adults 2017"
+          "BSH Guidelines on AIHA in Adults 2017",
+          "Therapeutic Guidelines: Haematology",
+          "ANZSBT Guidelines for the Administration of Blood Products"
         ]
       },
       {
         "letter": "B",
-        "text": "Prednisolone 1 mg/kg/day orally with monitoring of Hb and reticulocytes",
-        "correct": true,
-        "rationale": "First-line therapy for warm AIHA is prednisolone 1 mg/kg/day until response, then taper over weeks to months; about 80% achieve initial response. Add folate replacement and PJP prophylaxis if high-dose steroid prolonged (BCSH AIHA Guideline; eTG Haematology).",
-        "source_refs": [
-          "BSH Guidelines on AIHA in Adults 2017",
-          "Therapeutic Guidelines: Haematology"
-        ]
-      },
-      {
-        "letter": "C",
-        "text": "Plasma exchange with fresh frozen plasma replacement",
+        "text": "Oral prednisolone 1 mg/kg daily and strictly avoid blood transfusion regardless of severity",
         "correct": false,
-        "rationale": "Plasma exchange is used in TTP and severe cold agglutinin disease with hyperviscosity, not warm AIHA; cold agglutinin titre here is negative (BSH AIHA 2017; ANZSBT).",
+        "rationale": "Transfusion is not absolutely contraindicated in warm AIHA; least incompatible units may be life-saving when there is end-organ ischaemia (here, exertional angina with troponin rise) (BSH AIHA; ANZSBT).",
         "source_refs": [
           "BSH Guidelines on AIHA in Adults 2017",
           "ANZSBT Guidelines for the Administration of Blood Products"
         ]
       },
       {
-        "letter": "D",
-        "text": "Avoid all blood transfusion regardless of severity",
+        "letter": "C",
+        "text": "Urgent splenectomy and IV immunoglobulin 1 g/kg as first-line therapy",
         "correct": false,
-        "rationale": "Transfusion is not absolutely contraindicated; least incompatible units may be given for life-threatening anaemia with close clinical and lab monitoring (ANZSBT; BSH AIHA 2017).",
+        "rationale": "Splenectomy and IVIg are not first-line in warm AIHA; prednisolone is. Splenectomy is second-line for steroid-refractory or relapsing disease, after vaccination against encapsulated organisms (BSH AIHA).",
         "source_refs": [
-          "ANZSBT Guidelines for the Administration of Blood Products",
+          "BSH Guidelines on AIHA in Adults 2017"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Plasma exchange with fresh frozen plasma replacement and rituximab 375 mg/m^2 weekly",
+        "correct": false,
+        "rationale": "Plasma exchange is used in TTP and severe cold agglutinin disease with hyperviscosity, not warm AIHA. Rituximab is second-line therapy for steroid-refractory cases (BSH AIHA).",
+        "source_refs": [
           "BSH Guidelines on AIHA in Adults 2017"
         ]
       },
       {
         "letter": "E",
-        "text": "Rituximab 375 mg/m^2 weekly for 4 weeks as monotherapy",
+        "text": "Continue hydroxychloroquine only and recheck FBC in 1 week before considering steroid initiation",
         "correct": false,
-        "rationale": "Rituximab is increasingly used as second-line or in combination with steroids, but monotherapy is not the standard first-line approach in newly diagnosed warm AIHA (BSH AIHA 2017).",
+        "rationale": "Symptomatic warm AIHA with Hb 62 and cardiac compromise is not safely managed expectantly; immediate prednisolone is required (BSH AIHA; eTG Haematology).",
         "source_refs": [
-          "BSH Guidelines on AIHA in Adults 2017"
+          "BSH Guidelines on AIHA in Adults 2017",
+          "Therapeutic Guidelines: Haematology"
         ]
       }
     ],
@@ -471,29 +472,29 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-haem-onc-006",
+    "id": "med-haem-onc-006-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "PE workup pathway",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "VTE",
       "PE"
     ],
-    "stem": "A 74-year-old woman attends ED with one day of right-sided pleuritic chest pain and mild dyspnoea on exertion. She has hypertension on perindopril and osteoarthritis. She had a knee arthroplasty 8 weeks ago and has otherwise been active. She has no haemoptysis, no calf swelling, no recent immobilisation beyond the post-op period and no malignancy. She does not smoke. On examination she is comfortable at rest, with clear chest, no calf tenderness or asymmetry and oxygen saturation 96% on room air. ECG shows sinus tachycardia at 102 bpm. The intern calculates a Wells score of 1.5 (recent surgery within 4 weeks: 1.5) - PE unlikely (less than or equal to 4). CXR is normal. The intern asks whether she needs a CTPA, a D-dimer, or both, given her age. She has no contraindication to contrast and her eGFR is 68. She has no known thrombophilia. She is asking about her risk of getting an unnecessary scan.",
+    "stem": "A 74-year-old woman attends ED with one day of right-sided pleuritic chest pain and mild exertional dyspnoea. She had a knee arthroplasty 8 weeks ago. She has hypertension on perindopril, osteoarthritis, no haemoptysis, no calf swelling, no malignancy and is otherwise active. Examination: comfortable at rest, clear chest, no calf signs, SpO2 96 percent on room air. ECG sinus tachycardia 102. CXR normal. Bloods: troponin negative, FBC normal, eGFR 68. Wells score is 1.5 (recent surgery 1.5; PE most likely diagnosis criterion not counted). Age-adjusted D-dimer returns at 680 microgram/L FEU.",
     "data_table": {
       "Vital signs": "HR 102 bpm, BP 138/82 mmHg, RR 18, SpO2 96% RA, T 36.7 deg C.",
       "Examination": "Clear chest, no calf signs, comfortable at rest.",
       "Investigations": "Troponin negative, ECG sinus tachycardia, CXR normal, eGFR 68, FBC normal, Wells score 1.5 (PE unlikely)."
     },
-    "lead_in": "What is the most appropriate next step?",
+    "lead_in": "Which is the most appropriate next step?",
     "options": [
       {
         "letter": "A",
-        "text": "Proceed directly to CTPA given her age and recent surgery",
-        "correct": false,
-        "rationale": "Wells unlikely with a negative age-adjusted D-dimer safely excludes PE without CTPA; going straight to CTPA exposes her to contrast and radiation unnecessarily (eTG; BTS PE Guideline).",
+        "text": "Exclude PE based on Wells unlikely plus D-dimer 680 microgram/L below the age-adjusted cut-off of 740, and discharge with safety netting",
+        "correct": true,
+        "rationale": "In Wells PE-unlikely patients over 50, the age-adjusted D-dimer cut-off is age x 10 microgram/L FEU (740 here). A value of 680 lies below this cut-off and safely excludes PE per ADJUST-PE and eTG, sparing her CTPA contrast and radiation; safety netting and follow-up are appropriate.",
         "source_refs": [
           "Therapeutic Guidelines: Cardiovascular",
           "BTS Pulmonary Embolism Guideline"
@@ -501,37 +502,36 @@
       },
       {
         "letter": "B",
-        "text": "Use the standard fixed D-dimer cut-off of 500 micrograms/L regardless of age",
+        "text": "Proceed to CTPA because the D-dimer is above the standard fixed cut-off of 500 microgram/L",
         "correct": false,
-        "rationale": "Fixed cut-offs over-investigate older patients; age-adjusted D-dimer maintains specificity while preserving sensitivity in Wells-unlikely patients over 50 (ADJUST-PE; eTG).",
+        "rationale": "Applying the fixed cut-off in patients over 50 over-investigates them; age-adjusted cut-off is the correct rule and avoids unnecessary CTPA (ADJUST-PE; eTG).",
         "source_refs": [
           "Therapeutic Guidelines: Cardiovascular"
         ]
       },
       {
         "letter": "C",
-        "text": "Start therapeutic anticoagulation empirically and image within 24 hours",
+        "text": "Start therapeutic anticoagulation empirically and image with CTPA within 24 hours",
         "correct": false,
-        "rationale": "Empirical anticoagulation is for high pre-test probability patients awaiting imaging that is delayed beyond 4 hours; this patient is Wells-unlikely (eTG; BTS).",
+        "rationale": "Empirical anticoagulation pending imaging is reserved for Wells-likely patients with delayed imaging, not Wells-unlikely with a negative age-adjusted D-dimer (eTG; BTS).",
         "source_refs": [
           "Therapeutic Guidelines: Cardiovascular"
         ]
       },
       {
         "letter": "D",
-        "text": "Send age-adjusted D-dimer (age x 10 micrograms/L); if below 740 micrograms/L exclude PE",
-        "correct": true,
-        "rationale": "In Wells PE-unlikely patients over 50, age-adjusted D-dimer (age x 10 micrograms/L FEU; for this patient 740) safely excludes PE without imaging. If above this cut-off, proceed to CTPA (eTG; ADJUST-PE study; BTS PE).",
+        "text": "Perform V/Q scan as the first-line confirmatory test because CXR is normal",
+        "correct": false,
+        "rationale": "V/Q is preferred when contrast is contraindicated; in her case PE is already excluded by Wells-unlikely plus negative age-adjusted D-dimer (eTG).",
         "source_refs": [
-          "Therapeutic Guidelines: Cardiovascular",
-          "BTS Pulmonary Embolism Guideline"
+          "Therapeutic Guidelines: Cardiovascular"
         ]
       },
       {
         "letter": "E",
-        "text": "Perform V/Q scan as first-line because CXR is normal",
+        "text": "Repeat D-dimer in 24 hours before deciding on imaging",
         "correct": false,
-        "rationale": "V/Q is preferred when contrast is contraindicated (renal impairment, pregnancy, contrast allergy); first-line in standard adults with adequate renal function is age-adjusted D-dimer then CTPA if positive (eTG).",
+        "rationale": "Repeating D-dimer adds no diagnostic information when the original is already below the age-adjusted cut-off; PE is excluded (eTG).",
         "source_refs": [
           "Therapeutic Guidelines: Cardiovascular"
         ]
@@ -665,66 +665,67 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-haem-onc-008",
+    "id": "med-haem-onc-008-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "4Ts score and alternative anticoagulation",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [],
-    "stem": "A 72-year-old man is on day 8 post coronary artery bypass grafting. He has been receiving prophylactic enoxaparin 40 mg SC daily since post-op day 1 plus an unfractionated heparin infusion for 48 hours intraoperatively and post-op. He develops new right calf swelling, tenderness and a confirmed proximal DVT on ultrasound. His platelet count has fallen from 280 x10^9/L pre-op to 78 x10^9/L today, a nadir 72% drop. There is no bleeding. He has no skin necrosis at injection sites and no thrombocytopenia of other obvious cause - no sepsis, no DIC, no recent IV contrast. The blood film shows no schistocytes. The cardiothoracic registrar calculates a 4Ts score of 7 (thrombocytopenia 2, timing 2, thrombosis 2, no other cause 1). The lab confirms PF4-heparin ELISA is strongly positive and a serotonin release assay is sent. He has CKD with eGFR 42.",
+    "stem": "A 72-year-old man is on day 8 post coronary artery bypass grafting. He has been on prophylactic enoxaparin 40 mg SC daily since day 1 plus an intraoperative and 48-hour post-op unfractionated heparin infusion. He develops a new right calf DVT confirmed on ultrasound. Platelets have fallen from 280 to 78 (a 72 percent drop). No bleeding, no skin necrosis, no schistocytes on film. PF4-heparin ELISA is strongly positive and a serotonin release assay is pending. 4Ts score is 7. He has CKD with eGFR 38 (creatinine 168 micromol/L) and severe hepatic dysfunction from chronic right heart failure (bilirubin 62, INR 1.6).",
     "data_table": {
       "Vital signs": "BP 132/82 mmHg, HR 92 bpm, T 37.0 deg C.",
       "Examination": "Right calf swollen and tender, no skin necrosis, no bleeding, sternotomy wound clean.",
       "Investigations": "Platelets 78 x10^9/L (pre-op 280), Hb 102 g/L, INR 1.1, fibrinogen 4.2 g/L, no schistocytes, PF4 antibody strongly positive ELISA, 4Ts 7 (high probability), eGFR 42."
     },
-    "lead_in": "What is the most appropriate next step in management?",
+    "lead_in": "Which is the most appropriate immediate anticoagulation strategy?",
     "options": [
       {
         "letter": "A",
-        "text": "Stop heparin and observe expectantly; restart the heparin infusion once platelets have recovered fully",
-        "correct": false,
-        "rationale": "Stopping alone leaves the patient in a prothrombotic state with high risk of new venous and arterial events; rechallenge with heparin is contraindicated (ASH 2018).",
+        "text": "Stop all heparin (UFH and LMWH) and commence IV bivalirudin at adjusted dose given combined renal and hepatic impairment, with close aPTT monitoring",
+        "correct": true,
+        "rationale": "HIT requires stopping all heparins and starting a non-heparin therapeutic anticoagulant. Argatroban is preferred in renal impairment but contraindicated in significant hepatic dysfunction (predominantly hepatic clearance), and fondaparinux is renally cleared and contraindicated at eGFR under 30. Bivalirudin has both renal and hepatic dose-adjustable clearance, making it the appropriate choice when both organs are impaired (ASH 2018; eTG).",
         "source_refs": [
-          "ASH 2018 HIT Guideline"
+          "ASH 2018 HIT Guideline",
+          "Therapeutic Guidelines: Cardiovascular"
         ]
       },
       {
         "letter": "B",
-        "text": "Continue enoxaparin at therapeutic dose and add aspirin 100 mg daily for additional antiplatelet cover",
+        "text": "Stop heparin and commence fondaparinux 7.5 mg SC daily off-label at standard dose",
         "correct": false,
-        "rationale": "All heparins (including LMWH) must be stopped immediately when HIT is suspected at a high probability score; aspirin is inadequate (ASH 2018).",
+        "rationale": "Fondaparinux is renally cleared and contraindicated at eGFR under 30; her eGFR of 38 sits in the dose-reduction zone but combined with hepatic dysfunction makes bivalirudin a safer choice (ASH 2018; AMH).",
         "source_refs": [
-          "ASH 2018 HIT Guideline"
+          "ASH 2018 HIT Guideline",
+          "Australian Medicines Handbook"
         ]
       },
       {
         "letter": "C",
-        "text": "Start warfarin immediately to bridge through the heparin withdrawal phase with target INR 2-3",
+        "text": "Stop heparin and commence IV argatroban at standard dose",
         "correct": false,
-        "rationale": "Warfarin must NOT be started in acute HIT until platelets recover above 150 because of risk of warfarin-induced skin necrosis from protein C depletion (ASH 2018).",
+        "rationale": "Argatroban is hepatically cleared and contraindicated in significant hepatic dysfunction (bilirubin 62, INR 1.6); it would accumulate and over-anticoagulate (ASH 2018; AMH).",
+        "source_refs": [
+          "ASH 2018 HIT Guideline",
+          "Australian Medicines Handbook"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Stop heparin and immediately commence warfarin bridging to therapeutic INR 2.0 to 3.0",
+        "correct": false,
+        "rationale": "Warfarin must not be started in acute HIT until platelets recover above 150, due to risk of warfarin-induced skin necrosis from protein C depletion (ASH 2018).",
         "source_refs": [
           "ASH 2018 HIT Guideline"
         ]
       },
       {
-        "letter": "D",
-        "text": "Transfuse platelets to correct the thrombocytopenia and reduce the risk of major spontaneous haemorrhage",
-        "correct": false,
-        "rationale": "Prophylactic platelet transfusion is contraindicated in HIT unless major bleeding is occurring, because it can worsen thrombosis (ASH 2018; ANZSBT).",
-        "source_refs": [
-          "ASH 2018 HIT Guideline",
-          "ANZSBT Guidelines for the Administration of Blood Products"
-        ]
-      },
-      {
         "letter": "E",
-        "text": "Stop all heparin AND start a non-heparin anticoagulant (fondaparinux or argatroban) at therapeutic dose",
-        "correct": true,
-        "rationale": "HIT is a prothrombotic, life-threatening condition. Stopping heparin alone is INSUFFICIENT - patients require therapeutic-dose non-heparin anticoagulation. Fondaparinux is acceptable off-label in stable patients; argatroban is preferred in renal/critically ill (ASH HIT Guideline 2018; eTG).",
+        "text": "Stop all heparin and observe expectantly without alternative anticoagulation until platelets recover",
+        "correct": false,
+        "rationale": "HIT is prothrombotic; stopping heparin without substitute therapeutic anticoagulation leaves him at high risk of further venous and arterial events (ASH 2018).",
         "source_refs": [
-          "ASH 2018 HIT Guideline",
-          "Therapeutic Guidelines: Cardiovascular"
+          "ASH 2018 HIT Guideline"
         ]
       }
     ],
@@ -759,48 +760,57 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-haem-onc-009",
+    "id": "med-haem-onc-009-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "First-line corticosteroids and IVIG",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "IVIG",
       "steroids",
       "ITP"
     ],
-    "stem": "A 32-year-old woman presents with one week of widespread mucocutaneous bruising and gum bleeding when brushing her teeth. She has had two episodes of epistaxis lasting under 10 minutes each. She denies haemarthrosis or melaena. She is otherwise well, takes no medications, has no recent vaccinations and no recent viral illness. She is not pregnant. There is no family history of bleeding disorders. On examination she is haemodynamically stable. She has petechiae on the lower limbs and buccal mucosa, scattered bruising on the limbs and gingival oozing. There is no lymphadenopathy or hepatosplenomegaly. There are no rashes suggestive of vasculitis. Bloods reveal isolated thrombocytopenia at 8 x10^9/L with normal WCC, normal differential, normal Hb, normal coagulation profile, normal renal and liver function. Blood film shows large platelets, no schistocytes, no blasts. HIV, hepatitis B/C, and Helicobacter pylori serology are negative. ANA is negative. She has no contraindication to corticosteroids and no recent infections. She works as a primary school teacher and is keen to avoid admission if safe.",
+    "stem": "A 32-year-old woman presents with one week of mucocutaneous bruising, gum bleeding, two short epistaxis episodes, and today new heavy menstrual bleeding requiring an overnight pad change every 90 minutes. She takes no medications, has not been recently vaccinated, has no recent viral illness, no pregnancy. No lymphadenopathy or hepatosplenomegaly. Bloods: isolated platelets 4 x10^9/L with normal Hb, WCC, differential, coagulation profile, renal and liver function. Blood film: large platelets, no schistocytes, no blasts. HIV, hepatitis B and C, H. pylori, ANA all negative. She has no contraindication to corticosteroids or IVIG. The team plans urgent treatment.",
     "data_table": {
       "Vital signs": "BP 118/72 mmHg, HR 86 bpm, T 36.6 deg C.",
       "Examination": "Petechiae lower limbs and buccal mucosa, bruising, gingival oozing, no lymphadenopathy or hepatosplenomegaly.",
       "Investigations": "Platelets 8 x10^9/L, Hb 132, WCC 6.4 normal differential, INR 1.0, APTT 30, blood film large platelets no blasts, HIV/HBV/HCV negative, ANA negative."
     },
-    "lead_in": "What is the most appropriate first-line treatment?",
+    "lead_in": "Which is the most appropriate first-line treatment?",
     "options": [
       {
         "letter": "A",
-        "text": "Platelet transfusion of 2 adult therapeutic doses",
-        "correct": false,
-        "rationale": "Platelet transfusion is reserved for life-threatening bleeding (intracranial, major GI); transfused platelets are rapidly consumed by the same antibody and do not raise count meaningfully (ASH 2019; ANZSBT).",
-        "source_refs": [
-          "ASH 2019 ITP Guideline",
-          "ANZSBT Guidelines for the Administration of Blood Products"
-        ]
-      },
-      {
-        "letter": "B",
-        "text": "Prednisolone 1 mg/kg daily for 1-2 weeks then taper",
+        "text": "IV methylprednisolone 1 g daily for 3 days plus IVIG 1 g/kg as combination first-line therapy",
         "correct": true,
-        "rationale": "First-line therapy in adult ITP with bleeding or platelets under 20-30 is corticosteroids; prednisolone 1 mg/kg or short high-dose dexamethasone (40 mg daily x 4 days) are both accepted. Response in days to weeks (ASH ITP Guideline 2019; eTG).",
+        "rationale": "Severe ITP (platelets under 20 with active bleeding requiring intervention) is treated with combination corticosteroid plus IVIG for rapid platelet rise, per ASH 2019 and eTG; IVIG raises platelets within 24 to 48 hours, while corticosteroid (oral or pulsed IV) provides sustained immunomodulation. Heavy menstrual bleeding with platelets of 4 is bleeding sufficient to warrant combination, not monotherapy (ASH 2019; eTG Haematology).",
         "source_refs": [
           "ASH 2019 ITP Guideline",
           "Therapeutic Guidelines: Haematology"
         ]
       },
       {
+        "letter": "B",
+        "text": "Oral prednisolone 1 mg/kg daily as monotherapy and review platelet count in 1 week",
+        "correct": false,
+        "rationale": "Corticosteroid monotherapy takes days to weeks to raise platelets; with active heavy bleeding and platelets of 4, the more rapid combined IVIG plus steroid response is preferred (ASH 2019).",
+        "source_refs": [
+          "ASH 2019 ITP Guideline"
+        ]
+      },
+      {
         "letter": "C",
-        "text": "Rituximab 375 mg/m^2 weekly for 4 weeks",
+        "text": "Platelet transfusion of 2 adult therapeutic doses to correct count above 50 x10^9/L",
+        "correct": false,
+        "rationale": "Transfused platelets are rapidly consumed by the same autoantibody and rarely raise count meaningfully in stable ITP; transfusion is reserved for life-threatening haemorrhage (intracranial, major GI) alongside other therapies (ASH 2019; ANZSBT).",
+        "source_refs": [
+          "ASH 2019 ITP Guideline",
+          "ANZSBT Guidelines for the Administration of Blood Products"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Rituximab 375 mg/m^2 weekly for 4 weeks as first-line therapy",
         "correct": false,
         "rationale": "Rituximab is second-line for steroid-refractory or relapsing ITP, not first-line (ASH 2019).",
         "source_refs": [
@@ -808,19 +818,10 @@
         ]
       },
       {
-        "letter": "D",
-        "text": "Splenectomy",
-        "correct": false,
-        "rationale": "Splenectomy is second-line, usually after 12 months of relapsing disease to allow for spontaneous remission and after pneumococcal/meningococcal/Hib vaccination (ASH 2019).",
-        "source_refs": [
-          "ASH 2019 ITP Guideline"
-        ]
-      },
-      {
         "letter": "E",
-        "text": "Bone marrow biopsy before any treatment",
+        "text": "Bone marrow biopsy first to confirm the diagnosis before commencing any treatment",
         "correct": false,
-        "rationale": "Bone marrow is not required in typical adult ITP with isolated thrombocytopenia and a normal blood film; reserve for atypical features or age over 60 (ASH 2019).",
+        "rationale": "Bone marrow biopsy is not required in typical adult ITP with isolated thrombocytopenia and normal film; treatment must not be delayed when bleeding is active (ASH 2019).",
         "source_refs": [
           "ASH 2019 ITP Guideline"
         ]
@@ -947,65 +948,67 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-haem-onc-011",
+    "id": "med-haem-onc-011-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "Philadelphia chromosome + tyrosine kinase inhibitor",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [],
-    "stem": "A 48-year-old man is referred from his GP after a routine FBC for life insurance showed a leucocytosis. He feels well other than mild left upper quadrant discomfort and early satiety. He has no fevers, no night sweats and no weight loss. He has no past medical history of note and takes no medications. On examination there is a 6 cm splenomegaly palpable below the costal margin. There is no lymphadenopathy. The lab phones the GP with results showing WCC 86 x10^9/L with a full spectrum of myeloid maturation on the blood film (myelocytes, metamyelocytes, basophilia, eosinophilia), no excess blasts (less than 2%), Hb 124 g/L, platelets 480 x10^9/L. He is haemodynamically stable. He has no infections and no organomegaly other than the spleen. Bone marrow aspirate is hypercellular with myeloid hyperplasia and 1% blasts. Cytogenetics confirm t(9;22) and BCR-ABL1 transcript by PCR. He has no cardiac history and no other comorbidities. He works as an accountant.",
+    "stem": "A 48-year-old man is referred from his GP after a routine FBC for life insurance showed WCC 86 x10^9/L with a full myeloid maturation spectrum (myelocytes, metamyelocytes, basophilia 5 percent, eosinophilia 4 percent, blasts under 2 percent), Hb 124, platelets 480. He has mild left upper quadrant discomfort, no fevers, weight loss, or B symptoms. He has 6 cm splenomegaly. He has a 12-year history of bipolar disorder on lithium 800 mg daily and has a recurrent left-sided pleural effusion from chronic congestive heart failure (LVEF 40 percent). Cytogenetics confirm t(9;22) and BCR-ABL1 transcript by PCR. Bone marrow shows 1 percent blasts (chronic phase). He has no other comorbidities.",
     "data_table": {
       "Vital signs": "BP 124/78, HR 78, T 36.6.",
       "Examination": "6 cm splenomegaly, no lymphadenopathy, no other organomegaly.",
       "Investigations": "WCC 86 x10^9/L with myeloid left shift, basophilia 5%, eosinophilia 4%, blasts <2%, Hb 124 g/L, platelets 480 x10^9/L; bone marrow hypercellular myeloid 1% blasts; cytogenetics t(9;22) and BCR-ABL1 positive."
     },
-    "lead_in": "What is the most appropriate first-line treatment?",
+    "lead_in": "Which is the most appropriate first-line BCR-ABL1 tyrosine kinase inhibitor?",
     "options": [
       {
         "letter": "A",
-        "text": "Allogeneic stem cell transplant as first-line",
-        "correct": false,
-        "rationale": "Allogeneic transplant is reserved for accelerated/blast phase or TKI-failure cases; first-line transplant in chronic phase is no longer standard given TKI efficacy (eviQ CML).",
+        "text": "Imatinib 400 mg orally daily",
+        "correct": true,
+        "rationale": "Chronic phase CML is treated with a BCR-ABL1 TKI. Among second-generation TKIs, dasatinib is associated with pleural effusion and is contraindicated in his recurrent CHF-related effusion; nilotinib has cardiac and QT risks; ponatinib has significant vascular toxicity. Imatinib remains a reasonable first-line in older patients or those with comorbidities (pleural effusion, cardiac disease) where the side-effect profile favours it over second-generation TKIs (eviQ CML; HSANZ).",
         "source_refs": [
-          "eviQ Chronic myeloid leukaemia"
+          "eviQ Chronic myeloid leukaemia",
+          "HSANZ position statement on CML"
         ]
       },
       {
         "letter": "B",
-        "text": "Hydroxyurea 1-2 g daily until disease control",
+        "text": "Dasatinib 100 mg orally daily",
         "correct": false,
-        "rationale": "Hydroxyurea controls counts but does not affect underlying BCR-ABL biology; used as a bridge before TKI in symptomatic hyperleucocytosis, not as definitive therapy (eviQ CML).",
+        "rationale": "Dasatinib is associated with pleural effusion in 20 to 30 percent of patients; contraindicated in someone with a recurrent CHF-related pleural effusion (eviQ; AMH).",
         "source_refs": [
-          "eviQ Chronic myeloid leukaemia"
+          "eviQ Chronic myeloid leukaemia",
+          "Australian Medicines Handbook"
         ]
       },
       {
         "letter": "C",
-        "text": "Interferon alpha monotherapy",
+        "text": "Nilotinib 300 mg orally twice daily",
         "correct": false,
-        "rationale": "Interferon was superseded by TKIs; reserved now for pregnancy or rare TKI intolerance (eviQ).",
+        "rationale": "Nilotinib has cardiac and QT-prolongation risks and significant interactions with QT-prolonging drugs; lithium also prolongs QT, making this combination cardiotoxic (eviQ; AMH).",
+        "source_refs": [
+          "eviQ Chronic myeloid leukaemia",
+          "Australian Medicines Handbook"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Ponatinib 45 mg orally daily as first-line therapy",
+        "correct": false,
+        "rationale": "Ponatinib is reserved for T315I mutation or TKI-resistant disease due to significant vascular and arterial thrombotic toxicity; not first-line in chronic phase (eviQ).",
         "source_refs": [
           "eviQ Chronic myeloid leukaemia"
         ]
       },
       {
-        "letter": "D",
-        "text": "ATRA plus arsenic trioxide",
-        "correct": false,
-        "rationale": "ATRA plus arsenic is the treatment for acute promyelocytic leukaemia (APML), not CML (eviQ APML).",
-        "source_refs": [
-          "eviQ Acute myeloid leukaemia"
-        ]
-      },
-      {
         "letter": "E",
-        "text": "Imatinib 400 mg orally daily",
-        "correct": true,
-        "rationale": "First-line treatment for chronic phase CML is a BCR-ABL1 tyrosine kinase inhibitor; imatinib 400 mg daily is standard with 10-year survival approaching that of the general population. Nilotinib and dasatinib are alternatives with similar efficacy (eviQ CML; HSANZ).",
+        "text": "Hydroxyurea 1 to 2 g daily as definitive cytoreductive therapy",
+        "correct": false,
+        "rationale": "Hydroxyurea controls counts but does not target BCR-ABL1 biology; used as a bridge before TKI in severe hyperleucocytosis, not as definitive therapy (eviQ).",
         "source_refs": [
-          "eviQ Chronic myeloid leukaemia",
-          "HSANZ position statement on CML"
+          "eviQ Chronic myeloid leukaemia"
         ]
       }
     ],
@@ -1129,64 +1132,64 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-haem-onc-013",
+    "id": "med-haem-onc-013-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "B symptoms and Reed-Sternberg cells",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [],
-    "stem": "A 24-year-old previously well woman presents with a painless 4 cm left supraclavicular lymph node enlarging over 3 months. She reports drenching night sweats, intermittent fevers above 38 deg C and 8 kg unintentional weight loss over 6 weeks. She has noticed itching, particularly after warm showers. She does not drink alcohol but on the rare occasions she has, the node becomes painful within minutes. There is no infection source on history. Examination reveals firm supraclavicular and bilateral cervical lymphadenopathy, mild splenomegaly and no skin rash. Excisional lymph node biopsy is performed and immunohistochemistry shows large bi-nucleate cells with prominent eosinophilic nucleoli, expressing CD30 and CD15, negative for CD20, set in a mixed inflammatory infiltrate. PET-CT shows supradiaphragmatic-only involvement (left supraclavicular, mediastinal, both cervical nodal regions). FBC, LDH, ESR and HIV screen are pending but she is haemodynamically stable. She is keen to understand her diagnosis and likely treatment intensity. She has no past pregnancies and no significant comorbidities.",
+    "stem": "A 24-year-old previously well woman has been diagnosed with classical Hodgkin lymphoma after excisional left supraclavicular lymph node biopsy. Immunohistochemistry: CD30 positive, CD15 positive, CD20 negative Reed-Sternberg cells in a mixed inflammatory infiltrate. She reports drenching night sweats, fevers above 38, and 8 kg weight loss over 6 weeks. PET-CT shows supradiaphragmatic-only nodal involvement (left supraclavicular, mediastinal, bilateral cervical). Bloods: Hb 116, WCC normal, ESR 68, LDH normal, HIV negative. Echocardiogram shows LVEF 60 percent. Pulmonary function tests are normal. She has not commenced any treatment yet. She has no children but wishes to preserve fertility.",
     "data_table": {
       "Vital signs": "BP 118/72, HR 88, T 37.8 deg C.",
       "Examination": "4 cm firm left supraclavicular lymph node, bilateral cervical nodes, mild splenomegaly, no rash.",
       "Investigations": "Excisional node biopsy: CD30+ CD15+ CD20- bi-nucleate Reed-Sternberg cells in mixed inflammatory infiltrate. PET-CT supradiaphragmatic only."
     },
-    "lead_in": "Which feature most specifically supports a diagnosis of classical Hodgkin lymphoma over a non-Hodgkin lymphoma?",
+    "lead_in": "Which is the most appropriate next step before commencing chemotherapy?",
     "options": [
       {
         "letter": "A",
-        "text": "Biopsy showing CD30+ CD15+ CD20- Reed-Sternberg cells in mixed inflammatory infiltrate",
+        "text": "Refer urgently for fertility preservation counselling and oocyte or embryo cryopreservation, then commence ABVD chemotherapy",
         "correct": true,
-        "rationale": "Reed-Sternberg cells with the classical CD30+ CD15+ CD20- immunophenotype set in a mixed inflammatory background are diagnostic of classical Hodgkin lymphoma; NHL lacks Reed-Sternberg cells and typically expresses CD20 (B-cell) or T-cell markers (BSH Hodgkin; eviQ).",
+        "rationale": "ABVD chemotherapy (standard first-line for early-stage classical Hodgkin lymphoma with B symptoms is generally early-unfavourable disease per Australian and European stratification) carries low to moderate gonadotoxicity but the cumulative effect with potential radiotherapy and BEACOPP for relapse means fertility preservation should be offered before treatment begins. eviQ and HSANZ explicitly recommend urgent fertility referral before chemotherapy in young patients (eviQ Hodgkin; HSANZ).",
         "source_refs": [
-          "BSH Hodgkin Lymphoma Guideline 2014",
-          "eviQ Hodgkin lymphoma"
+          "eviQ Hodgkin lymphoma",
+          "HSANZ position statement"
         ]
       },
       {
         "letter": "B",
-        "text": "Reproducible alcohol-induced pain in the affected lymph node region after ingestion",
+        "text": "Commence ABVD chemotherapy immediately and defer fertility discussion until after first cycle",
         "correct": false,
-        "rationale": "Alcohol-induced node pain is a classic clinical association of Hodgkin lymphoma but it is rare (<10%) and not specific enough to outweigh immunohistochemistry; it is suggestive but not diagnostic (BSH Hodgkin Guideline).",
+        "rationale": "Delaying fertility discussion until after chemotherapy starts misses the window for oocyte or embryo cryopreservation (which requires ovarian stimulation pre-treatment); fertility referral must occur before first cycle (eviQ).",
         "source_refs": [
-          "BSH Hodgkin Lymphoma Guideline 2014"
-        ]
-      },
-      {
-        "letter": "C",
-        "text": "Drenching night sweats with documented unintentional weight loss exceeding 10 percent baseline",
-        "correct": false,
-        "rationale": "B symptoms (fever, night sweats, >10% weight loss) occur in both Hodgkin and NHL and do not distinguish between them (BSH Hodgkin; eviQ).",
-        "source_refs": [
-          "BSH Hodgkin Lymphoma Guideline 2014",
           "eviQ Hodgkin lymphoma"
         ]
       },
       {
-        "letter": "D",
-        "text": "Painless rubbery supraclavicular lymph node confirmed enlarged on bedside clinical examination",
+        "letter": "C",
+        "text": "Commence BEACOPP chemotherapy as first-line for B symptoms instead of ABVD",
         "correct": false,
-        "rationale": "Painless lymphadenopathy occurs in both Hodgkin and NHL and is not discriminating (BSH Hodgkin).",
+        "rationale": "ABVD is standard first-line in Australia for classical Hodgkin lymphoma; BEACOPP is reserved for advanced-stage disease or relapse, with greater gonadotoxicity (eviQ; HSANZ).",
         "source_refs": [
-          "BSH Hodgkin Lymphoma Guideline 2014"
+          "eviQ Hodgkin lymphoma",
+          "HSANZ position statement"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Proceed directly to involved-site radiotherapy as monotherapy without chemotherapy",
+        "correct": false,
+        "rationale": "Combined modality (chemotherapy plus radiotherapy in selected cases) is standard; radiotherapy monotherapy is not used for HL with B symptoms (eviQ).",
+        "source_refs": [
+          "eviQ Hodgkin lymphoma"
         ]
       },
       {
         "letter": "E",
-        "text": "PET-CT showing supradiaphragmatic-only nodal involvement consistent with early-stage disease distribution",
+        "text": "Repeat excisional lymph node biopsy to confirm the immunohistochemistry findings before treatment",
         "correct": false,
-        "rationale": "Contiguous nodal spread above the diaphragm is more typical of Hodgkin but NHL can present similarly; pattern alone is not diagnostic without histology (eviQ).",
+        "rationale": "Diagnosis is already established with CD30 positive CD15 positive CD20 negative Reed-Sternberg cells; repeat biopsy is not required and delays treatment (eviQ).",
         "source_refs": [
           "eviQ Hodgkin lymphoma"
         ]
@@ -1219,65 +1222,67 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-haem-onc-014",
+    "id": "med-haem-onc-014-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "CRAB criteria and SLiM-CRAB",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [],
-    "stem": "A 70-year-old man is referred for investigation of back pain and a 12 g/L drop in haemoglobin over 6 months. Pain is constant in the mid-thoracic spine, worse at night, with no clear mechanical trigger. He has lost 4 kg unintentionally over 3 months. He has had two episodes of pneumonia in the last 12 months. His past history includes hypertension. Examination reveals tenderness over the T6 vertebra without neurological deficit. Bloods show Hb 92 g/L, MCV 88 fL (normocytic), creatinine 198 micromol/L (eGFR 28; baseline 78), corrected calcium 2.78 mmol/L (RR 2.10-2.60), albumin 28 g/L, total protein 92 g/L. Serum protein electrophoresis shows an IgG kappa paraprotein of 42 g/L. Serum free light chain kappa is 320 mg/L with kappa/lambda ratio 28. Urinary Bence Jones protein is positive. Skeletal survey and low-dose whole body CT show multiple lytic lesions in the skull, spine and pelvis with a compression fracture at T6. Bone marrow aspirate is pending. He has no neurological signs of cord compression. There is no infection currently. He has no MGUS surveillance recorded.",
+    "stem": "A 70-year-old man is being evaluated for symptomatic multiple myeloma. He has back pain (mid-thoracic, worse at night), 4 kg unintentional weight loss, two recent pneumonias, T6 spinal tenderness without neurological deficit. Bloods: Hb 92 g/L, creatinine 198 micromol/L (eGFR 28; baseline 78), corrected calcium 2.78 mmol/L (RR 2.10 to 2.60), albumin 28, IgG kappa paraprotein 42 g/L, kappa free light chain 320 mg/L (ratio 28), urinary Bence Jones protein positive. CT shows multiple lytic lesions and a T6 compression fracture. Bone marrow biopsy: 45 percent clonal plasma cells.",
     "data_table": {
       "Vital signs": "BP 142/82, HR 78, T 36.7.",
       "Examination": "T6 spinal tenderness, no neurological deficit, no peripheral neuropathy.",
       "Investigations": "Hb 92 g/L, creatinine 198 micromol/L (eGFR 28), corrected Ca 2.78, albumin 28, IgG kappa paraprotein 42 g/L, FLC kappa 320 mg/L (ratio 28), urinary BJP positive, lytic lesions on CT, compression fx at T6."
     },
-    "lead_in": "Which feature is NOT one of the CRAB criteria defining symptomatic multiple myeloma?",
+    "lead_in": "Which is the most appropriate combination of next steps in management?",
     "options": [
       {
         "letter": "A",
-        "text": "Corrected calcium 2.78 mmol/L (>2.75)",
-        "correct": false,
-        "rationale": "Hypercalcaemia (corrected calcium >2.75 or >0.25 above ULN) is the 'C' in CRAB (IMWG).",
+        "text": "Urgent MRI whole spine for cord compression risk, IV hydration with isotonic crystalloid, IV zoledronic acid (dose-adjusted for renal function), and refer to haematology to commence bortezomib-based induction",
+        "correct": true,
+        "rationale": "He meets CRAB criteria with active myeloma. The T6 compression fracture in painful spine mandates urgent MRI to exclude cord compression. Hypercalcaemia requires IV hydration and bisphosphonate (zoledronic acid is the standard, with dose adjustment at eGFR 28 per AMH); bortezomib-based induction (e.g. VTd or VRd) is preferred over lenalidomide-based regimens in significant renal impairment (eviQ Myeloma; HSANZ; eTG).",
         "source_refs": [
-          "IMWG Diagnostic Criteria for Multiple Myeloma"
+          "eviQ Multiple myeloma",
+          "HSANZ position statement on multiple myeloma",
+          "Therapeutic Guidelines: Endocrinology"
         ]
       },
       {
         "letter": "B",
-        "text": "Creatinine 198 micromol/L (eGFR 28)",
+        "text": "Refer for bone marrow biopsy and skeletal survey before commencing any treatment",
         "correct": false,
-        "rationale": "Renal impairment (creatinine >177 or CrCl <40) is the 'R' in CRAB (IMWG).",
+        "rationale": "Bone marrow (45 percent plasma cells) and CT skeletal imaging are already done; further delay risks cord compression and worsening renal failure (eviQ).",
         "source_refs": [
-          "IMWG Diagnostic Criteria for Multiple Myeloma"
+          "eviQ Multiple myeloma"
         ]
       },
       {
         "letter": "C",
-        "text": "Serum paraprotein concentration of 42 g/L",
-        "correct": true,
-        "rationale": "CRAB criteria are hyperCalcaemia, Renal impairment, Anaemia and Bone lesions; paraprotein concentration is NOT part of CRAB. The size of paraprotein helps distinguish MGUS (<30 g/L) from smouldering/active myeloma but the diagnostic CRAB criteria are end-organ damage (IMWG; HSANZ).",
+        "text": "Commence high-dose dexamethasone 40 mg daily and discharge on outpatient follow-up",
+        "correct": false,
+        "rationale": "Dexamethasone alone is inadequate induction and discharge with painful compression fracture and severe AKI is unsafe; multidisciplinary inpatient management is required (eviQ).",
         "source_refs": [
-          "IMWG Diagnostic Criteria for Multiple Myeloma",
-          "HSANZ position statement on multiple myeloma"
+          "eviQ Multiple myeloma"
         ]
       },
       {
         "letter": "D",
-        "text": "Hb 92 g/L (below baseline by >20 g/L)",
+        "text": "Commence high-dose lenalidomide-based induction immediately without renal dose adjustment",
         "correct": false,
-        "rationale": "Anaemia (Hb <100 or fall >20 below baseline) is the 'A' in CRAB (IMWG).",
+        "rationale": "Lenalidomide requires substantial dose reduction at eGFR under 30 and bortezomib-based regimens are preferred in significant renal impairment due to faster reduction of paraprotein and better renal recovery (eviQ; AMH).",
         "source_refs": [
-          "IMWG Diagnostic Criteria for Multiple Myeloma"
+          "eviQ Multiple myeloma",
+          "Australian Medicines Handbook"
         ]
       },
       {
         "letter": "E",
-        "text": "Lytic lesions and a compression fracture at T6",
+        "text": "Commence emergency haemodialysis to clear paraprotein and defer chemotherapy until renal function improves",
         "correct": false,
-        "rationale": "Bone lesions on skeletal survey, CT, MRI or PET are the 'B' in CRAB (IMWG).",
+        "rationale": "Dialysis does not effectively clear intact paraprotein; renal recovery in myeloma is driven by reducing light chain production via systemic therapy (bortezomib-based), with dialysis reserved for life-threatening uraemia or fluid overload (eviQ).",
         "source_refs": [
-          "IMWG Diagnostic Criteria for Multiple Myeloma"
+          "eviQ Multiple myeloma"
         ]
       }
     ],
@@ -1774,30 +1779,30 @@
     "created": "2026-05-19"
   },
   {
-    "id": "med-haem-onc-020",
+    "id": "med-haem-onc-020-l3",
     "topic": "Medicine",
     "subtopic": "Other",
     "subtopic_detail": "1:1:1 ratio and metabolic complications",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "hyperkalaemia",
       "hypocalcaemia",
       "massive transfusion"
     ],
-    "stem": "A 56-year-old man with cirrhosis is admitted to ED with massive haematemesis. He has bled approximately 2.5 L by the time he arrives and is in haemorrhagic shock. He is haemodynamically unstable - BP 78/42, HR 142, peripherally shut down, GCS 13. The ED activates the massive transfusion protocol. He has received 6 units of packed red cells, 4 units of FFP and 1 pool of platelets over the last 60 minutes via rapid infuser. He is being continued on the MTP. Repeat bloods show Hb 78 g/L (after transfusion), platelets 62, INR 2.1, fibrinogen 1.1 g/L, potassium 6.2 mmol/L, ionised calcium 0.84 mmol/L (RR 1.10-1.30), pH 7.18, lactate 8.4, base excess minus 12, magnesium 0.62. ECG shows tall T waves in V2-V4.",
+    "stem": "A 56-year-old man with cirrhosis presents with massive haematemesis. He arrives in haemorrhagic shock (BP 78/42, HR 142, GCS 13). The massive transfusion protocol is activated and he receives 6 units packed red cells, 4 units FFP and 1 pool of platelets via rapid infuser over 60 minutes. He is being continued on the MTP and IV tranexamic acid 1 g over 10 minutes was given on arrival. Repeat bloods now: Hb 78, platelets 62, INR 2.1, fibrinogen 1.1 g/L, potassium 6.2 mmol/L, ionised calcium 0.84 mmol/L (RR 1.10 to 1.30), pH 7.18, lactate 8.4, base excess minus 12, magnesium 0.62, temperature 35.4 degrees C. ECG shows tall T waves in V2 to V4 with PR 200 ms; QRS 100 ms.",
     "data_table": {
       "Vital signs": "BP 78/42, HR 142, GCS 13, T 35.4 (mild hypothermia).",
       "Examination": "Cold peripheries, ongoing haematemesis, jaundice, ascites.",
       "Investigations": "Hb 78 g/L (post-transfusion), platelets 62, INR 2.1, fibrinogen 1.1, K 6.2, ionised Ca 0.84, pH 7.18, lactate 8.4, BE -12, Mg 0.62; ECG tall T waves V2-V4."
     },
-    "lead_in": "Which is the single most important next intervention to address an immediately life-threatening complication of massive transfusion?",
+    "lead_in": "Which is the most appropriate single next intervention?",
     "options": [
       {
         "letter": "A",
-        "text": "IV calcium gluconate 10% 10 mL (or calcium chloride 10% 10 mL via central access)",
+        "text": "IV calcium gluconate 10 percent 10 mL given over 2 to 3 minutes via a peripheral large-bore cannula",
         "correct": true,
-        "rationale": "Citrate in stored blood products chelates ionised calcium causing acute hypocalcaemia that depresses myocardial function and worsens coagulopathy. Ionised calcium 0.84 is severe and immediately life-threatening when combined with ongoing transfusion. Calcium replacement (gluconate peripherally or chloride centrally) is the single most important next intervention; it also helps stabilise myocardium against the hyperkalaemia (ANZSBT MTP; NBA Patient Blood Management).",
+        "rationale": "Severe ionised hypocalcaemia (0.84) from MTP is immediately life-threatening because it depresses myocardial contractility, prolongs coagulation, and amplifies hyperkalaemia toxicity; ANZSBT MTP guidance recommends calcium replacement at every 4-unit interval and when ionised calcium falls below 1.1. Calcium also stabilises the myocardium against the concomitant hyperkalaemia, addressing two life-threats simultaneously (ANZSBT MTP; NBA PBM).",
         "source_refs": [
           "ANZSBT Massive Transfusion Protocol",
           "NBA Patient Blood Management Guidelines"
@@ -1805,36 +1810,36 @@
       },
       {
         "letter": "B",
-        "text": "IV sodium bicarbonate 100 mmol bolus to correct the metabolic acidosis and stabilise the membrane",
+        "text": "IV insulin 10 units with 50 mL of 50 percent dextrose to shift potassium intracellularly",
         "correct": false,
-        "rationale": "Bicarbonate does not correct the underlying lactic acidosis of hypoperfusion; the priority is restoring perfusion, replacing calcium and addressing hyperkalaemia. Bicarbonate also acutely lowers ionised calcium, worsening the hypocalcaemia (ANZSBT MTP).",
+        "rationale": "Insulin-dextrose is reasonable for hyperkalaemia, but with ionised calcium 0.84 and ongoing MTP the calcium deficit is the more immediate cardiac threat and calcium replacement also stabilises the membrane against the hyperkalaemia; insulin without calcium first does not address the broader hypocalcaemia (ANZSBT MTP).",
         "source_refs": [
           "ANZSBT Massive Transfusion Protocol"
         ]
       },
       {
         "letter": "C",
-        "text": "Insulin 10 units IV with 50 mL of 50% dextrose to shift potassium intracellularly now",
+        "text": "IV sodium bicarbonate 100 mmol bolus to correct metabolic acidosis",
         "correct": false,
-        "rationale": "Insulin-dextrose shifts potassium intracellularly and is reasonable for hyperkalaemia, but ionised calcium 0.84 with continuing massive transfusion is the more immediate life-threat because it impairs cardiac contractility and coagulation. Calcium also stabilises the membrane against the hyperkalaemia (ANZSBT MTP).",
+        "rationale": "Bicarbonate does not correct lactic acidosis from hypoperfusion and acutely worsens ionised hypocalcaemia by increasing albumin-bound calcium fraction (ANZSBT MTP).",
         "source_refs": [
           "ANZSBT Massive Transfusion Protocol"
         ]
       },
       {
         "letter": "D",
-        "text": "Stop the massive transfusion protocol immediately pending haemodynamic improvement and clinical reassessment now",
+        "text": "Active rewarming to address hypothermia as the priority complication",
         "correct": false,
-        "rationale": "He remains in haemorrhagic shock with ongoing bleeding; stopping MTP risks exsanguination. Address metabolic complications IN PARALLEL with continued resuscitation (ANZSBT MTP).",
+        "rationale": "Hypothermia worsens the coagulopathy of the lethal triad and rewarming is essential, but it is parallel work; ionised calcium 0.84 with hyperkalaemia and ECG changes is the more immediate single life-threat (ANZSBT MTP).",
         "source_refs": [
           "ANZSBT Massive Transfusion Protocol"
         ]
       },
       {
         "letter": "E",
-        "text": "IV tranexamic acid 1 g over 10 minutes to reduce ongoing surgical site fibrinolytic bleeding",
+        "text": "Stop the massive transfusion protocol and reassess once haemodynamics improve",
         "correct": false,
-        "rationale": "TXA should be given (within 3 hours of bleeding onset) for major haemorrhage and is part of MTP, but it does not address the immediate cardiac risk of ionised calcium 0.84 plus hyperkalaemia; calcium correction is more urgent for this stem (ANZSBT MTP).",
+        "rationale": "He remains in haemorrhagic shock with ongoing variceal bleeding; pausing MTP risks exsanguination. Metabolic complications are addressed alongside continued resuscitation, not by stopping it (ANZSBT MTP).",
         "source_refs": [
           "ANZSBT Massive Transfusion Protocol"
         ]
