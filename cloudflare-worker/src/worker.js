@@ -13,10 +13,10 @@
  *     - Rob's profile shows these in the in-app Reports admin view.
  *
  * Secrets / vars (set via `wrangler secret put` or the dashboard):
- *   GITHUB_TOKEN   fine-grained PAT, repo: mord58562/y4-pocket-companion,
+ *   GITHUB_TOKEN   fine-grained PAT, repo: mord58562/a-to-e,
  *                  scope: contents:write
  *   GITHUB_OWNER   "mord58562"
- *   GITHUB_REPO    "y4-pocket-companion"
+ *   GITHUB_REPO    "a-to-e"
  *   GITHUB_BRANCH  "main"
  *   ALLOW_ORIGIN   "https://mord58562.github.io"  (or "*" for dev)
  */
