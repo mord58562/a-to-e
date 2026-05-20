@@ -525,7 +525,7 @@
         "Τύχῃ ἀγαθῇ.",
         "सौभाग्यम्।",
         "Ни пýха ни перá.",
-        "Sretno Ti Bilo.",
+        "Sretno ti bilo.",
         "Kila la kheri.",
         "بالتوفيق.",
         "Gutpela lak.",
