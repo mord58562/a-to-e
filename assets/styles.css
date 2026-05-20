@@ -848,20 +848,17 @@ body[data-screen="quiz"] main { padding-top: 16px; }
  * Below the threshold (1240px = 820 col + 420 panel) we don't shift,
  * since the overlap is unavoidable and the user can close the panel.
  */
-@media (min-width: 1240px) {
-  .reading,
-  main > .prose,
-  .reading-head,
-  .quiz-topbar .qt-inner,
-  #qtList {
-    transition: transform 0.22s ease;
-  }
-  body.refs-open .reading,
-  body.refs-open main > .prose,
-  body.refs-open .quiz-topbar .qt-inner,
-  body.refs-open #qtList {
-    transform: translateX(-210px);
-  }
+/* When the reference panel is open, shrink the available width of the
+ * reading column so the whole question stays visible to the left of the
+ * 420 px panel. Use padding-right on <body> (avoids the previous
+ * translate-only approach which still overlapped content). Below 920 px
+ * the panel takes the full screen and the content scroll is locked. */
+body.refs-open {
+  padding-right: min(420px, 92vw);
+  transition: padding-right 0.22s ease;
+}
+@media (max-width: 920px) {
+  body.refs-open { padding-right: 0; overflow: hidden; }
 }
 .ref-head {
   padding: 14px 18px;

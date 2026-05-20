@@ -1,0 +1,510 @@
+{
+  "audited_at": "2026-05-20",
+  "auditor": "Claude Opus 4.7 (1M context)",
+  "module": "Obstetrics & Gynaecology",
+  "definition": "Difficulty = cognitive work required to reach the correct answer, not topic rarity. Stems that telegraph the diagnosis or pre-commit to the correct option are recognition tasks (L1-L2) regardless of underlying topic depth.",
+  "scope": "All questions with difficulty >= 4 across questions_obgyn.json and batches/obgyn_*.json",
+  "total_audited": 144,
+  "verdicts": [
+    {
+      "id": "obgyn-018",
+      "source_file": "questions_obgyn.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: differentiate superimposed PE from worsening CHTN, gestational HTN, HELLP, isolated FGR using SOMANZ criteria across multiple organ-system features",
+      "note": "Stem does not pre-announce a diagnosis. Candidate must integrate proteinuria threshold, platelet trend, urate, creatinine, FGR, Doppler against SOMANZ 2023 definitions. Legitimate L4."
+    },
+    {
+      "id": "obgyn-021",
+      "source_file": "questions_obgyn.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step + AU-specific cut-offs: steroids + tocolysis + MgSO4 neuroprotection + GBS + transfer at 30 weeks with cervical length <25 mm and positive fFN",
+      "note": "Bundle answer requires recall of multiple parallel interventions and gestational thresholds (MgSO4 <30-32 wk per ANZ guideline). Distractors test plausible single-intervention errors. Legitimate L4."
+    },
+    {
+      "id": "obgyn-023",
+      "source_file": "questions_obgyn.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: PPH 4Ts triage + escalation step within the uterotonic ladder + identification of relative contraindication to ergometrine (hypotension implied by trajectory and 1200 mL loss)",
+      "note": "Requires choosing carboprost specifically over ergometrine, misoprostol, TXA alone, or rFVIIa. Knowledge of NSW Health/RANZCOG escalation order and a contraindication. Legitimate L4."
+    },
+    {
+      "id": "obgyn-024",
+      "source_file": "questions_obgyn.json",
+      "current_difficulty": 5,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "She is open to any contraceptive method that is safe in her current circumstances and prefers a long-acting reversible option if appropriate.",
+      "reasoning_required": "pattern-match: migraine with aura = UKMEC 4 CHC, patient states LARC preference",
+      "note": "Telegraph: explicit LARC preference + only the LNG-IUS option is LARC + only one option (E) is non-CHC-non-LARC. Migraine with aura alone is a recognition cue. Concept stacking is real but the answer is pre-committed. L3 (UKMEC stacking) at most, not L5."
+    },
+    {
+      "id": "obgyn-025",
+      "source_file": "questions_obgyn.json",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: simultaneous IUR + antibiotics + antipyretic + senior review + judgement that immediate Cat 1 CS is not yet appropriate at 8 cm multipara with chorio + meconium + pathological CTG",
+      "note": "Genuine reasoning chain. Distractor D (immediate Cat 1 CS) is plausible and the question rewards the candidate who recognises route-of-birth depends on senior assessment, not reflex CS. Legitimate L5."
+    },
+    {
+      "id": "obgyn-antenatal-004",
+      "source_file": "batches/obgyn_antenatal_complications.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step discrimination: HELLP vs AFLP vs TTP vs HUS vs ICP using fibrinogen, glucose, ammonia, ADAMTS13, creatinine, transaminases",
+      "note": "Strong discriminator design. Stem provides multiple lab clues that map to different syndromes; candidate must weigh each. No telegraph. Legitimate L4."
+    },
+    {
+      "id": "obgyn-antenatal-010",
+      "source_file": "batches/obgyn_antenatal_complications.json",
+      "current_difficulty": 4,
+      "verdict": "rewrite",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Amniocentesis is being arranged for foetal PCR at 18 weeks (consistent with the recommendation to wait at least six weeks after maternal seroconversion)",
+      "reasoning_required": "1 step (recognise spiramycin as first-tri + switch logic): the stem already telegraphs the staged approach by mentioning the amnio plan and the switch question",
+      "note": "Stem says the consultant will switch later if PCR positive. The whole staged-treatment plan is essentially handed over. Diagnosis-named (Toxoplasma primary infection), drug regimen is textbook. Remove the bracketed amnio rationale and the 'whether the medication chosen now should change' framing to make this L4."
+    },
+    {
+      "id": "obgyn-antenatal-013",
+      "source_file": "batches/obgyn_antenatal_complications.json",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: valproate teratogenicity rate vs alternatives, folate dose for AED users (5 mg not 0.5 mg), lamotrigine clearance changes requiring TDM, pre-conception timing of switch, against backdrop of prior level/CBZ failures",
+      "note": "Question packages four sub-decisions into one option. Distractor A (continue valproate) and D (polytherapy) require nuanced rejection. Folate dose alone is a common AU pitfall. Legitimate L5."
+    },
+    {
+      "id": "obgyn-antenatal-015",
+      "source_file": "batches/obgyn_antenatal_complications.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: 25-30% dose increase + 4-weekly TSH monitoring + trimester-specific upper TSH targets (<2.5 T1, <3.0 T2-T3) - requires rejecting plausible 'use lab reference range' distractor",
+      "note": "Diagnosis is given (known hypothyroid) but the question requires specific numeric thresholds and monitoring intervals, not just 'increase dose'. Distractor A is plausible (continue dose, recheck at 28 wk) and matches naive practice. Legitimate L4."
+    },
+    {
+      "id": "obgyn-anscreen-005",
+      "source_file": "batches/obgyn_antenatal_screening.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: integrate prior cFTS risk + LR of isolated EIF + rejection of plausible overtreatment options (NIPT, amnio, foetal echo, repeat scan)",
+      "note": "Correct answer requires the Bayesian framing - low prior x small LR = no change in management. Easy to be wrong by reaching for NIPT or foetal echo. Legitimate L4."
+    },
+    {
+      "id": "obgyn-anscreen-010",
+      "source_file": "batches/obgyn_antenatal_screening.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: recognise unruptured tubal ectopic, check eligibility criteria for MTX (size <35 mm, no FCA, hCG <5000, reliable follow-up), identify FCA as the contraindication among options",
+      "note": "Phrased as a 'find the contraindication' question. Requires knowing all five eligibility criteria. Distractors B, D, E test plausible misconceptions about thresholds. Legitimate L4."
+    },
+    {
+      "id": "obgyn-anscreen-011",
+      "source_file": "batches/obgyn_antenatal_screening.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: recognise PUL (positive hCG, empty uterus, hCG below discriminatory zone), know discriminatory zone 1500-2000 IU/L, reject premature MTX or laparoscopy",
+      "note": "Strong distractors: laparoscopy and empirical MTX are commonly wrong. Requires knowing the AU-specific discriminatory zone. No diagnosis pre-stated. Legitimate L4."
+    },
+    {
+      "id": "obgyn-anscreen-013",
+      "source_file": "batches/obgyn_antenatal_screening.json",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "passing what she describes as small grape-like tissue ... 'snowstorm' appearance ... bilateral theca lutein cysts ... beta-hCG 285 000 IU/L ... TSH 0.05 mU/L and free T4 22 pmol/L",
+      "reasoning_required": "pattern-match + 1 step (surveillance schedule recall)",
+      "note": "Stem hands over the diagnosis (snowstorm, grape-like tissue, very high hCG, theca lutein cysts, biochemical hyperthyroid). Question reduces to recall of post-evacuation surveillance schedule. Topic depth is real but cognitive work is recognition + recall. L3 at most."
+    },
+    {
+      "id": "obgyn-anscreen-015",
+      "source_file": "batches/obgyn_antenatal_screening.json",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: recognise heterotopic (concurrent IUP + tubal ring + free fluid), know MTX is contraindicated when viable IUP coexists, choose laparoscopic salpingectomy over KCl injection, remember anti-D before 12 wk if Rh-neg",
+      "note": "Question rewards correctly identifying heterotopic pregnancy and rejecting the standard ectopic algorithm (MTX). Distractor D (KCl) is sophisticated and tests cornual-vs-tubal discrimination. Anti-D RhD-positive footnote tests attention. Legitimate L5."
+    },
+    {
+      "id": "obgyn-atsi-dv-004",
+      "source_file": "batches/obgyn_first_nations_dv_top.json",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: identify severe MS decompensation in labour, rate control + diuresis as twin priorities, reject Cat 1 CS / fluid bolus / amiodarone / beta-agonist tocolysis, know assisted second stage logic",
+      "note": "Stem describes the haemodynamic physiology but does not telegraph the answer. Requires understanding that tachycardia is the enemy in MS (shortened diastole), and that beta-agonist tocolysis (B) is contraindicated specifically because of MS physiology. Legitimate L5."
+    },
+    {
+      "id": "obgyn-atsi-dv-007",
+      "source_file": "batches/obgyn_first_nations_dv_top.json",
+      "current_difficulty": 4,
+      "verdict": "rewrite",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "She has had no ectopic risk factors and the pre-TOP scan confirmed intrauterine pregnancy with normal adnexa.",
+      "reasoning_required": "1-2 steps: recognise septic incomplete abortion, ABC + antibiotics + source control",
+      "note": "Question essentially asks the candidate to recognise septic incomplete abortion and choose resuscitate + Abx + evacuate. The clinical picture (RPOC visible, fever, sepsis, anaemia) is unmistakable. The framing is the standard sepsis bundle. Useful Q but L3 - distractors are weak (none of A, C, D, E come close to the right answer in a critically ill patient)."
+    },
+    {
+      "id": "obgyn-atsi-dv-008",
+      "source_file": "batches/obgyn_first_nations_dv_top.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: recognise the extreme-risk DV cluster (non-fatal strangulation + threat to kill + pregnancy escalation + firearm access + coercive control) and discriminate from milder markers",
+      "note": "Lethality discrimination requires knowing specific predictors (non-fatal strangulation as ~7x homicide risk). Distractors A, B, D, E are plausible 'concerning' but not extreme-risk markers. Real reasoning. Legitimate L4."
+    },
+    {
+      "id": "obgyn-atsi-dv-011",
+      "source_file": "batches/obgyn_first_nations_dv_top.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step + AU-specific time windows: LNG (96 h), UPA (120 h), Cu-IUD (5 d), HIV PEP (72 h), at exactly 120 h with day-11 of cycle the Cu-IUD is the only reliable option",
+      "note": "Stem requires applying multiple time-window cut-offs simultaneously. Distractor D (HIV PEP) tests the 72-h window knowledge. UPA is licensed to 120 h but borderline at this exact mark - reasoning is genuine. Legitimate L4."
+    },
+    {
+      "id": "obgyn-atsi-dv-013",
+      "source_file": "batches/obgyn_first_nations_dv_top.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: know which AEDs are enzyme inducers, which contraceptive methods are reduced by CYP3A4 induction (CHC, POP, implant), and which are unaffected (IUD, DMPA)",
+      "note": "Requires recall of the FSRH Drug Interactions guidance. Distractor E (DMPA) is the trap - DMPA is acceptable but not the single best option vs IUD. Legitimate L4."
+    },
+    {
+      "id": "obgyn-atsi-dv-015",
+      "source_file": "batches/obgyn_first_nations_dv_top.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: distinguish malabsorptive (RYGB) vs restrictive (sleeve, band) bariatric procedures, identify reduced oral absorption, choose LARC",
+      "note": "Requires knowing the malabsorptive/restrictive distinction. Distractor C (CHC for cycle control) and D (await cycles) are plausible naive errors. Legitimate L4."
+    },
+    {
+      "id": "obgyn-atsi-dv-020",
+      "source_file": "batches/obgyn_first_nations_dv_top.json",
+      "current_difficulty": 4,
+      "verdict": "rewrite",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "The most likely cause is uterine atony given the soft, poorly contracted uterus",
+      "reasoning_required": "1 step (recall first-line uterotonic = oxytocin)",
+      "note": "Stem explicitly hands over the diagnosis ('most likely cause is uterine atony'). Question reduces to 'pick first-line uterotonic'. Remove that sentence and it becomes L4 (must integrate uterine tone + ruling out trauma/retained tissue)."
+    },
+    {
+      "id": "obgyn-gynae-hy-009",
+      "source_file": "batches/obgyn_gynae_high_yield.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: recognise deep infiltrating endometriosis features (uterosacral nodularity, fixed retroversion, dyschezia), weigh fertility goals against contraceptive medical options, choose MDT path over reflex COCP/LNG-IUS/laparoscopy",
+      "note": "Fertility constraint genuinely changes management. Strong distractors (COCP and LNG-IUS would be reasonable without fertility goal). Legitimate L4."
+    },
+    {
+      "id": "obgyn-gynae-hy-011",
+      "source_file": "batches/obgyn_gynae_high_yield.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: know RANZCOG RPL workup (APS yes, inherited thrombophilia no, NK cells no, parental karyotype contingent, hysteroscopy contingent)",
+      "note": "Requires knowing what NOT to do (inherited thrombophilia, NK cells) - common naive overordering. Correct answer (APS with repeat at 12 wk) is specific. Legitimate L4."
+    },
+    {
+      "id": "obgyn-gynae-hy-012",
+      "source_file": "batches/obgyn_gynae_high_yield.json",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": null,
+      "reasoning_required": "1-2 steps: recognise infertility definition (12 months <35) and standard initial workup",
+      "note": "Standard infertility workup question. Distractors (IVF first, wait 12 months more, HSG+lap first-line, AMH only) are weak. Answer is the textbook first-line bundle. L3."
+    },
+    {
+      "id": "obgyn-gynae-hy-013",
+      "source_file": "batches/obgyn_gynae_high_yield.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: recognise adolescent endo phenotype, know TVUS inappropriate in non-sexually-active adolescent, reject normalisation and reflex laparoscopy/GnRH, sequence empirical NSAID + continuous COCP",
+      "note": "Distractor B (reassure as normal) tests the dangerous default. Choice of TA vs TV scan is a real AU-specific consideration in this age group. Legitimate L4."
+    },
+    {
+      "id": "obgyn-gynae-hy-015",
+      "source_file": "batches/obgyn_gynae_high_yield.json",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: recognise torsion clinically + on Doppler, reject oophorectomy despite ischaemic appearance, know oophoropexy logic, reject delay-for-imaging",
+      "note": "Distractor D (planned oophorectomy because non-viable) is the sophisticated trap - tests knowledge that 'black does not equal dead' in detorsion. Legitimate L5."
+    },
+    {
+      "id": "obgyn-gynonc-011",
+      "source_file": "batches/obgyn_gynae_oncology.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: recognise torsion of known dermoid, reject delay-for-imaging and oophorectomy-first, choose laparoscopy with detorsion and conservative cystectomy",
+      "note": "Known dermoid + characteristic clinical features. Distractor C (oophorectomy because non-viable) is the trap. Doppler reliability footnote tests deeper knowledge. Legitimate L4."
+    },
+    {
+      "id": "obgyn-gynonc-012",
+      "source_file": "batches/obgyn_gynae_oncology.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: recognise lichen sclerosus phenotype, decide to biopsy persistent indurated nodule (4-5% lifetime SCC risk) BEFORE treating, reject reflex topical-only management",
+      "note": "Distractor C (clobetasol only) is the trap that most candidates would pick. The reasoning is biopsy-the-suspicious-lesion-before-treating-the-LS. Legitimate L4."
+    },
+    {
+      "id": "obgyn-gynonc-013",
+      "source_file": "batches/obgyn_gynae_oncology.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: choose Word catheter over simple I&D (40% recurrence) vs marsupialisation vs excision; antibiotics indicated only for systemic features",
+      "note": "Distractors cover the spectrum (simple I&D, antibiotics only, excision, sitz baths). Requires knowing the Word catheter recurrence advantage. Legitimate L4."
+    },
+    {
+      "id": "obgyn-gynonc-015",
+      "source_file": "batches/obgyn_gynae_oncology.json",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: recognise PMB on tamoxifen requires hysteroscopy + directed biopsy NOT TVUS (because tamoxifen-induced cystic stromal change reduces TVUS specificity); reject reflex 'switch to AI' and routine surveillance",
+      "note": "Distractor E (routine TVUS surveillance) is the sophisticated trap - tests knowledge that asymptomatic tamoxifen TVUS surveillance is explicitly NOT recommended. AU eviQ-specific guidance. Legitimate L5."
+    },
+    {
+      "id": "obgyn-gynae-006",
+      "source_file": "batches/obgyn_gynaecology_depth.json",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "prior identical self-resolving episodes (intermittent torsion clue) ... TVUS findings of an enlarged ovary with reduced Doppler flow",
+      "reasoning_required": "pattern-match: classic torsion presentation across 5 differentials",
+      "note": "Standard differential question. Stem includes prior self-resolving episodes (textbook intermittent torsion clue) and (implied via rationale) reduced Doppler. Distractors are weak in context. L3."
+    },
+    {
+      "id": "obgyn-gynae-009",
+      "source_file": "batches/obgyn_gynaecology_depth.json",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "She is open to long-acting methods including intrauterine devices and the etonogestrel subdermal implant, and is also willing to consider the progestogen-only pill.",
+      "reasoning_required": "1-2 steps: recall postpartum contraception UKMEC for breastfeeding (CHC avoided <6 wk, progestogen-only OK, IUD from 4-6 wk)",
+      "note": "Standard postpartum contraception. Stem narrows the field by stating she accepts LARC/POP. Correct answer is essentially 'all progestogen-only methods are fine'. L3."
+    },
+    {
+      "id": "obgyn-gynae-013",
+      "source_file": "batches/obgyn_gynaecology_depth.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: prior VTE -> transdermal not oral; intact uterus -> need progestogen; >12 months postmen + no-bleed pref -> continuous combined; LNG-IUS as elegant progestogen route",
+      "note": "Distractor B (oral CEE + continuous MPA) is plausible if VTE history is missed. Several constraints must compound. Legitimate L4."
+    },
+    {
+      "id": "obgyn-gynae-014",
+      "source_file": "batches/obgyn_gynaecology_depth.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: recognise GSM, know moisturisers + lubricants are first-line and failed, know low-dose vaginal oestrogen acceptable in breast cancer survivors not on AI after shared decision-making, know ospemifene contraindicated, laser not evidence-based",
+      "note": "Sophisticated discrimination between systemic MHT, local vaginal oestrogen, ospemifene, and laser. AU-specific TGA position on laser. Legitimate L4."
+    },
+    {
+      "id": "obgyn-gynae-015",
+      "source_file": "batches/obgyn_gynaecology_depth.json",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: persistent non-healing fissured area in LS = differentiated VIN/SCC concern, biopsy mandatory before changing therapy, reject discharge-to-self-management, reject WLE without histology",
+      "note": "Distractor A (just increase clobetasol) and C (discharge after 5 years stable) are sophisticated traps. Requires knowing the dVIN pathway specifically. Legitimate L5."
+    },
+    {
+      "id": "obgyn-intrapartum-001",
+      "source_file": "batches/obgyn_intrapartum_depth.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: classify FIGO pathological CTG, decide between intrauterine resuscitation + FBS vs Cat 1 CS (no sustained bradycardia so FBS appropriate), reject continued oxytocin",
+      "note": "Distractor C (immediate Cat 1 CS) is the trap - tests judgement that pathological-without-acute-decomp warrants FBS first. AU IFSM guidance specific. Legitimate L4."
+    },
+    {
+      "id": "obgyn-intrapartum-002",
+      "source_file": "batches/obgyn_intrapartum_depth.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: recognise neuraxial hypotension as cause of prolonged decel, choose phenylephrine over ephedrine (foetal acidaemia) and metaraminol (less evidence), reject adrenaline/atropine",
+      "note": "First-line vasopressor choice is a specific obstetric anaesthesia knowledge point. Distractor B (metaraminol - commonly used in Aus) is sophisticated. Legitimate L4."
+    },
+    {
+      "id": "obgyn-intrapartum-008",
+      "source_file": "batches/obgyn_intrapartum_depth.json",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "velamentous cord insertion with a vessel coursing close to the internal os ... sinusoidal pattern ... bleeding triggered immediately by SROM ... soft non-tender uterus",
+      "reasoning_required": "pattern-match: classic vasa praevia triad handed over",
+      "note": "Stem essentially names the diagnosis: velamentous cord near os + SROM-triggered bleeding + sinusoidal CTG + soft uterus. Distractors are all clearly ruled out by stem details. L3 recognition."
+    },
+    {
+      "id": "obgyn-intrapartum-010",
+      "source_file": "batches/obgyn_intrapartum_depth.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: severe PE with persistent neuro despite Mg load, choose IV labetalol (first-line per SOMANZ) over hydralazine/PO nifedipine/SL nifedipine; reject increasing Mg for BP",
+      "note": "Distractor C (PO nifedipine IR) is genuinely close - acceptable per SOMANZ but labetalol is more controllable with IV access. SL nifedipine trap tests knowledge of contraindication. Legitimate L4."
+    },
+    {
+      "id": "obgyn-intrapartum-012",
+      "source_file": "batches/obgyn_intrapartum_depth.json",
+      "current_difficulty": 5,
+      "verdict": "relabel",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "minute or two after delivery of the placenta she suddenly develops dyspnoea, agitation and a sense of impending doom ... cyanotic ... PEA ... brisk PV bleeding from soft contracted fundus ... oozing from peripheral IV site and recent venipuncture",
+      "reasoning_required": "pattern-match: full Clark AFE triad handed over (peripartum collapse + hypoxia/hypotension + DIC/oozing) with explicit exclusion of LAST/eclampsia",
+      "note": "All four Clark criteria explicitly present in stem; LAST excluded by dose disclosure (5 mL 1% lidocaine = 50 mg). Recognition question of a rare topic, not multi-step reasoning. Strong L4 at best, not L5."
+    },
+    {
+      "id": "obgyn-labour-hy-008",
+      "source_file": "batches/obgyn_labour_high_yield.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: Sultan classification mapping (3a <50% EAS, 3b >50% EAS, 3c +IAS, 4 +mucosa), apply 60% EAS + intact IAS + intact mucosa = 3b",
+      "note": "Requires applying the 50% threshold to choose 3b over 3a, plus recognising IAS-intact rules out 3c. Real classification reasoning. Legitimate L4."
+    },
+    {
+      "id": "obgyn-labour-hy-011",
+      "source_file": "batches/obgyn_labour_high_yield.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step + AU-specific cut-offs: PE at >=37+0 = deliver; MgSO4 only for severe features; BP target <140/90; route by Bishop; reject reflex CS for unfavourable cervix",
+      "note": "Distractor D (routine MgSO4) and E (steroids at 37 wk) test common errors. SOMANZ-specific guidance on MgSO4 indications. Legitimate L4."
+    },
+    {
+      "id": "obgyn-labour-hy-013",
+      "source_file": "batches/obgyn_labour_high_yield.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step + AU-specific guidance: term PROM offer IOL or expectant up to 24 h; GBS-neg with ROM <18 h = no Abx; avoid digital VE; respect preference",
+      "note": "Tests knowledge of Hannah TermPROM and current RANZCOG vs older 72-h outpatient approach. Distractor A reflects outdated practice and is the trap. Legitimate L4."
+    },
+    {
+      "id": "obgyn-labour-hy-014",
+      "source_file": "batches/obgyn_labour_high_yield.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: failed forceps with pathological CTG = Cat 1 CS, NOT sequential instruments (high neonatal morbidity), NOT reapply, NOT push further",
+      "note": "Distractor B (switch to ventouse) is the classic dangerous error this question tests. Real judgement required. Legitimate L4."
+    },
+    {
+      "id": "obgyn-labour-hy-015",
+      "source_file": "batches/obgyn_labour_high_yield.json",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: twin 2 transverse post-twin-1, choose IPV + breech extraction over ECV, CS, await descent, or premature ARM (cord prolapse risk)",
+      "note": "Sophisticated decision-making for an uncommon clinical situation. Distractor B (ECV) is genuinely a reasonable alternative making this a 'best of two acceptable' choice. Distractor E (ARM first) tests cord-prolapse-risk knowledge. Legitimate L5."
+    },
+    {
+      "id": "obgyn-lact-uro-003",
+      "source_file": "batches/obgyn_lactation_urogynae_vulval.json",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "She has been counselled about office-based ultrasound-guided aspiration as the preferred first-line drainage option.",
+      "reasoning_required": "pattern-match: lactational abscess <5 cm + intact skin = USS-guided aspiration + continue feeding",
+      "note": "Stem explicitly states the patient has been counselled about USS-guided aspiration as the preferred first-line option. Answer is pre-committed. Recognition + recall only."
+    },
+    {
+      "id": "obgyn-lact-uro-007",
+      "source_file": "batches/obgyn_lactation_urogynae_vulval.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: prior good response to sertraline + breastfeeding compatibility (sertraline first-line over fluoxetine accumulation, citalopram QT/transfer, mirtazapine limited data); EPDS 17 + item 10 endorsement = need pharmacotherapy now, not wait for CBT",
+      "note": "Distractor E (defer until CBT) is the safety-relevant trap given passive ideation. Past-responder + breastfeeding compatibility is a sophisticated combination. Legitimate L4."
+    },
+    {
+      "id": "obgyn-lact-uro-008",
+      "source_file": "batches/obgyn_lactation_urogynae_vulval.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: postpartum VTE in breastfeeding woman requires LMWH/warfarin (compatible) over DOACs (not recommended in lactation)",
+      "note": "DOAC avoidance in lactation is a specific AU/LactMed point. Distractors B and C plausibly look first-line in non-pregnant patient. Legitimate L4."
+    },
+    {
+      "id": "obgyn-lact-uro-010",
+      "source_file": "batches/obgyn_lactation_urogynae_vulval.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: POP-Q staging requires identifying most distal point (C +3), applying stage criteria (>1 cm beyond hymen, not full eversion = stage 3), assigning dominant compartment",
+      "note": "Requires concrete application of POP-Q rules, not just label recognition. Distractor C (stage 4 vault eversion) tests both the TVL-2 cm threshold and the vault-vs-uterine distinction. Legitimate L4."
+    },
+    {
+      "id": "obgyn-lact-uro-011",
+      "source_file": "batches/obgyn_lactation_urogynae_vulval.json",
+      "current_difficulty": 4,
+      "verdict": "rewrite",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "She has been counselled that the highest-durability vault prolapse repair preserving vaginal length and coital function in a fit woman is laparoscopic or robotic sacrocolpopexy with type 1 polypropylene mesh fixed to the anterior longitudinal ligament of the sacrum.",
+      "reasoning_required": "pattern-match: stem hands over the entire correct answer verbatim",
+      "note": "Last sentence of the stem literally states the correct answer (sacrocolpopexy with type 1 polypropylene mesh). The TGA distinction between transvaginal mesh kits (banned) and abdominal mesh placement (allowed) is a real teaching point, but candidates only need to read the last sentence. Remove that sentence to make this a legitimate L4."
+    }
+  ]
+}

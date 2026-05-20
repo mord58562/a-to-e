@@ -1,0 +1,314 @@
+{
+  "audited_at": "2026-05-20",
+  "auditor": "Claude Opus 4.7 (1M context)",
+  "module": "Paediatrics",
+  "scope": "All Paediatrics questions with difficulty >= 4 across questions_paeds.json and batches/paeds_*.json (including obgyn-batch-emerg-006 moved into paeds_user_paste_emergency_2026-05-20.json). 145 questions in scope.",
+  "definition": "Difficulty = cognitive work required to land on the correct answer, not topic rarity. Flag stems whose telegraph phrasing hands the answer to anyone reading carefully.",
+  "verdict_codes": {
+    "keep": "genuinely multi-step reasoning, no telegraph",
+    "relabel": "recognition of a complex topic only; downgrade L4/L5 to L1-L2",
+    "rewrite": "close to legitimate L4-L5 but a single telegraph sentence pre-commits the answer; remove it and the difficulty rating stands"
+  },
+  "verdicts": [
+    {
+      "id": "paeds-002",
+      "file": "questions_paeds.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: recognise refractory severe asthma after full inhaled bronchodilator + IV steroid course, choose IV magnesium over IV salbutamol/aminophylline/intubation as the next AU paeds step-up",
+      "note": "Genuine L4. No telegraph. Distractor space includes plausible IV salbutamol and aminophylline."
+    },
+    {
+      "id": "paeds-005",
+      "file": "questions_paeds.json",
+      "current_difficulty": 4,
+      "verdict": "rewrite",
+      "suggested_difficulty": 2,
+      "telegraph_to_remove": "(this hooks the discharge-home and urinalysis-only distractors, since neonatal age alone mandates full septic workup regardless of source)",
+      "reasoning_required": "pattern-match only: any febrile neonate <28 days = full septic workup including LP and triple empiric abx",
+      "note": "An author meta-comment is sitting inside the stem and literally states the rule the answer relies on. Even after removing it, the question is recognition-level for end-of-MD; relabel to L2. If kept as L4 the in-stem rationale must be excised."
+    },
+    {
+      "id": "paeds-006",
+      "file": "questions_paeds.json",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step: meningitis Sx + VP shunt (add vancomycin for staph), focal seizures + drowsiness (defer LP, image first), dex with or before first abx dose, neurosurgery for shunt; maternal pen-urticaria is not anaphylaxis so ceftriaxone still fine",
+      "note": "Genuine L5: four independent decisions stacked, each with a plausible distractor."
+    },
+    {
+      "id": "paeds-011",
+      "file": "questions_paeds.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step bundle: NBM + free-drain OG + triple abx with metronidazole + fluid bolus + surgical referral; selecting the complete AU NEC bundle over partial bundles",
+      "note": "Diagnosis itself is pattern-match (preterm + bilious aspirate + bloody stool + distension = NEC) but L4 hinges on choosing the full management bundle vs partial-credit distractors."
+    },
+    {
+      "id": "paeds-012",
+      "file": "questions_paeds.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step AU paeds DKA pathway: 10 mL/kg bolus (not 20), deficit over 48h (not 24), insulin at 0.05 unit/kg/hr (not 0.1), delay insulin start; cerebral oedema avoidance",
+      "note": "Genuine L4. AU-specific cut-offs are exactly the cognitive work."
+    },
+    {
+      "id": "paeds-013",
+      "file": "questions_paeds.json",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step refractory status: recognise failed 2x benzo, pick second-line (LEV vs PHT vs VPA), VPA excluded (already on it), PHT cardiac concerns; simultaneously prep RSI with thiopentone",
+      "note": "Genuine L5. Several anti-patterns (more midazolam, PHT bolus, no airway plan) act as plausible distractors."
+    },
+    {
+      "id": "paeds-017",
+      "file": "questions_paeds.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "AU-specific modified Jones criteria for high-risk population, plus full secondary prophylaxis register + IM benzathine + aspirin + cardiology bundle",
+      "note": "Pattern recognition for the diagnosis is easy, but choosing 'definite' vs 'probable' under modified Jones and including the secondary prophylaxis register pushes it to legitimate L4. Borderline; keep."
+    },
+    {
+      "id": "paeds-020",
+      "file": "questions_paeds.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "AU-specific NAI workup bundle (skeletal survey + CT then MRI + ophthalmology + mandatory notification) selected over partial bundles",
+      "note": "Diagnosis is recognition (torn frenulum + bruises in pre-mobile infant + inconsistent Hx) but selecting the complete AU bundle over partial-credit distractors is real work."
+    },
+    {
+      "id": "paeds-acute-hy-006",
+      "file": "paeds_acute_assessment_hy.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "multi-step refractory anaphylaxis: 2 IM doses failed -> IV adrenaline infusion at AU paeds dose 0.1 microg/kg/min; choose over third IM, glucagon, intubation-first",
+      "note": "Genuine L4. Stem explicitly excludes IM technique error so the candidate must escalate."
+    },
+    {
+      "id": "paeds-acute-hy-011",
+      "file": "paeds_acute_assessment_hy.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "fluid-refractory septic shock at 60 mL/kg ceiling with signs of fluid overload (hepatomegaly, bibasal crackles) -> peripheral adrenaline (now AU first-line) + prep intubation, not more fluid",
+      "note": "Genuine L4. Anti-pattern: another fluid bolus. AU paeds sepsis 2024 guideline favours peripheral adrenaline early."
+    },
+    {
+      "id": "paeds-acute-hy-012",
+      "file": "paeds_acute_assessment_hy.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "AU NAI workup bundle for pre-mobile infant with TEN-4 bruising pattern (ear, face, scalp); choose complete bundle over partial",
+      "note": "Recognition of suspected NAI is easy; selecting the full AU bundle (skeletal survey + CT + ophthalmology + mandatory report + child protection consult) is where the L4 reasoning sits."
+    },
+    {
+      "id": "paeds-acute-hy-013",
+      "file": "paeds_acute_assessment_hy.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "post-ROSC drowning bundle aligned with ANZCOR: lung-protective ventilation with PEEP, controlled rewarming target 36 degC (not aggressive cooling), post-arrest neuroprotection, ECMO retrieval discussion",
+      "note": "Genuine L4. Anti-patterns: hyperventilate to PaCO2 30, therapeutic hypothermia to 32, immediate extubation."
+    },
+    {
+      "id": "paeds-acute-hy-015",
+      "file": "paeds_acute_assessment_hy.json",
+      "current_difficulty": 5,
+      "verdict": "relabel",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "The Australian paracetamol nomogram has a single treatment line starting at 150 mg/L at 4 hours, dropping to 75 mg/L at 8 hours and 37 mg/L at 12 hours",
+      "reasoning_required": "level above the nomogram line at 4.5 h post-ingestion + dose >200 mg/kg -> two-bag NAC (current AU regimen) over three-bag",
+      "note": "Stem hands the nomogram values to the candidate, which removes the main piece of recall work. Remaining reasoning (two-bag vs three-bag, timing of NAC) is solid L4 but not L5. Either remove the in-stem nomogram quotation and keep at L5, or accept L4 and leave as-is."
+    },
+    {
+      "id": "paeds-resp-hy-011",
+      "file": "paeds_acute_respiratory_hy.json",
+      "current_difficulty": 4,
+      "verdict": "rewrite",
+      "suggested_difficulty": 2,
+      "telegraph_to_remove": "Calculated Westley score is 6, placing her in the moderate category.",
+      "reasoning_required": "after telegraph removed: calculate Westley from clinical signs, then select moderate-croup bundle (neb adrenaline + dex + 4h obs)",
+      "note": "Stem pre-classifies severity for the candidate. Without that sentence, the candidate has to compute Westley from the described signs and pick the right tier. Even then this is recognition-with-one-calculation, L2-L3 at most. If kept as L4, the severity-class sentence must go."
+    },
+    {
+      "id": "paeds-resp-hy-012",
+      "file": "paeds_acute_respiratory_hy.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "uncontrolled paeds asthma on low-dose ICS with good adherence and technique -> step up to ICS+LABA (AU step-3) rather than double ICS, LTRA, or OCS course",
+      "note": "AU/GINA paeds step-up between competing options is real work; technique-confirmed + adherence-confirmed deliberately rules out the easy distractors."
+    },
+    {
+      "id": "paeds-resp-hy-013",
+      "file": "paeds_acute_respiratory_hy.json",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": null,
+      "reasoning_required": "pattern-match pertussis (apnoea + paroxysmal + lymphocytosis + unimmunised + maternal cough) -> recall full AU public-health bundle (admit + azithromycin + notify + household chemoprophylaxis)",
+      "note": "Stem stacks every textbook pertussis cue. Diagnosis is pure pattern-match; bundle selection is recall. Closer to L3 than L4."
+    },
+    {
+      "id": "paeds-resp-hy-014",
+      "file": "paeds_acute_respiratory_hy.json",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 2,
+      "telegraph_to_remove": null,
+      "reasoning_required": "recall content of NAC asthma action plan 'yellow' zone",
+      "note": "Pure recall of NAC action plan template. No reasoning chain. L2 at most."
+    },
+    {
+      "id": "paeds-resp-hy-015",
+      "file": "paeds_acute_respiratory_hy.json",
+      "current_difficulty": 5,
+      "verdict": "relabel",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "CF pulmonary exacerbation criteria (sputum change + FEV1 drop) + dual anti-pseudomonal cover guided by recent sensitivities (ceftazidime + tobramycin) + AU-specific paeds dosing",
+      "note": "The stem hands a clean sensitivity panel and a single dominant organism (Pseudomonas), which collapses the antibiotic choice. Solid L4 but not L5; no genuinely competing pathway to weigh."
+    },
+    {
+      "id": "paeds-adol-004",
+      "file": "paeds_adolescent_devbehav.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "Gillick competence assessment + Victorian Abortion Law Reform Act 2008 framework + assess mandatory-reporting threshold (16yo boyfriend, consensual, non-coercive = below threshold) + confidentiality vs encouraging parental involvement",
+      "note": "Genuine L4. Four parallel decisions, each with a plausible wrong-direction distractor."
+    },
+    {
+      "id": "paeds-adol-006",
+      "file": "paeds_adolescent_devbehav.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "Victorian statutory triple pathway: Child Protection notification + Police + Reportable Conduct Scheme via the school (Commission for Children and Young People)",
+      "note": "Genuine L4. Selecting all three pathways simultaneously is the AU/Victoria-specific work."
+    },
+    {
+      "id": "paeds-adol-008",
+      "file": "paeds_adolescent_devbehav.json",
+      "current_difficulty": 4,
+      "verdict": "rewrite",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "The treating team is aware that a torn frenulum in a non-mobile infant is regarded as a sentinel injury and is planning the formal NAI workup according to RCH and Victorian Forensic Paediatric Medical Service guidance.",
+      "reasoning_required": "after telegraph removed: recognise sentinel injury in non-mobile infant + recall the AU complete workup including the 11-14 day repeat skeletal survey",
+      "note": "Stem already classifies the case as a sentinel injury and references the specific guidance. Without that sentence the Q is recognition + bundle recall, sits at L3."
+    },
+    {
+      "id": "paeds-adol-009",
+      "file": "paeds_adolescent_devbehav.json",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 2,
+      "telegraph_to_remove": "smooth philtrum, a thin upper vermilion border, and short palpebral fissures ... significant scatter and specific deficits in three of the recognised neurodevelopmental domains (executive function, adaptive behaviour, language) ... documented to have consumed alcohol at hazardous levels throughout the pregnancy",
+      "reasoning_required": "pattern-match: stem lists 3 sentinel facial features + 3 neurodevelopmental-domain deficits + confirmed PAE, all required for the AU Guide FASD diagnostic category, and the correct option re-states them",
+      "note": "Stem hands every diagnostic criterion verbatim. Pure recognition; not L4."
+    },
+    {
+      "id": "paeds-adol-010",
+      "file": "paeds_adolescent_devbehav.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "MARSIPAN-AU admission criteria applied to multiple parameters (HR 38, BMI 14.8, K 3.0, QTc 470), then choose medical ward vs ICU vs psych vs outpatient + refeeding rate (20 kcal/kg/day) to avoid refeeding syndrome",
+      "note": "Genuine L4. The disposition and refeeding-rate choice is real work even given the obvious admission threshold."
+    },
+    {
+      "id": "paeds-adol-019",
+      "file": "paeds_adolescent_devbehav.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "post-CBT failure paeds MDD -> fluoxetine first-line (AU/NICE), starting dose 10 mg, weekly review in first 4 weeks per TGA boxed warning, CBT continued",
+      "note": "Genuine L4. The Q requires both the agent choice and the AU-specific monitoring schedule; distractors include sertraline first-line, fluoxetine without weekly review, etc."
+    },
+    {
+      "id": "paeds-adol-020",
+      "file": "paeds_adolescent_devbehav.json",
+      "current_difficulty": 5,
+      "verdict": "relabel",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "RCH Australian Standards of Care: persistent + insistent + consistent dysphoria, Tanner stage 4 with menarche, MDT in place, family supportive -> GnRH analogue (stage 1 puberty suppression), not gender-affirming hormones (stage 2) and not surgery",
+      "note": "Stem hands every eligibility criterion (Tanner stage, MDT, mental-health stability, capacity, parental support). Real but single-stage decision; L4 fits better than L5."
+    },
+    {
+      "id": "paeds-allergy-derm-015",
+      "file": "paeds_allergy_dermatology.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "AU Resuscitation Council post-anaphylaxis observation criteria: >=2 adrenaline doses + asthma + transient collapse triggers extended 6-12 h monitored obs, plus full discharge bundle (action plan, 2 in-date AAIs, ICS optimisation, immunology referral)",
+      "note": "Genuine L4. The competing 4-hour standard-obs distractor is plausible; selection requires recognising the severity-feature combination."
+    },
+    {
+      "id": "paeds-allergy-derm-016",
+      "file": "paeds_allergy_dermatology.json",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "C4 sent earlier is reported as low",
+      "reasoning_required": "HAE pattern (non-itchy non-erythematous swelling + family history of throat-swelling death + no response to adrenaline/steroid/antihistamine + low C4) -> C1 inhibitor antigenic + function + SERPING1; treat with C1-INH concentrate or icatibant",
+      "note": "Diagnosis is heavily telegraphed (every classical HAE feature including the low C4 result in the stem). Management bundle is then recall. L3 fits better; if kept at L4 the C4 result should be withheld."
+    },
+    {
+      "id": "paeds-allergy-derm-017",
+      "file": "paeds_allergy_dermatology.json",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": null,
+      "reasoning_required": "DRESS pattern recognition (carbamazepine ~5 weeks + fever + facial oedema + morbilliform rash + LN + eosinophilia + transaminitis + atypical lymphocytes = RegiSCAR criteria) -> stop drug, steroid, admit, avoid aromatic AEDs",
+      "note": "Stem stacks every textbook DRESS feature. Diagnosis is pure pattern-match; bundle is recall. L3."
+    },
+    {
+      "id": "paeds-allergy-derm-018",
+      "file": "paeds_allergy_dermatology.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "chronic spontaneous urticaria on standard-dose H1 with partial benefit -> up-titrate to 4x dose (EAACI/AU step 2) before omalizumab (step 3) or ciclosporin (step 4); rule out OCS as long-term option",
+      "note": "Genuine L4. Distractors include several plausible but wrong-step options (OCS, omalizumab first, sedating H1 nocturnally)."
+    },
+    {
+      "id": "paeds-allergy-derm-019",
+      "file": "paeds_allergy_dermatology.json",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": null,
+      "reasoning_required": "necrotising fasciitis / strep TSS over varicella: pain out of proportion + dusky skin + sepsis -> resuscitate, broad-spec IV abx including clindamycin for toxin suppression, urgent surgical source control; ruling out oral cefalexin + topical mupirocin and ruling out delay for MRI",
+      "note": "Genuine L4. The competing oral-abx distractor and MRI-first distractor are explicitly listed in the stem, forcing the candidate to commit."
+    }
+  ]
+}
