@@ -235,7 +235,7 @@
   }
 
   async function passGate() {
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
       const gate = document.getElementById("gate");
       const card = gate ? gate.querySelector(".gate-card") : null;
       const unlock = () => {
