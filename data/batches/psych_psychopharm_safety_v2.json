@@ -1,67 +1,66 @@
 [
   {
-    "id": "psych-psychopharm-001",
+    "id": "psych-psychopharm-001-l3",
     "topic": "Psychiatry",
     "subtopic": "Antipsychotic metabolic monitoring",
     "subtopic_detail": "Baseline metabolic workup before olanzapine initiation",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "olanzapine"
     ],
-    "stem": "A 26-year-old man with a first episode of schizophrenia is reviewed in a community mental health clinic. His treating psychiatrist plans to commence olanzapine 10 mg nocte after a discussion about benefits and risks. The patient is a non-smoker, drinks two standard drinks on Friday and Saturday nights, has no known cardiovascular or endocrine history, and takes no regular medications. His weight is 78 kg, height 1.79 m, BMI 24.3 kg/m2, blood pressure 124/78 mmHg, waist circumference 92 cm. Family history is notable for type 2 diabetes in his father (diagnosed age 58) and dyslipidaemia in his mother. He has had a normal ECG. The team wants to follow Royal Australian and New Zealand College of Psychiatrists (RANZCP) guidance for metabolic monitoring of second-generation antipsychotics.",
+    "stem": "A 26-year-old man with a first episode of schizophrenia commenced olanzapine 10 mg nocte two weeks ago after baseline metabolic monitoring (BMI 24.3, waist 92 cm, BP 124/78, fasting glucose 4.8, lipids within range, ECG normal). His father has T2DM diagnosed at 58 and his mother has dyslipidaemia. He is a non-smoker, drinks two standard drinks on weekends, and is on no other medications. He has gained 1.8 kg in two weeks. The team plans to follow the RANZCP/Lambert metabolic-monitoring schedule for second-generation antipsychotics.",
     "data_table": {
       "Observations": "BP 124/78 mmHg, HR 76, weight 78 kg, BMI 24.3, waist 92 cm.",
       "Bloods": "Not yet taken at this visit."
     },
-    "lead_in": "Which set of baseline tests should be obtained before starting olanzapine?",
+    "lead_in": "Per the RANZCP-endorsed metabolic monitoring schedule for second-generation antipsychotics, what monitoring should occur at the 12-week post-initiation review?",
     "options": [
       {
         "letter": "A",
-        "text": "Weight and blood pressure only, with bloods deferred until week 12",
+        "text": "Weight and BMI only; bloods are scheduled at 6 months and annually thereafter",
         "correct": false,
-        "rationale": "RANZCP and Therapeutic Guidelines: Psychotropic require baseline anthropometry PLUS fasting glucose (or HbA1c) and lipids before starting a second-generation antipsychotic with high metabolic liability such as olanzapine; deferring bloods misses a key reference point for later interpretation.",
+        "rationale": "The RANZCP schedule explicitly includes fasting glucose (or HbA1c) and fasting lipids at 12 weeks, in addition to anthropometry and BP, because the highest-risk window for emergent metabolic disturbance is the first 3 months on olanzapine.",
         "source_refs": [
-          "RANZCP: Antipsychotic medication monitoring",
-          "Therapeutic Guidelines: Psychotropic - antipsychotic monitoring"
+          "RANZCP/Lambert SGA metabolic monitoring",
+          "RANZCP CPG: Schizophrenia"
         ]
       },
       {
         "letter": "B",
-        "text": "Fasting glucose and lipids only, without anthropometry",
-        "correct": false,
-        "rationale": "Anthropometry (weight, BMI, waist circumference) is part of the baseline schedule; omitting it removes the most sensitive early signal of antipsychotic-induced weight gain, which can precede dysglycaemia by months (RANZCP).",
+        "text": "Weight, BMI, waist circumference, BP, fasting glucose (or HbA1c), and fasting lipids; repeat ECG only if symptoms or risk-factor change",
+        "correct": true,
+        "rationale": "At the 12-week timepoint the schedule mandates full anthropometric panel (weight, BMI, waist), BP, fasting glucose or HbA1c, and fasting lipids; ECG repetition is not routinely required at 12 weeks unless QTc prolongation risk has changed (new QTc-prolonging drug, electrolyte derangement, syncope). This is the highest-yield repeat-monitoring window because olanzapine-related weight gain and dyslipidaemia peak in the first 3-6 months.",
         "source_refs": [
-          "RANZCP: Antipsychotic medication monitoring"
+          "RANZCP/Lambert metabolic monitoring schedule",
+          "RANZCP CPG: Schizophrenia 2016"
         ]
       },
       {
         "letter": "C",
-        "text": "Weight, BMI, waist circumference, blood pressure, fasting glucose (or HbA1c), fasting lipids, and ECG",
-        "correct": true,
-        "rationale": "RANZCP and Therapeutic Guidelines: Psychotropic recommend baseline weight, BMI, waist circumference, blood pressure, fasting glucose or HbA1c, and fasting lipids prior to starting any second-generation antipsychotic, plus ECG given olanzapine's modest QT effect and the value of a reference trace in young adults starting long-term treatment.",
+        "text": "Oral glucose tolerance test, fasting insulin and HOMA-IR in addition to anthropometry",
+        "correct": false,
+        "rationale": "OGTT, fasting insulin and HOMA-IR are not part of the routine RANZCP schedule; fasting glucose or HbA1c plus fasting lipids are sufficient at 12 weeks. Insulin-resistance metrics are research/specialist-endocrine tools.",
         "source_refs": [
-          "RANZCP: Antipsychotic medication monitoring",
-          "Therapeutic Guidelines: Psychotropic - antipsychotic monitoring",
-          "Australian Medicines Handbook (AMH): olanzapine"
+          "RANZCP/Lambert schedule"
         ]
       },
       {
         "letter": "D",
-        "text": "Oral glucose tolerance test, fasting insulin, and HOMA-IR in addition to the above",
+        "text": "Repeat ECG, prolactin, and 24-hour ambulatory blood pressure as a 12-week metabolic panel",
         "correct": false,
-        "rationale": "OGTT and HOMA-IR are not part of routine baseline monitoring; fasting glucose or HbA1c is sufficient at baseline per RANZCP, with OGTT reserved for impaired fasting glucose or specific endocrine review.",
+        "rationale": "These are not part of the metabolic monitoring schedule; prolactin is monitored only on prolactin-elevating antipsychotics (e.g. risperidone, amisulpride), 24-hour ABPM is not routine, and ECG at 12 weeks is only if indicated.",
         "source_refs": [
-          "RANZCP: Antipsychotic medication monitoring"
+          "RANZCP CPG"
         ]
       },
       {
         "letter": "E",
-        "text": "Echocardiogram and 24-hour ambulatory blood pressure monitoring before any antipsychotic",
+        "text": "Defer all repeat metabolic bloods until the 12-month anniversary review",
         "correct": false,
-        "rationale": "Echocardiography and ambulatory BP are not baseline requirements for olanzapine; they are reserved for clozapine (echo) or established cardiovascular concern (Therapeutic Guidelines: Psychotropic).",
+        "rationale": "Anti-pattern: olanzapine carries the highest metabolic-burden signal among SGAs and the first 12 weeks is when emergent dyslipidaemia and impaired fasting glucose are most readily reversed by early switch; 12-month-only monitoring misses this window.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic - antipsychotic monitoring"
+          "RANZCP/Lambert schedule"
         ]
       }
     ],
@@ -291,95 +290,6 @@
     "reference_ranges": [
       "glucose",
       "lipids"
-    ]
-  },
-  {
-    "id": "psych-psychopharm-004",
-    "topic": "Psychiatry",
-    "subtopic": "Lithium",
-    "subtopic_detail": "Therapeutic range for maintenance lithium",
-    "difficulty": 1,
-    "model": "Claude Opus 4.7 (1M context)",
-    "tags": [
-      "lithium"
-    ],
-    "stem": "A 38-year-old woman with bipolar I disorder has been stable on lithium carbonate maintenance for 2 years following two manic episodes. She takes lithium 750 mg nocte and is reviewed at her outpatient clinic. She has no tremor, no polyuria, no diarrhoea, and her recent renal function and thyroid panel are normal. Her treating psychiatrist orders a lithium level (12 hours post-dose) at the routine quarterly review.",
-    "data_table": {
-      "Medications": "Lithium carbonate 750 mg nocte (steady dose for 14 months).",
-      "Bloods": "eGFR 88 mL/min/1.73m2, TSH 2.1 mIU/L."
-    },
-    "lead_in": "Which serum lithium concentration range is targeted for routine maintenance in this patient?",
-    "options": [
-      {
-        "letter": "A",
-        "text": "0.6 to 0.8 mmol/L",
-        "correct": true,
-        "rationale": "Therapeutic Guidelines: Psychotropic and the Australian Medicines Handbook target 0.6-0.8 mmol/L for maintenance lithium in bipolar disorder, balancing relapse prevention against long-term renal and thyroid toxicity. Levels up to 1.0 mmol/L may be used for acute mania or breakthrough symptoms.",
-        "source_refs": [
-          "Therapeutic Guidelines: Psychotropic - lithium",
-          "Australian Medicines Handbook (AMH): lithium"
-        ]
-      },
-      {
-        "letter": "B",
-        "text": "0.2 to 0.4 mmol/L",
-        "correct": false,
-        "rationale": "Levels below 0.4 mmol/L are subtherapeutic and associated with substantially higher relapse rates (AMH).",
-        "source_refs": [
-          "Australian Medicines Handbook (AMH): lithium"
-        ]
-      },
-      {
-        "letter": "C",
-        "text": "1.2 to 1.5 mmol/L",
-        "correct": false,
-        "rationale": "Levels above 1.2 mmol/L are in the toxic range and risk neurotoxicity, tremor, and renal injury (Therapeutic Guidelines: Psychotropic).",
-        "source_refs": [
-          "Therapeutic Guidelines: Psychotropic - lithium"
-        ]
-      },
-      {
-        "letter": "D",
-        "text": "1.5 to 2.0 mmol/L",
-        "correct": false,
-        "rationale": "This range is overtly toxic; >1.5 mmol/L typically produces coarse tremor, ataxia, and confusion and requires urgent management (AMH).",
-        "source_refs": [
-          "Australian Medicines Handbook (AMH): lithium"
-        ]
-      },
-      {
-        "letter": "E",
-        "text": "2.0 to 2.5 mmol/L",
-        "correct": false,
-        "rationale": "Concentrations above 2.0 mmol/L are severe toxicity, often requiring haemodialysis (Therapeutic Guidelines: Psychotropic).",
-        "source_refs": [
-          "Therapeutic Guidelines: Psychotropic - lithium"
-        ]
-      }
-    ],
-    "explanation": {
-      "summary": "Maintenance lithium targets a narrow therapeutic window of 0.6-0.8 mmol/L 12 hours post-dose (Therapeutic Guidelines: Psychotropic; AMH).",
-      "key_points": [
-        "Maintenance: 0.6-0.8 mmol/L",
-        "Acute mania: may push to 0.8-1.0 mmol/L",
-        ">1.2 mmol/L is toxic, >2.0 mmol/L severe toxicity",
-        "Older adults often kept toward the lower end"
-      ],
-      "pearls": "Always interpret a level relative to time since last dose - 12-hour trough is the standard (AMH)."
-    },
-    "sources": [
-      {
-        "label": "Therapeutic Guidelines: Psychotropic - lithium",
-        "url": "https://tgldcdp.tg.org.au/"
-      },
-      {
-        "label": "Australian Medicines Handbook (AMH): lithium",
-        "url": "https://amhonline.amh.net.au/"
-      }
-    ],
-    "reference_ranges": [
-      "uec",
-      "thyroid"
     ]
   },
   {
@@ -956,68 +866,68 @@
     "reference_ranges": []
   },
   {
-    "id": "psych-psychopharm-011",
+    "id": "psych-psychopharm-011-l3",
     "topic": "Psychiatry",
     "subtopic": "Clozapine",
     "subtopic_detail": "Absolute neutrophil count monitoring thresholds",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "clozapine"
     ],
-    "stem": "A 37-year-old man with treatment-resistant schizophrenia has been on clozapine 400 mg nocte for 8 months, registered with a clozapine monitoring service. His weekly bloods through weeks 1-18 were unremarkable; he is now on 4-weekly haematological monitoring per the standard Australian schedule. Today's full blood count shows haemoglobin 142 g/L, white cell count 4.8 x 10^9/L, absolute neutrophil count (ANC) 1.6 x 10^9/L (last month 2.4), platelets 218. He has no fever, no sore throat, no mouth ulcers, no rash, and no other infective symptoms. He has not started any new medication in the past 3 months and has had no recent vaccinations. He is otherwise well and asymptomatic, and is engaged with his community mental health team. He is not of an ethnic background associated with benign ethnic neutropenia and has no prior history of neutropenia.",
+    "stem": "A 37-year-old man with treatment-resistant schizophrenia has been on clozapine 400 mg nocte for 8 months, registered with an Australian clozapine monitoring service (e.g. CPMS or ClopineCentral). His weekly bloods through weeks 1-18 were unremarkable; he is now on 4-weekly haematological monitoring per the standard Australian schedule. Today's FBC: Hb 142, WCC 4.8, ANC 1.6 x 10^9/L (last month 2.4), platelets 218. He has no fever, no sore throat, no mouth ulcers, and no other infective symptoms. He has not started new medications and has had no recent vaccinations. He is otherwise well, of European background (not associated with benign ethnic neutropenia), and has no prior neutropenia.",
     "data_table": {
       "FBC today": "Hb 142, WCC 4.8, ANC 1.6 x 10^9/L, platelets 218.",
       "Previous ANC": "Last month 2.4 x 10^9/L; baseline 3.1.",
       "Symptoms": "No fever, no infective symptoms."
     },
-    "lead_in": "Within standard Australian clozapine haematological monitoring categories, which zone does this ANC fall into and what is the appropriate action?",
+    "lead_in": "Which combination of zone classification, dose action, monitoring frequency and registry action best fits the Australian clozapine haematological monitoring framework?",
     "options": [
       {
         "letter": "A",
-        "text": "Green zone (ANC >=2.0 x 10^9/L) - continue clozapine at the current 400 mg dose and continue the existing 4-weekly haematological monitoring schedule unchanged with the next bloods due in 4 weeks",
+        "text": "Green zone (ANC >= 2.0) - continue clozapine, continue 4-weekly bloods, no registry action",
         "correct": false,
-        "rationale": "An ANC of 1.6 x 10^9/L is below the green-zone threshold (>=2.0) in Australian monitoring frameworks (Therapeutic Guidelines: Psychotropic; AMH).",
+        "rationale": "ANC 1.6 is below the Australian green-zone threshold (>=2.0) and triggers amber-zone management; this option misclassifies the result.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic - clozapine",
-          "Australian Medicines Handbook (AMH): clozapine"
+          "Australian clozapine monitoring framework (CPMS/ClopineCentral)",
+          "RANZCP CPG: Schizophrenia"
         ]
       },
       {
         "letter": "B",
-        "text": "Amber zone (ANC 1.5-1.99 x 10^9/L) - continue clozapine but increase monitoring to weekly until ANC recovers to green",
+        "text": "Amber zone (ANC 1.5-1.99) - continue clozapine at current dose, increase haematological monitoring to twice weekly, notify the registered clozapine monitoring service so the patient's status is updated",
         "correct": true,
-        "rationale": "Australian clozapine monitoring (Therapeutic Guidelines: Psychotropic and the Australian Medicines Handbook) categorises ANC 1.5-1.99 x 10^9/L as the amber (caution) zone: continue clozapine but increase haematological monitoring to weekly (or twice-weekly per local protocol) until ANC returns to green (>=2.0). Cessation is reserved for red-zone results.",
+        "rationale": "ANC 1.6 falls within the standard Australian amber zone (1.5 to <2.0); the appropriate response is to continue clozapine, increase FBC frequency to at least twice weekly until the count recovers to green, and notify the registry. There is no fever, sore throat or other sepsis flag mandating immediate clozapine cessation, and amber-zone management is well-established to avoid premature loss of a uniquely effective drug in TRS.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic - clozapine",
-          "Australian Medicines Handbook (AMH): clozapine"
+          "Australian clozapine monitoring scheme (CPMS / ClopineCentral)",
+          "RANZCP CPG: Schizophrenia 2016"
         ]
       },
       {
         "letter": "C",
-        "text": "Red zone (ANC <1.5 x 10^9/L) - stop clozapine immediately and admit",
+        "text": "Red zone (ANC <1.5) - stop clozapine immediately, admit, notify registry, never rechallenge",
         "correct": false,
-        "rationale": "Red-zone in Australian frameworks is ANC <1.5 x 10^9/L; his ANC is 1.6 and does not yet trigger cessation, only intensified monitoring (AMH).",
+        "rationale": "ANC 1.6 is amber, not red; immediate cessation is the wrong threshold response and would unnecessarily strip a TRS patient of the only drug shown effective for him. Rechallenge policy is also more nuanced than 'never'.",
         "source_refs": [
-          "Australian Medicines Handbook (AMH): clozapine"
+          "Australian clozapine framework"
         ]
       },
       {
         "letter": "D",
-        "text": "Defer to ANC in 2 months at the next routine visit",
+        "text": "Defer the next FBC by 4 weeks at the routine visit because he is clinically well",
         "correct": false,
-        "rationale": "Falling ANC into the amber zone requires increased not decreased monitoring; deferring two months risks missing progression to agranulocytosis (Therapeutic Guidelines: Psychotropic).",
+        "rationale": "Anti-pattern: any drop below green requires accelerated monitoring; routine 4-weekly is unsafe at ANC 1.6 because of the risk of progression to red zone.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic - clozapine"
+          "Australian clozapine framework"
         ]
       },
       {
         "letter": "E",
-        "text": "Add lithium 250 mg nocte to push the ANC up",
+        "text": "Continue clozapine and add lithium 250 mg nocte to push the ANC up",
         "correct": false,
-        "rationale": "Lithium can transiently raise neutrophil counts but is not the first-line response to an amber-zone result; it can also mask early agranulocytosis and is not standard practice without specialist input (Therapeutic Guidelines: Psychotropic).",
+        "rationale": "Lithium augmentation to raise neutrophil count is not standard of care and is not the appropriate response to amber-zone neutropenia; correct response is frequency escalation and registry notification, not pharmacological tampering.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic - clozapine"
+          "RANZCP CPG: Schizophrenia"
         ]
       }
     ],
@@ -1139,68 +1049,72 @@
     "reference_ranges": []
   },
   {
-    "id": "psych-psychopharm-013",
+    "id": "psych-psychopharm-013-l3",
     "topic": "Psychiatry",
     "subtopic": "Clozapine",
     "subtopic_detail": "Smoking cessation and clozapine level rise",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "clozapine",
       "toxicity"
     ],
-    "stem": "A 45-year-old man has been on clozapine 450 mg nocte for 9 years, with a steady-state clozapine level last measured 6 months ago at 480 mcg/L. He smokes 25 cigarettes per day. He attends his community mental health appointment having just been admitted overnight to a smoke-free general medical ward for a 5-day stay following a fall. The ward team asks the community team how to manage his clozapine while he is unable to smoke. He has no current symptoms of clozapine toxicity (no sedation, no hypersalivation change, no tachycardia, no constipation worsening). He has not formally enrolled in a smoking cessation programme yet.",
+    "stem": "A 45-year-old man has been on clozapine 450 mg nocte for 9 years, with steady-state clozapine level 480 mcg/L (therapeutic range 350-600) measured 6 months ago. He smokes 25 cigarettes per day. He is admitted overnight to a smoke-free general medical ward for a 5-day stay following a mechanical fall, and is offered nicotine replacement therapy (patch 21 mg/24 h plus PRN lozenges) but is not yet enrolled in a structured cessation programme. He has no current symptoms of clozapine toxicity (no sedation change, no hypersalivation increase, no tachycardia, no constipation worsening). The ward team contacts the community psychiatry team for guidance on clozapine dosing during the smoke-free inpatient period and any planned post-discharge cessation.",
     "data_table": {
       "Background": "Clozapine 450 mg nocte for 9 years; smokes 25/day.",
       "Recent level": "480 mcg/L six months ago.",
       "Setting": "5-day inpatient stay on smoke-free ward."
     },
-    "lead_in": "Which best explains the expected clozapine pharmacokinetic change during smoking cessation, and the appropriate response?",
+    "lead_in": "Which is the single best summary of the relevant pharmacokinetic mechanism and the appropriate immediate management?",
     "options": [
       {
         "letter": "A",
-        "text": "Smoking induces CYP3A4; cessation will halve clozapine levels and require dose increase",
+        "text": "Smoking induces CYP3A4; cessation will halve clozapine levels and require a dose increase of 25 percent",
         "correct": false,
-        "rationale": "The relevant enzyme is CYP1A2 (induced by polycyclic aromatic hydrocarbons in tobacco smoke, not nicotine), not CYP3A4. Cessation raises, not lowers, clozapine levels (AMH).",
+        "rationale": "Wrong enzyme and wrong direction. Clozapine is metabolised primarily by CYP1A2 (with CYP3A4 minor); polycyclic aromatic hydrocarbons (PAHs) in tobacco smoke - not nicotine - induce CYP1A2.",
         "source_refs": [
-          "Australian Medicines Handbook (AMH): clozapine"
+          "Australian Medicines Handbook: Clozapine",
+          "TGA Product Information"
         ]
       },
       {
         "letter": "B",
-        "text": "Smoking inhibits CYP1A2; cessation will lower clozapine levels and require dose reduction",
+        "text": "Nicotine itself is the inducer; full nicotine replacement therapy on admission prevents any clozapine level change, so no dose adjustment or level monitoring is required",
         "correct": false,
-        "rationale": "Smoking induces CYP1A2 (it does not inhibit it); cessation removes induction and raises clozapine levels (AMH).",
+        "rationale": "Anti-pattern: nicotine is NOT the CYP1A2 inducer in this interaction (PAHs are). NRT replaces nicotine for craving control but does not replace PAH-mediated enzyme induction; clozapine levels will still rise on cessation regardless of NRT.",
         "source_refs": [
-          "Australian Medicines Handbook (AMH): clozapine"
+          "AMH",
+          "TGA PI clozapine"
         ]
       },
       {
         "letter": "C",
-        "text": "Polycyclic aromatic hydrocarbons in tobacco smoke induce CYP1A2; smoking cessation can raise clozapine levels by approximately 50-70%, so the dose should be reviewed (often reduced) with level monitoring and observation for toxicity",
+        "text": "PAHs in tobacco smoke induce CYP1A2; abrupt cessation can raise clozapine levels by approximately 50-70 percent over 1-2 weeks. For this brief 5-day smoke-free inpatient stay, monitor for toxicity (sedation, hypersalivation, tachycardia, seizures), consider a level at day 4-5, and plan a pre-emptive ~25 percent dose reduction with level monitoring if he commits to sustained cessation post-discharge",
         "correct": true,
-        "rationale": "Tobacco smoke (via polycyclic aromatic hydrocarbons, not nicotine) induces CYP1A2, the main enzyme metabolising clozapine. Cessation removes induction and clozapine levels typically rise 50-70% over 1-2 weeks. The Australian Medicines Handbook and Therapeutic Guidelines: Psychotropic recommend planned dose review, often with empirical reduction and level monitoring, to avoid toxicity (sedation, hypersalivation, seizures, myocarditis flag).",
+        "rationale": "Mechanism: PAHs (not nicotine) induce CYP1A2 in heavy smokers; on cessation, induction reverses with a half-life of ~1 week, so clozapine clearance falls and levels can rise 50-70 percent. For a 5-day forced abstinence with planned return to smoking, monitor toxicity and check a level. For sustained cessation, a pre-emptive ~25 percent dose reduction with serial levels is recommended (RANZCP and AMH).",
         "source_refs": [
-          "Australian Medicines Handbook (AMH): clozapine",
-          "Therapeutic Guidelines: Psychotropic - clozapine"
+          "AMH Clozapine",
+          "RANZCP CPG: Schizophrenia",
+          "Clozapine TGA PI"
         ]
       },
       {
         "letter": "D",
-        "text": "Nicotine itself is the relevant CYP1A2 inducer in this interaction, so adequate nicotine replacement therapy started on admission (patches plus oral lozenges) will fully prevent any clozapine level change during the smoke-free inpatient stay and no dose review or level measurement is required",
+        "text": "Smoking inhibits CYP1A2; cessation will lower clozapine levels and require a dose increase",
         "correct": false,
-        "rationale": "Nicotine is not the inducer; the polycyclic aromatic hydrocarbons in combustion smoke are. NRT does NOT prevent the rise in clozapine level (AMH).",
+        "rationale": "Direction reversed: smoking INDUCES CYP1A2 (it does not inhibit); cessation raises levels.",
         "source_refs": [
-          "Australian Medicines Handbook (AMH): clozapine"
+          "AMH"
         ]
       },
       {
         "letter": "E",
         "text": "There is no clinically significant interaction between smoking and clozapine metabolism",
         "correct": false,
-        "rationale": "This is one of the strongest and most clinically relevant CYP1A2 interactions in psychiatry; it is well-documented and important (Therapeutic Guidelines: Psychotropic).",
+        "rationale": "False; this interaction is one of the most clinically important PAH-CYP1A2 interactions in psychiatry, with documented clozapine toxicity (seizures, sedation) following abrupt cessation.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic - clozapine"
+          "AMH",
+          "RANZCP CPG"
         ]
       }
     ],

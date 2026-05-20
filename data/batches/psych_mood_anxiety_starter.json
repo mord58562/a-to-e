@@ -1,65 +1,68 @@
 [
   {
-    "id": "psych-mood-001",
+    "id": "psych-mood-001-l3",
     "topic": "Psychiatry",
     "subtopic": "Mood: depression",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "DSM-5",
       "primary care"
     ],
-    "stem": "A 34-year-old primary school teacher attends her general practitioner reporting six weeks of persistent low mood after the end of a long-term relationship. She describes early morning waking by 0400, weight loss of 4 kg without dieting, and pervasive anhedonia: she has stopped attending her weekly netball game and no longer enjoys her two cats. She finds herself crying at work and struggles to plan lessons. She denies hallucinations, sustained elevated mood, or any prior hypomanic episodes lasting more than a day. She drinks two standard drinks weekly, uses no other substances and is on no regular medications. She has had passive thoughts of being better off dead in the past fortnight but no plan or intent, and identifies her sister and her work team as strong protective factors. Her TSH, FBC and UEC last month were unremarkable, and her K-10 today is 32 with no item suggesting active self-harm intent.",
+    "stem": "A 34-year-old primary school teacher attends her GP reporting six weeks of persistent low mood after the end of a 9-year relationship. She describes early morning waking at 0400 (two hours before her alarm), profound diurnal mood variation with mornings worst, weight loss of 4 kg without dieting, marked psychomotor retardation noted by her partner, and complete loss of mood reactivity even when her two cats greet her or her best friend visits. She is no longer able to plan lessons and has been on personal leave for three weeks. She denies hallucinations, sustained elevated mood, or any prior hypomanic episodes lasting more than a day. She drinks two standard drinks weekly, uses no other substances, and takes no regular medications. She reports passive thoughts of being better off dead but no plan or intent. Her TSH, FBC and UEC last month were unremarkable. PHQ-9 today is 23.",
     "data_table": {
       "Examination": "Tearful, congruent affect, slowed thought tempo, no thought disorder, no psychotic features.",
       "Investigations": "K-10 score 32. TSH 1.4 mIU/L, Hb 132 g/L, Na 139 mmol/L (all within reference)."
     },
-    "lead_in": "Which classification best describes her current presentation under DSM-5?",
+    "lead_in": "Which DSM-5 classification and specifier most accurately captures her presentation?",
     "options": [
       {
         "letter": "A",
-        "text": "Persistent depressive disorder, mild severity, with no current suicidal features",
+        "text": "Persistent depressive disorder (dysthymia) with intermittent major depressive episodes",
         "correct": false,
-        "rationale": "Persistent depressive disorder requires depressed mood for most of the day, more days than not, for at least 2 years in adults; her 6-week course does not meet this threshold (RANZCP Mood Disorders CPG).",
+        "rationale": "PDD requires depressed mood most days for at least 2 years; her 6-week course excludes this regardless of severity.",
         "source_refs": [
-          "RANZCP CPG: Mood Disorders 2020",
-          "Therapeutic Guidelines: Psychotropic"
+          "DSM-5-TR Depressive Disorders",
+          "RANZCP CPG: Mood Disorders 2020"
         ]
       },
       {
         "letter": "B",
-        "text": "Adjustment disorder with depressed mood and active anxiety features",
+        "text": "Adjustment disorder with depressed mood, severe",
         "correct": false,
-        "rationale": "Adjustment disorder applies when symptoms develop after an identifiable stressor and do NOT meet full criteria for another disorder such as MDD; she satisfies MDD criteria so this is excluded (eTG Psychotropic).",
+        "rationale": "Adjustment disorder is excluded once full MDE criteria are met; her symptom cluster (anhedonia, neurovegetative features, psychomotor retardation) meets MDE.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic"
+          "DSM-5-TR",
+          "RANZCP CPG: Mood Disorders 2020"
         ]
       },
       {
         "letter": "C",
-        "text": "Major depressive disorder, single episode, moderate severity overall",
-        "correct": true,
-        "rationale": "She meets at least 5 of 9 SIGECAPS criteria (depressed mood, anhedonia, weight loss, early waking, psychomotor change, passive death thoughts) for over 2 weeks with functional impairment; K-10 30-50 reflects severe distress but moderate functional impact and absence of psychosis is best coded moderate (RANZCP Mood Disorders CPG 2020).",
+        "text": "Major depressive disorder, single episode, moderate severity, no specifier",
+        "correct": false,
+        "rationale": "She meets MDE criteria but the specific cluster of loss of mood reactivity, distinct quality of depressed mood, marked psychomotor retardation, early morning waking and diurnal variation triggers the melancholic specifier, which carries treatment and prognostic implications.",
         "source_refs": [
-          "RANZCP CPG: Mood Disorders 2020",
-          "beyondblue: K-10 interpretation"
+          "DSM-5-TR melancholic specifier",
+          "RANZCP CPG: Mood Disorders 2020"
         ]
       },
       {
         "letter": "D",
-        "text": "Major depressive disorder, severe, with melancholic features specifier",
-        "correct": false,
-        "rationale": "Melancholic features require loss of pleasure in nearly all activities PLUS three of distinct mood quality, AM-worse diurnal pattern, marked psychomotor retardation, early waking, weight loss, or excessive guilt; she has some features but not enough to meet the specifier (RANZCP CPG).",
+        "text": "Major depressive disorder, single episode, severe, with melancholic features",
+        "correct": true,
+        "rationale": "She meets MDE criteria plus at least three melancholic features: complete loss of mood reactivity (cardinal feature A1), marked psychomotor retardation, early morning waking with diurnal mood variation worse in mornings, and significant weight loss. PHQ-9 23 plus functional collapse supports severe. Melancholic specifier matters: it predicts better response to TCAs/ECT and influences first-line drug choice under RANZCP guidance.",
         "source_refs": [
+          "DSM-5-TR melancholic specifier",
           "RANZCP CPG: Mood Disorders 2020"
         ]
       },
       {
         "letter": "E",
-        "text": "Bipolar II disorder, currently depressed, no current hypomania",
+        "text": "Bipolar II disorder, current episode depressed with melancholic features",
         "correct": false,
-        "rationale": "Bipolar II requires at least one prior hypomanic episode of 4 or more days plus a major depressive episode; she explicitly denies elevated mood episodes (RANZCP Bipolar CPG).",
+        "rationale": "Bipolar II requires at least one prior hypomanic episode lasting at least 4 days; explicitly absent. Misclassification as unipolar is acceptable here; the anti-pattern is calling it bipolar without evidence.",
         "source_refs": [
+          "DSM-5-TR Bipolar II",
           "RANZCP CPG: Mood Disorders 2020"
         ]
       }
@@ -97,69 +100,69 @@
     "subtopic_detail": "Major depressive disorder - DSM-5 diagnosis and severity threshold"
   },
   {
-    "id": "psych-mood-002",
+    "id": "psych-mood-002-l3",
     "topic": "Psychiatry",
     "subtopic": "Mood: depression",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "SSRI",
       "eTG"
     ],
-    "stem": "A 22-year-old apprentice electrician presents to his general practitioner with an 8-week history of low mood, anhedonia, broken sleep with 2 hours of night waking, poor concentration on the worksite and a 3 kg weight loss. He has had no manic or hypomanic episodes, no psychotic symptoms, and denies suicidal ideation but admits he has stopped enjoying weekend football. He smokes 10 cigarettes daily, drinks 4 standard drinks on weekends, and uses cannabis once a month socially. He is otherwise well, on no regular medications, and family history is notable for an older sister whose depression remitted well with sertraline. His K-10 is 28 and PHQ-9 is 16. Bloods including TSH, FBC, EUC, LFTs and B12 are unremarkable. After psychoeducation, lifestyle measures and discussion of psychological therapy through a GP Mental Health Treatment Plan, he and his GP agree to commence an antidepressant today and review in two weeks.",
+    "stem": "A 22-year-old apprentice electrician presents with an 8-week history of moderate major depression (PHQ-9 16). He has had no manic episodes, no psychotic symptoms, and denies suicidal ideation. He smokes 10 cigarettes daily, drinks 4 standard drinks weekly, and uses cannabis socially once a month. His chief functional complaints are early morning waking at 0430, fatigue at work and a recent 3 kg weight loss. He is sexually active with his girlfriend and explicitly raises concerns about sexual side effects after reading about them online. He has no past medication trials, no allergies, no QTc concerns on a recent ECG (QTc 405 ms), and bloods including TSH, FBC, EUC, LFTs and B12 are unremarkable. His older sister had moderate depression that remitted well on sertraline. He and his GP agree to commence an antidepressant today alongside a Mental Health Treatment Plan for CBT.",
     "data_table": {
       "Examination": "Flat affect, no psychomotor agitation, no psychotic features, MSE otherwise unremarkable.",
       "Investigations": "PHQ-9 16, K-10 28, TSH 1.8 mIU/L, Hb 145 g/L, ALT 22 U/L, B12 360 pmol/L (all reference)."
     },
-    "lead_in": "Which is the most appropriate first-line antidepressant choice?",
+    "lead_in": "Considering the eTG Psychotropic discriminators (efficacy, tolerability profile, sleep effect, sexual side-effect burden, family-history match), which is the single most appropriate first-line antidepressant?",
     "options": [
       {
         "letter": "A",
-        "text": "Mirtazapine 30 mg orally nocte titrated weekly",
+        "text": "Mirtazapine 15 mg orally nocte titrated to 30 mg",
         "correct": false,
-        "rationale": "Mirtazapine causes weight gain and sedation; it can be useful when weight loss and insomnia dominate but is not first-line for a young, normotensive man and is reserved as second-line or adjunctive in eTG (Therapeutic Guidelines: Psychotropic).",
+        "rationale": "Mirtazapine has lower sexual side-effect burden and helps sleep, but routinely causes 2-4 kg weight gain and daytime sedation which is poorly suited to apprentice work at heights; eTG positions it as second-line or where SSRI is unsuitable.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic"
-        ]
-      },
-      {
-        "letter": "B",
-        "text": "Sertraline 50 mg orally daily as initial SSRI",
-        "correct": true,
-        "rationale": "Sertraline is recommended as a preferred SSRI in eTG Psychotropic for moderate MDD in young adults given favourable tolerability, low drug-interaction profile, and family history of response (predictive of personal response); start 50 mg mane (Therapeutic Guidelines: Psychotropic; AMH).",
-        "source_refs": [
-          "Therapeutic Guidelines: Psychotropic",
-          "Australian Medicines Handbook"
-        ]
-      },
-      {
-        "letter": "C",
-        "text": "Venlafaxine XR 75 mg orally daily as initial SNRI",
-        "correct": false,
-        "rationale": "SNRIs are alternative first-line but have higher discontinuation-syndrome risk and dose-dependent hypertension; SSRIs are preferred initial therapy in uncomplicated MDD per eTG and RANZCP CPG (Therapeutic Guidelines: Psychotropic).",
-        "source_refs": [
-          "Therapeutic Guidelines: Psychotropic",
+          "eTG Psychotropic: Antidepressant selection",
           "RANZCP CPG: Mood Disorders 2020"
         ]
       },
       {
-        "letter": "D",
-        "text": "Amitriptyline 25 mg orally nocte titrated weekly",
-        "correct": false,
-        "rationale": "Tricyclics are not first-line for MDD due to anticholinergic effects, cardiac toxicity, and lethality in overdose; reserved for refractory cases or specific indications such as chronic pain (Australian Medicines Handbook).",
+        "letter": "B",
+        "text": "Sertraline 50 mg orally daily",
+        "correct": true,
+        "rationale": "First-line SSRI with strong family-history concordance (a key eTG discriminator when comparing SSRIs), broad safety in young adults, no QTc dose-cap (unlike citalopram), and no significant CYP2D6 enzyme effect that would matter for his cannabis or future medications. Sexual side effects are a class effect that requires monitoring but does not exclude first-line SSRI; the response is to counsel, review at 2 weeks, and switch class only if intolerable.",
         "source_refs": [
-          "Australian Medicines Handbook",
-          "Therapeutic Guidelines: Psychotropic"
+          "eTG Psychotropic 2024",
+          "RANZCP CPG: Mood Disorders 2020"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Venlafaxine XR 75 mg orally daily",
+        "correct": false,
+        "rationale": "SNRI is not first-line for uncomplicated moderate MDD; has a more difficult discontinuation profile and dose-dependent BP rise. Reserved per eTG for SSRI failure or specific indications.",
+        "source_refs": [
+          "eTG Psychotropic"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Citalopram 20 mg orally daily",
+        "correct": false,
+        "rationale": "Reasonable SSRI but carries the TGA QT-prolongation dose cap of 40 mg (20 mg in those >65 or on CYP2C19 inhibitors), which limits future titration headroom; without a family-history match and given sertraline-responsive sister, citalopram is not the best first choice.",
+        "source_refs": [
+          "TGA citalopram dose cap advisory",
+          "eTG Psychotropic"
         ]
       },
       {
         "letter": "E",
-        "text": "Fluoxetine 20 mg orally daily as initial SSRI",
+        "text": "Fluoxetine 20 mg orally daily",
         "correct": false,
-        "rationale": "Fluoxetine is a reasonable SSRI but its long half-life and CYP2D6 inhibition complicate later switching; in this young adult with a family member who responded to sertraline, sertraline is preferred (Therapeutic Guidelines: Psychotropic; AMH).",
+        "rationale": "Acceptable SSRI but its long half-life (norfluoxetine ~7-15 days) complicates any later switch to an MAOI or other antidepressant; sertraline is preferred when family history of sertraline response is present and there is no specific indication driving fluoxetine choice.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic",
-          "Australian Medicines Handbook"
+          "eTG Psychotropic",
+          "AMH Antidepressants"
         ]
       }
     ],
@@ -1110,70 +1113,71 @@
     "subtopic_detail": "Perinatal psychiatry - postpartum psychosis recognition"
   },
   {
-    "id": "psych-mood-012",
+    "id": "psych-mood-012-l3",
     "topic": "Psychiatry",
     "subtopic": "Other",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "EPDS",
       "screening",
       "primary care"
     ],
-    "stem": "A 33-year-old G1P1 woman attends her general practitioner for her 6-week postnatal check. Her infant son is feeding and growing well. She delivered by uncomplicated vaginal birth at 40+1 and breastfeeding is established. She acknowledges tiredness and intermittent tearfulness but denies any thoughts of harming herself or her baby. She has no past psychiatric history. As part of routine COPE-aligned postnatal screening her GP administers the Edinburgh Postnatal Depression Scale. Her total score is 14. Item 10 (self-harm question) is scored zero. She is engaged, future-oriented and looking forward to a planned trip to visit her mother next month. There is no overt psychomotor change, no psychotic features, no perceptual disturbance and no functional collapse. There are no medical comorbidities. She has not yet started any psychological therapy and is open to discussing options including medication.",
+    "stem": "A 33-year-old G1P1 woman attends her GP for her 6-week postnatal check. She delivered by uncomplicated vaginal birth at 40+1 and breastfeeding is established. Her infant is feeding and growing on the 50th percentile. COPE-aligned screening returns EPDS 14 with item 10 (self-harm) scored 0. On clinician interview today she has 4 weeks of low mood, anhedonia for activities she previously enjoyed, broken sleep beyond night feeds, tearfulness, guilt about her mothering, and difficulty bonding with the infant. She has no past psychiatric history. There are no psychotic features and she denies thoughts of harming the baby. She is engaged, future-oriented and looking forward to a planned visit from her mother next month. She has no medical comorbidities. Both she and her partner are working with the maternal child health nurse fortnightly.",
     "data_table": {
       "Vital signs": "BP 116/72 mmHg, HR 72, weight 67 kg, BMI 24.",
       "Examination": "MSE: mildly tired, mood low, affect reactive, no psychosis, no thoughts of self-harm.",
       "Investigations": "EPDS total 14 (item 10 = 0). TSH 1.9 mIU/L, Hb 124 g/L, ferritin 38 micrograms/L."
     },
-    "lead_in": "Which is the most appropriate next step?",
+    "lead_in": "Which is the single most appropriate next step under the COPE Australian Perinatal Mental Health Guideline?",
     "options": [
       {
         "letter": "A",
         "text": "Reassure her this is normal postnatal tiredness and review in three months",
         "correct": false,
-        "rationale": "An EPDS score >=13 indicates probable depression and warrants further assessment and intervention, not simple reassurance (COPE Perinatal Guidelines; beyondblue).",
+        "rationale": "EPDS 14 with concordant clinical history of MDD-range symptoms is above the COPE threshold (>=13) that mandates clinical assessment and intervention; watchful waiting risks a deteriorating course in the bonding-critical window.",
         "source_refs": [
-          "COPE Perinatal Mental Health Guidelines",
-          "beyondblue: EPDS"
+          "COPE Australian Perinatal Mental Health Guideline 2023"
         ]
       },
       {
         "letter": "B",
         "text": "Refer urgently to the crisis mental health team for same-day specialist assessment",
         "correct": false,
-        "rationale": "Same-day crisis review is indicated when item 10 (self-harm) is positive or there are imminent safety concerns; her item 10 is 0 and she has no acute risk markers (COPE Perinatal Guidelines).",
+        "rationale": "Crisis referral is reserved for acute suicide/infanticide risk, psychosis, or severe functional collapse; she has none of these. Over-triage diverts crisis resources and may damage the therapeutic alliance.",
         "source_refs": [
-          "COPE Perinatal Mental Health Guidelines"
+          "COPE Guideline",
+          "RANZCP Perinatal CPG"
         ]
       },
       {
         "letter": "C",
-        "text": "Stop breastfeeding immediately and commence venlafaxine 75 mg daily without psychology",
+        "text": "Repeat the EPDS in two weeks without further structured assessment",
         "correct": false,
-        "rationale": "Sertraline and paroxetine are SSRIs of choice in breastfeeding (low milk transfer); stopping breastfeeding is not necessary and SNRI is not first-line (COPE; AMH).",
+        "rationale": "EPDS is a screening tool not a diagnostic instrument; once it is positive and symptoms are confirmed on interview, the COPE step is structured diagnostic assessment plus management planning, not screening re-run.",
         "source_refs": [
-          "COPE Perinatal Mental Health Guidelines",
-          "Australian Medicines Handbook"
+          "COPE Guideline"
         ]
       },
       {
         "letter": "D",
-        "text": "Repeat the EPDS in two weeks without further intervention or referral",
-        "correct": false,
-        "rationale": "Delaying assessment for 2 weeks after a clearly elevated score does not align with COPE recommendations for prompt diagnostic clarification and treatment offer (COPE Perinatal Guidelines).",
+        "text": "Conduct a diagnostic interview confirming moderate postnatal MDD, offer CBT or IPT through a Mental Health Treatment Plan, discuss sertraline as breastfeeding-compatible first-line, and arrange MCH-nurse + GP review at 2 weeks",
+        "correct": true,
+        "rationale": "COPE pathway after a positive EPDS plus clinical confirmation: structured diagnostic assessment, psychological therapy as first-line for mild-to-moderate (CBT or IPT, with IPT particularly evidence-based perinatally), and shared decision-making on antidepressants. Sertraline is the first-line SSRI in breastfeeding per AMH and the COPE Guideline. Early review captures deterioration and bonding risk.",
         "source_refs": [
-          "COPE Perinatal Mental Health Guidelines"
+          "COPE Guideline 2023",
+          "AMH Lactation appendix",
+          "RANZCP Perinatal CPG"
         ]
       },
       {
         "letter": "E",
-        "text": "Arrange diagnostic interview, offer CBT or IPT and discuss antidepressant options",
-        "correct": true,
-        "rationale": "EPDS >=13 with item 10 score 0 indicates probable depression without acute self-harm risk; COPE recommends diagnostic interview, evidence-based psychological therapy (CBT or IPT), discussion of antidepressants (sertraline preferred in breastfeeding), and follow-up with repeat EPDS (COPE Perinatal Guidelines).",
+        "text": "Stop breastfeeding immediately and commence venlafaxine 75 mg daily without psychology",
+        "correct": false,
+        "rationale": "Anti-pattern: stopping breastfeeding is not required for first-line SSRI (sertraline) and venlafaxine is not first-line for postnatal depression; psychological therapy must be offered for mild-to-moderate disease.",
         "source_refs": [
-          "COPE Perinatal Mental Health Guidelines",
-          "Therapeutic Guidelines: Psychotropic"
+          "COPE Guideline",
+          "AMH"
         ]
       }
     ],
@@ -1215,68 +1219,69 @@
     "subtopic_detail": "EPDS interpretation in routine postnatal screening"
   },
   {
-    "id": "psych-mood-013",
+    "id": "psych-mood-013-l3",
     "topic": "Psychiatry",
     "subtopic": "Anxiety + trauma",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "SSRI",
       "CBT"
     ],
-    "stem": "A 26-year-old accountant attends her GP for 9 months of persistent excessive worry about work performance, finances, her parents' health, and her partner's commute safety. She describes feeling wound up most days, struggling to relax even on weekends, irritability that her partner has noticed, broken sleep with difficulty falling asleep due to ruminating, muscle tension across her shoulders, and difficulty concentrating at work. She drinks one or two glasses of wine on weekends, no smoking, and exercises three times weekly. There has been no discrete panic episode, no avoidance pattern fitting agoraphobia or social anxiety, no obsessions or compulsions, no trauma history, and no low mood or anhedonia. K-10 is 24 and GAD-7 is 15. Bloods (TSH, FBC, EUC) are normal and her caffeine intake is moderate (two coffees per day). She is keen to engage with treatment and is interested in both psychological and pharmacological options.",
+    "stem": "A 26-year-old accountant attends her GP for 9 months of persistent excessive worry across work, finances, parents' health and partner's safety. She describes feeling wound up most days, broken sleep with onset insomnia from rumination, muscle tension, irritability noted by her partner, and difficulty concentrating at work where her billable output has fallen by 25 percent. She has no panic attacks, no agoraphobia, no social anxiety pattern, no obsessions or compulsions, no trauma history and no anhedonia. K-10 is 24 and GAD-7 is 15 (moderate-to-severe). Bloods (TSH, FBC, EUC) are normal and caffeine intake is moderate (two coffees per day). She has no past psychiatric history, no past medication trials and no allergies. She is keen to engage with treatment but cannot start psychology for 4 weeks due to a clinician wait-list. She has private health insurance.",
     "data_table": {
       "Examination": "MSE: mildly anxious, no psychomotor change, no psychotic features, insight good.",
       "Investigations": "GAD-7 15 (moderate), K-10 24, TSH 1.7 mIU/L, Hb 134 g/L, Na 140 mmol/L."
     },
-    "lead_in": "Which is the most appropriate first-line management?",
+    "lead_in": "Which is the single most appropriate first-line management plan?",
     "options": [
       {
         "letter": "A",
         "text": "Diazepam 5 mg twice daily for six weeks while she organises psychological therapy",
         "correct": false,
-        "rationale": "Benzodiazepines are not first-line for GAD due to dependence, tolerance, cognitive effects and withdrawal; eTG recommends short-term (<2 weeks) use only for severe acute distress (Therapeutic Guidelines: Psychotropic; AMH).",
+        "rationale": "Anti-pattern: benzodiazepines are not first-line in GAD because of dependence risk and the chronic-course nature of the disorder; short courses for acute crisis are the only acceptable indication.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic",
-          "Australian Medicines Handbook"
+          "eTG Psychotropic: Anxiety",
+          "RANZCP CPG: Anxiety"
         ]
       },
       {
         "letter": "B",
-        "text": "Cognitive behavioural therapy as first-line, with SSRI added if no response at 6-8 weeks",
-        "correct": true,
-        "rationale": "eTG Psychotropic and RANZCP recommend evidence-based psychological therapy (CBT) as first-line for mild-to-moderate GAD, with SSRI/SNRI added if no response or if patient prefers; Mental Health Treatment Plan funds 10 psychology sessions per year (Therapeutic Guidelines: Psychotropic; RANZCP).",
+        "text": "Trauma-focused CBT alone, deferring any pharmacotherapy until at least 12 weeks of therapy is complete",
+        "correct": false,
+        "rationale": "Trauma-focused CBT is for PTSD, not GAD; she has no trauma. Generic CBT for GAD is first-line for mild-to-moderate disease but at GAD-7 15 (moderate-severe) with significant functional impairment plus a 4-week wait, combining CBT with an SSRI is supported by eTG and RANZCP guidance.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic",
-          "RANZCP CPG: Mood Disorders 2020"
+          "eTG Psychotropic: GAD",
+          "RANZCP CPG: Anxiety"
         ]
       },
       {
         "letter": "C",
-        "text": "Propranolol 40 mg orally as required for episodes of worry and tension",
-        "correct": false,
-        "rationale": "Propranolol can reduce peripheral autonomic symptoms in performance/social anxiety but does not treat the generalised worry of GAD (AMH; eTG).",
+        "text": "Commence escitalopram 10 mg daily plus arrange CBT, with review at 2 weeks for activation/akathisia and 6 weeks for response",
+        "correct": true,
+        "rationale": "GAD-7 15 plus 25 percent loss of work output places her in the moderate-severe band where eTG supports combined first-line therapy; escitalopram is a first-line SSRI for GAD with a favourable side-effect profile (under the 20 mg/day TGA QTc dose-cap), early review captures the 1-2 week activation window during which transient worsening may occur, and CBT remains the durable component.",
         "source_refs": [
-          "Australian Medicines Handbook",
-          "Therapeutic Guidelines: Psychotropic"
+          "eTG Psychotropic: GAD",
+          "TGA escitalopram dose cap",
+          "RANZCP CPG: Anxiety"
         ]
       },
       {
         "letter": "D",
-        "text": "Mirtazapine 30 mg orally nocte commencing now as initial pharmacotherapy choice",
+        "text": "Mirtazapine 30 mg orally nocte as initial pharmacotherapy",
         "correct": false,
-        "rationale": "Mirtazapine has weight gain and sedation as primary effects and is not first-line for GAD; first-line pharmacotherapy when chosen is an SSRI (escitalopram, sertraline) or SNRI (venlafaxine, duloxetine) (eTG Psychotropic).",
+        "rationale": "Mirtazapine is not first-line for GAD; SSRI or SNRI are first-line per eTG. Mirtazapine is reserved for SSRI failure or where its sleep and appetite profile is specifically desired.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic"
+          "eTG Psychotropic"
         ]
       },
       {
         "letter": "E",
         "text": "Avoid caffeine completely and review in six months without other intervention today",
         "correct": false,
-        "rationale": "Lifestyle modification alone is insufficient for moderate GAD with functional impact; structured psychological therapy and review at a shorter interval are required (eTG; RANZCP).",
+        "rationale": "Lifestyle alone is insufficient for GAD-7 15 with documented functional impairment; eTG mandates structured psychological therapy +/- SSRI in this band.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic"
+          "eTG Psychotropic"
         ]
       }
     ],

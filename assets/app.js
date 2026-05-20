@@ -914,8 +914,9 @@
 
     document.getElementById("submitBtn").onclick = onSubmit;
     document.getElementById("nextBtn").onclick = onNext;
-    document.getElementById("labsBtn").onclick = () => toggleRefs();
-    document.getElementById("labsBtn").classList.toggle("active", state.refsOpen);
+    // labsBtn removed (the masthead Reference values button covers this).
+    const lb0 = document.getElementById("labsBtn");
+    if (lb0) { lb0.onclick = () => toggleRefs(); lb0.classList.toggle("active", state.refsOpen); }
     document.getElementById("flagBtn").onclick = () => {
       state.flags[q.id] = !state.flags[q.id];
       save(ns(FLAGS_KEY), state.flags);

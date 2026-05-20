@@ -290,16 +290,16 @@
     "created": "2026-05-19"
   },
   {
-    "id": "psych-somatic-004",
+    "id": "psych-somatic-004-l3",
     "topic": "Psychiatry",
     "subtopic": "Somatic symptom disorders",
     "subtopic_detail": "Factitious disorder vs malingering",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "consultation-liaison"
     ],
-    "stem": "A 45-year-old man presents to the emergency department for the 7th time in 8 months with recurrent hypoglycaemia. Each admission has shown plasma glucose 2.1 to 2.6 mmol/L with markedly elevated insulin and SUPPRESSED C-peptide. He has no diabetes, no insulinoma on prior CT and MRI, and no sulphonylurea detected on urine screen. He is a former endocrinology nurse, currently unemployed, and lives alone. He denies injecting insulin and becomes irritable when asked. There is no pending litigation, no Centrelink claim under review, no workers compensation case, and no current criminal charge or active forensic process. Staff have observed him discarding small objects in the sharps bin after symptom onset. Each admission has involved invasive investigations and extended length of stay. His K-10 is 30 and he reports profound loneliness.",
+    "stem": "A 45-year-old man presents to ED for the 7th time in 8 months with recurrent hypoglycaemia (plasma glucose 2.1-2.6 mmol/L, markedly elevated insulin and SUPPRESSED C-peptide each time). He has no diabetes, no insulinoma on prior CT and MRI, no sulphonylureas on urine screen. He is a former endocrinology nurse, currently unemployed, lives alone. He denies injecting insulin and becomes irritable when asked. He has no pending litigation, no Centrelink claim under review, no workers compensation case and no active forensic process. Staff have observed him discarding small objects in the sharps bin after symptom onset. Each admission has involved invasive investigations and extended stays during which he is highly engaged with treating teams who describe him as 'the most knowledgeable patient we've ever had'. He receives no financial benefit from admissions but openly enjoys the medical-team attention. K-10 is 30 with profound loneliness.",
     "data_table": {
       "Vital signs": "HR 92, BP 128/82, RR 16, BSL 2.3 mmol/L on arrival.",
       "Examination": "Diaphoretic, oriented, no focal neurology.",
@@ -311,47 +311,47 @@
         "letter": "A",
         "text": "Malingering for secondary financial gain",
         "correct": false,
-        "rationale": "Malingering is intentional production of symptoms for an EXTERNAL incentive (avoiding work, military duty, criminal prosecution, securing benefits, obtaining drugs). The stem explicitly excludes pending litigation, Centrelink review, workers compensation, criminal proceedings, and drug-seeking - so external incentive is absent (DSM-5).",
+        "rationale": "Malingering requires an EXTERNAL incentive (financial, legal, evasion of duty, drug-seeking). He has no Centrelink claim, no litigation, no forensic process and no controlled-substance request. The 'gain' here (medical attention, sick-role identity) is INTERNAL, which is the DSM-5 hallmark of factitious disorder rather than malingering.",
         "source_refs": [
-          "DSM-5 (APA) - Factitious Disorder criteria",
-          "RANZCP: Somatic Symptom and Related Disorders overview"
+          "DSM-5-TR Somatic Symptom and Related Disorders",
+          "RANZCP CPG"
         ]
       },
       {
         "letter": "B",
         "text": "Factitious disorder imposed on self",
         "correct": true,
-        "rationale": "Factitious disorder requires intentional falsification or induction of signs/symptoms WITH deceptive intent, presentation of self as ill, AND absence of obvious external reward. Suppressed C-peptide with elevated insulin and negative sulphonylurea screen confirms exogenous insulin administration; secretive discarding of objects and former medical employment supports falsification; no external incentive is identifiable. The motive is the sick role itself (DSM-5; RANZCP).",
+        "rationale": "Three DSM-5 criteria are met: (i) falsification of physical signs (covertly self-administered insulin, evidenced by suppressed C-peptide with elevated insulin and observed sharps disposal); (ii) presentation as ill/injured/impaired; (iii) absence of obvious external incentive. The internal psychological gain (sick-role identity, relational connection with medical teams) is the discriminator from malingering and is consistent with his nursing-background insider-knowledge profile.",
         "source_refs": [
-          "DSM-5 (APA) - Factitious Disorder criteria",
-          "RANZCP: Somatic Symptom and Related Disorders overview"
+          "DSM-5-TR Factitious Disorder",
+          "RANZCP CPG"
         ]
       },
       {
         "letter": "C",
         "text": "Somatic symptom disorder with predominant pain",
         "correct": false,
-        "rationale": "SSD requires genuine distressing somatic symptoms with disproportionate response WITHOUT intentional falsification; suppressed C-peptide proves exogenous insulin, which is induction not genuine pathology (DSM-5).",
+        "rationale": "SSD involves genuine somatic symptoms with disproportionate thoughts/feelings/behaviours; deliberate falsification of laboratory signs takes the case out of SSD and into factitious disorder.",
         "source_refs": [
-          "DSM-5 (APA) - Factitious Disorder criteria"
+          "DSM-5-TR SSD"
         ]
       },
       {
         "letter": "D",
         "text": "Conversion disorder (functional neurological symptom disorder)",
         "correct": false,
-        "rationale": "Conversion disorder requires altered voluntary motor/sensory function inconsistent with recognised neurological disease but is NOT intentionally produced; the lab pattern here proves intentional induction (DSM-5).",
+        "rationale": "Conversion disorder requires neurological symptoms (weakness, tremor, sensory loss) without organic cause; his presentation is biochemical hypoglycaemia, not neurological functional symptom.",
         "source_refs": [
-          "DSM-5 (APA) - Factitious Disorder criteria"
+          "DSM-5-TR Conversion"
         ]
       },
       {
         "letter": "E",
         "text": "Delusional disorder, somatic type",
         "correct": false,
-        "rationale": "Delusional disorder requires fixed false belief; he is intentionally inducing pathology, not holding a fixed belief about disease (RANZCP).",
+        "rationale": "Delusional disorder requires a fixed false belief; he is engaged in covert behaviour (sharps disposal) which implies awareness of the deception, inconsistent with delusional certainty.",
         "source_refs": [
-          "RANZCP: Somatic Symptom and Related Disorders overview"
+          "DSM-5-TR Delusional Disorder"
         ]
       }
     ],
@@ -488,67 +488,71 @@
     "created": "2026-05-19"
   },
   {
-    "id": "psych-somatic-006",
+    "id": "psych-somatic-006-l3",
     "topic": "Psychiatry",
     "subtopic": "Medical mimics",
     "subtopic_detail": "Autoimmune encephalitis vs first-episode psychosis",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "medical mimics"
     ],
-    "stem": "A 22-year-old previously well university student is admitted to a psychiatric inpatient unit with a 3-week history of insomnia, paranoid delusions, and disorganised behaviour. Over 48 hours her presentation has changed: she now has orofacial dyskinesias, brief episodes of unresponsiveness with eyelid twitching, autonomic instability with episodes of HR 140 then HR 48, BP swings between 165/95 and 95/55, and a low-grade fever of 38.1. She has had no recent antipsychotic doses (admitted before any were given). She has no recent illicit substance use on urine drug screen. Her CK is 320 U/L. There is no neck stiffness. Her family report a brief flu-like illness 6 weeks ago. CT head is normal. Lumbar puncture shows mild lymphocytic pleocytosis (35 cells/microL, predominantly lymphocytes) with normal glucose and mildly raised protein.",
+    "stem": "A 22-year-old previously well university student is admitted to a psychiatric inpatient unit with 3 weeks of insomnia, paranoid delusions and disorganised behaviour. Over 48 hours her presentation has evolved: she now has orofacial dyskinesias, brief episodes of unresponsiveness with eyelid twitching, autonomic instability (HR oscillating 140 then 48, BP 165/95 then 95/55), and low-grade fever 38.1. She has had NO antipsychotic exposure to date (admitted before any were given). Urine drug screen is negative. CK 320 U/L. No neck stiffness. Family report a brief flu-like illness 6 weeks ago. CT head normal. LP performed: mild lymphocytic pleocytosis (35 cells/microL), normal glucose, mildly raised protein, no organisms on Gram stain, viral PCR (including HSV-1/2 and enterovirus) pending.",
     "data_table": {
       "Vital signs": "Fluctuating HR 48-140, BP 95/55 to 165/95, T 38.1, RR variable.",
       "Examination": "Orofacial dyskinesias, intermittent unresponsiveness with eyelid twitching, no neck stiffness, no focal deficit.",
       "Investigations": "Urine drug screen negative. CK 320 U/L. CT head normal. CSF: WCC 35 (lymphocytic), protein 0.65 g/L, glucose 3.2 mmol/L (paired plasma 5.0)."
     },
-    "lead_in": "Which is the single most appropriate next investigation?",
+    "lead_in": "Which is the single most appropriate next investigative AND empirical step in parallel?",
     "options": [
       {
         "letter": "A",
-        "text": "Serum and CSF anti-NMDA receptor antibodies plus MRI brain with contrast",
+        "text": "Send serum AND CSF anti-NMDA receptor (and broader autoimmune encephalitis) antibodies, arrange MRI brain with contrast, request urgent neurology review, and start empirical IV aciclovir until HSV PCR returns negative",
         "correct": true,
-        "rationale": "Sub-acute psychiatric symptoms in a young woman PLUS movement disorder (orofacial dyskinesias) PLUS autonomic instability PLUS seizure-like episodes PLUS lymphocytic CSF pleocytosis is the textbook pentad of anti-NMDA receptor encephalitis. Serum and CSF antibody testing PLUS MRI is the diagnostic pathway; early immunotherapy improves outcome (Therapeutic Guidelines: Neurology; RANZCP medical mimics).",
+        "rationale": "Multi-step: the prodromal flu-like illness, subacute psychiatric onset, orofacial dyskinesias, autonomic instability and CSF lymphocytic pleocytosis form the classical anti-NMDAR encephalitis syndrome (Dalmau triad-plus). Definitive diagnosis requires BOTH serum and CSF antibodies (CSF more sensitive); MRI brain frequently normal but indicated for differential. While awaiting antibody result and HSV PCR, empirical aciclovir is standard because HSV encephalitis is treatable and the cost of delay is high. This combines confirmatory and empirical limbs concurrently.",
         "source_refs": [
-          "Therapeutic Guidelines: Neurology",
-          "RANZCP: Somatic Symptom and Related Disorders overview"
+          "Australian and New Zealand Society for Immunology autoimmune encephalitis consensus",
+          "eTG: Encephalitis",
+          "Lancet Neurol 2016 anti-NMDAR clinical approach"
         ]
       },
       {
         "letter": "B",
-        "text": "Increase olanzapine to 20 mg daily and add lorazepam for agitation",
+        "text": "Increase olanzapine to 20 mg daily and add lorazepam for agitation while awaiting CSF PCR",
         "correct": false,
-        "rationale": "Treating as primary psychosis without excluding autoimmune encephalitis risks delayed immunotherapy, worse outcomes, and antipsychotic-induced NMS-like deterioration in encephalitis patients (RANZCP).",
+        "rationale": "Anti-pattern: escalating antipsychotic in suspected autoimmune encephalitis worsens autonomic instability and dyskinesias, may precipitate NMS-overlap, and delays the disease-modifying immunotherapy that this condition needs.",
         "source_refs": [
-          "RANZCP: Somatic Symptom and Related Disorders overview"
+          "RANZCP CPG",
+          "Lancet Neurol anti-NMDAR"
         ]
       },
       {
         "letter": "C",
-        "text": "Empirical IV aciclovir 10 mg/kg 8-hourly for HSV encephalitis only",
+        "text": "Empirical IV aciclovir alone with no autoimmune antibody panel, on the assumption that lymphocytic pleocytosis is always HSV until proven otherwise",
         "correct": false,
-        "rationale": "Aciclovir is appropriate empirically while encephalitis is being worked up, but it is not the most informative SINGLE next test, and HSV alone does not explain the orofacial dyskinesias and autonomic storm; antibody testing plus MRI is the diagnostic pathway (Therapeutic Guidelines: Antibiotic).",
+        "rationale": "HSV cover is appropriate, but failing to send autoimmune encephalitis antibodies delays the diagnosis that drives first-line immunotherapy (steroids, IVIg or plasma exchange). The two limbs must run in parallel.",
         "source_refs": [
-          "Therapeutic Guidelines: Antibiotic"
+          "eTG Encephalitis"
         ]
       },
       {
         "letter": "D",
-        "text": "EEG plus measurement of serum creatine kinase trend for NMS",
+        "text": "EEG and serial CK only, on the assumption this is neuroleptic malignant syndrome",
         "correct": false,
-        "rationale": "NMS is unlikely as she has had no antipsychotic exposure (admitted before any dose) and CK is only mildly elevated; EEG can support encephalitis but is not the disease-specific test (RANZCP).",
+        "rationale": "NMS requires antipsychotic exposure; she has had none. CK is only mildly raised. EEG is useful adjunct but not the next investigative priority.",
         "source_refs": [
-          "RANZCP: Somatic Symptom and Related Disorders overview"
+          "DSM-5-TR NMS",
+          "eTG"
         ]
       },
       {
         "letter": "E",
-        "text": "Whole-body PET CT to exclude paraneoplastic origin only",
+        "text": "Whole-body PET CT to exclude paraneoplastic origin as the first investigative step",
         "correct": false,
-        "rationale": "Paraneoplastic workup (e.g., ovarian teratoma in anti-NMDAR) follows confirmation of the antibody syndrome; the immediate next test is antibody plus MRI (Therapeutic Guidelines: Neurology).",
+        "rationale": "Ovarian teratoma screening is essential ONCE anti-NMDAR antibodies confirm the syndrome (then pelvic US/MRI is first-line, not PET CT). PET CT is not the initial step.",
         "source_refs": [
-          "Therapeutic Guidelines: Neurology"
+          "Lancet Neurol anti-NMDAR",
+          "ANZCA autoimmune encephalitis consensus"
         ]
       }
     ],
@@ -586,69 +590,72 @@
     "created": "2026-05-19"
   },
   {
-    "id": "psych-somatic-007",
+    "id": "psych-somatic-007-l3",
     "topic": "Psychiatry",
     "subtopic": "Other",
     "subtopic_detail": "Hospital delirium superimposed on dementia",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "dementia",
       "delirium"
     ],
-    "stem": "An 84-year-old woman with Alzheimer disease (baseline MoCA 16/30, lives at home with daily community nursing) is admitted with a community-acquired pneumonia and treated with IV ceftriaxone plus oral azithromycin. On day 3 of admission her family report she is markedly different from baseline: she is drowsy in the morning, agitated and pulling at her cannula by evening, sees small children in the curtains, and cannot identify where she is. Her usual mild forgetfulness has been replaced with fluctuating attention - she cannot maintain a conversation for more than 30 seconds. Her oxygen saturation is 95% on 2 L. She has not opened her bowels in 4 days. Urinalysis shows mild leucocytes only. Recent additions to her chart include oxycodone 5 mg 4-hourly PRN (taken regularly), lorazepam 1 mg PRN at night, and metoclopramide. Her CXR shows improving consolidation.",
+    "stem": "An 84-year-old woman with Alzheimer disease (baseline MoCA 16/30, lives at home with daily community nursing) is admitted with community-acquired pneumonia and treated with IV ceftriaxone plus oral azithromycin. On day 3 her family report a change from baseline: drowsy in the morning, agitated and pulling at her cannula by evening, sees small children in the curtains, and cannot identify where she is. Her usual mild forgetfulness has been replaced with fluctuating attention - cannot maintain a conversation >30 seconds. SpO2 95% on 2 L. No bowel motion in 4 days. Urinalysis: leucocytes only, no nitrites, asymptomatic. Recent additions to her chart include oxycodone 5 mg 4-hourly PRN (taken regularly), lorazepam 1 mg PRN nocte, and metoclopramide 10 mg TDS. CXR shows improving consolidation. CAM is positive for delirium.",
     "data_table": {
       "Vital signs": "HR 92, BP 132/74, RR 18, SpO2 95% on 2 L, T 37.2.",
       "Examination": "Fluctuating attention, inattentive on months-of-year backwards, visual hallucinations, distractible.",
       "Investigations": "FBC, UEC, CRP improving. Glucose 6.4 mmol/L. Urinalysis mild leukocytes only. CXR improving. ECG normal."
     },
-    "lead_in": "Which is the single most appropriate next step in management?",
+    "lead_in": "Which is the single most appropriate INITIAL management plan, per the Australian Commission on Safety and Quality in Health Care delirium clinical care standard?",
     "options": [
       {
         "letter": "A",
-        "text": "Add scheduled risperidone 1 mg BD and continue oxycodone, lorazepam, and metoclopramide",
+        "text": "Add scheduled risperidone 1 mg BD; continue oxycodone, lorazepam and metoclopramide unchanged",
         "correct": false,
-        "rationale": "Antipsychotics are not first-line for delirium; they are reserved for severe agitation with risk of harm at the lowest effective dose. Continuing deliriogenic medications is the proximal cause and must be addressed first (RANZCP delirium; Therapeutic Guidelines: Psychotropic).",
+        "rationale": "Anti-pattern: adding antipsychotics without first deprescribing the precipitating drugs is the wrong order. Lorazepam and oxycodone are independent deliriogens; metoclopramide is also implicated. Adding risperidone routinely is contrary to the ACSQHC standard, which reserves antipsychotics for severe agitation with imminent harm.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic",
-          "Australian Commission on Safety and Quality in Health Care - Delirium Clinical Care Standard"
+          "ACSQHC Delirium Clinical Care Standard 2021",
+          "Beers Criteria",
+          "eTG: Delirium"
         ]
       },
       {
         "letter": "B",
         "text": "Start donepezil 5 mg daily for worsening Alzheimer disease and discharge home",
         "correct": false,
-        "rationale": "Cholinesterase inhibitors are NOT indicated for acute delirium; the acute change reflects superimposed delirium not progression of dementia (Australian Medicines Handbook).",
+        "rationale": "Cholinesterase inhibitors are not delirium treatment; discharge of an actively delirious patient with unsafe medications would breach the standard.",
         "source_refs": [
-          "Australian Medicines Handbook"
+          "ACSQHC Delirium Standard"
         ]
       },
       {
         "letter": "C",
-        "text": "Transfer to closed psychiatric ward under involuntary order for management of psychosis",
+        "text": "Transfer to a closed psychiatric ward under involuntary order for management of psychosis",
         "correct": false,
-        "rationale": "Delirium is a medical syndrome managed on the medical ward; transfer to psychiatric care delays treatment of the underlying medical cause (Delirium Clinical Care Standard).",
+        "rationale": "Delirium is a medical emergency managed on a medical or geriatric ward; psychiatric ward transfer is inappropriate and likely worsens outcome.",
         "source_refs": [
-          "Australian Commission on Safety and Quality in Health Care - Delirium Clinical Care Standard"
+          "ACSQHC Delirium Standard"
         ]
       },
       {
         "letter": "D",
-        "text": "Minimise deliriogenic drugs, address constipation, optimise non-pharmacological measures, treat UTI only if supported",
+        "text": "Deprescribe lorazepam, switch oxycodone to a non-opioid analgesic ladder (paracetamol +/- topical), cease metoclopramide, manage constipation actively (aperient ladder), address dehydration, optimise non-pharmacological measures (familiar items, orientation, daylight, hearing aids, glasses), and NOT treat the asymptomatic pyuria with antibiotics",
         "correct": true,
-        "rationale": "The Australian Commission Delirium Clinical Care Standard mandates a structured non-pharmacological bundle: identify and treat reversible precipitants (medications, constipation, pain, hypoxia, infection, dehydration, sleep-wake disruption), reorientation, hearing/vision aids, mobilisation, hydration, family presence. Asymptomatic bacteriuria should NOT be treated with antibiotics in older adults as it does not cause delirium and antibiotic exposure worsens it (Delirium Clinical Care Standard; eTG Antibiotic).",
+        "rationale": "ACSQHC standard sequence: identify and remove precipitants first. Lorazepam, oxycodone, metoclopramide and constipation are all reversible contributors. Asymptomatic bacteriuria/pyuria in older adults should NOT be treated (eTG anti-pattern), and over-treatment of dipstick findings is a major contributor to inappropriate antibiotic use and further delirium. Antipsychotics are reserved for severe agitation when non-pharmacological measures fail.",
         "source_refs": [
-          "Australian Commission on Safety and Quality in Health Care - Delirium Clinical Care Standard",
-          "Therapeutic Guidelines: Antibiotic"
+          "ACSQHC Delirium Clinical Care Standard",
+          "eTG: Delirium",
+          "eTG: Antibiotic Stewardship - asymptomatic bacteriuria"
         ]
       },
       {
         "letter": "E",
-        "text": "Commence intravenous ciprofloxacin empirically for presumed urinary tract infection based on urinalysis",
+        "text": "Commence IV ciprofloxacin empirically for presumed UTI based on the urinalysis result",
         "correct": false,
-        "rationale": "Mild leucocytes on urinalysis in an older adult without urinary symptoms represents asymptomatic bacteriuria and does not warrant antibiotics; treatment risks Clostridioides difficile and further delirium (Therapeutic Guidelines: Antibiotic).",
+        "rationale": "Anti-pattern: asymptomatic pyuria in an 84-year-old should not be treated with antibiotics; ciprofloxacin in elderly adds its own delirium risk (CNS effects) plus TGA fluoroquinolone safety warnings on tendinopathy, aortic risk and dysglycaemia.",
         "source_refs": [
-          "Therapeutic Guidelines: Antibiotic"
+          "eTG Antibiotic",
+          "TGA fluoroquinolone safety advisory"
         ]
       }
     ],
@@ -689,68 +696,69 @@
     "created": "2026-05-19"
   },
   {
-    "id": "psych-somatic-008",
+    "id": "psych-somatic-008-l3",
     "topic": "Psychiatry",
     "subtopic": "Mood: depression",
     "subtopic_detail": "Treatment-resistant depression - augmentation",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "lithium",
       "ECT"
     ],
-    "stem": "A 52-year-old man with recurrent major depressive disorder has had no adequate response to sertraline 200 mg daily for 10 weeks followed by venlafaxine titrated to 225 mg daily for 8 weeks. Adherence is confirmed by pharmacy records and partner observation. His PHQ-9 has fallen from 22 to 19 only. There has been no significant intolerance. He has no bipolar history and no psychotic features. He is not catatonic, not refusing food, has no immediate suicide plan, and his K-10 today is 30. He sleeps 5 hours and has lost 3 kg over 8 weeks. His baseline bloods today are FBC normal, UEC normal (eGFR 92), TSH 1.8, fasting glucose 5.2, LFTs normal, ECG QTc 410 ms. He is a non-smoker, drinks 4 standard drinks weekly, and has no chronic medical illness. RANZCP defines treatment-resistant depression as failure of two adequate antidepressant trials at therapeutic dose and duration.",
+    "stem": "A 52-year-old man with recurrent major depressive disorder has not adequately responded to sertraline 200 mg daily for 10 weeks followed by venlafaxine titrated to 225 mg daily for 8 weeks (adequate dose, adequate duration, confirmed adherence by pharmacy records and partner observation). PHQ-9 has fallen from 22 to 19 only. He has no significant intolerance, no bipolar history, no psychotic features, is not catatonic, not refusing food, has no immediate suicide plan; K-10 today is 30. Sleep 5 hours, weight loss 3 kg over 8 weeks. Bloods: FBC normal, UEC normal (eGFR 92), TSH 1.8, fasting glucose 5.2, LFTs normal. ECG QTc 410 ms. He is a non-smoker, drinks 4 standard drinks weekly, no chronic medical illness. RANZCP defines TRD as failure of two adequate antidepressant trials. He is willing to take additional medication and to engage with augmentation but prefers to avoid ECT if alternatives exist.",
     "data_table": {
       "Examination": "Low mood, congruent affect, no psychosis, no catatonia.",
       "Investigations": "PHQ-9 19. FBC, UEC (eGFR 92), TSH 1.8, fasting glucose 5.2, LFTs all within reference. ECG QTc 410 ms.",
       "Medications": "Venlafaxine 225 mg daily (current), sertraline 200 mg daily for 10 weeks previously."
     },
-    "lead_in": "Which is the single most appropriate next pharmacological step?",
+    "lead_in": "Which is the single most appropriate next pharmacological step per the RANZCP CPG TRD pathway?",
     "options": [
       {
         "letter": "A",
-        "text": "Add lithium augmentation to trough 0.4-0.8 mmol/L with renal and thyroid monitoring",
+        "text": "Add lithium augmentation titrated to trough 0.4-0.8 mmol/L with renal and thyroid monitoring at baseline, 6 weeks and 3-monthly thereafter",
         "correct": true,
-        "rationale": "RANZCP CPG 2020 for treatment-resistant depression endorses lithium augmentation as a first-line augmentation strategy with the strongest evidence base, target trough level 0.4 to 0.8 mmol/L for augmentation (lower than mania prophylaxis target). His normal eGFR, normal TSH, and absence of contraindications support this choice. Baseline U+E, TSH, calcium and ECG plus 12-week-interval monitoring are required (RANZCP; AMH).",
+        "rationale": "Lithium augmentation has the strongest evidence base (multiple RCTs, NNT ~5) for SSRI/SNRI-resistant unipolar MDD and is the standard first augmentation in RANZCP TRD pathway. Target trough for augmentation is lower than mania prophylaxis (0.4-0.8 vs 0.6-1.0). The patient meets TRD criteria (two adequate trials) and has no contraindication (normal eGFR, normal TSH).",
         "source_refs": [
-          "RANZCP CPG: Mood Disorders 2020",
-          "Australian Medicines Handbook"
+          "RANZCP CPG: Mood Disorders 2020 (TRD pathway)",
+          "eTG Psychotropic: Treatment-resistant depression"
         ]
       },
       {
         "letter": "B",
-        "text": "Switch venlafaxine to fluoxetine 20 mg daily as monotherapy without any augmentation",
+        "text": "Switch venlafaxine to fluoxetine 20 mg daily monotherapy without augmentation",
         "correct": false,
-        "rationale": "Switching to a third SSRI as monotherapy after two failed trials is lower-yield than augmentation in confirmed TRD; switching may be appropriate after one failure with intolerance, not after two adequate trials with partial response (RANZCP CPG).",
+        "rationale": "Switching to a third antidepressant monotherapy without augmentation has lower evidence than lithium or atypical-antipsychotic augmentation in TRD; he has already failed two adequate trials.",
         "source_refs": [
-          "RANZCP CPG: Mood Disorders 2020"
+          "RANZCP CPG TRD"
         ]
       },
       {
         "letter": "C",
-        "text": "Add bupropion 150 mg daily as monoamine combination augmentation strategy",
+        "text": "Add bupropion 150 mg daily as monoamine combination augmentation (not PBS-listed in Australia)",
         "correct": false,
-        "rationale": "Bupropion combination has weaker evidence in TRD than lithium or atypical augmentation; it is not first-line in RANZCP TRD guidance (RANZCP CPG).",
+        "rationale": "Bupropion combination has weaker evidence than lithium/aripiprazole/quetiapine augmentation and is not PBS-listed for depression in Australia (only for smoking cessation), limiting practical access. Not the best next step.",
         "source_refs": [
-          "RANZCP CPG: Mood Disorders 2020"
+          "PBS schedule",
+          "RANZCP CPG TRD"
         ]
       },
       {
         "letter": "D",
-        "text": "Add diazepam 5 mg BD as anxiolytic augmentation for six weeks duration",
+        "text": "Add diazepam 5 mg BD as anxiolytic augmentation for six weeks",
         "correct": false,
-        "rationale": "Benzodiazepines have no role in TRD augmentation, risk dependence, and may worsen depressive symptoms; they are not endorsed by RANZCP or eTG for this indication (Therapeutic Guidelines: Psychotropic).",
+        "rationale": "Benzodiazepines are not disease-modifying augmentation in TRD and add dependence risk; not supported by RANZCP CPG.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic"
+          "RANZCP CPG"
         ]
       },
       {
         "letter": "E",
-        "text": "Refer urgently for ECT as first-line treatment for resistant depressive illness",
+        "text": "Refer urgently for ECT as the first-line treatment for resistant depression",
         "correct": false,
-        "rationale": "ECT is indicated when rapid response is required (catatonia, refusal of food/fluid, high suicide risk, severe psychotic depression) or after multiple pharmacological strategies have failed; he is not in any of those categories so pharmacological augmentation is offered first (RANZCP CPG).",
+        "rationale": "ECT is appropriate for life-threatening (catatonia, food refusal, immediate suicide risk, severe psychotic depression) or following failure of multiple augmentation/switch strategies; patient preference to avoid ECT plus absence of life-threatening features means it is not the first augmentation choice.",
         "source_refs": [
-          "RANZCP CPG: Mood Disorders 2020"
+          "RANZCP CPG: ECT indications"
         ]
       }
     ],
@@ -789,68 +797,71 @@
     "created": "2026-05-19"
   },
   {
-    "id": "psych-somatic-009",
+    "id": "psych-somatic-009-l3",
     "topic": "Psychiatry",
     "subtopic": "Mood: depression",
     "subtopic_detail": "Antidepressant switching - serotonin syndrome avoidance",
-    "difficulty": 1,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "fluoxetine"
     ],
-    "stem": "A 47-year-old woman with MDD has been on fluoxetine 40 mg daily for 9 months with partial response (PHQ-9 only fallen from 21 to 16) and persistent fatigue, sexual dysfunction, and weight gain. Her psychiatrist plans to switch her to phenelzine, a non-selective irreversible monoamine oxidase inhibitor, given her atypical features. She has no significant medical illness, no concurrent serotonergic medications, no St John's Wort, no tramadol, no triptans, and is not pregnant. Her renal and hepatic function are normal. The patient asks how the switch will be done safely. She has no immediate suicide risk, lives with her supportive partner, and is willing to attend weekly review during the transition.",
+    "stem": "A 47-year-old woman with treatment-resistant MDD with atypical features has been on fluoxetine 40 mg daily for 9 months (partial response, PHQ-9 21 to 16). Her psychiatrist plans to switch to phenelzine, a non-selective irreversible MAOI. She has no concurrent serotonergic medications, no St John's Wort, no tramadol, no triptans, no pethidine, no linezolid, and is not pregnant. Renal and hepatic function are normal. Lives with supportive partner, no immediate suicide risk, agrees to weekly review during transition. She specifically asks why the wait between stopping fluoxetine and starting phenelzine is different to what her friend was told when switching from citalopram to phenelzine (2 weeks).",
     "data_table": {
       "Examination": "Mild psychomotor slowing, otherwise unremarkable, no autonomic instability.",
       "Investigations": "FBC, UEC, LFTs, TSH all within reference. ECG normal.",
       "Medications": "Fluoxetine 40 mg daily for 9 months, no other serotonergic agents."
     },
-    "lead_in": "Which is the single most appropriate switching strategy?",
+    "lead_in": "Which is the single most appropriate switching strategy and the underlying reason?",
     "options": [
       {
         "letter": "A",
         "text": "Direct switch: stop fluoxetine today and commence phenelzine 15 mg TDS tomorrow",
         "correct": false,
-        "rationale": "Direct switch from any SSRI to an MAOI risks fatal serotonin syndrome and is contraindicated; washout is mandatory (AMH; Therapeutic Guidelines: Psychotropic).",
+        "rationale": "Anti-pattern: switching from any serotonergic agent directly to an MAOI risks fatal serotonin syndrome. Direct switch is contraindicated.",
         "source_refs": [
-          "Australian Medicines Handbook",
-          "Therapeutic Guidelines: Psychotropic"
+          "AMH MAOI section",
+          "eTG Psychotropic"
         ]
       },
       {
         "letter": "B",
         "text": "Cross-taper: reduce fluoxetine while simultaneously titrating phenelzine over 2 weeks",
         "correct": false,
-        "rationale": "Cross-tapering between SSRI and MAOI is contraindicated because of overlapping serotonergic activity; AMH and eTG specifically require a complete washout (AMH).",
+        "rationale": "Anti-pattern: overlapping serotonergic agents with an irreversible MAOI is contraindicated. Cross-tapers are for SSRI-to-SSRI/SNRI switches, never SSRI-to-MAOI.",
         "source_refs": [
-          "Australian Medicines Handbook"
+          "AMH",
+          "eTG"
         ]
       },
       {
         "letter": "C",
-        "text": "Stop fluoxetine and wait 5 weeks before commencing phenelzine for adequate norfluoxetine washout",
+        "text": "Stop fluoxetine and wait at least 5 weeks before commencing phenelzine, because the active metabolite norfluoxetine has a half-life of approximately 7-15 days and requires ~5 half-lives for clearance; other SSRIs (citalopram, sertraline) need only ~2 weeks washout because they lack a long-half-life active metabolite",
         "correct": true,
-        "rationale": "Switching FROM fluoxetine TO an MAOI requires at least 5 weeks washout because of fluoxetine's active metabolite norfluoxetine (half-life 7-15 days). All other SSRIs/SNRIs require minimum 2 weeks washout before an MAOI; switching FROM an MAOI TO another antidepressant requires 2 weeks for the MAO enzyme to regenerate. These are absolute rules in AMH and Therapeutic Guidelines: Psychotropic.",
+        "rationale": "Fluoxetine's active metabolite norfluoxetine has a half-life of 7-15 days; ~5 elimination half-lives = ~35-75 days. The AMH and eTG specify a 5-week minimum washout from fluoxetine to MAOI. Other SSRIs require ~2 weeks (5 half-lives of citalopram/sertraline). This contrast is the AU-cutoff knowledge being tested.",
         "source_refs": [
-          "Australian Medicines Handbook",
-          "Therapeutic Guidelines: Psychotropic"
+          "AMH MAOI switching",
+          "eTG Psychotropic 2024",
+          "MIMS fluoxetine PI"
         ]
       },
       {
         "letter": "D",
         "text": "Stop fluoxetine and wait 5 days before starting phenelzine",
         "correct": false,
-        "rationale": "Five days is insufficient given fluoxetine plus norfluoxetine half-life; this would carry significant serotonin syndrome risk (AMH).",
+        "rationale": "5 days is grossly inadequate for fluoxetine because of norfluoxetine accumulation; 5-week wait is required.",
         "source_refs": [
-          "Australian Medicines Handbook"
+          "AMH"
         ]
       },
       {
         "letter": "E",
         "text": "Continue fluoxetine and add low-dose phenelzine 7.5 mg daily as augmentation",
         "correct": false,
-        "rationale": "Combining an SSRI with an MAOI is contraindicated and a serotonin syndrome death risk; never coadminister (AMH).",
+        "rationale": "Co-administration of any SSRI with an MAOI is contraindicated due to serotonin syndrome risk; no 'low-dose' is safe.",
         "source_refs": [
-          "Australian Medicines Handbook"
+          "AMH",
+          "TGA PI phenelzine"
         ]
       }
     ],
@@ -884,70 +895,72 @@
     "created": "2026-05-19"
   },
   {
-    "id": "psych-somatic-010",
+    "id": "psych-somatic-010-l3",
     "topic": "Psychiatry",
     "subtopic": "Toxicology",
     "subtopic_detail": "Serotonin syndrome vs NMS vs anticholinergic discrimination",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "discrimination",
       "serotonin syndrome"
     ],
-    "stem": "A 28-year-old man is brought to ED by ambulance 6 hours after his community mental health team added tramadol 100 mg QID for back pain. He was already on escitalopram 20 mg daily and recently started linezolid for a soft tissue infection. He is agitated, with shivering, sweating, and intermittent myoclonus that is most prominent in the LOWER LIMBS. His pupils are dilated (6 mm) and reactive. He has hyperreflexia with inducible clonus, most marked at the ankles, and ocular clonus is also present. His skin is moist (not dry). HR 128, BP 168/92, RR 22, T 39.4. He is alert but agitated. He has no recent antipsychotic exposure. CK is 480 U/L.",
+    "stem": "A 28-year-old man is brought to ED by ambulance 6 hours after his community team added tramadol 100 mg QID for back pain. He was already on escitalopram 20 mg daily and started linezolid 4 days ago for a soft tissue infection. He is agitated and shivering with sweating; intermittent myoclonus is most prominent in the LOWER limbs; pupils are dilated (6 mm) and reactive; he is markedly hyperreflexic with sustained inducible clonus at the ankles, and ocular clonus is present. Skin is MOIST. HR 128, BP 168/92, RR 22, T 39.4. He is alert but agitated. CK 480 U/L. No recent antipsychotic exposure on review of his community team's chart. The ED registrar is choosing between the Hunter Serotonin Toxicity Criteria, NMS criteria and an anticholinergic toxidrome.",
     "data_table": {
       "Vital signs": "HR 128, BP 168/92, RR 22, T 39.4.",
       "Examination": "Agitation, diaphoresis, dilated reactive pupils, lower-limb-predominant clonus, hyperreflexia, ocular clonus, moist skin.",
       "Investigations": "CK 480 U/L, FBC, UEC, glucose normal. Paracetamol level negative.",
       "Medications": "Escitalopram 20 mg daily, tramadol 100 mg QID (started today), linezolid for soft tissue infection."
     },
-    "lead_in": "Which is the single most likely toxidrome?",
+    "lead_in": "Which toxidrome best fits, and which is the most discriminating feature on examination?",
     "options": [
       {
         "letter": "A",
-        "text": "Anticholinergic toxidrome from antimuscarinic overdose",
+        "text": "Anticholinergic toxidrome - dry mucous membranes and absent bowel sounds are the deciding features",
         "correct": false,
-        "rationale": "Anticholinergic toxidrome shows DRY skin, dry mucous membranes, urinary retention, ileus, dilated pupils, and confusion without clonus or hyperreflexia; his moist skin and clonus exclude this (Therapeutic Guidelines: Toxicology).",
+        "rationale": "Anticholinergic toxidrome features DRY skin, dry mucous membranes, urinary retention and absent bowel sounds. The patient's skin is MOIST and he has hyperreflexia/clonus, which are inconsistent with anticholinergic and consistent with serotonin toxicity.",
         "source_refs": [
-          "Therapeutic Guidelines: Toxicology"
+          "eTG: Toxicology - toxidromes",
+          "Hunter criteria (Dunkley 2003)"
         ]
       },
       {
         "letter": "B",
-        "text": "Neuroleptic malignant syndrome from antipsychotic dopamine blockade",
+        "text": "Neuroleptic malignant syndrome - lead-pipe rigidity, hyporeflexia and antipsychotic exposure are the deciding features",
         "correct": false,
-        "rationale": "NMS features 'lead-pipe' rigidity, HYPOreflexia or normal reflexes, hyperthermia, autonomic instability, markedly raised CK (often >1000), and develops over days; clonus and hyperreflexia point away from NMS, and he has had no antipsychotic exposure (Therapeutic Guidelines: Psychotropic).",
+        "rationale": "NMS classically has lead-pipe rigidity, HYPOreflexia, autonomic instability, hyperthermia AND recent antipsychotic initiation/dose change. The patient has NO antipsychotic exposure, has HYPERreflexia with clonus (not hyporeflexia), and has the triple-serotonergic exposure consistent with serotonin toxicity.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic"
+          "DSM-5-TR NMS criteria",
+          "eTG"
         ]
       },
       {
         "letter": "C",
-        "text": "Serotonin syndrome from triple serotonergic combination",
+        "text": "Serotonin syndrome by Hunter criteria - the discriminating feature is spontaneous or inducible clonus with hyperreflexia in the setting of multi-serotonergic exposure (escitalopram + tramadol + linezolid as a non-selective MAOI)",
         "correct": true,
-        "rationale": "Hunter Serotonin Toxicity Criteria require a serotonergic agent PLUS one of: spontaneous clonus; inducible clonus + agitation or diaphoresis; ocular clonus + agitation or diaphoresis; tremor + hyperreflexia; or hypertonia + temperature >38 with ocular or inducible clonus. He has multiple positive criteria. Onset is rapid (hours), and the pattern of LOWER-limb-predominant clonus, hyperreflexia, and ocular clonus is pathognomonic. Tramadol (serotonin reuptake inhibitor) plus linezolid (MAOI activity) plus escitalopram is a textbook triple-hit (Hunter criteria; eTG Toxicology).",
+        "rationale": "Hunter criteria require serotonergic agent PLUS one of: spontaneous clonus; inducible clonus + agitation or diaphoresis; ocular clonus + agitation or diaphoresis; tremor + hyperreflexia; hypertonia + temperature >38 + ocular/inducible clonus. He meets multiple. Triple-serotonergic exposure: SSRI + tramadol (weak SNRI/opioid with serotonergic activity) + linezolid (non-selective MAOI). Distinct from NMS by hyperreflexia/clonus pattern and absence of antipsychotic exposure.",
         "source_refs": [
-          "Therapeutic Guidelines: Toxicology",
-          "Therapeutic Guidelines: Psychotropic",
-          "Australian Medicines Handbook"
+          "Hunter Serotonin Toxicity Criteria (Dunkley 2003)",
+          "eTG: Serotonin syndrome",
+          "AMH linezolid drug interaction warning"
         ]
       },
       {
         "letter": "D",
-        "text": "Sympathomimetic toxidrome from stimulant intoxication",
+        "text": "Sympathomimetic toxidrome from undisclosed stimulant intoxication - urine drug screen will confirm",
         "correct": false,
-        "rationale": "Stimulant toxidrome may cause hyperthermia, hypertension, and agitation but does NOT cause lower-limb-predominant clonus or ocular clonus; the medication exposure pattern and clonus distribution favour serotonin syndrome (Therapeutic Guidelines: Toxicology).",
+        "rationale": "Sympathomimetic toxidrome shares tachycardia, hypertension, mydriasis and diaphoresis but lacks the prominent neuromuscular features of hyperreflexia, clonus and ocular clonus, which are the discriminating Hunter criteria.",
         "source_refs": [
-          "Therapeutic Guidelines: Toxicology"
+          "eTG Toxicology"
         ]
       },
       {
         "letter": "E",
-        "text": "Malignant hyperthermia from volatile anaesthetic exposure",
+        "text": "Malignant hyperthermia from anaesthetic exposure",
         "correct": false,
-        "rationale": "Malignant hyperthermia requires exposure to volatile anaesthetic or suxamethonium with masseter rigidity, rising end-tidal CO2, and acidosis; this is a non-anaesthetic setting (Therapeutic Guidelines: Toxicology).",
+        "rationale": "Malignant hyperthermia requires exposure to volatile anaesthetic or depolarising neuromuscular blocker; no such exposure here.",
         "source_refs": [
-          "Therapeutic Guidelines: Toxicology"
+          "eTG"
         ]
       }
     ],
@@ -1086,70 +1099,72 @@
     "created": "2026-05-19"
   },
   {
-    "id": "psych-somatic-012",
+    "id": "psych-somatic-012-l3",
     "topic": "Psychiatry",
     "subtopic": "Other",
     "subtopic_detail": "Valproate in reproductive-age women",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "valproate",
       "teratogenicity"
     ],
-    "stem": "A 26-year-old woman with bipolar I disorder has had two manic episodes in the past 18 months despite lithium 1000 mg daily (level 0.8 mmol/L). She and her partner are planning a pregnancy within the next 12 months and have stopped using contraception. She is otherwise well, takes no other medications, has normal renal and hepatic function, normal TSH, normal weight, and no history of polycystic ovary syndrome. Her consultant psychiatrist is considering adjuncts to improve mood stability before conception. She asks specifically about sodium valproate, which her sister with epilepsy takes. She has no current depressive symptoms, no psychosis, no current suicide risk, and has been adherent to lithium with stable trough levels.",
+    "stem": "A 26-year-old woman with bipolar I disorder has had two manic episodes in the past 18 months despite lithium 1000 mg daily (level 0.8 mmol/L, partner-confirmed adherence). She and her partner are planning a pregnancy within the next 12 months and have stopped contraception. She is otherwise well, takes no other medications, has normal renal/hepatic function, normal TSH, normal weight, no PCOS history. Her predominant illness course is MANIC (no significant depressive episodes documented). She has no current depressive symptoms, no psychosis, no current suicide risk and has been adherent with stable lithium troughs. She asks specifically about adding sodium valproate (her sister with epilepsy takes it) and about lamotrigine.",
     "data_table": {
       "Examination": "Euthymic mood, no psychosis.",
       "Investigations": "Lithium 0.8 mmol/L, FBC, UEC, LFTs, TSH all within reference. Pregnancy test negative.",
       "Medications": "Lithium 1000 mg daily; no contraception."
     },
-    "lead_in": "Which is the single most appropriate next step?",
+    "lead_in": "Which is the single most appropriate next step in this preconception window?",
     "options": [
       {
         "letter": "A",
-        "text": "Add sodium valproate 500 mg BD as adjunct mood stabiliser",
+        "text": "Add sodium valproate 500 mg BD as adjunct mood stabiliser to lithium",
         "correct": false,
-        "rationale": "Sodium valproate is contraindicated in pregnancy and in women of childbearing potential not on highly effective contraception because of major congenital malformations (~10%) and neurodevelopmental impairment (~30-40%). It must NOT be used unless a Pregnancy Prevention Programme is in place AND no alternative exists. She is actively trying to conceive (TGA black-box; AMH).",
+        "rationale": "Anti-pattern: adding valproate in a woman of reproductive potential who has stopped contraception is contraindicated under the TGA Valproate Pregnancy Prevention Program (~10 percent major malformation rate, IQ effects). Even if not pregnant today, the planning window plus inconsistent prior contraception makes any valproate prescription unacceptable.",
         "source_refs": [
-          "Australian Medicines Handbook",
-          "Therapeutic Goods Administration valproate restrictions"
+          "TGA Valproate Pregnancy Prevention Program 2023",
+          "RANZCP CPG: Bipolar"
         ]
       },
       {
         "letter": "B",
-        "text": "Add quetiapine extended-release 300-600 mg nocte with metabolic monitoring",
+        "text": "Add quetiapine extended-release titrated to 300-600 mg nocte with metabolic monitoring, continuing lithium at its current dose",
         "correct": true,
-        "rationale": "RANZCP Mood Disorders CPG 2020 endorses quetiapine as a first-line option for mood stabilisation in bipolar disorder during pregnancy planning; it has the most reassuring reproductive safety profile among atypical antipsychotics. Add to current lithium with combined metabolic monitoring; this preserves lithium-conferred suicide-prevention effect while improving cycle control (RANZCP; AMH).",
+        "rationale": "Her predominant pattern is mania despite therapeutic lithium; the evidence base supports atypical antipsychotic adjunct (quetiapine, olanzapine) for breakthrough mania. Quetiapine has a more reassuring preconception profile than valproate, no Pregnancy Prevention Program, and acceptable monitoring requirements. Lithium is retained because her trough is therapeutic and switching would risk further mania during the planning window.",
         "source_refs": [
-          "RANZCP CPG: Mood Disorders 2020",
-          "Australian Medicines Handbook"
+          "RANZCP CPG: Bipolar 2020",
+          "eTG Psychotropic: Bipolar"
         ]
       },
       {
         "letter": "C",
-        "text": "Switch lithium to carbamazepine 200 mg BD as monotherapy",
+        "text": "Switch lithium to carbamazepine 200 mg BD",
         "correct": false,
-        "rationale": "Carbamazepine is also teratogenic (neural tube defects ~1-3%, craniofacial and cardiac malformations) and induces hepatic enzymes including hormonal contraceptives; not first-line in pre-conception planning (AMH).",
+        "rationale": "Carbamazepine is teratogenic (neural tube defects), induces hepatic enzymes (interferes with oral contraceptives and many drugs), and has weaker mania-prophylaxis evidence than continuation of lithium. Not preferred in preconception planning.",
         "source_refs": [
-          "Australian Medicines Handbook"
+          "AMH carbamazepine",
+          "RANZCP CPG: Bipolar"
         ]
       },
       {
         "letter": "D",
-        "text": "Stop lithium immediately because of active pregnancy planning",
+        "text": "Stop lithium immediately because of pregnancy planning",
         "correct": false,
-        "rationale": "Stopping lithium pre-conception in a woman with two recent manic episodes carries high relapse risk; current Australian and RANZCP guidance is shared decision-making with risk-benefit, often continuing at lowest effective dose with detailed counselling about Ebstein anomaly risk (low absolute, ~0.05-0.1%) and foetal monitoring (RANZCP perinatal psychiatry; AMH).",
+        "rationale": "Anti-pattern: lithium has an absolute Ebstein anomaly risk of ~1-2 per 1000 (relative risk elevated but absolute risk modest). Stopping lithium without replacement during a mania-predominant course produces extremely high relapse risk; preconception management is shared decision-making, not reflex cessation.",
         "source_refs": [
-          "RANZCP CPG: Mood Disorders 2020",
-          "Australian Medicines Handbook"
+          "RANZCP CPG: Bipolar perinatal",
+          "Cohen et al systematic reviews"
         ]
       },
       {
         "letter": "E",
         "text": "Switch lithium to lamotrigine 200 mg daily as monotherapy",
         "correct": false,
-        "rationale": "Lamotrigine is effective for depressive maintenance in bipolar but NOT effective for mania prevention; with two recent manic episodes, lamotrigine monotherapy would predictably under-treat (RANZCP).",
+        "rationale": "Lamotrigine has efficacy for bipolar DEPRESSION prophylaxis but is INFERIOR to lithium for mania prophylaxis; switching a mania-predominant patient to lamotrigine monotherapy is mechanistically wrong.",
         "source_refs": [
-          "RANZCP CPG: Mood Disorders 2020"
+          "RANZCP CPG: Bipolar 2020",
+          "Geddes et al lamotrigine meta-analysis"
         ]
       }
     ],
@@ -1187,66 +1202,68 @@
     "created": "2026-05-19"
   },
   {
-    "id": "psych-somatic-013",
+    "id": "psych-somatic-013-l3",
     "topic": "Psychiatry",
     "subtopic": "Toxicology",
     "subtopic_detail": "TCA overdose - cardiac toxicity and sodium bicarbonate",
-    "difficulty": 1,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [],
-    "stem": "A 32-year-old woman with chronic depression is brought to ED 90 minutes after a deliberate ingestion of approximately 50 amitriptyline 25 mg tablets taken with alcohol. She is drowsy but rousable, GCS 12 (E3 V4 M5). She has had a single self-terminating generalised tonic-clonic seizure on arrival. Her pupils are dilated, mucous membranes dry, urinary catheter has drained 200 mL. ECG shows sinus tachycardia HR 132, QRS 140 ms, terminal R wave in aVR 4 mm, QTc 510 ms. BP is 92/54. Venous blood gas pH 7.28, lactate 3.4, sodium 138, potassium 3.6. No paracetamol co-ingestion detected. She was on no other regular medications.",
+    "stem": "A 32-year-old woman with chronic depression is brought to ED 90 minutes after deliberate ingestion of approximately 50 amitriptyline 25 mg tablets with alcohol. She is drowsy but rousable (GCS 12), has had a single self-terminating generalised tonic-clonic seizure on arrival, pupils dilated, mucous membranes dry, catheter drained 200 mL. ECG: sinus tachycardia 132 bpm, QRS 140 ms, terminal R wave in aVR 4 mm, QTc 510 ms. BP 92/54. VBG: pH 7.28, lactate 3.4, Na 138, K 3.6. No paracetamol co-ingestion. No other regular medications.",
     "data_table": {
       "Vital signs": "HR 132, BP 92/54, RR 14, GCS 12, T 36.8.",
       "Examination": "Drowsy but rousable, dilated pupils, dry mucosae, post-ictal.",
       "Investigations": "ECG: sinus tachycardia, QRS 140 ms, terminal R in aVR 4 mm, QTc 510 ms. VBG: pH 7.28, lactate 3.4, Na 138, K 3.6. Paracetamol level negative."
     },
-    "lead_in": "Which is the single most appropriate immediate intervention?",
+    "lead_in": "Which is the single most appropriate immediate intervention, and what is the threshold guiding it?",
     "options": [
       {
         "letter": "A",
-        "text": "IV sodium bicarbonate 1-2 mmol/kg bolus, narrow QRS to pH 7.50-7.55",
+        "text": "IV sodium bicarbonate 1-2 mmol/kg bolus, repeated as needed to narrow QRS below ~120 ms and target arterial pH 7.50-7.55; bicarbonate is indicated for QRS >100-120 ms, terminal R in aVR >3 mm, hypotension, ventricular arrhythmia or seizures, per Australian Poisons Information Centre and eTG Toxicology",
         "correct": true,
-        "rationale": "Therapeutic Guidelines Toxicology criteria for sodium bicarbonate in TCA toxicity: QRS >100 ms, terminal R wave in aVR >3 mm, hypotension, ventricular arrhythmia, or seizures. She meets multiple criteria. Bicarbonate works via sodium loading (overcoming fast sodium channel blockade) AND alkalinisation (reducing free drug). Target QRS narrowing and pH 7.50-7.55 (eTG Toxicology; AMH).",
+        "rationale": "TCA toxicity: bicarbonate reverses cardiac sodium channel blockade by raising serum pH and providing a sodium load. Australian thresholds for bicarbonate (eTG Toxicology, NSW Poisons Information Centre): QRS >100-120 ms, terminal R wave in aVR >3 mm, hypotension, broad-complex arrhythmia, or seizure. She meets multiple. Target QRS <120 ms, pH 7.50-7.55. This is a textbook L3 AU-cutoff application.",
         "source_refs": [
-          "Therapeutic Guidelines: Toxicology",
-          "Australian Medicines Handbook"
+          "eTG Toxicology: TCA poisoning",
+          "NSW Poisons Information Centre",
+          "Murray's Toxicology Handbook"
         ]
       },
       {
         "letter": "B",
-        "text": "IV flumazenil 0.2 mg slow push to reverse benzodiazepine sedation",
+        "text": "IV flumazenil 0.2 mg to reverse sedation",
         "correct": false,
-        "rationale": "Flumazenil is contraindicated in mixed overdose where TCA is involved because it can precipitate seizures; she has already seized (eTG Toxicology).",
+        "rationale": "Anti-pattern: flumazenil is contraindicated in mixed/unknown overdose because it can precipitate refractory seizures, especially in TCA overdose where seizures are already present.",
         "source_refs": [
-          "Therapeutic Guidelines: Toxicology"
+          "eTG Toxicology"
         ]
       },
       {
         "letter": "C",
-        "text": "IV amiodarone 300 mg loading dose for QRS prolongation overnight",
+        "text": "IV amiodarone 300 mg for the wide-complex tachycardia",
         "correct": false,
-        "rationale": "Class III antiarrhythmics including amiodarone, and class Ia (procainamide) and Ic agents are CONTRAINDICATED in TCA toxicity because they also block sodium channels and prolong repolarisation, worsening cardiotoxicity (eTG Toxicology; AMH).",
+        "rationale": "Anti-pattern: class III antiarrhythmics including amiodarone are contraindicated in TCA-induced wide-complex rhythms because they further prolong QT and can precipitate torsades; lignocaine is the preferred antiarrhythmic if bicarbonate fails.",
         "source_refs": [
-          "Therapeutic Guidelines: Toxicology",
-          "Australian Medicines Handbook"
+          "eTG",
+          "Murray's Toxicology"
         ]
       },
       {
         "letter": "D",
-        "text": "Gastric lavage and oral activated charcoal 50 g for decontamination",
+        "text": "Gastric lavage and oral activated charcoal 50 g at 90 minutes post-ingestion in a drowsy patient",
         "correct": false,
-        "rationale": "Gastric lavage is not recommended after the first hour in most ingestions and has no benefit at 90 minutes; single-dose activated charcoal may be considered within 1-2 hours in an alert patient with protected airway but does not address the life-threatening cardiotoxicity; the primary intervention is sodium bicarbonate (eTG Toxicology).",
+        "rationale": "Gastric lavage is no longer recommended (Position Statement: Toxicology). Charcoal at 90 minutes has limited benefit and the unprotected airway in GCS 12 raises aspiration risk; airway protection takes priority over decontamination.",
         "source_refs": [
-          "Therapeutic Guidelines: Toxicology"
+          "AACT/EAPCCT Position Statements",
+          "eTG Toxicology"
         ]
       },
       {
         "letter": "E",
         "text": "IV physostigmine 1 mg slow push to reverse anticholinergic effects",
         "correct": false,
-        "rationale": "Physostigmine is contraindicated in TCA overdose because it can precipitate asystole, seizures, and worsen cardiotoxicity (eTG Toxicology).",
+        "rationale": "Physostigmine is contraindicated in TCA overdose because it has been associated with asystole and seizures; the anticholinergic features are a manifestation of TCA toxicity, not the target.",
         "source_refs": [
-          "Therapeutic Guidelines: Toxicology"
+          "eTG Toxicology"
         ]
       }
     ],
@@ -1278,69 +1295,69 @@
     "created": "2026-05-19"
   },
   {
-    "id": "psych-somatic-014",
+    "id": "psych-somatic-014-l3",
     "topic": "Psychiatry",
     "subtopic": "Mood: depression",
     "subtopic_detail": "Discontinuation syndrome vs relapse",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "SSRI"
     ],
-    "stem": "A 41-year-old woman who has been on venlafaxine 150 mg daily for 14 months for major depressive disorder agrees with her general practitioner to begin reducing her dose. After her first reduction to 75 mg daily, she develops, within 48 hours: brief electric-shock sensations described as 'brain zaps', dizziness, nausea, headache, insomnia, and intermittent crying spells with irritability. Her PHQ-9 4 days ago at 75 mg was 4. Her mood is reactive, she still finds pleasure in her usual activities, she has no anhedonia, no early morning waking, no suicidal ideation, no diurnal mood variation. Her partner notes she 'feels off' but is still socially engaged and functioning at work. The symptoms began within 48 hours of the dose reduction.",
+    "stem": "A 41-year-old woman who has been on venlafaxine XR 150 mg daily for 14 months for MDD agrees with her GP to reduce her dose. Within 48 hours of dropping to 75 mg daily she develops brief electric-shock sensations ('brain zaps'), dizziness, nausea, headache, insomnia and intermittent crying spells with irritability. PHQ-9 four days earlier on 150 mg was 4. Her mood remains reactive, she still enjoys her usual activities, has no anhedonia, no early-morning waking, no suicidal ideation, no diurnal mood variation. She is still functioning at work and socially engaged. Symptoms began within 48 hours of the dose reduction. She has no other new medications, no infections, no thyroid symptoms.",
     "data_table": {
       "Examination": "Reactive affect, mild irritability, no anhedonia, no psychomotor change, no psychosis.",
       "Investigations": "PHQ-9 at 150 mg dose 4 days ago: score 4.",
       "Medications": "Venlafaxine 75 mg daily (reduced from 150 mg 48 hours ago)."
     },
-    "lead_in": "Which is the single most likely cause of her symptoms?",
+    "lead_in": "Which is the single most likely cause of her symptoms, and what is the most appropriate immediate response?",
     "options": [
       {
         "letter": "A",
-        "text": "Recurrence of major depressive disorder",
+        "text": "Recurrence of major depressive disorder - reinstate full dose and refer urgently",
         "correct": false,
-        "rationale": "Relapse develops gradually over 2-3 weeks with anhedonia, psychomotor change, neurovegetative features, and progressive functional decline; rapid 48-hour onset of physical neurological symptoms with reactive mood is discontinuation syndrome, not relapse (RANZCP CPG; AMH).",
+        "rationale": "Relapse of MDD typically develops over weeks not 48 hours, includes core symptoms (low mood, anhedonia, neurovegetative features) that are absent here. The temporal pattern and somatic features (brain zaps, dizziness) are not typical of MDD recurrence.",
         "source_refs": [
-          "RANZCP CPG: Mood Disorders 2020",
-          "Australian Medicines Handbook"
+          "RANZCP CPG: Mood Disorders"
         ]
       },
       {
         "letter": "B",
-        "text": "Serotonin withdrawal-induced GAD",
-        "correct": false,
-        "rationale": "New-onset GAD requires >=6 months of excessive worry; her symptoms began within 48 hours and have a specific neurological pattern fitting discontinuation (DSM-5).",
+        "text": "Antidepressant discontinuation syndrome - resume venlafaxine 150 mg daily then implement a slower taper (e.g. 37.5 mg reductions every 2-4 weeks) per eTG; venlafaxine is particularly prone due to its short half-life",
+        "correct": true,
+        "rationale": "Discontinuation syndrome: onset within days (typically 2-5 days) of dose reduction or cessation, FINISH mnemonic (Flu-like, Insomnia, Nausea, Imbalance, Sensory disturbance including brain zaps, Hyperarousal). Venlafaxine is among the highest-risk antidepressants due to short half-life (~5 hours parent, ~11 hours active metabolite). Management: reinstate previous dose, then taper more slowly. This is the AU-cutoff: venlafaxine taper steps should be smaller (37.5 mg) and more spaced than SSRIs.",
         "source_refs": [
-          "Australian Medicines Handbook"
+          "eTG Psychotropic: Antidepressant discontinuation",
+          "AMH venlafaxine",
+          "RANZCP CPG"
         ]
       },
       {
         "letter": "C",
-        "text": "Serotonin syndrome from drug interaction",
+        "text": "Serotonin syndrome from a drug interaction",
         "correct": false,
-        "rationale": "Serotonin syndrome features hyperreflexia, clonus, agitation, and autonomic hyperactivity from EXCESS serotonergic activity; she has REDUCED her dose and has no clonus or hyperreflexia (eTG Toxicology).",
+        "rationale": "Serotonin syndrome features hyperreflexia, clonus, hyperthermia, and follows the addition of a serotonergic agent, not a dose REDUCTION. The pattern here is the opposite (reduction not addition) and lacks neuromuscular features.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic"
+          "Hunter criteria",
+          "eTG"
         ]
       },
       {
         "letter": "D",
-        "text": "Antidepressant discontinuation syndrome",
-        "correct": true,
-        "rationale": "The FINISH mnemonic (Flu-like symptoms, Insomnia, Nausea, Imbalance, Sensory disturbances 'brain zaps', Hyperarousal) captures the syndrome. Onset is within days of dose reduction, lasts 1-2 weeks, and resolves on dose restoration. Venlafaxine has a short half-life (~5 hours; metabolite ~11 hours) and is one of the highest-risk SNRIs for discontinuation symptoms. Distinguishing features from relapse: rapid onset, sensory disturbances, retained mood reactivity, no anhedonia, and resolution with dose restoration (AMH; RANZCP).",
+        "text": "Hypothyroidism from long-term SNRI use",
+        "correct": false,
+        "rationale": "SNRIs do not cause hypothyroidism; no thyroid symptoms and no temporal link with dose change.",
         "source_refs": [
-          "Australian Medicines Handbook",
-          "RANZCP CPG: Mood Disorders 2020",
-          "Therapeutic Guidelines: Psychotropic"
+          "AMH"
         ]
       },
       {
         "letter": "E",
-        "text": "Hypothyroidism from long-term SNRI use",
+        "text": "Serotonin withdrawal-induced GAD",
         "correct": false,
-        "rationale": "SNRIs do not cause hypothyroidism; brain zaps and rapid onset on dose reduction point to discontinuation syndrome (AMH).",
+        "rationale": "GAD requires at least 6 months of pervasive worry with characteristic features; the syndrome here is acute, sensorimotor and time-locked to the dose reduction, not anxiety-disorder onset.",
         "source_refs": [
-          "Australian Medicines Handbook"
+          "DSM-5-TR GAD criteria"
         ]
       }
     ],
@@ -1375,69 +1392,70 @@
     "created": "2026-05-19"
   },
   {
-    "id": "psych-somatic-015",
+    "id": "psych-somatic-015-l3",
     "topic": "Psychiatry",
     "subtopic": "Other",
     "subtopic_detail": "Chronic vs acute risk factors and safety planning",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "safety plan"
     ],
-    "stem": "A 38-year-old Aboriginal man presents to ED after an impulsive paracetamol ingestion of 8 tablets following an argument with his partner. He is medically cleared with no transaminitis, paracetamol level below the Rumack-Matthew nomogram line, and ongoing review for psychosocial assessment. He has a history of one previous self-harm episode 4 years ago, a long history of harmful alcohol use (currently 8 standard drinks daily), unemployment for 12 months, and recent eviction. He has chronic back pain and stopped his SSRI 3 months ago because he 'could not afford it'. Tonight he tells you the argument was 'the last straw' and although he says he does not want to die now, he feels 'hopeless about anything getting better'. He has a firearm at home (legally held licensed pest control firearm). He has a brother who completed suicide 8 years ago. He has not yet been linked with the local Aboriginal Community Controlled Health Service.",
+    "stem": "A 38-year-old Aboriginal man presents to ED after an impulsive paracetamol ingestion of 8 tablets following an argument with his partner. He is medically cleared (no transaminitis, paracetamol level below the Rumack-Matthew nomogram line). History: one previous self-harm 4 years ago; harmful alcohol use (8 standard drinks/day currently); unemployment 12 months; recent eviction. He has chronic back pain and stopped his SSRI 3 months ago because he 'could not afford it'. Tonight he says the argument was 'the last straw' and although he does not want to die now, he feels 'hopeless about anything getting better'. He has a legally-licensed firearm at home for pest control. His brother completed suicide 8 years ago. He has not yet been linked with the local Aboriginal Community Controlled Health Service. He agrees to attend follow-up if it is arranged for him.",
     "data_table": {
       "Examination": "Hopeless, mildly intoxicated, no psychosis, no agitation, no suicide plan at this moment.",
       "Investigations": "Paracetamol level non-toxic. LFTs normal. UEC normal. BAC 0.18%.",
       "Medications": "Nil current (stopped SSRI 3 months ago)."
     },
-    "lead_in": "Which is the single most important MODIFIABLE acute risk factor to address before discharge planning?",
+    "lead_in": "Of the listed factors, which is the single most important MODIFIABLE acute risk factor to address before discharge planning under the Australian National Suicide Prevention Strategy and RANZCP guidance?",
     "options": [
       {
         "letter": "A",
-        "text": "Brother's completed suicide from eight years ago",
+        "text": "Brother's completed suicide 8 years ago",
         "correct": false,
-        "rationale": "Family history of suicide is a non-modifiable chronic risk factor; while important to acknowledge it cannot be changed and is not the priority intervention target tonight (RANZCP suicide risk).",
+        "rationale": "Family history is a non-modifiable distal risk factor; cannot be acted on to reduce acute risk before discharge.",
         "source_refs": [
-          "RANZCP: Assessment and management of suicide risk",
-          "Therapeutic Guidelines: Psychotropic"
+          "RANZCP Suicide Prevention guidance"
         ]
       },
       {
         "letter": "B",
         "text": "His Aboriginal identity as a demographic factor",
         "correct": false,
-        "rationale": "Aboriginal identity is NOT a risk factor; structural disadvantage, intergenerational trauma, and reduced access to culturally safe care are. Linking with the Aboriginal Community Controlled Health Service is an important protective intervention, but framing identity itself as a risk factor is wrong (RANZCP; Gayaa Dhuwi).",
+        "rationale": "Anti-pattern: identity is not a risk factor to be 'modified' - culturally-safe care and ACCHS linkage are the appropriate response, not pathologising identity. (Identifying as Aboriginal carries elevated population-level risk because of social determinants, not because of identity itself.)",
         "source_refs": [
-          "RANZCP: Assessment and management of suicide risk",
-          "Gayaa Dhuwi (Proud Spirit) Declaration"
+          "National Aboriginal and Torres Strait Islander Suicide Prevention Strategy",
+          "RANZCP"
         ]
       },
       {
         "letter": "C",
-        "text": "Previous self-harm episode from four years ago",
+        "text": "Previous self-harm episode 4 years ago",
         "correct": false,
-        "rationale": "Past self-harm is a strong chronic risk factor but non-modifiable historically; it informs risk stratification but is not the modifiable intervention target (RANZCP).",
+        "rationale": "Past self-harm is a strong non-modifiable historical risk factor; cannot be 'addressed' acutely to change risk before discharge.",
         "source_refs": [
-          "RANZCP: Assessment and management of suicide risk"
+          "RANZCP"
         ]
       },
       {
         "letter": "D",
         "text": "Pervasive hopelessness about the future improving",
         "correct": false,
-        "rationale": "Hopelessness is a modifiable cognitive factor addressed by psychotherapy, social support, and treatment of underlying depression but acts over weeks; means restriction acts immediately and prevents impulsive action in the highest-risk 48-72 hours post-presentation (RANZCP).",
+        "rationale": "Hopelessness is the strongest psychological correlate of suicide and is modifiable in principle through psychological therapy and treating the underlying mood disorder, but it is a downstream construct, not the most rapidly-modifiable factor that can be addressed BEFORE discharge tonight.",
         "source_refs": [
-          "RANZCP: Assessment and management of suicide risk"
+          "RANZCP",
+          "Beck Hopelessness Scale literature"
         ]
       },
       {
         "letter": "E",
-        "text": "Access to a firearm at home",
+        "text": "Access to a firearm at home (means restriction)",
         "correct": true,
-        "rationale": "Means restriction is the single highest-impact MODIFIABLE acute intervention in suicide prevention. Firearm access in Australia approximately triples completed suicide risk and is the most lethal method; safely removing the firearm before discharge (police-held storage, family-held storage, voluntary surrender) is the priority risk-reduction action. RANZCP and Australian suicide prevention guidance both centre means restriction as the most evidence-based modifiable acute factor (RANZCP; LIFE Framework).",
+        "rationale": "Means restriction is the highest-evidence acute modifiable intervention in suicide prevention: removing or securing the firearm tonight (e.g. via partner-removal, police safe-storage, or temporary surrender) reduces lethality even if other risk factors persist. The acute window after presentation is when access to lethal means most strongly predicts completed suicide. RANZCP, Black Dog Institute and the National Suicide Prevention Strategy all rank means restriction as the most actionable acute step. (Resuming SSRI access and ACCHS linkage are also critical, but means restriction is rate-limiting.)",
         "source_refs": [
-          "RANZCP: Assessment and management of suicide risk",
-          "Australian Government LIFE: Living Is For Everyone Framework"
+          "RANZCP Suicide Prevention",
+          "National Suicide Prevention Strategy",
+          "Black Dog Institute means restriction"
         ]
       }
     ],
@@ -1477,67 +1495,69 @@
     "created": "2026-05-19"
   },
   {
-    "id": "psych-somatic-016",
+    "id": "psych-somatic-016-l3",
     "topic": "Psychiatry",
     "subtopic": "Other",
     "subtopic_detail": "Safety plan after self-harm (DBT chain analysis)",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "safety plan"
     ],
-    "stem": "A 23-year-old woman with borderline personality disorder presents to ED after superficial wrist cutting following a perceived rejection by a friend. She has had 6 similar presentations over the past 12 months. She is medically cleared after wound closure and tetanus update. She has an established treatment relationship with a community DBT-informed team. She declines admission and her case manager is contactable. She is no longer acutely distressed and denies suicidal intent. She agrees that she 'just snapped' when she saw the unread message. She asks for help with what to do next time. She has had no alcohol or substances tonight. She lives with her mother who is supportive and present in ED.",
+    "stem": "A 23-year-old woman with established borderline personality disorder presents to ED after superficial wrist cutting following a perceived rejection by a friend. She has had 6 similar presentations over 12 months. She is medically cleared after wound closure and tetanus update. She has an established treatment relationship with a community DBT-informed team; her case manager is contactable and has texted the ED to confirm she is engaged with treatment. She declines admission. She is no longer acutely distressed and denies current suicidal intent. She agrees that she 'just snapped' when she saw the unread message. She has no alcohol or substances on board tonight. She lives with her supportive mother who is present in ED. She asks for help with what to do differently next time.",
     "data_table": {
       "Examination": "Calm, reactive affect, no current suicidal ideation, no psychosis, superficial laceration sutured.",
       "Investigations": "Wounds superficial, tetanus updated, paracetamol level negative, BAC zero."
     },
-    "lead_in": "Which is the single most appropriate next step before discharge?",
+    "lead_in": "Which is the single most appropriate next step before discharge, per the National Health and Medical Research Council Clinical Practice Guideline for Borderline Personality Disorder?",
     "options": [
       {
         "letter": "A",
         "text": "Admit involuntarily under the Mental Health Act for inpatient stabilisation",
         "correct": false,
-        "rationale": "Involuntary admission requires that the person is suffering a mental illness AND there is no less restrictive option appropriate to their care; she has capacity, no active suicidal intent, available community supports, and an established outpatient team. Involuntary admission for repeated low-lethality self-harm in BPD is often counter-therapeutic and is not standard practice (RANZCP BPD CPG).",
+        "rationale": "Anti-pattern: routine admission of BPD self-harm without acute suicide intent or psychosis worsens long-term outcomes (regression, role-reinforcement, iatrogenic harm) and is explicitly cautioned against by the NHMRC BPD Guideline. Admission is reserved for severe acute risk that cannot be safely managed in the community.",
         "source_refs": [
-          "RANZCP CPG: Borderline Personality Disorder"
+          "NHMRC Clinical Practice Guideline for the Management of Borderline Personality Disorder 2013",
+          "RANZCP CPG"
         ]
       },
       {
         "letter": "B",
-        "text": "Discharge with a written 'no-suicide contract' signed by the patient",
+        "text": "Discharge with a 'no-suicide contract' signed by the patient",
         "correct": false,
-        "rationale": "No-suicide contracts have no evidence of efficacy, may reduce clinical vigilance, and are not endorsed by RANZCP or international guidance (RANZCP suicide).",
+        "rationale": "Anti-pattern: 'no-suicide contracts' have NO evidence for reducing suicide risk and may worsen outcomes by substituting a paper artefact for genuine engagement. NHMRC explicitly recommends safety PLANS over contracts.",
         "source_refs": [
-          "RANZCP: Assessment and management of suicide risk"
+          "NHMRC BPD Guideline",
+          "Cochrane review of safety contracts"
         ]
       },
       {
         "letter": "C",
-        "text": "Collaboratively develop a Stanley-Brown safety plan and contact her DBT team",
+        "text": "Collaboratively develop a Stanley-Brown style safety plan (warning signs, internal coping, social distraction, social support contacts, professional contacts and crisis lines, means restriction) with the patient, share a copy with her DBT team and her mother, and arrange a same-week DBT contact",
         "correct": true,
-        "rationale": "The Stanley-Brown Safety Planning Intervention is the Australian-endorsed structured approach: warning signs, internal coping strategies, social contacts and settings for distraction, supportive people to contact, professionals/agencies, and means restriction. Pairing this with handover to the established DBT team allows chain analysis at next session to identify triggers, vulnerabilities, and skill alternatives. Evidence supports SPI reducing repeat suicidal behaviour by ~50% at 6 months (RANZCP; LIFE Framework; Stanley-Brown).",
+        "rationale": "NHMRC BPD Guideline and the National Suicide Prevention Strategy endorse Stanley-Brown safety planning as the evidence-based ED discharge tool. The six steps include explicit means restriction and graded coping/social/professional escalation. Sharing the plan with her established DBT team preserves continuity of care, which is the active ingredient in BPD outcomes.",
         "source_refs": [
-          "RANZCP: Assessment and management of suicide risk",
-          "RANZCP CPG: Borderline Personality Disorder",
-          "Australian Government LIFE: Living Is For Everyone Framework"
+          "NHMRC BPD Guideline 2013",
+          "Stanley & Brown Safety Planning Intervention",
+          "RANZCP"
         ]
       },
       {
         "letter": "D",
-        "text": "Commence olanzapine 10 mg daily for affective instability and agitation",
+        "text": "Commence olanzapine 10 mg daily for affective instability",
         "correct": false,
-        "rationale": "Pharmacotherapy is not first-line for BPD and antipsychotics have only limited evidence for some symptom domains; introducing medication in ED without longitudinal review is not endorsed (RANZCP BPD CPG).",
+        "rationale": "Pharmacotherapy is not first-line for BPD; medications target specific comorbidities (e.g. depression, psychosis) rather than the disorder itself. Starting an antipsychotic at ED discharge bypasses the structured DBT-led care she already has.",
         "source_refs": [
-          "RANZCP CPG: Borderline Personality Disorder"
+          "NHMRC BPD Guideline"
         ]
       },
       {
         "letter": "E",
         "text": "Refer to drug and alcohol service for substance-use treatment",
         "correct": false,
-        "rationale": "She has no alcohol or substance use tonight or per history in the stem; not the priority (RANZCP).",
+        "rationale": "She has no alcohol or substances on board tonight and there is no documented substance-use comorbidity to act on; mis-referral pathologises a non-existent problem and dilutes engagement with her existing DBT team.",
         "source_refs": [
-          "RANZCP CPG: Borderline Personality Disorder"
+          "NHMRC BPD Guideline"
         ]
       }
     ],
@@ -1675,69 +1695,71 @@
     "created": "2026-05-19"
   },
   {
-    "id": "psych-somatic-018",
+    "id": "psych-somatic-018-l3",
     "topic": "Psychiatry",
     "subtopic": "Other",
     "subtopic_detail": "Postpartum mood disorder after pregnancy loss",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "EPDS",
       "depression"
     ],
-    "stem": "A 31-year-old woman attends her general practitioner 6 weeks after a stillbirth at 32 weeks gestation. She reports persistent low mood, anhedonia, insomnia with early morning waking, weight loss of 3 kg, feelings of worthlessness, and intermittent passive thoughts of being better off not being here. She has not returned to work and avoids contact with friends who have babies. She has no psychotic symptoms, no delusions or hallucinations. Her Edinburgh Postnatal Depression Scale (EPDS) today is 18 with item 10 (self-harm) scored 1. She has had no prior psychiatric history. She is not breastfeeding. She would like to try for another pregnancy in the future. She lives with a supportive partner.",
+    "stem": "A 31-year-old woman attends her GP 6 weeks after a stillbirth at 32 weeks gestation. She reports persistent low mood, anhedonia, insomnia with early morning waking, weight loss of 3 kg, feelings of worthlessness extending beyond bereavement (she believes she is 'fundamentally damaged'), and intermittent passive thoughts of being better off not being here. She has not returned to work and avoids contact with friends who have babies. No psychotic symptoms, no delusions or hallucinations. EPDS today is 18 with item 10 (self-harm) scored 1 (occasionally has the thought). No prior psychiatric history. She is not breastfeeding (no surviving infant). She would like to try again in the future. She lives with a supportive partner.",
     "data_table": {
       "Examination": "Tearful, congruent affect, no psychosis, no thought disorder.",
       "Investigations": "EPDS 18, item 10 score 1. TSH 1.6, FBC, UEC, LFTs, B12, ferritin all within reference."
     },
-    "lead_in": "Which is the single most appropriate next step in management?",
+    "lead_in": "Which is the single most appropriate management plan under the COPE Perinatal Mental Health Guideline and RANZCP CPG?",
     "options": [
       {
         "letter": "A",
-        "text": "Watchful waiting for grief resolution over 3-6 months with no treatment",
+        "text": "Watchful waiting for grief resolution over 3-6 months with no specific treatment",
         "correct": false,
-        "rationale": "EPDS of 18 with neurovegetative symptoms, functional impairment, and passive death thoughts at 6 weeks post-loss meets criteria for major depressive disorder, NOT uncomplicated grief; expectant management is inappropriate (RANZCP perinatal; COPE).",
+        "rationale": "Anti-pattern: her presentation goes beyond uncomplicated grief - EPDS 18 with item 10 positive, neurovegetative features, anhedonia, worthlessness, and 6 weeks duration meet MDE criteria. DSM-5 explicitly removed the bereavement exclusion to allow recognition of MDD coexisting with grief. Watchful waiting risks worsening course.",
         "source_refs": [
-          "COPE: Mental Health Care in the Perinatal Period - Australian Clinical Practice Guideline",
-          "RANZCP CPG: Mood Disorders 2020"
+          "DSM-5-TR (removal of bereavement exclusion)",
+          "COPE Guideline 2023"
         ]
       },
       {
         "letter": "B",
-        "text": "Diagnose prolonged grief disorder and offer structured grief therapy alone",
+        "text": "Diagnose prolonged grief disorder and offer grief therapy alone",
         "correct": false,
-        "rationale": "Prolonged grief disorder DSM-5-TR requires symptoms beyond 12 months in adults; at 6 weeks, comorbid MDD is the diagnosis with priority intervention (DSM-5-TR).",
+        "rationale": "Prolonged grief disorder (DSM-5-TR) requires symptoms at least 12 months after the loss in adults; she is at 6 weeks, so the diagnosis is premature, and her syndrome better fits MDE coexisting with normal grief at this timepoint. Grief therapy alone misses the MDE component.",
         "source_refs": [
-          "DSM-5 (APA) - Somatic Symptom Disorder criteria"
+          "DSM-5-TR Prolonged Grief Disorder criteria"
         ]
       },
       {
         "letter": "C",
         "text": "Start a benzodiazepine for short-term anxiolysis and review in 4 weeks",
         "correct": false,
-        "rationale": "Benzodiazepines are not first-line for depressive disorders, carry dependence risk, and would be considered only briefly if at all for severe anxiety; they do not treat the depressive presentation (Therapeutic Guidelines: Psychotropic).",
+        "rationale": "Benzodiazepines are not disease-modifying in MDD or grief, risk dependence, and may impair the cognitive processing required for grief integration.",
         "source_refs": [
-          "Therapeutic Guidelines: Psychotropic"
+          "eTG",
+          "COPE Guideline"
         ]
       },
       {
         "letter": "D",
-        "text": "Sertraline 25-50 mg daily plus structured psychotherapy with perinatal-experienced clinician",
+        "text": "Sertraline 25-50 mg daily titrated as tolerated, plus structured psychotherapy (CBT or IPT) with a perinatal-experienced clinician, plus grief-informed peer support (e.g. SANDS Australia), with weekly GP review until stable",
         "correct": true,
-        "rationale": "COPE Perinatal Guideline 2023 recommends combined pharmacotherapy plus structured psychotherapy for moderate-to-severe perinatal depression. Sertraline is a first-line Australian SSRI in perinatal contexts including breastfeeding (not relevant here) and pregnancy planning. SANDS and Red Nose provide bereavement-specific peer support after stillbirth or neonatal loss. Combining biological treatment with grief-informed psychological care is the evidence-based standard (COPE; RANZCP).",
+        "rationale": "Combined antidepressant plus psychotherapy is recommended for moderate-to-severe perinatal MDD with item 10 positive on EPDS. Sertraline is first-line SSRI per COPE (her potential to breastfeed in future pregnancies makes sertraline a sensible default choice). Perinatal-experienced psychological therapy plus grief-informed peer support (SANDS Australia specifically supports stillbirth/neonatal loss) addresses both the MDE and the grief processes. Frequent GP review covers safety.",
         "source_refs": [
-          "COPE: Mental Health Care in the Perinatal Period - Australian Clinical Practice Guideline",
-          "RANZCP CPG: Mood Disorders 2020",
-          "Therapeutic Guidelines: Psychotropic"
+          "COPE Australian Perinatal Mental Health Guideline 2023",
+          "RANZCP Perinatal CPG",
+          "SANDS Australia stillbirth pathway"
         ]
       },
       {
         "letter": "E",
         "text": "Recommend immediate next pregnancy as therapeutic to resolve mood symptoms",
         "correct": false,
-        "rationale": "There is no evidence that next pregnancy treats perinatal depression and it may worsen outcomes; depression should be treated before conception planning (COPE).",
+        "rationale": "Anti-pattern: 'replacement child' framing is contrary to perinatal bereavement guidance and risks complicated grief and PTSD in the subsequent pregnancy.",
         "source_refs": [
-          "COPE: Mental Health Care in the Perinatal Period - Australian Clinical Practice Guideline"
+          "COPE Guideline",
+          "SANDS Australia"
         ]
       }
     ],

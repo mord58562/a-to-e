@@ -183,48 +183,48 @@
     "created": "2026-05-19"
   },
   {
-    "id": "paeds-genetic-003",
+    "id": "paeds-genetic-003-l3",
     "topic": "Paediatrics",
     "subtopic": "Genetic syndromes",
     "subtopic_detail": "Down syndrome - leukaemia recognition",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "trisomy 21",
       "leukaemia",
       "Down syndrome"
     ],
-    "stem": "A 3-year-old boy with trisomy 21 is brought to the GP by his mother because of 3 weeks of progressive lethargy, intermittent low-grade fevers without an obvious source, and new bruising over his shins and trunk that she does not recall him sustaining. He had complete AVSD repair at 6 months with no current cardiac issues and a normal TSH 5 months ago. He has otherwise been well, fully immunised, on no medications, and has no preceding viral illness or anti-inflammatory exposure. On examination he is pale, has a smooth firm spleen palpable 3 cm below the left costal margin, generalised non-tender cervical lymphadenopathy with the largest node 2 cm in diameter, and multiple bruises in non-traumatic distribution including a few petechiae on the soft palate. There is no rash, no joint swelling, and no focus of infection. He is haemodynamically stable. A point-of-care capillary blood count is sent urgently from the practice.",
+    "stem": "A 3-year-old boy with trisomy 21 (AVSD repair at 6 months, normal TSH 5 months ago, fully immunised) is brought to the GP with 3 weeks of progressive lethargy, intermittent low-grade fevers without an obvious source, and new bruising over shins and trunk that he does not recall sustaining. He has been on no medications and has had no preceding viral illness. On examination he is pale, has a smooth firm spleen palpable 3 cm below the left costal margin, generalised non-tender cervical lymphadenopathy with the largest node 2 cm, multiple bruises in non-traumatic distribution and palatal petechiae. He is haemodynamically stable. Capillary FBC: Hb 68, WCC 22 with blasts on film, platelets 28. He is not febrile to a level requiring urgent neutropenic sepsis protocol but the GP wants the appropriate disposition.",
     "data_table": {
       "Vital signs": "HR 122, RR 26, T 37.9, BP 95/55, SpO2 98%",
       "Examination": "Pale, splenomegaly 3 cm BLCM, generalised lymphadenopathy (largest 2 cm), bruising on shins and trunk, palatal petechiae",
       "Investigations": "Hb 68 g/L, WCC 22 x10^9/L (blasts on film), platelets 28 x10^9/L"
     },
-    "lead_in": "What is the single most appropriate next step?",
+    "lead_in": "Which is the most appropriate next step?",
     "options": [
       {
         "letter": "A",
-        "text": "Reassure as likely viral illness, repeat full blood count in 2 weeks",
+        "text": "Reassure as likely viral illness and repeat FBC in 2 weeks",
         "correct": false,
-        "rationale": "Pancytopenia, blasts on film, splenomegaly and lymphadenopathy in any child mandate urgent specialist assessment; repeat in 2 weeks risks deterioration and delay of leukaemia diagnosis (RCH CPG: Approach to suspected leukaemia).",
+        "rationale": "Pancytopenia with circulating blasts plus hepatosplenomegaly and lymphadenopathy is leukaemia until proven otherwise; delay is unsafe.",
         "source_refs": [
           "RCH CPG: Suspected leukaemia"
         ]
       },
       {
         "letter": "B",
-        "text": "Prescribe oral antibiotics for presumed occult bacterial infection and review in 48 hours",
+        "text": "Empirical oral antibiotics for presumed occult bacterial infection and review at 48 hours",
         "correct": false,
-        "rationale": "Empirical oral antibiotics without a defined infection focus delay diagnosis and do not address the underlying haematological abnormality; the picture is bone marrow failure with circulating blasts, not undifferentiated infection (RCH CPG: Suspected leukaemia).",
+        "rationale": "Empirical antibiotics without a focus and without acknowledging the haematological abnormality delays diagnosis (anti-pattern: treating symptoms without addressing marrow failure).",
         "source_refs": [
           "RCH CPG: Suspected leukaemia"
         ]
       },
       {
         "letter": "C",
-        "text": "Arrange immediate transfer to a tertiary paediatric oncology service for marrow assessment",
+        "text": "Arrange immediate (same-day) transfer to a tertiary paediatric oncology service for marrow assessment, supportive care and isolation; involve haematology-oncology and confirm trisomy 21-specific monitoring including TMD/ML-DS pathway awareness",
         "correct": true,
-        "rationale": "Pancytopenia with circulating blasts, hepatosplenomegaly and lymphadenopathy in a child with trisomy 21 is leukaemia until proven otherwise. Children with T21 carry approximately a 10 to 20-fold increased lifetime risk of acute leukaemia (both ALL and AMKL), and urgent same-day transfer for bone marrow biopsy and supportive care is required (RCH CPG: Suspected leukaemia; AAP Down syndrome health supervision).",
+        "rationale": "Pancytopenia with circulating blasts, hepatosplenomegaly and lymphadenopathy in a child with trisomy 21 is leukaemia until proven otherwise; T21 carries an approximately 10-20-fold increased risk of both ALL and AMKL (and a distinct ML-DS pathway). Same-day tertiary transfer for bone marrow biopsy, supportive care (transfusion as needed, neutropenic precautions) and oncology input is mandatory.",
         "source_refs": [
           "RCH CPG: Suspected leukaemia",
           "AAP Down syndrome health supervision"
@@ -234,16 +234,16 @@
         "letter": "D",
         "text": "Order ferritin, B12 and folate to investigate the anaemia in primary care",
         "correct": false,
-        "rationale": "Nutritional anaemia work-up does not explain the thrombocytopenia, blasts, splenomegaly, or lymphadenopathy and would delay a leukaemia diagnosis requiring tertiary care (RCH CPG: Suspected leukaemia).",
+        "rationale": "Nutritional workup does not explain the thrombocytopenia, blasts, splenomegaly or lymphadenopathy.",
         "source_refs": [
           "RCH CPG: Suspected leukaemia"
         ]
       },
       {
         "letter": "E",
-        "text": "Refer to outpatient general paediatrics for next available clinic appointment",
+        "text": "Refer to outpatient general paediatrics for next available clinic",
         "correct": false,
-        "rationale": "An outpatient appointment delays definitive diagnosis and supportive care; this child needs same-day tertiary oncology assessment given marrow failure and circulating blasts (RCH CPG: Suspected leukaemia).",
+        "rationale": "Outpatient referral risks dangerous delay; this child needs same-day tertiary oncology assessment.",
         "source_refs": [
           "RCH CPG: Suspected leukaemia"
         ]
@@ -910,63 +910,64 @@
     "created": "2026-05-19"
   },
   {
-    "id": "paeds-genetic-011",
+    "id": "paeds-genetic-011-l3",
     "topic": "Paediatrics",
     "subtopic": "Genetic syndromes",
     "subtopic_detail": "Neurofibromatosis type 1 - cafe-au-lait diagnostic threshold",
-    "difficulty": 1,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [],
-    "stem": "A 4-year-old previously well girl is brought to her GP because her mother has noticed an increasing number of pale brown patches on her skin over the past 2 years. There is no family history of neurofibromatosis. She is developmentally appropriate, has no learning concerns, is fully immunised, and has no other medical issues. On full examination today she has 7 well-demarcated cafe-au-lait macules across her trunk and limbs, all greater than 5 mm in their longest diameter, and freckling clearly visible in both axillae. She has no Lisch nodules visible on bedside ophthalmoscopy, no plexiform neurofibroma, no cutaneous neurofibroma, no optic glioma symptoms, and no skeletal dysplasia. Her growth is on the 50th centile and her head circumference on the 75th. Vision and developmental screening today are normal.",
+    "stem": "A 4-year-old previously well girl is brought to her GP because her mother has noticed an increasing number of pale brown skin patches over 2 years. There is no family history of neurofibromatosis or unexplained tumours. She is developmentally appropriate, fully immunised and otherwise well. On full examination today she has 7 well-demarcated cafe-au-lait macules across her trunk and limbs, all greater than 5 mm in longest diameter, and bilateral axillary freckling clearly visible. She has no Lisch nodules visible on bedside ophthalmoscopy, no plexiform neurofibroma, no cutaneous neurofibroma, no symptoms of optic glioma, and no skeletal dysplasia. Growth is on the 50th centile (head circumference 75th). Vision and developmental screening today are normal.",
     "data_table": {
       "Examination": "7 cafe-au-lait macules >5 mm, bilateral axillary freckling, no neurofibromas, no Lisch nodules on bedside exam, no skeletal abnormality",
       "Family history": "No known NF1 in family"
     },
-    "lead_in": "Which single statement most accurately reflects whether she meets the NIH diagnostic criteria for neurofibromatosis type 1?",
+    "lead_in": "Which is the most appropriate conclusion-and-next-step pair under the 2021 revised NIH/NF1 criteria?",
     "options": [
       {
         "letter": "A",
-        "text": "She does not meet criteria - skin findings alone can never be diagnostic of NF1",
+        "text": "She does not meet criteria because skin findings alone can never be diagnostic of NF1; do not refer",
         "correct": false,
-        "rationale": "The 2021 revised NIH/NF1 diagnostic criteria explicitly allow diagnosis based on multiple cafe-au-lait macules of appropriate size combined with skin-fold freckling, in the absence of a family history (Revised NF1 Diagnostic Criteria 2021).",
+        "rationale": "The 2021 revised criteria allow diagnosis based on two features and explicitly include 6 or more cafe-au-lait macules plus skin-fold freckling in the absence of a family history.",
         "source_refs": [
-          "Revised NF1 diagnostic criteria 2021"
+          "Revised NF1 Diagnostic Criteria 2021"
         ]
       },
       {
         "letter": "B",
-        "text": "She meets criteria only if molecular NF1 gene testing returns a positive pathogenic variant",
+        "text": "She meets criteria only if molecular NF1 gene testing returns a pathogenic variant; do not diagnose without sequencing",
         "correct": false,
-        "rationale": "Molecular confirmation is one diagnostic criterion but not required when two other clinical criteria are present (Revised NF1 diagnostic criteria 2021).",
+        "rationale": "Molecular confirmation is one of the diagnostic criteria but not required when two clinical criteria are present.",
         "source_refs": [
-          "Revised NF1 diagnostic criteria 2021"
+          "Revised NF1 Diagnostic Criteria 2021"
         ]
       },
       {
         "letter": "C",
-        "text": "She does not meet criteria - the cafe-au-lait threshold for diagnosis is at least 10 macules",
+        "text": "She does not meet criteria because the cafe-au-lait macule threshold is at least 10",
         "correct": false,
-        "rationale": "The diagnostic threshold is 6 or more cafe-au-lait macules >5 mm prepubertally, not 10 (Revised NF1 diagnostic criteria 2021).",
+        "rationale": "The diagnostic threshold is 6 or more macules over 5 mm prepubertally (or over 15 mm post-pubertally).",
         "source_refs": [
-          "Revised NF1 diagnostic criteria 2021"
+          "Revised NF1 Diagnostic Criteria 2021"
         ]
       },
       {
         "letter": "D",
-        "text": "She meets criteria: 6 or more macules >5 mm prepubertally plus skin-fold axillary freckling",
+        "text": "She meets criteria (6 or more cafe-au-lait macules over 5 mm prepubertally PLUS skin-fold axillary freckling = two of the 2021 criteria); refer to paediatric genetics and arrange RCH NF1 surveillance pathway including paediatric ophthalmology slit lamp for Lisch nodules and baseline optic pathway screening as per AU surveillance schedule",
         "correct": true,
-        "rationale": "The 2021 revised criteria require two or more of: 6 or more cafe-au-lait macules >5 mm prepubertally (>15 mm postpubertally), skin-fold freckling, 2 or more neurofibromas or 1 plexiform NF, optic pathway glioma, 2 or more Lisch nodules or choroidal abnormalities, distinctive osseous lesion, pathogenic NF1 variant, or affected first-degree relative. She has two: macule count/size and freckling (Revised NF1 Diagnostic Criteria 2021).",
+        "rationale": "Under the 2021 revised criteria she meets two features (macule count/size and skin-fold freckling). AU practice (RCH CPG: NF1) is then to refer for genetics, formal paediatric ophthalmology slit-lamp (Lisch nodules and optic pathway glioma screening), blood pressure monitoring annually (phaeochromocytoma/renovascular risk) and structured developmental and learning surveillance.",
         "source_refs": [
-          "Revised NF1 diagnostic criteria 2021"
+          "Revised NF1 Diagnostic Criteria 2021",
+          "RCH CPG: Neurofibromatosis type 1"
         ]
       },
       {
         "letter": "E",
         "text": "She meets criteria only if a first-degree relative also has clinically confirmed NF1",
         "correct": false,
-        "rationale": "An affected first-degree relative is one of several alternative criteria but is not required when other clinical features are present (Revised NF1 diagnostic criteria 2021).",
+        "rationale": "Affected first-degree relative is one of several alternative features but not required when other clinical features are present.",
         "source_refs": [
-          "Revised NF1 diagnostic criteria 2021"
+          "Revised NF1 Diagnostic Criteria 2021"
         ]
       }
     ],
@@ -1170,25 +1171,25 @@
     "created": "2026-05-19"
   },
   {
-    "id": "paeds-genetic-014",
+    "id": "paeds-genetic-014-l3",
     "topic": "Paediatrics",
     "subtopic": "Genetic syndromes",
     "subtopic_detail": "Tuberous sclerosis - antenatal cardiac rhabdomyoma",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [],
-    "stem": "A 34-year-old G2P1 woman is referred to a tertiary foetal medicine service after a 28-week morphology surveillance ultrasound demonstrated a 14 mm well-circumscribed echogenic mass on the interventricular septum of the foetus, with a second 8 mm mass on the left ventricular free wall. The foetal cardiac function appears preserved on echocardiography, there is no hydrops, no significant outflow tract obstruction, and amniotic fluid volume is normal. The woman has no personal history of seizures, no facial angiofibromas, no hypopigmented macules, and a normal renal ultrasound performed last year. There is no family history of tuberous sclerosis, intellectual disability, or unexplained kidney tumours. She has no other foetal anomalies on dedicated reassessment of the brain, kidneys, and skeleton (acknowledging the limits of antenatal imaging). The foetal medicine team is counselling her about implications.",
+    "stem": "A 34-year-old G2P1 woman is referred to tertiary foetal medicine after a 28-week scan showed a 14 mm well-circumscribed echogenic mass on the foetal interventricular septum and a second 8 mm mass on the LV free wall. Foetal cardiac function is preserved, there is no hydrops, no significant outflow obstruction and normal amniotic fluid volume. The woman has no personal history of seizures, facial angiofibromas or hypopigmented macules, and a normal renal ultrasound last year. There is no family history of tuberous sclerosis. Dedicated reassessment of the foetal brain, kidneys and skeleton shows no other anomalies (acknowledging antenatal imaging limits).",
     "data_table": {
       "Imaging": "Foetal echo: 14 mm IVS rhabdomyoma + 8 mm LV free wall rhabdomyoma, preserved function",
       "Family history": "No known TSC; maternal clinical examination unremarkable"
     },
-    "lead_in": "Which single statement is the most accurate counselling point?",
+    "lead_in": "Which combination of counselling, antenatal investigation and postnatal plan is most appropriate?",
     "options": [
       {
         "letter": "A",
-        "text": "Multiple foetal rhabdomyomas are strongly associated with TSC; arrange foetal MRI and postnatal TSC1/TSC2 testing",
+        "text": "Multiple foetal cardiac rhabdomyomas are strongly associated with tuberous sclerosis complex (around 75-80 percent of foetuses with multiple rhabdomyomas have TSC); arrange foetal MRI for cortical tubers and subependymal nodules; counsel that the rhabdomyomas typically regress after birth but TSC requires lifelong multisystem surveillance; arrange postnatal clinical genetics review and TSC1/TSC2 sequencing",
         "correct": true,
-        "rationale": "Multiple foetal cardiac rhabdomyomas are highly suggestive of TSC, with around 75 to 80% of foetuses with multiple rhabdomyomas ultimately confirmed to have TSC. Foetal MRI looks for cortical tubers and subependymal nodules, and postnatal molecular testing (TSC1/TSC2) confirms the diagnosis (International TSC Consensus 2021; RCH CPG: Tuberous sclerosis).",
+        "rationale": "International TSC consensus: multiple foetal cardiac rhabdomyomas confer about 75-80 percent risk of TSC. Antenatal workup includes foetal MRI for CNS lesions; postnatal: clinical genetics, TSC1/TSC2 sequencing, dermatologic, ophthalmologic, neurology, renal and cardiac surveillance per RCH CPG.",
         "source_refs": [
           "International TSC Consensus 2021",
           "RCH CPG: Tuberous sclerosis"
@@ -1196,36 +1197,36 @@
       },
       {
         "letter": "B",
-        "text": "Cardiac rhabdomyomas are almost always isolated benign tumours unrelated to any syndromic genetic diagnosis",
+        "text": "Cardiac rhabdomyomas are almost always isolated benign tumours unrelated to a syndromic diagnosis; no further evaluation required",
         "correct": false,
-        "rationale": "Although the lesions themselves are benign and frequently regress, multiple foetal rhabdomyomas are strongly associated with TSC; calling them isolated misses the syndromic diagnosis (International TSC Consensus 2021).",
+        "rationale": "Although lesions regress, multiple rhabdomyomas are strongly associated with TSC and require workup.",
         "source_refs": [
           "International TSC Consensus 2021"
         ]
       },
       {
         "letter": "C",
-        "text": "Antenatal cardiac rhabdomyoma is essentially diagnostic of Williams syndrome and warrants 7q11.23 microarray testing",
+        "text": "Antenatal cardiac rhabdomyoma is essentially diagnostic of Williams syndrome; arrange 7q11.23 microarray",
         "correct": false,
-        "rationale": "Williams syndrome features supravalvular aortic stenosis, elfin facies, and hypercalcaemia - not cardiac rhabdomyomas (AAP Williams syndrome health supervision).",
+        "rationale": "Williams syndrome causes supravalvular aortic stenosis and elfin facies, not cardiac rhabdomyomas.",
         "source_refs": [
           "International TSC Consensus 2021"
         ]
       },
       {
         "letter": "D",
-        "text": "Antenatal cardiac rhabdomyoma is most commonly associated with Noonan syndrome and the RASopathy genes",
+        "text": "Antenatal cardiac rhabdomyoma is most commonly associated with Noonan syndrome (RASopathy); arrange a RASopathy panel",
         "correct": false,
-        "rationale": "Noonan syndrome cardiac involvement is dominated by valvular pulmonary stenosis and hypertrophic cardiomyopathy, not rhabdomyomas (Noonan syndrome clinical management guidelines).",
+        "rationale": "Noonan cardiac involvement is dominated by pulmonary valve stenosis and HCM, not rhabdomyomas.",
         "source_refs": [
-          "International TSC Consensus 2021"
+          "RCH CPG: Noonan syndrome"
         ]
       },
       {
         "letter": "E",
-        "text": "The lesions typically grow rapidly after birth and surgical excision is required in the neonatal period",
+        "text": "Lesions typically grow rapidly after birth and require surgical excision in the neonatal period",
         "correct": false,
-        "rationale": "Cardiac rhabdomyomas typically peak in the third trimester and regress spontaneously after birth; surgical intervention is reserved for haemodynamic obstruction or refractory arrhythmia (International TSC Consensus 2021).",
+        "rationale": "Rhabdomyomas typically peak in the third trimester and regress after birth; surgery is reserved for haemodynamic obstruction or refractory arrhythmia.",
         "source_refs": [
           "International TSC Consensus 2021"
         ]
@@ -1254,66 +1255,67 @@
     "created": "2026-05-19"
   },
   {
-    "id": "paeds-genetic-015",
+    "id": "paeds-genetic-015-l3",
     "topic": "Paediatrics",
     "subtopic": "Genetic syndromes",
     "subtopic_detail": "22q11.2 deletion syndrome - hypocalcaemia and immune workup",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "hypocalcaemia"
     ],
-    "stem": "A 5-day-old term male neonate is reviewed on the postnatal ward after a generalised tonic-clonic seizure lasting 90 seconds, which terminated spontaneously. He was born at 38+5 weeks gestation by uncomplicated normal vaginal delivery; antenatal scans had identified a conotruncal cardiac anomaly (interrupted aortic arch type B) for which he is scheduled for surgical repair next week at a tertiary cardiothoracic service. On examination he has subtle dysmorphic features including hypertelorism, a broad nasal bridge, low-set ears with deficient ear lobes, and a small mouth with a high-arched palate. He has not had a thymic shadow on his postnatal chest radiograph, although the team noted that thymic absence is difficult to confirm radiographically. Capillary samples now show a markedly low ionised calcium. Magnesium and glucose are within normal range and there has been no exposure to maternal calcium-altering medications. The neonatal team is planning a coordinated investigation pathway with cardiology and immunology.",
+    "stem": "A 5-day-old term male neonate is reviewed on the postnatal ward after a 90-second generalised tonic-clonic seizure that terminated spontaneously. He was born at 38+5 weeks by uncomplicated NVD. Antenatal scans identified interrupted aortic arch type B for which he is scheduled for repair next week. Examination shows hypertelorism, broad nasal bridge, low-set ears with deficient ear lobes, and a small mouth with high-arched palate. The postnatal CXR shows no clear thymic shadow. Investigations: ionised calcium 0.78 mmol/L (low), magnesium 0.85 (normal), glucose 3.4, PTH inappropriately low for the calcium. There has been no maternal calcium-altering medication exposure.",
     "data_table": {
       "Vital signs": "HR 150, RR 50, T 36.9, SpO2 96%",
       "Examination": "Hypertelorism, broad nasal bridge, low-set ears, high-arched palate; cardiac murmur of IAA-B",
       "Investigations": "Corrected calcium 1.62 mmol/L, ionised calcium 0.78 mmol/L, magnesium 0.85 mmol/L, glucose 3.4 mmol/L, PTH inappropriately low",
       "Imaging": "No clear thymic shadow on CXR; IAA-B confirmed on echo"
     },
-    "lead_in": "Which single investigation is the most appropriate next step?",
+    "lead_in": "Which combination of first-line genetic investigation and live-vaccine planning is most appropriate?",
     "options": [
       {
         "letter": "A",
-        "text": "Chromosomal microarray to detect the 22q11.2 microdeletion",
+        "text": "Chromosomal microarray (CMA) as first-line genetic test to detect the 22q11.2 microdeletion (more sensitive than FISH for atypical deletion sizes); withhold live vaccines (rotavirus, BCG, MMR, varicella) until T-cell subsets confirm adequate cellular immunity; commence IV calcium replacement and engage cardiothoracic, immunology, endocrinology and clinical genetics teams",
         "correct": true,
-        "rationale": "The combination of conotruncal cardiac anomaly (interrupted aortic arch type B), hypocalcaemia with inappropriately low PTH, suspected thymic hypoplasia, and characteristic facial features is the classic DiGeorge/velocardiofacial presentation. Chromosomal microarray is the first-line test to detect the 22q11.2 microdeletion (more sensitive than FISH for atypical deletion sizes) (RCH CPG: 22q11.2 deletion syndrome; International 22q11.2 Deletion Syndrome Foundation guidelines).",
+        "rationale": "The combination of conotruncal cardiac anomaly (IAA-B), hypocalcaemia with inappropriately low PTH, suspected thymic hypoplasia and characteristic facies is the classic 22q11.2 deletion (DiGeorge) phenotype. CMA is first-line and detects atypical deletion sizes that FISH may miss. Live vaccines must be withheld until cellular immunity is confirmed by T-cell subsets, per Australian Immunisation Handbook and RCH CPG.",
         "source_refs": [
           "RCH CPG: 22q11.2 deletion syndrome",
+          "Australian Immunisation Handbook",
           "22q11.2 international management guidelines"
         ]
       },
       {
         "letter": "B",
-        "text": "Standard karyotype only, looking specifically for trisomy 22",
+        "text": "Standard karyotype looking for trisomy 22",
         "correct": false,
-        "rationale": "22q11.2 deletion is a sub-microscopic microdeletion not visible on standard karyotype; microarray (or targeted FISH) is required (RCH CPG: 22q11.2 deletion syndrome).",
+        "rationale": "22q11.2 deletion is sub-microscopic and is not detected by standard karyotype; CMA or targeted FISH is required.",
         "source_refs": [
           "RCH CPG: 22q11.2 deletion syndrome"
         ]
       },
       {
         "letter": "C",
-        "text": "Repeat newborn screen card for congenital hypothyroidism",
+        "text": "Repeat newborn screening card for congenital hypothyroidism",
         "correct": false,
-        "rationale": "Repeat newborn screen for thyroid function does not address conotruncal anomaly, hypocalcaemia and thymic hypoplasia and is not the appropriate next test in this syndromic context (RCH CPG: Neonatal hypocalcaemia).",
+        "rationale": "Does not address the syndromic combination of cardiac anomaly, hypocalcaemia and thymic hypoplasia.",
         "source_refs": [
           "RCH CPG: Neonatal hypocalcaemia"
         ]
       },
       {
         "letter": "D",
-        "text": "Maternal vitamin D level only at this stage",
+        "text": "Maternal vitamin D level only",
         "correct": false,
-        "rationale": "Maternal vitamin D deficiency causes neonatal hypocalcaemia but does not account for the cardiac anomaly, thymic absence, and facial features - microarray is needed to confirm the unifying diagnosis (RCH CPG: Neonatal hypocalcaemia).",
+        "rationale": "Maternal vitamin D deficiency can cause neonatal hypocalcaemia but does not explain the cardiac anomaly, thymic absence and facies.",
         "source_refs": [
           "RCH CPG: Neonatal hypocalcaemia"
         ]
       },
       {
         "letter": "E",
-        "text": "Trans-fontanelle cranial ultrasound at the cotside",
+        "text": "Trans-fontanelle cranial ultrasound at the cotside as the next investigation",
         "correct": false,
-        "rationale": "Cranial ultrasound does not investigate the unifying genetic syndrome and is not indicated in an afebrile neonate with hypocalcaemic seizure plus syndromic features; microarray is the next test (RCH CPG: 22q11.2 deletion syndrome).",
+        "rationale": "Cranial ultrasound does not investigate the unifying syndromic diagnosis.",
         "source_refs": [
           "RCH CPG: 22q11.2 deletion syndrome"
         ]
