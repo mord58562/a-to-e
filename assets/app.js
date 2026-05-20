@@ -400,7 +400,8 @@
         "Kila la kheri.",
         "بالتوفيق.",
         "Gutpela lak.",
-        "Gōd wyrd sīe þē."
+        "Gōd wyrd sīe þē.",
+        "සභ ගමන්."
       ];
       luck.textContent = phrases[Math.floor(Math.random() * phrases.length)];
     }
