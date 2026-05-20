@@ -1219,6 +1219,11 @@
       if (!q) return;
       const k = e.key.toLowerCase();
       if (["1","2","3","4","5"].includes(k)) {
+        // Number keys SELECT the corresponding option (A-E). They do NOT
+        // submit - the user still has to press Enter / Space / Submit
+        // button to commit. li.click() triggers the option's onclick
+        // which only updates state.quiz.answers and enables the submit
+        // button; it never submits.
         const letter = "ABCDE"[parseInt(k, 10) - 1];
         const li = document.querySelector(`#qOptions li[data-letter="${letter}"]`);
         if (li && !state.quiz.revealed[q.id]) li.click();
