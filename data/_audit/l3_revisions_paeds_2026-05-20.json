@@ -2,5 +2,874 @@
   "revised_at": "2026-05-20",
   "auditor": "Claude Opus 4.7 (1M context)",
   "scope": "Paediatrics L1+L2 -> L3 or discard",
-  "verdicts": []
+  "verdicts": [
+    {
+      "id": "paeds-005",
+      "file": "data/questions_paeds.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "AU-cutoff",
+      "new_stem": "A 24-day-old term male infant is brought to ED at 9 pm with a measured rectal temperature of 38.3 deg C two hours ago and reduced feeding (about 40 percent of usual volumes) for 12 hours. Birth was uncomplicated at 40 weeks, maternal group B Streptococcus status was negative, and his mother received no intrapartum antibiotics. He has been previously well, is exclusively breastfed, and there have been no rashes, vomiting, diarrhoea, cough or coryza. His 4-year-old sibling has a clear runny nose without fever. He is fully immunised for age (no scheduled vaccinations yet due). He looks pale, is consolable but quiet, and his parents specifically report he is not interacting as he normally does at this time of evening. The ED registrar has performed peripheral blood cultures, urinalysis (catheter), and bedside FBC and CRP, and is now planning antibiotic cover.",
+      "new_lead_in": "Which empirical antibiotic regimen, paired with timing of lumbar puncture, is most appropriate?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "IV ceftriaxone monotherapy now; defer LP until CRP is back to decide whether it is needed",
+          "correct": false,
+          "rationale": "Ceftriaxone alone does not cover Listeria, which remains a real (though uncommon) pathogen in infants under 4 weeks; deferring LP to await CRP delays diagnosis of meningitis and is contrary to RCH CPG: Febrile child for under-4-week infants.",
+          "source_refs": [
+            "RCH CPG: Febrile child",
+            "Therapeutic Guidelines: Antibiotic"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "IV benzylpenicillin plus IV gentamicin now; defer LP until after antibiotics if the infant is too unwell to safely lie flat",
+          "correct": false,
+          "rationale": "This is the under-7-day neonatal sepsis regimen; for an infant 7 days to under 4 weeks, third-generation cephalosporin cover is added because of higher Gram-negative enteric and pneumococcal risk per RCH CPG.",
+          "source_refs": [
+            "RCH CPG: Sepsis",
+            "Therapeutic Guidelines: Antibiotic"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Lumbar puncture first, then IV benzylpenicillin plus IV gentamicin plus IV cefotaxime once CSF is obtained",
+          "correct": true,
+          "rationale": "For a febrile infant aged 7 days to under 4 weeks the RCH-recommended empirical regimen is benzylpenicillin plus gentamicin plus cefotaxime (Listeria, Gram-negatives, and CNS penetration for pneumococcus). LP is performed before antibiotics if the infant is stable; if unstable, antibiotics are given first and LP follows. This 24-day-old is haemodynamically reasonable (CRT 3 s without shock), so LP first is appropriate, per RCH CPG: Febrile child and RCH CPG: Sepsis.",
+          "source_refs": [
+            "RCH CPG: Febrile child",
+            "RCH CPG: Sepsis",
+            "Therapeutic Guidelines: Antibiotic"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Await CRP and FBC results before starting antibiotics; perform LP only if CRP is over 40 mg/L",
+          "correct": false,
+          "rationale": "Antibiotic-by-biomarker is unsafe in a febrile under-4-week infant; CRP cut-offs do not rule out invasive bacterial infection at this age, per RCH CPG: Febrile child.",
+          "source_refs": [
+            "RCH CPG: Febrile child"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Oral amoxicillin 30 mg/kg three times daily plus admission for observation; reserve LP for clinical deterioration",
+          "correct": false,
+          "rationale": "Oral antibiotics are inadequate for possible neonatal sepsis or meningitis; IV therapy and LP are mandatory in a febrile infant under 4 weeks, per Therapeutic Guidelines: Antibiotic.",
+          "source_refs": [
+            "Therapeutic Guidelines: Antibiotic",
+            "RCH CPG: Febrile child"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paeds-014",
+      "file": "data/questions_paeds.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "anti-pattern",
+      "new_stem": "A previously well 18-month-old boy is brought to ED after a witnessed generalised tonic-clonic seizure at home lasting 2 minutes. He had been febrile since the morning with clear coryza and a tympanic temperature of 39.0 deg C. After the seizure he was drowsy for 15 minutes and then returned to baseline, drinking and interacting normally with his parents. There is a paternal history of childhood febrile seizures and he is fully immunised. On arrival he is alert and interactive with a temperature of 38.4 deg C, no neck stiffness, no rash, and no focal neurology. The ear examination shows a right bulging erythematous tympanic membrane. He has not had recent antibiotics and there is no head injury.",
+      "new_lead_in": "Which combination of investigation and management is most appropriate?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Non-contrast CT brain and admission for 24-hour observation; commence regular paracetamol",
+          "correct": false,
+          "rationale": "Routine neuroimaging is not indicated after a simple febrile seizure with normal neurology and an identified febrile focus, per RCH CPG: Febrile seizure.",
+          "source_refs": [
+            "RCH CPG: Febrile seizure"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Lumbar puncture and empirical IV ceftriaxone because of the seizure during fever",
+          "correct": false,
+          "rationale": "LP is not indicated in a fully immunised over-12-month-old with a simple febrile seizure who has returned to baseline without meningism, per RCH CPG: Febrile seizure. LP-before-treat reasoning is the anti-pattern tested here.",
+          "source_refs": [
+            "RCH CPG: Febrile seizure"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Prophylactic oral sodium valproate to prevent recurrence with neurology outpatient referral",
+          "correct": false,
+          "rationale": "Long-term anticonvulsants are not used after simple febrile seizures, even with positive family history, per RCH CPG: Febrile seizure.",
+          "source_refs": [
+            "RCH CPG: Febrile seizure"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "No investigations; treat the acute otitis media per eTG criteria, provide written first-aid advice, discharge home",
+          "correct": true,
+          "rationale": "This is a simple febrile seizure (single, generalised, under 15 minutes, full recovery, 6 months to 6 years) with an identified bacterial focus (right bulging TM in a child under 2 with severe symptoms meets eTG criteria for amoxicillin 30 mg/kg q8h for 5 days). No investigations are required. Reassurance and written first-aid advice are standard per RCH CPG: Febrile seizure and Therapeutic Guidelines: Antibiotic.",
+          "source_refs": [
+            "RCH CPG: Febrile seizure",
+            "Therapeutic Guidelines: Antibiotic"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Admit overnight for continuous EEG and reassess for discharge in the morning",
+          "correct": false,
+          "rationale": "EEG is not indicated after a simple febrile seizure with full recovery, per RCH CPG: Febrile seizure.",
+          "source_refs": [
+            "RCH CPG: Febrile seizure"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paeds-015",
+      "file": "data/questions_paeds.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "multi-step",
+      "new_stem": "A 3-year-old previously well boy presents on day 6 of fever. His mother reports daily fevers peaking at 39.5 deg C, unresponsive to alternating paracetamol and ibuprofen. He has bilateral non-purulent conjunctivitis, cracked red lips, a strawberry tongue, a polymorphous truncal rash, and unilateral cervical lymphadenopathy with one node 1.8 cm. His hands and feet are red and swollen. He has no respiratory symptoms, no diarrhoea, and no household contacts with rash. He is fully immunised. Initial bloods show CRP 138 mg/L, ESR 78 mm/hr, platelets 530 x10^9/L, ALT 78 U/L. Urine microscopy shows sterile pyuria. Echocardiography is being arranged.",
+      "new_lead_in": "Which combination of immediate therapy and aspirin dosing is most appropriate?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "IV immunoglobulin 2 g/kg single infusion plus high-dose aspirin (30-50 mg/kg/day) until afebrile for 48 hours, then switch to low-dose aspirin (3-5 mg/kg/day) until inflammatory markers and echocardiogram are normal",
+          "correct": true,
+          "rationale": "He meets clinical criteria for Kawasaki disease (fever >= 5 days plus 4 of 5 principal features) and remains within the day-10 window where IVIG most reduces coronary aneurysm risk. Australian practice (RCH CPG) uses IVIG 2 g/kg with high-dose aspirin acutely, stepping down to low-dose antiplatelet aspirin once afebrile and continuing until coronary status is confirmed.",
+          "source_refs": [
+            "RCH CPG: Kawasaki disease",
+            "AHA Kawasaki disease 2017"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "IV immunoglobulin 2 g/kg plus oral prednisolone 2 mg/kg/day as primary adjunct; withhold aspirin because of risk of Reye syndrome in a child under 5",
+          "correct": false,
+          "rationale": "Aspirin is standard in Kawasaki disease and the Reye-syndrome concern does not override its use in this indication. Adjunctive steroids are reserved for high-risk patients (Kobayashi or Egami score, age under 12 months, persistent fever) or IVIG-resistant disease, not first-line in this child, per RCH CPG.",
+          "source_refs": [
+            "RCH CPG: Kawasaki disease"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Oral amoxicillin 25 mg/kg three times daily for 10 days for presumed group A streptococcal scarlet fever",
+          "correct": false,
+          "rationale": "Scarlet fever does not cause non-purulent conjunctivitis or extremity desquamation; missing Kawasaki disease delays IVIG and increases aneurysm risk per RCH CPG.",
+          "source_refs": [
+            "RCH CPG: Kawasaki disease"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Defer IVIG until echocardiography is completed and confirms coronary changes, then treat",
+          "correct": false,
+          "rationale": "IVIG should be given on clinical grounds within 10 days of fever onset; echocardiography is for baseline assessment of coronaries, not a gate to treatment, per RCH CPG and AHA 2017.",
+          "source_refs": [
+            "RCH CPG: Kawasaki disease",
+            "AHA Kawasaki disease 2017"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Reassurance and antipyretics; arrange paediatric outpatient review if fever persists beyond day 10",
+          "correct": false,
+          "rationale": "Delaying treatment beyond day 10 substantially increases coronary aneurysm risk; treatment should be commenced now, per RCH CPG.",
+          "source_refs": [
+            "RCH CPG: Kawasaki disease"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paeds-023",
+      "file": "data/questions_paeds.json",
+      "verdict": "discard",
+      "discard_reason": "Pure recall of the ANZCOR single-rescuer paediatric BLS ratio (30:2). The topic does not support genuine alternative-selection, anti-pattern, AU-specific cut-off discrimination, or multi-step decision-making; it is a memorised number. Reasoning lever options were considered (e.g. dispatcher-assisted CPR vs unwitnessed-arrest decisions) but each collapses to the same memorised algorithm step."
+    },
+    {
+      "id": "paeds-id-005",
+      "file": "data/batches/paeds_infectious_diseases_depth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "AU-cutoff",
+      "new_stem": "A previously well 5-year-old boy presents to his GP with 4 days of fever, productive cough and reduced activity. He is fully immunised on the Australian NIP including 13vPCV, and has had no foreign travel or sick contacts. He is alert, well perfused, taking oral fluids and about 75 percent of usual food, with no recessions or grunting. SpO2 is 96 percent on room air. Auscultation reveals bronchial breathing and crackles in the right lower zone. A chest X-ray performed because of the persistent fever shows right lower lobe consolidation without effusion. His weight is 18 kg. He has no known drug allergies and has not received antibiotics in the previous 3 months.",
+      "new_lead_in": "Which oral antibiotic regimen is most appropriate as outpatient first-line therapy?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Amoxicillin 15 mg/kg three times daily for 7 days",
+          "correct": false,
+          "rationale": "Dose is too low; Therapeutic Guidelines and the AMH Children's Dosing Companion specify 25-30 mg/kg (max 1 g) eight-hourly for paediatric CAP to cover pneumococci with reduced penicillin susceptibility.",
+          "source_refs": [
+            "Therapeutic Guidelines: Antibiotic",
+            "AMH Children's Dosing Companion"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Amoxicillin 25 mg/kg (max 1 g) eight-hourly for 5 days",
+          "correct": true,
+          "rationale": "First-line for uncomplicated CAP in a well child tolerating oral therapy with SpO2 over 92 percent: oral amoxicillin 25 mg/kg (max 1 g) eight-hourly for 5 days, per Therapeutic Guidelines: Antibiotic and RCH CPG: Pneumonia. Five days is the current AU-recommended duration for uncomplicated CAP.",
+          "source_refs": [
+            "Therapeutic Guidelines: Antibiotic",
+            "RCH CPG: Pneumonia",
+            "AMH Children's Dosing Companion"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Azithromycin 10 mg/kg once daily for 5 days as first-line monotherapy",
+          "correct": false,
+          "rationale": "Macrolides are added only when atypical infection is suspected (often school-age with persistent fever or after first-line failure); they are not monotherapy first-line for typical lobar CAP, per Therapeutic Guidelines.",
+          "source_refs": [
+            "Therapeutic Guidelines: Antibiotic"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Amoxicillin-clavulanate 22.5/3.2 mg/kg twice daily for 7 days",
+          "correct": false,
+          "rationale": "Amoxicillin-clavulanate is reserved for aspiration pneumonia or after failure of amoxicillin; the added clavulanate is unnecessary and increases adverse effects, per Therapeutic Guidelines.",
+          "source_refs": [
+            "Therapeutic Guidelines: Antibiotic"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Cefalexin 25 mg/kg six-hourly for 7 days",
+          "correct": false,
+          "rationale": "Cefalexin has poorer activity than amoxicillin against penicillin-non-susceptible Streptococcus pneumoniae and is not first-line for paediatric CAP, per Therapeutic Guidelines.",
+          "source_refs": [
+            "Therapeutic Guidelines: Antibiotic"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paeds-id-010",
+      "file": "data/batches/paeds_infectious_diseases_depth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 7-year-old girl with homozygous sickle cell disease (HbSS) on hydroxyurea and penicillin V prophylaxis presents with 3 days of fatigue, pallor and exertional dyspnoea. Two weeks ago her 5-year-old brother developed bright red cheeks with a lacy reticular rash on his arms and trunk after a coryzal prodrome. She has had no fever, no chest pain, no abdominal pain and no bone pain. She is fully immunised. Examination shows pallor and tachycardia without jaundice or splenomegaly, and a clear chest. Bloods show Hb 52 g/L (her usual baseline 78 g/L), MCV 86 fL, reticulocyte count 4 x 10^9/L (markedly reduced), WCC 6.2 x 10^9/L, platelets 240 x 10^9/L, and bilirubin and LDH at her usual baseline.",
+      "new_lead_in": "Which diagnosis best fits the haematological pattern and exposure history?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Acute haemolytic exacerbation of sickle cell disease",
+          "correct": false,
+          "rationale": "An acute haemolytic event would raise the reticulocyte count, bilirubin and LDH; here the reticulocyte count is markedly reduced and LDH/bilirubin are at baseline, making this incompatible.",
+          "source_refs": [
+            "BMJ Best Practice: Sickle cell disease"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Acute splenic sequestration crisis",
+          "correct": false,
+          "rationale": "Sequestration produces rapid splenic enlargement and a fall in Hb in young children; this child has no splenomegaly and HbSS spleens typically autoinfarct by school age, making sequestration unlikely.",
+          "source_refs": [
+            "BMJ Best Practice: Sickle cell disease"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Iron deficiency anaemia from suboptimal dietary intake",
+          "correct": false,
+          "rationale": "Iron deficiency is microcytic and develops over weeks; her MCV is 86 fL and the Hb has dropped acutely, so this does not fit.",
+          "source_refs": [
+            "BMJ Best Practice: Iron deficiency anaemia"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Acute chest syndrome",
+          "correct": false,
+          "rationale": "ACS requires a new pulmonary infiltrate with one of fever, chest pain or hypoxia; she has a clear chest, no chest pain, no fever and SpO2 98 percent on room air.",
+          "source_refs": [
+            "BMJ Best Practice: Sickle cell disease"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Transient red cell aplasia from parvovirus B19 infection",
+          "correct": true,
+          "rationale": "Parvovirus B19 infects erythroid progenitors and stops erythropoiesis for about 7-10 days. In a host with a shortened red cell lifespan (HbSS), this manifests as severe normocytic anaemia with a markedly reduced reticulocyte count and unchanged haemolytic markers, exactly as seen here. The exposure (sibling with slapped-cheek 2 weeks earlier) fits, per BMJ Best Practice and RCH CPG.",
+          "source_refs": [
+            "BMJ Best Practice: Parvovirus B19",
+            "RCH CPG: Sickle cell disease"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paeds-id-013",
+      "file": "data/batches/paeds_infectious_diseases_depth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "AU-cutoff",
+      "new_stem": "A 3-year-old previously well, fully immunised girl is brought to her GP with 12 hours of right ear pain and a mild fever. She has been clingy but is eating and drinking normally with no vomiting and no neck stiffness. This is her first episode and she has no high-risk background (no cleft palate, no immunodeficiency, not Aboriginal or Torres Strait Islander). On examination her left tympanic membrane is normal and her right tympanic membrane is erythematous and bulging with the membrane intact and no otorrhoea. She is afebrile in clinic at 37.8 deg C. Her mother reports she settles with paracetamol.",
+      "new_lead_in": "Which is the most appropriate management plan?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Regular analgesia (paracetamol with or without ibuprofen) and safety-net advice to return or recommence antibiotics if not improving at 48 to 72 hours",
+          "correct": true,
+          "rationale": "Australian guidance (Therapeutic Guidelines: Antibiotic, RCH CPG: AOM) reserves antibiotics for children under 6 months always, under 2 years with bilateral disease, otorrhoea, systemically unwell, or high-risk groups (Aboriginal or Torres Strait Islander background, immunocompromised, cochlear implants). A low-risk, well, over-2 child with unilateral AOM and an intact TM is managed with analgesia and watchful waiting.",
+          "source_refs": [
+            "Therapeutic Guidelines: Antibiotic",
+            "RCH CPG: Acute otitis media"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Immediate oral amoxicillin 15 mg/kg three times daily for 5 days",
+          "correct": false,
+          "rationale": "The AU dose when antibiotics are indicated for AOM is amoxicillin 30 mg/kg (max 1 g) eight-hourly for 5 days, not 15 mg/kg; and in this low-risk child antibiotics are not first-line, per Therapeutic Guidelines.",
+          "source_refs": [
+            "Therapeutic Guidelines: Antibiotic"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Immediate oral amoxicillin-clavulanate 22.5/3.2 mg/kg twice daily for 7 days",
+          "correct": false,
+          "rationale": "Amoxicillin-clavulanate is for amoxicillin failure, recent amoxicillin use, or recurrent AOM, not a first uncomplicated episode, per Therapeutic Guidelines.",
+          "source_refs": [
+            "Therapeutic Guidelines: Antibiotic"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Immediate oral cefaclor 10 mg/kg three times daily for 7 days",
+          "correct": false,
+          "rationale": "Cefaclor is poorly active against penicillin-non-susceptible pneumococcus and risks serum-sickness-like reactions; it is not first-line, per Therapeutic Guidelines.",
+          "source_refs": [
+            "Therapeutic Guidelines: Antibiotic"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Topical ciprofloxacin 0.3% ear drops twice daily for 7 days",
+          "correct": false,
+          "rationale": "Topical quinolone drops are for AOM with perforation, otorrhoea through a grommet, or chronic suppurative OM; the TM here is intact, per Therapeutic Guidelines.",
+          "source_refs": [
+            "Therapeutic Guidelines: Antibiotic"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paeds-cardgen-001",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 4-year-old boy is brought to his GP for a pre-kinder health check. He is otherwise well, growing along the 50th centile, fully immunised, with no exercise intolerance, syncope, cyanosis or breathlessness on play. There is no family history of sudden cardiac death or congenital heart disease, no recent sore throats, no joint pains, and no rashes. On examination he is pink and well perfused with normal femoral pulses, no thrill, a quiet S1 and S2 with no fixed splitting, and a soft musical murmur best heard at the lower left sternal edge while supine. The murmur has a distinctly vibratory or twangy quality, occupies early to mid-systole, is grade 2/6 in intensity, softens considerably on sitting up, and almost disappears with the Valsalva manoeuvre. There is no diastolic component and no radiation to the neck or axilla.",
+      "new_lead_in": "Which is the most appropriate next step?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Reassure the family that this is a Still's vibratory innocent murmur and document review at routine health checks; no investigations or paediatric cardiology referral are required",
+          "correct": true,
+          "rationale": "Vibratory grade 1-2 early systolic murmur at the lower left sternal edge in a well 2-7-year-old that softens with Valsalva and on sitting is the classic Still's murmur. Per RCH CPG: Heart murmurs, an asymptomatic child with all innocent-murmur features (no diastolic component, no thrill, soft, varies with posture, normal pulses) does not require ECG, echo or referral.",
+          "source_refs": [
+            "RCH CPG: Heart murmurs",
+            "BMJ Best Practice: Heart murmurs in children"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Refer for paediatric cardiology assessment and echocardiogram because innocent murmurs cannot be distinguished from pathological murmurs on examination alone",
+          "correct": false,
+          "rationale": "Australian primary-care guidance accepts the diagnosis of a Still's murmur clinically when all innocent features are present; routine echo is not required, per RCH CPG.",
+          "source_refs": [
+            "RCH CPG: Heart murmurs"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Arrange ECG and ASOT today and treat as possible acute rheumatic carditis pending results",
+          "correct": false,
+          "rationale": "There are no Jones features and no sore throat history; investigating for ARF in an asymptomatic child with a classic innocent murmur is inappropriate, per RHDAustralia guideline.",
+          "source_refs": [
+            "RHDAustralia 2020 guideline"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Arrange exercise stress testing to exclude hypertrophic cardiomyopathy before clearing for kindergarten sport",
+          "correct": false,
+          "rationale": "HCM typically produces a harsh systolic murmur that increases with Valsalva (the opposite of this murmur) and there is no family history of sudden cardiac death; exercise testing is not indicated, per RCH CPG.",
+          "source_refs": [
+            "RCH CPG: Heart murmurs"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Document the murmur as a small ventricular septal defect and arrange echocardiogram within one month",
+          "correct": false,
+          "rationale": "A small VSD murmur is harsh and pansystolic, often with a thrill, and does not soften with Valsalva; the murmur described is musical, dynamic with posture, and innocent, per RCH CPG.",
+          "source_refs": [
+            "RCH CPG: Heart murmurs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paeds-cardgen-013",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "multi-step",
+      "new_stem": "A 3-year-old boy is referred to a community paediatrician for short stature and a heart murmur. He was born at term with a birthweight of 3.2 kg. Height has tracked along the 3rd centile and weight on the 10th centile, despite a mid-parental height on the 50th centile. He sat unsupported at 9 months, walked at 18 months and now uses only 2 to 3 word phrases. He has hypertelorism with downslanting palpebral fissures, low-set posteriorly rotated ears, a webbed neck with low posterior hairline, and a pectus carinatum superiorly with pectus excavatum inferiorly. There is a 3/6 ejection systolic murmur at the upper left sternal edge that is loudest on inspiration, with a soft single S2 and no thrill. Four-limb blood pressures are symmetric and femoral pulses are equal. Echocardiography shows a thickened, dysplastic pulmonary valve with a peak gradient of 45 mmHg, mild post-stenotic dilatation of the main pulmonary artery, and no left ventricular hypertrophy.",
+      "new_lead_in": "Which combination of underlying diagnosis and confirmatory genetic test is most appropriate?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Williams syndrome; request fluorescence in situ hybridisation for the 7q11.23 elastin region",
+          "correct": false,
+          "rationale": "Williams syndrome features supravalvular aortic stenosis (right upper sternal edge, radiates to neck) and elfin facies; this child has dysplastic pulmonary valve stenosis with Noonan facies.",
+          "source_refs": [
+            "BMJ Best Practice: Williams syndrome"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Turner syndrome; request peripheral blood karyotype with 30-cell count for mosaicism",
+          "correct": false,
+          "rationale": "Turner syndrome affects phenotypic females and features bicuspid aortic valve and coarctation; this patient is male with pulmonary stenosis.",
+          "source_refs": [
+            "BMJ Best Practice: Turner syndrome"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Noonan syndrome; request a multi-gene RASopathy panel (PTPN11, SOS1, RAF1 and related genes)",
+          "correct": true,
+          "rationale": "Dysplastic pulmonary valve stenosis (50 percent of cases) with short stature, hypertelorism with downslanting fissures, webbed neck, pectus carinatum/excavatum and mild developmental delay is the Noonan phenotype. PTPN11 mutations are responsible for about half of cases, but several RASopathy genes can produce the phenotype, so a multi-gene panel (not single-gene PTPN11) is the appropriate first-line genetic test per RCH CPG.",
+          "source_refs": [
+            "BMJ Best Practice: Noonan syndrome",
+            "RCH CPG: Noonan syndrome"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Marfan syndrome; request FBN1 sequencing",
+          "correct": false,
+          "rationale": "Marfan syndrome features tall stature, arachnodactyly, ectopia lentis and aortic root dilatation; short stature, webbed neck and pulmonary stenosis do not fit.",
+          "source_refs": [
+            "BMJ Best Practice: Marfan syndrome"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Trisomy 21; request peripheral blood karyotype",
+          "correct": false,
+          "rationale": "Down syndrome features upslanting palpebral fissures, single palmar crease and AVSD; this child's downslanting fissures and pulmonary valve dysplasia do not fit.",
+          "source_refs": [
+            "RCH CPG: Down syndrome"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paeds-cardgen-015",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "multi-step",
+      "new_stem": "A 7-year-old boy is referred for assessment of moderate intellectual disability (recent WISC FSIQ 58), comorbid attentional difficulties, hand-flapping when excited, poor eye contact, echolalia and tactile defensiveness. He attends mainstream school with full-time aide support. Examination shows a long narrow face with prominent forehead, large protruding ears, a high-arched palate, hyperextensible joints, soft velvety skin, mild pectus excavatum, pes planus, and symmetrically enlarged testes at a Prader orchidometer volume of 6 mL bilaterally for prepubertal age. There is no microcephaly and no neurocutaneous stigmata. Family history shows a maternal uncle with late-onset intention tremor and gait disorder diagnosed in his 60s, and a maternal grandmother with primary ovarian insufficiency at age 36. Microarray comparative genomic hybridisation at age 4 was normal and a metabolic screen including very long chain fatty acids was normal.",
+      "new_lead_in": "Which diagnosis-and-investigation pair best fits and would have been missed by the prior microarray?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Klinefelter syndrome; peripheral blood karyotype",
+          "correct": false,
+          "rationale": "Klinefelter features tall stature, small testes (not macroorchidism), and milder cognitive impact; the family history of FXTAS and FXPOI is not explained.",
+          "source_refs": [
+            "BMJ Best Practice: Klinefelter syndrome"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Williams syndrome; FISH for 7q11.23 elastin",
+          "correct": false,
+          "rationale": "Williams syndrome features elfin facies, supravalvular AS, hypercalcaemia and overfriendly personality; macroorchidism and the X-linked family pattern are not explained, and a 7q deletion would have shown on the prior microarray.",
+          "source_refs": [
+            "BMJ Best Practice: Williams syndrome"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Prader-Willi syndrome; DNA methylation analysis at 15q11-q13",
+          "correct": false,
+          "rationale": "Prader-Willi features neonatal hypotonia, hyperphagia, obesity and hypogonadism with small testes; this profile of macroorchidism and intellectual disability does not fit.",
+          "source_refs": [
+            "BMJ Best Practice: Prader-Willi"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Tuberous sclerosis complex; TSC1 and TSC2 sequencing",
+          "correct": false,
+          "rationale": "TSC features hypopigmented macules, facial angiofibromas, cardiac rhabdomyomas and epilepsy; none are present.",
+          "source_refs": [
+            "BMJ Best Practice: Tuberous sclerosis"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Fragile X syndrome; targeted FMR1 PCR with methylation analysis",
+          "correct": true,
+          "rationale": "Moderate ID with autistic features, long face, prominent ears, joint hypermobility, macroorchidism (already enlarged prepubertally), a maternal uncle with FXTAS and a maternal grandmother with FXPOI fits Fragile X (FMR1 CGG expansion over 200 with methylation). Microarrays do not detect CGG trinucleotide expansions, which is why the prior microarray was normal; FMR1 targeted testing with methylation analysis is the correct next investigation, per RCH CPG: Fragile X.",
+          "source_refs": [
+            "RCH CPG: Fragile X syndrome",
+            "BMJ Best Practice: Fragile X syndrome"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paeds-msk-ent-003",
+      "file": "data/batches/paeds_msk_ent_ophth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 13-year-old male competitive basketballer presents to his GP with a 6-week history of bilateral anterior knee pain that is worse during and after training, jumping and stair climbing, and that settles with rest. He denies any acute injury and has had no swelling, locking or giving way. He has had a recent growth spurt of 8 cm over the past 12 months. On examination both knees show localised tenderness and a palpable bony prominence at the tibial tuberosity, with reproduction of pain on resisted knee extension and on direct pressure over the tuberosity. There is no joint effusion, no warmth, no ligamentous laxity and no patellar grind. He has full painless range, no nocturnal pain, no constitutional symptoms and no inguinal lymphadenopathy. He is afebrile with normal observations.",
+      "new_lead_in": "Which is the most appropriate next step?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Reassure with the clinical diagnosis of Osgood-Schlatter, advise relative activity modification, ice and simple analgesia, and continue sport within pain tolerance",
+          "correct": true,
+          "rationale": "Bilateral tibial tuberosity tenderness in an adolescent during a growth spurt with reproducible pain on resisted knee extension and no red flags is diagnostic of Osgood-Schlatter (traction apophysitis); imaging is not required and management is conservative, per RCH CPG: Knee pain.",
+          "source_refs": [
+            "RCH CPG: Knee pain",
+            "RACGP: Osgood-Schlatter"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Order bilateral knee MRI to exclude osteochondritis dissecans and refer to paediatric orthopaedics",
+          "correct": false,
+          "rationale": "MRI and orthopaedic referral are reserved for atypical presentations (unilateral, nocturnal pain, locking, persistent symptoms beyond skeletal maturity); typical bilateral apophysitis does not need imaging.",
+          "source_refs": [
+            "RCH CPG: Knee pain"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Apply long-leg plaster casts bilaterally for 6 weeks then reassess for ongoing apophyseal fragmentation",
+          "correct": false,
+          "rationale": "Casting is not recommended for Osgood-Schlatter and risks deconditioning; relative rest with continued activity within pain tolerance preserves strength and growth.",
+          "source_refs": [
+            "RCH CPG: Knee pain"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Inject intralesional corticosteroid into the tibial tuberosity bilaterally to reduce inflammation",
+          "correct": false,
+          "rationale": "Intralesional corticosteroid near an open apophysis risks soft tissue atrophy, depigmentation and growth disturbance.",
+          "source_refs": [
+            "RCH CPG: Knee pain"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Arrange plain knee radiographs in both AP and skyline views to confirm the diagnosis and exclude tibial tuberosity avulsion fracture",
+          "correct": false,
+          "rationale": "Plain films are not routine for typical Osgood-Schlatter; tuberosity fragmentation on X-ray is a normal variant in adolescents and does not change management. Imaging is reserved for atypical features (acute injury, locking, persistent unilateral pain beyond skeletal maturity).",
+          "source_refs": [
+            "RCH CPG: Knee pain",
+            "RACGP: Osgood-Schlatter"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paeds-msk-ent-005",
+      "file": "data/batches/paeds_msk_ent_ophth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "anti-pattern",
+      "new_stem": "A term female infant is being examined on day 2 of life on the postnatal ward. She was born by elective caesarean at 39+1 weeks for breech presentation that did not respond to external cephalic version. Birthweight was 3520 g. There is a family history of developmental dysplasia of the hip in her older sister who required a Pavlik harness. She is breastfeeding well and has passed urine and meconium. On hip examination today, the Ortolani manoeuvre on the left hip elicits a palpable clunk as the femoral head reduces into the acetabulum with abduction. The right hip is stable. There is no leg-length discrepancy or asymmetric thigh skin creases. Neurological examination including primitive reflexes is normal.",
+      "new_lead_in": "Which is the most appropriate next step?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Reassure that hip clunks at this age are usually benign and arrange a routine 6-week paediatric review without specialist input or imaging today",
+          "correct": false,
+          "rationale": "A positive Ortolani is a clinically dislocated and reducible hip, not a benign click; same-admission paediatric orthopaedic referral is mandatory per RCH CPG: DDH.",
+          "source_refs": [
+            "RCH CPG: DDH"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Order an immediate plain anteroposterior pelvic radiograph to assess acetabular index and the Shenton line before referral",
+          "correct": false,
+          "rationale": "Plain radiographs are unreliable before about 4-6 months because the femoral heads have not ossified; ultrasound (static and dynamic, Graf classification) is the neonatal imaging modality, per RCH CPG: DDH.",
+          "source_refs": [
+            "RCH CPG: DDH"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Refer to paediatric orthopaedic surgery now for assessment and Pavlik harness application, and arrange a static and dynamic hip ultrasound",
+          "correct": true,
+          "rationale": "A frankly positive Ortolani with risk factors (female, breech, family history) mandates urgent paediatric orthopaedic referral, supervised Pavlik harness fitting, and ultrasound (Graf classification, static and dynamic) for morphology, per RCH CPG: DDH and the Australian national hip surveillance guidance.",
+          "source_refs": [
+            "RCH CPG: DDH",
+            "Healthy WA - DDH"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Apply double nappies between the legs to maintain abduction and review the infant in 4 weeks",
+          "correct": false,
+          "rationale": "Double-nappying is not evidence-based and delays definitive Pavlik harness treatment in a frankly dislocated hip.",
+          "source_refs": [
+            "RCH CPG: DDH"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Arrange an outpatient hip ultrasound at 6 weeks as standard risk-factor screening",
+          "correct": false,
+          "rationale": "The 6-week screening pathway applies to at-risk infants with a normal clinical examination; a positive Ortolani is a clinical diagnosis requiring immediate referral and harness, not delayed screening.",
+          "source_refs": [
+            "RCH CPG: DDH"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paeds-msk-ent-011",
+      "file": "data/batches/paeds_msk_ent_ophth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 6-year-old boy is brought to the GP after the third episode of right-sided epistaxis this month. Each episode has been brief (5 to 10 minutes), stopped with pressure, and has occurred when he was picking his nose. He is otherwise well, with no bruising, no bleeding from other sites and no family history of bleeding disorders. He is on no medication. Anterior rhinoscopy reveals a small visible vessel and a crust over the right Little area, with no active bleeding; the left nasal cavity is clear. There is no septal haematoma, no mass and no facial deformity. He has full eye movements, no proptosis, no neck masses and no lymphadenopathy. Full blood count and coagulation screen are normal.",
+      "new_lead_in": "Which is the most appropriate next step?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Refer urgently to ENT for examination under general anaesthetic to exclude juvenile nasopharyngeal angiofibroma",
+          "correct": false,
+          "rationale": "JNA affects adolescent males with unilateral nasal obstruction and severe recurrent epistaxis often with a nasopharyngeal mass; digit-trauma anterior bleeding in a 6-year-old is not the JNA pattern.",
+          "source_refs": [
+            "RCH CPG: Epistaxis"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Apply topical antiseptic ointment (Naseptin or paraffin) twice daily for 2 weeks plus reinforce first aid technique (pinch the soft part of the nose, lean forward, 10 to 15 minutes)",
+          "correct": true,
+          "rationale": "Recurrent anterior epistaxis at Little area in a child is most often due to digit trauma and mucosal dryness. First-line management is topical antiseptic ointment plus reinforced first aid, which reduces recurrence in randomised trials. Silver nitrate cautery is reserved for failure of conservative care, per RCH CPG: Epistaxis.",
+          "source_refs": [
+            "RCH CPG: Epistaxis"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Perform bedside silver nitrate cautery bilaterally to Little area today with topical antibiotic ointment for 1 week",
+          "correct": false,
+          "rationale": "Bilateral simultaneous septal cautery risks septal perforation; cautery (when needed) is unilateral and is generally a second-line ENT intervention after failed conservative therapy.",
+          "source_refs": [
+            "RCH CPG: Epistaxis"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Insert an anterior Merocel nasal pack into the right nostril and remove at 48 hours in the GP rooms",
+          "correct": false,
+          "rationale": "Packing is uncomfortable in children and is reserved for ongoing bleeding not controlled by first aid; it is not appropriate as outpatient management of recurrent self-limited bleeds.",
+          "source_refs": [
+            "RCH CPG: Epistaxis"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Commence oral tranexamic acid 25 mg/kg three times daily for 6 weeks as antifibrinolytic prophylaxis",
+          "correct": false,
+          "rationale": "Oral tranexamic acid has no role as first-line outpatient management of mucosal-trauma epistaxis with normal coagulation in a child.",
+          "source_refs": [
+            "RCH CPG: Epistaxis"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paeds-msk-ent-012",
+      "file": "data/batches/paeds_msk_ent_ophth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "multi-step",
+      "new_stem": "A 4-year-old girl presents to her GP with a 3-day history of a tender red swelling in front of the right ear. Her mother reports a small pit in front of the right ear since birth that has occasionally discharged a small amount of fluid but has never been red or swollen before. On examination there is a 1.5 cm tender, erythematous, fluctuant swelling immediately anterior to the right ear at the level of the helical root, centred over a visible pit. The pinna, ear canal and tympanic membrane are normal. There is no facial nerve weakness, no cervical lymphadenopathy and no parotid swelling. She is afebrile and otherwise well. She has no penicillin allergy.",
+      "new_lead_in": "Which is the most appropriate plan now, and what is the appropriate timing of definitive surgery?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Oral di/flucloxacillin 25 mg/kg six-hourly for 7 days now, with incision and drainage if not settling at 48 to 72 hours; refer to ENT for elective complete sinus excision once the acute infection has fully resolved (typically 6 weeks)",
+          "correct": true,
+          "rationale": "An acutely infected pre-auricular sinus is treated with anti-staphylococcal oral antibiotic and I&D if abscess fails to settle. Definitive excision is delayed until after the acute inflammation resolves because operating on inflamed tissue increases recurrence; the planes are clearer at 4-6 weeks, per RCH CPG: Pre-auricular sinus and Therapeutic Guidelines.",
+          "source_refs": [
+            "RCH CPG: Pre-auricular sinus",
+            "Therapeutic Guidelines: Antibiotic"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Urgent total parotidectomy on suspicion of an infected first branchial cleft anomaly with facial nerve involvement",
+          "correct": false,
+          "rationale": "First branchial cleft anomalies are rare and present with peri-auricular sinus tracts that may be intimately related to the facial nerve; a typical pre-auricular pit at the helical root does not warrant parotidectomy.",
+          "source_refs": [
+            "RCH CPG: Pre-auricular sinus"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Reassurance and review only if the lesion enlarges or discharges further",
+          "correct": false,
+          "rationale": "An infected pre-auricular sinus requires antibiotic treatment and ENT referral for definitive excision; observation alone risks abscess progression and chronic discharge.",
+          "source_refs": [
+            "RCH CPG: Pre-auricular sinus"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Express the sinus contents by firm squeezing today plus topical mupirocin 2% three times daily for 7 days",
+          "correct": false,
+          "rationale": "Squeezing spreads infection and damages adjacent tissues; systemic antibiotics with surgical drainage if needed is appropriate.",
+          "source_refs": [
+            "RCH CPG: Pre-auricular sinus"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Same-day complete excision of the sinus tract under general anaesthesia with antibiotic cover",
+          "correct": false,
+          "rationale": "Operating on an acutely inflamed sinus increases recurrence because tissue planes are obscured; excision is deferred until the acute infection has settled, per RCH CPG.",
+          "source_refs": [
+            "RCH CPG: Pre-auricular sinus"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paeds-msk-ent-014",
+      "file": "data/batches/paeds_msk_ent_ophth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "anti-pattern",
+      "new_stem": "A 9-month-old girl is brought to the GP after her grandmother noticed that the left pupil appeared white in a recent flash photograph. The mother reports the eye otherwise looks normal, the baby fixes and follows in good light and reaches for toys with both hands. She was born at term by normal vaginal birth with an unremarkable antenatal course. The parents do not recall whether the red reflex was specifically examined on the newborn check. There is no family history of retinoblastoma or other eye disease. On examination with an ophthalmoscope held at arm's length the right pupil shows a normal red reflex but the left pupil shows a clearly visible white reflex (leukocoria). There is no strabismus, no nystagmus and no proptosis. The cornea is clear and the anterior chamber appears normal. Visual behaviour is reduced when the right eye is occluded.",
+      "new_lead_in": "Which is the most appropriate next step?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Reassure that white reflex on flash photographs is usually benign and review at the routine 12-month immunisation visit",
+          "correct": false,
+          "rationale": "Leukocoria is never normal and mandates same-day to next-day paediatric ophthalmology assessment to exclude retinoblastoma and other sight-threatening or life-threatening pathology, per RANZCO position statement on red reflex testing.",
+          "source_refs": [
+            "RANZCO - Red reflex testing"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Refer to a community optometrist for paediatric vision testing in 4 to 6 weeks",
+          "correct": false,
+          "rationale": "Optometry deferral risks unacceptable delay; retinoblastoma is curable when caught early but devastating when missed.",
+          "source_refs": [
+            "RANZCO - Red reflex testing"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Refer urgently (within 24 to 48 hours) to a paediatric ophthalmologist for examination under anaesthetic to assess for retinoblastoma and other causes of leukocoria",
+          "correct": true,
+          "rationale": "Persistent unilateral leukocoria in an infant requires urgent paediatric ophthalmology referral. EUA is the diagnostic step; differential includes retinoblastoma, congenital cataract, persistent foetal vasculature, Coats disease and toxocariasis. Imaging is staging not screening, per RANZCO and RCH CPG.",
+          "source_refs": [
+            "RANZCO - Red reflex testing",
+            "RCH CPG: Vision screening"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Order outpatient MRI brain and orbits under GA as the initial investigation to characterise any intraocular mass before specialist ophthalmology referral",
+          "correct": false,
+          "rationale": "MRI is for staging once retinoblastoma is diagnosed (optic nerve extension, trilateral disease); the first step is paediatric ophthalmology EUA, not pre-emptive imaging. Imaging-before-EUA is the anti-pattern tested here.",
+          "source_refs": [
+            "RANZCO - Red reflex testing"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Patch the right (unaffected) eye for 2 hours daily for amblyopia management of the left eye and review in 3 months",
+          "correct": false,
+          "rationale": "Patching is for confirmed amblyopia after the underlying lesion has been identified and treated; occlusion now could delay diagnosis of retinoblastoma.",
+          "source_refs": [
+            "RANZCO - Red reflex testing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paeds-msk-ent-017",
+      "file": "data/batches/paeds_msk_ent_ophth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "An 18-month-old girl is brought to her GP because her grandmother thinks she has a squint. The mother is unsure. She was born at term, met milestones and has otherwise been well. There is no family history of strabismus, amblyopia or significant refractive error. On examination she has a broad nasal bridge and prominent epicanthic folds. Hirschberg corneal light reflex test is centred symmetrically in both pupils. The cover-uncover test reveals no movement of either eye when the other is occluded. Eye movements are full in all directions of gaze. Red reflex is normal bilaterally and visual behaviour is age-appropriate with good fixation and following.",
+      "new_lead_in": "Which is the most appropriate next step?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Refer urgently to paediatric ophthalmology for examination under anaesthesia and consideration of strabismus surgery",
+          "correct": false,
+          "rationale": "There is no true strabismus on Hirschberg or cover-uncover testing; this is pseudoesotropia and does not require surgery.",
+          "source_refs": [
+            "RANZCO - Childhood strabismus"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Reassure that this is pseudoesotropia from epicanthic folds, document normal Hirschberg and cover-uncover testing, and book the routine 4-year preschool vision screen; advise return if any new objective squint is noted",
+          "correct": true,
+          "rationale": "Symmetric corneal light reflex and a negative cover-uncover test with epicanthic folds is pseudoesotropia; the apparent squint resolves as facial features mature. Reassurance with routine preschool screen is appropriate, per RANZCO and RCH CPG: Vision screening.",
+          "source_refs": [
+            "RANZCO - Childhood strabismus",
+            "RCH CPG: Vision screening"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Patch the left eye for 2 hours daily for 3 months to prevent amblyopia",
+          "correct": false,
+          "rationale": "Patching is for confirmed amblyopia after specialist diagnosis; occluding a child without amblyopia is harmful.",
+          "source_refs": [
+            "RANZCO - Childhood strabismus"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Commence topical atropine 1% to the right eye to penalise the dominant eye for presumed left amblyopia",
+          "correct": false,
+          "rationale": "Atropine penalisation is for confirmed amblyopia; it has no role in a child with normal vision and no strabismus.",
+          "source_refs": [
+            "RANZCO - Childhood strabismus"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Order outpatient MRI brain and orbits under sedation to exclude a sixth nerve palsy",
+          "correct": false,
+          "rationale": "A sixth nerve palsy would cause limitation of abduction and incomitant esotropia; full eye movements and a negative cover-uncover test exclude this.",
+          "source_refs": [
+            "RANZCO - Childhood strabismus"
+          ]
+        }
+      ]
+    }
+  ]
 }
