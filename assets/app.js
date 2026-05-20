@@ -732,6 +732,12 @@
     renderReadingPane();
     state.questionStart = Date.now();
     bindQuizKeys();
+    // Always start a new question (or a re-rendered one after navigation)
+    // at the top of the page so the full stem is in view. Use instant
+    // behaviour - a smooth scroll feels laggy when paging through quickly.
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   }
 
   // Compact book-style position indicator (Previous / counter / Next).
