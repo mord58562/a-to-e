@@ -16,7 +16,7 @@
   // `wrangler deploy` from cloudflare-worker/. While null/empty, the
   // site falls back to the local Python backend (scripts/server.py) for
   // dev or to localStorage as a last resort.
-  const WORKER_URL = "";   // e.g. "https://a-to-e-inbox.<subdomain>.workers.dev"
+  const WORKER_URL = "https://a-to-e-inbox.mord58562.workers.dev";
 
   const HISTORY_KEY  = "y4mcq.history.v1";
   const FLAGS_KEY    = "y4mcq.flags.v1";
