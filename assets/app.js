@@ -387,11 +387,22 @@
       greet.textContent = `Hi, ${currentProfile.name}.`;
       greet.hidden = false;
     }
-    // Randomise the closing well-wish: 1/3 English, 1/3 Latin, 1/3 Greek.
+    // Randomise the closing well-wish across ten languages.
     const luck = document.getElementById("luckPhrase");
     if (luck) {
-      const phrases = ["Good luck.", "Dī bene vertant.", "Τύχῃ ἀγαθῇ."];
-      luck.textContent = phrases[Math.floor(Math.random() * 3)];
+      const phrases = [
+        "Good luck.",
+        "Dī bene vertant.",
+        "Τύχῃ ἀγαθῇ.",
+        "सौभाग्यम्।",
+        "בְּהַצְלָחָה.",
+        "祝你好运。",
+        "幸運を祈ります。",
+        "حظًا سعيدًا.",
+        "Удачи.",
+        "Go n-éirí an t-ádh leat."
+      ];
+      luck.textContent = phrases[Math.floor(Math.random() * phrases.length)];
     }
 
     applySettingsToOptions();
