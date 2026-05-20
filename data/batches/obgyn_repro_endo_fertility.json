@@ -1,46 +1,44 @@
 [
   {
-    "id": "obgyn-repro-001",
+    "id": "obgyn-repro-001-l3",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Contraception",
-    "difficulty": 1,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "contraception"
     ],
-    "stem": "A 26-year-old nulligravid woman attends her GP for contraception. She is in a new monogamous relationship and would like a reliable method. She is a non-smoker with a BMI of 23 and a blood pressure of 116/72 mmHg. She has had occasional simple tension-type headaches but no migraines, no focal neurology, no visual symptoms and no history of stroke or transient ischaemic attack. There is no personal or family history of venous thromboembolism, ischaemic heart disease, breast cancer or liver disease. She is not breastfeeding and has not had a baby. She has regular 28-day cycles, no abnormal bleeding and a normal cervical screening 18 months ago. She takes no regular medications and has no allergies. She prefers a daily oral method initially while she considers a long-acting reversible contraceptive in the future. Her GP confirms there are no UKMEC category 3 or 4 conditions present today.",
+    "stem": "A 32-year-old woman attends her GP for contraception. She is a non-smoker, BMI 24, BP 122/76 mmHg, with regular 28-day cycles and a normal cervical screening 12 months ago. Over the past year she has had three episodes of unilateral throbbing headache lasting 24 hours, each preceded by a 20-minute episode of zigzag visual lines in one visual field followed by partial right-sided pins and needles. Headaches are now occurring monthly. There is no personal or family history of venous thromboembolism, ischaemic heart disease, breast cancer or liver disease. She is not breastfeeding. She has heard friends recommend the combined oral contraceptive pill and asks specifically about that option.",
     "data_table": {
       "Vital signs": "BP 116/72 mmHg, HR 70 bpm, BMI 23",
       "Examination": "Unremarkable; no focal neurology",
       "Investigations": "Beta-hCG negative; no other testing required for routine contraceptive counselling"
     },
-    "lead_in": "Which contraceptive option is most appropriate as a first-line choice for this woman?",
+    "lead_in": "Which is the most appropriate next step in contraceptive counselling?",
     "options": [
       {
         "letter": "A",
-        "text": "Combined oral contraceptive pill containing 30 mcg ethinyloestradiol and levonorgestrel",
-        "correct": true,
-        "rationale": "With no UKMEC category 3 or 4 conditions, the COCP is a first-line option; a 30 mcg ethinyloestradiol with levonorgestrel formulation is the standard low-VTE-risk starter pill in Australia (FSRH UKMEC 2016; Therapeutic Guidelines: Contraception).",
+        "text": "Commence a combined oral contraceptive pill with 20 mcg ethinyloestradiol to minimise vascular risk",
+        "correct": false,
+        "rationale": "Migraine with aura at any dose of ethinyloestradiol is UKMEC category 4 (unacceptable health risk) because of stroke risk. A lower dose does not change the category (UKMEC 2016).",
         "source_refs": [
-          "FSRH UKMEC 2016",
-          "Therapeutic Guidelines: Contraception"
+          "FSRH UKMEC 2016"
         ]
       },
       {
         "letter": "B",
-        "text": "Depot medroxyprogesterone acetate 150 mg IM every 12 weeks as initial method",
+        "text": "Commence a combined oral contraceptive pill with 30 mcg ethinyloestradiol and levonorgestrel",
         "correct": false,
-        "rationale": "DMPA is safe and effective but causes reversible bone density loss with long-term use and is not typically first-line in a young nulliparous woman without a specific indication (FSRH UKMEC 2016; Therapeutic Guidelines: Contraception).",
+        "rationale": "CHC is UKMEC 4 in migraine with aura regardless of progestogen choice; the ischaemic stroke association is driven by oestrogen exposure (UKMEC 2016).",
         "source_refs": [
-          "FSRH UKMEC 2016",
-          "Therapeutic Guidelines: Contraception"
+          "FSRH UKMEC 2016"
         ]
       },
       {
         "letter": "C",
-        "text": "Copper intrauterine device inserted in the next available family planning clinic slot",
-        "correct": false,
-        "rationale": "The copper IUD is an excellent LARC and UKMEC 1 for this patient but she has expressed a preference for a daily oral method initially; LARC is not mandatory and patient preference guides initial choice (FSRH UKMEC 2016; Therapeutic Guidelines: Contraception).",
+        "text": "Recommend a progestogen-only or non-hormonal method as combined hormonal contraception is contraindicated",
+        "correct": true,
+        "rationale": "Visual aura preceding headache is migraine with aura, UKMEC 4 for all combined hormonal contraception. Progestogen-only methods (POP, DMPA, implant, LNG-IUS) and copper IUD are UKMEC 1-2 and safe alternatives (UKMEC 2016).",
         "source_refs": [
           "FSRH UKMEC 2016",
           "Therapeutic Guidelines: Contraception"
@@ -48,21 +46,20 @@
       },
       {
         "letter": "D",
-        "text": "Fertility awareness method with abstinence during the fertile window each cycle",
+        "text": "Continue current condom-only contraception and only review if she develops new neurological deficit",
         "correct": false,
-        "rationale": "Fertility awareness has a typical-use failure rate of around 24% per year and is not first-line where reliable contraception is requested (Therapeutic Guidelines: Contraception; RANZCOG).",
+        "rationale": "Failure to offer a more reliable method is suboptimal; multiple effective progestogen-only and non-hormonal options remain available (Therapeutic Guidelines).",
         "source_refs": [
-          "Therapeutic Guidelines: Contraception",
-          "RANZCOG: Contraception"
+          "Therapeutic Guidelines: Contraception"
         ]
       },
       {
         "letter": "E",
-        "text": "Progestogen-only pill (norethisterone) taken at the same time each day",
+        "text": "Refer to neurology before any contraceptive can be safely commenced",
         "correct": false,
-        "rationale": "Traditional POPs have a narrow 3-hour mistiming window and are usually reserved for women with contraindications to oestrogen; the COCP is preferred when no contraindication exists and the patient wants reliable oral contraception (Therapeutic Guidelines: Contraception).",
+        "rationale": "Migraine with aura is a clinical diagnosis from history; neurology referral is not required to begin a UKMEC 1-2 progestogen-only or non-hormonal contraceptive today (UKMEC 2016; RACGP).",
         "source_refs": [
-          "Therapeutic Guidelines: Contraception"
+          "FSRH UKMEC 2016"
         ]
       }
     ],
@@ -95,153 +92,62 @@
     "subtopic_detail": "Contraception - UKMEC migraine recognition"
   },
   {
-    "id": "obgyn-repro-002",
-    "topic": "Obstetrics & Gynaecology",
-    "subtopic": "Gynaecology + menstrual",
-    "difficulty": 2,
-    "model": "Claude Opus 4.7 (1M context)",
-    "tags": [
-      "PCOS",
-      "Rotterdam"
-    ],
-    "stem": "A 22-year-old nulligravid woman presents to her GP with 18 months of irregular cycles ranging from 45 to 80 days, mild acne over the jawline that flares premenstrually and increased hair growth on the upper lip and chin requiring waxing every 3 weeks. She has had no rapidly progressive virilising features (no voice change, no clitoromegaly, no temporal balding), no galactorrhoea, no headaches, no visual disturbance, no temperature intolerance and no recent weight change. She is not sexually active currently and is not planning pregnancy in the next 2 to 3 years. BMI 26. Beta-hCG is negative. TSH 1.6 mIU/L, prolactin within reference range, 17-hydroxyprogesterone normal, total testosterone mildly elevated with a low SHBG and elevated free androgen index. Transvaginal ultrasound shows 22 follicles in the right ovary and ovarian volumes of 11 mL and 9 mL. Modified Ferriman-Gallwey score 9.",
-    "data_table": {
-      "Vital signs": "BP 118/74 mmHg, BMI 26",
-      "Examination": "Acne jawline; modified Ferriman-Gallwey 9; no virilisation",
-      "Investigations": "TSH 1.6 mIU/L, prolactin normal, 17-OHP normal, total testosterone mildly elevated, SHBG low, FAI elevated, beta-hCG negative; TVUS: 22 follicles right ovary, ovarian volume 11 mL right and 9 mL left"
-    },
-    "lead_in": "Which Rotterdam criteria does this patient fulfil to confirm a diagnosis of polycystic ovary syndrome?",
-    "options": [
-      {
-        "letter": "A",
-        "text": "Continue current management and review again in 3 months as planned",
-        "correct": false,
-        "rationale": "Clinical and biochemical hyperandrogenism count as ONE Rotterdam criterion (hyperandrogenism); they are not two separate criteria (2023 International PCOS Guideline; Jean Hailes PCOS).",
-        "source_refs": [
-          "International PCOS Guideline 2023",
-          "Jean Hailes PCOS"
-        ]
-      },
-      {
-        "letter": "B",
-        "text": "Oligo-anovulation plus hyperandrogenism plus polycystic ovarian morphology on ultrasound",
-        "correct": true,
-        "rationale": "Rotterdam criteria require any 2 of 3: oligo-anovulation, clinical/biochemical hyperandrogenism, and PCOM (>=20 follicles per ovary OR ovarian volume >=10 mL using current high-resolution TVUS thresholds); this patient meets all three (2023 International PCOS Guideline; Jean Hailes PCOS).",
-        "source_refs": [
-          "International PCOS Guideline 2023",
-          "Jean Hailes PCOS"
-        ]
-      },
-      {
-        "letter": "C",
-        "text": "Polycystic ovarian morphology alone is sufficient for a diagnosis in adults",
-        "correct": false,
-        "rationale": "PCOM in isolation does not equal PCOS; up to 20% of asymptomatic women have polycystic-appearing ovaries on ultrasound and a diagnosis requires 2 of 3 Rotterdam criteria (2023 International PCOS Guideline).",
-        "source_refs": [
-          "International PCOS Guideline 2023"
-        ]
-      },
-      {
-        "letter": "D",
-        "text": "Refer urgently to gynaecologic oncology for definitive surgical staging",
-        "correct": false,
-        "rationale": "Insulin resistance is a metabolic feature of PCOS but is not part of the Rotterdam criteria; metabolic screening is recommended after diagnosis (2023 International PCOS Guideline; Jean Hailes PCOS).",
-        "source_refs": [
-          "International PCOS Guideline 2023",
-          "Jean Hailes PCOS"
-        ]
-      },
-      {
-        "letter": "E",
-        "text": "Commence empirical broad-spectrum oral antibiotics for presumed PID",
-        "correct": false,
-        "rationale": "An elevated LH:FSH ratio supports the diagnosis but is not a Rotterdam criterion and is not required; LH/FSH is no longer recommended as a diagnostic test (2023 International PCOS Guideline).",
-        "source_refs": [
-          "International PCOS Guideline 2023"
-        ]
-      }
-    ],
-    "explanation": {
-      "summary": "Rotterdam criteria require any 2 of 3: oligo-anovulation, clinical or biochemical hyperandrogenism, and PCOM on ultrasound (>=20 follicles per ovary OR ovarian volume >=10 mL on current TVUS) after excluding mimics (2023 International PCOS Guideline; Jean Hailes PCOS).",
-      "key_points": [
-        "Exclude mimics first: TSH, prolactin, 17-OHP, beta-hCG",
-        "PCOM thresholds updated: >=20 follicles/ovary OR ovarian volume >=10 mL",
-        "AMH may substitute for ultrasound in adults but not in adolescents",
-        "Adolescents (<8 years post-menarche) require BOTH oligo-anovulation AND hyperandrogenism (not PCOM)"
-      ],
-      "pearls": "PCOM alone is not PCOS; up to 20% of asymptomatic women have polycystic-appearing ovaries."
-    },
-    "sources": [
-      {
-        "label": "International PCOS Guideline 2023",
-        "url": "https://www.monash.edu/medicine/sphpm/mchri/pcos"
-      },
-      {
-        "label": "Jean Hailes PCOS",
-        "url": "https://www.jeanhailes.org.au/health-a-z/pcos"
-      }
-    ],
-    "reference_ranges": [],
-    "created": "2026-05-18",
-    "subtopic_detail": "PCOS - Rotterdam criteria identification"
-  },
-  {
-    "id": "obgyn-repro-003",
+    "id": "obgyn-repro-003-l3",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Reproductive endocrinology",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [],
-    "stem": "A 29-year-old nulligravid woman presents with 7 months of secondary amenorrhoea, intermittent bilateral milky nipple discharge that she first noticed 3 months ago and a 6-month history of reduced libido. She has had no recent pregnancy or breastfeeding. Her cycles were previously regular at 30 days. She has had no headaches, no visual field defects, no hot flushes, no temperature intolerance and no weight change. She is sexually active with her long-term male partner using condoms, with no missed periods until this episode. Beta-hCG is negative. She takes no regular medications, has no over-the-counter medication use, and no recreational drug use. Examination is unremarkable apart from confirmation of milky expressible bilateral nipple discharge with no breast mass. BMI 24. A serum prolactin taken at 11 am returns 1850 mIU/L (reference <500). TSH and free T4 are within reference range.",
+    "stem": "A 29-year-old nulligravid woman presents with 7 months of secondary amenorrhoea, intermittent bilateral galactorrhoea and reduced libido. She has had no recent pregnancy or breastfeeding, no headaches and no visual symptoms. She started risperidone 4 mg daily 9 months ago for chronic schizoaffective disorder, prescribed by her psychiatrist, and is responding well with no recent admissions. She takes no other regular medications and uses no recreational drugs. BMI 24, BP 116/70. Visual fields are full to confrontation. Bloods: beta-hCG negative, repeat mid-morning serum prolactin 1900 mIU/L (reference <500) on two occasions one week apart, TSH and free T4 normal, U+Es normal. She is keen to conceive in the next 12 months.",
     "data_table": {
       "Vital signs": "BP 116/70 mmHg, BMI 24",
       "Examination": "Bilateral expressible galactorrhoea, no breast mass, visual fields normal to confrontation",
       "Investigations": "Beta-hCG negative, prolactin 1850 mIU/L (reference <500), TSH 1.4 mIU/L, free T4 normal"
     },
-    "lead_in": "What is the most appropriate next investigation to clarify the cause of her hyperprolactinaemia?",
+    "lead_in": "What is the most appropriate next step?",
     "options": [
       {
         "letter": "A",
-        "text": "Repeat morning serum prolactin and review medications and stress factors",
+        "text": "Request urgent MRI pituitary with gadolinium before any further investigation",
+        "correct": false,
+        "rationale": "MRI is indicated for unexplained sustained hyperprolactinaemia, but when a dopamine-antagonist antipsychotic is the strongly suspected cause, identification and management of that cause should precede imaging (Endocrine Society 2011).",
+        "source_refs": [
+          "Endocrine Society Hyperprolactinaemia 2011"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Liaise with the treating psychiatrist about switching to a prolactin-sparing antipsychotic such as aripiprazole, then re-check prolactin",
         "correct": true,
-        "rationale": "A single mildly elevated prolactin can result from stress, recent breast examination, exercise or medications; the Endocrine Society recommends confirmation with a repeat fasting morning sample plus a careful medication and clinical review before imaging (Endocrine Society Hyperprolactinaemia 2011; eTG: Endocrinology).",
+        "rationale": "Risperidone is a strong dopamine D2 antagonist and a common cause of pharmacological hyperprolactinaemia. The first step is collaborative medication review with the prescribing psychiatrist; switching to a prolactin-sparing agent (aripiprazole) and re-measuring before imaging avoids unnecessary MRI and identifies the cause (Endocrine Society 2011; eTG Endocrinology).",
         "source_refs": [
           "Endocrine Society Hyperprolactinaemia 2011",
           "eTG: Endocrinology"
         ]
       },
       {
-        "letter": "B",
-        "text": "MRI of the pituitary fossa with gadolinium contrast within the next week",
-        "correct": false,
-        "rationale": "Pituitary MRI is indicated for confirmed persistent hyperprolactinaemia when secondary causes (medications, hypothyroidism, pregnancy, renal failure) have been excluded; performing it before confirmation overcalls macroprolactinaemia and stress-related elevations (Endocrine Society Hyperprolactinaemia 2011).",
-        "source_refs": [
-          "Endocrine Society Hyperprolactinaemia 2011"
-        ]
-      },
-      {
         "letter": "C",
-        "text": "Dopamine agonist (cabergoline) trial and reassess prolactin in 6 weeks",
+        "text": "Commence cabergoline 0.25 mg twice weekly empirically and reassess prolactin in 6 weeks",
         "correct": false,
-        "rationale": "Treatment without confirming the diagnosis and excluding secondary causes is inappropriate; cabergoline has cardiac valve risk at high cumulative doses and should be reserved for a confirmed prolactinoma (Endocrine Society Hyperprolactinaemia 2011).",
+        "rationale": "Dopamine agonists may worsen psychosis in this population and are not first-line when a drug-induced cause is highly likely; medication review is the correct next step (Endocrine Society 2011).",
         "source_refs": [
           "Endocrine Society Hyperprolactinaemia 2011"
         ]
       },
       {
         "letter": "D",
-        "text": "Formal visual field testing by Humphrey perimetry as the first step",
+        "text": "Macroprolactin screen with polyethylene glycol precipitation as the next test",
         "correct": false,
-        "rationale": "Visual field testing is appropriate when a mass effect is suspected (level near the optic chiasm, headaches, field defect on confrontation), not as the first step in mildly elevated prolactin (Endocrine Society Hyperprolactinaemia 2011).",
+        "rationale": "Macroprolactin screening is for asymptomatic hyperprolactinaemia. This woman has symptoms (amenorrhoea, galactorrhoea, low libido) consistent with biologically active hyperprolactinaemia; the focus should be on the offending drug (Endocrine Society 2011).",
         "source_refs": [
           "Endocrine Society Hyperprolactinaemia 2011"
         ]
       },
       {
         "letter": "E",
-        "text": "Macroprolactin screen with polyethylene glycol precipitation as the first test",
+        "text": "Stop risperidone abruptly without psychiatric consultation to allow prolactin to normalise",
         "correct": false,
-        "rationale": "Macroprolactin screening is useful in asymptomatic patients with isolated hyperprolactinaemia; this woman has galactorrhoea and amenorrhoea making biologically inactive macroprolactin a less likely explanation, and a confirmatory repeat is the first step (Endocrine Society Hyperprolactinaemia 2011).",
+        "rationale": "Abruptly stopping antipsychotics without psychiatric input risks relapse and is unsafe; switching requires shared decision-making (Endocrine Society 2011).",
         "source_refs": [
           "Endocrine Society Hyperprolactinaemia 2011"
         ]
@@ -272,38 +178,37 @@
     "subtopic_detail": "Hyperprolactinaemia - first-line investigation"
   },
   {
-    "id": "obgyn-repro-004",
+    "id": "obgyn-repro-004-l3",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Other",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "IVF",
       "OHSS"
     ],
-    "stem": "A 32-year-old woman is reviewed in the day assessment unit 7 days after oocyte retrieval as part of an IVF cycle. She had 21 oocytes retrieved and reports progressive abdominal distension, nausea and reduced oral intake for 48 hours. She has had no fever, no vaginal bleeding and no chest pain. On examination she appears uncomfortable, BP 108/68 mmHg, HR 96 bpm, RR 16, SpO2 98% on room air. Abdomen is distended with shifting dullness and mild generalised tenderness; there is no peritonism. Pelvic ultrasound shows enlarged ovaries (10 cm right and 9 cm left) with multiple cysts and moderate free fluid in the pelvis extending into the lower abdomen but not above the umbilicus. Bloods: haematocrit 0.45 (baseline 0.38), white cell count 12.5 x10^9/L, sodium 137 mmol/L, potassium 4.2 mmol/L, creatinine 72 micromol/L, albumin 32 g/L, liver function tests normal. She is tolerating sips of fluid and passing urine.",
+    "stem": "A 32-year-old woman is reviewed 8 days after IVF oocyte retrieval (21 oocytes). She reports 48 hours of worsening abdominal distension, nausea and reduced oral intake. BP 108/64, HR 108, RR 18, SpO2 98% on room air. Abdomen distended, tense ascites palpable to the costal margin, mild generalised tenderness without peritonism. Pelvic ultrasound: ovaries 11 cm right and 10 cm left with multiple cysts; large-volume ascites extending above the umbilicus; small right pleural effusion. Bloods: haematocrit 0.48 (baseline 0.38), WCC 13.2, sodium 132, potassium 4.6, creatinine 96 micromol/L (baseline 62), albumin 27 g/L, ALT 78 U/L, urine output 25 mL/h for the past 4 hours.",
     "data_table": {
       "Vital signs": "BP 108/68, HR 96, RR 16, SpO2 98% RA, T 36.8",
       "Examination": "Distended abdomen, shifting dullness, mild tenderness, no peritonism",
       "Investigations": "Hct 0.45 (baseline 0.38), WCC 12.5, Na 137, K 4.2, Cr 72 micromol/L, Alb 32 g/L; USS: ovaries 10 cm R / 9 cm L, moderate ascites pelvic + lower abdo, not above umbilicus"
     },
-    "lead_in": "Which classification best describes the severity of her ovarian hyperstimulation syndrome?",
+    "lead_in": "Which classification and management plan best fit her ovarian hyperstimulation syndrome?",
     "options": [
       {
         "letter": "A",
-        "text": "Mild OHSS - abdominal discomfort with mild ovarian enlargement only",
+        "text": "Moderate OHSS: discharge home with daily phone review and oral fluids",
         "correct": false,
-        "rationale": "Mild OHSS is abdominal distension/discomfort with ovaries up to about 8 cm; this patient has 10 cm ovaries with ascites which exceeds mild (RANZCOG OHSS; ESHRE).",
+        "rationale": "Haematocrit >=0.45, rising creatinine, oliguria, hypoalbuminaemia and ascites above the umbilicus place her into severe OHSS, not moderate; outpatient management is unsafe (RANZCOG OHSS; ESHRE).",
         "source_refs": [
-          "RANZCOG OHSS",
-          "ESHRE OHSS Guideline"
+          "RANZCOG OHSS"
         ]
       },
       {
         "letter": "B",
-        "text": "Moderate OHSS - features of mild OHSS plus ultrasound evidence of ascites",
+        "text": "Severe OHSS: admit for IV crystalloid, VTE prophylaxis with LMWH, strict fluid balance and consider paracentesis",
         "correct": true,
-        "rationale": "Moderate OHSS combines mild features with sonographic ascites; she has stable observations, haematocrit <0.45, no haemoconcentration past threshold, and ascites visible on ultrasound but no clinical haemodynamic compromise (RANZCOG OHSS; ESHRE).",
+        "rationale": "Haematocrit 0.48, oliguria, creatinine rise, hypoalbuminaemia, ascites above the umbilicus and pleural effusion meet severe OHSS criteria. Management is admission for IV fluids, prophylactic LMWH (high VTE risk), strict input/output and paracentesis for symptomatic tense ascites (RANZCOG OHSS; ESHRE).",
         "source_refs": [
           "RANZCOG OHSS",
           "ESHRE OHSS Guideline"
@@ -311,30 +216,30 @@
       },
       {
         "letter": "C",
-        "text": "Severe OHSS - clinical ascites, haemoconcentration with haematocrit >0.45 or oliguria",
+        "text": "Critical OHSS: transfer to ICU now for invasive ventilation and renal replacement",
         "correct": false,
-        "rationale": "Severe OHSS requires clinical ascites, haematocrit >0.45, WCC >15, hypoalbuminaemia <35 g/L with oliguria or evidence of significant third-space loss; her haematocrit is exactly 0.45 and observations are stable, placing her at the moderate end (RANZCOG OHSS).",
+        "rationale": "Critical OHSS requires anuria, ARDS, thromboembolism or multiorgan failure. She has oliguria not anuria, normal saturations and no thromboembolism; ICU is not yet required (RANZCOG OHSS).",
         "source_refs": [
           "RANZCOG OHSS"
         ]
       },
       {
         "letter": "D",
-        "text": "Critical OHSS - tense ascites, ARDS, thromboembolism, renal failure or anuria",
+        "text": "Severe OHSS: admit but give large-volume normal saline boluses until haematocrit normalises",
         "correct": false,
-        "rationale": "Critical OHSS includes haematocrit >0.55, WCC >25, tense ascites, ARDS, VTE, hepatorenal dysfunction or anuria; her parameters fall well short of critical (RANZCOG OHSS; ESHRE).",
+        "rationale": "Aggressive saline boluses worsen third-spacing in OHSS; balanced fluid strategy with albumin where indicated, plus paracentesis, is preferred (RANZCOG OHSS; ESHRE).",
         "source_refs": [
-          "RANZCOG OHSS",
-          "ESHRE OHSS Guideline"
+          "RANZCOG OHSS"
         ]
       },
       {
         "letter": "E",
-        "text": "Early OHSS pre-ovulation with no clinical or laboratory abnormality detected",
+        "text": "Severe OHSS: admit but withhold thromboprophylaxis until haemoconcentration resolves",
         "correct": false,
-        "rationale": "Early OHSS occurs within 9 days of trigger and is HCG-mediated, but it is still classified by severity (mild/moderate/severe/critical) using clinical and laboratory parameters; her findings are abnormal so this is not the answer (RANZCOG OHSS).",
+        "rationale": "OHSS is a hypercoagulable state and LMWH thromboprophylaxis is recommended early; withholding it increases life-threatening VTE risk (RANZCOG OHSS; ESHRE).",
         "source_refs": [
-          "RANZCOG OHSS"
+          "RANZCOG OHSS",
+          "ESHRE OHSS Guideline"
         ]
       }
     ],
@@ -363,27 +268,27 @@
     "subtopic_detail": "OHSS - severity recognition"
   },
   {
-    "id": "obgyn-repro-005",
+    "id": "obgyn-repro-005-l3",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Reproductive endocrinology",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "infertility",
       "IVF"
     ],
-    "stem": "A 31-year-old woman and her 33-year-old male partner have been trying to conceive for 14 months. Initial workup is complete: she has regular 28-day ovulatory cycles, mid-luteal progesterone is consistent with ovulation, AMH 18 pmol/L, antral follicle count 14 (total both ovaries), TSH and prolactin normal, BMI 24, and a hysterosalpingo-contrast-sonography (HyCoSy) confirmed bilateral tubal patency. Her partner had a normal semen analysis on two occasions performed 4 weeks apart per WHO 2021 criteria (volume, concentration, total motility and normal morphology all above reference). Neither has a history of pelvic surgery, endometriosis, sexually transmitted infection or chronic disease. She has not previously been pregnant. They are using folic acid 0.5 mg daily. Both are non-smokers and drink alcohol within recommended limits. After full counselling, the couple ask which assisted reproductive option would be most appropriate as a next step.",
+    "stem": "A 38-year-old woman and her 40-year-old male partner have been trying to conceive for 18 months. The woman has regular ovulatory cycles, mid-luteal progesterone confirms ovulation, AMH 6 pmol/L (low for age), antral follicle count 6, TSH and prolactin normal, BMI 24, HyCoSy confirmed bilateral tubal patency. The partner has had two normal semen analyses by WHO 2021 criteria 4 weeks apart. Neither has had pelvic surgery, endometriosis or STI. They are non-smokers and drink within recommended limits. They have not had any prior pregnancies. They ask which ART pathway gives the highest live-birth chance given her age and ovarian reserve.",
     "data_table": {
       "Examination": "Both partners healthy; female BMI 24",
       "Investigations": "Female: regular ovulatory cycles, normal mid-luteal progesterone, AMH 18 pmol/L, AFC 14, normal TSH/prolactin, bilateral tubal patency. Male: normal semen analysis x2 by WHO 2021"
     },
-    "lead_in": "What is the most appropriate next management step?",
+    "lead_in": "What is the most appropriate next step?",
     "options": [
       {
         "letter": "A",
-        "text": "Proceed directly to in vitro fertilisation with single embryo transfer",
+        "text": "Continue timed intercourse for a further 12 months before referral to a fertility specialist",
         "correct": false,
-        "rationale": "IVF is not first-line for unexplained infertility in a woman under 35 with a short duration of unexplained infertility; expectant or stepped management is preferred initially (RANZCOG; NICE CG156).",
+        "rationale": "Female age >=35 with infertility >=6-12 months warrants prompt referral; an additional 12 months reduces cumulative live-birth chance, particularly with low AMH (RANZCOG; NICE CG156).",
         "source_refs": [
           "RANZCOG: Infertility",
           "NICE CG156 Fertility"
@@ -391,9 +296,9 @@
       },
       {
         "letter": "B",
-        "text": "Diet-controlled GDM with daily SMBG monitoring and dietetic input",
+        "text": "Proceed to in vitro fertilisation given her age and low ovarian reserve",
         "correct": true,
-        "rationale": "For unexplained infertility in a woman under 36 with a normal workup including patent tubes, normal ovulation, normal semen analysis and 12 to 24 months of infertility, expectant management with timed intercourse is reasonable; cumulative spontaneous pregnancy rates remain meaningful in this group (RANZCOG; NICE CG156).",
+        "rationale": "At 38 with AMH 6 pmol/L and AFC 6 (low ovarian reserve), IVF gives the highest cycle live-birth chance and allows aneuploidy management; IUI is less effective in this context (NICE CG156; RANZCOG).",
         "source_refs": [
           "RANZCOG: Infertility",
           "NICE CG156 Fertility"
@@ -401,31 +306,29 @@
       },
       {
         "letter": "C",
-        "text": "Intrauterine insemination (IUI) without ovarian stimulation in next natural cycle",
+        "text": "Three cycles of intrauterine insemination with clomiphene before considering IVF",
         "correct": false,
-        "rationale": "Unstimulated IUI offers minimal benefit over timed intercourse for unexplained infertility with normal semen; stimulated IUI improves outcomes but is generally not first-line in this scenario (NICE CG156).",
+        "rationale": "IUI offers limited additional benefit over expectant management in unexplained infertility with low ovarian reserve at 38; cycles spent on IUI may reduce her IVF window (NICE CG156).",
         "source_refs": [
           "NICE CG156 Fertility"
         ]
       },
       {
         "letter": "D",
-        "text": "Insulin-controlled type 2 diabetes diagnosed antenatally for the first time",
+        "text": "Commence clomiphene citrate alone with timed intercourse for six cycles",
         "correct": false,
-        "rationale": "Empirical ovulation induction in a woman with confirmed ovulation does not improve live birth rates and risks multiple pregnancy; it is not appropriate (RANZCOG; NICE CG156).",
+        "rationale": "She is already ovulating; clomiphene without IVF or IUI does not address her age-related and reserve-related decline (NICE CG156).",
         "source_refs": [
-          "RANZCOG: Infertility",
           "NICE CG156 Fertility"
         ]
       },
       {
         "letter": "E",
-        "text": "Impaired fasting glucose without meeting diagnostic criteria for gestational diabetes",
+        "text": "Recommend donor oocyte IVF as her age and reserve preclude autologous IVF success",
         "correct": false,
-        "rationale": "Laparoscopy is not routinely indicated for unexplained infertility unless there is suspicion of endometriosis or adhesions on history or imaging (RANZCOG; ESHRE Endometriosis 2022).",
+        "rationale": "Autologous IVF still offers reasonable success at 38 with AMH 6; donor oocyte is reserved for those with very low reserve and repeated IVF failure (RANZCOG; NICE).",
         "source_refs": [
-          "RANZCOG: Infertility",
-          "ESHRE Endometriosis Guideline 2022"
+          "RANZCOG: Infertility"
         ]
       }
     ],
@@ -458,26 +361,26 @@
     "subtopic_detail": "IUI vs IVF - eligibility selection"
   },
   {
-    "id": "obgyn-repro-006",
+    "id": "obgyn-repro-006-l3",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Gynaecology + menstrual",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "fibroids",
       "FIGO"
     ],
-    "stem": "A 38-year-old G2P2 woman is referred for assessment of progressively heavy menstrual bleeding and intermenstrual spotting for 9 months. She is otherwise well, with a normal full blood count apart from microcytic anaemia (Hb 102 g/L), normal iron studies after recent supplementation, normal TSH and beta-hCG negative. Pelvic ultrasound (transvaginal route) demonstrates four discrete fibroids. The largest is 3 cm and lies entirely within the endometrial cavity with no myometrial extension. A second fibroid is 4 cm and protrudes into the cavity with approximately 60% of its volume within the myometrium and 40% within the cavity. A third fibroid is 3 cm and sits entirely within the myometrium without distorting the cavity or reaching the serosa. A fourth is 5 cm and is predominantly on the outer surface of the uterus with a narrow pedicle. Her cervical screening is up to date and the endometrial biopsy is benign. She has completed her family and prefers to avoid hysterectomy if possible.",
+    "stem": "A 38-year-old G2P2 woman has 9 months of progressively heavy menstrual bleeding and intermenstrual spotting. Hb 102 g/L (microcytic) responsive to iron, TSH and beta-hCG normal, endometrial biopsy benign, cervical screening up to date. Pelvic ultrasound and saline-infusion sonography demonstrate a single 3 cm fibroid lying entirely within the endometrial cavity on a narrow stalk (FIGO type 0), with no other fibroids and a normal myometrium. She has completed her family, wishes to preserve her uterus, and prefers the most targeted intervention with the fastest return to normal activity. She has no contraindication to anaesthesia.",
     "data_table": {
       "Investigations": "Hb 102 g/L (microcytic), iron studies normal post-supplement, TSH normal, beta-hCG negative; pelvic USS: four fibroids as described, endometrial biopsy benign"
     },
-    "lead_in": "Which FIGO classification correctly matches the fibroid that lies entirely within the endometrial cavity?",
+    "lead_in": "What is the most appropriate treatment for her fibroid-related heavy menstrual bleeding?",
     "options": [
       {
         "letter": "A",
-        "text": "FIGO type 0 - submucosal pedunculated entirely within the cavity",
+        "text": "Hysteroscopic resection of the submucosal fibroid",
         "correct": true,
-        "rationale": "FIGO type 0 fibroids are entirely intracavitary (pedunculated submucosal); type 1 are <50% intramural and type 2 are >=50% intramural; correct identification guides hysteroscopic resection eligibility (FIGO PALM-COEIN 2011; RANZCOG).",
+        "rationale": "A FIGO type 0 submucosal fibroid causing HMB is best treated by hysteroscopic resection: targeted, uterus-preserving, day-procedure, with rapid recovery and high HMB resolution rates (RANZCOG fibroids; FIGO PALM-COEIN).",
         "source_refs": [
           "FIGO PALM-COEIN 2011",
           "RANZCOG: Fibroids"
@@ -485,38 +388,38 @@
       },
       {
         "letter": "B",
-        "text": "FIGO type 1 - submucosal with less than 50% intramural extension",
+        "text": "Uterine artery embolisation by interventional radiology",
         "correct": false,
-        "rationale": "FIGO type 1 fibroids are submucosal but have <50% intramural extension; the patient's 3 cm cavity fibroid is entirely intracavitary (type 0) (FIGO PALM-COEIN 2011).",
+        "rationale": "UAE is effective for symptomatic intramural or larger fibroids but is suboptimal for an isolated cavity-based pedunculated fibroid (FIGO 0), which may necrose into the cavity; hysteroscopic resection is preferred (RANZCOG).",
         "source_refs": [
-          "FIGO PALM-COEIN 2011"
+          "RANZCOG: Fibroids"
         ]
       },
       {
         "letter": "C",
-        "text": "FIGO type 2 - submucosal with 50% or greater intramural extension",
+        "text": "Levonorgestrel intrauterine system (Mirena) insertion at next routine appointment",
         "correct": false,
-        "rationale": "FIGO type 2 is submucosal with >=50% intramural extension; this describes the second fibroid in the stem (with 60% myometrial component), not the entirely intracavitary one (FIGO PALM-COEIN 2011).",
+        "rationale": "LNG-IUS efficacy is reduced when a submucosal fibroid distorts the cavity, and expulsion rates are higher; hysteroscopic resection should precede or replace LNG-IUS in FIGO 0 lesions (RANZCOG; NICE).",
         "source_refs": [
-          "FIGO PALM-COEIN 2011"
+          "RANZCOG: Fibroids"
         ]
       },
       {
         "letter": "D",
-        "text": "FIGO type 3 - intramural fibroid that contacts the endometrium without distortion",
+        "text": "Total abdominal hysterectomy as definitive treatment",
         "correct": false,
-        "rationale": "FIGO type 3 fibroids are intramural but contact the endometrium; type 4 are entirely intramural; neither describes a wholly intracavitary fibroid (FIGO PALM-COEIN 2011).",
+        "rationale": "She wishes to preserve her uterus and the lesion is well suited to a uterus-sparing day procedure; hysterectomy is disproportionate (RANZCOG).",
         "source_refs": [
-          "FIGO PALM-COEIN 2011"
+          "RANZCOG: Fibroids"
         ]
       },
       {
         "letter": "E",
-        "text": "FIGO type 7 - subserosal pedunculated fibroid on a narrow stalk",
+        "text": "Three-month course of GnRH agonist (goserelin) as definitive management",
         "correct": false,
-        "rationale": "FIGO type 7 is subserosal pedunculated; this describes the fourth fibroid in the stem (5 cm with a narrow pedicle on the outer surface), not the cavity fibroid (FIGO PALM-COEIN 2011).",
+        "rationale": "GnRH agonists are used pre-operatively to shrink fibroids and treat anaemia but are not definitive; bleeding returns once stopped, and adverse effects limit long-term use (RANZCOG).",
         "source_refs": [
-          "FIGO PALM-COEIN 2011"
+          "RANZCOG: Fibroids"
         ]
       }
     ],

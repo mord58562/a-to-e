@@ -1,67 +1,70 @@
 [
   {
-    "id": "obgyn-matmed-001",
+    "id": "obgyn-matmed-001-l3",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Maternal medical conditions",
     "subtopic_detail": "Epilepsy - preconception folate dose",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "lamotrigine"
     ],
-    "stem": "A 27-year-old woman with focal epilepsy attends her GP for preconception counselling. She has been seizure free for four years on lamotrigine 200 mg twice daily as monotherapy. She has no other medical history, takes no other medications and has no known drug allergies. Her last neurologist review six months ago confirmed ongoing monotherapy was appropriate and she has had no medication changes for three years. She is in a stable relationship, drinks no alcohol, does not smoke and has a BMI of 24 kg/m2. She tells you she would like to start trying to conceive in the next two to three months and asks specifically about supplementation and whether she should stop or change her antiepileptic before conception. She is not currently taking any vitamins. Her partner has no relevant medical history and there is no family history of neural tube defects, congenital heart disease or developmental disability on either side.",
+    "stem": "A 27-year-old woman with focal epilepsy attends her GP for preconception counselling. She has been seizure-free for 4 years on sodium valproate 1000 mg daily as monotherapy, prescribed by her neurologist who has been unable to wean her without seizure recurrence. She is in a stable relationship, drinks no alcohol, BMI 24, no other medications. There is no personal or family history of neural tube defects. She wishes to conceive within the next 6 months and has not yet started any vitamins. She has read online that 'folic acid 5 mg' is recommended in epilepsy.",
     "data_table": {
       "Vital signs": "BP 118/72 mmHg, HR 72 bpm, weight 68 kg, BMI 24 kg/m2.",
       "Examination": "Unremarkable, no neurocutaneous markers, no goitre.",
       "Medications": "Lamotrigine 200 mg BD. No other medications. No allergies."
     },
-    "lead_in": "What is the most appropriate folate supplementation advice for her now?",
+    "lead_in": "What is the most appropriate preconception advice?",
     "options": [
       {
         "letter": "A",
-        "text": "Folic acid 400 micrograms daily from now until 12 weeks gestation",
+        "text": "Continue valproate, start folic acid 5 mg daily and aim to conceive in 6 months",
         "correct": false,
-        "rationale": "400 micrograms daily is the standard population dose for women without specific risk factors and is insufficient for a woman on any antiepileptic drug, who is in a higher-risk group for neural tube defects (RANZCOG; Therapeutic Guidelines: Neurology).",
+        "rationale": "Valproate is highly teratogenic (NTD, cardiac, craniofacial, cognitive impairment) and is unsafe in any woman of reproductive age unless a Pregnancy Prevention Programme (PPP) is in place and no alternatives exist. Folate alone does not mitigate the teratogenic risk (RANZCOG; TGA valproate PPP; AMH).",
         "source_refs": [
-          "RANZCOG: Pre-pregnancy counselling and routine antenatal assessment",
-          "Therapeutic Guidelines: Neurology - epilepsy and pregnancy"
+          "RANZCOG: Epilepsy in pregnancy",
+          "TGA - Valproate Pregnancy Prevention Programme",
+          "AMH 2024"
         ]
       },
       {
         "letter": "B",
-        "text": "Switch to folinic acid 15 mg daily preconception in this scenario",
-        "correct": false,
-        "rationale": "Folinic acid is reserved for specific scenarios such as concurrent methotrexate or trimethoprim therapy; routine antiepileptic preconception care uses oral folic acid 5 mg daily (Australian Medicines Handbook).",
+        "text": "Refer to neurology for transition to a less teratogenic antiepileptic (e.g. lamotrigine or levetiracetam) and start folic acid 5 mg daily, deferring conception until stable on the new agent",
+        "correct": true,
+        "rationale": "Valproate must be avoided in pregnancy where possible. Neurology should switch to lamotrigine or levetiracetam, conception is deferred until seizure-free on the new agent, and folic acid 5 mg daily is started preconception until 12 weeks (RANZCOG; AMH; TGA valproate PPP).",
         "source_refs": [
-          "Australian Medicines Handbook: Folic acid"
+          "RANZCOG: Epilepsy in pregnancy",
+          "AMH 2024",
+          "TGA - Valproate Pregnancy Prevention Programme"
         ]
       },
       {
         "letter": "C",
-        "text": "Folic acid 5 mg daily only once pregnancy is confirmed on testing",
+        "text": "Stop valproate today without neurology input and start folic acid 400 mcg daily",
         "correct": false,
-        "rationale": "Neural tube closure is complete by 28 days post-conception, before most women know they are pregnant; starting folate only after a positive test is too late to prevent neural tube defects (RANZCOG).",
+        "rationale": "Abrupt cessation of antiepileptics risks status epilepticus, which carries higher maternal and foetal mortality than the drug itself. Transition must be supervised (RANZCOG).",
         "source_refs": [
-          "RANZCOG: Pre-pregnancy counselling and routine antenatal assessment"
+          "RANZCOG: Epilepsy in pregnancy"
         ]
       },
       {
         "letter": "D",
-        "text": "No supplementation needed because lamotrigine is folate sparing here",
+        "text": "Continue valproate and add lamotrigine to allow pregnancy on combination therapy",
         "correct": false,
-        "rationale": "Although lamotrigine has a lower teratogenic risk than valproate or carbamazepine, Australian guidance still recommends 5 mg daily for any woman on an antiepileptic given residual risk of malformations including neural tube defects (Therapeutic Guidelines: Neurology).",
+        "rationale": "Polytherapy increases teratogenic risk; valproate must be removed entirely if possible (RANZCOG; AMH).",
         "source_refs": [
-          "Therapeutic Guidelines: Neurology - epilepsy and pregnancy"
+          "RANZCOG: Epilepsy in pregnancy"
         ]
       },
       {
         "letter": "E",
-        "text": "Folic acid 5 mg daily from now until at least 12 weeks gestation",
-        "correct": true,
-        "rationale": "Women on any antiepileptic drug should receive high-dose folate (5 mg daily) ideally for at least one to three months preconception and continuing until 12 weeks gestation, regardless of which antiepileptic is used (RANZCOG; Therapeutic Guidelines: Neurology; RCOG Green-top 68).",
+        "text": "Continue valproate and start folic acid 400 mcg daily, the standard dose for low-risk women",
+        "correct": false,
+        "rationale": "Folic acid 5 mg, not 400 mcg, is the recommended preconception dose for women on antiepileptics; even then, valproate must be replaced (RANZCOG; AMH).",
         "source_refs": [
-          "RANZCOG: Pre-pregnancy counselling and routine antenatal assessment",
-          "Therapeutic Guidelines: Neurology - epilepsy and pregnancy"
+          "RANZCOG: Epilepsy in pregnancy",
+          "AMH 2024"
         ]
       }
     ],
@@ -191,66 +194,66 @@
     "created": "2026-05-19"
   },
   {
-    "id": "obgyn-matmed-003",
+    "id": "obgyn-matmed-003-l3",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Maternal medical conditions",
     "subtopic_detail": "Asthma - continuation of inhaled corticosteroid",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [],
-    "stem": "A 24-year-old G1P0 woman attends her booking visit at 9 weeks. She has had asthma since childhood and her control has been good for the last two years on budesonide 200 micrograms twice daily with salbutamol 100 micrograms PRN. She has used her reliever twice in the past month, has no nocturnal symptoms, no exercise limitation and no emergency presentations or oral corticosteroid courses in the last 12 months. She has not been admitted to hospital for asthma since age 14. She has no other medical problems, takes no other regular medications and has no allergies. She tells you she has read on social media that all asthma medications cross the placenta and harm the baby, and asks whether she should stop her preventer for the duration of the pregnancy. She is otherwise well, has commenced folic acid 500 micrograms daily and is up to date with her influenza and pertussis plans. The remainder of the booking history is unremarkable.",
+    "stem": "A 24-year-old G1P0 at 9 weeks gestation has had asthma since childhood, well-controlled on budesonide 200 mcg bd plus salbutamol PRN. Over the past month she has needed reliever 4-5 times per week with two episodes of nocturnal cough. Spirometry today: FEV1 78% predicted (baseline 95% pre-pregnancy). No infective symptoms, no exposure changes. She tells you a friend advised her to stop the budesonide because 'steroids cross the placenta'. She is up to date with influenza vaccination and folic acid.",
     "data_table": {
       "Vital signs": "BP 110/68 mmHg, HR 78 bpm, RR 16, SpO2 99% on air.",
       "Examination": "Chest clear, no wheeze, peak flow at her usual personal best.",
       "Medications": "Budesonide 200 micrograms BD inhaled, salbutamol 100 micrograms PRN."
     },
-    "lead_in": "What is the most appropriate advice regarding her asthma preventer?",
+    "lead_in": "What is the most appropriate management of her asthma now?",
     "options": [
       {
         "letter": "A",
-        "text": "Stop budesonide for the first trimester and restart in the second",
+        "text": "Continue current budesonide 200 mcg bd and reassess in 4 weeks",
         "correct": false,
-        "rationale": "Stopping inhaled corticosteroids increases the risk of exacerbations, which are more harmful to the foetus than the medication itself; inhaled budesonide has the most reassuring pregnancy safety data (Therapeutic Guidelines: Respiratory; National Asthma Council Australia).",
+        "rationale": "Her control has deteriorated (reliever >2/week, nocturnal symptoms, FEV1 drop). Continuing the same dose accepts uncontrolled asthma, which carries higher risk to mother and foetus than dose escalation (RANZCOG; TSANZ).",
         "source_refs": [
-          "Therapeutic Guidelines: Respiratory - asthma in pregnancy",
-          "National Asthma Council Australia Handbook"
+          "RANZCOG: Asthma in pregnancy",
+          "TSANZ Australian Asthma Handbook"
         ]
       },
       {
         "letter": "B",
-        "text": "Stop budesonide for the entire pregnancy and use salbutamol PRN only",
-        "correct": false,
-        "rationale": "Reliever-only treatment is inadequate for persistent asthma at any time and is associated with worse maternal and perinatal outcomes if exacerbations occur (National Asthma Council Australia).",
+        "text": "Step up inhaled corticosteroid (e.g. budesonide-formoterol combination) per the Australian Asthma Handbook and continue throughout pregnancy",
+        "correct": true,
+        "rationale": "Uncontrolled asthma is more dangerous to the pregnancy than inhaled corticosteroids. The Australian Asthma Handbook recommends standard step-up of inhaled therapy in pregnancy, including ICS-LABA combinations. Stopping ICS is the anti-pattern to avoid (RANZCOG; TSANZ).",
         "source_refs": [
-          "National Asthma Council Australia Handbook"
+          "RANZCOG: Asthma in pregnancy",
+          "TSANZ Australian Asthma Handbook"
         ]
       },
       {
         "letter": "C",
-        "text": "Switch to oral prednisolone 5 mg daily for the whole pregnancy",
+        "text": "Stop budesonide and use salbutamol alone for the duration of pregnancy",
         "correct": false,
-        "rationale": "Maintenance oral corticosteroids are reserved for severe refractory asthma; routinely escalating a well controlled patient on ICS to systemic steroids is inappropriate (Therapeutic Guidelines: Respiratory).",
+        "rationale": "Stopping ICS in pregnancy is associated with worse asthma control and adverse pregnancy outcomes including pre-eclampsia, prematurity and low birth weight (TSANZ).",
         "source_refs": [
-          "Therapeutic Guidelines: Respiratory - asthma in pregnancy"
+          "TSANZ Australian Asthma Handbook"
         ]
       },
       {
         "letter": "D",
-        "text": "Switch to montelukast 10 mg orally daily as monotherapy now",
+        "text": "Switch to oral prednisolone 10 mg daily for the duration of pregnancy",
         "correct": false,
-        "rationale": "Montelukast is reserved for add-on therapy in pregnancy when control is inadequate on ICS; it is not used as monotherapy, and switching a well controlled patient is unnecessary (National Asthma Council Australia).",
+        "rationale": "Oral corticosteroids are reserved for exacerbations, not maintenance, due to maternal side effects; inhaled escalation is preferred (TSANZ).",
         "source_refs": [
-          "National Asthma Council Australia Handbook"
+          "TSANZ Australian Asthma Handbook"
         ]
       },
       {
         "letter": "E",
-        "text": "Continue budesonide at the current dose and reassess regularly",
-        "correct": true,
-        "rationale": "The principal message of all Australian asthma-in-pregnancy guidance is that women should continue their preventer; inhaled corticosteroids are safe and uncontrolled asthma poses the greater risk through hypoxia, preterm birth and pre-eclampsia (National Asthma Council Australia; Therapeutic Guidelines: Respiratory).",
+        "text": "Switch to montelukast 10 mg daily as monotherapy",
+        "correct": false,
+        "rationale": "Montelukast may be continued if it was being used pre-pregnancy but is not first-line monotherapy; ICS-based step-up is preferred (TSANZ).",
         "source_refs": [
-          "National Asthma Council Australia Handbook",
-          "Therapeutic Guidelines: Respiratory - asthma in pregnancy"
+          "TSANZ Australian Asthma Handbook"
         ]
       }
     ],

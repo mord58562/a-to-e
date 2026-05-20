@@ -289,46 +289,46 @@
     "subtopic_detail": "UTI imaging"
   },
   {
-    "id": "paeds-renal-004",
+    "id": "paeds-renal-004-l3",
     "topic": "Paediatrics",
     "subtopic": "Renal and urology",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "UTI",
       "urinalysis"
     ],
-    "stem": "A 9-month-old, fully vaccinated boy is brought to his GP by his mother for 36 hours of low-grade fever to 38.1 degC and mild irritability. He has had no rash, vomiting, diarrhoea or cough. He has 5-6 wet nappies a day and is feeding only slightly less than usual. He is on the 50th centile and is developmentally normal. There were no antenatal renal concerns and he is uncircumcised. On examination he is alert, well perfused, has a flat fontanelle, clear chest, soft non-tender abdomen with no palpable bladder and no flank tenderness. Vitals: T 37.9 degC, HR 132, RR 28, SpO2 99 percent RA, cap refill 2 s. The practice nurse, planning to apply an adhesive perineal bag for screening urinalysis, has already cleaned the perineum. The bag specimen returns leucocyte esterase trace, nitrites negative, blood negative, protein negative, and microscopy shows 8 WBC per high power field with no organisms seen. The mother asks whether her son has a urinary tract infection. The local pathology service offers same-day clean catch processing.",
+    "stem": "A 9-month-old fully vaccinated boy is brought to his GP with 36 hours of low-grade fever (38.1 deg C) and mild irritability. He has had no rash, vomiting, diarrhoea or cough. He has 5-6 wet nappies a day and is feeding only slightly less than usual. He is otherwise well, on the 50th centile and developmentally normal. There were no antenatal renal concerns. He is uncircumcised. Examination: alert, well perfused, flat fontanelle, clear chest, soft non-tender abdomen, no palpable bladder, no flank tenderness. T 37.9, HR 132, RR 28, SpO2 99 percent. The practice nurse applied an adhesive perineal bag for screening urinalysis. Bag urine: LE trace, nitrites negative, blood negative, protein negative, microscopy 8 WBC per high power field with no organisms seen. The lab offers same-day clean-catch processing.",
     "data_table": {
       "Vital signs": "T 37.9 degC, HR 132, RR 28, SpO2 99% RA",
       "Examination": "Alert, well perfused, abdomen soft, no flank tenderness",
       "Investigations": "Bag urine: LE trace, nitrites neg, blood neg, protein neg, 8 WBC/HPF"
     },
-    "lead_in": "How should the bag urine result be interpreted?",
+    "lead_in": "How should the bag urine result be interpreted and what is the next step?",
     "options": [
       {
         "letter": "A",
-        "text": "Bag specimens have poor specificity; a negative result is reassuring and excludes UTI",
+        "text": "Bag urine has poor specificity but the negative result reliably excludes UTI; discharge with safety-net advice",
         "correct": false,
-        "rationale": "Bag urine has high false-positive but variable false-negative rates and cannot reliably exclude UTI; nitrites particularly require bladder dwell time of at least 4 hours and are commonly negative in true infection (RCH CPG - Urinary tract infection).",
+        "rationale": "Bag urine cannot reliably exclude UTI: nitrites require at least 4 hours of bladder dwell time (frequently negative in infants who void frequently), and not all uropathogens reduce nitrate.",
         "source_refs": [
-          "RCH CPG - Urinary tract infection"
+          "RCH CPG: Urinary Tract Infection"
         ]
       },
       {
         "letter": "B",
-        "text": "Commence empirical oral trimethoprim while awaiting a follow-up bag specimen",
+        "text": "Commence empirical oral trimethoprim while awaiting a repeat bag specimen",
         "correct": false,
-        "rationale": "Empirical antibiotics should not be started on the basis of a bag urine alone; a reliable confirmatory sample is required first (NICE NG224).",
+        "rationale": "Empirical antibiotics should not be started on the basis of a bag urine alone; a reliable confirmatory sample is required first.",
         "source_refs": [
           "NICE NG224 - UTI in under 16s"
         ]
       },
       {
         "letter": "C",
-        "text": "Negative nitrites and trace leucocyte esterase rule out E. coli UTI in this child",
+        "text": "Negative nitrites rule out E. coli UTI in this child",
         "correct": false,
-        "rationale": "Negative nitrites do not exclude UTI in infants because frequent voiding prevents nitrate-to-nitrite conversion, and not all uropathogens reduce nitrate (AAP - UTI in febrile infants 2-24 months).",
+        "rationale": "Negative nitrites do not exclude UTI in infants because of short bladder dwell time and non-nitrate-reducing uropathogens.",
         "source_refs": [
           "AAP - UTI in febrile infants 2-24 months"
         ]
@@ -337,18 +337,18 @@
         "letter": "D",
         "text": "Send the bag specimen for culture; a negative culture will exclude UTI",
         "correct": false,
-        "rationale": "Bag samples carry contamination rates around 60 percent and do not meet Kass criteria; positive cultures are usually mixed and negative cultures do not reliably exclude infection (RCH CPG - Urinary tract infection).",
+        "rationale": "Bag samples have contamination rates around 60 percent and do not meet Kass criteria; bag-urine culture cannot reliably exclude infection.",
         "source_refs": [
-          "RCH CPG - Urinary tract infection"
+          "RCH CPG: Urinary Tract Infection"
         ]
       },
       {
         "letter": "E",
-        "text": "The result is unreliable; if clinical suspicion remains, obtain a clean catch sample",
+        "text": "The bag result is unreliable for both diagnosing and excluding UTI; if clinical suspicion remains, obtain a CLEAN CATCH urine for microscopy and culture (catheter sample if the child is unwell or requires urgent treatment); do not start antibiotics on the basis of the bag urine",
         "correct": true,
-        "rationale": "Bag urine is unsuitable for diagnosing or excluding UTI because of contamination and short bladder dwell making nitrites unreliable; when clinical suspicion persists a clean catch (or catheter if unwell) sample is required for diagnosis (RCH CPG - Urinary tract infection; NICE NG224).",
+        "rationale": "Bag-urine-as-diagnostic is the anti-pattern. Australian guidance (RCH CPG: UTI, NICE NG224): bag urine is for screening only because of high contamination and unreliable nitrites; a clean-catch (or catheter/SPA if unwell) is required for diagnosis. Antibiotics should not be started on bag urine alone.",
         "source_refs": [
-          "RCH CPG - Urinary tract infection",
+          "RCH CPG: Urinary Tract Infection",
           "NICE NG224 - UTI in under 16s"
         ]
       }
@@ -1280,66 +1280,67 @@
     "subtopic_detail": "PSGN"
   },
   {
-    "id": "paeds-renal-014",
+    "id": "paeds-renal-014-l3",
     "topic": "Paediatrics",
     "subtopic": "Renal and urology",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "urology"
     ],
-    "stem": "A first-time mother attends her GP with her 2-week-old, ex-39-week, breastfed son for a routine review. The infant is thriving and feeding well. The mother asks about religious neonatal circumcision which the family has booked for next week with a mohel. On examination the infant is alert and well, with no jaundice, normal scrotum with bilateral palpable descended testes, and no inguinal hernia. The penis shows a glanular meatus opening on the ventral surface of the glans rather than the tip, a hooded incomplete dorsal foreskin, and mild ventral chordee on tractioned examination. There is no scrotal involvement, no bifid scrotum, and no palpable abnormality of the perineum. The newborn examination at birth was documented as normal but the GP suspects this was overlooked. The infant has passed urine in a normal forward stream without straining. Antenatal scans showed no renal tract abnormality. The mother is keen to proceed as planned and asks the GP to provide a fitness letter. The local paediatric urology service offers outpatient review within 8 weeks.",
+    "stem": "A first-time mother attends with her 2-week-old ex-39-week breastfed son. The family has booked a religious circumcision next week. The infant is thriving, alert and well, with no jaundice, normal scrotum with bilateral palpable descended testes, and no inguinal hernia. The penis shows a glanular meatus opening on the ventral surface of the glans rather than the tip, a hooded incomplete dorsal foreskin, and mild ventral chordee on tractioned examination. There is no scrotal involvement, no bifid scrotum and no perineal abnormality. He passes urine in a normal forward stream. Antenatal scans showed no renal tract abnormality. Newborn examination at birth was documented as normal but appears to have missed these features. Paediatric urology offers outpatient review within 8 weeks.",
     "data_table": {
       "Examination": "Glanular ventral meatus, hooded incomplete foreskin, mild ventral chordee, normal scrotum and testes",
       "History": "Voiding normally, antenatal scans normal"
     },
-    "lead_in": "What is the most appropriate advice for the family?",
+    "lead_in": "Which is the most appropriate advice, and is karyotyping required?",
     "options": [
       {
         "letter": "A",
-        "text": "Proceed with neonatal circumcision as planned given the normal voiding",
+        "text": "Proceed with the planned circumcision because voiding is normal",
         "correct": false,
-        "rationale": "Circumcision is contraindicated in hypospadias because the foreskin is required as a tissue graft or flap during corrective urethroplasty; voiding normally does not eliminate the cosmetic and functional reasons for repair (RCH CPG - Hypospadias; USANZ - Hypospadias position statement).",
+        "rationale": "Hypospadias contraindicates neonatal circumcision because the foreskin is required as tissue for urethroplasty (the circumcise-anyway anti-pattern).",
         "source_refs": [
-          "RCH CPG - Hypospadias",
+          "RCH CPG: Hypospadias",
           "USANZ - Hypospadias position statement"
         ]
       },
       {
         "letter": "B",
-        "text": "Defer circumcision and refer to paediatric urology for hypospadias assessment",
+        "text": "Defer circumcision and refer to paediatric urology for assessment of distal hypospadias with mild chordee; the prepuce will be used for reconstruction (repair typically at 6-18 months); karyotyping/DSD workup is NOT required for isolated distal hypospadias with bilateral descended testes",
         "correct": true,
-        "rationale": "Hypospadias is a contraindication to neonatal circumcision because the prepuce is used for reconstruction; refer to paediatric urology for assessment and planning of repair, typically performed between 6 and 18 months (RCH CPG - Hypospadias; USANZ - Hypospadias position statement).",
+        "rationale": "Hypospadias is a contraindication to neonatal circumcision because the prepuce is needed for urethroplasty. Karyotype and DSD workup are reserved for proximal hypospadias, hypospadias plus undescended testis, or bifid scrotum; isolated distal hypospadias with bilateral descended testes does NOT require karyotyping.",
         "source_refs": [
-          "RCH CPG - Hypospadias",
-          "USANZ - Hypospadias position statement"
+          "RCH CPG: Hypospadias",
+          "USANZ - Hypospadias position statement",
+          "RCH CPG: Disorders of sex development"
         ]
       },
       {
         "letter": "C",
-        "text": "Proceed with circumcision but preserve the dorsal hood for future use",
+        "text": "Proceed with partial circumcision preserving the dorsal hood for future repair",
         "correct": false,
-        "rationale": "Partial circumcision approaches still compromise the prepuce needed for urethroplasty; any neonatal circumcision in hypospadias is avoided (RCH CPG - Hypospadias).",
+        "rationale": "Even partial circumcision compromises the prepuce needed for urethroplasty; neonatal circumcision in hypospadias is avoided.",
         "source_refs": [
-          "RCH CPG - Hypospadias"
+          "RCH CPG: Hypospadias"
         ]
       },
       {
         "letter": "D",
-        "text": "Reassure that this is a normal anatomical variant and no follow up is required",
+        "text": "Reassure as a normal anatomical variant and arrange no follow-up",
         "correct": false,
-        "rationale": "Distal hypospadias with chordee is an abnormality requiring at least paediatric urology assessment for repair planning and family counselling, even if voiding is currently normal (RCH CPG - Hypospadias).",
+        "rationale": "Distal hypospadias with chordee requires paediatric urology assessment and family counselling, even with normal voiding.",
         "source_refs": [
-          "RCH CPG - Hypospadias"
+          "RCH CPG: Hypospadias"
         ]
       },
       {
         "letter": "E",
-        "text": "Arrange a karyotype and pelvic ultrasound to exclude a disorder of sex development",
+        "text": "Arrange karyotype and pelvic ultrasound to exclude a disorder of sex development",
         "correct": false,
-        "rationale": "DSD workup is indicated for proximal hypospadias, hypospadias with undescended testis, or bifid scrotum; isolated distal hypospadias with bilateral descended testes does not require karyotyping (RCH CPG - Disorders of sex development).",
+        "rationale": "DSD workup is reserved for proximal hypospadias, hypospadias with undescended testis or bifid scrotum, not isolated distal hypospadias with bilaterally descended testes.",
         "source_refs": [
-          "RCH CPG - Disorders of sex development"
+          "RCH CPG: Disorders of sex development"
         ]
       }
     ],
@@ -1659,63 +1660,62 @@
     "subtopic_detail": "Bilateral cryptorchidism + DSD"
   },
   {
-    "id": "paeds-renal-018",
+    "id": "paeds-renal-018-l3",
     "topic": "Paediatrics",
     "subtopic": "Renal and urology",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [],
-    "stem": "A primigravida attends her postnatal ward review at 8 hours after an uncomplicated term vaginal birth. Her 32-week growth scan reported isolated SFU grade 2 left hydronephrosis with a renal pelvis anteroposterior diameter of 8 mm, normal contralateral kidney, normal ureters, normal bladder, normal amniotic fluid index and no other anomalies. The infant is a male, ex-40-week, breastfeeding well, alert, well perfused, with normal vitals. Newborn examination is unremarkable: normal cardiac auscultation, normal palpable kidneys (no flank masses), bilateral descended testes, normal penis with glanular meatus, no spinal abnormalities, normal hip examination and a strong urinary stream documented during the examination. Family history is unremarkable with no renal disease, no vesicoureteric reflux, no consanguinity and no recurrent UTIs in siblings or parents. The newborn screen has been collected. The mother asks when her son needs his postnatal renal tract ultrasound. The hospital can offer outpatient renal ultrasound from day of life 4 onwards. The infant is otherwise well and discharge home is planned for tomorrow.",
+    "stem": "A primigravida attends a postnatal ward review at 8 hours after an uncomplicated term vaginal birth. The 32-week growth scan reported isolated SFU grade 2 left hydronephrosis with renal pelvis anteroposterior diameter 8 mm, normal contralateral kidney, normal ureters, normal bladder, normal amniotic fluid index and no other anomalies. The male infant (ex-40-week) is breastfeeding well, alert, well perfused with normal vitals. Examination: normal cardiorespiratory examination, no flank masses, bilateral descended testes, normal penis with glanular meatus, no spinal abnormality, normal hip examination, and a documented strong urinary stream. No family history of renal disease, VUR or consanguinity. The hospital offers outpatient renal ultrasound from day of life 4 onwards. Discharge home is planned for tomorrow.",
     "data_table": {
       "Examination": "Normal newborn, no flank masses, normal genitalia, strong urinary stream observed",
       "Antenatal": "SFU grade 2 left hydronephrosis, AP diameter 8 mm at 32 weeks, normal ureters/bladder/AFI"
     },
-    "lead_in": "When should the postnatal renal tract ultrasound be performed?",
+    "lead_in": "When should the postnatal renal tract ultrasound be performed, and what additional imaging (if any) is needed at this stage?",
     "options": [
       {
         "letter": "A",
-        "text": "Within the first 24 hours of life before discharge home",
+        "text": "Within the first 24 hours of life before discharge plus an MCUG",
         "correct": false,
-        "rationale": "Imaging in the first 48 hours underestimates hydronephrosis because of physiological neonatal oliguria and dehydration; early scans risk false reassurance and missing significant uropathy (RCH CPG - Antenatal hydronephrosis; Society for Foetal Urology - Hydronephrosis grading).",
+        "rationale": "Imaging in the first 48 hours underestimates hydronephrosis because of physiological neonatal oliguria; routine MCUG is not indicated for isolated SFU 1-2.",
         "source_refs": [
-          "RCH CPG - Antenatal hydronephrosis",
-          "Society for Foetal Urology - Hydronephrosis grading"
+          "RCH CPG: Antenatal hydronephrosis"
         ]
       },
       {
         "letter": "B",
         "text": "Within the first 12 hours of life with concurrent MCUG",
         "correct": false,
-        "rationale": "Routine MCUG is not indicated for isolated SFU 1-2 hydronephrosis and early scanning is unreliable due to neonatal oliguria (RCH CPG - Antenatal hydronephrosis).",
+        "rationale": "Early scanning and routine MCUG are both inappropriate for isolated mild-moderate antenatal hydronephrosis.",
         "source_refs": [
-          "RCH CPG - Antenatal hydronephrosis"
+          "RCH CPG: Antenatal hydronephrosis"
         ]
       },
       {
         "letter": "C",
-        "text": "Routinely repeat only at 3 months of age regardless of severity",
+        "text": "At 3 months of age routinely regardless of severity",
         "correct": false,
-        "rationale": "Three-month deferral risks missing significant uropathy; SFU 2 disease should be assessed by 6 weeks (RCH CPG - Antenatal hydronephrosis).",
+        "rationale": "Three-month deferral risks missing significant uropathy; SFU 2 should be assessed by 6 weeks.",
         "source_refs": [
-          "RCH CPG - Antenatal hydronephrosis"
+          "RCH CPG: Antenatal hydronephrosis"
         ]
       },
       {
         "letter": "D",
         "text": "Only if the infant develops a febrile illness or fails to thrive",
         "correct": false,
-        "rationale": "Symptom-driven imaging misses asymptomatic obstructive uropathy and vesicoureteric reflux; all antenatally detected hydronephrosis requires postnatal confirmation (RCH CPG - Antenatal hydronephrosis).",
+        "rationale": "Symptom-driven imaging misses asymptomatic obstructive uropathy and VUR; all antenatally detected hydronephrosis needs postnatal confirmation.",
         "source_refs": [
-          "RCH CPG - Antenatal hydronephrosis"
+          "RCH CPG: Antenatal hydronephrosis"
         ]
       },
       {
         "letter": "E",
-        "text": "Between day 4 and 6 weeks of life as an outpatient ultrasound",
+        "text": "Renal tract ultrasound between day 4 and 6 weeks of life as an outpatient (typically days 4-7 or by 6 weeks); MCUG NOT required at this stage for isolated SFU 1-2; reserve MCUG for SFU 3-4, bilateral disease, abnormal postnatal ultrasound or suspected PUV, in which case earlier imaging (in the first days of life) is also indicated",
         "correct": true,
-        "rationale": "Postnatal renal tract ultrasound for isolated mild/moderate (SFU 1-2) antenatal hydronephrosis is performed after day 4 (typically days 4-7 or by 6 weeks) once neonatal oliguria has resolved; severe (SFU 3-4) or bilateral disease or suspected PUV warrant earlier imaging (RCH CPG - Antenatal hydronephrosis; Society for Foetal Urology - Hydronephrosis grading).",
+        "rationale": "RCH CPG: Antenatal hydronephrosis recommends postnatal renal ultrasound after day 4 once neonatal oliguria resolves; for isolated SFU 1-2 by 6 weeks is appropriate. SFU 3-4, bilateral disease, or suspected PUV warrant earlier imaging in the first days of life, and MCUG is reserved for higher-grade or abnormal findings.",
         "source_refs": [
-          "RCH CPG - Antenatal hydronephrosis",
+          "RCH CPG: Antenatal hydronephrosis",
           "Society for Foetal Urology - Hydronephrosis grading"
         ]
       }
@@ -1750,63 +1750,63 @@
     "subtopic_detail": "Antenatal hydronephrosis"
   },
   {
-    "id": "paeds-renal-019",
+    "id": "paeds-renal-019-l3",
     "topic": "Paediatrics",
     "subtopic": "Renal and urology",
-    "difficulty": 1,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [],
-    "stem": "A 9-year-old previously well boy presents to a regional ED with a 24-hour history of gradually worsening pain at the upper pole of the right testis. The pain is localised, dull rather than severe, and has not been associated with nausea, vomiting or systemic upset. He has had no trauma, no urinary symptoms and no urethral discharge. He has not yet entered puberty (Tanner 1). His parents have noticed a small dark spot through the scrotal skin. On examination he is alert and afebrile with normal vitals for age. The right hemiscrotum has mild diffuse swelling. The testis lies in normal vertical orientation with a normal cremasteric reflex. There is a discrete 5 mm point of tenderness at the upper pole of the testis with a visible bluish discolouration through the thinned scrotal skin. The remainder of the testis is non-tender and palpable in normal position. The epididymis is non-tender. Urinalysis is negative for blood, leucocytes and nitrites.",
+    "stem": "A 9-year-old previously well prepubertal boy (Tanner 1) presents to a regional ED with 24 hours of gradually worsening pain at the upper pole of the right testis. The pain is localised and dull rather than severe and has not been associated with nausea, vomiting or systemic upset. He has had no trauma, no urinary symptoms and no urethral discharge. His parents have noticed a small dark spot through the scrotal skin. He is alert and afebrile with normal vitals. The right hemiscrotum has mild diffuse swelling. The testis lies in normal vertical orientation with a normal cremasteric reflex. There is a discrete 5 mm point of tenderness at the UPPER POLE of the testis with a visible bluish discolouration through the thinned scrotal skin. The remainder of the testis is non-tender and palpable in normal position. The epididymis is non-tender. Urinalysis is negative.",
     "data_table": {
       "Examination": "Tenderness localised to upper pole; visible blue dot; testis in vertical lie, cremasteric reflex present",
       "Investigations": "Urinalysis negative"
     },
-    "lead_in": "Which is the most likely diagnosis?",
+    "lead_in": "Which combination of most likely diagnosis and most appropriate management is correct?",
     "options": [
       {
         "letter": "A",
-        "text": "Acute testicular torsion requiring immediate surgical scrotal exploration",
+        "text": "Acute testicular torsion; immediate scrotal exploration",
         "correct": false,
-        "rationale": "Testicular torsion typically presents with sudden severe pain, nausea, a high-riding horizontal testis and absent cremasteric reflex; this child has localised dull upper-pole pain with a preserved reflex (RCH CPG - Acute scrotal pain; BMJ Best Practice - Testicular torsion).",
+        "rationale": "Torsion typically has sudden severe pain, nausea, a high-riding horizontal testis and absent cremasteric reflex; this presentation does not fit.",
         "source_refs": [
-          "RCH CPG - Acute scrotal pain",
-          "BMJ Best Practice - Testicular torsion"
+          "RCH CPG: Acute scrotal pain"
         ]
       },
       {
         "letter": "B",
-        "text": "Torsion of the appendix testis (torted hydatid)",
+        "text": "Torsion of the appendix testis (torted hydatid); manage with analgesia and rest (NSAIDs and paracetamol), reassurance that the appendage infarcts and resolves spontaneously over 7-14 days, with safety-net advice to return if pain escalates or signs change; if diagnostic uncertainty remains, scrotal ultrasound with Doppler is the next step rather than empirical exploration",
         "correct": true,
-        "rationale": "A subacute (12-48 hour) presentation in a prepubertal boy with localised upper-pole tenderness, a visible blue dot through thinned scrotal skin, vertical lie and preserved cremasteric reflex is classic for torsion of the appendix testis; treatment is supportive with analgesia and rest as the appendage infarcts and resolves spontaneously (RCH CPG - Acute scrotal pain).",
+        "rationale": "Subacute (12-48 hour) presentation in a prepubertal boy with localised upper-pole tenderness, visible blue dot, vertical lie and preserved cremasteric reflex is classic for torsion of the appendix testis. Australian management is conservative (analgesia, rest) because the appendage infarcts and the pain resolves; ultrasound with Doppler is reserved for diagnostic uncertainty.",
         "source_refs": [
-          "RCH CPG - Acute scrotal pain"
+          "RCH CPG: Acute scrotal pain",
+          "BMJ Best Practice: Testicular torsion"
         ]
       },
       {
         "letter": "C",
-        "text": "Acute bacterial epididymo-orchitis from a urinary tract pathogen",
+        "text": "Bacterial epididymo-orchitis; oral cefalexin and urology referral",
         "correct": false,
-        "rationale": "Epididymo-orchitis usually involves diffuse epididymal tenderness with positive urinalysis and is uncommon in prepubertal boys without urinary tract abnormality; the localised upper-pole signs with negative urinalysis make this unlikely (BMJ Best Practice - Testicular torsion).",
+        "rationale": "Epididymo-orchitis features diffuse epididymal tenderness and positive urinalysis and is uncommon prepubertally without urinary tract abnormality.",
         "source_refs": [
-          "BMJ Best Practice - Testicular torsion"
+          "BMJ Best Practice: Testicular torsion"
         ]
       },
       {
         "letter": "D",
-        "text": "Idiopathic scrotal oedema with non-tender pink swelling",
+        "text": "Idiopathic scrotal oedema; observation alone",
         "correct": false,
-        "rationale": "Idiopathic scrotal oedema presents with painless or mildly tender pink/erythematous scrotal swelling that may extend to the perineum; there is no focal tenderness or blue dot (RCH CPG - Acute scrotal pain).",
+        "rationale": "Idiopathic scrotal oedema presents with painless or mildly tender pink scrotal swelling that may extend to the perineum; there is no focal upper-pole tenderness or blue dot.",
         "source_refs": [
-          "RCH CPG - Acute scrotal pain"
+          "RCH CPG: Acute scrotal pain"
         ]
       },
       {
         "letter": "E",
-        "text": "Incarcerated indirect inguinal hernia with bowel content",
+        "text": "Incarcerated indirect inguinal hernia; immediate surgical reduction",
         "correct": false,
-        "rationale": "Incarcerated inguinoscrotal hernia presents with a tender groin lump extending into the scrotum often with vomiting and obstructive symptoms; examination is intratesticular here with no inguinal mass (RCH CPG - Acute scrotal pain).",
+        "rationale": "Incarcerated hernia presents with a tender groin lump extending into the scrotum often with vomiting; examination here is intratesticular with no inguinal mass.",
         "source_refs": [
-          "RCH CPG - Acute scrotal pain"
+          "RCH CPG: Acute scrotal pain"
         ]
       }
     ],

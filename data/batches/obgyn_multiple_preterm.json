@@ -1,66 +1,65 @@
 [
   {
-    "id": "obgyn-multpre-001",
+    "id": "obgyn-multpre-001-l3",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Multiple pregnancy + preterm",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "twins"
     ],
-    "stem": "A 29-year-old G1P0 attends her first obstetric ultrasound at 9 weeks and 4 days by certain LMP. She conceived spontaneously after three months off the combined oral contraceptive. She has a family history of dizygotic twins on her mother's side. She has no medical problems and takes only iodine-supplemented pregnancy multivitamins and folate 500 micrograms daily. Ultrasound demonstrates two viable intrauterine gestations with synchronous foetal heart activity, two distinct gestational sacs, two yolk sacs, and a thick echogenic membrane between the sacs with a clear wedge of placental tissue extending into the base of the inter-twin membrane. Both crown-rump lengths are concordant. Her partner is well and has no relevant medical history; she is up to date with her routine pregnancy screening to date.",
+    "stem": "A 29-year-old G1P0 has her first ultrasound at 9+4 by certain LMP, showing two viable intrauterine pregnancies. The report describes two gestational sacs, two yolk sacs, a thick echogenic inter-twin membrane and a wedge of placental tissue extending into the base of the membrane (lambda sign). Both crown-rump lengths are concordant. The next appointment with maternal-foetal medicine is in 5 weeks. The community midwife asks the registrar what additional management is required as a direct consequence of this chorionicity assignment, beyond singleton routine care.",
     "data_table": {
       "Examination": "Soft abdomen, fundus not yet palpable",
       "Investigations": "TVS at 9+4: two sacs, two yolk sacs, lambda sign present, CRL twin 1 28 mm, CRL twin 2 27 mm",
       "Medications": "Folate 500 mcg daily, pregnancy multivitamin"
     },
-    "lead_in": "Which is the most accurate chorionicity assignment?",
+    "lead_in": "Which management plan correctly reflects the chorionicity and the implications for care?",
     "options": [
       {
         "letter": "A",
-        "text": "Monochorionic monoamniotic twins with a single placenta and no membrane",
-        "correct": false,
-        "rationale": "MCMA twins show a single sac, single yolk sac in many cases, and no inter-twin membrane; the lambda sign is incompatible with MCMA per RANZCOG twin guidance.",
+        "text": "Dichorionic diamniotic twins: scan every 4 weeks from 24 weeks for growth and Dopplers, plan delivery by 37+6 weeks if uncomplicated",
+        "correct": true,
+        "rationale": "The lambda sign confirms dichorionic-diamniotic twins. Australian/RANZCOG guidance recommends 4-weekly growth scans from 24 weeks, delivery by 37+6 if uncomplicated (vs 36+0 for MCDA and 32-34 for MCMA). No 2-weekly TTTS surveillance is required (RANZCOG twins; ISUOG).",
         "source_refs": [
-          "RANZCOG: Management of Monochorionic Twin Pregnancy"
+          "RANZCOG: Multiple Pregnancy",
+          "ISUOG Practice Guidelines - Twins"
         ]
       },
       {
         "letter": "B",
-        "text": "Dichorionic diamniotic twins with a lambda sign at the inter-twin membrane",
-        "correct": true,
-        "rationale": "Two sacs, two yolk sacs, and a lambda (twin peak) sign of placental tissue into the membrane base before 14 weeks is diagnostic of dichorionicity, per RANZCOG.",
+        "text": "Monochorionic diamniotic twins: scan every 2 weeks from 16 weeks for TTTS, deliver by 36+6 weeks",
+        "correct": false,
+        "rationale": "The lambda sign indicates dichorionic; T-sign would indicate monochorionic-diamniotic. TTTS surveillance is not required (RANZCOG; ISUOG).",
         "source_refs": [
-          "RANZCOG: Management of Monochorionic Twin Pregnancy",
-          "ISUOG Practice Guidelines: Twin pregnancy"
+          "RANZCOG: Multiple Pregnancy"
         ]
       },
       {
         "letter": "C",
-        "text": "Monochorionic diamniotic twins with a T-sign at the inter-twin membrane",
+        "text": "Monochorionic monoamniotic twins: admit from 24 weeks for daily CTG and deliver by 32-34 weeks",
         "correct": false,
-        "rationale": "MCDA twins show a thin membrane with the T-sign (membrane meeting placenta at 90 degrees) and a single placental mass, not a wedge of placenta into the membrane.",
+        "rationale": "MCMA requires single sac and no inter-twin membrane; here there are two sacs and a thick membrane (RANZCOG).",
         "source_refs": [
-          "RANZCOG: Management of Monochorionic Twin Pregnancy"
+          "RANZCOG: Multiple Pregnancy"
         ]
       },
       {
         "letter": "D",
-        "text": "Dichorionic monoamniotic twins (as a genuine ultrasound entity)",
+        "text": "Chorionicity cannot be assigned until 11-14 weeks gestation",
         "correct": false,
-        "rationale": "Dichorionic monoamniotic pregnancy does not exist as a natural entity; chorion always forms before or with amnion in splitting.",
+        "rationale": "Chorionicity is best assigned in the first trimester (before 14 weeks); at 9+4 the lambda/T-sign is highly accurate (ISUOG).",
         "source_refs": [
-          "ISUOG Practice Guidelines: Twin pregnancy"
+          "ISUOG Practice Guidelines - Twins"
         ]
       },
       {
         "letter": "E",
-        "text": "Chorionicity cannot be reliably assigned until 11 to 14 weeks gestation",
+        "text": "Dichorionic monoamniotic twins exist and require shared monitoring; plan delivery by 34 weeks",
         "correct": false,
-        "rationale": "Chorionicity is most accurate between 7 and 14 weeks; at 9+4 the lambda sign and two yolk sacs reliably confirm DCDA per RANZCOG and ISUOG.",
+        "rationale": "Dichorionic monoamniotic twinning is not a genuine entity; each chorion has its own amnion (RANZCOG).",
         "source_refs": [
-          "RANZCOG: Management of Monochorionic Twin Pregnancy",
-          "ISUOG Practice Guidelines: Twin pregnancy"
+          "RANZCOG: Multiple Pregnancy"
         ]
       }
     ],
@@ -91,16 +90,16 @@
     "subtopic_detail": "Multiple pregnancy - chorionicity"
   },
   {
-    "id": "obgyn-multpre-002",
+    "id": "obgyn-multpre-002-l3",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Multiple pregnancy + preterm",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "twins",
       "monochorionic"
     ],
-    "stem": "A 32-year-old G2P1 with a confirmed MCDA twin pregnancy at 19 weeks and 5 days attends fortnightly twin surveillance. The 16-week scan showed concordant growth, normal liquor in both sacs, and no membrane folding. Today's TAS and TVS demonstrate twin 1 (presumed donor) with EFW on the 22nd centile, deepest vertical pocket (DVP) of 1.6 cm, and the bladder not visualised on three sweeps over 30 minutes. Twin 2 (presumed recipient) has EFW on the 56th centile, DVP 9.2 cm, distended bladder, and a normal middle cerebral artery PSV. Both umbilical artery Dopplers are within normal limits and both cardiac four-chamber views appear structurally normal. The woman is well, has no contractions, and her cervix is 38 mm on TVS. The tertiary foetal medicine service is two hours away by road and offers fetoscopic laser ablation on a near-daily basis with experienced operators.",
+    "stem": "A 32-year-old G2P1 with a confirmed MCDA twin pregnancy at 19+5 weeks attends fortnightly surveillance. The 16-week scan was unremarkable. Today's ultrasound: twin 1 (donor) EFW 22nd centile, DVP 1.6 cm, bladder not seen on three sweeps over 30 minutes; twin 2 (recipient) EFW 56th centile, DVP 9.2 cm, distended bladder, normal MCA-PSV. Umbilical artery Dopplers normal both twins, no foetal hydrops, cervix 38 mm. She has no contractions, no bleeding, no symptoms of pre-eclampsia. The tertiary foetal medicine unit is 2 hours away and offers fetoscopic laser ablation daily. She wants the option that maximises the chance of two healthy survivors.",
     "data_table": {
       "Vital signs": "BP 118/72, HR 84, T 36.8",
       "Examination": "Soft non-tender uterus appropriate for 24 weeks size",
@@ -110,49 +109,48 @@
     "options": [
       {
         "letter": "A",
-        "text": "Reassurance only and routine fortnightly twin surveillance scan in two weeks",
-        "correct": false,
-        "rationale": "Discordant DVP with oligohydramnios in one sac and polyhydramnios in the other meets criteria for TTTS; routine surveillance alone misses the treatment window per RANZCOG.",
+        "text": "Urgent referral to a tertiary foetal medicine unit for fetoscopic laser ablation of the placental anastomoses",
+        "correct": true,
+        "rationale": "She has stage I/II TTTS (Quintero stage II given absent donor bladder, with oligohydramnios <2 cm vs polyhydramnios >8 cm; normal Dopplers excluding stage III; no hydrops). Fetoscopic laser ablation between 16-26 weeks gives the best dual-survival outcome and is recommended over amnioreduction (RANZCOG twins; ISUOG).",
         "source_refs": [
-          "RANZCOG: Management of Monochorionic Twin Pregnancy"
+          "RANZCOG: Multiple Pregnancy",
+          "ISUOG Practice Guidelines - Twins"
         ]
       },
       {
         "letter": "B",
-        "text": "Urgent referral to a foetal medicine unit for fetoscopic laser ablation assessment",
-        "correct": true,
-        "rationale": "DVP under 2 cm in one twin with DVP over 8 cm in the co-twin before 20 weeks defines Quintero stage I TTTS; fetoscopic laser is first-line for stage II or higher and stage I with progression, ideally before 26 weeks.",
+        "text": "Reassure and continue routine fortnightly surveillance for 2 more weeks",
+        "correct": false,
+        "rationale": "Stage II TTTS without intervention has high mortality; awaiting progression is unsafe (RANZCOG).",
         "source_refs": [
-          "RANZCOG: Management of Monochorionic Twin Pregnancy",
-          "NICE NG137: Twin and triplet pregnancy"
+          "RANZCOG: Multiple Pregnancy"
         ]
       },
       {
         "letter": "C",
-        "text": "Therapeutic amnioreduction of the recipient sac in the local maternity unit",
+        "text": "Amnioreduction of the recipient sac in the local maternity unit",
         "correct": false,
-        "rationale": "Amnioreduction is inferior to laser for stages II to IV before 26 weeks per the Eurofoetus trial; it is used only when laser is unavailable or contraindicated, and not in a local unit.",
+        "rationale": "Amnioreduction is symptomatic only; laser ablation has superior dual-survival outcomes and is the recommended first-line definitive treatment at 16-26 weeks (RANZCOG; ISUOG).",
         "source_refs": [
-          "RANZCOG: Management of Monochorionic Twin Pregnancy"
+          "RANZCOG: Multiple Pregnancy"
         ]
       },
       {
         "letter": "D",
-        "text": "Admit for antenatal betamethasone and plan to deliver this current week",
+        "text": "Admit for antenatal corticosteroids and plan delivery this week",
         "correct": false,
-        "rationale": "Delivery at 19+5 is non-viable at most Australian centres and would not treat the underlying placental shunting; corticosteroids are not indicated this early.",
+        "rationale": "Delivery at 19+5 is non-viable; pregnancy must be prolonged with definitive treatment (RANZCOG).",
         "source_refs": [
-          "RANZCOG: Antenatal corticosteroids",
-          "RANZCOG: Management of Monochorionic Twin Pregnancy"
+          "RANZCOG: Multiple Pregnancy"
         ]
       },
       {
         "letter": "E",
-        "text": "Selective foetal reduction of the donor twin by cord occlusion",
+        "text": "Selective foetal reduction of the donor twin by cord occlusion now",
         "correct": false,
-        "rationale": "Selective reduction is reserved for cases such as sIUGR with imminent demise threatening the co-twin, not for stage I TTTS where laser preserves both twins.",
+        "rationale": "Selective reduction is reserved for stage IV-V TTTS or where laser is not feasible; at stage II laser is preferred (RANZCOG; ISUOG).",
         "source_refs": [
-          "RANZCOG: Management of Monochorionic Twin Pregnancy"
+          "RANZCOG: Multiple Pregnancy"
         ]
       }
     ],
@@ -274,67 +272,67 @@
     "subtopic_detail": "Selective IUGR in monochorionic twins"
   },
   {
-    "id": "obgyn-multpre-004",
+    "id": "obgyn-multpre-004-l3",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Multiple pregnancy + preterm",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "twins",
       "early pregnancy"
     ],
-    "stem": "A 30-year-old G1P0 with a spontaneous DCDA twin pregnancy seen at 7+1 (two viable embryos with cardiac activity) re-presents at 9+3 with a single episode of minimal pink spotting yesterday that has now stopped. She has no pain and no passage of tissue. She is well and haemodynamically normal. TAS and TVS today show twin A with normal cardiac activity and CRL appropriate for 9+3 within its own sac. Twin B's sac is collapsed, the embryo measures equivalent to 7+5 with no cardiac activity, and there is no retained sac fluid or significant haematoma. Her blood group is O Rh-positive. She has no risk factors for preterm birth. She has no significant family history and her booking bloods were unremarkable.",
+    "stem": "A 30-year-old G1P0 RhD-negative woman with a DCDA twin pregnancy (two viable embryos at 7+1) re-presents at 13+0 with a single episode of pink spotting yesterday, now resolved. She is haemodynamically stable. Ultrasound today: twin A viable, CRL appropriate for 13+0; twin B sac collapsed, embryo CRL 7+5 with no cardiac activity (demised). Antibody screen at booking and today: negative. She has not previously received anti-D in this pregnancy. She is otherwise well.",
     "data_table": {
       "Vital signs": "BP 112/70, HR 76, T 36.6",
       "Examination": "Soft non-tender abdomen, closed cervical os, scant brown discharge",
       "Investigations": "TVS: twin A viable, twin B demised (CRL 7+5, no FH). Blood group O Rh-positive."
     },
-    "lead_in": "What is the most appropriate counselling and management?",
+    "lead_in": "Which combination of management is most appropriate?",
     "options": [
       {
         "letter": "A",
-        "text": "Reassure that the surviving twin is at minimally increased risk and continue routine antenatal care",
+        "text": "Reassure regarding minimal increased risk to the surviving twin from the early loss; administer anti-D 625 IU IM as the bleeding episode is at 13+0; continue routine DCDA twin surveillance",
         "correct": true,
-        "rationale": "First-trimester single foetal demise (vanishing twin) carries minimal additional risk for the surviving co-twin beyond a slightly higher singleton miscarriage rate; routine care is appropriate per RANZCOG guidance on early pregnancy loss.",
+        "rationale": "Early vanishing twin (before 14 weeks) confers minimal increased risk to the surviving co-twin. As she is now 13+0 with a sensitising event, anti-D 625 IU IM is required (NBA gives 625 IU from 13 weeks). DCDA surveillance continues 4-weekly from 24 weeks (NBA; RANZCOG).",
         "source_refs": [
-          "RANZCOG: Management of Monochorionic Twin Pregnancy",
-          "RANZCOG: Early Pregnancy Loss"
+          "National Blood Authority: Anti-D Ig guidelines",
+          "RANZCOG: Multiple Pregnancy"
         ]
       },
       {
         "letter": "B",
-        "text": "Admit for serial coagulation studies given the increased maternal risk of disseminated intravascular coagulation",
+        "text": "Administer anti-D 250 IU IM as the dose for sensitising events before 20 weeks",
         "correct": false,
-        "rationale": "Maternal DIC from a retained dead foetus requires a singleton demise retained for weeks, not a first-trimester vanishing twin; serial coags are not indicated.",
+        "rationale": "From 13 weeks the dose is 625 IU IM, not 250 IU; 250 IU is the pre-12-week dose (NBA).",
         "source_refs": [
-          "RANZCOG: Early Pregnancy Loss"
+          "National Blood Authority: Anti-D Ig guidelines"
         ]
       },
       {
         "letter": "C",
-        "text": "Offer surgical evacuation to remove the demised gestational sac and prevent later miscarriage",
+        "text": "Withhold anti-D until 28 weeks routine prophylaxis as the antibody screen is negative",
         "correct": false,
-        "rationale": "Operating risks loss of the surviving twin; vanishing twin tissue resorbs spontaneously and intervention is not warranted.",
+        "rationale": "Sensitising events require anti-D within 72 hours regardless of antibody screen and irrespective of upcoming routine prophylaxis (NBA).",
         "source_refs": [
-          "RANZCOG: Early Pregnancy Loss"
+          "National Blood Authority: Anti-D Ig guidelines"
         ]
       },
       {
         "letter": "D",
-        "text": "Administer anti-D immunoglobulin 625 IU IM now to cover the recent vaginal spotting",
+        "text": "Surgical evacuation of the demised gestational sac to prevent later miscarriage of the surviving twin",
         "correct": false,
-        "rationale": "The patient is Rh-positive; anti-D is unnecessary regardless of bleeding (NBA guidelines).",
+        "rationale": "Vanishing twin resorbs naturally and does not threaten the surviving twin; surgical intervention risks loss of the live twin (RANZCOG).",
         "source_refs": [
-          "NBA: Anti-D Guidelines (Australia)"
+          "RANZCOG: Multiple Pregnancy"
         ]
       },
       {
         "letter": "E",
-        "text": "Refer urgently for chorionic villus sampling to confirm the karyotype of the surviving twin",
+        "text": "Admit for serial coagulation studies given the increased maternal risk of disseminated intravascular coagulation",
         "correct": false,
-        "rationale": "Vanishing twin alone is not an indication for CVS; routine combined first-trimester screening or NIPT may be offered but invasive testing is not warranted.",
+        "rationale": "DIC risk applies to single-twin demise after viability (>=14-20 weeks) with prolonged retention; first-trimester vanishing twin does not carry this risk (RANZCOG).",
         "source_refs": [
-          "RANZCOG: Prenatal screening and diagnostic testing for genetic conditions"
+          "RANZCOG: Multiple Pregnancy"
         ]
       }
     ],
@@ -1602,65 +1600,66 @@
     "subtopic_detail": "Late preterm / early term decisions"
   },
   {
-    "id": "obgyn-multpre-018",
+    "id": "obgyn-multpre-018-l3",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Multiple pregnancy + preterm",
-    "difficulty": 2,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "induction"
     ],
-    "stem": "A 28-year-old G1P0 at 39+3 presents 2 hours after a gush of clear fluid followed by ongoing leakage. She is not contracting, the CTG is reactive, and observations are normal. Speculum confirms a pool of clear amniotic fluid and a closed soft cervix. She is GBS negative on her 36-week swab. She is well and has no risk factors for infection. She asks about waiting at home for spontaneous labour. She has no fever, no abdominal tenderness, no offensive vaginal discharge and no antepartum haemorrhage. She has no penicillin allergy. The unit follows current RANZCOG term PROM guidance which supports either immediate induction or short-interval expectant management with active surveillance.",
+    "stem": "A 28-year-old G1P0 at 39+3 presents 2 hours after a gush of clear fluid followed by ongoing leakage. Not contracting; speculum confirms a pool of clear amniotic fluid and a closed soft cervix. CTG reactive. GBS swab at 36 weeks was POSITIVE. She has no penicillin allergy. Booking BMI 24, otherwise uncomplicated pregnancy. She asks about waiting at home for spontaneous labour; she has no childcare for her older child and would prefer to wait if it is safe.",
     "data_table": {
       "Vital signs": "BP 118/72, HR 76, T 36.6",
       "Examination": "Pool of clear AF on speculum, soft closed cervix, no contractions",
       "Investigations": "CTG reactive, GBS negative at 36 weeks"
     },
-    "lead_in": "Which option is most consistent with RANZCOG term PROM guidance?",
+    "lead_in": "Which is the most appropriate plan in this Australian setting?",
     "options": [
       {
         "letter": "A",
-        "text": "Offer immediate induction of labour or short expectant management for up to 24 hours",
+        "text": "Admit for immediate induction of labour and commence intrapartum IV benzylpenicillin GBS prophylaxis now",
         "correct": true,
-        "rationale": "At term PROM, RANZCOG supports either prompt induction or expectant management up to about 24 hours; beyond that period chorioamnionitis risk rises and induction is recommended.",
+        "rationale": "Term PROM with GBS-positive status: RANZCOG recommends immediate induction and commencement of intrapartum GBS prophylaxis (rather than expectant management) to reduce risk of early-onset neonatal GBS sepsis. Penicillin is first-line in non-allergic women (RANZCOG term PROM; RANZCOG GBS).",
         "source_refs": [
-          "RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"
+          "RANZCOG: Term Prelabour Rupture of Membranes",
+          "RANZCOG: Maternal group B streptococcus"
         ]
       },
       {
         "letter": "B",
-        "text": "Mandatory immediate lower segment caesarean section to prevent ascending infection",
+        "text": "Admit for expectant management up to 24 hours with no antibiotics unless fever develops",
         "correct": false,
-        "rationale": "Term PROM is not an indication for caesarean section in the absence of other obstetric reasons.",
+        "rationale": "GBS-positive women warrant immediate IAP regardless of expectant approach; delaying antibiotics increases neonatal sepsis risk (RANZCOG GBS).",
         "source_refs": [
-          "RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"
+          "RANZCOG: Maternal group B streptococcus"
         ]
       },
       {
         "letter": "C",
-        "text": "Wait expectantly at home for up to 5 days for spontaneous onset of labour",
+        "text": "Wait at home for spontaneous labour for up to 5 days with daily review",
         "correct": false,
-        "rationale": "Outpatient expectant management beyond around 24 hours increases chorioamnionitis and neonatal infection risk; this duration is unsafe.",
+        "rationale": "Outpatient expectant management for >24 hours in term PROM increases chorioamnionitis risk; GBS-positive status makes this clearly unsafe (RANZCOG).",
         "source_refs": [
-          "RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"
+          "RANZCOG: Term Prelabour Rupture of Membranes"
         ]
       },
       {
         "letter": "D",
-        "text": "Commence oral erythromycin to prolong latency to delivery at term",
+        "text": "Mandatory immediate lower-segment caesarean to prevent ascending infection",
         "correct": false,
-        "rationale": "Latency antibiotics are used for PPROM under 34 weeks, not term PROM; routine antibiotics are not given to GBS-negative term women.",
+        "rationale": "Vaginal birth is appropriate with IAP; caesarean is not indicated solely for GBS-positive PROM (RANZCOG).",
         "source_refs": [
-          "RANZCOG: Term prelabour rupture of membranes and preterm prelabour rupture of membranes"
+          "RANZCOG: Term Prelabour Rupture of Membranes"
         ]
       },
       {
         "letter": "E",
-        "text": "Administer betamethasone 11.4 mg IM before any onset of labour",
+        "text": "Commence oral erythromycin to prolong latency to delivery at term",
         "correct": false,
-        "rationale": "Antenatal corticosteroids are not used at 39+3; the gestational window is up to 34+6 in Australia.",
+        "rationale": "Latency antibiotics (erythromycin) are for preterm PROM, not term PROM; at term, induction is the goal (RANZCOG).",
         "source_refs": [
-          "RANZCOG: Antenatal corticosteroids"
+          "RANZCOG: Term Prelabour Rupture of Membranes"
         ]
       }
     ],

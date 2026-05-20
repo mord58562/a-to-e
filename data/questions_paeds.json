@@ -368,36 +368,37 @@
     "model": "claude-opus-4-5"
   },
   {
-    "id": "paeds-005",
+    "id": "paeds-005-l3",
     "topic": "Paediatrics",
     "subtopic": "Infections + immunisation",
-    "difficulty": 2,
+    "difficulty": 3,
     "tags": [
       "fever",
       "young infant"
     ],
-    "stem": "A 24-day-old term male infant is brought to ED by his parents at 9 pm with a measured rectal temperature of 38.2 deg C two hours ago, and reduced feeding for the last 12 hours, taking around 40 percent of his usual volumes. Birth was uncomplicated at 40 weeks, group B Strep status was negative, and his mother received no intrapartum antibiotics. He has been previously well, is breastfed, has had normal wet nappies until today, and has had no rashes, vomiting or diarrhoea. He has had no cough or coryza and his older sibling with a runny nose has not been febrile. There are no sick contacts at home apart from a 4-year-old sibling with a clear runny nose. He looks pale, is consolable but quiet, and his parents specifically report he is not interacting as he normally does at this time of evening.",
+    "stem": "A 24-day-old term male infant is brought to ED at 9 pm with a measured rectal temperature of 38.3 deg C two hours ago and reduced feeding (about 40 percent of usual volumes) for 12 hours. Birth was uncomplicated at 40 weeks, maternal group B Streptococcus status was negative, and his mother received no intrapartum antibiotics. He has been previously well, is exclusively breastfed, and there have been no rashes, vomiting, diarrhoea, cough or coryza. His 4-year-old sibling has a clear runny nose without fever. He is fully immunised for age (no scheduled vaccinations yet due). He looks pale, is consolable but quiet, and his parents specifically report he is not interacting as he normally does at this time of evening. The ED registrar has performed peripheral blood cultures, urinalysis (catheter), and bedside FBC and CRP, and is now planning antibiotic cover.",
     "data_table": {
       "Vital signs": "T 38.3 deg C rectal, HR 178 bpm, RR 56 /min, SpO2 97% on room air, capillary refill 3 seconds",
       "Examination": "Quiet but rousable, anterior fontanelle soft and flat, no rash, no focal signs, soft non-distended abdomen, normal tone",
       "Investigations": "FBC, UEC, CRP, blood culture, urinalysis and urine culture pending; LP not yet performed"
     },
-    "lead_in": "What is the single most appropriate next step in management?",
+    "lead_in": "Which empirical antibiotic regimen, paired with timing of lumbar puncture, is most appropriate?",
     "options": [
       {
         "letter": "A",
-        "text": "Discharge home with regular paracetamol and review by the GP in 12 hours if persistent fever",
+        "text": "IV ceftriaxone monotherapy now; defer LP until CRP is back to decide whether it is needed",
         "correct": false,
-        "rationale": "Any fever >= 38 deg C in an infant under 3 months mandates a full septic workup and empirical antibiotics; outpatient management is unsafe per RCH CPG: Febrile child.",
+        "rationale": "Ceftriaxone alone does not cover Listeria, which remains a real (though uncommon) pathogen in infants under 4 weeks; deferring LP to await CRP delays diagnosis of meningitis and is contrary to RCH CPG: Febrile child for under-4-week infants.",
         "source_refs": [
-          "RCH CPG: Febrile child"
+          "RCH CPG: Febrile child",
+          "Therapeutic Guidelines: Antibiotic"
         ]
       },
       {
         "letter": "B",
-        "text": "Await blood culture and CRP results in ED before deciding on any empirical antibiotic therapy today",
+        "text": "IV benzylpenicillin plus IV gentamicin now; defer LP until after antibiotics if the infant is too unwell to safely lie flat",
         "correct": false,
-        "rationale": "Antibiotics must not be delayed for results in a febrile neonate; empirical therapy is started immediately after cultures per RCH CPG: Sepsis.",
+        "rationale": "This is the under-7-day neonatal sepsis regimen; for an infant 7 days to under 4 weeks, third-generation cephalosporin cover is added because of higher Gram-negative enteric and pneumococcal risk per RCH CPG.",
         "source_refs": [
           "RCH CPG: Sepsis",
           "Therapeutic Guidelines: Antibiotic"
@@ -405,29 +406,31 @@
       },
       {
         "letter": "C",
-        "text": "Admit, perform lumbar puncture, and commence IV benzylpenicillin plus IV gentamicin plus IV cefotaxime empirically",
+        "text": "Lumbar puncture first, then IV benzylpenicillin plus IV gentamicin plus IV cefotaxime once CSF is obtained",
         "correct": true,
-        "rationale": "Febrile infants under 4 weeks require admission, full septic workup including LP, and empirical IV benzylpenicillin plus gentamicin plus cefotaxime (or ceftriaxone after 4 weeks) per RCH CPG: Febrile child and Therapeutic Guidelines: Antibiotic.",
+        "rationale": "For a febrile infant aged 7 days to under 4 weeks the RCH-recommended empirical regimen is benzylpenicillin plus gentamicin plus cefotaxime (Listeria, Gram-negatives, and CNS penetration for pneumococcus). LP is performed before antibiotics if the infant is stable; if unstable, antibiotics are given first and LP follows. This 24-day-old is haemodynamically reasonable (CRT 3 s without shock), so LP first is appropriate, per RCH CPG: Febrile child and RCH CPG: Sepsis.",
         "source_refs": [
           "RCH CPG: Febrile child",
+          "RCH CPG: Sepsis",
           "Therapeutic Guidelines: Antibiotic"
         ]
       },
       {
         "letter": "D",
-        "text": "Commence oral amoxicillin 30 mg/kg three times daily pending blood culture results and arrange GP review",
+        "text": "Await CRP and FBC results before starting antibiotics; perform LP only if CRP is over 40 mg/L",
         "correct": false,
-        "rationale": "Oral antibiotics are inadequate for possible neonatal sepsis; IV therapy is mandatory per Therapeutic Guidelines: Antibiotic.",
+        "rationale": "Antibiotic-by-biomarker is unsafe in a febrile under-4-week infant; CRP cut-offs do not rule out invasive bacterial infection at this age, per RCH CPG: Febrile child.",
         "source_refs": [
-          "Therapeutic Guidelines: Antibiotic"
+          "RCH CPG: Febrile child"
         ]
       },
       {
         "letter": "E",
-        "text": "Perform urinalysis only; if negative, observe in the short stay unit overnight without any empirical antibiotics",
+        "text": "Oral amoxicillin 30 mg/kg three times daily plus admission for observation; reserve LP for clinical deterioration",
         "correct": false,
-        "rationale": "A negative urinalysis does not exclude bacteraemia or meningitis in this age group; full workup and empirical antibiotics are required per RCH CPG: Febrile child.",
+        "rationale": "Oral antibiotics are inadequate for possible neonatal sepsis or meningitis; IV therapy and LP are mandatory in a febrile infant under 4 weeks, per Therapeutic Guidelines: Antibiotic.",
         "source_refs": [
+          "Therapeutic Guidelines: Antibiotic",
           "RCH CPG: Febrile child"
         ]
       }
@@ -1241,51 +1244,51 @@
     "model": "claude-opus-4-5"
   },
   {
-    "id": "paeds-014",
+    "id": "paeds-014-l3",
     "topic": "Paediatrics",
     "subtopic": "Neurology",
-    "difficulty": 2,
+    "difficulty": 3,
     "tags": [],
-    "stem": "A previously well 18-month-old boy is brought to ED by his parents after a single witnessed generalised tonic-clonic seizure at home lasting 2 minutes. He had been febrile and miserable since the morning with clear coryza and a tympanic temperature of 39.0 deg C. After the seizure he was briefly drowsy for around 15 minutes and then returned to his baseline behaviour, drinking and interacting normally. There is a paternal history of childhood febrile seizures. He is fully immunised. He has had no neck stiffness, no rash, no recurrent vomiting, no recent antibiotics, and no head injury.",
+    "stem": "A previously well 18-month-old boy is brought to ED after a witnessed generalised tonic-clonic seizure at home lasting 2 minutes. He had been febrile since the morning with clear coryza and a tympanic temperature of 39.0 deg C. After the seizure he was drowsy for 15 minutes and then returned to baseline, drinking and interacting normally with his parents. There is a paternal history of childhood febrile seizures and he is fully immunised. On arrival he is alert and interactive with a temperature of 38.4 deg C, no neck stiffness, no rash, and no focal neurology. The ear examination shows a right bulging erythematous tympanic membrane. He has not had recent antibiotics and there is no head injury.",
     "data_table": {
       "Vital signs": "T 38.4 deg C, HR 140 bpm, RR 30 /min, SpO2 99% on room air, capillary refill 2 seconds",
       "Examination": "Alert and interactive, fontanelle closed, no neck stiffness, no rash, ear examination shows a right bulging red tympanic membrane, no focal neurology",
       "History": "Paternal history of febrile seizures, fully immunised, single seizure under 15 min, returned to baseline"
     },
-    "lead_in": "What is the single most appropriate next step in management?",
+    "lead_in": "Which combination of investigation and management is most appropriate?",
     "options": [
       {
         "letter": "A",
-        "text": "Arrange urgent non-contrast CT brain in the ED today to exclude an intracranial structural cause of the seizure",
+        "text": "Non-contrast CT brain and admission for 24-hour observation; commence regular paracetamol",
         "correct": false,
-        "rationale": "Routine neuroimaging is not indicated after a simple febrile seizure with normal neurology and a clear infective focus per RCH CPG: Febrile seizure.",
+        "rationale": "Routine neuroimaging is not indicated after a simple febrile seizure with normal neurology and an identified febrile focus, per RCH CPG: Febrile seizure.",
         "source_refs": [
           "RCH CPG: Febrile seizure"
         ]
       },
       {
         "letter": "B",
-        "text": "Perform a lumbar puncture given the seizure during fever, send CSF for culture and PCR, and commence empirical IV ceftriaxone",
+        "text": "Lumbar puncture and empirical IV ceftriaxone because of the seizure during fever",
         "correct": false,
-        "rationale": "LP is not routine after a simple febrile seizure in an immunised child without meningism or persistent altered mental state per RCH CPG: Febrile seizure.",
+        "rationale": "LP is not indicated in a fully immunised over-12-month-old with a simple febrile seizure who has returned to baseline without meningism, per RCH CPG: Febrile seizure. LP-before-treat reasoning is the anti-pattern tested here.",
         "source_refs": [
           "RCH CPG: Febrile seizure"
         ]
       },
       {
         "letter": "C",
-        "text": "Commence prophylactic oral sodium valproate 20 mg/kg/day to prevent recurrence and arrange neurology outpatient follow-up review",
+        "text": "Prophylactic oral sodium valproate to prevent recurrence with neurology outpatient referral",
         "correct": false,
-        "rationale": "Long-term anticonvulsants are not used for simple febrile seizures; recurrence is generally benign per RCH CPG: Febrile seizure.",
+        "rationale": "Long-term anticonvulsants are not used after simple febrile seizures, even with positive family history, per RCH CPG: Febrile seizure.",
         "source_refs": [
           "RCH CPG: Febrile seizure"
         ]
       },
       {
         "letter": "D",
-        "text": "Reassure the parents, treat the underlying acute otitis media as per eTG, and provide written first-aid advice",
+        "text": "No investigations; treat the acute otitis media per eTG criteria, provide written first-aid advice, discharge home",
         "correct": true,
-        "rationale": "Simple febrile seizure (single, generalised, < 15 minutes, complete recovery, 6 months to 6 years) requires identification and treatment of the febrile focus, reassurance, and safety-net advice per RCH CPG: Febrile seizure and Therapeutic Guidelines: Antibiotic.",
+        "rationale": "This is a simple febrile seizure (single, generalised, under 15 minutes, full recovery, 6 months to 6 years) with an identified bacterial focus (right bulging TM in a child under 2 with severe symptoms meets eTG criteria for amoxicillin 30 mg/kg q8h for 5 days). No investigations are required. Reassurance and written first-aid advice are standard per RCH CPG: Febrile seizure and Therapeutic Guidelines: Antibiotic.",
         "source_refs": [
           "RCH CPG: Febrile seizure",
           "Therapeutic Guidelines: Antibiotic"
@@ -1293,9 +1296,9 @@
       },
       {
         "letter": "E",
-        "text": "Admit overnight to the short-stay unit for continuous EEG monitoring and reassess for safe discharge in the morning",
+        "text": "Admit overnight for continuous EEG and reassess for discharge in the morning",
         "correct": false,
-        "rationale": "EEG is not indicated after a simple febrile seizure with full recovery per RCH CPG: Febrile seizure.",
+        "rationale": "EEG is not indicated after a simple febrile seizure with full recovery, per RCH CPG: Febrile seizure.",
         "source_refs": [
           "RCH CPG: Febrile seizure"
         ]
@@ -1329,28 +1332,28 @@
     "model": "claude-opus-4-5"
   },
   {
-    "id": "paeds-015",
+    "id": "paeds-015-l3",
     "topic": "Paediatrics",
     "subtopic": "Cardiology",
-    "difficulty": 2,
+    "difficulty": 3,
     "tags": [
       "IVIG",
       "aspirin",
       "Kawasaki"
     ],
-    "stem": "A 3-year-old previously well boy presents on day 6 of fever with bilateral non-purulent conjunctivitis, cracked red lips, a strawberry tongue, a polymorphous truncal rash, and unilateral cervical lymphadenopathy with one node measuring 1.8 cm. His hands and feet are red and swollen. His mother reports the fever has been daily, peaking at 39.5 deg C, and unresponsive to alternating paracetamol and ibuprofen. He has no respiratory symptoms, no diarrhoea, and no household contacts with rash. He is fully immunised.",
+    "stem": "A 3-year-old previously well boy presents on day 6 of fever. His mother reports daily fevers peaking at 39.5 deg C, unresponsive to alternating paracetamol and ibuprofen. He has bilateral non-purulent conjunctivitis, cracked red lips, a strawberry tongue, a polymorphous truncal rash, and unilateral cervical lymphadenopathy with one node 1.8 cm. His hands and feet are red and swollen. He has no respiratory symptoms, no diarrhoea, and no household contacts with rash. He is fully immunised. Initial bloods show CRP 138 mg/L, ESR 78 mm/hr, platelets 530 x10^9/L, ALT 78 U/L. Urine microscopy shows sterile pyuria. Echocardiography is being arranged.",
     "data_table": {
       "Vital signs": "T 39.2 deg C, HR 150 bpm, RR 32 /min, SpO2 99% on room air, BP 96/60 mmHg",
       "Examination": "Bilateral bulbar conjunctival injection (non-exudative), cracked lips, strawberry tongue, polymorphous truncal rash, red swollen palms and soles, one cervical node 1.8 cm",
       "Investigations": "Echocardiogram pending; CRP 138 mg/L, ESR 78 mm/hr, platelets 530 x10^9/L"
     },
-    "lead_in": "Which single management option is most appropriate?",
+    "lead_in": "Which combination of immediate therapy and aspirin dosing is most appropriate?",
     "options": [
       {
         "letter": "A",
-        "text": "IV immunoglobulin 2 g/kg over 10-12 hours plus oral aspirin",
+        "text": "IV immunoglobulin 2 g/kg single infusion plus high-dose aspirin (30-50 mg/kg/day) until afebrile for 48 hours, then switch to low-dose aspirin (3-5 mg/kg/day) until inflammatory markers and echocardiogram are normal",
         "correct": true,
-        "rationale": "Kawasaki disease meeting clinical criteria (fever >= 5 days plus 4 of 5 classic features) is treated with IVIG 2 g/kg single dose plus aspirin, ideally within 10 days of fever onset, per RCH CPG: Kawasaki disease.",
+        "rationale": "He meets clinical criteria for Kawasaki disease (fever >= 5 days plus 4 of 5 principal features) and remains within the day-10 window where IVIG most reduces coronary aneurysm risk. Australian practice (RCH CPG) uses IVIG 2 g/kg with high-dose aspirin acutely, stepping down to low-dose antiplatelet aspirin once afebrile and continuing until coronary status is confirmed.",
         "source_refs": [
           "RCH CPG: Kawasaki disease",
           "AHA Kawasaki disease 2017"
@@ -1358,36 +1361,37 @@
       },
       {
         "letter": "B",
-        "text": "Oral amoxicillin 25 mg/kg TDS for 10 days for streptococcal scarlet fever",
+        "text": "IV immunoglobulin 2 g/kg plus oral prednisolone 2 mg/kg/day as primary adjunct; withhold aspirin because of risk of Reye syndrome in a child under 5",
         "correct": false,
-        "rationale": "Scarlet fever does not cause non-purulent conjunctivitis or extremity changes; antibiotics do not treat Kawasaki disease per RCH CPG: Kawasaki disease.",
+        "rationale": "Aspirin is standard in Kawasaki disease and the Reye-syndrome concern does not override its use in this indication. Adjunctive steroids are reserved for high-risk patients (Kobayashi or Egami score, age under 12 months, persistent fever) or IVIG-resistant disease, not first-line in this child, per RCH CPG.",
         "source_refs": [
           "RCH CPG: Kawasaki disease"
         ]
       },
       {
         "letter": "C",
-        "text": "Oral prednisolone 1 mg/kg as sole therapy for 14 days",
+        "text": "Oral amoxicillin 25 mg/kg three times daily for 10 days for presumed group A streptococcal scarlet fever",
         "correct": false,
-        "rationale": "Corticosteroid monotherapy is not standard; steroids are adjunctive in IVIG-resistant or high-risk Kawasaki disease per AHA Kawasaki disease 2017.",
-        "source_refs": [
-          "AHA Kawasaki disease 2017"
-        ]
-      },
-      {
-        "letter": "D",
-        "text": "Topical chloramphenicol drops and symptomatic care, review in 48 hours",
-        "correct": false,
-        "rationale": "This is not a localised conjunctivitis; delaying IVIG beyond day 10 increases coronary aneurysm risk per RCH CPG: Kawasaki disease.",
+        "rationale": "Scarlet fever does not cause non-purulent conjunctivitis or extremity desquamation; missing Kawasaki disease delays IVIG and increases aneurysm risk per RCH CPG.",
         "source_refs": [
           "RCH CPG: Kawasaki disease"
         ]
       },
       {
-        "letter": "E",
-        "text": "Reassurance and antipyretics only; review if fever persists beyond day 10",
+        "letter": "D",
+        "text": "Defer IVIG until echocardiography is completed and confirms coronary changes, then treat",
         "correct": false,
-        "rationale": "Delaying treatment increases coronary artery aneurysm risk substantially; treatment within 10 days is the standard per RCH CPG: Kawasaki disease.",
+        "rationale": "IVIG should be given on clinical grounds within 10 days of fever onset; echocardiography is for baseline assessment of coronaries, not a gate to treatment, per RCH CPG and AHA 2017.",
+        "source_refs": [
+          "RCH CPG: Kawasaki disease",
+          "AHA Kawasaki disease 2017"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Reassurance and antipyretics; arrange paediatric outpatient review if fever persists beyond day 10",
+        "correct": false,
+        "rationale": "Delaying treatment beyond day 10 substantially increases coronary aneurysm risk; treatment should be commenced now, per RCH CPG.",
         "source_refs": [
           "RCH CPG: Kawasaki disease"
         ]
@@ -2086,89 +2090,6 @@
     "created": "2026-05-12",
     "model": "claude-opus-4-5",
     "subtopic_detail": "Allergy / Emergency"
-  },
-  {
-    "id": "paeds-023",
-    "topic": "Paediatrics",
-    "subtopic": "Acute assessment + resus",
-    "difficulty": 1,
-    "tags": [],
-    "stem": "A 4-year-old boy is found unresponsive in the playground at his childcare centre. The childcare nurse confirms he is not breathing normally despite a 10-second look-listen-feel assessment. There is no obvious chest movement and no audible breath sounds. An ambulance has been called. The nurse asks the bystander medical student to commence basic life support immediately while she retrieves the AED from the office. The child has no known medical history, is not known to childcare staff to have any allergies, and there is no witnessed foreign body event. The student is alone with the patient for the next 60 seconds until the nurse returns. She has been trained in ANZCOR paediatric BLS.",
-    "data_table": {
-      "Vital signs": "Unresponsive, not breathing normally, pulse not yet assessed",
-      "Examination": "Apnoea, no chest movement, no obvious cyanosis yet, no visible trauma, no obvious foreign body in mouth on quick visual check"
-    },
-    "lead_in": "What is the single most appropriate compression-to-ventilation ratio in single-rescuer paediatric BLS?",
-    "options": [
-      {
-        "letter": "A",
-        "text": "15 compressions to 2 breaths at a rate of approximately 100-120 compressions per minute",
-        "correct": false,
-        "rationale": "15:2 is the two-rescuer paediatric ratio used by trained healthcare providers; single-rescuer ratio is different per ANZCOR Guideline 12.",
-        "source_refs": [
-          "ANZCOR Guideline 12: Paediatric BLS"
-        ]
-      },
-      {
-        "letter": "B",
-        "text": "30 compressions to 2 breaths at a rate of approximately 100-120 compressions per minute",
-        "correct": true,
-        "rationale": "Single-rescuer paediatric BLS uses 30:2 (the same as adult BLS) at 100-120 compressions per minute and a compression depth of approximately one third of chest AP diameter, per ANZCOR Guideline 12.",
-        "source_refs": [
-          "ANZCOR Guideline 12: Paediatric BLS"
-        ]
-      },
-      {
-        "letter": "C",
-        "text": "5 compressions to 1 breath at a rate of approximately 80 compressions per minute",
-        "correct": false,
-        "rationale": "This ratio is not used in current ANZCOR algorithms; 5:1 is historical and replaced by 30:2 single-rescuer per ANZCOR Guideline 12.",
-        "source_refs": [
-          "ANZCOR Guideline 12: Paediatric BLS"
-        ]
-      },
-      {
-        "letter": "D",
-        "text": "Continuous chest compressions only with no ventilations until paramedics arrive",
-        "correct": false,
-        "rationale": "Paediatric arrests are usually respiratory in origin; ventilations are essential and compression-only CPR is reserved for adult bystander CPR per ANZCOR Guideline 12.",
-        "source_refs": [
-          "ANZCOR Guideline 12: Paediatric BLS"
-        ]
-      },
-      {
-        "letter": "E",
-        "text": "10 compressions to 2 breaths at a rate of approximately 60 compressions per minute",
-        "correct": false,
-        "rationale": "Neither the ratio nor the rate matches ANZCOR paediatric BLS guidance; rate is 100-120 per minute per ANZCOR Guideline 12.",
-        "source_refs": [
-          "ANZCOR Guideline 12: Paediatric BLS"
-        ]
-      }
-    ],
-    "explanation": {
-      "summary": "ANZCOR paediatric BLS uses 30:2 for single-rescuer (lay or healthcare) and 15:2 for two-rescuer healthcare providers. Compression rate is 100-120 per minute, depth is one third of chest AP diameter, with full chest recoil and minimal interruption. Attach the AED as soon as available.",
-      "key_points": [
-        "Single-rescuer paediatric: 30:2",
-        "Two-rescuer healthcare provider paediatric: 15:2",
-        "Rate 100-120/min, depth one third AP chest diameter",
-        "Use paediatric AED pads where available for under 8 years; if not, use adult pads",
-        "Paediatric arrests are usually respiratory; ventilations matter"
-      ],
-      "pearls": "If unsure whether to use paediatric or adult AED pads, use whatever you have; doing nothing is worse."
-    },
-    "sources": [
-      {
-        "label": "ANZCOR Guideline 12: Paediatric BLS",
-        "url": "https://resus.org.au/guidelines/"
-      }
-    ],
-    "reference_ranges": [
-      "paeds_vitals_child"
-    ],
-    "created": "2026-05-12",
-    "model": "claude-opus-4-5",
-    "subtopic_detail": "Emergency / Resuscitation"
   },
   {
     "id": "paeds-024",
