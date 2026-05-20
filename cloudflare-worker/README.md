@@ -13,7 +13,7 @@ API, so GitHub Pages picks up the change automatically.
 3. **Create a GitHub fine-grained PAT**:
    - <https://github.com/settings/personal-access-tokens/new>
    - Resource owner: your account (mord58562)
-   - Repository access: only `y4-pocket-companion`
+   - Repository access: only `a-to-e`
    - Repository permissions: **Contents: Read and write**
    - Expiration: 1 year (renew when it pops)
    - Copy the `github_pat_...` token once.

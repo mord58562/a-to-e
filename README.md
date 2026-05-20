@@ -2,7 +2,7 @@
 
 A free, open practice MCQ bank for end-of-medical-school clinical reasoning - paediatrics and obstetrics & gynaecology, Australian units and Australian guideline sources throughout.
 
-**Live: <https://mord58562.github.io/y4-pocket-companion/>**
+**Live: <https://mord58562.github.io/a-to-e/>**
 
 ## What's new in 1.3.0
 
@@ -75,8 +75,8 @@ abcde/
 ## Run locally
 
 ```
-git clone https://github.com/mord58562/y4-pocket-companion.git
-cd y4-pocket-companion
+git clone https://github.com/mord58562/a-to-e.git
+cd a-to-e
 ./scripts/start.sh
 ```
 
