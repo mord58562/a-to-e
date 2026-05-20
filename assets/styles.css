@@ -1330,6 +1330,33 @@ body[data-screen="summary"] main { max-width: 760px; }
 
 /* ── Reports admin (Rob only) ───────────────────────────────────── */
 .admin-only.has-pending { color: var(--accent); }
+
+/* Defence-in-depth: nothing class="admin-only" ever paints unless the body
+   has the is-admin class. Set/unset by app.js after auth resolves. */
+body:not(.is-admin) .admin-only { display: none !important; }
+
+/* Per-user pill colour palette. Twelve hues chosen for legibility on both
+   the light and dark backgrounds. The chosen index is set via the
+   --pill-hue inline style at the .profile-chip element by app.js. */
+.profile-chip {
+  --pill-bg: hsl(var(--pill-hue, 200), 60%, 70%);
+  --pill-fg: #0e1421;
+  background: var(--pill-bg);
+  color: var(--pill-fg);
+  padding: 4px 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+[data-theme="dark"] .profile-chip {
+  --pill-bg: hsl(var(--pill-hue, 200), 55%, 32%);
+  --pill-fg: #f3f6fb;
+}
+.profile-chip .profile-name { font-weight: 600; }
+.profile-chip .ghost-link { color: inherit; opacity: 0.7; }
+.profile-chip .ghost-link:hover { opacity: 1; }
+
 .admin-only .badge {
   display: inline-block;
   min-width: 18px;
@@ -1498,16 +1525,25 @@ body[data-screen="summary"] main { max-width: 760px; }
 }
 .audit-row-head {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.audit-row-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 .audit-row-name {
   font-family: var(--font-mono, monospace);
   font-size: 13px;
   font-weight: 600;
+  word-break: break-all;
 }
-.audit-row-meta { flex: 1 1 auto; }
+.audit-row-meta { flex: 0 0 auto; }
+.audit-row-toggle { flex-shrink: 0; white-space: nowrap; }
 .audit-flow {
   margin-top: 12px;
   padding-top: 12px;

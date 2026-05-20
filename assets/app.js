@@ -88,6 +88,20 @@
     if (cloudUser && cloudUser.is_admin) return true;
     return false;
   }
+  // Apply the is-admin class to <body> so the CSS rule
+  // `body:not(.is-admin) .admin-only { display: none }` kicks in.
+  function refreshAdminBodyClass() {
+    document.body.classList.toggle("is-admin", isCurrentUserAdmin());
+  }
+  // Deterministic per-user pill hue (one of 12 evenly-spaced hues around the
+  // wheel). The CSS defines saturation + lightness so the colour lands in a
+  // legible band in both light and dark themes.
+  function pillHueFor(seed) {
+    let h = 5381;
+    for (let i = 0; i < (seed || "").length; i++) h = ((h * 33) ^ seed.charCodeAt(i)) | 0;
+    const idx = Math.abs(h) % 12;
+    return idx * 30;
+  }
 
   // Profile registry. Each entry has a stable `id` (used as the
   // localStorage namespace), a human `name` (shown in the UI), and the
@@ -421,15 +435,23 @@
     if (brand) brand.onclick = goHome;
     const chip = document.getElementById("profileChip");
     const nameEl = document.getElementById("profileName");
+    let pillSeed = "";
     if (chip && currentProfile) {
       chip.hidden = false;
       chip.dataset.profileId = currentProfile.id;
       nameEl.textContent = currentProfile.name;
+      pillSeed = currentProfile.id;
     } else if (chip && cloudUser) {
       chip.hidden = false;
       chip.dataset.profileId = "cloud-" + cloudUser.id;
+      // display_name carries the first-name the user gave at signup.
       nameEl.textContent = cloudUser.display_name || cloudUser.email;
+      pillSeed = cloudUser.id;
     }
+    if (chip && pillSeed) {
+      chip.style.setProperty("--pill-hue", String(pillHueFor(pillSeed)));
+    }
+    refreshAdminBodyClass();
     const signOutBtn = document.getElementById("signOutBtn");
     if (signOutBtn) signOutBtn.onclick = e => {
       e.stopPropagation();
@@ -478,7 +500,9 @@
     const meta = state.meta || {};
     // sessionStorage: dismiss persists for the page session only and
     // resets on next reload, per Rob's spec.
-    if (sessionStorage.getItem("y4mcq.reminder.sessionDismissed")) return;
+    // Persist dismissal across reloads (was previously sessionStorage; the
+    // user kept seeing the banner reappear).
+    if (localStorage.getItem(REMINDER_DISMISS_KEY)) return;
     const total = state.questions.length;
     const updated = meta.last_added || meta.updated;
     if (!updated) {
@@ -496,7 +520,7 @@
     }
     document.getElementById("reminderHowTo").onclick = openHowTo;
     document.getElementById("reminderDismiss").onclick = () => {
-      sessionStorage.setItem("y4mcq.reminder.sessionDismissed", "1");
+      localStorage.setItem(REMINDER_DISMISS_KEY, "1");
       banner.hidden = true;
     };
   }
@@ -512,8 +536,9 @@
     document.getElementById("sessionMeta").textContent = "";
 
     const greet = document.getElementById("homeGreeting");
-    if (greet && currentProfile) {
-      greet.textContent = `Hi, ${currentProfile.name}.`;
+    const greetName = currentProfile ? currentProfile.name : (cloudUser ? (cloudUser.display_name || cloudUser.email.split("@")[0]) : "");
+    if (greet && greetName) {
+      greet.textContent = `Hi, ${greetName}.`;
       greet.hidden = false;
     }
     // Randomise the closing well-wish across the available languages.
@@ -998,8 +1023,7 @@
     const eb = ex.querySelector(".section-eyebrow");
     eb.innerHTML = `Commentary` +
       (subLabel ? `<span class="topic-tag">${esc(subLabel)}</span>` : "") +
-      (q.difficulty ? `<span class="difficulty-tag">Difficulty ${q.difficulty}/5</span>` : "") +
-      (q.model ? `<span class="model-tag" title="Question author">${esc(q.model)}</span>` : "");
+      (q.difficulty ? `<span class="difficulty-tag">Difficulty ${q.difficulty}/5</span>` : "");
 
     const correct = _shuffledOptions(q).find(o => o.correct);
     const correctCite = correct.source_refs && correct.source_refs.length
@@ -1193,7 +1217,9 @@
         const li = document.querySelector(`#qOptions li[data-letter="${letter}"]`);
         if (li && !state.quiz.revealed[q.id]) li.click();
         e.preventDefault();
-      } else if (k === "enter" || k === " " || k === "arrowright") {
+      } else if (k === "enter" || k === " ") {
+        // Enter or Space = submit the selected answer (or advance to the
+        // next question if the answer is already revealed).
         const submit = document.getElementById("submitBtn");
         const next   = document.getElementById("nextBtn");
         if (!next.hidden) next.click();
@@ -1207,7 +1233,13 @@
       } else if (k === "l") {
         toggleRefs();
       } else if (k === "arrowleft") {
+        // Left = previous question (does not submit, even if an answer is
+        // selected).
         navOffset(-1);
+        e.preventDefault();
+      } else if (k === "arrowright") {
+        // Right = next question (skip). Does not submit.
+        navOffset(1);
         e.preventDefault();
       } else if (k === "arrowup" || k === "arrowdown") {
         if (state.quiz.revealed[q.id]) { e.preventDefault(); return; }
@@ -1607,8 +1639,10 @@
       const modelSummary = Object.entries(modelsCount).map(([m, n]) => `${esc(m)}×${n}`).join(", ");
       li.innerHTML = `
         <div class="audit-row-head">
-          <span class="audit-row-name">${esc(b.path)}</span>
-          <span class="audit-row-meta dim small">${b.questions.length} Q · ${topicSummary} · author(s): ${modelSummary}</span>
+          <div class="audit-row-text">
+            <span class="audit-row-name">${esc(b.path)}</span>
+            <span class="audit-row-meta dim small">${b.questions.length} Q · ${topicSummary} · author(s): ${modelSummary}</span>
+          </div>
           <button class="link-btn audit-row-toggle">Audit this batch</button>
         </div>
         <div class="audit-flow" hidden>
@@ -1859,8 +1893,10 @@ because the site replaces the live entry wholesale on apply.`;
       const modelSummary = Object.entries(models).map(([m, n]) => `${esc(m)}×${n}`).join(", ");
       li.innerHTML = `
         <div class="audit-row-head">
-          <span class="audit-row-name">${isMain ? "★ " : ""}${esc(f.path)}</span>
-          <span class="audit-row-meta dim small">${f.questions.length} Q · top: ${topSubjects} · author(s): ${modelSummary}</span>
+          <div class="audit-row-text">
+            <span class="audit-row-name">${isMain ? "★ " : ""}${esc(f.path)}</span>
+            <span class="audit-row-meta dim small">${f.questions.length} Q · top: ${topSubjects} · author(s): ${modelSummary}</span>
+          </div>
           <button class="link-btn audit-row-toggle">Audit this file</button>
         </div>
         <div class="audit-flow" hidden>${auditFlowMarkup(`live-${esc(f.path)}`)}</div>

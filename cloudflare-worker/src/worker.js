@@ -66,7 +66,7 @@ function corsHeaders(env) {
 
 /* ── Account + stats API ────────────────────────────────────────────── */
 
-const SESSION_TTL_SEC = 60 * 60 * 24 * 30;   // 30 days
+const SESSION_TTL_SEC = 60 * 60 * 24 * 365;  // 1 year; auto-refreshed on every /api/me
 const PBKDF2_ITER = 100000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -159,6 +159,15 @@ async function handleLogin(request, env, cors) {
 async function handleMe(request, env, cors) {
   const user = await authUser(request, env);
   if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  // Sliding session: bump the current token's expiry on every /api/me call
+  // so an active user is never logged out on the same browser.
+  const auth = request.headers.get("Authorization") || "";
+  const m = auth.match(/^Bearer\s+([a-f0-9]{32,})$/i);
+  if (m) {
+    const now = Math.floor(Date.now() / 1000);
+    await env.DB.prepare("UPDATE sessions SET expires_at = ? WHERE token = ?")
+      .bind(now + SESSION_TTL_SEC, m[1]).run();
+  }
   return json({ ok: true, user: publicUser(user) }, 200, cors);
 }
 
