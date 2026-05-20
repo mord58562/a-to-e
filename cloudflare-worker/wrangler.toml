@@ -9,3 +9,11 @@ GITHUB_OWNER  = "mord58562"
 GITHUB_REPO   = "a-to-e"
 GITHUB_BRANCH = "main"
 ALLOW_ORIGIN  = "https://mord58562.github.io"
+
+# D1 database binding (accounts + answer aggregates).
+# Create the DB once with `wrangler d1 create a-to-e`, paste the printed
+# database_id below, then `wrangler d1 execute a-to-e --file=schema.sql --remote`.
+[[d1_databases]]
+binding       = "DB"
+database_name = "a-to-e"
+database_id   = "REPLACE_WITH_OUTPUT_OF_d1_create"
