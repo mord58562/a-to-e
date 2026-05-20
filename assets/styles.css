@@ -151,6 +151,39 @@ body.locked > *:not(#gate):not(script) { display: none !important; }
   margin: 0;
 }
 .gate-card .primary { width: 100%; }
+.gate-pane { display: flex; flex-direction: column; gap: 12px; margin: 0; }
+.gate-pane[hidden] { display: none; }
+.gate-switch { font-size: 12.5px; color: var(--ink-mute); margin: 4px 0 0; }
+.gate-switch .link-btn { font-size: 12.5px; }
+
+.comm-stats { padding-top: 4px; }
+.stats-bars { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+.stats-row {
+  display: grid;
+  grid-template-columns: 18px 1fr 44px 36px;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+}
+.stats-letter { font-weight: 700; color: var(--ink-mute); font-variant: small-caps; }
+.stats-row.correct .stats-letter { color: var(--good, #2a8f4c); }
+.stats-bar {
+  position: relative;
+  height: 8px;
+  background: var(--surface-2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.stats-bar-fill {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: var(--accent);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+.stats-row.correct .stats-bar-fill { background: var(--good, #2a8f4c); }
+.stats-pct { text-align: right; font-variant-numeric: tabular-nums; }
+.stats-n { text-align: right; }
+
 html, body {
   margin: 0;
   padding: 0;

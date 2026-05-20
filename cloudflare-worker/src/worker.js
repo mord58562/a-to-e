@@ -30,10 +30,19 @@ export default {
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: cors });
     }
-    if (request.method !== "POST") {
-      return json({ ok: false, error: "POST only" }, 405, cors);
-    }
     try {
+      // Account + stats API: GET allowed for /api/me, /api/stats/:qid.
+      if (url.pathname === "/api/register" && request.method === "POST") return await handleRegister(request, env, cors);
+      if (url.pathname === "/api/login"    && request.method === "POST") return await handleLogin(request, env, cors);
+      if (url.pathname === "/api/me"       && request.method === "GET")  return await handleMe(request, env, cors);
+      if (url.pathname === "/api/answer"   && request.method === "POST") return await handleAnswer(request, env, cors);
+      if (url.pathname.startsWith("/api/stats/") && request.method === "GET") {
+        return await handleStats(request, env, cors, url.pathname.slice("/api/stats/".length));
+      }
+      // Existing GitHub-write endpoints (POST only).
+      if (request.method !== "POST") {
+        return json({ ok: false, error: "POST only" }, 405, cors);
+      }
       if (url.pathname === "/paste")        return await handlePaste(request, env, cors);
       if (url.pathname === "/report")       return await handleReport(request, env, cors);
       if (url.pathname === "/apply-audit")           return await handleApplyAudit(request, env, cors);
@@ -49,10 +58,149 @@ export default {
 function corsHeaders(env) {
   return {
     "Access-Control-Allow-Origin":  env.ALLOW_ORIGIN || "*",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Access-Control-Max-Age":       "86400",
   };
+}
+
+/* ── Account + stats API ────────────────────────────────────────────── */
+
+const SESSION_TTL_SEC = 60 * 60 * 24 * 30;   // 30 days
+const PBKDF2_ITER = 100000;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function bytesToHex(bytes) {
+  return Array.from(new Uint8Array(bytes)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+function randomHex(byteCount) {
+  const b = new Uint8Array(byteCount);
+  crypto.getRandomValues(b);
+  return bytesToHex(b);
+}
+async function hashPassword(password, saltHex) {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey("raw", enc.encode(password), "PBKDF2", false, ["deriveBits"]);
+  const bits = await crypto.subtle.deriveBits(
+    { name: "PBKDF2", salt: enc.encode(saltHex), iterations: PBKDF2_ITER, hash: "SHA-256" },
+    key, 256
+  );
+  return bytesToHex(bits);
+}
+
+async function authUser(request, env) {
+  const auth = request.headers.get("Authorization") || "";
+  const m = auth.match(/^Bearer\s+([a-f0-9]{32,})$/i);
+  if (!m) return null;
+  const token = m[1];
+  const now = Math.floor(Date.now() / 1000);
+  const row = await env.DB.prepare(
+    "SELECT u.id, u.email, u.display_name, u.is_admin FROM sessions s JOIN users u ON u.id = s.user_id WHERE s.token = ? AND s.expires_at > ?"
+  ).bind(token, now).first();
+  return row || null;
+}
+
+function publicUser(u) {
+  return { id: u.id, email: u.email, display_name: u.display_name, is_admin: !!u.is_admin };
+}
+
+async function handleRegister(request, env, cors) {
+  if (!env.DB) return json({ ok: false, error: "DB not bound" }, 500, cors);
+  const body = await request.json().catch(() => null);
+  const email = (body && body.email || "").trim().toLowerCase();
+  const password = body && body.password || "";
+  const displayName = (body && body.display_name || "").trim().slice(0, 60) || email.split("@")[0];
+  if (!EMAIL_RE.test(email)) return json({ ok: false, error: "invalid email" }, 400, cors);
+  if (password.length < 8) return json({ ok: false, error: "password must be 8+ characters" }, 400, cors);
+
+  const existing = await env.DB.prepare("SELECT id FROM users WHERE email = ?").bind(email).first();
+  if (existing) return json({ ok: false, error: "email already registered" }, 409, cors);
+
+  const id = crypto.randomUUID();
+  const salt = randomHex(16);
+  const hash = await hashPassword(password, salt);
+  const now = Math.floor(Date.now() / 1000);
+  await env.DB.prepare(
+    "INSERT INTO users (id, email, password_hash, password_salt, display_name, is_admin, created_at) VALUES (?, ?, ?, ?, ?, 0, ?)"
+  ).bind(id, email, hash, salt, displayName, now).run();
+
+  const token = randomHex(32);
+  await env.DB.prepare(
+    "INSERT INTO sessions (token, user_id, created_at, expires_at) VALUES (?, ?, ?, ?)"
+  ).bind(token, id, now, now + SESSION_TTL_SEC).run();
+
+  return json({ ok: true, token, user: publicUser({ id, email, display_name: displayName, is_admin: 0 }) }, 200, cors);
+}
+
+async function handleLogin(request, env, cors) {
+  if (!env.DB) return json({ ok: false, error: "DB not bound" }, 500, cors);
+  const body = await request.json().catch(() => null);
+  const email = (body && body.email || "").trim().toLowerCase();
+  const password = body && body.password || "";
+  if (!email || !password) return json({ ok: false, error: "email + password required" }, 400, cors);
+
+  const row = await env.DB.prepare(
+    "SELECT id, email, password_hash, password_salt, display_name, is_admin FROM users WHERE email = ?"
+  ).bind(email).first();
+  // Constant-ish-time: still hash even on miss so timing leaks email existence less.
+  const tryHash = await hashPassword(password, row ? row.password_salt : "dummy");
+  if (!row || tryHash !== row.password_hash) {
+    return json({ ok: false, error: "invalid credentials" }, 401, cors);
+  }
+
+  const now = Math.floor(Date.now() / 1000);
+  const token = randomHex(32);
+  await env.DB.prepare(
+    "INSERT INTO sessions (token, user_id, created_at, expires_at) VALUES (?, ?, ?, ?)"
+  ).bind(token, row.id, now, now + SESSION_TTL_SEC).run();
+  return json({ ok: true, token, user: publicUser(row) }, 200, cors);
+}
+
+async function handleMe(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  return json({ ok: true, user: publicUser(user) }, 200, cors);
+}
+
+async function handleAnswer(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  const body = await request.json().catch(() => null);
+  const qid = body && body.question_id;
+  const srcLetter = body && body.source_letter;
+  const correct = body && body.correct ? 1 : 0;
+  if (typeof qid !== "string" || !/^[A-Za-z0-9_\-]+$/.test(qid) || qid.length > 200) {
+    return json({ ok: false, error: "bad question_id" }, 400, cors);
+  }
+  if (!"ABCDE".includes(srcLetter)) {
+    return json({ ok: false, error: "source_letter must be A-E" }, 400, cors);
+  }
+  const now = Math.floor(Date.now() / 1000);
+  // INSERT OR IGNORE so a user's first answer wins and replays don't skew the stats.
+  await env.DB.prepare(
+    "INSERT OR IGNORE INTO answers (user_id, question_id, source_letter, correct, ts) VALUES (?, ?, ?, ?, ?)"
+  ).bind(user.id, qid, srcLetter, correct, now).run();
+
+  const stats = await getStats(env, qid);
+  return json({ ok: true, stats }, 200, cors);
+}
+
+async function handleStats(request, env, cors, qid) {
+  if (!qid || !/^[A-Za-z0-9_\-]+$/.test(qid)) return json({ ok: false, error: "bad question id" }, 400, cors);
+  return json({ ok: true, stats: await getStats(env, qid) }, 200, cors);
+}
+
+async function getStats(env, qid) {
+  if (!env.DB) return { total: 0, A: 0, B: 0, C: 0, D: 0, E: 0 };
+  const rows = await env.DB.prepare(
+    "SELECT source_letter, COUNT(*) AS n FROM answers WHERE question_id = ? GROUP BY source_letter"
+  ).bind(qid).all();
+  const out = { total: 0, A: 0, B: 0, C: 0, D: 0, E: 0 };
+  for (const r of (rows.results || [])) {
+    out[r.source_letter] = r.n;
+    out.total += r.n;
+  }
+  return out;
 }
 
 function json(obj, status, extraHeaders) {

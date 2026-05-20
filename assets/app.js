@@ -26,6 +26,68 @@
   const LOCAL_QUESTIONS_KEY  = "y4mcq.local_questions.v1";
   const PROFILE_CURRENT_KEY  = "y4mcq.profile.current";
   const PROFILE_MIGRATED_KEY = "y4mcq.profile.migrated.v1";
+  const AUTH_TOKEN_KEY       = "y4mcq.auth.token";
+
+  // Cloud account state. Populated by checkAuth() on startup if a token
+  // is stored; cleared on logout. `is_admin` controls whether add/audit
+  // UI is visible.
+  let cloudUser = null;
+  let authToken = null;
+
+  async function apiFetch(path, options) {
+    if (!WORKER_URL) throw new Error("Cloud backend not configured");
+    const headers = { "Content-Type": "application/json", ...(options && options.headers || {}) };
+    if (authToken) headers["Authorization"] = `Bearer ${authToken}`;
+    const r = await fetch(WORKER_URL.replace(/\/$/, "") + path, { ...(options || {}), headers });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok || data.ok === false) throw new Error(data.error || `HTTP ${r.status}`);
+    return data;
+  }
+
+  async function cloudCheckAuth() {
+    if (!WORKER_URL) return null;
+    const t = localStorage.getItem(AUTH_TOKEN_KEY);
+    if (!t) return null;
+    authToken = t;
+    try {
+      const { user } = await apiFetch("/api/me", { method: "GET" });
+      cloudUser = user;
+      return user;
+    } catch {
+      authToken = null;
+      localStorage.removeItem(AUTH_TOKEN_KEY);
+      return null;
+    }
+  }
+  async function cloudSignIn(email, password) {
+    const { token, user } = await apiFetch("/api/login", { method: "POST", body: JSON.stringify({ email, password }) });
+    authToken = token; cloudUser = user;
+    localStorage.setItem(AUTH_TOKEN_KEY, token);
+    return user;
+  }
+  async function cloudSignUp(email, password, displayName) {
+    const { token, user } = await apiFetch("/api/register", { method: "POST", body: JSON.stringify({ email, password, display_name: displayName }) });
+    authToken = token; cloudUser = user;
+    localStorage.setItem(AUTH_TOKEN_KEY, token);
+    return user;
+  }
+  function cloudSignOut() {
+    authToken = null; cloudUser = null;
+    localStorage.removeItem(AUTH_TOKEN_KEY);
+  }
+  async function cloudPostAnswer(qid, sourceLetter, correct) {
+    try {
+      const { stats } = await apiFetch("/api/answer", { method: "POST", body: JSON.stringify({ question_id: qid, source_letter: sourceLetter, correct }) });
+      return stats;
+    } catch { return null; }
+  }
+
+  // Combined admin check: legacy Rob profile OR signed-in cloud admin.
+  function isCurrentUserAdmin() {
+    if (currentProfile && currentProfile.id === "rob") return true;
+    if (cloudUser && cloudUser.is_admin) return true;
+    return false;
+  }
 
   // Profile registry. Each entry has a stable `id` (used as the
   // localStorage namespace), a human `name` (shown in the UI), and the
@@ -48,7 +110,9 @@
   // Falls back to the bare key if no profile is loaded yet (only happens
   // pre-gate, where we never actually read state-bearing keys).
   function ns(key) {
-    return currentProfile ? `${key}.${currentProfile.id}` : key;
+    if (currentProfile) return `${key}.${currentProfile.id}`;
+    if (cloudUser) return `${key}.cloud-${cloudUser.id}`;
+    return key;
   }
 
   const DEFAULT_SETTINGS = {
@@ -173,9 +237,7 @@
   async function passGate() {
     return new Promise(resolve => {
       const gate = document.getElementById("gate");
-      const form = document.getElementById("gateForm");
-      const input = document.getElementById("gateInput");
-      const err = document.getElementById("gateErr");
+      const card = gate ? gate.querySelector(".gate-card") : null;
       const unlock = () => {
         if (gate) gate.hidden = true;
         document.body.classList.remove("locked");
@@ -183,15 +245,71 @@
       };
       if (!gate) { document.body.classList.remove("locked"); return resolve(); }
 
+      // Pane switcher.
+      const switchPane = (mode) => {
+        if (card) card.dataset.mode = mode;
+        document.querySelectorAll(".gate-pane").forEach(p => p.hidden = true);
+        const map = { signin: "cloudSignInForm", signup: "cloudSignUpForm", legacy: "gateForm" };
+        const el = document.getElementById(map[mode] || "cloudSignInForm");
+        if (el) { el.hidden = false; const f = el.querySelector("input"); if (f) setTimeout(() => f.focus(), 50); }
+      };
+      document.querySelectorAll("[data-gate-switch]").forEach(b => {
+        b.addEventListener("click", () => switchPane(b.dataset.gateSwitch));
+      });
+
+      // 1. Already signed in via cloud? Skip the gate.
+      const cloudCheck = await cloudCheckAuth();
+      if (cloudCheck) return unlock();
+
+      // 2. Already chose a legacy profile previously? Skip the gate.
       const savedId = localStorage.getItem(PROFILE_CURRENT_KEY);
       if (savedId) {
         const p = PROFILES.find(p => p.id === savedId);
         if (p) { currentProfile = p; return unlock(); }
-        // Saved id no longer matches any known profile - clear it.
         localStorage.removeItem(PROFILE_CURRENT_KEY);
       }
 
-      setTimeout(() => input.focus(), 50);
+      // 3. Cloud sign-in form.
+      const signInForm = document.getElementById("cloudSignInForm");
+      const signInErr  = document.getElementById("cloudSignInErr");
+      signInForm.addEventListener("submit", async e => {
+        e.preventDefault();
+        signInErr.hidden = true;
+        try {
+          await cloudSignIn(
+            document.getElementById("cloudSignInEmail").value.trim(),
+            document.getElementById("cloudSignInPassword").value
+          );
+          unlock();
+        } catch (err) {
+          signInErr.textContent = (err && err.message) || "Sign in failed.";
+          signInErr.hidden = false;
+        }
+      });
+
+      // 4. Cloud sign-up form.
+      const signUpForm = document.getElementById("cloudSignUpForm");
+      const signUpErr  = document.getElementById("cloudSignUpErr");
+      signUpForm.addEventListener("submit", async e => {
+        e.preventDefault();
+        signUpErr.hidden = true;
+        try {
+          await cloudSignUp(
+            document.getElementById("cloudSignUpEmail").value.trim(),
+            document.getElementById("cloudSignUpPassword").value,
+            document.getElementById("cloudSignUpName").value.trim()
+          );
+          unlock();
+        } catch (err) {
+          signUpErr.textContent = (err && err.message) || "Sign up failed.";
+          signUpErr.hidden = false;
+        }
+      });
+
+      // 5. Legacy local-profile form.
+      const form  = document.getElementById("gateForm");
+      const input = document.getElementById("gateInput");
+      const err   = document.getElementById("gateErr");
       form.addEventListener("submit", async e => {
         e.preventDefault();
         const h = await sha256Hex((input.value || "").trim());
@@ -206,11 +324,14 @@
           input.focus();
         }
       });
+
+      switchPane("signin");
     });
   }
 
   function signOut() {
     localStorage.removeItem(PROFILE_CURRENT_KEY);
+    cloudSignOut();
     // Hard reload so all in-memory state resets to the gate flow.
     location.reload();
   }
@@ -304,11 +425,16 @@
       chip.hidden = false;
       chip.dataset.profileId = currentProfile.id;
       nameEl.textContent = currentProfile.name;
+    } else if (chip && cloudUser) {
+      chip.hidden = false;
+      chip.dataset.profileId = "cloud-" + cloudUser.id;
+      nameEl.textContent = cloudUser.display_name || cloudUser.email;
     }
     const signOutBtn = document.getElementById("signOutBtn");
     if (signOutBtn) signOutBtn.onclick = e => {
       e.stopPropagation();
-      if (confirm(`Sign out ${currentProfile ? currentProfile.name : ""}? Your progress stays saved against this profile.`)) signOut();
+      const label = currentProfile ? currentProfile.name : (cloudUser ? (cloudUser.display_name || cloudUser.email) : "");
+      if (confirm(`Sign out ${label}? Your progress stays saved against this account.`)) signOut();
     };
   }
 
@@ -343,7 +469,10 @@
   }
 
   // ── Reminder ────────────────────────────────────────────────────────────
+  // Non-admins never see the "X questions in the bank. Add more via..."
+  // reminder banner because adding is admin-only.
   function maybeShowReminder() {
+    if (!isCurrentUserAdmin()) return;
     const banner = document.getElementById("reminderBanner");
     const text = document.getElementById("reminderText");
     const meta = state.meta || {};
@@ -657,7 +786,9 @@
     const letters = ["A", "B", "C", "D", "E", "F", "G"];
     const out = order.map((origIdx, newIdx) => {
       const o = q.options[origIdx];
-      return Object.assign({}, o, { letter: letters[newIdx] });
+      // Preserve the source-JSON letter alongside the post-shuffle letter so
+      // cross-user stats can aggregate by the unchanging source label.
+      return Object.assign({}, o, { letter: letters[newIdx], sourceLetter: o.letter });
     });
     q._shuffledOptions = out;
     return out;
@@ -794,13 +925,53 @@
   function onSubmit() {
     const q = state.quiz.pool[state.quiz.idx];
     if (!state.quiz.answers[q.id]) return;
-    const isC = _shuffledOptions(q).find(o => o.letter === state.quiz.answers[q.id])?.correct;
-    state.history[q.id] = { lastCorrect: !!isC, count: (state.history[q.id]?.count || 0) + 1 };
+    const chosen = _shuffledOptions(q).find(o => o.letter === state.quiz.answers[q.id]);
+    const isC = !!(chosen && chosen.correct);
+    state.history[q.id] = { lastCorrect: isC, count: (state.history[q.id]?.count || 0) + 1 };
     save(ns(HISTORY_KEY), state.history);
+    // Log to cloud (fire-and-forget) so this answer joins the aggregate
+    // stats. Stats response is stashed on the question so revealAnswer can
+    // paint the bars. Test mode also logs (but reveal happens at session end).
+    if (cloudUser && chosen && chosen.sourceLetter) {
+      cloudPostAnswer(q.id, chosen.sourceLetter, isC).then(stats => {
+        if (stats) {
+          q._stats = stats;
+          if (state.quiz.revealed[q.id]) renderStatsPanel(q);
+        }
+      });
+    }
     if (state.quiz.mode === "test") { onNext(); return; }
     state.quiz.revealed[q.id] = true;
     revealAnswer(q);
     renderTopbar();
+  }
+
+  function renderStatsPanel(q) {
+    const panel = document.getElementById("explainStats");
+    if (!panel) return;
+    const stats = q._stats;
+    if (!stats || !stats.total) { panel.hidden = true; return; }
+    // Map source letters back to the shuffled letters the user saw, and
+    // also surface which option text each row refers to.
+    const shuffled = _shuffledOptions(q);
+    const bars = document.getElementById("explainStatsBars");
+    bars.innerHTML = "";
+    shuffled.forEach(opt => {
+      const n = stats[opt.sourceLetter] || 0;
+      const pct = stats.total ? Math.round((n / stats.total) * 100) : 0;
+      const row = document.createElement("div");
+      row.className = "stats-row" + (opt.correct ? " correct" : "");
+      row.innerHTML = `
+        <span class="stats-letter">${opt.letter}</span>
+        <span class="stats-bar"><span class="stats-bar-fill" style="width:${pct}%"></span></span>
+        <span class="stats-pct">${pct}%</span>
+        <span class="stats-n dim small">${n}</span>
+      `;
+      bars.appendChild(row);
+    });
+    document.getElementById("explainStatsMeta").textContent =
+      `${stats.total} ${stats.total === 1 ? "person" : "people"} answered.`;
+    panel.hidden = false;
   }
 
   function revealAnswer(q) {
@@ -842,6 +1013,8 @@
           ? `<span class="cite">· ${esc(o.source_refs.join(", "))}</span>` : "";
         return `<p><b>${o.letter}. ${esc(o.text)}</b><br/><span class="dim">${esc(o.rationale)}</span>${c}</p>`;
       }).join("");
+
+    renderStatsPanel(q);
 
     const sum = q.explanation || {};
     const sumWrap = document.getElementById("explainSummary");
@@ -1370,7 +1543,7 @@
     const btn = document.getElementById("reportsAdminBtn");
     const badge = document.getElementById("reportsAdminCount");
     if (!btn) return;
-    const isAdmin = currentProfile && currentProfile.id === "rob";
+    const isAdmin = isCurrentUserAdmin();
     if (!isAdmin) { btn.hidden = true; return; }
     const open = state.reports.filter(r => r.status === "open").length;
     btn.hidden = false;
@@ -1378,7 +1551,7 @@
     btn.classList.toggle("has-pending", open > 0);
   }
   async function openReportsAdmin() {
-    if (!currentProfile || currentProfile.id !== "rob") return;
+    if (!isCurrentUserAdmin()) return;
     document.getElementById("reportsAdminModal").hidden = false;
     await refreshAuditInboxList();
     switchAuditTab("inbox");
@@ -1963,6 +2136,7 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     startSessionTimer();
   }
   function openHowTo()  {
+    if (!isCurrentUserAdmin()) return;
     document.getElementById("howToModal").hidden = false;
     refreshLocalBankSummary();
   }

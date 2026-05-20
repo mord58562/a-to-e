@@ -21,18 +21,57 @@
 <body data-screen="home" class="locked">
 
 <div id="gate" class="gate">
-  <form id="gateForm" class="gate-card" autocomplete="off">
+  <div class="gate-card" data-mode="signin">
     <div class="gate-brand">
       <span class="brand-mark"><span class="cross"></span></span>
       <span class="gate-title">A to E</span>
     </div>
-    <p class="gate-sub">Enter your profile password.</p>
-    <input id="gateInput" class="gate-input" type="password" autocomplete="off"
-           autocorrect="off" autocapitalize="off" spellcheck="false"
-           placeholder="password" aria-label="Access password" />
-    <button id="gateSubmit" class="primary" type="submit">Continue</button>
-    <p id="gateErr" class="gate-err" hidden>Incorrect password.</p>
-  </form>
+
+    <!-- Cloud sign-in (default tab) -->
+    <form id="cloudSignInForm" class="gate-pane" autocomplete="on">
+      <p class="gate-sub">Sign in to track progress and see how others answer.</p>
+      <input id="cloudSignInEmail" class="gate-input" type="email" required
+             autocomplete="email" placeholder="email" aria-label="Email" />
+      <input id="cloudSignInPassword" class="gate-input" type="password" required
+             autocomplete="current-password" placeholder="password" aria-label="Password" />
+      <button class="primary" type="submit">Sign in</button>
+      <p id="cloudSignInErr" class="gate-err" hidden></p>
+      <p class="gate-switch">
+        New here? <button type="button" class="link-btn" data-gate-switch="signup">Create an account</button>
+        ·
+        <button type="button" class="link-btn" data-gate-switch="legacy">Use a profile password</button>
+      </p>
+    </form>
+
+    <!-- Cloud signup -->
+    <form id="cloudSignUpForm" class="gate-pane" autocomplete="on" hidden>
+      <p class="gate-sub">Create an account. Email and a password of 8+ characters; that's it.</p>
+      <input id="cloudSignUpName" class="gate-input" type="text"
+             autocomplete="nickname" placeholder="display name (optional)" aria-label="Display name" />
+      <input id="cloudSignUpEmail" class="gate-input" type="email" required
+             autocomplete="email" placeholder="email" aria-label="Email" />
+      <input id="cloudSignUpPassword" class="gate-input" type="password" required minlength="8"
+             autocomplete="new-password" placeholder="password (8+ characters)" aria-label="Password" />
+      <button class="primary" type="submit">Create account</button>
+      <p id="cloudSignUpErr" class="gate-err" hidden></p>
+      <p class="gate-switch">
+        Already have one? <button type="button" class="link-btn" data-gate-switch="signin">Sign in</button>
+      </p>
+    </form>
+
+    <!-- Legacy local profile (Rob + invited collaborators) -->
+    <form id="gateForm" class="gate-pane" autocomplete="off" hidden>
+      <p class="gate-sub">Local profile password.</p>
+      <input id="gateInput" class="gate-input" type="password" autocomplete="off"
+             autocorrect="off" autocapitalize="off" spellcheck="false"
+             placeholder="profile password" aria-label="Profile password" />
+      <button id="gateSubmit" class="primary" type="submit">Continue</button>
+      <p id="gateErr" class="gate-err" hidden>Incorrect password.</p>
+      <p class="gate-switch">
+        <button type="button" class="link-btn" data-gate-switch="signin">Back to sign in</button>
+      </p>
+    </form>
+  </div>
 </div>
 
 <div id="reminderBanner" class="reminder" hidden>
@@ -246,6 +285,12 @@
       <div class="comm-block">
         <p class="comm-label">Sources</p>
         <ol id="explainSources" class="sources"></ol>
+      </div>
+
+      <div id="explainStats" class="comm-block comm-stats" hidden>
+        <p class="comm-label">What other users chose</p>
+        <div id="explainStatsBars" class="stats-bars"></div>
+        <p id="explainStatsMeta" class="dim small"></p>
       </div>
 
       <div id="explainRanges" class="comm-block comm-aside"></div>
