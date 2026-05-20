@@ -1,0 +1,332 @@
+{
+  "audited_at": "2026-05-20",
+  "auditor": "Claude Opus 4.7 (1M context)",
+  "principle": "Difficulty is set by clinical-reasoning complexity. Any stem sentence that does not hook a distractor or steer the answer is padding and should be removed.",
+  "verdicts": [
+    {
+      "id": "paeds-002",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "She has not eaten since lunch and her last menstrual period is not applicable.",
+        "She has no known drug allergies."
+      ],
+      "rationale": "LMP is not applicable to a 7-year-old and fasting status is not referenced by any option/rationale; allergy status is not hooked by any distractor (no allergy-related options).",
+      "estimated_pruned_word_count": 134,
+      "current_word_count": 150
+    },
+    {
+      "id": "paeds-005",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        " (this hooks the discharge-home and urinalysis-only distractors, since neonatal age alone mandates full septic workup regardless of source)",
+        "He is fully immunised for age (none yet due)."
+      ],
+      "rationale": "Parenthetical is a leaked author meta-note that should never appear in a stem. Immunisation status (none due yet at 24 days) provides no diagnostic information and does not hook any distractor.",
+      "estimated_pruned_word_count": 150,
+      "current_word_count": 172
+    },
+    {
+      "id": "paeds-006",
+      "current_difficulty": 5,
+      "prunable_sentences": [
+        "Her parents are present and have consented to investigations."
+      ],
+      "rationale": "Consent statement does not steer any option choice; no distractor discriminates on consent. The TB exposure, VP shunt, penicillin urticaria, focal seizures, and immunisation status all hook specific options (D, vancomycin coverage, cephalosporin safety, LP deferral, Hib coverage respectively).",
+      "estimated_pruned_word_count": 156,
+      "current_word_count": 166
+    },
+    {
+      "id": "paeds-011",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "There is no family history of inflammatory bowel disease."
+      ],
+      "rationale": "IBD family history is not on the differential for a 28-week neonate with NEC features and no option discriminates on IBD. Caffeine, recent transfusion absence, mottling, bilious aspirate, bloody stool all hook NEC vs alternatives appropriately.",
+      "estimated_pruned_word_count": 129,
+      "current_word_count": 138
+    },
+    {
+      "id": "paeds-012",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "There is a family history of coeliac disease but no thyroid disease.",
+        "Her allergies are nil known."
+      ],
+      "rationale": "Coeliac/thyroid family history is type-1-DM-associated background but does not change next acute step or hook any distractor. Allergy status is not referenced by any option/rationale.",
+      "estimated_pruned_word_count": 105,
+      "current_word_count": 123
+    },
+    {
+      "id": "paeds-013",
+      "current_difficulty": 5,
+      "prunable_sentences": [
+        "He has had no recent travel.",
+        "He weighs 19 kg, has no known drug allergies, and his recent levetiracetam level was therapeutic."
+      ],
+      "rationale": "Recent travel is irrelevant to status epilepticus and not referenced by any option. Weight is already given earlier in stem; therapeutic levetiracetam level does not change second-line choice (option B still loads levetiracetam per APLS regardless of pre-existing level in acute status); allergy status is not hooked by any option.",
+      "estimated_pruned_word_count": 132,
+      "current_word_count": 157
+    },
+    {
+      "id": "paeds-017",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "He has had no recent travel outside the region and no household pets or insect bites.",
+        "He has no known drug allergies.",
+        "His weight and growth are on the 25th centile."
+      ],
+      "rationale": "Travel/pets/insect bites would only matter for a zoonotic or vector-borne differential that is not represented in any option. Allergy status is not hooked by any option. Growth centile is unreferenced by any rationale.",
+      "estimated_pruned_word_count": 99,
+      "current_word_count": 128
+    },
+    {
+      "id": "paeds-020",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "He has no documented bleeding disorder and no known medical conditions."
+      ],
+      "rationale": "Option C explicitly says 'attribute to a presumed undiagnosed inherited bleeding disorder' - the rationale for ruling out C is that normal coagulation does not exclude NAI, not that a bleeding disorder is absent. The 'no documented bleeding disorder' statement therefore does not hook C; if anything it pre-empts the option. Removing it does not change difficulty.",
+      "estimated_pruned_word_count": 138,
+      "current_word_count": 150
+    },
+    {
+      "id": "obgyn-018",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "She had a first-trimester combined risk screen and a normal 20-week morphology scan.",
+        "She is a non-smoker, BMI 31, allergic to penicillin (rash), influenza-vaccinated this pregnancy and has had her pertussis booster at 28 weeks."
+      ],
+      "rationale": "Combined screen/morphology scan are antenatal completeness padding that do not hook any SOMANZ-criteria-based option. Smoking, BMI, penicillin allergy, vaccinations are not referenced by any option rationale or SOMANZ criterion in this question.",
+      "estimated_pruned_word_count": 117,
+      "current_word_count": 160
+    },
+    {
+      "id": "obgyn-021",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        " (this hooks the immediate-Caesarean distractor, since prior preterm vaginal birth is not in itself an indication for operative delivery now)",
+        " (currently in that NICU, so transfer-out is not indicated)",
+        "She is on no regular medications, has no allergies, smoking 5 cigarettes per day (declined to cease), and lives 90 minutes from the nearest tertiary NICU."
+      ],
+      "rationale": "Both parenthetical author meta-notes are leaked review comments that must not appear in a stem. Without the meta-note about being in the NICU, the residency-on-no-meds/smoking/distance sentence loses its anchor for the option-E ex-utero-transfer distractor; however that distractor is already invalidated by stem opening ('tertiary maternity service'). Smoking/allergies/medications are not referenced by any option.",
+      "estimated_pruned_word_count": 117,
+      "current_word_count": 156
+    },
+    {
+      "id": "obgyn-023",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "Her three previous births were uncomplicated."
+      ],
+      "rationale": "Prior uncomplicated births do not hook any uterotonic-choice distractor and are not referenced in any option rationale. Coagulopathy/anticoagulants/prior PPH and admission Hb all hook plausible alternatives.",
+      "estimated_pruned_word_count": 131,
+      "current_word_count": 138
+    },
+    {
+      "id": "obgyn-024",
+      "current_difficulty": 5,
+      "prunable_sentences": [
+        " (this hooks the COCP and patch distractors, since migraine with aura is an absolute UKMEC 4 contraindication to combined hormonal contraception)",
+        "She had a Caesarean for breech with her first child and two subsequent uneventful vaginal births.",
+        "Her cervical screening test is up to date and negative."
+      ],
+      "rationale": "Author meta-comment leaked into stem. Past obstetric history (Caesarean, vaginal births) does not change UKMEC categories for the listed options. Cervical screening status is unreferenced by any contraception option.",
+      "estimated_pruned_word_count": 165,
+      "current_word_count": 207
+    },
+    {
+      "id": "obgyn-025",
+      "current_difficulty": 5,
+      "prunable_sentences": [
+        "There are no antenatal risk factors for placental insufficiency.",
+        "She is hydrated and her last paracetamol was 6 hours ago."
+      ],
+      "rationale": "Absence of placental-insufficiency risk does not hook any option (none of A-E rest on this). Hydration status and paracetamol timing are not referenced by any option rationale.",
+      "estimated_pruned_word_count": 138,
+      "current_word_count": 158
+    },
+    {
+      "id": "paeds-emerg-002",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "She has met all developmental milestones to date, is fully immunised to the current Australian schedule, and has no family history of epilepsy or sudden infant death.",
+        "The mother denies head trauma and no household members are on antiepileptic or antidepressant medications.",
+        "The team has applied high-flow oxygen at 8 L/min via Hudson mask, has charcoal-impregnated suction available at the bedside, has prepared a rapid-sequence induction trolley, and the anaesthetic registrar and PICU outreach team have been paged."
+      ],
+      "rationale": "Developmental milestones, immunisations, family history of epilepsy/SIDS are background colour that do not change the next pharmacological step. Head trauma absence and household drug access are not referenced by any option (no toxic/traumatic option exists). The team-readiness sentence (charcoal suction, RSI trolley) does not change the choice between levetiracetam and phenytoin/phenobarbitone/RSI.",
+      "estimated_pruned_word_count": 119,
+      "current_word_count": 206
+    },
+    {
+      "id": "paeds-emerg-003",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "He has a 22-gauge cannula in the right antecubital fossa and a second cannula being placed; his last meal was 4 hours ago.",
+        "There are no known drug allergies and parents have given verbal consent for further therapy."
+      ],
+      "rationale": "Cannula gauge/location and fasting status do not differentiate IV magnesium from IV salbutamol/aminophylline (all are IV). Allergy status and consent are not hooked by any option.",
+      "estimated_pruned_word_count": 178,
+      "current_word_count": 213
+    },
+    {
+      "id": "paeds-emerg-005",
+      "current_difficulty": 5,
+      "prunable_sentences": [
+        "She had no preceding head injury, no toxic ingestion, and no prior diabetes diagnosis; her family history is notable only for type 2 diabetes in a paternal uncle."
+      ],
+      "rationale": "Head injury/ingestion/family history of T2DM do not change management of the established DKA-related cerebral oedema clinical picture; no option discriminates on prior diabetes or family history.",
+      "estimated_pruned_word_count": 211,
+      "current_word_count": 238
+    },
+    {
+      "id": "paeds-emerg-008",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "The on-call mental health team has been notified and is on the way.",
+        "The on-call clinical toxicologist has been contacted by phone."
+      ],
+      "rationale": "Mental-health notification and toxicology consultation are governance steps that do not change the NAC decision itself; no option discriminates on whether the consultation has occurred.",
+      "estimated_pruned_word_count": 205,
+      "current_word_count": 225
+    },
+    {
+      "id": "paeds-emerg-014",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "He was born at 39+4 weeks by uncomplicated vaginal delivery, with Apgars 9 and 9, and discharged from the maternity unit at 36 hours after a normal newborn examination.",
+        "There is no family history of congenital heart disease."
+      ],
+      "rationale": "Delivery details, Apgars, discharge timing, and family history of CHD are background that do not discriminate between the listed pharmacological options once the bedside echo has confirmed critical coarctation with closing duct.",
+      "estimated_pruned_word_count": 148,
+      "current_word_count": 182
+    },
+    {
+      "id": "paeds-neo-004",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "He has had one apnoea requiring stimulation in the last hour.",
+        "He has no umbilical lines in situ.",
+        "He has had no surgical procedures and no recent transfusions.",
+        "He has not yet received probiotics."
+      ],
+      "rationale": "Apnoea episode does not change NEC management choice between the options. No-umbilical-lines, no-prior-surgery, no-prior-transfusion, no-probiotics are explicitly non-discriminating: no option turns on these factors (probiotic option A is ruled out by active NEC presence not by prior probiotic status).",
+      "estimated_pruned_word_count": 197,
+      "current_word_count": 229
+    },
+    {
+      "id": "paeds-neo-007",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "There is no family history of hearing loss or congenital infection, no maternal HIV or syphilis, and rubella immunity was documented at booking."
+      ],
+      "rationale": "Once CMV is confirmed by PCR (per lead-in), absence of hearing-loss family history, maternal HIV/syphilis, and rubella immunity does not change the choice between valganciclovir, IV ganciclovir, observation, hyperimmune globulin, or audiology-only.",
+      "estimated_pruned_word_count": 196,
+      "current_word_count": 220
+    },
+    {
+      "id": "paeds-neo-010",
+      "current_difficulty": 5,
+      "prunable_sentences": [
+        "He weighs 3540 g and has no surgical contraindication.",
+        "Imaging is pending."
+      ],
+      "rationale": "Weight is not used to discriminate cooling method (servo cooling temperature is not weight-dependent in the options). 'No surgical contraindication' is not hooked by any option. Pending imaging does not discriminate between options once eligibility for cooling is established (option E about delaying for MRI is invalid regardless of whether imaging is pending or done).",
+      "estimated_pruned_word_count": 260,
+      "current_word_count": 272
+    },
+    {
+      "id": "paeds-neo-011",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "There is no pneumothorax on transillumination or repeat CXR."
+      ],
+      "rationale": "Absence of pneumothorax does not differentiate iNO from HFOV/ECMO/sildenafil/PGE1 - no option proposes pneumothorax treatment. Surfactant given, milrinone, structurally normal heart, OI 22, ductal R-to-L all hook specific options.",
+      "estimated_pruned_word_count": 222,
+      "current_word_count": 232
+    },
+    {
+      "id": "paeds-neo-013",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "There is no family history of consanguinity, neonatal seizures or sudden infant death.",
+        "Examination reveals no dysmorphic features, no rash, no neurocutaneous stigmata (no cafe-au-lait or hypopigmented macules under Wood's lamp), and a normal anterior fontanelle."
+      ],
+      "rationale": "Family history details and absence of dysmorphic/neurocutaneous features do not discriminate among diazepam, calcium, pyridoxine, phenobarbitone, or hypothermia. Pyridoxine option C exclusion rests on it being reserved for refractory cases, not on absence of family history. The HIE-criteria sentence already addresses cooling option E.",
+      "estimated_pruned_word_count": 217,
+      "current_word_count": 253
+    },
+    {
+      "id": "paeds-neo-015",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "There is no antenatal evidence of infection.",
+        "He has not yet had a chest radiograph."
+      ],
+      "rationale": "Infection status is already addressed by the earlier sentence about CRP/WCC and no maternal fever. CXR status does not change choice between LISA, intubation, INSURE, nebulised surfactant, or postnatal steroid.",
+      "estimated_pruned_word_count": 191,
+      "current_word_count": 205
+    },
+    {
+      "id": "paeds-cardgen-007",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "She has not previously had any cardiac investigations or family screening, she takes no over-the-counter or herbal medications, and her resting heart rate today is 58 with no postural drop.",
+        "There is no history of hearing impairment in the family."
+      ],
+      "rationale": "Prior absence of cardiac investigations does not change current management. OTC/herbal medications and postural drop are not referenced by any option. Hearing impairment (Jervell-Lange-Nielsen vs Romano-Ward distinction) is not discriminated by any of the options A-E.",
+      "estimated_pruned_word_count": 158,
+      "current_word_count": 195
+    },
+    {
+      "id": "paeds-cardgen-008",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "She has had no rash and no subcutaneous nodules detected on careful palpation of extensor surfaces."
+      ],
+      "rationale": "Absence of rash and subcutaneous nodules (other major criteria) is not directly hooked by any of the five options about whether the diagnostic threshold is met; the discriminating points are polyarthritis major, minors (PR/CRP/ESR), and GAS evidence which all remain.",
+      "estimated_pruned_word_count": 220,
+      "current_word_count": 236
+    },
+    {
+      "id": "paeds-cardgen-013",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "He has not had any significant illnesses and has been fully immunised.",
+        "Blood pressure is symmetric in both arms at 96/58 mmHg and femoral pulses are present and equal."
+      ],
+      "rationale": "Past medical/immunisation history does not discriminate among the syndromes listed. Symmetric BP and present femoral pulses rule out coarctation, but coarctation is not on the option list; none of the syndromes A-E proposes coarctation as the cardiac lesion.",
+      "estimated_pruned_word_count": 207,
+      "current_word_count": 236
+    },
+    {
+      "id": "paeds-cardgen-014",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "He has no learning difficulties, no recent syncope, and no exertional chest pain."
+      ],
+      "rationale": "Absence of learning difficulties, syncope, and chest pain does not discriminate among the medical-therapy options A-E. Syncope/chest pain would prompt urgent intervention but no option proposes that based on these features.",
+      "estimated_pruned_word_count": 207,
+      "current_word_count": 219
+    },
+    {
+      "id": "paeds-cardgen-015",
+      "current_difficulty": 5,
+      "prunable_sentences": [
+        "He has had no seizures and has not lost previously acquired skills."
+      ],
+      "rationale": "Absence of seizures and regression does not discriminate among the five syndromes listed. Microarray-normal/metabolic-screen-normal is retained because option E rationale specifically references microarrays not detecting trinucleotide expansions, which is the key teaching point.",
+      "estimated_pruned_word_count": 263,
+      "current_word_count": 275
+    },
+    {
+      "id": "paeds-endo-003",
+      "current_difficulty": 4,
+      "prunable_sentences": [
+        "The consultant intensivist is en route from the ICU upstairs, the airway trolley with appropriately sized equipment is at the bedside, and 3% saline and mannitol are available in the resus bay."
+      ],
+      "rationale": "Availability of consultant, airway trolley, and osmotherapy agents does not discriminate among the options - 3% saline (option C) is correct regardless of whether equipment is mentioned as ready, and the LP/bicarbonate/dextrose options are wrong on clinical grounds not equipment availability.",
+      "estimated_pruned_word_count": 220,
+      "current_word_count": 253
+    }
+  ]
+}
