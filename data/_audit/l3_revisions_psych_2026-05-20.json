@@ -2,5 +2,1644 @@
   "revised_at": "2026-05-20",
   "auditor": "Claude Opus 4.7 (1M context)",
   "scope": "Psychiatry L1+L2 -> L3 or discard",
-  "verdicts": []
+  "verdicts": [
+    {
+      "id": "psych-mood-001",
+      "file": "data/batches/psych_mood_anxiety_starter.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 34-year-old primary school teacher attends her GP reporting six weeks of persistent low mood after the end of a 9-year relationship. She describes early morning waking at 0400 (two hours before her alarm), profound diurnal mood variation with mornings worst, weight loss of 4 kg without dieting, marked psychomotor retardation noted by her partner, and complete loss of mood reactivity even when her two cats greet her or her best friend visits. She is no longer able to plan lessons and has been on personal leave for three weeks. She denies hallucinations, sustained elevated mood, or any prior hypomanic episodes lasting more than a day. She drinks two standard drinks weekly, uses no other substances, and takes no regular medications. She reports passive thoughts of being better off dead but no plan or intent. Her TSH, FBC and UEC last month were unremarkable. PHQ-9 today is 23.",
+      "new_lead_in": "Which DSM-5 classification and specifier most accurately captures her presentation?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Persistent depressive disorder (dysthymia) with intermittent major depressive episodes",
+          "correct": false,
+          "rationale": "PDD requires depressed mood most days for at least 2 years; her 6-week course excludes this regardless of severity.",
+          "source_refs": [
+            "DSM-5-TR Depressive Disorders",
+            "RANZCP CPG: Mood Disorders 2020"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Adjustment disorder with depressed mood, severe",
+          "correct": false,
+          "rationale": "Adjustment disorder is excluded once full MDE criteria are met; her symptom cluster (anhedonia, neurovegetative features, psychomotor retardation) meets MDE.",
+          "source_refs": [
+            "DSM-5-TR",
+            "RANZCP CPG: Mood Disorders 2020"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Major depressive disorder, single episode, moderate severity, no specifier",
+          "correct": false,
+          "rationale": "She meets MDE criteria but the specific cluster of loss of mood reactivity, distinct quality of depressed mood, marked psychomotor retardation, early morning waking and diurnal variation triggers the melancholic specifier, which carries treatment and prognostic implications.",
+          "source_refs": [
+            "DSM-5-TR melancholic specifier",
+            "RANZCP CPG: Mood Disorders 2020"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Major depressive disorder, single episode, severe, with melancholic features",
+          "correct": true,
+          "rationale": "She meets MDE criteria plus at least three melancholic features: complete loss of mood reactivity (cardinal feature A1), marked psychomotor retardation, early morning waking with diurnal mood variation worse in mornings, and significant weight loss. PHQ-9 23 plus functional collapse supports severe. Melancholic specifier matters: it predicts better response to TCAs/ECT and influences first-line drug choice under RANZCP guidance.",
+          "source_refs": [
+            "DSM-5-TR melancholic specifier",
+            "RANZCP CPG: Mood Disorders 2020"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Bipolar II disorder, current episode depressed with melancholic features",
+          "correct": false,
+          "rationale": "Bipolar II requires at least one prior hypomanic episode lasting at least 4 days; explicitly absent. Misclassification as unipolar is acceptable here; the anti-pattern is calling it bipolar without evidence.",
+          "source_refs": [
+            "DSM-5-TR Bipolar II",
+            "RANZCP CPG: Mood Disorders 2020"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-mood-002",
+      "file": "data/batches/psych_mood_anxiety_starter.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 22-year-old apprentice electrician presents with an 8-week history of moderate major depression (PHQ-9 16). He has had no manic episodes, no psychotic symptoms, and denies suicidal ideation. He smokes 10 cigarettes daily, drinks 4 standard drinks weekly, and uses cannabis socially once a month. His chief functional complaints are early morning waking at 0430, fatigue at work and a recent 3 kg weight loss. He is sexually active with his girlfriend and explicitly raises concerns about sexual side effects after reading about them online. He has no past medication trials, no allergies, no QTc concerns on a recent ECG (QTc 405 ms), and bloods including TSH, FBC, EUC, LFTs and B12 are unremarkable. His older sister had moderate depression that remitted well on sertraline. He and his GP agree to commence an antidepressant today alongside a Mental Health Treatment Plan for CBT.",
+      "new_lead_in": "Considering the eTG Psychotropic discriminators (efficacy, tolerability profile, sleep effect, sexual side-effect burden, family-history match), which is the single most appropriate first-line antidepressant?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Mirtazapine 15 mg orally nocte titrated to 30 mg",
+          "correct": false,
+          "rationale": "Mirtazapine has lower sexual side-effect burden and helps sleep, but routinely causes 2-4 kg weight gain and daytime sedation which is poorly suited to apprentice work at heights; eTG positions it as second-line or where SSRI is unsuitable.",
+          "source_refs": [
+            "eTG Psychotropic: Antidepressant selection",
+            "RANZCP CPG: Mood Disorders 2020"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Sertraline 50 mg orally daily",
+          "correct": true,
+          "rationale": "First-line SSRI with strong family-history concordance (a key eTG discriminator when comparing SSRIs), broad safety in young adults, no QTc dose-cap (unlike citalopram), and no significant CYP2D6 enzyme effect that would matter for his cannabis or future medications. Sexual side effects are a class effect that requires monitoring but does not exclude first-line SSRI; the response is to counsel, review at 2 weeks, and switch class only if intolerable.",
+          "source_refs": [
+            "eTG Psychotropic 2024",
+            "RANZCP CPG: Mood Disorders 2020"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Venlafaxine XR 75 mg orally daily",
+          "correct": false,
+          "rationale": "SNRI is not first-line for uncomplicated moderate MDD; has a more difficult discontinuation profile and dose-dependent BP rise. Reserved per eTG for SSRI failure or specific indications.",
+          "source_refs": [
+            "eTG Psychotropic"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Citalopram 20 mg orally daily",
+          "correct": false,
+          "rationale": "Reasonable SSRI but carries the TGA QT-prolongation dose cap of 40 mg (20 mg in those >65 or on CYP2C19 inhibitors), which limits future titration headroom; without a family-history match and given sertraline-responsive sister, citalopram is not the best first choice.",
+          "source_refs": [
+            "TGA citalopram dose cap advisory",
+            "eTG Psychotropic"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Fluoxetine 20 mg orally daily",
+          "correct": false,
+          "rationale": "Acceptable SSRI but its long half-life (norfluoxetine ~7-15 days) complicates any later switch to an MAOI or other antidepressant; sertraline is preferred when family history of sertraline response is present and there is no specific indication driving fluoxetine choice.",
+          "source_refs": [
+            "eTG Psychotropic",
+            "AMH Antidepressants"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-mood-012",
+      "file": "data/batches/psych_mood_anxiety_starter.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "multi-step",
+      "new_stem": "A 33-year-old G1P1 woman attends her GP for her 6-week postnatal check. She delivered by uncomplicated vaginal birth at 40+1 and breastfeeding is established. Her infant is feeding and growing on the 50th percentile. COPE-aligned screening returns EPDS 14 with item 10 (self-harm) scored 0. On clinician interview today she has 4 weeks of low mood, anhedonia for activities she previously enjoyed, broken sleep beyond night feeds, tearfulness, guilt about her mothering, and difficulty bonding with the infant. She has no past psychiatric history. There are no psychotic features and she denies thoughts of harming the baby. She is engaged, future-oriented and looking forward to a planned visit from her mother next month. She has no medical comorbidities. Both she and her partner are working with the maternal child health nurse fortnightly.",
+      "new_lead_in": "Which is the single most appropriate next step under the COPE Australian Perinatal Mental Health Guideline?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Reassure her this is normal postnatal tiredness and review in three months",
+          "correct": false,
+          "rationale": "EPDS 14 with concordant clinical history of MDD-range symptoms is above the COPE threshold (>=13) that mandates clinical assessment and intervention; watchful waiting risks a deteriorating course in the bonding-critical window.",
+          "source_refs": [
+            "COPE Australian Perinatal Mental Health Guideline 2023"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Refer urgently to the crisis mental health team for same-day specialist assessment",
+          "correct": false,
+          "rationale": "Crisis referral is reserved for acute suicide/infanticide risk, psychosis, or severe functional collapse; she has none of these. Over-triage diverts crisis resources and may damage the therapeutic alliance.",
+          "source_refs": [
+            "COPE Guideline",
+            "RANZCP Perinatal CPG"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Repeat the EPDS in two weeks without further structured assessment",
+          "correct": false,
+          "rationale": "EPDS is a screening tool not a diagnostic instrument; once it is positive and symptoms are confirmed on interview, the COPE step is structured diagnostic assessment plus management planning, not screening re-run.",
+          "source_refs": [
+            "COPE Guideline"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Conduct a diagnostic interview confirming moderate postnatal MDD, offer CBT or IPT through a Mental Health Treatment Plan, discuss sertraline as breastfeeding-compatible first-line, and arrange MCH-nurse + GP review at 2 weeks",
+          "correct": true,
+          "rationale": "COPE pathway after a positive EPDS plus clinical confirmation: structured diagnostic assessment, psychological therapy as first-line for mild-to-moderate (CBT or IPT, with IPT particularly evidence-based perinatally), and shared decision-making on antidepressants. Sertraline is the first-line SSRI in breastfeeding per AMH and the COPE Guideline. Early review captures deterioration and bonding risk.",
+          "source_refs": [
+            "COPE Guideline 2023",
+            "AMH Lactation appendix",
+            "RANZCP Perinatal CPG"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Stop breastfeeding immediately and commence venlafaxine 75 mg daily without psychology",
+          "correct": false,
+          "rationale": "Anti-pattern: stopping breastfeeding is not required for first-line SSRI (sertraline) and venlafaxine is not first-line for postnatal depression; psychological therapy must be offered for mild-to-moderate disease.",
+          "source_refs": [
+            "COPE Guideline",
+            "AMH"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-mood-013",
+      "file": "data/batches/psych_mood_anxiety_starter.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 26-year-old accountant attends her GP for 9 months of persistent excessive worry across work, finances, parents' health and partner's safety. She describes feeling wound up most days, broken sleep with onset insomnia from rumination, muscle tension, irritability noted by her partner, and difficulty concentrating at work where her billable output has fallen by 25 percent. She has no panic attacks, no agoraphobia, no social anxiety pattern, no obsessions or compulsions, no trauma history and no anhedonia. K-10 is 24 and GAD-7 is 15 (moderate-to-severe). Bloods (TSH, FBC, EUC) are normal and caffeine intake is moderate (two coffees per day). She has no past psychiatric history, no past medication trials and no allergies. She is keen to engage with treatment but cannot start psychology for 4 weeks due to a clinician wait-list. She has private health insurance.",
+      "new_lead_in": "Which is the single most appropriate first-line management plan?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Diazepam 5 mg twice daily for six weeks while she organises psychological therapy",
+          "correct": false,
+          "rationale": "Anti-pattern: benzodiazepines are not first-line in GAD because of dependence risk and the chronic-course nature of the disorder; short courses for acute crisis are the only acceptable indication.",
+          "source_refs": [
+            "eTG Psychotropic: Anxiety",
+            "RANZCP CPG: Anxiety"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Trauma-focused CBT alone, deferring any pharmacotherapy until at least 12 weeks of therapy is complete",
+          "correct": false,
+          "rationale": "Trauma-focused CBT is for PTSD, not GAD; she has no trauma. Generic CBT for GAD is first-line for mild-to-moderate disease but at GAD-7 15 (moderate-severe) with significant functional impairment plus a 4-week wait, combining CBT with an SSRI is supported by eTG and RANZCP guidance.",
+          "source_refs": [
+            "eTG Psychotropic: GAD",
+            "RANZCP CPG: Anxiety"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Commence escitalopram 10 mg daily plus arrange CBT, with review at 2 weeks for activation/akathisia and 6 weeks for response",
+          "correct": true,
+          "rationale": "GAD-7 15 plus 25 percent loss of work output places her in the moderate-severe band where eTG supports combined first-line therapy; escitalopram is a first-line SSRI for GAD with a favourable side-effect profile (under the 20 mg/day TGA QTc dose-cap), early review captures the 1-2 week activation window during which transient worsening may occur, and CBT remains the durable component.",
+          "source_refs": [
+            "eTG Psychotropic: GAD",
+            "TGA escitalopram dose cap",
+            "RANZCP CPG: Anxiety"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Mirtazapine 30 mg orally nocte as initial pharmacotherapy",
+          "correct": false,
+          "rationale": "Mirtazapine is not first-line for GAD; SSRI or SNRI are first-line per eTG. Mirtazapine is reserved for SSRI failure or where its sleep and appetite profile is specifically desired.",
+          "source_refs": [
+            "eTG Psychotropic"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Avoid caffeine completely and review in six months without other intervention today",
+          "correct": false,
+          "rationale": "Lifestyle alone is insufficient for GAD-7 15 with documented functional impairment; eTG mandates structured psychological therapy +/- SSRI in this band.",
+          "source_refs": [
+            "eTG Psychotropic"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-psychopharm-001",
+      "file": "data/batches/psych_psychopharm_safety_v2.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "AU-cutoff",
+      "new_stem": "A 26-year-old man with a first episode of schizophrenia commenced olanzapine 10 mg nocte two weeks ago after baseline metabolic monitoring (BMI 24.3, waist 92 cm, BP 124/78, fasting glucose 4.8, lipids within range, ECG normal). His father has T2DM diagnosed at 58 and his mother has dyslipidaemia. He is a non-smoker, drinks two standard drinks on weekends, and is on no other medications. He has gained 1.8 kg in two weeks. The team plans to follow the RANZCP/Lambert metabolic-monitoring schedule for second-generation antipsychotics.",
+      "new_lead_in": "Per the RANZCP-endorsed metabolic monitoring schedule for second-generation antipsychotics, what monitoring should occur at the 12-week post-initiation review?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Weight and BMI only; bloods are scheduled at 6 months and annually thereafter",
+          "correct": false,
+          "rationale": "The RANZCP schedule explicitly includes fasting glucose (or HbA1c) and fasting lipids at 12 weeks, in addition to anthropometry and BP, because the highest-risk window for emergent metabolic disturbance is the first 3 months on olanzapine.",
+          "source_refs": [
+            "RANZCP/Lambert SGA metabolic monitoring",
+            "RANZCP CPG: Schizophrenia"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Weight, BMI, waist circumference, BP, fasting glucose (or HbA1c), and fasting lipids; repeat ECG only if symptoms or risk-factor change",
+          "correct": true,
+          "rationale": "At the 12-week timepoint the schedule mandates full anthropometric panel (weight, BMI, waist), BP, fasting glucose or HbA1c, and fasting lipids; ECG repetition is not routinely required at 12 weeks unless QTc prolongation risk has changed (new QTc-prolonging drug, electrolyte derangement, syncope). This is the highest-yield repeat-monitoring window because olanzapine-related weight gain and dyslipidaemia peak in the first 3-6 months.",
+          "source_refs": [
+            "RANZCP/Lambert metabolic monitoring schedule",
+            "RANZCP CPG: Schizophrenia 2016"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Oral glucose tolerance test, fasting insulin and HOMA-IR in addition to anthropometry",
+          "correct": false,
+          "rationale": "OGTT, fasting insulin and HOMA-IR are not part of the routine RANZCP schedule; fasting glucose or HbA1c plus fasting lipids are sufficient at 12 weeks. Insulin-resistance metrics are research/specialist-endocrine tools.",
+          "source_refs": [
+            "RANZCP/Lambert schedule"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Repeat ECG, prolactin, and 24-hour ambulatory blood pressure as a 12-week metabolic panel",
+          "correct": false,
+          "rationale": "These are not part of the metabolic monitoring schedule; prolactin is monitored only on prolactin-elevating antipsychotics (e.g. risperidone, amisulpride), 24-hour ABPM is not routine, and ECG at 12 weeks is only if indicated.",
+          "source_refs": [
+            "RANZCP CPG"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Defer all repeat metabolic bloods until the 12-month anniversary review",
+          "correct": false,
+          "rationale": "Anti-pattern: olanzapine carries the highest metabolic-burden signal among SGAs and the first 12 weeks is when emergent dyslipidaemia and impaired fasting glucose are most readily reversed by early switch; 12-month-only monitoring misses this window.",
+          "source_refs": [
+            "RANZCP/Lambert schedule"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-psychopharm-004",
+      "file": "data/batches/psych_psychopharm_safety_v2.json",
+      "verdict": "discard",
+      "discard_reason": "Single-number recall (maintenance lithium 0.6-0.8 mmol/L) with no genuine alternative selection, anti-pattern or multi-step pathway. Cannot legitimately be raised to L3 without inventing artificial complexity; the topic is better covered by psych-psychopharm questions that combine lithium target with toxicity recognition, dose adjustment, or interaction (already present in the bank).",
+      "new_difficulty": 3,
+      "new_stem": null,
+      "new_lead_in": null,
+      "new_options": null
+    },
+    {
+      "id": "psych-psychopharm-011",
+      "file": "data/batches/psych_psychopharm_safety_v2.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "AU-cutoff",
+      "new_stem": "A 37-year-old man with treatment-resistant schizophrenia has been on clozapine 400 mg nocte for 8 months, registered with an Australian clozapine monitoring service (e.g. CPMS or ClopineCentral). His weekly bloods through weeks 1-18 were unremarkable; he is now on 4-weekly haematological monitoring per the standard Australian schedule. Today's FBC: Hb 142, WCC 4.8, ANC 1.6 x 10^9/L (last month 2.4), platelets 218. He has no fever, no sore throat, no mouth ulcers, and no other infective symptoms. He has not started new medications and has had no recent vaccinations. He is otherwise well, of European background (not associated with benign ethnic neutropenia), and has no prior neutropenia.",
+      "new_lead_in": "Which combination of zone classification, dose action, monitoring frequency and registry action best fits the Australian clozapine haematological monitoring framework?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Green zone (ANC >= 2.0) - continue clozapine, continue 4-weekly bloods, no registry action",
+          "correct": false,
+          "rationale": "ANC 1.6 is below the Australian green-zone threshold (>=2.0) and triggers amber-zone management; this option misclassifies the result.",
+          "source_refs": [
+            "Australian clozapine monitoring framework (CPMS/ClopineCentral)",
+            "RANZCP CPG: Schizophrenia"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Amber zone (ANC 1.5-1.99) - continue clozapine at current dose, increase haematological monitoring to twice weekly, notify the registered clozapine monitoring service so the patient's status is updated",
+          "correct": true,
+          "rationale": "ANC 1.6 falls within the standard Australian amber zone (1.5 to <2.0); the appropriate response is to continue clozapine, increase FBC frequency to at least twice weekly until the count recovers to green, and notify the registry. There is no fever, sore throat or other sepsis flag mandating immediate clozapine cessation, and amber-zone management is well-established to avoid premature loss of a uniquely effective drug in TRS.",
+          "source_refs": [
+            "Australian clozapine monitoring scheme (CPMS / ClopineCentral)",
+            "RANZCP CPG: Schizophrenia 2016"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Red zone (ANC <1.5) - stop clozapine immediately, admit, notify registry, never rechallenge",
+          "correct": false,
+          "rationale": "ANC 1.6 is amber, not red; immediate cessation is the wrong threshold response and would unnecessarily strip a TRS patient of the only drug shown effective for him. Rechallenge policy is also more nuanced than 'never'.",
+          "source_refs": [
+            "Australian clozapine framework"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Defer the next FBC by 4 weeks at the routine visit because he is clinically well",
+          "correct": false,
+          "rationale": "Anti-pattern: any drop below green requires accelerated monitoring; routine 4-weekly is unsafe at ANC 1.6 because of the risk of progression to red zone.",
+          "source_refs": [
+            "Australian clozapine framework"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Continue clozapine and add lithium 250 mg nocte to push the ANC up",
+          "correct": false,
+          "rationale": "Lithium augmentation to raise neutrophil count is not standard of care and is not the appropriate response to amber-zone neutropenia; correct response is frequency escalation and registry notification, not pharmacological tampering.",
+          "source_refs": [
+            "RANZCP CPG: Schizophrenia"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-psychopharm-013",
+      "file": "data/batches/psych_psychopharm_safety_v2.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "multi-step",
+      "new_stem": "A 45-year-old man has been on clozapine 450 mg nocte for 9 years, with steady-state clozapine level 480 mcg/L (therapeutic range 350-600) measured 6 months ago. He smokes 25 cigarettes per day. He is admitted overnight to a smoke-free general medical ward for a 5-day stay following a mechanical fall, and is offered nicotine replacement therapy (patch 21 mg/24 h plus PRN lozenges) but is not yet enrolled in a structured cessation programme. He has no current symptoms of clozapine toxicity (no sedation change, no hypersalivation increase, no tachycardia, no constipation worsening). The ward team contacts the community psychiatry team for guidance on clozapine dosing during the smoke-free inpatient period and any planned post-discharge cessation.",
+      "new_lead_in": "Which is the single best summary of the relevant pharmacokinetic mechanism and the appropriate immediate management?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Smoking induces CYP3A4; cessation will halve clozapine levels and require a dose increase of 25 percent",
+          "correct": false,
+          "rationale": "Wrong enzyme and wrong direction. Clozapine is metabolised primarily by CYP1A2 (with CYP3A4 minor); polycyclic aromatic hydrocarbons (PAHs) in tobacco smoke - not nicotine - induce CYP1A2.",
+          "source_refs": [
+            "Australian Medicines Handbook: Clozapine",
+            "TGA Product Information"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Nicotine itself is the inducer; full nicotine replacement therapy on admission prevents any clozapine level change, so no dose adjustment or level monitoring is required",
+          "correct": false,
+          "rationale": "Anti-pattern: nicotine is NOT the CYP1A2 inducer in this interaction (PAHs are). NRT replaces nicotine for craving control but does not replace PAH-mediated enzyme induction; clozapine levels will still rise on cessation regardless of NRT.",
+          "source_refs": [
+            "AMH",
+            "TGA PI clozapine"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "PAHs in tobacco smoke induce CYP1A2; abrupt cessation can raise clozapine levels by approximately 50-70 percent over 1-2 weeks. For this brief 5-day smoke-free inpatient stay, monitor for toxicity (sedation, hypersalivation, tachycardia, seizures), consider a level at day 4-5, and plan a pre-emptive ~25 percent dose reduction with level monitoring if he commits to sustained cessation post-discharge",
+          "correct": true,
+          "rationale": "Mechanism: PAHs (not nicotine) induce CYP1A2 in heavy smokers; on cessation, induction reverses with a half-life of ~1 week, so clozapine clearance falls and levels can rise 50-70 percent. For a 5-day forced abstinence with planned return to smoking, monitor toxicity and check a level. For sustained cessation, a pre-emptive ~25 percent dose reduction with serial levels is recommended (RANZCP and AMH).",
+          "source_refs": [
+            "AMH Clozapine",
+            "RANZCP CPG: Schizophrenia",
+            "Clozapine TGA PI"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Smoking inhibits CYP1A2; cessation will lower clozapine levels and require a dose increase",
+          "correct": false,
+          "rationale": "Direction reversed: smoking INDUCES CYP1A2 (it does not inhibit); cessation raises levels.",
+          "source_refs": [
+            "AMH"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "There is no clinically significant interaction between smoking and clozapine metabolism",
+          "correct": false,
+          "rationale": "False; this interaction is one of the most clinically important PAH-CYP1A2 interactions in psychiatry, with documented clozapine toxicity (seizures, sedation) following abrupt cessation.",
+          "source_refs": [
+            "AMH",
+            "RANZCP CPG"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-eating-perinatal-008",
+      "file": "data/batches/psych_eating_perinatal_v2.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 24-year-old man in Sydney is referred to psychiatry distressed about the appearance of his nose. He spends >=4 hours daily checking his nose in mirrors, takes repeated comparison photos, avoids social outings and dating, and is convinced his nose looks deformed though objectively it is unremarkable. He has consulted two plastic surgeons for rhinoplasty; both declined. Weight, eating and shape concerns are absent. He has no delusions of reference and no auditory hallucinations. He has tried to stop the checking but feels driven to perform it to reduce anxiety. BDD-YBOCS is 28 (severe). He has no current suicidal ideation but past passive ideation when preoccupation peaks. He has no substance use, no psychotic features, K-10 22, no past medication trials and no medical comorbidities. He is keen to start treatment now and has private health cover.",
+      "new_lead_in": "Which is the single most appropriate first-line treatment plan for severe body dysmorphic disorder per eTG and RANZCP guidance?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Refer for a third rhinoplasty consultation, expecting that successful surgery will resolve the preoccupation",
+          "correct": false,
+          "rationale": "Anti-pattern: cosmetic surgery for BDD is a recognised harm; the preoccupation typically migrates to a new body part and dissatisfaction recurs. Two surgeons have already declined, consistent with appropriate practice.",
+          "source_refs": [
+            "eTG Psychotropic: BDD",
+            "RANZCP CPG: OCD-spectrum"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Olanzapine 5 mg nocte as first-line monotherapy",
+          "correct": false,
+          "rationale": "Antipsychotic monotherapy is not first-line; it is reserved for SSRI-resistant BDD or where delusional intensity is prominent and as augmentation, not stand-alone.",
+          "source_refs": [
+            "eTG Psychotropic: BDD"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "BDD-tailored CBT with exposure and response prevention plus an SSRI titrated to the higher end of the dose range over 12-16 weeks before declaring non-response",
+          "correct": true,
+          "rationale": "Combined ERP-CBT plus an SSRI at the upper licensed dose range (e.g. fluoxetine up to 60-80 mg, escitalopram up to 20 mg respecting the TGA dose cap, sertraline up to 200 mg) is the eTG-endorsed first-line for moderate-to-severe BDD. Adequate trial is at least 12 weeks at maximum tolerated dose before declaring resistance; this avoids premature switching at sub-therapeutic doses, a common pitfall.",
+          "source_refs": [
+            "eTG Psychotropic: BDD",
+            "RANZCP CPG: OCD-spectrum disorders"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Diazepam 5 mg PRN for distress with no other intervention",
+          "correct": false,
+          "rationale": "Benzodiazepines are not disease-modifying in BDD and risk dependence in a young adult with a chronic-course illness.",
+          "source_refs": [
+            "eTG Psychotropic"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Reassurance that the nose looks normal, with no further intervention",
+          "correct": false,
+          "rationale": "Reassurance is well-known to be ineffective and even worsens BDD by reinforcing checking behaviours; the evidence-based response is ERP-CBT plus high-dose SSRI.",
+          "source_refs": [
+            "eTG Psychotropic: BDD"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-eating-perinatal-012",
+      "file": "data/batches/psych_eating_perinatal_v2.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 29-year-old woman is 8 weeks postpartum and exclusively breastfeeding her first child. She has moderate postnatal MDD confirmed after structured interview following EPDS 16; 6 weeks of CBT has produced limited improvement and she wishes to add an SSRI while continuing to breastfeed. She has no past medication trials, no allergies, normal renal and hepatic function, no QTc prolongation (resting ECG QTc 410 ms) and no concerning interactions. The infant was term, is feeding well and gaining weight on the 50th percentile, with no congenital heart disease, no liver dysfunction and no prematurity. The TGA, AMH lactation appendix, and COPE Australian Perinatal Mental Health Guideline provide concordant guidance. She specifically asks why fluoxetine is not the first choice given a friend was started on it.",
+      "new_lead_in": "Which is the single most appropriate first-line SSRI for this scenario, and why is it preferred over the listed alternatives?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Fluoxetine 20 mg orally daily",
+          "correct": false,
+          "rationale": "Fluoxetine and its long-half-life active metabolite norfluoxetine (t1/2 7-15 days) accumulate in breastmilk and infant plasma more than alternatives, producing higher relative infant doses and case reports of irritability/colic in neonates; not first choice when sertraline is available.",
+          "source_refs": [
+            "AMH Lactation appendix",
+            "COPE Perinatal Guideline",
+            "Hale's Medications and Mothers' Milk"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Sertraline 50 mg orally daily",
+          "correct": true,
+          "rationale": "Sertraline has the lowest relative infant dose (typically <2 percent of weight-adjusted maternal dose), short half-life with no active metabolite of clinical consequence, no QTc dose-cap, and the largest perinatal evidence base. COPE, AMH and RANZCP all list sertraline as preferred first-line in breastfeeding.",
+          "source_refs": [
+            "AMH Lactation",
+            "COPE Guideline 2023",
+            "RANZCP Perinatal CPG"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Citalopram 20 mg orally daily",
+          "correct": false,
+          "rationale": "Citalopram carries the TGA QT-prolongation dose cap (max 40 mg in adults, 20 mg in >65/CYP2C19 inhibitor) and has a higher relative infant dose than sertraline; not first choice when sertraline is appropriate.",
+          "source_refs": [
+            "TGA citalopram dose cap",
+            "AMH Lactation"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Venlafaxine 75 mg orally daily",
+          "correct": false,
+          "rationale": "Venlafaxine is an SNRI not an SSRI, and is not first-line in breastfeeding; reserved for SSRI failure.",
+          "source_refs": [
+            "AMH Lactation",
+            "COPE Guideline"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Doxepin 25 mg orally nightly",
+          "correct": false,
+          "rationale": "Doxepin is a TCA with reported neonatal sedation and respiratory depression in breastfeeding; contraindicated in lactation.",
+          "source_refs": [
+            "AMH Lactation",
+            "Hale's"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-eating-perinatal-014",
+      "file": "data/batches/psych_eating_perinatal_v2.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "AU-cutoff",
+      "new_stem": "A 25-year-old woman with bipolar I disorder is maintained on sodium valproate 1000 mg orally daily and attends an Adelaide community mental health clinic for routine review. She has been euthymic for 18 months on valproate after two prior manic admissions; lithium was discontinued for tremor and polyuria with insufficient response, and olanzapine for metabolic side effects. She uses condoms inconsistently as her only contraception, is uncertain whether she wants children and has not actively planned a pregnancy. She has no other medications, normal renal and hepatic function, normal cycles and is not currently pregnant (LMP 10 days ago, urine beta-hCG negative). The TGA introduced the Valproate Pregnancy Prevention Program in 2023 with mandatory annual acknowledgement, including documentation of pregnancy status, contraception adequacy, and risk acknowledgement.",
+      "new_lead_in": "Which is the single most appropriate immediate plan under the TGA Valproate Pregnancy Prevention Program?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Continue current valproate unchanged because she is stable; document verbal acknowledgement at next visit",
+          "correct": false,
+          "rationale": "Anti-pattern: stability does not exempt the patient from the PPP. The TGA program is mandatory annually and requires written acknowledgement, documented contraception, and active risk discussion, not deferred verbal acknowledgement.",
+          "source_refs": [
+            "TGA Valproate Pregnancy Prevention Program 2023"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Cease valproate abruptly today with no replacement mood stabiliser, relying on her current stability until she returns when ready to conceive",
+          "correct": false,
+          "rationale": "Anti-pattern: abrupt valproate cessation in a patient with two prior manic admissions carries a high relapse risk; she requires a planned switch through to an alternative agent with a more favourable preconception profile (e.g. quetiapine or lithium) under shared care.",
+          "source_refs": [
+            "RANZCP CPG: Bipolar",
+            "TGA PPP"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Switch immediately to topiramate as the safest alternative without further discussion",
+          "correct": false,
+          "rationale": "Topiramate is also teratogenic (cleft palate, low birth weight) and not first-line for bipolar prophylaxis; choosing it without contraception or shared decision-making fails the PPP requirements and bipolar efficacy benchmarks.",
+          "source_refs": [
+            "RANZCP CPG: Bipolar",
+            "TGA PPP"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Document an in-clinic pregnancy test, counsel on the ~10 percent major malformation risk and IQ effects of valproate, ensure highly effective contraception (such as a LARC) is in place, complete the TGA risk acknowledgement form annually, and formally review the indication for valproate versus alternatives (lithium re-trial, quetiapine, lamotrigine) within a shared-decision plan",
+          "correct": true,
+          "rationale": "This is the complete TGA Valproate PPP step: document pregnancy status, written risk acknowledgement annually, contraception meeting the 'highly effective' threshold (LARC preferred since user-dependent methods like condoms are inadequate), and active reconsideration of indication. The PPP is an active program, not a passive form-filling exercise.",
+          "source_refs": [
+            "TGA Valproate PPP 2023",
+            "RANZCP CPG: Bipolar"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Recommend tubal ligation as the only acceptable option to continue valproate",
+          "correct": false,
+          "rationale": "Tubal ligation is one option but is NOT the only acceptable contraception; LARC (implant, IUD) meets the PPP threshold and preserves future fertility choice.",
+          "source_refs": [
+            "TGA PPP",
+            "RANZCOG contraception"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-eating-perinatal-015",
+      "file": "data/batches/psych_eating_perinatal_v2.json",
+      "verdict": "discard",
+      "discard_reason": "Stem pre-commits the answer (predominantly depressive course + planning pregnancy + considering lamotrigine + favourable teratogenicity vs valproate). No genuine alternative selection survives without rewriting the whole scenario, which would overlap psych-somatic-012 (lithium vs quetiapine vs valproate). Better to remove and rely on the somatic-012 question for this content area.",
+      "new_difficulty": 3,
+      "new_stem": null,
+      "new_lead_in": null,
+      "new_options": null
+    },
+    {
+      "id": "psych-somatic-004",
+      "file": "data/batches/psych_somatic_depth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 45-year-old man presents to ED for the 7th time in 8 months with recurrent hypoglycaemia (plasma glucose 2.1-2.6 mmol/L, markedly elevated insulin and SUPPRESSED C-peptide each time). He has no diabetes, no insulinoma on prior CT and MRI, no sulphonylureas on urine screen. He is a former endocrinology nurse, currently unemployed, lives alone. He denies injecting insulin and becomes irritable when asked. He has no pending litigation, no Centrelink claim under review, no workers compensation case and no active forensic process. Staff have observed him discarding small objects in the sharps bin after symptom onset. Each admission has involved invasive investigations and extended stays during which he is highly engaged with treating teams who describe him as 'the most knowledgeable patient we've ever had'. He receives no financial benefit from admissions but openly enjoys the medical-team attention. K-10 is 30 with profound loneliness.",
+      "new_lead_in": "Which is the single most appropriate DSM-5 classification of his behaviour?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Malingering for secondary financial gain",
+          "correct": false,
+          "rationale": "Malingering requires an EXTERNAL incentive (financial, legal, evasion of duty, drug-seeking). He has no Centrelink claim, no litigation, no forensic process and no controlled-substance request. The 'gain' here (medical attention, sick-role identity) is INTERNAL, which is the DSM-5 hallmark of factitious disorder rather than malingering.",
+          "source_refs": [
+            "DSM-5-TR Somatic Symptom and Related Disorders",
+            "RANZCP CPG"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Factitious disorder imposed on self",
+          "correct": true,
+          "rationale": "Three DSM-5 criteria are met: (i) falsification of physical signs (covertly self-administered insulin, evidenced by suppressed C-peptide with elevated insulin and observed sharps disposal); (ii) presentation as ill/injured/impaired; (iii) absence of obvious external incentive. The internal psychological gain (sick-role identity, relational connection with medical teams) is the discriminator from malingering and is consistent with his nursing-background insider-knowledge profile.",
+          "source_refs": [
+            "DSM-5-TR Factitious Disorder",
+            "RANZCP CPG"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Somatic symptom disorder with predominant pain",
+          "correct": false,
+          "rationale": "SSD involves genuine somatic symptoms with disproportionate thoughts/feelings/behaviours; deliberate falsification of laboratory signs takes the case out of SSD and into factitious disorder.",
+          "source_refs": [
+            "DSM-5-TR SSD"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Conversion disorder (functional neurological symptom disorder)",
+          "correct": false,
+          "rationale": "Conversion disorder requires neurological symptoms (weakness, tremor, sensory loss) without organic cause; his presentation is biochemical hypoglycaemia, not neurological functional symptom.",
+          "source_refs": [
+            "DSM-5-TR Conversion"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Delusional disorder, somatic type",
+          "correct": false,
+          "rationale": "Delusional disorder requires a fixed false belief; he is engaged in covert behaviour (sharps disposal) which implies awareness of the deception, inconsistent with delusional certainty.",
+          "source_refs": [
+            "DSM-5-TR Delusional Disorder"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-somatic-006",
+      "file": "data/batches/psych_somatic_depth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "multi-step",
+      "new_stem": "A 22-year-old previously well university student is admitted to a psychiatric inpatient unit with 3 weeks of insomnia, paranoid delusions and disorganised behaviour. Over 48 hours her presentation has evolved: she now has orofacial dyskinesias, brief episodes of unresponsiveness with eyelid twitching, autonomic instability (HR oscillating 140 then 48, BP 165/95 then 95/55), and low-grade fever 38.1. She has had NO antipsychotic exposure to date (admitted before any were given). Urine drug screen is negative. CK 320 U/L. No neck stiffness. Family report a brief flu-like illness 6 weeks ago. CT head normal. LP performed: mild lymphocytic pleocytosis (35 cells/microL), normal glucose, mildly raised protein, no organisms on Gram stain, viral PCR (including HSV-1/2 and enterovirus) pending.",
+      "new_lead_in": "Which is the single most appropriate next investigative AND empirical step in parallel?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Send serum AND CSF anti-NMDA receptor (and broader autoimmune encephalitis) antibodies, arrange MRI brain with contrast, request urgent neurology review, and start empirical IV aciclovir until HSV PCR returns negative",
+          "correct": true,
+          "rationale": "Multi-step: the prodromal flu-like illness, subacute psychiatric onset, orofacial dyskinesias, autonomic instability and CSF lymphocytic pleocytosis form the classical anti-NMDAR encephalitis syndrome (Dalmau triad-plus). Definitive diagnosis requires BOTH serum and CSF antibodies (CSF more sensitive); MRI brain frequently normal but indicated for differential. While awaiting antibody result and HSV PCR, empirical aciclovir is standard because HSV encephalitis is treatable and the cost of delay is high. This combines confirmatory and empirical limbs concurrently.",
+          "source_refs": [
+            "Australian and New Zealand Society for Immunology autoimmune encephalitis consensus",
+            "eTG: Encephalitis",
+            "Lancet Neurol 2016 anti-NMDAR clinical approach"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Increase olanzapine to 20 mg daily and add lorazepam for agitation while awaiting CSF PCR",
+          "correct": false,
+          "rationale": "Anti-pattern: escalating antipsychotic in suspected autoimmune encephalitis worsens autonomic instability and dyskinesias, may precipitate NMS-overlap, and delays the disease-modifying immunotherapy that this condition needs.",
+          "source_refs": [
+            "RANZCP CPG",
+            "Lancet Neurol anti-NMDAR"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Empirical IV aciclovir alone with no autoimmune antibody panel, on the assumption that lymphocytic pleocytosis is always HSV until proven otherwise",
+          "correct": false,
+          "rationale": "HSV cover is appropriate, but failing to send autoimmune encephalitis antibodies delays the diagnosis that drives first-line immunotherapy (steroids, IVIg or plasma exchange). The two limbs must run in parallel.",
+          "source_refs": [
+            "eTG Encephalitis"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "EEG and serial CK only, on the assumption this is neuroleptic malignant syndrome",
+          "correct": false,
+          "rationale": "NMS requires antipsychotic exposure; she has had none. CK is only mildly raised. EEG is useful adjunct but not the next investigative priority.",
+          "source_refs": [
+            "DSM-5-TR NMS",
+            "eTG"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Whole-body PET CT to exclude paraneoplastic origin as the first investigative step",
+          "correct": false,
+          "rationale": "Ovarian teratoma screening is essential ONCE anti-NMDAR antibodies confirm the syndrome (then pelvic US/MRI is first-line, not PET CT). PET CT is not the initial step.",
+          "source_refs": [
+            "Lancet Neurol anti-NMDAR",
+            "ANZCA autoimmune encephalitis consensus"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-somatic-007",
+      "file": "data/batches/psych_somatic_depth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "multi-step",
+      "new_stem": "An 84-year-old woman with Alzheimer disease (baseline MoCA 16/30, lives at home with daily community nursing) is admitted with community-acquired pneumonia and treated with IV ceftriaxone plus oral azithromycin. On day 3 her family report a change from baseline: drowsy in the morning, agitated and pulling at her cannula by evening, sees small children in the curtains, and cannot identify where she is. Her usual mild forgetfulness has been replaced with fluctuating attention - cannot maintain a conversation >30 seconds. SpO2 95% on 2 L. No bowel motion in 4 days. Urinalysis: leucocytes only, no nitrites, asymptomatic. Recent additions to her chart include oxycodone 5 mg 4-hourly PRN (taken regularly), lorazepam 1 mg PRN nocte, and metoclopramide 10 mg TDS. CXR shows improving consolidation. CAM is positive for delirium.",
+      "new_lead_in": "Which is the single most appropriate INITIAL management plan, per the Australian Commission on Safety and Quality in Health Care delirium clinical care standard?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Add scheduled risperidone 1 mg BD; continue oxycodone, lorazepam and metoclopramide unchanged",
+          "correct": false,
+          "rationale": "Anti-pattern: adding antipsychotics without first deprescribing the precipitating drugs is the wrong order. Lorazepam and oxycodone are independent deliriogens; metoclopramide is also implicated. Adding risperidone routinely is contrary to the ACSQHC standard, which reserves antipsychotics for severe agitation with imminent harm.",
+          "source_refs": [
+            "ACSQHC Delirium Clinical Care Standard 2021",
+            "Beers Criteria",
+            "eTG: Delirium"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Start donepezil 5 mg daily for worsening Alzheimer disease and discharge home",
+          "correct": false,
+          "rationale": "Cholinesterase inhibitors are not delirium treatment; discharge of an actively delirious patient with unsafe medications would breach the standard.",
+          "source_refs": [
+            "ACSQHC Delirium Standard"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Transfer to a closed psychiatric ward under involuntary order for management of psychosis",
+          "correct": false,
+          "rationale": "Delirium is a medical emergency managed on a medical or geriatric ward; psychiatric ward transfer is inappropriate and likely worsens outcome.",
+          "source_refs": [
+            "ACSQHC Delirium Standard"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Deprescribe lorazepam, switch oxycodone to a non-opioid analgesic ladder (paracetamol +/- topical), cease metoclopramide, manage constipation actively (aperient ladder), address dehydration, optimise non-pharmacological measures (familiar items, orientation, daylight, hearing aids, glasses), and NOT treat the asymptomatic pyuria with antibiotics",
+          "correct": true,
+          "rationale": "ACSQHC standard sequence: identify and remove precipitants first. Lorazepam, oxycodone, metoclopramide and constipation are all reversible contributors. Asymptomatic bacteriuria/pyuria in older adults should NOT be treated (eTG anti-pattern), and over-treatment of dipstick findings is a major contributor to inappropriate antibiotic use and further delirium. Antipsychotics are reserved for severe agitation when non-pharmacological measures fail.",
+          "source_refs": [
+            "ACSQHC Delirium Clinical Care Standard",
+            "eTG: Delirium",
+            "eTG: Antibiotic Stewardship - asymptomatic bacteriuria"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Commence IV ciprofloxacin empirically for presumed UTI based on the urinalysis result",
+          "correct": false,
+          "rationale": "Anti-pattern: asymptomatic pyuria in an 84-year-old should not be treated with antibiotics; ciprofloxacin in elderly adds its own delirium risk (CNS effects) plus TGA fluoroquinolone safety warnings on tendinopathy, aortic risk and dysglycaemia.",
+          "source_refs": [
+            "eTG Antibiotic",
+            "TGA fluoroquinolone safety advisory"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-somatic-008",
+      "file": "data/batches/psych_somatic_depth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 52-year-old man with recurrent major depressive disorder has not adequately responded to sertraline 200 mg daily for 10 weeks followed by venlafaxine titrated to 225 mg daily for 8 weeks (adequate dose, adequate duration, confirmed adherence by pharmacy records and partner observation). PHQ-9 has fallen from 22 to 19 only. He has no significant intolerance, no bipolar history, no psychotic features, is not catatonic, not refusing food, has no immediate suicide plan; K-10 today is 30. Sleep 5 hours, weight loss 3 kg over 8 weeks. Bloods: FBC normal, UEC normal (eGFR 92), TSH 1.8, fasting glucose 5.2, LFTs normal. ECG QTc 410 ms. He is a non-smoker, drinks 4 standard drinks weekly, no chronic medical illness. RANZCP defines TRD as failure of two adequate antidepressant trials. He is willing to take additional medication and to engage with augmentation but prefers to avoid ECT if alternatives exist.",
+      "new_lead_in": "Which is the single most appropriate next pharmacological step per the RANZCP CPG TRD pathway?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Add lithium augmentation titrated to trough 0.4-0.8 mmol/L with renal and thyroid monitoring at baseline, 6 weeks and 3-monthly thereafter",
+          "correct": true,
+          "rationale": "Lithium augmentation has the strongest evidence base (multiple RCTs, NNT ~5) for SSRI/SNRI-resistant unipolar MDD and is the standard first augmentation in RANZCP TRD pathway. Target trough for augmentation is lower than mania prophylaxis (0.4-0.8 vs 0.6-1.0). The patient meets TRD criteria (two adequate trials) and has no contraindication (normal eGFR, normal TSH).",
+          "source_refs": [
+            "RANZCP CPG: Mood Disorders 2020 (TRD pathway)",
+            "eTG Psychotropic: Treatment-resistant depression"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Switch venlafaxine to fluoxetine 20 mg daily monotherapy without augmentation",
+          "correct": false,
+          "rationale": "Switching to a third antidepressant monotherapy without augmentation has lower evidence than lithium or atypical-antipsychotic augmentation in TRD; he has already failed two adequate trials.",
+          "source_refs": [
+            "RANZCP CPG TRD"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Add bupropion 150 mg daily as monoamine combination augmentation (not PBS-listed in Australia)",
+          "correct": false,
+          "rationale": "Bupropion combination has weaker evidence than lithium/aripiprazole/quetiapine augmentation and is not PBS-listed for depression in Australia (only for smoking cessation), limiting practical access. Not the best next step.",
+          "source_refs": [
+            "PBS schedule",
+            "RANZCP CPG TRD"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Add diazepam 5 mg BD as anxiolytic augmentation for six weeks",
+          "correct": false,
+          "rationale": "Benzodiazepines are not disease-modifying augmentation in TRD and add dependence risk; not supported by RANZCP CPG.",
+          "source_refs": [
+            "RANZCP CPG"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Refer urgently for ECT as the first-line treatment for resistant depression",
+          "correct": false,
+          "rationale": "ECT is appropriate for life-threatening (catatonia, food refusal, immediate suicide risk, severe psychotic depression) or following failure of multiple augmentation/switch strategies; patient preference to avoid ECT plus absence of life-threatening features means it is not the first augmentation choice.",
+          "source_refs": [
+            "RANZCP CPG: ECT indications"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-somatic-009",
+      "file": "data/batches/psych_somatic_depth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "AU-cutoff",
+      "new_stem": "A 47-year-old woman with treatment-resistant MDD with atypical features has been on fluoxetine 40 mg daily for 9 months (partial response, PHQ-9 21 to 16). Her psychiatrist plans to switch to phenelzine, a non-selective irreversible MAOI. She has no concurrent serotonergic medications, no St John's Wort, no tramadol, no triptans, no pethidine, no linezolid, and is not pregnant. Renal and hepatic function are normal. Lives with supportive partner, no immediate suicide risk, agrees to weekly review during transition. She specifically asks why the wait between stopping fluoxetine and starting phenelzine is different to what her friend was told when switching from citalopram to phenelzine (2 weeks).",
+      "new_lead_in": "Which is the single most appropriate switching strategy and the underlying reason?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Direct switch: stop fluoxetine today and commence phenelzine 15 mg TDS tomorrow",
+          "correct": false,
+          "rationale": "Anti-pattern: switching from any serotonergic agent directly to an MAOI risks fatal serotonin syndrome. Direct switch is contraindicated.",
+          "source_refs": [
+            "AMH MAOI section",
+            "eTG Psychotropic"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Cross-taper: reduce fluoxetine while simultaneously titrating phenelzine over 2 weeks",
+          "correct": false,
+          "rationale": "Anti-pattern: overlapping serotonergic agents with an irreversible MAOI is contraindicated. Cross-tapers are for SSRI-to-SSRI/SNRI switches, never SSRI-to-MAOI.",
+          "source_refs": [
+            "AMH",
+            "eTG"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Stop fluoxetine and wait at least 5 weeks before commencing phenelzine, because the active metabolite norfluoxetine has a half-life of approximately 7-15 days and requires ~5 half-lives for clearance; other SSRIs (citalopram, sertraline) need only ~2 weeks washout because they lack a long-half-life active metabolite",
+          "correct": true,
+          "rationale": "Fluoxetine's active metabolite norfluoxetine has a half-life of 7-15 days; ~5 elimination half-lives = ~35-75 days. The AMH and eTG specify a 5-week minimum washout from fluoxetine to MAOI. Other SSRIs require ~2 weeks (5 half-lives of citalopram/sertraline). This contrast is the AU-cutoff knowledge being tested.",
+          "source_refs": [
+            "AMH MAOI switching",
+            "eTG Psychotropic 2024",
+            "MIMS fluoxetine PI"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Stop fluoxetine and wait 5 days before starting phenelzine",
+          "correct": false,
+          "rationale": "5 days is grossly inadequate for fluoxetine because of norfluoxetine accumulation; 5-week wait is required.",
+          "source_refs": [
+            "AMH"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Continue fluoxetine and add low-dose phenelzine 7.5 mg daily as augmentation",
+          "correct": false,
+          "rationale": "Co-administration of any SSRI with an MAOI is contraindicated due to serotonin syndrome risk; no 'low-dose' is safe.",
+          "source_refs": [
+            "AMH",
+            "TGA PI phenelzine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-somatic-010",
+      "file": "data/batches/psych_somatic_depth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 28-year-old man is brought to ED by ambulance 6 hours after his community team added tramadol 100 mg QID for back pain. He was already on escitalopram 20 mg daily and started linezolid 4 days ago for a soft tissue infection. He is agitated and shivering with sweating; intermittent myoclonus is most prominent in the LOWER limbs; pupils are dilated (6 mm) and reactive; he is markedly hyperreflexic with sustained inducible clonus at the ankles, and ocular clonus is present. Skin is MOIST. HR 128, BP 168/92, RR 22, T 39.4. He is alert but agitated. CK 480 U/L. No recent antipsychotic exposure on review of his community team's chart. The ED registrar is choosing between the Hunter Serotonin Toxicity Criteria, NMS criteria and an anticholinergic toxidrome.",
+      "new_lead_in": "Which toxidrome best fits, and which is the most discriminating feature on examination?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Anticholinergic toxidrome - dry mucous membranes and absent bowel sounds are the deciding features",
+          "correct": false,
+          "rationale": "Anticholinergic toxidrome features DRY skin, dry mucous membranes, urinary retention and absent bowel sounds. The patient's skin is MOIST and he has hyperreflexia/clonus, which are inconsistent with anticholinergic and consistent with serotonin toxicity.",
+          "source_refs": [
+            "eTG: Toxicology - toxidromes",
+            "Hunter criteria (Dunkley 2003)"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Neuroleptic malignant syndrome - lead-pipe rigidity, hyporeflexia and antipsychotic exposure are the deciding features",
+          "correct": false,
+          "rationale": "NMS classically has lead-pipe rigidity, HYPOreflexia, autonomic instability, hyperthermia AND recent antipsychotic initiation/dose change. The patient has NO antipsychotic exposure, has HYPERreflexia with clonus (not hyporeflexia), and has the triple-serotonergic exposure consistent with serotonin toxicity.",
+          "source_refs": [
+            "DSM-5-TR NMS criteria",
+            "eTG"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Serotonin syndrome by Hunter criteria - the discriminating feature is spontaneous or inducible clonus with hyperreflexia in the setting of multi-serotonergic exposure (escitalopram + tramadol + linezolid as a non-selective MAOI)",
+          "correct": true,
+          "rationale": "Hunter criteria require serotonergic agent PLUS one of: spontaneous clonus; inducible clonus + agitation or diaphoresis; ocular clonus + agitation or diaphoresis; tremor + hyperreflexia; hypertonia + temperature >38 + ocular/inducible clonus. He meets multiple. Triple-serotonergic exposure: SSRI + tramadol (weak SNRI/opioid with serotonergic activity) + linezolid (non-selective MAOI). Distinct from NMS by hyperreflexia/clonus pattern and absence of antipsychotic exposure.",
+          "source_refs": [
+            "Hunter Serotonin Toxicity Criteria (Dunkley 2003)",
+            "eTG: Serotonin syndrome",
+            "AMH linezolid drug interaction warning"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Sympathomimetic toxidrome from undisclosed stimulant intoxication - urine drug screen will confirm",
+          "correct": false,
+          "rationale": "Sympathomimetic toxidrome shares tachycardia, hypertension, mydriasis and diaphoresis but lacks the prominent neuromuscular features of hyperreflexia, clonus and ocular clonus, which are the discriminating Hunter criteria.",
+          "source_refs": [
+            "eTG Toxicology"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Malignant hyperthermia from anaesthetic exposure",
+          "correct": false,
+          "rationale": "Malignant hyperthermia requires exposure to volatile anaesthetic or depolarising neuromuscular blocker; no such exposure here.",
+          "source_refs": [
+            "eTG"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-somatic-012",
+      "file": "data/batches/psych_somatic_depth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 26-year-old woman with bipolar I disorder has had two manic episodes in the past 18 months despite lithium 1000 mg daily (level 0.8 mmol/L, partner-confirmed adherence). She and her partner are planning a pregnancy within the next 12 months and have stopped contraception. She is otherwise well, takes no other medications, has normal renal/hepatic function, normal TSH, normal weight, no PCOS history. Her predominant illness course is MANIC (no significant depressive episodes documented). She has no current depressive symptoms, no psychosis, no current suicide risk and has been adherent with stable lithium troughs. She asks specifically about adding sodium valproate (her sister with epilepsy takes it) and about lamotrigine.",
+      "new_lead_in": "Which is the single most appropriate next step in this preconception window?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Add sodium valproate 500 mg BD as adjunct mood stabiliser to lithium",
+          "correct": false,
+          "rationale": "Anti-pattern: adding valproate in a woman of reproductive potential who has stopped contraception is contraindicated under the TGA Valproate Pregnancy Prevention Program (~10 percent major malformation rate, IQ effects). Even if not pregnant today, the planning window plus inconsistent prior contraception makes any valproate prescription unacceptable.",
+          "source_refs": [
+            "TGA Valproate Pregnancy Prevention Program 2023",
+            "RANZCP CPG: Bipolar"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Add quetiapine extended-release titrated to 300-600 mg nocte with metabolic monitoring, continuing lithium at its current dose",
+          "correct": true,
+          "rationale": "Her predominant pattern is mania despite therapeutic lithium; the evidence base supports atypical antipsychotic adjunct (quetiapine, olanzapine) for breakthrough mania. Quetiapine has a more reassuring preconception profile than valproate, no Pregnancy Prevention Program, and acceptable monitoring requirements. Lithium is retained because her trough is therapeutic and switching would risk further mania during the planning window.",
+          "source_refs": [
+            "RANZCP CPG: Bipolar 2020",
+            "eTG Psychotropic: Bipolar"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Switch lithium to carbamazepine 200 mg BD",
+          "correct": false,
+          "rationale": "Carbamazepine is teratogenic (neural tube defects), induces hepatic enzymes (interferes with oral contraceptives and many drugs), and has weaker mania-prophylaxis evidence than continuation of lithium. Not preferred in preconception planning.",
+          "source_refs": [
+            "AMH carbamazepine",
+            "RANZCP CPG: Bipolar"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Stop lithium immediately because of pregnancy planning",
+          "correct": false,
+          "rationale": "Anti-pattern: lithium has an absolute Ebstein anomaly risk of ~1-2 per 1000 (relative risk elevated but absolute risk modest). Stopping lithium without replacement during a mania-predominant course produces extremely high relapse risk; preconception management is shared decision-making, not reflex cessation.",
+          "source_refs": [
+            "RANZCP CPG: Bipolar perinatal",
+            "Cohen et al systematic reviews"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Switch lithium to lamotrigine 200 mg daily as monotherapy",
+          "correct": false,
+          "rationale": "Lamotrigine has efficacy for bipolar DEPRESSION prophylaxis but is INFERIOR to lithium for mania prophylaxis; switching a mania-predominant patient to lamotrigine monotherapy is mechanistically wrong.",
+          "source_refs": [
+            "RANZCP CPG: Bipolar 2020",
+            "Geddes et al lamotrigine meta-analysis"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-somatic-013",
+      "file": "data/batches/psych_somatic_depth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "AU-cutoff",
+      "new_stem": "A 32-year-old woman with chronic depression is brought to ED 90 minutes after deliberate ingestion of approximately 50 amitriptyline 25 mg tablets with alcohol. She is drowsy but rousable (GCS 12), has had a single self-terminating generalised tonic-clonic seizure on arrival, pupils dilated, mucous membranes dry, catheter drained 200 mL. ECG: sinus tachycardia 132 bpm, QRS 140 ms, terminal R wave in aVR 4 mm, QTc 510 ms. BP 92/54. VBG: pH 7.28, lactate 3.4, Na 138, K 3.6. No paracetamol co-ingestion. No other regular medications.",
+      "new_lead_in": "Which is the single most appropriate immediate intervention, and what is the threshold guiding it?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "IV sodium bicarbonate 1-2 mmol/kg bolus, repeated as needed to narrow QRS below ~120 ms and target arterial pH 7.50-7.55; bicarbonate is indicated for QRS >100-120 ms, terminal R in aVR >3 mm, hypotension, ventricular arrhythmia or seizures, per Australian Poisons Information Centre and eTG Toxicology",
+          "correct": true,
+          "rationale": "TCA toxicity: bicarbonate reverses cardiac sodium channel blockade by raising serum pH and providing a sodium load. Australian thresholds for bicarbonate (eTG Toxicology, NSW Poisons Information Centre): QRS >100-120 ms, terminal R wave in aVR >3 mm, hypotension, broad-complex arrhythmia, or seizure. She meets multiple. Target QRS <120 ms, pH 7.50-7.55. This is a textbook L3 AU-cutoff application.",
+          "source_refs": [
+            "eTG Toxicology: TCA poisoning",
+            "NSW Poisons Information Centre",
+            "Murray's Toxicology Handbook"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "IV flumazenil 0.2 mg to reverse sedation",
+          "correct": false,
+          "rationale": "Anti-pattern: flumazenil is contraindicated in mixed/unknown overdose because it can precipitate refractory seizures, especially in TCA overdose where seizures are already present.",
+          "source_refs": [
+            "eTG Toxicology"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "IV amiodarone 300 mg for the wide-complex tachycardia",
+          "correct": false,
+          "rationale": "Anti-pattern: class III antiarrhythmics including amiodarone are contraindicated in TCA-induced wide-complex rhythms because they further prolong QT and can precipitate torsades; lignocaine is the preferred antiarrhythmic if bicarbonate fails.",
+          "source_refs": [
+            "eTG",
+            "Murray's Toxicology"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Gastric lavage and oral activated charcoal 50 g at 90 minutes post-ingestion in a drowsy patient",
+          "correct": false,
+          "rationale": "Gastric lavage is no longer recommended (Position Statement: Toxicology). Charcoal at 90 minutes has limited benefit and the unprotected airway in GCS 12 raises aspiration risk; airway protection takes priority over decontamination.",
+          "source_refs": [
+            "AACT/EAPCCT Position Statements",
+            "eTG Toxicology"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "IV physostigmine 1 mg slow push to reverse anticholinergic effects",
+          "correct": false,
+          "rationale": "Physostigmine is contraindicated in TCA overdose because it has been associated with asystole and seizures; the anticholinergic features are a manifestation of TCA toxicity, not the target.",
+          "source_refs": [
+            "eTG Toxicology"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-somatic-014",
+      "file": "data/batches/psych_somatic_depth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 41-year-old woman who has been on venlafaxine XR 150 mg daily for 14 months for MDD agrees with her GP to reduce her dose. Within 48 hours of dropping to 75 mg daily she develops brief electric-shock sensations ('brain zaps'), dizziness, nausea, headache, insomnia and intermittent crying spells with irritability. PHQ-9 four days earlier on 150 mg was 4. Her mood remains reactive, she still enjoys her usual activities, has no anhedonia, no early-morning waking, no suicidal ideation, no diurnal mood variation. She is still functioning at work and socially engaged. Symptoms began within 48 hours of the dose reduction. She has no other new medications, no infections, no thyroid symptoms.",
+      "new_lead_in": "Which is the single most likely cause of her symptoms, and what is the most appropriate immediate response?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Recurrence of major depressive disorder - reinstate full dose and refer urgently",
+          "correct": false,
+          "rationale": "Relapse of MDD typically develops over weeks not 48 hours, includes core symptoms (low mood, anhedonia, neurovegetative features) that are absent here. The temporal pattern and somatic features (brain zaps, dizziness) are not typical of MDD recurrence.",
+          "source_refs": [
+            "RANZCP CPG: Mood Disorders"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Antidepressant discontinuation syndrome - resume venlafaxine 150 mg daily then implement a slower taper (e.g. 37.5 mg reductions every 2-4 weeks) per eTG; venlafaxine is particularly prone due to its short half-life",
+          "correct": true,
+          "rationale": "Discontinuation syndrome: onset within days (typically 2-5 days) of dose reduction or cessation, FINISH mnemonic (Flu-like, Insomnia, Nausea, Imbalance, Sensory disturbance including brain zaps, Hyperarousal). Venlafaxine is among the highest-risk antidepressants due to short half-life (~5 hours parent, ~11 hours active metabolite). Management: reinstate previous dose, then taper more slowly. This is the AU-cutoff: venlafaxine taper steps should be smaller (37.5 mg) and more spaced than SSRIs.",
+          "source_refs": [
+            "eTG Psychotropic: Antidepressant discontinuation",
+            "AMH venlafaxine",
+            "RANZCP CPG"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Serotonin syndrome from a drug interaction",
+          "correct": false,
+          "rationale": "Serotonin syndrome features hyperreflexia, clonus, hyperthermia, and follows the addition of a serotonergic agent, not a dose REDUCTION. The pattern here is the opposite (reduction not addition) and lacks neuromuscular features.",
+          "source_refs": [
+            "Hunter criteria",
+            "eTG"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Hypothyroidism from long-term SNRI use",
+          "correct": false,
+          "rationale": "SNRIs do not cause hypothyroidism; no thyroid symptoms and no temporal link with dose change.",
+          "source_refs": [
+            "AMH"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Serotonin withdrawal-induced GAD",
+          "correct": false,
+          "rationale": "GAD requires at least 6 months of pervasive worry with characteristic features; the syndrome here is acute, sensorimotor and time-locked to the dose reduction, not anxiety-disorder onset.",
+          "source_refs": [
+            "DSM-5-TR GAD criteria"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-somatic-015",
+      "file": "data/batches/psych_somatic_depth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "multi-step",
+      "new_stem": "A 38-year-old Aboriginal man presents to ED after an impulsive paracetamol ingestion of 8 tablets following an argument with his partner. He is medically cleared (no transaminitis, paracetamol level below the Rumack-Matthew nomogram line). History: one previous self-harm 4 years ago; harmful alcohol use (8 standard drinks/day currently); unemployment 12 months; recent eviction. He has chronic back pain and stopped his SSRI 3 months ago because he 'could not afford it'. Tonight he says the argument was 'the last straw' and although he does not want to die now, he feels 'hopeless about anything getting better'. He has a legally-licensed firearm at home for pest control. His brother completed suicide 8 years ago. He has not yet been linked with the local Aboriginal Community Controlled Health Service. He agrees to attend follow-up if it is arranged for him.",
+      "new_lead_in": "Of the listed factors, which is the single most important MODIFIABLE acute risk factor to address before discharge planning under the Australian National Suicide Prevention Strategy and RANZCP guidance?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Brother's completed suicide 8 years ago",
+          "correct": false,
+          "rationale": "Family history is a non-modifiable distal risk factor; cannot be acted on to reduce acute risk before discharge.",
+          "source_refs": [
+            "RANZCP Suicide Prevention guidance"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "His Aboriginal identity as a demographic factor",
+          "correct": false,
+          "rationale": "Anti-pattern: identity is not a risk factor to be 'modified' - culturally-safe care and ACCHS linkage are the appropriate response, not pathologising identity. (Identifying as Aboriginal carries elevated population-level risk because of social determinants, not because of identity itself.)",
+          "source_refs": [
+            "National Aboriginal and Torres Strait Islander Suicide Prevention Strategy",
+            "RANZCP"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Previous self-harm episode 4 years ago",
+          "correct": false,
+          "rationale": "Past self-harm is a strong non-modifiable historical risk factor; cannot be 'addressed' acutely to change risk before discharge.",
+          "source_refs": [
+            "RANZCP"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Pervasive hopelessness about the future improving",
+          "correct": false,
+          "rationale": "Hopelessness is the strongest psychological correlate of suicide and is modifiable in principle through psychological therapy and treating the underlying mood disorder, but it is a downstream construct, not the most rapidly-modifiable factor that can be addressed BEFORE discharge tonight.",
+          "source_refs": [
+            "RANZCP",
+            "Beck Hopelessness Scale literature"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Access to a firearm at home (means restriction)",
+          "correct": true,
+          "rationale": "Means restriction is the highest-evidence acute modifiable intervention in suicide prevention: removing or securing the firearm tonight (e.g. via partner-removal, police safe-storage, or temporary surrender) reduces lethality even if other risk factors persist. The acute window after presentation is when access to lethal means most strongly predicts completed suicide. RANZCP, Black Dog Institute and the National Suicide Prevention Strategy all rank means restriction as the most actionable acute step. (Resuming SSRI access and ACCHS linkage are also critical, but means restriction is rate-limiting.)",
+          "source_refs": [
+            "RANZCP Suicide Prevention",
+            "National Suicide Prevention Strategy",
+            "Black Dog Institute means restriction"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-somatic-016",
+      "file": "data/batches/psych_somatic_depth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "anti-pattern",
+      "new_stem": "A 23-year-old woman with established borderline personality disorder presents to ED after superficial wrist cutting following a perceived rejection by a friend. She has had 6 similar presentations over 12 months. She is medically cleared after wound closure and tetanus update. She has an established treatment relationship with a community DBT-informed team; her case manager is contactable and has texted the ED to confirm she is engaged with treatment. She declines admission. She is no longer acutely distressed and denies current suicidal intent. She agrees that she 'just snapped' when she saw the unread message. She has no alcohol or substances on board tonight. She lives with her supportive mother who is present in ED. She asks for help with what to do differently next time.",
+      "new_lead_in": "Which is the single most appropriate next step before discharge, per the National Health and Medical Research Council Clinical Practice Guideline for Borderline Personality Disorder?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Admit involuntarily under the Mental Health Act for inpatient stabilisation",
+          "correct": false,
+          "rationale": "Anti-pattern: routine admission of BPD self-harm without acute suicide intent or psychosis worsens long-term outcomes (regression, role-reinforcement, iatrogenic harm) and is explicitly cautioned against by the NHMRC BPD Guideline. Admission is reserved for severe acute risk that cannot be safely managed in the community.",
+          "source_refs": [
+            "NHMRC Clinical Practice Guideline for the Management of Borderline Personality Disorder 2013",
+            "RANZCP CPG"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Discharge with a 'no-suicide contract' signed by the patient",
+          "correct": false,
+          "rationale": "Anti-pattern: 'no-suicide contracts' have NO evidence for reducing suicide risk and may worsen outcomes by substituting a paper artefact for genuine engagement. NHMRC explicitly recommends safety PLANS over contracts.",
+          "source_refs": [
+            "NHMRC BPD Guideline",
+            "Cochrane review of safety contracts"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Collaboratively develop a Stanley-Brown style safety plan (warning signs, internal coping, social distraction, social support contacts, professional contacts and crisis lines, means restriction) with the patient, share a copy with her DBT team and her mother, and arrange a same-week DBT contact",
+          "correct": true,
+          "rationale": "NHMRC BPD Guideline and the National Suicide Prevention Strategy endorse Stanley-Brown safety planning as the evidence-based ED discharge tool. The six steps include explicit means restriction and graded coping/social/professional escalation. Sharing the plan with her established DBT team preserves continuity of care, which is the active ingredient in BPD outcomes.",
+          "source_refs": [
+            "NHMRC BPD Guideline 2013",
+            "Stanley & Brown Safety Planning Intervention",
+            "RANZCP"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Commence olanzapine 10 mg daily for affective instability",
+          "correct": false,
+          "rationale": "Pharmacotherapy is not first-line for BPD; medications target specific comorbidities (e.g. depression, psychosis) rather than the disorder itself. Starting an antipsychotic at ED discharge bypasses the structured DBT-led care she already has.",
+          "source_refs": [
+            "NHMRC BPD Guideline"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Refer to drug and alcohol service for substance-use treatment",
+          "correct": false,
+          "rationale": "She has no alcohol or substances on board tonight and there is no documented substance-use comorbidity to act on; mis-referral pathologises a non-existent problem and dilutes engagement with her existing DBT team.",
+          "source_refs": [
+            "NHMRC BPD Guideline"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-somatic-018",
+      "file": "data/batches/psych_somatic_depth.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 31-year-old woman attends her GP 6 weeks after a stillbirth at 32 weeks gestation. She reports persistent low mood, anhedonia, insomnia with early morning waking, weight loss of 3 kg, feelings of worthlessness extending beyond bereavement (she believes she is 'fundamentally damaged'), and intermittent passive thoughts of being better off not being here. She has not returned to work and avoids contact with friends who have babies. No psychotic symptoms, no delusions or hallucinations. EPDS today is 18 with item 10 (self-harm) scored 1 (occasionally has the thought). No prior psychiatric history. She is not breastfeeding (no surviving infant). She would like to try again in the future. She lives with a supportive partner.",
+      "new_lead_in": "Which is the single most appropriate management plan under the COPE Perinatal Mental Health Guideline and RANZCP CPG?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Watchful waiting for grief resolution over 3-6 months with no specific treatment",
+          "correct": false,
+          "rationale": "Anti-pattern: her presentation goes beyond uncomplicated grief - EPDS 18 with item 10 positive, neurovegetative features, anhedonia, worthlessness, and 6 weeks duration meet MDE criteria. DSM-5 explicitly removed the bereavement exclusion to allow recognition of MDD coexisting with grief. Watchful waiting risks worsening course.",
+          "source_refs": [
+            "DSM-5-TR (removal of bereavement exclusion)",
+            "COPE Guideline 2023"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Diagnose prolonged grief disorder and offer grief therapy alone",
+          "correct": false,
+          "rationale": "Prolonged grief disorder (DSM-5-TR) requires symptoms at least 12 months after the loss in adults; she is at 6 weeks, so the diagnosis is premature, and her syndrome better fits MDE coexisting with normal grief at this timepoint. Grief therapy alone misses the MDE component.",
+          "source_refs": [
+            "DSM-5-TR Prolonged Grief Disorder criteria"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Start a benzodiazepine for short-term anxiolysis and review in 4 weeks",
+          "correct": false,
+          "rationale": "Benzodiazepines are not disease-modifying in MDD or grief, risk dependence, and may impair the cognitive processing required for grief integration.",
+          "source_refs": [
+            "eTG",
+            "COPE Guideline"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Sertraline 25-50 mg daily titrated as tolerated, plus structured psychotherapy (CBT or IPT) with a perinatal-experienced clinician, plus grief-informed peer support (e.g. SANDS Australia), with weekly GP review until stable",
+          "correct": true,
+          "rationale": "Combined antidepressant plus psychotherapy is recommended for moderate-to-severe perinatal MDD with item 10 positive on EPDS. Sertraline is first-line SSRI per COPE (her potential to breastfeed in future pregnancies makes sertraline a sensible default choice). Perinatal-experienced psychological therapy plus grief-informed peer support (SANDS Australia specifically supports stillbirth/neonatal loss) addresses both the MDE and the grief processes. Frequent GP review covers safety.",
+          "source_refs": [
+            "COPE Australian Perinatal Mental Health Guideline 2023",
+            "RANZCP Perinatal CPG",
+            "SANDS Australia stillbirth pathway"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Recommend immediate next pregnancy as therapeutic to resolve mood symptoms",
+          "correct": false,
+          "rationale": "Anti-pattern: 'replacement child' framing is contrary to perinatal bereavement guidance and risks complicated grief and PTSD in the subsequent pregnancy.",
+          "source_refs": [
+            "COPE Guideline",
+            "SANDS Australia"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-pers-ger-001",
+      "file": "data/batches/psych_personality_geriatric.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 24-year-old hospitality worker self-presents to a community mental health team after an overdose of 12 paracetamol tablets last night following an argument with her current partner of three weeks. During the assessment interview she tells the registrar that her partner is the only person who has ever truly understood her, and that the team nurse who saw her on arrival was 'cold and judgemental', in stark contrast with 'you, the first to really listen'. She reports two prior emergency presentations in the past year following similar low-lethality overdoses, longstanding cutting of her forearms since age 15, recurrent feelings of emptiness, and intense difficulty being alone. She denies sustained elevated mood, persistent psychotic symptoms, and has no current diurnal mood variation, no early morning waking, no anhedonia outside relationship distress, and her mood reactively brightens when discussing her partner. Father describes lifelong rapid shifts between idealising and devaluing close friends since adolescence. Serum paracetamol below the treatment line at 8 hours; LFTs normal. She has had no episodes of pervasive low mood lasting beyond a few days.",
+      "new_lead_in": "Which clinical feature most strongly supports a primary diagnosis of borderline personality disorder OVER major depressive disorder in this presentation?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Rapid splitting of the treating team within a single assessment, in the context of lifelong pattern of idealisation/devaluation since adolescence",
+          "correct": true,
+          "rationale": "Real-time splitting (idealising the current clinician while devaluing the nurse minutes earlier) within a single assessment, combined with collateral history of the same pattern since adolescence, is the most specific feature pointing to BPD over MDD. MDD does not produce splitting; identity-and-relationships instability is core BPD. The pattern's duration since adolescence (DSM-5 onset criterion) and collateral confirmation increase specificity.",
+          "source_refs": [
+            "DSM-5-TR Borderline Personality Disorder",
+            "NHMRC BPD Guideline 2013"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Multiple low-lethality self-harm episodes since adolescence",
+          "correct": false,
+          "rationale": "Recurrent self-harm is consistent with BPD but is not specific - it can occur in MDD, adjustment disorders, and other conditions. Not the strongest discriminator.",
+          "source_refs": [
+            "DSM-5-TR BPD"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Two emergency presentations after relationship arguments",
+          "correct": false,
+          "rationale": "Crisis pattern in response to relational stressors is consistent with BPD but is not specific; many people with MDD also present in interpersonal crisis.",
+          "source_refs": [
+            "NHMRC BPD Guideline"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Chronic feelings of emptiness for many years",
+          "correct": false,
+          "rationale": "Emptiness is part of BPD but is also reported in chronic depression; alone it does not discriminate.",
+          "source_refs": [
+            "DSM-5-TR"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Mood reactivity (tearful affect that brightens within the interview)",
+          "correct": false,
+          "rationale": "Mood reactivity in fact argues AGAINST melancholic MDD but does not distinguish BPD from atypical-features MDD; not the strongest BPD-vs-MDD discriminator.",
+          "source_refs": [
+            "DSM-5-TR atypical features specifier"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-pers-ger-003",
+      "file": "data/batches/psych_personality_geriatric.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 30-year-old man is reviewed in a community mental health clinic after release from a 12-month custodial sentence for aggravated assault. Documented history: truancy from age 11, cruelty to a neighbour's cat at age 13, fire-setting at 14, multiple arrests for fraud and driving offences as a young adult, pattern of brief sexual relationships ended by him without distress. He is referred because his probation officer is concerned about his mental state. On interview he is articulate, charming, shows little remorse for the assault and frames it as the victim's fault. He denies persistent low mood, sustained elevated mood, hallucinations, recurrent self-harm, chronic emptiness, fear of abandonment, or rapid shifts in his view of others (no splitting pattern on collateral). Collateral from his sister confirms longstanding deceitfulness, irritability and callous disregard for the welfare of partners and family across at least the past decade. He drinks heavily on weekends, uses cocaine intermittently and is on no regular medications.",
+      "new_lead_in": "Which feature most specifically supports antisocial personality disorder OVER borderline personality disorder in this man (per DSM-5 criteria)?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Cocaine and heavy episodic alcohol use",
+          "correct": false,
+          "rationale": "Substance use is common in both ASPD and BPD and is not a discriminating criterion.",
+          "source_refs": [
+            "DSM-5-TR ASPD/BPD"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Multiple short-lived sexual relationships ended by the patient",
+          "correct": false,
+          "rationale": "Brief unstable relationships occur in both disorders; ASPD ends relationships out of exploitation/boredom, BPD out of abandonment fear or devaluation - the relational pattern alone does not discriminate without more detail.",
+          "source_refs": [
+            "DSM-5-TR"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Evidence of conduct disorder before age 15 (truancy, cruelty to animals, fire-setting) followed by adult callous disregard for the welfare of others and lack of remorse",
+          "correct": true,
+          "rationale": "DSM-5 ASPD criterion C requires evidence of conduct disorder with onset before age 15 (criterion A1-15 covers aggression to people/animals, destruction of property, deceitfulness, serious rules violations); his history meets at least three. This is a unique and discriminating criterion - BPD has no childhood-conduct-disorder requirement. Adult callous disregard (criterion 7) further supports.",
+          "source_refs": [
+            "DSM-5-TR ASPD criteria A and C"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Irritability and verbal aggression toward family members",
+          "correct": false,
+          "rationale": "Irritability is part of both ASPD and BPD criteria sets; not specific.",
+          "source_refs": [
+            "DSM-5-TR"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Articulate self-presentation and use of charm",
+          "correct": false,
+          "rationale": "Glibness/superficial charm features in Hare's PCL-R psychopathy construct but is not a DSM-5 ASPD criterion per se; it raises ASPD probability but is not the most specific DSM-5 discriminator from BPD.",
+          "source_refs": [
+            "DSM-5-TR ASPD",
+            "Hare PCL-R"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-pers-ger-004",
+      "file": "data/batches/psych_personality_geriatric.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 45-year-old corporate lawyer is referred by his GP after his wife of 12 years left him last month. He attends reluctantly, stating he expects to be seen by 'the head of the department' and finds the waiting room beneath him. He describes his career in detail, refers to himself as one of the best litigators in the country and as misunderstood by colleagues who he believes envy him. He reports that his wife 'failed to appreciate his achievements' and that her departure has caused mild low mood but no anhedonia, no neurovegetative symptoms and no suicidal ideation. He has no history of self-harm, no chronic emptiness, no fear of abandonment, no impulsive risk-taking and no history of conduct disorder, criminal behaviour or callous disregard for others' rights. Collateral from his sister describes a lifelong (since early adulthood) tendency to demand admiration, exploit junior staff to advance his cases, and react to mild criticism with prolonged contemptuous anger. He drinks 8 standard drinks weekly and is on no regular medications.",
+      "new_lead_in": "Which DSM-5 personality disorder best fits this clinical pattern, and what is the key discriminator from a closely related diagnosis?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Histrionic personality disorder - excessive emotionality and attention-seeking",
+          "correct": false,
+          "rationale": "Histrionic PD features dramatic, sexually provocative or shallow-affect attention-seeking; he is grandiose and contemptuous rather than dramatic/seductive. The patterns share attention-needing but differ in style.",
+          "source_refs": [
+            "DSM-5-TR Histrionic vs Narcissistic"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Borderline personality disorder - identity disturbance and unstable relationships",
+          "correct": false,
+          "rationale": "BPD requires identity disturbance, abandonment fear, splitting and impulsive self-damage - all explicitly absent. Job loss is sustained competent functioning, not BPD-pattern instability.",
+          "source_refs": [
+            "DSM-5-TR BPD"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Antisocial personality disorder - exploitation, lack of remorse",
+          "correct": false,
+          "rationale": "ASPD requires childhood conduct disorder (criterion C) and adult pattern of disregard for others' rights/laws; he has no childhood conduct history, no criminal behaviour and no callous disregard for safety. Overlap with NPD (exploitation, lack of empathy) exists but ASPD's law-violation core is absent.",
+          "source_refs": [
+            "DSM-5-TR ASPD criterion C"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Narcissistic personality disorder - grandiose self-importance, need for admiration, exploitativeness, lack of empathy and rage at criticism; key discriminator from ASPD is the absence of childhood conduct disorder and criminal/aggressive disregard for others' rights, and key discriminator from histrionic is that the admiration-seeking is grandiose rather than dramatically emotional",
+          "correct": true,
+          "rationale": "NPD meets >=5 of 9 criteria here: grandiose self-importance, fantasies of unlimited brilliance, belief he is 'special', requires excessive admiration, sense of entitlement, interpersonally exploitative, lacks empathy, envious or believes others envy him, arrogant/haughty. Differentiation from ASPD turns on absence of childhood conduct disorder and criminal behaviour; differentiation from histrionic turns on grandiosity vs dramatic emotionality.",
+          "source_refs": [
+            "DSM-5-TR Narcissistic Personality Disorder criteria"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Obsessive-compulsive personality disorder - preoccupation with orderliness, perfectionism and control",
+          "correct": false,
+          "rationale": "OCPD features rigid perfectionism, preoccupation with rules and lists, miserliness, and over-conscientiousness; he shows grandiosity and contempt, not perfectionistic control.",
+          "source_refs": [
+            "DSM-5-TR OCPD"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-pers-ger-016",
+      "file": "data/batches/psych_personality_geriatric.json",
+      "verdict": "discard",
+      "discard_reason": "Single-answer recall (CBT is first-line for GAD) with no genuine alternative selection or AU-cutoff at the L3 level. Cannot be elevated without overlap with psych-mood-013 (which already tests GAD management more comprehensively).",
+      "new_difficulty": 3,
+      "new_stem": null,
+      "new_lead_in": null,
+      "new_options": null
+    },
+    {
+      "id": "psych-pers-ger-017",
+      "file": "data/batches/psych_personality_geriatric.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "alternative-selection",
+      "new_stem": "A 31-year-old woman is reviewed at her 6-week postnatal visit. She had a normal vaginal birth of a healthy term infant; the pregnancy was planned and uncomplicated. Over the past 3 weeks she has experienced persistent low mood, anhedonia, broken sleep beyond what is explained by the baby's feeds, tearfulness, guilt about her mothering and difficulty bonding. Her EPDS is 16 with item 10 negative for self-harm. She has no prior major depressive episodes, no bipolar history, no psychotic features, and no current thoughts of harm to herself or the baby. She is exclusively breastfeeding and prefers to start with a psychological therapy before considering medication. She has a supportive partner and family, no current significant stressors beyond the role transition to parenthood, no relationship grief or recent bereavement. She works in clerical administration and has private health insurance covering psychology sessions.",
+      "new_lead_in": "Which structured psychological therapy is best supported as first-line for her presentation per the COPE Australian Perinatal Mental Health Guideline?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Acceptance and commitment therapy as first-line for perinatal depression",
+          "correct": false,
+          "rationale": "ACT has growing evidence in perinatal populations but is not the first-line therapy recommended by COPE for postnatal MDD; reserved as an alternative if IPT or CBT are unavailable or unsuitable.",
+          "source_refs": [
+            "COPE Perinatal Guideline 2023"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Interpersonal therapy (IPT) - structured 12-16 sessions focusing on role transitions and interpersonal conflict, with the strongest perinatal-specific RCT evidence base",
+          "correct": true,
+          "rationale": "IPT has the strongest postnatal-specific evidence base (multiple RCTs including O'Hara 2000; Stuart manual); the role-transition focus is mechanistically matched to the parenthood transition that triggered her episode. COPE positions IPT and CBT as first-line for postnatal MDD, with IPT specifically called out for role-transition presentations.",
+          "source_refs": [
+            "COPE Australian Perinatal Mental Health Guideline 2023",
+            "RANZCP Perinatal CPG",
+            "O'Hara et al RCT IPT postnatal"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Long-term psychodynamic psychotherapy",
+          "correct": false,
+          "rationale": "Insufficient RCT evidence in postnatal depression; not first-line.",
+          "source_refs": [
+            "COPE Guideline"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Eye movement desensitisation and reprocessing (EMDR)",
+          "correct": false,
+          "rationale": "EMDR is for PTSD, not postnatal MDD without trauma history.",
+          "source_refs": [
+            "NICE PTSD",
+            "COPE Guideline"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Dialectical behaviour therapy",
+          "correct": false,
+          "rationale": "DBT is for BPD and chronic self-harm, not postnatal MDD.",
+          "source_refs": [
+            "NHMRC BPD Guideline"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "psych-pers-ger-018",
+      "file": "data/batches/psych_personality_geriatric.json",
+      "verdict": "revise",
+      "new_difficulty": 3,
+      "reasoning_lever": "multi-step",
+      "new_stem": "A 52-year-old man attends his GP at his wife's request after a recent admission with alcoholic gastritis. He drinks 8-10 standard drinks daily, has done so for at least 10 years, and acknowledges that his drinking 'might be a bit too much' but feels he could cut down on his own if he wanted to. He has not made any concrete plans to reduce, has not removed alcohol from the house, has not engaged with treatment, and does not yet identify himself as having a problem requiring help. He has no current severe withdrawal symptoms (no tremor, no autonomic instability), no current suicidal ideation, AUDIT 22. PMH: T2DM, hypertension, macrocytosis on FBC. The GP plans a longer follow-up consultation to address the drinking through a structured behaviour-change framework.",
+      "new_lead_in": "Which stage of change does this man most clearly demonstrate, and what is the best-matched evidence-based intervention plan today?",
+      "new_options": [
+        {
+          "letter": "A",
+          "text": "Precontemplation - provide brief structured information about risks; do not raise treatment options today as he is not ready",
+          "correct": false,
+          "rationale": "Precontemplation = no awareness of problem; he has acknowledged 'might be a bit too much', which is awareness of the problem without commitment to change. That places him in contemplation, not precontemplation. Brief information alone is also insufficient at AUDIT 22 (high-risk drinking).",
+          "source_refs": [
+            "Prochaska & DiClemente Transtheoretical Model",
+            "RACGP SNAP framework"
+          ]
+        },
+        {
+          "letter": "B",
+          "text": "Preparation - schedule a quit date within 30 days and start naltrexone today",
+          "correct": false,
+          "rationale": "Preparation requires intention to act within 30 days and concrete planning steps; he has neither. Jumping to a quit date risks engagement loss.",
+          "source_refs": [
+            "Prochaska & DiClemente"
+          ]
+        },
+        {
+          "letter": "C",
+          "text": "Contemplation - use motivational interviewing to explore ambivalence (decisional balance, importance/confidence ruler), offer brief intervention with feedback (FRAMES), and OFFER (do not impose) naltrexone or acamprosate as pharmacotherapy options to support reduction or abstinence, given AUDIT 22 plus end-organ damage (alcoholic gastritis, macrocytosis) which independently warrant pharmacotherapy discussion under RACGP/RANZCP guidance",
+          "correct": true,
+          "rationale": "Stage matching: he acknowledges the problem (past precontemplation) but is ambivalent and not yet planning concrete action (not yet preparation). MI is stage-matched. Importantly, stage matching does NOT mean withholding evidence-based pharmacotherapy: AUDIT >=20 and end-organ damage independently justify offering naltrexone or acamprosate now, framed as supports for the change he is contemplating, not as imposed treatments.",
+          "source_refs": [
+            "Prochaska & DiClemente Transtheoretical Model",
+            "RACGP SNAP framework",
+            "eTG: Alcohol use disorder pharmacotherapy",
+            "RANZCP Substance Use guidance"
+          ]
+        },
+        {
+          "letter": "D",
+          "text": "Action - initiate naltrexone and refer to relapse prevention group today",
+          "correct": false,
+          "rationale": "Action requires active behaviour change within the last 6 months; he has not yet started.",
+          "source_refs": [
+            "Prochaska & DiClemente"
+          ]
+        },
+        {
+          "letter": "E",
+          "text": "Maintenance - relapse-prevention planning",
+          "correct": false,
+          "rationale": "Maintenance follows >=6 months of sustained behaviour change; not applicable.",
+          "source_refs": [
+            "Prochaska & DiClemente"
+          ]
+        }
+      ]
+    }
+  ]
 }
