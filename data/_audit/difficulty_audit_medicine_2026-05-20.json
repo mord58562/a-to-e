@@ -3,5 +3,383 @@
   "auditor": "Claude Opus 4.7 (1M context)",
   "module": "Medicine",
   "verdicts": [
+    {
+      "id": "medicine-cardio-core-002",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem explicitly hands the GRACE score (158), the dynamic ECG (1 mm horizontal ST depression V4-V6 with biphasic T waves), and the positive troponin. All three high-risk criteria are pre-stated. The data_table even lists GRACE.",
+      "reasoning_required": "memorisable rule (GRACE>140 + dynamic ECG + troponin = early invasive <24h)",
+      "note": "Once the GRACE threshold rule is known the answer is immediate. Distractors self-eliminate (2h reserved for instability, 72h for intermediate, etc.). L3."
+    },
+    {
+      "id": "medicine-cardio-core-006",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "none",
+      "reasoning_required": "multi-step AU dosing rule (apixaban 80/60/133 triad) + eGFR cut-off rationale + reject warfarin/LAAO/dabigatran traps",
+      "note": "Candidate must apply the 80/60/133 dose-reduction triad (age 79 fails the 80 cut-off but weight criterion is dropped because of the renal cut-off path), reject dabigatran (CrCl<30), reject continued 20 mg, reject LAAO without anticoagulant contraindication. Multi-step. Honest L4."
+    },
+    {
+      "id": "medicine-cardio-core-009",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "none",
+      "reasoning_required": "differential (hypertensive APO vs cardiogenic shock) + Resus Plan-driven NIV before intubation + reject morphine reflex",
+      "note": "Genuine multi-option weighing: candidate must reject morphine (mortality signal), reject intubation despite RR 36 (NIV first per Resus Plan), reject inotropy in hypertensive presentation, reject IV BB in decompensated HF. Honest L4."
+    },
+    {
+      "id": "medicine-cardio-core-011",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": "Subtopic_detail names Brugada (not visible to candidate). Stem describes type 1 pattern in coved-form with measurements and confirms persistence on repeat ECG, which is a strong telegraph but the candidate still has to apply Class I indication and reject flecainide (counterintuitive sodium-channel-blocker trap), amiodarone, genetic-testing-first delay.",
+      "reasoning_required": "ECG recognition + applied Class I indication + reject flecainide/amiodarone/genetics-delay traps",
+      "note": "The ECG description is detailed (almost diagnostic), but the trap distractor C (flecainide as 'antiarrhythmic') and E (genetic-testing-first) are strong. Borderline L4-L5; keep at L5 because the answer requires both recognition AND application of inheritance-syndrome management bundle including fever treatment + family screening. Honest L5."
+    },
+    {
+      "id": "medicine-cardio-core-015",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "none",
+      "reasoning_required": "ANZCOR escalation + recognise atropine futility in infra-nodal block + reject adrenaline arrest-dose / calcium / fluid errors",
+      "note": "Strong reasoning content: candidate must know wide-QRS escape signals infra-nodal disease (atropine fails), reject 1 mg adrenaline bolus (arrest dose vs infusion 2-10 mcg/min), reject calcium (no hyperkalaemia indication), reject fluid bolus. Honest L4."
+    },
+    {
+      "id": "med-cardio-resp-001",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem explicitly states FMC-to-balloon would be 200 min if transferred and that lysis can be given within 20 min, naming the exact 120-minute threshold trigger in the lead-in's framing.",
+      "reasoning_required": "pattern-match 120-minute rule",
+      "note": "Once the 120-minute rule is invoked by the stem numbers, the answer (lyse + transfer for pharmaco-invasive angio 3-24h) is rule-driven. Distractors easily eliminated. L3."
+    },
+    {
+      "id": "med-cardio-resp-002",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "Stem hands assay-specific cut-offs (rule-out <5, rule-in >52, rule-in delta >6) which are technically a memorisable rule, but the candidate must apply them to a borderline observe-zone result (delta 4, value 18 ng/L) and then choose the disposition pathway (repeat at 3h + cardiac obs vs discharge vs angio).",
+      "reasoning_required": "0/1h algorithm application + observe-zone disposition + reject discharge/angio/fibrinolysis errors",
+      "note": "The cut-offs are pre-supplied but applying them and recognising 'observe zone' (not rule-out, not rule-in) requires real reasoning. Distractor A (discharge with trivial delta) is the classic trap. Honest L4."
+    },
+    {
+      "id": "med-cardio-resp-003",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem already includes a posterior 15-lead ECG showing 1 mm ST elevation in V8 and V9 - this is essentially the diagnostic answer handed in the stem. Candidate just needs to recognise that posterior STEMI is a STEMI-equivalent.",
+      "reasoning_required": "fact recall (posterior STEMI = STEMI-equivalent)",
+      "note": "If the stem only described the V1-V3 ST depression pattern WITHOUT supplying the posterior lead findings, this would be a strong L4. As written, the posterior leads are already shown positive. L3."
+    },
+    {
+      "id": "med-cardio-resp-006",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem states 'four pillars... she has private cover and PBS access to all four pillars' and explicitly lists tolerated ACEi and BB. Lead-in 'most appropriate to optimise prognosis' with this setup essentially names the answer (add MRA + SGLT2i + switch to ARNI).",
+      "reasoning_required": "memorise GDMT four pillars + ARNI washout rule",
+      "note": "Distractors include obvious errors (ivabradine when HR=64, digoxin without AF, amlodipine for HF, CRT before GDMT). Pure rule-match. L3."
+    },
+    {
+      "id": "med-cardio-resp-008",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "Mild telegraph in 'creatinine 138 micromol/L, eGFR 32, weight 58 kg' which directly feeds the apixaban 80/60/133 triad - but the candidate must know the triad and apply it (only TWO of the three criteria met: weight and creatinine; age 76 fails the >=80 cut-off). The 2.5 mg BD rule fires on weight + creatinine alone.",
+      "reasoning_required": "apply apixaban 80/60/133 dose-reduction triad + reject dabigatran/warfarin/DAPT errors",
+      "note": "Real reasoning despite the stem priming - candidate must NOT make the common error of using age 76 as a criterion (it's <80). Distractor A (full dose) is the classic trap. Honest L4."
+    },
+    {
+      "id": "med-cardio-resp-010",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "Lead-in is asking which finding 'most strongly distinguishes' which narrows the cognitive task but is fair. Distractor E (slow-rising pulse) is genuinely plausible because pulsus parvus et tardus does favour AS - the correct answer requires knowing the dynamic squat manoeuvre is more reliable.",
+      "reasoning_required": "dynamic auscultation physiology + AS vs HOCM preload-response differentiation",
+      "note": "Tighter than typical 'which finding distinguishes' question because distractor E (slow-rising pulse) is a legitimate AS finding and the candidate must weigh it against the squat dynamic. Honest L4."
+    },
+    {
+      "id": "med-cardio-resp-012",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem hands the ABG (pH 7.21, pCO2 88, HCO3 32) which is unambiguous Type 2 respiratory failure with respiratory acidosis. Hyperoxia from 8 L on Hudson is also pre-flagged. The flap + bounding pulses 'bedside hypercapnia triad' is also pre-described.",
+      "reasoning_required": "memorise COPD-X rule (controlled O2 88-92% + BiPAP for pH<7.35)",
+      "note": "Diagnosis is handed; correct answer follows directly. Distractors are obviously wrong (doxapram is archaic; nasal HF without BiPAP). L3."
+    },
+    {
+      "id": "med-cardio-resp-015",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "none",
+      "reasoning_required": "Wells score calculation + recognise high-probability disqualifies age-adjusted D-dimer + reject V/Q-first/US-first errors",
+      "note": "The trap distractor A (age-adjusted threshold of 780 'excludes' PE) is exactly the misapplication of the rule that the question audits. Real reasoning required to compute Wells, recognise it as 'PE likely', and reject the D-dimer rule-out shortcut. Honest L4."
+    },
+    {
+      "id": "med-cardio-resp-017",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "none",
+      "reasoning_required": "SMART-COP calculation + disposition choice + reject CURB-65 underestimation + reject broad-spectrum cover without risk factors",
+      "note": "Genuine multi-step: candidate must compute SMART-COP (>=5 triggers HDU/ICU), reject CURB-65=1 leading to discharge (classic trap in young-ish patients), reject benzylpenicillin monotherapy (atypicals not covered), reject vancomycin/meropenem (no risk factors). Honest L4."
+    },
+    {
+      "id": "med-cardio-resp-020",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": "none",
+      "reasoning_required": "5-way differential (ADHF vs PE vs CAP vs ACS vs shotgun) + integrate POCUS + biomarker + DOAC pretest probability",
+      "note": "Genuine L5: weighing PE against ADHF when both elevated D-dimer and elevated troponin and AF and recent immobilisation are present. Candidate must recognise NT-proBNP 6800 + POCUS B-lines + upper-lobe diversion dominate, and that therapeutic apixaban reduces PE pretest probability. Multiple plausible answers; the rejected shotgun option exposes a common error. Honest L5."
+    },
+    {
+      "id": "med-endo-neuro-002",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem explicitly states 'cardiorenal protection in addition to glycaemic control' as the patient's goal, plus HFrEF + CKD + ACR elevated. The bundle pre-commits to SGLT2i.",
+      "reasoning_required": "pattern-match: HFrEF/CKD + T2DM = SGLT2i first add-on",
+      "note": "Distractors self-eliminate (TZD in HF, DPP4 saxagliptin HF signal, SU no cardiorenal benefit). Patient-stated cardiorenal preference effectively names the agent. L3."
+    },
+    {
+      "id": "med-endo-neuro-005",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "none",
+      "reasoning_required": "DKA-cerebral-oedema recognition (Cushing reflex pattern) + osmotherapy + reject increase-fluid/stop-insulin/dextrose/meningitis errors",
+      "note": "Strong distractors all represent real bedside errors. Recognising Cushing reflex in a DKA context and pivoting to osmotherapy requires real reasoning, not pattern-match. Honest L4."
+    },
+    {
+      "id": "med-endo-neuro-008",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem is a near-pathognomonic thyroid storm vignette (post-cessation Graves, hyperthermia, AF tachycardia, agitation, exophthalmos, goitre). Lead-in asks 'initial medical management'. The bundle answer is the only complete one; distractors include obvious errors (amiodarone in storm, levothyroxine for myxoedema picture).",
+      "reasoning_required": "pattern-match thyroid storm + memorise storm bundle",
+      "note": "Once thyroid storm is recognised the bundle (BB + PTU + iodine-after-PTU + hydrocortisone + cooling) is rule-driven. L3."
+    },
+    {
+      "id": "med-endo-neuro-009",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "Mild telegraph in 'plans for pregnancy within 12 months' + 'moderate active orbitopathy (CAS 4/7)' + 'high TRAb' - these combined steer the candidate to surgery, but the answer requires weighing three real options (long-term carbimazole, RAI, surgery) against each constraint.",
+      "reasoning_required": "weigh long-term carbimazole vs RAI vs surgery against pregnancy timing + orbitopathy + TRAb relapse risk",
+      "note": "Multi-constraint optimisation: RAI worsens orbitopathy AND delays pregnancy 6 months; carbimazole has 50% relapse risk and teratogenicity; surgery wins on rapid cure + orbitopathy-neutral + pregnancy-soon. Honest L4."
+    },
+    {
+      "id": "med-endo-neuro-013",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": "none",
+      "reasoning_required": "discriminate SIADH vs CSW on volume status + SAH-specific DCI risk + reject fluid restriction/tolvaptan/D5W errors",
+      "note": "Genuine L5: SIADH and CSW look biochemically identical (both low Osm, both high urine Na, both high urine Osm). Distinction rests entirely on volume status - which the stem hands but candidate must integrate (postural drop, weight loss, dry mucous membranes). Treating CSW with fluid restriction would worsen DCI; the wrong choice has catastrophic consequence. Honest L5."
+    },
+    {
+      "id": "med-endo-neuro-014",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "Stem states 'last apixaban dose was at 0700' and time of onset, plus ASPECTS 8 and M1 occlusion + LVO+ NIHSS 18. These pre-frame the answer but the candidate must integrate three rules: DOAC <48h excludes lysis; M1+ASPECTS>=6+NIHSS>=6 fits thrombectomy; idarucizumab only reverses dabigatran (trap E).",
+      "reasoning_required": "multi-rule integration (DOAC-lysis contraindication + LVO thrombectomy criteria + reversal-agent matching) + BP target",
+      "note": "Candidate must reject the seductive distractor E (idarucizumab) which sounds correct unless they know the agent-specific reversal mapping. Honest L4."
+    },
+    {
+      "id": "med-haem-onc-003",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "none",
+      "reasoning_required": "ferritin-unreliable-in-inflammation + sTfR as non-acute-phase marker + reject ferritin-isolation/low-iron-alone/MCV pattern errors",
+      "note": "Recognising that ferritin 142 in active RA with CRP 42 does NOT exclude iron deficiency, and identifying sTfR as the inflammation-immune marker, is genuine non-trivial reasoning. Distractors are well-constructed lookalikes. Honest L4."
+    },
+    {
+      "id": "med-haem-onc-005",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem hands the diagnosis (acute chest syndrome) on a plate: HbSS background, bilateral pleuritic chest pain, new bilateral infiltrates, hypoxia despite supplemental O2, falling Hb. Lead-in 'single most appropriate next step in management' essentially asks for the textbook exchange-transfusion threshold.",
+      "reasoning_required": "memorise severe-ACS criteria + exchange transfusion target HbS<30%",
+      "note": "Once severe ACS is recognised the answer is rule-driven. Distractors easily eliminated. L3."
+    },
+    {
+      "id": "med-haem-onc-007",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem explicitly states 'no luminal GI/GU lesion documented on endoscopy', 'wants oral agent', eGFR 38, and the lead-in narrows to anticoagulation choice. Distractor B explanation even admits dabigatran 'not first-line in CAT'.",
+      "reasoning_required": "pattern-match: non-luminal CAT + eGFR>30 + oral preference = apixaban",
+      "note": "Patient preferences and exclusion of luminal GI cancer pre-commit to apixaban. L3."
+    },
+    {
+      "id": "med-haem-onc-008",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "Stem hands the 4Ts=7 score and confirms PF4 strongly positive, which pre-establishes HIT. However the question is really testing the full management bundle (stop heparin AND substitute non-heparin therapeutic anticoag), which is the common error spot. Several distractors are real bedside errors (warfarin acute, platelet transfusion).",
+      "reasoning_required": "HIT management bundle + reject warfarin-acute / platelet-transfusion / aspirin / stop-only errors",
+      "note": "The 'stop heparin alone' distractor catches a common error and the 'warfarin acute' distractor is a real clinical trap. Honest L4."
+    },
+    {
+      "id": "med-haem-onc-014",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 2,
+      "telegraph_to_remove": "Lead-in 'which feature is NOT one of the CRAB criteria' is pure mnemonic recall. Five options map directly onto the CRAB mnemonic (C/R/A/B) with paraprotein concentration as the obvious odd-one-out.",
+      "reasoning_required": "mnemonic recall (CRAB)",
+      "note": "Pure recall of the CRAB acronym. No clinical reasoning, no AU-specific element, no weighing of alternatives. L2 at most."
+    },
+    {
+      "id": "med-haem-onc-015",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem explicitly states 'classifies him as high risk for TLS by Cairo-Bishop criteria' and lists every high-risk feature (Burkitt, LDH 4800 = >10x ULN, baseline urate 0.62, bulky disease). Lead-in confirms 'high-risk patient'.",
+      "reasoning_required": "memorise rasburicase for high-risk TLS + G6PD screen",
+      "note": "Once high-risk TLS is announced the answer is rule-driven. Distractors self-eliminate (delay chemo in Burkitt = wrong; alkalinisation outdated; prophylactic dialysis wrong). L3."
+    },
+    {
+      "id": "med-haem-onc-018",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "Lead-in is constrained ('In the absence of airway compromise or critical neurological symptoms, which step is most important BEFORE starting empirical corticosteroids?') which heavily directs to biopsy-first. This is technically a telegraph but the underlying reasoning is non-trivial: steroids obscure lymphoma histology, and anterior mediastinal mass in young non-smoker is lymphoma-until-proven-otherwise.",
+      "reasoning_required": "principle: tissue diagnosis before steroids in stable SVCO + reject stenting/anticoag/MRI as first step",
+      "note": "Strong distractors (radiotherapy empirical, stent, anticoagulation alone). The lead-in does most of the heavy lifting but the principle still requires understanding. Honest L4 but borderline."
+    },
+    {
+      "id": "med-haem-onc-020",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": "none",
+      "reasoning_required": "multi-system MTP priority weighting: calcium > K+ > acidosis > TXA + reject bicarb (worsens iCa) + reject stop-MTP + reject insulin-dextrose as first move",
+      "note": "Genuine L5: candidate must rank five interventions (calcium, bicarb, insulin-dextrose, stop MTP, TXA) by immediate threat. Calcium is correct because it tackles both citrate-induced hypocalcaemia AND membrane-stabilises against hyperkalaemia simultaneously. Subtle reasoning - the wrong choice (bicarb) actively worsens the calcium picture. Honest L5."
+    },
+    {
+      "id": "med-id-rheum-002",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem explicitly states '30 mL/kg of compound sodium lactate over 90 minutes' + 'MAP 63' after fluid + 'urine output 12 mL/hr', and the lead-in 'most appropriate next step' essentially names noradrenaline by the Surviving Sepsis algorithm.",
+      "reasoning_required": "memorise Surviving Sepsis sequence (30 mL/kg then NA for persistent MAP<65)",
+      "note": "Distractors all violate the SSC algorithm in obvious ways (more fluid, antibiotic switch, transfusion threshold, steroid-without-pressor). L3."
+    },
+    {
+      "id": "med-id-rheum-003",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem hands the age (68 = >50, requires Listeria cover) and immunosuppression (SLE on pred+aza, requires Listeria cover) and the lead-in 'most appropriate empirical regimen to administer now, before CT or LP' essentially names the bundle.",
+      "reasoning_required": "memorise eTG meningitis bundle (ceftriaxone + benzylpenicillin for Listeria + dexamethasone)",
+      "note": "Distractors fail obvious tests (delay for LP, omit Listeria cover, omit dexamethasone, broad-spectrum without indication, add acyclovir without encephalitic features). L3."
+    },
+    {
+      "id": "med-id-rheum-005",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "Lead-in narrows to 'additional monitoring step'; stem already includes PR 168 ms (mildly prolonged) and 'perivalvular abscess' on TOE. These together steer toward telemetry, but the candidate must still reject 4 plausible monitoring choices (CT chest weekly, daily ECG, vancomycin troughs (wrong drug), daily TTE).",
+      "reasoning_required": "perivalvular abscess + conduction system anatomy + telemetry vs daily ECG vs TTE/CT choices",
+      "note": "Multi-option weighing with all five being legitimate monitoring options. Honest L4."
+    },
+    {
+      "id": "med-id-rheum-010",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem hands every WHO severity criterion (parasitaemia 8%, hypoglycaemia 3.1, AKI 198, jaundice 64, lactate 4.2, GCS 13, oliguria), PNG origin (chloroquine-resistant), and confirms IV artesunate availability on SAS. Lead-in 'most appropriate next step'.",
+      "reasoning_required": "memorise severe falciparum criteria + first-line artesunate",
+      "note": "Severity is so thoroughly painted that the answer is rule-driven. Distractors include obvious errors (chloroquine for PNG, oral therapy for severe, doxycycline monotherapy). Note: option E text is mismatched with its rationale - the correct answer text says doxycycline mono but the rationale describes IV artesunate. This is a stem-quality issue but does not affect difficulty rating. L3."
+    },
+    {
+      "id": "med-id-rheum-011",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem includes every classic nec-fas hard sign (pain out of proportion, dusky violaceous discolouration, haemorrhagic bullae, fascial-plane gas on bedside US, LRINEC >8 in data_table). Lead-in 'most appropriate next step'.",
+      "reasoning_required": "pattern-match nec-fas hard signs + memorise debridement + meropenem + clindamycin bundle",
+      "note": "Diagnosis is unmistakable; bundle is rule-driven. Distractors include obvious errors (oral cefalexin, flucloxacillin mono with morning surgery, HBO alone, MRI before surgery). L3."
+    },
+    {
+      "id": "med-id-rheum-017",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "Stem hands triple-positive APS confirmed at 12 weeks (Sapporo). But the question really tests the counterintuitive 'DOACs inferior in APS, warfarin INR 2-3 is correct' rule. Many students reflexively pick a DOAC.",
+      "reasoning_required": "APS-specific anticoagulant choice (DOACs inferior) + INR target 2-3 (not 3-4) for venous + reject aspirin/short-course",
+      "note": "Two trap distractors: A (apixaban - the modern-default error) and D (high-intensity INR 3-4 - which used to be recommended but is not). Distinguishing these requires APS-specific knowledge beyond standard VTE. Honest L4."
+    },
+    {
+      "id": "med-id-rheum-019",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": "none",
+      "reasoning_required": "crystal-confirmed gout + co-existing-sepsis caution + NSAID contraindications (CKD + ulcer) + colchicine renal dosing + reject allopurinol-in-flare error",
+      "note": "Genuine L5: candidate must pick agent given multiple contraindications (eGFR 38 rules out NSAIDs; PUD reinforces it; colchicine needs renal dose adjustment; allopurinol-in-flare is a common error). The intra-articular steroid + low-dose colchicine bundle requires knowing both that IA steroid is acceptable in monoarticular gout once sepsis is provisionally excluded by negative Gram and that high-dose colchicine has been abandoned. Honest L5."
+    },
+    {
+      "id": "med-renal-003",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "none",
+      "reasoning_required": "CKD-MBD sequence (phosphate first, then PTH) + non-calcium binder preference + reject calcitriol/cinacalcet/Ca-binder/parathyroidectomy errors",
+      "note": "Multi-step sequencing: phosphate before PTH, non-calcium before calcium binder, defer calcitriol until phosphate controlled, cinacalcet PBS-restricted to dialysis, parathyroidectomy threshold not met. Honest L4."
+    },
+    {
+      "id": "med-renal-008",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem hands all the triggers (ACR 78 mg/mmol, BP 138/88, biopsy confirmed IgA, no contraindication to ACEi, K normal). Lead-in 'most appropriate next step'.",
+      "reasoning_required": "memorise KDIGO IgA-nephropathy first-line (max RAS + BP<120/70 + proteinuria<1g)",
+      "note": "Distractors include obvious errors (cyclophosphamide for non-crescentic, prednisolone before RAS optimisation, tonsillectomy in non-Japanese practice, lifestyle alone above the 0.5g threshold). L3."
+    },
+    {
+      "id": "med-renal-009",
+      "current_difficulty": 4,
+      "verdict": "relabel",
+      "suggested_difficulty": 3,
+      "telegraph_to_remove": "Stem hands pulmonary-renal syndrome with MPO-ANCA positive, anti-GBM negative, RPGN (creatinine rise 84 -> 312), peripheral GGO. The bundle 'methylpred + rituximab/cyclophosphamide + PJP prophylaxis' is the standard induction.",
+      "reasoning_required": "memorise organ-threatening AAV induction bundle",
+      "note": "Distractors include obvious errors (steroid mono, MMF mono, PLEX mono, wait-for-biopsy). L3."
+    },
+    {
+      "id": "med-renal-010",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "Stem hands MAHA + thrombocytopenia + neuro + cardiac involvement + relatively preserved kidneys (TTP phenotype), but the candidate must integrate ADAMTS13 unavailability with empirical PLEX initiation, reject platelet transfusion (counterintuitive contraindication trap), and reject eculizumab (correct drug, wrong syndrome here).",
+      "reasoning_required": "TMA differential (TTP vs HUS vs aHUS vs DIC) + reject platelet transfusion (key trap) + empirical PLEX before ADAMTS13",
+      "note": "The platelet-transfusion distractor is the classic teaching trap. Coag profile (normal INR/APTT/fibrinogen) rules out DIC. Honest L4."
+    },
+    {
+      "id": "med-renal-015",
+      "current_difficulty": 4,
+      "verdict": "keep",
+      "suggested_difficulty": 4,
+      "telegraph_to_remove": "Stem hands severe symptomatic hyponatraemia (Na 108, seizure, GCS 11), but the question really tests both the hypertonic-saline indication AND the rate-cap (8-10 mmol/L per 24h in this ODS-high-risk patient). The cap is the high-yield exam point.",
+      "reasoning_required": "hypertonic saline indication + ODS-prevention rate cap + reject isotonic-only/water-restrict/tolvaptan/spontaneous-correction",
+      "note": "ODS risk factors (alcohol + malnutrition + hypokalaemia) push the cap lower; the correct answer pairs the bolus strategy with the rate-cap. Distractors target real errors. Honest L4."
+    },
+    {
+      "id": "med-renal-019",
+      "current_difficulty": 5,
+      "verdict": "keep",
+      "suggested_difficulty": 5,
+      "telegraph_to_remove": "none",
+      "reasoning_required": "calculate AG + delta-delta + Winters + recognise mixed HAGMA + alkalosis from vomiting",
+      "note": "Genuine L5: candidate must compute AG (38), delta-delta (~1.4), Winters expected pCO2 (17, matches 16), and integrate the vomiting history to recognise concurrent metabolic alkalosis pulling HCO3 upward relative to gap rise. The delta-ratio >1 vs <1 vs ~1 discrimination is exactly the kind of integrative arithmetic that justifies L5. Honest L5."
+    }
   ]
 }

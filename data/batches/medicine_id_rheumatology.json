@@ -102,7 +102,7 @@
     "topic": "Medicine",
     "subtopic": "Septic shock - lactate-guided resuscitation",
     "subtopic_detail": "qSOFA, vasopressor initiation threshold and MAP target",
-    "difficulty": 4,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "septic shock",
@@ -199,7 +199,7 @@
     "topic": "Medicine",
     "subtopic": "Bacterial meningitis - empirical therapy in adults",
     "subtopic_detail": "Ceftriaxone + benzylpenicillin + dexamethasone timing",
-    "difficulty": 4,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "meningitis",
@@ -874,7 +874,7 @@
     "topic": "Medicine",
     "subtopic": "Severe falciparum malaria - IV artesunate",
     "subtopic_detail": "WHO severity criteria and parenteral therapy",
-    "difficulty": 4,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "malaria",
@@ -895,10 +895,11 @@
       {
         "letter": "A",
         "text": "IV artesunate 2.4 mg/kg at 0, 12 and 24 hours then daily, with ICU-level supportive care",
-        "correct": false,
-        "rationale": "Doxycycline is used in combination with quinine when artesunate is unavailable, never as monotherapy. Severe malaria requires IV artesunate (Therapeutic Guidelines: Antibiotic).",
+        "correct": true,
+        "rationale": "Severe falciparum malaria (defined by parasitaemia > 2 percent or any of: impaired GCS, AKI, jaundice, acidosis, hypoglycaemia, shock, severe anaemia, bleeding) is treated with IV artesunate, which has superior survival over quinine in the SEAQUAMAT and AQUAMAT trials (Therapeutic Guidelines: Antibiotic - Malaria; WHO Malaria Guidelines).",
         "source_refs": [
-          "Therapeutic Guidelines: Antibiotic"
+          "Therapeutic Guidelines: Antibiotic",
+          "WHO Guidelines for Malaria"
         ]
       },
       {
@@ -931,11 +932,10 @@
       {
         "letter": "E",
         "text": "Oral doxycycline 100 mg twice daily as monotherapy for 7 days without other agents",
-        "correct": true,
-        "rationale": "Severe falciparum malaria (defined by parasitaemia > 2 percent or any of: impaired GCS, AKI, jaundice, acidosis, hypoglycaemia, shock, severe anaemia, bleeding) is treated with IV artesunate, which has superior survival over quinine in the SEAQUAMAT and AQUAMAT trials (Therapeutic Guidelines: Antibiotic - Malaria; WHO Malaria Guidelines).",
+        "correct": false,
+        "rationale": "Doxycycline is used in combination with quinine when artesunate is unavailable, never as monotherapy. Severe malaria requires IV artesunate (Therapeutic Guidelines: Antibiotic).",
         "source_refs": [
-          "Therapeutic Guidelines: Antibiotic",
-          "WHO Guidelines for Malaria"
+          "Therapeutic Guidelines: Antibiotic"
         ]
       }
     ],
@@ -972,7 +972,7 @@
     "topic": "Medicine",
     "subtopic": "Necrotising fasciitis - LRINEC and urgent debridement",
     "subtopic_detail": "Cellulitis vs erysipelas vs necrotising soft tissue infection",
-    "difficulty": 4,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": [
       "necrotising fasciitis",
