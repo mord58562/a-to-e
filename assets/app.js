@@ -228,8 +228,36 @@
       "The bank's paeds + O&G coverage is mature; psych + medicine are the current under-served disciplines.",
     ].join("\n");
   }
+  // Inject live bank counts into the prompt so other LLMs (Gemini /
+  // ChatGPT / Mistral / DeepSeek - the free-tier paste flow) know
+  // where the bank currently is and which discipline most needs new
+  // questions. The placeholder is optional; if the template doesn't
+  // include it, this is a no-op.
+  function bankStateBlock() {
+    const counts = { "Paediatrics": 0, "Obstetrics & Gynaecology": 0, "Psychiatry": 0, "Medicine": 0 };
+    const diff = { L2: 0, L3: 0, L4: 0, L5: 0 };
+    (state.questions || []).forEach(q => {
+      if (q.topic in counts) counts[q.topic]++;
+      if (q.difficulty >= 2 && q.difficulty <= 5) diff["L" + q.difficulty]++;
+    });
+    const total = state.questions.length;
+    const lines = [
+      `Current bank state (live, embedded at copy time):`,
+      `- Paediatrics: ${counts["Paediatrics"]}`,
+      `- Obstetrics & Gynaecology: ${counts["Obstetrics & Gynaecology"]}`,
+      `- Psychiatry: ${counts["Psychiatry"]}`,
+      `- Medicine: ${counts["Medicine"]}`,
+      `- TOTAL: ${total}`,
+      ``,
+      `By difficulty: L2=${diff.L2}, L3=${diff.L3}, L4=${diff.L4}, L5=${diff.L5}`,
+      `Target ratios: L3 and L4 should each outnumber L2; L5 is ~5% of bank (extremely difficult, may be niche but ALWAYS requires complex reasoning, not just niche fact recall).`,
+    ];
+    return lines.join("\n");
+  }
   function renderPrompt(tpl) {
-    return tpl.replace(/\{\{FOCUS_DIRECTIVE\}\}/g, seasonalFocusDirective());
+    return tpl
+      .replace(/\{\{FOCUS_DIRECTIVE\}\}/g, seasonalFocusDirective())
+      .replace(/\{\{BANK_STATE\}\}/g, bankStateBlock());
   }
 
   // POST to the remote worker first, then local backend, then null.
