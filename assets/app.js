@@ -1642,13 +1642,22 @@
     // labsBtn removed (the masthead Reference values button covers this).
     const lb0 = document.getElementById("labsBtn");
     if (lb0) { lb0.onclick = () => toggleRefs(); lb0.classList.toggle("active", state.refsOpen); }
-    document.getElementById("flagBtn").onclick = () => {
+    // classList.toggle throws SyntaxError on a token containing whitespace,
+    // so we must toggle each class separately. The CSS rule that paints the
+    // active-flagged state is `.action-link.active.flag` - both classes
+    // need to be on the button at once for the warn-colour styling.
+    const flagBtn = document.getElementById("flagBtn");
+    flagBtn.onclick = () => {
       state.flags[q.id] = !state.flags[q.id];
       save(ns(FLAGS_KEY), state.flags);
-      document.getElementById("flagBtn").classList.toggle("active flag", !!state.flags[q.id]);
+      const on = !!state.flags[q.id];
+      flagBtn.classList.toggle("active", on);
+      flagBtn.classList.toggle("flag", on);
       renderTopbar();
     };
-    document.getElementById("flagBtn").classList.toggle("active flag", !!state.flags[q.id]);
+    const flagOn = !!state.flags[q.id];
+    flagBtn.classList.toggle("active", flagOn);
+    flagBtn.classList.toggle("flag", flagOn);
 
     // The click handler is delegated globally (see wireReportModal).
     // Here we just update the button's visual state for the current Q.
