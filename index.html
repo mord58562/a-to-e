@@ -16,61 +16,73 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260521b" />
+<link rel="stylesheet" href="assets/styles.css?v=20260521c" />
 </head>
 <body data-screen="home" class="locked">
 
 <div id="gate" class="gate">
   <div class="gate-card" data-mode="signin">
-    <div class="gate-brand">
-      <span class="brand-mark"><span class="cross"></span></span>
-      <span class="gate-title">A to E</span>
-    </div>
+    <header class="gate-head">
+      <a class="gate-brand-row" aria-label="A to E">
+        <span class="brand-mark"><span class="cross"></span></span>
+        <span class="gate-wordmark">A to E <span class="brand-glucose">(+ glucose)</span></span>
+      </a>
+      <p class="gate-tagline">MCQ practice for the final-year Australian MD.</p>
+    </header>
+
+    <nav class="gate-tabs" role="tablist">
+      <button type="button" class="gate-tab" data-gate-switch="signin" role="tab" aria-selected="true">Sign in</button>
+      <button type="button" class="gate-tab" data-gate-switch="signup" role="tab" aria-selected="false">Create account</button>
+    </nav>
 
     <!-- Cloud sign-in (default tab) -->
     <form id="cloudSignInForm" class="gate-pane" autocomplete="on">
-      <p class="gate-sub">Sign in to track progress and see how others answer.</p>
-      <input id="cloudSignInEmail" class="gate-input" type="email" required
-             autocomplete="email" placeholder="email" aria-label="Email" />
-      <input id="cloudSignInPassword" class="gate-input" type="password" required
-             autocomplete="current-password" placeholder="password" aria-label="Password" />
-      <button class="primary" type="submit">Sign in</button>
+      <label class="gate-field">
+        <span>Email</span>
+        <input id="cloudSignInEmail" type="email" required autocomplete="email" autocapitalize="off" spellcheck="false" />
+      </label>
+      <label class="gate-field">
+        <span>Password</span>
+        <input id="cloudSignInPassword" type="password" required autocomplete="current-password" />
+      </label>
+      <button class="primary gate-primary" type="submit">Sign in</button>
       <p id="cloudSignInErr" class="gate-err" hidden></p>
-      <p class="gate-switch">
-        New here? <button type="button" class="link-btn" data-gate-switch="signup">Create an account</button>
-        ·
-        <button type="button" class="link-btn" data-gate-switch="legacy">Use a profile password</button>
-      </p>
     </form>
 
     <!-- Cloud signup -->
     <form id="cloudSignUpForm" class="gate-pane" autocomplete="on" hidden>
-      <p class="gate-sub">Create an account. First name, email, and a password of 8+ characters.</p>
-      <input id="cloudSignUpName" class="gate-input" type="text" required
-             autocomplete="given-name" placeholder="first name" aria-label="First name" />
-      <input id="cloudSignUpEmail" class="gate-input" type="email" required
-             autocomplete="email" placeholder="email" aria-label="Email" />
-      <input id="cloudSignUpPassword" class="gate-input" type="password" required minlength="8"
-             autocomplete="new-password" placeholder="password (8+ characters)" aria-label="Password" />
-      <button class="primary" type="submit">Create account</button>
+      <label class="gate-field">
+        <span>First name</span>
+        <input id="cloudSignUpName" type="text" required autocomplete="given-name" />
+      </label>
+      <label class="gate-field">
+        <span>Email</span>
+        <input id="cloudSignUpEmail" type="email" required autocomplete="email" autocapitalize="off" spellcheck="false" />
+      </label>
+      <label class="gate-field">
+        <span>Password</span>
+        <input id="cloudSignUpPassword" type="password" required minlength="8" autocomplete="new-password" />
+        <small class="gate-hint">At least 8 characters.</small>
+      </label>
+      <button class="primary gate-primary" type="submit">Create account</button>
       <p id="cloudSignUpErr" class="gate-err" hidden></p>
-      <p class="gate-switch">
-        Already have one? <button type="button" class="link-btn" data-gate-switch="signin">Sign in</button>
-      </p>
     </form>
 
     <!-- Legacy local profile (Rob + invited collaborators) -->
     <form id="gateForm" class="gate-pane" autocomplete="off" hidden>
-      <p class="gate-sub">Local profile password.</p>
-      <input id="gateInput" class="gate-input" type="password" autocomplete="off"
-             autocorrect="off" autocapitalize="off" spellcheck="false"
-             placeholder="profile password" aria-label="Profile password" />
-      <button id="gateSubmit" class="primary" type="submit">Continue</button>
+      <label class="gate-field">
+        <span>Profile password</span>
+        <input id="gateInput" type="password" autocomplete="off"
+               autocorrect="off" autocapitalize="off" spellcheck="false" />
+      </label>
+      <button id="gateSubmit" class="primary gate-primary" type="submit">Continue</button>
       <p id="gateErr" class="gate-err" hidden>Incorrect password.</p>
-      <p class="gate-switch">
-        <button type="button" class="link-btn" data-gate-switch="signin">Back to sign in</button>
-      </p>
     </form>
+
+    <footer class="gate-foot">
+      <button type="button" class="gate-foot-link" data-gate-switch="legacy">Use a profile password</button>
+      <button type="button" class="gate-foot-link" data-gate-switch="signin" data-gate-back hidden>Back to sign in</button>
+    </footer>
   </div>
 </div>
 
@@ -1108,6 +1120,6 @@ visible to the maintainer in the commentary view.
 Output the final JSON array. Nothing else.
 </script>
 
-<script src="assets/app.js?v=20260521b" defer></script>
+<script src="assets/app.js?v=20260521c" defer></script>
 </body>
 </html>
