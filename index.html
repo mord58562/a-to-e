@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260521c" />
+<link rel="stylesheet" href="assets/styles.css?v=20260521d" />
 </head>
 <body data-screen="home" class="locked">
 
@@ -78,6 +78,14 @@
       <button id="gateSubmit" class="primary gate-primary" type="submit">Continue</button>
       <p id="gateErr" class="gate-err" hidden>Incorrect password.</p>
     </form>
+
+    <div class="gate-or" data-hide-in-legacy>
+      <span>or</span>
+    </div>
+    <button type="button" id="gateGuestBtn" class="gate-secondary" data-hide-in-legacy>
+      Continue as guest
+      <span class="gate-secondary-sub">progress stays on this device only</span>
+    </button>
 
     <footer class="gate-foot">
       <button type="button" class="gate-foot-link" data-gate-switch="legacy">Use a profile password</button>
@@ -1120,6 +1128,6 @@ visible to the maintainer in the commentary view.
 Output the final JSON array. Nothing else.
 </script>
 
-<script src="assets/app.js?v=20260521c" defer></script>
+<script src="assets/app.js?v=20260521d" defer></script>
 </body>
 </html>
