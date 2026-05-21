@@ -66,6 +66,390 @@
       "issues": [],
       "suggested_difficulty": 4,
       "fix_sketch": "Genuine L4: Wells 'PE-likely' patient (post-op + DVT signs + tachycardia) so D-dimer is not applicable; CTPA + empirical anticoagulation. Distractor 'age-adjusted D-dimer excludes' is the precise diagnostic trap. Acceptable."
+    },
+    {
+      "id": "med-cardio-resp-017",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option", "implausible-distractors"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Lead-in asks 'disposition AND initial empirical antibiotic' (two answers bundled). Patient SMART-COP scores high (BP 96/64, SpO2 90%, RR 28, alb 28, multilobar small effusion, tachycardia, pH 7.42). Acceptable to bundle if lead-in stays plural. Distractors moxifloxacin-with-CURB-65-of-1 (factually wrong CURB calc shown in option) and vanc+meropenem are weak. Replace with: (a) ward-level IV ceftriaxone + oral azithromycin (under-disposition); (b) ICU IV pip-taz + azithromycin (over-broad gram-neg); (c) ICU IV benzylpenicillin + IV azithromycin (under-cover for non-pneumococcal pathogens given severity)."
+    },
+    {
+      "id": "med-cardio-resp-020",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "rewrite",
+      "issues": ["implausible-distractors"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "L5 claim too generous - underlying decision is 'treat dominant dx (ADHF) first' which is one step. Distractors include 'broad empirical for all three' (caricature) and 'cath lab for primary PCI' (no STEMI). Replace one with 'IV frusemide + add empirical antibiotics for HCAP cover given recent admission' (closer competitor) and another with 'IV frusemide + CTPA before any treatment given recent immobility'. Relabel 5 -> 4."
+    },
+    {
+      "id": "med-endo-neuro-005",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option", "implausible-distractors"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Cerebral oedema in DKA: correct option bundles 4 actions (hypertonic, halve fluids, head up, CT/retrieval). Lead-in 'most appropriate immediate next step' implies single. Either change lead-in to 'most appropriate immediate management bundle' OR pick the single most-time-critical step (hypertonic saline). Distractors include meningitis cover and 50% dextrose - both caricatures. Replace with: (a) mannitol 0.5 g/kg over 20 min (correct class, alternative osmotherapy - tests AU paeds preference for hypertonic over mannitol); (b) intubate and hyperventilate to pCO2 32 (pre-2000 practice trap); (c) IV dexamethasone 8 mg + halve fluids (steroid trap from non-traumatic cerebral oedema reasoning)."
+    },
+    {
+      "id": "med-endo-neuro-009",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Correct option bundles surgery + Lugol prep + Ca/vit D loading; lead-in says 'definitive treatment option'. Replace bundling - pick 'total thyroidectomy' as the choice, and put Lugol prep into the explanation. Distractors are reasonable. Otherwise good test of RAI-contraindication-in-active-orbitopathy + pregnancy-planning rule."
+    },
+    {
+      "id": "med-endo-neuro-013",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option", "implausible-distractors"],
+      "suggested_difficulty": 5,
+      "fix_sketch": "Correct option bundles isotonic saline + oral salt + escalation plan. Lead-in 'initial fluid management' could keep bundle but tighten. Distractor 'tolvaptan' is for SIADH (this is CSW) and is plausible, good. 'IV dextrose to reduce osmotic stress' is a caricature - replace with 'IV 0.9% saline 60 mL/hr with fluid restriction to 1 L total' (CSW with cautious-volume trap) or 'IV 3% saline 100 mL bolus then 0.9% maintenance' (over-aggressive osmotherapy). Genuine L5 distinguishing CSW from SIADH - keep label."
+    },
+    {
+      "id": "med-endo-neuro-014",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: tPA contraindicated due to DOAC within 48h, M1 LVO with ASPECTS 8 - thrombectomy without tPA. Distractor 'tPA then thrombectomy' is the precise trap. Other distractors plausible (BP-first, aspirin alone, idarucizumab is for dabigatran not apixaban - good trap). Keep."
+    },
+    {
+      "id": "med-haem-onc-003",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: ACD vs IDA in inflammation - TSAT<20% + elevated sTfR (sTfR unaffected by inflammation). Tests subtle dx; distractors all plausible misreads of iron studies in chronic disease."
+    },
+    {
+      "id": "med-haem-onc-018",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "rewrite",
+      "issues": ["diagnosis-named", "implausible-distractors"],
+      "suggested_difficulty": 3,
+      "fix_sketch": "Lead-in essentially gives the answer: 'BEFORE starting empirical corticosteroids' frames steroids-are-wrong-first. Distractors include obvious decoys (RT before tissue, anticoagulation alone, stenting alone). Tightening would relabel down to L3 (one-step recall: tissue dx before steroids in SVCO without airway/CNS compromise). Either relabel or rewrite to add closer competitors: (a) PET-CT before biopsy; (b) FNA only (insufficient for lymphoma subtyping); (c) bone marrow biopsy as first-line."
+    },
+    {
+      "id": "med-id-rheum-005",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: AV-node extension via aortic perivalvular abscess - continuous telemetry to detect PR prolongation as harbinger of CHB and surgical timing. Distractors all plausible IE monitoring strategies."
+    },
+    {
+      "id": "med-id-rheum-017",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: triple-positive APS with VTE -> warfarin INR 2-3 (DOACs inferior, including apixaban; ACTION/RAPS trials). Distractors include the DOAC trap (very common pitfall) and high-INR target (for arterial APS). Acceptable."
+    },
+    {
+      "id": "med-id-rheum-019",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option", "implausible-distractors"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Lead-in 'single best acute pharmacological management' but correct option bundles IA steroid + oral colchicine. Pick one as the correct answer (intra-articular methylprednisolone) and add the colchicine combo to a distractor or explanation. Distractor 'colchicine 1 mg x6 daily until diarrhoea' is a clearly-toxic caricature - replace with 'oral prednisolone 30 mg daily for 5 days' (closer real alternative). Also 'flucloxacillin without aspirate' is a caricature given aspirate already done in stem - replace with 'IV cef + flucloxacillin pending aspirate culture' as a hedged-cover trap. Allopurinol-during-flare is a textbook trap, keep."
+    },
+    {
+      "id": "med-renal-003",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: CKD-MBD sequencing - phosphate-first with non-Ca binder when Ca low-normal and PTH rising; activated vit D only after phosphate controlled. Distractors all plausible CKD-MBD steps; tests the KDIGO sequencing."
+    },
+    {
+      "id": "med-renal-010",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: TMA (MAHA + thrombocytopenia + neuro + renal + normal coags) - empirical PLEX + steroids for presumed TTP before ADAMTS13 returns. Distractors include the 'wait for ADAMTS13' trap, platelet-transfusion (contraindicated - fuels thrombosis), eculizumab (aHUS), and DIC (normal coags rule out)."
+    },
+    {
+      "id": "med-renal-015",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: symptomatic severe hyponatraemia (seizure, Na 108) - hypertonic saline 150 mL boluses, target 8-10 mmol/L/24h (lower in high-risk). Distractors include the slow-correction trap and tolvaptan (contraindicated acute). Acceptable."
+    },
+    {
+      "id": "med-renal-019",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 5,
+      "fix_sketch": "Genuine L5: DKA with HAGMA + chloride 88 + delta-delta calc reveals concurrent metabolic alkalosis (from vomiting). Distractors include the standard 'pure HAGMA with Kussmaul' answer (most students will pick), mixed HAGMA+NAGMA, and primary respiratory alkalosis traps. Strong question."
+    },
+    {
+      "id": "obgyn-antenatal-004",
+      "file": "data/batches/obgyn_antenatal_complications.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: discriminating HELLP from AFLP/TTP/HUS using late-pregnancy biochemistry - normal coags + normal glucose + normal renal + high LFTs = HELLP. Distractors are the precise discriminator list (AFLP has hypoglycaemia+coagulopathy, TTP has ADAMTS13, HUS is renal-dominant). Acceptable; lead-in does not pre-name the diagnosis."
+    },
+    {
+      "id": "obgyn-antenatal-013",
+      "file": "data/batches/obgyn_antenatal_complications.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option", "implausible-distractors"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Lead-in says 'combination' so bundling congruent. But 'phenytoin lowest teratogenicity' and 'stop all AEDs' are clear caricatures (phenytoin teratogenic, stopping = status risk). Replace with: (a) switch to topiramate (cleft-palate risk - more plausible if not aware); (b) reduce valproate to <600 mg with folate 5 mg (the dose-related-risk trap); (c) continue valproate with folate 5 mg only (folate-rescue myth). Correct combo (switch + folate 5 mg + level monitoring) remains plural per lead-in."
+    },
+    {
+      "id": "obgyn-antenatal-015",
+      "file": "data/batches/obgyn_antenatal_complications.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option", "implausible-distractors"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Lead-in says 'combined management plan' so bundling acceptable. But 'cease levothyroxine to assess endogenous function' and 'reduce levothyroxine by 25% because pregnancy is hyperthyroid' are caricatures. Replace with: (a) increase 25-30% but check TSH 6-weekly until 20 weeks (frequency trap); (b) increase 50% (over-dose trap based on autoimmune burden); (c) continue current dose, check TSH 4-weekly (no-empirical-increase trap)."
+    },
+    {
+      "id": "obgyn-anscreen-005",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: isolated soft marker (EIF) in low-risk cFTS does not change management. Distractors are all the over-investigation traps (NIPT, MFM, foetal echo, repeat scan). Acceptable."
+    },
+    {
+      "id": "obgyn-anscreen-010",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: tests methotrexate contraindications for ectopic - foetal cardiac activity is the deal-breaker; mass <35 mm with yolk sac is OK; hCG <5000 with appropriate rise is OK. Inverted lead-in ('if changed, would contraindicate') tests deep understanding. Acceptable."
+    },
+    {
+      "id": "obgyn-anscreen-011",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: PUL with hCG 1200 below discriminatory zone - repeat hCG at 48h. Distractors include empirical MTX trap (no confirmed ectopic), laparoscopy trap, false reassurance, and second-sonographer trap. Acceptable."
+    },
+    {
+      "id": "obgyn-anscreen-015",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 5,
+      "fix_sketch": "Genuine L5: heterotopic post-IVF with viable IUP - MTX contraindicated (would terminate IUP), expectant is unsafe given dizziness + free fluid, salpingectomy is correct. KCl injection is real alternative for cornual or interstitial but not standard for tubal heterotopic. Strong distractors."
+    },
+    {
+      "id": "obgyn-atsi-dv-004",
+      "file": "data/batches/obgyn_first_nations_dv_top.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option", "implausible-distractors"],
+      "suggested_difficulty": 5,
+      "fix_sketch": "Lead-in 'single best next intervention' but correct option bundles IV frusemide + IV beta-blocker. Pick single (additional IV beta-blocker - the most time-critical for MS-with-tachycardia decompensation), put diuresis as adjunct in explanation. Distractor 'IV salbutamol tocolysis' is a caricature (worsens tachycardia in MS) - keep as it tests anti-pattern. 'IV crystalloid 500 mL' actually plausible-bad-choice. 'Cat 1 LSCS under GA' for acute pulmonary oedema is poor (induction worsens). All work; mainly fix bundling."
+    },
+    {
+      "id": "obgyn-atsi-dv-008",
+      "file": "data/batches/obgyn_first_nations_dv_top.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: extreme-risk IPV/femicide features - strangulation, threat to kill, escalation in pregnancy, firearm access. Distractors all decoys but each tests a real misconception (verbal-only minimisation, remote-past minimisation, disclosure-as-feature confusion, AVO-absence false-reassurance). Acceptable."
+    },
+    {
+      "id": "obgyn-atsi-dv-011",
+      "file": "data/batches/obgyn_first_nations_dv_top.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: at 120h, LNG window closed, UPA window borderline, copper IUD still effective up to 5 days. Distractors test exact licensed windows + HIV PEP cut-off (72h passed). Acceptable."
+    },
+    {
+      "id": "obgyn-atsi-dv-013",
+      "file": "data/batches/obgyn_first_nations_dv_top.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: enzyme-inducing AED + breastfeeding + LARC preference - IUD only viable LARC (implant affected). Distractors include the implant trap (most common LARC default), COCP trap, POP trap, DMPA (acceptable but not first-line LARC). Acceptable."
+    },
+    {
+      "id": "obgyn-atsi-dv-015",
+      "file": "data/batches/obgyn_first_nations_dv_top.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: post-RYGB oral absorption affected, LARCs preferred. Tests bariatric-specific contraception knowledge. Distractor 'pregnancy unsafe after bariatric' is the only weak one (caricature), but the others (await cycles, COCP for cycle control, sister's pill) test real misconceptions."
+    },
+    {
+      "id": "obgyn-gynae-hy-009",
+      "file": "data/batches/obgyn_gynae_high_yield.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Lead-in 'most appropriate next step' but correct option bundles MDT referral + MRI + fertility. Could pivot lead-in to 'most appropriate management plan' OR pick single (MDT referral). Distractors are reasonable individual treatments that all skip workup. Workable as-is if lead-in tightens to 'most appropriate management approach'."
+    },
+    {
+      "id": "obgyn-gynae-hy-011",
+      "file": "data/batches/obgyn_gynae_high_yield.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: APS screen for recurrent miscarriage (LA + aCL + anti-B2GP1, repeated 12 wk apart). Distractors include the inherited-thrombophilia trap (not standard in RPL), parental karyotype-first trap, hysteroscopy trap, NK cell assay trap. Acceptable."
+    },
+    {
+      "id": "obgyn-gynae-hy-013",
+      "file": "data/batches/obgyn_gynae_high_yield.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Correct option bundles 3 actions (NSAID schedule + continuous COCP + USS + safety net). Lead-in 'next step' suggests single. Tighten lead-in to 'most appropriate combined initial management' OR split: pick continuous COCP as the most impactful single step, put NSAID/USS into other options. Distractors are clear (false reassurance is caricature, lap-first is wrong-step, GnRH-add-back is too aggressive, LNG-IUS pre-medical-trial is reasonable but not first-line in 15yo)."
+    },
+    {
+      "id": "obgyn-gynae-hy-015",
+      "file": "data/batches/obgyn_gynae_high_yield.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Ovarian torsion in adolescent - laparoscopy with detorsion + ovarian preservation. Distractor 'salpingo-oophorectomy because non-viable on Doppler' is a strong closer (tests modern preservation principle - even apparently necrotic ovaries are detorted and given 24h to recover). L5 claim overstated; relabel 5 -> 4 (this is well-described high-yield torsion management)."
+    },
+    {
+      "id": "obgyn-gynonc-011",
+      "file": "data/batches/obgyn_gynae_oncology.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: torsion with known dermoid in 24yo - urgent lap with detorsion + ovarian-preserving cystectomy. Distractors all plausible delays or over-treatment. Acceptable."
+    },
+    {
+      "id": "obgyn-gynonc-012",
+      "file": "data/batches/obgyn_gynae_oncology.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Lead-in 'next step' - correct option bundles biopsy + clobetasol. Either tighten lead-in to 'most appropriate combined initial management' or pick biopsy as the single most-time-critical step (rule out SCC), put clobetasol in another distractor. Distractor 'WLE without histology' is a caricature. Replace with 'shave biopsy and topical pimecrolimus' (closer-but-wrong). Otherwise distractors test the missed-LS-mistake pattern."
+    },
+    {
+      "id": "obgyn-gynonc-013",
+      "file": "data/batches/obgyn_gynae_oncology.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: Bartholin abscess management - I&D + Word catheter (40% recurrence with simple I&D, so addition of Word catheter or marsupialisation is key). Distractors test exact recurrence-prevention knowledge. Acceptable."
+    },
+    {
+      "id": "obgyn-gynonc-015",
+      "file": "data/batches/obgyn_gynae_oncology.json",
+      "verdict": "rewrite",
+      "issues": ["implausible-distractors"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4 concept (tamoxifen + PMB = hysteroscopy + biopsy, regardless of ET thickness, because tamoxifen-related stromal change reduces specificity). Distractors are reasonable but 'discontinue tamoxifen and substitute AI without further gx investigation' is a strong caricature. Replace with: (a) Pipelle biopsy only without hysteroscopy (closer-but-misses focal lesion); (b) Saline-infusion sonohysterography (real alternative but not gold standard); (c) Stop tamoxifen pending biopsy result. Relabel 5 -> 4."
+    },
+    {
+      "id": "obgyn-gynae-013",
+      "file": "data/batches/obgyn_gynaecology_depth.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: MHT with prior provoked DVT + obesity + intact uterus - transdermal E2 + LNG-IUS for endometrial protection (avoids oral first-pass; uses LARC progestogen). Distractors test MPA-progestogen-VTE trap, oral oestrogen trap, tibolone-monotherapy trap, no-progestogen trap. Acceptable."
+    },
+    {
+      "id": "obgyn-gynae-014",
+      "file": "data/batches/obgyn_gynaecology_depth.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: GSM in breast cancer survivor - low-dose vaginal oestriol after MDT discussion. Distractors include hard-line avoidance, systemic MHT, CO2 laser (limited evidence), and ospemifene (SERM - contraindicated in breast Ca). Acceptable."
+    },
+    {
+      "id": "obgyn-gynae-015",
+      "file": "data/batches/obgyn_gynaecology_depth.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Lead-in 'next step' but correct option bundles 3 actions (urgent referral + continued steroid + annual surveillance). Tighten lead-in to 'most appropriate next management plan' OR pick urgent biopsy referral as the single key action. Distractors mostly reasonable; 'WLE without histology' weak (caricature) - replace with 'imiquimod 5% cream as differentiated-VIN topical' (closer but wrong - differentiated-VIN is HPV-negative and not imiquimod-responsive). Relabel 5 -> 4."
+    },
+    {
+      "id": "obgyn-intrapartum-001",
+      "file": "data/batches/obgyn_intrapartum_depth.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Lead-in 'immediate next step' but correct option bundles 4 actions (stop oxy + reposition + IV fluid + FSL). All are simultaneous intrauterine resuscitation actions, so bundle is congruent in clinical practice - either change lead-in to 'most appropriate immediate management bundle' or pick stopping oxytocin as the single most-critical first move. Distractors include the cat-1 LSCS trap (over-call without resus first) and continue-oxy trap, terbutaline-with-oxy (contradictory), and FSE-with-AROM (skips resus). Mostly good."
+    },
+    {
+      "id": "obgyn-intrapartum-002",
+      "file": "data/batches/obgyn_intrapartum_depth.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: post-epidural hypotension causing prolonged deceleration - phenylephrine is first-line (least uterine artery effect; preserves foetal pH). Distractors include ephedrine (older first-line - tests modern preference), metaraminol (alternative but second-line), adrenaline (over-treatment), atropine (wrong indication). Acceptable."
+    },
+    {
+      "id": "obgyn-intrapartum-010",
+      "file": "data/batches/obgyn_intrapartum_depth.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: severe PE BP control - IV labetalol first-line per SOMANZ (hydralazine second-line for refractory). Distractors test exact dose schedules, the sublingual-nifedipine anti-pattern (dangerous BP drop), and the magnesium-as-antihypertensive misconception. Acceptable."
+    },
+    {
+      "id": "obgyn-intrapartum-012",
+      "file": "data/batches/obgyn_intrapartum_depth.json",
+      "verdict": "rewrite",
+      "issues": ["implausible-distractors"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "AFE diagnosis - classic Clark triad. Distractors include eclampsia-arrest (no prior BP/proteinuria in stem - caricature), ACS (in 36yo with no risk - weak), LAST (no LA infiltration documented for this gravida - weak). Replace with: (a) septic shock from chorioamnionitis (with rising fevers - closer competitor); (b) massive PE in the immediate postpartum window (closer competitor without DIC); (c) anaphylaxis to IM oxytocin (rare but documented). Tighten distractors and keep concept."
+    },
+    {
+      "id": "obgyn-labour-hy-008",
+      "file": "data/batches/obgyn_labour_high_yield.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Lead-in 'classification AND repair plan' so bundling congruent (two-part). But correct option also bundles antibiotics + laxatives + physio. Tighten distractors to match: each option should specify classification + repair-location + antibiotic/laxative/physio. Currently uneven - 3a option doesn't list adjuncts, 3c option doesn't list adjuncts. Acceptable as-is if distractors made parallel."
+    },
+    {
+      "id": "obgyn-labour-hy-011",
+      "file": "data/batches/obgyn_labour_high_yield.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Lead-in 'management plan' so bundling congruent. Distractors test the deliver-at->=37-rule (discharge-and-wait is wrong), Mg-only-for-severe (over-treatment trap), Cat-2-LSCS (mode-of-delivery trap), steroids-not-indicated-at-37+ (over-treatment trap). Acceptable."
+    },
+    {
+      "id": "obgyn-labour-hy-013",
+      "file": "data/batches/obgyn_labour_high_yield.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Correct option bundles 'offer IOL or expectant + GBS only if >18h'. Tighten lead-in to 'best describes optimal management options' (already plural-friendly). Distractor 'discharge home with daily review up to 72h' is anti-pattern (Hannah trial showed higher chorio with delay) - keep. 'Empirical IV ampicillin/gent' (over-treatment given no GBS, no fever) - keep. 'Digital VE and immediate LSCS' (caricature) - replace with 'admit, NIL by mouth, plan LSCS within 6h' (closer non-evidence-based delay). Acceptable."
+    },
+    {
+      "id": "obgyn-labour-hy-014",
+      "file": "data/batches/obgyn_labour_high_yield.json",
+      "verdict": "rewrite",
+      "issues": ["implausible-distractors"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Failed forceps -> Cat-1 LSCS, don't switch instruments. Distractor 'symphysiotomy at bedside' is a caricature in AU setting (not used in developed countries since 1980s). Replace with 'rotational Kielland forceps by senior operator'. 'Ask the mother to push without forceps for one contraction' is also weak - replace with 'apply Pinard manoeuvre / suprapubic pressure for 2 more pulls'. Keep ventouse-switch trap (real exam pitfall)."
+    },
+    {
+      "id": "obgyn-labour-hy-015",
+      "file": "data/batches/obgyn_labour_high_yield.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 5,
+      "fix_sketch": "Genuine L5: twin 2 management - internal podalic version + breech extraction for transverse back-inferior twin 2 (preferred over ECV when back is not superior). Distractors all real alternatives that fail on specific criteria. Strong question."
+    },
+    {
+      "id": "obgyn-lact-uro-007",
+      "file": "data/batches/obgyn_lactation_urogynae_vulval.json",
+      "verdict": "relabel",
+      "issues": ["single-step-recall"],
+      "suggested_difficulty": 3,
+      "fix_sketch": "Single-step recall: sertraline = preferred SSRI in breastfeeding. Stem length is high but decision is one-step. Relabel 4 -> 3. To keep at 4, add a closer competitor like 'sertraline 100 mg' (wrong starting dose) or 'paroxetine 20 mg' (also breastfeeding-compatible but more discontinuation syndrome)."
     }
   ]
 }
