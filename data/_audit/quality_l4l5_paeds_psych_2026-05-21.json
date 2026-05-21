@@ -1,0 +1,72 @@
+{
+  "audited_at": "2026-05-21",
+  "auditor": "Claude Opus 4.7 (1M context)",
+  "scope": "L4-L5 Paediatrics + Psychiatry quality audit",
+  "total_audited": 107,
+  "verdicts": [
+    {
+      "id": "paeds-acute-hy-006",
+      "file": "data/batches/paeds_acute_assessment_hy.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Refractory anaphylaxis after 2 IM doses; IV infusion vs IV bolus is genuine paediatric discriminator. Other distractors weaker but adequate."
+    },
+    {
+      "id": "paeds-acute-hy-011",
+      "file": "data/batches/paeds_acute_assessment_hy.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Fluid-refractory septic shock with hepatomegaly hint. Noradrenaline-vs-adrenaline first-line in paeds and fluid-overload recognition are AU-specific L4 discriminators."
+    },
+    {
+      "id": "paeds-acute-hy-012",
+      "file": "data/batches/paeds_acute_assessment_hy.json",
+      "verdict": "relabel",
+      "issues": ["implausible-distractors", "single-step-recall"],
+      "suggested_difficulty": 3,
+      "fix_sketch": "Recognising NAI in pre-mobile infant is single-concept. Distractors B (reassure), D (no notification), E (confront mother) are absurd; A (outpatient coags only) and C (correct) are the only credible pair. Relabel to L3. Optional rewrite: replace weak distractors with credible alternatives such as 'admit overnight for observation without imaging' or 'urgent paediatric review tomorrow with FBC/coag only'."
+    },
+    {
+      "id": "paeds-acute-hy-013",
+      "file": "data/batches/paeds_acute_assessment_hy.json",
+      "issues": ["implausible-distractors", "bundled-correct-option"],
+      "verdict": "rewrite",
+      "suggested_difficulty": 3,
+      "fix_sketch": "Lead-in asks 'best reflects management priorities' so bundled option is technically OK, but distractors (withdraw care, hyperventilate, rapid rewarm to 38+ceftriaxone, early extubation) are caricatures. Rewrite distractors to credible alternatives: e.g. 'controlled rewarming to 36 then maintain normothermia 24-48h vs targeted temperature management 33 degC for 24h'; 'permissive hypercapnia at FiO2 0.4 vs FiO2 1.0 for 24h'; 'discuss ECMO at H4 vs deferred ECMO discussion'. Otherwise relabel to L3."
+    },
+    {
+      "id": "paeds-acute-hy-015",
+      "file": "data/batches/paeds_acute_assessment_hy.json",
+      "verdict": "relabel",
+      "issues": ["implausible-distractors", "single-step-recall"],
+      "suggested_difficulty": 3,
+      "fix_sketch": "Single-step recall: level above treatment line = NAC. Distractors C (charcoal at 5h), D (discharge above line), E (methionine + transplant) are clearly absurd. Only A (repeat at 8h) is partially plausible. Either relabel to L3, or rewrite with credible distractors such as 'one-bag 12-h NAC vs two-bag 20-h NAC' (AU dosing nuance) or 'modified massive ingestion protocol with double-strength NAC'."
+    },
+    {
+      "id": "paeds-resp-hy-012",
+      "file": "data/batches/paeds_acute_respiratory_hy.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "GINA step-up at age 10 from low-dose ICS uncontrolled; ICS-LABA vs adding LTRA vs SMART is genuine current-guideline discrimination."
+    },
+    {
+      "id": "paeds-resp-hy-015",
+      "file": "data/batches/paeds_acute_respiratory_hy.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "CF exacerbation with known Pseudomonas; dual antipseudomonal (ceftazidime + tobramycin) is the established CF standard. Meropenem-monotherapy and oral cipro distractors test the 'mono vs dual' principle - genuine L4."
+    },
+    {
+      "id": "paeds-adol-004",
+      "file": "data/batches/paeds_adolescent_devbehav.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Lead-in says 'single most appropriate next step' but option D bundles four discrete actions (document Gillick, maintain confidentiality, encourage parental involvement, refer). Fix: either change lead-in to 'Which best describes appropriate management' OR shorten D to 'Document Gillick competence and refer to the patient's chosen termination pathway in confidence'. Distractors otherwise legally plausible-enough."
+    }
+  ]
+}

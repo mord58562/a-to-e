@@ -1,0 +1,71 @@
+{
+  "audited_at": "2026-05-21",
+  "auditor": "Claude Opus 4.7 (1M context)",
+  "scope": "L4-L5 Obstetrics & Gynaecology + Medicine quality audit",
+  "verdicts": [
+    {
+      "id": "medicine-cardio-core-006",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: correct option is single action (switch to apixaban 2.5 BD), distractors are all real DOAC choices that differ on AU dose criteria; tests apixaban dose-reduction rule (any 2 of age>=80, wt<=60, Cr>=133)."
+    },
+    {
+      "id": "medicine-cardio-core-009",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option", "implausible-distractors"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Lead-in says 'combination' so bundling congruent; however 'Intubate immediately' and 'digoxin loading + metoprolol' are caricatures. Replace distractors with closer competitors: (a) CPAP + IV frusemide alone without nitrate (forgets afterload); (b) IV frusemide + IV GTN without NIV; (c) high-flow nasal oxygen + IV frusemide + IV labetalol. Keeps single-arrow truth (NIV+nitrate+loop) as the correct combo."
+    },
+    {
+      "id": "medicine-cardio-core-011",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "verdict": "rewrite",
+      "issues": ["implausible-distractors", "diagnosis-named"],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Brugada explicitly named in lead-in ('symptomatic Brugada syndrome Class I'). Withhold diagnosis label; ask 'most appropriate definitive management'. Distractor 'reassure + paracetamol' is too weak in a syncope-with-type-1-ECG case. Replace with: (a) EP study before ICD decision; (b) quinidine monotherapy; (c) wearable defibrillator until genetic result returns. Also relabel from 5 -> 4 once diagnosis label removed; L5 should be a closer ICD-vs-EP study or ICD-vs-quinidine call."
+    },
+    {
+      "id": "medicine-cardio-core-015",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: wide-QRS infranodal complete heart block with shock; tests the ANZCOR step that wide-QRS often fails atropine -> pacing. Distractors include atropine-as-sole-therapy (textbook wrong-step), calcium empirically (looks reasonable), saline bolus (preload-first reasoning). Acceptable."
+    },
+    {
+      "id": "med-cardio-resp-002",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: 0/1h hs-troponin algorithm with observe-zone result (above LoD, below rule-in, delta <6). Tests recognition that the patient sits in observe zone, requires 3h repeat. Distractors all plausible misreads of the algorithm."
+    },
+    {
+      "id": "med-cardio-resp-008",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: apixaban 2.5 BD dose-reduction in non-valvular AF; tests AU CHA2DS2-VA cut-off + apixaban any-2-of criteria (Cr 138, wt 58 = 2 criteria). Distractors include the standard-dose apixaban look-alike and dabigatran (CrCl 32 contraindication)."
+    },
+    {
+      "id": "med-cardio-resp-010",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: dynamic-manoeuvre auscultation distinguishing AS from HOCM. Tests the squat/Valsalva preload-direction reasoning; distractors are plausible AS pointers that also occur in HOCM (LVH/strain, syncope, ESM at RUSB)."
+    },
+    {
+      "id": "med-cardio-resp-015",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "suggested_difficulty": 4,
+      "fix_sketch": "Genuine L4: Wells 'PE-likely' patient (post-op + DVT signs + tachycardia) so D-dimer is not applicable; CTPA + empirical anticoagulation. Distractor 'age-adjusted D-dimer excludes' is the precise diagnostic trap. Acceptable."
+    }
+  ]
+}

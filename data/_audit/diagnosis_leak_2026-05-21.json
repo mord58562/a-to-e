@@ -2,5 +2,262 @@
   "audited_at": "2026-05-21",
   "auditor": "Claude Opus 4.7 (1M context)",
   "rule": "Option text must not name the underlying diagnosis when the stem withholds it",
-  "rewrites": []
+  "method": "Built a curated lexicon of ~120 high-yield Y4 diagnoses with word-boundary triggers. For every question at difficulty>=3 with a non-diagnosis lead-in, identified the underlying diagnosis from explanation summary, correct rationale and tags; flagged any option whose text named a diagnosis the stem did not name. Manually triaged 65 candidates to remove false positives (abbreviation collisions, lead-ins that themselves name the differential, distractor references that do not name the underlying condition, standard product/protocol/test names like 'ASCIA Anaphylaxis Action Plan' or 'chlamydia/gonorrhoea NAAT swab').",
+  "rewrites": [
+    {
+      "id": "medicine-cardio-core-001",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "underlying_diagnosis": "posterior STEMI",
+      "options": [
+        {"letter": "D", "old_text": "Treat as NSTE-ACS, administer aspirin, ticagrelor, fondaparinux and refer for angiography within 72 hours", "new_text": "Treat the changes as non-ST-elevation, give aspirin, ticagrelor and fondaparinux, and refer for angiography within 72 hours"}
+      ]
+    },
+    {
+      "id": "med-cardio-resp-002",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "underlying_diagnosis": "NSTEMI",
+      "options": [
+        {"letter": "A", "old_text": "Discharge home with GP follow-up within 48 hours - the 0/1 hour algorithm rules out NSTEMI in this patient given the trivial 1-hour delta", "new_text": "Discharge home with GP follow-up within 48 hours because the 0/1 hour algorithm rules her out given the trivial 1-hour delta"},
+        {"letter": "B", "old_text": "Diagnose NSTEMI now and proceed to inpatient invasive coronary angiography within 24 hours with adjunctive dual antiplatelet loading and fondaparinux", "new_text": "Admit and proceed to inpatient invasive coronary angiography within 24 hours with adjunctive dual antiplatelet loading and fondaparinux"}
+      ]
+    },
+    {
+      "id": "med-cardio-resp-015",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "underlying_diagnosis": "pulmonary embolism",
+      "options": [
+        {"letter": "A", "old_text": "Discharge home - D-dimer is below the age-adjusted threshold of 780 microg/L so PE is excluded", "new_text": "Discharge home because the D-dimer sits below the age-adjusted threshold of 780 microg/L and therefore excludes the diagnosis"}
+      ]
+    },
+    {
+      "id": "med-endo-neuro-015-l3",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "underlying_diagnosis": "TIA",
+      "options": [
+        {"letter": "C", "old_text": "Reassure and arrange outpatient TIA clinic review in 2 weeks with aspirin 100 mg daily today", "new_text": "Reassure and arrange outpatient specialist clinic review in 2 weeks with aspirin 100 mg daily today"}
+      ]
+    },
+    {
+      "id": "obgyn-anscreen-012",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "underlying_diagnosis": "hyperemesis gravidarum",
+      "options": [
+        {"letter": "E", "old_text": "Arrange urgent termination of pregnancy at 10 weeks as the only definitive treatment for refractory severe hyperemesis unresponsive to oral therapy", "new_text": "Arrange urgent termination of pregnancy at 10 weeks as the only definitive treatment for refractory severe vomiting unresponsive to oral therapy"}
+      ]
+    },
+    {
+      "id": "obgyn-anscreen-013",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "underlying_diagnosis": "complete hydatidiform mole",
+      "options": [
+        {"letter": "D", "old_text": "Total abdominal hysterectomy as primary treatment given the high reported risk of choriocarcinoma associated with complete hydatidiform mole on histology", "new_text": "Total abdominal hysterectomy as primary treatment given the high reported risk of choriocarcinoma associated with this histology"}
+      ]
+    },
+    {
+      "id": "both-batch-finals-003",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "underlying_diagnosis": "tubal ectopic pregnancy",
+      "options": [
+        {"letter": "B", "old_text": "Offer methotrexate after confirming suitability for medical ectopic management", "new_text": "Offer single-dose intramuscular methotrexate after confirming suitability for medical management"}
+      ]
+    },
+    {
+      "id": "both-finals-106",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "underlying_diagnosis": "placental abruption",
+      "options": [
+        {"letter": "A", "old_text": "Arrange formal ultrasound with Doppler assessment because placental abruption must be confirmed radiologically", "new_text": "Arrange formal ultrasound with Doppler assessment because the diagnosis must be confirmed radiologically before delivery"}
+      ]
+    },
+    {
+      "id": "both-finals-110",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "underlying_diagnosis": "chorioamnionitis",
+      "options": [
+        {"letter": "B", "old_text": "Proceed toward delivery while continuing broad-spectrum antibiotics for presumed chorioamnionitis", "new_text": "Proceed toward delivery while continuing broad-spectrum antibiotics for presumed intrauterine infection"}
+      ]
+    },
+    {
+      "id": "obgyn-batch-017",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "underlying_diagnosis": "pre-eclampsia without severe features",
+      "options": [
+        {"letter": "A", "old_text": "Induction of labour within the next 24-48 hours, as delivery is recommended for all women with pre-eclampsia at or beyond 37+0 weeks gestation", "new_text": "Induction of labour within the next 24-48 hours, as delivery is recommended for this hypertensive disorder of pregnancy at or beyond 37+0 weeks"},
+        {"letter": "B", "old_text": "Continue oral labetalol and expectant management with twice-weekly review until 39+0 weeks, as her blood pressure is now controlled and she has no severe features of pre-eclampsia", "new_text": "Continue oral labetalol and expectant management with twice-weekly review until 39+0 weeks, as her blood pressure is now controlled and she has no severe features"},
+        {"letter": "C", "old_text": "Perform immediate caesarean section, as the presence of proteinuria with a PCR of 45 mg/mmol and hypertension at 36+6 weeks indicates severe pre-eclampsia requiring urgent delivery", "new_text": "Perform immediate caesarean section, as the proteinuria with a PCR of 45 mg/mmol and hypertension at 36+6 weeks meets severe-features criteria requiring urgent delivery"}
+      ]
+    },
+    {
+      "id": "obgyn-batch-024",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "underlying_diagnosis": "severe pre-eclampsia with HELLP features",
+      "options": [
+        {"letter": "B", "old_text": "Proceed to delivery within 24 hours, as severe pre-eclampsia with hepatic involvement mandates delivery regardless of gestational age", "new_text": "Proceed to delivery within 24 hours, as severe-features hypertensive disease with hepatic involvement mandates delivery regardless of gestational age"},
+        {"letter": "E", "old_text": "Deliver immediately by caesarean, as severe pre-eclampsia with abnormal LFTs and platelets <150 ×10⁹/L meets criteria for HELLP syndrome", "new_text": "Deliver immediately by caesarean, as severe-features hypertension with abnormal LFTs and platelets <150 ×10⁹/L meets haemolysis-elevated-liver-enzymes-low-platelets criteria"}
+      ]
+    },
+    {
+      "id": "paeds-cardgen-009",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "underlying_diagnosis": "incomplete Kawasaki disease",
+      "options": [
+        {"letter": "D", "old_text": "Incomplete Kawasaki disease; treat with IVIG 2 g/kg plus aspirin and arrange echocardiogram", "new_text": "Treat empirically with IVIG 2 g/kg plus aspirin and arrange echocardiogram"}
+      ]
+    },
+    {
+      "id": "paeds-chronic-hy-003",
+      "file": "data/batches/paeds_chronic_common_hy.json",
+      "underlying_diagnosis": "eczema herpeticum",
+      "options": [
+        {"letter": "D", "old_text": "Admit, treat as eczema herpeticum: IV aciclovir 8-hourly, urgent ophthalmology", "new_text": "Admit, commence IV aciclovir 8-hourly and arrange urgent ophthalmology review"}
+      ]
+    },
+    {
+      "id": "paeds-endo-001-l3",
+      "file": "data/batches/paeds_endocrinology_depth.json",
+      "underlying_diagnosis": "new-onset type 1 diabetes without DKA",
+      "options": [
+        {"letter": "B", "old_text": "Commence IV 0.9% saline at twice maintenance and a fixed-rate insulin infusion at 0.1 units/kg/hour as per the DKA protocol", "new_text": "Commence IV 0.9% saline at twice maintenance and a fixed-rate insulin infusion at 0.1 units/kg/hour as per the inpatient ketoacidosis protocol"}
+      ]
+    },
+    {
+      "id": "paeds-id-001",
+      "file": "data/batches/paeds_infectious_diseases_depth.json",
+      "underlying_diagnosis": "bacterial meningitis with raised ICP features",
+      "options": [
+        {"letter": "C", "old_text": "Give IV dexamethasone then IV ceftriaxone at the meningitis dose, defer LP, arrange CT brain after stabilisation", "new_text": "Give IV dexamethasone then IV ceftriaxone at the CSF-penetrating dose, defer LP, arrange CT brain after stabilisation"}
+      ]
+    },
+    {
+      "id": "paeds-msk-ent-001",
+      "file": "data/batches/paeds_msk_ent_ophth.json",
+      "underlying_diagnosis": "low-risk irritable hip (Kocher 0-1)",
+      "options": [
+        {"letter": "A", "old_text": "Discharge home with paracetamol and ibuprofen for simple analgesia and arrange GP review in 48 hours for likely post-viral transient synovitis with planned reassessment", "new_text": "Discharge home with paracetamol and ibuprofen for simple analgesia and arrange GP review in 48 hours for a likely post-viral self-limiting hip presentation with planned reassessment"}
+      ]
+    },
+    {
+      "id": "paeds-msk-ent-002",
+      "file": "data/batches/paeds_msk_ent_ophth.json",
+      "underlying_diagnosis": "SCFE",
+      "options": [
+        {"letter": "C", "old_text": "Order an outpatient MRI of the left hip within the next 7 days to exclude Perthes disease before any orthopaedic referral or non-weight-bearing measures", "new_text": "Order an outpatient MRI of the left hip within the next 7 days to exclude an idiopathic femoral head osteonecrosis before any orthopaedic referral or non-weight-bearing measures"}
+      ]
+    },
+    {
+      "id": "paeds-msk-ent-009",
+      "file": "data/batches/paeds_msk_ent_ophth.json",
+      "underlying_diagnosis": "acute mastoiditis",
+      "options": [
+        {"letter": "D", "old_text": "Perform urgent lumbar puncture in ED for cell count, protein, glucose and culture and commence empirical IV ceftriaxone for suspected bacterial meningitis complicating mastoiditis", "new_text": "Perform urgent lumbar puncture in ED for cell count, protein, glucose and culture and commence empirical IV ceftriaxone for suspected intracranial extension from the ear"}
+      ]
+    },
+    {
+      "id": "paeds-rash-007",
+      "file": "data/batches/paeds_rashes_exanthems.json",
+      "underlying_diagnosis": "meningococcal septicaemia",
+      "options": [
+        {"letter": "E", "old_text": "Reassess in 30 minutes after antipyretics as her immunisations make meningococcal disease unlikely", "new_text": "Reassess in 30 minutes after antipyretics as her current immunisations make invasive bacterial illness unlikely"}
+      ]
+    },
+    {
+      "id": "paeds-batch-emerg-010",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "underlying_diagnosis": "diabetic ketoacidosis",
+      "options": [
+        {"letter": "B", "old_text": "Give a normal saline bolus and begin the paediatric DKA protocol", "new_text": "Give a normal saline bolus and begin the paediatric ketoacidosis protocol"}
+      ]
+    },
+    {
+      "id": "both-finals-103",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "underlying_diagnosis": "meningococcal septic shock",
+      "options": [
+        {"letter": "A", "old_text": "Perform urgent lumbar puncture before antibiotics because meningitis confirmation will guide therapy duration", "new_text": "Perform urgent lumbar puncture before antibiotics because CSF confirmation will guide therapy duration"},
+        {"letter": "D", "old_text": "Commence aciclovir and transfer for MRI because encephalitis is more likely than bacterial sepsis", "new_text": "Commence aciclovir and transfer for MRI because a viral CNS cause is more likely here"}
+      ]
+    },
+    {
+      "id": "both-finals-107",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "underlying_diagnosis": "young infant with possible serious bacterial infection (likely UTI)",
+      "options": [
+        {"letter": "A", "old_text": "Discharge with oral cephalexin because urinary tract infection is the likely source of fever", "new_text": "Discharge with oral cephalexin because a urinary source is the likely cause of fever"}
+      ]
+    },
+    {
+      "id": "paeds-batch-emerg-015",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "underlying_diagnosis": "symptomatic hyponatraemia (water intoxication)",
+      "options": [
+        {"letter": "B", "old_text": "Give 3% hypertonic saline for symptomatic hyponatraemia", "new_text": "Give 3% hypertonic saline for symptomatic sodium derangement"}
+      ]
+    },
+    {
+      "id": "paeds-batch-009-l3",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "underlying_diagnosis": "simple febrile seizure",
+      "options": [
+        {"letter": "C", "old_text": "Reassure (simple febrile seizure: single, generalised, under 15 minutes, full recovery, no neuro deficit, age 6 months to 6 years); identify and treat the febrile focus; provide written first-aid advice and red-flag escalation criteria; no investigations or prophylaxis", "new_text": "Reassure given the simple presentation (single, generalised, under 15 minutes, full recovery, no neurological deficit, age 6 months to 6 years); identify and treat the febrile focus; provide written first-aid advice and red-flag escalation criteria; no investigations or prophylaxis"}
+      ]
+    },
+    {
+      "id": "paeds-batch-012",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "underlying_diagnosis": "childhood nephrotic syndrome (minimal change)",
+      "options": [
+        {"letter": "A", "old_text": "Refer to paediatric nephrology for renal biopsy to confirm minimal change disease before commencing any therapy", "new_text": "Refer to paediatric nephrology for renal biopsy to confirm the histological subtype before commencing any therapy"}
+      ]
+    },
+    {
+      "id": "paeds-batch-014",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "underlying_diagnosis": "meningococcal septicaemia",
+      "options": [
+        {"letter": "E", "old_text": "Notify the public health unit and await their advice before administering antibiotics, as meningococcal disease is a notifiable condition requiring public health intervention", "new_text": "Notify the public health unit and await their advice before administering antibiotics, as this presentation is a notifiable condition requiring coordinated public health intervention"}
+      ]
+    },
+    {
+      "id": "paeds-batch-030",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "underlying_diagnosis": "HSP nephritis with nephrotic-range proteinuria",
+      "options": [
+        {"letter": "B", "old_text": "Commence oral prednisolone daily for 4 weeks to treat the nephritis and prevent chronic kidney disease", "new_text": "Commence oral prednisolone daily for 4 weeks to treat the nephritis and prevent long-term renal impairment"},
+        {"letter": "C", "old_text": "Discharge home with advice to monitor urine dipstick weekly for 6 weeks, as most cases of HSP nephritis resolve spontaneously without treatment", "new_text": "Discharge home with advice to monitor urine dipstick weekly for 6 weeks, as most cases of this nephritis resolve spontaneously without treatment"},
+        {"letter": "E", "old_text": "Admit for intravenous methylprednisolone pulse therapy daily for 3 days, as severe HSP nephritis requires immediate high-dose steroids", "new_text": "Admit for intravenous methylprednisolone pulse therapy daily for 3 days, as severe nephritis in this setting requires immediate high-dose steroids"}
+      ]
+    },
+    {
+      "id": "paeds-batch-077",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "underlying_diagnosis": "anti-NMDA receptor encephalitis",
+      "options": [
+        {"letter": "C", "old_text": "Initiate IV aciclovir 8-hourly for presumed herpes simplex encephalitis until CSF PCR returns", "new_text": "Initiate IV aciclovir 8-hourly for presumed herpes simplex CNS infection until CSF PCR returns"}
+      ]
+    },
+    {
+      "id": "psych-eating-perinatal-009",
+      "file": "data/batches/psych_eating_perinatal_v2.json",
+      "underlying_diagnosis": "postpartum psychosis",
+      "options": [
+        {"letter": "D", "old_text": "Urgent psychiatric admission, ideally to a mother-baby unit, for postpartum psychosis with antipsychotic treatment and infant safety planning", "new_text": "Urgent psychiatric admission, ideally to a mother-baby unit, for inpatient stabilisation with antipsychotic treatment and infant safety planning"}
+      ]
+    },
+    {
+      "id": "psych-pers-ger-008",
+      "file": "data/batches/psych_personality_geriatric.json",
+      "underlying_diagnosis": "hypoactive delirium (multifactorial)",
+      "options": [
+        {"letter": "C", "old_text": "Withhold oxycodone, correct hyponatraemia and treat the UTI", "new_text": "Stop oxycodone, correct sodium and treat the urinary infection"}
+      ]
+    },
+    {
+      "id": "psych-psych-sub-040",
+      "file": "data/batches/psych_psychosis_substance_starter.json",
+      "underlying_diagnosis": "severe alcohol withdrawal with seizures (delirium tremens)",
+      "options": [
+        {"letter": "C", "old_text": "Commence intravenous haloperidol 10 mg as the primary treatment for delirium tremens", "new_text": "Commence intravenous haloperidol 10 mg as the primary treatment for the agitated withdrawal state"}
+      ]
+    }
+  ]
 }
