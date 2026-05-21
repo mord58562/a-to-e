@@ -109,21 +109,11 @@
   }
   async function cloudSignUp(email, password, displayName, legacyAdminSecret) {
     const payload = { email, password, display_name: displayName };
-    // LEGACY_ADMIN_MIGRATION-START (remove next line after one-time use)
-    if (legacyAdminSecret) payload.legacy_admin_secret = legacyAdminSecret;
-    // LEGACY_ADMIN_MIGRATION-END
     const { token, user } = await apiFetch("/api/register", { method: "POST", body: JSON.stringify(payload) });
     authToken = token; cloudUser = user;
     localStorage.setItem(AUTH_TOKEN_KEY, token);
     return user;
   }
-  // LEGACY_ADMIN_MIGRATION-START (delete this function after one-time use)
-  async function cloudClaimAdmin(legacyAdminSecret) {
-    const r = await apiFetch("/api/account/claim-admin", { method: "POST", body: JSON.stringify({ legacy_admin_secret: legacyAdminSecret }) });
-    if (r && r.user) cloudUser = r.user;
-    return r;
-  }
-  // LEGACY_ADMIN_MIGRATION-END
   function cloudSignOut() {
     authToken = null; cloudUser = null;
     localStorage.removeItem(AUTH_TOKEN_KEY);
@@ -465,8 +455,6 @@
             document.getElementById("cloudSignUpEmail").value.trim(),
             pw,
             document.getElementById("cloudSignUpName").value.trim(),
-            // LEGACY_ADMIN_MIGRATION: remove the line below after one-time use; cloudSignUp() ignores undefined.
-            (document.getElementById("cloudSignUpLegacy") || {}).value || ""
           );
           // Capture any pre-existing guest id BEFORE we clear it so we
           // can fold guest progress into the new cloud account.
@@ -801,19 +789,6 @@
       root.innerHTML = `<p class="dim">Sign in to manage your account.</p>`;
       return;
     }
-    // LEGACY_ADMIN_MIGRATION-START (delete claimBlock + the
-    // acctClaim* wiring lower down after one-time use)
-    const claimBlock = cloudUser.is_admin ? "" : `
-      <div class="account-claim-admin">
-        <strong>Claim admin rights.</strong>
-        <p class="dim small" style="margin:4px 0">If you hold the original local-gate admin password, enter it here to promote this cloud account to admin.</p>
-        <div class="claim-row">
-          <input type="password" id="acctClaimInput" placeholder="legacy admin password" autocomplete="off" />
-          <button class="primary" id="acctClaimBtn">Claim admin</button>
-        </div>
-        <p id="acctClaimMsg" class="dim small" hidden></p>
-      </div>`;
-    // LEGACY_ADMIN_MIGRATION-END
     root.innerHTML = `
       <h3>Signed in</h3>
       <p>${esc(cloudUser.display_name || cloudUser.email)} · <span class="dim">${esc(cloudUser.email)}</span>${cloudUser.is_admin ? ' · <span class="dim">admin</span>' : ''}</p>
@@ -823,25 +798,6 @@
         <p class="dim small" style="margin:4px 0">All your answers and progress will be permanently removed. This cannot be undone.</p>
         <button class="danger-btn" id="acctSelfDeleteUnified">Delete my account</button>
       </div>`;
-    // LEGACY_ADMIN_MIGRATION-START
-    const claimBtn = document.getElementById("acctClaimBtn");
-    if (claimBtn) claimBtn.onclick = async () => {
-      const input = document.getElementById("acctClaimInput");
-      const msg = document.getElementById("acctClaimMsg");
-      const secret = (input && input.value || "").trim();
-      if (!secret) return;
-      try {
-        await cloudClaimAdmin(secret);
-        msg.hidden = false;
-        msg.textContent = "Admin granted. Reloading...";
-        refreshAdminBodyClass();
-        setTimeout(() => location.reload(), 600);
-      } catch (e) {
-        msg.hidden = false;
-        msg.textContent = "Wrong legacy secret.";
-      }
-    };
-    // LEGACY_ADMIN_MIGRATION-END
     const sb = document.getElementById("acctSelfDeleteUnified");
     if (sb) sb.onclick = async () => {
       const confirmEmail = prompt("Type your email to confirm permanent account deletion:");
@@ -2286,9 +2242,11 @@
     });
     const bulkBtn = document.getElementById("auditBulkReports");
     if (bulkBtn) bulkBtn.onclick = startBulkReportAudit;
-    document.querySelectorAll('#reportsAdminModal [data-live-filter]').forEach(b => {
+    // Filter pills (selector kept generic so wiring still works after
+    // the panel is re-parented into the unified Admin modal).
+    document.querySelectorAll('[data-live-filter]').forEach(b => {
       b.onclick = () => {
-        document.querySelectorAll('#reportsAdminModal [data-live-filter]').forEach(x => x.classList.remove("selected"));
+        document.querySelectorAll('[data-live-filter]').forEach(x => x.classList.remove("selected"));
         b.classList.add("selected");
         renderAuditLive(b.dataset.liveFilter);
       };

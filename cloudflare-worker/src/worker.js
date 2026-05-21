@@ -37,9 +37,6 @@ export default {
       if (url.pathname === "/api/me"       && request.method === "GET")  return await handleMe(request, env, cors);
       if (url.pathname === "/api/answer"   && request.method === "POST") return await handleAnswer(request, env, cors);
       if (url.pathname === "/api/account/delete" && request.method === "POST") return await handleAccountDelete(request, env, cors);
-      // LEGACY_ADMIN_MIGRATION-START (delete this route after one-time use)
-      if (url.pathname === "/api/account/claim-admin" && request.method === "POST") return await handleClaimAdmin(request, env, cors);
-      // LEGACY_ADMIN_MIGRATION-END
       if (url.pathname === "/api/admin/users" && request.method === "GET") return await handleAdminListUsers(request, env, cors);
       if (url.pathname.startsWith("/api/admin/users/") && url.pathname.endsWith("/delete") && request.method === "POST") {
         const id = url.pathname.split("/")[4];
@@ -190,17 +187,6 @@ function publicUser(u) {
   return { id: u.id, email: u.email, display_name: u.display_name, is_admin: !!u.is_admin };
 }
 
-// LEGACY_ADMIN_MIGRATION-START (one-time bootstrap; safe to delete this
-// block, the handleClaimAdmin function, the legacy_admin_secret branch
-// in handleRegister, and the /api/account/claim-admin route after Rob
-// has promoted his cloud account)
-const LEGACY_ADMIN_HASH = "84313ef39b0a979f0608491608870b3f2065f447d73e4373ba75ae2330aa82b5";
-async function sha256HexNode(s) {
-  const buf = new TextEncoder().encode(s);
-  const hash = await crypto.subtle.digest("SHA-256", buf);
-  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
-}
-// LEGACY_ADMIN_MIGRATION-END
 
 async function handleRegister(request, env, cors) {
   if (!env.DB) return json({ ok: false, error: "DB not bound" }, 500, cors);
@@ -212,14 +198,6 @@ async function handleRegister(request, env, cors) {
   if (password.length < 8) return json({ ok: false, error: "password must be 8+ characters" }, 400, cors);
 
   let isAdmin = 0;
-  // LEGACY_ADMIN_MIGRATION-START (delete this block to remove the
-  // one-time legacy-secret-on-signup admin grant)
-  const legacySecret = (body && body.legacy_admin_secret) || "";
-  if (legacySecret) {
-    const h = await sha256HexNode(legacySecret);
-    if (h === LEGACY_ADMIN_HASH) isAdmin = 1;
-  }
-  // LEGACY_ADMIN_MIGRATION-END
 
   const existing = await env.DB.prepare("SELECT id FROM users WHERE email = ?").bind(email).first();
   if (existing) return json({ ok: false, error: "email already registered" }, 409, cors);
@@ -240,19 +218,6 @@ async function handleRegister(request, env, cors) {
   return json({ ok: true, token, user: publicUser({ id, email, display_name: displayName, is_admin: isAdmin }) }, 200, cors);
 }
 
-// LEGACY_ADMIN_MIGRATION-START (delete this function after one-time use)
-async function handleClaimAdmin(request, env, cors) {
-  const user = await authUser(request, env);
-  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
-  const body = await request.json().catch(() => null);
-  const legacySecret = (body && body.legacy_admin_secret) || "";
-  if (!legacySecret) return json({ ok: false, error: "legacy_admin_secret required" }, 400, cors);
-  const h = await sha256HexNode(legacySecret);
-  if (h !== LEGACY_ADMIN_HASH) return json({ ok: false, error: "wrong legacy secret" }, 403, cors);
-  await env.DB.prepare("UPDATE users SET is_admin = 1 WHERE id = ?").bind(user.id).run();
-  return json({ ok: true, user: publicUser({ ...user, is_admin: 1 }) }, 200, cors);
-}
-// LEGACY_ADMIN_MIGRATION-END
 
 async function handleLogin(request, env, cors) {
   if (!env.DB) return json({ ok: false, error: "DB not bound" }, 500, cors);
