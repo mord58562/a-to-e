@@ -491,36 +491,33 @@
   }
 
   // ── Reminder ────────────────────────────────────────────────────────────
-  // Non-admins never see the "X questions in the bank. Add more via..."
-  // reminder banner because adding is admin-only.
+  // Admin top bar: how-to-add + audit. Always visible for admins, dismiss
+  // only for this browser session (sessionStorage). Non-admins never see it.
   function maybeShowReminder() {
     if (!isCurrentUserAdmin()) return;
+    // Dismiss persists for this browser session only; next visit it re-appears.
+    if (sessionStorage.getItem("y4mcq.adminbar.sessionDismissed")) return;
     const banner = document.getElementById("reminderBanner");
     const text = document.getElementById("reminderText");
     const meta = state.meta || {};
-    // sessionStorage: dismiss persists for the page session only and
-    // resets on next reload, per Rob's spec.
-    // Persist dismissal across reloads (was previously sessionStorage; the
-    // user kept seeing the banner reappear).
-    if (localStorage.getItem(REMINDER_DISMISS_KEY)) return;
     const total = state.questions.length;
     const updated = meta.last_added || meta.updated;
-    if (!updated) {
-      text.textContent = `${total} questions in the bank. Add more via Index → How to add.`;
-      banner.hidden = false;
+    const days = updated ? Math.floor((Date.now() - new Date(updated).getTime()) / 86400000) : null;
+    // Admin top bar message: short status; banner is ALWAYS visible for admins
+    // (gated only by the per-session dismiss above).
+    if (days === null) {
+      text.textContent = `${total} questions in the bank.`;
+    } else if (days >= 7) {
+      text.textContent = `${days} days since the last add - ${total} questions in the bank.`;
+    } else if (days >= 3) {
+      text.textContent = `${days} days since last add - ${total} questions in the bank.`;
     } else {
-      const days = Math.floor((Date.now() - new Date(updated).getTime()) / 86400000);
-      if (days >= 7) {
-        text.textContent = `${days} days since the last add. ${total} questions in the bank.`;
-        banner.hidden = false;
-      } else if (days >= 3) {
-        text.textContent = `${days} days since last add. ${total} questions in the bank.`;
-        banner.hidden = false;
-      }
+      text.textContent = `${total} questions in the bank.`;
     }
+    banner.hidden = false;
     document.getElementById("reminderHowTo").onclick = openHowTo;
     document.getElementById("reminderDismiss").onclick = () => {
-      localStorage.setItem(REMINDER_DISMISS_KEY, "1");
+      sessionStorage.setItem("y4mcq.adminbar.sessionDismissed", "1");
       banner.hidden = true;
     };
   }
