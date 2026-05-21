@@ -1077,18 +1077,12 @@
       (subLabel ? `<span class="topic-tag">${esc(subLabel)}</span>` : "") +
       (q.difficulty ? `<span class="difficulty-tag">Difficulty ${q.difficulty}/5</span>` : "");
 
-    const correct = _shuffledOptions(q).find(o => o.correct);
-    const correctCite = correct.source_refs && correct.source_refs.length
-      ? `<span class="cite">Sources: ${esc(correct.source_refs.join("; "))}</span>` : "";
-    document.getElementById("explainCorrect").innerHTML =
-      `<p><b>${correct.letter}. ${esc(correct.text)}</b></p><p>${esc(correct.rationale)}</p>${correctCite}`;
-
-    document.getElementById("explainDistractors").innerHTML =
-      _shuffledOptions(q).filter(o => !o.correct).map(o => {
-        const c = o.source_refs && o.source_refs.length
-          ? `<span class="cite">· ${esc(o.source_refs.join(", "))}</span>` : "";
-        return `<p><b>${o.letter}. ${esc(o.text)}</b><br/><span class="dim">${esc(o.rationale)}</span>${c}</p>`;
-      }).join("");
+    // The Why-is-correct / Why-the-others-are-not commentary blocks are
+    // intentionally NOT populated here - their content used to duplicate
+    // the option-box rationales (which are now visible on every option
+    // post-reveal). The blocks stay hidden via their `hidden` attribute
+    // in HTML. "In context" (explainSummary) is the differentiating
+    // explanation - condition background, key points, pearls.
 
     renderStatsPanel(q);
 
