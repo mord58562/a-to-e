@@ -1478,11 +1478,10 @@
     const rl = document.getElementById("explainRanges");
     rl.innerHTML = "";
     if (q.reference_ranges && q.reference_ranges.length) {
-      const btn = document.createElement("button");
-      btn.className = "show-ranges";
-      btn.textContent = `Open reference values (${q.reference_ranges.length})`;
-      btn.onclick = () => openRefs(q.reference_ranges);
-      rl.appendChild(btn);
+      // Render relevant ranges inline so the user sees them without
+      // an extra click. The full Reference values panel remains
+      // available from the masthead button.
+      rl.innerHTML = renderInlineRanges(q.reference_ranges);
     }
 
     document.getElementById("submitBtn").hidden = true;
@@ -1534,33 +1533,100 @@
     const lb = document.getElementById("labsBtn");
     if (lb) lb.classList.remove("active");
   }
+  // Curated quick-jump pills. Each maps to a category key in
+  // reference_ranges.json. The order is the user's expected reach
+  // frequency in a clinical question - common bloods first.
+  const REF_JUMP_PILLS = [
+    { label: "FBC",    key: "fbc" },
+    { label: "U&E",    key: "uec" },
+    { label: "LFT",    key: "lft" },
+    { label: "ABG",    key: "abg" },
+    { label: "VBG",    key: "vbg" },
+    { label: "Urine",  key: "urine_dipstick" },
+    { label: "Paeds",  key: "paeds_fbc_age_bands" },
+    { label: "Glucose", key: "glucose_ogtt_hba1c" },
+    { label: "Thyroid", key: "tft" },
+    { label: "Coag",   key: "coags" },
+    { label: "CSF",    key: "csf_adult" },
+    { label: "Iron",   key: "iron_studies" },
+  ];
+
   function renderRefBody(restrictKeys) {
     const body = document.getElementById("rangesBody");
+    const jump = document.getElementById("refJump");
     body.innerHTML = "";
+    if (jump) jump.innerHTML = "";
     const cats = (state.ranges && state.ranges.categories) || {};
     const keys = restrictKeys && restrictKeys.length ? restrictKeys : Object.keys(cats);
+    if (!keys.length || Object.keys(cats).length === 0) {
+      body.innerHTML = `<p class="dim">No reference data loaded.</p>`;
+      return;
+    }
+
+    // Quick-jump pills: only render those whose key exists in the data
+    // and isn't restricted away by a question-specific subset.
+    if (jump && (!restrictKeys || !restrictKeys.length)) {
+      jump.innerHTML = REF_JUMP_PILLS
+        .filter(p => cats[p.key])
+        .map(p => `<button class="ref-pill" data-key="${esc(p.key)}">${esc(p.label)}</button>`)
+        .join("");
+      jump.querySelectorAll(".ref-pill").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const target = body.querySelector(`.range-cat[data-key="${btn.dataset.key}"]`);
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+    }
+
     keys.forEach(k => {
       const cat = cats[k]; if (!cat) return;
-      const div = document.createElement("div");
+      const div = document.createElement("section");
       div.className = "range-cat";
       div.dataset.key = k;
       const rows = (cat.ranges || []).map(r => {
         const v = r.value != null ? r.value : (r.range != null ? r.range : "");
         const t = r.test || r.label || r.name || "";
-        return `<tr><td class="test">${esc(t)}</td><td class="value">${esc(String(v))}</td></tr>`;
+        return `<div class="rr"><div class="test">${esc(t)}</div><div class="value">${esc(String(v))}</div></div>`;
       }).join("");
-      div.innerHTML = `<h3>${esc(cat.label || k)}</h3><table>${rows}</table>` +
+      div.innerHTML = `<h3>${esc(cat.label || k)}</h3><div class="rrs">${rows}</div>` +
         (cat.notes ? `<p class="range-note">${esc(cat.notes)}</p>` : "");
       body.appendChild(div);
     });
-    if (!body.children.length) body.innerHTML = `<p class="dim">No reference data loaded.</p>`;
   }
+
+  // Search: filter at row-level (not category-level) so a search for
+  // "potassium" surfaces only the row, not whole categories.
   function filterRanges(term) {
-    document.querySelectorAll("#rangesBody .range-cat").forEach(c => {
-      const k = (c.dataset.key || "").toLowerCase();
-      const t = c.textContent.toLowerCase();
-      c.classList.toggle("hidden", !!term && !k.includes(term) && !t.includes(term));
+    term = (term || "").trim().toLowerCase();
+    const hit = document.getElementById("rangesSearchHit");
+    let matches = 0;
+    document.querySelectorAll("#rangesBody .range-cat").forEach(cat => {
+      let visibleRows = 0;
+      cat.querySelectorAll(".rr").forEach(row => {
+        const text = row.textContent.toLowerCase();
+        const show = !term || text.includes(term);
+        row.classList.toggle("rr-hidden", !show);
+        if (show) { visibleRows++; matches++; }
+      });
+      const catLabel = (cat.querySelector("h3")?.textContent || "").toLowerCase();
+      const catMatches = !term || catLabel.includes(term);
+      // Show category if any row matches OR the category title itself matches.
+      cat.classList.toggle("hidden", !visibleRows && !catMatches);
+      // If category title matches but no rows, un-hide all rows so user can scan.
+      if (term && !visibleRows && catMatches) {
+        cat.querySelectorAll(".rr").forEach(r => r.classList.remove("rr-hidden"));
+      }
     });
+    if (hit) {
+      if (term) {
+        hit.hidden = false;
+        hit.textContent = `${matches} match${matches === 1 ? "" : "es"}`;
+      } else {
+        hit.hidden = true;
+      }
+    }
+    const jump = document.getElementById("refJump");
+    if (jump) jump.style.display = term ? "none" : "";
   }
 
   // ── Timers ──────────────────────────────────────────────────────────────
@@ -2845,6 +2911,23 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     const dismiss = () => { toast.classList.remove("show"); setTimeout(() => toast.remove(), 320); };
     toast.addEventListener("click", dismiss);
     setTimeout(dismiss, 9000);
+  }
+
+  // Render a small inline list of reference ranges relevant to the
+  // current question. Looks up each key in state.ranges and renders
+  // a compact name/range pair. Unknown keys render their bare key
+  // so authors can spot typos.
+  function renderInlineRanges(keys) {
+    const ranges = state.ranges || {};
+    const items = keys.map(k => {
+      const r = ranges[k] || (ranges.categories && Object.values(ranges.categories).flatMap(c => c.items || []).find(it => it.key === k));
+      if (!r) return `<li class="ir-row"><span class="ir-key">${esc(k)}</span><span class="ir-val dim">(not in reference set)</span></li>`;
+      const label = r.label || r.name || k;
+      const val   = r.value || r.range || r.normal || "";
+      const unit  = r.unit ? ` ${esc(r.unit)}` : "";
+      return `<li class="ir-row"><span class="ir-key">${esc(label)}</span><span class="ir-val">${esc(val)}${unit}</span></li>`;
+    }).join("");
+    return `<ul class="inline-ranges">${items}</ul>`;
   }
 
   // Render the stem, optionally highlighting authored clue phrases after
