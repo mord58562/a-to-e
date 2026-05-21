@@ -542,8 +542,6 @@
     wireStatsModal();
     wireAccountModal();
     wireAdminModal();
-    wireReminderDismiss();
-    maybeShowReminder();
     updateReportsAdminBadge();
     showHome();
   });
@@ -629,10 +627,31 @@
     if (!tab) return;
     if (tab.source) {
       // Re-parent existing wired DOM into the admin panel. The original
-      // modal stays empty in the DOM; closing the admin modal returns
-      // the content. We just leave it in the admin pane until next time.
+      // modal stays empty; closing the admin modal leaves the content
+      // in the admin pane until the next activation.
       const src = document.querySelector(tab.source);
-      if (src) main.appendChild(src);
+      if (src) {
+        src.hidden = false;
+        main.appendChild(src);
+      }
+      // Re-populate the panel's lists. The legacy openReportsAdmin
+      // flow used to populate these on modal-open; we mirror that
+      // contract per-tab here.
+      if (id === "inbox") {
+        if (typeof refreshAuditInboxList === "function") {
+          refreshAuditInboxList().then(() => {
+            if (typeof renderAuditInbox === "function") renderAuditInbox();
+          });
+        }
+      } else if (id === "reports") {
+        if (typeof renderReportsAdminList === "function") renderReportsAdminList("open");
+      } else if (id === "live") {
+        if (typeof loadAndRenderAuditLive === "function") loadAndRenderAuditLive();
+      } else if (id === "add") {
+        // The how-to-modal contains the prompt+paste flow; refresh the
+        // local-bank summary so any pre-existing local additions show.
+        if (typeof refreshLocalBankSummary === "function") refreshLocalBankSummary();
+      }
       return;
     }
     if (id === "overview")  return renderAdminOverview(main);
@@ -838,104 +857,6 @@
     };
   }
 
-  async function renderAccount() {
-    const body = document.getElementById("accountBody");
-    if (!body || !cloudUser) return;
-    body.innerHTML = `<p class="dim small">Loading...</p>`;
-    const self = `
-      <div class="account-section">
-        <h3>Signed in</h3>
-        <p>${esc(cloudUser.display_name || cloudUser.email)} · <span class="dim">${esc(cloudUser.email)}</span>${cloudUser.is_admin ? ' · <span class="dim">admin</span>' : ''}</p>
-        <div class="account-self-delete">
-          <strong>Delete this account.</strong>
-          <p class="dim small" style="margin:4px 0">All your answers and progress will be permanently removed. This cannot be undone.</p>
-          <button class="danger-btn" id="acctSelfDelete">Delete my account</button>
-        </div>
-      </div>`;
-    let adminHtml = "";
-    if (cloudUser.is_admin) {
-      let users = []; let quality = null;
-      try {
-        const r1 = await apiFetch("/api/admin/users");
-        users = (r1 && r1.users) || [];
-      } catch (_) {}
-      try {
-        quality = await apiFetch("/api/admin/quality");
-      } catch (_) {}
-      const rows = users.map(u => {
-        const isSelf = u.id === cloudUser.id;
-        return `
-          <div class="ar ${isSelf ? 'is-self' : ''}">${esc(u.display_name || u.email.split('@')[0])}</div>
-          <div class="ar">${esc(u.email)}</div>
-          <div class="ar">${u.answers || 0}</div>
-          <div class="ar">${u.is_admin ? '<span title="Admin">admin</span>' : 'user'}</div>
-          <div class="ar">${isSelf ? '' : (u.is_admin
-            ? `<button class="btn-mini" data-act="demote" data-id="${esc(u.id)}">demote</button>`
-            : `<button class="btn-mini promote" data-act="promote" data-id="${esc(u.id)}">promote</button>`)}</div>
-          <div class="ar">${isSelf ? '' : `<button class="btn-mini danger" data-act="delete" data-id="${esc(u.id)}" data-label="${esc(u.email)}">delete</button>`}</div>`;
-      }).join("");
-      const worst = (quality && quality.worst) || [];
-      const totals = (quality && quality.totals) || {};
-      const worstRows = worst.slice(0, 25).map(r => {
-        const pct = r.n ? Math.round((100 * (r.c || 0)) / r.n) : 0;
-        return `<div class="qr qid">${esc(r.question_id)}</div><div class="qr">${r.n}</div><div class="qr">${pct}%</div>`;
-      }).join("");
-      adminHtml = `
-        <div class="account-section">
-          <h3>Admin · bank engagement</h3>
-          <p class="dim small">Across all users: ${totals.users || 0} users, ${totals.answers || 0} answers on ${totals.qs || 0} distinct questions.</p>
-        </div>
-        <div class="account-section">
-          <h3>Admin · worst-performing questions</h3>
-          <p class="dim small">Lowest first-time-correct rates with ≥5 answers - likely candidates for audit.</p>
-          <div class="account-quality-table">
-            <div class="qh">Question id</div><div class="qh">N</div><div class="qh">Correct</div>
-            ${worstRows || '<div class="qr" style="grid-column:1/-1">No questions with 5+ answers yet.</div>'}
-          </div>
-        </div>
-        <div class="account-section">
-          <h3>Admin · users</h3>
-          <div class="account-users-table">
-            <div class="ah">Name</div><div class="ah">Email</div><div class="ah">Answers</div><div class="ah">Role</div><div class="ah"></div><div class="ah"></div>
-            ${rows}
-          </div>
-        </div>`;
-    }
-    body.innerHTML = self + adminHtml;
-
-    const selfBtn = document.getElementById("acctSelfDelete");
-    if (selfBtn) selfBtn.onclick = async () => {
-      const confirmEmail = prompt("Type your email to confirm permanent account deletion:");
-      if (!confirmEmail || confirmEmail.trim().toLowerCase() !== (cloudUser.email || "").toLowerCase()) {
-        if (confirmEmail !== null) alert("Email did not match - account NOT deleted.");
-        return;
-      }
-      try {
-        await apiFetch("/api/account/delete", { method: "POST" });
-        cloudSignOut();
-        location.reload();
-      } catch (e) { alert("Failed to delete account: " + (e.message || e)); }
-    };
-
-    body.querySelectorAll("[data-act]").forEach(btn => {
-      btn.onclick = async () => {
-        const id = btn.dataset.id, act = btn.dataset.act, label = btn.dataset.label || id;
-        try {
-          if (act === "delete") {
-            if (!confirm(`Permanently delete user ${label} and all their answers?`)) return;
-            await apiFetch(`/api/admin/users/${encodeURIComponent(id)}/delete`, { method: "POST" });
-          } else if (act === "promote") {
-            if (!confirm(`Grant admin to ${label}?`)) return;
-            await apiFetch(`/api/admin/users/${encodeURIComponent(id)}/promote`, { method: "POST" });
-          } else if (act === "demote") {
-            if (!confirm(`Revoke admin from ${label}?`)) return;
-            await apiFetch(`/api/admin/users/${encodeURIComponent(id)}/demote`, { method: "POST" });
-          }
-          renderAccount();
-        } catch (e) { alert("Action failed: " + (e.message || e)); }
-      };
-    });
-  }
   function formatDuration(ms) {
     const s = Math.max(0, Math.round(ms / 1000));
     const h = Math.floor(s / 3600);
@@ -1217,32 +1138,6 @@
     document.getElementById("quizTopbar").hidden = name !== "quiz";
   }
 
-  // ── Reminder ────────────────────────────────────────────────────────────
-  // Admin top bar: how-to-add + audit. Always visible for admins, dismiss
-  // only for this browser session (sessionStorage). Non-admins never see it.
-  function maybeShowReminder() {
-    // Admin reminder strip was removed - status now lives in the Admin
-    // modal's Overview tab. Function kept as a no-op so DOMContentLoaded
-    // wiring stays unchanged.
-  }
-
-  // Reminder bar X button: wired at DOMContentLoaded so the close is
-  // always available, regardless of whether maybeShowReminder fires
-  // this turn (it only fires for admins). Persists dismissal across the
-  // tab session so the bar stays closed until the next visit.
-  function wireReminderDismiss() {
-    const x = document.getElementById("reminderDismiss");
-    const banner = document.getElementById("reminderBanner");
-    const howTo = document.getElementById("reminderHowTo");
-    if (howTo) howTo.addEventListener("click", openHowTo);
-    if (!x || !banner) return;
-    x.addEventListener("click", e => {
-      e.preventDefault();
-      e.stopPropagation();
-      sessionStorage.setItem("y4mcq.adminbar.sessionDismissed", "1");
-      banner.hidden = true;
-    });
-  }
 
   // ── Home ────────────────────────────────────────────────────────────────
   function showHome() {
@@ -2409,12 +2304,6 @@
     btn.hidden = false;
     badge.textContent = open > 0 ? String(open) : "";
     btn.classList.toggle("has-pending", open > 0);
-  }
-  async function openReportsAdmin() {
-    if (!isCurrentUserAdmin()) return;
-    document.getElementById("reportsAdminModal").hidden = false;
-    await refreshAuditInboxList();
-    switchAuditTab("inbox");
   }
   function switchAuditTab(name) {
     document.querySelectorAll('#reportsAdminModal .audit-tab').forEach(b => {

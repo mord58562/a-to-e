@@ -2015,7 +2015,16 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 
 /* ── Unified Admin modal ─────────────────────────────────────────── */
 .modal-card-xwide { max-width: 1080px; }
-.admin-modal-card { display: flex; flex-direction: column; max-height: 88vh; padding: 0; }
+/* Admin modal locks to a stable size so tab switches never reflow the
+   surrounding chrome. The content pane scrolls internally instead. */
+.admin-modal-card {
+  display: flex;
+  flex-direction: column;
+  width: min(1080px, 96vw);
+  height: min(820px, 88vh);
+  max-height: 88vh;
+  padding: 0;
+}
 .admin-modal-card .modal-head { flex: 0 0 auto; padding: 18px 24px; border-bottom: 1px solid var(--line); }
 .admin-layout {
   display: grid;
