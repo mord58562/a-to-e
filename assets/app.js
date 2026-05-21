@@ -453,10 +453,17 @@
       signUpForm.addEventListener("submit", async e => {
         e.preventDefault();
         signUpErr.hidden = true;
+        const pw  = document.getElementById("cloudSignUpPassword").value;
+        const pw2 = (document.getElementById("cloudSignUpPassword2") || {}).value || "";
+        if (pw !== pw2) {
+          signUpErr.textContent = "Passwords don't match.";
+          signUpErr.hidden = false;
+          return;
+        }
         try {
           await cloudSignUp(
             document.getElementById("cloudSignUpEmail").value.trim(),
-            document.getElementById("cloudSignUpPassword").value,
+            pw,
             document.getElementById("cloudSignUpName").value.trim(),
             // LEGACY_ADMIN_MIGRATION: remove the line below after one-time use; cloudSignUp() ignores undefined.
             (document.getElementById("cloudSignUpLegacy") || {}).value || ""
@@ -1198,27 +1205,9 @@
   // Admin top bar: how-to-add + audit. Always visible for admins, dismiss
   // only for this browser session (sessionStorage). Non-admins never see it.
   function maybeShowReminder() {
-    if (!isCurrentUserAdmin()) return;
-    // Dismiss persists for this browser session only; next visit it re-appears.
-    if (sessionStorage.getItem("y4mcq.adminbar.sessionDismissed")) return;
-    const banner = document.getElementById("reminderBanner");
-    const text = document.getElementById("reminderText");
-    const meta = state.meta || {};
-    const total = state.questions.length;
-    const updated = meta.last_added || meta.updated;
-    const days = updated ? Math.floor((Date.now() - new Date(updated).getTime()) / 86400000) : null;
-    // Admin top bar message: short status; banner is ALWAYS visible for admins
-    // (gated only by the per-session dismiss above).
-    if (days === null) {
-      text.textContent = `${total} questions in the bank`;
-    } else if (days >= 7) {
-      text.textContent = `${days} days since the last add - ${total} questions in the bank`;
-    } else if (days >= 3) {
-      text.textContent = `${days} days since last add - ${total} questions in the bank`;
-    } else {
-      text.textContent = `${total} questions in the bank`;
-    }
-    banner.hidden = false;
+    // Admin reminder strip was removed - status now lives in the Admin
+    // modal's Overview tab. Function kept as a no-op so DOMContentLoaded
+    // wiring stays unchanged.
   }
 
   // Reminder bar X button: wired at DOMContentLoaded so the close is
