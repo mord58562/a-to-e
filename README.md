@@ -36,7 +36,16 @@ A free, open practice MCQ bank for end-of-medical-school clinical reasoning - pa
 
 ## Privacy
 
-Fully client-side. Question history, marks, and theme preference live only in your browser's `localStorage`. Nothing is sent to any server.
+You can use A to E without an account. In **guest mode** the site is fully client-side: question history, flags, theme preference, and locally-pasted questions live only in your browser's `localStorage` and nothing is sent to any server.
+
+If you **create a cloud account** (email + password) to sync progress across devices and see what proportion of other users picked each option after you submit, then:
+
+- Email, a PBKDF2-hashed password, an opaque session token, and a per-question record of which option-letter you chose and whether it was first-time correct are stored in a Cloudflare D1 database behind a Cloudflare Worker at `a-to-e-inbox.mord58562.workers.dev`.
+- Aggregate counts are returned to the client to render the social-stats panel. No personally-identifying option-choice data is shown to other users - only totals.
+- You can permanently delete your account and all associated rows from inside the Admin modal's Account tab (or via `POST /api/account/delete`).
+- The reference-ranges panel, the questions themselves, and the per-batch JSON are static assets served from GitHub Pages.
+
+Question-content submitted via the paste flow is committed to the public `mord58562/a-to-e` GitHub repo through the worker (so other users see it on their next reload).
 
 ## Adding your own questions
 
