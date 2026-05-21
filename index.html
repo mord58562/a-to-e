@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260521n" />
+<link rel="stylesheet" href="assets/styles.css?v=20260521o" />
 </head>
 <body data-screen="home" class="locked">
 
@@ -61,6 +61,10 @@
         <span>Password</span>
         <input id="cloudSignUpPassword" type="password" required minlength="8" autocomplete="new-password" />
       </label>
+      <label class="gate-field">
+        <span>Confirm password</span>
+        <input id="cloudSignUpPassword2" type="password" required minlength="8" autocomplete="new-password" />
+      </label>
       <!-- LEGACY_ADMIN_MIGRATION-START (delete this <details> block after one-time use) -->
       <details class="gate-extra">
         <summary>Claim admin (optional)</summary>
@@ -94,14 +98,10 @@
   </div>
 </div>
 
-<div id="reminderBanner" class="reminder admin-only" hidden>
-  <span id="reminderText"></span>
-  <span class="reminder-badge-wrap"><span id="reportsAdminCount" class="badge"></span></span>
-  <button id="reminderDismiss" class="ghost-x" aria-label="Dismiss for this session">×</button>
-</div>
-<!-- Legacy ids referenced by existing JS - hidden, never opened. -->
+<!-- Legacy ids retained, hidden, so any defensive JS lookups still resolve to null gracefully. -->
 <button id="reminderHowTo" hidden></button>
 <button id="reportsAdminBtn" hidden></button>
+<span id="reportsAdminCount" hidden></span>
 
 <header class="masthead">
   <div class="masthead-left">
@@ -1193,6 +1193,6 @@ visible to the maintainer in the commentary view.
 Output the final JSON array. Nothing else.
 </script>
 
-<script src="assets/app.js?v=20260521n" defer></script>
+<script src="assets/app.js?v=20260521o" defer></script>
 </body>
 </html>
