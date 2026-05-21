@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260521j" />
+<link rel="stylesheet" href="assets/styles.css?v=20260521k" />
 </head>
 <body data-screen="home" class="locked">
 
@@ -25,9 +25,9 @@
     <header class="gate-head">
       <a class="gate-brand-row" aria-label="A to E">
         <span class="brand-mark"><span class="cross"></span></span>
-        <span class="gate-wordmark">A to E <span class="brand-glucose">(+ glucose)</span></span>
+        <span class="gate-wordmark">A to E</span>
       </a>
-      <p class="gate-tagline">MCQ practice for the final-year Australian MD student.</p>
+      <p class="gate-tagline">Final-year Australian MD practice.</p>
     </header>
 
     <nav class="gate-tabs" role="tablist">
@@ -35,7 +35,6 @@
       <button type="button" class="gate-tab" data-gate-switch="signup" role="tab" aria-selected="false">Create account</button>
     </nav>
 
-    <!-- Cloud sign-in (default tab) -->
     <form id="cloudSignInForm" class="gate-pane" autocomplete="on">
       <label class="gate-field">
         <span>Email</span>
@@ -45,11 +44,10 @@
         <span>Password</span>
         <input id="cloudSignInPassword" type="password" required autocomplete="current-password" />
       </label>
-      <button class="primary gate-primary" type="submit">Sign in</button>
+      <button class="primary gate-primary" type="submit">Continue</button>
       <p id="cloudSignInErr" class="gate-err" hidden></p>
     </form>
 
-    <!-- Cloud signup -->
     <form id="cloudSignUpForm" class="gate-pane" autocomplete="on" hidden>
       <label class="gate-field">
         <span>First name</span>
@@ -62,13 +60,11 @@
       <label class="gate-field">
         <span>Password</span>
         <input id="cloudSignUpPassword" type="password" required minlength="8" autocomplete="new-password" />
-        <small class="gate-hint">At least 8 characters.</small>
       </label>
       <button class="primary gate-primary" type="submit">Create account</button>
       <p id="cloudSignUpErr" class="gate-err" hidden></p>
     </form>
 
-    <!-- Legacy local profile (Rob + invited collaborators) -->
     <form id="gateForm" class="gate-pane" autocomplete="off" hidden>
       <label class="gate-field">
         <span>Admin password</span>
@@ -79,15 +75,9 @@
       <p id="gateErr" class="gate-err" hidden>Incorrect password.</p>
     </form>
 
-    <div class="gate-or" data-hide-in-legacy>
-      <span>or</span>
-    </div>
-    <button type="button" id="gateGuestBtn" class="gate-secondary" data-hide-in-legacy>
-      Continue as guest
-      <span class="gate-secondary-sub">progress stays on this device only</span>
-    </button>
-
-    <footer class="gate-foot">
+    <footer class="gate-foot" data-hide-in-legacy>
+      <button type="button" id="gateGuestBtn" class="gate-foot-link gate-foot-primary">Continue as guest</button>
+      <span class="gate-foot-sep">·</span>
       <button type="button" class="gate-foot-link" data-gate-switch="legacy">Admin login</button>
       <button type="button" class="gate-foot-link" data-gate-switch="signin" data-gate-back hidden>Back to sign in</button>
     </footer>
@@ -162,10 +152,12 @@
     <button class="ghost-x" id="refClose" aria-label="Close">×</button>
   </div>
   <div class="ref-search">
-    <input id="rangesSearch" type="search" placeholder="filter (e.g. paeds, hb, ctg)" autocomplete="off" />
+    <input id="rangesSearch" type="search" placeholder="search tests, conditions, units..." autocomplete="off" spellcheck="false" />
+    <span id="rangesSearchHit" class="ref-search-hit" hidden></span>
   </div>
+  <div id="refJump" class="ref-jump"></div>
   <div id="rangesBody" class="ref-body"></div>
-  <p class="ref-foot">Sources: RCPA Manual, RCH CPG, KEMH, Therapeutic Guidelines, NHMRC. Always check your local lab.</p>
+  <p class="ref-foot">RCPA Manual · RCH CPG · KEMH · Therapeutic Guidelines · NHMRC. Verify locally before clinical decisions.</p>
 </aside>
 
 <!-- ── HOME ─────────────────────────────────────────────────────────── -->
@@ -1160,6 +1152,6 @@ visible to the maintainer in the commentary view.
 Output the final JSON array. Nothing else.
 </script>
 
-<script src="assets/app.js?v=20260521j" defer></script>
+<script src="assets/app.js?v=20260521k" defer></script>
 </body>
 </html>

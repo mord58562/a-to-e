@@ -253,15 +253,17 @@ body.locked > *:not(#gate):not(script) { display: none !important; }
 
 .gate-foot {
   display: flex; justify-content: center; align-items: center;
-  margin-top: 2px;
-  padding-top: 12px;
+  gap: 8px;
+  margin-top: 4px;
+  padding-top: 14px;
   border-top: 1px solid var(--line);
+  font-size: 12.5px;
 }
 .gate-foot-link {
   background: transparent;
   border: none;
   font-family: inherit;
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--ink-mute);
   cursor: pointer;
   padding: 4px 8px;
@@ -269,6 +271,8 @@ body.locked > *:not(#gate):not(script) { display: none !important; }
   transition: color 0.12s ease, background 0.12s ease;
 }
 .gate-foot-link:hover { color: var(--ink); background: var(--surface-2); }
+.gate-foot-link.gate-foot-primary { color: var(--ink); font-weight: 500; }
+.gate-foot-sep { color: var(--ink-mute); opacity: 0.6; }
 .gate-card[data-mode="legacy"] .gate-foot-link:not([data-gate-back]) { display: none; }
 .gate-card[data-mode="legacy"] .gate-foot-link[data-gate-back] { display: inline-flex; }
 .gate-card[data-mode="signin"] .gate-foot-link[data-gate-back],
@@ -425,13 +429,20 @@ a:hover { text-decoration: underline; }
   place-items: center;
   position: relative;
 }
+/* Five-bar primary-survey glyph (A,B,C,D,E ascending). The third bar
+   (C - Circulation, mid-survey, the cardio-respiratory pivot) is
+   slightly accented so the row reads as a sequence not a barcode. */
 .brand-mark::before {
-  content: "Q";
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 16px;
-  color: var(--bg);
-  letter-spacing: -0.02em;
+  content: "";
+  display: block;
+  width: 19px;
+  height: 14px;
+  background:
+    linear-gradient(to top, var(--bg) 30%, transparent 30%) 0    100% / 2px  5px no-repeat,
+    linear-gradient(to top, var(--bg) 30%, transparent 30%) 4px  100% / 2px  8px no-repeat,
+    linear-gradient(to top, color-mix(in srgb, var(--bg) 80%, white 20%) 30%, transparent 30%) 8px 100% / 2px 11px no-repeat,
+    linear-gradient(to top, var(--bg) 30%, transparent 30%) 12px 100% / 2px 13px no-repeat,
+    linear-gradient(to top, var(--bg) 30%, transparent 30%) 16px 100% / 2px 14px no-repeat;
 }
 .brand-mark .cross { display: none; }
 .brand-words { display: flex; flex-direction: column; line-height: 1; }
@@ -1911,3 +1922,92 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 .account-quality-table .qh { font-weight: 600; color: var(--ink-mute); font-size: 11px; border-bottom: 1px solid var(--line); padding-bottom: 4px; }
 .account-quality-table .qr { padding: 4px 0; border-bottom: 1px solid var(--line); }
 .account-quality-table .qid { font-family: var(--mono); font-size: 11px; }
+
+/* ── Inline reference ranges (post-reveal) ───────────────────────── */
+.inline-ranges {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 4px 16px;
+  font-size: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+.inline-ranges .ir-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 0;
+  font-variant-numeric: tabular-nums;
+}
+.inline-ranges .ir-key { color: var(--ink-mute); }
+.inline-ranges .ir-val { color: var(--ink); }
+
+/* ── Rebuilt reference panel (search-first, scrollable, dense) ───── */
+.ref-search { position: relative; }
+.ref-search-hit {
+  position: absolute;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  color: var(--ink-mute);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.ref-jump {
+  display: flex;
+  gap: 6px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+}
+.ref-jump::-webkit-scrollbar { display: none; }
+.ref-pill {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-family: inherit;
+  color: var(--ink-mute);
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+.ref-pill:hover { background: var(--surface); color: var(--ink); border-color: var(--ink-mute); }
+.ref-body { padding: 10px 14px 24px; }
+.range-cat { margin: 0 0 16px; padding: 0 0 12px; border-bottom: 1px solid var(--line); }
+.range-cat:last-child { border-bottom: none; }
+.range-cat h3 {
+  position: sticky;
+  top: 0;
+  margin: 0 0 6px;
+  padding: 8px 0 6px;
+  background: var(--surface);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  z-index: 1;
+}
+.range-cat .rrs { display: flex; flex-direction: column; }
+.range-cat .rr {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 12px;
+  padding: 4px 0;
+  border-bottom: 1px dotted var(--line);
+  font-size: 12.5px;
+  align-items: baseline;
+}
+.range-cat .rr:last-child { border-bottom: none; }
+.range-cat .rr .test { color: var(--ink-mute); }
+.range-cat .rr .value { color: var(--ink); font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+.range-cat .rr.rr-hidden { display: none; }
+.range-cat.hidden { display: none; }
