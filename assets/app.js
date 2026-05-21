@@ -1063,7 +1063,12 @@
     state.ranges = ranges;
     state.meta = meta;
   }
-  function fetchJson(p) { return fetch(p, { cache: "no-cache" }).then(r => r.json()); }
+  // Use the default browser HTTP cache. The HTML script/link tags carry a
+  // ?v=YYYYMMDDx cache-bust string on every release, and JSON data files
+  // are pulled relative to that page, so a fresh release picks up new data
+  // without needing to revalidate every fetch on every page load (which
+  // previously cost ~54 conditional GETs even when nothing changed).
+  function fetchJson(p) { return fetch(p).then(r => r.json()); }
 
   function applyTheme(t) {
     document.documentElement.setAttribute("data-theme", t);
