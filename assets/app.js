@@ -43,7 +43,34 @@
     let g = null;
     try { g = JSON.parse(localStorage.getItem(GUEST_KEY) || "null"); } catch {}
     if (!g || !g.id) {
-      g = { id: "g-" + Math.random().toString(36).slice(2, 10), display_name: "Guest", created_at: Date.now() };
+      // If a previous guest session left progress behind in localStorage
+      // (HISTORY_KEY.guest-<id>), adopt that id so the user inherits
+      // their prior progress and pill colour. Pick the guest namespace
+      // with the most recent `last_at` activity. Otherwise mint fresh.
+      let bestId = null, bestAt = 0;
+      const prefix = HISTORY_KEY + ".guest-";
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (!k || !k.startsWith(prefix)) continue;
+        const id = k.slice(prefix.length);
+        let hist = null;
+        try { hist = JSON.parse(localStorage.getItem(k) || "{}"); } catch {}
+        if (!hist || typeof hist !== "object") continue;
+        let mostRecent = 0;
+        for (const qid in hist) {
+          const at = (hist[qid] && hist[qid].last_at) || 0;
+          if (at > mostRecent) mostRecent = at;
+        }
+        if (mostRecent > bestAt || (mostRecent === bestAt && !bestId)) {
+          bestAt = mostRecent;
+          bestId = id;
+        }
+      }
+      g = {
+        id: bestId || ("g-" + Math.random().toString(36).slice(2, 10)),
+        display_name: "Guest",
+        created_at: Date.now(),
+      };
       localStorage.setItem(GUEST_KEY, JSON.stringify(g));
     }
     guestUser = g;
@@ -105,8 +132,13 @@
   }
   // Apply the is-admin class to <body> so the CSS rule
   // `body:not(.is-admin) .admin-only { display: none }` kicks in.
+  // Same pattern for is-cloud so cloud-only chrome (Account modal,
+  // settings, etc.) is hidden for guests / legacy profiles.
   function refreshAdminBodyClass() {
     document.body.classList.toggle("is-admin", isCurrentUserAdmin());
+    document.body.classList.toggle("is-cloud", !!cloudUser);
+    const acct = document.getElementById("accountBtn");
+    if (acct) acct.hidden = !cloudUser;
   }
   // Deterministic per-user pill hue (one of 12 evenly-spaced hues around the
   // wheel). The CSS defines saturation + lightness so the colour lands in a
@@ -153,6 +185,7 @@
     count: 20,
     timer: 0,
     disciplines: ["Paediatrics", "Obstetrics & Gynaecology", "Psychiatry", "Medicine"],
+    difficulties: [2, 3, 4, 5],
     filter: "all",
     subtopics: null,   // null = all on; array of strings = subset
   };
@@ -318,6 +351,12 @@
         b.addEventListener("click", () => switchPane(b.dataset.gateSwitch));
       });
 
+      // 0. Guest-to-signup intent: a guest just clicked "sign up" in the
+      // chip. Do NOT auto-activate guest; show the signup pane and run
+      // the guest->cloud migration on success.
+      const signupIntent = sessionStorage.getItem("y4mcq.signupIntent");
+      if (signupIntent) sessionStorage.removeItem("y4mcq.signupIntent");
+
       // 1. Already signed in via cloud? Skip the gate AND clear any stale
       // legacy profile token so ns() never shadows the cloud namespace.
       const cloudCheck = await cloudCheckAuth();
@@ -335,9 +374,11 @@
         localStorage.removeItem(PROFILE_CURRENT_KEY);
       }
 
-      // 3. Already in guest mode? Skip the gate.
+      // 3. Already in guest mode? Skip the gate (UNLESS the guest asked
+      // to sign up, in which case we keep them at the gate so they can
+      // create a cloud account that inherits their guest progress).
       const savedGuest = localStorage.getItem(GUEST_KEY);
-      if (savedGuest) { activateGuest(); return unlock(); }
+      if (savedGuest && !signupIntent) { activateGuest(); return unlock(); }
 
       // Guest button: continue without an account; data lives in localStorage.
       const guestBtn = document.getElementById("gateGuestBtn");
@@ -380,6 +421,14 @@
             document.getElementById("cloudSignUpPassword").value,
             document.getElementById("cloudSignUpName").value.trim()
           );
+          // Capture any pre-existing guest id BEFORE we clear it so we
+          // can fold guest progress into the new cloud account.
+          let prevGuestId = null;
+          try {
+            const g = localStorage.getItem(GUEST_KEY);
+            if (g) prevGuestId = JSON.parse(g).id;
+          } catch (_) {}
+          if (prevGuestId) migrateGuestHistoryIntoCloud(prevGuestId);
           localStorage.removeItem(PROFILE_CURRENT_KEY);
           currentProfile = null;
           localStorage.removeItem(GUEST_KEY);
@@ -410,7 +459,7 @@
         }
       });
 
-      switchPane("signin");
+      switchPane(signupIntent ? "signup" : "signin");
     });
   }
 
@@ -438,6 +487,7 @@
     wireReportModal();
     wireReportsAdmin();
     wireStatsModal();
+    wireAccountModal();
     wireReminderDismiss();
     maybeShowReminder();
     updateReportsAdminBadge();
@@ -453,6 +503,115 @@
     btn.onclick = () => { renderStats(); modal.hidden = false; };
     close.onclick = () => { modal.hidden = true; };
     modal.addEventListener("click", e => { if (e.target.id === "statsModal") modal.hidden = true; });
+  }
+
+  function wireAccountModal() {
+    const btn = document.getElementById("accountBtn");
+    const modal = document.getElementById("accountModal");
+    const close = document.getElementById("accountClose");
+    if (!btn || !modal || !close) return;
+    btn.onclick = () => { renderAccount(); modal.hidden = false; };
+    close.onclick = () => { modal.hidden = true; };
+    modal.addEventListener("click", e => { if (e.target.id === "accountModal") modal.hidden = true; });
+  }
+
+  async function renderAccount() {
+    const body = document.getElementById("accountBody");
+    if (!body || !cloudUser) return;
+    body.innerHTML = `<p class="dim small">Loading...</p>`;
+    const self = `
+      <div class="account-section">
+        <h3>Signed in</h3>
+        <p>${esc(cloudUser.display_name || cloudUser.email)} · <span class="dim">${esc(cloudUser.email)}</span>${cloudUser.is_admin ? ' · <span class="dim">admin</span>' : ''}</p>
+        <div class="account-self-delete">
+          <strong>Delete this account.</strong>
+          <p class="dim small" style="margin:4px 0">All your answers and progress will be permanently removed. This cannot be undone.</p>
+          <button class="danger-btn" id="acctSelfDelete">Delete my account</button>
+        </div>
+      </div>`;
+    let adminHtml = "";
+    if (cloudUser.is_admin) {
+      let users = []; let quality = null;
+      try {
+        const r1 = await apiFetch("/api/admin/users");
+        users = (r1 && r1.users) || [];
+      } catch (_) {}
+      try {
+        quality = await apiFetch("/api/admin/quality");
+      } catch (_) {}
+      const rows = users.map(u => {
+        const isSelf = u.id === cloudUser.id;
+        return `
+          <div class="ar ${isSelf ? 'is-self' : ''}">${esc(u.display_name || u.email.split('@')[0])}</div>
+          <div class="ar">${esc(u.email)}</div>
+          <div class="ar">${u.answers || 0}</div>
+          <div class="ar">${u.is_admin ? '<span title="Admin">admin</span>' : 'user'}</div>
+          <div class="ar">${isSelf ? '' : (u.is_admin
+            ? `<button class="btn-mini" data-act="demote" data-id="${esc(u.id)}">demote</button>`
+            : `<button class="btn-mini promote" data-act="promote" data-id="${esc(u.id)}">promote</button>`)}</div>
+          <div class="ar">${isSelf ? '' : `<button class="btn-mini danger" data-act="delete" data-id="${esc(u.id)}" data-label="${esc(u.email)}">delete</button>`}</div>`;
+      }).join("");
+      const worst = (quality && quality.worst) || [];
+      const totals = (quality && quality.totals) || {};
+      const worstRows = worst.slice(0, 25).map(r => {
+        const pct = r.n ? Math.round((100 * (r.c || 0)) / r.n) : 0;
+        return `<div class="qr qid">${esc(r.question_id)}</div><div class="qr">${r.n}</div><div class="qr">${pct}%</div>`;
+      }).join("");
+      adminHtml = `
+        <div class="account-section">
+          <h3>Admin · bank engagement</h3>
+          <p class="dim small">Across all users: ${totals.users || 0} users, ${totals.answers || 0} answers on ${totals.qs || 0} distinct questions.</p>
+        </div>
+        <div class="account-section">
+          <h3>Admin · worst-performing questions</h3>
+          <p class="dim small">Lowest first-time-correct rates with ≥5 answers - likely candidates for audit.</p>
+          <div class="account-quality-table">
+            <div class="qh">Question id</div><div class="qh">N</div><div class="qh">Correct</div>
+            ${worstRows || '<div class="qr" style="grid-column:1/-1">No questions with 5+ answers yet.</div>'}
+          </div>
+        </div>
+        <div class="account-section">
+          <h3>Admin · users</h3>
+          <div class="account-users-table">
+            <div class="ah">Name</div><div class="ah">Email</div><div class="ah">Answers</div><div class="ah">Role</div><div class="ah"></div><div class="ah"></div>
+            ${rows}
+          </div>
+        </div>`;
+    }
+    body.innerHTML = self + adminHtml;
+
+    const selfBtn = document.getElementById("acctSelfDelete");
+    if (selfBtn) selfBtn.onclick = async () => {
+      const confirmEmail = prompt("Type your email to confirm permanent account deletion:");
+      if (!confirmEmail || confirmEmail.trim().toLowerCase() !== (cloudUser.email || "").toLowerCase()) {
+        if (confirmEmail !== null) alert("Email did not match - account NOT deleted.");
+        return;
+      }
+      try {
+        await apiFetch("/api/account/delete", { method: "POST" });
+        cloudSignOut();
+        location.reload();
+      } catch (e) { alert("Failed to delete account: " + (e.message || e)); }
+    };
+
+    body.querySelectorAll("[data-act]").forEach(btn => {
+      btn.onclick = async () => {
+        const id = btn.dataset.id, act = btn.dataset.act, label = btn.dataset.label || id;
+        try {
+          if (act === "delete") {
+            if (!confirm(`Permanently delete user ${label} and all their answers?`)) return;
+            await apiFetch(`/api/admin/users/${encodeURIComponent(id)}/delete`, { method: "POST" });
+          } else if (act === "promote") {
+            if (!confirm(`Grant admin to ${label}?`)) return;
+            await apiFetch(`/api/admin/users/${encodeURIComponent(id)}/promote`, { method: "POST" });
+          } else if (act === "demote") {
+            if (!confirm(`Revoke admin from ${label}?`)) return;
+            await apiFetch(`/api/admin/users/${encodeURIComponent(id)}/demote`, { method: "POST" });
+          }
+          renderAccount();
+        } catch (e) { alert("Action failed: " + (e.message || e)); }
+      };
+    });
   }
   function formatDuration(ms) {
     const s = Math.max(0, Math.round(ms / 1000));
@@ -637,21 +796,61 @@
     if (signOutBtn) {
       const isGuest = guestUser && !currentProfile && !cloudUser;
       if (isGuest) {
-        signOutBtn.textContent = "exit guest";
-        signOutBtn.title = "Leave guest mode and return to the sign-in screen";
+        signOutBtn.textContent = "sign up";
+        signOutBtn.title = "Create a cloud account and migrate your guest progress automatically";
       }
       signOutBtn.onclick = e => {
         e.stopPropagation();
         if (isGuest) {
-          if (!confirm("Exit guest mode? Your guest progress stays on this device but you'll see the sign-in screen.")) return;
-          localStorage.removeItem(GUEST_KEY);
-          guestUser = null;
+          // Reload into the gate's signup pane WITHOUT clearing the
+          // guest token. passGate will see the SIGNUP_INTENT flag and
+          // jump straight to the sign-up form; on successful signup it
+          // migrates the guest namespace into the new cloud namespace.
+          sessionStorage.setItem("y4mcq.signupIntent", "1");
           location.reload();
           return;
         }
         const label = currentProfile ? currentProfile.name : (cloudUser ? (cloudUser.display_name || cloudUser.email) : "");
         if (confirm(`Sign out ${label}? Your progress stays saved against this account.`)) signOut();
       };
+    }
+  }
+
+  // Migrate localStorage progress from the guest namespace into the
+  // signed-in cloud user's namespace. Called once immediately after
+  // a successful signup while a guest token still exists. After
+  // migration the guest token is cleared so the user never sees the
+  // guest identity again.
+  function migrateGuestHistoryIntoCloud(prevGuestId) {
+    if (!cloudUser || !prevGuestId) return;
+    const importedFlag = "y4mcq.cloud.guestmigrated." + cloudUser.id;
+    if (localStorage.getItem(importedFlag)) return;
+    const guestHist = load(`${HISTORY_KEY}.guest-${prevGuestId}`, null);
+    if (guestHist) {
+      const cloudKey = `${HISTORY_KEY}.cloud-${cloudUser.id}`;
+      const existing = load(cloudKey, {});
+      for (const qid in guestHist) {
+        if (!existing[qid] || (guestHist[qid].count > (existing[qid].count || 0))) {
+          existing[qid] = guestHist[qid];
+        }
+      }
+      save(cloudKey, existing);
+      localStorage.removeItem(`${HISTORY_KEY}.guest-${prevGuestId}`);
+    }
+    const guestFlags = load(`${FLAGS_KEY}.guest-${prevGuestId}`, null);
+    if (guestFlags) {
+      const cloudFlagsKey = `${FLAGS_KEY}.cloud-${cloudUser.id}`;
+      save(cloudFlagsKey, Object.assign({}, guestFlags, load(cloudFlagsKey, {})));
+      localStorage.removeItem(`${FLAGS_KEY}.guest-${prevGuestId}`);
+    }
+    localStorage.setItem(importedFlag, "1");
+    // Also stream guest answers up to the cloud so the social-stats
+    // aggregate reflects them. Fire-and-forget; failures don't block UX.
+    const qids = guestHist ? Object.keys(guestHist) : [];
+    for (const qid of qids) {
+      const h = guestHist[qid];
+      if (!h || !h.count) continue;
+      try { cloudPostAnswer(qid, "", !!h.lastCorrect); } catch (_) {}
     }
   }
 
@@ -838,6 +1037,9 @@
     document.querySelectorAll('.setup-options[data-name="disciplines"] .opt').forEach(c => {
       c.classList.toggle("selected", state.settings.disciplines.includes(c.dataset.value));
     });
+    document.querySelectorAll('.setup-options[data-name="difficulties"] .opt').forEach(c => {
+      c.classList.toggle("selected", state.settings.difficulties.includes(parseInt(c.dataset.value, 10)));
+    });
     document.querySelectorAll('[data-show-for="test"]').forEach(r => {
       r.hidden = state.settings.mode !== "test";
     });
@@ -855,6 +1057,8 @@
       state.settings.disciplines = values;
       // Re-render the subtopic chips so they reflect the new discipline set.
       renderSubtopicChips();
+    } else if (name === "difficulties") {
+      state.settings.difficulties = values.map(v => parseInt(v, 10)).filter(n => !isNaN(n));
     } else if (name === "subtopics") {
       const total = row.querySelectorAll(".opt").length;
       state.settings.subtopics = values.length === total ? null : values;
@@ -873,6 +1077,7 @@
     const s = state.settings;
     return state.questions.filter(q => {
       if (s.disciplines.length && !s.disciplines.includes(q.topic)) return false;
+      if (s.difficulties && s.difficulties.length && !s.difficulties.includes(q.difficulty)) return false;
       if (s.subtopics && !s.subtopics.includes(q.subtopic || "Other")) return false;
       const h = state.history[q.id];
       if (s.filter === "unseen" && h) return false;
@@ -1043,7 +1248,7 @@
     const fSep = document.querySelector(".folio-sep");
     if (fSep) fSep.style.display = "none";
 
-    document.getElementById("qStem").textContent = q.stem;
+    renderStemWithClues(q);
 
     // Optional question image (e.g. from a referenced AU image bank).
     const imgFig = document.getElementById("qImage");
@@ -1174,6 +1379,7 @@
       first_correct: prev.first_correct ?? (prev.count ? prev.first_correct : isC),
     };
     save(ns(HISTORY_KEY), state.history);
+    maybeShowHouseQuote();
     // Log to cloud (fire-and-forget) so this answer joins the aggregate
     // stats. Stats response is stashed on the question so revealAnswer can
     // paint the bars. Test mode also logs (but reveal happens at session end).
@@ -1228,6 +1434,7 @@
       if (opt.correct) li.classList.add("correct");
       else if (state.quiz.answers[q.id] === letter) li.classList.add("wrong");
     });
+    renderStemWithClues(q);
 
     const ex = document.getElementById("explainBlock");
     ex.hidden = false;
@@ -2592,10 +2799,92 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
   }
 
   // ── Utility ─────────────────────────────────────────────────────────────
+  // ── House M.D. comic-relief toast (every 50 submissions per session) ──
+  // Real lines from the show. Each lands once per browser session-tab
+  // crossing of a multiple of 50 submissions. The first 50 also fires
+  // on the user's very first session so the easter egg is discoverable.
+  const HOUSE_QUOTES = [
+    { q: "Everybody lies.", who: "House" },
+    { q: "It's a basic truth of the human condition that everybody lies. The only variable is about what.", who: "House" },
+    { q: "I take risks, sometimes patients die. But not taking risks causes more patients to die, so I guess my biggest problem is I've been cursed with the ability to do the math.", who: "House" },
+    { q: "Patients sometimes get better. You have no idea why, but unless you give a reason they won't pay you.", who: "House" },
+    { q: "Anybody notice if there's a full moon? Nurses are eight times more likely to assault a doctor during a full moon.", who: "House" },
+    { q: "If you talk to God, you're religious. If God talks to you, you're psychotic.", who: "House" },
+    { q: "Reality is almost always wrong.", who: "House" },
+    { q: "Diagnostics is solving puzzles. Puzzles where the wrong answer kills.", who: "House" },
+    { q: "Treating illnesses is why we became doctors. Treating patients is what makes most doctors miserable.", who: "House" },
+    { q: "There's no I in team. There's a me, though, if you jumble it up.", who: "House" },
+    { q: "Test results are never a substitute for a good clinical history.", who: "House" },
+    { q: "When you want to know the truth about someone, that someone is probably the last person you should ask.", who: "House" },
+    { q: "The eyes can mislead, the smile can lie, but the shoes always tell the truth.", who: "House" },
+    { q: "It's never lupus.", who: "House" },
+    { q: "Idiopathic, from the Latin meaning we're idiots cause we can't figure out what's causing it.", who: "House" },
+    { q: "Patients lie. People die. You ought to be used to it by now.", who: "House" },
+    { q: "Humanity is overrated.", who: "House" },
+    { q: "I don't ask questions. I make connections.", who: "House" },
+    { q: "If her DNA was off by one percentage point she'd be a dolphin.", who: "House" },
+    { q: "You can't always get what you want.", who: "House" },
+    { q: "Wisdom is acknowledging what you don't know.", who: "House" },
+  ];
+  function maybeShowHouseQuote() {
+    const KEY = "y4mcq.house.sessionCount";
+    const next = (parseInt(sessionStorage.getItem(KEY) || "0", 10) || 0) + 1;
+    sessionStorage.setItem(KEY, String(next));
+    if (next % 50 !== 0) return;
+    const idx = Math.floor(Math.random() * HOUSE_QUOTES.length);
+    showHouseQuote(HOUSE_QUOTES[idx]);
+  }
+  function showHouseQuote({ q, who }) {
+    const old = document.querySelector(".house-toast");
+    if (old) old.remove();
+    const toast = document.createElement("div");
+    toast.className = "house-toast";
+    toast.innerHTML = `<span class="hq-quote">"${esc(q)}"</span><span class="hq-attrib">- ${esc(who)}</span>`;
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add("show"));
+    const dismiss = () => { toast.classList.remove("show"); setTimeout(() => toast.remove(), 320); };
+    toast.addEventListener("click", dismiss);
+    setTimeout(dismiss, 9000);
+  }
+
+  // Render the stem, optionally highlighting authored clue phrases after
+  // the answer has been revealed. q.explanation.stem_clues (when present)
+  // is an array of substrings; matching spans are wrapped in <mark>. If
+  // no clues are authored, the stem renders as plain text - never
+  // synthetic guesses. Highlights only show after reveal.
+  function renderStemWithClues(q) {
+    const el = document.getElementById("qStem");
+    if (!el) return;
+    const revealed = state.quiz && state.quiz.revealed && state.quiz.revealed[q.id];
+    const clues = (q.explanation && Array.isArray(q.explanation.stem_clues)) ? q.explanation.stem_clues : [];
+    if (!revealed || !clues.length) { el.textContent = q.stem; return; }
+    let html = esc(q.stem);
+    const seen = new Set();
+    for (const raw of clues) {
+      const c = String(raw || "").trim();
+      if (!c || seen.has(c)) continue;
+      seen.add(c);
+      const escClue = esc(c).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const re = new RegExp(escClue, "g");
+      html = html.replace(re, m => `<mark class="stem-clue">${m}</mark>`);
+    }
+    el.innerHTML = html;
+  }
+
+  // Fisher-Yates shuffle. Uses crypto.getRandomValues when available so
+  // the next-question stream is uniform across the eligible pool with
+  // no positional bias and no recency clustering. Math.random fallback
+  // for ancient browsers.
   function shuffle(arr) {
     const a = arr.slice();
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+    const n = a.length;
+    if (n < 2) return a;
+    const buf = new Uint32Array(n);
+    const cryptoApi = (typeof crypto !== "undefined" && crypto.getRandomValues) ? crypto : null;
+    if (cryptoApi) cryptoApi.getRandomValues(buf);
+    for (let i = n - 1; i > 0; i--) {
+      const r = cryptoApi ? buf[i] / 4294967296 : Math.random();
+      const j = Math.floor(r * (i + 1));
       [a[i], a[j]] = [a[j], a[i]];
     }
     return a;
