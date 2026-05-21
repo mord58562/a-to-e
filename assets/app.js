@@ -107,12 +107,23 @@
     localStorage.setItem(AUTH_TOKEN_KEY, token);
     return user;
   }
-  async function cloudSignUp(email, password, displayName) {
-    const { token, user } = await apiFetch("/api/register", { method: "POST", body: JSON.stringify({ email, password, display_name: displayName }) });
+  async function cloudSignUp(email, password, displayName, legacyAdminSecret) {
+    const payload = { email, password, display_name: displayName };
+    // LEGACY_ADMIN_MIGRATION-START (remove next line after one-time use)
+    if (legacyAdminSecret) payload.legacy_admin_secret = legacyAdminSecret;
+    // LEGACY_ADMIN_MIGRATION-END
+    const { token, user } = await apiFetch("/api/register", { method: "POST", body: JSON.stringify(payload) });
     authToken = token; cloudUser = user;
     localStorage.setItem(AUTH_TOKEN_KEY, token);
     return user;
   }
+  // LEGACY_ADMIN_MIGRATION-START (delete this function after one-time use)
+  async function cloudClaimAdmin(legacyAdminSecret) {
+    const r = await apiFetch("/api/account/claim-admin", { method: "POST", body: JSON.stringify({ legacy_admin_secret: legacyAdminSecret }) });
+    if (r && r.user) cloudUser = r.user;
+    return r;
+  }
+  // LEGACY_ADMIN_MIGRATION-END
   function cloudSignOut() {
     authToken = null; cloudUser = null;
     localStorage.removeItem(AUTH_TOKEN_KEY);
@@ -137,8 +148,7 @@
   function refreshAdminBodyClass() {
     document.body.classList.toggle("is-admin", isCurrentUserAdmin());
     document.body.classList.toggle("is-cloud", !!cloudUser);
-    const acct = document.getElementById("accountBtn");
-    if (acct) acct.hidden = !cloudUser;
+    refreshAdminAccountVisibility();
   }
   // Deterministic per-user pill hue (one of 12 evenly-spaced hues around the
   // wheel). The CSS defines saturation + lightness so the colour lands in a
@@ -447,7 +457,9 @@
           await cloudSignUp(
             document.getElementById("cloudSignUpEmail").value.trim(),
             document.getElementById("cloudSignUpPassword").value,
-            document.getElementById("cloudSignUpName").value.trim()
+            document.getElementById("cloudSignUpName").value.trim(),
+            // LEGACY_ADMIN_MIGRATION: remove the line below after one-time use; cloudSignUp() ignores undefined.
+            (document.getElementById("cloudSignUpLegacy") || {}).value || ""
           );
           // Capture any pre-existing guest id BEFORE we clear it so we
           // can fold guest progress into the new cloud account.
@@ -536,9 +548,20 @@
 
   function wireAccountModal() {
     // The legacy account modal is superseded by the unified Admin
-    // interface; the Account button now routes there.
+    // interface; the Account / Admin buttons both route there.
     const btn = document.getElementById("accountBtn");
     if (btn) btn.onclick = () => openAdmin("account");
+    const adminBtn = document.getElementById("adminMastheadBtn");
+    if (adminBtn) adminBtn.onclick = () => openAdmin("overview");
+    // Admins don't need a separate Account button - the unified modal
+    // already contains the account tab. Hide the duplicate.
+    if (adminBtn) refreshAdminAccountVisibility();
+  }
+  function refreshAdminAccountVisibility() {
+    const acc = document.getElementById("accountBtn");
+    const adm = document.getElementById("adminMastheadBtn");
+    if (acc) acc.hidden = !cloudUser || (cloudUser && cloudUser.is_admin);
+    if (adm) adm.hidden = !(cloudUser && cloudUser.is_admin);
   }
 
   // ── Unified Admin interface ─────────────────────────────────────────
@@ -548,14 +571,14 @@
   // Live), we re-parent the existing wired DOM into the active panel
   // on tab activation so the original event handlers keep working.
   const ADMIN_TABS = [
-    { id: "overview", label: "Overview", admin: true },
-    { id: "add",      label: "Add questions", admin: true, source: "#howToModal .modal-body" },
-    { id: "inbox",    label: "Inbox", admin: true, source: '#reportsAdminModal [data-tab-panel="inbox"]' },
-    { id: "reports",  label: "Reports", admin: true, source: '#reportsAdminModal [data-tab-panel="reports"]' },
-    { id: "live",     label: "Live content", admin: true, source: '#reportsAdminModal [data-tab-panel="live"]' },
-    { id: "quality",  label: "Quality", admin: true },
-    { id: "users",    label: "Users", admin: true },
-    { id: "account",  label: "Account", admin: false },
+    { id: "overview", label: "Overview", admin: true,  icon: "▤" },
+    { id: "add",      label: "Add",      admin: true,  icon: "+", source: "#howToModal .modal-body" },
+    { id: "inbox",    label: "Inbox",    admin: true,  icon: "▾", source: '#reportsAdminModal [data-tab-panel="inbox"]' },
+    { id: "reports",  label: "Reports",  admin: true,  icon: "⚠", source: '#reportsAdminModal [data-tab-panel="reports"]' },
+    { id: "live",     label: "Live",     admin: true,  icon: "◐", source: '#reportsAdminModal [data-tab-panel="live"]' },
+    { id: "quality",  label: "Quality",  admin: true,  icon: "★" },
+    { id: "users",    label: "Users",    admin: true,  icon: "◯" },
+    { id: "account",  label: "Account",  admin: false, icon: "●" },
   ];
 
   function wireAdminModal() {
@@ -574,7 +597,7 @@
     const sidebar = document.getElementById("adminSidebar");
     const title = document.getElementById("adminTitle");
     if (title) title.textContent = isAdmin ? "Admin" : "Account";
-    sidebar.innerHTML = tabs.map(t => `<button class="admin-tab" data-admin-tab="${t.id}">${esc(t.label)}</button>`).join("");
+    sidebar.innerHTML = tabs.map(t => `<button class="admin-tab" data-admin-tab="${t.id}"><span class="admin-tab-icon">${esc(t.icon || "·")}</span><span class="admin-tab-label">${esc(t.label)}</span></button>`).join("");
     sidebar.querySelectorAll(".admin-tab").forEach(b => {
       b.onclick = () => selectAdminTab(b.dataset.adminTab);
     });
@@ -608,6 +631,8 @@
   function renderAdminOverview(root) {
     const counts = { L2: 0, L3: 0, L4: 0, L5: 0 };
     const byTopic = {};
+    const flagged = state.flags ? Object.keys(state.flags).filter(k => state.flags[k]).length : 0;
+    const answered = state.history ? Object.keys(state.history).length : 0;
     (state.questions || []).forEach(q => {
       const d = q.difficulty;
       if (d >= 2 && d <= 5) counts["L" + d]++;
@@ -616,24 +641,48 @@
     const total = state.questions.length;
     const meta = state.meta || {};
     const lastAdd = meta.last_added || meta.updated || "-";
+    const reportsOpen = (state.reports || []).filter(r => (r.status || "open") === "open").length;
+    const inboxCount = (state.inboxManifest && state.inboxManifest.inbox && state.inboxManifest.inbox.length) || 0;
+    const max = Math.max(1, ...Object.values(byTopic));
     root.innerHTML = `
-      <h3>Bank overview</h3>
-      <div class="admin-grid-4">
-        <div class="ag-stat"><span class="ag-stat-val">${total}</span><span class="ag-stat-lbl">questions total</span></div>
-        <div class="ag-stat"><span class="ag-stat-val">${counts.L2}</span><span class="ag-stat-lbl">at L2</span></div>
-        <div class="ag-stat"><span class="ag-stat-val">${counts.L3}</span><span class="ag-stat-lbl">at L3</span></div>
-        <div class="ag-stat"><span class="ag-stat-val">${counts.L4}</span><span class="ag-stat-lbl">at L4</span></div>
+      <div class="admin-pane">
+        <header class="admin-pane-head">
+          <h2>Bank overview</h2>
+          <p class="dim">${esc(String(lastAdd))} · last batch added</p>
+        </header>
+        <div class="admin-stat-grid">
+          <div class="ag-stat"><span class="ag-stat-val">${total}</span><span class="ag-stat-lbl">questions</span></div>
+          <div class="ag-stat"><span class="ag-stat-val">${answered}</span><span class="ag-stat-lbl">you've answered</span></div>
+          <div class="ag-stat"><span class="ag-stat-val">${flagged}</span><span class="ag-stat-lbl">flagged</span></div>
+          <div class="ag-stat"><span class="ag-stat-val ${reportsOpen ? 'warn' : ''}">${reportsOpen}</span><span class="ag-stat-lbl">open reports</span></div>
+          <div class="ag-stat"><span class="ag-stat-val ${inboxCount ? 'warn' : ''}">${inboxCount}</span><span class="ag-stat-lbl">inbox pending</span></div>
+        </div>
+
+        <section class="admin-pane-section">
+          <h3>By discipline</h3>
+          <div class="admin-bar-rows">
+            ${["Paediatrics","Obstetrics & Gynaecology","Psychiatry","Medicine"].map(t => {
+              const n = byTopic[t] || 0;
+              const pct = total ? Math.round((n / total) * 100) : 0;
+              const widthPct = Math.round((n / max) * 100);
+              return `<div class="ab-row"><div class="ab-label">${esc(t)}</div><div class="ab-bar-wrap"><span style="width:${widthPct}%"></span></div><div class="ab-val">${n} <span class="dim">· ${pct}%</span></div></div>`;
+            }).join("")}
+          </div>
+        </section>
+
+        <section class="admin-pane-section">
+          <h3>By difficulty</h3>
+          <div class="admin-bar-rows">
+            ${["L2","L3","L4","L5"].map(k => {
+              const n = counts[k];
+              const pct = total ? Math.round((n / total) * 100) : 0;
+              const widthPct = Math.round((n / Math.max(1, ...Object.values(counts))) * 100);
+              return `<div class="ab-row"><div class="ab-label">${k}</div><div class="ab-bar-wrap"><span style="width:${widthPct}%"></span></div><div class="ab-val">${n} <span class="dim">· ${pct}%</span></div></div>`;
+            }).join("")}
+          </div>
+          <p class="dim small" style="margin-top:8px">Target shape: L3 and L4 each outnumber L2; L5 around 5% of total.</p>
+        </section>
       </div>
-      <h3>By discipline</h3>
-      <div class="admin-discipline-rows">
-        ${["Paediatrics","Obstetrics & Gynaecology","Psychiatry","Medicine"].map(t => {
-          const n = byTopic[t] || 0;
-          const pct = total ? Math.round((n / total) * 100) : 0;
-          return `<div class="admin-disc-row"><span>${esc(t)}</span><span class="dim">${n} · ${pct}%</span></div>`;
-        }).join("")}
-      </div>
-      <h3>Last batch added</h3>
-      <p class="dim">${esc(String(lastAdd))}</p>
     `;
   }
 
@@ -720,14 +769,47 @@
       root.innerHTML = `<p class="dim">Sign in to manage your account.</p>`;
       return;
     }
+    // LEGACY_ADMIN_MIGRATION-START (delete claimBlock + the
+    // acctClaim* wiring lower down after one-time use)
+    const claimBlock = cloudUser.is_admin ? "" : `
+      <div class="account-claim-admin">
+        <strong>Claim admin rights.</strong>
+        <p class="dim small" style="margin:4px 0">If you hold the original local-gate admin password, enter it here to promote this cloud account to admin.</p>
+        <div class="claim-row">
+          <input type="password" id="acctClaimInput" placeholder="legacy admin password" autocomplete="off" />
+          <button class="primary" id="acctClaimBtn">Claim admin</button>
+        </div>
+        <p id="acctClaimMsg" class="dim small" hidden></p>
+      </div>`;
+    // LEGACY_ADMIN_MIGRATION-END
     root.innerHTML = `
       <h3>Signed in</h3>
       <p>${esc(cloudUser.display_name || cloudUser.email)} · <span class="dim">${esc(cloudUser.email)}</span>${cloudUser.is_admin ? ' · <span class="dim">admin</span>' : ''}</p>
+      ${claimBlock}
       <div class="account-self-delete">
         <strong>Delete this account.</strong>
         <p class="dim small" style="margin:4px 0">All your answers and progress will be permanently removed. This cannot be undone.</p>
         <button class="danger-btn" id="acctSelfDeleteUnified">Delete my account</button>
       </div>`;
+    // LEGACY_ADMIN_MIGRATION-START
+    const claimBtn = document.getElementById("acctClaimBtn");
+    if (claimBtn) claimBtn.onclick = async () => {
+      const input = document.getElementById("acctClaimInput");
+      const msg = document.getElementById("acctClaimMsg");
+      const secret = (input && input.value || "").trim();
+      if (!secret) return;
+      try {
+        await cloudClaimAdmin(secret);
+        msg.hidden = false;
+        msg.textContent = "Admin granted. Reloading...";
+        refreshAdminBodyClass();
+        setTimeout(() => location.reload(), 600);
+      } catch (e) {
+        msg.hidden = false;
+        msg.textContent = "Wrong legacy secret.";
+      }
+    };
+    // LEGACY_ADMIN_MIGRATION-END
     const sb = document.getElementById("acctSelfDeleteUnified");
     if (sb) sb.onclick = async () => {
       const confirmEmail = prompt("Type your email to confirm permanent account deletion:");
