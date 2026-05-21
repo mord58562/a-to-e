@@ -392,10 +392,106 @@
     wireHowToModal();
     wireReportModal();
     wireReportsAdmin();
+    wireStatsModal();
     maybeShowReminder();
     updateReportsAdminBadge();
     showHome();
   });
+
+  // ── Stats modal ─────────────────────────────────────────────────────
+  function wireStatsModal() {
+    const btn = document.getElementById("statsBtn");
+    const modal = document.getElementById("statsModal");
+    const close = document.getElementById("statsClose");
+    if (!btn || !modal || !close) return;
+    btn.onclick = () => { renderStats(); modal.hidden = false; };
+    close.onclick = () => { modal.hidden = true; };
+    modal.addEventListener("click", e => { if (e.target.id === "statsModal") modal.hidden = true; });
+  }
+  function formatDuration(ms) {
+    const s = Math.max(0, Math.round(ms / 1000));
+    const h = Math.floor(s / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const sec = s % 60;
+    if (h) return `${h}h ${m}m`;
+    if (m) return `${m}m ${sec}s`;
+    return `${sec}s`;
+  }
+  function renderStats() {
+    const body = document.getElementById("statsBody");
+    if (!body) return;
+    const history = state.history || {};
+    const ids = Object.keys(history);
+    const bankById = {}; (state.questions || []).forEach(q => { bankById[q.id] = q; });
+
+    let answered = 0, firstCorrect = 0, totalMs = 0;
+    const byTopic = {};
+    const byDiff = {};
+    let lastAt = 0;
+    for (const id of ids) {
+      const h = history[id]; if (!h || !h.count) continue;
+      const q = bankById[id]; if (!q) continue;
+      answered++;
+      if (h.lastCorrect) firstCorrect++;
+      totalMs += h.time_ms_total || 0;
+      if ((h.last_at || 0) > lastAt) lastAt = h.last_at || 0;
+      const t = q.topic || "Other";
+      byTopic[t] = byTopic[t] || { n: 0, correct: 0 };
+      byTopic[t].n++; if (h.lastCorrect) byTopic[t].correct++;
+      const d = String(q.difficulty || "?");
+      byDiff[d] = byDiff[d] || { n: 0, correct: 0 };
+      byDiff[d].n++; if (h.lastCorrect) byDiff[d].correct++;
+    }
+    const total = (state.questions || []).length;
+    const acc = answered ? Math.round((firstCorrect / answered) * 100) : 0;
+    const avg = answered ? Math.round(totalMs / answered / 1000) : 0;
+
+    if (!answered) {
+      body.innerHTML = `<p class="stats-empty">You haven't answered any questions yet. Pick a mode and hit Begin from the home screen; stats will appear here once you've worked through a few.</p>`;
+      return;
+    }
+
+    const head = `
+      <div class="stats-head">
+        <div class="stats-num"><span class="stats-num-value">${answered}</span><span class="stats-num-label">questions answered (${Math.round(answered / total * 100) || 0}% of bank)</span></div>
+        <div class="stats-num"><span class="stats-num-value">${acc}%</span><span class="stats-num-label">first-time correct</span></div>
+        <div class="stats-num"><span class="stats-num-value">${formatDuration(totalMs)}</span><span class="stats-num-label">time studying · ${avg}s avg / q</span></div>
+      </div>`;
+
+    function rows(map, order) {
+      const keys = order ? order.filter(k => map[k]) : Object.keys(map).sort();
+      const maxN = Math.max(1, ...keys.map(k => map[k].n));
+      return keys.map(k => {
+        const { n, correct } = map[k];
+        const pct = n ? Math.round((correct / n) * 100) : 0;
+        const widthPct = Math.round((n / maxN) * 100);
+        return `
+          <div class="stats-label">${esc(k)}</div>
+          <div class="stats-count">${correct} / ${n}</div>
+          <div class="stats-bar-wrap"><span style="width:${widthPct}%"></span></div>
+          <div class="stats-pct-cell">${pct}%</div>`;
+      }).join("");
+    }
+
+    const topicOrder = ["Paediatrics","Obstetrics & Gynaecology","Psychiatry","Medicine"];
+    const diffOrder = ["3","4","5"];
+    const lastStr = lastAt ? new Date(lastAt).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }) : "-";
+
+    body.innerHTML = `
+      ${head}
+      <div class="stats-section">
+        <h3>By discipline</h3>
+        <div class="stats-table">${rows(byTopic, topicOrder)}</div>
+      </div>
+      <div class="stats-section">
+        <h3>By difficulty</h3>
+        <div class="stats-table">${rows(byDiff, diffOrder)}</div>
+      </div>
+      <div class="stats-section">
+        <h3>Last activity</h3>
+        <p class="stats-empty" style="margin:0">${lastStr}</p>
+      </div>`;
+  }
 
   async function loadData() {
     const [paeds, obgyn, psych, medicine, ranges, meta, batchManifest, inboxManifest, reportsFile] = await Promise.all([
@@ -1004,7 +1100,15 @@
     if (!state.quiz.answers[q.id]) return;
     const chosen = _shuffledOptions(q).find(o => o.letter === state.quiz.answers[q.id]);
     const isC = !!(chosen && chosen.correct);
-    state.history[q.id] = { lastCorrect: isC, count: (state.history[q.id]?.count || 0) + 1 };
+    const elapsedMs = state.questionStart ? Math.min(1000 * 60 * 30, Date.now() - state.questionStart) : 0;
+    const prev = state.history[q.id] || {};
+    state.history[q.id] = {
+      lastCorrect: isC,
+      count: (prev.count || 0) + 1,
+      last_at: Date.now(),
+      time_ms_total: (prev.time_ms_total || 0) + elapsedMs,
+      first_correct: prev.first_correct ?? (prev.count ? prev.first_correct : isC),
+    };
     save(ns(HISTORY_KEY), state.history);
     // Log to cloud (fire-and-forget) so this answer joins the aggregate
     // stats. Stats response is stashed on the question so revealAnswer can
