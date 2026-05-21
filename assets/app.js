@@ -27,12 +27,27 @@
   const PROFILE_CURRENT_KEY  = "y4mcq.profile.current";
   const PROFILE_MIGRATED_KEY = "y4mcq.profile.migrated.v1";
   const AUTH_TOKEN_KEY       = "y4mcq.auth.token";
+  const GUEST_KEY            = "y4mcq.guest.v1";
 
   // Cloud account state. Populated by checkAuth() on startup if a token
   // is stored; cleared on logout. `is_admin` controls whether add/audit
   // UI is visible.
   let cloudUser = null;
   let authToken = null;
+  // Guest state: lightweight identity used purely for namespacing
+  // localStorage; never synced to the worker. Persisted across reloads
+  // until the user signs in or explicitly clears.
+  let guestUser = null;
+
+  function activateGuest() {
+    let g = null;
+    try { g = JSON.parse(localStorage.getItem(GUEST_KEY) || "null"); } catch {}
+    if (!g || !g.id) {
+      g = { id: "g-" + Math.random().toString(36).slice(2, 10), display_name: "Guest", created_at: Date.now() };
+      localStorage.setItem(GUEST_KEY, JSON.stringify(g));
+    }
+    guestUser = g;
+  }
 
   async function apiFetch(path, options) {
     if (!WORKER_URL) throw new Error("Cloud backend not configured");
@@ -126,6 +141,7 @@
   function ns(key) {
     if (currentProfile) return `${key}.${currentProfile.id}`;
     if (cloudUser) return `${key}.cloud-${cloudUser.id}`;
+    if (guestUser) return `${key}.guest-${guestUser.id}`;
     return key;
   }
 
@@ -283,6 +299,17 @@
         localStorage.removeItem(PROFILE_CURRENT_KEY);
       }
 
+      // 3. Already in guest mode? Skip the gate.
+      const savedGuest = localStorage.getItem(GUEST_KEY);
+      if (savedGuest) { activateGuest(); return unlock(); }
+
+      // Guest button: continue without an account; data lives in localStorage.
+      const guestBtn = document.getElementById("gateGuestBtn");
+      if (guestBtn) guestBtn.addEventListener("click", () => {
+        activateGuest();
+        unlock();
+      });
+
       // 3. Cloud sign-in form.
       const signInForm = document.getElementById("cloudSignInForm");
       const signInErr  = document.getElementById("cloudSignInErr");
@@ -345,7 +372,9 @@
 
   function signOut() {
     localStorage.removeItem(PROFILE_CURRENT_KEY);
+    localStorage.removeItem(GUEST_KEY);
     cloudSignOut();
+    guestUser = null;
     // Hard reload so all in-memory state resets to the gate flow.
     location.reload();
   }
@@ -444,20 +473,39 @@
     } else if (chip && cloudUser) {
       chip.hidden = false;
       chip.dataset.profileId = "cloud-" + cloudUser.id;
-      // display_name carries the first-name the user gave at signup.
       nameEl.textContent = cloudUser.display_name || cloudUser.email;
       pillSeed = cloudUser.id;
+    } else if (chip && guestUser) {
+      chip.hidden = false;
+      chip.dataset.profileId = "guest";
+      nameEl.textContent = "Guest";
+      pillSeed = guestUser.id;
     }
     if (chip && pillSeed) {
       chip.style.setProperty("--pill-hue", String(pillHueFor(pillSeed)));
     }
     refreshAdminBodyClass();
     const signOutBtn = document.getElementById("signOutBtn");
-    if (signOutBtn) signOutBtn.onclick = e => {
-      e.stopPropagation();
-      const label = currentProfile ? currentProfile.name : (cloudUser ? (cloudUser.display_name || cloudUser.email) : "");
-      if (confirm(`Sign out ${label}? Your progress stays saved against this account.`)) signOut();
-    };
+    if (signOutBtn) {
+      if (guestUser && !currentProfile && !cloudUser) {
+        // Reframe sign-out as "save progress" for guests - sign-out doesn't
+        // help them, the upgrade path does.
+        signOutBtn.textContent = "save progress";
+        signOutBtn.title = "Create an account to keep your progress across devices";
+      }
+      signOutBtn.onclick = e => {
+        e.stopPropagation();
+        if (guestUser && !currentProfile && !cloudUser) {
+          // Take the guest to the signup form. Their localStorage data
+          // stays under the guest namespace; we'll migrate it on signup
+          // in a future pass.
+          location.reload();
+          return;
+        }
+        const label = currentProfile ? currentProfile.name : (cloudUser ? (cloudUser.display_name || cloudUser.email) : "");
+        if (confirm(`Sign out ${label}? Your progress stays saved against this account.`)) signOut();
+      };
+    }
   }
 
   function wireColophon() {
