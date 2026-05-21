@@ -360,14 +360,15 @@ a:hover { text-decoration: underline; }
   place-items: center;
   position: relative;
 }
-/* Curled-stethoscope glyph: two earpieces, a Y-tube to a curl that
-   ends at the diaphragm bell. White-on-teal cutout via inline SVG. */
+/* Stethoscope glyph: arched binaural with two earpieces at top,
+   Y-junction at center, single tube curling down-right to the
+   diaphragm bell. White-on-teal cutout via inline SVG. */
 .brand-mark::before {
   content: "";
   display: block;
   width: 22px;
   height: 22px;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'><circle cx='6.2' cy='3.6' r='1.05' fill='%23ffffff' stroke='none'/><circle cx='13.8' cy='3.6' r='1.05' fill='%23ffffff' stroke='none'/><path d='M6.2 4.7 V7.5 Q6.2 9.6 10 10.5 Q13.8 9.6 13.8 7.5 V4.7'/><path d='M10 10.5 V13 Q10 15.6 12.5 16.8 Q15.5 18 15.2 20.6'/><circle cx='15.2' cy='20.6' r='2' fill='%23ffffff' stroke='%23ffffff'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'><path d='M6 4.5 C 6 9 8 11 12 11 C 16 11 18 9 18 4.5'/><circle cx='6' cy='4' r='1.4' fill='%23ffffff' stroke='none'/><circle cx='18' cy='4' r='1.4' fill='%23ffffff' stroke='none'/><path d='M12 11 V 14 Q 12 18 16 19'/><circle cx='16.5' cy='19' r='2.4' fill='%23ffffff' stroke='%23ffffff'/></svg>");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -2050,3 +2051,15 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
    for them - the Account tab inside the admin modal covers the same
    surface. Non-admin cloud users keep the Account button. */
 body.is-admin #accountBtn { display: none !important; }
+
+/* Inline-ranges category blocks (post-reveal, in the rationale area) */
+.ir-cat { margin-top: 14px; }
+.ir-cat-head {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-mute);
+  margin-bottom: 6px;
+}
+.ir-cat .inline-ranges { border-top: none; padding-top: 0; margin-top: 0; }
