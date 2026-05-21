@@ -36,6 +36,21 @@ export default {
       if (url.pathname === "/api/login"    && request.method === "POST") return await handleLogin(request, env, cors);
       if (url.pathname === "/api/me"       && request.method === "GET")  return await handleMe(request, env, cors);
       if (url.pathname === "/api/answer"   && request.method === "POST") return await handleAnswer(request, env, cors);
+      if (url.pathname === "/api/account/delete" && request.method === "POST") return await handleAccountDelete(request, env, cors);
+      if (url.pathname === "/api/admin/users" && request.method === "GET") return await handleAdminListUsers(request, env, cors);
+      if (url.pathname.startsWith("/api/admin/users/") && url.pathname.endsWith("/delete") && request.method === "POST") {
+        const id = url.pathname.split("/")[4];
+        return await handleAdminDeleteUser(request, env, cors, id);
+      }
+      if (url.pathname.startsWith("/api/admin/users/") && url.pathname.endsWith("/promote") && request.method === "POST") {
+        const id = url.pathname.split("/")[4];
+        return await handleAdminPromote(request, env, cors, id, true);
+      }
+      if (url.pathname.startsWith("/api/admin/users/") && url.pathname.endsWith("/demote") && request.method === "POST") {
+        const id = url.pathname.split("/")[4];
+        return await handleAdminPromote(request, env, cors, id, false);
+      }
+      if (url.pathname === "/api/admin/quality" && request.method === "GET") return await handleAdminQuality(request, env, cors);
       if (url.pathname.startsWith("/api/stats/") && request.method === "GET") {
         return await handleStats(request, env, cors, url.pathname.slice("/api/stats/".length));
       }
@@ -237,6 +252,60 @@ async function handleMe(request, env, cors) {
       .bind(now + SESSION_TTL_SEC, m[1]).run();
   }
   return json({ ok: true, user: publicUser(user) }, 200, cors);
+}
+
+async function handleAccountDelete(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  // Delete in order: sessions, answers, user.
+  await env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(user.id).run();
+  await env.DB.prepare("DELETE FROM answers WHERE user_id = ?").bind(user.id).run();
+  await env.DB.prepare("DELETE FROM users WHERE id = ?").bind(user.id).run();
+  return json({ ok: true }, 200, cors);
+}
+
+async function handleAdminListUsers(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
+  const { results } = await env.DB.prepare(
+    "SELECT u.id, u.email, u.display_name, u.is_admin, u.created_at, COUNT(a.question_id) AS answers FROM users u LEFT JOIN answers a ON a.user_id = u.id GROUP BY u.id ORDER BY u.created_at DESC"
+  ).all();
+  return json({ ok: true, users: results || [] }, 200, cors);
+}
+
+async function handleAdminDeleteUser(request, env, cors, targetId) {
+  const user = await authUser(request, env);
+  if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
+  if (!targetId || typeof targetId !== "string") return json({ ok: false, error: "missing user id" }, 400, cors);
+  if (targetId === user.id) return json({ ok: false, error: "use /api/account/delete to remove your own account" }, 400, cors);
+  await env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(targetId).run();
+  await env.DB.prepare("DELETE FROM answers WHERE user_id = ?").bind(targetId).run();
+  await env.DB.prepare("DELETE FROM users WHERE id = ?").bind(targetId).run();
+  return json({ ok: true }, 200, cors);
+}
+
+async function handleAdminPromote(request, env, cors, targetId, makeAdmin) {
+  const user = await authUser(request, env);
+  if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
+  if (!targetId) return json({ ok: false, error: "missing user id" }, 400, cors);
+  if (targetId === user.id && !makeAdmin) return json({ ok: false, error: "cannot demote yourself" }, 400, cors);
+  await env.DB.prepare("UPDATE users SET is_admin = ? WHERE id = ?").bind(makeAdmin ? 1 : 0, targetId).run();
+  return json({ ok: true }, 200, cors);
+}
+
+async function handleAdminQuality(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
+  // Worst-performing questions: at least 5 answers, lowest correct-rate first.
+  const { results: worst } = await env.DB.prepare(
+    "SELECT question_id, COUNT(*) AS n, SUM(correct) AS c FROM answers GROUP BY question_id HAVING n >= 5 ORDER BY (1.0 * c / n) ASC, n DESC LIMIT 50"
+  ).all();
+  // Most-answered (engagement signal).
+  const { results: top } = await env.DB.prepare(
+    "SELECT question_id, COUNT(*) AS n, SUM(correct) AS c FROM answers GROUP BY question_id ORDER BY n DESC LIMIT 25"
+  ).all();
+  const totals = await env.DB.prepare("SELECT COUNT(DISTINCT question_id) AS qs, COUNT(*) AS answers, COUNT(DISTINCT user_id) AS users FROM answers").first();
+  return json({ ok: true, worst, top, totals }, 200, cors);
 }
 
 async function handleAnswer(request, env, cors) {

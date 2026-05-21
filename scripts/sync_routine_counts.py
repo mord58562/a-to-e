@@ -32,6 +32,19 @@ def live_totals():
         'Medicine': totals['Medicine'],
     }
 
+def update_meta(totals):
+    """Write total_questions + by_topic into data/meta.json so the
+    portfolio fetch can show a live question count."""
+    path = os.path.join(REPO, 'data/meta.json')
+    try:
+        meta = json.load(open(path))
+    except Exception:
+        meta = {}
+    meta['total_questions'] = sum(totals.values())
+    meta['by_topic'] = totals
+    with open(path,'w') as f:
+        json.dump(meta, f, indent=2); f.write('\n')
+
 def update_context(totals):
     """Rewrite Section 2's 'Current snapshot' block with fresh numbers."""
     text = open(CTX).read()
@@ -172,6 +185,7 @@ def push_remote(prompt):
 def main():
     totals = live_totals()
     print(f'Live totals: Paeds={totals["Paediatrics"]} Obgyn={totals["Obstetrics & Gynaecology"]} Psych={totals["Psychiatry"]} Medicine={totals["Medicine"]} Total={sum(totals.values())}')
+    update_meta(totals)
     changed = update_context(totals)
     print(f'.remote-agent-context.md updated: {changed}')
     prompt = build_prompt(totals)
