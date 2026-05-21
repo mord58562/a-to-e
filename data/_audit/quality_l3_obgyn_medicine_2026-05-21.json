@@ -2048,6 +2048,223 @@
       "verdict": "discard",
       "issues": ["single-step-recall"],
       "fix_sketch": "Endometritis post-CS -> clinda + gent (or ampi + gent + metro per eTG variant). Single-step regimen recall (similar to obgyn-postnatal-002). DISCARD."
+    },
+    {
+      "id": "obgyn-batch-015",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "HPV-16 + pLSIL -> colposcopy regardless of cytology grade. Single-step NCSP recall (similar to many obgyn-gynonc/006 etc). DISCARD."
+    },
+    {
+      "id": "obgyn-batch-017",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Pre-eclampsia at 36+6 + controlled BP + no severe features -> IOL at 37+0. Tests SOMANZ delivery timing thresholds for non-severe pre-eclampsia. Distractor B (expectant to 39 - false for PET), C (immediate CS - PCR 45 alone is not severe-features), D (delivery 40+0 - delays in PET), E (await steroids effect at 36+6 - too late). Multi-step."
+    },
+    {
+      "id": "obgyn-batch-019",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Secondary PPH + endometritis + retained products -> USS + IV abx + oxytocin + theatre for evac. Bundle 4 actions. Lead-in 'next step' singular but congruent. Distractor A (abx + uterotonic without USS - misses retained products), B (digital removal at bedside - inadequate dx), D (uterotonic + observe - dangerous), E (oral + outpt - dangerous)."
+    },
+    {
+      "id": "obgyn-batch-020",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "GDM + failed metformin max + fasting still >5.1 -> add basal insulin (continue metformin). Bundle 2 actions. Lead-in 'next step' singular. Distractor B (cease metformin + basal-bolus - over-treats), C (>2g metformin), D (glyburide), E (only prandial - wrong target). Multi-step."
+    },
+    {
+      "id": "obgyn-batch-021",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Term breech -> ECV at 37 wk then CS 39 wk if unsuccessful. Bundle 2 conditional steps. Lead-in 'recommendation' singular. Distractor B (vaginal breech - higher risk per Term Breech Trial), C (CS without ECV offer - removes option), D (ECV without tocolysis - lower success), E (await spontaneous version - 8% chance after 37 wk)."
+    },
+    {
+      "id": "obgyn-batch-022-l3",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "33+5 + APH + planned CS at 36-37 -> ACS course now. Tests recognition of ACS window (up to 34+6 standard, late preterm 34-36+6 with high risk). Distractor B (no ACS beyond 34 - wrong, ACS Late Preterm Trial supports up to 36+6), C (single dose), D (weekly), E (dex superior - false). Multi-step."
+    },
+    {
+      "id": "obgyn-batch-023-l3",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "Endometritis + sepsis -> admit + IV ampi+gent+metro. Single-step. Same content as several other questions. DISCARD."
+    },
+    {
+      "id": "obgyn-batch-024",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Severe PET at 29+3 + stable on Rx -> complete steroid course + deliver at 48h. Tests recognition that even severe PET at preterm gestation may allow brief steroid completion if BP/maternal status controllable. Distractor B (delivery <24h regardless - over-aggressive), C (expectant to 34 - dangerous), E (HELLP criteria not yet met - plt 130 > 100, ALT 110 < usually required threshold for HELLP). Multi-step."
+    },
+    {
+      "id": "obgyn-batch-028",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Complete mole -> contraception + monthly hCG surveillance for 6 months after normalisation. Tests recall of surveillance protocol. Distractor A (no surveillance - dangerous), C (hysterectomy mandatory - false), D (MTX prophylaxis - reserved for high-risk GTN), E (CT staging - only with persistent hCG)."
+    },
+    {
+      "id": "obgyn-batch-031-l3",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Periviable preterm + active resus planned -> give ACS (RANZCOG supports 22+0-22+6 with active resus). Tests recognition of periviability decision. Distractor B (withhold below 23 - older threshold), C (single dose), D (dex 4 doses), E (defer to ROM)."
+    },
+    {
+      "id": "obgyn-batch-033",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option", "implausible-distractors"],
+      "fix_sketch": "RPL workup: APL antibodies + pelvic USS for uterine anatomy. Bundle 3 tests + USS. Distractor B (adds parental karyotype + thrombophilia - both have lower-evidence recommendations but RANZCOG now suggests targeted), C (general health screen - irrelevant), D (ovarian reserve - irrelevant for RPL), E (MTHFR - low evidence). Acceptable but the correct option excludes parental karyotype, which is debatable in RANZCOG guidance."
+    },
+    {
+      "id": "obgyn-batch-034",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "VBAC + sudden pain + bleeding + bradycardia = uterine rupture. Single-step pattern recognition. Distractors all clearly distinguishable. DISCARD."
+    },
+    {
+      "id": "obgyn-batch-035",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "Post-GDM screening at 6-12 wk -> 75g OGTT per ADIPS. Single-step recall. Distractors B (FBG alone - inadequate sens), C (HbA1c - reasonable alt but OGTT preferred), D (no test - dangerous), E (home monitoring) caricatures. DISCARD."
+    },
+    {
+      "id": "obgyn-batch-036-l3",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Primary dysmenorrhoea in adolescent -> first-line NSAID (no need for laparoscopy first). Tests recognition that empirical NSAID precedes diagnostic laparoscopy in adolescent dysmenorrhoea. Distractor B (lap first - older paradigm), C (codeine), D (GnRH agonist), E (TENS as monotherapy)."
+    },
+    {
+      "id": "obgyn-batch-037",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "Endometriosis gold standard dx = diagnostic laparoscopy. Single-step recall. Distractors B (TVUS - misses peritoneal disease), C (MRI - reserved for deep infiltrating), D (CA-125 - not diagnostic), E (empiric GnRH as dx test) caricatures. DISCARD."
+    },
+    {
+      "id": "obgyn-batch-038",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Pelvic girdle pain in pregnancy -> physio + support belt + analgesia. Tests recognition of PGP. Distractor B (IOL 37 - inappropriate), C (bedrest - worsens), D (corticosteroid inj - last-line), E (opioids - avoid in pregnancy). Multi-step."
+    },
+    {
+      "id": "obgyn-batch-039-l3",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Fibroid red degeneration in pregnancy -> conservative analgesia (avoid NSAIDs >32wk for DA constriction). Tests recognition of fibroid red degeneration + AVOID indomethacin at this gestation. Distractor B (indomethacin tds 7d - dangerous), C (myomectomy in pregnancy - contraindicated), D (abruption misdx), E (presumed sepsis without features). Multi-step."
+    },
+    {
+      "id": "obgyn-batch-040-l3",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Recurrent 2nd-trimester loss with painless dilatation = cervical insufficiency -> history-indicated cerclage at 12-14 wk. Tests recognition of pattern + intervention. Distractor B (US-indicated only - inadequate for history-positive), C (vag prog only - inadequate), D (bedrest), E (await rescue cerclage). Multi-step."
+    },
+    {
+      "id": "obgyn-batch-041-l3",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "IUFD at 36+2 + stable -> counsel re DIC risk + IOL. Tests recognition of DIC risk after >48h retention + shared decision-making. Distractor B (CS), C (await spontaneous - DIC risk), D (steroids - dead baby), E (repeat USS - unnecessary delay)."
+    },
+    {
+      "id": "obgyn-batch-042-l3",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Major abruption + DIC + foetal bradycardia + maternal shock -> MTP + Cat 1 CS. Bundled but congruent with emergency. Distractor B (tocolysis - contraindicated in abruption), C (fluid bolus + reassess - delays delivery), D (ARM for vaginal - too slow), E (transfer - inappropriate). Multi-step."
+    },
+    {
+      "id": "obgyn-batch-043",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Late decels on oxytocin + tachysystole 5/10 -> stop oxytocin + LL + terbutaline. Bundle 3 actions. Lead-in 'next step' singular but congruent. Distractor B (continue + deliver - dangerous), C (CS without IUR), D (FSE + FBS - reasonable but second-line), E (O2 + increase oxytocin)."
+    },
+    {
+      "id": "obgyn-batch-044",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Postnatal depression EPDS 14 + 6 wk postpartum + BF -> psychological therapy + consider sertraline. Bundle 2 actions. Lead-in 'initial management' singular. Distractor B (baby blues - too late at 6 wk), C (admit - no risk evident), D (fluoxetine + stop BF - both incorrect), E (lifestyle alone - inadequate)."
+    },
+    {
+      "id": "obgyn-batch-049-l3",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Inevitable miscarriage at 8+2 + falling hCG + stable -> offer all 3 management options (expectant/medical/surgical). Tests recognition of patient-led choice. Distractor B (proceed to surgery - removes choice), C (MTX - wrong context), D (oxytocin - not used at this gestation), E (no follow-up - inadequate). Multi-step."
+    },
+    {
+      "id": "obgyn-batch-055",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "PPROM <34 wk -> oral erythromycin 10d (ORACLE I). Single-step regimen recall. Distractors B/C/D/E all caricatures. DISCARD."
+    },
+    {
+      "id": "obgyn-batch-065-l3",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Shoulder dystocia after all internal manoeuvres failed -> Gaskin all-fours + reattempt post arm (ALSO step 4). Tests sequential ladder + AVOID fundal pressure. Distractor B (fundal - contraindicated), C (symphysiotomy - last resort), D (Zavanelli - last resort), E (repeat M+SPP - already tried). Multi-step."
+    },
+    {
+      "id": "obgyn-batch-067-l3",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Obstetric APS + already on warfarin (inappropriate for prevention without prior VTE) + new pregnancy -> stop warfarin + ASA + prophylactic LMWH. Bundled but congruent. Tests warfarin teratogenicity + standard APS pregnancy regimen + recognition that prior prescription was wrong. Multi-step."
+    },
+    {
+      "id": "obgyn-batch-069-l3",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Maternal sepsis from chorioamnionitis + septic shock -> IV abx within 1h + 30mL/kg fluid + delivery. Bundled correct (3 actions). Lead-in 'next step' singular but Surviving Sepsis 1-hour bundle. Distractor B (ICU first - delays abx), C (CS first - misses sepsis bundle), D (paracetamol - inadequate), E (CT before abx)."
+    },
+    {
+      "id": "obgyn-batch-071-l3",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "Classical scar + TOLAC + rupture features (head receded, fundus not palpable) -> Cat 1 CS + MTP. Single-step pattern + action. Distractors B/C (oxytocin/fundal pressure - dangerous), D (terbutaline - delays), E (workup - delays) all clearly excluded. DISCARD."
+    },
+    {
+      "id": "obgyn-batch-073",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "Severe HG + before dextrose -> IV thiamine to prevent Wernicke. Single-step recall (same content as obgyn-anscreen-012 thiamine pearl). Distractors B (folate), C (vit K), D (B12), E (no vitamin) caricatures. DISCARD."
+    },
+    {
+      "id": "obgyn-batch-075-l3",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Mid-trimester cervical insufficiency with bulging membranes -> emergency cerclage + tocolysis + abx + ACS when feasible. Bundled correct. Lead-in 'combination' plural OK. Tests recognition that cerclage CAN be done with bulging membranes (rescue cerclage). Distractor B (contraindicated - false), C (no indomethacin), D (induce - against patient wishes), E (abdominal cerclage today - reserved for transvaginal failure). Multi-step."
+    },
+    {
+      "id": "obgyn-batch-077-l3",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Placenta accreta confirmed + 4 prior CS -> planned CS hysterectomy 34-35+6 + MDT at tertiary + cell salvage + midline incision + MTP standby. Bundled but congruent with major intervention. Tests MDT timing + technique. Multi-step."
     }
   ]
 }
