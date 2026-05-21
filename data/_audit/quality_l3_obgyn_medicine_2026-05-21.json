@@ -612,7 +612,406 @@
       "file": "data/batches/medicine_id_rheumatology.json",
       "verdict": "keep",
       "issues": [],
-      "fix_sketch": "CD4 134 + toxo IgG+ -> bactrim DS for both PJP and toxo (one drug, two indications). Tests prophylaxis CD4 thresholds + dual-coverage knowledge. Distractor A (azithro for MAC only - wrong threshold), C-E need to read but assume genuine alternatives. Multi-step."
+      "fix_sketch": "CD4 134 + toxo IgG+ -> bactrim DS for both PJP and toxo (one drug, two indications). Tests prophylaxis CD4 thresholds + dual-coverage knowledge. Distractor A (azithro for MAC - threshold CD4<50), C (CMV proph - not standard), D (itraconazole - wrong context), E (INH - latent TB already excluded). Multi-step."
+    },
+    {
+      "id": "med-id-rheum-008",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option", "implausible-distractors"],
+      "fix_sketch": "BUG: option B and option C have identical text (both say tenofovir-emtricitabine without third agent). This means the question has TWO identical 'correct' options or one is a typo. Standard ASHM PEP for high-risk receptive vaginal sex with HIV+ source (regardless of U=U claim if unconfirmed) is 3-drug PEP (TDF/FTC + raltegravir or dolutegravir), not PrEP and not 2-drug. The CORRECT answer should be 3-drug PEP, not PrEP. Major error - flag for rewrite with proper PEP regimen as correct."
+    },
+    {
+      "id": "med-id-rheum-009-l3",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Latent TB + nursing student + IGRA+ -> rifampicin 4 months (or INH 6-9 months per TSANZ). Tests indication for LTBI treatment and IGRA preference over TST in BCG-vaccinated. Distractor B (Mantoux to confirm - wrong, IGRA is more specific in BCG-vacc), C (active TB - wrong CXR), D (no treatment with surveillance - inadequate), E (repeat IGRA - not the pathway). Multi-step."
+    },
+    {
+      "id": "med-id-rheum-010",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "Severe falciparum malaria (8% parasitaemia + AKI + hypoglyc + jaundice + GCS 13) -> IV artesunate. Single-step recognition. Distractors B (oral artemether-lumefantrine - mild only), C (chloroquine - wrong for falciparum), D (quinine - second-line if no artesunate), E (doxycycline mono - wrong) all caricatures. DISCARD."
+    },
+    {
+      "id": "med-id-rheum-011",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Necrotising fasciitis - pain out of proportion + bullae + fascial gas. Correct bundle: surgery + mero + clinda (toxin suppression). Lead-in 'most appropriate next step' singular. Distractors B/C/D/E (mono-fluclox, oral, HBO alone, MRI before surgery) caricatures. Tighten lead-in to 'most appropriate combined management' or split."
+    },
+    {
+      "id": "med-id-rheum-012",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "discard",
+      "issues": ["implausible-distractors"],
+      "fix_sketch": "BUG/ERROR: COVID-19 day 6 + hypoxic + hospitalised - the CORRECT therapy per RECOVERY/Aus COVID-19 Living Guidelines is DEXAMETHASONE, not nirmatrelvir. Nirmatrelvir is for early outpatient treatment in mild disease within 5 days of symptom onset, NOT for hypoxic hospitalised patients. The marked-correct answer (B) is medically WRONG; option A (dexamethasone) is the correct answer for this scenario. Major content error - DISCARD or rewrite stem to be early outpatient mild disease (where nirmatrelvir IS first-line)."
+    },
+    {
+      "id": "med-id-rheum-013-l3",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Influenza in hospitalised elderly + comorbid -> oseltamivir, renal-dose-reduced. Tests recognition that >48h symptom onset still warrants antiviral in severe/hospitalised AND renal dose adjustment. Distractor D (no antiviral because >48h - real trap), B (standard dose without adjustment), C (baloxavir not first-line for hosp), E (zanamivir wrong route+dose). Multi-step."
+    },
+    {
+      "id": "med-id-rheum-014",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "rewrite",
+      "issues": ["implausible-distractors"],
+      "fix_sketch": "Pyelonephritis requiring admission -> IV gent + amoxicillin per eTG. Distractors A (mero too broad), B (nitrofurantoin - inadequate tissue penetration for upper UTI), C (trim 14d outpatient - inadequate for admission), E (cipro outpatient - inadequate disposition). All non-credible because the stem already establishes admission. Replace 2 distractors: 'IV ceftriaxone 1g daily' (real alternative but eTG prefers gent+ampi/amox for empirical) and 'IV pip-taz' (over-broad first-line)."
+    },
+    {
+      "id": "med-id-rheum-015",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "BUG: option A and E are IDENTICAL ('Oral methotrexate 10-15 mg weekly plus folic acid 5 mg weekly') but only E is marked correct. Also tests single-step 'first-line DMARD for RA = MTX' recall. Distractors B (HCQ mono), C (long-term pred mono), D (adalimumab first-line) caricatures. DISCARD; if salvaged, fix duplicate option text."
+    },
+    {
+      "id": "med-id-rheum-016",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "SLE first-line = HCQ + baseline ophthalmology screening. Distractor B (long-term high-dose pred), C (MTX mono in SLE - wrong, used in non-renal), D (rituximab first-line - wrong), E (NSAID mono - inadequate). Tests EULAR/ACR HCQ-for-all approach + retinal screening recall. Multi-step."
+    },
+    {
+      "id": "med-id-rheum-018",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option", "diagnosis-named"],
+      "fix_sketch": "GCA with visual symptoms (transient monocular vision loss) - effectively named in stem. Correct option bundles IV methylpred 3d + biopsy. Distractor B (PO 15mg + biopsy 6 wk - real trap, classic PMR dose), A (defer steroid for biopsy), D (aspirin only), E (MRI as primary) caricatures. Tighten by lead-in 'most appropriate combined regimen'. Or DISCARD overlap with 018."
+    },
+    {
+      "id": "med-id-rheum-020-l3",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "PMR + suspicious GCA features (new headache, jaw claud) -> high-dose pred 60mg + biopsy (not PMR-dose 15mg). Distractor A (PMR-dose 15 - the trap if reader misses GCA features), C (IV pulse - reserved for visual symptoms only), D (NSAID), E (MTX first) caricatures. Multi-step (overlap recognition + dose escalation)."
+    },
+    {
+      "id": "med-renal-001",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "DM + CKD G3b A3 -> nephrology referral (KHA-CARI: ACR>30 OR eGFR<30 OR eGFR fall >5/yr OR refractory HTN). Distractor B (wait for eGFR<30 - the standard trap), C (stop SGLT2i - wrong, indicated to eGFR 20), D (stop ACEi - wrong with proteinuria). Multi-step."
+    },
+    {
+      "id": "med-renal-002",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "CKD anaemia + TSAT 14% + ferritin 78 -> iron repletion BEFORE ESA per KDIGO. Distractor A (ESA without iron repletion - common trap), C (oral iron - inadequate absorption in CKD), D (transfuse - over-treats stable Hb 96), E (GI workup - inappropriate with negative FOBT). Multi-step."
+    },
+    {
+      "id": "med-renal-004",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "CFS 7 + Charlson 9 + patient preference -> conservative/renal supportive care. Tests recognition that not all CKD5 requires RRT. Distractor A (urgent HD without GoC), C (PD training despite frailty), D (catheter + discharge - inadequate), E (transfuse - not addressing primary issue). Multi-step."
+    },
+    {
+      "id": "med-renal-005",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Pre-renal AKI vs ATN: low UNa + concentrated urine = pre-renal. Tests precise discriminator. Distractor A (postural drop - clinical sign present in both), B (Cr doubling - both), D (hypernatraemia - free water deficit but not the discriminator), E (no obstruction - rules out post-renal not ATN). Genuine multi-step."
+    },
+    {
+      "id": "med-renal-006-l3",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "CA-AKI prevention: hold metformin + SGLT2i + IV NaCl. Bundled (3 actions). Lead-in 'combined peri-procedural plan' plural so OK. Distractor A (continue all meds + fluid - real trap), C (NAC - outdated), D (bicarb + frusemide - wrong), E (stop antihypertensives - wrong) caricatures. Tighten."
+    },
+    {
+      "id": "med-renal-007-l3",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Adult nephrotic syndrome -> renal biopsy is gold-standard for histology. Distractor B (paraprotein - reasonable adjunct but not primary), C (anti-PLA2R - relevant for membranous but not standalone), D (US), E (empirical pred without biopsy - wrong in adults). Multi-step."
+    },
+    {
+      "id": "med-renal-008",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "IgA nephropathy + persistent proteinuria 1.1g/d + HTN -> ACEi/ARB max with BP and proteinuria targets. Distractor C (pred first-line - reserved for proteinuria >1g despite max RAS blockade), B (cyclophosphamide - reserved for crescentic), D (tonsillectomy - Japanese-only practice), A (observe - inadequate). Multi-step."
+    },
+    {
+      "id": "med-renal-009",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "MPO-ANCA vasculitis with pulmonary-renal -> IV methylpred + rituximab/cyclo. Bundle 3 actions. Distractors A (pred mono - inadequate), C (PLEX alone - reserved as adjunct), D (MMF mono - maintenance not induction), E (await biopsy - delays Rx in severe disease) caricatures. Tighten."
+    },
+    {
+      "id": "med-renal-011",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "AIN classic triad (PPI + amox-clav + rash + fever + eosinophilia + sterile pyuria) -> dx + drug withdrawal. Tests AIN recognition vs ATN, pre-renal, RPGN, pyelo. Distractors all real differentials. Multi-step."
+    },
+    {
+      "id": "med-renal-012",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Rhabdomyolysis CK 84,000 -> aggressive IV fluid + UO target. Distractor A (frusemide), B (HD as first), D (mannitol - outdated), E (restrict - dangerous) caricatures but the choice of A (frusemide) and D (mannitol) are real historical-teaching traps."
+    },
+    {
+      "id": "med-renal-013-l3",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Severe hyperkalaemia + ECG changes + bactrim-driven -> shift + remove offenders + dialysis prep. Correct option bundles 5 actions. Lead-in 'combination of next set of interventions' plural OK. Distractor A (repeat Ca alone - inadequate), C (oral resonium + frusemide - inadequate as immediate), D (bicarb + continue ACEi/MRA - wrong), E (recheck only - dangerous) caricatures. Tighten."
+    },
+    {
+      "id": "med-renal-014",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Refractory hypokalaemia with low Mg + U waves + QT long -> replace Mg first. Tests recognition that K won't correct without Mg. Distractor A (K infusion at 40/h - too fast peripheral), B (more oral K - won't work without Mg), D (stop PPI - chronic cause not acute), E (bicarb - worsens). Multi-step."
+    },
+    {
+      "id": "med-renal-016-l3",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "SIADH with smoker + cough + weight loss -> CT chest for SCLC + medication review. Tests recognition of paraneoplastic SIADH and SSRI/carbamazepine drug causes. Distractor A (cease both meds without imaging - misses cancer), C (tolvaptan empirically - skips workup), D (hypertonic saline asymptomatic), E (fluid restrict + reassure - misses cancer). Multi-step."
+    },
+    {
+      "id": "med-renal-017-l3",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Lithium-induced nephrogenic DI + must continue lithium -> add amiloride + free water. Distractor A (stop lithium - psychiatrist preference says no), C (desmopressin for nephrogenic - won't work), D (fluid restrict - dangerous), E (high-salt - worsens). Multi-step (recognise nephrogenic by lack of DDAVP response + treatment with amiloride)."
+    },
+    {
+      "id": "med-renal-018",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "Low PTH + lytic lesions + reversed A:G + back pain + anaemia + AKI -> MM. Single-step pattern recognition. Distractors A (vit D toxicity), B (primary HPT - PTH would be high, not low), D (sarcoid - would have hyper-Ca/PO4 differently), E (thiazide - mild only) caricatures. Pure pattern-match recall. DISCARD."
+    },
+    {
+      "id": "med-renal-020-l3",
+      "file": "data/batches/medicine_renal_electrolytes.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "CKD4 polypharmacy -> reduce gabapentin + switch morphine + reduce apixaban. Correct option bundles 3 changes. Lead-in 'combination of medication changes' plural OK. Distractors B (stop metformin only - addresses one issue), C (switch apixaban to warfarin - opposite of indicated), D (nitrofurantoin in CKD - contraindicated), E (stop perindopril). Reasonable bundle."
+    },
+    {
+      "id": "obgyn-antenatal-001",
+      "file": "data/batches/obgyn_antenatal_complications.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "PET diagnosis without proteinuria - SOMANZ criteria require new HTN + maternal organ involvement (low plt, hepatic, renal, neuro, haem). Tests recall of qualifying organ-system criteria. Distractor A (urate alone - not in modern SOMANZ), B (hyperreflexia alone), D (RUQ pain alone), E (PCR<30) all close-but-not-sufficient. Multi-step."
+    },
+    {
+      "id": "obgyn-antenatal-002",
+      "file": "data/batches/obgyn_antenatal_complications.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "Severe PET -> MgSO4 4g load + 1g/h maintenance per SOMANZ. Pure regimen recall. Distractors A (2g load + 0.5g/h - half-dose), C (6g + 2g - over-dose with no monitoring), D (IM-only Pritchard - outdated AU), E (4g load over 5 min + cease if reflex absent - real safety detail trapped in distractor). DISCARD per L3-minimum policy."
+    },
+    {
+      "id": "obgyn-antenatal-003",
+      "file": "data/batches/obgyn_antenatal_complications.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall", "diagnosis-named", "bundled-correct-option"],
+      "fix_sketch": "Eclampsia named in stem essentially. Correct option bundles 4 actions (LL position + Mg + antihypertensive + delivery). Pure recall of eclampsia protocol. Distractors A (immediate C/S without anticonvulsant), B (diazepam + phenytoin - MAGPIE-disproven), C (sublingual NIF - dangerous), E (EEG before Rx) caricatures. DISCARD."
+    },
+    {
+      "id": "obgyn-antenatal-005-l3",
+      "file": "data/batches/obgyn_antenatal_complications.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "GDM diagnosis on fasting>=5.1 + management plan. Correct option bundles dx + dietitian + monitoring + clinic. Lead-in 'interpretation and next step' plural-implying OK. Distractor B (not GDM - missing fasting threshold), C (5.5 threshold - wrong), D (T2DM at 5.3 - wrong), E (borderline - wrong) caricatures. Could tighten."
+    },
+    {
+      "id": "obgyn-antenatal-006",
+      "file": "data/batches/obgyn_antenatal_complications.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Failed lifestyle + fasting-predominant -> NPH bedtime (basal insulin for fasting target). Distractor A (basal-bolus - more than needed), B (prandial only - misses fasting), C (continue lifestyle - inadequate), D (empagliflozin in pregnancy - contraindicated) caricatures but B is real trap (postprandial-only thinking). Multi-step."
+    },
+    {
+      "id": "obgyn-antenatal-007-l3",
+      "file": "data/batches/obgyn_antenatal_complications.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Pregnancy + severe asthma -> avoid labetalol (BB) for first-line; nifedipine SR preferred. Tests understanding of relative contraindication. Distractor A (labetalol - first-line in most pregnant women but caution in severe asthma), C (ACE-i - teratogenic), D (methyldopa - acceptable alternative), E (oral hydralazine - not first-line oral) all real options."
+    },
+    {
+      "id": "obgyn-antenatal-009-l3",
+      "file": "data/batches/obgyn_antenatal_complications.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall", "diagnosis-named"],
+      "fix_sketch": "Listeria in pregnancy effectively named via 'food-borne organism after soft cheese'. Single-step regimen recall (ampi+gent). Distractors all caricatures (ceftriaxone has no Listeria cover, doxy not pregnancy-safe, vanc not for Listeria, oral amox inadequate). DISCARD."
+    },
+    {
+      "id": "obgyn-antenatal-010",
+      "file": "data/batches/obgyn_antenatal_complications.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Maternal toxo + spiramycin (block transmission) + amnio for confirmation + step-up to triple if foetal infection. Tests recognition of contingent-treatment ladder. Distractor B (triple from outset - over-treats), C (cotrim mono - wrong), D (azithro mono - wrong), E (TOP without dx - wrong) caricatures."
+    },
+    {
+      "id": "obgyn-antenatal-011",
+      "file": "data/batches/obgyn_antenatal_complications.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Primary CMV in pregnancy -> serial USS + amnio post-21wk + valaciclovir per CHIPS/RANZCOG. Distractor A (non-primary higher transmission - false), B (ganciclovir maternal IV - not standard), C (spiramycin for CMV - wrong), D (no surveillance - wrong) caricatures."
+    },
+    {
+      "id": "obgyn-antenatal-012",
+      "file": "data/batches/obgyn_antenatal_complications.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Acute asthma in pregnancy - same as non-pregnant: SABA + ICS + systemic steroid + O2. Bundled correct option (4 actions). Lead-in 'management approach' singular-ish. Distractors A (continue ICS but withhold steroid in preg - real teratogen myth), C (LRTA mono), D (IV Mg as first-line), E (early discharge) caricatures but A is real-world myth worth testing."
+    },
+    {
+      "id": "obgyn-antenatal-014-l3",
+      "file": "data/batches/obgyn_antenatal_complications.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Graves in pregnancy -> PTU in T1, switch to carbi T2-3, foetal surveillance, neonatal TFT/TRAb. Correct option bundles 4 actions. Lead-in 'management plan' plural OK. Distractors B (continue carbi - misses T1 teratogen risk), C (stop ATD - dangerous), D (RAI in preg - contraindicated), E (PTU throughout - misses hepatotox risk) caricatures except B (real practice variation)."
+    },
+    {
+      "id": "obgyn-anscreen-002",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "High-risk cFTS (1:80) -> offer NIPT (contingent) OR diagnostic test (CVS/amnio) after counselling. Distractor A (reassure - wrong because 1:80 is high-risk), B (repeat cFTS - wrong), C (mandatory CVS - false, patient choice), E (amnio at 12+4 - too early) all real-world traps."
+    },
+    {
+      "id": "obgyn-anscreen-003",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Positive NIPT requires diagnostic confirmation before irreversible decisions. Tests understanding NIPT = screening, not diagnostic. Distractor A (proceed to TOP on screen) is the real-world error to avoid. Multi-step (PPV concept + counselling pathway)."
+    },
+    {
+      "id": "obgyn-anscreen-004",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "TA-CVS at 11+5 with <0.5% miscarriage risk in experienced units. Tests CVS vs amnio timing AND modern (post-Tara) miscarriage rates. Distractor A (TC-CVS - higher risk), B (amnio at 11+5 - too early), C (NIPT only - she wants definitive), E (defer to morphology - misses opportunity). Multi-step."
+    },
+    {
+      "id": "obgyn-anscreen-006",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Bleeding at 9+1 (<12 wk) -> NBA guideline says anti-D NOT routinely indicated <12wk (except for surgical procedures/recurrent bleeding). Tests AU NBA threshold. Distractor A (give 625 IU now), C (250 IU + Kleihauer) are real-world over-treatment traps."
+    },
+    {
+      "id": "obgyn-anscreen-007",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "GBS+ + high-risk penicillin allergy + clinda resistant -> vancomycin per CDC/RANZCOG. Multi-step (recognise allergy severity + check sensitivities + select vanc over cefazolin). Distractor B (cefazolin - real but only for low-risk allergy), D (clinda - resistant) genuine traps."
+    },
+    {
+      "id": "obgyn-anscreen-008",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "GDM diagnosed on fasting 5.3 vs ADIPS 5.1. Single-step threshold recall. Distractors B (WHO 7.0 - wrong threshold), C (two values needed - wrong), D (1h<10 means no GDM - wrong), E (HbA1c rules out - wrong) all caricatures. DISCARD per L3-minimum policy."
+    },
+    {
+      "id": "obgyn-anscreen-009",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "Missed miscarriage (foetal demise, closed os, no symptoms). Single-step pattern recognition. Distractors A (threatened), C (inevitable), D (incomplete), E (complete) all distinguishable on stem features. Pure classification recall. DISCARD."
+    },
+    {
+      "id": "obgyn-anscreen-012",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Hyperemesis severe -> admit + IV saline + thiamine + K+ + antiemetic ladder. Correct option bundles 4 actions. Lead-in 'single most appropriate immediate step' is singular but correct option is multi-action. Distractor B (discharge on doxylamine - inadequate), C (TPN first-line - wrong), D (dextrose without thiamine - Wernicke trap), E (TOP - wrong) caricatures except D (real teaching point). Tighten lead-in."
+    },
+    {
+      "id": "obgyn-anscreen-013",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Complete mole - suction curettage + serial hCG + contraception + 6mo surveillance. Distractor A (MTX as primary - reserved for GTN), C (expectant), D (TAH primary - overtreats fertility), E (medical evac with methylergometrine - contraindicated in mole). Tests recognition + standard protocol."
+    },
+    {
+      "id": "obgyn-anscreen-014-l3",
+      "file": "data/batches/obgyn_antenatal_screening.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "GBS bacteriuria (any count, any time in pregnancy) -> treat AND intrapartum IAP. Tests recognition that GBS bacteriuria is BOTH a treatable infection AND a marker for IAP at delivery. Distractor B (no treatment - wrong because GBS bacteriuria is different), C (treat now but no IAP - misses indication). Multi-step."
+    },
+    {
+      "id": "obgyn-atsi-dv-001-l3",
+      "file": "data/batches/obgyn_first_nations_dv_top.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "DV screening must be conducted privately. Tests communication skill + AU safe-enquiry frameworks (HARK, RADAR). Distractor A (in front of partner - dangerous), C (defer to postnatal - misses opportunity), D (leaflet only - inadequate), E (police without consent - violates autonomy). Multi-step."
+    },
+    {
+      "id": "obgyn-atsi-dv-002-l3",
+      "file": "data/batches/obgyn_first_nations_dv_top.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Aboriginal woman + prior unsafe experience -> AMIHS/continuity of carer with ACCHO. Tests recognition of culturally safe model. Distractor C (all Aboriginal pregnancies high-risk - racist assumption to reject), B (separate AHW), D (GP only), E (telehealth forced). Multi-step."
+    },
+    {
+      "id": "obgyn-atsi-dv-003",
+      "file": "data/batches/obgyn_first_nations_dv_top.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "RHD secondary prophylaxis BPG continues throughout pregnancy at standard dose. Tests recognition that penicillin is safe and prevention is critical. Distractor B (switch oral - inadequate), C (cease - dangerous), D (shorten interval - not standard), E (allergy unfounded). Multi-step (Australia-specific RHD context)."
+    },
+    {
+      "id": "obgyn-atsi-dv-005",
+      "file": "data/batches/obgyn_first_nations_dv_top.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Vic Abortion Law Reform Act: on-request to 24wk. Tests state-specific TOP law. Distractor A (says lawful on request up to 24wk - this is actually correct under Vic law, but the option needs to specify tertiary referral context, which C does), B (unlawful after 20wk - false), D (ethics committee required - false), E (only if incompatible with life - false). Could tighten A/C distinction."
+    },
+    {
+      "id": "obgyn-atsi-dv-006",
+      "file": "data/batches/obgyn_first_nations_dv_top.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "MS-2 Step regimen: mife 200mg PO then miso 800mcg buccal 36-48h later. Single-step regimen recall. Distractor B (mife 600 + miso 400 24h - older Asian regimens), C (MTX + miso - ectopic regimen), D (miso alone), E (immediate sequence - wrong interval) caricatures. Pure recall. DISCARD."
+    },
+    {
+      "id": "obgyn-atsi-dv-007",
+      "file": "data/batches/obgyn_first_nations_dv_top.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Post-TOP retained products + infection + haemodynamic instability -> resuscitate + IV abx + surgical evac. Distractor A (outpatient miso + doxy - inadequate for septic shock-near), C (oxytocin only - inadequate), D (TXA alone - inadequate), E (MTX for non-existent ongoing pregnancy - wrong) caricatures. Tests recognition of septic incomplete TOP."
+    },
+    {
+      "id": "obgyn-atsi-dv-009",
+      "file": "data/batches/obgyn_first_nations_dv_top.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Children exposed to IPV in NSW = ROSH threshold for mandatory reporting. Tests recognition that consent does not override mandatory reporting. Distractor A (honour request - violates legal obligation), D (police without consent - separate pathway), E (wait - dangerous). Multi-step."
+    },
+    {
+      "id": "obgyn-atsi-dv-010-l3",
+      "file": "data/batches/obgyn_first_nations_dv_top.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Honeymoon phase recognition + joint counselling contraindicated in IPV with strangulation + maintain safety plan. Correct option bundles 5 components. Lead-in 'most appropriate response' singular but communication question. Distractors B (reassure violence won't recur), C (insist she leave), D (joint counselling), E (discharge) caricatures except D (real practice trap in low-resource settings)."
+    },
+    {
+      "id": "obgyn-atsi-dv-012",
+      "file": "data/batches/obgyn_first_nations_dv_top.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "DFSA toxicology: urine has longer detection window than blood for GHB and benzos. Tests recognition of specific drug pharmacokinetics + practical forensic procedure. Distractor A (serum - shorter window), C/D/E unread but generally hair/oral fluid alternatives less useful at 18h. Multi-step."
     }
   ]
 }

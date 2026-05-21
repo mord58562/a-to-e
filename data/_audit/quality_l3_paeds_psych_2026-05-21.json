@@ -7,21 +7,28 @@
       "id": "both-batch-finals-002",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option bundles two actions ('hyperosmolar therapy AND urgently escalate'); split into singular action - either '3% saline 2.5 mL/kg over 10-15 minutes' or 'IV mannitol 0.5-1 g/kg', with escalation implied. Otherwise reasoning is genuine multi-step (recognise cerebral oedema during DKA Rx, not the well-known drug-for-condition pairing)."
     },
     {
       "id": "both-finals-109",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option bundles 'air enema reduction AFTER surgical consultation AND initial stabilisation'. Reword to a singular next step (e.g. 'Resuscitate with IV fluids and notify paediatric surgery for air enema reduction') or split into separate prioritisation options. Diagnosis pattern is reasonable L3 - classic + bilious raises the discriminator."
     },
     {
       "id": "both-finals-117",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["bundled-correct-option", "single-step-recall"],
+      "issues": [
+        "bundled-correct-option",
+        "single-step-recall"
+      ],
       "discard_reason": "Near-duplicate of both-batch-finals-002 (cerebral oedema during DKA Rx). Same answer pattern, same bundled correct option. With both-batch-finals-002 retained/rewritten, this one is redundant."
     },
     {
@@ -35,7 +42,10 @@
       "id": "obgyn-batch-emerg-006",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall", "implausible-distractors"],
+      "issues": [
+        "single-step-recall",
+        "implausible-distractors"
+      ],
       "discard_reason": "Single-step recall: pathological jaundice at 34h with positive DAT and TSB 230 -> phototherapy. Distractors (phenobarb, exchange before repeat, dehydration-only, discharge) are all clearly wrong without nuanced reasoning. No real L3 cognitive work."
     },
     {
@@ -49,7 +59,9 @@
       "id": "paeds-003",
       "file": "data/questions_paeds.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct answer bundles 'dexamethasone PLUS nebulised adrenaline PLUS observe 4 hours'. Distractor A is dex alone. Reword lead-in to 'Most appropriate combination of initial therapy and disposition' OR split: ask either drug choice or observation period, not both at once."
     },
     {
@@ -77,21 +89,28 @@
       "id": "paeds-008",
       "file": "data/questions_paeds.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option bundles NG ORS + ondansetron. Either narrow lead-in to 'most appropriate rehydration strategy' (drop the ondansetron), or recognise both are part of single decision and reframe explicitly. Otherwise discrimination between IV bolus (no shock) and oral/NG is genuinely L3."
     },
     {
       "id": "paeds-009",
       "file": "data/questions_paeds.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option", "diagnosis-named"],
+      "issues": [
+        "bundled-correct-option",
+        "diagnosis-named"
+      ],
       "fix_sketch": "Stem effectively names pyloric stenosis (olive, visible peristalsis, classic alkalosis, family history). Correct option triples fluid management + withhold feeds + surgical referral. The key teaching point is 'electrolyte correction BEFORE surgery' - narrow lead-in to 'most appropriate priority before pyloromyotomy' with options being competing prioritisations. The hypochloraemic alkalosis recognition is the L3 element worth preserving."
     },
     {
       "id": "paeds-010",
       "file": "data/questions_paeds.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option bundles 'IR for air enema AFTER fluid resus AND surgical review'. Imaging already shows target sign so diagnosis isn't the question. Reduce to single next step (e.g. 'Resuscitate and arrange air enema reduction' versus 'theatre first' versus 'observe'). Some redundancy with both-finals-109."
     },
     {
@@ -105,14 +124,19 @@
       "id": "paeds-015-l3",
       "file": "data/questions_paeds.json",
       "verdict": "rewrite",
-      "issues": ["diagnosis-named", "bundled-correct-option"],
+      "issues": [
+        "diagnosis-named",
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Stem telegraphs Kawasaki (5 of 5 classic features explicitly listed). Lead-in explicitly bundles IVIG + aspirin transition. Either (a) withhold some features and ask 'most likely diagnosis with appropriate Rx', or (b) narrow lead-in to 'aspirin dosing' alone or 'rationale for IVIG within 10 days'. The Reye/scarlet fever/defer-IVIG distractors are good anti-patterns - preserve them under a tighter lead-in."
     },
     {
       "id": "paeds-016",
       "file": "data/questions_paeds.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option triples 'analgesia + 6m urinalysis surveillance + return-precautions'. Lead-in asks 'next step'. BP is already >95th centile - that's the actionable signal. Reframe lead-in to 'most appropriate monitoring plan' OR split into a single discriminator (e.g. duration of surveillance, or role of steroids). HSP-with-renal-involvement could legitimately be a genuine L3 if narrowed."
     },
     {
@@ -126,14 +150,19 @@
       "id": "paeds-019",
       "file": "data/questions_paeds.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option bundles audiology + ASD assessment referral. Both are valid concurrent steps but bundling defeats the singular lead-in. Reframe to 'most appropriate first investigation' (audiology) OR 'most appropriate combination' explicitly. The 18m red-flags recognition is solid L3."
     },
     {
       "id": "paeds-021",
       "file": "data/questions_paeds.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option", "diagnosis-named"],
+      "issues": [
+        "bundled-correct-option",
+        "diagnosis-named"
+      ],
       "fix_sketch": "Blood film already names blasts (diagnosis given by labs). Correct option bundles 'same-day referral + BM + TLS prevention + supportive care'. Discriminators 'commence prednisolone' / 'transfuse in GP' are good anti-patterns. Narrow lead-in to 'most important pre-transfer priority' or 'most important pre-treatment risk to address' (TLS) to genuinely test L3 reasoning rather than 'don't manage cancer in GP'."
     },
     {
@@ -147,14 +176,18 @@
       "id": "paeds-024",
       "file": "data/questions_paeds.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option bundles 'disimpaction + maintenance macrogol + toileting routine + dietary advice'. Distractors are good anti-patterns (Hirschsprung biopsy, dairy elimination, reassurance). Narrow to single discriminator: disimpaction approach OR maintenance choice OR rule-out-Hirschsprung threshold. Otherwise discrimination is single-step recall."
     },
     {
       "id": "paeds-025",
       "file": "data/questions_paeds.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option bundles five actions (history + chart review + bloods + cow's-milk reduction + dietitian). Lead-in asks single 'next step'. Distractors are reasonable but the bundle dominates by inclusion. Narrow to 'most appropriate modifiable dietary intervention' (cow's milk reduction) or 'most appropriate first investigation' - both are real L3 decisions for faltering growth."
     },
     {
@@ -189,7 +222,9 @@
       "id": "paeds-acute-hy-005-l3",
       "file": "data/batches/paeds_acute_assessment_hy.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option is a verbose 5-part bundle (position + dose + repeat-at-5 + O2/IV + CPR). The actual single discriminator is the dose - 150 microg EpiPen Jr for 20 kg (10-20 kg threshold). Narrow to 'most appropriate adrenaline dose and route' with single-action options. ASCIA weight-band recall is legitimate L3 calibration."
     },
     {
@@ -210,7 +245,9 @@
       "id": "paeds-acute-hy-009-l3",
       "file": "data/batches/paeds_acute_assessment_hy.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option is a verbose paragraph bundling 'reassurance + treat focus + safety advice + GP follow-up + recurrence/epilepsy figures'. Identical educational point to paeds-014-l3. Either narrow to 'most appropriate plan regarding investigations' (none/LP/EEG/MRI) or treat as a near-duplicate of paeds-014-l3 and discard."
     },
     {
@@ -231,7 +268,9 @@
       "id": "paeds-adol-001",
       "file": "data/batches/paeds_adolescent_devbehav.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option bundles 'ask mother to leave AND explain confidentiality limits'. The 2-action sequence is the teaching point but technically bundled. Narrow to 'most appropriate first action' (separate from parent) - that alone discriminates from distractor B (proceed with mother) and the confidentiality framing is tested by paeds-adol-002. Slight overlap with paeds-adol-002."
     },
     {
@@ -259,7 +298,9 @@
       "id": "paeds-adol-007",
       "file": "data/batches/paeds_adolescent_devbehav.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option bundles 'admit + senior review + social work + skeletal survey + CP notification'. The single key decision-step here is 'this triggers formal NAI workup', tested via TEN-4 (non-mobile infant = positive). Narrow correct option to 'mandatory child protection notification and admit for formal NAI assessment'; the granular components are tested by paeds-adol-008."
     },
     {
@@ -308,14 +349,19 @@
       "id": "paeds-adol-015",
       "file": "data/batches/paeds_adolescent_devbehav.json",
       "verdict": "discard",
-      "issues": ["single-step-recall", "implausible-distractors"],
+      "issues": [
+        "single-step-recall",
+        "implausible-distractors"
+      ],
       "discard_reason": "Single-step pattern recognition: classic ASD features (hand-flapping, toe-walking, echolalia, restricted interest, parallel play, monotone). Distractors (childhood schizophrenia, RAD, SLD) are wildly implausible against this stem. No real L3 cognitive work; this is L1-L2 recognition."
     },
     {
       "id": "paeds-adol-016",
       "file": "data/batches/paeds_adolescent_devbehav.json",
       "verdict": "discard",
-      "issues": ["single-step-recall"],
+      "issues": [
+        "single-step-recall"
+      ],
       "discard_reason": "Pure factoid recall: NDIS Early Childhood Approach age cut-off (now <9). Clinical scenario is window-dressing; the question is a number-recall trivia item. Not appropriate L3 clinical reasoning."
     },
     {
@@ -329,7 +375,10 @@
       "id": "paeds-adol-018-l3",
       "file": "data/batches/paeds_adolescent_devbehav.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option", "diagnosis-named"],
+      "issues": [
+        "bundled-correct-option",
+        "diagnosis-named"
+      ],
       "fix_sketch": "Stem names 'meets DSM-5 criteria for adolescent-onset conduct disorder' - dx is given. Correct option bundles PMT/MST + comorbidity screening + treatment. Lead-in is OK ('first-line evidence-based intervention') but the option triples three actions. Narrow to single intervention choice (family-based behavioural intervention) and treat comorbidity screening as a separate question. Distractors (risperidone-first, boot-camp, psychodynamic-only, police-only) are good anti-patterns."
     },
     {
@@ -343,14 +392,20 @@
       "id": "paeds-allergy-derm-002-l3",
       "file": "data/batches/paeds_allergy_dermatology.json",
       "verdict": "discard",
-      "issues": ["single-step-recall", "implausible-distractors"],
+      "issues": [
+        "single-step-recall",
+        "implausible-distractors"
+      ],
       "discard_reason": "Pure pattern-matching: high fever then rash with face-sparing = roseola. Lead-in asks which option 'supports the most likely diagnosis' but the rash-onset detail in the stem makes it obvious. Distractors describe other classical exanthems, so the question reduces to multiple-choice exanthem recognition. L1-L2 recall."
     },
     {
       "id": "paeds-allergy-derm-003-l3",
       "file": "data/batches/paeds_allergy_dermatology.json",
       "verdict": "rewrite",
-      "issues": ["diagnosis-named", "bundled-correct-option"],
+      "issues": [
+        "diagnosis-named",
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Stem essentially names HFMD (outbreak + grey-roofed vesicles on palms/soles/buttocks + oral ulcers). Correct option bundles dx + exclusion advice + hygiene. The discriminator that matters here is the NHMRC exclusion rule change (no formal exclusion required if well). Narrow lead-in to 'most appropriate exclusion advice' with dx already disclosed - the exclusion-rule update is the genuine L3 testable point."
     },
     {
@@ -371,7 +426,9 @@
       "id": "paeds-allergy-derm-006",
       "file": "data/batches/paeds_allergy_dermatology.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option triples 'step-up potency + 250g/week emollient + FTU instruction'. Narrow to single discriminator: step-up to mod-potent OR emollient quantity OR address steroid phobia. Each is a legitimate L3 standalone. As written, distractors are good (oral pred, tacro-replacement, refer-for-systemic, sedating-antihistamine)."
     },
     {
@@ -385,7 +442,9 @@
       "id": "paeds-allergy-derm-008",
       "file": "data/batches/paeds_allergy_dermatology.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option bundles 'failed challenge interpretation + avoidance + 12-18m re-challenge + EpiPen Jr + Action Plan'. Lead-in asks 'interpretation and ongoing plan' which legitimises some bundling, but it's a 4-part bundle. Narrow to interpretation alone (failed vs passed vs equivocal) OR follow-up plan alone."
     },
     {
@@ -406,7 +465,9 @@
       "id": "paeds-allergy-derm-011",
       "file": "data/batches/paeds_allergy_dermatology.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option triples 'permethrin to all contacts + 7-14d repeat + environmental measures + consider ivermectin'. Each is legitimate, but combined into one option dominates. Narrow lead-in to e.g. 'most important management principle' (treat contacts simultaneously) or 'most appropriate adjunctive therapy for crusted features' (oral ivermectin). The remote/Aboriginal/crusted setting is the L3 hook."
     },
     {
@@ -434,84 +495,113 @@
       "id": "paeds-allergy-derm-016",
       "file": "data/batches/paeds_allergy_dermatology.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Lead-in asks for paired 'investigation and acute management' which partly justifies bundle. But correct option triples C1-inh testing + SERPING1 + acute Rx + follow-up. Narrow to either 'most appropriate confirmatory test' OR 'most appropriate acute treatment' (C1-INH concentrate or icatibant) - the second is the genuine L3 reasoning point (bradykinin-mediated, adrenaline/steroid/antihistamine ineffective)."
     },
     {
       "id": "paeds-allergy-derm-017",
       "file": "data/batches/paeds_allergy_dermatology.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option", "diagnosis-named"],
+      "issues": [
+        "bundled-correct-option",
+        "diagnosis-named"
+      ],
       "fix_sketch": "Stem strongly telegraphs DRESS (5 weeks post-carbamazepine + eosinophilia + atypical lymphs + hepatitis + creatinine bump). Correct option bundles stop-drug + admit + steroid + dermatology/immunology + future avoidance. Narrow lead-in to 'most appropriate immediate intervention' (stop carbamazepine + corticosteroid) OR 'most appropriate drug to avoid in future' (other aromatic anticonvulsants). Distractors are good (treat-as-SJS, treat-as-Kawasaki, switch-to-phenytoin which has cross-reactivity)."
     },
     {
       "id": "paeds-batch-001",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall", "implausible-distractors"],
+      "issues": [
+        "single-step-recall",
+        "implausible-distractors"
+      ],
       "discard_reason": "Single-step recall: bronchiolitis meeting admission criteria -> admit for supportive care. Distractors are wildly wrong (steroid + NG + 6h discharge; salbutamol trial; antibiotics+CXR+NPA) and obvious. Duplicates teaching point of paeds-001 and both-finals-119. Bank cleanup: drop."
     },
     {
       "id": "paeds-batch-002-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall"],
+      "issues": [
+        "single-step-recall"
+      ],
       "discard_reason": "Duplicates paeds-005-l3 / paeds-acute-hy-001-l3 teaching point (febrile neonate full septic workup + amp/gent/cefotaxime). Single-step recall."
     },
     {
       "id": "paeds-batch-003",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Acute severe asthma - correct option bundles O2 + neb salb+ipratropium + oral pred + repeat. Narrow lead-in to 'most appropriate bronchodilator/route' (nebulised over MDI given SpO2 90% and inability to speak) - that's the genuine decision point vs the MDI+spacer distractor."
     },
     {
       "id": "paeds-batch-004",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall"],
+      "issues": [
+        "single-step-recall"
+      ],
       "discard_reason": "Single-step recall: mild-mod croup -> oral dex 0.15 mg/kg. Lateral neck XR distractor is implausible. Duplicates paeds-003 (which already had refined teaching point of adrenaline addition for moderate)."
     },
     {
       "id": "paeds-batch-005",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall"],
+      "issues": [
+        "single-step-recall"
+      ],
       "discard_reason": "Duplicates paeds-008 / paeds-acute-hy-003-l3 / paeds-acute-hy-004 teaching point (NG ORS for mod dehydration, no shock)."
     },
     {
       "id": "paeds-batch-006",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall"],
+      "issues": [
+        "single-step-recall"
+      ],
       "discard_reason": "Duplicates paeds-004 (outpatient CAP -> amoxicillin)."
     },
     {
       "id": "paeds-batch-007-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall"],
+      "issues": [
+        "single-step-recall"
+      ],
       "discard_reason": "Single-step recall: mild croup (Westley 1) -> single dose oral dex. Implausible distractors (nebulised adrenaline for mild, amoxicillin). Duplicates paeds-batch-004 and paeds-003. Bank cleanup: drop."
     },
     {
       "id": "paeds-batch-008-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall"],
+      "issues": [
+        "single-step-recall"
+      ],
       "discard_reason": "Third duplicate of bronchiolitis admission criteria (paeds-001, both-finals-119, paeds-batch-001 already cover this). Drop."
     },
     {
       "id": "paeds-batch-009-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall", "bundled-correct-option"],
+      "issues": [
+        "single-step-recall",
+        "bundled-correct-option"
+      ],
       "discard_reason": "Duplicates paeds-014-l3 / paeds-acute-hy-009-l3 (simple febrile seizure -> reassure, treat focus, safety advice). Bank already has two near-identical questions."
     },
     {
       "id": "paeds-batch-010",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall", "diagnosis-named", "bundled-correct-option"],
+      "issues": [
+        "single-step-recall",
+        "diagnosis-named",
+        "bundled-correct-option"
+      ],
       "discard_reason": "Duplicates paeds-015-l3 (Kawasaki + IVIG/aspirin). Stem telegraphs all 5 features. Drop."
     },
     {
@@ -525,7 +615,9 @@
       "id": "paeds-batch-012",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Nephrotic syndrome in preschool - correct option bundles ISKDC steroid regimen + low-salt diet. Distractors (renal biopsy first, diuretic-only, albumin+frusemide, ACEi+observe) are real anti-patterns. Narrow to drug-choice OR salt-restriction OR role-of-biopsy - any of these is a clean L3 discriminator."
     },
     {
@@ -546,7 +638,9 @@
       "id": "paeds-batch-017",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall"],
+      "issues": [
+        "single-step-recall"
+      ],
       "discard_reason": "Duplicates paeds-005-l3 / paeds-acute-hy-001-l3 / paeds-batch-002-l3 (febrile infant <8 weeks -> full septic workup). Multiple covers exist; drop."
     },
     {
@@ -567,14 +661,18 @@
       "id": "paeds-batch-034-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option bundles dx + analgesia-only + safety-net delayed prescription. Lead-in asks 'diagnosis and management plan'. Narrow to single dispositional decision: 'most appropriate antibiotic strategy' (immediate / delayed / none) - delayed prescription for low-risk uncomplicated AOM is the Aus eTG teaching point and is a clean L3."
     },
     {
       "id": "paeds-batch-035-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Verbose correct option bundles feed + buccal gel + recheck + escalation criteria. Narrow to 'most appropriate first-line intervention' (feed + buccal dextrose gel rather than IV bolus) - that is the QCG teaching point. The 2.6 mmol/L threshold for escalation could be a separate question."
     },
     {
@@ -588,14 +686,19 @@
       "id": "paeds-batch-037",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall", "implausible-distractors"],
+      "issues": [
+        "single-step-recall",
+        "implausible-distractors"
+      ],
       "discard_reason": "Single-step pattern recognition: classic Turner stigmata (webbed neck, low hairline, broad chest, widely-spaced nipples, short stature, delayed puberty). Distractors don't fit the dysmorphology. L1-L2 recognition not L3."
     },
     {
       "id": "paeds-batch-038",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall"],
+      "issues": [
+        "single-step-recall"
+      ],
       "discard_reason": "Duplicates paeds-adol-013 (paeds OSA with adenotonsillar hypertrophy -> ENT). This version is shorter and lacks the ADHD-mimicry distractor that makes paeds-adol-013 L3."
     },
     {
@@ -609,7 +712,9 @@
       "id": "paeds-batch-040",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option bundles oral cephalexin + wet dressings + diluted-TCS. Lead-in is 'next step'. The genuine discriminator is bacterial superinfection (pustules) vs eczema herpeticum (vesicles/punched-out). Narrow to 'most appropriate antimicrobial choice' OR 'most likely cause of flare' (impetiginisation vs herpeticum vs TCS-resistance)."
     },
     {
@@ -623,14 +728,18 @@
       "id": "paeds-batch-043-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall"],
+      "issues": [
+        "single-step-recall"
+      ],
       "discard_reason": "Duplicates paeds-021 (ALL presentation). Lead-in asks for 'diagnosis + most discriminating lab feature' but the constellation makes ALL obvious. Drop in favour of paeds-021 which has better-calibrated distractors."
     },
     {
       "id": "paeds-batch-044-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option triples 'audiology + M-CHAT-R/F + referral if positive + AGPAR funding pathway note'. Narrow to 'most appropriate screening tool' (M-CHAT-R/F) - that's the clean discriminator. Audiology+referral could be standalone L3."
     },
     {
@@ -644,7 +753,9 @@
       "id": "paeds-batch-047-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall"],
+      "issues": [
+        "single-step-recall"
+      ],
       "discard_reason": "Fourth duplicate of bronchiolitis-admission-criteria (paeds-001, both-finals-119, paeds-batch-001, paeds-batch-008-l3 already cover this). Drop."
     },
     {
@@ -658,21 +769,27 @@
       "id": "paeds-batch-049",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall"],
+      "issues": [
+        "single-step-recall"
+      ],
       "discard_reason": "Exact duplicate of paeds-batch-036 (asthma step-up). Drop."
     },
     {
       "id": "paeds-batch-050-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Lead-in asks paired 'immediate + longer-term' so some bundling justified, but correct option is a 100-word paragraph bundling 4 elements. Narrow to 'most appropriate immediate management' (monitor, don't pace because adequate escape) - that is the discriminating call. Permanent-pacemaker-thresholds and skin-rash counselling could be separate."
     },
     {
       "id": "paeds-batch-052-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option bundles 'sterile sampling before Abx + admit + IV amp/gent + USS + DMSA/MCUG only if indicated'. Lead-in explicitly asks combination of three things. Narrow to one discriminator: 'most appropriate urine sample method' (catheter/SPA, not bag for UTI dx) OR 'most appropriate empirical antibiotic'. The bag-urine-not-sufficient-for-dx point is the genuine L3 teaching."
     },
     {
@@ -693,7 +810,9 @@
       "id": "paeds-batch-055-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option bundles air-enema + surgical-standby + IV-fluids + contraindications. Lead-in asks 'definitive management + safety prerequisite' which justifies some bundling. The peritonitis/perforation contraindication is the genuine L3 teaching. Narrow to single safety prerequisite. Some redundancy with paeds-010, paeds-batch-011, both-finals-109."
     },
     {
@@ -735,14 +854,18 @@
       "id": "paeds-batch-067-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Verbose correct option bundles hypertonic-saline/mannitol + reduce-fluids + positioning + CT + don't-hyperventilate. Narrow to either 'most appropriate osmotherapy choice' or 'most appropriate fluid adjustment'. Some redundancy with both-batch-finals-002, both-finals-117, paeds-batch-071-l3."
     },
     {
       "id": "paeds-batch-068-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Correct option bundles dx + NJ feeding + electrolytes + surgical-reserve. Narrow to 'most appropriate initial management' (NJ feeding post-obstruction) - that is the SMA-specific teaching point. Distractors are good differentials (chronic duodenal atresia, annular pancreas, MALS, EoE)."
     },
     {
@@ -756,7 +879,9 @@
       "id": "paeds-batch-071-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "rewrite",
-      "issues": ["bundled-correct-option"],
+      "issues": [
+        "bundled-correct-option"
+      ],
       "fix_sketch": "Lead-in asks 'intervention AND why preferred over alternative osmotherapy' which justifies a paired answer. Correct option is verbose. Narrow to single comparison: hypertonic saline preferred over mannitol in hypotension (intravascular expansion vs osmotic diuresis). The reasoning point is genuinely L3."
     },
     {
@@ -770,7 +895,10 @@
       "id": "paeds-batch-emerg-001-l3",
       "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
       "verdict": "discard",
-      "issues": ["single-step-recall", "bundled-correct-option"],
+      "issues": [
+        "single-step-recall",
+        "bundled-correct-option"
+      ],
       "discard_reason": "Fifth bronchiolitis admission duplicate (paeds-001, both-finals-119, paeds-batch-001, paeds-batch-008-l3, paeds-batch-047-l3). Drop."
     },
     {
@@ -786,4 +914,242 @@
       "verdict": "keep",
       "issues": [],
       "fix_sketch": "Genuine L3 anti-pattern: paracetamol OD with UNKNOWN time of ingestion -> start NAC immediately, do not wait for nomogram. Tests calibrated awareness that nomogram requires known ingestion time. Solid."
+    },
+    {
+      "id": "paeds-batch-emerg-007-l3",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "verdict": "rewrite",
+      "issues": [
+        "bundled-correct-option"
+      ],
+      "fix_sketch": "Correct option bundles USS + air enema + surgical-standby + IV-resus. Lead-in asks paired investigation + follow-up. Narrow to single discriminator (first imaging = USS). Duplicates paeds-010, paeds-batch-011, paeds-batch-055-l3."
+    },
+    {
+      "id": "paeds-batch-emerg-008",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3: febrile neutropenia -> cultures + immediate broad-spectrum IV Abx (NOT remove line first, not wait, not oral). Solid time-critical anti-pattern."
+    },
+    {
+      "id": "paeds-batch-emerg-010",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3: DKA -> fluid bolus BEFORE insulin (anti-pattern). Distractors test classic errors (insulin-first, bicarb for low pH, treat-hyperK before fluids). Solid."
+    },
+    {
+      "id": "paeds-batch-emerg-013",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3: bruising in non-mobile or pre-walking child + sentinel-injury concern -> dont assume pulled elbow, investigate. Tests NAI threshold awareness. Solid."
+    },
+    {
+      "id": "paeds-batch-highyield-002",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3: classic metaphyseal corner fracture + multi-age bruising -> skeletal survey + CP. Tests recognition of specific NAI radiographic feature. Distractors test mismanagement (treat-as-accidental, BMD-first). Solid."
+    },
+    {
+      "id": "paeds-batch-highyield-006-l3",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "verdict": "discard",
+      "issues": [
+        "single-step-recall"
+      ],
+      "discard_reason": "Sixth bronchiolitis-admit duplicate. Drop."
+    },
+    {
+      "id": "paeds-cardgen-001-l3",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3: classic Still murmur features (vibratory, positional change, Valsalva-attenuated) -> reassure, dont over-investigate. Tests calibrated recognition. Solid."
+    },
+    {
+      "id": "paeds-cardgen-002",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3: TOF tet spell -> knee-chest + morphine (NOT adenosine, NOT frusemide, NOT prostaglandin). Distractors test classic errors. Solid."
+    },
+    {
+      "id": "paeds-cardgen-003",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "rewrite",
+      "issues": [
+        "bundled-correct-option"
+      ],
+      "fix_sketch": "Correct option bundles frusemide + ACEi + high-energy feeds. Narrow to single drug choice (loop diuretic + ACEi as combined heart failure regimen is somewhat standard). Distractors are good (spontaneous-closure wait, propranolol, PGE1, oxygen-as-treatment)."
+    },
+    {
+      "id": "paeds-cardgen-004",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3: haemodynamically significant PDA in preterm -> pharmacological closure (ibuprofen/indomethacin), not PGE1 (which keeps it open), not paracetamol-indefinite. Tests directional knowledge of duct manipulation. Solid."
+    },
+    {
+      "id": "paeds-cardgen-005",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3: duct-dependent CHD (coarctation pattern - pre/post-ductal split, absent femorals, arm-leg BP gradient) -> PGE1. Distractors test classic errors (frusemide, high-O2 closes duct, vit-K). Solid."
+    },
+    {
+      "id": "paeds-cardgen-006",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3: infant SVT (stable) -> vagal maneuvre (ice to face) BEFORE drug therapy or DC cardioversion. Tests sequence/maneuvre choice. Distractors test classic errors (defib for stable narrow-complex, verapamil contraindicated <1y, carotid massage). Solid."
+    },
+    {
+      "id": "paeds-cardgen-007",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "rewrite",
+      "issues": [
+        "bundled-correct-option",
+        "diagnosis-named"
+      ],
+      "fix_sketch": "Stem essentially confirms LQTS (QTc 510, exertional syncope, family SCD swim). Correct option triples beta-blocker + sport-restrict + cascade-screen. Narrow to single discriminator (most appropriate first-line drug) - sotalol distractor tests common confusion. The exertional+swim trigger and cascade screening are useful but bundle is wide."
+    },
+    {
+      "id": "paeds-cardgen-009",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3: incomplete Kawasaki (3 features + supportive labs/CRP/ESR/plt/sterile pyuria/low albumin) - treat empirically with IVIG+aspirin, do NOT defer for echo confirmation. Tests the do-not-wait principle. Distractors test under-treatment (paracetamol, ceftriaxone, defer-for-echo) and wrong-treatment (steroid monotherapy). Solid."
+    },
+    {
+      "id": "paeds-cardgen-010",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3: T21 with duodenal atresia + TAM - highest priority before surgery is define cardiac anatomy (AVSD common in T21). Tests pre-operative cardiac workup priority. Solid."
+    },
+    {
+      "id": "paeds-cardgen-011",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3: Turner stigmata + measurable arm-leg BP gradient -> coarctation echo is urgent. Tests selecting the right finding to act on (vs the lymphoedema/neck-web that are static dysmorphology). Solid."
+    },
+    {
+      "id": "paeds-cardgen-012",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "discard",
+      "issues": [
+        "single-step-recall"
+      ],
+      "discard_reason": "Pure syndrome pattern recognition: classic Williams (elfin face + supravalvular AS + hypercalcaemia + hypersociable). Distractors are other syndromes that obviously dont fit. L1-L2 recognition."
+    },
+    {
+      "id": "paeds-cardgen-013-l3",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Lead-in asks paired diagnosis+test. Noonan vs other RASopathies + Williams/Turner/Marfan/T21 - distractors are real differentials with the wrong test. Tests dysplastic-pulmonary-valve specificity to Noonan. Solid."
+    },
+    {
+      "id": "paeds-cardgen-014",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "rewrite",
+      "issues": [
+        "bundled-correct-option",
+        "diagnosis-named"
+      ],
+      "fix_sketch": "Stem effectively diagnoses Marfan (ectopia lentis + aortic root Z>3.8 + father aortic dissection). Correct option triples drug + sport restriction + screening. Narrow to single discriminator (most appropriate sport restriction OR drug choice). Distractors test real errors (under-treatment, immediate surgery, sotalol)."
+    },
+    {
+      "id": "paeds-cardgen-015-l3",
+      "file": "data/batches/paeds_cardiology_genetics.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Lead-in asks paired diagnosis+test. Fragile X with FXTAS in maternal uncle + POI in grandmother is the genuinely L3 family-history clue. Tests recognition that microarray misses CGG-repeat expansion. Distractors test alt syndromes with appropriate tests. Solid."
+    },
+    {
+      "id": "paeds-chronic-hy-001-l3",
+      "file": "data/batches/paeds_chronic_common_hy.json",
+      "verdict": "rewrite",
+      "issues": [
+        "bundled-correct-option"
+      ],
+      "fix_sketch": "Correct option bundles milk-cap + dietary + iron + recheck + duration. Narrow to single discriminator (dietary modification vs oral iron vs IV vs transfusion). Tests IDA management - good distractors (transfusion, electrophoresis, IV iron, sub-therapeutic dose) but bundle too wide."
+    },
+    {
+      "id": "paeds-chronic-hy-002",
+      "file": "data/batches/paeds_chronic_common_hy.json",
+      "verdict": "rewrite",
+      "issues": [
+        "bundled-correct-option"
+      ],
+      "fix_sketch": "Correct option triples emollient + body-TCS + face-TCS regimen. Narrow to single discriminator (mod-potency TCS for body) OR proactive vs reactive use. Distractors include real anti-patterns (TCS-phobic emollient-only, over-potent face TCS, ciclosporin)."
+    },
+    {
+      "id": "paeds-chronic-hy-003",
+      "file": "data/batches/paeds_chronic_common_hy.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3: eczema herpeticum recognition (monomorphic umbilicated punched-out, household HSV contact) -> admit + IV aciclovir + ophthal. Tests anti-pattern (NOT cefalexin, NOT increase TCS, NOT oral val-aciclovir-discharge). Solid."
+    },
+    {
+      "id": "paeds-chronic-hy-004",
+      "file": "data/batches/paeds_chronic_common_hy.json",
+      "verdict": "discard",
+      "issues": [
+        "single-step-recall"
+      ],
+      "discard_reason": "Duplicates paeds-024 (functional constipation -> macrogol disimpaction + maintenance). Drop."
+    },
+    {
+      "id": "paeds-chronic-hy-005",
+      "file": "data/batches/paeds_chronic_common_hy.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Lead-in asks paired dx+investigation. Genuine L3: delayed meconium >24h + explosive PR + bilious vomiting + ribbon rectum -> Hirschsprung suction rectal biopsy. Distractors test real differentials with wrong tests."
+    },
+    {
+      "id": "paeds-chronic-hy-006",
+      "file": "data/batches/paeds_chronic_common_hy.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3 anti-pattern: faltering growth -> detailed feeding hx + observe feed BEFORE broad screening or NG-admit or CP referral. Tests Apple/RCH stepwise. Solid."
+    },
+    {
+      "id": "paeds-chronic-hy-008",
+      "file": "data/batches/paeds_chronic_common_hy.json",
+      "verdict": "rewrite",
+      "issues": [
+        "bundled-correct-option"
+      ],
+      "fix_sketch": "Correct option triples MDT autism + audiology + NDIS-ECEI. Narrow to most-appropriate-first-investigation (audiology) OR most-appropriate-referral (MDT autism). Some duplication with paeds-019 and paeds-batch-044-l3."
+    },
+    {
+      "id": "paeds-chronic-hy-011-l3",
+      "file": "data/batches/paeds_chronic_common_hy.json",
+      "verdict": "rewrite",
+      "issues": [
+        "bundled-correct-option"
+      ],
+      "fix_sketch": "Verbose correct option bundles DMSA timing + MCUG indications + constipation/bladder habit advice. Narrow to single discriminator (DMSA at 4-6m vs immediate MCUG vs prophylaxis vs cystoscopy vs repeat USS). The 4-6m timing post-UTI for DMSA is the genuine L3 teaching point."
+    },
+    {
+      "id": "paeds-chronic-hy-013",
+      "file": "data/batches/paeds_chronic_common_hy.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3 anti-pattern: live vaccines (MMR/varicella) safe and indicated for healthy household contacts of immunocompromised - do not defer. Tests common misconception. Distractors test under-management (defer, replace, only-inactivated) and over-reach (live typhoid prophylaxis). Solid."
+    },
+    {
+      "id": "paeds-chronic-hy-014-l3",
+      "file": "data/batches/paeds_chronic_common_hy.json",
+      "verdict": "rewrite",
+      "issues": [
+        "bundled-correct-option"
+      ],
+      "fix_sketch": "Correct option is a 70-word paragraph bundling MI + presumptive lang + acknowledging + evidence + recommendation + SKAI + follow-up + documentation + against-spaced-schedule. Narrow to a single discriminator like spaced-vs-standard schedule OR most appropriate communication framing. Distractors are good (refuse care, CP notification, spaced schedule)."
     }
+  ]
+}
