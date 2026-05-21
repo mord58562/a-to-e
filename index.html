@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260521v" />
+<link rel="stylesheet" href="assets/styles.css?v=20260522a" />
 </head>
 <body data-screen="home" class="locked">
 
@@ -498,660 +498,236 @@
 
 <script type="text/template" id="addQuestionsPromptTemplate">
 You are generating high-quality single-best-answer MCQs for a Year 4
-Australian medical student preparing for their final-year MCQ exams
-(end of MD program). Output ONLY a JSON array conforming to the schema
-below, with no surrounding prose.
+Australian medical student. Output ONLY a JSON array of question
+objects - no prose, no Markdown fences, nothing else.
 
 ============================
-0. CURRENT FOCUS (time-bound)
+0. CURRENT FOCUS
 ============================
 
 {{FOCUS_DIRECTIVE}}
 
 {{BANK_STATE}}
 
-Generate ONLY in the discipline(s) listed above for this period.
-Questions in non-focus disciplines are dropped during audit, so don't
-waste your generation budget on them. The framework topic lists in
-Section 5B include all four disciplines for reference, but ONLY pick
-scenarios from the disciplines named in this Current Focus block.
+Generate ONLY in the disciplines named in the focus block.
 
 ============================
-1. DIFFICULTY CALIBRATION  (UPDATED 2026-05-21)
+1. DIFFICULTY (binding)
 ============================
 
-POLICY: The bank is L3-MINIMUM. No questions at difficulty 1 or 2
-are accepted. If a topic / cluster cannot legitimately reach L3,
-pick a different topic - do not generate.
+The bank floor is L3 (do not produce L1/L2). The target per-topic
+shape is L3 ~50% / L4 ~45% / L5 ~5%. Difficulty is the COMPLEXITY OF
+REASONING required to land on the correct answer - not stem length,
+not topic rarity, not vocabulary.
 
-Difficulty is determined by the COMPLEXITY OF CLINICAL REASONING
-required to land on the correct answer. It is NOT about stem length,
-number of data fields, vocabulary, or topic rarity. A 60-word stem
-can be a legitimate L5 if the reasoning chain is non-trivial. A
-300-word stem can be a discarded L2 if it telegraphs the answer
-(resource hints, pre-stated diagnoses, named gold-standard treatments
-in the stem, patient/clinician preferences that pre-commit the choice).
+  3/5  Integrate 2-3 data points and choose between PLAUSIBLE
+       distractors. Lead-in is "most appropriate next step", not
+       "what is it". 30-60 sec of real reasoning.
+  4/5  Multi-step pathway with trade-offs, OR application of an
+       AU-specific cut-off / threshold / dose-rule, with competing
+       considerations. 60-90 sec.
+  5/5  Atypical or contested presentation, anti-pattern recognition,
+       calculation under uncertainty, OR niche sub-specialty fact
+       PLUS multi-step reasoning. Niche fact alone is never L5.
 
-  3/5  Reach the answer by integrating 2-3 data points and selecting
-       between PLAUSIBLE distractors. Lead-in is "most appropriate
-       next step" (not "what is it"). 30-60 sec of real reasoning.
-  4/5  Multi-step pathway decision OR application of an AU-specific
-       cut-off / threshold / dosing rule, with trade-offs to weigh.
-       60-90 sec. AMBOSS standard.
-  5/5  Atypical or contested presentation, multi-step reasoning,
-       contradictory data, calculation under uncertainty, anti-pattern
-       discrimination. Top 5% USMLE Step 2 equivalent.
+For a 30-Q batch aim ~0 L2 / ~12 L3 / ~12 L4 / ~6 L5.
+For a 50-Q batch aim ~0 L2 / ~20 L3 / ~20 L4 / ~10 L5.
 
-Distribution targets per batch:
-  -  15-Q batch: ~6 / 6 / 3  (L3 / L4 / L5)
-  -  20-Q batch: ~8 / 8 / 4
-  -  30-Q batch: ~12 / 12 / 6
-  -  >=25% of L4-L5 must centre on COMMON presentations (sore throat,
-     paracetamol overdose, ACS, postpartum haemorrhage) where the
-     reasoning earns the rating - not rare-topic recognition.
+If a question can only legitimately reach L1 or L2, DISCARD it - do
+not commit. >=25% of L4-L5 must centre on COMMON presentations
+(sore throat, PPH, ACS, paracetamol overdose) where the reasoning
+earns the rating - not rare-topic recognition.
 
-Telegraph patterns that demote a question to L2 (= reject) regardless
-of topic complexity:
-  -  Stem names the gold-standard treatment ("the tertiary unit offers
-     near-daily laser ablation").
-  -  Stem pre-commits via patient/clinician preference ("she wants
-     maximum survival", "the cardiologist recommends ICD").
-  -  Stem hands the diagnosis ("known case of X", "diagnosed with X")
-     with a lead-in that just asks "what's next?".
-  -  Pathognomonic triad spelled out so pattern-matching alone solves
-     it.
-  Strip any such sentence; if removing it leaves the question
-  ambiguous, the question is structurally broken - rebuild or discard.
+Hard demote-to-discard patterns (= telegraphed answer):
+- Stem names the gold-standard treatment or pathognomonic triad.
+- Stem pre-states the diagnosis with a lead-in that just asks "next?".
+- Patient/clinician preference pre-commits the choice.
+- Risk-escalation telegraphing ("compounding the risk", "further
+  increasing the risk").
 
 ============================
-2. STEM CRAFT  (NO LENGTH FLOORS)
+2. STEM CRAFT
 ============================
 
-There are NO stem-length floors per difficulty level. Write the stem
-exactly as long as the scenario genuinely requires - never pad to hit
-a target, never truncate to hit one. The only stem-length constraint
-that remains is the every-sentence-justified rule in the clinical-
-relevance block below.
+Write the stem exactly as long as the clinical scenario requires - no
+length floors, no padding. The only stem-length rule is the
+clinical-relevance audit in Section 7.
 
-Aim for the typical AU-MD vignette shape (demographics + presenting
-complaint + relevant history + exam + investigations + meds) when
-needed. Use a data_table for structured findings (vitals, exam,
-investigations, meds, history) rather than repeating them in prose.
+Typical AU-MD vignette shape when needed: demographics + presenting
+complaint + relevant history + exam + investigations + medications.
+Use the `data_table` field for structured findings (vitals, labs,
+imaging, drugs); do NOT also state them in the stem prose.
 
-ANTI-PATTERNS in stems (HARD - all are auto-reject):
-  -  Author meta-commentary: ANY parenthetical of the form
-     "(this hooks the X distractor)", "hooks the X distractor",
-     "rules out [A-E]", "red herring)", "tests the X anti-pattern",
-     "this anchors the". Stems are seen by the candidate; they must
-     not contain author back-of-house notes.
-  -  Risk-escalation telegraphing: ANY phrase like "compounding the
-     risk", "further increasing the risk", "putting her at additional
-     risk", "which significantly increases the risk". That IS the
-     question; if you write it in the stem you have telegraphed the
-     answer.
-  -  Negative lead-ins: avoid "not" / "except" / "least" in the
-     lead-in unless visually emphasised (UPPERCASE or **bold**). Prefer
-     "most appropriate", "single best", "most likely" constructions.
-  -  Doubled structured data: if a finding lives in data_table, do
-     not also state it in the stem prose, and vice versa. Pick one
-     place per finding.
-  -  Leaked back-of-house data_table fields: never use keys like
-     "Differential considered and ruled out by echo", "Plan for
-     theatre", "Team is aware", "Discharge plan being considered".
-     Those belong in the explanation, not the data block.
+The candidate IS the treating doctor. Never frame the stem from a
+nurse / pharmacist / midwife / student observer perspective. Other
+professionals appearing in the scene is fine - the question is always
+"what do you, the doctor, do next".
 
-Include ALL of the following at increasing depth as level rises:
-  - Patient demographics + relevant past medical / obstetric / surgical
-    history that affects the answer
-  - Presenting complaint with full timeline (hours/days/weeks)
-  - Multiple exam findings: vitals + focal findings + secondary signs
-  - Investigations already done with specific numeric values (AUSTRALIAN
-    SI units only - mmol/L, micromol/L, g/L, x10^9/L, mmHg, deg C, kg)
-  - Current medications + drug allergies where relevant
-  - Social / family / occupational / immunisation / travel / contact
-    context if it informs the answer (level 4-5)
-
-CLINICAL-RELEVANCE RULE (HARD - ZERO TOLERANCE FOR FILLER):
-  Every sentence, data point, history element, and exam finding in the
-  stem must serve one of:
-    (a) act as a HOOK for a SPECIFIC NAMED distractor,
-    (b) be the key feature pointing to the correct answer,
-    (c) be an INTENTIONAL red herring the student must recognise as
-        irrelevant (max 1 per stem, only as a teaching feature),
-    (d) provide essential context (age, gestation, comorbidity, meds,
-        allergies) needed to interpret the question.
-
-  Self-audit: for each sentence in the stem, write down which of
-  (a)/(b)/(c)/(d) it serves. For (a), name the specific distractor it
-  hooks. If you cannot justify a sentence, delete it.
-
-  If after deletion the stem falls below its difficulty floor, the
-  question's true difficulty is lower - RELABEL it, do not pad it back
-  up. A short stem with no filler is better than a long stem with
-  any filler. Long stems that contain incidental family history, room
-  description, generic social trivia, or "fun fact" detail are
-  REJECTED outright - they teach the student that exam stems contain
-  noise, which is the wrong study habit.
-
-ANTI-TRICK RULE (HARD):
-  Difficulty MUST come from clinical reasoning challenge - integrating
-  findings, weighing trade-offs, applying guideline cut-offs, choosing
-  the safe next step among plausible alternatives. NOT from:
-    - WEIGHT-ADJUSTED DOSE ARITHMETIC (mg/kg, mL/kg/hr maintenance,
-      paeds resus boluses by weight, Kleihauer-Betke anti-D math).
-      This bank trains decision-making, not mental math under exam
-      pressure. A stem MAY mention a dose to anchor the scenario
-      (e.g., "after IM adrenaline 10 mcg/kg with minimal effect"),
-      but the LEAD-IN and CORRECT ANSWER must NEVER hinge on the
-      student doing the multiplication. If the only way to answer is
-      to compute a dose, the question is rejected.
-    - Niche guideline exceptions 99% of clinicians wouldn't know.
-    - Single-word red-herring traps.
-    - Obscure pharmacological mechanism trivia.
-    - Statistical / epidemiology trivia ("second most common cause").
-    - Reverse-engineering rare diagnosis from one atypical sign.
-    - Textual gotchas / contradiction-spotting.
-  A 5/5 question should leave the student thinking "that was hard but
-  the right answer is defensible", not "I'd never get that without the
-  specific 2023 RANZCOG amendment" or "I just had to do the
-  multiplication faster".
-
-REJECTED EXAMPLE (47-word stem labelled 4/5 - actually below 1/5 floor):
-  "A 4-year-old girl presents with 12 hours of fever, headache,
-  vomiting, and increasing drowsiness. She is fully immunised. T 39.4,
-  HR 150, RR 28, BP 90/55, SpO2 97%. GCS 13, neck stiffness,
-  photophobia, no rash, cap refill 3s. After blood cultures, what is
-  the single most appropriate empirical therapy?"
-
-  Why it fails: hands the diagnosis (classic meningitis), lead-in
-  hands the management framework (already-cultured, asking for
-  empirical), one obvious answer (ceftriaxone + dexamethasone).
-
-  4/5 version adds: full immunisation history with specific catch-up
-  status, drug allergies, social context (sibling with URTI, daycare
-  cohort, recent travel), more specific bloods (WCC, neutrophils, CRP,
-  lactate, sodium with SIADH implication), neuroimaging-decision
-  context (raised-ICP signs), corticosteroid-timing context,
-  Aboriginal and Torres Strait Islander health considerations where
-  relevant (e.g. ARF prophylaxis status, MeNZB cohort, regional
-  protocol).
-
-Lead-in questions should test ONE of:
-  - "What is the most appropriate NEXT step in management?" (not first)
-  - "Which is the most appropriate INITIAL investigation given X?"
-  - "What is the SINGLE BEST next intervention?"
-  - "Which of these is CONTRAINDICATED?"
-  - "Which finding most strongly suggests X over Y?"
-  - Risk-stratification / severity classification
-  - Cut-off / score / graph interpretation (Rumack-Matthew, Bishop,
-    CTG class, phototherapy nomogram, Wells, qSOFA - INTERPRET, not
-    compute weight-based doses)
-
-Lead-ins that REQUIRE WEIGHT-BASED DOSE ARITHMETIC are banned (see
-ANTI-TRICK RULE above).
-
-Avoid: "What is the most likely diagnosis?" unless the question requires
-discriminating between four genuinely plausible look-alikes (e.g.
-placenta praevia vs abruption vs vasa praevia vs uterine rupture).
+Hard anti-patterns in stems (auto-reject):
+- Author meta-commentary ("(this hooks the X distractor)",
+  "rules out [A-E]", "red herring)", "tests the X anti-pattern").
+- Risk-escalation telegraphing (above).
+- Doubled structured data (data_table contradicts or repeats prose).
+- Markdown asterisks `**bold**` anywhere in the stem or lead-in.
+- Leaked back-of-house keys ("Differential ruled out by echo").
+- Lead-in guideline-name leak ("best matches RCH and ISPAD guidance").
+  Use neutral lead-ins ("most appropriate next step", "single best
+  initial intervention").
+- Pertinent-negative pile-up (chains of "no X, no Y, no Z, no W"
+  beyond 2 items - they telegraph the answer).
 
 ============================
-3. OPTIONS REQUIREMENTS
+3. OPTIONS (binding parity rules)
 ============================
 
-  - Exactly FIVE options labelled A-E.
-  - Exactly ONE correct.
-  - Distractors must be genuinely plausible - each should be a real
-    answer to a related but subtly different question. No obvious-wrong
-    distractors.
-  - DO NOT always put the correct answer at letter A. Randomly assign
-    the correct answer to any of A-E. The site shuffles at render but
-    new content should still be balanced in the raw JSON.
-  - Each option has a per-option rationale (1-3 sentences) explaining
-    WHY that option is correct or incorrect, with explicit source
-    attribution at the end (see Section 4).
-  - LENGTH-BALANCE THE OPTIONS (critical). All five must be within
-    +/- 25% of each other in word count. Never write a correct answer
-    that is markedly longer or more qualified than the distractors -
-    test-takers learn to pick the longest most-hedged option without
-    engaging. If the correct answer genuinely needs detail (dose, route,
-    qualifier), match that detail level on all four distractors. e.g.
-    if correct = "IM ergometrine 250 mcg + IV tranexamic acid 1 g",
-    distractors should also include dose + route ("IM carboprost 250
-    mcg q15min", "IV oxytocin 40 U infusion", "Syntometrine 1 mL IM
-    stat", "Misoprostol 800 mcg PR") - not single-word answers.
-  - Avoid the "all of the above / none of the above" anti-pattern.
-  - Avoid grammatical-cueing (correct option agreeing in number /
-    article with the lead-in; distractors not).
-  - EMBED DISTRACTOR HOOKS IN THE STEM (critical for >=3/5). Each
-    distractor must be supported by at least one specific feature in
-    the stem - the student should be able to point to a finding that
-    makes that distractor genuinely plausible, then reason about why
-    the correct answer outweighs it. Examples:
-      * Meningitis vignette with hypoglycaemia + lactate elevation
-        (supports sepsis distractor), preceding URTI (supports viral
-        meningitis distractor), no rash (rules out meningococcaemia
-        but doesn't exclude pneumococcal), recent travel to a TB-
-        endemic country (supports TB meningitis distractor), known
-        VP shunt (supports shunt-related infection distractor).
-      * APH vignette with painless bleeding + low-lying placenta on
-        20-week scan (placenta praevia hook), tetanic uterus +
-        smoking history (abruption hook), prior CS with anterior
-        praevia history (accreta hook), sudden bleeding after ROM
-        with foetal bradycardia (vasa praevia hook).
-    Without embedded hooks, distractors are obviously implausible and
-    the question collapses to recognition.
+Five options A-E, exactly one with `correct: true`.
+
+ANSWER-LENGTH PARITY (hard): max:min character ratio across the 5
+option `text` fields <= 1.35. NEVER write a correct option that is
+markedly longer, more specific, more qualified, or uniquely contains
+a key clinical word (a dose, "with airway clearance", "no
+contraindication") that no distractor has. Either pad the distractors
+with comparable plausible specificity OR shorten the correct option.
+
+DOSE-FORMAT PARITY: all options use the same units, the same separator
+style, the same route abbreviation. Inconsistency telegraphs.
+
+NO DIAGNOSIS-LEAK: when the stem withholds the diagnosis to test
+diagnostic + management reasoning, NO option may name that diagnosis.
+Options describe ACTIONS; the rationale carries the diagnosis.
+Exception: lead-ins of the form "what is the most likely diagnosis?".
+
+NO PERTINENT-NEGATIVE PARENTHETICALS in the correct option text. A
+trailing "(no hypertension contraindication)" is a leak.
+
+NO "FOLLOW LOCAL GUIDELINES" non-options. Any option that reduces to
+"do what the local guideline says" / "as per institutional policy"
+trivializes by elimination. Replace with a substantive distractor.
+
+Correct-letter distribution across the batch: roughly even (avoid
+all-A; ~3-4 per letter for 15-Q, ~6 per letter for 30-Q).
 
 ============================
-4. SOURCE CITATION (CRITICAL)
+4. RATIONALES + EXPLANATIONS
 ============================
 
-  - Each question has a top-level `sources` array of 2+ entries.
-    Format: { "label": "...", "url": "https://..." }
-  - Australian sources first wherever they cover the topic:
-      RCH CPG (https://www.rch.org.au/clinicalguide/),
-      RANZCOG (https://ranzcog.edu.au/),
-      KEMH (https://www.kemh.health.wa.gov.au/For-health-professionals/Clinical-guidelines),
-      The Royal Women's (Vic),
-      NSW Health / SA Health / Vic Health maternity,
-      Therapeutic Guidelines (https://tgldcdp.tg.org.au/),
-      Australian Medicines Handbook (AMH),
-      NHMRC,
-      ADIPS (gestational diabetes; https://adips.org/),
-      NCSP / Cancer Council Australia (https://www.cancer.org.au/cervical-screening),
-      ANZCOR (https://resus.org.au/),
-      ASCIA (https://www.allergy.org.au/),
-      NCIRS (immunisation),
-      CDNA.
-    International acceptable: NICE, BMJ Best Practice, StatPearls
-    (https://www.ncbi.nlm.nih.gov/books/NBK430685/), Cochrane,
-    AAP/RCPCH, KDIGO, FIGO. UpToDate citations OK but never the only
-    source (paywalled).
+Each option carries a `rationale` of 1-3 sentences. Distractor
+rationales lead with WHY the option is wrong, then add EITHER
+"would be correct if..." OR an AU carve-out OR an anti-pattern label.
+Every rationale ends with an inline source citation by name (e.g.
+"(Source: RCH CPG: Bronchiolitis)" or "(eTG; AMH)").
 
-  - Every option's `rationale` MUST end with explicit source
-    attribution by name. e.g. "...as per RCH CPG: Bronchiolitis" or
-    "(Source: Therapeutic Guidelines: Respiratory)".
+Each option has a `source_refs` array of strings that match labels
+in the question's top-level `sources` array.
 
-  - Every option has an array `source_refs` whose entries are the
-    `label` strings (from the question's `sources`) that back that
-    option's rationale. e.g. `"source_refs": ["RCH CPG: Bronchiolitis",
-    "Therapeutic Guidelines: Respiratory"]`.
+`explanation.summary` is 3-5 sentences of broader clinical context
+the question lives in (the wider pathway, indications,
+contraindications, what happens if missed) - NOT a restatement of
+the correct rationale.
 
-  - The same rule for `explanation.summary`, every entry in
-    `explanation.key_points`, and `explanation.pearls`.
+`explanation.key_points` is an array of 3-5 bullet strings.
 
-  - Every numeric claim must be verifiable in a cited source. Before
-    finalising each question, re-read each rationale and check every
-    dose, threshold, percentage, age cut-off, gestational-age cut-off
-    against the cited source. If you cannot verify a claim, drop the
-    claim or drop the question. Do NOT ship hedged or fabricated
-    statistics.
+`explanation.pearls` is a single 1-2 sentence pearl: ONE specific,
+memorable clinical fact (named drug + threshold + timeframe). NOT
+formulaic ("Remember to consider...", "Always check...", "Key
+learning point...", "Don't forget..."). The pearl must add
+information not already in the rationale.
 
 ============================
-5. AUSTRALIAN-SPECIFIC CALIBRATION
+5. SOURCES + TAGS
 ============================
 
-Where Australian guidance differs from international, USE AUSTRALIAN:
-  - Anti-D 625 IU (AU) NOT 1500 IU (UK).
-  - ADIPS GDM thresholds 75g OGTT: fasting >=5.1, 1h >=10.0, 2h >=8.5
-    mmol/L (NOT IADPSG older or NICE thresholds).
-  - NCSP cervical screening: HPV-based, 5-yearly, from age 25, oncogenic
-    16/18 -> direct colposcopy, other oncogenic -> reflex LBC.
-  - eTG antibiotic regimens (e.g. AOM amoxicillin 15 mg/kg BD, GAS
-    pharyngitis phenoxymethylpenicillin 15 mg/kg BD x 10 days).
-  - RCH paediatric dosing.
-  - ANZCOR resuscitation algorithms (not AHA/ERC).
-  - RANZCOG / KEMH obstetric protocols.
-  - Listeria, Rh-D, Group B Strep AU protocols.
+`sources` is a 2+ entry array of {label, url?} objects. Australian
+first (RCH CPG, RANZCOG, KEMH, Therapeutic Guidelines / eTG, AMH,
+ASHM, COPE, NHFA/CSANZ, RACGP, NHMRC, ANZICS, ARA). Then international
+backups (NICE, BMJ Best Practice, UpToDate, StatPearls, Cochrane).
 
-NEVER use the abbreviation "ATSI" (hard rule):
-  - General references: spell out "Aboriginal and Torres Strait
-    Islander" in full every time.
-  - When the patient in the stem is specifically Aboriginal OR
-    specifically Torres Strait Islander, use only that half of the
-    phrase. Don't write "an ATSI woman" or "an Indigenous Australian
-    woman who is ATSI".
-  - This applies to stems, lead-ins, options, rationales,
-    explanations, sources, tags, and subtopic labels.
-
-AUSTRALIAN SPELLINGS ONLY (this is a hard rule):
-  - paediatric (not pediatric), gynaecology, haematology, haemorrhage,
-    foetal, oesophagus, oedema, anaemia, leukaemia, orthopaedic, fibre,
-    colour, behaviour, signalling, sulphate, caesarean, dyspnoea,
-    diarrhoea, faeces. EXCEPTION: drug INNs like "magnesium sulfate"
-    follow the Australian Medicines Handbook spelling, which is "sulfate"
-    when used as part of the drug name; use "sulphate" everywhere else.
+`tags` is an array of MAX 3 short tags from the live vocabulary.
+Guideline names go in `sources`, not `tags`. Generic modifiers
+(severe, common, complex, first-line, acute, chronic) are NOT tags.
+Drug names, condition names, and well-known acronyms (DKA, PPH, ACS,
+SSRI) are good tags.
 
 ============================
-5B. FRAMEWORK TOPIC TAXONOMY (HY + MID, by discipline)
+6. UNITS + SPELLING
 ============================
 
-Generate ONLY from this taxonomy. The four lists below are derived from
-the Year 4 Australian medical school frameworks; anything outside them
-should NOT be generated for this bank. Pick from the discipline
-matching your assigned topic.
+AU SI units throughout: mmol/L, micromol/L, g/L, x10^9/L, mmHg, mcg
+(NOT μg), kg, °C.
 
-PAEDIATRICS:
-  Paediatric fever assessment, febrile infant ED workup, otitis media,
-  meningococcal disease and septicaemia, viral URTI and antibiotic
-  stewardship, meningitis (LP, complications, contact tracing), early
-  and late onset neonatal sepsis, Kawasaki disease, Henoch-Schonlein
-  purpura, viral exanthems (measles, rubella, roseola, varicella,
-  hand-foot-mouth, erythema infectiosum), paediatric sepsis pathway,
-  paediatric shock, A-G assessment and Between the Flags, NETS
-  escalation, Australian immunisation schedule, vaccine hesitancy,
-  notifiable diseases, newborn and 6-week examination, prematurity,
-  RDS, CPAP, surfactant, TTN, neonatal jaundice and phototherapy,
-  failure to thrive, breastfeeding, bilirubin and blood gas
-  interpretation, asthma (acute + chronic), asthma action plan, croup,
-  bronchiolitis, community-acquired pneumonia, differentiating asthma
-  vs bronchiolitis vs croup vs pneumonia, paediatric CXR, cystic
-  fibrosis, cerebral palsy and gross motor delay, first seizure and
-  epilepsy, febrile convulsions (simple vs complex), status epilepticus
-  APLS, developmental delay assessment, ADHD, autism spectrum disorder,
-  foetal alcohol syndrome, non-accidental injury and bruising rules,
-  acute rheumatic fever and rheumatic heart disease, vomiting and
-  pyloric stenosis, testicular torsion, intussusception/volvulus, NEC,
-  appendicitis, chronic constipation and encopresis, enuresis,
-  polyuria/polydipsia, coeliac, IBD, gastroenteritis, paediatric UTI,
-  dehydration assessment, oral rehydration, paediatric IV fluid
-  prescribing, paediatric multi-trauma and head injury, type 1
-  diabetes and DKA, acute leukaemia, iron deficiency anaemia, sickle
-  cell, ITP, nephrotic syndrome, post-strep glomerulonephritis,
-  juvenile idiopathic arthritis, septic arthritis, febrile neutropenia,
-  child/adolescent anxiety and depression, HEEADSSS assessment,
-  Aboriginal and Torres Strait Islander child health priorities
-  (ARF/RHD, growth, immunisation, sepsis considerations).
+AU spellings: paediatric, gynaecology, haematology, haemorrhage,
+foetal, oesophagus, oedema, anaemia, leukaemia, orthopaedic, fibre,
+colour, behaviour, signalling, caesarean, dyspnoea, diarrhoea, faeces.
+Exception: drug INN "magnesium sulfate" follows AMH.
 
-OBSTETRICS & GYNAECOLOGY:
-  PALM-COEIN abnormal uterine bleeding, amenorrhoea, oligomenorrhoea,
-  PCOS Rotterdam, pelvic pain, endometriosis, adenomyosis, fibroids,
-  infertility female/male, contraception options + failure rates, LARC,
-  emergency contraception, adolescent contraception + Gillick, pelvic
-  + speculum examination, pregnancy diagnosis + hCG, bleeding in early
-  pregnancy, miscarriage types and management, recurrent pregnancy
-  loss, ectopic pregnancy diagnosis + stable vs unstable management,
-  hyperemesis gravidarum, molar pregnancy, termination of pregnancy
-  (Australian state-specific), antenatal booking + risk stratification,
-  EDD, routine antenatal bloods + ultrasound, NIPT + combined first
-  trimester screening, CVS amniocentesis, anti-D Australian schedule,
-  IUGR/SGA, LGA/macrosomia, foetal wellbeing (CTG/BPP/Doppler),
-  oligo/polyhydramnios, gestational + chronic hypertension,
-  pre-eclampsia/eclampsia/HELLP + magnesium sulfate, GDM OGTT screening
-  + diet/metformin/insulin, pre-existing diabetes in pregnancy, GBS
-  screening + intrapartum prophylaxis, TORCH infections, UTI +
-  asymptomatic bacteriuria in pregnancy, smoking/alcohol/substance use
-  in pregnancy, twin pregnancy, preterm labour (tocolysis,
-  corticosteroids, magnesium neuroprotection), PPROM, Aboriginal and
-  Torres Strait Islander maternal health, domestic violence screening,
-  normal labour stages, FTP,
-  partogram, CTG interpretation + decelerations, foetal scalp sampling,
-  labour analgesia/epidural, IOL + Bishop score, post-term pregnancy,
-  instrumental delivery, caesarean indications + classification, VBAC,
-  APH (praevia, abruption, vasa praevia), primary/secondary PPH (4 Ts),
-  cord prolapse, shoulder dystocia HELPERR, uterine rupture, AFE +
-  maternal collapse, stillbirth, perineal trauma OASIS, episiotomy,
-  menopause + MHT, premature ovarian insufficiency, pelvic organ
-  prolapse, urinary incontinence (stress/urge/mixed), chronic pelvic
-  pain, HPV + cervical pathology, NCSP (5-yearly HPV), colposcopy,
-  cervical/endometrial/ovarian cancer, ovarian torsion, vulval lichen
-  sclerosus + VIN, Bartholin, sexual assault medical + forensic,
-  normal puerperium + 6-week check, post-caesarean complications,
-  puerperal sepsis, endometritis, mastitis + breast abscess,
-  breastfeeding, baby blues/PND/postpartum psychosis + EPDS,
-  medications in pregnancy (teratogenicity), STIs (chlamydia,
-  gonorrhoea, syphilis, HSV, HIV), PID, post-exposure prophylaxis,
-  maternal + perinatal mortality, gynaecological emergencies.
-
-PSYCHIATRY:
-  Major depressive disorder, bipolar disorder, schizophrenia + other
-  primary psychotic disorders, GAD, panic disorder, social anxiety,
-  specific phobia, agoraphobia, OCD, PTSD, anorexia, bulimia, BED,
-  alcohol use disorder, opioid use disorder, stimulant use disorder,
-  cannabis use disorder, nicotine dependence, benzodiazepine misuse,
-  borderline + other personality disorders, delirium vs dementia, MCI,
-  somatic symptom disorders, perinatal psychiatry, geriatric
-  psychiatry, child/adolescent psychiatry, school refusal, LGBTQAI+
-  mental health, gender dysphoria, Aboriginal and Torres Strait
-  Islander mental health, MSE, MMSE/MoCA,
-  DASS, K-10, AUDIT, EPDS, suicide + self-harm risk assessment,
-  psychiatric formulation (4 Ps), biopsychosocial management,
-  psychiatric emergencies, Australian Mental Health Act applications,
-  community treatment orders, involuntary admission, restraint ethics,
-  CBT, psychodynamic, supportive, mindfulness-based, motivational
-  interviewing + stages of change, recovery-oriented practice, SSRI
-  choice + SEs, SNRI, TCA overdose, antipsychotic selection, clozapine
-  monitoring, mood stabilisers, lithium toxicity + monitoring,
-  valproate teratogenicity, antidepressant discontinuation/switching,
-  AIMS/EPSE: acute dystonia, akathisia, tardive dyskinesia, NMS,
-  serotonin syndrome, antipsychotic metabolic syndrome, ECT
-  indications/contraindications, TMS, alcohol withdrawal + CIWA,
-  inpatient withdrawal criteria, opioid OST (methadone vs
-  buprenorphine), smoking cessation, medical causes of psychiatric
-  symptoms (thyroid, HIV, epilepsy, stroke, Parkinson's, dementia),
-  hospital delirium, consultation-liaison psychiatry, eating disorder
-  medical complications + MARSIPAN-AU, professional boundaries,
-  childhood trauma impact.
-
-MEDICINE:
-  Atrial fibrillation, atrial flutter, SVT, VT, long QT, WPW, heart
-  block, ACS (STEMI/NSTEMI/UA), stable angina, ECG interpretation,
-  troponin, CHA2DS2-VA, anticoagulation, antiplatelet, amiodarone,
-  heart failure, aortic stenosis/regurgitation, mitral
-  stenosis/regurgitation/prolapse, prosthetic valve complications,
-  infective endocarditis, rheumatic heart disease, HCM, hypertensive
-  crisis, systemic hypertension, pericarditis, myocarditis, cardiac
-  tamponade, aortic dissection, COPD, asthma (adult), pneumonia, lung
-  cancer, PE/DVT, pulmonary hypertension, pneumothorax, pleural
-  effusion (Light's), bronchiectasis, TB (Mantoux/QuantiFERON), OSA,
-  ILD/sarcoidosis, ABG, spirometry, GORD, H pylori, peptic ulcer,
-  UGIB (Rockall), varices, Mallory-Weiss, IBD, IBS, coeliac, infective
-  dysentery, gastric/colorectal cancer + bowel screening, cirrhosis,
-  portal HTN, hepatic encephalopathy, SBP, ascites, hepatitis B/C,
-  NAFLD, alcohol withdrawal, AKI, CKD, dialysis indications, glomerular
-  disease, ATN, AIN, haematuria, rhabdomyolysis,
-  hyper/hypokalaemia, hyper/hyponatraemia, electrolyte ECG, HUS,
-  hyperparathyroidism, prescribing in renal disease, fluid status,
-  stroke/TIA, SAH, SDH, raised ICP, seizures/epilepsy, syncope
-  (vasovagal vs cardiac), migraine, cluster headache, GCA,
-  meningitis/encephalitis, cranial nerve palsies, Horner's, INO,
-  optic neuritis, Bell's palsy, MS, carpal tunnel, peripheral
-  neuropathy, GBS, myasthenia gravis, MND, polymyositis/
-  dermatomyositis, Wernicke's, delirium, T1DM, T2DM, DKA/HHS, diabetes
-  insipidus, hyper/hypothyroidism, thyroiditis, goitre,
-  hypercalcaemia (incl malignancy), Cushing's, Conn's,
-  phaeochromocytoma, Addison's, glucocorticoid prescribing,
-  osteoporosis (FRAX), septic arthritis, gout, pseudogout, OA, RA,
-  reactive arthritis, spondyloarthritis, SLE, PMR, fibromyalgia,
-  large/small vessel vasculitis, falls, elder abuse, malnutrition,
-  refeeding, frailty/deprescribing, end-of-life symptoms,
-  anticipatory prescribing, ACP, sepsis/septic shock, urosepsis,
-  cellulitis, nec fasc, bacterial meningitis, encephalitis, FUO,
-  COVID-19, influenza, HIV (acute/AIDS/opportunistic), PrEP/PEP, STI
-  screening, malaria, antibiotic resistance, anaphylaxis (adult),
-  drug hypersensitivity, melanoma, NMSC, psoriasis, eczema, acne,
-  HSV, zoster, SJS, contact dermatitis, erythema nodosum, breast/
-  prostate cancer, oncological emergencies (cord compression,
-  pathological fracture, SVC obstruction), anaemia workup, AIHA,
-  sickle cell, haemochromatosis, HUS/TTP, polycythaemia vera,
-  thrombocytopenia, lymphadenopathy, AML/ALL/CLL/CML, Hodgkin/NHL,
-  multiple myeloma, MGUS, coagulation tests, haemophilia, VWD,
-  antiphospholipid syndrome.
+Banned tokens (ZERO tolerated):
+- Em-dashes (U+2014). Use ` - ` (space-hyphen-space).
+- "ATSI". Spell out "Aboriginal and Torres Strait Islander", or use
+  only the applicable half when a specific person is named.
+- "canonical". Use "primary", "core", "main", "live", or "promoted".
 
 ============================
-6. JSON SCHEMA (exact)
+7. SELF-AUDIT (before output)
 ============================
 
+For every question:
+1. Valid JSON; the array parses cleanly.
+2. Every difficulty is 3, 4, or 5.
+3. Every sentence in every stem is justified by (a) hooks specific
+   named distractor, (b) points to correct answer, (c) intentional
+   red herring (max 1 per stem), or (d) essential context. Delete
+   anything that fails this audit.
+4. Answer-length parity holds (max:min char ratio <= 1.35).
+5. No weight-based dose arithmetic in the lead-in. The correct answer
+   must NEVER hinge on the student multiplying mg/kg.
+6. Distractor hooks: each of the 5 options is supported by at least
+   one specific feature in the stem.
+7. Banned tokens absent (em-dash, ATSI, canonical, `**`).
+8. AU units + AU spellings throughout.
+9. No author meta-commentary, no risk-escalation telegraph, no
+   doubled data_table, no lead-in guideline-name leak, no
+   "follow local guidelines" option, no diagnosis-leak in options.
+
+============================
+8. SCHEMA (exact)
+============================
+
+```
 [
   {
-    "id": "<paeds-NNN | obgyn-NNN | psych-NNN | med-NNN | batch-name-NNN>",
+    "id": "<topic>-<cluster>-<###>",
     "topic": "Paediatrics" | "Obstetrics & Gynaecology" | "Psychiatry" | "Medicine",
-    "subtopic": "<broad learning area, e.g. Respiratory, Early pregnancy, Mood: depression, Cardiology>",
-    "subtopic_detail": "<optional more granular learning point, e.g. 'Acute severe asthma - magnesium escalation'>",
+    "subtopic": "<broad area from existing vocabulary>",
+    "subtopic_detail": "<more specific area>",
     "difficulty": 3 | 4 | 5,
-    "model": "<MANDATORY: your model name, e.g. 'Claude Opus 4.7 (1M context)', 'ChatGPT 5', 'Gemini 2.5 Pro'. Do NOT leave blank or write 'unknown'.>",
-    "tags": ["<learning-point tag>", "<condition tag>", ...],
-    "stem": "<120-220 word clinical vignette>",
-    "data_table": {
-      "Vital signs": "<...>",
-      "Examination": "<...>",
-      "Investigations": "<specific values with units>",
-      "Medications": "<...>"            // include any subset relevant
-    },
-    "lead_in": "<bolded question that tests reasoning>",
+    "model": "<your model name + version>",
+    "tags": ["<tag>", "<tag>"],
+    "stem": "...",
+    "data_table": { "Vital signs": "...", "Examination": "...", "Investigations": "..." },
+    "lead_in": "What is the most appropriate next step?",
     "options": [
-      { "letter": "A", "text": "<...>", "correct": false,
-        "rationale": "<1-3 sentences ending with explicit source attribution>",
-        "source_refs": ["<label matching a sources[].label>", ...] },
-      { "letter": "B", "text": "<...>", "correct": true,
-        "rationale": "...",
-        "source_refs": [...] },
-      ... five total, exactly one correct, RANDOMLY POSITIONED ...
+      { "letter": "A", "text": "...", "correct": false, "rationale": "...", "source_refs": ["<source label>"] },
+      { "letter": "B", "text": "...", "correct": false, "rationale": "...", "source_refs": ["..."] },
+      { "letter": "C", "text": "...", "correct": true,  "rationale": "...", "source_refs": ["..."] },
+      { "letter": "D", "text": "...", "correct": false, "rationale": "...", "source_refs": ["..."] },
+      { "letter": "E", "text": "...", "correct": false, "rationale": "...", "source_refs": ["..."] }
     ],
     "explanation": {
-      "summary":     "<2-4 sentence integrative summary with source>",
-      "key_points":  ["<bullet 1>", "<bullet 2>", ...],
-      "pearls":      "<optional one-line clinical pearl>"
+      "summary": "3-5 sentence broader context.",
+      "key_points": ["...", "...", "..."],
+      "pearls": "Specific clinical fact - named drug + threshold + timeframe."
     },
     "sources": [
-      { "label": "<concise human-readable label>", "url": "<https://...>" },
-      ...
-    ],
-    "reference_ranges": [
-      "<one or more of: paeds_vitals_infant, paeds_vitals_child, fbc,
-       uec, lfts, abg, vbg, bsl_paeds, ketones, csf, paeds_jaundice,
-       iron_studies, thyroid, glucose_hba1c, ogtt_pregnancy,
-       beta_hcg_pregnancy, obs_pregnancy_vitals, pre_eclampsia_bloods,
-       ctg_baseline, apgar, bishop_score, gcs, lipids, calcium_corrected,
-       inflammatory_markers, coags, vitamins, paeds_fbc, paeds_uec>"
-    ],
-    "created": "YYYY-MM-DD"
+      { "label": "RCH CPG: Bronchiolitis", "url": "https://..." },
+      { "label": "Therapeutic Guidelines: Respiratory" }
+    ]
   }
 ]
+```
 
-============================
-7. FINAL RULES
-============================
-
-  - NO em-dashes (U+2014). Use space-hyphen-space ` - ` only.
-  - NO emojis.
-  - NO references to any specific university, course code, OSCE rubric,
-    Joint Medical Program, UNE, or similar uni-specific framing in the
-    QUESTIONS. The site has a JMP-student audience framing in the UI
-    chrome; that does not change the rule for question content.
-  - NEVER use the abbreviation "ATSI". Spell out "Aboriginal and Torres
-    Strait Islander" in full for general references; use only the
-    applicable half ("Aboriginal" OR "Torres Strait Islander") when a
-    specific person's heritage is named. Applies to stems, options,
-    rationales, explanations, sources, tags, and subtopic labels.
-  - NEVER use the word "canonical" in any output (rationales,
-    explanations, summaries, descriptions of source content,
-    pearls). It is a permanently banned word for this maintainer.
-    Use "primary", "core", "main", "live", or "promoted" instead.
-  - Each question is FULLY STANDALONE - assume the renderer shuffles
-    option order at runtime, so don't refer to "option C" in rationales.
-  - SELF-DECLARE your model in the top-level `model` field on every
-    question, MANDATORY. e.g. "Claude Opus 4.7 (1M context)",
-    "ChatGPT 5", "Gemini 2.5 Pro". Be SPECIFIC about the version (not
-    just "Claude"). This is mandatory - the maintainer does NOT manually
-    set this; if you leave it blank or write "unknown", the user has
-    no way to recover the attribution. This is how the maintainer tracks
-    which LLM is producing which calibre of question.
-  - DIFFICULTY HONESTY: rate strictly per Section 1 - the maintainer
-    re-rates every question and historical generators have over-rated
-    by 1-2. If unsure, rate DOWN, not up.
-  - HIGH-YIELD ONLY: the bank exists for exam prep, NOT subspecialty
-    training. Cover bread-and-butter presentations deeply; cap niche
-    subspecialty topics at 1-2 questions per topic (e.g., don't write
-    deep paediatric haem-onc protocols, FIGO sub-stage management, or
-    rare genetic syndromes beyond top 10). When in doubt: is this
-    likely to appear on a Y4 exam OR in an intern's first year? If not,
-    skip it.
-  - AUDITABLE BY DESIGN: every question gets a "Report issue" button on
-    the live site. Reports trigger an audit pass that re-reads the stem,
-    options, rationales, and sources. Write so your batch survives audit
-    on first read: defensible distractors, traceable claims, calibrated
-    difficulty, no anti-patterns.
-  - Valid JSON only. Validate with `python3 -c "import json; json.load(open('FILE'))"`.
-
-============================
-INPUT FROM ME
-============================
-
-Generate {{N}} new MCQs at the above standard.
-
-Discipline focus: {{paeds | obgyn | both}}
-Topic / theme:    {{free text - e.g. "intrapartum emergencies and
-                  decision-making at decision-to-delivery"}}
-ID prefix:        {{e.g. paeds-batch-emerg- and continue numbering from
-                  the highest existing ID}}
-
-Before outputting, run a self-audit pass:
-  1. Re-read every rationale; check every numeric claim against the
-     cited source.
-  2. Re-read every stem and confirm a Y4 Australian medical student
-     would find it genuinely challenging (not 1-2/5 recall).
-  3. Check the correct-answer distribution across the batch - should
-     NOT cluster at any one letter.
-  4. Drop any question you cannot fully source.
-  5. For each question, count the words in each option. The correct
-     answer must NOT be noticeably longer than the distractors. If it
-     is, rewrite all five to the same length / detail level.
-  6. Confirm no grammatical-agreement cueing: each option must read
-     naturally after the same lead-in.
-  7. NO WEIGHT-BASED DOSE ARITHMETIC IN THE LEAD-IN. Confirm that for
-     every question, the correct answer can be picked WITHOUT the
-     student doing a mg/kg or mL/kg/hr multiplication. If the lead-in
-     asks "what dose..." and the options differ only in computed
-     numbers, drop the question.
-  8. CLINICAL-RELEVANCE AUDIT. For every sentence in every stem, name
-     which of (a) hooks distractor X, (b) points to correct answer,
-     (c) intentional red herring, (d) essential context. If you can't
-     justify a sentence, delete it. If the stem then drops below the
-     difficulty floor, RELABEL the difficulty - don't pad it back up.
-
-============================
-8. HOW THESE QUESTIONS REACH THE SITE
-============================
-
-PRIMARY PATH - paste box. This works for any LLM (chat-only or
-file-writing). The default flow:
-
-  Output a clean JSON array as your reply. The user pastes it into the
-  "Paste new questions" box on the A to E site. The site submits the
-  questions to the live remote backend, which commits them to
-  data/inbox/<auto-filename>.json in the repo. GitHub Pages rebuilds
-  within ~30 s, so EVERY visitor to the site sees the new questions on
-  their next reload - not just the user who pasted them. The
-  maintainer's next audit pass picks them up from data/inbox/, applies
-  fixes, and promotes passing questions to the live files.
-
-  Because of this, your output MUST be a single valid JSON array and
-  NOTHING ELSE - no prose, no Markdown fences, no commentary. The
-  paste box tolerates ```json fences but a raw array is cleanest.
-
-OPTIONAL PATH - inbox file (only if you have repo file-write access
-AND the maintainer has explicitly asked you to commit to the repo):
-
-  (a) Save the JSON array to data/inbox/<descriptive-filename>.json
-      (lowercase, hyphens, no spaces; e.g.
-      paeds-renal-uti-batch.json).
-  (b) Append "inbox/<filename>.json" to data/inbox_manifest.json.
-  (c) Commit + push, or notify the maintainer.
-
-Audit guarantee: every uploaded batch is audited before promotion.
-Your batch will be checked against: bell-distribution, stem-length
-floors, source-citation, distractor hooks, length-balanced options,
-randomised correct-letter, em-dash count, AU units + spellings,
-no-uni-references, and difficulty-honesty. Passing questions are
-promoted into the live files. Failing ones move to
-data/inbox/_rejected/ with a one-line reason. Generators whose batches
-consistently fail (correct-answer-too-detailed, US spellings,
-inflated difficulty) will be flagged in the per-question `model` tag
-visible to the maintainer in the commentary view.
-
-Output the final JSON array. Nothing else.
+Output the JSON array. Nothing else.
 </script>
 
-<script src="assets/app.js?v=20260521v" defer></script>
+<script src="assets/app.js?v=20260522a" defer></script>
 </body>
 </html>
