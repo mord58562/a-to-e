@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260521a" />
+<link rel="stylesheet" href="assets/styles.css?v=20260521b" />
 </head>
 <body data-screen="home" class="locked">
 
@@ -473,77 +473,88 @@ Section 5B include all four disciplines for reference, but ONLY pick
 scenarios from the disciplines named in this Current Focus block.
 
 ============================
-1. DIFFICULTY CALIBRATION
+1. DIFFICULTY CALIBRATION  (UPDATED 2026-05-21)
 ============================
 
-Target the upper end of end-of-Australian-MD standard. Anchor points:
+POLICY: The bank is L3-MINIMUM. No questions at difficulty 1 or 2
+are accepted. If a topic / cluster cannot legitimately reach L3,
+pick a different topic - do not generate.
 
-* "Recall what Kawasaki is treated with" = 1/5. TOO EASY. Reject.
-* "What is the most likely diagnosis?" where one phrase in the stem
-  gives it away = 1-2/5. TOO EASY. Reject.
-* AMBOSS-style 100-250 word vignettes that require integrating 5+
-  data points (history + vitals + exam + labs + meds) and asking
-  for NEXT-BEST-STEP or RISK-STRATIFICATION or DISCRIMINATION between
-  plausible differentials = 4/5. THIS IS THE TARGET.
+Difficulty is determined by the COMPLEXITY OF CLINICAL REASONING
+required to land on the correct answer. It is NOT about stem length,
+number of data fields, vocabulary, or topic rarity. A 60-word stem
+can be a legitimate L5 if the reasoning chain is non-trivial. A
+300-word stem can be a discarded L2 if it telegraphs the answer
+(resource hints, pre-stated diagnoses, named gold-standard treatments
+in the stem, patient/clinician preferences that pre-commit the choice).
 
-Per batch of N questions, distribute according to a normal curve
-N(mu=3, sigma=1) clipped to integers 1-5:
-  -  ~6% at level 1
-  -  ~24% at level 2
-  -  ~40% at level 3
-  -  ~24% at level 4
-  -  ~6% at level 5
+  3/5  Reach the answer by integrating 2-3 data points and selecting
+       between PLAUSIBLE distractors. Lead-in is "most appropriate
+       next step" (not "what is it"). 30-60 sec of real reasoning.
+  4/5  Multi-step pathway decision OR application of an AU-specific
+       cut-off / threshold / dosing rule, with trade-offs to weigh.
+       60-90 sec. AMBOSS standard.
+  5/5  Atypical or contested presentation, multi-step reasoning,
+       contradictory data, calculation under uncertainty, anti-pattern
+       discrimination. Top 5% USMLE Step 2 equivalent.
 
-(For 25 questions that is approximately 2 / 6 / 9 / 6 / 2.)
+Distribution targets per batch:
+  -  15-Q batch: ~6 / 6 / 3  (L3 / L4 / L5)
+  -  20-Q batch: ~8 / 8 / 4
+  -  30-Q batch: ~12 / 12 / 6
+  -  >=25% of L4-L5 must centre on COMMON presentations (sore throat,
+     paracetamol overdose, ACS, postpartum haemorrhage) where the
+     reasoning earns the rating - not rare-topic recognition.
 
-Self-rating heuristic (STRICT - agents have historically inflated by 1):
-
-  1/5  Student recognises the pattern, answer obvious in <5 seconds.
-       Equivalent to a Y4 Anki recall flashcard.
-  2/5  Pattern recognition + minor distractor elimination. 10-30 sec.
-       e.g. "ASD red flags vignette, which is the red flag?" - pattern
-       handed in the stem, lead-in tests recognition.
-  3/5  Integrate 2-3 data points and pick between PLAUSIBLE options.
-       30-60 sec of reasoning. Lead-in is "most appropriate next step"
-       not "what is it".
-  4/5  Integrate 4+ data points PLUS a guideline-specific cut-off or
-       calculation. Trade-offs to weigh. 60-90 sec. AMBOSS standard.
-  5/5  Atypical presentation, multi-step reasoning, contradictory
-       data, calculation under uncertainty. Top 5% USMLE Step 2.
-
-KEY RULE: if the answer is recognisable from any single phrase in the
-stem, the question is 2/5 or lower regardless of stem length.
-
-Worked example. The following is a 2/5, NOT a 3/5:
-  Stem: 18-month-old with solitary play, doesn't share interest by
-  pointing, doesn't respond to name, fascinated by spinning wheels.
-  Lead-in: which is the most concerning red flag?
-  Correct: lack of joint attention + name non-response.
-  Why only 2/5: the ASD red-flag pattern IS the vignette; the lead-in
-  is pattern recognition; a Y4 student answers in <10 seconds.
-
-To make the same scenario 3/5: change lead-in to "What is the most
-appropriate next step?" with plausible distractors (urgent paeds
-referral, watchful waiting, formal M-CHAT-R/F, audiology referral,
-speech pathology referral) - student must rank by priority.
-
-To make it 4/5: add Australian-funding context (NDIS early intervention
-age cut-off), a complicating factor (recurrent OM now resolved, parent
-a clinician minimising concerns), and a guideline-specific cut-off.
+Telegraph patterns that demote a question to L2 (= reject) regardless
+of topic complexity:
+  -  Stem names the gold-standard treatment ("the tertiary unit offers
+     near-daily laser ablation").
+  -  Stem pre-commits via patient/clinician preference ("she wants
+     maximum survival", "the cardiologist recommends ICD").
+  -  Stem hands the diagnosis ("known case of X", "diagnosed with X")
+     with a lead-in that just asks "what's next?".
+  -  Pathognomonic triad spelled out so pattern-matching alone solves
+     it.
+  Strip any such sentence; if removing it leaves the question
+  ambiguous, the question is structurally broken - rebuild or discard.
 
 ============================
-2. STEM REQUIREMENTS (HARD FLOORS BY DIFFICULTY)
+2. STEM CRAFT  (NO LENGTH FLOORS)
 ============================
 
-Stem length MUST match the assigned difficulty level. These are hard
-floors verified with Rob - shorter stems are auto-rejected as below
-the labelled difficulty.
+There are NO stem-length floors per difficulty level. Write the stem
+exactly as long as the scenario genuinely requires - never pad to hit
+a target, never truncate to hit one. The only stem-length constraint
+that remains is the every-sentence-justified rule in the clinical-
+relevance block below.
 
-  Level 1/5:  90 - 130 words   2-3 data fields  (vitals + exam)
-  Level 2/5:  110 - 160 words  3 data fields
-  Level 3/5:  140 - 200 words  3-4 data fields  (+ investigations)
-  Level 4/5:  180 - 260 words  4-5 data fields  (+ meds + history)
-  Level 5/5:  220 - 320 words  5+ data fields   (+ social context)
+Aim for the typical AU-MD vignette shape (demographics + presenting
+complaint + relevant history + exam + investigations + meds) when
+needed. Use a data_table for structured findings (vitals, exam,
+investigations, meds, history) rather than repeating them in prose.
+
+ANTI-PATTERNS in stems (HARD - all are auto-reject):
+  -  Author meta-commentary: ANY parenthetical of the form
+     "(this hooks the X distractor)", "hooks the X distractor",
+     "rules out [A-E]", "red herring)", "tests the X anti-pattern",
+     "this anchors the". Stems are seen by the candidate; they must
+     not contain author back-of-house notes.
+  -  Risk-escalation telegraphing: ANY phrase like "compounding the
+     risk", "further increasing the risk", "putting her at additional
+     risk", "which significantly increases the risk". That IS the
+     question; if you write it in the stem you have telegraphed the
+     answer.
+  -  Negative lead-ins: avoid "not" / "except" / "least" in the
+     lead-in unless visually emphasised (UPPERCASE or **bold**). Prefer
+     "most appropriate", "single best", "most likely" constructions.
+  -  Doubled structured data: if a finding lives in data_table, do
+     not also state it in the stem prose, and vice versa. Pick one
+     place per finding.
+  -  Leaked back-of-house data_table fields: never use keys like
+     "Differential considered and ruled out by echo", "Plan for
+     theatre", "Team is aware", "Discharge plan being considered".
+     Those belong in the explanation, not the data block.
 
 Include ALL of the following at increasing depth as level rises:
   - Patient demographics + relevant past medical / obstetric / surgical
@@ -1097,6 +1108,6 @@ visible to the maintainer in the commentary view.
 Output the final JSON array. Nothing else.
 </script>
 
-<script src="assets/app.js?v=20260521a" defer></script>
+<script src="assets/app.js?v=20260521b" defer></script>
 </body>
 </html>
