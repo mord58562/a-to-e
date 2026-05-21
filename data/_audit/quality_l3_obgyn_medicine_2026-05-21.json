@@ -410,6 +410,209 @@
       "verdict": "rewrite",
       "issues": ["bundled-correct-option"],
       "fix_sketch": "TIA -> same-day CT/CTA + aspirin load + stroke unit. Bundled correct option (3 actions). Lead-in 'combination of management steps' is plural so congruent. Distractor B (ABCD2-only - outdated), C (outpatient 2 wk - wrong), D (empirical anticoag for presumed AF - wrong), E (Doppler in 4 wk - wrong). Acceptable but tighten distractors as they currently caricature each tier."
+    },
+    {
+      "id": "med-endo-neuro-016",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "First-seizure workup (MRI+EEG) plus Austroads private 6mo no-drive. Lead-in 'combination of investigation and driving advice' is plural so bundling OK. Distractor B (start AED + drive in 1 mo - 2 wrongs), C (LP+ceftriaxone for meningitis - no meningism), D (admit VEEG today - wrong tier), E (cleared commercial driving - wrong). All caricatures. Replace 2 distractors: (a) MRI/EEG outpatient + no driving for 3 months (wrong duration); (b) MRI/EEG + drive immediately as single-seizure not epilepsy (wrong threshold)."
+    },
+    {
+      "id": "med-endo-neuro-017",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Refractory status (2 benzo doses, 25 min) -> 2nd-line AED (levetiracetam per ESETT). Distractor A (third benzo - wrong, beyond max), C (RSI without AED), D (NG phenytoin - wrong route), E (Wernicke prevention - not the priority). Multi-step (recognise refractory definition + select AED)."
+    },
+    {
+      "id": "med-endo-neuro-018-l3",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "GCA + visual symptoms + RAPD -> IV methylprednisolone, biopsy, dual specialty. Bundle has 4 actions. The PO-pred-only distractor (B) is the key discriminator (visual involvement upgrades to IV pulse). Acceptable bundle but lead-in singular - tighten to 'most appropriate combination of next steps'. Otherwise OK."
+    },
+    {
+      "id": "med-endo-neuro-019-l3",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "Thunderclap headache + normal CT at 14h -> LP for xanthochromia. Single-step algorithm recall (CT<6h sensitivity falls). Distractors B (discharge), D (empirical meningitis cover), E (MRI gad - wrong test) caricatures. Only C (CTA upfront) is a real alternative but tested as a single fact. DISCARD per L3-minimum policy."
+    },
+    {
+      "id": "med-endo-neuro-020-l3",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option", "implausible-distractors"],
+      "fix_sketch": "Refractory anaphylaxis (2 IM doses fail) -> IV adrenaline infusion + fluids + airway prep. Bundle 3 actions. Distractor B (continue IM only forever - caricature), C (steroid + antihistamine alone - misses refractory definition), D (glucagon - reserved for beta-blocker overdose), E (neb adrenaline + salbutamol without IV escalation). Replace with closer alternatives: (a) repeat IM + start IV fluids without IV adrenaline (under-treatment); (b) IV adrenaline bolus rather than infusion (real anti-pattern); (c) call MET + continue IM as bridge (delays definitive)."
+    },
+    {
+      "id": "med-haem-onc-001",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Postmenopausal IDA + FOBT+ -> bidirectional endoscopy. Tests recognition that postmenopausal IDA mandates GI workup. Distractor C (CT colonography first-line - real alternative when colonoscopy unsuitable). Multi-step."
+    },
+    {
+      "id": "med-haem-onc-002",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "B12 deficiency with subacute combined degeneration on PPI + metformin background. Neurological features mandate parenteral B12 not oral. Distractor A (oral cyanocobalamin) is the trap; D (cease metformin and recheck) delays treatment. Multi-step."
+    },
+    {
+      "id": "med-haem-onc-004-l3",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option", "diagnosis-named"],
+      "fix_sketch": "Stem essentially gives warm AIHA dx (DAT IgG+, spherocytes, SLE background). Correct option bundles steroid + cautious transfusion + folate. Lead-in 'combination of treatments' plural so OK. Distractor B (steroid + strict no-transfusion - factually wrong dogma), D (TTP-like plasma exchange - wrong dx), E (no steroid for 1 wk - wrong) are caricatures. Replace with closer real alternatives: (a) IVIG monotherapy without steroid (real but not first-line); (b) rituximab upfront (real second-line - tests sequencing)."
+    },
+    {
+      "id": "med-haem-onc-005",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Acute chest syndrome in SCD -> exchange transfusion target HbS <30%. Tests sickle-specific transfusion strategy. Distractor A (simple top-up - real-world trap, can worsen by raising viscosity without lowering HbS), B (anticoag for PE), D (continue current), E (hydroxyurea acutely - useless). Multi-step."
+    },
+    {
+      "id": "med-haem-onc-006-l3",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Wells unlikely + age-adjusted D-dimer 680 (cutoff age*10 = 740) -> exclude PE. Tests AGE-ADJUSTED cutoff vs fixed 500 cutoff trap. Distractor B (CTPA because >500) is the precise trap. Multi-step."
+    },
+    {
+      "id": "med-haem-onc-007",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Cancer-associated VTE in metastatic CRC -> apixaban or LMWH preferred (Caravaggio/HOKUSAI-cancer). Riva avoided in GI-active cancer due to bleed risk. Distractor A (riva - real but higher bleed in GI cancers), C (warfarin - outdated), E (aspirin - inadequate) are real-world alternatives. Multi-step."
+    },
+    {
+      "id": "med-haem-onc-008-l3",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "rewrite",
+      "issues": ["implausible-distractors"],
+      "fix_sketch": "HIT + DVT + dual organ failure -> non-heparin alternative. Bivalirudin chosen for combined renal+hepatic impairment (eliminated via plasma proteases). Distractor B (fondaparinux off-label - real alternative when no acute thrombosis but here HITT confirmed makes it controversial), C (argatroban standard dose - hepatic impairment requires dose adjustment, so 'standard' makes it wrong), D (warfarin straight - well-known venous-limb-gangrene trap), E (stop heparin observe - inadequate). Acceptable but D too easy."
+    },
+    {
+      "id": "med-haem-onc-009-l3",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Severe ITP with active bleeding + plt 4 -> combination IV methylpred + IVIG (ICIS 2019 guideline). Distractor B (PO pred alone) is the real trap (slower response when bleeding). Multi-step."
+    },
+    {
+      "id": "med-haem-onc-010",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Suspected APML -> urgent transfer + empirical ATRA. Bundles transfer + bone marrow + ATRA. Distractor A (outpatient 2 wk), B (broad-spec abx + observe), C (transfuse only), E (repeat FBC 48h) caricatures. Lead-in 'single most appropriate next step' is singular but correct option is multi-action. Tighten lead-in to 'most appropriate disposition' or split into 'next step' (ATRA empirically)."
+    },
+    {
+      "id": "med-haem-onc-011-l3",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "CML chronic phase -> imatinib first-line. Single-step TKI recall. Distractors B/C (other TKIs) and D (ponatinib first-line - wrong) and E (HU as definitive - wrong) caricatures. The lithium and CHF background are red herrings that should drive choice. Discard or rewrite to leverage the pleural-effusion-caution (dasatinib trap) and CHF as the real discriminator."
+    },
+    {
+      "id": "med-haem-onc-012",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Richter transformation suspicion: SUVmax>10 + LDH rise + B-sx. Tests PET-guided biopsy thresholds. Distractor A/B/D/E are individual findings that don't independently indicate transformation. Multi-step."
+    },
+    {
+      "id": "med-haem-onc-013-l3",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Young woman + cHL + fertility preservation BEFORE chemo. Tests recognition that fertility counselling happens upfront. Distractor B (defer to after cycle 1 - real trap because urgent, but fertility services can usually be done in <2 weeks), C (BEACOPP first-line - older trap), D (RT only - wrong), E (repeat biopsy - wrong). Multi-step."
+    },
+    {
+      "id": "med-haem-onc-014-l3",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "MM with cord-compression risk + AKI + hypercalcaemia. Correct option bundles 4 actions. Lead-in 'combination of next steps' plural so OK. Distractors B (workup before tx - misses urgency), C (dex + outpatient - inadequate), D (lenalidomide without renal-dose adjust), E (HD to clear paraprotein - wrong) caricatures. Tighten distractors."
+    },
+    {
+      "id": "med-haem-onc-015",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "TLS high-risk (Burkitt + LDH >10x ULN + baseline urate 0.62) -> rasburicase + aggressive hydration. Distractor B (allopurinol only - inadequate for high-risk), C (urinary alkalinisation - outdated, increases Ca-PO4 precipitation), D (delay chemo - unsafe in Burkitt), E (upfront HD - over-treatment). Multi-step."
+    },
+    {
+      "id": "med-haem-onc-016",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Febrile neutropenia + high-risk MASCC -> empiric pip-taz monotherapy per eTG. Distractor A (PO outpatient) over-relies on low-risk MASCC (this is high-risk), C (triple from outset before culture data), D (ceftriaxone - inadequate Pseudomonas cover), B (meropenem - too broad first-line in stable patient). Multi-step."
+    },
+    {
+      "id": "med-haem-onc-017",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "Malignant cord compression -> high-dose dex + urgent MRI whole spine. Single-step oncology emergency recall. Distractors A (x-rays + outpatient MRI 1 wk - wildly wrong), C (LP - wrong test), D (analgesia + clinic - dangerous), E (bone scan - wrong). All caricatures. DISCARD."
+    },
+    {
+      "id": "med-haem-onc-019",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall", "implausible-distractors"],
+      "fix_sketch": "Malignancy-related hypercalcaemia -> aggressive IV fluids then bisphosphonate. Single-step recall. Distractor B (frusemide before fluid - outdated dogma but rarely chosen), C (calcitonin alone), D (prednisolone alone), E (HD first-line) all caricatures. DISCARD."
+    },
+    {
+      "id": "med-haem-onc-020-l3",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Massive transfusion + ionised Ca 0.84 + K 6.2 + ECG changes -> Ca gluconate first (treats both hypocalcaemia AND stabilises myocardium for hyperK). Tests the dual-rationale priority. Distractor B (insulin/dex shift - good for K but doesn't fix Ca), C (HCO3), D (rewarming), E (stop MTP) are real competing priorities. Multi-step."
+    },
+    {
+      "id": "med-id-rheum-001",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Septic urosepsis + AKI -> gent + ampi/amox per eTG empirical adult sepsis (urinary source). Distractor B (ceftriax+metro - bowel-source not urinary), D (pip-taz - over-broad), E (mero - over-broad). Multi-step."
+    },
+    {
+      "id": "med-id-rheum-002",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Septic shock unresponsive to 30mL/kg + MAP 63 + UO 12 -> noradrenaline. Surviving Sepsis MAP 65 target. Distractor A (more fluid - inappropriate given fluid-refractory), C (steroid without pressor), D (escalate abx), E (transfuse). Multi-step."
+    },
+    {
+      "id": "med-id-rheum-003",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Bacterial meningitis suspected + age + immunosuppressed -> dex with/before ceftriax + benzylpen (Listeria cover). Distractor A (no Listeria), B (vanc+mero without dex, no Listeria cover via mero), D (no Listeria, +aciclovir as if encephalitis), E (delay - unsafe). Multi-step."
+    },
+    {
+      "id": "med-id-rheum-004",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Encephalitis features (temporal-lobe dysphasia, seizure, behavioural change) -> empirical IV aciclovir without waiting for LP. Tests time-to-aciclovir as priority. Distractor B (wait for PCR) is real-world delay trap. Multi-step."
+    },
+    {
+      "id": "med-id-rheum-006",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Acute HIV seroconversion (window between Ag/Ab+ and viral load detection) -> 4th-gen Ag/Ab + RNA viral load. Distractor A (Ab-only rapid - misses window), C (Western blot screening - outdated), D (CD4), E (delay 12 wk - real-world bad practice). Multi-step."
+    },
+    {
+      "id": "med-id-rheum-007",
+      "file": "data/batches/medicine_id_rheumatology.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "CD4 134 + toxo IgG+ -> bactrim DS for both PJP and toxo (one drug, two indications). Tests prophylaxis CD4 thresholds + dual-coverage knowledge. Distractor A (azithro for MAC only - wrong threshold), C-E need to read but assume genuine alternatives. Multi-step."
     }
   ]
 }
