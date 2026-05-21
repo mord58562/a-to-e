@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260521k" />
+<link rel="stylesheet" href="assets/styles.css?v=20260521l" />
 </head>
 <body data-screen="home" class="locked">
 
@@ -465,35 +465,61 @@
   </div>
 </div>
 
+<!-- ── UNIFIED ADMIN INTERFACE ──────────────────────────────────────── -->
+<div id="adminModal" class="modal" hidden>
+  <div class="modal-card modal-card-xwide admin-modal-card">
+    <div class="modal-head">
+      <h2 id="adminTitle">Admin</h2>
+      <button id="adminClose" class="ghost-x" aria-label="Close">×</button>
+    </div>
+    <div class="admin-layout">
+      <nav class="admin-sidebar" id="adminSidebar"></nav>
+      <div class="admin-main" id="adminMain"></div>
+    </div>
+  </div>
+</div>
+
 <div id="howToModal" class="modal" hidden>
   <div class="modal-card modal-card-wide">
     <div class="modal-head">
-      <h2>Adding more questions</h2>
+      <h2>Add more questions</h2>
       <button id="howToClose" class="ghost-x" aria-label="Close">×</button>
     </div>
     <div class="modal-body">
-      <p>Two-step flow. <strong>1.</strong> Copy the prompt and paste it into any LLM (Claude, ChatGPT, Gemini) - it is fully self-contained. <strong>2.</strong> Paste the LLM's JSON output into the box below. Questions go straight into your bank - no file editing required.</p>
-
-      <h3 class="paste-head">Paste new questions</h3>
-      <p class="dim small paste-hint">Paste the JSON array the LLM produced. The site validates, then submits it to the live bank for everyone (or, if the remote backend is unreachable, stores it in this browser).</p>
-      <textarea id="pasteBox" class="paste-box" placeholder='[ { "id": "paeds-batch-renal-001", "topic": "Paediatrics", ... } ]' spellcheck="false" autocomplete="off"></textarea>
-      <div class="prompt-actions">
-        <button id="pasteAddBtn" class="primary">Add to the bank</button>
-        <button id="pasteDownloadBtn" class="link-btn" title="Save as data/inbox/*.json for the repo">Download as JSON file</button>
-        <span id="pasteStatus" class="dim small"></span>
-      </div>
-      <div class="local-bank-row" id="localBankRow" hidden>
-        <span id="localBankSummary" class="dim small"></span>
-        <button id="localBankExport" class="ghost-link" title="Download all locally-pasted questions for repo audit">Export for audit</button>
-        <button id="localBankClear" class="ghost-link">Clear local additions</button>
-      </div>
-
-      <h3 class="paste-head">Generation prompt</h3>
-      <div class="prompt-actions">
-        <button id="copyPromptBtn" class="primary">Copy prompt to clipboard</button>
-        <span id="copyPromptStatus" class="dim small"></span>
-      </div>
-      <pre id="promptText" class="prompt-pre"></pre>
+      <ol class="howto-steps">
+        <li class="howto-step">
+          <div class="howto-step-head"><span class="howto-num">1</span><h3>Copy the prompt</h3></div>
+          <p class="howto-step-note">Works in any free LLM (Claude, ChatGPT, Gemini, etc.). The prompt is fully self-contained - it includes the schema, audit rules, current focus, and current bank state.</p>
+          <div class="prompt-actions">
+            <button id="copyPromptBtn" class="primary">Copy prompt to clipboard</button>
+            <span id="copyPromptStatus" class="dim small"></span>
+            <button id="promptToggleBtn" class="link-btn" type="button" title="Show / hide the full prompt">show prompt</button>
+          </div>
+          <pre id="promptText" class="prompt-pre" hidden></pre>
+        </li>
+        <li class="howto-step">
+          <div class="howto-step-head"><span class="howto-num">2</span><h3>Paste the JSON the LLM returned</h3></div>
+          <p class="howto-step-note">The site validates the structure and submits to the bank. If the remote backend is unreachable, it falls back to this browser's local store.</p>
+          <textarea id="pasteBox" class="paste-box" placeholder='[ { "id": "paeds-batch-renal-001", "topic": "Paediatrics", ... } ]' spellcheck="false" autocomplete="off"></textarea>
+          <div class="prompt-actions">
+            <button id="pasteAddBtn" class="primary">Add to the bank</button>
+            <button id="pasteDownloadBtn" class="link-btn" title="Save as data/inbox/*.json for the repo">Download as JSON file</button>
+            <span id="pasteStatus" class="dim small"></span>
+          </div>
+          <div class="local-bank-row" id="localBankRow" hidden>
+            <span id="localBankSummary" class="dim small"></span>
+            <button id="localBankExport" class="ghost-link" title="Download all locally-pasted questions for repo audit">Export for audit</button>
+            <button id="localBankClear" class="ghost-link">Clear local additions</button>
+          </div>
+        </li>
+        <li class="howto-step admin-only">
+          <div class="howto-step-head"><span class="howto-num">3</span><h3>Audit and promote</h3></div>
+          <p class="howto-step-note">Pending submissions sit in <code>data/inbox/</code> until they're audited and merged. Open the audit dashboard to review and promote.</p>
+          <div class="prompt-actions">
+            <button id="howToOpenAuditBtn" class="primary">Open audit dashboard</button>
+          </div>
+        </li>
+      </ol>
     </div>
   </div>
 </div>
@@ -1152,6 +1178,6 @@ visible to the maintainer in the commentary view.
 Output the final JSON array. Nothing else.
 </script>
 
-<script src="assets/app.js?v=20260521k" defer></script>
+<script src="assets/app.js?v=20260521l" defer></script>
 </body>
 </html>

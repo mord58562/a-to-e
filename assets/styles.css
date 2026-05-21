@@ -2011,3 +2011,113 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 .range-cat .rr .value { color: var(--ink); font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
 .range-cat .rr.rr-hidden { display: none; }
 .range-cat.hidden { display: none; }
+
+/* ── Unified Admin modal ─────────────────────────────────────────── */
+.modal-card-xwide { max-width: 1080px; }
+.admin-modal-card { display: flex; flex-direction: column; max-height: 86vh; }
+.admin-modal-card .modal-head { flex: 0 0 auto; }
+.admin-layout {
+  display: grid;
+  grid-template-columns: 196px 1fr;
+  gap: 0;
+  min-height: 0;
+  flex: 1 1 auto;
+}
+.admin-sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border-right: 1px solid var(--line);
+  background: var(--surface);
+  min-width: 0;
+  overflow-y: auto;
+}
+.admin-tab {
+  appearance: none;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ink-mute);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 2px;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.admin-tab:hover { background: var(--surface-2); color: var(--ink); }
+.admin-tab.active { background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--ink); font-weight: 500; }
+.admin-main {
+  padding: 16px 22px 22px;
+  overflow-y: auto;
+  min-height: 0;
+}
+.admin-main h3 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+  margin: 18px 0 10px;
+}
+.admin-main h3:first-child { margin-top: 0; }
+.admin-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 6px 0 8px;
+}
+.ag-stat {
+  display: flex; flex-direction: column;
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.ag-stat-val { font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.ag-stat-lbl { font-size: 11px; color: var(--ink-mute); margin-top: 2px; }
+.admin-discipline-rows { display: flex; flex-direction: column; gap: 4px; }
+.admin-disc-row {
+  display: flex; justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+.admin-disc-row:last-child { border-bottom: none; }
+
+/* Inside admin panels, suppress legacy modal padding/heads since the
+   admin frame already provides them. */
+.admin-main .audit-intro,
+.admin-main .audit-tabs,
+.admin-main .audit-tab-panel { padding: 0; }
+.admin-main .audit-tabs { display: none; }
+.admin-main .audit-tab-panel { display: block !important; }
+.admin-main .howto-steps { padding-left: 0; margin: 0; list-style: none; }
+
+@media (max-width: 720px) {
+  .admin-layout { grid-template-columns: 1fr; }
+  .admin-sidebar {
+    flex-direction: row;
+    overflow-x: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    padding: 8px;
+  }
+  .admin-tab { flex: 0 0 auto; }
+}
+
+/* Step-style HowTo (preserved when re-parented under the Admin add tab) */
+.howto-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 20px; }
+.howto-step { padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.howto-step-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.howto-step-head h3 { margin: 0; font-size: 14px; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.howto-num {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 700; font-size: 12px;
+  display: grid; place-items: center;
+}
+.howto-step-note { font-size: 12.5px; color: var(--ink-mute); margin: 0 0 10px; line-height: 1.55; }

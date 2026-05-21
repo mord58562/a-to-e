@@ -488,6 +488,7 @@
     wireReportsAdmin();
     wireStatsModal();
     wireAccountModal();
+    wireAdminModal();
     wireReminderDismiss();
     maybeShowReminder();
     updateReportsAdminBadge();
@@ -506,13 +507,212 @@
   }
 
   function wireAccountModal() {
+    // The legacy account modal is superseded by the unified Admin
+    // interface; the Account button now routes there.
     const btn = document.getElementById("accountBtn");
-    const modal = document.getElementById("accountModal");
-    const close = document.getElementById("accountClose");
-    if (!btn || !modal || !close) return;
-    btn.onclick = () => { renderAccount(); modal.hidden = false; };
+    if (btn) btn.onclick = () => openAdmin("account");
+  }
+
+  // ── Unified Admin interface ─────────────────────────────────────────
+  // One modal, sidebar tabs. Non-admin cloud users see Account only;
+  // admins see the full set. Each tab lazy-renders into #adminMain.
+  // For tabs whose content lives in legacy modals (Add, Inbox, Reports,
+  // Live), we re-parent the existing wired DOM into the active panel
+  // on tab activation so the original event handlers keep working.
+  const ADMIN_TABS = [
+    { id: "overview", label: "Overview", admin: true },
+    { id: "add",      label: "Add questions", admin: true, source: "#howToModal .modal-body" },
+    { id: "inbox",    label: "Inbox", admin: true, source: '#reportsAdminModal [data-tab-panel="inbox"]' },
+    { id: "reports",  label: "Reports", admin: true, source: '#reportsAdminModal [data-tab-panel="reports"]' },
+    { id: "live",     label: "Live content", admin: true, source: '#reportsAdminModal [data-tab-panel="live"]' },
+    { id: "quality",  label: "Quality", admin: true },
+    { id: "users",    label: "Users", admin: true },
+    { id: "account",  label: "Account", admin: false },
+  ];
+
+  function wireAdminModal() {
+    const modal = document.getElementById("adminModal");
+    const close = document.getElementById("adminClose");
+    if (!modal || !close) return;
     close.onclick = () => { modal.hidden = true; };
-    modal.addEventListener("click", e => { if (e.target.id === "accountModal") modal.hidden = true; });
+    modal.addEventListener("click", e => { if (e.target.id === "adminModal") modal.hidden = true; });
+  }
+
+  function openAdmin(initialTab) {
+    const modal = document.getElementById("adminModal");
+    if (!modal) return;
+    const isAdmin = isCurrentUserAdmin();
+    const tabs = ADMIN_TABS.filter(t => isAdmin || !t.admin);
+    const sidebar = document.getElementById("adminSidebar");
+    const title = document.getElementById("adminTitle");
+    if (title) title.textContent = isAdmin ? "Admin" : "Account";
+    sidebar.innerHTML = tabs.map(t => `<button class="admin-tab" data-admin-tab="${t.id}">${esc(t.label)}</button>`).join("");
+    sidebar.querySelectorAll(".admin-tab").forEach(b => {
+      b.onclick = () => selectAdminTab(b.dataset.adminTab);
+    });
+    const want = initialTab && tabs.some(t => t.id === initialTab) ? initialTab : tabs[0].id;
+    selectAdminTab(want);
+    modal.hidden = false;
+  }
+
+  function selectAdminTab(id) {
+    document.querySelectorAll(".admin-tab").forEach(b => {
+      b.classList.toggle("active", b.dataset.adminTab === id);
+    });
+    const main = document.getElementById("adminMain");
+    main.innerHTML = "";
+    const tab = ADMIN_TABS.find(t => t.id === id);
+    if (!tab) return;
+    if (tab.source) {
+      // Re-parent existing wired DOM into the admin panel. The original
+      // modal stays empty in the DOM; closing the admin modal returns
+      // the content. We just leave it in the admin pane until next time.
+      const src = document.querySelector(tab.source);
+      if (src) main.appendChild(src);
+      return;
+    }
+    if (id === "overview")  return renderAdminOverview(main);
+    if (id === "quality")   return renderAdminQualityTab(main);
+    if (id === "users")     return renderAdminUsersTab(main);
+    if (id === "account")   return renderAdminAccountTab(main);
+  }
+
+  function renderAdminOverview(root) {
+    const counts = { L2: 0, L3: 0, L4: 0, L5: 0 };
+    const byTopic = {};
+    (state.questions || []).forEach(q => {
+      const d = q.difficulty;
+      if (d >= 2 && d <= 5) counts["L" + d]++;
+      byTopic[q.topic] = (byTopic[q.topic] || 0) + 1;
+    });
+    const total = state.questions.length;
+    const meta = state.meta || {};
+    const lastAdd = meta.last_added || meta.updated || "-";
+    root.innerHTML = `
+      <h3>Bank overview</h3>
+      <div class="admin-grid-4">
+        <div class="ag-stat"><span class="ag-stat-val">${total}</span><span class="ag-stat-lbl">questions total</span></div>
+        <div class="ag-stat"><span class="ag-stat-val">${counts.L2}</span><span class="ag-stat-lbl">at L2</span></div>
+        <div class="ag-stat"><span class="ag-stat-val">${counts.L3}</span><span class="ag-stat-lbl">at L3</span></div>
+        <div class="ag-stat"><span class="ag-stat-val">${counts.L4}</span><span class="ag-stat-lbl">at L4</span></div>
+      </div>
+      <h3>By discipline</h3>
+      <div class="admin-discipline-rows">
+        ${["Paediatrics","Obstetrics & Gynaecology","Psychiatry","Medicine"].map(t => {
+          const n = byTopic[t] || 0;
+          const pct = total ? Math.round((n / total) * 100) : 0;
+          return `<div class="admin-disc-row"><span>${esc(t)}</span><span class="dim">${n} · ${pct}%</span></div>`;
+        }).join("")}
+      </div>
+      <h3>Last batch added</h3>
+      <p class="dim">${esc(String(lastAdd))}</p>
+    `;
+  }
+
+  async function renderAdminQualityTab(root) {
+    root.innerHTML = `<p class="dim">Loading...</p>`;
+    let q = null;
+    try { q = await apiFetch("/api/admin/quality"); } catch (_) {}
+    const worst = (q && q.worst) || [];
+    const top = (q && q.top) || [];
+    const totals = (q && q.totals) || {};
+    const rowsWorst = worst.slice(0, 30).map(r => {
+      const pct = r.n ? Math.round((100 * (r.c || 0)) / r.n) : 0;
+      return `<div class="qr qid">${esc(r.question_id)}</div><div class="qr">${r.n}</div><div class="qr">${pct}%</div>`;
+    }).join("");
+    const rowsTop = top.slice(0, 20).map(r => {
+      const pct = r.n ? Math.round((100 * (r.c || 0)) / r.n) : 0;
+      return `<div class="qr qid">${esc(r.question_id)}</div><div class="qr">${r.n}</div><div class="qr">${pct}%</div>`;
+    }).join("");
+    root.innerHTML = `
+      <h3>Engagement</h3>
+      <p class="dim">${totals.users || 0} users · ${totals.answers || 0} answers · ${totals.qs || 0} distinct questions answered.</p>
+      <h3>Lowest first-time correct (audit candidates, ≥5 answers)</h3>
+      <div class="account-quality-table">
+        <div class="qh">Question id</div><div class="qh">N</div><div class="qh">Correct</div>
+        ${rowsWorst || '<div class="qr" style="grid-column:1/-1">No questions with 5+ answers yet.</div>'}
+      </div>
+      <h3>Most answered</h3>
+      <div class="account-quality-table">
+        <div class="qh">Question id</div><div class="qh">N</div><div class="qh">Correct</div>
+        ${rowsTop || '<div class="qr" style="grid-column:1/-1">No data yet.</div>'}
+      </div>
+    `;
+  }
+
+  async function renderAdminUsersTab(root) {
+    root.innerHTML = `<p class="dim">Loading users...</p>`;
+    let users = [];
+    try {
+      const r = await apiFetch("/api/admin/users");
+      users = (r && r.users) || [];
+    } catch (_) {}
+    const rows = users.map(u => {
+      const isSelf = u.id === (cloudUser && cloudUser.id);
+      return `
+        <div class="ar ${isSelf ? 'is-self' : ''}">${esc(u.display_name || u.email.split('@')[0])}</div>
+        <div class="ar">${esc(u.email)}</div>
+        <div class="ar">${u.answers || 0}</div>
+        <div class="ar">${u.is_admin ? '<span title="Admin">admin</span>' : 'user'}</div>
+        <div class="ar">${isSelf ? '' : (u.is_admin
+          ? `<button class="btn-mini" data-act="demote" data-id="${esc(u.id)}">demote</button>`
+          : `<button class="btn-mini promote" data-act="promote" data-id="${esc(u.id)}">promote</button>`)}</div>
+        <div class="ar">${isSelf ? '' : `<button class="btn-mini danger" data-act="delete" data-id="${esc(u.id)}" data-label="${esc(u.email)}">delete</button>`}</div>`;
+    }).join("");
+    root.innerHTML = `
+      <h3>Users</h3>
+      <p class="dim">${users.length} account${users.length === 1 ? "" : "s"}. You cannot delete or demote yourself from here - use the Account tab.</p>
+      <div class="account-users-table">
+        <div class="ah">Name</div><div class="ah">Email</div><div class="ah">Answers</div><div class="ah">Role</div><div class="ah"></div><div class="ah"></div>
+        ${rows}
+      </div>
+    `;
+    root.querySelectorAll("[data-act]").forEach(btn => {
+      btn.onclick = async () => {
+        const id = btn.dataset.id, act = btn.dataset.act, label = btn.dataset.label || id;
+        try {
+          if (act === "delete") {
+            if (!confirm(`Permanently delete user ${label} and all their answers?`)) return;
+            await apiFetch(`/api/admin/users/${encodeURIComponent(id)}/delete`, { method: "POST" });
+          } else if (act === "promote") {
+            if (!confirm(`Grant admin to ${label}?`)) return;
+            await apiFetch(`/api/admin/users/${encodeURIComponent(id)}/promote`, { method: "POST" });
+          } else if (act === "demote") {
+            if (!confirm(`Revoke admin from ${label}?`)) return;
+            await apiFetch(`/api/admin/users/${encodeURIComponent(id)}/demote`, { method: "POST" });
+          }
+          renderAdminUsersTab(root);
+        } catch (e) { alert("Action failed: " + (e.message || e)); }
+      };
+    });
+  }
+
+  function renderAdminAccountTab(root) {
+    if (!cloudUser) {
+      root.innerHTML = `<p class="dim">Sign in to manage your account.</p>`;
+      return;
+    }
+    root.innerHTML = `
+      <h3>Signed in</h3>
+      <p>${esc(cloudUser.display_name || cloudUser.email)} · <span class="dim">${esc(cloudUser.email)}</span>${cloudUser.is_admin ? ' · <span class="dim">admin</span>' : ''}</p>
+      <div class="account-self-delete">
+        <strong>Delete this account.</strong>
+        <p class="dim small" style="margin:4px 0">All your answers and progress will be permanently removed. This cannot be undone.</p>
+        <button class="danger-btn" id="acctSelfDeleteUnified">Delete my account</button>
+      </div>`;
+    const sb = document.getElementById("acctSelfDeleteUnified");
+    if (sb) sb.onclick = async () => {
+      const confirmEmail = prompt("Type your email to confirm permanent account deletion:");
+      if (!confirmEmail || confirmEmail.trim().toLowerCase() !== (cloudUser.email || "").toLowerCase()) {
+        if (confirmEmail !== null) alert("Email did not match - account NOT deleted.");
+        return;
+      }
+      try {
+        await apiFetch("/api/account/delete", { method: "POST" });
+        cloudSignOut();
+        location.reload();
+      } catch (e) { alert("Failed to delete account: " + (e.message || e)); }
+    };
   }
 
   async function renderAccount() {
@@ -1869,6 +2069,14 @@
       if (!document.getElementById("howToModal").hidden) closeHowTo();
       else if (state.refsOpen) closeRefs();
     });
+    const toggleBtn = document.getElementById("promptToggleBtn");
+    const promptPre = document.getElementById("promptText");
+    if (toggleBtn && promptPre) toggleBtn.onclick = () => {
+      promptPre.hidden = !promptPre.hidden;
+      toggleBtn.textContent = promptPre.hidden ? "show prompt" : "hide prompt";
+    };
+    const auditNav = document.getElementById("howToOpenAuditBtn");
+    if (auditNav) auditNav.onclick = () => openAdmin("inbox");
 
     // Populate the LLM prompt + copy button. The prompt text has
     // placeholders ({{FOCUS_DIRECTIVE}}) that are substituted at
@@ -2035,8 +2243,12 @@
     const btn = document.getElementById("reportsAdminBtn");
     const m = document.getElementById("reportsAdminModal");
     if (!btn || !m) return;
-    btn.onclick = openReportsAdmin;
-    document.getElementById("reportsAdminClose").onclick = () => m.hidden = true;
+    // Route the top-bar "audit" button to the unified Admin modal's
+    // Inbox tab. The legacy reportsAdminModal stays as a DOM container
+    // for the tab content (re-parented at activation time by openAdmin).
+    btn.onclick = () => openAdmin("inbox");
+    const closeBtn = document.getElementById("reportsAdminClose");
+    if (closeBtn) closeBtn.onclick = () => m.hidden = true;
     m.addEventListener("click", e => { if (e.target.id === "reportsAdminModal") m.hidden = true; });
     const llmSel = document.getElementById("auditLlmSelect");
     if (llmSel) {
@@ -2665,8 +2877,8 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
   }
   function openHowTo()  {
     if (!isCurrentUserAdmin()) return;
-    document.getElementById("howToModal").hidden = false;
     refreshLocalBankSummary();
+    openAdmin("add");
   }
   function closeHowTo() { document.getElementById("howToModal").hidden = true; }
 
