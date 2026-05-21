@@ -521,11 +521,17 @@
 
   document.addEventListener("DOMContentLoaded", async () => {
     applyTheme(localStorage.getItem(THEME_KEY) || "light");
+    // Kick off the data load in parallel with the gate. The bank JSON does
+    // not depend on which user is signed in, so we can overlap the ~54
+    // file fetches with the /api/me round-trip + any password entry. On a
+    // returning signed-in user this overlaps roughly 100-400ms of /api/me
+    // latency with the dominant data download.
+    const dataPromise = loadData();
     await passGate();
     migrateLegacyIfNeeded();
     importLegacyHistoryIntoCloud();
     loadProfileState();
-    await loadData();
+    await dataPromise;
     wireMasthead();
     wireColophon();
     wireRefPanel();
@@ -1102,11 +1108,16 @@
     } else if (chip && cloudUser) {
       chip.hidden = false;
       chip.dataset.profileId = "cloud-" + cloudUser.id;
+      // Admin cloud accounts wear the same gold metallic pill as the
+      // legacy admin so admin = gold across the whole site.
+      if (cloudUser.is_admin) chip.dataset.pillStyle = "gold";
+      else delete chip.dataset.pillStyle;
       nameEl.textContent = cloudUser.display_name || cloudUser.email;
       pillSeed = cloudUser.id;
     } else if (chip && guestUser) {
       chip.hidden = false;
       chip.dataset.profileId = "guest";
+      delete chip.dataset.pillStyle;
       nameEl.textContent = "Guest";
       pillSeed = guestUser.id;
     }
