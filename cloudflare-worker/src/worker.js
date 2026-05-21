@@ -48,6 +48,7 @@ export default {
       if (url.pathname === "/apply-audit")           return await handleApplyAudit(request, env, cors);
       if (url.pathname === "/apply-live-audit") return await handleApplyLiveAudit(request, env, cors);
       if (url.pathname === "/apply-report")          return await handleApplyReport(request, env, cors);
+      if (url.pathname === "/commit-batch")          return await handleCommitBatch(request, env, cors);
       return json({ ok: false, error: "not found" }, 404, cors);
     } catch (e) {
       return json({ ok: false, error: String(e && e.message || e) }, 500, cors);
@@ -62,6 +63,73 @@ function corsHeaders(env) {
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Access-Control-Max-Age":       "86400",
   };
+}
+
+/* ── /commit-batch ───────────────────────────────────────────────────
+ *  body: { batch_name: "<snake_case>", questions: [...] }
+ *  header: Authorization: Bearer <ROUTINE_TOKEN>
+ *
+ *  Writes data/batches/<batch_name>.json, appends to
+ *  data/batches_manifest.json, and bumps data/meta.json last_added.
+ *  Used by the scheduled remote agent so it can publish a batch
+ *  without needing git push credentials inside the ephemeral
+ *  container - the worker is the credentialed boundary.
+ */
+async function handleCommitBatch(request, env, cors) {
+  const expected = env.ROUTINE_TOKEN;
+  if (!expected) return json({ ok: false, error: "ROUTINE_TOKEN not set on worker" }, 500, cors);
+  const auth = request.headers.get("Authorization") || "";
+  const m = auth.match(/^Bearer\s+(.+)$/);
+  if (!m || m[1] !== expected) return json({ ok: false, error: "unauthorised" }, 401, cors);
+
+  const body = await request.json().catch(() => null);
+  const name = body && body.batch_name;
+  const questions = body && body.questions;
+  if (typeof name !== "string" || !/^[a-z0-9_]{4,80}$/.test(name)) {
+    return json({ ok: false, error: "batch_name must be snake_case, 4-80 chars" }, 400, cors);
+  }
+  if (!Array.isArray(questions) || questions.length < 5 || questions.length > 50) {
+    return json({ ok: false, error: "questions must be array of 5-50 items" }, 400, cors);
+  }
+  const filename = `${name}.json`;
+  const batchPath = `data/batches/${filename}`;
+  const manifestEntry = `batches/${filename}`;
+  const today = new Date().toISOString().slice(0, 10);
+  const content = JSON.stringify(questions, null, 2) + "\n";
+
+  // 1. Write the batch file.
+  await ghPutFile(env, batchPath, content,
+    `Add ${filename} batch (${questions.length} Qs) via scheduled remote agent`);
+
+  // 2. Append to batches_manifest.json (idempotent: skip if already there).
+  await ghAppendManifest(env, "data/batches_manifest.json", "batches", manifestEntry);
+
+  // 3. Bump meta.json last_added to today.
+  await ghPatchMeta(env, "data/meta.json", { last_added: today });
+
+  return json({ ok: true, path: batchPath, count: questions.length }, 200, cors);
+}
+
+async function ghPatchMeta(env, path, patch) {
+  const cur = await ghGetFileJson(env, path) || {};
+  Object.assign(cur, patch);
+  const content = JSON.stringify(cur, null, 2) + "\n";
+  await ghPutFile(env, path, content, `Bump meta.json (${Object.keys(patch).join(', ')})`);
+}
+
+async function ghGetFileJson(env, path) {
+  // Minimal Contents-API read so we can re-write with merged content.
+  const url = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${encodeURIComponent(path)}?ref=${env.GITHUB_BRANCH || 'main'}`;
+  const r = await fetch(url, {
+    headers: {
+      "Authorization": `Bearer ${env.GITHUB_TOKEN}`,
+      "Accept": "application/vnd.github+json",
+      "User-Agent": "a-to-e-worker",
+    },
+  });
+  if (!r.ok) return null;
+  const j = await r.json();
+  try { return JSON.parse(atob(j.content.replace(/\n/g, ""))); } catch { return null; }
 }
 
 /* ── Account + stats API ────────────────────────────────────────────── */
