@@ -10,7 +10,8 @@
     "stem-data_table-duplication",
     "single-step-recall: drug-for-condition / fact-for-condition - DISCARD"
   ],
-  "total_audited": 322,
+  "total_audited": 334,
+  "note": "Audited a union of the working snapshot (322 IDs) and the 12 IDs that appear in the current source but were absent from the snapshot. Source files shifted during the audit window (some IDs were removed and replaced). Verdicts on IDs that no longer exist in source are preserved as findings on the snapshot.",
   "verdicts": [
     {
       "id": "obgyn-001-l3",
@@ -2265,6 +2266,90 @@
       "verdict": "keep",
       "issues": [],
       "fix_sketch": "Placenta accreta confirmed + 4 prior CS -> planned CS hysterectomy 34-35+6 + MDT at tertiary + cell salvage + midline incision + MTP standby. Bundled but congruent with major intervention. Tests MDT timing + technique. Multi-step."
+    },
+    {
+      "id": "med-haem-onc-018",
+      "file": "data/batches/medicine_haem_onc_emergencies.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "SVC syndrome without airway compromise -> tissue diagnosis BEFORE empirical steroid (because dex obscures lymphoma histology). Tests recognition that haematological vs non-haem dx changes treatment, so biopsy first. Distractor A (dex regardless - obscures dx), B (RT before dx - destroys tissue), D (anticoag alone - misses cancer), E (stent as definitive - misses cancer). Multi-step."
+    },
+    {
+      "id": "obgyn-lact-uro-007",
+      "file": "data/batches/obgyn_lactation_urogynae_vulval.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "Postnatal depression + BF -> sertraline first-line (low milk transfer). Single-step recall (same content as obgyn-postnatal-006 and obgyn-batch-044). Distractors B-D acceptable BF SSRIs but sertraline is the standard first-line; E (defer pharm) inadequate. Pure recall. DISCARD."
+    },
+    {
+      "id": "obgyn-lact-uro-018",
+      "file": "data/batches/obgyn_lactation_urogynae_vulval.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall", "diagnosis-named"],
+      "fix_sketch": "Erosive vulvovaginal lichen planus features given (vulvovaginal-gingival overlap, erosions, contact bleeding) - single-step pattern recognition. Distractors B (lichen sclerosus - figure-of-8 different), C (uVIN - epithelial not erosive), D (Zoon - vestibular only), E (atrophic - won't have erosive vagina). DISCARD."
+    },
+    {
+      "id": "obgyn-multpre-013",
+      "file": "data/batches/obgyn_multiple_preterm.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Term PROM at 36+5 + GBS+ -> IOL now + IAP. Bundle 2 actions. Lead-in 'management' singular. Same content as obgyn-anscreen + obgyn-014. Distractor B (home expectant - dangerous with GBS+), C (tocolysis - inappropriate at term), D (CS only), E (expectant to 39 - dangerous)."
+    },
+    {
+      "id": "obgyn-postnatal-006",
+      "file": "data/batches/obgyn_postnatal_depth.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "PND + BF -> sertraline first-line. Single-step regimen recall. Duplicate of obgyn-lact-uro-007 and obgyn-batch-044. Distractor A (fluoxetine - longer half-life, infant accumulation), C (paroxetine - withdrawal in infant), D (venlafaxine - second-line), E (lithium mono - wrong dx) caricatures. DISCARD."
+    },
+    {
+      "id": "obgyn-batch-highyield-001",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall", "bundled-correct-option"],
+      "fix_sketch": "Severe PET features (severe HTN + headache + RUQ pain) -> IV labetalol + MgSO4. Bundle 2 actions. Single-step PET-management recall. Distractors B (CS without seizure prophylaxis), C (oral NIF + expectant - inadequate), D (diazepam - wrong indication), E (hydralazine alone - inadequate without Mg). DISCARD."
+    },
+    {
+      "id": "obgyn-batch-highyield-008",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Pregnancy of unknown location + stable + low concern -> repeat hCG in 48h. Tests recognition of PUL pathway. Distractor A (MTX - premature without ectopic confirmation), B (laparoscopy - over-investigation in stable), C (D&C - wrong without uterine pregnancy), D (progesterone - low evidence). Multi-step."
+    },
+    {
+      "id": "both-batch-finals-001",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Severe PET at 33+5 + worsening features -> MgSO4 + IV antihypertensive + delivery after stabilisation. Bundle 3 actions. Lead-in 'single best intervention' singular but answer multi-action. Distractors A (expectant - dangerous), C (steroids + 48h - reasonable in non-severe but here severe), D (CS without MgSO4 - eclampsia risk), E (outpatient review - dangerous)."
+    },
+    {
+      "id": "obgyn-batch-emerg-009",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Severe PET symptoms at 34 wk -> MgSO4 + urgent delivery after stabilisation. Bundle 2 actions. Lead-in 'next step' singular. Distractors A (observation - dangerous), B (PO labetalol + outpatient), D (terbutaline tocolysis - inappropriate), E (CS without MgSO4 - eclampsia risk)."
+    },
+    {
+      "id": "both-finals-106",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Major abruption + bleeding + maternal compromise + 35wk -> Cat 1 CS + concurrent resuscitation + blood products. Bundle 3 actions. Same pattern as obgyn-batch-042-l3 and obgyn-batch-emerg-001. Distractors A (formal USS - delays), C (tocolysis - contraindicated), D (ARM + IOL - too slow), E (observe - dangerous). Duplicate concept."
+    },
+    {
+      "id": "both-finals-110",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "PPROM + chorioamnionitis features (foetal tachy + maternal markers) -> deliver despite preterm + continue broad-spec abx. Bundle 2 actions. Lead-in 'next step' singular. Distractor A (continue expectant despite infection - dangerous), C (tocolysis when infected - contraindicated), D (repeat USS - delays), E (stop abx - dangerous). Acceptable but tighten."
+    },
+    {
+      "id": "both-finals-118",
+      "file": "data/batches/obgyn_user_paste_emergency_2026-05-20.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Severe PET features at 35wk -> MgSO4 + expedited delivery. Same content as obgyn-batch-highyield-001, both-batch-finals-001, obgyn-batch-emerg-009. Heavy duplication suggests cluster-wide rewrite OR consolidation needed. Bundle 2 actions."
     }
   ]
 }

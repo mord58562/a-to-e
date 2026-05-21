@@ -371,12 +371,29 @@ a:hover { text-decoration: underline; }
 .reminder {
   border-bottom: 1px solid var(--line);
   background: var(--surface-2);
-  padding: 8px 22px;
+  padding: 8px 28px;
+  padding-left: max(28px, env(safe-area-inset-left));
+  padding-right: max(28px, env(safe-area-inset-right));
   font-size: 13px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   color: var(--ink-2);
+}
+.reminder #reminderText { font-weight: 500; color: var(--ink-2); margin-right: 4px; }
+.reminder .ghost-link {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink-mute);
+}
+.reminder .ghost-link:hover {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--ink-mute);
 }
 .reminder .ghost-x { margin-left: auto; }
 
@@ -449,8 +466,20 @@ a:hover { text-decoration: underline; }
 }
 .profile-chip[hidden] { display: none; }
 .profile-name { font-weight: 600; color: var(--ink); letter-spacing: 0.01em; line-height: 1; }
-.profile-chip .ghost-link { font-size: 11.5px; color: var(--ink-mute); line-height: 1; }
-.profile-chip .ghost-link:hover { color: var(--accent); }
+.profile-chip .ghost-link {
+  font-size: 11.5px;
+  color: var(--ink-mute);
+  line-height: 1;
+  text-decoration: none;
+  padding: 3px 7px;
+  border-radius: 5px;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.profile-chip .ghost-link:hover {
+  color: var(--ink);
+  text-decoration: none;
+  background: color-mix(in srgb, currentColor 14%, transparent);
+}
 
 /* Per-profile colour. Rob's chip is gold - a warm metallic look with
    a subtle gradient + inner highlight so it reads as polished metal,
@@ -485,7 +514,8 @@ a:hover { text-decoration: underline; }
 .profile-chip[data-profile-id="rob"] .ghost-link:hover {
   color: var(--gold-ink);
   opacity: 1;
-  text-decoration: underline;
+  text-decoration: none;
+  background: rgba(120, 80, 10, 0.18);
 }
 
 [data-theme="light"] .profile-chip[data-profile-id="rob"] {
@@ -1250,7 +1280,9 @@ body[data-screen="summary"] main { max-width: 760px; }
   color: var(--ink-mute);
   letter-spacing: 0;
   font-size: 0.78em;
-  margin-left: 4px;
+  margin-left: 6px;
+  position: relative;
+  top: -0.18em;
 }
 
 .prompt-pre {
