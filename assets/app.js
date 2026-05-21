@@ -139,8 +139,11 @@
   // Falls back to the bare key if no profile is loaded yet (only happens
   // pre-gate, where we never actually read state-bearing keys).
   function ns(key) {
-    if (currentProfile) return `${key}.${currentProfile.id}`;
+    // Cloud user takes precedence so a signed-in account's progress
+    // always lives in its own cross-device namespace - never shadowed
+    // by a stale legacy profile token left from earlier builds.
     if (cloudUser) return `${key}.cloud-${cloudUser.id}`;
+    if (currentProfile) return `${key}.${currentProfile.id}`;
     if (guestUser) return `${key}.guest-${guestUser.id}`;
     return key;
   }
@@ -233,7 +236,7 @@
   // profile's namespace so existing history/flags/settings/questions
   // don't appear lost.
   function migrateLegacyIfNeeded() {
-    if (!currentProfile) return;
+    if (!currentProfile && !cloudUser) return;
     if (localStorage.getItem(PROFILE_MIGRATED_KEY)) return;
     const legacy = [
       HISTORY_KEY, FLAGS_KEY, SETTINGS_KEY,
@@ -248,9 +251,37 @@
       }
       localStorage.removeItem(base);
     }
-    // Old single-password gate flag is obsolete.
     localStorage.removeItem("y4mcq.gate.passed");
     localStorage.setItem(PROFILE_MIGRATED_KEY, "1");
+  }
+
+  // When a cloud user signs in for the first time on a browser that
+  // previously stored progress under the legacy "rob" profile (or any
+  // other legacy profile), fold that history into the cloud namespace
+  // so the user sees their existing progress under the new account.
+  function importLegacyHistoryIntoCloud() {
+    if (!cloudUser) return;
+    const importedFlag = "y4mcq.cloud.imported." + cloudUser.id;
+    if (localStorage.getItem(importedFlag)) return;
+    for (const profile of PROFILES) {
+      const legHist = load(`${HISTORY_KEY}.${profile.id}`, null);
+      if (!legHist) continue;
+      const cloudKey = `${HISTORY_KEY}.cloud-${cloudUser.id}`;
+      const existing = load(cloudKey, {});
+      for (const qid in legHist) {
+        if (!existing[qid] || (legHist[qid].count > (existing[qid].count || 0))) {
+          existing[qid] = legHist[qid];
+        }
+      }
+      save(cloudKey, existing);
+      const legFlags = load(`${FLAGS_KEY}.${profile.id}`, null);
+      if (legFlags) {
+        const cloudFlagsKey = `${FLAGS_KEY}.cloud-${cloudUser.id}`;
+        const ef = load(cloudFlagsKey, {});
+        save(cloudFlagsKey, Object.assign({}, legFlags, ef));
+      }
+    }
+    localStorage.setItem(importedFlag, "1");
   }
 
   // Client-side gate. Plaintext passwords are never in source - we ship
@@ -287,11 +318,16 @@
         b.addEventListener("click", () => switchPane(b.dataset.gateSwitch));
       });
 
-      // 1. Already signed in via cloud? Skip the gate.
+      // 1. Already signed in via cloud? Skip the gate AND clear any stale
+      // legacy profile token so ns() never shadows the cloud namespace.
       const cloudCheck = await cloudCheckAuth();
-      if (cloudCheck) return unlock();
+      if (cloudCheck) {
+        localStorage.removeItem(PROFILE_CURRENT_KEY);
+        currentProfile = null;
+        return unlock();
+      }
 
-      // 2. Already chose a legacy profile previously? Skip the gate.
+      // 2. Legacy profile fallback (only when no cloud user is active).
       const savedId = localStorage.getItem(PROFILE_CURRENT_KEY);
       if (savedId) {
         const p = PROFILES.find(p => p.id === savedId);
@@ -321,6 +357,10 @@
             document.getElementById("cloudSignInEmail").value.trim(),
             document.getElementById("cloudSignInPassword").value
           );
+          localStorage.removeItem(PROFILE_CURRENT_KEY);
+          currentProfile = null;
+          localStorage.removeItem(GUEST_KEY);
+          guestUser = null;
           unlock();
         } catch (err) {
           signInErr.textContent = (err && err.message) || "Sign in failed.";
@@ -340,6 +380,10 @@
             document.getElementById("cloudSignUpPassword").value,
             document.getElementById("cloudSignUpName").value.trim()
           );
+          localStorage.removeItem(PROFILE_CURRENT_KEY);
+          currentProfile = null;
+          localStorage.removeItem(GUEST_KEY);
+          guestUser = null;
           unlock();
         } catch (err) {
           signUpErr.textContent = (err && err.message) || "Sign up failed.";
@@ -383,6 +427,7 @@
     applyTheme(localStorage.getItem(THEME_KEY) || "light");
     await passGate();
     migrateLegacyIfNeeded();
+    importLegacyHistoryIntoCloud();
     loadProfileState();
     await loadData();
     wireMasthead();
@@ -393,6 +438,7 @@
     wireReportModal();
     wireReportsAdmin();
     wireStatsModal();
+    wireReminderDismiss();
     maybeShowReminder();
     updateReportsAdminBadge();
     showHome();
@@ -424,7 +470,7 @@
     const ids = Object.keys(history);
     const bankById = {}; (state.questions || []).forEach(q => { bankById[q.id] = q; });
 
-    let answered = 0, firstCorrect = 0, totalMs = 0;
+    let answered = 0, firstCorrect = 0, totalMs = 0, timedCount = 0;
     const byTopic = {};
     const byDiff = {};
     let lastAt = 0;
@@ -433,7 +479,13 @@
       const q = bankById[id]; if (!q) continue;
       answered++;
       if (h.lastCorrect) firstCorrect++;
-      totalMs += h.time_ms_total || 0;
+      // Only aggregate time for entries that actually recorded a duration.
+      // Legacy entries (pre-stats-panel) carry no time_ms_total - excluding
+      // them avoids skewing the average toward zero.
+      if (h.time_ms_total && h.time_ms_total > 0) {
+        totalMs += h.time_ms_total;
+        timedCount++;
+      }
       if ((h.last_at || 0) > lastAt) lastAt = h.last_at || 0;
       const t = q.topic || "Other";
       byTopic[t] = byTopic[t] || { n: 0, correct: 0 };
@@ -444,7 +496,7 @@
     }
     const total = (state.questions || []).length;
     const acc = answered ? Math.round((firstCorrect / answered) * 100) : 0;
-    const avg = answered ? Math.round(totalMs / answered / 1000) : 0;
+    const avg = timedCount ? Math.round(totalMs / timedCount / 1000) : 0;
 
     if (!answered) {
       body.innerHTML = `<p class="stats-empty">You haven't answered any questions yet. Pick a mode and hit Begin from the home screen; stats will appear here once you've worked through a few.</p>`;
@@ -455,7 +507,7 @@
       <div class="stats-head">
         <div class="stats-num"><span class="stats-num-value">${answered}</span><span class="stats-num-label">questions answered (${Math.round(answered / total * 100) || 0}% of bank)</span></div>
         <div class="stats-num"><span class="stats-num-value">${acc}%</span><span class="stats-num-label">first-time correct</span></div>
-        <div class="stats-num"><span class="stats-num-value">${formatDuration(totalMs)}</span><span class="stats-num-label">time studying · ${avg}s avg / q</span></div>
+        <div class="stats-num"><span class="stats-num-value">${timedCount ? formatDuration(totalMs) : '-'}</span><span class="stats-num-label">${timedCount ? `time studying · ${avg}s avg / q` : `time not recorded for ${answered} earlier ${answered === 1 ? 'answer' : 'answers'}`}</span></div>
       </div>`;
 
     function rows(map, order) {
@@ -474,7 +526,7 @@
     }
 
     const topicOrder = ["Paediatrics","Obstetrics & Gynaecology","Psychiatry","Medicine"];
-    const diffOrder = ["3","4","5"];
+    const diffOrder = ["2","3","4","5"];
     const lastStr = lastAt ? new Date(lastAt).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }) : "-";
 
     body.innerHTML = `
@@ -583,18 +635,17 @@
     refreshAdminBodyClass();
     const signOutBtn = document.getElementById("signOutBtn");
     if (signOutBtn) {
-      if (guestUser && !currentProfile && !cloudUser) {
-        // Reframe sign-out as "save progress" for guests - sign-out doesn't
-        // help them, the upgrade path does.
-        signOutBtn.textContent = "save progress";
-        signOutBtn.title = "Create an account to keep your progress across devices";
+      const isGuest = guestUser && !currentProfile && !cloudUser;
+      if (isGuest) {
+        signOutBtn.textContent = "exit guest";
+        signOutBtn.title = "Leave guest mode and return to the sign-in screen";
       }
       signOutBtn.onclick = e => {
         e.stopPropagation();
-        if (guestUser && !currentProfile && !cloudUser) {
-          // Take the guest to the signup form. Their localStorage data
-          // stays under the guest namespace; we'll migrate it on signup
-          // in a future pass.
+        if (isGuest) {
+          if (!confirm("Exit guest mode? Your guest progress stays on this device but you'll see the sign-in screen.")) return;
+          localStorage.removeItem(GUEST_KEY);
+          guestUser = null;
           location.reload();
           return;
         }
@@ -650,20 +701,33 @@
     // Admin top bar message: short status; banner is ALWAYS visible for admins
     // (gated only by the per-session dismiss above).
     if (days === null) {
-      text.textContent = `${total} questions in the bank.`;
+      text.textContent = `${total} questions in the bank`;
     } else if (days >= 7) {
-      text.textContent = `${days} days since the last add - ${total} questions in the bank.`;
+      text.textContent = `${days} days since the last add - ${total} questions in the bank`;
     } else if (days >= 3) {
-      text.textContent = `${days} days since last add - ${total} questions in the bank.`;
+      text.textContent = `${days} days since last add - ${total} questions in the bank`;
     } else {
-      text.textContent = `${total} questions in the bank.`;
+      text.textContent = `${total} questions in the bank`;
     }
     banner.hidden = false;
-    document.getElementById("reminderHowTo").onclick = openHowTo;
-    document.getElementById("reminderDismiss").onclick = () => {
+  }
+
+  // Reminder bar X button: wired at DOMContentLoaded so the close is
+  // always available, regardless of whether maybeShowReminder fires
+  // this turn (it only fires for admins). Persists dismissal across the
+  // tab session so the bar stays closed until the next visit.
+  function wireReminderDismiss() {
+    const x = document.getElementById("reminderDismiss");
+    const banner = document.getElementById("reminderBanner");
+    const howTo = document.getElementById("reminderHowTo");
+    if (howTo) howTo.addEventListener("click", openHowTo);
+    if (!x || !banner) return;
+    x.addEventListener("click", e => {
+      e.preventDefault();
+      e.stopPropagation();
       sessionStorage.setItem("y4mcq.adminbar.sessionDismissed", "1");
       banner.hidden = true;
-    };
+    });
   }
 
   // ── Home ────────────────────────────────────────────────────────────────
