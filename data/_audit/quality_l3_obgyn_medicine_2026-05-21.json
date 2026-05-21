@@ -1,0 +1,415 @@
+{
+  "audited_at": "2026-05-21",
+  "auditor": "Claude Opus 4.7 (1M context)",
+  "scope": "L3 Obstetrics & Gynaecology + Medicine quality audit",
+  "policy": "L3-minimum: any question that cannot legitimately reach L3 is DISCARDED. Verdicts: keep | rewrite | discard.",
+  "failure_modes": [
+    "bundled-correct-option: lead-in singular but correct answer lists multiple discrete actions",
+    "implausible-distractors: 3+ distractors so wrong rule-out solves it without reasoning",
+    "diagnosis-named: stem/lead-in names diagnosis when it could be withheld",
+    "stem-data_table-duplication",
+    "single-step-recall: drug-for-condition / fact-for-condition - DISCARD"
+  ],
+  "total_audited": 322,
+  "verdicts": [
+    {
+      "id": "obgyn-001-l3",
+      "file": "data/questions_obgyn.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3: tests AU-specific 8-year Mirena contraception licence vs HMB 5-year licence vs MHT 5-year licence. Distractor D (indefinite) and E (switch to copper) are credible look-alikes; A and B are common misconceptions. Multi-step (recognise HMB resolved, recognise contraception indication, recall AU 2023 extension)."
+    },
+    {
+      "id": "obgyn-002-l3",
+      "file": "data/questions_obgyn.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Tests 72h vs 120h EC windows + BMI fall-off + IUD-declined. Distractors are all real EC options; LNG-3mg-double-dose is an actual practiced off-label that has to be ruled out on window not dose. Multi-step."
+    },
+    {
+      "id": "obgyn-003-l3",
+      "file": "data/questions_obgyn.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Genuine L3: requires recognising pyridoxine failure + position on antiemetic ladder. Doxylamine-pyridoxine vs ondansetron vs steroid step-up is a real exam discrimination. Discharge is a clear safety distractor but the other three are credible."
+    },
+    {
+      "id": "obgyn-004-l3",
+      "file": "data/questions_obgyn.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "AU-specific 250/625/1500 IU dosing - genuine 3-step (recognise indication + recall AU dose split at 12 wk + reject UK 1500 trap). Distractors all plausible misreads."
+    },
+    {
+      "id": "obgyn-005-l3",
+      "file": "data/questions_obgyn.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Prior GBS-affected infant means screen-irrelevant + universal IAP. Tests RANZCOG indication recall - non-trivial because 'screen anyway' is the immediate-instinct trap."
+    },
+    {
+      "id": "obgyn-006-l3",
+      "file": "data/questions_obgyn.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "NCSP pathway for non-16/18 HPV + pHSIL on reflex -> direct colposcopy. Tests recognition of pHSIL as colposcopy indication. Distractors credible (12-month repeat is the standard non-16/18 with NILM trap)."
+    },
+    {
+      "id": "obgyn-007-l3",
+      "file": "data/questions_obgyn.json",
+      "verdict": "rewrite",
+      "issues": ["implausible-distractors"],
+      "fix_sketch": "EPDS 16 is above-threshold and item-10 zero is reassuring. Correct option B 'refer to GP within 1-2 weeks' is right but distractors C (ED today) and D (start sertraline today by nurse) and E (baby blues at 6 wk) are weak. Replace with: (a) refer for psychological therapy under Medicare MHTP without GP review; (b) telephone advice to GP same day; (c) repeat EPDS in 4 weeks to confirm. Keep E (baby-blues misreading) as it is the genuine confound."
+    },
+    {
+      "id": "obgyn-008",
+      "file": "data/questions_obgyn.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Transdermal E + micronised progesterone is genuinely first-line in AU per AMS 2024; oral CEE and oral MPA (option A, B) are credible older choices, tibolone and vaginal-oestrogen-monotherapy are real but wrong for systemic VMS. Multi-step."
+    },
+    {
+      "id": "obgyn-009",
+      "file": "data/questions_obgyn.json",
+      "verdict": "rewrite",
+      "issues": ["diagnosis-named"],
+      "fix_sketch": "Correct option text reads 'Tubal ectopic in the RIGHT ampulla' but stem says LEFT-sided pain - factual inconsistency. Also 'most likely diagnosis' is recognition-style L3 but the correct-option diagnosis label gives away the answer if the student spots that ectopic is the only ectopic-named option. Rewrite: change lead-in to 'most appropriate next investigation' (TVUS + serial beta-hCG vs MTX vs laparoscopy) so it tests management not pattern-match. Fix laterality typo."
+    },
+    {
+      "id": "obgyn-010",
+      "file": "data/questions_obgyn.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "RCOG/ASUM diagnostic criteria for miscarriage (CRL>=7mm no FH, MSD>=25mm no embryo). Tests recall of CRL cutoff vs MSD cutoff vs ratio - all real ultrasound criteria. Genuine 3-option discrimination among A/B/E."
+    },
+    {
+      "id": "obgyn-011",
+      "file": "data/questions_obgyn.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall", "diagnosis-named"],
+      "fix_sketch": "Stem essentially names pre-eclampsia + seizure = eclampsia; lead-in asks first-line drug. Single-step drug-for-condition recall (eclampsia -> MgSO4). Distractors are caricatures (immediate GA C/S without anticonvulsant; phenytoin; diazepam single 5mg). DISCARD per L3-minimum policy."
+    },
+    {
+      "id": "obgyn-012",
+      "file": "data/questions_obgyn.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "Painless bright red APH classic praevia recognition - single-step pattern match. Distractors all credible APH causes but vasa praevia + abruption + rupture are easily ruled out by 'painless + no contractions + previous fundal placenta migrated'. The pattern-recognition is single-concept. DISCARD or rewrite as management question (next investigation: TVUS placental localisation vs Kleihauer vs CTG + steroids)."
+    },
+    {
+      "id": "obgyn-013",
+      "file": "data/questions_obgyn.json",
+      "verdict": "rewrite",
+      "issues": ["implausible-distractors"],
+      "fix_sketch": "Cord prolapse - elevate presenting part is correct first manoeuvre but distractors C (oxytocin in transverse lie at 3cm) and D (bladder fill only, no elevation) and E (terbutaline without elevation) are wildly wrong. Replace with closer alternatives: (a) elevate + tocolysis with terbutaline only (omits position change); (b) elevate + bladder fill only en route to theatre (legitimate alternative but less preferred); (c) all-fours position + manual elevation (correct alternative position). Keep A (cord replacement - real wrong-historical-teaching trap)."
+    },
+    {
+      "id": "obgyn-014",
+      "file": "data/questions_obgyn.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Term PROM with negative GBS - genuine choice between immediate IOL vs expectant up to 24h. Distractors A (96h discharge), C (immediate C/S), D (broad-spec abx with neg GBS), E (tocolysis at term) are caricatures but the question still rewards real RANZCOG ROM-at-term knowledge. Borderline; keep but acknowledge distractors could be tightened."
+    },
+    {
+      "id": "obgyn-015",
+      "file": "data/questions_obgyn.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Empirical endometriosis therapy without laparoscopy is now first-line per RANZCOG/ESHRE 2022. Distractors A (laparoscopy first - the older paradigm), B (GnRH-agonist + add-back upfront), E (CA-125 for dx) are genuine traps; D (hysterectomy first-line) is a caricature. Multi-step."
+    },
+    {
+      "id": "obgyn-016-l3",
+      "file": "data/questions_obgyn.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "2023 PCOS Guideline: oligo + hyperandrogenism = 2 of 3 Rotterdam criteria met, USS not needed for diagnosis in adults. Distractors all real exam traps (defer for USS, LH:FSH, ACTH stim, AMH-alone)."
+    },
+    {
+      "id": "obgyn-017",
+      "file": "data/questions_obgyn.json",
+      "verdict": "rewrite",
+      "issues": ["stem-data_table-duplication", "diagnosis-named"],
+      "fix_sketch": "Lead-in primes PALM-COEIN and asks classification - so the question is essentially 'what was on her USS' but the USS in this stem was 18 months ago and unremarkable. The 44-year-old + heavy + regular pattern is non-specific; either L (fibroid) or A (adenomyosis) is defensible without current imaging. Rewrite to provide a current TVUS finding in data_table that distinguishes - or change lead-in to 'most appropriate next investigation' (TVUS vs endometrial sampling vs hysteroscopy)."
+    },
+    {
+      "id": "obgyn-019",
+      "file": "data/questions_obgyn.json",
+      "verdict": "rewrite",
+      "issues": ["stem-data_table-duplication"],
+      "fix_sketch": "Stem does not actually give the OGTT values - asks student to interpret thresholds without showing values. Either add OGTT values to data_table (fasting + 1h + 2h) or change lead-in to 'which is the correct ADIPS fasting threshold'. As written, option C is unanswerable from the stem."
+    },
+    {
+      "id": "obgyn-020",
+      "file": "data/questions_obgyn.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "Turtle sign + first manoeuvre = McRoberts + suprapubic. Single-step ALSO/ANZCOR drill recall. Distractors A (fundal pressure), C (Zavanelli first), D (symphysiotomy bedside), E (cut cord then C/S) are caricatures. Pattern is single-concept; DISCARD per L3-minimum policy. (Could be salvaged as second-line-after-McRoberts-fails L4.)"
+    },
+    {
+      "id": "obgyn-022",
+      "file": "data/questions_obgyn.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall", "implausible-distractors"],
+      "fix_sketch": "PID -> ceftriaxone + doxycycline + metronidazole regimen. Single-step Therapeutic-Guidelines recall. Distractors A (amox+metro), B (cipro-which is no longer used due to GC resistance), C (doxy mono), E (azithro mono) are all clearly inadequate cover. Pure regimen recall. DISCARD."
+    },
+    {
+      "id": "obgyn-024",
+      "file": "data/questions_obgyn.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Multiple UKMEC-3/4 stacking (migraine-with-aura UKMEC 4 -> rules out CHC; postpartum + breastfeeding + BMI 33 + ankle ORIF -> DMPA caution; LNG-IUS UKMEC 1). Genuine multi-criterion synthesis. Distractors all real methods. POP also defensible - the LNG-IUS preference comes from long-acting reversible + heavy menstrual control."
+    },
+    {
+      "id": "medicine-cardio-core-001",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Correct option bundles: fibrinolysis + ASA + clopidogrel + enoxaparin + transfer for PCI 3-24h. Lead-in 'single most appropriate immediate reperfusion strategy' is singular. The competing options also bundle (PCI + anticoag en route). Tighten by restating lead-in 'most appropriate reperfusion strategy' (drops 'single', acknowledges combination)."
+    },
+    {
+      "id": "medicine-cardio-core-002",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "GRACE 158 + NSTE-ACS + recurrent ischaemia within 12h -> 24h invasive. Distractors A (24h - correct), B (2h-immediate), C (72h-delayed), D (selective), E (defer-CKD) are all real ESC/ANZ pathway tiers. Genuine multi-step (calculate-risk-tier + recall timing-cutoffs)."
+    },
+    {
+      "id": "medicine-cardio-core-003-l3",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Bundling is congruent with 'plan' lead-in. Tests the 6-week DAPT minimum vs DES-recent-PCI principle - real ANZ guidance. Distractors credible (stop both, continue both, bridge with LMWH, proceed unchanged)."
+    },
+    {
+      "id": "medicine-cardio-core-004-l3",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Apixaban 2.5 BD dose-reduction (age>=80, weight 56, Cr 138 - 3/3 criteria). Rivaroxaban distractor doesn't have age/wt dose-reduction. Aspirin clearly wrong with prior stroke. Multi-step (calculate criteria + recall threshold)."
+    },
+    {
+      "id": "medicine-cardio-core-005",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "HFrEF + symptomatic AF on optimal HF therapy -> CASTLE-AF/RAFT-AF evidence for catheter ablation as preferred rhythm-control. Distractors all genuine candidate strategies. Multi-step."
+    },
+    {
+      "id": "medicine-cardio-core-007",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Correct option bundles ARNI-switch + spiro + dapa over subsequent visits (three additions). Lead-in 'next addition or modification' is singular. Tighten lead-in to 'most appropriate medication strategy' OR pick single next step (most-impactful = ARNI switch first). Distractors are credible single moves - ivabradine, digoxin, frusemide up, CRT-D."
+    },
+    {
+      "id": "medicine-cardio-core-008",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "HFpEF + T2DM + obesity -> empagliflozin first-line (EMPEROR-Preserved). Distractors A (ARNI - PARAGON neutral), B (spiro - TOPCAT neutral), C (BB - no HFpEF benefit) are real real-world traps. Multi-step."
+    },
+    {
+      "id": "medicine-cardio-core-010-l3",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Lead-in 'next steps' is plural so bundling is congruent. Tests high-risk syncope features (bifascicular block + abrupt + brief jerks misinterpreted) plus AU driving regulations (Austroads). Distractors B vs A vary only on driving advice - clean discrimination."
+    },
+    {
+      "id": "medicine-cardio-core-012",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Resistant HTN + hypokalaemia + metabolic alkalosis -> screen primary aldosteronism with ARR. Distractors all real secondary HTN work-up tests; A (repeat metanephrines) and E (empirical spironolactone) are real traps."
+    },
+    {
+      "id": "medicine-cardio-core-013-l3",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Grade 2 HTN after 12 wk lifestyle -> add ACE-i. NHFA-aligned. Distractor C (ABPM first) is a real trap when home-BP already confirms. E (full secondary HTN workup) overinvestigation trap."
+    },
+    {
+      "id": "medicine-cardio-core-014",
+      "file": "data/batches/medicine_cardio_core_v1.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall", "diagnosis-named"],
+      "fix_sketch": "Stem explicitly names Mobitz II AV block in correct option, and the constant-PR with intermittent dropped beat + symptomatic presyncope + RBBB QRS is textbook 'symptomatic Mobitz II -> PPM' single-step. Distractors B (atropine), C (iso then discharge), D (reduce perindopril), E (AV node ablation as definitive) are caricatures. DISCARD."
+    },
+    {
+      "id": "med-cardio-resp-001",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Rural STEMI with FMC-to-balloon 200 min > 120 min cutoff -> fibrinolysis + pharmaco-invasive transfer. Distractor A (transfer for primary PCI despite >120) is the real trap. Tests AU/ANZ STEMI pathway threshold."
+    },
+    {
+      "id": "med-cardio-resp-003",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Posterior STEMI as STEMI-equivalent (V7-9 elevation). Tests recognition that isolated ST depression V1-3 + tall R + post-leads elevation = STEMI activation. Distractor A (NSTEMI conservative path) is the genuine trap. Wellens / RBBB / digoxin distractors weaker but acceptable."
+    },
+    {
+      "id": "med-cardio-resp-004",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Correct option bundles 'ticagrelor + duration + then aspirin alone' - reasonable. Distractor D (prasugrel for 6 months) implies a duration that does not match current AU practice (DAPT 12 months for ACS). Replace D with: 'prasugrel for 12 months then aspirin alone' (real ticagrelor-vs-prasugrel call). Borderline keep."
+    },
+    {
+      "id": "med-cardio-resp-005",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option", "implausible-distractors"],
+      "fix_sketch": "Correct option bundles 3 actions (IV frusemide + GTN + NIV CPAP). Lead-in 'most appropriate initial management' singular but bundle congruent. Distractors B (fluid bolus + metoprolol for tachycardia - caricature), D (withhold ACE/BB + dobutamine - caricature), E (PO frusemide + metolazone in acute APO - caricature). Replace with closer alternatives: (a) IV frusemide alone without nitrate/NIV; (b) NIV + IV GTN without frusemide; (c) IV frusemide + NIV without GTN."
+    },
+    {
+      "id": "med-cardio-resp-006",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Correct option bundles 3 actions (add spiro + dapa + switch ARNI). Lead-in 'next step' is singular. Tighten lead-in to 'most appropriate medication strategy' OR isolate single best next move. Distractors B (digoxin for prognosis), D (CRT without further uptitration), E (switch to ARB + ivabradine) are real-world traps but the bundle vs each-single-move mismatch is the issue."
+    },
+    {
+      "id": "med-cardio-resp-007",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Correct option bundles 3 actions (apixaban + BB + early DCCV + ablation consideration). EAST-AFNET-4-aligned. Bundle is OK but the 'consider ablation' tail is vague. Trim correct to 'apixaban + BB + early DCCV' and let ablation be a separate downstream decision."
+    },
+    {
+      "id": "med-cardio-resp-009-l3",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "SVT in asthmatic with adenosine relative caution (bronchospasm risk). Verapamil is correct in stable narrow-complex SVT in adult non-WPW. Distractor A (adenosine despite asthma) is the discriminator - genuine ANZCOR/RACGP awareness. Multi-step."
+    },
+    {
+      "id": "med-cardio-resp-011",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "COPD GOLD E (>=2 exac, mMRC 2, eos low) -> LAMA/LABA. Distractors A (LAMA alone), C (LABA/ICS for COPD - low eos = no benefit), D (triple before LAMA/LABA), E (theophylline) are all real. Multi-step."
+    },
+    {
+      "id": "med-cardio-resp-012",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Type-2 resp failure from over-oxygenation in COPD exac + features of CO2 narcosis (flap, drowsy) -> titrate O2 + BiPAP. Distractor B (intubation), E (HFNC instead of BiPAP) are real exam traps. Multi-step."
+    },
+    {
+      "id": "med-cardio-resp-013",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Lead-in asks 'classification + corresponding initial treatment' (explicit bundle). Acceptable. Distractor C (life-threatening + immediate intubation) without trial of medical therapy is a caricature; E (severe + IV Mg first-line before salbutamol/steroid) is wrong ladder. Tighten E to real Aus Asthma Handbook ladder."
+    },
+    {
+      "id": "med-cardio-resp-014-l3",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Uncontrolled mild asthma + planning pregnancy -> AIR with low-dose ICS-formoterol. Tests Aus Asthma Handbook 2024 AIR/MART terminology. Distractors all real ladder steps. Multi-step."
+    },
+    {
+      "id": "med-cardio-resp-016",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "sPESI 0 + no RV strain + stable home -> outpatient apixaban. Lead-in essentially asks single strategy. Distractor B (warfarin bridge) is the older default trap. Multi-step (recognise low-risk PE + select DOAC over warfarin + outpatient eligibility)."
+    },
+    {
+      "id": "med-cardio-resp-018-l3",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "rewrite",
+      "issues": ["implausible-distractors"],
+      "fix_sketch": "Aspiration pneumonia in nursing-home resident with recent broad-spec abx (HCAP equivalent) -> pip-taz. Distractor C (PO amox monotherapy in confused hypoxic patient) and E (vanc + cipro empirically without MRO data) are caricatures. Replace with: (a) IV ceftriaxone + IV azithromycin (standard CAP but misses anaerobes/Pseudomonas); (b) IV benzylpenicillin + IV metronidazole (old-style 'aspiration' regimen without Pseudomonas cover); (c) IV meropenem + vancomycin (over-broad without MRSA/Pseudomonas risk data)."
+    },
+    {
+      "id": "med-cardio-resp-019-l3",
+      "file": "data/batches/medicine_cardio_resp_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "AF onset ambiguous (32 h current but milder episode 4 days ago) -> TOE-guided cardioversion + 4-wk post-CV anticoag regardless of CHA2DS2-VA. Distractor A (DCCV without anticoag because <48h) is the trap that overlooks the milder episode 4 days ago. Multi-step."
+    },
+    {
+      "id": "med-endo-neuro-001-l3",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "T2DM diagnosis with HbA1c unreliable in haemoglobinopathy -> repeat fasting glucose for confirmation. Tests RACGP red-book diagnostic algorithm + recognition that haemoglobinopathy invalidates HbA1c. Subtopic_detail field is corrupted ('RACGP)' only) - flag for metadata fix."
+    },
+    {
+      "id": "med-endo-neuro-002",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "T2DM + HFrEF + CKD + albuminuria -> SGLT2i for cardiorenal indication regardless of HbA1c. Distractors all real T2DM second-line agents. Genuine multi-step (recognise compelling indications + reject HbA1c-only thinking)."
+    },
+    {
+      "id": "med-endo-neuro-003",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "T2DM + fasting hyperglyc + plateau on GLP-1 -> basal insulin start. Tests fasting-dominant pattern -> basal-only over basal-bolus or premix. Distractors all real insulin regimens; B (basal-bolus) and A (premix) are credible alternatives that overshoot complexity."
+    },
+    {
+      "id": "med-endo-neuro-004",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "DKA + first 15 min -> fluid first. Single-step ANZCOR/eTG DKA algorithm recall. Distractors B (insulin without fluid), C (HCO3 bolus), D (KCl pre-insulin), E (SC long-acting) are all caricatures. DISCARD per L3-minimum policy."
+    },
+    {
+      "id": "med-endo-neuro-006",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "HHS vs DKA discrimination: osmolality>320 + ketones<3 + pH>7.30. Tests precise biochemical criteria. Distractor A (BGL alone), C (AKI), D (precipitant), E (GCS) are all features present in both - discrimination must be biochemical. Multi-step."
+    },
+    {
+      "id": "med-endo-neuro-007",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Trimethoprim + gliclazide interaction + CKD reduces clearance. Real AMH/AusDI interaction trap. Distractors A (blame basal), C (metformin causing hypo - caricature), D (cefalexin causing hypo - false), E (glucagon dose) all real-world misattributions. Multi-step."
+    },
+    {
+      "id": "med-endo-neuro-008",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option", "diagnosis-named"],
+      "fix_sketch": "Thyroid storm - stem essentially names it via Burch-Wartofsky-like features. Correct option bundles 6 components. Lead-in 'initial medical management' singular but bundle congruent. Distractor B (amiodarone - contraindicated, real trap), C (sepsis), D (myxoedema coma - opposite dx), E (single carbimazole + discharge) - mostly caricatures. Tighten by lead-in 'most appropriate medical strategy' and replacing D and E with closer wrong-choices: (a) PTU monotherapy without iodine/BB; (b) Lugol's iodine before PTU (sequence error)."
+    },
+    {
+      "id": "med-endo-neuro-010-l3",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "keep",
+      "issues": [],
+      "fix_sketch": "Subclinical hypothyroidism + TPO+ + preconception -> treat to TSH<2.5. Tests ATA preconception threshold. Distractor B (no treatment) is the watch-and-wait trap that misses pregnancy goal. Multi-step."
+    },
+    {
+      "id": "med-endo-neuro-011",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "Correct option bundles 3 actions (IV Ca gluconate + Mg replacement + PO calcitriol). Symptomatic hypocalcaemia + QTc 510 indication for IV Ca. Distractor C (CaCl peripheral - sclerosant trap), D (Mg only without Ca - misses primary problem), E (cinacalcet - wrong direction) are caricatures. Replace one with closer alternative: 'PO calcium carbonate alone with cardiology review for QTc' (under-treats with symptoms)."
+    },
+    {
+      "id": "med-endo-neuro-012",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "discard",
+      "issues": ["single-step-recall"],
+      "fix_sketch": "Severe hyperkalaemia + ECG changes -> Ca gluconate first. Single-step ANZCOR/eTG hyperkalaemia algorithm. Distractors B-E all individually correct downstream steps just sequenced wrong. Pure sequencing recall. DISCARD per L3-minimum policy. (Could be salvaged as L4 'after Ca, what next'.)"
+    },
+    {
+      "id": "med-endo-neuro-015-l3",
+      "file": "data/batches/medicine_endo_neuro_starter.json",
+      "verdict": "rewrite",
+      "issues": ["bundled-correct-option"],
+      "fix_sketch": "TIA -> same-day CT/CTA + aspirin load + stroke unit. Bundled correct option (3 actions). Lead-in 'combination of management steps' is plural so congruent. Distractor B (ABCD2-only - outdated), C (outpatient 2 wk - wrong), D (empirical anticoag for presumed AF - wrong), E (Doppler in 4 wk - wrong). Acceptable but tighten distractors as they currently caricature each tier."
+    }
+  ]
+}
