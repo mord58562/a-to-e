@@ -1,0 +1,99 @@
+[
+  {
+    "id": "paeds-l4depth-001",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Bronchiolitis: escalation thresholds",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "bronchiolitis",
+      "HFNC",
+      "RSV"
+    ],
+    "stem": "A 7-week-old former 38-week infant presents to a metropolitan paediatric emergency department in winter with 4 days of coryza and 24 hours of worsening work of breathing. He has been refusing feeds for 8 hours and has had 3 short apnoeas witnessed in triage. He is on standard nasal-prong oxygen at 1 L/min. RSV PCR is positive. He has had no fever above 38.0 degrees C and chest X-ray shows hyperinflation without focal consolidation. The treating registrar has commenced him on 2 L/kg/min heated humidified high-flow nasal cannula with FiO2 0.4 thirty minutes ago.",
+    "data_table": {
+      "Vital signs": "HR 178, RR 78, SpO2 89% on HFNC FiO2 0.4, temperature 37.6 degrees C, CRT 3 seconds",
+      "Examination": "Marked subcostal and intercostal recession, head bobbing, fine crackles bilaterally, mottled peripheries",
+      "Investigations": "VBG: pH 7.24, pCO2 64 mmHg, HCO3 26, lactate 2.1 mmol/L"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Continue current HFNC settings and reassess in 30 minutes",
+        "correct": false,
+        "rationale": "Persistent hypercapnia, falling saturations and recurrent apnoeas on established HFNC define HFNC failure; further passive observation risks respiratory arrest. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Trial nebulised adrenaline 5 mg with reassessment at 15 minutes",
+        "correct": false,
+        "rationale": "Nebulised adrenaline has not been shown to alter the natural history of bronchiolitis and does not address the apnoeas or hypercapnia driving deterioration here. (Source: RCH CPG: Bronchiolitis; PREDICT bronchiolitis guideline)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis",
+          "PREDICT Bronchiolitis Guideline"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Order an urgent CT chest and consult paediatric infectious diseases",
+        "correct": false,
+        "rationale": "Imaging beyond the existing chest X-ray will not change acute management; the priority is ventilatory support, and apnoeas in RSV infants are characteristic and do not need ID review. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Administer IV salbutamol 5 mcg/kg over 10 minutes and reassess",
+        "correct": false,
+        "rationale": "Beta-2 agonists are not recommended in bronchiolitis under 12 months; salbutamol risks tachycardia and lactataemia without bronchodilator response in this age group. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Escalate to non-invasive ventilation with PEEP 6 cmH2O and contact PICU",
+        "correct": true,
+        "rationale": "HFNC failure (rising pCO2, apnoeas, persistent saturations under 90%) in an infant under 3 months meets escalation criteria; NIV with PEEP recruits collapsed alveoli and PICU transfer secures airway support. (Source: RCH CPG: Bronchiolitis; ANZICS paediatric NIV)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis",
+          "ANZICS Paediatric NIV"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Bronchiolitis escalation in Australian paediatric units follows a stepwise model: minimal handling and nasogastric or IV fluids, supplemental oxygen, HFNC for SpO2 under 92 percent or moderate work of breathing, then NIV or intubation for HFNC failure. HFNC failure is defined by persistent SpO2 under 90 percent at FiO2 above 0.4, rising pCO2 above 60 mmHg, or recurrent apnoeas. NIV with PEEP 5 to 7 cmH2O is the next step before intubation in most centres. PICU contact is mandatory at the point of HFNC failure.",
+      "key_points": [
+        "HFNC failure criteria: FiO2 over 0.4 with SpO2 under 90 percent, pCO2 over 60 mmHg, or apnoeas",
+        "Salbutamol and adrenaline are not recommended in infants under 12 months with bronchiolitis",
+        "Apnoeas are typical of RSV in infants under 3 months and warrant high-acuity observation",
+        "Escalate to NIV before intubation when criteria met; involve PICU early"
+      ],
+      "pearls": "In an infant under 3 months on HFNC at 2 L/kg/min with FiO2 above 0.4 and any apnoea within 30 minutes, escalate to NIV that hour - do not retry HFNC settings."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Bronchiolitis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/"
+      },
+      {
+        "label": "PREDICT Bronchiolitis Guideline",
+        "url": "https://www.predict.edu.au/bronchiolitis-guideline/"
+      },
+      {
+        "label": "ANZICS Paediatric NIV"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "vbg"
+    ],
+    "created": "2026-05-21"
+  }
+]
