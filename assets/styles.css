@@ -2045,41 +2045,8 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 .ab-val { text-align: right; font-variant-numeric: tabular-nums; }
 
 /* ── Legacy-admin migration affordances ──────────────────────────── */
-/* LEGACY_ADMIN_MIGRATION-START (delete this CSS block to remove). */
-.gate-extra {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 10px 12px;
-  background: var(--surface-2);
-  font-size: 12.5px;
-}
-.gate-extra summary {
-  cursor: pointer;
-  color: var(--ink-mute);
-  font-weight: 500;
-  list-style: none;
-}
-.gate-extra summary::-webkit-details-marker { display: none; }
-.gate-extra summary::before { content: "▸ "; font-size: 10px; opacity: 0.7; }
-.gate-extra[open] summary::before { content: "▾ "; }
-.gate-extra .gate-field { margin-top: 10px; }
-.account-claim-admin {
-  margin: 12px 0;
-  padding: 12px 14px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--surface-2);
-}
-.account-claim-admin .claim-row {
-  display: flex; gap: 8px; margin-top: 8px;
-}
-.account-claim-admin .claim-row input {
-  flex: 1;
-  padding: 7px 10px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: var(--surface);
-  font: inherit;
-  color: var(--ink);
-}
-/* LEGACY_ADMIN_MIGRATION-END */
+
+/* Admins see the Admin masthead button. Hide the Account duplicate
+   for them - the Account tab inside the admin modal covers the same
+   surface. Non-admin cloud users keep the Account button. */
+body.is-admin #accountBtn { display: none !important; }
