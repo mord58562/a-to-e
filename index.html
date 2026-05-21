@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260521u" />
+<link rel="stylesheet" href="assets/styles.css?v=20260521v" />
 </head>
 <body data-screen="home" class="locked">
 
@@ -373,73 +373,9 @@
 
 <!-- ── AUDIT DASHBOARD (Rob only) ───────────────────────────────────── -->
 
-<div id="reportsAdminModal" class="modal" hidden>
-  <div class="modal-card modal-card-wide">
-    <div class="modal-head">
-      <h2>Audit dashboard</h2>
-      <button id="reportsAdminClose" class="ghost-x" aria-label="Close">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="audit-intro">
-        <p>Audit pending content using any LLM with a free tier - no API key, no Claude Code. Pick your LLM, then for each row: <b>(1)</b> <em>Copy prompt</em>, <b>(2)</b> <em>Open</em> the LLM in a new tab and paste, <b>(3)</b> paste its full JSON reply back into the textarea, <b>(4)</b> <em>Validate &amp; apply</em>. The site validates the schema and commits via the live backend.</p>
-        <div class="audit-llm-picker">
-          <label for="auditLlmSelect">LLM:</label>
-          <select id="auditLlmSelect">
-            <option value="claude">Claude (claude.ai)</option>
-            <option value="chatgpt">ChatGPT (chatgpt.com)</option>
-            <option value="gemini">Gemini (gemini.google.com)</option>
-            <option value="grok">Grok (grok.com)</option>
-            <option value="deepseek">DeepSeek (chat.deepseek.com)</option>
-            <option value="mistral">Le Chat (chat.mistral.ai)</option>
-            <option value="copilot">Copilot (copilot.microsoft.com)</option>
-          </select>
-          <span class="dim small">Your choice is remembered.</span>
-        </div>
-      </div>
-      <div class="audit-tabs">
-        <button class="audit-tab selected" data-tab="inbox">Inbox <span id="auditInboxCount" class="badge"></span></button>
-        <button class="audit-tab" data-tab="reports">Reports <span id="auditReportsCount" class="badge"></span></button>
-        <button class="audit-tab" data-tab="live">Live content <span id="auditLiveCount" class="badge"></span></button>
-      </div>
-
-      <!-- Inbox tab -->
-      <div class="audit-tab-panel" data-tab-panel="inbox">
-        <p class="dim small">Pending batches uploaded via the paste box. Each batch needs a quality-bar audit before promotion into the live per-topic files.</p>
-        <ol id="auditInboxList" class="audit-list"></ol>
-      </div>
-
-      <!-- Live content tab - audit anything already in the bank -->
-      <div class="audit-tab-panel" data-tab-panel="live" hidden>
-        <p class="dim small">Every batch file and main per-topic file in the bank. Use this to re-audit already-promoted content. Apply rewrites the file in place via the live-audit endpoint.</p>
-        <div class="audit-live-filters">
-          <button class="opt selected" data-live-filter="all">All</button>
-          <button class="opt" data-live-filter="batches">Batches</button>
-          <button class="opt" data-live-filter="main">Main files</button>
-          <button class="opt" data-live-filter="paeds">Paediatrics</button>
-          <button class="opt" data-live-filter="obgyn">O&amp;G</button>
-          <button class="opt" data-live-filter="psych">Psychiatry</button>
-          <button class="opt" data-live-filter="medicine">Medicine</button>
-        </div>
-        <ol id="auditLiveList" class="audit-list"></ol>
-      </div>
-
-      <!-- Reports tab -->
-      <div class="audit-tab-panel" data-tab-panel="reports" hidden>
-        <div class="reports-filters">
-          <button class="opt selected" data-rep-filter="open">Open</button>
-          <button class="opt" data-rep-filter="all">All</button>
-          <button class="opt" data-rep-filter="fixed">Fixed</button>
-          <button class="opt" data-rep-filter="dismissed">Dismissed</button>
-          <button class="opt" data-rep-filter="dropped">Dropped</button>
-          <span class="audit-bulk">
-            <button id="auditBulkReports" class="link-btn" disabled>Bulk-audit selected</button>
-          </span>
-        </div>
-        <ol id="reportsAdminList" class="reports-list"></ol>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- reportsAdminModal removed - content now lives permanently inside the
+     Admin modal's Add & Audit pane. -->
+<button id="reportsAdminClose" hidden></button>
 
 <!-- ── HOW-TO ───────────────────────────────────────────────────────── -->
 
@@ -462,55 +398,103 @@
     </div>
     <div class="admin-layout">
       <nav class="admin-sidebar" id="adminSidebar"></nav>
-      <div class="admin-main" id="adminMain"></div>
+      <div class="admin-main" id="adminMain">
+
+        <!-- Add & Audit pane: permanently mounted. Other tabs render
+             into #adminNative; activating this tab shows this block. -->
+        <div id="adminAddAuditPane" class="admin-pane" hidden>
+          <header class="admin-pane-head">
+            <h2>Add &amp; Audit</h2>
+            <p class="dim">Paste, submit, review the inbox, resolve reports, re-audit live content. All on one pane.</p>
+          </header>
+
+          <section class="admin-pane-section">
+            <h3>1. Generation prompt</h3>
+            <p class="dim small">Self-contained prompt - works in any free LLM. Bank state + audit rules + schema embedded at copy time.</p>
+            <div class="prompt-actions">
+              <button id="copyPromptBtn" class="primary">Copy prompt</button>
+              <span id="copyPromptStatus" class="dim small"></span>
+              <button id="promptToggleBtn" class="link-btn" type="button">show prompt</button>
+            </div>
+            <pre id="promptText" class="prompt-pre" hidden></pre>
+          </section>
+
+          <section class="admin-pane-section">
+            <h3>2. Paste the JSON</h3>
+            <p class="dim small">Site validates the schema and submits to the bank. Falls back to this browser if the worker is unreachable.</p>
+            <textarea id="pasteBox" class="paste-box" placeholder='[ { "id": "paeds-renal-001", "topic": "Paediatrics", ... } ]' spellcheck="false" autocomplete="off"></textarea>
+            <div class="prompt-actions">
+              <button id="pasteAddBtn" class="primary">Submit to bank</button>
+              <button id="pasteDownloadBtn" class="link-btn" title="Download the current paste as a .json file">Save as .json</button>
+              <span id="pasteStatus" class="dim small"></span>
+            </div>
+            <div class="local-bank-row" id="localBankRow" hidden>
+              <span id="localBankSummary" class="dim small"></span>
+              <button id="localBankExport" class="ghost-link" title="Download all local additions">Export local additions</button>
+              <button id="localBankClear" class="ghost-link">Discard local additions</button>
+            </div>
+          </section>
+
+          <section class="admin-pane-section">
+            <h3>3. Inbox <span id="auditInboxCount" class="badge"></span></h3>
+            <p class="dim small">Pending batches awaiting an audit pass. Each needs review before being promoted to the per-topic files.</p>
+            <div class="audit-llm-picker">
+              <label for="auditLlmSelect">LLM for audit:</label>
+              <select id="auditLlmSelect">
+                <option value="claude">Claude (claude.ai)</option>
+                <option value="chatgpt">ChatGPT (chatgpt.com)</option>
+                <option value="gemini">Gemini (gemini.google.com)</option>
+                <option value="grok">Grok (grok.com)</option>
+                <option value="deepseek">DeepSeek (chat.deepseek.com)</option>
+                <option value="mistral">Le Chat (chat.mistral.ai)</option>
+                <option value="copilot">Copilot (copilot.microsoft.com)</option>
+              </select>
+            </div>
+            <ol id="auditInboxList" class="audit-list"></ol>
+          </section>
+
+          <section class="admin-pane-section">
+            <h3>4. Reports <span id="auditReportsCount" class="badge"></span></h3>
+            <p class="dim small">User-submitted issues against specific questions.</p>
+            <div class="reports-filters">
+              <button class="opt selected" data-rep-filter="open">Open</button>
+              <button class="opt" data-rep-filter="all">All</button>
+              <button class="opt" data-rep-filter="fixed">Fixed</button>
+              <button class="opt" data-rep-filter="dismissed">Dismissed</button>
+              <button class="opt" data-rep-filter="dropped">Dropped</button>
+              <span class="audit-bulk">
+                <button id="auditBulkReports" class="link-btn" disabled>Bulk-audit selected</button>
+              </span>
+            </div>
+            <ol id="reportsAdminList" class="reports-list"></ol>
+          </section>
+
+          <section class="admin-pane-section">
+            <h3>5. Live content audit <span id="auditLiveCount" class="badge"></span></h3>
+            <p class="dim small">Every batch + main per-topic file in the bank. Re-audit already-promoted content here.</p>
+            <div class="audit-live-filters">
+              <button class="opt selected" data-live-filter="all">All</button>
+              <button class="opt" data-live-filter="batches">Batches</button>
+              <button class="opt" data-live-filter="main">Main files</button>
+              <button class="opt" data-live-filter="paeds">Paediatrics</button>
+              <button class="opt" data-live-filter="obgyn">O&amp;G</button>
+              <button class="opt" data-live-filter="psych">Psychiatry</button>
+              <button class="opt" data-live-filter="medicine">Medicine</button>
+            </div>
+            <ol id="auditLiveList" class="audit-list"></ol>
+          </section>
+        </div>
+
+        <div id="adminNative"></div>
+      </div>
     </div>
   </div>
 </div>
 
-<div id="howToModal" class="modal" hidden>
-  <div class="modal-card modal-card-wide">
-    <div class="modal-head">
-      <h2>Add more questions</h2>
-      <button id="howToClose" class="ghost-x" aria-label="Close">×</button>
-    </div>
-    <div class="modal-body">
-      <ol class="howto-steps">
-        <li class="howto-step">
-          <div class="howto-step-head"><span class="howto-num">1</span><h3>Copy the prompt</h3></div>
-          <p class="howto-step-note">Works in any free LLM (Claude, ChatGPT, Gemini, etc.). The prompt is fully self-contained - it includes the schema, audit rules, current focus, and current bank state.</p>
-          <div class="prompt-actions">
-            <button id="copyPromptBtn" class="primary">Copy prompt to clipboard</button>
-            <span id="copyPromptStatus" class="dim small"></span>
-            <button id="promptToggleBtn" class="link-btn" type="button" title="Show / hide the full prompt">show prompt</button>
-          </div>
-          <pre id="promptText" class="prompt-pre" hidden></pre>
-        </li>
-        <li class="howto-step">
-          <div class="howto-step-head"><span class="howto-num">2</span><h3>Paste the JSON the LLM returned</h3></div>
-          <p class="howto-step-note">The site validates the structure and submits to the bank. If the remote backend is unreachable, it falls back to this browser's local store.</p>
-          <textarea id="pasteBox" class="paste-box" placeholder='[ { "id": "paeds-batch-renal-001", "topic": "Paediatrics", ... } ]' spellcheck="false" autocomplete="off"></textarea>
-          <div class="prompt-actions">
-            <button id="pasteAddBtn" class="primary">Add to the bank</button>
-            <button id="pasteDownloadBtn" class="link-btn" title="Save as data/inbox/*.json for the repo">Download as JSON file</button>
-            <span id="pasteStatus" class="dim small"></span>
-          </div>
-          <div class="local-bank-row" id="localBankRow" hidden>
-            <span id="localBankSummary" class="dim small"></span>
-            <button id="localBankExport" class="ghost-link" title="Download all locally-pasted questions for repo audit">Export for audit</button>
-            <button id="localBankClear" class="ghost-link">Clear local additions</button>
-          </div>
-        </li>
-        <li class="howto-step admin-only">
-          <div class="howto-step-head"><span class="howto-num">3</span><h3>Audit and promote</h3></div>
-          <p class="howto-step-note">Pending submissions sit in <code>data/inbox/</code> until they're audited and merged. Open the audit dashboard to review and promote.</p>
-          <div class="prompt-actions">
-            <button id="howToOpenAuditBtn" class="primary">Open audit dashboard</button>
-          </div>
-        </li>
-      </ol>
-    </div>
-  </div>
-</div>
+<!-- howToModal removed - paste flow now lives permanently inside the
+     Admin modal's Add & Audit pane. Stub elements retained so legacy
+     event-handler wiring still attaches cleanly. -->
+<button id="howToClose" hidden></button>
 
 <script type="text/template" id="addQuestionsPromptTemplate">
 You are generating high-quality single-best-answer MCQs for a Year 4
@@ -1168,6 +1152,6 @@ visible to the maintainer in the commentary view.
 Output the final JSON array. Nothing else.
 </script>
 
-<script src="assets/app.js?v=20260521u" defer></script>
+<script src="assets/app.js?v=20260521v" defer></script>
 </body>
 </html>

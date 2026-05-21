@@ -570,14 +570,11 @@
   // Live), we re-parent the existing wired DOM into the active panel
   // on tab activation so the original event handlers keep working.
   const ADMIN_TABS = [
-    { id: "overview", label: "Overview", admin: true,  icon: "▤" },
-    { id: "add",      label: "Add",      admin: true,  icon: "+", source: "#howToModal .modal-body" },
-    { id: "inbox",    label: "Inbox",    admin: true,  icon: "▾", source: '#reportsAdminModal [data-tab-panel="inbox"]' },
-    { id: "reports",  label: "Reports",  admin: true,  icon: "⚠", source: '#reportsAdminModal [data-tab-panel="reports"]' },
-    { id: "live",     label: "Live",     admin: true,  icon: "◐", source: '#reportsAdminModal [data-tab-panel="live"]' },
-    { id: "quality",  label: "Quality",  admin: true,  icon: "★" },
-    { id: "users",    label: "Users",    admin: true,  icon: "◯" },
-    { id: "account",  label: "Account",  admin: false, icon: "●" },
+    { id: "overview", label: "Overview",     admin: true,  icon: "▤" },
+    { id: "addaudit", label: "Add & Audit",  admin: true,  icon: "+" },
+    { id: "quality",  label: "Quality",      admin: true,  icon: "★" },
+    { id: "users",    label: "Users",        admin: true,  icon: "◯" },
+    { id: "account",  label: "Account",      admin: false, icon: "●" },
   ];
 
   function wireAdminModal() {
@@ -609,43 +606,34 @@
     document.querySelectorAll(".admin-tab").forEach(b => {
       b.classList.toggle("active", b.dataset.adminTab === id);
     });
-    const main = document.getElementById("adminMain");
-    main.innerHTML = "";
+    const addaudit = document.getElementById("adminAddAuditPane");
+    const native = document.getElementById("adminNative");
+    if (!native) return;
+    native.innerHTML = "";
     const tab = ADMIN_TABS.find(t => t.id === id);
     if (!tab) return;
-    if (tab.source) {
-      // Re-parent existing wired DOM into the admin panel. The original
-      // modal stays empty; closing the admin modal leaves the content
-      // in the admin pane until the next activation.
-      const src = document.querySelector(tab.source);
-      if (src) {
-        src.hidden = false;
-        main.appendChild(src);
+    if (id === "addaudit") {
+      if (addaudit) addaudit.hidden = false;
+      if (native) native.hidden = true;
+      // Populate all five sections on activation; they share a single
+      // scrollable pane, so refreshing one without the others gives a
+      // partial picture.
+      if (typeof refreshLocalBankSummary === "function") refreshLocalBankSummary();
+      if (typeof refreshAuditInboxList === "function") {
+        refreshAuditInboxList().then(() => {
+          if (typeof renderAuditInbox === "function") renderAuditInbox();
+        });
       }
-      // Re-populate the panel's lists. The legacy openReportsAdmin
-      // flow used to populate these on modal-open; we mirror that
-      // contract per-tab here.
-      if (id === "inbox") {
-        if (typeof refreshAuditInboxList === "function") {
-          refreshAuditInboxList().then(() => {
-            if (typeof renderAuditInbox === "function") renderAuditInbox();
-          });
-        }
-      } else if (id === "reports") {
-        if (typeof renderReportsAdminList === "function") renderReportsAdminList("open");
-      } else if (id === "live") {
-        if (typeof loadAndRenderAuditLive === "function") loadAndRenderAuditLive();
-      } else if (id === "add") {
-        // The how-to-modal contains the prompt+paste flow; refresh the
-        // local-bank summary so any pre-existing local additions show.
-        if (typeof refreshLocalBankSummary === "function") refreshLocalBankSummary();
-      }
+      if (typeof renderReportsAdminList === "function") renderReportsAdminList("open");
+      if (typeof loadAndRenderAuditLive === "function") loadAndRenderAuditLive();
       return;
     }
-    if (id === "overview")  return renderAdminOverview(main);
-    if (id === "quality")   return renderAdminQualityTab(main);
-    if (id === "users")     return renderAdminUsersTab(main);
-    if (id === "account")   return renderAdminAccountTab(main);
+    if (addaudit) addaudit.hidden = true;
+    native.hidden = false;
+    if (id === "overview")  return renderAdminOverview(native);
+    if (id === "quality")   return renderAdminQualityTab(native);
+    if (id === "users")     return renderAdminUsersTab(native);
+    if (id === "account")   return renderAdminAccountTab(native);
   }
 
   function renderAdminOverview(root) {
@@ -1661,7 +1649,10 @@
 
     document.getElementById("submitBtn").hidden = true;
     document.getElementById("nextBtn").hidden = false;
-    document.getElementById("nextBtn").focus();
+    // Focus without scrolling so the user keeps the rationale + option
+    // breakdown in view. Enter still advances to the next question
+    // because the button has keyboard focus.
+    document.getElementById("nextBtn").focus({ preventScroll: true });
   }
 
   function onNext() {
@@ -3100,17 +3091,48 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
   // current question. Looks up each key in state.ranges and renders
   // a compact name/range pair. Unknown keys render their bare key
   // so authors can spot typos.
+  // Resolve a reference_ranges key against state.ranges.categories.
+  // Categories look like:
+  //   "paeds_fbc_age_bands": { "label": "...", "ranges": [{test, value, units}, ...] }
+  // A key can be:
+  //   (a) a category key - render the whole category's rows
+  //   (b) a single test key inside a category - render just that row
+  //   (c) a guess with common aliases - we map a few historical names
+  //   (d) unknown - skip silently rather than show "(not in reference set)"
+  const REF_KEY_ALIASES = {
+    paeds_vitals_infant: "paeds_vitals",
+    paeds_vitals: "paeds_fbc_age_bands",
+    paeds_fbc: "paeds_fbc_age_bands",
+    paeds_uec: "paeds_uec_age_bands",
+    inflammatory_markers: "inflammation",
+  };
   function renderInlineRanges(keys) {
-    const ranges = state.ranges || {};
-    const items = keys.map(k => {
-      const r = ranges[k] || (ranges.categories && Object.values(ranges.categories).flatMap(c => c.items || []).find(it => it.key === k));
-      if (!r) return `<li class="ir-row"><span class="ir-key">${esc(k)}</span><span class="ir-val dim">(not in reference set)</span></li>`;
-      const label = r.label || r.name || k;
-      const val   = r.value || r.range || r.normal || "";
-      const unit  = r.unit ? ` ${esc(r.unit)}` : "";
-      return `<li class="ir-row"><span class="ir-key">${esc(label)}</span><span class="ir-val">${esc(val)}${unit}</span></li>`;
-    }).join("");
-    return `<ul class="inline-ranges">${items}</ul>`;
+    const cats = (state.ranges && state.ranges.categories) || {};
+    const blocks = [];
+    keys.forEach(rawKey => {
+      const k = REF_KEY_ALIASES[rawKey] || rawKey;
+      const cat = cats[k];
+      if (cat && Array.isArray(cat.ranges) && cat.ranges.length) {
+        const rows = cat.ranges.slice(0, 8).map(r => {
+          const t = r.test || r.label || r.name || "";
+          const v = r.value || r.range || r.normal || "";
+          const u = r.units ? ` ${esc(r.units)}` : (r.unit ? ` ${esc(r.unit)}` : "");
+          return `<li class="ir-row"><span class="ir-key">${esc(t)}</span><span class="ir-val">${esc(v)}${u}</span></li>`;
+        }).join("");
+        blocks.push(`<div class="ir-cat"><div class="ir-cat-head">${esc(cat.label || k)}</div><ul class="inline-ranges">${rows}</ul></div>`);
+        return;
+      }
+      // Try as a single test row inside any category
+      const items = Object.values(cats).flatMap(c => (c.ranges || []).map(r => ({ ...r, _cat: c.label })));
+      const hit = items.find(it => (it.test || it.label || it.name || "").toLowerCase().replace(/[^a-z0-9]+/g, "_") === rawKey.toLowerCase());
+      if (hit) {
+        const v = hit.value || hit.range || hit.normal || "";
+        const u = hit.units ? ` ${esc(hit.units)}` : "";
+        blocks.push(`<ul class="inline-ranges"><li class="ir-row"><span class="ir-key">${esc(hit.test || hit.label || rawKey)}</span><span class="ir-val">${esc(v)}${u}</span></li></ul>`);
+      }
+      // Unknown key: skip silently (don't print "(not in reference set)" - clutter without value).
+    });
+    return blocks.join("");
   }
 
   // Render the stem, optionally highlighting authored clue phrases after
