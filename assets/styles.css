@@ -494,7 +494,7 @@ a:hover { text-decoration: underline; }
    not just a yellow rectangle. Tuned separately for dark and light
    themes (gold needs different chroma on each background to feel
    "real"). Future profiles get their own block here. */
-.profile-chip[data-profile-id="rob"] {
+.profile-chip[data-profile-id="rob"], .profile-chip[data-pill-style="gold"] {
   --gold-1:  #ffd770;
   --gold-2:  #d9a020;
   --gold-bd: #c9941c;
@@ -511,22 +511,26 @@ a:hover { text-decoration: underline; }
     inset 0 -1px 0 rgba(120, 80, 10, 0.35),
     0 1px 2px rgba(0, 0, 0, 0.25);
 }
-.profile-chip[data-profile-id="rob"] .profile-name {
+.profile-chip[data-profile-id="rob"] .profile-name,
+.profile-chip[data-pill-style="gold"] .profile-name {
   color: var(--gold-ink);
   text-shadow: 0 1px 0 rgba(255, 248, 220, 0.45);
 }
-.profile-chip[data-profile-id="rob"] .ghost-link {
+.profile-chip[data-profile-id="rob"] .ghost-link,
+.profile-chip[data-pill-style="gold"] .ghost-link {
   color: var(--gold-ink);
   opacity: 0.75;
 }
-.profile-chip[data-profile-id="rob"] .ghost-link:hover {
+.profile-chip[data-profile-id="rob"] .ghost-link:hover,
+.profile-chip[data-pill-style="gold"] .ghost-link:hover {
   color: var(--gold-ink);
   opacity: 1;
   text-decoration: none;
   background: rgba(120, 80, 10, 0.18);
 }
 
-[data-theme="light"] .profile-chip[data-profile-id="rob"] {
+[data-theme="light"] .profile-chip[data-profile-id="rob"],
+[data-theme="light"] .profile-chip[data-pill-style="gold"] {
   /* Slightly deeper, more saturated gold on white so it doesn't wash
      out. Keeps the same metallic gradient shape. */
   --gold-bd: #a67510;
