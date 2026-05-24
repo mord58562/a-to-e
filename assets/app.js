@@ -1662,6 +1662,33 @@
     // breakdown in view. Enter still advances to the next question
     // because the button has keyboard focus.
     document.getElementById("nextBtn").focus({ preventScroll: true });
+    // Frame the post-submit state so both the answers panel and the
+    // Next button are visible without the user reaching for the wheel.
+    // Prefer the chosen option (or the correct one if the user got it
+    // wrong) as the anchor; fall back to the Next button. rAF defers
+    // until the explainBlock has reflowed.
+    requestAnimationFrame(() => {
+      const ansLetter = state.quiz.answers[q.id];
+      const anchorLi =
+        (ansLetter && document.querySelector(`#qOptions li[data-letter="${ansLetter}"]`)) ||
+        document.querySelector("#qOptions li.revealed.correct");
+      const nextBtn = document.getElementById("nextBtn");
+      if (anchorLi && nextBtn) {
+        const aRect = anchorLi.getBoundingClientRect();
+        const nRect = nextBtn.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        // If both already fit, do nothing. Otherwise scroll so the
+        // answer row is near the top and the Next button is in view
+        // (or as close as the document allows).
+        const fits = aRect.top >= 0 && nRect.bottom <= vh;
+        if (!fits) {
+          const targetTop = window.scrollY + aRect.top - 80;
+          window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+        }
+      } else if (nextBtn) {
+        nextBtn.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      }
+    });
   }
 
   function onNext() {
@@ -1868,59 +1895,92 @@
   }
 
   // ── Keyboard ────────────────────────────────────────────────────────────
+  // Direction map normalises arrow keys + WASD into a single token
+  // ("up" / "down" / "left" / "right" / "submit") so the dispatch below
+  // doesn't repeat itself. WASD only fires outside form fields.
+  const DIR_MAP = {
+    "arrowup": "up", "w": "up",
+    "arrowdown": "down", "s": "down",
+    "arrowleft": "left", "a": "left",
+    "arrowright": "right", "d": "right",
+  };
   function bindQuizKeys() {
     document.onkeydown = e => {
-      if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+      if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+      // Modifier-key shortcuts belong to the browser / OS.
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
       const q = state.quiz && state.quiz.pool[state.quiz.idx];
       if (!q) return;
       const k = e.key.toLowerCase();
+      const dir = DIR_MAP[k];
+      const submitBtn = document.getElementById("submitBtn");
+      const nextBtn   = document.getElementById("nextBtn");
+      const revealed  = !!state.quiz.revealed[q.id];
+      const selected  = document.querySelector("#qOptions li.selected");
+      const canSubmit = !revealed && submitBtn && !submitBtn.disabled;
+      const canNext   = revealed && nextBtn && !nextBtn.hidden;
+
       if (["1","2","3","4","5"].includes(k)) {
         // Number keys SELECT the corresponding option (A-E). They do NOT
-        // submit - the user still has to press Enter / Space / Submit
-        // button to commit. li.click() triggers the option's onclick
-        // which only updates state.quiz.answers and enables the submit
-        // button; it never submits.
+        // submit - the user still has to press Enter / Space / right /
+        // d / Submit to commit.
         const letter = "ABCDE"[parseInt(k, 10) - 1];
         const li = document.querySelector(`#qOptions li[data-letter="${letter}"]`);
-        if (li && !state.quiz.revealed[q.id]) li.click();
+        if (li && !revealed) li.click();
         e.preventDefault();
       } else if (k === "enter" || k === " ") {
-        // Enter or Space = submit the selected answer (or advance to the
-        // next question if the answer is already revealed).
-        const submit = document.getElementById("submitBtn");
-        const next   = document.getElementById("nextBtn");
-        if (!next.hidden) next.click();
-        else if (!submit.disabled) submit.click();
+        // Enter / Space: submit when an answer is selected, otherwise
+        // advance to the next question once revealed.
+        if (canNext) nextBtn.click();
+        else if (canSubmit) submitBtn.click();
         e.preventDefault();
+      } else if (k === "escape") {
+        // Escape clears a not-yet-submitted selection (so the user can
+        // back out of a tentative choice without striking it). Post-
+        // reveal, Escape is owned by the ref-panel / modal handlers.
+        if (!revealed && selected) {
+          selected.classList.remove("selected");
+          delete state.quiz.answers[q.id];
+          if (submitBtn) submitBtn.disabled = true;
+          e.preventDefault();
+        }
       } else if (k === "f") {
         document.getElementById("flagBtn").click();
       } else if (k === "x") {
-        const sel = document.querySelector("#qOptions li.selected");
-        if (sel) toggleStrike(q.id, sel.dataset.letter, sel);
+        if (selected) toggleStrike(q.id, selected.dataset.letter, selected);
       } else if (k === "l") {
         toggleRefs();
-      } else if (k === "arrowleft") {
-        // Left = previous question (does not submit, even if an answer is
-        // selected).
+      } else if (dir === "left") {
+        // Left / A = previous question (does not submit, even if an
+        // answer is selected).
         navOffset(-1);
         e.preventDefault();
-      } else if (k === "arrowright") {
-        // Right = next question (skip). Does not submit.
-        navOffset(1);
+      } else if (dir === "right") {
+        // Right / D is context-aware:
+        //   not-yet-submitted + answer selected -> submit
+        //   revealed                            -> advance to next
+        //   otherwise                           -> navigate forward
+        if (canSubmit) submitBtn.click();
+        else if (canNext) nextBtn.click();
+        else navOffset(1);
         e.preventDefault();
-      } else if (k === "arrowup" || k === "arrowdown") {
-        if (state.quiz.revealed[q.id]) { e.preventDefault(); return; }
+      } else if (dir === "up" || dir === "down") {
+        if (revealed) { e.preventDefault(); return; }
         const items = Array.from(document.querySelectorAll("#qOptions li"));
         if (!items.length) { e.preventDefault(); return; }
         const n = items.length;
         const cur = items.findIndex(li => li.classList.contains("selected"));
         let nextIdx;
         if (cur === -1) {
-          nextIdx = k === "arrowdown" ? 0 : n - 1;
+          nextIdx = dir === "down" ? 0 : n - 1;
         } else {
-          nextIdx = k === "arrowdown" ? (cur + 1) % n : (cur - 1 + n) % n;
+          nextIdx = dir === "down" ? (cur + 1) % n : (cur - 1 + n) % n;
         }
         items[nextIdx].click();
+        // Keep the newly-selected option in view so keyboard browsing
+        // works on short viewports without the user reaching for the
+        // wheel. `block: nearest` won't scroll if already in view.
+        items[nextIdx].scrollIntoView({ block: "nearest", behavior: "smooth" });
         e.preventDefault();
       }
     };
