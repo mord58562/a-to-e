@@ -367,15 +367,19 @@ a:hover { text-decoration: underline; }
   place-items: center;
   position: relative;
 }
-/* Stethoscope glyph: arched binaural with two earpieces at top,
-   Y-junction at center, single tube curling down-right to the
-   diaphragm bell. White-on-teal cutout via inline SVG. */
+/* Stethoscope glyph (refinished).
+   Geometry: two earpieces at the top, tubing that drops a short
+   straight section then arches symmetrically around the chest to a
+   Y-junction at centre, single tube curling down-right to a diaphragm
+   with a clear bell + inner aperture. Stroke widths balanced so the
+   chest-piece doesn't dominate the tubing. White-on-teal via inline
+   SVG so the mark stays template-tint compatible. */
 .brand-mark::before {
   content: "";
   display: block;
   width: 22px;
   height: 22px;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'><path d='M6 4.5 C 6 9 8 11 12 11 C 16 11 18 9 18 4.5'/><circle cx='6' cy='4' r='1.4' fill='%23ffffff' stroke='none'/><circle cx='18' cy='4' r='1.4' fill='%23ffffff' stroke='none'/><path d='M12 11 V 14 Q 12 18 16 19'/><circle cx='16.5' cy='19' r='2.4' fill='%23ffffff' stroke='%23ffffff'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'><path d='M5.6 4.4 V 7.5 C 5.6 11.6 8.4 13.2 12 13.2 C 15.6 13.2 18.4 11.6 18.4 7.5 V 4.4'/><circle cx='5.6' cy='3.5' r='1.25' fill='%23ffffff' stroke='none'/><circle cx='18.4' cy='3.5' r='1.25' fill='%23ffffff' stroke='none'/><path d='M12 13.2 V 15.6 C 12 18.4 14 19.4 16.2 19.4'/><circle cx='17.4' cy='19.4' r='2.3' fill='%23ffffff' stroke='%23ffffff' stroke-width='0.6'/><circle cx='17.4' cy='19.4' r='0.95' fill='none' stroke='%230a7d8a' stroke-width='0.7'/></svg>");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
