@@ -96,6 +96,13 @@ body {
  * except the gate is hidden. Pre-JS render therefore shows only the
  * gate, never the app behind it. */
 body.locked > *:not(#gate):not(script) { display: none !important; }
+/* Pre-paint auth hint: if a saved auth token is detected by the inline
+ * head script, skip the gate flash entirely and reveal the app shell
+ * immediately. The JS unlock path still runs in parallel; if /api/me
+ * rejects the token, the gate is re-shown by app.js. */
+html.pre-authed #gate { display: none !important; }
+html.pre-authed body.locked { /* unlock for first paint */ }
+html.pre-authed body.locked > *:not(#gate):not(script) { display: revert !important; }
 .gate {
   position: fixed; inset: 0;
   background: var(--bg);
