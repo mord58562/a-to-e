@@ -118,6 +118,20 @@
     authToken = null; cloudUser = null;
     localStorage.removeItem(AUTH_TOKEN_KEY);
   }
+  // Pull the signed-in user's answer history from the worker so the
+  // Unseen / Previously-incorrect filters work on a fresh browser the
+  // same as on the original one (localStorage alone is per-device).
+  // Returns a history-shaped object keyed by question_id, or {} on
+  // failure / non-cloud users.
+  async function cloudFetchHistory() {
+    if (!cloudUser || !WORKER_URL) return {};
+    try {
+      const { history } = await apiFetch("/api/history", { method: "GET" });
+      return (history && typeof history === "object") ? history : {};
+    } catch (_) {
+      return {};
+    }
+  }
   async function cloudPostAnswer(qid, sourceLetter, correct) {
     try {
       const { stats } = await apiFetch("/api/answer", { method: "POST", body: JSON.stringify({ question_id: qid, source_letter: sourceLetter, correct }) });
@@ -519,6 +533,32 @@
     migrateLegacyIfNeeded();
     importLegacyHistoryIntoCloud();
     loadProfileState();
+    // Race fix: when a cloud user signs in on a fresh browser, the
+    // localStorage history is empty even though the user has answered
+    // questions on another device. The Unseen / Previously-incorrect
+    // filters would then misclassify every Q as unseen. Pull the
+    // server history before showHome so getPool sees the merged view.
+    if (cloudUser) {
+      const cloudHist = await cloudFetchHistory();
+      let merged = false;
+      for (const qid in cloudHist) {
+        const local = state.history[qid];
+        const remote = cloudHist[qid];
+        if (!local) {
+          state.history[qid] = remote;
+          merged = true;
+        } else {
+          // Keep the local count/time totals; refresh lastCorrect /
+          // last_at if the remote is fresher.
+          if ((remote.last_at || 0) > (local.last_at || 0)) {
+            local.lastCorrect = remote.lastCorrect;
+            local.last_at = remote.last_at;
+            merged = true;
+          }
+        }
+      }
+      if (merged) save(ns(HISTORY_KEY), state.history);
+    }
     await dataPromise;
     // Wire each subsystem defensively so a single throw in any wiring
     // function can't leave the home view unrendered (the symptom that

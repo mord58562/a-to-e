@@ -50,6 +50,7 @@ export default {
       if (url.pathname === "/api/login"    && request.method === "POST") return await handleLogin(request, env, cors);
       if (url.pathname === "/api/me"       && request.method === "GET")  return await handleMe(request, env, cors);
       if (url.pathname === "/api/answer"   && request.method === "POST") return await handleAnswer(request, env, cors);
+      if (url.pathname === "/api/history"  && request.method === "GET")  return await handleHistory(request, env, cors);
       if (url.pathname === "/api/account/delete" && request.method === "POST") return await handleAccountDelete(request, env, cors);
       if (url.pathname === "/api/admin/users" && request.method === "GET") return await handleAdminListUsers(request, env, cors);
       if (url.pathname.startsWith("/api/admin/users/") && url.pathname.endsWith("/delete") && request.method === "POST") {
@@ -582,6 +583,27 @@ async function handleAnswer(request, env, cors) {
 
   const stats = await getStats(env, qid);
   return json({ ok: true, stats }, 200, cors);
+}
+
+/* /api/history: returns the signed-in user's answered question_ids so
+ * the client can hydrate cross-device. Each row carries the last-seen
+ * correctness and timestamp so the Unseen / Previously-incorrect
+ * filters work on a fresh browser the same way as the original one. */
+async function handleHistory(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  const rows = await env.DB.prepare(
+    "SELECT question_id, correct, ts FROM answers WHERE user_id = ?"
+  ).bind(user.id).all();
+  const history = {};
+  for (const r of (rows.results || [])) {
+    history[r.question_id] = {
+      lastCorrect: !!r.correct,
+      count: 1,
+      last_at: (r.ts || 0) * 1000,
+    };
+  }
+  return json({ ok: true, history }, 200, cors);
 }
 
 async function handleStats(request, env, cors, qid) {
