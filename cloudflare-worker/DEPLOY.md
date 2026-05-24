@@ -66,3 +66,11 @@ You'll see the **Audit** button in the masthead and the "how to add" banner appe
 ## Schema migration policy
 
 `schema.sql` uses `CREATE TABLE IF NOT EXISTS` and `CREATE INDEX IF NOT EXISTS`, so re-running the file is idempotent. For destructive changes, use a new file (`schema_002.sql` etc.) and apply manually.
+
+## Active migrations
+
+- 2026-05-25: PII encryption hardening - see `MIGRATION_2026-05-25.md`.
+  Adds Argon2id passwords, AES-256-GCM email encryption, hashed session
+  tokens, login rate-limiting. Three new wrangler secrets required
+  (`EMAIL_HMAC_KEY`, `EMAIL_ENC_KEY`, `SESSION_PEPPER`) plus
+  `schema_002_encrypt.sql` applied to D1.

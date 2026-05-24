@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Insert a user row directly into the D1 `users` table, using the same
-PBKDF2-SHA256(100k iter, salt-as-utf8-bytes, 32-byte output) scheme the
-worker uses. Useful for seeding test accounts whose passwords would not
-pass the worker's signup validation (e.g. shorter than 8 chars).
+"""Insert a user row directly into the D1 `users` table.
+
+Writes a LEGACY-format row (PBKDF2-SHA256 hash + plaintext email).
+That's fine - the worker migrates legacy rows to Argon2id + encrypted
+email on the first successful login. This keeps the seeding tool
+runnable without porting Argon2id to Python.
 
 Usage:
     python3 scripts/seed_dummy_user.py <email> <password> [display_name] [admin|user]

@@ -1,25 +1,39 @@
-/* A to E remote inbox + reports backend.
+/* A to E remote inbox + reports + accounts backend.
  *
- * Cloudflare Worker. Two endpoints:
- *
- *   POST /paste   { questions: [...], model?: "Claude 3.5" }
- *     - Commits data/inbox/pasted-<UTC-stamp>-<short-id>.json to the
- *       GitHub repo and appends the path to data/inbox_manifest.json.
- *     - GitHub Pages rebuilds within ~30 s, so the new questions appear
- *       for every visitor on the next reload.
- *
- *   POST /report  { question_id, issue, profile?, model? }
- *     - Appends a report entry to data/reports.json on the repo.
- *     - Rob's profile shows these in the in-app Reports admin view.
+ * Cloudflare Worker. Endpoints documented inline; routing in `fetch()`.
  *
  * Secrets / vars (set via `wrangler secret put` or the dashboard):
- *   GITHUB_TOKEN   fine-grained PAT, repo: mord58562/a-to-e,
- *                  scope: contents:write
- *   GITHUB_OWNER   "mord58562"
- *   GITHUB_REPO    "a-to-e"
- *   GITHUB_BRANCH  "main"
- *   ALLOW_ORIGIN   "https://mord58562.github.io"  (or "*" for dev)
+ *   GITHUB_TOKEN     fine-grained PAT, repo: mord58562/a-to-e,
+ *                    scope: contents:write
+ *   GITHUB_OWNER     "mord58562"
+ *   GITHUB_REPO      "a-to-e"
+ *   GITHUB_BRANCH    "main"
+ *   ALLOW_ORIGIN     "https://mord58562.github.io"  (or "*" for dev)
+ *   ROUTINE_TOKEN    bearer for the scheduled remote-agent /commit-batch caller
+ *
+ * Encryption secrets (REQUIRED for /api/register, /api/login, /api/me;
+ * the worker refuses to handle account routes if any are missing):
+ *   EMAIL_HMAC_KEY   32+ bytes of base64-encoded entropy. Drives the
+ *                    deterministic search hash on the users table so
+ *                    lookups by email still work without decrypting.
+ *   EMAIL_ENC_KEY    32 bytes (= AES-256) of base64-encoded entropy.
+ *                    Drives AES-256-GCM envelope encryption of the
+ *                    plaintext email at rest.
+ *   SESSION_PEPPER   any string. Mixed into the session-token hash so a
+ *                    DB dump alone can't be replayed against the worker.
+ *
+ * Generate them once with:
+ *   node -e 'console.log(require("crypto").randomBytes(32).toString("base64"))'
+ * Then store with:
+ *   wrangler secret put EMAIL_HMAC_KEY
+ *   wrangler secret put EMAIL_ENC_KEY
+ *   wrangler secret put SESSION_PEPPER
+ *
+ * NEVER rotate EMAIL_HMAC_KEY or EMAIL_ENC_KEY without a re-encryption
+ * script; rotation invalidates every existing row.
  */
+
+import { argon2id } from "@noble/hashes/argon2";
 
 const JSON_HEADERS = { "Content-Type": "application/json" };
 
@@ -150,110 +164,334 @@ async function ghGetFileJson(env, path) {
 /* ── Account + stats API ────────────────────────────────────────────── */
 
 const SESSION_TTL_SEC = 60 * 60 * 24 * 365;  // 1 year; auto-refreshed on every /api/me
-const PBKDF2_ITER = 100000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Argon2id parameters. RFC 9106 "SECOND RECOMMENDED" profile (m=19456 KB,
+// t=2, p=1) lands well inside a Cloudflare Worker invocation budget while
+// remaining infeasible to brute-force GPU-side. Memory is the load-bearing
+// cost; iteration count is intentionally low so login latency stays under
+// ~500 ms even on cold-start.
+const ARGON2_PARAMS = { m: 19456, t: 2, p: 1, dkLen: 32, version: 0x13 };
+const ARGON2_ALGO_LABEL = "argon2id-v19-m19456-t2-p1";
+const LEGACY_PBKDF2_LABEL = "pbkdf2-sha256-100k";
+const LEGACY_PBKDF2_ITER = 100000;
+
+// Rate-limit thresholds for /api/login. Window is rolling 15 min; after
+// FAIL_THRESHOLD failed attempts inside the window we lock out for
+// LOCKOUT_SEC seconds. ok=1 rows do not count toward the threshold but
+// are still kept so we can purge cleanly.
+const ATTEMPT_WINDOW_SEC = 15 * 60;
+const FAIL_THRESHOLD = 8;
+const LOCKOUT_SEC = 15 * 60;
 
 function bytesToHex(bytes) {
   return Array.from(new Uint8Array(bytes)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+function hexToBytes(hex) {
+  const out = new Uint8Array(hex.length / 2);
+  for (let i = 0; i < out.length; i++) out[i] = parseInt(hex.substr(i * 2, 2), 16);
+  return out;
 }
 function randomHex(byteCount) {
   const b = new Uint8Array(byteCount);
   crypto.getRandomValues(b);
   return bytesToHex(b);
 }
-async function hashPassword(password, saltHex) {
+function randomBytes(byteCount) {
+  const b = new Uint8Array(byteCount);
+  crypto.getRandomValues(b);
+  return b;
+}
+function bytesToBase64(bytes) {
+  let s = "";
+  for (const b of bytes) s += String.fromCharCode(b);
+  return btoa(s);
+}
+function base64ToBytes(b64) {
+  const s = atob(b64);
+  const out = new Uint8Array(s.length);
+  for (let i = 0; i < s.length; i++) out[i] = s.charCodeAt(i);
+  return out;
+}
+function constantTimeEq(a, b) {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
+function requireEncryptionEnv(env) {
+  const missing = [];
+  if (!env.EMAIL_HMAC_KEY) missing.push("EMAIL_HMAC_KEY");
+  if (!env.EMAIL_ENC_KEY)  missing.push("EMAIL_ENC_KEY");
+  if (!env.SESSION_PEPPER) missing.push("SESSION_PEPPER");
+  if (missing.length) {
+    throw new Error(`worker missing secrets: ${missing.join(", ")} - see worker.js header`);
+  }
+}
+
+// ── password hashing ────────────────────────────────────────────────────
+// New rows always use Argon2id. Legacy rows (pbkdf2-sha256-100k) are
+// migrated to Argon2id on next successful login.
+async function hashPasswordArgon2(password, saltBytes) {
+  const enc = new TextEncoder();
+  // @noble/hashes argon2id returns a Uint8Array of dkLen bytes.
+  const out = argon2id(enc.encode(password), saltBytes, ARGON2_PARAMS);
+  return bytesToHex(out);
+}
+async function hashPasswordLegacyPbkdf2(password, saltHex) {
   const enc = new TextEncoder();
   const key = await crypto.subtle.importKey("raw", enc.encode(password), "PBKDF2", false, ["deriveBits"]);
   const bits = await crypto.subtle.deriveBits(
-    { name: "PBKDF2", salt: enc.encode(saltHex), iterations: PBKDF2_ITER, hash: "SHA-256" },
+    { name: "PBKDF2", salt: enc.encode(saltHex), iterations: LEGACY_PBKDF2_ITER, hash: "SHA-256" },
     key, 256
   );
   return bytesToHex(bits);
 }
+async function verifyPassword(password, row) {
+  const algo = row.pw_algo || LEGACY_PBKDF2_LABEL;
+  if (algo === ARGON2_ALGO_LABEL) {
+    const salt = hexToBytes(row.password_salt);
+    const got = await hashPasswordArgon2(password, salt);
+    return constantTimeEq(got, row.password_hash);
+  }
+  // Legacy path.
+  const got = await hashPasswordLegacyPbkdf2(password, row.password_salt);
+  return constantTimeEq(got, row.password_hash);
+}
+
+// ── email encryption ────────────────────────────────────────────────────
+async function emailLookup(env, emailLower) {
+  // Deterministic HMAC-SHA256 so SELECT ... WHERE email_lookup = ? works.
+  const keyBytes = base64ToBytes(env.EMAIL_HMAC_KEY);
+  const key = await crypto.subtle.importKey(
+    "raw", keyBytes, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(emailLower));
+  return bytesToHex(sig);
+}
+async function emailEncrypt(env, emailLower) {
+  // AES-256-GCM with random 12-byte IV. Output = base64(iv || ct || tag).
+  const keyBytes = base64ToBytes(env.EMAIL_ENC_KEY);
+  if (keyBytes.length !== 32) throw new Error("EMAIL_ENC_KEY must decode to exactly 32 bytes");
+  const key = await crypto.subtle.importKey("raw", keyBytes, { name: "AES-GCM" }, false, ["encrypt"]);
+  const iv = randomBytes(12);
+  const ct = new Uint8Array(await crypto.subtle.encrypt(
+    { name: "AES-GCM", iv }, key, new TextEncoder().encode(emailLower)
+  ));
+  const packed = new Uint8Array(iv.length + ct.length);
+  packed.set(iv, 0); packed.set(ct, iv.length);
+  return bytesToBase64(packed);
+}
+async function emailDecrypt(env, packedB64) {
+  if (!packedB64) return null;
+  const keyBytes = base64ToBytes(env.EMAIL_ENC_KEY);
+  const key = await crypto.subtle.importKey("raw", keyBytes, { name: "AES-GCM" }, false, ["decrypt"]);
+  const packed = base64ToBytes(packedB64);
+  const iv = packed.slice(0, 12);
+  const ct = packed.slice(12);
+  const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, ct);
+  return new TextDecoder().decode(pt);
+}
+
+// ── session tokens (stored hashed) ─────────────────────────────────────
+async function hashSessionToken(env, tokenHex) {
+  // SHA-256(token || SESSION_PEPPER). Pepper means a DB dump alone can't
+  // be replayed - the attacker also needs the worker secret.
+  const data = new TextEncoder().encode(tokenHex + ":" + env.SESSION_PEPPER);
+  const h = await crypto.subtle.digest("SHA-256", data);
+  return bytesToHex(h);
+}
 
 async function authUser(request, env) {
+  if (!env.DB) return null;
   const auth = request.headers.get("Authorization") || "";
   const m = auth.match(/^Bearer\s+([a-f0-9]{32,})$/i);
   if (!m) return null;
-  const token = m[1];
+  const tokenHash = await hashSessionToken(env, m[1]);
   const now = Math.floor(Date.now() / 1000);
   const row = await env.DB.prepare(
-    "SELECT u.id, u.email, u.display_name, u.is_admin FROM sessions s JOIN users u ON u.id = s.user_id WHERE s.token = ? AND s.expires_at > ?"
-  ).bind(token, now).first();
-  return row || null;
+    "SELECT u.id, u.email, u.email_enc, u.display_name, u.is_admin FROM sessions s JOIN users u ON u.id = s.user_id WHERE s.token_hash = ? AND s.expires_at > ?"
+  ).bind(tokenHash, now).first();
+  if (!row) return null;
+  // Prefer the decrypted email; fall back to legacy plaintext column
+  // for accounts that haven't logged in since the migration.
+  try {
+    if (row.email_enc) row.email = await emailDecrypt(env, row.email_enc);
+  } catch { /* fall through to legacy plaintext */ }
+  return row;
 }
 
 function publicUser(u) {
   return { id: u.id, email: u.email, display_name: u.display_name, is_admin: !!u.is_admin };
 }
 
+async function ipHash(request, env) {
+  // Best-effort attacker fingerprint, stored only as a salted hash.
+  const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+  const data = new TextEncoder().encode(ip + ":" + (env.SESSION_PEPPER || ""));
+  const h = await crypto.subtle.digest("SHA-256", data);
+  return bytesToHex(h).slice(0, 32);
+}
+
+async function recordAttempt(env, emailLookupHash, ok, ipH) {
+  const now = Math.floor(Date.now() / 1000);
+  await env.DB.prepare(
+    "INSERT INTO login_attempts (email_lookup, ts, ok, ip_hash) VALUES (?, ?, ?, ?)"
+  ).bind(emailLookupHash, now, ok ? 1 : 0, ipH).run();
+  // Opportunistic purge of stale rows for this key.
+  await env.DB.prepare(
+    "DELETE FROM login_attempts WHERE email_lookup = ? AND ts < ?"
+  ).bind(emailLookupHash, now - ATTEMPT_WINDOW_SEC).run();
+}
+
+async function isLockedOut(env, emailLookupHash) {
+  const now = Math.floor(Date.now() / 1000);
+  const row = await env.DB.prepare(
+    "SELECT COUNT(*) AS n, MAX(ts) AS last_ts FROM login_attempts WHERE email_lookup = ? AND ok = 0 AND ts > ?"
+  ).bind(emailLookupHash, now - ATTEMPT_WINDOW_SEC).first();
+  if (!row || row.n < FAIL_THRESHOLD) return 0;
+  const unlockAt = row.last_ts + LOCKOUT_SEC;
+  return unlockAt > now ? unlockAt - now : 0;
+}
 
 async function handleRegister(request, env, cors) {
   if (!env.DB) return json({ ok: false, error: "DB not bound" }, 500, cors);
+  requireEncryptionEnv(env);
   const body = await request.json().catch(() => null);
   const email = (body && body.email || "").trim().toLowerCase();
   const password = body && body.password || "";
   const displayName = (body && body.display_name || "").trim().slice(0, 60) || email.split("@")[0];
   if (!EMAIL_RE.test(email)) return json({ ok: false, error: "invalid email" }, 400, cors);
   if (password.length < 8) return json({ ok: false, error: "password must be 8+ characters" }, 400, cors);
+  if (password.length > 1024) return json({ ok: false, error: "password too long" }, 400, cors);
 
   let isAdmin = 0;
 
-  const existing = await env.DB.prepare("SELECT id FROM users WHERE email = ?").bind(email).first();
+  const lookup = await emailLookup(env, email);
+  // Block both the migrated lookup column AND the legacy plaintext column
+  // so an in-flight migration can't double-register the same address.
+  const existing = await env.DB.prepare(
+    "SELECT id FROM users WHERE email_lookup = ? OR email = ?"
+  ).bind(lookup, email).first();
   if (existing) return json({ ok: false, error: "email already registered" }, 409, cors);
 
   const id = crypto.randomUUID();
-  const salt = randomHex(16);
-  const hash = await hashPassword(password, salt);
+  const saltBytes = randomBytes(16);
+  const saltHex = bytesToHex(saltBytes);
+  const hash = await hashPasswordArgon2(password, saltBytes);
+  const emailEnc = await emailEncrypt(env, email);
   const now = Math.floor(Date.now() / 1000);
+  // The legacy `email` column still has a UNIQUE constraint; we keep it
+  // populated with the deterministic lookup hash so it stays unique
+  // without storing plaintext. Once schema_003 drops the column this
+  // line can be removed.
   await env.DB.prepare(
-    "INSERT INTO users (id, email, password_hash, password_salt, display_name, is_admin, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)"
-  ).bind(id, email, hash, salt, displayName, isAdmin, now).run();
+    "INSERT INTO users (id, email, email_lookup, email_enc, password_hash, password_salt, pw_algo, display_name, is_admin, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+  ).bind(id, "enc:" + lookup.slice(0, 32), lookup, emailEnc, hash, saltHex, ARGON2_ALGO_LABEL, displayName, isAdmin, now).run();
 
-  const token = randomHex(32);
+  const tokenHex = randomHex(32);
+  const tokenH = await hashSessionToken(env, tokenHex);
   await env.DB.prepare(
-    "INSERT INTO sessions (token, user_id, created_at, expires_at) VALUES (?, ?, ?, ?)"
-  ).bind(token, id, now, now + SESSION_TTL_SEC).run();
+    "INSERT INTO sessions (token, token_hash, user_id, created_at, expires_at) VALUES (?, ?, ?, ?, ?)"
+  ).bind("h:" + tokenH.slice(0, 24), tokenH, id, now, now + SESSION_TTL_SEC).run();
 
-  return json({ ok: true, token, user: publicUser({ id, email, display_name: displayName, is_admin: isAdmin }) }, 200, cors);
+  return json({ ok: true, token: tokenHex, user: publicUser({ id, email, display_name: displayName, is_admin: isAdmin }) }, 200, cors);
 }
 
 
 async function handleLogin(request, env, cors) {
   if (!env.DB) return json({ ok: false, error: "DB not bound" }, 500, cors);
+  requireEncryptionEnv(env);
   const body = await request.json().catch(() => null);
   const email = (body && body.email || "").trim().toLowerCase();
   const password = body && body.password || "";
   if (!email || !password) return json({ ok: false, error: "email + password required" }, 400, cors);
+  if (password.length > 1024) return json({ ok: false, error: "password too long" }, 400, cors);
 
-  const row = await env.DB.prepare(
-    "SELECT id, email, password_hash, password_salt, display_name, is_admin FROM users WHERE email = ?"
-  ).bind(email).first();
-  // Constant-ish-time: still hash even on miss so timing leaks email existence less.
-  const tryHash = await hashPassword(password, row ? row.password_salt : "dummy");
-  if (!row || tryHash !== row.password_hash) {
+  const lookup = await emailLookup(env, email);
+  const lockSecondsLeft = await isLockedOut(env, lookup);
+  if (lockSecondsLeft > 0) {
+    return json({ ok: false, error: `too many failed attempts; try again in ${Math.ceil(lockSecondsLeft / 60)} min` }, 429, cors);
+  }
+  const ipH = await ipHash(request, env);
+
+  // Try the migrated column first; fall back to legacy plaintext email
+  // for rows that pre-date schema_002.
+  let row = await env.DB.prepare(
+    "SELECT id, email, email_enc, password_hash, password_salt, pw_algo, display_name, is_admin FROM users WHERE email_lookup = ?"
+  ).bind(lookup).first();
+  if (!row) {
+    row = await env.DB.prepare(
+      "SELECT id, email, email_enc, password_hash, password_salt, pw_algo, display_name, is_admin FROM users WHERE email = ?"
+    ).bind(email).first();
+  }
+
+  // Constant-ish time: even on miss, do a full Argon2id pass against a
+  // throwaway salt so timing leaks user existence as little as possible.
+  // We discard the result on the miss path.
+  let ok = false;
+  if (row) {
+    ok = await verifyPassword(password, row);
+  } else {
+    await hashPasswordArgon2(password, randomBytes(16));
+  }
+
+  if (!row || !ok) {
+    await recordAttempt(env, lookup, false, ipH);
     return json({ ok: false, error: "invalid credentials" }, 401, cors);
   }
 
+  await recordAttempt(env, lookup, true, ipH);
+
+  // Lazy migration: if this account is still on legacy hashing /
+  // plaintext email, upgrade it now that we have the password in hand.
+  try {
+    if (row.pw_algo !== ARGON2_ALGO_LABEL) {
+      const newSaltBytes = randomBytes(16);
+      const newHash = await hashPasswordArgon2(password, newSaltBytes);
+      const emailEnc = await emailEncrypt(env, email);
+      await env.DB.prepare(
+        "UPDATE users SET password_hash = ?, password_salt = ?, pw_algo = ?, email_lookup = ?, email_enc = ?, email = ? WHERE id = ?"
+      ).bind(newHash, bytesToHex(newSaltBytes), ARGON2_ALGO_LABEL, lookup, emailEnc, "enc:" + lookup.slice(0, 32), row.id).run();
+      row.email_enc = emailEnc;
+    } else if (!row.email_enc) {
+      // Argon2-hashed but missing email encryption (shouldn't happen post-002, but defensive).
+      const emailEnc = await emailEncrypt(env, email);
+      await env.DB.prepare(
+        "UPDATE users SET email_lookup = ?, email_enc = ?, email = ? WHERE id = ?"
+      ).bind(lookup, emailEnc, "enc:" + lookup.slice(0, 32), row.id).run();
+      row.email_enc = emailEnc;
+    }
+  } catch (e) {
+    // Migration failure is non-fatal - the user still gets logged in;
+    // we'll retry on their next login.
+  }
+
   const now = Math.floor(Date.now() / 1000);
-  const token = randomHex(32);
+  const tokenHex = randomHex(32);
+  const tokenH = await hashSessionToken(env, tokenHex);
   await env.DB.prepare(
-    "INSERT INTO sessions (token, user_id, created_at, expires_at) VALUES (?, ?, ?, ?)"
-  ).bind(token, row.id, now, now + SESSION_TTL_SEC).run();
-  return json({ ok: true, token, user: publicUser(row) }, 200, cors);
+    "INSERT INTO sessions (token, token_hash, user_id, created_at, expires_at) VALUES (?, ?, ?, ?, ?)"
+  ).bind("h:" + tokenH.slice(0, 24), tokenH, row.id, now, now + SESSION_TTL_SEC).run();
+
+  // Return the decrypted email in the user object so the UI shows the
+  // real address rather than the placeholder we stash in the legacy
+  // column.
+  return json({ ok: true, token: tokenHex, user: publicUser({ id: row.id, email, display_name: row.display_name, is_admin: row.is_admin }) }, 200, cors);
 }
 
 async function handleMe(request, env, cors) {
   const user = await authUser(request, env);
   if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
-  // Sliding session: bump the current token's expiry on every /api/me call
-  // so an active user is never logged out on the same browser.
+  // Sliding session: bump the current token's expiry on every /api/me call.
   const auth = request.headers.get("Authorization") || "";
   const m = auth.match(/^Bearer\s+([a-f0-9]{32,})$/i);
   if (m) {
+    const tokenH = await hashSessionToken(env, m[1]);
     const now = Math.floor(Date.now() / 1000);
-    await env.DB.prepare("UPDATE sessions SET expires_at = ? WHERE token = ?")
-      .bind(now + SESSION_TTL_SEC, m[1]).run();
+    await env.DB.prepare("UPDATE sessions SET expires_at = ? WHERE token_hash = ?")
+      .bind(now + SESSION_TTL_SEC, tokenH).run();
   }
   return json({ ok: true, user: publicUser(user) }, 200, cors);
 }
@@ -272,9 +510,20 @@ async function handleAdminListUsers(request, env, cors) {
   const user = await authUser(request, env);
   if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
   const { results } = await env.DB.prepare(
-    "SELECT u.id, u.email, u.display_name, u.is_admin, u.created_at, COUNT(a.question_id) AS answers FROM users u LEFT JOIN answers a ON a.user_id = u.id GROUP BY u.id ORDER BY u.created_at DESC"
+    "SELECT u.id, u.email, u.email_enc, u.display_name, u.is_admin, u.created_at, COUNT(a.question_id) AS answers FROM users u LEFT JOIN answers a ON a.user_id = u.id GROUP BY u.id ORDER BY u.created_at DESC"
   ).all();
-  return json({ ok: true, users: results || [] }, 200, cors);
+  // Decrypt every email_enc in flight. Rows that pre-date migration still
+  // have their plaintext in the legacy `email` column; we use that
+  // verbatim so the admin UI keeps working through the rollover.
+  const out = [];
+  for (const r of (results || [])) {
+    let email = r.email;
+    if (r.email_enc) {
+      try { email = await emailDecrypt(env, r.email_enc); } catch {}
+    }
+    out.push({ id: r.id, email, display_name: r.display_name, is_admin: r.is_admin, created_at: r.created_at, answers: r.answers });
+  }
+  return json({ ok: true, users: out }, 200, cors);
 }
 
 async function handleAdminDeleteUser(request, env, cors, targetId) {
@@ -354,9 +603,22 @@ async function getStats(env, qid) {
 }
 
 function json(obj, status, extraHeaders) {
+  // Defense-in-depth headers on every JSON response. Bearer-token auth
+  // means we never set cookies, so HttpOnly/Secure/SameSite don't apply
+  // here - the token sits in the SPA's localStorage and is sent as an
+  // Authorization header (NOT a query param, NOT a cookie). Trade-off:
+  // localStorage is exposed to XSS but immune to CSRF. The SPA mitigates
+  // XSS by avoiding innerHTML on untrusted strings and serving from a
+  // static GitHub Pages origin with a tight CSP at the page level.
+  const security = {
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "no-referrer",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Cache-Control": "no-store",
+  };
   return new Response(JSON.stringify(obj), {
     status,
-    headers: { ...JSON_HEADERS, ...(extraHeaders || {}) },
+    headers: { ...JSON_HEADERS, ...security, ...(extraHeaders || {}) },
   });
 }
 
