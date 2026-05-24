@@ -520,17 +520,26 @@
     importLegacyHistoryIntoCloud();
     loadProfileState();
     await dataPromise;
-    wireMasthead();
-    wireColophon();
-    wireRefPanel();
-    wireQuizTopbar();
-    wireHowToModal();
-    wireReportModal();
-    wireReportsAdmin();
-    wireStatsModal();
-    wireAccountModal();
-    wireAdminModal();
-    updateReportsAdminBadge();
+    // Wire each subsystem defensively so a single throw in any wiring
+    // function can't leave the home view unrendered (the symptom that
+    // looked like "blank screen until clicking the logo"). Each wire is
+    // independent; a failure in one shouldn't suppress showHome().
+    const wires = [
+      ["masthead",   wireMasthead],
+      ["colophon",   wireColophon],
+      ["refPanel",   wireRefPanel],
+      ["quizTopbar", wireQuizTopbar],
+      ["howTo",      wireHowToModal],
+      ["report",     wireReportModal],
+      ["reportsAdmin", wireReportsAdmin],
+      ["stats",      wireStatsModal],
+      ["account",    wireAccountModal],
+      ["admin",      wireAdminModal],
+    ];
+    for (const [name, fn] of wires) {
+      try { fn(); } catch (e) { console.error("wire", name, "failed:", e); }
+    }
+    try { updateReportsAdminBadge(); } catch (e) { console.error(e); }
     showHome();
   });
 
