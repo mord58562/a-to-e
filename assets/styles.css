@@ -352,12 +352,35 @@ a:hover { text-decoration: underline; }
   border-bottom: 1px solid var(--line);
   position: sticky;
   top: 0;
-  z-index: 50;
+  /* Sit above the reference panel (z-index 110) so the trigger button
+   * stays at the same screen coordinates and remains clickable while
+   * the panel is open. Clicking the trigger then closes the panel
+   * without the user needing to move the cursor across the screen to
+   * the × button (Chrome-tab-style toggle). */
+  z-index: 120;
+  /* Belt-and-braces against any host wrapper (PWA shell, SSB, Electron-
+   * style chrome-less window) that defaults the top of the page to a
+   * draggable region. Each interactive child explicitly opts back in to
+   * being clickable below via `.masthead *`. */
+  -webkit-app-region: no-drag;
+          app-region: no-drag;
+}
+.masthead *,
+.quiz-topbar *,
+.colophon * {
+  -webkit-app-region: no-drag;
+          app-region: no-drag;
 }
 .masthead-left { display: flex; align-items: center; gap: 18px; line-height: 1; }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; line-height: 1; padding: 4px 6px; border-radius: 6px; transition: background 0.12s ease; }
 .brand:hover { background: var(--surface); text-decoration: none; }
 .brand:hover .brand-title, .brand:hover .brand-sub, .brand:hover .brand-glucose { text-decoration: none; }
+/* "(+ glucose)" only makes sense when the current session includes
+ * Paediatrics. Hidden by default; revealed when body carries the
+ * .has-paeds class (set by app.js when state.quiz.topics includes
+ * Paediatrics). */
+.masthead .brand-glucose { display: none; }
+body.has-paeds .masthead .brand-glucose { display: inline; }
 .brand-mark {
   width: 30px;
   height: 30px;
@@ -401,7 +424,12 @@ a:hover { text-decoration: underline; }
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-mute);
+  /* Plain selectable text - the cursor should signal that, not the
+   * pointer that the surrounding clickable chrome uses. */
+  cursor: text;
 }
+.profile-name { cursor: text; }
+.profile-chip { cursor: default; }
 .masthead-tools { display: flex; gap: 6px; align-items: center; line-height: 1; }
 .masthead-tools .link-btn { display: inline-flex; align-items: center; line-height: 1; }
 .profile-chip {
@@ -500,6 +528,8 @@ a:hover { text-decoration: underline; }
   cursor: pointer;
 }
 .link-btn:hover { background: var(--surface); color: var(--ink); }
+.link-btn.active { color: var(--accent); }
+.link-btn[aria-pressed="true"] { color: var(--accent); }
 .ghost-link {
   background: transparent;
   border: none;
@@ -574,7 +604,11 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   background: var(--surface);
   border: 1px solid var(--line);
   border-bottom: none;
-  border-radius: 12px 12px 0 0;
+  /* Tightened from the previous 12 px droopy arc - the prev/next bar
+   * sits flush against the masthead so a wide rounded corner above
+   * the navigation read as a soft underbite. 6 px is just enough to
+   * register as intentional without sagging. */
+  border-radius: 6px 6px 0 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -642,7 +676,7 @@ body[data-screen="quiz"] main { padding-top: 16px; }
 .reading {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 0 0 12px 12px;
+  border-radius: 0 0 6px 6px;
   padding: 22px 24px 22px;
   margin-bottom: 24px;
 }
@@ -955,9 +989,13 @@ body[data-screen="quiz"] main { padding-top: 16px; }
 /* ── Reference panel (right slide-in, no scrim, no dim) ───────────── */
 .ref-panel {
   position: fixed;
-  top: 0; right: 0;
-  height: 100vh;
-  height: 100dvh;
+  /* Start below the masthead (sticky, ~56 px) so the trigger button
+   * stays uncovered. The masthead also has a higher z-index now, so
+   * clicking the trigger again toggles the panel closed without
+   * moving the cursor to the × button. */
+  top: 56px; right: 0;
+  height: calc(100vh - 56px);
+  height: calc(100dvh - 56px);
   width: 420px;
   max-width: 92vw;
   background: var(--bg-2);

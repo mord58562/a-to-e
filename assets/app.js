@@ -959,9 +959,40 @@
     applyTheme(cur === "light" ? "dark" : "light");
   }
 
+  // Anki-style hover-card opt-out. Hover popups only ever activate in
+  // REVIEW mode (post-submit / summary review), never while the user is
+  // still committing to an answer. Persisted across reloads.
+  const ANKI_HOVER_KEY = "y4mcq.ankiHover.v1";
+  function ankiHoverEnabled() {
+    const v = localStorage.getItem(ANKI_HOVER_KEY);
+    // Default ON. Rob can toggle off with the AN button.
+    return v == null ? true : v === "1";
+  }
+  function setAnkiHover(on) {
+    localStorage.setItem(ANKI_HOVER_KEY, on ? "1" : "0");
+    refreshAnkiHoverButton();
+    document.body.classList.toggle("anki-hover-off", !on);
+  }
+  function refreshAnkiHoverButton() {
+    const b = document.getElementById("anBtn");
+    if (!b) return;
+    const on = ankiHoverEnabled();
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+    b.classList.toggle("active", on);
+    b.title = on
+      ? "Hover-card definitions: ON (post-reveal only) - click to disable"
+      : "Hover-card definitions: OFF - click to enable (only activates post-reveal)";
+  }
+
   function wireMasthead() {
     document.getElementById("rangesBtn").onclick = () => toggleRefs();
     document.getElementById("themeBtn").onclick = toggleTheme;
+    const anBtn = document.getElementById("anBtn");
+    if (anBtn) {
+      anBtn.onclick = () => setAnkiHover(!ankiHoverEnabled());
+      refreshAnkiHoverButton();
+      document.body.classList.toggle("anki-hover-off", !ankiHoverEnabled());
+    }
     const goHome = e => {
       if (e) e.preventDefault();
       if (state.quiz && !state.quiz.finished &&
@@ -1097,6 +1128,7 @@
     setScreen("home");
     state.quiz = null;
     closeRefs(true);
+    document.body.classList.remove("has-paeds");
     const app = document.getElementById("app");
     app.innerHTML = "";
     app.appendChild(document.getElementById("tpl-home").content.cloneNode(true));
@@ -1293,8 +1325,18 @@
     document.getElementById("sessionMeta").textContent =
       (s.mode === "study" ? "Study session" : "Test session") +
       " · " + new Date().toLocaleDateString(undefined, { day: "numeric", month: "short" });
+    // "(+ glucose)" in the wordmark is only meaningful when paediatrics
+    // is in the session. Toggle the body class so the CSS rule reveals
+    // the suffix without app.js touching the masthead DOM directly.
+    refreshGlucoseSuffix();
     renderQuiz();
     startSessionTimer();
+  }
+
+  function refreshGlucoseSuffix() {
+    const inPaeds = !!(state.quiz && state.quiz.pool &&
+      state.quiz.pool.some(q => q.topic === "Paediatrics"));
+    document.body.classList.toggle("has-paeds", inPaeds);
   }
 
   function renderQuiz() {
@@ -1429,12 +1471,24 @@
     }
 
     const dtWrap = document.getElementById("qDataTable");
-    if (q.data_table && Object.keys(q.data_table).length) {
+    // Filter out empty / placeholder rows so an empty Investigations
+    // entry (or any other row with a blank/n-a/nil value) doesn't
+    // render its label with no content beside it.
+    const dtEntries = (q.data_table ? Object.entries(q.data_table) : [])
+      .filter(([k, v]) => {
+        if (v == null) return false;
+        const s = String(v).trim().toLowerCase();
+        if (!s) return false;
+        if (s === "-" || s === "—" || s === "n/a" || s === "na" ||
+            s === "nil" || s === "none" || s === "not performed") return false;
+        return true;
+      });
+    if (dtEntries.length) {
       dtWrap.hidden = false;
       const dl = document.createElement("dl");
       dl.className = "patient-table";
       dl.id = "qDataTable";
-      for (const [k, v] of Object.entries(q.data_table)) {
+      for (const [k, v] of dtEntries) {
         const dt = document.createElement("dt"); dt.textContent = k;
         const dd = document.createElement("dd"); dd.textContent = v;
         dl.appendChild(dt); dl.appendChild(dd);
