@@ -3307,8 +3307,8 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     const el = document.getElementById("qStem");
     if (!el) return;
     const revealed = state.quiz && state.quiz.revealed && state.quiz.revealed[q.id];
+    if (!revealed) { el.textContent = q.stem; return; }
     const clues = (q.explanation && Array.isArray(q.explanation.stem_clues)) ? q.explanation.stem_clues : [];
-    if (!revealed || !clues.length) { el.textContent = q.stem; return; }
     let html = esc(q.stem);
     const seen = new Set();
     for (const raw of clues) {
@@ -3319,8 +3319,162 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
       const re = new RegExp(escClue, "g");
       html = html.replace(re, m => `<mark class="stem-clue">${m}</mark>`);
     }
+    // Anki-style hover spans: wrap recognised medical terms in
+    // <span class="term" data-term="..."> so the hover handler can
+    // surface the glossary entry. Only active post-reveal (the
+    // revealed branch above) and only when the user hasn't disabled
+    // hover cards via the AN button (CSS .anki-hover-off disables
+    // pointer-events on the spans).
+    html = wrapTerms(html);
     el.innerHTML = html;
   }
+
+  // Minimal curated glossary - the smallest useful set for the
+  // current bank. Expand opportunistically as the question pool
+  // grows. Keys are matched case-insensitively as whole words.
+  const TERM_GLOSSARY = {
+    "DKA": "Diabetic ketoacidosis. Hyperglycaemia + ketonaemia + metabolic acidosis. Common precipitants: missed insulin, infection, new-onset T1DM. Mgmt: fluids first, then insulin, then K+.",
+    "PPH": "Postpartum haemorrhage. >=500 mL blood loss after vaginal delivery (>=1000 mL caesarean) or any loss causing haemodynamic compromise. 4 Ts: Tone, Trauma, Tissue, Thrombin.",
+    "ACS": "Acute coronary syndrome. Umbrella for unstable angina, NSTEMI, STEMI. ECG + troponin + risk stratify.",
+    "SSRI": "Selective serotonin reuptake inhibitor. First-line for moderate-severe depression and most anxiety disorders. Common: sertraline, escitalopram, fluoxetine.",
+    "SNRI": "Serotonin-noradrenaline reuptake inhibitor. e.g. venlafaxine, duloxetine.",
+    "NSAID": "Non-steroidal anti-inflammatory drug. e.g. ibuprofen, naproxen, diclofenac. GI / renal / CV cautions.",
+    "ECG": "Electrocardiogram. 12-lead is the standard initial cardiac investigation in chest pain, syncope, palpitations.",
+    "CTG": "Cardiotocograph. Continuous fetal heart rate + uterine activity trace. Used antenatally and in labour.",
+    "GBS": "Group B Streptococcus. Maternal carriage screened ~36 wk; intrapartum penicillin if positive or risk factors.",
+    "PPROM": "Preterm pre-labour rupture of membranes (before 37 wk, before labour onset).",
+    "PROM": "Pre-labour rupture of membranes at term (>=37 wk, before labour onset).",
+    "HELLP": "Haemolysis, Elevated Liver enzymes, Low Platelets. Severe pre-eclampsia variant; deliver after stabilisation.",
+    "CTPA": "CT pulmonary angiogram. First-line for suspected PE in non-pregnant adults.",
+    "PE": "Pulmonary embolism. Clot in pulmonary arteries; sudden dyspnoea, pleuritic chest pain, tachycardia.",
+    "DVT": "Deep vein thrombosis. Most commonly in the calf; risk factors via Wells / Caprini.",
+    "COPD": "Chronic obstructive pulmonary disease. Spirometry: post-bronchodilator FEV1/FVC < 0.7.",
+    "CKD": "Chronic kidney disease. eGFR < 60 mL/min/1.73m^2 OR markers of kidney damage for >=3 months.",
+    "AKI": "Acute kidney injury. Cr rise >=26 micromol/L in 48 h, or >=1.5× baseline in 7 d, or urine output <0.5 mL/kg/h x 6 h.",
+    "T1DM": "Type 1 diabetes mellitus. Autoimmune beta-cell destruction; lifelong insulin required.",
+    "T2DM": "Type 2 diabetes mellitus. Insulin resistance + relative deficiency; lifestyle + metformin first-line.",
+    "GTT": "Glucose tolerance test. 75 g oral glucose; fasting + 1 h + 2 h plasma glucose. Gestational diabetes screen.",
+    "HbA1c": "Glycated haemoglobin; reflects average plasma glucose over preceding ~3 months. Diabetes diagnostic threshold >=48 mmol/mol (6.5%).",
+    // ASD - see disambiguated entry below.
+    "VSD": "Ventricular septal defect. Pansystolic murmur, lower-left sternal edge.",
+    "FBC": "Full blood count. Hb, WCC, platelets +/- differential.",
+    "UEC": "Urea, electrolytes, creatinine. Renal function + Na/K screen.",
+    "LFT": "Liver function tests. ALT, AST, ALP, GGT, bilirubin, albumin.",
+    "TFT": "Thyroid function tests. TSH +/- free T4 / free T3.",
+    "CRP": "C-reactive protein. Acute-phase reactant; rises hours after inflammatory stimulus.",
+    "ESR": "Erythrocyte sedimentation rate. Slower-rising inflammatory marker.",
+    "eGFR": "Estimated glomerular filtration rate. Calculated from creatinine + age +/- sex.",
+    "BMI": "Body mass index. kg/m^2. AU adult cut-offs: <18.5 underweight, 25-29.9 overweight, >=30 obese.",
+    "GCS": "Glasgow Coma Scale. Eye/Verbal/Motor; range 3-15. <=8 = secure airway.",
+    "BNP": "B-type natriuretic peptide. Marker of cardiac wall stretch; rises in heart failure.",
+    "TSH": "Thyroid-stimulating hormone. First-line thyroid screen; raised in primary hypothyroidism.",
+    "ICU": "Intensive care unit.",
+    "GP": "General practitioner.",
+    "OGTT": "Oral glucose tolerance test. See GTT.",
+    "STI": "Sexually transmitted infection.",
+    "UTI": "Urinary tract infection.",
+    "MSU": "Midstream urine sample.",
+    "CPAP": "Continuous positive airway pressure. Non-invasive ventilation; first-line in obstructive sleep apnoea.",
+    "BiPAP": "Bilevel positive airway pressure. Non-invasive ventilation with distinct inspiratory + expiratory pressures.",
+    "AED": "Antiepileptic drug.",
+    "TCA": "Tricyclic antidepressant. e.g. amitriptyline, nortriptyline.",
+    "MAOI": "Monoamine oxidase inhibitor.",
+    "GORD": "Gastro-oesophageal reflux disease.",
+    "IBS": "Irritable bowel syndrome.",
+    "IBD": "Inflammatory bowel disease - umbrella for Crohn's disease + ulcerative colitis.",
+    "OCD": "Obsessive-compulsive disorder.",
+    "PTSD": "Post-traumatic stress disorder.",
+    "ADHD": "Attention-deficit hyperactivity disorder.",
+    "ASD": "Autism spectrum disorder (psych/paeds context) OR atrial septal defect (cardiac context).",
+    "TIA": "Transient ischaemic attack. Stroke-like deficit resolving within 24 h (most <1 h).",
+    "MI": "Myocardial infarction.",
+    "CHF": "Congestive heart failure.",
+    "AF": "Atrial fibrillation.",
+    "VT": "Ventricular tachycardia.",
+    "VF": "Ventricular fibrillation.",
+  };
+
+  // Precompile regex outside the hot path. Word-boundary on both
+  // sides so we don't match inside other words ("PEs" doesn't match
+  // "PE", "DKAish" doesn't match "DKA"). Longest-first so "HELLP"
+  // matches before any shorter prefix would.
+  const TERM_KEYS = Object.keys(TERM_GLOSSARY).sort((a, b) => b.length - a.length);
+  const TERM_REGEX = new RegExp(
+    "\\b(" + TERM_KEYS.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")\\b",
+    "g"
+  );
+
+  function wrapTerms(html) {
+    // Avoid wrapping inside existing tags (e.g. <mark>...). The stem
+    // HTML at this point only contains <mark class="stem-clue">
+    // wrappers from the clue pass, so a simple split on tag boundaries
+    // is enough.
+    const parts = html.split(/(<[^>]+>)/);
+    for (let i = 0; i < parts.length; i++) {
+      if (parts[i].startsWith("<")) continue;
+      parts[i] = parts[i].replace(TERM_REGEX, m =>
+        `<span class="term" data-term="${esc(m)}">${m}</span>`);
+    }
+    return parts.join("");
+  }
+
+  // Tooltip element is a singleton - created lazily, reparented as
+  // needed, positioned relative to the hovered span. Body-level click
+  // anywhere else dismisses it on touch devices.
+  let _termPopup = null;
+  function getTermPopup() {
+    if (_termPopup) return _termPopup;
+    _termPopup = document.createElement("div");
+    _termPopup.className = "term-popup";
+    _termPopup.setAttribute("role", "tooltip");
+    _termPopup.hidden = true;
+    document.body.appendChild(_termPopup);
+    return _termPopup;
+  }
+  function showTermPopup(span) {
+    const term = span.getAttribute("data-term");
+    if (!term) return;
+    const def = TERM_GLOSSARY[term] || TERM_GLOSSARY[term.toUpperCase()];
+    if (!def) return;
+    const pop = getTermPopup();
+    pop.innerHTML = `<div class="term-popup-head">${esc(term)}</div><div class="term-popup-body">${esc(def)}</div>`;
+    pop.hidden = false;
+    // Position below the span by default; flip above if it would
+    // overflow the viewport bottom; clamp horizontally so the popup
+    // never disappears off the left/right edges.
+    const r = span.getBoundingClientRect();
+    pop.style.left = "0px";
+    pop.style.top  = "0px";
+    const pr = pop.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const vw = window.innerWidth  || document.documentElement.clientWidth;
+    let top = r.bottom + 6;
+    if (top + pr.height > vh - 8) top = r.top - pr.height - 6;
+    let left = r.left;
+    if (left + pr.width > vw - 8) left = vw - pr.width - 8;
+    if (left < 8) left = 8;
+    pop.style.left = `${left + window.scrollX}px`;
+    pop.style.top  = `${top + window.scrollY}px`;
+  }
+  function hideTermPopup() {
+    if (_termPopup) _termPopup.hidden = true;
+  }
+  // Delegated hover handler - attached once. The .anki-hover-off body
+  // class disables it from the CSS side (pointer-events: none on the
+  // spans). Mouseover bubbles; mouseout fires when leaving the span.
+  document.addEventListener("mouseover", e => {
+    const t = e.target;
+    if (!(t instanceof HTMLElement)) return;
+    if (!t.classList.contains("term")) return;
+    if (document.body.classList.contains("anki-hover-off")) return;
+    showTermPopup(t);
+  });
+  document.addEventListener("mouseout", e => {
+    const t = e.target;
+    if (!(t instanceof HTMLElement)) return;
+    if (!t.classList.contains("term")) return;
+    hideTermPopup();
+  });
 
   // Fisher-Yates shuffle. Uses crypto.getRandomValues when available so
   // the next-question stream is uniform across the eligible pool with
