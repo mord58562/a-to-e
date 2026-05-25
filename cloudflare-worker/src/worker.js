@@ -51,6 +51,9 @@ export default {
       if (url.pathname === "/api/me"       && request.method === "GET")  return await handleMe(request, env, cors);
       if (url.pathname === "/api/answer"   && request.method === "POST") return await handleAnswer(request, env, cors);
       if (url.pathname === "/api/history"  && request.method === "GET")  return await handleHistory(request, env, cors);
+      if (url.pathname === "/api/state"    && request.method === "GET")  return await handleState(request, env, cors);
+      if (url.pathname === "/api/flag"     && request.method === "POST") return await handleFlag(request, env, cors);
+      if (url.pathname === "/api/settings" && request.method === "POST") return await handleSettings(request, env, cors);
       if (url.pathname === "/api/account/delete" && request.method === "POST") return await handleAccountDelete(request, env, cors);
       if (url.pathname === "/api/admin/users" && request.method === "GET") return await handleAdminListUsers(request, env, cors);
       if (url.pathname.startsWith("/api/admin/users/") && url.pathname.endsWith("/delete") && request.method === "POST") {
@@ -500,9 +503,13 @@ async function handleMe(request, env, cors) {
 async function handleAccountDelete(request, env, cors) {
   const user = await authUser(request, env);
   if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
-  // Delete in order: sessions, answers, user.
+  // Delete in order: sessions, answers, flags, user_settings, user.
+  // D1 ignores SQLite ON DELETE CASCADE unless PRAGMA foreign_keys is
+  // explicitly set, so each per-user table is cleared by hand.
   await env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(user.id).run();
   await env.DB.prepare("DELETE FROM answers WHERE user_id = ?").bind(user.id).run();
+  await env.DB.prepare("DELETE FROM flags WHERE user_id = ?").bind(user.id).run();
+  await env.DB.prepare("DELETE FROM user_settings WHERE user_id = ?").bind(user.id).run();
   await env.DB.prepare("DELETE FROM users WHERE id = ?").bind(user.id).run();
   return json({ ok: true }, 200, cors);
 }
@@ -534,6 +541,8 @@ async function handleAdminDeleteUser(request, env, cors, targetId) {
   if (targetId === user.id) return json({ ok: false, error: "use /api/account/delete to remove your own account" }, 400, cors);
   await env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(targetId).run();
   await env.DB.prepare("DELETE FROM answers WHERE user_id = ?").bind(targetId).run();
+  await env.DB.prepare("DELETE FROM flags WHERE user_id = ?").bind(targetId).run();
+  await env.DB.prepare("DELETE FROM user_settings WHERE user_id = ?").bind(targetId).run();
   await env.DB.prepare("DELETE FROM users WHERE id = ?").bind(targetId).run();
   return json({ ok: true }, 200, cors);
 }
@@ -576,10 +585,25 @@ async function handleAnswer(request, env, cors) {
     return json({ ok: false, error: "source_letter must be A-E" }, 400, cors);
   }
   const now = Math.floor(Date.now() / 1000);
-  // INSERT OR IGNORE so a user's first answer wins and replays don't skew the stats.
+  // UPSERT: re-attempts MUST update the latest correctness + bump the
+  // attempt counter + advance updated_at. INSERT-OR-IGNORE froze every
+  // (user, question) at its first attempt and broke cross-device sync
+  // when the user re-answered on another device.
+  //
+  // Aggregate stats (handleStats) still count every distinct user's
+  // latest answer once - that's how the existing public bars are
+  // documented to behave, and it stays correct because we never write
+  // more than one row per (user, question).
   await env.DB.prepare(
-    "INSERT OR IGNORE INTO answers (user_id, question_id, source_letter, correct, ts) VALUES (?, ?, ?, ?, ?)"
-  ).bind(user.id, qid, srcLetter, correct, now).run();
+    `INSERT INTO answers (user_id, question_id, source_letter, correct, ts, updated_at, attempt_count)
+     VALUES (?, ?, ?, ?, ?, ?, 1)
+     ON CONFLICT(user_id, question_id) DO UPDATE SET
+       source_letter = excluded.source_letter,
+       correct       = excluded.correct,
+       ts            = excluded.ts,
+       updated_at    = excluded.updated_at,
+       attempt_count = attempt_count + 1`
+  ).bind(user.id, qid, srcLetter, correct, now, now).run();
 
   const stats = await getStats(env, qid);
   return json({ ok: true, stats }, 200, cors);
@@ -587,23 +611,111 @@ async function handleAnswer(request, env, cors) {
 
 /* /api/history: returns the signed-in user's answered question_ids so
  * the client can hydrate cross-device. Each row carries the last-seen
- * correctness and timestamp so the Unseen / Previously-incorrect
- * filters work on a fresh browser the same way as the original one. */
+ * correctness, attempt count, and timestamp so the Unseen / Previously-
+ * incorrect filters AND per-Q attempt counters survive a fresh browser. */
 async function handleHistory(request, env, cors) {
   const user = await authUser(request, env);
   if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  const history = await readHistory(env, user.id);
+  return json({ ok: true, history }, 200, cors);
+}
+
+async function readHistory(env, userId) {
   const rows = await env.DB.prepare(
-    "SELECT question_id, correct, ts FROM answers WHERE user_id = ?"
-  ).bind(user.id).all();
+    "SELECT question_id, correct, ts, attempt_count, updated_at FROM answers WHERE user_id = ?"
+  ).bind(userId).all();
   const history = {};
   for (const r of (rows.results || [])) {
     history[r.question_id] = {
       lastCorrect: !!r.correct,
-      count: 1,
+      count: r.attempt_count || 1,
       last_at: (r.ts || 0) * 1000,
+      updated_at: r.updated_at || r.ts || 0,
     };
   }
-  return json({ ok: true, history }, 200, cors);
+  return history;
+}
+
+/* /api/state: single round-trip hydration. Returns the user's history,
+ * flags, and settings so the new device has the full picture before
+ * first paint. */
+async function handleState(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  const [history, flags, settings] = await Promise.all([
+    readHistory(env, user.id),
+    readFlags(env, user.id),
+    readSettings(env, user.id),
+  ]);
+  return json({ ok: true, history, flags, settings }, 200, cors);
+}
+
+async function readFlags(env, userId) {
+  const rows = await env.DB.prepare(
+    "SELECT question_id, updated_at FROM flags WHERE user_id = ?"
+  ).bind(userId).all();
+  const out = {};
+  for (const r of (rows.results || [])) out[r.question_id] = true;
+  return out;
+}
+
+async function readSettings(env, userId) {
+  const row = await env.DB.prepare(
+    "SELECT settings FROM user_settings WHERE user_id = ?"
+  ).bind(userId).first();
+  if (!row || !row.settings) return null;
+  try { return JSON.parse(row.settings); } catch { return null; }
+}
+
+/* /api/flag: body { question_id, on } - toggles a per-user star. */
+async function handleFlag(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  const body = await request.json().catch(() => null);
+  const qid = body && body.question_id;
+  const on  = !!(body && body.on);
+  if (typeof qid !== "string" || !/^[A-Za-z0-9_\-]+$/.test(qid) || qid.length > 200) {
+    return json({ ok: false, error: "bad question_id" }, 400, cors);
+  }
+  const now = Math.floor(Date.now() / 1000);
+  if (on) {
+    await env.DB.prepare(
+      `INSERT INTO flags (user_id, question_id, updated_at)
+       VALUES (?, ?, ?)
+       ON CONFLICT(user_id, question_id) DO UPDATE SET updated_at = excluded.updated_at`
+    ).bind(user.id, qid, now).run();
+  } else {
+    await env.DB.prepare(
+      "DELETE FROM flags WHERE user_id = ? AND question_id = ?"
+    ).bind(user.id, qid).run();
+  }
+  return json({ ok: true, on }, 200, cors);
+}
+
+/* /api/settings: body { settings: {...} } - overwrites the user's
+ * settings blob. We trust the client to send the full settings object;
+ * partial updates would race in multi-device scenarios. */
+async function handleSettings(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  const body = await request.json().catch(() => null);
+  const settings = body && body.settings;
+  if (!settings || typeof settings !== "object") {
+    return json({ ok: false, error: "settings object required" }, 400, cors);
+  }
+  const serialized = JSON.stringify(settings);
+  if (serialized.length > 10000) {
+    return json({ ok: false, error: "settings too large" }, 400, cors);
+  }
+  const now = Math.floor(Date.now() / 1000);
+  await env.DB.prepare(
+    `INSERT INTO user_settings (user_id, settings, updated_at)
+     VALUES (?, ?, ?)
+     ON CONFLICT(user_id) DO UPDATE SET
+       settings = excluded.settings,
+       updated_at = excluded.updated_at`
+  ).bind(user.id, serialized, now).run();
+  return json({ ok: true }, 200, cors);
 }
 
 async function handleStats(request, env, cors, qid) {
