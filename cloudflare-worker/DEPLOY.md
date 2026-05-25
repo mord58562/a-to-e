@@ -74,3 +74,10 @@ You'll see the **Audit** button in the masthead and the "how to add" banner appe
   tokens, login rate-limiting. Three new wrangler secrets required
   (`EMAIL_HMAC_KEY`, `EMAIL_ENC_KEY`, `SESSION_PEPPER`) plus
   `schema_002_encrypt.sql` applied to D1.
+- 2026-05-25: Cross-device sync - `schema_003_sync.sql` adds
+  `answers.updated_at`, `answers.attempt_count`, a `flags` table, and a
+  `user_settings` table. Worker exposes `/api/state` (one-shot
+  hydration), `/api/flag`, `/api/settings`; `/api/answer` is now UPSERT
+  rather than INSERT-OR-IGNORE. Apply with:
+  `wrangler d1 execute a-to-e --file=schema_003_sync.sql --remote`
+  then `wrangler deploy`.
