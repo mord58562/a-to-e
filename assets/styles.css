@@ -1880,6 +1880,53 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   cursor: pointer;
 }
 .account-self-delete .danger-btn:hover { background: #c0392b; color: white; }
+.account-self-delete .danger-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.account-self-delete .danger-btn:disabled:hover { background: transparent; color: #c0392b; }
+.acct-delete-confirm {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.acct-delete-label {
+  font-size: 12px;
+  color: var(--ink-mute);
+  line-height: 1.4;
+}
+.acct-delete-label code {
+  background: var(--surface-alt, rgba(15, 202, 212, 0.08));
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--ink);
+}
+.acct-delete-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 13px;
+  font-family: inherit;
+}
+.acct-delete-input:focus {
+  outline: none;
+  border-color: #c0392b;
+  box-shadow: 0 0 0 2px rgba(192, 57, 43, 0.18);
+}
+.acct-delete-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-end;
+}
+.acct-delete-status {
+  margin: 0;
+  min-height: 16px;
+}
 .account-quality-table {
   display: grid;
   grid-template-columns: 1fr 60px 70px;
