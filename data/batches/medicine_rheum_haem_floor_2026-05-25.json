@@ -1,0 +1,1067 @@
+[
+  {
+    "id": "med-rhh2-001",
+    "topic": "Medicine",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "RA vs PsA vs reactive vs gout - pattern recognition",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["arthritis", "rheumatology"],
+    "stem": "A 38-year-old man presents to a HNE LHD rheumatology clinic with 8 weeks of asymmetric joint pain affecting the right second and third distal interphalangeal joints, left knee and left Achilles insertion. He has a 4-year history of scalp scaling treated with topical betamethasone. There is dactylitis of the left third toe. C-reactive protein (CRP) 28 mg/L, rheumatoid factor negative, anti-CCP negative, uric acid 0.36 mmol/L. Hand X-ray: bone proliferation and central erosion at the right second DIP joint with periostitis.",
+    "data_table": {
+      "Joint pattern": "Asymmetric, DIP-predominant, dactylitis, enthesitis (Achilles).",
+      "Inflammatory markers": "CRP 28 mg/L, ESR 34 mm/h.",
+      "Serology": "RF negative, anti-CCP negative, ANA negative, HLA-B27 not done.",
+      "Uric acid": "0.36 mmol/L (normal).",
+      "Imaging": "DIP central erosion with bone proliferation, periostitis."
+    },
+    "lead_in": "Which feature best discriminates the most likely diagnosis from the leading alternatives?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Dactylitis with DIP involvement and bone proliferation on imaging",
+        "correct": true,
+        "rationale": "Dactylitis (whole digit swelling from combined synovitis, tenosynovitis and enthesitis), DIP-predominant disease, and the combination of erosion plus new bone formation are characteristic of psoriatic arthritis. Rheumatoid arthritis is symmetric, MCP/PIP/wrist predominant, with pure erosive change and no periostitis. Gout produces overhanging-edge tophaceous erosions, not periostitis (eTG; ARA classification).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - Psoriatic arthritis", "Australian Rheumatology Association - PsA classification"]
+      },
+      {
+        "letter": "B",
+        "text": "Negative rheumatoid factor and anti-CCP antibodies",
+        "correct": false,
+        "rationale": "Seronegativity is consistent with PsA but is also seen in 20-30% of RA and is present by definition in reactive arthritis and gout. It supports the diagnosis but does not discriminate (RACP).",
+        "source_refs": ["RACP Adult Medicine Curriculum - Rheumatology"]
+      },
+      {
+        "letter": "C",
+        "text": "Asymmetric joint distribution affecting fewer than five joints",
+        "correct": false,
+        "rationale": "Asymmetric oligoarthritis fits PsA, reactive arthritis and crystal disease equally. Without the imaging and dactylitis findings, this pattern alone does not separate them (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - Inflammatory arthritis assessment"]
+      },
+      {
+        "letter": "D",
+        "text": "Serum urate level of 0.36 mmol/L within reference range",
+        "correct": false,
+        "rationale": "Urate may be normal during an acute gout flare (cytokine-driven shift). It weakly argues against gout but is not the strongest discriminator here; the imaging and dactylitis are (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - Gout"]
+      },
+      {
+        "letter": "E",
+        "text": "Personal history of scalp scaling treated with topical steroid",
+        "correct": false,
+        "rationale": "Psoriasis history raises pre-test probability for PsA but only 30% of psoriasis patients develop arthritis, and PsA can precede skin disease. The discriminating features here are the imaging signature and dactylitis (CASPAR criteria).",
+        "source_refs": ["CASPAR classification criteria for PsA"]
+      }
+    ],
+    "explanation": {
+      "summary": "PsA is the unifying diagnosis: DIP joints, dactylitis, enthesitis, asymmetric pattern, seronegativity, and the pathognomonic radiographic combination of erosion with adjacent bone proliferation. RA is symmetric and erosive without proliferation; reactive arthritis follows GI/GU infection and has more knee/ankle large-joint disease without DIP predilection; gout produces tophaceous overhanging-edge erosions on a background of hyperuricaemia history.",
+      "key_points": [
+        "PsA imaging hallmark: erosion + new bone formation (periostitis, pencil-in-cup later)",
+        "Dactylitis is highly specific for spondyloarthritis spectrum",
+        "DIP involvement strongly suggests PsA over RA",
+        "Skin psoriasis can postdate joint disease in 15% of PsA"
+      ],
+      "context": "Psoriatic arthritis sits in the seronegative spondyloarthritis family with shared HLA-B27 association, enthesitis-driven pathology and axial-plus-peripheral disease. The mechanism involves IL-23/IL-17 axis activation at entheses, driving local bone remodelling (both erosion and proliferation) - explaining why imaging shows both subtraction and addition of bone, unlike pure RA pannus-driven erosion. This mechanism is the rationale for IL-17 inhibitors (secukinumab, ixekizumab) in PsA. In context, when an oligoarticular asymmetric arthritis presents with DIP involvement, dactylitis or enthesitis, PsA jumps to the top of the differential regardless of skin findings."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Rheumatology - Psoriatic arthritis", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "CASPAR classification criteria for PsA", "url": "https://rheumatology.org/"}
+    ],
+    "reference_ranges": ["crp", "urate"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-rhh2-002",
+    "topic": "Medicine",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "DMARD escalation and biologic switch - infection screening",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["DMARD", "bDMARD", "screening"],
+    "stem": "A 54-year-old woman with seropositive rheumatoid arthritis has persistent DAS28 of 5.2 after 6 months of methotrexate 25 mg weekly plus sulfasalazine 1 g twice daily plus hydroxychloroquine 200 mg twice daily. Her rheumatologist proposes adding a tumour necrosis factor (TNF) inhibitor. She was born in Vietnam, migrated to Australia aged 22, and had a positive Mantoux test 10 years ago after a household contact; chest X-ray then was normal and she received no treatment.",
+    "data_table": {
+      "Disease": "Seropositive RA, DAS28 5.2 after triple csDMARD 6/12.",
+      "Plan": "Add TNF inhibitor (etanercept or adalimumab).",
+      "TB risk": "Vietnam birth, positive Mantoux 10 years ago, CXR normal then, no treatment.",
+      "Hep status": "Not previously tested.",
+      "Vaccinations": "Pre-bDMARD checklist pending."
+    },
+    "lead_in": "Which is the most appropriate next step before starting the TNF inhibitor?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Interferon-gamma release assay plus hepatitis B and C serology",
+        "correct": true,
+        "rationale": "Pre-biologic screen per the Australian Rheumatology Association and RACP requires testing for latent tuberculosis (interferon-gamma release assay (IGRA) preferred over Mantoux in BCG-vaccinated or immunocompromised), hepatitis B (HBsAg, anti-HBc, anti-HBs), hepatitis C and HIV. Given Vietnam birth and prior Mantoux positivity she has high pre-test probability of latent TB; IGRA is more specific. Hepatitis B reactivation on TNFi is well-documented.",
+        "source_refs": ["Australian Rheumatology Association bDMARD prescribing checklist", "RACP - bDMARD pre-treatment screening"]
+      },
+      {
+        "letter": "B",
+        "text": "Start the TNF inhibitor and monitor for tuberculosis symptoms monthly",
+        "correct": false,
+        "rationale": "TNF-alpha is essential for granuloma maintenance; blocking it reactivates latent TB within months. Symptom monitoring without screening missed cases historically and is below the standard of care (ARA).",
+        "source_refs": ["Australian Rheumatology Association bDMARD prescribing checklist"]
+      },
+      {
+        "letter": "C",
+        "text": "Repeat the Mantoux test and proceed if induration less than 5 mm",
+        "correct": false,
+        "rationale": "Mantoux false-positives are common after BCG (universal in Vietnam) and false-negatives occur on immunosuppression. IGRA is the preferred test in Australian guidelines for this population (ARA).",
+        "source_refs": ["Australian Rheumatology Association bDMARD prescribing checklist"]
+      },
+      {
+        "letter": "D",
+        "text": "Switch to a JAK inhibitor instead of a TNF inhibitor to avoid screening",
+        "correct": false,
+        "rationale": "JAK inhibitors require the same TB, hepatitis B/C and HIV screen as TNF inhibitors and additionally have herpes zoster, VTE and major cardiovascular event warnings. They do not avoid screening (ARA).",
+        "source_refs": ["Australian Rheumatology Association bDMARD prescribing checklist"]
+      },
+      {
+        "letter": "E",
+        "text": "Order chest computed tomography and proceed if no active lesions",
+        "correct": false,
+        "rationale": "Imaging detects active or healed TB but cannot exclude latent infection in the absence of IGRA or Mantoux. Latent TB management requires immunological evidence of infection plus exclusion of active disease (ARA).",
+        "source_refs": ["Australian Rheumatology Association bDMARD prescribing checklist"]
+      }
+    ],
+    "explanation": {
+      "summary": "Pre-biologic screening in Australia: IGRA (preferred) or Mantoux, HBsAg + anti-HBc + anti-HBs, anti-HCV, HIV, varicella serology (if not immune, vaccinate before starting), and update non-live vaccines (pneumococcal, influenza, COVID-19, recombinant zoster). Live vaccines (MMR, yellow fever, varicella, live zoster) are contraindicated during bDMARD therapy.",
+      "key_points": [
+        "IGRA preferred in BCG-vaccinated populations",
+        "Treat latent TB before bDMARD (isoniazid 9 months or rifampicin 4 months)",
+        "Hepatitis B reactivation occurs even in anti-HBc-positive HBsAg-negative patients (prophylactic entecavir)",
+        "Live vaccines contraindicated during bDMARD; complete before starting"
+      ],
+      "context": "TNF-alpha maintains granulomas that wall off Mycobacterium tuberculosis bacilli. Blocking TNF dissolves the granuloma, allowing bacillary escape and reactivation, typically with atypical (extrapulmonary, disseminated) presentations. This mechanism (mechanism inversion: a beneficial host response is the very thing the drug blocks) is why TB screening is non-negotiable. Hepatitis B reactivation follows a similar mechanism: immune suppression allows viral replication that the prior cellular response had contained, manifesting weeks to months later as a hepatitis flare."
+    },
+    "sources": [
+      {"label": "Australian Rheumatology Association bDMARD prescribing checklist", "url": "https://rheumatology.org.au/"},
+      {"label": "Therapeutic Guidelines: Rheumatology - DMARD therapy", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-rhh2-003",
+    "topic": "Medicine",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "GCA + PMR overlap - temporal artery biopsy decision",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["GCA", "PMR", "vasculitis"],
+    "stem": "A 74-year-old woman presents to a Central Coast LHD emergency department with 5 days of right-sided headache, jaw pain after chewing for several minutes, and 6 weeks of bilateral shoulder and hip girdle stiffness lasting 2 hours each morning. Vision is normal. The right superficial temporal artery is tender and non-pulsatile. CRP 96 mg/L, ESR 88 mm/h, haemoglobin 105 g/L (normocytic), platelets 462. The on-call team gives prednisolone 60 mg orally and arranges temporal artery biopsy for 4 days' time.",
+    "data_table": {
+      "Symptoms": "Headache, jaw claudication, PMR-pattern girdle stiffness, no visual loss.",
+      "Examination": "Right temporal artery tender, non-pulsatile.",
+      "Inflammatory markers": "CRP 96 mg/L, ESR 88 mm/h.",
+      "Bloods": "Hb 105 g/L normocytic, platelets 462.",
+      "Treatment started": "Prednisolone 60 mg po stat."
+    },
+    "lead_in": "Which is the most appropriate position on the temporal artery biopsy timing?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Biopsy within 2 weeks of starting steroids remains diagnostic in most cases",
+        "correct": true,
+        "rationale": "Histological features of giant cell arteritis (GCA) persist for at least 2 weeks on corticosteroid therapy, so steroids must not be delayed for biopsy. Australian and British Society for Rheumatology guidance: start high-dose corticosteroid immediately on clinical suspicion and arrange biopsy within 1-2 weeks. Sensitivity remains 70-80% in this window.",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - GCA", "BSR GCA guideline (referenced in ARA materials)"]
+      },
+      {
+        "letter": "B",
+        "text": "Steroids should be withheld until after biopsy to preserve diagnostic yield",
+        "correct": false,
+        "rationale": "Delaying steroids risks irreversible anterior ischaemic optic neuropathy and bilateral blindness. The Australian standard is treat first, biopsy second - histology survives the steroid effect long enough for diagnostic confirmation (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - GCA"]
+      },
+      {
+        "letter": "C",
+        "text": "Temporal artery ultrasound replaces biopsy in all Australian centres",
+        "correct": false,
+        "rationale": "Halo-sign ultrasound is increasingly used as a fast-track tool (especially in the UK) but in Australia biopsy remains the reference standard outside specialist GCA fast-track clinics. Ultrasound complements rather than replaces biopsy (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - GCA"]
+      },
+      {
+        "letter": "D",
+        "text": "Biopsy is unnecessary given the classic clinical picture and elevated inflammatory markers",
+        "correct": false,
+        "rationale": "Long-term high-dose corticosteroids carry substantial morbidity (osteoporosis, diabetes, infection); biopsy or imaging confirmation justifies prolonged treatment and is the standard (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - GCA"]
+      },
+      {
+        "letter": "E",
+        "text": "Biopsy after 4 days of steroid therapy is non-diagnostic and should be cancelled",
+        "correct": false,
+        "rationale": "Inflammatory changes persist at least 2 weeks; cancelling the biopsy abandons confirmation of a disease requiring 12-24 months of immunosuppression (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - GCA"]
+      }
+    ],
+    "explanation": {
+      "summary": "GCA management: prednisolone 1 mg/kg/day (max 60 mg) orally immediately on clinical suspicion; if any visual symptoms add intravenous methylprednisolone 500-1000 mg daily for 3 days. Biopsy of the symptomatic temporal artery within 1-2 weeks, ideally with a 2 cm segment to minimise sampling error from skip lesions. Tocilizumab is steroid-sparing for relapsing or steroid-toxic disease.",
+      "key_points": [
+        "Treat first, biopsy second - histology lasts 2 weeks",
+        "PMR overlap occurs in 40-50% of GCA",
+        "Visual loss is the feared, often irreversible, complication",
+        "Aspirin 100 mg daily reduces ischaemic events in GCA"
+      ],
+      "context": "GCA is a granulomatous large-vessel vasculitis affecting branches of the external carotid (temporal, occipital, ophthalmic). The pathology is patchy (skip lesions), driven by IL-6 and interferon-gamma. PMR overlaps mechanistically via shared IL-6 elevation, hence dramatic CRP/ESR responses and the efficacy of tocilizumab (IL-6 receptor blockade). Jaw claudication has the highest positive likelihood ratio for biopsy-positive GCA among history features. Anterior ischaemic optic neuropathy from posterior ciliary artery vasculitis is the emergency that drives the treat-first rule."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Rheumatology - Giant cell arteritis", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Rheumatology Association - GCA position", "url": "https://rheumatology.org.au/"}
+    ],
+    "reference_ranges": ["crp", "esr", "fbc"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-rhh2-004",
+    "topic": "Medicine",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "ANCA-associated vasculitis induction vs maintenance",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["ANCA", "vasculitis", "rituximab"],
+    "stem": "A 62-year-old man is admitted to a HNE LHD renal unit with 3 weeks of fatigue, weight loss, haemoptysis and rising creatinine. Investigations: creatinine 312 micromol/L (baseline 92), urinalysis 3+ blood 2+ protein with dysmorphic red cells and red cell casts. ANCA: PR3-ANCA positive at high titre. Chest CT: bilateral cavitating pulmonary nodules. Renal biopsy: pauci-immune crescentic glomerulonephritis with 60% crescents. He is dialysis-independent and has no alveolar haemorrhage. He has a 15-year remote history of bladder cancer in remission.",
+    "data_table": {
+      "Presentation": "Constitutional + haemoptysis + AKI.",
+      "Renal": "Cr 312 (baseline 92), active urinary sediment, 60% crescents on biopsy.",
+      "Serology": "PR3-ANCA high titre.",
+      "Imaging": "Bilateral cavitating pulmonary nodules.",
+      "History": "Bladder cancer 15 yr ago, remission.",
+      "Severity": "Organ-threatening (kidney, lung) but not life-threatening (no DAH, dialysis-independent)."
+    },
+    "lead_in": "Which is the most appropriate induction regimen?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Rituximab 375 mg/m2 IV weekly for 4 weeks plus methylprednisolone then oral prednisolone",
+        "correct": true,
+        "rationale": "For PR3-positive granulomatosis with polyangiitis (GPA) with organ-threatening disease, rituximab is non-inferior to cyclophosphamide for induction (RAVE, RITUXVAS) and is preferred when fertility preservation, prior cyclophosphamide exposure, or malignancy history is relevant. His bladder cancer history makes cyclophosphamide (bladder carcinogenicity, secondary malignancy risk) particularly inappropriate. Plasma exchange is reserved for severe alveolar haemorrhage or co-existing anti-GBM (PEXIVAS).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - ANCA-associated vasculitis", "KDIGO 2024 ANCA vasculitis guideline"]
+      },
+      {
+        "letter": "B",
+        "text": "Cyclophosphamide 15 mg/kg IV pulses every 2-3 weeks for 3-6 doses",
+        "correct": false,
+        "rationale": "Effective induction but cyclophosphamide is contraindicated by prior bladder cancer (urothelial recurrence risk from acrolein metabolite). Rituximab is the standard alternative with equivalent efficacy (KDIGO).",
+        "source_refs": ["KDIGO 2024 ANCA vasculitis guideline"]
+      },
+      {
+        "letter": "C",
+        "text": "Plasma exchange plus oral prednisolone alone",
+        "correct": false,
+        "rationale": "PEXIVAS showed plasma exchange does not reduce death or end-stage kidney disease in ANCA vasculitis without severe alveolar haemorrhage. Reserved for diffuse alveolar haemorrhage or anti-GBM overlap (KDIGO).",
+        "source_refs": ["KDIGO 2024 ANCA vasculitis guideline"]
+      },
+      {
+        "letter": "D",
+        "text": "Methotrexate 25 mg weekly plus oral prednisolone",
+        "correct": false,
+        "rationale": "Methotrexate is restricted to non-organ-threatening disease (NORAM trial). This patient has crescentic glomerulonephritis and lung cavitation - clear organ-threatening disease requiring rituximab or cyclophosphamide (KDIGO).",
+        "source_refs": ["KDIGO 2024 ANCA vasculitis guideline"]
+      },
+      {
+        "letter": "E",
+        "text": "Oral prednisolone 1 mg/kg/day as monotherapy",
+        "correct": false,
+        "rationale": "Steroid monotherapy is inadequate for organ-threatening ANCA vasculitis; relapse and progression to dialysis are near-universal without a second agent (KDIGO).",
+        "source_refs": ["KDIGO 2024 ANCA vasculitis guideline"]
+      }
+    ],
+    "explanation": {
+      "summary": "ANCA-associated vasculitis induction: rituximab or cyclophosphamide plus tapering glucocorticoid (PEXIVAS reduced-dose regimen). Rituximab preferred when relapsing, fertility-preserving needs, prior cyclophosphamide exposure, or malignancy history. Maintenance after induction: rituximab 500 mg every 6 months (MAINRITSAN) for 18-24 months, or azathioprine 2 mg/kg/day as alternative.",
+      "key_points": [
+        "Induction: rituximab OR cyclophosphamide + glucocorticoid",
+        "Plasma exchange only for severe DAH or anti-GBM overlap",
+        "Maintenance: rituximab pulses preferred over azathioprine for PR3-positive disease",
+        "PR3-positive disease relapses more often than MPO-positive"
+      ],
+      "context": "ANCA-associated vasculitis pathology: ANCA antibodies bind primed neutrophils (TNF-primed in infection or inflammation), triggering degranulation and release of neutrophil extracellular traps that damage small-vessel endothelium pauci-immunely (no significant immune complex deposition). Rituximab depletes CD20-positive B cells, removing the antibody-producing population. PR3-positive disease (granulomatosis with polyangiitis) is more relapsing than MPO-positive (microscopic polyangiitis), justifying scheduled rituximab maintenance. The bladder cancer history is the constraint-stack: it forces selection of rituximab over the otherwise-equivalent cyclophosphamide."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Rheumatology - ANCA-associated vasculitis", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "KDIGO 2024 ANCA vasculitis guideline", "url": "https://kdigo.org/"}
+    ],
+    "reference_ranges": ["uec"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-rhh2-005",
+    "topic": "Medicine",
+    "subtopic": "Haematology",
+    "subtopic_detail": "Anticoagulation in antiphospholipid syndrome",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["APS", "anticoagulation", "warfarin"],
+    "stem": "A 34-year-old woman is referred to a HNE LHD haematology clinic after a second unprovoked deep vein thrombosis. She had a first DVT aged 30 and one previous late pregnancy loss. Antiphospholipid antibody screen: lupus anticoagulant positive on two occasions 14 weeks apart, anti-cardiolipin IgG 78 GPL units (high titre), anti-beta2-glycoprotein-1 IgG positive. Renal function and full blood count are normal. She asks whether she can switch from warfarin to apixaban for convenience.",
+    "data_table": {
+      "Diagnosis": "Triple-positive antiphospholipid syndrome (APS), recurrent venous events.",
+      "Antibody profile": "LA positive x2, aCL IgG high titre, anti-beta2-GP1 IgG positive.",
+      "Renal/FBC": "Normal.",
+      "Current therapy": "Warfarin, INR target 2.0-3.0.",
+      "Request": "Switch to DOAC for convenience."
+    },
+    "lead_in": "Which is the most appropriate response?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Continue warfarin; direct oral anticoagulants increase thrombotic events in triple-positive APS",
+        "correct": true,
+        "rationale": "The TRAPS trial was stopped early because rivaroxaban tripled arterial thromboembolic events versus warfarin in triple-positive APS patients. International Society on Thrombosis and Haemostasis (ISTH) and Thrombosis and Haemostasis Society of Australia and New Zealand (THANZ) advise against direct oral anticoagulants (DOACs) in triple-positive APS and in any APS patient with prior arterial events. Warfarin remains the standard with target INR 2.0-3.0.",
+        "source_refs": ["THANZ position statement on DOACs in APS", "ISTH guidance - APS anticoagulation"]
+      },
+      {
+        "letter": "B",
+        "text": "Switch to apixaban 5 mg twice daily; equivalent efficacy in all APS subgroups",
+        "correct": false,
+        "rationale": "Equivalence has not been demonstrated and TRAPS showed harm with rivaroxaban specifically in triple-positive APS. Class effect is presumed cautiously by guidelines until disproven (THANZ).",
+        "source_refs": ["THANZ position statement on DOACs in APS"]
+      },
+      {
+        "letter": "C",
+        "text": "Switch to rivaroxaban 20 mg daily; warfarin INR monitoring is unnecessary",
+        "correct": false,
+        "rationale": "Rivaroxaban is the specific agent that failed in TRAPS for triple-positive APS. INR monitoring inconvenience does not outweigh the arterial event excess (THANZ).",
+        "source_refs": ["THANZ position statement on DOACs in APS"]
+      },
+      {
+        "letter": "D",
+        "text": "Switch to low molecular weight heparin long-term to avoid INR monitoring",
+        "correct": false,
+        "rationale": "Long-term LMWH is used in cancer-associated VTE but is not standard in APS. Warfarin remains first-line with reliable efficacy in this group (THANZ).",
+        "source_refs": ["THANZ position statement on DOACs in APS"]
+      },
+      {
+        "letter": "E",
+        "text": "Stop anticoagulation; two unprovoked venous events do not justify lifelong therapy",
+        "correct": false,
+        "rationale": "Recurrent unprovoked VTE plus persistent triple-positive APS mandates indefinite anticoagulation; recurrence rate off therapy approaches 30% per year (THANZ).",
+        "source_refs": ["THANZ position statement on DOACs in APS"]
+      }
+    ],
+    "explanation": {
+      "summary": "APS anticoagulation: warfarin INR 2.0-3.0 for venous events, INR 3.0-4.0 (or warfarin + aspirin) for arterial events. DOACs are contraindicated in triple-positive APS, any prior arterial thrombosis, and discouraged in single/double-positive APS unless warfarin is unsuitable. Pregnancy: switch to LMWH plus low-dose aspirin.",
+      "key_points": [
+        "Triple-positive = LA + aCL + anti-beta2-GP1 all positive",
+        "DOACs lose efficacy when the index event was arterial",
+        "Warfarin INR 2.0-3.0 for venous, 3.0-4.0 for arterial events",
+        "Lupus anticoagulant can prolong baseline INR - use chromogenic factor X if reliability uncertain"
+      ],
+      "context": "APS pathology: antiphospholipid antibodies bind beta2-glycoprotein-1 on endothelial cells, monocytes and platelets, activating complement, tissue factor expression and platelet aggregation. The procoagulant signal sits on the protein-protein interaction layer (slow, sustained, vitamin-K-dependent factor depletion countered by warfarin) rather than the active enzyme layer that DOACs target. This mechanistic mismatch explains why factor-Xa inhibitors are less effective: they block one downstream enzyme but leave intact the chronic endothelial activation that warfarin's broader factor-II/VII/IX/X depletion suppresses (mechanism inversion)."
+    },
+    "sources": [
+      {"label": "THANZ position statement on DOACs in APS", "url": "https://www.thanz.org.au/"},
+      {"label": "Therapeutic Guidelines: Cardiovascular - Anticoagulation", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["inr"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-rhh2-006",
+    "topic": "Medicine",
+    "subtopic": "Haematology",
+    "subtopic_detail": "Anticoagulation choice in valvular AF and severe renal impairment",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["AF", "anticoagulation", "renal"],
+    "stem": "A 72-year-old man with moderate mitral stenosis (rheumatic) and new persistent atrial fibrillation is reviewed at a Central Coast LHD cardiology clinic. CHA2DS2-VA score 4. Estimated glomerular filtration rate (eGFR) 28 mL/min/1.73 m2 (CKD stage 4). No prior bleeding. He has heard about apixaban from a friend and asks for it instead of warfarin.",
+    "data_table": {
+      "Rhythm": "Persistent AF, CHA2DS2-VA 4.",
+      "Valve": "Moderate rheumatic mitral stenosis.",
+      "Renal": "eGFR 28 mL/min/1.73 m2 (CKD 4).",
+      "Bleeding history": "Nil.",
+      "Request": "Apixaban instead of warfarin."
+    },
+    "lead_in": "Which is the most appropriate anticoagulant choice?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Warfarin with target international normalised ratio 2.0-3.0",
+        "correct": true,
+        "rationale": "Moderate-to-severe rheumatic mitral stenosis defines valvular atrial fibrillation, where direct oral anticoagulants are contraindicated (no trial evidence; the RE-ALIGN trial of dabigatran in mechanical valves showed increased thrombosis). Warfarin remains the standard. Severe renal impairment is an independent additional argument against DOACs but the valve lesion alone settles the choice.",
+        "source_refs": ["NHFA/CSANZ AF guideline 2018", "Therapeutic Guidelines: Cardiovascular - AF anticoagulation"]
+      },
+      {
+        "letter": "B",
+        "text": "Apixaban 2.5 mg twice daily based on renal dose reduction",
+        "correct": false,
+        "rationale": "DOACs are contraindicated in rheumatic mitral stenosis regardless of renal function. The renal dose-reduction question does not arise (NHFA/CSANZ).",
+        "source_refs": ["NHFA/CSANZ AF guideline 2018"]
+      },
+      {
+        "letter": "C",
+        "text": "Rivaroxaban 15 mg daily reduced for renal impairment",
+        "correct": false,
+        "rationale": "Rivaroxaban is contraindicated in valvular AF and is also contraindicated when creatinine clearance <15 mL/min; this patient's valve lesion alone excludes it (NHFA/CSANZ; PI).",
+        "source_refs": ["NHFA/CSANZ AF guideline 2018"]
+      },
+      {
+        "letter": "D",
+        "text": "Aspirin 100 mg daily as monotherapy",
+        "correct": false,
+        "rationale": "Aspirin is inferior to warfarin for stroke prevention in AF and is no longer recommended as an alternative; it offers minor benefit at substantial bleeding risk (NHFA/CSANZ).",
+        "source_refs": ["NHFA/CSANZ AF guideline 2018"]
+      },
+      {
+        "letter": "E",
+        "text": "Dabigatran 110 mg twice daily as renal-safe direct oral anticoagulant",
+        "correct": false,
+        "rationale": "Dabigatran is 80% renally cleared and is contraindicated at creatinine clearance <30 mL/min, and is contraindicated in mechanical and rheumatic valve disease (NHFA/CSANZ).",
+        "source_refs": ["NHFA/CSANZ AF guideline 2018"]
+      }
+    ],
+    "explanation": {
+      "summary": "Valvular AF (moderate-to-severe mitral stenosis or any mechanical heart valve) requires warfarin, not DOACs. In non-valvular AF, DOACs are preferred over warfarin, with apixaban being the most renal-tolerant (used down to CrCl 25 mL/min, with caution below). The CHA2DS2-VA score (replacing CHA2DS2-VASc in Australia since 2024, dropping sex) guides anticoagulation initiation.",
+      "key_points": [
+        "Valvular AF: warfarin only",
+        "Apixaban most renal-tolerant DOAC (>= 25 mL/min)",
+        "Dabigatran is 80% renal cleared - contraindicated CrCl <30",
+        "Aspirin is not an acceptable substitute"
+      ],
+      "context": "Mitral stenosis creates a low-flow, high-shear left atrial environment that activates platelet and contact-pathway thrombosis differently from the stasis-driven AF in structurally normal hearts. DOAC trials excluded patients with significant mitral stenosis, so efficacy is unknown and presumed inadequate. RE-ALIGN extrapolation (mechanical valves) showed harm. CHA2DS2-VA: C congestive heart failure, H hypertension, A age >=75 (2 points), D diabetes, S2 stroke/TIA (2 points), V vascular disease, A age 65-74. This patient has age, hypertension and vascular features driving the score."
+    },
+    "sources": [
+      {"label": "NHFA/CSANZ AF guideline 2018", "url": "https://www.heartfoundation.org.au/"},
+      {"label": "Therapeutic Guidelines: Cardiovascular - AF anticoagulation", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["egfr"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-rhh2-007",
+    "topic": "Medicine",
+    "subtopic": "Haematology",
+    "subtopic_detail": "Cancer-associated VTE - anticoagulant selection",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["VTE", "cancer", "anticoagulation"],
+    "stem": "A 64-year-old woman with metastatic colorectal adenocarcinoma on FOLFOX chemotherapy presents with acute right calf swelling. Doppler ultrasound confirms proximal deep vein thrombosis. Platelets 168, eGFR 78 mL/min/1.73 m2, normal liver function. No active bleeding; no recent gastrointestinal surgery. She has had mild grade 1 mucositis but no upper or lower gastrointestinal bleeding.",
+    "data_table": {
+      "Cancer": "Metastatic colorectal adenocarcinoma on FOLFOX.",
+      "VTE": "Proximal right DVT.",
+      "Bloods": "Plt 168, eGFR 78, LFTs normal.",
+      "Bleeding": "Nil; mild grade 1 mucositis only."
+    },
+    "lead_in": "Which is the most appropriate anticoagulant?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Apixaban 10 mg twice daily for 7 days then 5 mg twice daily",
+        "correct": true,
+        "rationale": "Caravaggio and ADAM-VTE trials showed apixaban is non-inferior to dalteparin for cancer-associated VTE without the GI bleeding excess seen with rivaroxaban and edoxaban in luminal GI cancers. ISTH 2022 and Australian Cancer Council guidance endorse apixaban as first-line for cancer-associated VTE in patients with luminal GI malignancy.",
+        "source_refs": ["Cancer Council Australia - VTE in cancer", "ISTH 2022 cancer-associated thrombosis guidance"]
+      },
+      {
+        "letter": "B",
+        "text": "Rivaroxaban 15 mg twice daily for 21 days then 20 mg daily",
+        "correct": false,
+        "rationale": "SELECT-D and Hokusai VTE Cancer showed rivaroxaban and edoxaban increase major bleeding versus dalteparin specifically in luminal GI cancers; apixaban does not (ISTH).",
+        "source_refs": ["ISTH 2022 cancer-associated thrombosis guidance"]
+      },
+      {
+        "letter": "C",
+        "text": "Enoxaparin 1.5 mg/kg subcutaneously once daily indefinitely",
+        "correct": false,
+        "rationale": "Once-daily 1.5 mg/kg dosing is for non-cancer VTE. Cancer-associated VTE uses 1 mg/kg twice daily for the first month then 1 mg/kg daily (CLOT regimen with dalteparin). LMWH remains an option but apixaban is preferred when oral therapy is feasible (ISTH).",
+        "source_refs": ["ISTH 2022 cancer-associated thrombosis guidance"]
+      },
+      {
+        "letter": "D",
+        "text": "Warfarin with target international normalised ratio 2.0-3.0",
+        "correct": false,
+        "rationale": "Warfarin is inferior to LMWH and DOACs in cancer-associated VTE (CLOT showed 50% recurrence reduction with dalteparin vs warfarin). Drug interactions with chemotherapy make INR control unreliable (ISTH).",
+        "source_refs": ["ISTH 2022 cancer-associated thrombosis guidance"]
+      },
+      {
+        "letter": "E",
+        "text": "Aspirin 100 mg daily plus graduated compression stockings",
+        "correct": false,
+        "rationale": "Aspirin is not adequate for acute proximal DVT; therapeutic anticoagulation is required to prevent extension and pulmonary embolism (ISTH).",
+        "source_refs": ["ISTH 2022 cancer-associated thrombosis guidance"]
+      }
+    ],
+    "explanation": {
+      "summary": "Cancer-associated VTE: apixaban or LMWH (dalteparin, enoxaparin) for at least 6 months; longer if active cancer or ongoing chemotherapy. Avoid rivaroxaban/edoxaban in luminal GI cancers (excess bleeding). Avoid warfarin (interactions, recurrence). Reassess at 6 months: continue while cancer is active or on treatment.",
+      "key_points": [
+        "Apixaban or LMWH first-line in cancer VTE",
+        "Avoid rivaroxaban/edoxaban in luminal GI cancer",
+        "Treat 6 months minimum, longer while cancer active",
+        "Reassess bleeding risk at each cycle (thrombocytopenia, mucositis)"
+      ],
+      "context": "Cancer creates a procoagulant state via tissue factor expression on tumour cells (especially adenocarcinomas), cytokine-driven endothelial activation, platelet activation by mucin shedding and circulating microparticles. Chemotherapy adds direct endothelial toxicity and (with platinum-based agents) thrombotic risk. Apixaban's pharmacology - reversible factor Xa inhibition with 25% renal clearance and twice-daily dosing - gives smoother levels and less peak GI mucosal exposure than once-daily rivaroxaban, plausibly explaining the GI-bleeding signal difference (constraint stack: GI malignancy + chemo + need for oral therapy narrows the field to apixaban or LMWH)."
+    },
+    "sources": [
+      {"label": "Cancer Council Australia - VTE in cancer", "url": "https://www.cancer.org.au/"},
+      {"label": "ISTH 2022 cancer-associated thrombosis guidance", "url": "https://www.isth.org/"}
+    ],
+    "reference_ranges": ["fbc", "egfr"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-rhh2-008",
+    "topic": "Medicine",
+    "subtopic": "Haematology",
+    "subtopic_detail": "Extended VTE therapy - decision at 3 months",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["VTE", "extended therapy"],
+    "stem": "A 48-year-old man completed 3 months of apixaban for an unprovoked proximal deep vein thrombosis. He has no thrombophilia (negative full panel), no malignancy on age-appropriate screening, normal D-dimer 4 weeks after stopping anticoagulation would be needed for HERDOO2-style assessment in women but he is male. He is overweight (body mass index 31) and has no bleeding history. He asks whether he can stop.",
+    "data_table": {
+      "Index event": "Unprovoked proximal DVT 3 months ago.",
+      "Therapy": "Apixaban 5 mg BD currently.",
+      "Thrombophilia": "Negative.",
+      "Cancer screen": "Negative (age-appropriate).",
+      "BMI": "31.",
+      "Bleeding history": "Nil."
+    },
+    "lead_in": "Which is the most appropriate plan from 3 months onwards?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Extended apixaban 2.5 mg twice daily indefinitely with annual review",
+        "correct": true,
+        "rationale": "AMPLIFY-EXT showed apixaban 2.5 mg twice daily after the initial 6-month treatment phase reduced recurrent VTE by over 80% with bleeding rates similar to placebo. ISTH guidance and Therapeutic Guidelines endorse extended low-dose DOAC therapy for unprovoked proximal DVT in men (higher recurrence than women) and in patients with persisting risk factors (obesity here), absent high bleeding risk. Annual reassessment of bleeding and patient preference is required.",
+        "source_refs": ["Therapeutic Guidelines: Cardiovascular - Extended VTE therapy", "ISTH guidance on extended VTE anticoagulation"]
+      },
+      {
+        "letter": "B",
+        "text": "Stop apixaban now; 3 months is sufficient for any proximal DVT",
+        "correct": false,
+        "rationale": "Three months is the minimum for proximal DVT but male sex and unprovoked nature give an annual recurrence of 7-10%, justifying extended therapy when bleeding risk is acceptable (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Cardiovascular - Extended VTE therapy"]
+      },
+      {
+        "letter": "C",
+        "text": "Continue apixaban 5 mg twice daily indefinitely without dose reduction",
+        "correct": false,
+        "rationale": "AMPLIFY-EXT showed 2.5 mg twice daily is equally effective at preventing recurrence as 5 mg twice daily in the extended phase with lower bleeding. Full dose is not required after the initial treatment period (ISTH).",
+        "source_refs": ["ISTH guidance on extended VTE anticoagulation"]
+      },
+      {
+        "letter": "D",
+        "text": "Switch to aspirin 100 mg daily as extended secondary prevention",
+        "correct": false,
+        "rationale": "Aspirin (ASPIRE, WARFASA) reduces recurrence by only 30-40% versus 80%+ with low-dose DOAC and is reserved for patients who decline or cannot tolerate anticoagulation (ISTH).",
+        "source_refs": ["ISTH guidance on extended VTE anticoagulation"]
+      },
+      {
+        "letter": "E",
+        "text": "Switch to warfarin with target international normalised ratio 1.5-2.0",
+        "correct": false,
+        "rationale": "Low-intensity warfarin (PREVENT) is inferior to standard intensity and is not an Australian standard for extended VTE prevention. Apixaban 2.5 mg BD is the preferred regimen (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Cardiovascular - Extended VTE therapy"]
+      }
+    ],
+    "explanation": {
+      "summary": "Unprovoked proximal VTE: minimum 3 months treatment, then decide on extended therapy. Extended therapy is favoured in men, persisting risk factors, recurrent VTE or strong thrombophilia, unless bleeding risk is high. Low-dose DOAC (apixaban 2.5 mg BD or rivaroxaban 10 mg daily) is the preferred extended regimen. Reassess annually.",
+      "key_points": [
+        "3-month minimum for proximal DVT",
+        "Extended low-dose DOAC for unprovoked DVT in men",
+        "HERDOO2 score can identify low-risk women safe to stop",
+        "Annual review of bleeding risk and preference"
+      ],
+      "context": "Recurrence risk after unprovoked VTE is sex-divergent: men 10% in year 1, women 5%, both rising cumulatively. The HERDOO2 score (Hyperpigmentation, Edema, Redness; D-dimer >250; Obesity BMI >30; Older age >65) identifies women safe to stop after 3-6 months (score 0-1) but is not validated in men, so men with unprovoked VTE default to extended therapy. AMPLIFY-EXT pivotal data: apixaban 2.5 mg BD vs placebo reduced recurrence from 8.8% to 1.7% with major bleeding 0.2% vs 0.5% - the rare situation where extended therapy improves both outcomes."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Cardiovascular - Extended VTE therapy", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "ISTH guidance on extended VTE anticoagulation", "url": "https://www.isth.org/"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-rhh2-009",
+    "topic": "Medicine",
+    "subtopic": "Haematology",
+    "subtopic_detail": "ITP vs TTP vs HUS - adult distinction",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["TTP", "ITP", "HUS"],
+    "stem": "A 36-year-old woman is admitted to a HNE LHD emergency department with 3 days of confusion, fever and bruising. Vital signs: temperature 38.4, heart rate 112, blood pressure 138/86. Examination: petechiae over lower limbs, no splenomegaly, fluctuating confusion. Bloods: haemoglobin 78 g/L, platelets 14 x 10^9/L, white cells 9.1, reticulocytes elevated, bilirubin 48 micromol/L, LDH 1240 U/L, creatinine 142 micromol/L (baseline 70), haptoglobin undetectable. Blood film: numerous schistocytes. Direct antiglobulin test negative. Coagulation: INR 1.1, APTT 32, fibrinogen 3.4 g/L.",
+    "data_table": {
+      "Pentad features": "Fever, neuro changes, AKI, thrombocytopenia, MAHA.",
+      "Bloods": "Hb 78, Plt 14, retics up, bilirubin 48, LDH 1240, haptoglobin undetectable.",
+      "Film": "Numerous schistocytes.",
+      "DAT": "Negative.",
+      "Coags": "INR 1.1, APTT 32, fibrinogen 3.4.",
+      "Renal": "Cr 142 (baseline 70)."
+    },
+    "lead_in": "Which is the most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Urgent plasma exchange plus corticosteroid, before ADAMTS13 result",
+        "correct": true,
+        "rationale": "Pentad of microangiopathic haemolytic anaemia (MAHA, schistocytes + low haptoglobin + raised LDH + raised bilirubin), thrombocytopenia, neurological changes, fever and acute kidney injury (AKI) with normal coagulation defines thrombotic thrombocytopenic purpura (TTP) until ADAMTS13 returns. Untreated mortality exceeds 90%; treated 10-20%. Plasma exchange replaces ADAMTS13 and removes the inhibitor antibody. Steroids suppress antibody production. Caplacizumab is added in many Australian centres while awaiting ADAMTS13 confirmation.",
+        "source_refs": ["Therapeutic Guidelines: Haematology - TTP", "British Society for Haematology TTP guideline (HSANZ aligned)"]
+      },
+      {
+        "letter": "B",
+        "text": "Platelet transfusion to target greater than 50 x 10^9/L plus oral prednisolone",
+        "correct": false,
+        "rationale": "Platelet transfusion in TTP fuels thrombotic microangiopathy and worsens neurological and cardiac events. Reserved for life-threatening bleeding only. The diagnosis here is TTP not ITP (HSANZ).",
+        "source_refs": ["Therapeutic Guidelines: Haematology - TTP"]
+      },
+      {
+        "letter": "C",
+        "text": "Eculizumab as first-line therapy",
+        "correct": false,
+        "rationale": "Eculizumab targets complement-mediated atypical haemolytic uraemic syndrome (aHUS). In adults with prominent neurology and only modest AKI, TTP is more likely; eculizumab is appropriate when aHUS is the leading diagnosis (after ADAMTS13 returns adequate) (HSANZ).",
+        "source_refs": ["Therapeutic Guidelines: Haematology - TMA"]
+      },
+      {
+        "letter": "D",
+        "text": "Intravenous immunoglobulin 1 g/kg plus oral prednisolone",
+        "correct": false,
+        "rationale": "IVIg + steroid is first-line for adult immune thrombocytopenia (ITP), which presents with isolated thrombocytopenia without MAHA, AKI or neurology. This patient has the full thrombotic microangiopathy syndrome (HSANZ).",
+        "source_refs": ["Therapeutic Guidelines: Haematology - ITP"]
+      },
+      {
+        "letter": "E",
+        "text": "Empirical ceftriaxone plus supportive care pending blood cultures",
+        "correct": false,
+        "rationale": "Fever in TTP is a syndrome feature, not infection-driven. Antibiotic-first delays plasma exchange and increases mortality. Cultures may be sent in parallel but exchange must not wait (HSANZ).",
+        "source_refs": ["Therapeutic Guidelines: Haematology - TTP"]
+      }
+    ],
+    "explanation": {
+      "summary": "Adult thrombotic microangiopathy differential: TTP (ADAMTS13 activity <10%, neurological prominent, AKI mild-moderate), aHUS (complement dysregulation, AKI prominent, neurology variable), Shiga toxin HUS (preceding bloody diarrhoea, children > adults), DIC (deranged coagulation, low fibrinogen). TTP demands urgent plasma exchange. ITP differs entirely: isolated platelet drop without MAHA.",
+      "key_points": [
+        "TTP pentad: MAHA + thrombocytopenia + neuro + AKI + fever (full pentad uncommon)",
+        "ADAMTS13 <10% confirms TTP but treat empirically while awaiting",
+        "Avoid platelet transfusion in TTP unless life-threatening bleed",
+        "Caplacizumab (anti-vWF nanobody) reduces refractoriness in many centres"
+      ],
+      "context": "TTP mechanism: ADAMTS13 normally cleaves ultra-large von Willebrand factor (vWF) multimers released from endothelium. Acquired deficiency (autoantibody) leaves ultra-large multimers intact - they bind platelets and form microthrombi in capillaries and arterioles, especially in brain, heart, kidneys, mesentery. The microthrombi shear passing red cells (schistocytes, intravascular haemolysis - undetectable haptoglobin, high LDH) and consume platelets (thrombocytopenia). The mechanism inversion is therapeutic: replace ADAMTS13 (plasma) and remove the inhibitor antibody (exchange), then suppress production (steroid, rituximab). Caplacizumab blocks the vWF-platelet interaction directly, buying time."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Haematology - TTP", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "HSANZ guidance on TMA", "url": "https://www.hsanz.org.au/"}
+    ],
+    "reference_ranges": ["fbc", "uec", "ldh", "haptoglobin"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-rhh2-010",
+    "topic": "Medicine",
+    "subtopic": "Haematology",
+    "subtopic_detail": "Microcytic anaemia - workup",
+    "difficulty": 1,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["anaemia", "microcytic"],
+    "stem": "A 42-year-old woman presents to a Central Coast LHD general practice with 3 months of fatigue. She has heavy menstrual periods and follows a vegetarian diet. Full blood count: haemoglobin 92 g/L, mean cell volume (MCV) 68 fL, mean cell haemoglobin 22 pg, red cell distribution width raised. White cells and platelets normal. Her general practitioner orders iron studies.",
+    "data_table": {
+      "FBC": "Hb 92, MCV 68, MCH 22, RDW raised.",
+      "Diet": "Vegetarian.",
+      "Menses": "Heavy."
+    },
+    "lead_in": "Which iron study pattern best confirms the most likely diagnosis?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Low ferritin, low transferrin saturation, raised transferrin",
+        "correct": true,
+        "rationale": "Iron deficiency anaemia from menstrual losses and reduced dietary intake. Ferritin (iron storage) falls first, transferrin (iron-carrying capacity) rises as the liver upregulates synthesis to scavenge iron, and transferrin saturation falls. Ferritin under 30 micrograms/L confirms iron deficiency in non-inflamed states (eTG; RCPA).",
+        "source_refs": ["Therapeutic Guidelines: Haematology - Iron deficiency", "RCPA iron studies interpretation"]
+      },
+      {
+        "letter": "B",
+        "text": "Raised ferritin, low transferrin saturation, low transferrin",
+        "correct": false,
+        "rationale": "This is anaemia of chronic disease: inflammation upregulates hepcidin, sequestering iron in macrophages (high ferritin), reducing transferrin synthesis and saturation. MCV is usually normal or only mildly low (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Haematology - Anaemia of chronic disease"]
+      },
+      {
+        "letter": "C",
+        "text": "Normal ferritin, normal transferrin saturation, normal MCV",
+        "correct": false,
+        "rationale": "Inconsistent with microcytic anaemia. Suggests thalassaemia trait (microcytosis with normal iron studies) requires haemoglobin electrophoresis (eTG).",
+        "source_refs": ["RCPA iron studies interpretation"]
+      },
+      {
+        "letter": "D",
+        "text": "Raised ferritin, raised transferrin saturation, raised serum iron",
+        "correct": false,
+        "rationale": "This is iron overload (haemochromatosis, transfusion overload) - the opposite metabolic picture and not associated with anaemia in this pattern (RCPA).",
+        "source_refs": ["RCPA iron studies interpretation"]
+      },
+      {
+        "letter": "E",
+        "text": "Low ferritin, raised transferrin saturation, raised transferrin",
+        "correct": false,
+        "rationale": "Internally inconsistent: low ferritin with high saturation suggests acute iron supplementation effect or sample after iron dose. Not a recognised iron deficiency pattern (RCPA).",
+        "source_refs": ["RCPA iron studies interpretation"]
+      }
+    ],
+    "explanation": {
+      "summary": "Microcytic anaemia differential: iron deficiency (commonest), thalassaemia (microcytosis disproportionate to anaemia, normal iron), anaemia of chronic disease (usually normocytic, sometimes mildly microcytic), sideroblastic anaemia (rare). Iron studies are the first-line discriminator. In iron deficiency, treat the cause (menstrual, dietary, GI loss) and replace iron orally or intravenously.",
+      "key_points": [
+        "Ferritin <30 microg/L = iron deficiency in non-inflamed states",
+        "Ferritin <100 microg/L with TSAT <20% suggests iron deficiency in inflammation/CKD",
+        "Investigate cause: GI loss in men and postmenopausal women",
+        "Oral iron alternate-day dosing improves absorption vs daily"
+      ],
+      "context": "Iron metabolism: hepcidin is the master regulator, released by the liver in response to iron stores and inflammation. High hepcidin internalises and degrades ferroportin on enterocytes and macrophages, blocking iron export to plasma. In inflammation, hepcidin is elevated even when stores are low, masking iron deficiency on ferritin alone - hence the higher ferritin threshold (100 microg/L with TSAT <20%) in chronic disease. Alternate-day oral iron dosing exploits hepcidin's circadian rise after a dose: a dose every second day catches hepcidin at its trough, doubling fractional absorption versus daily dosing."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Haematology - Iron deficiency", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "RCPA iron studies interpretation", "url": "https://www.rcpa.edu.au/"}
+    ],
+    "reference_ranges": ["fbc", "iron"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-rhh2-011",
+    "topic": "Medicine",
+    "subtopic": "Haematology",
+    "subtopic_detail": "Macrocytic anaemia - mechanism-driven workup",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["macrocytic", "B12"],
+    "stem": "A 67-year-old woman presents to a HNE LHD general practice with 4 months of fatigue, paraesthesia in both feet and an unsteady gait. Full blood count: haemoglobin 96 g/L, MCV 116 fL, white cells 4.2, platelets 130. Blood film: oval macrocytes, hypersegmented neutrophils. LDH raised, indirect bilirubin mildly raised. She takes metformin 1 g twice daily for type 2 diabetes and esomeprazole 20 mg daily for reflux.",
+    "data_table": {
+      "FBC": "Hb 96, MCV 116, WCC 4.2, Plt 130.",
+      "Film": "Oval macrocytes, hypersegmented neutrophils.",
+      "Haemolysis markers": "LDH up, indirect bilirubin mildly up.",
+      "Neuro": "Bilateral foot paraesthesia, unsteady gait.",
+      "Medications": "Metformin, esomeprazole."
+    },
+    "lead_in": "Which is the most appropriate next investigation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Serum vitamin B12 and red cell folate levels",
+        "correct": true,
+        "rationale": "Macrocytosis, hypersegmented neutrophils and pancytopenic trend with neurological features suggest vitamin B12 deficiency. Metformin (impairs B12 absorption via altered ileal calcium-dependent uptake) and long-term proton pump inhibitor (reduced gastric acid impairs cobalamin release from food protein) are both contributors. Folate should be measured simultaneously - giving folate without B12 in combined deficiency precipitates subacute combined degeneration.",
+        "source_refs": ["Therapeutic Guidelines: Haematology - Macrocytic anaemia", "RCPA haematology testing"]
+      },
+      {
+        "letter": "B",
+        "text": "Reticulocyte count and direct antiglobulin test",
+        "correct": false,
+        "rationale": "Useful if haemolysis is the leading diagnosis, but the film features (oval macrocytes, hypersegmented neutrophils) and neurological signs point to megaloblastic process, not autoimmune haemolysis (RCPA).",
+        "source_refs": ["RCPA haematology testing"]
+      },
+      {
+        "letter": "C",
+        "text": "Bone marrow biopsy for suspected myelodysplastic syndrome",
+        "correct": false,
+        "rationale": "MDS is a differential for macrocytic anaemia in older adults but reversible causes (B12, folate, thyroid, alcohol, drugs) are excluded first. Bone marrow is later in the workup (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Haematology - Macrocytic anaemia"]
+      },
+      {
+        "letter": "D",
+        "text": "Thyroid function tests and gamma-glutamyl transferase",
+        "correct": false,
+        "rationale": "Hypothyroidism and alcohol excess cause non-megaloblastic macrocytosis (round macrocytes, no hypersegmentation). The film here is classically megaloblastic - go to B12/folate first (RCPA).",
+        "source_refs": ["RCPA haematology testing"]
+      },
+      {
+        "letter": "E",
+        "text": "Gastroscopy with duodenal biopsy for coeliac disease",
+        "correct": false,
+        "rationale": "Coeliac disease can cause B12/folate malabsorption but is investigated after deficiencies are confirmed; serology (tissue transglutaminase IgA) precedes biopsy (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Haematology - Macrocytic anaemia"]
+      }
+    ],
+    "explanation": {
+      "summary": "Macrocytic anaemia workup: distinguish megaloblastic (B12/folate deficiency, drugs disrupting DNA synthesis e.g. methotrexate, hydroxyurea) from non-megaloblastic (alcohol, liver disease, hypothyroidism, MDS, reticulocytosis). Film features (hypersegmented neutrophils, oval macrocytes) point to megaloblastic. Measure B12 and folate before replacement; replace B12 first (or together) if both low.",
+      "key_points": [
+        "Hypersegmented neutrophils + oval macrocytes = megaloblastic",
+        "Metformin and PPIs both impair B12 absorption",
+        "Replace B12 before/with folate to avoid SCD precipitation",
+        "Neurological signs mandate parenteral B12 loading"
+      ],
+      "context": "B12 (cobalamin) is required for methylmalonyl-CoA mutase and methionine synthase. Deficiency disrupts DNA synthesis (megaloblastic anaemia) and myelin maintenance (subacute combined degeneration of dorsal columns and corticospinal tracts - the unsteady gait and paraesthesia here). Side-effect-to-class reasoning: chronic acid suppression (PPIs, atrophic gastritis) reduces protein-bound B12 liberation; metformin disrupts ileal absorption. Both are common, both are reversible-cause checks before invasive workup. Folate replacement alone bypasses the haematological deficit but leaves neurological B12 deficiency to progress unchecked - hence the rule to replace B12 first."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Haematology - Macrocytic anaemia", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "RCPA haematology testing", "url": "https://www.rcpa.edu.au/"}
+    ],
+    "reference_ranges": ["fbc"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-rhh2-012",
+    "topic": "Medicine",
+    "subtopic": "Haematology",
+    "subtopic_detail": "Anaemia in CKD - ESA initiation threshold",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["CKD anaemia", "ESA"],
+    "stem": "A 68-year-old man with stage 4 chronic kidney disease (eGFR 22) is reviewed at a HNE LHD renal clinic. Haemoglobin 92 g/L, MCV 88 fL. Iron studies: ferritin 180 microg/L, transferrin saturation 28%. Vitamin B12 and folate normal. Faecal occult blood negative. No bleeding. He reports fatigue limiting daily walks.",
+    "data_table": {
+      "CKD": "Stage 4, eGFR 22.",
+      "Hb": "92 g/L, MCV 88.",
+      "Iron": "Ferritin 180, TSAT 28%.",
+      "B12/folate": "Normal.",
+      "Bleeding": "Nil; FOBT negative.",
+      "Symptoms": "Fatigue."
+    },
+    "lead_in": "Which is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Start erythropoiesis-stimulating agent targeting haemoglobin 100-115 g/L",
+        "correct": true,
+        "rationale": "Iron stores are adequate (ferritin >100 microg/L, TSAT >20%), reversible causes excluded, haemoglobin <100 g/L and symptomatic - erythropoiesis-stimulating agent (ESA) is indicated per KDIGO and KHA-CARI. Target haemoglobin 100-115 g/L; aiming above 130 g/L (TREAT, CHOIR) increases stroke and cardiovascular events.",
+        "source_refs": ["KHA-CARI CKD anaemia guideline", "KDIGO 2012 anaemia in CKD"]
+      },
+      {
+        "letter": "B",
+        "text": "Start ESA targeting haemoglobin 130-140 g/L for symptom resolution",
+        "correct": false,
+        "rationale": "TREAT and CHOIR showed that haemoglobin targets above 130 g/L increase stroke and cardiovascular mortality. Australian and KDIGO targets remain 100-115 g/L (KDIGO).",
+        "source_refs": ["KDIGO 2012 anaemia in CKD"]
+      },
+      {
+        "letter": "C",
+        "text": "Intravenous iron infusion irrespective of current iron stores",
+        "correct": false,
+        "rationale": "Iron stores are already adequate (ferritin 180, TSAT 28%); further iron does not improve haemoglobin and risks oxidative stress and infection. IV iron is given when ferritin <100 microg/L or TSAT <20% in CKD (KDIGO).",
+        "source_refs": ["KDIGO 2012 anaemia in CKD"]
+      },
+      {
+        "letter": "D",
+        "text": "Red cell transfusion of 2 units to raise haemoglobin promptly",
+        "correct": false,
+        "rationale": "Transfusion in CKD anaemia is reserved for symptomatic acute drops, surgery, or failed ESA. It risks HLA sensitisation that complicates future transplantation (ANZSBT).",
+        "source_refs": ["ANZSBT blood management guideline"]
+      },
+      {
+        "letter": "E",
+        "text": "Repeat haemoglobin in 3 months without treatment",
+        "correct": false,
+        "rationale": "He is symptomatic with haemoglobin 92, iron-replete and B12/folate-replete; expectant management forfeits proven benefit (KHA-CARI).",
+        "source_refs": ["KHA-CARI CKD anaemia guideline"]
+      }
+    ],
+    "explanation": {
+      "summary": "CKD anaemia workup: confirm anaemia, exclude non-renal causes (iron, B12, folate, occult blood loss, haemolysis, MDS). Optimise iron first (target ferritin >100 microg/L and TSAT >20%; if dialysis, ferritin >200 and TSAT >20%). Start ESA when Hb <100 g/L and symptomatic, target 100-115 g/L. Newer agents: HIF-PHI (roxadustat) increasingly used.",
+      "key_points": [
+        "Iron-replete first (ferritin >100, TSAT >20%)",
+        "Hb target 100-115 g/L - higher targets harm",
+        "Transfusion sparingly to preserve transplant eligibility",
+        "Investigate non-renal causes before attributing to CKD"
+      ],
+      "context": "CKD anaemia mechanism: reduced erythropoietin (EPO) production by peritubular fibroblasts as renal mass declines; uraemic inhibitors of erythropoiesis; absolute iron deficiency from chronic blood loss (dialysis, GI) and functional iron deficiency from inflammation-driven hepcidin upregulation sequestering iron. ESAs replace EPO but cannot drive erythropoiesis without iron substrate - hence iron optimisation must precede ESA initiation. The AU cut-off discrimination is the haemoglobin target band: 100-115 g/L balances symptom improvement against the cardiovascular harms shown when targeting normal-range haemoglobin in CKD."
+    },
+    "sources": [
+      {"label": "KHA-CARI CKD anaemia guideline", "url": "https://kha-cari.org.au/"},
+      {"label": "KDIGO 2012 anaemia in CKD", "url": "https://kdigo.org/"}
+    ],
+    "reference_ranges": ["fbc", "iron", "egfr"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-rhh2-013",
+    "topic": "Medicine",
+    "subtopic": "Haematology",
+    "subtopic_detail": "Sickle cell - acute chest syndrome",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["sickle cell", "acute chest"],
+    "stem": "A 22-year-old woman with homozygous sickle cell disease presents to a HNE LHD emergency department with 24 hours of right upper-quadrant and back pain typical of her vaso-occlusive crises, treated with intravenous opioid analgesia. Six hours later she becomes dyspnoeic with new fever 38.6, oxygen saturation 88% room air, respiratory rate 28, and chest X-ray shows new bilateral lower lobe infiltrates. Haemoglobin 68 g/L (baseline 82), platelets 320, white cells 18.",
+    "data_table": {
+      "Disease": "Homozygous sickle cell, in vaso-occlusive crisis 24 h.",
+      "New features": "Dyspnoea, fever 38.6, SpO2 88% RA, RR 28.",
+      "CXR": "New bilateral lower lobe infiltrates.",
+      "FBC": "Hb 68 (baseline 82), Plt 320, WCC 18.",
+      "Analgesia": "IV opioid running."
+    },
+    "lead_in": "Which is the most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Oxygen, broad-spectrum antibiotics, exchange transfusion and incentive spirometry",
+        "correct": true,
+        "rationale": "Acute chest syndrome: new pulmonary infiltrate plus fever plus respiratory symptoms in sickle cell disease. Mortality 3-9%. Management is multimodal: oxygen, broad-spectrum antibiotics (cover atypicals - mycoplasma and chlamydia are common precipitants), incentive spirometry (prevents atelectasis from splinting pain), and exchange transfusion (preferred over simple transfusion when severe: SpO2 <90%, multilobar, falling Hb). Continue analgesia but titrate to avoid further hypoventilation.",
+        "source_refs": ["HSANZ sickle cell disease guideline", "Therapeutic Guidelines: Haematology - Sickle cell crises"]
+      },
+      {
+        "letter": "B",
+        "text": "Increase opioid analgesia and continue current observation",
+        "correct": false,
+        "rationale": "Acute chest is a respiratory emergency; opioid escalation alone risks further hypoventilation and progression. Definitive management combines oxygen, antibiotics, transfusion and chest physiotherapy (HSANZ).",
+        "source_refs": ["HSANZ sickle cell disease guideline"]
+      },
+      {
+        "letter": "C",
+        "text": "Simple top-up transfusion only to baseline haemoglobin",
+        "correct": false,
+        "rationale": "Simple transfusion is acceptable in mild acute chest but exchange transfusion is preferred when severe (SpO2 <90%, multilobar infiltrates, falling Hb) - it reduces HbS percentage without volume overload (HSANZ).",
+        "source_refs": ["HSANZ sickle cell disease guideline"]
+      },
+      {
+        "letter": "D",
+        "text": "Diuretics and non-invasive ventilation for presumed fluid overload",
+        "correct": false,
+        "rationale": "Acute chest syndrome is not pulmonary oedema; diuresis worsens hypovolaemic sickling. NIV may be considered for severe respiratory failure but is not the primary intervention (HSANZ).",
+        "source_refs": ["HSANZ sickle cell disease guideline"]
+      },
+      {
+        "letter": "E",
+        "text": "Antibiotics alone targeting Streptococcus pneumoniae",
+        "correct": false,
+        "rationale": "Antibiotics are necessary but insufficient. Atypical cover is required, plus oxygen, transfusion (exchange when severe) and chest physiotherapy - the bundle reduces mortality (HSANZ).",
+        "source_refs": ["HSANZ sickle cell disease guideline"]
+      }
+    ],
+    "explanation": {
+      "summary": "Acute chest syndrome triggers a vicious cycle: pain causes splinting and hypoventilation, hypoxia drives sickling, sickling causes pulmonary microvascular occlusion and infarction, releasing fat emboli from infarcted marrow. Multimodal bundle: oxygen, antibiotics (cefotaxime + macrolide or doxycycline), incentive spirometry, judicious analgesia, exchange transfusion for severe disease, and bronchodilators if reversible airway component.",
+      "key_points": [
+        "Acute chest = new infiltrate + (fever OR resp symptom) in SCD",
+        "Atypical cover essential (mycoplasma common trigger)",
+        "Exchange transfusion if severe: SpO2 <90%, multilobar, falling Hb",
+        "Incentive spirometry prevents progression in pain crises"
+      ],
+      "context": "Acute chest syndrome mechanism: any pulmonary insult (infection, atelectasis from chest-wall splinting in pain crisis, fat embolism from infarcted bone marrow) reduces alveolar oxygen tension. Hypoxia in capillaries promotes HbS polymerisation, deforming red cells into sickles that occlude vessels and cause infarction - which further reduces oxygen tension. Exchange transfusion breaks the cycle by reducing the proportion of HbS in circulation rapidly (target <30%) without the volume load that simple transfusion would add to already-stressed pulmonary vasculature (mechanism inversion: the disease cell IS the problem; remove it rather than dilute it)."
+    },
+    "sources": [
+      {"label": "HSANZ sickle cell disease guideline", "url": "https://www.hsanz.org.au/"},
+      {"label": "Therapeutic Guidelines: Haematology - Sickle cell crises", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["fbc", "abg"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-rhh2-014",
+    "topic": "Medicine",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "Crystal vs septic arthritis - joint aspiration",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["gout", "septic arthritis"],
+    "stem": "A 56-year-old man presents to a Central Coast LHD emergency department with 8 hours of severe right knee pain, swelling and erythema. Temperature 37.4, heart rate 96. Two previous similar episodes responded to indomethacin. Serum urate 0.52 mmol/L. White cells 11.2, CRP 64. Joint aspiration is performed.",
+    "data_table": {
+      "Joint": "Right knee, hot swollen erythematous, 8 h.",
+      "Previous": "2 similar episodes, NSAID-responsive.",
+      "Urate": "0.52 mmol/L.",
+      "Inflammatory markers": "WCC 11.2, CRP 64."
+    },
+    "lead_in": "Which synovial fluid finding most strongly supports a gout flare over septic arthritis?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Negatively birefringent needle-shaped crystals and sterile Gram stain",
+        "correct": true,
+        "rationale": "Monosodium urate crystals are needle-shaped and strongly negatively birefringent under polarised light. Sterile Gram stain (with culture pending) and elevated synovial white cell count up to 50 x 10^9/L are consistent with crystal arthritis. Septic arthritis typically shows neutrophils with positive Gram stain (in 50-70%) and synovial WCC frequently >50 x 10^9/L (eTG; ARA).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - Gout vs septic arthritis", "Australian Rheumatology Association - joint aspiration"]
+      },
+      {
+        "letter": "B",
+        "text": "Positively birefringent rhomboid crystals and sterile Gram stain",
+        "correct": false,
+        "rationale": "Calcium pyrophosphate (pseudogout) crystals are rhomboid and weakly positively birefringent. Possible cause of an acute hot joint but the urate level and clinical pattern favour gout here (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - Gout vs septic arthritis"]
+      },
+      {
+        "letter": "C",
+        "text": "Synovial white cell count over 100 x 10^9/L with no crystals",
+        "correct": false,
+        "rationale": "Synovial WCC over 50-100 x 10^9/L without crystals strongly suggests septic arthritis until proven otherwise. This finding argues against gout (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - Gout vs septic arthritis"]
+      },
+      {
+        "letter": "D",
+        "text": "Gram-positive cocci in clusters on Gram stain",
+        "correct": false,
+        "rationale": "Suggests Staphylococcus aureus septic arthritis - the diagnosis to exclude before treating as gout. This finding mandates surgical washout and antibiotics (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - Gout vs septic arthritis"]
+      },
+      {
+        "letter": "E",
+        "text": "Bloody synovial fluid with normal red cell morphology",
+        "correct": false,
+        "rationale": "Haemarthrosis points to trauma, coagulopathy or pigmented villonodular synovitis - not gout or sepsis (ARA).",
+        "source_refs": ["Australian Rheumatology Association - joint aspiration"]
+      }
+    ],
+    "explanation": {
+      "summary": "Hot joint workup: aspirate before treatment. Send synovial fluid for cell count, Gram stain, culture and crystal examination under polarised light. Even when crystals are present, infection can coexist - if any suspicion of sepsis, give empirical antibiotics after culture. Acute gout treatment: NSAID, colchicine or prednisolone; do not start or stop urate-lowering therapy during a flare.",
+      "key_points": [
+        "Monosodium urate: needle-shaped, strongly negatively birefringent",
+        "Calcium pyrophosphate: rhomboid, weakly positively birefringent",
+        "Synovial WCC >50 x 10^9/L raises sepsis concern even with crystals",
+        "Treat presumed septic arthritis empirically pending culture"
+      ],
+      "context": "Gout pathology: monosodium urate crystallises in synovial fluid when urate concentration exceeds solubility (around 0.36 mmol/L at 37 degrees). Crystals are phagocytosed by neutrophils, activating NLRP3 inflammasome and IL-1 beta release, driving acute inflammation. The crystal shape (long needles) lyses lysosomes inside phagocytes, amplifying the response. Polarised light microscopy uses the crystal's anisotropy: negative birefringence means the crystal appears yellow when parallel to the polariser axis. Septic arthritis from S. aureus or streptococci dominates in adults; gonococcal arthritis (Neisseria gonorrhoeae) is a young-adult differential with tenosynovitis and dermatitis."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Rheumatology - Gout vs septic arthritis", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Rheumatology Association - joint aspiration", "url": "https://rheumatology.org.au/"}
+    ],
+    "reference_ranges": ["urate", "fbc", "crp"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-rhh2-015",
+    "topic": "Medicine",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "Reactive arthritis - post-infectious pattern",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["reactive arthritis", "spondyloarthritis"],
+    "stem": "A 28-year-old man presents to a HNE LHD general practice with 3 weeks of asymmetric oligoarthritis affecting the left knee and right ankle, with bilateral Achilles enthesitis. He recalls a 5-day diarrhoeal illness with bloody stools 3 weeks before joint symptoms began, while travelling regionally. He also has conjunctivitis and sterile dysuria. CRP 56 mg/L, RF negative, anti-CCP negative, urate 0.32 mmol/L. Stool culture from the diarrhoeal episode grew Campylobacter jejuni. HIV testing negative.",
+    "data_table": {
+      "Joint pattern": "Asymmetric oligoarthritis (knee, ankle), Achilles enthesitis.",
+      "Extra-articular": "Conjunctivitis, sterile dysuria.",
+      "Preceding": "Bloody diarrhoea 3 weeks earlier, Campylobacter jejuni isolated.",
+      "Inflammatory markers": "CRP 56.",
+      "Serology": "RF neg, anti-CCP neg, urate normal, HIV neg."
+    },
+    "lead_in": "Which is the most appropriate initial management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Naproxen 500 mg twice daily with proton pump inhibitor cover and review at 4 weeks",
+        "correct": true,
+        "rationale": "Reactive arthritis (the triad of arthritis, conjunctivitis and urethritis after enteric or genitourinary infection) is largely self-limiting within 3-6 months. First-line management is NSAIDs at full anti-inflammatory dose with PPI cover, plus physiotherapy. Antibiotics for the index Campylobacter infection are usually not indicated weeks later. Intra-articular corticosteroid is considered for persistent monoarthritis. Sulfasalazine or methotrexate is added if symptoms persist beyond 3-6 months.",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - Reactive arthritis", "RACP Adult Medicine Curriculum - Spondyloarthritis"]
+      },
+      {
+        "letter": "B",
+        "text": "Prolonged oral ciprofloxacin to eradicate persistent Campylobacter antigens",
+        "correct": false,
+        "rationale": "Antibiotic courses do not change the natural history of post-enteric reactive arthritis; the inflammation is driven by immune cross-reactivity, not persistent organism (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - Reactive arthritis"]
+      },
+      {
+        "letter": "C",
+        "text": "Methotrexate 15 mg weekly as first-line disease-modifying therapy",
+        "correct": false,
+        "rationale": "DMARDs are reserved for reactive arthritis lasting beyond 3-6 months or with significant functional impact; first-line is NSAIDs (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - Reactive arthritis"]
+      },
+      {
+        "letter": "D",
+        "text": "Prednisolone 50 mg daily tapering over 6 weeks",
+        "correct": false,
+        "rationale": "Systemic steroids are not first-line for reactive arthritis; intra-articular steroid is preferred for persistent monoarthritis. Oral steroid is reserved for severe polyarthritis unresponsive to NSAIDs (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - Reactive arthritis"]
+      },
+      {
+        "letter": "E",
+        "text": "Allopurinol 100 mg daily for presumed gout flare",
+        "correct": false,
+        "rationale": "Urate is normal, the pattern is migratory inflammatory oligoarthritis with extra-articular features, and gout does not cause conjunctivitis or sterile dysuria. Allopurinol is not indicated (eTG).",
+        "source_refs": ["Therapeutic Guidelines: Rheumatology - Gout"]
+      }
+    ],
+    "explanation": {
+      "summary": "Reactive arthritis: post-infectious inflammatory arthritis 1-4 weeks after enteric (Salmonella, Shigella, Yersinia, Campylobacter) or urogenital (Chlamydia trachomatis) infection. Asymmetric lower-limb oligoarthritis, enthesitis, conjunctivitis, sterile urethritis, sometimes circinate balanitis or keratoderma blennorrhagicum. HLA-B27 in 60-80%. Treatment: NSAIDs first, intra-articular steroids for persistent monoarthritis, DMARDs if chronic.",
+      "key_points": [
+        "Triad: arthritis + conjunctivitis + urethritis (Reiter's)",
+        "1-4 week latency from index infection",
+        "NSAIDs first-line, antibiotics do not change course",
+        "HLA-B27 association; consider testing if chronic"
+      ],
+      "context": "Reactive arthritis pathogenesis involves immune cross-reactivity between bacterial antigens (transiently presented during enteric or urogenital infection) and self-antigens at entheses, plus HLA-B27 mediated misfolding/unfolded protein response in synoviocytes. The latency from infection to arthritis (1-4 weeks) reflects the time to develop the cross-reactive T-cell response. Most cases resolve within 3-6 months but 15-20% become chronic and indistinguishable from other peripheral spondyloarthritis. The mechanism inversion in management: antibiotics cure the trigger infection but cannot recall the cross-reactive immune response - hence NSAIDs/anti-inflammatory therapy, not antimicrobials, are the standard."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Rheumatology - Reactive arthritis", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "RACP Adult Medicine Curriculum - Spondyloarthritis", "url": "https://www.racp.edu.au/"}
+    ],
+    "reference_ranges": ["crp", "urate"],
+    "created": "2026-05-25"
+  }
+]
