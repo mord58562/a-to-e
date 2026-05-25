@@ -118,25 +118,70 @@
     authToken = null; cloudUser = null;
     localStorage.removeItem(AUTH_TOKEN_KEY);
   }
-  // Pull the signed-in user's answer history from the worker so the
-  // Unseen / Previously-incorrect filters work on a fresh browser the
-  // same as on the original one (localStorage alone is per-device).
-  // Returns a history-shaped object keyed by question_id, or {} on
-  // failure / non-cloud users.
-  async function cloudFetchHistory() {
-    if (!cloudUser || !WORKER_URL) return {};
+  // Pull the signed-in user's full state (answers + flags + settings)
+  // from the worker so a fresh browser sees the same picture as the
+  // original device. Server is the source of truth; localStorage is a
+  // read-through cache that we OVERWRITE with this response.
+  //
+  // Returns { history, flags, settings } or null on failure. We do NOT
+  // return empty shapes on failure - the caller needs to distinguish
+  // "fetched and empty" from "couldn't reach the server" so it doesn't
+  // wipe local state on a transient network blip.
+  async function cloudFetchState() {
+    if (!cloudUser || !WORKER_URL) return null;
     try {
-      const { history } = await apiFetch("/api/history", { method: "GET" });
-      return (history && typeof history === "object") ? history : {};
-    } catch (_) {
-      return {};
+      const r = await apiFetch("/api/state", { method: "GET" });
+      return {
+        history:  (r && r.history && typeof r.history === "object") ? r.history : {},
+        flags:    (r && r.flags && typeof r.flags === "object") ? r.flags : {},
+        settings: (r && r.settings && typeof r.settings === "object") ? r.settings : null,
+      };
+    } catch (e) {
+      console.warn("[sync] cloudFetchState failed:", e && e.message || e);
+      return null;
     }
   }
+  // Legacy single-endpoint hydrator, kept for callers that only need
+  // history. Wraps cloudFetchState; returns {} on failure (legacy shape).
+  async function cloudFetchHistory() {
+    const s = await cloudFetchState();
+    return (s && s.history) || {};
+  }
   async function cloudPostAnswer(qid, sourceLetter, correct) {
+    if (!cloudUser) return null;
+    // Skip the round-trip when we don't have a real source letter -
+    // the worker rejects empty letters (400) and the catch below would
+    // hide that as a successful no-op. Guest-import replay hits this
+    // path with sourceLetter=""; those answers are pre-account and
+    // intentionally don't join the per-user server history.
+    if (!sourceLetter || !"ABCDE".includes(sourceLetter)) return null;
     try {
       const { stats } = await apiFetch("/api/answer", { method: "POST", body: JSON.stringify({ question_id: qid, source_letter: sourceLetter, correct }) });
       return stats;
-    } catch { return null; }
+    } catch (e) {
+      console.warn("[sync] cloudPostAnswer failed:", e && e.message || e);
+      return null;
+    }
+  }
+  async function cloudPostFlag(qid, on) {
+    if (!cloudUser) return false;
+    try {
+      await apiFetch("/api/flag", { method: "POST", body: JSON.stringify({ question_id: qid, on: !!on }) });
+      return true;
+    } catch (e) {
+      console.warn("[sync] cloudPostFlag failed:", e && e.message || e);
+      return false;
+    }
+  }
+  async function cloudPostSettings(settings) {
+    if (!cloudUser) return false;
+    try {
+      await apiFetch("/api/settings", { method: "POST", body: JSON.stringify({ settings }) });
+      return true;
+    } catch (e) {
+      console.warn("[sync] cloudPostSettings failed:", e && e.message || e);
+      return false;
+    }
   }
 
   // Combined admin check: legacy Rob profile OR signed-in cloud admin.
@@ -295,7 +340,19 @@
 
   function load(k, d) { try { return JSON.parse(localStorage.getItem(k)) || d; } catch { return d; } }
   function save(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
-  function saveSettings() { save(ns(SETTINGS_KEY), state.settings); }
+  // Settings sync is debounced so rapid setting flips (e.g. clicking
+  // through difficulty options) collapse into one POST per ~600ms idle
+  // window. Local save is immediate.
+  let _settingsSyncTimer = null;
+  function saveSettings() {
+    save(ns(SETTINGS_KEY), state.settings);
+    if (!cloudUser) return;
+    if (_settingsSyncTimer) clearTimeout(_settingsSyncTimer);
+    _settingsSyncTimer = setTimeout(() => {
+      _settingsSyncTimer = null;
+      cloudPostSettings(state.settings);
+    }, 600);
+  }
 
   // Hydrate per-profile state after the gate has set currentProfile.
   // Pre-gate, state.history/flags/settings are empty defaults.
@@ -533,31 +590,27 @@
     migrateLegacyIfNeeded();
     importLegacyHistoryIntoCloud();
     loadProfileState();
-    // Race fix: when a cloud user signs in on a fresh browser, the
-    // localStorage history is empty even though the user has answered
-    // questions on another device. The Unseen / Previously-incorrect
-    // filters would then misclassify every Q as unseen. Pull the
-    // server history before showHome so getPool sees the merged view.
+    // Cloud user: SERVER IS THE SOURCE OF TRUTH. On every session start
+    // we pull the full per-user state (history + flags + settings) and
+    // REPLACE the local cache. Merge-bias-toward-local lost newer
+    // updates from other devices; this replacement model can't.
+    //
+    // Defensive: only overwrite when the fetch actually succeeded. A
+    // transient network failure must NOT wipe a returning user's local
+    // cache - they can keep working offline against the last-known
+    // server snapshot and we'll re-hydrate on the next reload.
     if (cloudUser) {
-      const cloudHist = await cloudFetchHistory();
-      let merged = false;
-      for (const qid in cloudHist) {
-        const local = state.history[qid];
-        const remote = cloudHist[qid];
-        if (!local) {
-          state.history[qid] = remote;
-          merged = true;
-        } else {
-          // Keep the local count/time totals; refresh lastCorrect /
-          // last_at if the remote is fresher.
-          if ((remote.last_at || 0) > (local.last_at || 0)) {
-            local.lastCorrect = remote.lastCorrect;
-            local.last_at = remote.last_at;
-            merged = true;
-          }
+      const remote = await cloudFetchState();
+      if (remote) {
+        state.history = remote.history || {};
+        state.flags   = remote.flags   || {};
+        if (remote.settings && typeof remote.settings === "object") {
+          state.settings = Object.assign({}, DEFAULT_SETTINGS, remote.settings);
         }
+        save(ns(HISTORY_KEY), state.history);
+        save(ns(FLAGS_KEY),   state.flags);
+        save(ns(SETTINGS_KEY), state.settings);
       }
-      if (merged) save(ns(HISTORY_KEY), state.history);
     }
     await dataPromise;
     // Wire each subsystem defensively so a single throw in any wiring
@@ -1122,14 +1175,20 @@
       localStorage.removeItem(`${FLAGS_KEY}.guest-${prevGuestId}`);
     }
     localStorage.setItem(importedFlag, "1");
-    // Also stream guest answers up to the cloud so the social-stats
-    // aggregate reflects them. Fire-and-forget; failures don't block UX.
-    const qids = guestHist ? Object.keys(guestHist) : [];
-    for (const qid of qids) {
-      const h = guestHist[qid];
-      if (!h || !h.count) continue;
-      try { cloudPostAnswer(qid, "", !!h.lastCorrect); } catch (_) {}
+    // Guest-history rows don't carry a sourceLetter (the original
+    // shuffle wasn't recorded), so the per-user server answers table
+    // intentionally doesn't receive them - cloudPostAnswer rejects
+    // empty letters and the worker would too. Local cache still shows
+    // these as answered so the user's filter view is preserved.
+    //
+    // Flags ARE pushable, and so are settings - both are by-id state.
+    if (guestFlags && cloudUser) {
+      for (const qid in guestFlags) {
+        if (guestFlags[qid]) cloudPostFlag(qid, true);
+      }
     }
+    const guestSettings = load(`${SETTINGS_KEY}.guest-${prevGuestId}`, null);
+    if (guestSettings && cloudUser) cloudPostSettings(guestSettings);
   }
 
   function wireColophon() {
@@ -1590,12 +1649,17 @@
     // need to be on the button at once for the warn-colour styling.
     const flagBtn = document.getElementById("flagBtn");
     flagBtn.onclick = () => {
-      state.flags[q.id] = !state.flags[q.id];
+      const on = !state.flags[q.id];
+      // Optimistic local update so the star is instant. Cloud sync runs
+      // in the background; failures log to console (no UX impact - the
+      // next session-start hydration will reconcile from the server).
+      if (on) state.flags[q.id] = true;
+      else    delete state.flags[q.id];
       save(ns(FLAGS_KEY), state.flags);
-      const on = !!state.flags[q.id];
       flagBtn.classList.toggle("active", on);
       flagBtn.classList.toggle("flag", on);
       renderTopbar();
+      if (cloudUser) cloudPostFlag(q.id, on);
     };
     const flagOn = !!state.flags[q.id];
     flagBtn.classList.toggle("active", flagOn);
