@@ -870,5 +870,205 @@
     "reference_ranges": ["tsh", "lithium_level"],
     "created": "2026-05-25",
     "subtopic_detail": "Mood stabiliser selection under multiple pregnancy/BF constraints"
+  },
+  {
+    "id": "creative-reasoning-016-pattern-recognition-stec-hus",
+    "topic": "Paediatrics",
+    "subtopic": "Renal / Infectious",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["pattern recognition", "non-obvious cue", "STEC HUS"],
+    "stem": "A 4-year-old previously well girl is brought to Maitland Hospital paediatric ED with 5 days of bloody diarrhoea, 24 hours of pallor, and 12 hours of reduced urine output. Her family returned 9 days ago from a 3-week farm-stay holiday on the NSW mid-north coast where the children regularly fed unpasteurised milk to orphan calves. Initial GP-ordered stool PCR is pending. Today she appears pale, irritable, with abdominal tenderness but no peritonism. She has had no antibiotic exposure for this illness. There is no rash, no jaundice, no recent vaccinations, no medication exposure. Family history is unremarkable for renal or haematological disease.",
+    "data_table": {
+      "Vital signs": "T 37.4, HR 138, BP 105/72 (above the 95th centile for age), RR 26, SpO2 98%, weight 16 kg, urine output 0.4 mL/kg/h over 12 h.",
+      "Examination": "Pallor, mild scleral icterus, generalised abdominal tenderness, no peritonism, no organomegaly, no rash, no peripheral oedema (yet).",
+      "Investigations": "Hb 76 g/L, platelets 42 x10^9/L, WCC 14, blood film: schistocytes ++ and helmet cells. Reticulocytes elevated. Cr 168 micromol/L (baseline unknown, eGFR markedly reduced for age). LDH 1840 U/L, haptoglobin undetectable, INR/aPTT normal, Coombs negative. Bilirubin 38 micromol/L (mostly unconjugated). Stool PCR pending."
+    },
+    "lead_in": "Which is the single most likely diagnosis, and which clinical action is contraindicated?",
+    "options": [
+      {"letter": "A", "text": "Immune thrombocytopaenic purpura; commence prednisolone 2 mg/kg orally", "correct": false, "rationale": "ITP causes isolated thrombocytopenia, not the microangiopathic haemolytic anaemia + AKI triad described. Schistocytes on film exclude ITP. Source: RCH CPG.", "source_refs": ["RCH CPG"]},
+      {"letter": "B", "text": "STEC-associated haemolytic uraemic syndrome (D+HUS); supportive management and avoid empirical antibiotics", "correct": true, "rationale": "Pattern: bloody diarrhoea + microangiopathic haemolytic anaemia (schistocytes, low haptoglobin, raised LDH, raised unconjugated bilirubin, Coombs negative) + thrombocytopaenia + AKI = classic STEC-HUS. Non-obvious cue is unpasteurised milk + calf contact at a farm-stay (STEC O157 reservoirs include cattle and unpasteurised dairy in Australia; multiple outbreaks). CONTRAINDICATED: empirical antibiotics (associated with increased Shiga toxin release and worsened HUS in some studies), antimotility agents, NSAIDs, platelet transfusion (paradoxical worsening). Management is supportive (careful IV fluids, monitoring for dialysis indication, blood transfusion if Hb critically low, plasma exchange in atypical HUS only). Eculizumab for atypical HUS, not STEC-HUS. Source: RCH CPG: HUS; eTG Paediatrics; CDNA STEC SoNG.", "source_refs": ["RCH CPG: Haemolytic Uraemic Syndrome", "eTG Paediatrics", "CDNA STEC SoNG"]},
+      {"letter": "C", "text": "Acute leukaemia with disseminated intravascular coagulation; commence empirical broad-spectrum antibiotics", "correct": false, "rationale": "Coagulation profile is normal (INR/aPTT normal), excluding DIC. WCC is mildly elevated but no blast cells. Source: RCH CPG.", "source_refs": ["RCH CPG"]},
+      {"letter": "D", "text": "Acute glomerulonephritis post-infectious; commence furosemide and start ACE inhibitor", "correct": false, "rationale": "Post-infectious GN typically presents with hypertension, oedema, haematuria, mild proteinuria - not the microangiopathic haemolytic anaemia pattern. ACE inhibitor in AKI worsens renal function. Source: RCH CPG.", "source_refs": ["RCH CPG"]},
+      {"letter": "E", "text": "Autoimmune haemolytic anaemia; commence prednisolone 2 mg/kg and IVIG", "correct": false, "rationale": "Coombs is NEGATIVE - rules out warm or cold AIHA. Pattern is microangiopathic (schistocytes, MAHA), not autoimmune. Source: RCH CPG.", "source_refs": ["RCH CPG"]}
+    ],
+    "explanation": {
+      "summary": "STEC-HUS (formerly D+HUS) is the dominant paediatric cause of acute kidney injury in Australia in children under 5. Triad: microangiopathic haemolytic anaemia, thrombocytopaenia, AKI - usually 5-10 days after a prodrome of bloody diarrhoea. Mechanism: Shiga toxin from E. coli O157 (and other STEC strains) binds Gb3 glycosphingolipid on glomerular endothelium → endothelial swelling → microthrombi → mechanical RBC shear and platelet consumption. Antibiotics are contraindicated because Shiga toxin release is upregulated by bacterial stress response (multiple RCT-level signals of harm). Supportive care, blood transfusion when needed, dialysis if oligoanuric or hyperkalaemic. Notifiable to NSW Health public health unit.",
+      "key_points": [
+        "Triad: MAHA + thrombocytopaenia + AKI after bloody diarrhoea prodrome",
+        "STEC sources: unpasteurised dairy, ground beef, petting farms, contaminated water",
+        "Antibiotics CONTRAINDICATED in suspected STEC-HUS",
+        "NSAIDs, antimotility agents, platelet transfusion all contraindicated",
+        "Notifiable disease - inform NSW Health public health unit"
+      ],
+      "pearls": "Atypical HUS (complement-mediated) presents without diarrhoea prodrome and is treated with eculizumab; STEC-HUS is supportive only. Always ask about farm visits, raw milk, and recent ground-beef consumption in paediatric AKI workup."
+    },
+    "sources": [
+      {"label": "RCH CPG: Haemolytic Uraemic Syndrome", "url": "https://www.rch.org.au/clinicalguide/"},
+      {"label": "CDNA STEC SoNG", "url": "https://www.health.gov.au/"}
+    ],
+    "reference_ranges": ["fbc", "uec", "haemolysis_panel"],
+    "created": "2026-05-25",
+    "subtopic_detail": "STEC-HUS pattern recognition + antibiotic contraindication"
+  },
+  {
+    "id": "creative-reasoning-017-au-cutoff-sepsis-paeds",
+    "topic": "Paediatrics",
+    "subtopic": "Sepsis recognition",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["AU-cutoff discrimination", "paediatric sepsis"],
+    "stem": "A 3-year-old boy weighing 14 kg is triaged at John Hunter Hospital paediatric ED at 0220 with 18 hours of fever, lethargy and decreased oral intake. Parents describe a non-blanching rash that developed in the last hour on both legs. He has not been immunised. Initial assessment: T 39.4, HR 178, RR 44, capillary refill 4 seconds peripherally and 3 seconds centrally, mottled extremities, BP 88/52, SpO2 96% room air. He is drowsy but rousable, no neck stiffness on initial exam but obtunded enough to limit reliable testing. Blood glucose 5.4 mmol/L. The triage nurse is initiating the NSW Health Paediatric Sepsis Pathway.",
+    "data_table": {
+      "Vital signs": "T 39.4 deg C, HR 178, RR 44, BP 88/52, SpO2 96% RA, CRT 4 sec peripheral, weight 14 kg.",
+      "Examination": "Lethargic but rousable, mottled extremities, non-blanching petechial rash both legs, dry mucous membranes, no obvious focus.",
+      "Investigations": "Initial venous gas pending; bedside lactate 4.8 mmol/L; FBC, UEC, CRP, blood cultures, meningococcal PCR all sent."
+    },
+    "lead_in": "Within the NSW Health Paediatric Sepsis Pathway, what is the most appropriate fluid resuscitation and antibiotic decision for the first hour?",
+    "options": [
+      {"letter": "A", "text": "10 mL/kg of 0.9% saline over 15 min and reassess; defer antibiotics until LP and CT brain", "correct": false, "rationale": "Septic-shock paediatric bolus per NSW Health is 20 mL/kg of 0.9% saline (or balanced crystalloid) given over 5-10 min and reassessed. Antibiotics must be given within the first hour - LP can be deferred (and is contraindicated in shock until stabilised). Source: NSW Health Paediatric Sepsis Pathway.", "source_refs": ["NSW Health Paediatric Sepsis Pathway"]},
+      {"letter": "B", "text": "20 mL/kg of 0.9% saline (280 mL) over 5-10 min, reassess, repeat to max 40-60 mL/kg with cardiovascular monitoring; ceftriaxone 50 mg/kg IV (max 2 g) within 60 min of recognition; consider early inotropes if no response to second bolus", "correct": true, "rationale": "NSW Health Paediatric Sepsis Pathway: 20 mL/kg crystalloid bolus over 5-10 min, repeat to max 40-60 mL/kg watching for fluid-overload signs (hepatomegaly, increased work of breathing) before considering inotropes. Ceftriaxone 50 mg/kg (max 2 g) IV is first-line empirical (meningococcal cover). Antibiotic must be administered within 60 min of sepsis recognition. Early inotrope (adrenaline 0.1-0.2 mcg/kg/min) if no response to second bolus. Lactate >4 = severe sepsis criterion. Source: NSW Health Paediatric Sepsis Pathway; CHOPP guideline.", "source_refs": ["NSW Health Paediatric Sepsis Pathway", "CHOPP Paediatric Sepsis Guideline"]},
+      {"letter": "C", "text": "40 mL/kg of 4% albumin over 30 min as initial bolus to address capillary leak; vancomycin and meropenem within 60 min", "correct": false, "rationale": "Crystalloid (not colloid) is first-line in paediatric sepsis (FEAST trial impact + Australian preference). 40 mL/kg as a single push is contraindicated - boluses are 20 mL/kg with reassessment between each. Vancomycin + meropenem is overkill for community-acquired sepsis without specific MRSA/multi-resistant risk. Source: NSW Health Pathway.", "source_refs": ["NSW Health Paediatric Sepsis Pathway"]},
+      {"letter": "D", "text": "Defer fluid resuscitation; commence adrenaline infusion 0.5 mcg/kg/min immediately as primary therapy", "correct": false, "rationale": "Fluid resuscitation precedes inotropes in compensated paediatric septic shock. Adrenaline is added after 2 boluses fail to restore perfusion, not as primary therapy. Source: NSW Pathway.", "source_refs": ["NSW Health Paediatric Sepsis Pathway"]},
+      {"letter": "E", "text": "20 mL/kg 0.9% saline over 60 min; benzylpenicillin 60 mg/kg IV; arrange immediate LP to confirm meningitis", "correct": false, "rationale": "Bolus over 60 min is too slow for resuscitation (target 5-10 min). LP in shock is contraindicated until cardiovascular stability. Benzylpenicillin monotherapy is too narrow for empirical adult septic shock cover in current AU practice. Source: NSW Pathway; eTG.", "source_refs": ["NSW Health Paediatric Sepsis Pathway", "eTG Paediatrics"]}
+    ],
+    "explanation": {
+      "summary": "The discriminator is recall of the NSW Health Paediatric Sepsis Pathway specific cut-offs: bolus volume 20 mL/kg over 5-10 min (not 10, not 40), antibiotic within 60 min, max fluid 40-60 mL/kg before inotrope consideration, ceftriaxone 50 mg/kg (max 2 g) as first-line. The clinical picture (compensated septic shock with petechial rash, unimmunised) strongly suggests meningococcaemia; meningococcal PCR confirms but does not delay treatment. Public health notification within 24 hours.",
+      "key_points": [
+        "NSW paeds septic shock bolus: 20 mL/kg crystalloid over 5-10 min, reassess each",
+        "Max ~40-60 mL/kg before inotropes (watch for fluid overload)",
+        "First antibiotic within 60 min of recognition",
+        "Empirical: ceftriaxone 50 mg/kg (max 2 g) IV in community-acquired sepsis",
+        "Lactate >4 + tachycardia + mottled = severe sepsis criteria"
+      ],
+      "pearls": "LP is contraindicated in shock until cardiovascular stability is restored. Empirical antibiotics first; LP later. Notify NSW Health public health unit for meningococcal."
+    },
+    "sources": [
+      {"label": "NSW Health Paediatric Sepsis Pathway", "url": "https://www.health.nsw.gov.au/"},
+      {"label": "eTG Paediatrics", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["lactate", "paediatric_vitals"],
+    "created": "2026-05-25",
+    "subtopic_detail": "NSW Health paediatric sepsis pathway cut-offs"
+  },
+  {
+    "id": "creative-reasoning-018-time-onset-puerperal-sepsis",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Postnatal infections",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["time-of-onset reasoning", "puerperal fever differential"],
+    "stem": "A 32-year-old G2P2 woman is reviewed in Calvary Mater Newcastle maternity ward day 4 post elective lower-segment caesarean section for breech at term. She has a temperature of 38.6 degrees Celsius, mild lower abdominal tenderness, no offensive lochia, and breastfeeding well. Pre-operative antibiotic prophylaxis was cefazolin. Wound site is dry without erythema. There is no calf swelling and no respiratory symptoms. Urinalysis is negative. Foley catheter was removed day 2. Her temperature has now been over 38 degrees for 12 hours despite paracetamol. Blood pressure 118/76, heart rate 96 sinus, respiratory rate 18, SpO2 98 percent.",
+    "data_table": {
+      "Vital signs": "T 38.6, HR 96 sinus, BP 118/76, RR 18, SpO2 98%.",
+      "Examination": "Mild lower abdominal tenderness without peritonism; uterus appropriate involution, lochia rubra without offensive odour; wound clean; calves soft, no swelling; chest clear.",
+      "Investigations": "FBC: WCC 14.2 x10^9/L; CRP 88 mg/L. UEC normal. Urinalysis negative. Blood cultures sent. Pelvic USS pending."
+    },
+    "lead_in": "Based on the timing relative to delivery and the constellation of negative findings, which is the single most likely diagnosis?",
+    "options": [
+      {"letter": "A", "text": "Wound infection at the caesarean site", "correct": false, "rationale": "Wound is dry without erythema or discharge; wound infections typically present day 4-7 with localised signs that are absent here. Source: RANZCOG; eTG Antibiotic.", "source_refs": ["RANZCOG Postnatal Infections", "eTG Antibiotic"]},
+      {"letter": "B", "text": "Endometritis", "correct": true, "rationale": "TIME-OF-ONSET discriminator: endometritis is the most common cause of puerperal sepsis at day 2-10 post-caesarean (risk 5-10x vaginal birth even with prophylaxis). Diagnostic constellation: fever >38, uterine tenderness, raised WCC + CRP, lochia may or may not be offensive (often subtle), other foci negative (wound, urine, chest, DVT). Treatment: gentamicin 5 mg/kg IV daily + ampicillin 2 g IV 6-hourly + metronidazole 500 mg IV 12-hourly (or as per local NSW Health antibiotic stewardship). Source: RANZCOG Postnatal Infections; eTG Antibiotic; NSW Health Maternity Sepsis.", "source_refs": ["RANZCOG Postnatal Infections", "eTG Antibiotic", "NSW Health Maternity Sepsis Pathway"]},
+      {"letter": "C", "text": "Mastitis from breastfeeding", "correct": false, "rationale": "Mastitis would typically present with breast pain, erythema and induration; chest findings absent. Source: ABA; eTG.", "source_refs": ["Australian Breastfeeding Association"]},
+      {"letter": "D", "text": "Deep vein thrombosis (DVT) related to postpartum hypercoagulability", "correct": false, "rationale": "DVT presents with calf swelling, tenderness, asymmetry; calf exam negative. DVT also less commonly causes fever this high. Pulmonary embolism would present with tachycardia + dyspnoea + hypoxia. Source: RANZCOG VTE in Pregnancy.", "source_refs": ["RANZCOG VTE in Pregnancy"]},
+      {"letter": "E", "text": "Urinary tract infection from recent catheter exposure", "correct": false, "rationale": "Urinalysis is negative; catheter was removed day 2 (48 hours before symptom onset). Possible but less likely than endometritis given the timing and uterine tenderness. Source: eTG Antibiotic.", "source_refs": ["eTG Antibiotic"]}
+    ],
+    "explanation": {
+      "summary": "Puerperal fever (>38 degrees within 14 days postpartum) requires systematic differential by timing and physical findings: day 1-2 favours atelectasis or wound; day 2-10 favours endometritis (especially post-caesarean); day 7-14 favours wound infection, mastitis, DVT/PE; any time UTI, catheter-related infection. Endometritis incidence is ~3 percent of vaginal births but ~5-10x higher with caesarean even after prophylaxis. Triple antibiotic regimen (ampicillin + gentamicin + metronidazole) covers polymicrobial flora typical of endometritis (anaerobes, group B strep, E coli, enterococcus, gardnerella). Resolution typically within 48 hours; persistent fever suggests abscess, retained products, or pelvic vein thrombophlebitis - imaging indicated.",
+      "key_points": [
+        "Puerperal fever day 2-10: endometritis top of differential",
+        "Caesarean increases risk 5-10x vs vaginal even with prophylaxis",
+        "AU triple therapy: ampicillin + gentamicin + metronidazole",
+        "Persistent fever despite 48h appropriate antibiotics: imaging for abscess",
+        "Postpartum VTE risk persists 6 weeks; high index of suspicion"
+      ],
+      "pearls": "Septic pelvic thrombophlebitis is the diagnosis of exclusion in persistent puerperal fever with normal imaging - empirical heparin produces dramatic defervescence within 48 hours and confirms diagnosis."
+    },
+    "sources": [
+      {"label": "RANZCOG Postnatal Infections", "url": "https://ranzcog.edu.au/"},
+      {"label": "NSW Health Maternity Sepsis Pathway", "url": "https://www.health.nsw.gov.au/"}
+    ],
+    "reference_ranges": ["fbc", "crp"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Puerperal fever timing-based differential"
+  },
+  {
+    "id": "creative-reasoning-019-au-cutoff-marsipan-au",
+    "topic": "Psychiatry",
+    "subtopic": "Eating disorders / MHA",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["AU-cutoff discrimination", "MARSIPAN-AU", "involuntary admission"],
+    "stem": "A 22-year-old woman with severe restricting-type anorexia nervosa over 5 years is brought to John Hunter Hospital ED by her mother. The patient is refusing admission. She weighs 38 kg (height 168 cm, BMI 13.5), heart rate 38 bpm sinus, BP 78/48 supine and 65/40 standing, T 35.2 degrees Celsius, glucose 2.8 mmol/L, K 2.6 mmol/L, P 0.42 mmol/L, Mg 0.62 mmol/L. ECG shows sinus bradycardia with QTc 510 ms. She is alert, coherent, and capable of stating she understands she could die but does not want medical treatment because she fears weight restoration. She has no other psychiatric comorbidity and no acute psychosis. Her mother has lasting power of attorney for property only.",
+    "data_table": {
+      "Vital signs": "HR 38 sinus, BP 78/48 supine to 65/40 standing, T 35.2 deg C, weight 38 kg (BMI 13.5), SpO2 95%.",
+      "Examination": "Cachexia, lanugo hair, dry mucous membranes, peripheral cyanosis, alert and oriented, MSE no thought disorder, insight present for medical consequences but absent for need for treatment.",
+      "Investigations": "Glucose 2.8 mmol/L, K 2.6 mmol/L, P 0.42 mmol/L (low), Mg 0.62 mmol/L (low), ECG sinus brady 38 with QTc 510 ms. Cr 75, urea 4."
+    },
+    "lead_in": "Which combination of MARSIPAN-AU admission criteria and NSW Mental Health Act 2007 framework most appropriately governs her treatment, given that she is refusing care?",
+    "options": [
+      {"letter": "A", "text": "Discharge against advice with daily outpatient follow-up; her capacity is intact so no involuntary admission is possible", "correct": false, "rationale": "MARSIPAN-AU criteria for mandatory medical admission are met (BMI <14, HR <40, postural BP drop >20 mmHg systolic, T <35.5, glucose <3, K <2.5 [borderline], QTc >500 ms). Discharge would be negligent regardless of stated capacity, because severe AN classically presents with intact superficial reasoning but a circumscribed inability to weight-restore. NSW MHA Section 14 mental illness criteria can be met for severe AN where the eating disorder substantially impairs judgment. Source: MARSIPAN-AU; NSW MHA 2007.", "source_refs": ["MARSIPAN-AU", "NSW Mental Health Act 2007"]},
+      {"letter": "B", "text": "Admit to a medical ward under NSW MHA 2007 Schedule 1 (involuntary mental health assessment) with refeeding under specialist eating-disorder protocol; commence oral phosphate, low-dose IV thiamine 300 mg BD, refeed at 5-10 kcal/kg/day initial rate; daily P/Mg/K; cardiac monitoring for QTc and bradycardia", "correct": true, "rationale": "Combined trigger: ALL MARSIPAN-AU admission criteria are met (BMI 13.5, HR 38, postural BP drop, T 35.2, glucose 2.8, QTc 510). Under NSW MHA 2007, severe AN with refusal of care meets Schedule 1 criteria when the eating disorder is judged to substantially impair the patient's ability to make safe treatment decisions about feeding/weight restoration. Refeeding starts low (5-10 kcal/kg/day; progress per protocol over 5-7 days) to prevent refeeding syndrome; phosphate and thiamine pre-treatment are mandatory; cardiac monitoring for QTc and arrhythmia. Family is consulted; the eating-disorder service is involved early. Source: MARSIPAN-AU; NSW MHA 2007; RANZCP Eating Disorders Position.", "source_refs": ["MARSIPAN-AU", "NSW Mental Health Act 2007", "RANZCP Eating Disorders Position Statement"]},
+      {"letter": "C", "text": "Admit voluntarily and commence standard adult enteral nutrition at 30 kcal/kg/day via nasogastric tube to rapidly restore weight", "correct": false, "rationale": "Starting at 30 kcal/kg/day in severe AN triggers refeeding syndrome (intracellular phosphate/magnesium/potassium shift causing arrhythmia, cardiomyopathy, encephalopathy). MARSIPAN-AU protocol starts at 5-10 kcal/kg/day and titrates. The patient is also refusing care - voluntary admission cannot be assumed. Source: MARSIPAN-AU.", "source_refs": ["MARSIPAN-AU"]},
+      {"letter": "D", "text": "Apply for guardianship through the NSW Civil and Administrative Tribunal (NCAT) for medical treatment authority; defer treatment until order is granted", "correct": false, "rationale": "Guardianship orders take days to weeks; her condition is acutely life-threatening. NSW MHA 2007 provides immediate involuntary admission authority for psychiatric emergencies. Guardianship may be a longer-term consideration. Source: NSW MHA 2007.", "source_refs": ["NSW Mental Health Act 2007"]},
+      {"letter": "E", "text": "Sedate with IM midazolam 5 mg, intubate for airway protection, commence IV TPN 25 kcal/kg/day with continuous insulin infusion to manage hyperglycaemia", "correct": false, "rationale": "Sedation and intubation are inappropriate in an alert cooperative-to-discussion patient. TPN is reserved for failed enteral nutrition; oral or NG is preferred. Rate of 25 kcal/kg/day day 1 risks refeeding syndrome. Source: MARSIPAN-AU.", "source_refs": ["MARSIPAN-AU"]}
+    ],
+    "explanation": {
+      "summary": "Severe AN with medical instability + treatment refusal is one of the few situations where the medical and mental health systems intersect operationally. MARSIPAN-AU (Management of Really Sick Patients with Anorexia Nervosa - Australia/New Zealand) gives objective criteria for medical admission: BMI <14, HR <40, postural BP drop >20 mmHg, T <35.5, glucose <3, K <2.5, P <0.4, ECG QTc >500 or rhythm abnormality. When the patient refuses, NSW MHA 2007 Section 14 mental illness criteria (with eating disorder substantially impairing decision-making capacity around feeding) provides involuntary admission authority - even where surface capacity appears intact. Refeeding starts at 5-10 kcal/kg/day with pre-treatment phosphate + thiamine and progresses over 5-7 days under daily electrolyte monitoring. The principle: capacity to refuse weight restoration is not equivalent to capacity to refuse life-saving treatment for the underlying disorder.",
+      "key_points": [
+        "MARSIPAN-AU admission triggers: BMI<14, HR<40, postural drop>20, T<35.5, gluc<3, K<2.5, QTc>500",
+        "NSW MHA 2007 Section 14 covers severe AN with treatment refusal",
+        "Refeed start: 5-10 kcal/kg/day, titrate over 5-7 days",
+        "Pre-treatment: phosphate + thiamine before any kcal",
+        "Cardiac monitoring mandatory: QTc, bradycardia, arrhythmia"
+      ],
+      "pearls": "Aboriginal Mental Health Worker referral is essential when the patient identifies as Aboriginal or Torres Strait Islander; cultural-safety governance under NSW MHA 2007 includes consultation with the patient's preferred community supports."
+    },
+    "sources": [
+      {"label": "MARSIPAN-AU", "url": "https://www.ranzcp.org/"},
+      {"label": "NSW Mental Health Act 2007", "url": "https://legislation.nsw.gov.au/"}
+    ],
+    "reference_ranges": ["electrolytes", "ecg"],
+    "created": "2026-05-25",
+    "subtopic_detail": "MARSIPAN-AU admission threshold + NSW MHA 2007 framework"
+  },
+  {
+    "id": "creative-reasoning-020-mechanism-inversion-lithium-toxicity",
+    "topic": "Psychiatry",
+    "subtopic": "Mood stabiliser toxicity",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["mechanism inversion", "toxicology"],
+    "stem": "A 58-year-old man with bipolar I disorder on lithium carbonate 750 mg nocte for 12 years presents to Gosford ED with 5 days of nausea, coarse tremor, ataxia, slurred speech and increasing confusion. He started ramipril 5 mg 3 weeks ago for new hypertension. Three weeks ago he also started ibuprofen 400 mg TDS for chronic shoulder pain. He has had no fluid losses, no fever, no diuretics. His last documented serum lithium 6 months ago was 0.7 mmol/L. Today: lithium 2.4 mmol/L, creatinine 138 micromol/L (baseline 84), Na 142, K 4.2, TSH normal, glucose 5.8. ECG sinus rhythm with U waves and prolonged QT.",
+    "data_table": {
+      "Vital signs": "T 36.8, HR 102 sinus, BP 142/88, RR 16, SpO2 98% RA, GCS 13 (E3 V4 M6).",
+      "Examination": "Coarse upper-limb tremor at rest, hyperreflexia 3+, ataxic gait, dysarthria, dysmetria, no focal weakness, confusion to recent events.",
+      "Investigations": "Lithium 2.4 mmol/L (therapeutic 0.6-1.0), Cr 138 (baseline 84), Na 142, K 4.2, glucose 5.8. ECG sinus 102 with prolonged QT, U waves. TSH normal."
+    },
+    "lead_in": "Which is the single best explanation for the cerebellar and basal ganglia signs described, and which clinical scenario most predictably reproduces this mechanism?",
+    "options": [
+      {"letter": "A", "text": "Lithium interferes with neuronal sodium-potassium ATPase and Purkinje-cell function in cerebellum; recurs predictably when CYP450 inhibitors are added to the regimen", "correct": false, "rationale": "Lithium is not metabolised by CYP450 (it is purely renally excreted). CYP enzyme interactions are not the mechanism. The other half of the option (Na-K ATPase + Purkinje cell effect) is partially correct as a mechanism, but the predictability claim is wrong. Source: AMH; eTG Toxicology.", "source_refs": ["Australian Medicines Handbook", "eTG Toxicology"]},
+      {"letter": "B", "text": "Lithium accumulates in neurons via secondary active transport substituting for sodium; clearance falls when GFR drops or proximal tubule sodium reabsorption increases (NSAID, ACEI, dehydration, low salt intake)", "correct": true, "rationale": "MECHANISM: lithium is freely filtered at the glomerulus and reabsorbed in the proximal tubule via sodium-coupled transporters. Anything that reduces GFR (NSAIDs via prostaglandin-mediated afferent arteriolar constriction, ACEIs via efferent arteriolar dilation) OR increases proximal sodium reabsorption (dehydration, low-salt diet, thiazides) causes lithium reabsorption to rise and serum level to climb. Cerebellar and basal ganglia neurons accumulate lithium because it substitutes for sodium in active transport. The triple combination of lithium + ACEI + NSAID is the classic Australian general-practice prescribing trap. Source: AMH; eTG Toxicology; Murray's Toxicology Handbook.", "source_refs": ["Australian Medicines Handbook", "eTG Toxicology", "Murray's Toxicology Handbook"]},
+      {"letter": "C", "text": "Lithium is hepatically metabolised by CYP3A4 and accumulates when CYP3A4 inhibitors are added; clarithromycin and grapefruit juice are the classic triggers", "correct": false, "rationale": "Lithium is NOT hepatically metabolised - it is purely renally excreted unchanged. CYP3A4 is irrelevant. Source: AMH.", "source_refs": ["Australian Medicines Handbook"]},
+      {"letter": "D", "text": "Lithium chelates calcium and reduces parathyroid hormone production; chronic toxicity produces hypocalcaemic tetany and Trousseau sign", "correct": false, "rationale": "Lithium actually INCREASES PTH (causes hyperparathyroidism over years), producing hypercalcaemia not hypocalcaemia. Tetany is not the clinical picture described. Source: AMH.", "source_refs": ["Australian Medicines Handbook"]},
+      {"letter": "E", "text": "Lithium directly inhibits muscarinic receptors causing central anticholinergic toxicity; trigger is co-administration with other antimuscarinic agents", "correct": false, "rationale": "Lithium is not an antimuscarinic. Anticholinergic toxidrome is different (hot, dry, flushed, mydriasis, ileus) and not the cerebellar-extrapyramidal picture described. Source: eTG Toxicology.", "source_refs": ["eTG Toxicology"]}
+    ],
+    "explanation": {
+      "summary": "Lithium is purely renally cleared. Its handling follows sodium: it is freely filtered and ~80 percent is reabsorbed in the proximal tubule by sodium-coupled mechanisms. Anything that reduces GFR (NSAID afferent constriction, ACEI efferent dilation in low-perfusion states) or upregulates proximal sodium reabsorption (volume depletion, low-salt diet, thiazide) causes lithium reabsorption to climb and serum levels to rise. The narrow therapeutic index (0.6-1.0 mmol/L; toxicity 1.5+; severe 2.5+) and the neurotoxic accumulation (substitutes for sodium in CNS Na-coupled transport, accumulates in Purkinje cells and basal ganglia) produce the classic cerebellar + extrapyramidal syndrome. Management: stop lithium, stop the precipitant (NSAID, ACEI), aggressive IV crystalloid to restore renal lithium clearance, haemodialysis when level >4.0 mmol/L acute or >2.5 with neurological signs (lithium has small Vd, dialyses readily).",
+      "key_points": [
+        "Lithium = 100% renal clearance; never hepatic",
+        "Triple-trap interaction: lithium + NSAID + ACEI (or diuretic)",
+        "Therapeutic 0.6-1.0; toxicity >1.5; severe >2.5",
+        "Dialysis indications: level >4 acute, or >2.5 with neuro signs, or AKI",
+        "Long-term lithium adverse: nephrogenic DI, hypothyroidism, hyperparathyroidism, renal interstitial fibrosis"
+      ],
+      "pearls": "When commencing any new medication for a patient on lithium, ask: does this drug change renal sodium handling? If yes, monitor lithium level within 1-2 weeks. The classic exam vignette is the patient with new-onset hypertension started on an ACEI without lithium re-monitoring."
+    },
+    "sources": [
+      {"label": "Australian Medicines Handbook 2024", "url": "https://amhonline.amh.net.au/"},
+      {"label": "eTG Toxicology", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["lithium_level", "uec"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Lithium toxicity mechanism + drug interaction predictability"
   }
 ]
