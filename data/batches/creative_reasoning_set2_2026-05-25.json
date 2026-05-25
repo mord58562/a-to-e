@@ -1,0 +1,322 @@
+[
+  {
+    "id": "creative-reasoning-021-au-cutoff-paeds-trauma-bolus",
+    "topic": "Paediatrics",
+    "subtopic": "Trauma resuscitation",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["AU-cutoff discrimination", "paediatric trauma"],
+    "stem": "A 7-year-old boy weighing 22 kg is brought into John Hunter Hospital trauma bay after being hit by a car at low speed. Primary survey: airway patent, breathing equal but rapid, circulation tachycardic with weak peripheral pulses, conscious GCS 14. T 36.5, HR 156, RR 38, BP 86/52, capillary refill 4 seconds. He has bruising over the right lower abdomen, no obvious external bleeding, no long-bone deformity. The trauma team leader requests the first fluid resuscitation order, and the registrar must distinguish between the paediatric trauma bolus volume and the paediatric medical sepsis bolus volume.",
+    "data_table": {
+      "Vital signs": "T 36.5, HR 156, RR 38, BP 86/52, CRT 4 sec, GCS 14, weight 22 kg.",
+      "Examination": "Bruising RLQ, abdomen guarding, no peritonism yet, no external bleeding, no long-bone deformity.",
+      "Investigations": "FAST scan pending; blood group + crossmatch sent; bedside lactate 4.2 mmol/L."
+    },
+    "lead_in": "Which volume and fluid type should be administered as the first bolus, recognising that the paediatric trauma cut-off differs from the paediatric sepsis cut-off?",
+    "options": [
+      {"letter": "A", "text": "20 mL/kg crystalloid (440 mL) over 5-10 min - standard paediatric sepsis bolus", "correct": false, "rationale": "Paediatric TRAUMA bolus is smaller than the sepsis bolus to limit dilutional coagulopathy and re-bleeding from clot disruption. The Royal Children's / NSW trauma protocol gives 10 mL/kg crystalloid then early blood, not 20 mL/kg crystalloid loading. Sepsis bolus (20 mL/kg) is the wrong physiology for active haemorrhage. Source: NSW Health Paediatric Major Haemorrhage Protocol; PHANTOM.", "source_refs": ["NSW Health Paediatric Major Haemorrhage Protocol", "PHANTOM"]},
+      {"letter": "B", "text": "10 mL/kg crystalloid (220 mL) over 5-10 min then transition to packed red cells 10 mL/kg if persistent shock; activate paediatric massive transfusion protocol", "correct": true, "rationale": "AU paediatric trauma protocol (NSW Health Paediatric Major Haemorrhage; PHANTOM) recommends limited crystalloid (10 mL/kg) then early conversion to packed red cells (10 mL/kg) and FFP (10 mL/kg) in a 1:1 ratio after the first crystalloid bolus, plus activation of paediatric massive transfusion. Goal is permissive hypotension during damage-control resuscitation and avoidance of dilutional coagulopathy. The discriminator is recognising trauma (limit crystalloid, early blood) vs sepsis (crystalloid 20 mL/kg). Source: NSW Health Paediatric Major Haemorrhage Protocol; ANZSBT.", "source_refs": ["NSW Health Paediatric Major Haemorrhage Protocol", "ANZSBT Major Haemorrhage Guideline"]},
+      {"letter": "C", "text": "40 mL/kg crystalloid (880 mL) over 30 min - aggressive volume resuscitation as per ATLS adult protocol", "correct": false, "rationale": "Adult ATLS recommendations no longer support 40 mL/kg aggressive crystalloid in trauma even in adults (dilutional coagulopathy + clot disruption + ARDS risk); paediatric protocols are even more restrictive. Source: ATLS-AU; NSW Pathway.", "source_refs": ["ATLS Australasia"]},
+      {"letter": "D", "text": "20 mL/kg of 4% albumin colloid - colloid resuscitation for trauma", "correct": false, "rationale": "Crystalloid is first-line in AU paediatric trauma resuscitation (FEAST trial impact and AU practice). Colloid as primary trauma resus is not supported. Source: NSW Pathway.", "source_refs": ["NSW Health Paediatric Major Haemorrhage Protocol"]},
+      {"letter": "E", "text": "Withhold all fluids until CT abdomen confirms intra-abdominal injury and surgical control achieved", "correct": false, "rationale": "Withholding all fluid in compensated shock is unsafe; the goal is balanced damage-control resuscitation with limited crystalloid then early blood, not no fluid. Source: NSW Pathway.", "source_refs": ["NSW Health Paediatric Major Haemorrhage Protocol"]}
+    ],
+    "explanation": {
+      "summary": "Paediatric trauma resuscitation cut-offs differ from paediatric sepsis: trauma limits crystalloid (10 mL/kg) and transitions early to blood components to avoid dilutional coagulopathy and clot disruption (damage-control resuscitation); sepsis allows higher crystalloid (20 mL/kg per bolus, up to 40-60 mL/kg). This is the key cut-off difference. Activate paediatric massive transfusion protocol early when haemorrhagic shock is suspected. Tranexamic acid 15 mg/kg IV (max 1 g) within 3 hours of injury is the AU paediatric trauma standard. Permissive hypotension targets SBP 5th centile for age while damage control is achieved.",
+      "key_points": [
+        "Paeds trauma bolus: 10 mL/kg crystalloid then early blood",
+        "Paeds sepsis bolus: 20 mL/kg crystalloid x2-3",
+        "Paediatric MTP: PRBC + FFP + platelets in 1:1:1 ratio",
+        "TXA 15 mg/kg IV (max 1 g) within 3 hours of injury",
+        "Permissive hypotension: target SBP 5th centile for age until damage control"
+      ],
+      "pearls": "Tachycardia is the earliest paediatric shock sign; hypotension is late and often preterminal. Capillary refill >2 seconds + tachycardia is enough to start resuscitation; do not wait for hypotension."
+    },
+    "sources": [
+      {"label": "NSW Health Paediatric Major Haemorrhage Protocol", "url": "https://www.health.nsw.gov.au/"},
+      {"label": "ANZSBT Major Haemorrhage Guideline", "url": "https://anzsbt.org.au/"}
+    ],
+    "reference_ranges": ["paediatric_vitals", "lactate"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Paediatric trauma vs sepsis fluid bolus discrimination"
+  },
+  {
+    "id": "creative-reasoning-022-pattern-williams-syndrome",
+    "topic": "Paediatrics",
+    "subtopic": "Genetics / Cardiology",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["pattern recognition", "constellation diagnosis"],
+    "stem": "A 9-month-old girl is referred to paediatric cardiology at the John Hunter Children's Hospital for a murmur picked up at the 8-month vaccination visit. Birth was at term, weight 2.8 kg (10th centile), no antenatal concerns. She has fed well but feeds slowly. Her mother volunteers that she has the most outgoing personality of any baby in the family. Examination: weight on 5th centile (down from 10th at birth), interactive smile, prominent forehead and short upturned nose, full cheeks, wide mouth, small chin, mild infraorbital fullness. Cardiac auscultation: harsh ejection systolic murmur loudest at the right upper sternal edge with a thrill, transmitted to the carotids, no diastolic murmur. Femoral pulses present and equal. Mild generalised hypotonia.",
+    "data_table": {
+      "Vital signs": "HR 138, RR 36, BP arm 108/68 (right) and 96/62 (left), no postductal differential, SpO2 99%.",
+      "Examination": "Dysmorphic facies (prominent forehead, upturned nose, full cheeks, wide mouth), small chin, mild hypotonia, harsh ESM with thrill at right upper sternal edge, normal femoral pulses.",
+      "Investigations": "Echocardiogram pending. Random ionised calcium 1.42 mmol/L (high, ref 1.15-1.32). Random glucose 4.2 mmol/L. UEC otherwise normal."
+    },
+    "lead_in": "Which is the single most likely unifying diagnosis, and which targeted genetic test should be requested?",
+    "options": [
+      {"letter": "A", "text": "Down syndrome (trisomy 21); request karyotype and atrioventricular septal defect echocardiography", "correct": false, "rationale": "Down syndrome facies are upslanting palpebral fissures, brachycephaly, single palmar crease, hypotonia - and the typical cardiac lesion is AVSD or VSD, not supravalvular AS. The described upturned nose and personality phenotype do not fit. Source: RCH CPG.", "source_refs": ["RCH CPG"]},
+      {"letter": "B", "text": "DiGeorge syndrome (22q11.2 deletion); request FISH for 22q11.2 and cardiac imaging for conotruncal defects", "correct": false, "rationale": "22q11.2 deletion has different facial features (long face, almond-shaped eyes, tubular nose, short philtrum) and typical conotruncal cardiac defects (tetralogy of Fallot, truncus arteriosus, interrupted aortic arch), not supravalvular AS. Hypocalcaemia not hypercalcaemia. Source: RCH CPG.", "source_refs": ["RCH CPG"]},
+      {"letter": "C", "text": "Williams syndrome (7q11.23 deletion including the elastin gene); request FISH for ELN deletion and cardiology assessment for supravalvular AS and peripheral pulmonary stenosis", "correct": true, "rationale": "Pattern recognition: elfin facies (prominent forehead, periorbital fullness, upturned nose, full cheeks, wide mouth, small chin), supravalvular aortic stenosis (right upper sternal edge ESM transmitted to carotids - NOT left as in valvular AS), idiopathic hypercalcaemia in infancy, mild intellectual disability with characteristically friendly disinhibited personality, mild generalised hypotonia. Williams syndrome from deletion of ~26 genes at 7q11.23 including ELN (elastin) which causes the vascular phenotype. FISH or microarray confirms. Cardiology surveillance for SVAS progression and PPS. Avoid IV calcium. Source: RCH CPG: Williams Syndrome; Australian Genetic Heart Disease Registry.", "source_refs": ["RCH CPG: Williams Syndrome", "Australian Genetic Heart Disease Registry"]},
+      {"letter": "D", "text": "Noonan syndrome (PTPN11 mutation); request gene panel and ECG for pulmonary valve stenosis", "correct": false, "rationale": "Noonan has distinct features (hypertelorism, low-set posteriorly rotated ears, webbed neck, broad chest with widely spaced nipples) and typically pulmonary VALVE stenosis, not supravalvular AS. Source: RCH CPG.", "source_refs": ["RCH CPG"]},
+      {"letter": "E", "text": "Marfan syndrome (FBN1 mutation); request gene panel and echocardiogram for aortic root dilatation", "correct": false, "rationale": "Marfan presents with tall stature, arachnodactyly, joint hypermobility, ectopia lentis - rarely in infancy with this presentation. Source: RCH CPG.", "source_refs": ["RCH CPG"]}
+    ],
+    "explanation": {
+      "summary": "Williams syndrome is a contiguous-gene deletion at 7q11.23. The discriminator constellation is: elfin facies + supravalvular AS (or peripheral pulmonary stenosis) + idiopathic infantile hypercalcaemia + characteristic friendly cocktail-party personality + mild ID. Elastin (ELN) deletion explains the vascular phenotype (arterial wall fragility and stenoses). Surveillance includes annual cardiology, calcium monitoring (restrict vitamin D in infancy), school-age neurocognitive assessment, and hearing/vision. Compared with other syndromes that share one or two features, the combination is recognisable from this set.",
+      "key_points": [
+        "Williams = 7q11.23 deletion (includes ELN)",
+        "Cardinal cardiac lesion: supravalvular AS - ESM at right upper sternal edge to carotids",
+        "Idiopathic hypercalcaemia infancy: restrict vitamin D, avoid IV calcium",
+        "Characteristic friendly outgoing personality + mild ID",
+        "Diagnosis confirmed by FISH for ELN or microarray"
+      ],
+      "pearls": "Supravalvular AS murmurs are louder over the RIGHT upper sternal edge with carotid transmission (lesion above the valve), unlike valvular AS which is loudest at the LEFT upper sternal edge. This bedside cue points to Williams in an infant with dysmorphism."
+    },
+    "sources": [
+      {"label": "RCH CPG: Williams Syndrome", "url": "https://www.rch.org.au/clinicalguide/"},
+      {"label": "Australian Genetic Heart Disease Registry", "url": "https://www.aghdregistry.org.au/"}
+    ],
+    "reference_ranges": ["ionised_calcium"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Williams syndrome constellation recognition + ELN deletion confirmation"
+  },
+  {
+    "id": "creative-reasoning-023-constraint-vte-pregnancy-prior-pe",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Thromboprophylaxis in pregnancy",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["constraint stack", "anticoagulation in pregnancy"],
+    "stem": "A 32-year-old G2P1 woman attends a Calvary Mater Newcastle maternal medicine clinic at 8 weeks gestation. Past history: unprovoked pulmonary embolism 3 years ago, treated with warfarin for 6 months. Subsequent thrombophilia screen normal. No further VTE events. She has been on apixaban 5 mg BD since the PE for indefinite extended prophylaxis after a recurrence-risk consultation. She has a body mass index of 31, is currently a non-smoker, and her previous pregnancy 5 years ago (before the PE) was uncomplicated. She has no liver disease, normal renal function, no other comorbidity. Her booking bloods are normal.",
+    "data_table": {
+      "Vital signs": "BP 122/78, HR 76. BMI 31.",
+      "Examination": "Unremarkable. No calf swelling, no other signs of VTE.",
+      "Investigations": "Hb 122, platelets 240, INR 1.0 (off warfarin), Cr 68, LFT normal. Thrombophilia screen historically normal."
+    },
+    "lead_in": "Which is the most appropriate anticoagulation strategy throughout this pregnancy, satisfying ALL constraints: efficacy for VTE prevention given prior idiopathic PE, fetal safety, postpartum continuation feasibility, and Australian PBS access?",
+    "options": [
+      {"letter": "A", "text": "Continue apixaban 5 mg BD throughout pregnancy and breastfeeding; restart warfarin at 6 weeks postpartum", "correct": false, "rationale": "DOACs (apixaban, rivaroxaban, dabigatran) are contraindicated in pregnancy and breastfeeding in Australia due to lack of fetal safety data and likely teratogenicity (placental transfer demonstrated). Continuation is wrong. Source: RANZCOG VTE in Pregnancy; AMH.", "source_refs": ["RANZCOG VTE in Pregnancy", "Australian Medicines Handbook"]},
+      {"letter": "B", "text": "Switch to therapeutic enoxaparin 1 mg/kg BD throughout pregnancy, continue at least 6 weeks postpartum, switch back to apixaban after delivery if breastfeeding ceased", "correct": true, "rationale": "AU practice (RANZCOG): switch any pregnant patient on warfarin or DOAC to LMWH at confirmation of pregnancy. Therapeutic enoxaparin 1 mg/kg BD (or weight-based) is preferred for prior idiopathic PE with extended prophylaxis indication (her recurrence risk justifies therapeutic dose). Continue through pregnancy and at least 6 weeks postpartum. Switch back to DOAC postpartum only if breastfeeding ceased (DOACs are NOT BF-compatible). Renal function and anti-Xa monitoring in select patients. Source: RANZCOG VTE in Pregnancy; ANZSBT.", "source_refs": ["RANZCOG VTE in Pregnancy", "ANZSBT Anticoagulation in Pregnancy"]},
+      {"letter": "C", "text": "Switch to warfarin throughout pregnancy with INR target 2.5-3.5; pause warfarin at 36 weeks for elective delivery and bridge with enoxaparin", "correct": false, "rationale": "Warfarin is teratogenic (warfarin embryopathy: nasal hypoplasia, stippled epiphyses) in T1 and crosses placenta throughout pregnancy. AU practice avoids warfarin in pregnancy except in mechanical heart valves where benefit outweighs risk. Source: RANZCOG.", "source_refs": ["RANZCOG VTE in Pregnancy"]},
+      {"letter": "D", "text": "Stop apixaban now without replacement; restart at 6 weeks postpartum since recurrence risk is acceptable in pregnancy", "correct": false, "rationale": "Stopping anticoagulation in someone with prior idiopathic PE on extended prophylaxis is unsafe - pregnancy is a hypercoagulable state and VTE risk approaches 5-10x baseline. Source: RANZCOG.", "source_refs": ["RANZCOG VTE in Pregnancy"]},
+      {"letter": "E", "text": "Aspirin 150 mg daily as VTE prophylaxis throughout pregnancy", "correct": false, "rationale": "Aspirin is not adequate VTE prophylaxis or treatment in a patient with prior idiopathic PE; LMWH is required. Source: RANZCOG.", "source_refs": ["RANZCOG VTE in Pregnancy"]}
+    ],
+    "explanation": {
+      "summary": "DOACs are contraindicated in pregnancy (cross placenta; lack of fetal safety data) and in breastfeeding (cross into breast milk). Warfarin is teratogenic in trimester 1 (warfarin embryopathy) and crosses placenta throughout, so avoided except in mechanical heart valves where risk-benefit favours its use. LMWH (enoxaparin or dalteparin) does NOT cross placenta or transfer into breast milk and is the AU first-line for any pregnant patient requiring anticoagulation. Dose: prophylactic 40 mg SC daily (60-80 mg if BMI elevated) for VTE prophylaxis; therapeutic 1 mg/kg BD for treatment or extended prophylaxis for prior idiopathic events. Continue at least 6 weeks postpartum (peak postpartum VTE window). Switch back to DOAC postpartum only if breastfeeding ceased.",
+      "key_points": [
+        "DOACs contraindicated in pregnancy AND breastfeeding (AU)",
+        "Warfarin avoided in pregnancy except mechanical heart valves",
+        "LMWH: enoxaparin 1 mg/kg BD therapeutic, 40 mg daily prophylactic",
+        "Continue at least 6 weeks postpartum (peak risk)",
+        "DOAC can resume postpartum only if not breastfeeding"
+      ],
+      "pearls": "Anti-Xa monitoring of enoxaparin is recommended in pregnancy at booking, mid-pregnancy, and term, because volume of distribution and renal clearance change with gestation. Target 4-hour post-dose anti-Xa 0.5-1.0 IU/mL on BD dosing."
+    },
+    "sources": [
+      {"label": "RANZCOG VTE in Pregnancy", "url": "https://ranzcog.edu.au/"},
+      {"label": "ANZSBT Anticoagulation in Pregnancy", "url": "https://anzsbt.org.au/"}
+    ],
+    "reference_ranges": ["anti_xa", "uec"],
+    "created": "2026-05-25",
+    "subtopic_detail": "VTE prophylaxis strategy in pregnancy with prior idiopathic PE on DOAC"
+  },
+  {
+    "id": "creative-reasoning-024-side-effect-class-drug-induced-lupus",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Hypertension in pregnancy",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["side-effect to class mapping", "drug-induced syndrome"],
+    "stem": "A 36-year-old G3P2 woman at 32 weeks gestation is admitted to John Hunter Hospital maternal medicine ward with 6 weeks of progressive arthralgia (small joints of hands, both wrists, both knees, symmetrical), facial rash worse with sun exposure, and 2 days of pleuritic chest pain with mild pericardial friction rub on auscultation. She has been on a single antihypertensive agent for gestational hypertension since 22 weeks gestation, and the medication was titrated to current dose 4 weeks before symptom onset. She has no past history of autoimmune disease, no family history. Today: BP 138/86 on current treatment, HR 92, T 37.4, mild butterfly rash sparing nasolabial folds, MCP and PIP joint tenderness without effusion. Investigations: ANA 1:640 homogeneous, anti-histone antibody strongly positive, anti-dsDNA negative, ENA negative, complement (C3, C4) normal, ESR 78, CRP 32, urine no proteinuria.",
+    "data_table": {
+      "Vital signs": "BP 138/86, HR 92, T 37.4, RR 18.",
+      "Examination": "Butterfly malar rash sparing nasolabial folds, MCP+PIP joint tenderness symmetric without effusion, soft pericardial friction rub.",
+      "Investigations": "ANA 1:640 homogeneous, ANTI-HISTONE strongly positive, anti-dsDNA NEGATIVE, ENA negative, complement C3 C4 normal, ESR 78, CRP 32, urinalysis no proteinuria/casts."
+    },
+    "lead_in": "Which class of antihypertensive most plausibly explains this drug-induced syndrome, given the antibody pattern?",
+    "options": [
+      {"letter": "A", "text": "Calcium-channel blocker (nifedipine)", "correct": false, "rationale": "CCBs are not implicated in drug-induced lupus erythematosus (DILE). Their side-effect profile is ankle oedema, headache, gingival hyperplasia, reflex tachycardia. Source: AMH.", "source_refs": ["Australian Medicines Handbook"]},
+      {"letter": "B", "text": "Methyldopa (centrally-acting alpha-2 agonist used in pregnancy)", "correct": true, "rationale": "ANTIBODY PATTERN: ANA homogeneous + anti-histone strongly positive + anti-dsDNA negative + normal complement = drug-induced lupus erythematosus (DILE), distinct from SLE. The discriminator is anti-histone (positive in >95 percent of DILE) and absence of dsDNA + normal complement. Methyldopa is a well-recognised DILE precipitant and is the most common antihypertensive used in pregnancy in Australia. Stop methyldopa; switch to labetalol or nifedipine; symptoms typically resolve over 2-12 weeks. Other DILE precipitants: procainamide (highest risk), hydralazine (second), isoniazid, quinidine, chlorpromazine, anti-TNF. Source: RANZCOG; AMH; ACR DILE.", "source_refs": ["RANZCOG Hypertension in Pregnancy", "Australian Medicines Handbook", "ACR DILE Reference"]},
+      {"letter": "C", "text": "Beta-blocker (labetalol)", "correct": false, "rationale": "Beta-blockers are not implicated in DILE. Labetalol's pregnancy-specific side effects are neonatal hypoglycaemia and bradycardia. Source: AMH.", "source_refs": ["Australian Medicines Handbook"]},
+      {"letter": "D", "text": "Diuretic (hydrochlorothiazide)", "correct": false, "rationale": "Thiazides are not typical DILE precipitants. Also avoided in pregnancy due to fluid balance concerns. Source: AMH.", "source_refs": ["Australian Medicines Handbook"]},
+      {"letter": "E", "text": "ACE inhibitor (ramipril)", "correct": false, "rationale": "ACEIs are contraindicated in pregnancy (fetal renal dysgenesis, oligohydramnios) and are not associated with DILE. Source: AMH.", "source_refs": ["Australian Medicines Handbook"]}
+    ],
+    "explanation": {
+      "summary": "Drug-induced lupus erythematosus (DILE) is a serology + clinical syndrome distinct from idiopathic SLE: ANA positive with the ANTI-HISTONE antibody, anti-dsDNA NEGATIVE, complement normal, renal and CNS involvement rare, resolves within weeks-months of stopping the culprit drug. Antihypertensive precipitants: methyldopa, hydralazine. Antiarrhythmic: procainamide (highest risk - up to 30 percent over time). Antimicrobial: isoniazid. Antipsychotic: chlorpromazine. Biologic: anti-TNF (e.g. infliximab, etanercept). In pregnancy, methyldopa was historically first-line antihypertensive but is now often second-line behind labetalol or nifedipine due to side-effect profile including DILE and depression.",
+      "key_points": [
+        "DILE antibody pattern: ANA + anti-HISTONE positive, anti-dsDNA NEGATIVE, complement normal",
+        "Pregnancy antihypertensive DILE precipitant: methyldopa",
+        "Highest-risk DILE drug overall: procainamide",
+        "Resolution: 2-12 weeks after stopping the drug",
+        "Switch first-line AU pregnancy AHT: labetalol or nifedipine"
+      ],
+      "pearls": "When a new symptom cluster appears 4-8 weeks after a new drug start, always ask: 'Could this be drug-induced?' Anti-histone is the highest-yield serology to request when DILE is suspected."
+    },
+    "sources": [
+      {"label": "RANZCOG Hypertension in Pregnancy", "url": "https://ranzcog.edu.au/"},
+      {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/"}
+    ],
+    "reference_ranges": ["ana_ena", "complement"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Drug-induced lupus erythematosus from methyldopa in pregnancy"
+  },
+  {
+    "id": "creative-reasoning-025-counter-mechanism-opioid-naloxone-half-life",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use / Toxicology",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["counter-mechanism matching", "pharmacokinetic mismatch"],
+    "stem": "A 28-year-old man on methadone 100 mg daily for opioid use disorder is found unresponsive in a Newcastle community park after combining methadone with diazepam in an attempt to potentiate sedation. He is brought to the ED 30 minutes after the witnessed event with RR 6, GCS 8, SpO2 86 percent on room air, pinpoint pupils, no track marks suggesting concurrent injection. He responds briefly to 400 microgram IV naloxone with respiratory rate rising to 12 and GCS improving to 12 over 90 seconds. He then deteriorates again over the next 30 minutes back to RR 8 and GCS 9. Bedside glucose 5.4 mmol/L, T 36.4, BP 102/68.",
+    "data_table": {
+      "Vital signs": "RR 6 (improved to 12 with naloxone bolus then back to 8), GCS 8 -> 12 -> 9, SpO2 86% RA -> 96% with BVM, BP 102/68.",
+      "Examination": "Pinpoint pupils, no track marks, no aspiration evidence, no head injury signs.",
+      "Investigations": "Bedside glucose 5.4, paracetamol level pending, ECG sinus normal axis QRS 86 QTc 460."
+    },
+    "lead_in": "Why has he re-sedated after initial response, and what is the single most appropriate next intervention?",
+    "options": [
+      {"letter": "A", "text": "Naloxone has worn off because its half-life (~60 min) is much shorter than methadone (~24 h); commence naloxone infusion at two-thirds the effective bolus dose per hour (0.4 mg/h)", "correct": true, "rationale": "MECHANISM: naloxone is a competitive mu-opioid receptor antagonist with a short half-life (~60 minutes). Methadone has a half-life of ~24 hours (8-59 hour range). The bolus reverses receptor occupancy briefly; as naloxone redistributes and is cleared, methadone re-binds receptors and re-sedation follows. AU practice (eTG Toxicology): commence naloxone infusion at two-thirds the cumulative effective bolus dose per hour. So if 400 microgram bolus produced response, infuse 0.4 mg/h (267 microgram/h rounded). Titrate to RR >=12 and adequate consciousness for airway. Source: eTG Toxicology; NSW Poisons Information Centre.", "source_refs": ["eTG Toxicology", "NSW Poisons Information Centre"]},
+      {"letter": "B", "text": "Methadone causes tolerance, so additional doses of methadone should be given to maintain consciousness", "correct": false, "rationale": "This is the opposite of correct - methadone is the toxin causing sedation. Giving more methadone deepens toxicity. Source: eTG.", "source_refs": ["eTG Toxicology"]},
+      {"letter": "C", "text": "Diazepam reversal with flumazenil 0.2 mg IV is the priority", "correct": false, "rationale": "Flumazenil reversal in patients with chronic benzodiazepine use risks seizures; it is rarely indicated in mixed-overdose patients especially with opioid co-ingestion. Source: NSW PIC.", "source_refs": ["NSW Poisons Information Centre"]},
+      {"letter": "D", "text": "Intubation under RSI rather than continued naloxone, since recurrent doses prolong ED length of stay", "correct": false, "rationale": "Intubation is appropriate in failure of medical reversal, but the standard pathway is naloxone infusion first - intubation is reserved for failure of infusion to maintain airway. Source: eTG.", "source_refs": ["eTG Toxicology"]},
+      {"letter": "E", "text": "Activated charcoal 50 g orally to reduce further methadone absorption", "correct": false, "rationale": "Methadone was taken hours earlier and the patient has reduced GCS - charcoal is contraindicated due to aspiration risk and is past its absorption window. Source: eTG.", "source_refs": ["eTG Toxicology"]}
+    ],
+    "explanation": {
+      "summary": "Pharmacokinetic mismatch is the central reasoning step: naloxone (half-life ~60 minutes) reverses opioid receptor occupancy briefly, while methadone (half-life ~24 hours, can extend to 59 hours due to autoinduction and tissue redistribution) continues to bind. After bolus, naloxone is cleared while methadone is still toxic. AU practice is naloxone INFUSION at two-thirds the cumulative effective bolus per hour, titrated to RR >=12 and adequate airway maintenance. Continuous monitoring for at least 24 hours given methadone's prolonged effect. Buprenorphine overdose may NOT respond to naloxone due to high receptor affinity. Always consider co-ingestion: benzodiazepine (synergistic respiratory depression but flumazenil rarely indicated) and paracetamol (delayed hepatotoxicity).",
+      "key_points": [
+        "Naloxone t1/2 ~60 min; methadone t1/2 ~24 h (up to 59 h)",
+        "AU practice: naloxone infusion at 2/3 effective bolus dose per hour",
+        "Titrate to RR >=12 and airway maintenance, not full reversal",
+        "Buprenorphine overdose may not respond to naloxone (high affinity)",
+        "Observe at least 24 hours for methadone overdose"
+      ],
+      "pearls": "Avoid over-aggressive naloxone in chronic opioid-dependent patients - precipitated withdrawal is unpleasant, increases aspiration risk, and may not be needed. Aim for RR >=12 and airway maintenance, not awake-and-talking."
+    },
+    "sources": [
+      {"label": "eTG Toxicology", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "NSW Poisons Information Centre", "url": "https://www.poisonsinfo.nsw.gov.au/"}
+    ],
+    "reference_ranges": ["pharmacokinetic"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Naloxone infusion for methadone overdose - pharmacokinetic mismatch"
+  },
+  {
+    "id": "creative-reasoning-026-antibody-nmda-encephalitis",
+    "topic": "Psychiatry",
+    "subtopic": "Organic psychosis",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["antibody pattern", "psychiatric mimic"],
+    "stem": "A 24-year-old previously well woman is admitted to a Gosford acute mental health unit with 3 weeks of progressive anxiety, paranoid delusions, and disorganised speech. Over the past 5 days she has developed orofacial dyskinesias (intermittent lip-smacking and chewing movements), choreoathetoid limb movements, low-grade fever (37.8), and one witnessed generalised tonic-clonic seizure. She had previously been started on risperidone 2 mg BD 8 days ago for presumed first-episode psychosis with no improvement. She has a history of menstrual irregularity. No personal or family history of psychiatric illness. No drug use confirmed on urine toxicology screen.",
+    "data_table": {
+      "Vital signs": "T 37.8, HR 118 sinus, BP 142/88, RR 22, SpO2 98% RA.",
+      "Examination": "Disorganised speech, orofacial dyskinesias, choreoathetoid limb movements, no focal weakness, no rash, mild abdominal mass on bimanual palpation.",
+      "Investigations": "FBC, UEC, LFT normal. TSH normal. Urine toxicology negative. CT brain normal. LP CSF: lymphocytosis 36 (mostly lymphocytes), protein 0.52 g/L, glucose normal, ANTI-NMDA-receptor antibodies STRONGLY POSITIVE in CSF; serum anti-NMDA also positive. EEG generalised slowing with delta brushes."
+    },
+    "lead_in": "Which is the unifying diagnosis, and what additional investigation must be requested urgently?",
+    "options": [
+      {"letter": "A", "text": "First-episode schizophrenia with neuroleptic malignant syndrome from risperidone; cease risperidone and supportive care", "correct": false, "rationale": "NMS presents with rigidity, hyperthermia, autonomic instability, raised CK - not orofacial dyskinesias, choreoathetoid movements, seizures, or anti-NMDA antibody positivity in CSF. The serology and EEG findings are diagnostic. Source: eTG Neurology.", "source_refs": ["eTG Neurology"]},
+      {"letter": "B", "text": "Anti-NMDA-receptor encephalitis; urgent abdominal/pelvic imaging for ovarian teratoma", "correct": true, "rationale": "ANTIBODY PATTERN: CSF anti-NMDA-receptor antibodies are diagnostic of anti-NMDA-receptor encephalitis. Classic clinical phases: prodromal viral-like illness -> psychiatric symptoms (anxiety, psychosis, mood lability) -> seizures + orofacial dyskinesias + choreoathetoid movements -> autonomic instability + dyskinesias. EEG delta brushes are pathognomic. In young women, ~50 percent have an underlying ovarian teratoma producing the antigen - urgent abdominal/pelvic imaging (transabdominal/transvaginal USS + CT/MRI) and tumour removal is the curative step alongside immunotherapy (steroids + IVIG or plasmapheresis as first line; rituximab/cyclophosphamide as second line). Source: ANZAN; Australian Encephalitis Network; eTG Neurology.", "source_refs": ["ANZAN Encephalitis Guideline", "Australian Encephalitis Network", "eTG Neurology"]},
+      {"letter": "C", "text": "Acute disseminated encephalomyelitis (ADEM); high-dose methylprednisolone alone", "correct": false, "rationale": "ADEM is a post-infectious demyelinating disease with multifocal neurology and characteristic MRI white-matter lesions; the antibody and EEG findings here are diagnostic of NMDA-receptor encephalitis. Source: ANZAN.", "source_refs": ["ANZAN Encephalitis Guideline"]},
+      {"letter": "D", "text": "Limbic encephalitis (anti-Hu); CT chest for small-cell lung cancer", "correct": false, "rationale": "Anti-Hu paraneoplastic encephalitis is associated with small-cell lung cancer in older smokers; demographics, antibody profile, and CT chest are not appropriate first investigation in a 24-year-old woman with NMDA-positive CSF. Source: ANZAN.", "source_refs": ["ANZAN Encephalitis Guideline"]},
+      {"letter": "E", "text": "Substance-induced psychosis from undetected synthetic cannabinoid; urine ELISA for synthetic cannabinoids", "correct": false, "rationale": "Synthetic cannabinoid psychosis does not produce CSF antibody positivity, EEG delta brushes, or orofacial dyskinesias as a constellation. Source: NSW Health.", "source_refs": ["NSW Health Drug and Alcohol"]}
+    ],
+    "explanation": {
+      "summary": "Anti-NMDA-receptor encephalitis is one of the most important psychiatric mimics. It typically affects young women and presents in stereotyped phases: viral prodrome -> psychiatric symptoms (anxiety, psychosis, mood lability, behavioural change) -> seizures and movement disorders (orofacial dyskinesias, chorea) -> autonomic instability + reduced consciousness. CSF anti-NMDA antibodies are diagnostic. EEG delta brushes are pathognomic. In women aged 18-35, approximately half have an underlying ovarian teratoma producing the antigen - imaging and tumour removal is curative alongside immunotherapy (first-line steroids + IVIG or plasmapheresis; second-line rituximab + cyclophosphamide). Prognosis is good with early treatment. Cognitive recovery may take 12-24 months.",
+      "key_points": [
+        "Classic phases: prodrome -> psych -> seizures + dyskinesia -> autonomic",
+        "CSF anti-NMDA antibody is diagnostic",
+        "EEG delta brushes are pathognomic",
+        "~50% of young women have ovarian teratoma - REMOVE the tumour",
+        "First-line immunotherapy: steroids + IVIG or plasmapheresis"
+      ],
+      "pearls": "Any first-episode psychosis in a young woman with new seizures, movement disorder, dysautonomia, or refractory presentation should trigger urgent LP for NMDA antibodies. Antipsychotics worsen the movement disorder and may precipitate NMS-like reactions."
+    },
+    "sources": [
+      {"label": "ANZAN Encephalitis Guideline", "url": "https://anzan.com.au/"},
+      {"label": "eTG Neurology", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["csf"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Anti-NMDA-receptor encephalitis psychiatric mimic + teratoma search"
+  },
+  {
+    "id": "creative-reasoning-027-multi-step-af-hfref",
+    "topic": "Medicine",
+    "subtopic": "Cardiology",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["multi-step ladder", "comorbidity-constrained choice"],
+    "stem": "A 72-year-old man with HFrEF (LVEF 28 percent on echo 3 months ago, NYHA II baseline) and new persistent atrial fibrillation (onset >2 months ago, rate 132 average on Holter, mildly symptomatic with exertional dyspnoea) attends a Maitland cardiology clinic. He is already on optimised guideline-directed medical therapy: bisoprolol 10 mg, sacubitril/valsartan 49/51 mg BD, spironolactone 25 mg daily, dapagliflozin 10 mg daily. Renal function is normal (Cr 88), thyroid normal, LFT normal, no QT prolongation (QTc 420 ms). He is on apixaban 5 mg BD for AF. He has no symptomatic angina, no valvular disease beyond mild MR, no prior cardiac surgery, no history of substance use. Echo today: LV dilatation, LVEF 26 percent, LA dilated (5.2 cm), no LV thrombus.",
+    "data_table": {
+      "Vital signs": "HR 132 AF, BP 124/76, RR 16, SpO2 97% RA. JVP not elevated.",
+      "Examination": "Irregularly irregular pulse, S3 gallop, no peripheral oedema, chest clear.",
+      "Investigations": "ECG AF rate 132, no LVH on voltage. Echo LVEF 26%, dilated LV, LA 5.2 cm. NT-proBNP 1240 pg/mL. Cr 88, K 4.6, TSH 1.8, LFT normal."
+    },
+    "lead_in": "What is the most appropriate next step for rate or rhythm control of his AF, recognising the constraints of HFrEF, optimised GDMT, and the available antiarrhythmic profile?",
+    "options": [
+      {"letter": "A", "text": "Add digoxin 125 microgram daily for rate control given persistent tachycardia despite maximal beta-blocker dose", "correct": false, "rationale": "Digoxin is a reasonable adjunct for rate control in HFrEF + AF when beta-blocker alone is insufficient, but the AFFIRM-AF and CASTLE-AF era has shifted preference toward rhythm control in HFrEF + AF given mortality and HF hospitalisation benefits. Source: ESC/CSANZ AF Guidelines.", "source_refs": ["ESC AF Guidelines", "CSANZ HF Position Statement"]},
+      {"letter": "B", "text": "Refer for catheter ablation of AF, recognising mortality and HF hospitalisation reduction in HFrEF demonstrated in CASTLE-AF", "correct": true, "rationale": "MULTI-STEP LADDER CONSTRAINT: in HFrEF + AF, catheter ablation has demonstrated reduced all-cause mortality and HF hospitalisation (CASTLE-AF 2018) and is now Class IIa recommendation in CSANZ + ESC guidelines for symptomatic HFrEF + AF. Patient is on optimised GDMT, has no contraindication, LV thrombus excluded, anticoagulation in place. AAD options are constrained in HFrEF: amiodarone is the only oral AAD with adequate safety profile (flecainide and sotalol contraindicated in HFrEF), but amiodarone carries thyroid, hepatic, pulmonary toxicity and is reserved when ablation is not feasible. Ablation offers the strongest evidence base for prognostic and symptomatic benefit. Source: CSANZ HF Position; ESC AF Guidelines; CASTLE-AF.", "source_refs": ["CSANZ HF Position Statement", "ESC AF Guidelines", "CASTLE-AF Trial"]},
+      {"letter": "C", "text": "Commence flecainide 50 mg BD for rhythm control with target sinus rhythm restoration", "correct": false, "rationale": "Flecainide is CONTRAINDICATED in structural heart disease including HFrEF (CAST trial: increased mortality). Source: AMH; ESC AF Guidelines.", "source_refs": ["Australian Medicines Handbook", "ESC AF Guidelines"]},
+      {"letter": "D", "text": "Commence sotalol 80 mg BD for combined rate and rhythm control", "correct": false, "rationale": "Sotalol has class III antiarrhythmic effects with negative inotropy and is contraindicated in HFrEF + reduced LVEF. Source: AMH.", "source_refs": ["Australian Medicines Handbook"]},
+      {"letter": "E", "text": "Increase bisoprolol to 15 mg daily for tighter rate control", "correct": false, "rationale": "Maximum recommended bisoprolol dose is 10 mg daily; 15 mg is off-label and adds bradycardia risk without proven benefit over alternative rate or rhythm control. Source: AMH.", "source_refs": ["Australian Medicines Handbook"]}
+    ],
+    "explanation": {
+      "summary": "AF management in HFrEF stacks several constraints: (1) most class I antiarrhythmics (flecainide, propafenone) are contraindicated due to CAST trial mortality signal in structural heart disease; (2) sotalol has negative inotropy and is contraindicated in reduced LVEF; (3) amiodarone is the only oral AAD with adequate safety profile in HFrEF but carries thyroid/hepatic/pulmonary toxicity; (4) digoxin has rate-control role but no mortality benefit and possible neutral-to-harmful long-term effect; (5) catheter ablation has level I evidence (CASTLE-AF) for reduced mortality and HF hospitalisation in HFrEF + AF and is now CSANZ/ESC Class IIa recommendation. Workflow: optimise GDMT, ensure anticoagulation (CHA2DS2-VASc + apixaban first-line), exclude LV thrombus on echo, refer for catheter ablation if symptomatic and recurrent.",
+      "key_points": [
+        "Class IC AADs (flecainide, propafenone) contraindicated in structural HD",
+        "Sotalol contraindicated in HFrEF",
+        "Amiodarone usable but with multi-organ toxicity profile",
+        "CASTLE-AF: ablation reduces mortality + HF hospitalisation in HFrEF + AF",
+        "Confirm no LV thrombus on echo before cardioversion or ablation"
+      ],
+      "pearls": "When considering rhythm control in HFrEF + AF in 2026 practice, always ask if catheter ablation is available - the evidence base now favours ablation over amiodarone for symptomatic patients on optimised GDMT."
+    },
+    "sources": [
+      {"label": "CSANZ HF Position Statement", "url": "https://www.csanz.edu.au/"},
+      {"label": "ESC AF Guidelines", "url": "https://www.escardio.org/"}
+    ],
+    "reference_ranges": ["nt_probnp", "echo_lvef"],
+    "created": "2026-05-25",
+    "subtopic_detail": "AF rhythm vs rate strategy in HFrEF with multi-comorbidity constraints"
+  },
+  {
+    "id": "creative-reasoning-028-time-onset-qt-drug-combination",
+    "topic": "Medicine",
+    "subtopic": "Pharmacology",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["time-of-onset reasoning", "drug interaction"],
+    "stem": "A 64-year-old woman with chronic depression on stable citalopram 40 mg daily for 6 years is admitted to Calvary Mater Newcastle with new-onset palpitations, two presyncopal episodes, and one witnessed brief loss of consciousness this morning. She had been started on azithromycin 500 mg daily for community-acquired pneumonia 4 days ago, and was started on ondansetron 8 mg TDS for the nausea associated with her infection 2 days ago. She has no past cardiac history, no electrolyte disorder, normal renal function, no other medication changes. ECG today: sinus rhythm rate 92 with prolonged QT (QTc 580 ms), no T-wave alternans, no current torsades. Her ECG 6 months ago had QTc 440 ms.",
+    "data_table": {
+      "Vital signs": "HR 92 sinus, BP 118/72, RR 18, SpO2 98% RA.",
+      "Examination": "Alert oriented, no neurological deficit, normal heart sounds, chest mild crackles RLL.",
+      "Investigations": "ECG QTc 580 ms (was 440 ms 6 months ago). K 4.1, Mg 0.82, Ca 2.32. Cr 78. Troponin negative. CXR RLL consolidation."
+    },
+    "lead_in": "Which combination of mechanisms best explains the QT prolongation, and what is the immediate management priority?",
+    "options": [
+      {"letter": "A", "text": "Citalopram alone is responsible; stop citalopram and accept psychiatric relapse risk", "correct": false, "rationale": "Citalopram at 40 mg has been stable for 6 years with prior QTc 440 ms - it has not changed. The TIME-OF-ONSET points to the new drugs as additive contributors. Stopping citalopram alone misses the bigger discontinuation. Source: AMH.", "source_refs": ["Australian Medicines Handbook"]},
+      {"letter": "B", "text": "Additive QT prolongation from three QT-prolonging drugs (citalopram + azithromycin + ondansetron); admit to telemetry, stop both azithromycin (switch antibiotic to doxycycline) and ondansetron, replace IV Mg as prophylaxis", "correct": true, "rationale": "Three QT-prolonging drugs in additive combination: citalopram (FDA black-box at >40 mg), azithromycin (class effect of macrolides), ondansetron (5HT3 antagonists). The TIME-OF-ONSET maps the QT escalation precisely to addition of azithromycin then ondansetron in the past 4 days. QTc 580 ms is a high torsades risk. Management: admit to telemetry, replace IV magnesium sulphate 2 g over 20 min as torsades prophylaxis (target Mg 0.9+), stop both new QT-prolongers (switch macrolide to doxycycline; replace ondansetron with metoclopramide which has lower QT signal); continue citalopram (long-term, no acute change). Re-check ECG 24 hours after offending drugs ceased. Source: AMH; eTG Cardiovascular; CredibleMeds QTdrugs.org.", "source_refs": ["Australian Medicines Handbook", "eTG Cardiovascular", "CredibleMeds QTdrugs.org"]},
+      {"letter": "C", "text": "Hypokalaemia is the cause; replace IV K then continue all current medications", "correct": false, "rationale": "K is 4.1 (within normal). Hypokalaemia is not the issue here. Source: eTG.", "source_refs": ["eTG Cardiovascular"]},
+      {"letter": "D", "text": "Cardiac ischaemia precipitating QT prolongation; cardiac catheterisation lab activation", "correct": false, "rationale": "Troponin is negative; presentation is presyncope without typical ischaemic symptoms. QT prolongation in this context is drug-induced. Source: eTG.", "source_refs": ["eTG Cardiovascular"]},
+      {"letter": "E", "text": "Discharge on outpatient cardiology follow-up; QTc will normalise with antibiotic course completion", "correct": false, "rationale": "QTc 580 ms is a high torsades risk and must be treated as a medical emergency until the offending drugs are stopped and Mg restored. Discharge is unsafe. Source: eTG.", "source_refs": ["eTG Cardiovascular"]}
+    ],
+    "explanation": {
+      "summary": "QT prolongation from additive drug interaction is a recurring exam scenario. The TIME-OF-ONSET maps each new drug to the QT change: citalopram has been stable for years and is not the trigger; the addition of azithromycin (macrolide class effect on K+ delayed-rectifier currents) followed by ondansetron (5HT3 antagonists block IKr potassium current) produces additive QT prolongation that pushes a previously controlled QTc into a high-torsades risk range. Management priorities: telemetry, electrolyte correction (Mg first, target >0.9; K target 4.5+), discontinue the most recent QT-prolonging drugs (rarely all of them - choose alternatives), monitor for torsades. CredibleMeds QTdrugs.org maintains an up-to-date list. Risk factors that compound: female sex, older age, baseline cardiac disease, renal impairment, electrolyte abnormality.",
+      "key_points": [
+        "Always check QTc when adding ANY drug to a patient on QT-prolonging therapy",
+        "Macrolides (azithromycin, clarithromycin, erythromycin) prolong QT",
+        "Ondansetron prolongs QT (dose-dependent above 16 mg)",
+        "IV magnesium is first-line torsades prophylaxis and treatment",
+        "Replace K+ to >4.5 and Mg to >0.9 in any QT prolongation scenario"
+      ],
+      "pearls": "When prescribing for any patient already on a QT-prolonging drug, look up CredibleMeds.org or use eTG to verify additive risk. Doxycycline is the safer macrolide-alternative for CAP when QT is a concern."
+    },
+    "sources": [
+      {"label": "eTG Cardiovascular", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/"}
+    ],
+    "reference_ranges": ["ecg", "electrolytes"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Additive drug-induced QT prolongation - time-of-onset mapping"
+  }
+]
