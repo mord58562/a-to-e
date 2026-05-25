@@ -265,26 +265,13 @@
     reports: [],
   };
 
-  // Substitute today's date-driven focus directive into a prompt
-  // template that contains {{FOCUS_DIRECTIVE}}. Rob's directive:
-  // - until 6 June 2026: paste-flow LLMs generate only Paediatrics +
-  //   Obstetrics & Gynaecology questions.
-  // - from 6 June 2026: paste-flow LLMs generate primarily Medicine
-  //   and Psychiatry. Paeds/O&G still acceptable in small numbers.
-  function seasonalFocusDirective(now) {
-    now = now || new Date();
-    const flip = new Date("2026-06-06T00:00:00");
-    if (now < flip) {
-      return [
-        "**Until 6 June 2026 (today is " + now.toISOString().slice(0, 10) + ")**: generate ONLY Paediatrics or Obstetrics & Gynaecology questions.",
-        "Do NOT generate Psychiatry or Medicine questions in this period - they will be dropped from the bank.",
-        "The site already has enough psych/medicine seed content; the maintainer is prioritising paeds + O&G coverage to 500 each before the next exam window.",
-      ].join("\n");
-    }
+  // Build the focus directive embedded in the paste-flow prompt. All four
+  // disciplines are at parity, so the directive asks for an even split
+  // and pushes for creative-reasoning question types.
+  function seasonalFocusDirective() {
     return [
-      "**From 6 June 2026 onwards (today is " + now.toISOString().slice(0, 10) + ")**: generate PRIMARILY Psychiatry and Medicine questions.",
-      "Paediatrics and Obstetrics & Gynaecology questions are still acceptable but in much smaller numbers - no more than 1 in 5.",
-      "The bank's paeds + O&G coverage is mature; psych + medicine are the current under-served disciplines.",
+      "All four disciplines (Paediatrics, Obstetrics & Gynaecology, Psychiatry, Medicine) are at parity. Distribute new questions evenly across the four.",
+      "Each question should be built around a clinical-reasoning pattern - mechanism inversion, side-effect to drug class mapping, constraint-stacked decision, antibody or test-pattern to diagnosis, AU-specific cutoff discrimination, time-of-onset reasoning, multi-step ladder under organ dysfunction, confound elimination, pattern recognition with non-obvious cue, or dose-calculation traps. Vary the pattern across the batch.",
     ].join("\n");
   }
   // Inject live bank counts into the prompt so other LLMs (Gemini /
@@ -885,22 +872,71 @@
       ${claimBlock}
       <div class="account-self-delete">
         <strong>Delete this account.</strong>
-        <p class="dim small" style="margin:4px 0">All your answers and progress will be permanently removed. This cannot be undone.</p>
-        <button class="danger-btn" id="acctSelfDeleteUnified">Delete my account</button>
+        <p class="dim small" style="margin:4px 0">All your answers, flags and progress will be permanently removed. This cannot be undone.</p>
+        <button class="danger-btn" id="acctSelfDeleteOpen">Delete my account</button>
+        <div class="acct-delete-confirm" id="acctDeleteConfirm" hidden>
+          <label class="acct-delete-label" for="acctDeleteEmailInput">
+            Type <code>${esc(cloudUser.email || "")}</code> to confirm.
+          </label>
+          <input type="email" id="acctDeleteEmailInput" class="acct-delete-input" autocomplete="off" spellcheck="false" placeholder="${esc(cloudUser.email || "")}">
+          <div class="acct-delete-actions">
+            <button class="ghost-link" id="acctDeleteCancel" type="button">Cancel</button>
+            <button class="danger-btn" id="acctDeleteGo" type="button" disabled>Permanently delete</button>
+          </div>
+          <p class="acct-delete-status dim small" id="acctDeleteStatus" aria-live="polite"></p>
+        </div>
       </div>`;
-    const sb = document.getElementById("acctSelfDeleteUnified");
-    if (sb) sb.onclick = async () => {
-      const confirmEmail = prompt("Type your email to confirm permanent account deletion:");
-      if (!confirmEmail || confirmEmail.trim().toLowerCase() !== (cloudUser.email || "").toLowerCase()) {
-        if (confirmEmail !== null) alert("Email did not match - account NOT deleted.");
-        return;
-      }
-      try {
-        await apiFetch("/api/account/delete", { method: "POST" });
-        cloudSignOut();
-        location.reload();
-      } catch (e) { alert("Failed to delete account: " + (e.message || e)); }
-    };
+    const openBtn = document.getElementById("acctSelfDeleteOpen");
+    const confirmPane = document.getElementById("acctDeleteConfirm");
+    const emailInput = document.getElementById("acctDeleteEmailInput");
+    const cancelBtn = document.getElementById("acctDeleteCancel");
+    const goBtn = document.getElementById("acctDeleteGo");
+    const statusEl = document.getElementById("acctDeleteStatus");
+    if (openBtn && confirmPane) {
+      openBtn.onclick = () => {
+        confirmPane.hidden = false;
+        openBtn.hidden = true;
+        statusEl.textContent = "";
+        emailInput.value = "";
+        goBtn.disabled = true;
+        setTimeout(() => emailInput.focus(), 30);
+      };
+    }
+    if (cancelBtn && confirmPane && openBtn) {
+      cancelBtn.onclick = () => {
+        confirmPane.hidden = true;
+        openBtn.hidden = false;
+        statusEl.textContent = "";
+        emailInput.value = "";
+      };
+    }
+    if (emailInput && goBtn) {
+      emailInput.oninput = () => {
+        const target = (cloudUser.email || "").trim().toLowerCase();
+        const typed = emailInput.value.trim().toLowerCase();
+        goBtn.disabled = !target || typed !== target;
+        statusEl.textContent = "";
+      };
+      emailInput.onkeydown = e => {
+        if (e.key === "Enter" && !goBtn.disabled) { e.preventDefault(); goBtn.click(); }
+      };
+    }
+    if (goBtn) {
+      goBtn.onclick = async () => {
+        if (goBtn.disabled) return;
+        goBtn.disabled = true;
+        statusEl.textContent = "Deleting...";
+        try {
+          await apiFetch("/api/account/delete", { method: "POST" });
+          statusEl.textContent = "Account deleted. Reloading...";
+          cloudSignOut();
+          setTimeout(() => location.reload(), 600);
+        } catch (e) {
+          statusEl.textContent = "Could not delete: " + (e.message || e);
+          goBtn.disabled = false;
+        }
+      };
+    }
   }
 
   function formatDuration(ms) {
@@ -2272,9 +2308,9 @@
     if (auditNav) auditNav.onclick = () => openAdmin("inbox");
 
     // Populate the LLM prompt + copy button. The prompt text has
-    // placeholders ({{FOCUS_DIRECTIVE}}) that are substituted at
-    // copy time so today's date controls which discipline(s) are in
-    // scope - see seasonalFocusDirective() below.
+    // placeholders ({{FOCUS_DIRECTIVE}}, {{BANK_STATE}}) substituted
+    // at copy time so the directive and the live bank counts are
+    // always current.
     const promptTpl = document.getElementById("addQuestionsPromptTemplate");
     const promptText = document.getElementById("promptText");
     if (promptTpl && promptText) {
@@ -2285,8 +2321,7 @@
     const COPY_LABEL = copyBtn ? copyBtn.textContent : "";
     let copyResetTimer = null;
     if (copyBtn) copyBtn.onclick = async () => {
-      // Re-render in case the calendar rolled past 1 July since the
-      // modal was last opened.
+      // Re-render so the live bank counts are current at copy time.
       promptText.textContent = renderPrompt(promptTpl.textContent.trim());
       let ok = false;
       try {
@@ -3266,10 +3301,6 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
   }
 
   // ── Utility ─────────────────────────────────────────────────────────────
-  // ── House M.D. comic-relief toast (every 50 submissions per session) ──
-  // Real lines from the show. Each lands once per browser session-tab
-  // crossing of a multiple of 50 submissions. The first 50 also fires
-  // on the user's very first session so the easter egg is discoverable.
   const HOUSE_QUOTES = [
     { q: "Everybody lies.", who: "House" },
     { q: "It's a basic truth of the human condition that everybody lies. The only variable is about what.", who: "House" },
