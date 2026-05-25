@@ -670,5 +670,205 @@
     "reference_ranges": ["inr", "uec"],
     "created": "2026-05-25",
     "subtopic_detail": "Warfarin reversal ladder in multi-organ dysfunction"
+  },
+  {
+    "id": "creative-reasoning-011-confound-vaccine-troponin-paeds",
+    "topic": "Paediatrics",
+    "subtopic": "Cardiology / Vaccinology",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["confound elimination", "post-vaccine reasoning"],
+    "stem": "A 16-year-old boy presents to a Tamworth paediatric ED with 24 hours of mild central chest discomfort, no syncope, no palpitations, no exertional symptoms. Exam normal, no pericardial rub, no murmur. ECG sinus rhythm, no ST changes, no PR depression. Troponin I 87 ng/L (upper limit of normal 14). He received his second dose of an mRNA COVID-19 booster 48 hours ago. He has no past cardiac history, no family history of cardiomyopathy or sudden death, no recent viral illness, no drug use, no stimulant medications. Echocardiogram requested.",
+    "data_table": {
+      "Vital signs": "T 36.8, HR 78, BP 118/72, SpO2 99% room air.",
+      "Examination": "Heart sounds normal, no rub, no murmur, no peripheral oedema, chest non-tender.",
+      "Investigations": "ECG sinus normal axis, no ischaemia or pericarditis. Troponin I 87 ng/L (ULN 14). CRP 12. FBC normal. Echocardiogram pending."
+    },
+    "lead_in": "Which is the single most appropriate next step in management?",
+    "options": [
+      {"letter": "A", "text": "Discharge with safety-netting; troponin rise is fully explained by recent vaccination and requires no investigation", "correct": false, "rationale": "While post-mRNA-vaccine myocarditis is the leading differential, any troponin rise warrants echocardiography and cardiology review before discharge to exclude reduced LVEF or wall-motion abnormality. Source: NSW Health post-vaccine myocarditis guidance.", "source_refs": ["NSW Health Post-Vaccine Myocarditis Pathway", "ATAGI Statement"]},
+      {"letter": "B", "text": "Admit for telemetry, complete echocardiography, repeat troponin at 6 hours, paediatric cardiology review, and recognise post-mRNA-vaccine myocarditis as the most likely cause", "correct": true, "rationale": "Post-mRNA vaccine myocarditis is the most likely cause (young male, 1-5 days post second/booster dose, chest pain with troponin rise, normal pre-vaccine cardiac state). Confound elimination: ECG and FH excluded primary cardiomyopathy and ischaemic causes. Standard pathway is admission with telemetry, echo, repeat troponin, paediatric cardiology review. Course is usually self-limiting with NSAIDs or low-dose colchicine but ATAGI/NSW Health pathway is mandatory. Source: NSW Health Post-Vaccine Myocarditis Pathway; ATAGI Clinical Recommendations.", "source_refs": ["NSW Health Post-Vaccine Myocarditis Pathway", "ATAGI Clinical Recommendations"]},
+      {"letter": "C", "text": "Commence empirical aspirin 300 mg orally and admit as suspected acute coronary syndrome", "correct": false, "rationale": "ACS in a 16-year-old with no risk factors and a normal ECG is highly unlikely; aspirin loading is inappropriate. Source: eTG Cardiovascular.", "source_refs": ["eTG Cardiovascular"]},
+      {"letter": "D", "text": "Order CT coronary angiogram before any other intervention", "correct": false, "rationale": "CTCA is not first-line in adolescent myocarditis workup; echocardiography is. Cardiac MRI is the gold standard for post-vaccine myocarditis confirmation but is not the immediate next step in ED. Source: NSW Health Pathway.", "source_refs": ["NSW Health Post-Vaccine Myocarditis Pathway"]},
+      {"letter": "E", "text": "Reassure and arrange outpatient stress test in 6 weeks", "correct": false, "rationale": "Outpatient deferral fails to exclude active myocarditis in the acute window when echocardiographic findings (segmental wall-motion abnormality, mild LVEF reduction) determine inpatient versus outpatient management. Source: NSW Health Pathway.", "source_refs": ["NSW Health Post-Vaccine Myocarditis Pathway"]}
+    ],
+    "explanation": {
+      "summary": "The discriminator is recognising the confound: recent mRNA vaccine (24-72 h after second/booster dose, predominantly adolescent and young adult males) is the dominant cause of acute myopericarditis in this demographic since 2021. The reasoning trap is treating it as ACS or dismissing the troponin altogether. Standard Australian pathway is admit + telemetry + echo + repeat troponin + cardiology consult; cardiac MRI in 4-12 weeks confirms diagnosis. ATAGI maintains COVID-19 vaccine recommendations because benefit exceeds risk even when myocarditis is counted.",
+      "key_points": [
+        "Post-mRNA-vaccine myocarditis: 1-5 days post 2nd/booster, peaks day 2-3",
+        "Male adolescents and young adults at highest relative risk",
+        "Always exclude reduced LVEF before outpatient management",
+        "Cardiac MRI at 4-12 weeks confirms scar/oedema pattern",
+        "ATAGI recommends a temporary 6-12 month pause on further mRNA doses in confirmed cases"
+      ],
+      "pearls": "Differentiating cause-and-effect from confound is a recurring exam skill: post-transfusion bilirubin rise, post-vaccine serology positives, post-surgery troponin rise, post-statin CK rise. Always state the alternative diagnoses you excluded."
+    },
+    "sources": [
+      {"label": "NSW Health Post-Vaccine Myocarditis Pathway", "url": "https://www.health.nsw.gov.au/"},
+      {"label": "ATAGI Clinical Recommendations", "url": "https://www.health.gov.au/atagi"}
+    ],
+    "reference_ranges": ["troponin", "crp"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Post-mRNA-vaccine myocarditis vs alternative myocardial injury"
+  },
+  {
+    "id": "creative-reasoning-012-antibody-pattern-anti-ro-neonatal-block",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Maternal medicine",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["antibody pattern", "fetal surveillance", "autoimmunity in pregnancy"],
+    "stem": "A 31-year-old woman is referred to a maternal medicine clinic at the Calvary Mater Newcastle at 16 weeks gestation with a known diagnosis of Sjogren syndrome made 4 years ago. She is asymptomatic, on hydroxychloroquine 200 mg daily, and has had no thrombotic events. Autoantibody profile from her rheumatologist 6 months ago: ANA 1:1280 speckled, anti-Ro (SSA) strongly positive at 240 U/mL, anti-La (SSB) positive at 90 U/mL, anti-dsDNA negative, anticardiolipin negative, lupus anticoagulant negative, anti-Smith negative, anti-RNP negative. Her previous pregnancy 3 years ago ended in elective termination at 9 weeks. She has no children. She is on no other medications and has no thyroid disease.",
+    "data_table": {
+      "Vital signs": "BP 110/68, HR 72, BMI 24.",
+      "Examination": "No active synovitis, no rash, mild dry eyes only.",
+      "Investigations": "ANA 1:1280 speckled, anti-Ro (SSA) 240 U/mL strongly positive, anti-La (SSB) 90 U/mL positive, dsDNA neg, anticardiolipin neg, LA neg. TFT normal."
+    },
+    "lead_in": "Based on the antibody pattern, which is the single most important antenatal surveillance step beyond standard screening?",
+    "options": [
+      {"letter": "A", "text": "Serial uterine artery Doppler at 20 and 24 weeks for placental insufficiency risk", "correct": false, "rationale": "Uterine artery Doppler is for placental insufficiency / preeclampsia risk stratification and is non-specific for this serology pattern. The dominant fetal risk in anti-Ro positive pregnancies is congenital heart block, not placental insufficiency. Source: RANZCOG.", "source_refs": ["RANZCOG Maternal Medicine Guidance"]},
+      {"letter": "B", "text": "Weekly fetal echocardiography focused on PR interval from 16 to 26 weeks", "correct": true, "rationale": "The discriminator is the anti-Ro (SSA) titre. Anti-Ro IgG crosses the placenta and binds fetal cardiac conduction tissue, producing congenital heart block (CHB) - irreversible once third-degree. Window of highest risk is 16-26 weeks gestation. AU practice: weekly fetal echo with PR-interval measurement; first-degree block may be reversible with maternal dexamethasone. Risk in first anti-Ro pregnancy ~1-2 percent; recurrence in subsequent affected pregnancy ~15-20 percent. Source: RANZCOG; AHA Fetal Cardiology Statement; ACR Reproductive Health Guideline.", "source_refs": ["RANZCOG Maternal Medicine Guidance", "AHA Fetal Cardiology Statement", "ACR Reproductive Health Guideline"]},
+      {"letter": "C", "text": "Monthly maternal serum complement (C3 / C4) levels for lupus flare detection", "correct": false, "rationale": "Complement monitoring is used in SLE for flare surveillance but is non-specific for Sjogren and does not address the fetal risk. Source: ACR.", "source_refs": ["ACR Reproductive Health Guideline"]},
+      {"letter": "D", "text": "Maternal aspirin 150 mg from 12 weeks for preeclampsia prevention", "correct": false, "rationale": "Aspirin prophylaxis is appropriate per general preeclampsia risk algorithm but is not the most important step specific to this antibody pattern. It does not prevent congenital heart block. Source: RANZCOG.", "source_refs": ["RANZCOG Pre-eclampsia Prevention"]},
+      {"letter": "E", "text": "Serial fetal MRI from 20 weeks for neural-tube and brain anomalies", "correct": false, "rationale": "Fetal MRI is not part of routine surveillance for anti-Ro positive pregnancies and the antibodies do not cause CNS malformation. Source: RANZCOG.", "source_refs": ["RANZCOG"]}
+    ],
+    "explanation": {
+      "summary": "Anti-Ro and anti-La are IgG autoantibodies present in Sjogren syndrome, SLE, and isolated asymptomatic seropositivity. They cross the placenta from approximately 16 weeks gestation and can bind to the fetal AV node, producing inflammatory damage and progressive heart block. First-degree block may respond to maternal dexamethasone or fluorinated steroids; second-degree is sometimes reversible; third-degree is irreversible and may require fetal/neonatal pacing. Weekly fetal echo with PR-interval (mechanical) assessment 16-26 weeks is the AU surveillance standard for anti-Ro positive pregnancies. Neonatal lupus erythematosus (skin rash, hepatitis, cytopenias) is the postnatal counterpart and resolves as maternal IgG is cleared (~6 months).",
+      "key_points": [
+        "Anti-Ro/SSA + anti-La/SSB cross placenta from ~16 weeks",
+        "Surveillance window: 16-26 weeks for congenital heart block",
+        "Continue hydroxychloroquine in pregnancy (compatible, reduces CHB risk)",
+        "First-degree block may respond to maternal dexamethasone",
+        "Recurrence risk of CHB in subsequent affected pregnancy ~15-20 percent"
+      ],
+      "pearls": "Hydroxychloroquine is associated with reduced incidence of congenital heart block in anti-Ro positive pregnancies (PATCH trial); continuation through pregnancy is supported by RANZCOG."
+    },
+    "sources": [
+      {"label": "RANZCOG Maternal Medicine Guidance", "url": "https://ranzcog.edu.au/"},
+      {"label": "ACR Reproductive Health Guideline", "url": "https://www.rheumatology.org/"}
+    ],
+    "reference_ranges": ["ana_ena"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Anti-Ro associated congenital heart block surveillance"
+  },
+  {
+    "id": "creative-reasoning-013-mechanism-inversion-mgso4-neuroprotection",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Preterm labour",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["mechanism inversion", "preterm neuroprotection"],
+    "stem": "A 28-year-old G2P1 woman is admitted to John Hunter Hospital at 29+5 weeks gestation in established preterm labour. Birth is anticipated within 6 hours. She has received the first dose of betamethasone 11.4 mg IM 30 minutes ago. The obstetric registrar is preparing to commence an infusion of a magnesium-based agent whose primary intended fetal effect is described as: 'a calcium-channel modulator that stabilises immature cerebral microvasculature, attenuates glutamate-driven excitotoxicity at NMDA receptors, and reduces free-radical-mediated white matter injury in the periventricular region.' Maternal observations are normal, no preeclampsia features, no contraindications to magnesium therapy.",
+    "data_table": {
+      "Vital signs": "T 36.7, HR 88, BP 118/72, RR 18, SpO2 99% room air. Patellar reflexes 2+.",
+      "Examination": "Cervix 4 cm dilated, 80% effaced, cephalic, station -1; CTG reactive.",
+      "Investigations": "FBC, UEC normal. Mg baseline 0.85 mmol/L. Patellar reflexes preserved."
+    },
+    "lead_in": "Based purely on the mechanism described, which is the single most likely clinical indication?",
+    "options": [
+      {"letter": "A", "text": "Eclampsia seizure prophylaxis in severe preeclampsia at term", "correct": false, "rationale": "Eclampsia prophylaxis is indeed a magnesium indication but acts via maternal cortical neuronal stabilisation, not fetal periventricular white-matter protection. The mechanism described targets the immature fetal brain specifically. Source: RANZCOG.", "source_refs": ["RANZCOG Pre-eclampsia Guidance"]},
+      {"letter": "B", "text": "Tocolysis to delay preterm birth by 48 hours for steroid effect", "correct": false, "rationale": "Magnesium has been used historically as a tocolytic but is no longer recommended in Australia (no benefit over placebo). The mechanism described is neuroprotective, not myometrial. Source: RANZCOG Preterm Labour Guidance.", "source_refs": ["RANZCOG Preterm Labour Guidance"]},
+      {"letter": "C", "text": "Fetal neuroprotection from cerebral palsy in anticipated preterm birth under 30 weeks gestation", "correct": true, "rationale": "Australian Antenatal Magnesium Sulphate for Neuroprotection Clinical Practice Guideline (2010, reaffirmed) recommends IV magnesium sulphate for women at <30 weeks gestation with anticipated birth within 24 hours, to reduce cerebral palsy risk in surviving infants. Mechanism is calcium-channel modulation + glutamate/NMDA attenuation + free-radical scavenging at the developing periventricular white matter (which is highly vulnerable to hypoxic injury). NNT ~63 to prevent one case of CP. Loading 4 g IV over 20 min then 1 g/h until birth or 24 h. Source: Australian Antenatal Magnesium Sulphate Neuroprotection Guideline; RANZCOG.", "source_refs": ["Australian Antenatal Magnesium Sulphate Neuroprotection Guideline", "RANZCOG Preterm Labour Guidance"]},
+      {"letter": "D", "text": "Maternal treatment of supraventricular tachycardia in pregnancy", "correct": false, "rationale": "Magnesium has class effect at ion channels but is not used as primary SVT therapy; mechanism described is neuro-specific. Source: AHA.", "source_refs": ["AHA Arrhythmia Guidelines"]},
+      {"letter": "E", "text": "Maternal treatment of acute severe asthma with bronchodilator effect", "correct": false, "rationale": "IV magnesium has a role in severe asthma via smooth muscle relaxation, but the mechanism described targets fetal periventricular tissue, not adult bronchial smooth muscle. Source: TSANZ.", "source_refs": ["TSANZ Asthma Guidelines"]}
+    ],
+    "explanation": {
+      "summary": "MgSO4 for fetal neuroprotection acts via voltage-gated calcium channel modulation, NMDA receptor antagonism, and free-radical scavenging in the immature periventricular white matter, which is particularly vulnerable to hypoxic-ischaemic and inflammatory injury before 30 weeks gestation. Australian practice: indicated when birth is anticipated within 24 hours and gestation is <30 weeks (some units extend to 32 weeks). Maternal magnesium toxicity is monitored by patellar reflexes (loss at >3.5 mmol/L), respiratory rate, and urine output. Calcium gluconate IV is the antidote.",
+      "key_points": [
+        "AU indication: anticipated birth <30 weeks within 24 hours",
+        "Dose: 4 g IV over 20 min loading, then 1 g/h",
+        "NNT ~63 to prevent one case of cerebral palsy",
+        "Monitor patellar reflexes hourly; RR; urine output",
+        "Calcium gluconate IV reverses toxicity"
+      ],
+      "pearls": "Same drug, different indication, different mechanism: eclampsia prophylaxis (maternal cortex), fetal neuroprotection (periventricular white matter), severe asthma (bronchodilation), torsades (membrane stabilisation). The mechanism described in the stem mapped uniquely to neuroprotection."
+    },
+    "sources": [
+      {"label": "Australian Antenatal Magnesium Sulphate Neuroprotection Guideline", "url": "https://www.health.gov.au/"},
+      {"label": "RANZCOG Preterm Labour Guidance", "url": "https://ranzcog.edu.au/"}
+    ],
+    "reference_ranges": ["magnesium"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Magnesium sulphate fetal neuroprotection mechanism vs other indications"
+  },
+  {
+    "id": "creative-reasoning-014-side-effect-class-clozapine",
+    "topic": "Psychiatry",
+    "subtopic": "Antipsychotic monitoring",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["side-effect to monitoring mapping", "antipsychotic pharmacology"],
+    "stem": "A 34-year-old man with treatment-resistant schizophrenia has been stable on clozapine 450 mg nocte for 11 months, attending a Newcastle community mental health clinic. He smokes 20 cigarettes daily and has been advised against changing his smoking behaviour without consultation. He presents today with 4 days of intermittent sharp left-sided chest pain, mild dyspnoea on exertion (climbing one flight of stairs), and a single self-recorded resting heart rate of 122. He denies fever, cough, sputum, syncope, or recent travel. His most recent FBC, UEC, LFT, and CK are within 7 days and normal except WCC 7.2 (with neutrophils 4.8) and CK 142 U/L. He has gained 8 kg over 11 months.",
+    "data_table": {
+      "Vital signs": "T 36.9, HR 118 sinus, BP 124/82, RR 22, SpO2 97% room air.",
+      "Examination": "Heart sounds normal, no rub, mild bibasal fine crackles, no peripheral oedema, no calf tenderness, no rash.",
+      "Investigations": "ECG sinus tachycardia 118, no ST changes. Troponin I 142 ng/L (ULN 14). NT-proBNP 380 pg/mL. CXR mild cardiomegaly. FBC: WCC 7.2 N 4.8; UEC normal; CK 142; LFT normal."
+    },
+    "lead_in": "Which clozapine-associated adverse effect is the single most likely explanation for this presentation, and what is the immediate monitoring response?",
+    "options": [
+      {"letter": "A", "text": "Clozapine-induced agranulocytosis; cease clozapine and admit for haematology review", "correct": false, "rationale": "Neutrophil count is 4.8 (well above the 1.5 mandatory cessation threshold); agranulocytosis is not occurring. The presentation does not fit; agranulocytosis typically presents with sepsis from infection, not chest pain and troponin rise. Source: Australian Clozapine Monitoring Protocol.", "source_refs": ["Australian Clozapine Monitoring Protocol", "RANZCP"]},
+      {"letter": "B", "text": "Clozapine-induced myocarditis; cease clozapine, admit, urgent echocardiogram and cardiology consult", "correct": true, "rationale": "Clozapine-induced myocarditis occurs in 0.7-3 percent of patients, peaks 14-21 days after initiation but can occur later (especially with smoking-related metabolism changes). Presentation: tachycardia + chest pain + dyspnoea + raised troponin + raised CRP/NT-proBNP in a clozapine patient is myocarditis until proven otherwise. Mandatory cessation; cardiology review; echocardiogram for LVEF assessment; cardiac MRI for confirmation. Re-challenge generally not recommended. Source: RANZCP Clozapine Position Statement; Australian Clozapine Monitoring Protocol.", "source_refs": ["RANZCP Clozapine Position Statement", "Australian Clozapine Monitoring Protocol"]},
+      {"letter": "C", "text": "Clozapine-induced metabolic syndrome and weight gain; commence atorvastatin 40 mg daily and dietitian referral", "correct": false, "rationale": "Metabolic syndrome is a recognised clozapine effect but does not present acutely with chest pain and raised troponin in a young patient. The acute presentation demands cardiac evaluation. Source: RANZCP.", "source_refs": ["RANZCP Clozapine Position Statement"]},
+      {"letter": "D", "text": "Clozapine-induced sialorrhoea; commence hyoscine hydrobromide 0.4 mg sublingually nocte", "correct": false, "rationale": "Sialorrhoea is a common clozapine side effect but is unrelated to acute cardiac presentation. Source: AMH.", "source_refs": ["Australian Medicines Handbook"]},
+      {"letter": "E", "text": "Clozapine-induced ileus; nil orally, IV fluids, urgent abdominal X-ray", "correct": false, "rationale": "Gastrointestinal hypomotility is a serious clozapine effect but does not explain tachycardia + troponin + dyspnoea; the presentation is cardiac. Source: RANZCP.", "source_refs": ["RANZCP Clozapine Position Statement"]}
+    ],
+    "explanation": {
+      "summary": "Clozapine's adverse-effect profile is broad and side-effect-specific monitoring schedules are mandatory in Australian practice. Mapping the presentation back to the side effect determines whether the drug must be stopped or continued. Acute chest pain + tachycardia + troponin elevation + dyspnoea in a clozapine patient is myocarditis until proven otherwise; mandatory cessation, cardiology consult, echocardiogram + cardiac MRI confirm. Other key clozapine adverse effects with their monitoring: agranulocytosis (FBC weekly 18 weeks then monthly), seizure (EEG/dose review at high doses), GI hypomotility (constipation history at each visit), metabolic syndrome (HbA1c + lipids 3-monthly first year), pulmonary embolism (high index of suspicion), sialorrhoea (clinical), hypotension (BP at each visit).",
+      "key_points": [
+        "Clozapine myocarditis: peaks 14-21 days but possible later; mandatory cessation",
+        "Workup: ECG + troponin + CRP + NT-proBNP + echocardiogram + cardiac MRI",
+        "Smoking induces CYP1A2 - smoking cessation can double clozapine plasma level",
+        "Mandatory FBC monitoring: weekly x18 weeks, fortnightly x18 weeks, then monthly indefinitely",
+        "Re-challenge after myocarditis is not generally recommended in Australia"
+      ],
+      "pearls": "Smoking cessation in a clozapine patient is a pharmacokinetic event - plasma level can double within 1-2 weeks. Always consult before any smoking change, including admission to a non-smoking ward."
+    },
+    "sources": [
+      {"label": "RANZCP Clozapine Position Statement", "url": "https://www.ranzcp.org/"},
+      {"label": "Australian Clozapine Monitoring Protocol", "url": "https://amhonline.amh.net.au/"}
+    ],
+    "reference_ranges": ["fbc", "troponin", "nt_probnp"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Clozapine myocarditis recognition + mandatory cessation"
+  },
+  {
+    "id": "creative-reasoning-015-constraint-stack-mood-stabiliser-pregnancy",
+    "topic": "Psychiatry",
+    "subtopic": "Perinatal psychiatry",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["constraint stack", "mood stabiliser selection"],
+    "stem": "A 31-year-old woman with bipolar I disorder presents to a Gosford perinatal mental health clinic at 7 weeks gestation. Her bipolar history includes two manic episodes requiring hospitalisation 5 and 8 years ago, three depressive episodes between, and one suicide attempt by overdose 3 years ago. She has been euthymic for 18 months on sodium valproate 1000 mg daily as monotherapy. She has now stopped valproate on her own initiative 2 weeks ago after discovering the pregnancy. She has a personal history of acne treated with isotretinoin 8 years ago (now resolved), no thyroid disease, normal renal function (Cr 65), and a strong family history of bipolar disorder in her mother. She is keen to continue the pregnancy and plans to breastfeed. She has a supportive partner.",
+    "data_table": {
+      "Vital signs": "BP 112/68, HR 76. Weight 64 kg.",
+      "Examination": "Euthymic, no psychotic symptoms, MSE unremarkable, judgment intact.",
+      "Investigations": "TSH 1.8 mIU/L, free T4 normal. Cr 65 micromol/L. LFT normal. Beta-hCG confirms 7-week pregnancy."
+    },
+    "lead_in": "Which mood stabiliser strategy best satisfies ALL the following constraints: minimal teratogenic risk, established efficacy in bipolar maintenance, compatibility with breastfeeding, and minimum complexity of monitoring?",
+    "options": [
+      {"letter": "A", "text": "Restart sodium valproate at half-dose with 5 mg folate; the second trimester is past the highest teratogenicity window", "correct": false, "rationale": "Valproate is contraindicated in pregnancy at any gestation (neural-tube defects, autism, lower IQ) and is single-strongest absolute contraindication in the Australian Pregnancy Category D listings for bipolar. Restarting is wrong. Source: RANZCP Perinatal Position Statement; AMH.", "source_refs": ["RANZCP Perinatal Position Statement", "Australian Medicines Handbook"]},
+      {"letter": "B", "text": "Quetiapine 300-600 mg daily as monotherapy; trimester-specific dose reviews; compatible with breastfeeding", "correct": true, "rationale": "Quetiapine satisfies all four constraints: teratogenic risk is among the lowest of mood stabilisers/atypical antipsychotics in pregnancy (Pregnancy Category B3), has good evidence for bipolar maintenance, is breastfeeding-compatible (low RID typically <1 percent), and requires minimal additional monitoring beyond standard antenatal. Lithium is more efficacious but requires intensive monitoring (TFT, renal, lithium level), 12-week fetal echo for Ebstein anomaly, and is excreted in breast milk at significant levels. Source: RANZCP Perinatal Position Statement; Bipolar Disorder Australian Treatment Guide; LactMed.", "source_refs": ["RANZCP Perinatal Position Statement", "Bipolar Disorder Australian Treatment Guide"]},
+      {"letter": "C", "text": "Lithium 750 mg daily; weekly levels first trimester; 12-week and 20-week fetal echo for Ebstein anomaly; cease at 6 weeks postpartum to enable breastfeeding", "correct": false, "rationale": "Lithium is highly effective and reasonable in pregnancy if antenatal monitoring is feasible, but the question asks for the strategy that minimises monitoring complexity AND maintains breastfeeding compatibility - lithium requires intensive monitoring and is not first-line for breastfeeding women (high RID, neonatal toxicity risk). Source: RANZCP.", "source_refs": ["RANZCP Perinatal Position Statement"]},
+      {"letter": "D", "text": "Carbamazepine 600 mg daily; 5 mg folate daily; vitamin K 20 mg from 36 weeks to prevent neonatal haemorrhage", "correct": false, "rationale": "Carbamazepine is teratogenic (NTD, craniofacial defects) and is no longer recommended for bipolar in women of reproductive age in Australian guidance. Source: RANZCP; AMH.", "source_refs": ["RANZCP Perinatal Position Statement", "Australian Medicines Handbook"]},
+      {"letter": "E", "text": "Cease all mood stabilisers; weekly psychiatry review; restart only if relapse occurs", "correct": false, "rationale": "Wait-and-see strategy in a patient with two prior manic admissions and one suicide attempt is unsafe - relapse risk during pregnancy off all maintenance approaches 80 percent in 6 months. Source: RANZCP.", "source_refs": ["RANZCP Perinatal Position Statement"]}
+    ],
+    "explanation": {
+      "summary": "Constraint stacking forces the candidate to weigh teratogenicity (favours lamotrigine, quetiapine over valproate, carbamazepine, lithium), efficacy in bipolar maintenance (favours lithium, valproate, quetiapine, lamotrigine, olanzapine), breastfeeding compatibility (favours lamotrigine, quetiapine, sertraline, olanzapine; avoid lithium, valproate, carbamazepine), and monitoring complexity (favours quetiapine, lamotrigine over lithium). Quetiapine satisfies all four; lamotrigine is reasonable for bipolar depression maintenance but less effective for mania prevention. Patient autonomy and shared decision-making frame the discussion: each option's evidence and trade-off should be discussed explicitly.",
+      "key_points": [
+        "Valproate: absolutely avoid in women of reproductive age unless no alternative",
+        "Lithium: most efficacious but intensive monitoring; not first-line in BF",
+        "Quetiapine: best balance of efficacy, safety, BF compatibility, simplicity",
+        "Lamotrigine: best for bipolar depression maintenance; titration risk of SJS/TEN",
+        "Sudden discontinuation of mood stabiliser in pregnancy: relapse risk approaches 80% in 6 months"
+      ],
+      "pearls": "When discussing pregnancy planning in any woman of reproductive age on valproate, document the discussion explicitly - PBS access in Australia now requires a pregnancy-prevention attestation."
+    },
+    "sources": [
+      {"label": "RANZCP Perinatal Position Statement", "url": "https://www.ranzcp.org/"},
+      {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/"}
+    ],
+    "reference_ranges": ["tsh", "lithium_level"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Mood stabiliser selection under multiple pregnancy/BF constraints"
   }
 ]
