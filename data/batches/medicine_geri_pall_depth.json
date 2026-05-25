@@ -1,0 +1,799 @@
+[
+  {
+    "id": "med-gerip-001",
+    "topic": "Medicine",
+    "subtopic": "Geriatric prescribing",
+    "subtopic_detail": "STOPP/START - inappropriate benzodiazepine",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["geriatrics", "STOPP"],
+    "stem": "An 82-year-old woman with osteoporosis (previous Colles fracture and L1 vertebral compression fracture) and mild cognitive impairment is reviewed at her general practice for medication review. She has been taking temazepam 20 mg nightly for 9 years for insomnia. She lives alone. Her gait is steady but she has fallen twice in the past 6 months getting up to the toilet at night. Her other medications are perindopril 5 mg, atorvastatin 40 mg, denosumab 6-monthly, calcium 600 mg with cholecalciferol 1000 IU daily.",
+    "data_table": {
+      "Vital signs": "HR 72, BP 132/78 lying, 118/72 standing (no symptoms).",
+      "Falls": "Two falls in 6 months, both nocturnal.",
+      "Bone": "T-score -2.9 femoral neck."
+    },
+    "lead_in": "Which is the single most appropriate next prescribing action?",
+    "options": [
+      {"letter": "A", "text": "Continue temazepam unchanged; address fall risk with hip protectors", "correct": false, "rationale": "Benzodiazepines significantly increase falls and fracture risk in older adults; continuing without deprescribing addresses the wrong target (Beers Criteria; STOPP v2 - benzodiazepines).", "source_refs": ["Beers Criteria", "STOPP v2"]},
+      {"letter": "B", "text": "Switch to zopiclone 7.5 mg nightly as a safer alternative", "correct": false, "rationale": "Z-drugs carry similar falls and fracture risk to benzodiazepines in older adults and are also on STOPP and Beers; lateral substitution does not reduce harm (Beers Criteria; STOPP v2).", "source_refs": ["Beers Criteria", "STOPP v2"]},
+      {"letter": "C", "text": "Taper temazepam over 8 to 12 weeks (10 to 25% dose reduction every 1 to 2 weeks) and provide cognitive behavioural therapy for insomnia", "correct": true, "rationale": "Gradual taper avoids withdrawal seizures and rebound insomnia; CBT-I is first-line for chronic insomnia in older adults and has durable benefit. STOPP explicitly identifies long-term benzodiazepine use in fallers as inappropriate (eTG Psychotropic; STOPP v2; RACGP Aged Care).", "source_refs": ["eTG Psychotropic", "STOPP v2", "RACGP"]},
+      {"letter": "D", "text": "Stop temazepam abruptly tonight", "correct": false, "rationale": "Abrupt cessation of long-term benzodiazepine risks withdrawal seizures and severe rebound insomnia/anxiety; gradual taper is mandatory (eTG Psychotropic).", "source_refs": ["eTG Psychotropic"]},
+      {"letter": "E", "text": "Add melatonin 2 mg nightly and continue temazepam", "correct": false, "rationale": "Adding agents without deprescribing the harmful one is polypharmacy without benefit; the priority is removing the falls-precipitating drug (Beers Criteria; STOPP v2).", "source_refs": ["Beers Criteria"]}
+    ],
+    "explanation": {
+      "summary": "STOPP v2 and Beers Criteria identify benzodiazepines (and Z-drugs) as inappropriate in older adults due to falls, fractures, delirium, and cognitive impairment. Deprescribing requires a slow taper over weeks to months with non-pharmacological insomnia strategies (CBT-I, sleep hygiene).",
+      "key_points": [
+        "Benzodiazepines and Z-drugs both on STOPP and Beers for older adults",
+        "Falls risk approximately doubles; hip fracture risk significantly elevated",
+        "Taper 10-25% every 1-2 weeks over 8-12 weeks (longer for higher doses)",
+        "CBT-I is first-line for chronic insomnia"
+      ],
+      "pearls": "Diazepam-equivalent conversion is sometimes used to standardise tapering; e.g. temazepam 20 mg approx diazepam 10 mg."
+    },
+    "sources": [
+      {"label": "STOPP/START criteria version 2", "url": "https://academic.oup.com/ageing/article/44/2/213/2812233"},
+      {"label": "American Geriatrics Society Beers Criteria 2023", "url": "https://agsjournals.onlinelibrary.wiley.com/doi/10.1111/jgs.18372"},
+      {"label": "Therapeutic Guidelines: Psychotropic - Insomnia", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-002",
+    "topic": "Medicine",
+    "subtopic": "Geriatric prescribing",
+    "subtopic_detail": "Prescribing cascade recognition",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["polypharmacy", "cascade"],
+    "stem": "A 78-year-old woman is reviewed for ankle oedema. Her medications are amlodipine 10 mg daily (started 4 weeks ago for hypertension), perindopril 5 mg daily, atorvastatin 40 mg, metformin 1 g BD, and pantoprazole 40 mg daily. Her general practitioner is considering adding furosemide 20 mg for the oedema. Lower-limb examination shows symmetrical pitting oedema to mid-shin. JVP is not elevated. Heart sounds dual. Chest is clear. Renal function and serum albumin are normal.",
+    "data_table": {
+      "Vital signs": "HR 70, BP 124/78, SpO2 98% room air.",
+      "Examination": "Symmetric pitting oedema to mid-shin. JVP normal. No crackles, no S3.",
+      "Investigations": "eGFR 64, albumin 38 g/L, BNP 42 pg/mL."
+    },
+    "lead_in": "Which is the single most appropriate next action?",
+    "options": [
+      {"letter": "A", "text": "Reduce or stop amlodipine and substitute another antihypertensive (e.g. up-titrate perindopril)", "correct": true, "rationale": "Dihydropyridine calcium channel blockers commonly cause dose-dependent peripheral oedema by selective arteriolar dilatation. Adding a diuretic for drug-induced oedema is the classic prescribing cascade and is ineffective. The correct action is to address the cause by dose reduction or switching antihypertensive class (RACGP Polypharmacy; eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular", "RACGP"]},
+      {"letter": "B", "text": "Add furosemide 20 mg daily as planned", "correct": false, "rationale": "Adding a loop diuretic for amlodipine-induced oedema treats the symptom without addressing the cause and starts a prescribing cascade (oedema -> diuretic -> hypokalaemia -> potassium supplement -> hyperkalaemia etc.) (RACGP Polypharmacy).", "source_refs": ["RACGP"]},
+      {"letter": "C", "text": "Add compression stockings and continue all current medications", "correct": false, "rationale": "Compression alone does not address the pharmacologic cause and may not be tolerated; the cause-directed action is preferred (RACGP Polypharmacy).", "source_refs": ["RACGP"]},
+      {"letter": "D", "text": "Investigate for cardiac failure with echocardiogram", "correct": false, "rationale": "Cardiac failure is unlikely given normal BNP, normal JVP, no crackles, no S3, and a recent timing correlation with amlodipine initiation. Investigation may follow if dechallenge fails (eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular"]},
+      {"letter": "E", "text": "Increase amlodipine to control BP further", "correct": false, "rationale": "Higher dihydropyridine doses worsen oedema; this is the wrong direction (eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular"]}
+    ],
+    "explanation": {
+      "summary": "A prescribing cascade occurs when a drug side effect is misinterpreted as a new condition and treated with another drug. Common examples: dihydropyridine CCB oedema treated with diuretic; NSAID-induced hypertension treated with antihypertensive; cholinesterase inhibitor incontinence treated with anticholinergic. Recognise and dechallenge first.",
+      "key_points": [
+        "Dihydropyridine CCB oedema is dose-dependent, not fluid overload",
+        "Cascade examples: CCB->diuretic, NSAID->antihypertensive, ChEI->anticholinergic",
+        "Dechallenge tests causation",
+        "Heart failure should be excluded but is unlikely with normal BNP/exam"
+      ],
+      "pearls": "ACE inhibitors and ARBs partially mitigate dihydropyridine oedema by venodilation; combination therapy can reduce oedema without losing BP control."
+    },
+    "sources": [
+      {"label": "RACGP - Polypharmacy and prescribing cascades", "url": "https://www.racgp.org.au/"},
+      {"label": "Therapeutic Guidelines: Cardiovascular - Hypertension", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["uec", "bnp"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-003",
+    "topic": "Medicine",
+    "subtopic": "Geriatric prescribing",
+    "subtopic_detail": "Anticholinergic burden",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["polypharmacy", "anticholinergic"],
+    "stem": "An 81-year-old man with Parkinson disease and benign prostatic hyperplasia presents with new urinary retention, confusion (Mini-Mental State Examination dropped from 26 to 19), constipation, and dry mouth over 2 weeks. Medications introduced in the last month include oxybutynin 5 mg twice daily for urge incontinence, amitriptyline 25 mg nocte for neuropathic pain, and promethazine 25 mg nocte for sleep, added by different prescribers. He continues levodopa-carbidopa and tamsulosin.",
+    "data_table": {
+      "Vital signs": "HR 96, BP 128/72 lying, 96/64 standing (symptomatic).",
+      "Examination": "Confused, dry mucous membranes, palpable bladder, reduced bowel sounds.",
+      "New medications": "Oxybutynin, amitriptyline, promethazine - all started in last month."
+    },
+    "lead_in": "Which is the single most appropriate intervention?",
+    "options": [
+      {"letter": "A", "text": "Stop all three new anticholinergic agents; review with substitutes that lack anticholinergic burden (e.g. mirabegron, gabapentin, melatonin)", "correct": true, "rationale": "Cumulative anticholinergic burden in older adults causes confusion, urinary retention, constipation, dry mucosa, orthostasis and falls. Oxybutynin, tricyclic antidepressants, and sedating antihistamines (promethazine) are all high-burden and on Beers/STOPP. Substitute with mirabegron (beta-3 agonist for OAB), gabapentin or pregabalin for neuropathic pain (still cautious dosing), and non-pharmacological sleep strategies (Beers Criteria; STOPP v2; RACGP).", "source_refs": ["Beers Criteria", "STOPP v2", "RACGP"]},
+      {"letter": "B", "text": "Continue all medications and add donepezil to counter the cognitive decline", "correct": false, "rationale": "Adding a cholinesterase inhibitor to counter anticholinergic burden is the classic pharmacological tug-of-war and a recognised harmful cascade (Beers Criteria; RACGP).", "source_refs": ["Beers Criteria"]},
+      {"letter": "C", "text": "Catheterise for retention and continue all medications", "correct": false, "rationale": "Catheterisation addresses one consequence without removing the causes; confusion, falls and other anticholinergic effects continue (Beers Criteria).", "source_refs": ["Beers Criteria"]},
+      {"letter": "D", "text": "Stop tamsulosin to address orthostasis only", "correct": false, "rationale": "Tamsulosin contributes to orthostasis but is not the main driver of the syndrome; the new anticholinergic burden is the primary cause and stopping tamsulosin worsens retention (Beers Criteria).", "source_refs": ["Beers Criteria"]},
+      {"letter": "E", "text": "Halve all three new doses without stopping any", "correct": false, "rationale": "Dose reduction may partially mitigate but the cumulative anticholinergic burden remains high; substitution with non-anticholinergic alternatives is preferred (RACGP).", "source_refs": ["RACGP"]}
+    ],
+    "explanation": {
+      "summary": "Anticholinergic burden scales (e.g. Anticholinergic Cognitive Burden, ACB) sum the effect of multiple agents. High burden in older adults causes confusion, falls, constipation, urinary retention, dry mouth, blurred vision, and orthostasis. Common offenders: oxybutynin, TCAs, sedating antihistamines, first-generation antipsychotics, hyoscine.",
+      "key_points": [
+        "Anticholinergic burden is additive across drugs",
+        "High-burden agents on Beers/STOPP: oxybutynin, amitriptyline, promethazine, hyoscine",
+        "Substitute with mirabegron (OAB), SNRI or gabapentinoid (neuropathic), CBT-I (sleep)",
+        "Avoid the cholinesterase-inhibitor-versus-anticholinergic cascade"
+      ],
+      "pearls": "Anticholinergic burden correlates with hospitalisation and mortality risk in cohort studies; useful conversation starter for family meetings about deprescribing."
+    },
+    "sources": [
+      {"label": "American Geriatrics Society Beers Criteria 2023", "url": "https://agsjournals.onlinelibrary.wiley.com/doi/10.1111/jgs.18372"},
+      {"label": "STOPP/START criteria version 2", "url": "https://academic.oup.com/ageing/article/44/2/213/2812233"},
+      {"label": "RACGP - Anticholinergic burden", "url": "https://www.racgp.org.au/"}
+    ],
+    "reference_ranges": ["uec"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-004",
+    "topic": "Medicine",
+    "subtopic": "Falls",
+    "subtopic_detail": "Multifactorial falls assessment - priority intervention",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["falls", "geriatrics"],
+    "stem": "A 79-year-old woman presents to her general practitioner after three falls in 6 months. She has osteoarthritis of both knees, type 2 diabetes mellitus, and bilateral cataracts. Medications include metformin, gliclazide modified-release, perindopril, simvastatin and paracetamol. Visual acuity is 6/24 in both eyes. Timed up-and-go is 18 seconds. Lying blood pressure 138/78, standing 112/70 with mild dizziness. Vitamin D is 38 nmol/L (deficient). She is socially isolated and walks unaided indoors.",
+    "data_table": {
+      "Vital signs": "HR 70, lying BP 138/78, standing BP 112/70 with dizziness.",
+      "Examination": "Visual acuity 6/24 bilateral, TUG 18 s, no neurological deficit.",
+      "Investigations": "Vitamin D 38 nmol/L (deficient), HbA1c 7.2%, eGFR 58."
+    },
+    "lead_in": "Which is the single most appropriate first-priority intervention?",
+    "options": [
+      {"letter": "A", "text": "Comprehensive multifactorial falls intervention including medication review with deprescribing of gliclazide if hypoglycaemia documented, vitamin D supplementation, vision optimisation referral, strength and balance exercise program, and home hazard assessment", "correct": true, "rationale": "Cochrane and Australian guidelines support a comprehensive multifactorial intervention for older fallers, addressing all reversible contributors simultaneously. Single interventions in isolation are less effective than bundled care. Gliclazide MR (a sulfonylurea) contributes to falls via hypoglycaemia; visual correction, vitamin D, exercise, and home modification each have evidence (RACGP Falls; ACSQHC Falls; STOPP v2).", "source_refs": ["RACGP Falls Prevention", "ACSQHC Falls Standard", "STOPP v2"]},
+      {"letter": "B", "text": "Refer for hip protectors only", "correct": false, "rationale": "Hip protectors reduce hip fracture risk in specific high-risk groups (residential care) but do not prevent falls themselves; isolated intervention is suboptimal (RACGP Falls).", "source_refs": ["RACGP Falls Prevention"]},
+      {"letter": "C", "text": "Prescribe alendronate without bone density measurement", "correct": false, "rationale": "Bisphosphonate without DEXA does not address the immediate falls aetiology; bone health is part of fracture prevention but a separate workstream (eTG Endocrinology).", "source_refs": ["eTG Endocrinology"]},
+      {"letter": "D", "text": "Start fludrocortisone for orthostatic hypotension", "correct": false, "rationale": "Fludrocortisone risks supine hypertension and oedema and is reserved when conservative measures fail; medication review (perindopril dose) and education first (eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular"]},
+      {"letter": "E", "text": "Walker provision in isolation", "correct": false, "rationale": "Mobility aids without strength training can worsen deconditioning; aids are part of bundled care, not standalone (RACGP Falls).", "source_refs": ["RACGP Falls Prevention"]}
+    ],
+    "explanation": {
+      "summary": "Falls in older adults are usually multifactorial. The strongest evidence supports bundled multifactorial assessment and intervention covering medication review, vision, vitamin D, strength and balance exercise (Otago program, tai chi), and home hazard modification. Address all reversible contributors simultaneously.",
+      "key_points": [
+        "Multifactorial intervention > single intervention",
+        "Medication review with STOPP/Beers focus",
+        "Otago exercise program and tai chi both reduce falls",
+        "Vitamin D supplementation if deficient (target >=50 nmol/L)",
+        "Home assessment (rugs, lighting, bathroom modifications)"
+      ],
+      "pearls": "Timed Up and Go >12 seconds in community-dwelling older adults signals increased falls risk and warrants intervention."
+    },
+    "sources": [
+      {"label": "RACGP - Falls prevention in older people", "url": "https://www.racgp.org.au/"},
+      {"label": "ACSQHC Preventing Falls and Harm Standard", "url": "https://www.safetyandquality.gov.au/"},
+      {"label": "STOPP/START version 2", "url": "https://academic.oup.com/ageing/article/44/2/213/2812233"}
+    ],
+    "reference_ranges": ["uec", "vitd"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-005",
+    "topic": "Medicine",
+    "subtopic": "Delirium",
+    "subtopic_detail": "Delirium vs dementia - discriminator",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["delirium", "dementia"],
+    "stem": "An 84-year-old man with Alzheimer disease (baseline MMSE 22, lives at home with wife) is brought to a metropolitan emergency department because of acute behavioural change over the last 24 hours. He is alternately drowsy and agitated, sees insects on the wall, does not recognise his wife who is usually familiar, and is incontinent of urine for the first time. Examination reveals warm flushed skin, suprapubic tenderness, and crackles at the right base. Urinalysis shows leucocytes ++, nitrites positive.",
+    "data_table": {
+      "Vital signs": "HR 108, BP 132/76, SpO2 92% room air, T 38.4 C, RR 22.",
+      "Examination": "Fluctuating arousal, visual hallucinations, suprapubic tenderness, right basal crackles.",
+      "Urinalysis": "Leucocytes ++, nitrites positive, blood +."
+    },
+    "lead_in": "Which feature best discriminates delirium from a stepwise dementia decline in this patient?",
+    "options": [
+      {"letter": "A", "text": "Acute onset over 24 hours with fluctuating attention and altered arousal", "correct": true, "rationale": "Delirium is defined by acute onset (hours to days), fluctuating course, attention disturbance, and altered arousal/consciousness, on a background of a precipitant (here likely urinary tract infection and possible pneumonia). Dementia progresses over months to years with relatively preserved arousal (CAM criteria; eTG Neurology).", "source_refs": ["CAM criteria", "eTG Neurology"]},
+      {"letter": "B", "text": "Visual hallucinations", "correct": false, "rationale": "Visual hallucinations occur in both delirium and Lewy body dementia; they are not uniquely discriminating (eTG Neurology).", "source_refs": ["eTG Neurology"]},
+      {"letter": "C", "text": "Urinary incontinence", "correct": false, "rationale": "Urinary incontinence may occur in advanced dementia or other conditions; it does not specifically discriminate (eTG Neurology).", "source_refs": ["eTG Neurology"]},
+      {"letter": "D", "text": "Reduced visuospatial function", "correct": false, "rationale": "Visuospatial decline is characteristic of dementia subtypes (Lewy body, Alzheimer disease) and develops gradually; not the discriminator for acute change (eTG Neurology).", "source_refs": ["eTG Neurology"]},
+      {"letter": "E", "text": "Forgetting his wife's name", "correct": false, "rationale": "Failure of person recognition occurs in moderate-severe dementia and is not specifically delirium (eTG Neurology).", "source_refs": ["eTG Neurology"]}
+    ],
+    "explanation": {
+      "summary": "Confusion Assessment Method (CAM) criteria for delirium: (1) acute onset and fluctuating course, (2) inattention, plus either (3) disorganised thinking or (4) altered level of consciousness. Both 1 and 2 are required. Delirium is typically superimposed on dementia in older inpatients.",
+      "key_points": [
+        "Acute onset + fluctuation + inattention = delirium",
+        "Dementia: insidious onset, stable arousal, slow progression",
+        "Always seek precipitant: infection, drugs, electrolytes, pain, retention, constipation",
+        "Hyperactive vs hypoactive delirium; hypoactive often missed"
+      ],
+      "pearls": "Months-long history with stepwise vs gradual decline differentiates vascular from Alzheimer dementia; acute change is delirium regardless of dementia subtype."
+    },
+    "sources": [
+      {"label": "Confusion Assessment Method (CAM)", "url": "https://americandeliriumsociety.org/"},
+      {"label": "Therapeutic Guidelines: Psychotropic - Delirium", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "RACGP - Delirium in older people", "url": "https://www.racgp.org.au/"}
+    ],
+    "reference_ranges": ["fbc", "uec", "crp"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-006",
+    "topic": "Medicine",
+    "subtopic": "Delirium",
+    "subtopic_detail": "Hyperactive delirium - pharmacological intervention",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["delirium"],
+    "stem": "A 78-year-old woman with post-operative hyperactive delirium on day 2 after right total hip replacement is shouting, attempting to pull out her IV, and trying to climb out of bed despite reorientation, presence of family, ambient lighting, and management of pain, constipation and retention. She has not slept overnight. She has no Parkinson disease. ECG QTc is 440 ms.",
+    "data_table": {
+      "Vital signs": "HR 102, BP 138/82, SpO2 96% room air, afebrile.",
+      "Background": "Day 2 post right THR. Pain controlled (paracetamol + oxycodone PRN). No retention, normal bowels.",
+      "Non-pharm": "Reorientation, family present, lighting, hearing aids - tried."
+    },
+    "lead_in": "Which is the single most appropriate pharmacological intervention?",
+    "options": [
+      {"letter": "A", "text": "Haloperidol 0.5 mg orally or intramuscular, repeated 2-hourly as needed to a maximum of 2 mg in 24 hours", "correct": true, "rationale": "When non-pharmacological measures fail and delirium-related agitation poses risk of harm, low-dose haloperidol is the eTG first-line antipsychotic in non-Parkinson delirium. Start low (0.5 mg), titrate cautiously, monitor QTc. Avoid benzodiazepines except in alcohol withdrawal or benzodiazepine withdrawal delirium (eTG Psychotropic).", "source_refs": ["eTG Psychotropic"]},
+      {"letter": "B", "text": "Diazepam 5 mg orally", "correct": false, "rationale": "Benzodiazepines worsen non-withdrawal delirium and prolong its duration; reserved for alcohol or benzodiazepine withdrawal delirium (eTG Psychotropic).", "source_refs": ["eTG Psychotropic"]},
+      {"letter": "C", "text": "Olanzapine 10 mg intramuscular", "correct": false, "rationale": "Olanzapine 10 mg IM is a high starting dose for an opioid-using older adult and has been associated with hypotension and respiratory depression in combination with parenteral benzodiazepines or opioids; lower-dose haloperidol is preferred when antipsychotic is needed (eTG Psychotropic; TGA boxed warning).", "source_refs": ["eTG Psychotropic"]},
+      {"letter": "D", "text": "Quetiapine 100 mg orally", "correct": false, "rationale": "Quetiapine is used in Parkinson disease or Lewy body dementia delirium because of low extrapyramidal effect; starting dose for delirium is 12.5 to 25 mg. 100 mg is excessive (eTG Psychotropic).", "source_refs": ["eTG Psychotropic"]},
+      {"letter": "E", "text": "Physical restraint without sedation", "correct": false, "rationale": "Physical restraint increases delirium duration, injury, pressure injury and dignity loss; used only as last resort with strict monitoring under jurisdictional restraint legislation (ACSQHC Restraint Standard).", "source_refs": ["ACSQHC"]}
+    ],
+    "explanation": {
+      "summary": "Delirium management is non-pharmacological first: reorientation, environmental optimisation, family presence, address precipitants. Antipsychotic pharmacotherapy is reserved for severe agitation with risk of harm, after non-pharmacological measures. Low-dose haloperidol is eTG first-line in non-Parkinson delirium; benzodiazepines only for withdrawal delirium.",
+      "key_points": [
+        "Non-pharm first: reorient, family, sleep, glasses, hearing aids",
+        "Address precipitants: pain, retention, constipation, infection, drugs",
+        "If pharm needed: haloperidol 0.5 mg PO/IM, repeat 2-hourly, max 2 mg/24 h",
+        "Quetiapine 12.5-25 mg in Parkinson disease / Lewy body dementia",
+        "Benzodiazepines only for alcohol/benzo withdrawal delirium"
+      ],
+      "pearls": "Doses well below psychotic-illness dosing - if a delirium dose feels like a 'psych dose' it is too high."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Psychotropic - Delirium", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "ACSQHC Delirium Clinical Care Standard", "url": "https://www.safetyandquality.gov.au/"}
+    ],
+    "reference_ranges": ["uec", "ecg-qtc"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-007",
+    "topic": "Medicine",
+    "subtopic": "Palliative care",
+    "subtopic_detail": "Opioid conversion - morphine PO to subcutaneous",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["palliative", "opioid"],
+    "stem": "A 72-year-old man with metastatic pancreatic cancer is taking oral sustained-release morphine 60 mg twice daily plus oral immediate-release morphine 10 mg for breakthrough (using 4 doses in 24 hours). He is now unable to swallow due to oral mucositis and needs conversion to a continuous subcutaneous infusion (CSCI) via syringe driver. He has stable pain on the current regimen.",
+    "data_table": {
+      "Current regimen": "MS Contin 60 mg PO BD + morphine IR 10 mg PRN x4 doses in 24 h.",
+      "Total 24 h oral morphine": "120 mg sustained + 40 mg breakthrough = 160 mg PO.",
+      "Renal": "eGFR 62."
+    },
+    "lead_in": "Which is the single most appropriate 24-hour dose of subcutaneous morphine for the syringe driver, with breakthrough plan?",
+    "options": [
+      {"letter": "A", "text": "Morphine 80 mg subcutaneous over 24 hours via syringe driver; breakthrough morphine 10 to 15 mg subcutaneous 1-hourly as needed", "correct": true, "rationale": "Oral-to-subcutaneous morphine conversion ratio is approximately 2:1. Total 24-hour oral morphine is 160 mg (120 mg sustained + 40 mg breakthrough), converting to 80 mg subcutaneous over 24 hours. Breakthrough dose is one-sixth to one-tenth of the 24-hour CSCI dose given 1-hourly PRN (12 to 15 mg) (ANZSPM Opioid Conversion; eTG Palliative Care).", "source_refs": ["ANZSPM", "eTG Palliative Care"]},
+      {"letter": "B", "text": "Morphine 160 mg subcutaneous over 24 hours; breakthrough morphine 20 mg subcutaneous 4-hourly", "correct": false, "rationale": "1:1 oral-to-subcutaneous conversion produces overdose (subcutaneous bioavailability is approximately twice oral). The 2:1 ratio is mandatory (ANZSPM; eTG Palliative Care).", "source_refs": ["ANZSPM"]},
+      {"letter": "C", "text": "Morphine 40 mg subcutaneous over 24 hours; breakthrough morphine 5 mg subcutaneous 4-hourly", "correct": false, "rationale": "Under-dosing risks breakthrough pain in a stable patient; the conversion arithmetic should match the total 24-hour oral consumption (ANZSPM).", "source_refs": ["ANZSPM"]},
+      {"letter": "D", "text": "Hydromorphone 4 mg subcutaneous over 24 hours; no breakthrough", "correct": false, "rationale": "Switching opioid (rotation) without indication and omitting breakthrough is inappropriate; same-opioid route change is simpler when there is no rotation indication (ANZSPM).", "source_refs": ["ANZSPM"]},
+      {"letter": "E", "text": "Fentanyl patch 100 mcg/h with no breakthrough plan", "correct": false, "rationale": "Transdermal fentanyl takes 12 to 24 hours to reach steady state, is inappropriate for acute pain control transition, and absolutely requires a breakthrough plan (eTG Palliative Care; ANZSPM).", "source_refs": ["eTG Palliative Care"]}
+    ],
+    "explanation": {
+      "summary": "Oral to subcutaneous morphine conversion ratio is approximately 2:1 (subcutaneous is roughly twice as potent as oral). Total daily dose includes sustained-release plus all breakthrough use. Breakthrough subcutaneous dose is one-sixth to one-tenth of the 24-hour CSCI dose, given 1-hourly PRN.",
+      "key_points": [
+        "Oral morphine : subcut morphine = 2:1",
+        "Calculate total 24 h oral (sustained + breakthrough)",
+        "Breakthrough = 1/6 to 1/10 of CSCI dose, 1-hourly PRN",
+        "Rotate opioid (not just route) if neurotoxicity or tolerance",
+        "Caution in renal impairment (morphine metabolites accumulate)"
+      ],
+      "pearls": "ANZSPM and palliAGED publish opioid conversion calculators; always recheck after conversion as ratios are approximations."
+    },
+    "sources": [
+      {"label": "Australian and New Zealand Society of Palliative Medicine - Opioid Conversion", "url": "https://www.anzspm.org.au/"},
+      {"label": "Therapeutic Guidelines: Palliative Care", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["uec"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-008",
+    "topic": "Medicine",
+    "subtopic": "Palliative care",
+    "subtopic_detail": "Opioid rotation - morphine to hydromorphone in renal impairment",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["palliative", "renal"],
+    "stem": "A 68-year-old woman with metastatic ovarian cancer and chronic kidney disease stage 4 (eGFR 22) is on continuous subcutaneous morphine 40 mg over 24 hours. She has developed myoclonic jerks, generalised allodynia, and worsening confusion over 3 days. The palliative care team plans opioid rotation. Pain control was adequate prior to neurotoxicity.",
+    "data_table": {
+      "Vital signs": "HR 86, BP 124/74, SpO2 95% room air.",
+      "Examination": "Myoclonic jerks at rest, allodynia (lightest touch painful), confused.",
+      "Renal": "eGFR 22 (CKD stage 4)."
+    },
+    "lead_in": "Which is the single most appropriate opioid rotation choice and starting dose?",
+    "options": [
+      {"letter": "A", "text": "Hydromorphone subcutaneous, starting at 4 mg over 24 hours via syringe driver (with dose reduction for incomplete cross-tolerance), with appropriate breakthrough dosing", "correct": true, "rationale": "Morphine metabolites (morphine-3-glucuronide, morphine-6-glucuronide) accumulate in renal impairment causing neurotoxicity (myoclonus, allodynia, confusion). Hydromorphone is preferred in renal impairment (no active metabolites of clinical significance). Conversion: subcut morphine to subcut hydromorphone ratio approximately 5:1, then reduce 25 to 50% for incomplete cross-tolerance: 40 mg/5 = 8 mg, reduced to 4 mg (ANZSPM; eTG Palliative Care).", "source_refs": ["ANZSPM", "eTG Palliative Care"]},
+      {"letter": "B", "text": "Increase morphine to control the agitation", "correct": false, "rationale": "Increasing morphine in opioid neurotoxicity worsens the syndrome; the cause is metabolite accumulation, not under-dosing (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]},
+      {"letter": "C", "text": "Fentanyl patch 25 mcg/h with no syringe driver", "correct": false, "rationale": "Fentanyl is acceptable in renal impairment but the patch has a 12 to 24 hour onset and is unsuitable for acute pain transition; subcutaneous fentanyl via syringe driver or hydromorphone is more controllable (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]},
+      {"letter": "D", "text": "Pethidine subcutaneous 25 mg 4-hourly", "correct": false, "rationale": "Pethidine has a renally-cleared neurotoxic metabolite (norpethidine) causing seizures; contraindicated in renal impairment and not recommended for any palliative pain (eTG Palliative Care; ANZSPM).", "source_refs": ["eTG Palliative Care"]},
+      {"letter": "E", "text": "Codeine 60 mg orally 4-hourly", "correct": false, "rationale": "Codeine is a weak opioid metabolised to morphine, sharing the same renal-clearance problem and is unreliable due to CYP2D6 polymorphism (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]}
+    ],
+    "explanation": {
+      "summary": "Opioid neurotoxicity (myoclonus, allodynia, hyperalgesia, confusion) is driven by metabolite accumulation, classically morphine in renal impairment. Rotation to an opioid without renally-cleared active metabolites (hydromorphone, fentanyl, methadone) is the standard response. Always reduce calculated equianalgesic dose by 25 to 50% for incomplete cross-tolerance.",
+      "key_points": [
+        "Renal-safe opioids: fentanyl, hydromorphone, methadone (specialist)",
+        "Renal-unsafe: morphine, codeine, pethidine (norpethidine)",
+        "Opioid neurotoxicity triad: myoclonus, allodynia/hyperalgesia, confusion",
+        "Cross-tolerance reduction 25-50% on rotation",
+        "Hydration assists metabolite clearance acutely"
+      ],
+      "pearls": "Methadone is opioid-rotation-friendly but needs specialist supervision due to QTc, accumulation and bidirectional cross-tolerance complexity."
+    },
+    "sources": [
+      {"label": "Australian and New Zealand Society of Palliative Medicine - Opioid Rotation", "url": "https://www.anzspm.org.au/"},
+      {"label": "Therapeutic Guidelines: Palliative Care", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["uec"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-009",
+    "topic": "Medicine",
+    "subtopic": "Palliative care",
+    "subtopic_detail": "Terminal secretions management",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["palliative", "terminal"],
+    "stem": "An 82-year-old man with end-stage chronic obstructive pulmonary disease is unconscious and recognised to be in the last 48 hours of life. He has audible upper-airway bubbling secretions causing his family distress. He is not in respiratory distress himself and is comfortable. He has a continuous subcutaneous infusion of morphine and midazolam running.",
+    "data_table": {
+      "Vital signs": "HR 92, BP 96/58, SpO2 88% room air, RR 14 unlaboured.",
+      "Examination": "Unconscious, audible airway rattle, comfortable expression.",
+      "Family": "Distressed by the sound."
+    },
+    "lead_in": "Which is the single most appropriate management?",
+    "options": [
+      {"letter": "A", "text": "Reposition (lateral or semi-prone), gentle oral suction if needed, explain to family that rattle does not distress the patient, and consider hyoscine butylbromide 20 mg subcutaneous if rattle persists and family find it distressing", "correct": true, "rationale": "Terminal respiratory secretions (death rattle) reflect pooled secretions in the upper airway in an unconscious dying patient. The patient is unaware. Repositioning and education are first-line. Antimuscarinics (hyoscine butylbromide, glycopyrronium) modestly reduce ongoing secretion production but do not clear existing secretions; effect on rattle is modest and is mainly for family comfort (ANZSPM; eTG Palliative Care; CareSearch).", "source_refs": ["ANZSPM", "eTG Palliative Care"]},
+      {"letter": "B", "text": "Deep suctioning with a Yankauer to clear the airway", "correct": false, "rationale": "Deep suctioning traumatises mucosa, triggers more secretion, and may distress the patient; gentle oral suction only when needed (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]},
+      {"letter": "C", "text": "Intubation and mechanical ventilation", "correct": false, "rationale": "Intubation is contrary to comfort-focused care in the last days of life; not consistent with goals of care (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]},
+      {"letter": "D", "text": "Cease all parenteral fluids to dry up secretions", "correct": false, "rationale": "Most dying patients are not receiving parenteral fluids; if they are, reducing or ceasing is reasonable but does not produce rapid effect on existing rattle and the bigger principle is non-burdensome care (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]},
+      {"letter": "E", "text": "Furosemide 40 mg intravenous to reduce secretions", "correct": false, "rationale": "Furosemide treats pulmonary congestion, not upper airway secretions; not a recognised approach to death rattle (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]}
+    ],
+    "explanation": {
+      "summary": "Death rattle is caused by air moving over pooled upper airway secretions in unconscious patients near death. It does not distress the patient. Repositioning and family education are first-line. Antimuscarinics (hyoscine butylbromide, hyoscine hydrobromide, glycopyrronium) reduce further production but do not clear existing secretions and have modest effect.",
+      "key_points": [
+        "Patient is unaware; intervention is mainly for family",
+        "Reposition lateral/semi-prone, minimal gentle oral suction",
+        "Hyoscine butylbromide 20 mg SC (does not cross BBB, less delirium)",
+        "Hyoscine hydrobromide crosses BBB (more sedation, more delirium)",
+        "Glycopyrronium 0.2-0.4 mg SC PRN or via CSCI"
+      ],
+      "pearls": "Hyoscine butylbromide (Buscopan) is preferred over hydrobromide in delirium-prone patients due to peripheral selectivity."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Palliative Care - Respiratory secretions", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "CareSearch palliative care knowledge network", "url": "https://www.caresearch.com.au/"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-010",
+    "topic": "Medicine",
+    "subtopic": "Palliative care",
+    "subtopic_detail": "End-of-life agitation",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["palliative", "terminal"],
+    "stem": "A 75-year-old woman with end-stage metastatic colorectal cancer is in the last 48 hours of life on the palliative care ward. She develops restless picking at the bedclothes, calling out, and brief periods of agitation despite reorientation by her daughter. She has a continuous subcutaneous infusion of morphine 60 mg/24 h. There is no urinary retention, no constipation, no obvious pain trigger, and no signs of opioid neurotoxicity.",
+    "data_table": {
+      "Vital signs": "HR 110, BP 102/64, SpO2 92% room air, T 37.4 C, RR 18.",
+      "Reversibles checked": "Bladder empty, bowel opened yesterday, opioid-rotation considered (no neurotoxic signs), no clear pain spike."
+    },
+    "lead_in": "Which is the single most appropriate pharmacological management?",
+    "options": [
+      {"letter": "A", "text": "Add midazolam 2.5 to 5 mg subcutaneous as needed, with consideration of continuous infusion 10 to 30 mg over 24 hours if recurrent", "correct": true, "rationale": "Terminal agitation (terminal restlessness) after reversibles have been addressed is managed with midazolam subcutaneous PRN, escalating to continuous infusion. Doses are titrated to comfort. For severe refractory agitation, levomepromazine or phenobarbital may be added (ANZSPM; eTG Palliative Care).", "source_refs": ["ANZSPM", "eTG Palliative Care"]},
+      {"letter": "B", "text": "Increase morphine infusion to 120 mg/24 h", "correct": false, "rationale": "Opioids are for pain and breathlessness, not agitation; escalating without a pain trigger may precipitate neurotoxicity and worsen restlessness (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]},
+      {"letter": "C", "text": "Haloperidol 10 mg subcutaneous", "correct": false, "rationale": "Haloperidol 1.5 to 5 mg subcut is a reasonable adjunct in terminal agitation (especially delirium-driven) but 10 mg is excessive and risks extrapyramidal effects; midazolam is the eTG first-line for non-delirium agitation (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]},
+      {"letter": "D", "text": "Physical restraint", "correct": false, "rationale": "Restraint at end-of-life is inappropriate and contrary to comfort-focused care (ACSQHC Restraint Standard).", "source_refs": ["ACSQHC"]},
+      {"letter": "E", "text": "Reassurance only, no pharmacological intervention", "correct": false, "rationale": "After non-pharmacological measures have been tried and reversibles addressed, pharmacological symptom control is appropriate; failing to relieve distress is not acceptable (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]}
+    ],
+    "explanation": {
+      "summary": "Terminal agitation occurs in around 40 to 80% of dying patients. Approach: identify and treat reversibles (pain, retention, constipation, opioid neurotoxicity, hypoxia, hypercalcaemia), provide non-pharmacological comfort, then escalate with midazolam (sedation) and haloperidol (delirium-pattern agitation). Refractory cases may need levomepromazine or phenobarbital under specialist palliative care.",
+      "key_points": [
+        "Address reversibles first: pain, retention, constipation, neurotoxicity, hypoxia",
+        "Midazolam 2.5-5 mg SC PRN; CSCI 10-60 mg/24 h",
+        "Haloperidol 1.5-5 mg SC for delirium pattern",
+        "Levomepromazine, phenobarbital for refractory (specialist)",
+        "Family education throughout"
+      ],
+      "pearls": "Distinguish terminal delirium (overt confusion/hallucinations) from terminal restlessness (purposeless motor activity) - both benefit from similar approach but the antipsychotic emphasis differs."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Palliative Care - Terminal restlessness", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "ANZSPM Palliative Care", "url": "https://www.anzspm.org.au/"}
+    ],
+    "reference_ranges": ["uec", "ca"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-011",
+    "topic": "Medicine",
+    "subtopic": "Palliative care",
+    "subtopic_detail": "Breathlessness in advanced disease",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["palliative", "dyspnoea"],
+    "stem": "A 70-year-old woman with end-stage idiopathic pulmonary fibrosis is at home with a community palliative care team. She is opioid-naive. She describes constant breathlessness at rest, worsening on minimal exertion, with significant distress. SpO2 is 91% on 4 L home oxygen. There is no infection, no PE, no heart failure exacerbation, and supplemental oxygen has been maximised. She has clear goals-of-care discussions documented as comfort-focused.",
+    "data_table": {
+      "Vital signs": "HR 102, RR 28, SpO2 91% on 4 L home O2, BP 124/76.",
+      "Examination": "Bibasal velcro crackles, no fever, no oedema, no pleural rub.",
+      "Goals of care": "Comfort-focused at home."
+    },
+    "lead_in": "Which is the single most appropriate pharmacological intervention for the breathlessness?",
+    "options": [
+      {"letter": "A", "text": "Oral morphine immediate-release 2.5 mg 4-hourly as needed plus regular 4-hourly, with laxative cover and antiemetic available", "correct": true, "rationale": "Low-dose oral opioids reduce the sensation of breathlessness in advanced disease, with greatest evidence for morphine. Starting dose in opioid-naive frail patients is 2.5 to 5 mg PRN; effects on respiratory rate or oxygenation are minimal at these doses. Co-prescribe laxative (constipation universal) and ensure antiemetic available (Australian Palliative Care guidelines; ANZSPM; eTG Palliative Care).", "source_refs": ["ANZSPM", "eTG Palliative Care"]},
+      {"letter": "B", "text": "Diazepam 5 mg orally regularly", "correct": false, "rationale": "Benzodiazepines have limited evidence for breathlessness alone (Cochrane); reserved as adjunct for anxiety component when opioids inadequate. Not first-line monotherapy (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]},
+      {"letter": "C", "text": "Nebulised salbutamol 5 mg 6-hourly", "correct": false, "rationale": "Salbutamol is appropriate for reversible bronchoconstriction; IPF is not bronchospastic. Will not address sensation of breathlessness (eTG Respiratory).", "source_refs": ["eTG Respiratory"]},
+      {"letter": "D", "text": "Increase oxygen to 8 L via simple face mask", "correct": false, "rationale": "Higher oxygen does not improve breathlessness sensation when SpO2 is already adequate; flow rates beyond therapeutic targets cause dryness and discomfort without symptom benefit (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]},
+      {"letter": "E", "text": "Furosemide 40 mg intravenous daily", "correct": false, "rationale": "Furosemide treats pulmonary oedema; this is IPF without heart failure features. Inappropriate (eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular"]}
+    ],
+    "explanation": {
+      "summary": "Opioids are first-line pharmacotherapy for breathlessness in advanced disease, reducing the central perception without significantly affecting respiratory rate or oxygenation at low doses. Combine with non-pharmacological strategies: fan, positioning, pursed-lip breathing, relaxation. Benzodiazepines are second-line for anxiety component.",
+      "key_points": [
+        "Morphine IR 2.5-5 mg PRN in opioid-naive frail patients",
+        "Effect mediated centrally; minimal effect on RR or SpO2 at low doses",
+        "Always co-prescribe laxative and antiemetic availability",
+        "Non-pharmacological: fan, positioning, breathing exercises",
+        "Benzodiazepines second-line for anxiety overlay"
+      ],
+      "pearls": "Handheld fan directed at face activates trigeminal V2 cooling receptors and reduces breathlessness sensation; evidence-based, cheap, accessible."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Palliative Care - Dyspnoea", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "ANZSPM - Symptom management", "url": "https://www.anzspm.org.au/"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-012",
+    "topic": "Medicine",
+    "subtopic": "Palliative care",
+    "subtopic_detail": "Syringe driver compatibility",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["palliative", "syringe driver"],
+    "stem": "A 68-year-old man with metastatic lung cancer is being established on a continuous subcutaneous infusion via syringe driver. He has pain, agitation, nausea, and audible respiratory secretions. The community palliative care nurse asks which drugs can be safely combined in a single syringe with water for injection as diluent.",
+    "data_table": {
+      "Symptoms to control": "Pain (morphine), agitation (midazolam), nausea (metoclopramide), secretions (hyoscine butylbromide).",
+      "Diluent": "Water for injection."
+    },
+    "lead_in": "Which is the most appropriate combination plan?",
+    "options": [
+      {"letter": "A", "text": "Morphine, midazolam, metoclopramide and hyoscine butylbromide combined in one syringe driver with water for injection; check compatibility chart and visual inspection for precipitation", "correct": true, "rationale": "This four-drug combination is widely documented as compatible in palliAGED/ANZSPM compatibility charts when diluted in water for injection. Always confirm with a local compatibility resource and inspect visually for precipitation, colour change, or crystallisation prior to and during infusion. Cyclizine and dexamethasone are common precipitation risks (palliAGED Syringe Driver; ANZSPM).", "source_refs": ["palliAGED", "ANZSPM"]},
+      {"letter": "B", "text": "Run two separate syringe drivers, one with opioid alone and one with everything else", "correct": false, "rationale": "Two drivers are reserved for genuinely incompatible combinations (e.g. cyclizine with multiple co-drugs, or dexamethasone with most). Splitting unnecessarily adds patient and carer burden (palliAGED).", "source_refs": ["palliAGED"]},
+      {"letter": "C", "text": "Combine all four drugs but use 0.9% sodium chloride as the diluent", "correct": false, "rationale": "Saline can precipitate with cyclizine and is less universally compatible than water for injection; water for injection is the standard diluent for multi-drug syringes (palliAGED).", "source_refs": ["palliAGED"]},
+      {"letter": "D", "text": "Add dexamethasone to the same syringe to manage anorexia", "correct": false, "rationale": "Dexamethasone is notorious for precipitation with most syringe driver co-drugs; should be given via a separate route or separate driver (palliAGED).", "source_refs": ["palliAGED"]},
+      {"letter": "E", "text": "Bolus all four drugs subcutaneous PRN rather than continuous infusion", "correct": false, "rationale": "PRN bolus is appropriate adjunct to a CSCI but cannot replace continuous coverage in symptomatic terminal care; combining both is standard (palliAGED).", "source_refs": ["palliAGED"]}
+    ],
+    "explanation": {
+      "summary": "Syringe driver compatibility depends on drug combinations, diluent, concentrations, and infusion duration. Morphine + midazolam + metoclopramide + hyoscine butylbromide is a widely-used compatible combination in water for injection. Cyclizine and dexamethasone are common precipitation pitfalls.",
+      "key_points": [
+        "Water for injection is the most widely-compatible diluent",
+        "Visual inspection at start and during infusion: precipitate, colour, crystals",
+        "Common compatible: morphine, midazolam, metoclopramide, haloperidol, hyoscine butylbromide",
+        "Common incompatible: cyclizine + saline, dexamethasone with most",
+        "Always consult palliAGED or local compatibility chart before mixing"
+      ],
+      "pearls": "Niki T34 is the standard Australian syringe driver; familiar with one device per service prevents medication-administration errors."
+    },
+    "sources": [
+      {"label": "palliAGED Syringe Driver compatibility", "url": "https://www.palliaged.com.au/"},
+      {"label": "ANZSPM - Symptom Management Resources", "url": "https://www.anzspm.org.au/"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-013",
+    "topic": "Medicine",
+    "subtopic": "Geriatric prescribing",
+    "subtopic_detail": "START - underprescribing",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["START", "geriatrics"],
+    "stem": "An 81-year-old woman with permanent atrial fibrillation, hypertension, ischaemic heart disease (prior MI 5 years ago), and type 2 diabetes presents for medication review. Her medications are perindopril 5 mg, amlodipine 5 mg, metformin 1 g BD, and aspirin 100 mg daily. CHA2DS2-VASc is 6, HAS-BLED is 1. She has no contraindications to anticoagulation. eGFR is 58.",
+    "data_table": {
+      "Vital signs": "HR 76 irregular, BP 132/76.",
+      "Risk scores": "CHA2DS2-VASc 6, HAS-BLED 1.",
+      "Renal/Hepatic": "eGFR 58, LFTs normal."
+    },
+    "lead_in": "Which is the single most appropriate prescribing change based on START criteria?",
+    "options": [
+      {"letter": "A", "text": "Start apixaban 5 mg twice daily and cease aspirin", "correct": true, "rationale": "START identifies underprescribing of anticoagulation in AF as a major gap. CHA2DS2-VASc 6 with low bleed risk strongly favours anticoagulation. Aspirin is not effective AF stroke prevention and continued in combination with anticoagulant increases bleeding without benefit unless there is a separate antiplatelet indication (recent ACS or stent) (START v2; eTG Cardiovascular).", "source_refs": ["START v2", "eTG Cardiovascular"]},
+      {"letter": "B", "text": "Continue aspirin alone and add clopidogrel for stroke prevention", "correct": false, "rationale": "Dual antiplatelet is inferior to anticoagulation for AF stroke prevention and increases bleeding (ACTIVE-A); not a substitute (eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular"]},
+      {"letter": "C", "text": "Start aspirin plus warfarin (triple antithrombotic)", "correct": false, "rationale": "Triple antithrombotic combinations are short-term post-PCI only; not maintenance therapy. Inappropriate combination here (eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular"]},
+      {"letter": "D", "text": "Reduce metformin dose without other changes", "correct": false, "rationale": "Metformin is appropriate at eGFR 58 with no dose-reduction trigger until eGFR <45; no change indicated (eTG Endocrinology).", "source_refs": ["eTG Endocrinology"]},
+      {"letter": "E", "text": "Stop perindopril given age >80", "correct": false, "rationale": "Age alone is not an indication to stop an ACE inhibitor; perindopril is appropriate for hypertension and post-MI secondary prevention (eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular"]}
+    ],
+    "explanation": {
+      "summary": "START criteria flag drugs that should be added in older adults where they are indicated but not prescribed. AF anticoagulation is the most prominent example. Aspirin without separate antiplatelet indication should be ceased when anticoagulation is started for AF to reduce bleeding without sacrificing benefit.",
+      "key_points": [
+        "STOPP = stop inappropriate; START = start indicated but missing",
+        "AF + CHA2DS2-VASc >=2 in men, >=3 in women = anticoagulation",
+        "DOAC > warfarin in non-valvular AF",
+        "Aspirin + anticoagulation only with separate indication (recent ACS, stent)",
+        "Apixaban dose reduce to 2.5 mg BD if 2 of 3: age >=80, weight <=60 kg, creatinine >=133 micromol/L"
+      ],
+      "pearls": "Always reassess HAS-BLED bleeding risk as a guide to reversible-risk modification, not as a barrier to starting anticoagulation."
+    },
+    "sources": [
+      {"label": "STOPP/START version 2", "url": "https://academic.oup.com/ageing/article/44/2/213/2812233"},
+      {"label": "Therapeutic Guidelines: Cardiovascular - AF", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["uec"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-014",
+    "topic": "Medicine",
+    "subtopic": "Geriatric assessment",
+    "subtopic_detail": "Frailty - clinical implications",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["frailty"],
+    "stem": "An 86-year-old woman is referred for consideration of transcatheter aortic valve implantation for severe symptomatic aortic stenosis. She lives alone, walks 50 metres slowly before stopping, has unintentionally lost 4 kg over 6 months, says she feels exhausted most days, and reports decreased grip when opening jars. She avoids most physical activity. Clinical Frailty Scale is 6.",
+    "data_table": {
+      "Background": "Severe symptomatic AS being considered for TAVI.",
+      "Fried phenotype": "Weight loss, exhaustion, weakness, slowness, low activity - meets 5/5.",
+      "Clinical Frailty Scale": "6 (moderately frail)."
+    },
+    "lead_in": "Which is the single most appropriate next step?",
+    "options": [
+      {"letter": "A", "text": "Comprehensive geriatric assessment with multidisciplinary input prior to procedural decision, including prehabilitation if intervention proceeds", "correct": true, "rationale": "Frailty independently predicts adverse outcomes after cardiac intervention. Comprehensive geriatric assessment (CGA) prior to high-risk procedures clarifies functional reserve, cognitive status, social supports, goals of care, and supports shared decision-making. Prehabilitation (exercise, nutrition, optimisation) improves outcomes (ANZSGM Position Statement; RACP Frailty; Heart Foundation TAVI consensus).", "source_refs": ["ANZSGM", "RACP"]},
+      {"letter": "B", "text": "Proceed to TAVI based on aortic valve area and symptoms alone", "correct": false, "rationale": "Frailty assessment is now standard pre-procedure for older adults considered for major cardiac intervention; ignoring it underestimates peri-procedural risk and post-procedure recovery burden (ANZSGM).", "source_refs": ["ANZSGM"]},
+      {"letter": "C", "text": "Decline TAVI on age criterion alone", "correct": false, "rationale": "Age is not a contraindication to TAVI; frailty and goals of care are the relevant filters, not chronological age (ANZSGM).", "source_refs": ["ANZSGM"]},
+      {"letter": "D", "text": "Refer for surgical aortic valve replacement instead", "correct": false, "rationale": "In a frail 86-year-old, surgical AVR carries higher operative mortality than TAVI; TAVI is preferred for higher-risk surgical candidates (Heart Foundation; eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular"]},
+      {"letter": "E", "text": "Watchful waiting until syncope or heart failure develops", "correct": false, "rationale": "Severe symptomatic AS has poor untreated prognosis (median survival approximately 2 years from symptom onset); deferring decision wastes the optimal intervention window (eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular"]}
+    ],
+    "explanation": {
+      "summary": "Frailty (Fried phenotype: weight loss, exhaustion, weakness, slowness, low activity; or Clinical Frailty Scale) predicts adverse outcomes across surgical, cardiac, oncological and emergency care. Comprehensive geriatric assessment integrates frailty into shared decision-making, identifies modifiable factors, and supports prehabilitation.",
+      "key_points": [
+        "Fried phenotype: weight loss, exhaustion, weakness, slowness, low activity",
+        "Clinical Frailty Scale 1 (very fit) to 9 (terminally ill); >=5 = frail",
+        "CGA prior to high-risk procedure standard of care",
+        "Prehabilitation improves outcomes - exercise, nutrition, optimisation",
+        "Frailty informs prognosis and goals of care, not absolute contraindication"
+      ],
+      "pearls": "Gait speed (5-metre walk test) alone is a robust single-item frailty surrogate; <0.8 m/s flags increased risk."
+    },
+    "sources": [
+      {"label": "Australian and New Zealand Society for Geriatric Medicine - Frailty Position Statement", "url": "https://www.anzsgm.org/"},
+      {"label": "Royal Australasian College of Physicians - Frailty", "url": "https://www.racp.edu.au/"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-015",
+    "topic": "Medicine",
+    "subtopic": "Palliative care",
+    "subtopic_detail": "Malignant bowel obstruction",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["palliative", "MBO"],
+    "stem": "A 67-year-old woman with metastatic ovarian cancer and known peritoneal disease presents with 3 days of colicky abdominal pain, vomiting, and absolute constipation. CT abdomen shows multi-level small bowel obstruction with no transition point amenable to surgery. Surgical team has reviewed and considers her inoperable. She wants to maximise comfort. She has been able to tolerate sips.",
+    "data_table": {
+      "Vital signs": "HR 102, BP 110/70, T 37.2 C.",
+      "Examination": "Distended abdomen, tinkling bowel sounds, no peritonism.",
+      "Imaging": "Multi-level SBO, peritoneal metastases, no surgical target."
+    },
+    "lead_in": "Which is the single most appropriate pharmacological management plan?",
+    "options": [
+      {"letter": "A", "text": "Continuous subcutaneous infusion of morphine (pain), haloperidol or metoclopramide (antiemetic - metoclopramide avoided if complete obstruction with colic), hyoscine butylbromide (antisecretory and antispasmodic), with consideration of octreotide if secretions persist; allow comfort sips orally", "correct": true, "rationale": "Inoperable malignant bowel obstruction management combines opioid (pain), antiemetic (haloperidol if complete obstruction; metoclopramide only if partial without colic, as prokinetic worsens complete obstruction pain), antisecretory (hyoscine butylbromide), and octreotide for refractory high-output secretions. Nasogastric tube is generally avoided in favour of pharmacological symptom control (ANZSPM Malignant Bowel Obstruction; eTG Palliative Care).", "source_refs": ["ANZSPM", "eTG Palliative Care"]},
+      {"letter": "B", "text": "Nil by mouth with nasogastric tube and IV fluids only", "correct": false, "rationale": "NG tube and aggressive nil-by-mouth in inoperable MBO is more burdensome than pharmacological control and is not the preferred palliative approach. Some sips and pharmacological symptom control improve comfort (ANZSPM).", "source_refs": ["ANZSPM"]},
+      {"letter": "C", "text": "Metoclopramide 10 mg IV 4-hourly", "correct": false, "rationale": "Prokinetic antiemetics worsen colic in complete mechanical obstruction; choose haloperidol or cyclizine when colic present (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]},
+      {"letter": "D", "text": "Dexamethasone 8 mg PO daily as monotherapy", "correct": false, "rationale": "Dexamethasone can reduce inflammatory oedema around tumour and may relieve partial obstruction; useful as adjunct but not as monotherapy for symptom control (ANZSPM).", "source_refs": ["ANZSPM"]},
+      {"letter": "E", "text": "Oral laxatives to relieve constipation", "correct": false, "rationale": "Stimulant or bulk laxatives are contraindicated in complete mechanical obstruction; will worsen colic and vomiting (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]}
+    ],
+    "explanation": {
+      "summary": "Inoperable malignant bowel obstruction is managed with a pharmacological bundle: opioid for pain, antiemetic appropriate to obstruction completeness, antisecretory (hyoscine butylbromide first, octreotide if refractory), and dexamethasone as adjunct to reduce peritumour oedema. Avoid prokinetics in complete obstruction. NG tube is reserved for symptoms not controlled pharmacologically.",
+      "key_points": [
+        "Opioid: morphine CSCI (renal-friendly alternatives if needed)",
+        "Antiemetic: haloperidol or cyclizine if complete; metoclopramide only if partial without colic",
+        "Antisecretory: hyoscine butylbromide; octreotide if refractory",
+        "Dexamethasone adjunct to reduce inflammatory component",
+        "NG only if pharmacological control insufficient"
+      ],
+      "pearls": "Octreotide reduces gut secretion volume dramatically and can avoid NG placement; consider early in high-output obstruction."
+    },
+    "sources": [
+      {"label": "ANZSPM - Malignant Bowel Obstruction", "url": "https://www.anzspm.org.au/"},
+      {"label": "Therapeutic Guidelines: Palliative Care - Bowel obstruction", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["uec", "fbc"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-016",
+    "topic": "Medicine",
+    "subtopic": "Palliative care",
+    "subtopic_detail": "Cancer pain - neuropathic adjuvant",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["palliative", "neuropathic"],
+    "stem": "A 62-year-old man with metastatic prostate cancer involving the lumbar spine has back pain with radiation down the right leg in an L5 dermatomal distribution, with burning and electric shock quality. He is on oral sustained-release morphine 60 mg BD with breakthrough morphine, which controls the deep aching back pain but the radicular leg pain remains 7/10. MRI confirms epidural disease at L4-L5 without cord compression. He is receiving palliative radiotherapy.",
+    "data_table": {
+      "Pain": "Deep back pain 3/10 on opioid; radicular L5 burning electric 7/10.",
+      "Imaging": "L4-L5 epidural metastases, no cord compression.",
+      "Plan": "Palliative radiotherapy underway."
+    },
+    "lead_in": "Which is the single most appropriate next pharmacological step?",
+    "options": [
+      {"letter": "A", "text": "Add a gabapentinoid (gabapentin 100 mg three times daily titrated, or pregabalin 25-75 mg twice daily titrated) for the neuropathic component", "correct": true, "rationale": "Neuropathic pain (burning, electric shock, dermatomal) responds poorly to opioid escalation alone. Adjuvant gabapentinoids or tricyclics target neuropathic pain via different mechanism; combination opioid + neuropathic adjuvant gives better control than escalating either alone. Start low, titrate, monitor for sedation (eTG Palliative Care; ANZSPM).", "source_refs": ["eTG Palliative Care", "ANZSPM"]},
+      {"letter": "B", "text": "Double the morphine sustained-release dose", "correct": false, "rationale": "Opioid dose escalation alone for neuropathic pain has diminishing returns and rising side effects; combination with neuropathic adjuvant is more effective and safer (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]},
+      {"letter": "C", "text": "Add ibuprofen 400 mg three times daily", "correct": false, "rationale": "NSAIDs help bone pain via inflammation and prostaglandins but are not neuropathic-specific; renal, gastric and bleeding risks in cancer patients also a concern. Adjuvant for neuropathic pain is the first add (eTG Analgesic).", "source_refs": ["eTG Analgesic"]},
+      {"letter": "D", "text": "Add paracetamol 1 g four times daily only", "correct": false, "rationale": "Paracetamol is a baseline analgesic, not a neuropathic-pain agent; adding will not address the burning/electric quality (eTG Palliative Care).", "source_refs": ["eTG Palliative Care"]},
+      {"letter": "E", "text": "Rotate to methadone monotherapy", "correct": false, "rationale": "Methadone has NMDA-receptor activity useful in neuropathic pain but is specialist-initiated due to QTc, accumulation, and complex equianalgesic ratios; adjuvant gabapentinoid is the first-tier step (ANZSPM).", "source_refs": ["ANZSPM"]}
+    ],
+    "explanation": {
+      "summary": "Neuropathic cancer pain (described as burning, electric, shooting, dermatomal) responds incompletely to opioids alone. Add a neuropathic adjuvant: gabapentinoid (gabapentin, pregabalin) or tricyclic (amitriptyline, nortriptyline). Steroid adjunct (dexamethasone) reduces peritumour oedema in nerve compression. Palliative radiotherapy is mainstay for symptomatic bony/epidural disease.",
+      "key_points": [
+        "Neuropathic pain = burning, electric, dermatomal",
+        "Gabapentinoid or TCA as adjuvant",
+        "Dexamethasone for peritumour oedema reducing nerve compression",
+        "Palliative radiotherapy for bone metastases",
+        "Watch for cord compression as a separate emergency"
+      ],
+      "pearls": "Always screen for spinal cord compression in cancer patients with new neurological symptoms - back pain with neurology = urgent MRI same day."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Palliative Care - Neuropathic pain", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "ANZSPM - Cancer pain management", "url": "https://www.anzspm.org.au/"}
+    ],
+    "reference_ranges": ["uec"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-017",
+    "topic": "Medicine",
+    "subtopic": "Geriatric prescribing",
+    "subtopic_detail": "Deprescribing PPIs",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["deprescribing", "PPI"],
+    "stem": "A 76-year-old woman has been on pantoprazole 40 mg daily for 8 years, originally started during a hospital admission for gastroenteritis. She has no history of peptic ulcer, no NSAID use, no upper GI bleeding, no Barrett oesophagus, and no current reflux symptoms. She has osteoporosis with a recent T-score -2.7 at the femoral neck and one fall in the past year.",
+    "data_table": {
+      "Indication review": "No documented ongoing indication; started during gastroenteritis admission 8 years ago.",
+      "Bone": "T-score -2.7 femoral neck.",
+      "Reflux": "Asymptomatic."
+    },
+    "lead_in": "Which is the single most appropriate deprescribing plan?",
+    "options": [
+      {"letter": "A", "text": "Step-down to pantoprazole 20 mg daily for 4 weeks, then alternate-day, then cease over 8 to 12 weeks; provide PRN antacid for rebound symptoms", "correct": true, "rationale": "Long-term PPI without ongoing indication is on the deprescribing target list. Abrupt cessation causes rebound acid hypersecretion. Step-down or alternate-day approach over weeks minimises rebound. PPIs are associated with fracture risk, Clostridioides difficile, hypomagnesaemia, and vitamin B12 deficiency in long-term use (NPS MedicineWise PPI deprescribing; primaryclinicalcare.com.au; RACGP).", "source_refs": ["NPS MedicineWise", "RACGP"]},
+      {"letter": "B", "text": "Continue pantoprazole indefinitely; benefits outweigh harms", "correct": false, "rationale": "Without an ongoing indication, long-term PPI risks (fracture, C. difficile, hypomagnesaemia, B12 deficiency) outweigh benefits (NPS MedicineWise).", "source_refs": ["NPS MedicineWise"]},
+      {"letter": "C", "text": "Stop pantoprazole abruptly tonight", "correct": false, "rationale": "Abrupt cessation produces rebound acid hypersecretion and symptom resurgence that often returns the patient to long-term PPI; gradual step-down is more successful (NPS MedicineWise).", "source_refs": ["NPS MedicineWise"]},
+      {"letter": "D", "text": "Switch to ranitidine indefinitely", "correct": false, "rationale": "Lateral switch maintains acid suppression with different long-term concerns; deprescribing is the goal where no indication exists (NPS MedicineWise).", "source_refs": ["NPS MedicineWise"]},
+      {"letter": "E", "text": "Increase to twice-daily PPI given bone density", "correct": false, "rationale": "PPIs do not improve bone density; this misdirects the bone management workstream (NPS MedicineWise).", "source_refs": ["NPS MedicineWise"]}
+    ],
+    "explanation": {
+      "summary": "PPIs are often started for short-term indications and continued indefinitely without review. Deprescribing should be considered when there is no documented ongoing indication. Gradual step-down minimises rebound hypersecretion. Long-term PPI risks include fracture, C. difficile, hypomagnesaemia, and B12 deficiency.",
+      "key_points": [
+        "Review indication at each prescription",
+        "No indication = deprescribe with step-down over weeks",
+        "Rebound acid hypersecretion mitigated by taper, antacid PRN",
+        "Long-term risks: fracture, C. difficile, hypomagnesaemia, B12 deficiency",
+        "Continue indefinitely for Barrett, prior bleeding peptic ulcer, NSAID prophylaxis in high-risk"
+      ],
+      "pearls": "Indications for indefinite PPI: Barrett oesophagus, severe erosive oesophagitis grade C/D, previous upper GI bleed, Zollinger-Ellison syndrome, ongoing NSAID/antiplatelet in high-risk patient."
+    },
+    "sources": [
+      {"label": "NPS MedicineWise - PPI deprescribing", "url": "https://www.nps.org.au/"},
+      {"label": "RACGP - Deprescribing PPIs", "url": "https://www.racgp.org.au/"}
+    ],
+    "reference_ranges": ["uec", "mg"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-018",
+    "topic": "Medicine",
+    "subtopic": "Geriatric assessment",
+    "subtopic_detail": "Orthostatic hypotension - drug review",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["orthostasis", "geriatrics"],
+    "stem": "A 79-year-old man presents with recurrent presyncope and one collapse over the past month. Lying blood pressure is 142/82, standing at 1 minute 108/68 with reproduced symptoms. His medications are perindopril 10 mg, amlodipine 10 mg, indapamide 2.5 mg, tamsulosin 400 mcg, mirtazapine 30 mg nocte, and oxybutynin 5 mg twice daily.",
+    "data_table": {
+      "Vital signs": "HR 72, lying BP 142/82, standing BP 108/68 with symptoms.",
+      "Examination": "No focal neurology, dry mucosae, JVP not elevated."
+    },
+    "lead_in": "Which is the single most appropriate first management step?",
+    "options": [
+      {"letter": "A", "text": "Sequential withdrawal of contributing medications (start with tamsulosin and one antihypertensive) and non-pharmacological measures (slow positional change, salt and fluid liberalisation if no heart failure, compression)", "correct": true, "rationale": "Drug-induced orthostatic hypotension is the most common cause in older adults. Multiple contributors here: ACE inhibitor + CCB + thiazide + alpha-blocker + mirtazapine (anti-alpha-1) + oxybutynin (anticholinergic). Stage withdrawal one at a time to identify reversible contributors. Non-pharmacological measures support recovery (eTG Cardiovascular; STOPP v2; RACGP).", "source_refs": ["eTG Cardiovascular", "STOPP v2"]},
+      {"letter": "B", "text": "Start fludrocortisone 0.1 mg daily without medication review", "correct": false, "rationale": "Adding a drug without removing the contributors creates supine hypertension, oedema, and polypharmacy; deprescribe first (eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular"]},
+      {"letter": "C", "text": "Tilt-table testing as first investigation", "correct": false, "rationale": "Bedside lying/standing BP has reproduced symptoms; tilt-table is reserved for unexplained syncope after first-line workup (eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular"]},
+      {"letter": "D", "text": "Pacemaker referral", "correct": false, "rationale": "Pacemaker is for cardiac syncope with conduction disease, not orthostasis with reproduced symptoms on standing (eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular"]},
+      {"letter": "E", "text": "Increase indapamide to 5 mg daily for BP control", "correct": false, "rationale": "Higher diuretic dose worsens orthostasis through volume depletion; opposite of what is needed (eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular"]}
+    ],
+    "explanation": {
+      "summary": "Orthostatic hypotension in older adults is usually multifactorial: drugs, autonomic neuropathy, volume depletion, deconditioning. Medication review with staged withdrawal of contributors (antihypertensives, alpha-blockers, anticholinergics, antidepressants, diuretics) is first-line. Non-pharmacological measures (slow rising, compression, salt/fluid) support recovery. Pharmacotherapy (fludrocortisone, midodrine) only when conservative measures fail.",
+      "key_points": [
+        "Diagnose: drop of >=20/10 mmHg on standing with symptoms (or >=30/15 in hypertensive)",
+        "Drug review: stop tamsulosin, reduce diuretic, simplify antihypertensives",
+        "Non-pharmacological: slow rising, compression stockings, salt/fluid",
+        "Fludrocortisone, midodrine if conservative fails",
+        "Beware supine hypertension when adding pressor agents"
+      ],
+      "pearls": "Standing BP should be measured at 1 and 3 minutes; some patients have delayed orthostatic hypotension only at 3 minutes."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Cardiovascular - Orthostatic hypotension", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "STOPP/START version 2", "url": "https://academic.oup.com/ageing/article/44/2/213/2812233"}
+    ],
+    "reference_ranges": ["uec"],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-019",
+    "topic": "Medicine",
+    "subtopic": "Palliative care",
+    "subtopic_detail": "Voluntary assisted dying eligibility",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["palliative", "VAD"],
+    "stem": "A 64-year-old woman with metastatic glioblastoma multiforme is being treated at a tertiary centre in New South Wales. She raises voluntary assisted dying (VAD) with her treating oncologist. She has decision-making capacity, has been an Australian resident for over a year, has a prognosis of less than 6 months as documented by two specialists, and is suffering intolerably. She is currently able to communicate clearly. She is 64 years old.",
+    "data_table": {
+      "State": "NSW.",
+      "Capacity": "Intact.",
+      "Prognosis": "Less than 6 months documented by two specialists.",
+      "Residency": "Australian for >1 year, NSW for >12 months."
+    },
+    "lead_in": "Which is the single most accurate statement regarding her eligibility under NSW VAD legislation?",
+    "options": [
+      {"letter": "A", "text": "She is potentially eligible if she also meets the formal request process; the treating doctor may either accept the role of coordinating practitioner or refer her to another practitioner who is willing and trained", "correct": true, "rationale": "NSW Voluntary Assisted Dying Act 2022 (commenced 28 November 2023) requires eligibility criteria of age 18+, Australian citizenship or permanent residency >=3 years OR Australian resident >=12 months and ordinarily resident in NSW >=12 months, decision-making capacity, advanced disease causing intolerable suffering with prognosis <=6 months (or <=12 months for neurodegenerative). The doctor may conscientiously object but must inform the patient and offer information about other practitioners (NSW VAD Act 2022; NSW Health VAD).", "source_refs": ["NSW VAD Act 2022", "NSW Health VAD"]},
+      {"letter": "B", "text": "She is ineligible because she is under 65", "correct": false, "rationale": "VAD eligibility starts at age 18 in all Australian jurisdictions, not 65 (NSW VAD Act 2022).", "source_refs": ["NSW VAD Act 2022"]},
+      {"letter": "C", "text": "She is ineligible because gliomas do not qualify", "correct": false, "rationale": "VAD is condition-agnostic; advanced disease with intolerable suffering and limited prognosis is the criterion, not the diagnosis (NSW VAD Act 2022).", "source_refs": ["NSW VAD Act 2022"]},
+      {"letter": "D", "text": "The treating oncologist must facilitate VAD even if they conscientiously object", "correct": false, "rationale": "Conscientious objection is respected; the doctor must inform the patient that they object and direct them to information about other practitioners. They are not required to facilitate (NSW VAD Act 2022).", "source_refs": ["NSW VAD Act 2022"]},
+      {"letter": "E", "text": "Family members can request VAD on her behalf if she becomes incapacitated", "correct": false, "rationale": "VAD is voluntary and requires the person themselves to make repeated requests; substitute decision-makers cannot request it on behalf of another (NSW VAD Act 2022).", "source_refs": ["NSW VAD Act 2022"]}
+    ],
+    "explanation": {
+      "summary": "VAD is legal in all Australian states (and ACT from late 2025) with broadly similar but jurisdiction-specific frameworks. NSW commenced 28 November 2023. Core eligibility: 18+, residency criteria, capacity, advanced disease, intolerable suffering, prognosis <=6 months (longer for neurodegenerative in some states). Process involves multiple requests, two assessing practitioners, cooling-off period.",
+      "key_points": [
+        "VAD is voluntary - requested by the person, not family",
+        "Capacity must be present at every step",
+        "Two independent medical assessments required",
+        "Conscientious objection respected; refer for information",
+        "Health practitioners cannot initiate the VAD discussion in NSW (must wait until raised by patient)"
+      ],
+      "pearls": "The NSW Act specifically prohibits doctors from raising VAD first; the patient must initiate the conversation. Different from Victoria/WA where doctors may initiate with prescribed information requirements."
+    },
+    "sources": [
+      {"label": "Voluntary Assisted Dying Act 2022 (NSW)", "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2022-017"},
+      {"label": "NSW Health - Voluntary Assisted Dying", "url": "https://www.health.nsw.gov.au/voluntaryassisteddying/"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-25"
+  },
+  {
+    "id": "med-gerip-020",
+    "topic": "Medicine",
+    "subtopic": "Geriatric assessment",
+    "subtopic_detail": "Decision-making capacity assessment",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["capacity"],
+    "stem": "An 82-year-old man with moderate dementia (MMSE 18) is admitted with a hip fracture requiring surgical fixation. The orthopaedic team asks whether he can consent to surgery. He can describe in his own words that his hip is broken, that surgery is being recommended to fix it, that without surgery he will not walk again and may die from complications, and that surgery carries risks of bleeding, infection, and worsening confusion. He says he wants the operation. His daughter has enduring guardianship.",
+    "data_table": {
+      "Background": "Moderate dementia, MMSE 18, lives with daughter who has enduring guardianship.",
+      "Capacity discussion": "Patient describes condition, treatment, alternatives, risks; consistent choice."
+    },
+    "lead_in": "Which is the single most appropriate next step regarding consent?",
+    "options": [
+      {"letter": "A", "text": "Accept his consent for the surgery; he demonstrates decision-specific capacity (understands, retains, weighs the information, and communicates a choice) despite the dementia diagnosis", "correct": true, "rationale": "Capacity is decision-specific and time-specific, not a global on/off determination. The four-component test (understand the information, retain it for long enough to decide, weigh it as part of the decision-making, communicate the decision) is met here. A dementia diagnosis or low MMSE alone does not equate to incapacity. Enduring guardianship is activated only when capacity is absent (NSW Guardianship Act; RACP Position on Capacity).", "source_refs": ["NSW Guardianship Act 1987", "RACP"]},
+      {"letter": "B", "text": "Defer to his daughter as enduring guardian because of the dementia diagnosis", "correct": false, "rationale": "Enduring guardianship activates only when the person lacks capacity for the specific decision. He has demonstrated decision-specific capacity here; the daughter's authority does not override (NSW Guardianship Act 1987).", "source_refs": ["NSW Guardianship Act 1987"]},
+      {"letter": "C", "text": "Apply to the Guardianship Tribunal for a one-off consent order", "correct": false, "rationale": "Tribunal application is reserved for incapacity with no available substitute decision-maker, or disputed substitute decisions; not needed when the patient retains capacity (NSW Guardianship Act 1987).", "source_refs": ["NSW Guardianship Act 1987"]},
+      {"letter": "D", "text": "Use MMSE score alone to determine capacity (MMSE >24 = capacity)", "correct": false, "rationale": "MMSE is a cognitive screen, not a capacity test; capacity is determined by the four-component decision-specific assessment, not a cognitive cut-off (RACP).", "source_refs": ["RACP"]},
+      {"letter": "E", "text": "Document the patient as lacking capacity due to dementia and proceed under best-interests provisions", "correct": false, "rationale": "Assuming incapacity from diagnosis breaches the presumption-of-capacity principle and the patient's autonomy (NSW Guardianship Act 1987).", "source_refs": ["NSW Guardianship Act 1987"]}
+    ],
+    "explanation": {
+      "summary": "Decision-making capacity is decision-specific and time-specific. The four-component test (understand, retain, weigh, communicate) is the standard. Dementia diagnosis, low MMSE, or substitute decision-maker appointment do not, of themselves, indicate incapacity. The presumption of capacity must be rebutted by assessment of the specific decision in question.",
+      "key_points": [
+        "Capacity = decision-specific, time-specific",
+        "Four-component test: understand, retain, weigh, communicate",
+        "Presumption of capacity is the legal starting point",
+        "Diagnosis (dementia, intellectual disability) does not equal incapacity",
+        "Substitute decision-makers activate only on incapacity for that decision"
+      ],
+      "pearls": "Use the same information in capacity assessment that would be used for standard consent; the test is whether the person can engage with the same conversation, not whether they reach the same conclusion as the clinician."
+    },
+    "sources": [
+      {"label": "NSW Guardianship Act 1987", "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-1987-257"},
+      {"label": "Royal Australasian College of Physicians - Decision-making in older people", "url": "https://www.racp.edu.au/"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-25"
+  }
+]
