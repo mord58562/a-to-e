@@ -1,6 +1,6 @@
 # A to E
 
-A free, open practice MCQ bank for the final-year Australian MD student. Single-best-answer clinical reasoning across paediatrics, obstetrics & gynaecology, psychiatry, and adult medicine, with Australian units and Australian guideline sources throughout.
+A free, open practice MCQ bank for Australian medical students in their clinical years. Single-best-answer clinical reasoning across paediatrics, obstetrics & gynaecology, psychiatry, and adult medicine, with Australian units and Australian guideline sources throughout.
 
 **Live: <https://mord58562.github.io/a-to-e/>** — guest mode, no signup required.
 
@@ -10,18 +10,16 @@ A free, open practice MCQ bank for the final-year Australian MD student. Single-
 - **Difficulty scale overhauled.** Bank now uses L2 as the floor (was L3-minimum). L3 and L4 dominate (~95% of the bank); L5 is a new extreme tier (~5% target) that requires complex reasoning *and* may require niche sub-specialty knowledge.
 - **Social stats panel.** Signed-in users see what proportion of other users picked each option after they submit.
 - **Difficulty toggles on the home screen.** Each level individually toggleable.
-- **Scheduled generation.** A Claude-powered cloud routine fires 15× per day producing one 15-20 question batch per fire, with self-audit against the binding rule pack before commit.
+- **Scheduled generation.** A cloud routine fires regularly producing fresh single-best-answer batches, each self-audited against the binding rule pack before commit.
 - **Unified Add & Audit pane** for admins: paste flow, inbox of pending submissions, user-submitted reports, and live-content audit all on one scrollable surface.
-- **House M.D. easter egg.** Every 50 answered questions per session, a real House quote toast appears bottom-right.
 
 ## What it is
 
-- ~830+ single-best-answer clinical vignettes calibrated to the upper end of Year 4 Australian medical school standard.
+- An ever-increasing library of single-best-answer clinical vignettes calibrated to the upper end of Australian undergraduate clinical-years standard.
 - Four disciplines: Paediatrics, Obstetrics & Gynaecology, Psychiatry, adult Medicine.
-- Difficulty distribution (current): L2 minimal, L3 dominant, L4 strong, L5 ~5% target. Every L5 requires multi-step reasoning, not just niche fact recall.
 - Every option carries a per-option rationale ending with an explicit source citation. Every claim verifiable in a free-tier reference (RCH CPG, RANZCOG, KEMH, Therapeutic Guidelines, AMH, ASHM, COPE, NHFA/CSANZ, RACGP, NHMRC, NICE, BMJ Best Practice, StatPearls, Cochrane).
 - Australian SI units throughout (mmol/L, micromol/L, g/L, x10^9/L, mmHg, °C, kg).
-- Built-in **Reference values** panel: 30+ categories of Australian normal ranges (paediatric age bands, pregnancy-trimester ranges, ADIPS OGTT, urinalysis dipstick + quantitative, etc.) toggleable with the **L** key. Sticky category headers, quick-jump pills, row-level search, inline-rendering of question-relevant ranges post-reveal.
+- Built-in **Reference values** panel: an ever-growing set of categories of Australian normal ranges (paediatric age bands, pregnancy-trimester ranges, ADIPS OGTT, urinalysis dipstick + quantitative, and more) toggleable with the **L** key. Sticky category headers, quick-jump pills, row-level search, and inline rendering of question-relevant ranges after you reveal the answer.
 
 ## How to use
 
@@ -52,32 +50,17 @@ If you **create a cloud account** to sync progress across devices and see what p
 
 Question content submitted via the paste flow is committed to the public `mord58562/a-to-e` GitHub repo through the worker (so other users see it on their next reload).
 
-## Adding more questions (admin)
-
-No JSON file editing required. In the Admin modal's **Add & Audit** pane:
-
-1. **Copy prompt.** A self-contained prompt embedding the schema, the binding audit rules, the live bank state (per-topic + per-difficulty counts), and the seasonal focus directive. Paste it into any free LLM (Claude.ai, ChatGPT, Gemini, DeepSeek, Mistral, Grok, Copilot).
-2. **Submit to bank.** Paste the LLM's JSON output. The site validates the schema, dedupes against existing IDs, submits to the bank via the worker (which writes the batch + manifest + meta to GitHub in one atomic commit). If the worker is unreachable it falls back to browser `localStorage`.
-3. **Audit.** Pending batches show in the Inbox section; user-submitted reports show in Reports; the whole bank is re-auditable in Live content.
-
-The in-app prompt embeds every rule the bundled questions follow: doctor-perspective only, no diagnosis-leak in options, answer-length parity within ±35%, no lead-in guideline name leaks, dose-format parity, Australian source citation, randomised correct-letter placement, tags ≤3 from existing vocabulary, no formulaic pearls.
-
-A scheduled cloud routine independently generates one 15-20 question batch per hourly fire (15× per day, weighted toward L3/L4/L5), using the same prompt and the same publish path.
-
 ## Project structure
 
 ```
-y4-mcq/
+a-to-e/
 ├── index.html
 ├── assets/
 │   ├── styles.css
 │   ├── app.js
 │   └── favicon.svg
 ├── data/
-│   ├── questions_paeds.json
-│   ├── questions_obgyn.json
-│   ├── questions_psych.json
-│   ├── questions_medicine.json
+│   ├── questions_{paeds,obgyn,psych,medicine}.json
 │   ├── reference_ranges.json
 │   ├── meta.json
 │   ├── batches_manifest.json
@@ -87,16 +70,14 @@ y4-mcq/
 ├── cloudflare-worker/
 │   ├── src/worker.js
 │   ├── schema.sql
+│   ├── DEPLOY.md
 │   └── wrangler.toml
-├── scripts/
-│   ├── start.sh
-│   ├── server.py
-│   ├── sync_routine_counts.py
-│   ├── add-questions.sh
-│   ├── merge_batches.sh
-│   └── merge_inbox.sh
-├── .remote-agent-context.md      (binding context for the scheduled routine)
-└── LEGACY_ADMIN_MIGRATION.md     (one-time bootstrap removal guide)
+└── scripts/
+    ├── start.sh
+    ├── server.py
+    ├── add-questions.sh
+    ├── merge_batches.sh
+    └── merge_inbox.sh
 ```
 
 ## Run locally
