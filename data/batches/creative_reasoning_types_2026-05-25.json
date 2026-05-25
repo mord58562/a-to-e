@@ -470,5 +470,205 @@
     ],
     "created": "2026-05-25",
     "subtopic_detail": "Methotrexate threshold criteria for ectopic pregnancy management"
+  },
+  {
+    "id": "creative-reasoning-006-pattern-recognition-pigeon-fancier",
+    "topic": "Medicine",
+    "subtopic": "Respiratory",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["pattern recognition", "non-obvious cue", "occupational lung disease"],
+    "stem": "A 58-year-old retiree from the Central Coast presents to a Gosford respiratory clinic with 6 months of progressive dyspnoea, dry cough and 4 kg weight loss. He is a lifelong non-smoker. He has been retired for 5 years from his job as an aircraft mechanic. He spends most of his time at home; he keeps a small allotment vegetable garden, has two outdoor cats, and tends to the racing pigeon loft his neighbour asked him to mind during a 12-month overseas trip that began 8 months ago. He has no occupational asbestos exposure beyond brief brake-pad work in the 1980s. There is no fever, no haemoptysis, no joint pain, no rash. Resting SpO2 96 percent room air, falling to 88 percent after a 6-minute walk test. Fine bibasal end-inspiratory crackles are heard but no clubbing. Spirometry shows a restrictive pattern with FEV1/FVC 0.84, TLC 71 percent predicted, DLCO 52 percent predicted. CT chest reports patchy ground-glass and centrilobular nodularity with mid-to-upper lobe predominance.",
+    "data_table": {
+      "Vital signs": "T 36.7 deg C, HR 92, RR 22, BP 132/82, SpO2 96% room air resting (88% post 6MWT).",
+      "Examination": "Fine bibasal crackles, no clubbing, no rash, no synovitis.",
+      "Investigations": "Spirometry restrictive (FEV1/FVC 0.84, TLC 71%, DLCO 52%), CT chest patchy ground-glass + centrilobular nodularity, mid-upper lobe predominant. FBC, UEC, LFT, CRP all normal. ANA, ENA, ANCA negative."
+    },
+    "lead_in": "Which of the following is the single most likely diagnosis?",
+    "options": [
+      {"letter": "A", "text": "Idiopathic pulmonary fibrosis (IPF)", "correct": false, "rationale": "IPF is basal-predominant with honeycombing and reticulation, age >60 with insidious onset, and would show a UIP pattern on CT - not mid-upper-lobe ground glass with centrilobular nodules. Source: TSANZ/Lung Foundation Australia IPF guidelines.", "source_refs": ["TSANZ IPF Position Statement", "Lung Foundation Australia"]},
+      {"letter": "B", "text": "Chronic hypersensitivity pneumonitis from avian antigen exposure", "correct": true, "rationale": "The discriminator is the pigeon loft, which the candidate must pick out from a long social history. Avian antigens (bird droppings, feathers, bloom proteins) drive a type III/IV hypersensitivity reaction producing centrilobular nodularity and ground-glass with mid-upper-lobe predominance - exactly the imaging described. Restrictive PFTs with reduced DLCO, fine crackles without clubbing in a non-smoker fit. Source: TSANZ Interstitial Lung Disease Position Statement; Cormier 2016.", "source_refs": ["TSANZ ILD Position Statement", "eTG Respiratory"]},
+      {"letter": "C", "text": "Asbestos-related pleural disease", "correct": false, "rationale": "Brief brake-pad exposure 40 years ago is below threshold for asbestos disease, and asbestos causes pleural plaques or asbestosis with basal reticulation - not centrilobular nodularity. Source: ATS/ERS Asbestos guidelines.", "source_refs": ["ATS-ERS Asbestos Position Paper"]},
+      {"letter": "D", "text": "Sarcoidosis stage II", "correct": false, "rationale": "Sarcoidosis would typically show bilateral hilar lymphadenopathy with upper-lobe interstitial change and is age 20-40 in most Australian cohorts; ACE level and Ca often abnormal. The imaging here lacks lymphadenopathy and ANA/ENA are non-discriminating. Source: TSANZ Sarcoidosis Guidelines.", "source_refs": ["TSANZ Sarcoidosis Guidelines"]},
+      {"letter": "E", "text": "Cryptogenic organising pneumonia (COP)", "correct": false, "rationale": "COP usually has patchy peripheral or peribronchovascular consolidation rather than centrilobular nodularity, and responds rapidly to steroids - the discriminator is the imaging pattern + occupational/animal history. Source: eTG Respiratory.", "source_refs": ["eTG Respiratory"]}
+    ],
+    "explanation": {
+      "summary": "Hypersensitivity pneumonitis (HP) is driven by inhaled organic antigens (avian proteins, mould, isocyanates) producing a non-IgE immune reaction in alveoli and bronchioles. The chronic form looks like restrictive ILD; the discriminator is exposure history. Mid-upper-lobe predominance and centrilobular nodules differ from IPF (basal, reticular, honeycomb) and sarcoid (lymphadenopathy). Antigen avoidance is the central management step - even before steroids - because continued exposure causes irreversible fibrosis.",
+      "key_points": [
+        "Bird-fancier's lung is the prototypical chronic HP exposure",
+        "Mid-upper-lobe centrilobular nodules + ground glass = HP pattern",
+        "Restrictive PFTs with low DLCO and exercise desaturation",
+        "Antigen avoidance is mandatory and primary therapy",
+        "Precipitating IgG (against pigeon serum) supports but does not exclude"
+      ],
+      "pearls": "Always ask explicitly about birds, hot tubs, mould exposure, and farming - patients rarely volunteer these on standard history. The Central Coast and Hunter regions have an active pigeon-racing culture, making this a regionally relevant differential."
+    },
+    "sources": [
+      {"label": "TSANZ Interstitial Lung Disease Position Statement", "url": "https://www.thoracic.org.au/"},
+      {"label": "eTG Respiratory", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["spirometry_adult"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Hypersensitivity pneumonitis from avian antigen exposure"
+  },
+  {
+    "id": "creative-reasoning-007-dose-calc-unit-trap-paracetamol",
+    "topic": "Paediatrics",
+    "subtopic": "Toxicology",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["dose calculation", "unit conversion trap", "AU-specific cutoff"],
+    "stem": "A 12-month-old infant weighing 9.4 kg is brought to John Hunter Hospital paediatric ED 90 minutes after the parent inadvertently gave the child five doses of paracetamol 250 mg/5 mL suspension instead of paracetamol 120 mg/5 mL suspension, at the prescribed paediatric volume of 6 mL per dose, over the past 16 hours (one dose every 4 hours; the 5th dose was 90 minutes ago). The child is alert, well, afebrile, drinking, and has no abdominal pain or vomiting. No other agent was co-ingested. Pre-existing health is unremarkable. The parent has brought the bottle and the dosing syringe.",
+    "data_table": {
+      "Vital signs": "HR 124, RR 28, BP 92/58, T 36.9 deg C, SpO2 99% room air.",
+      "Examination": "Alert, hydrated, abdomen soft, no hepatomegaly.",
+      "Investigations": "Pending - clinician calculating total ingested dose to determine NAC eligibility."
+    },
+    "lead_in": "Which is the most appropriate next step in management based on the calculated cumulative dose?",
+    "options": [
+      {"letter": "A", "text": "Discharge with safety-netting; cumulative dose below the staggered-ingestion treatment threshold", "correct": false, "rationale": "The calculation: 5 doses x 6 mL x 250 mg/5 mL = 5 x 300 mg = 1500 mg total over 16 hours = 1500 / 9.4 = 159.6 mg/kg. The Australian Poisons Information Centre threshold for repeated supratherapeutic ingestion in children is >150 mg/kg in any 24-hour period (or >100 mg/kg/day for >2 days). This child is above threshold; discharge is wrong. Source: Murray's Toxicology Handbook; NSW PIC.", "source_refs": ["NSW Poisons Information Centre", "Murray's Toxicology Handbook"]},
+      {"letter": "B", "text": "Commence IV N-acetylcysteine using the 21-hour Prescott regimen and check paracetamol concentration and ALT now", "correct": true, "rationale": "Cumulative dose is 159.6 mg/kg in <24 hours (5 x 6 mL x 50 mg/mL = 1500 mg; 1500/9.4 = 159.6 mg/kg). This exceeds the 150 mg/kg/24h repeated supratherapeutic threshold. The nomogram does not apply to staggered ingestion; treatment decision is based on dose plus ALT/paracetamol level. NAC is started empirically while bloods are awaited. The 21-hour Prescott regimen (150-50-100 mg/kg) is current Australian standard. Source: NSW Poisons Information Centre; Murray's Toxicology Handbook; eTG Toxicology.", "source_refs": ["NSW PIC", "eTG Toxicology", "Murray's Toxicology Handbook"]},
+      {"letter": "C", "text": "Use the Rumack-Matthew nomogram at 4 hours post the most recent dose to decide NAC", "correct": false, "rationale": "The nomogram is invalid in staggered or repeated supratherapeutic ingestion - it was derived for single acute ingestions only. Source: NSW PIC.", "source_refs": ["NSW Poisons Information Centre"]},
+      {"letter": "D", "text": "Administer activated charcoal 1 g/kg orally to limit further absorption", "correct": false, "rationale": "Charcoal is useful only within 1-2 hours of an acute single ingestion, not for staggered ingestion of a now-mostly-absorbed dose. Source: eTG Toxicology.", "source_refs": ["eTG Toxicology"]},
+      {"letter": "E", "text": "Repeat paracetamol level at 24 hours post the most recent dose and decide on NAC then", "correct": false, "rationale": "Delaying NAC past 8 hours from ingestion significantly increases hepatotoxicity risk. Empirical NAC should start now and be discontinued only if labs clearly fall below treatment threshold. Source: NSW PIC.", "source_refs": ["NSW Poisons Information Centre"]}
+    ],
+    "explanation": {
+      "summary": "The discriminator is the unit-conversion trap: the family used a 250 mg/5 mL strength instead of 120 mg/5 mL, giving each 6 mL dose 300 mg of paracetamol rather than the intended 144 mg. Five doses over 16 hours = 1500 mg = 159.6 mg/kg in a 9.4 kg child. Australian staggered-ingestion threshold is 150 mg/kg/24h - this child is above. The Rumack-Matthew nomogram applies only to single acute ingestions; for staggered ingestion, decision is based on cumulative dose, ALT, and paracetamol level interpreted in clinical context.",
+      "key_points": [
+        "Staggered paracetamol ingestion: nomogram does NOT apply",
+        "AU threshold for treatment in children: >150 mg/kg/24h or >100 mg/kg/day for >2 days",
+        "Paracetamol suspension strengths in AU: 120 mg/5 mL (infant) and 250 mg/5 mL (older child) - common dispensing error",
+        "Empirical NAC then de-escalate based on bloods is the safe pathway",
+        "Australian Prescott 21-hour regimen: 150 mg/kg over 1 h, then 50 mg/kg over 4 h, then 100 mg/kg over 16 h"
+      ],
+      "pearls": "Always confirm the strength of liquid paediatric paracetamol with the parent and look at the bottle. Two-strength availability in Australia is a recurring source of accidental supratherapeutic ingestion."
+    },
+    "sources": [
+      {"label": "NSW Poisons Information Centre", "url": "https://www.poisonsinfo.nsw.gov.au/"},
+      {"label": "eTG Toxicology", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["paracetamol_nomogram", "lft"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Paracetamol staggered supratherapeutic ingestion threshold"
+  },
+  {
+    "id": "creative-reasoning-008-antibody-pattern-aih",
+    "topic": "Medicine",
+    "subtopic": "Hepatology",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["antibody pattern", "autoimmune liver disease", "pattern matching"],
+    "stem": "A 22-year-old woman presents to a Newcastle hepatology clinic with 6 weeks of fatigue, mild jaundice and a 3 kg weight loss. She is not on any medication and denies herbal supplement use. Alcohol intake is 2 standard drinks per week. She has no risk factors for viral hepatitis on screening interview. There is a remote history of vitiligo and a paternal history of type 1 diabetes mellitus. Bloods today show ALT 612 U/L, AST 540 U/L, ALP 142 U/L, GGT 88 U/L, total bilirubin 58 micromol/L, conjugated 41 micromol/L, INR 1.2, albumin 36 g/L, IgG 26 g/L (high). Viral hepatitis serology (HBsAg, anti-HCV, anti-HAV IgM, anti-HEV IgM) negative; HIV negative. Caeruloplasmin and alpha-1-antitrypsin normal. Iron studies show normal ferritin and transferrin saturation. Autoimmune panel: ANA 1:640 (homogeneous), anti-smooth muscle antibody (ASMA) 1:160, anti-LKM-1 negative, anti-mitochondrial antibody (AMA) negative, anti-soluble liver antigen (SLA) negative.",
+    "data_table": {
+      "Vital signs": "T 36.6, HR 78, BP 112/68, no asterixis.",
+      "Examination": "Mild scleral icterus, no stigmata of chronic liver disease, soft non-tender abdomen, no hepatosplenomegaly.",
+      "Investigations": "Hepatocellular pattern (ALT 612, AST 540, ALP 142). Bilirubin 58 (conj 41). IgG 26 (high). ANA 1:640 homogeneous, ASMA 1:160, anti-LKM-1 negative, AMA negative."
+    },
+    "lead_in": "Which is the most likely diagnosis?",
+    "options": [
+      {"letter": "A", "text": "Primary biliary cholangitis", "correct": false, "rationale": "PBC is cholestatic (ALP-dominant, raised GGT, elevated IgM) with positive AMA in 95 percent. Here ALT/AST dominate, GGT is only mildly elevated, IgG (not IgM) is high, and AMA is negative. Source: eTG Gastrointestinal.", "source_refs": ["eTG Gastrointestinal"]},
+      {"letter": "B", "text": "Type 1 autoimmune hepatitis", "correct": true, "rationale": "The pattern fits AIH type 1: young woman, hepatocellular injury (ALT > ALP), markedly elevated IgG, ANA homogeneous + ASMA positive (the type 1 serology), AMA and anti-LKM-1 negative. The associated autoimmunity (vitiligo, family T1DM) supports. International AIH Group simplified criteria score >=7 (definite). Source: eTG Gastrointestinal; AASLD AIH Practice Guidance.", "source_refs": ["eTG Gastrointestinal", "AASLD AIH Practice Guidance"]},
+      {"letter": "C", "text": "Type 2 autoimmune hepatitis", "correct": false, "rationale": "AIH type 2 has anti-LKM-1 or anti-LC1 antibodies (negative here) and typically presents in childhood/adolescence. ASMA-positive AIH is type 1. Source: AASLD.", "source_refs": ["AASLD AIH Practice Guidance"]},
+      {"letter": "D", "text": "Primary sclerosing cholangitis", "correct": false, "rationale": "PSC is cholestatic with bile-duct strictures on imaging; ALP > ALT; pANCA positive in 65 percent. Pattern here is hepatocellular and ANCA was not even part of the differential. Source: eTG Gastrointestinal.", "source_refs": ["eTG Gastrointestinal"]},
+      {"letter": "E", "text": "Wilson disease", "correct": false, "rationale": "Wilson is excluded by normal caeruloplasmin and presents with mixed neurological/psychiatric features and Kayser-Fleischer rings. AIH-like ANA + ASMA in Wilson is rare. Source: eTG Gastrointestinal.", "source_refs": ["eTG Gastrointestinal"]}
+    ],
+    "explanation": {
+      "summary": "AIH is a T-cell-mediated attack on hepatocytes producing a hepatocellular injury pattern (ALT/AST elevation), polyclonal hypergammaglobulinaemia (IgG specifically), and characteristic autoantibodies. Type 1 (ANA + ASMA positive, anti-LKM-1 negative) accounts for ~75 percent of cases and presents in young adults, often with associated autoimmunity (thyroid, vitiligo, T1DM). The IAIHG simplified score combines autoantibody titre, IgG level, biopsy histology and exclusion of viral hepatitis. Treatment is prednisolone +/- azathioprine; biopsy is recommended before commencing to grade activity and exclude overlap syndromes.",
+      "key_points": [
+        "Type 1 AIH = ANA + ASMA (anti-LKM-1 negative); type 2 = anti-LKM-1 or anti-LC1",
+        "Hepatocellular pattern + raised IgG + ANA/ASMA in a young woman = AIH until proven otherwise",
+        "Personal or family history of other autoimmune disease supports",
+        "Biopsy: interface hepatitis + plasma cell infiltrate confirms",
+        "Treatment: prednisolone 30-60 mg, taper, add azathioprine; long-term remission >80%"
+      ],
+      "pearls": "Beware overlap syndromes (AIH-PBC, AIH-PSC) - if ALP is disproportionately high or AMA is positive, image the biliary tree and consider MRCP."
+    },
+    "sources": [
+      {"label": "eTG Gastrointestinal", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "AASLD AIH Practice Guidance", "url": "https://www.aasld.org/"}
+    ],
+    "reference_ranges": ["lft", "iggam"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Autoimmune hepatitis type 1 serological pattern"
+  },
+  {
+    "id": "creative-reasoning-009-time-onset-statin-rhabdo",
+    "topic": "Medicine",
+    "subtopic": "Pharmacology / Rheumatology",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["time-of-onset reasoning", "drug interaction", "latency mapping"],
+    "stem": "A 67-year-old man presents to a Maitland general practice with 5 days of progressively severe bilateral thigh and shoulder muscle pain, dark cola-coloured urine and weakness when climbing stairs. He cannot recall recent strenuous exercise or trauma. He has hypertension, type 2 diabetes mellitus, hypothyroidism and stable HFrEF. His regular medications are atorvastatin 40 mg, perindopril 5 mg, metformin XR 1 g BD, levothyroxine 100 micrograms, and bisoprolol 5 mg, all unchanged for over 2 years. Two weeks ago his GP started clarithromycin 500 mg BD for a 7-day course to treat a confirmed Helicobacter pylori eradication regimen. The macrolide course finished 5 days ago. Bloods today: CK 38400 U/L, creatinine 142 micromol/L (baseline 80), K 4.1, urine dipstick blood ++++, microscopy 2 RBC per high power field, TSH 2.4.",
+    "data_table": {
+      "Vital signs": "T 36.5, HR 78, BP 132/78, SpO2 98% room air.",
+      "Examination": "Bilateral proximal muscle tenderness in shoulders and thighs, power 4/5 against resistance, reflexes preserved, no rash.",
+      "Investigations": "CK 38 400 U/L; Cr 142 (baseline 80); K 4.1; urine dipstick blood ++++ but only 2 RBC/HPF on microscopy (myoglobinuria); TSH 2.4."
+    },
+    "lead_in": "Which is the single most likely precipitant for this presentation?",
+    "options": [
+      {"letter": "A", "text": "Hypothyroid-induced myopathy from drift in levothyroxine effect", "correct": false, "rationale": "TSH is normal at 2.4, excluding overt hypothyroid myopathy. Source: eTG Endocrinology.", "source_refs": ["eTG Endocrinology"]},
+      {"letter": "B", "text": "Clarithromycin-induced atorvastatin toxicity via CYP3A4 inhibition", "correct": true, "rationale": "Clarithromycin is a strong CYP3A4 inhibitor and atorvastatin is a CYP3A4 substrate; co-administration causes a several-fold rise in plasma statin and risk of rhabdomyolysis. The TIME-OF-ONSET is the discriminator: symptoms started during/after the macrolide course on an otherwise unchanged statin regimen of >2 years. Eradication therapy is a recognised trigger. Australian Medicines Handbook and eTG both list this interaction. Source: AMH 2024; eTG Cardiovascular.", "source_refs": ["Australian Medicines Handbook", "eTG Cardiovascular"]},
+      {"letter": "C", "text": "Idiopathic immune-mediated necrotising myopathy (anti-HMGCR)", "correct": false, "rationale": "Anti-HMGCR necrotising myopathy is a recognised but uncommon statin-triggered syndrome; it tends to persist after statin cessation and has a longer subacute onset. Time-of-onset linkage to clarithromycin makes the interaction explanation more likely first. Source: ACR myopathy guidance.", "source_refs": ["ACR Myopathy Guidance"]},
+      {"letter": "D", "text": "Strenuous unrecognised exertional rhabdomyolysis", "correct": false, "rationale": "Exertional rhabdo would have a clear inciting episode in the days before symptom onset; the patient denies this and bilateral proximal distribution is unusual. Source: eTG Renal.", "source_refs": ["eTG Renal"]},
+      {"letter": "E", "text": "Perindopril-induced AKI causing secondary CK release", "correct": false, "rationale": "ACE inhibitors do not cause primary rhabdomyolysis; the CK 38 400 represents true muscle injury, not a creatinine artefact, and the AKI is secondary to myoglobin nephrotoxicity. Source: KDIGO AKI guidance.", "source_refs": ["KDIGO AKI"]}
+    ],
+    "explanation": {
+      "summary": "The discriminating cue is the timing of the macrolide course relative to symptom onset. Atorvastatin is metabolised by CYP3A4; clarithromycin is one of the strongest CYP3A4 inhibitors in clinical use. Co-administration produces dose-dependent rises in atorvastatin exposure and significantly increases rhabdomyolysis risk, with symptoms typically appearing within 5-14 days of macrolide initiation. Management: stop atorvastatin, IV crystalloid to maintain urine output >100 mL/h, monitor K and renal function, repeat CK trend. Restart a non-CYP3A4 statin (rosuvastatin, pravastatin) only once CK and renal function normalise.",
+      "key_points": [
+        "Clarithromycin and erythromycin are strong CYP3A4 inhibitors",
+        "Atorvastatin, simvastatin, lovastatin are CYP3A4 substrates",
+        "Rosuvastatin and pravastatin are NOT CYP3A4 dependent",
+        "Statin-macrolide interaction is the single most common drug-induced rhabdomyolysis in AU primary care",
+        "Always pause CYP3A4-substrate statins for the duration of macrolide therapy"
+      ],
+      "pearls": "Helicobacter eradication regimens almost always include clarithromycin; flag statin-substrate switching at the time of prescribing."
+    },
+    "sources": [
+      {"label": "Australian Medicines Handbook 2024", "url": "https://amhonline.amh.net.au/"},
+      {"label": "eTG Cardiovascular", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["ck", "uec"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Statin-macrolide CYP3A4 interaction rhabdomyolysis"
+  },
+  {
+    "id": "creative-reasoning-010-multi-organ-ladder-warfarin-aki",
+    "topic": "Medicine",
+    "subtopic": "Anticoagulation / Multi-organ",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["multi-step ladder", "organ dysfunction", "constraint stacking"],
+    "stem": "A 78-year-old man on long-term warfarin for non-valvular AF (target INR 2.0-3.0) is admitted to Calvary Mater Newcastle with community-acquired pneumonia. He is in atrial fibrillation rate 102, BP 108/68, SpO2 92% on 2 L nasal prongs. His admission bloods show creatinine 198 micromol/L (baseline 90), urea 18 mmol/L, K 5.1, INR 7.4. He had a witnessed mechanical fall yesterday with a 2x2 cm forehead haematoma but no loss of consciousness; CT brain on arrival shows no intracranial haemorrhage. He has no active bleeding now; urinalysis no blood. Past history: hypertension, mild Alzheimer dementia, prior PE 4 years ago. Medications: warfarin 5/4 mg alternate days, perindopril 5 mg, donepezil 10 mg. He weighs 72 kg.",
+    "data_table": {
+      "Vital signs": "T 38.2, HR 102 AF, BP 108/68, RR 24, SpO2 92% on 2 L NP.",
+      "Examination": "Forehead haematoma 2x2 cm, no active bleed, no neurological deficit. Crepitations RLL. AF irregularly irregular.",
+      "Investigations": "Hb 124, Plt 220, INR 7.4. Cr 198 (baseline 90), urea 18, K 5.1. CT brain no haemorrhage. CXR RLL consolidation."
+    },
+    "lead_in": "Which is the most appropriate next step for management of his over-anticoagulation, integrating renal function, recent fall, and continued thromboembolic risk?",
+    "options": [
+      {"letter": "A", "text": "Withhold warfarin only and recheck INR in 24 hours; no other intervention", "correct": false, "rationale": "Withholding alone is appropriate for INR 4.5-10 in a stable patient without bleeding; this patient has multiple bleeding risk factors (recent fall with extracranial haematoma, AKI raising drug-handling unpredictability, age, dementia) that push the threshold for active reversal. Source: BSH Anticoagulation Guidelines; eTG Cardiovascular.", "source_refs": ["BSH Anticoagulation Guidelines", "eTG Cardiovascular"]},
+      {"letter": "B", "text": "Stop warfarin and give oral phytomenadione (vitamin K1) 1-2 mg PO once", "correct": true, "rationale": "INR 4.5-10 without bleeding but with elevated bleeding risk (recent head trauma + extracranial haematoma + AKI + age) is reversed with low-dose oral vitamin K1 1-2 mg, plus warfarin withhold and INR recheck at 12-24 hours. IV vitamin K reserved for major bleeding (not present here despite negative CT). PCC is for major bleeding. Continued AF anticoagulation is reassessed after the acute illness; not stopped permanently. Source: eTG Cardiovascular; AHA AF Guidelines; ANZSBT/NBA Massive Transfusion / Warfarin reversal flowchart.", "source_refs": ["eTG Cardiovascular", "ANZSBT Warfarin Reversal Guideline"]},
+      {"letter": "C", "text": "Stop warfarin, give 4-factor PCC 50 IU/kg plus IV vitamin K1 10 mg", "correct": false, "rationale": "Prothrombinex-VF (Australian 3-factor PCC) plus IV vitamin K1 is for major or life-threatening bleeding, not for non-bleeding over-anticoagulation. CT brain is clear; haematoma is extracranial and not active. This is over-reversal and risks rebound thrombosis. Source: ANZSBT.", "source_refs": ["ANZSBT Warfarin Reversal Guideline"]},
+      {"letter": "D", "text": "Substitute warfarin with therapeutic enoxaparin 1 mg/kg BD bridging", "correct": false, "rationale": "Enoxaparin at 1 mg/kg BD is contraindicated at this creatinine clearance (estimated <30 mL/min): use renally-dose-reduced enoxaparin (1 mg/kg daily) or UFH if bridging needed - and bridging itself is rarely indicated for AF cessation of <1 week. The over-anticoagulation should be reversed first, not switched. Source: AMH; AHA AF Guidelines.", "source_refs": ["Australian Medicines Handbook", "AHA AF Guidelines"]},
+      {"letter": "E", "text": "Continue warfarin at full dose; treat pneumonia and reassess INR after antibiotics complete", "correct": false, "rationale": "Continuing supratherapeutic warfarin in a patient with AKI, recent head trauma and infection is unsafe; INR will likely climb further as antibiotics displace warfarin from protein binding and inhibit gut vitamin K synthesis. Source: eTG Cardiovascular.", "source_refs": ["eTG Cardiovascular"]}
+    ],
+    "explanation": {
+      "summary": "Warfarin reversal sits on a ladder: withhold (INR 4.5-10 stable, no risk factors) → oral vitamin K1 1-2 mg (INR 4.5-10 with bleeding risk factors OR INR >10 stable) → IV vitamin K1 5-10 mg + PCC (major or life-threatening bleeding). This patient is at INR 7.4 without active bleeding but has multiple amplifiers of bleeding risk (recent fall with extracranial haematoma, age, dementia, AKI affecting drug clearance and platelet function). That moves him from 'withhold alone' to 'low-dose vitamin K1', without justifying full PCC reversal. AKI also matters for any LMWH bridging decision: enoxaparin needs dose reduction at CrCl <30 mL/min. Long-term, anticoagulation will be reassessed after acute illness resolves; falls themselves are not an absolute contraindication if HAS-BLED-adjusted benefit favours continuation.",
+      "key_points": [
+        "INR 4.5-10, no bleeding, no risk factors: withhold alone",
+        "INR 4.5-10, no bleeding, but bleeding risk factors: add oral vitamin K1 1-2 mg",
+        "INR >10 or any major bleed: IV vitamin K1 5-10 mg + Prothrombinex-VF",
+        "Renal impairment: enoxaparin at CrCl <30 mL/min needs dose reduction or switch to UFH",
+        "AKI also impairs warfarin metabolism and platelet function - lower threshold for reversal"
+      ],
+      "pearls": "Antibiotics that potentiate warfarin: ciprofloxacin, metronidazole, trimethoprim-sulfamethoxazole, macrolides, azoles. Anticipate INR rise and pre-emptively reduce warfarin dose."
+    },
+    "sources": [
+      {"label": "ANZSBT Warfarin Reversal Guideline", "url": "https://anzsbt.org.au/"},
+      {"label": "eTG Cardiovascular", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["inr", "uec"],
+    "created": "2026-05-25",
+    "subtopic_detail": "Warfarin reversal ladder in multi-organ dysfunction"
   }
 ]
