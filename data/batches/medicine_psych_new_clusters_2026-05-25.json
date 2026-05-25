@@ -1,0 +1,71 @@
+[
+  {
+    "id": "med-nc-001",
+    "topic": "Medicine",
+    "subtopic": "Metabolic bone disease",
+    "subtopic_detail": "Post-menopausal osteoporosis - treatment initiation",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["osteoporosis", "bisphosphonate"],
+    "stem": "A 68-year-old post-menopausal woman is referred after a DXA scan. She has no history of fragility fractures. Her only medication is vitamin D 1000 IU daily and dietary calcium intake is adequate. She has no history of oesophageal disease, renal impairment, or malabsorption.",
+    "data_table": {
+      "Investigations": "DXA: T-score -2.8 lumbar spine, -2.1 femoral neck. Calcium 2.35 mmol/L (2.15-2.55). 25-OH vitamin D 68 nmol/L. eGFR 72 mL/min/1.73m2. TSH 2.1 mU/L (0.4-4.0)."
+    },
+    "lead_in": "What is the most appropriate initial pharmacological therapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Denosumab 60 mg subcutaneously every six months",
+        "correct": false,
+        "rationale": "Denosumab is effective but is reserved for patients who are intolerant of or have contraindications to oral bisphosphonates, or who have failed bisphosphonate therapy. It is not first-line in this uncomplicated presentation. (Source: RACGP Osteoporosis Guidelines)",
+        "source_refs": ["RACGP Osteoporosis Guidelines"]
+      },
+      {
+        "letter": "B",
+        "text": "Raloxifene 60 mg orally once daily with calcium",
+        "correct": false,
+        "rationale": "Raloxifene reduces vertebral fracture risk but has no proven benefit for hip fractures. It also carries VTE risk. Bisphosphonates have broader fracture reduction evidence and are preferred first-line. (Source: Osteoporosis Australia; eTG)",
+        "source_refs": ["Osteoporosis Australia", "Therapeutic Guidelines"]
+      },
+      {
+        "letter": "C",
+        "text": "Alendronate 70 mg orally once weekly with calcium",
+        "correct": true,
+        "rationale": "Alendronate is the first-line pharmacological treatment for post-menopausal osteoporosis with T-score of -2.5 or below. It reduces vertebral, hip, and non-vertebral fractures. She has no contraindications to oral bisphosphonates. (Source: RACGP Osteoporosis Guidelines; eTG)",
+        "source_refs": ["RACGP Osteoporosis Guidelines", "Therapeutic Guidelines"]
+      },
+      {
+        "letter": "D",
+        "text": "Zoledronic acid 5 mg intravenously once yearly",
+        "correct": false,
+        "rationale": "IV zoledronic acid is an alternative bisphosphonate typically reserved for patients who cannot tolerate oral formulations, have poor adherence, or have upper GI contraindications. Oral bisphosphonate is trialled first. (Source: RACGP Osteoporosis Guidelines)",
+        "source_refs": ["RACGP Osteoporosis Guidelines"]
+      },
+      {
+        "letter": "E",
+        "text": "Teriparatide 20 mcg subcutaneously once daily",
+        "correct": false,
+        "rationale": "Teriparatide is an anabolic agent reserved for severe osteoporosis with multiple fractures or failure of anti-resorptive therapy. PBS-subsidised criteria are strict and this patient does not meet them. (Source: PBS Schedule; AMH)",
+        "source_refs": ["AMH", "Therapeutic Guidelines"]
+      }
+    ],
+    "explanation": {
+      "summary": "Post-menopausal osteoporosis is defined by a T-score of -2.5 or below at the lumbar spine or femoral neck on DXA, or by a minimal trauma fracture regardless of T-score. First-line pharmacological treatment is an oral bisphosphonate, with alendronate being the most commonly prescribed. Adequate calcium and vitamin D intake are ensured concurrently. Denosumab, IV bisphosphonates, and anabolic agents are reserved for specific indications including bisphosphonate intolerance or severe disease.",
+      "key_points": [
+        "T-score of -2.5 or below at spine or hip establishes osteoporosis diagnosis",
+        "Oral bisphosphonates are first-line; denosumab is second-line",
+        "Alendronate must be taken upright with water 30 minutes before food",
+        "PBS criteria for teriparatide require severe osteoporosis with fractures"
+      ],
+      "pearls": "Alendronate reduces hip fracture risk by approximately 40% over 3-4 years in women with established osteoporosis, with efficacy maintained for at least 10 years of continuous therapy per the FLEX extension trial."
+    },
+    "sources": [
+      {"label": "RACGP Osteoporosis Guidelines", "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/osteoporosis"},
+      {"label": "Therapeutic Guidelines", "url": "https://www.tg.org.au"},
+      {"label": "Osteoporosis Australia", "url": "https://www.osteoporosis.org.au"},
+      {"label": "AMH", "url": "https://amhonline.amh.net.au"}
+    ],
+    "reference_ranges": ["calcium_corrected", "uec", "thyroid"],
+    "created": "2026-05-25"
+  }
+]
