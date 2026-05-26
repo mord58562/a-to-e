@@ -1,1 +1,2906 @@
-[{"id": "med-menenc-001", "topic": "Medicine", "subtopic": "Infectious diseases", "subtopic_detail": "Bacterial meningitis empiric therapy and adjunctive dexamethasone", "difficulty": 3, "model": "Claude Opus 4.7 (1M context)", "tags": ["meningitis", "dexamethasone", "ceftriaxone"], "stem": "A 52-year-old man presents to the emergency department with a 12-hour history of worsening headache, fever, and neck stiffness. His wife reports he has become increasingly confused over the past 3 hours. He has no significant past medical history and takes no regular medications. He is not immunocompromised and has no history of recent neurosurgery or head trauma.", "data_table": {"Vital signs": "T 39.4, HR 112, BP 135/82, RR 22, SpO2 96% on room air, GCS 13 (E3 V4 M6)", "Examination": "Marked neck stiffness, positive Kernig sign, no focal neurological deficits, no papilloedema on fundoscopy, no rash", "Investigations": "WCC 18.2 x10^9/L (neutrophils 15.8), CRP 245 mg/L, lactate 2.8 mmol/L"}, "lead_in": "What is the most appropriate initial management?", "options": [{"letter": "A", "text": "IV dexamethasone followed by IV ceftriaxone within 20 minutes", "correct": true, "rationale": "In suspected bacterial meningitis, IV dexamethasone 10 mg should be given before or with the first dose of antibiotics to reduce mortality and neurological sequelae, particularly from pneumococcal meningitis. Ceftriaxone 2 g IV 12-hourly is the recommended empiric antibiotic for community-acquired bacterial meningitis in immunocompetent adults aged 18-60 in Australia. The key is that dexamethasone must precede or accompany the first antibiotic dose - it is ineffective if started later. (Source: Therapeutic Guidelines: Antibiotic)", "source_refs": ["Therapeutic Guidelines: Antibiotic", "BMJ Best Practice: Bacterial Meningitis"]}, {"letter": "B", "text": "Urgent CT brain followed by lumbar puncture before starting antibiotics", "correct": false, "rationale": "While CT and LP are important diagnostic steps, delaying antibiotics for imaging in a patient without papilloedema or focal neurology is harmful. CT is indicated before LP only when there are signs of raised intracranial pressure or focal deficits. In this patient with no papilloedema and no focal signs, LP can proceed without CT, and empiric antibiotics should not await results. (Source: Therapeutic Guidelines: Antibiotic)", "source_refs": ["Therapeutic Guidelines: Antibiotic"]}, {"letter": "C", "text": "IV benzylpenicillin followed by urgent lumbar puncture", "correct": false, "rationale": "Benzylpenicillin alone does not provide adequate empiric cover for bacterial meningitis given rising penicillin-resistant pneumococcal strains. It may be given as a pre-hospital dose by GPs or paramedics, but in-hospital empiric therapy requires ceftriaxone. Additionally, dexamethasone should be given before antibiotics. (Source: Therapeutic Guidelines: Antibiotic)", "source_refs": ["Therapeutic Guidelines: Antibiotic"]}, {"letter": "D", "text": "IV ceftriaxone and IV vancomycin without dexamethasone", "correct": false, "rationale": "Vancomycin is added to empiric therapy when cephalosporin-resistant pneumococcal meningitis is strongly suspected, which is uncommon in Australia. Omitting dexamethasone increases mortality from pneumococcal meningitis. The standard Australian empiric regimen for immunocompetent adults 18-60 is ceftriaxone plus dexamethasone. (Source: Therapeutic Guidelines: Antibiotic)", "source_refs": ["Therapeutic Guidelines: Antibiotic", "BMJ Best Practice: Bacterial Meningitis"]}, {"letter": "E", "text": "IV ceftriaxone and IV metronidazole with dexamethasone", "correct": false, "rationale": "Metronidazole has no role in empiric meningitis therapy. It covers anaerobes, which are exceedingly rare causes of meningitis unless there is penetrating head trauma or a neurosurgical wound. Adding unnecessary antibiotics increases adverse effects without benefit. (Source: Therapeutic Guidelines: Antibiotic)", "source_refs": ["Therapeutic Guidelines: Antibiotic"]}], "explanation": {"summary": "Community-acquired bacterial meningitis in immunocompetent adults requires prompt empiric antibiotics with ceftriaxone plus adjunctive dexamethasone. Dexamethasone reduces mortality and hearing loss, particularly in pneumococcal meningitis, but must be given before or with the first antibiotic dose to be effective. CT before LP is only indicated when there are features suggesting raised intracranial pressure or mass lesion, such as papilloedema, focal neurology, seizures, or GCS below 10.", "key_points": ["Dexamethasone 10 mg IV must be given before or with the first dose of antibiotics in suspected bacterial meningitis", "Ceftriaxone 2 g IV 12-hourly is the standard empiric antibiotic for immunocompetent adults aged 18-60", "CT before LP is only required with papilloedema, focal neurology, seizures, or severely depressed consciousness", "Blood cultures should be drawn before antibiotics but should not delay treatment"], "pearls": "Dexamethasone started more than 4 hours after the first antibiotic dose in bacterial meningitis confers no mortality benefit - the anti-inflammatory window closes rapidly once the bacterial lysis cascade begins."}, "sources": [{"label": "Therapeutic Guidelines: Antibiotic", "url": "https://www.tg.org.au"}, {"label": "BMJ Best Practice: Bacterial Meningitis", "url": "https://bestpractice.bmj.com/topics/en-gb/20"}], "reference_ranges": ["inflammatory_markers", "fbc"], "created": "2026-05-26"}]
+[
+  {
+    "id": "med-menenc-001",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Bacterial meningitis empiric therapy and adjunctive dexamethasone",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "meningitis",
+      "dexamethasone",
+      "ceftriaxone"
+    ],
+    "stem": "A 52-year-old man presents to the emergency department with a 12-hour history of worsening headache, fever, and neck stiffness. His wife reports he has become increasingly confused over the past 3 hours. He has no significant past medical history and takes no regular medications. He is not immunocompromised and has no history of recent neurosurgery or head trauma.",
+    "data_table": {
+      "Vital signs": "T 39.4, HR 112, BP 135/82, RR 22, SpO2 96% on room air, GCS 13 (E3 V4 M6)",
+      "Examination": "Marked neck stiffness, positive Kernig sign, no focal neurological deficits, no papilloedema on fundoscopy, no rash",
+      "Investigations": "WCC 18.2 x10^9/L (neutrophils 15.8), CRP 245 mg/L, lactate 2.8 mmol/L"
+    },
+    "lead_in": "What is the most appropriate initial management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "IV dexamethasone followed by IV ceftriaxone within 20 minutes",
+        "correct": true,
+        "rationale": "In suspected bacterial meningitis, IV dexamethasone 10 mg should be given before or with the first dose of antibiotics to reduce mortality and neurological sequelae, particularly from pneumococcal meningitis. Ceftriaxone 2 g IV 12-hourly is the recommended empiric antibiotic for community-acquired bacterial meningitis in immunocompetent adults aged 18-60 in Australia. The key is that dexamethasone must precede or accompany the first antibiotic dose - it is ineffective if started later. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic",
+          "BMJ Best Practice: Bacterial Meningitis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Urgent CT brain followed by lumbar puncture before starting antibiotics",
+        "correct": false,
+        "rationale": "While CT and LP are important diagnostic steps, delaying antibiotics for imaging in a patient without papilloedema or focal neurology is harmful. CT is indicated before LP only when there are signs of raised intracranial pressure or focal deficits. In this patient with no papilloedema and no focal signs, LP can proceed without CT, and empiric antibiotics should not await results. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "IV benzylpenicillin followed by urgent lumbar puncture",
+        "correct": false,
+        "rationale": "Benzylpenicillin alone does not provide adequate empiric cover for bacterial meningitis given rising penicillin-resistant pneumococcal strains. It may be given as a pre-hospital dose by GPs or paramedics, but in-hospital empiric therapy requires ceftriaxone. Additionally, dexamethasone should be given before antibiotics. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "IV ceftriaxone and IV vancomycin without dexamethasone",
+        "correct": false,
+        "rationale": "Vancomycin is added to empiric therapy when cephalosporin-resistant pneumococcal meningitis is strongly suspected, which is uncommon in Australia. Omitting dexamethasone increases mortality from pneumococcal meningitis. The standard Australian empiric regimen for immunocompetent adults 18-60 is ceftriaxone plus dexamethasone. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic",
+          "BMJ Best Practice: Bacterial Meningitis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "IV ceftriaxone and IV metronidazole with dexamethasone",
+        "correct": false,
+        "rationale": "Metronidazole has no role in empiric meningitis therapy. It covers anaerobes, which are exceedingly rare causes of meningitis unless there is penetrating head trauma or a neurosurgical wound. Adding unnecessary antibiotics increases adverse effects without benefit. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Community-acquired bacterial meningitis in immunocompetent adults requires prompt empiric antibiotics with ceftriaxone plus adjunctive dexamethasone. Dexamethasone reduces mortality and hearing loss, particularly in pneumococcal meningitis, but must be given before or with the first antibiotic dose to be effective. CT before LP is only indicated when there are features suggesting raised intracranial pressure or mass lesion, such as papilloedema, focal neurology, seizures, or GCS below 10.",
+      "key_points": [
+        "Dexamethasone 10 mg IV must be given before or with the first dose of antibiotics in suspected bacterial meningitis",
+        "Ceftriaxone 2 g IV 12-hourly is the standard empiric antibiotic for immunocompetent adults aged 18-60",
+        "CT before LP is only required with papilloedema, focal neurology, seizures, or severely depressed consciousness",
+        "Blood cultures should be drawn before antibiotics but should not delay treatment"
+      ],
+      "pearls": "Dexamethasone started more than 4 hours after the first antibiotic dose in bacterial meningitis confers no mortality benefit - the anti-inflammatory window closes rapidly once the bacterial lysis cascade begins."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://www.tg.org.au"
+      },
+      {
+        "label": "BMJ Best Practice: Bacterial Meningitis",
+        "url": "https://bestpractice.bmj.com/topics/en-gb/20"
+      }
+    ],
+    "reference_ranges": [
+      "inflammatory_markers",
+      "fbc"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-menenc-002",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "HSV encephalitis recognition and empiric aciclovir",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "encephalitis",
+      "aciclovir",
+      "HSV"
+    ],
+    "stem": "A 38-year-old woman presents with a 3-day history of headache, fever, and personality change. Her partner reports she has been unusually irritable and had a brief episode of olfactory hallucinations yesterday. She has no past psychiatric history. On examination she is febrile, disoriented to time and place, but follows simple commands. There are no focal motor deficits and no meningism.",
+    "data_table": {
+      "Vital signs": "T 38.9, HR 98, BP 128/76, RR 18, SpO2 98% on room air, GCS 14 (E4 V4 M6)",
+      "Investigations": "WCC 11.4 x10^9/L, CRP 48 mg/L, CT brain with contrast shows subtle low density in the left temporal lobe",
+      "CSF": "Opening pressure 22 cmH2O, WCC 85 (lymphocyte-predominant), protein 0.9 g/L, glucose 3.2 mmol/L (serum 5.8 mmol/L), Gram stain negative"
+    },
+    "lead_in": "What is the single most important next step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Arrange urgent MRI brain and await results before initiating treatment",
+        "correct": false,
+        "rationale": "MRI is the most sensitive imaging modality for HSV encephalitis and may show characteristic temporal lobe changes earlier than CT. However, awaiting MRI should never delay empiric aciclovir in suspected HSV encephalitis - every hour of delay increases mortality and morbidity. MRI should be arranged concurrently with treatment. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Commence IV aciclovir 10 mg/kg 8-hourly without awaiting PCR results",
+        "correct": true,
+        "rationale": "This presentation - fever, personality change, olfactory hallucinations, temporal lobe abnormality on CT, and lymphocytic CSF - is highly suggestive of HSV encephalitis. Untreated HSV encephalitis has a mortality exceeding 70% and high morbidity in survivors. IV aciclovir 10 mg/kg 8-hourly must be started immediately on clinical suspicion without waiting for PCR confirmation. Treatment duration is 14-21 days. Adequate hydration is essential to prevent aciclovir nephrotoxicity. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic",
+          "BMJ Best Practice: Encephalitis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Start IV ceftriaxone and dexamethasone for possible meningitis",
+        "correct": false,
+        "rationale": "The CSF profile with lymphocytic pleocytosis and negative Gram stain argues against bacterial meningitis. The personality change and olfactory hallucinations with temporal lobe CT abnormality point toward viral encephalitis rather than meningitis. Empiric bacterial cover alone would miss the most dangerous diagnosis. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Send CSF for HSV PCR and start treatment once result is positive",
+        "correct": false,
+        "rationale": "CSF HSV PCR is the gold-standard confirmatory test and should be sent, but treatment must not await results. PCR can take 24-48 hours, and HSV encephalitis causes progressive temporal lobe necrosis during this interval. Early empiric aciclovir dramatically reduces mortality from over 70% to approximately 20%. (Source: BMJ Best Practice: Encephalitis)",
+        "source_refs": [
+          "BMJ Best Practice: Encephalitis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Commence oral valaciclovir 1 g 8-hourly with outpatient follow-up",
+        "correct": false,
+        "rationale": "HSV encephalitis mandates intravenous aciclovir at high doses (10 mg/kg 8-hourly). Oral valaciclovir does not achieve adequate CNS concentrations for encephalitis treatment. This patient requires inpatient treatment with close neurological monitoring. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "HSV encephalitis characteristically affects the temporal and frontal lobes, producing personality change, olfactory or gustatory hallucinations, aphasia, and seizures in addition to fever and headache. The CSF typically shows lymphocytic pleocytosis with elevated protein and normal-to-mildly-reduced glucose. CT may be normal early but MRI shows changes earlier. The hallmark is that empiric IV aciclovir must not be delayed for any investigation, as mortality without treatment exceeds 70%.",
+      "key_points": [
+        "Olfactory hallucinations with fever and temporal lobe changes is a classic HSV encephalitis presentation",
+        "IV aciclovir 10 mg/kg 8-hourly is started empirically on suspicion without awaiting HSV PCR",
+        "CSF HSV PCR is the confirmatory test but results take 24-48 hours",
+        "Treatment duration for confirmed HSV encephalitis is 14-21 days",
+        "Adequate IV hydration is essential to prevent aciclovir crystalluria and nephrotoxicity"
+      ],
+      "pearls": "HSV PCR sensitivity in CSF is approximately 95% after 48 hours of symptoms but can be falsely negative in the first 24-72 hours of illness - a negative early PCR should prompt repeat LP at 3-7 days if clinical suspicion remains high."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://www.tg.org.au"
+      },
+      {
+        "label": "BMJ Best Practice: Encephalitis",
+        "url": "https://bestpractice.bmj.com/topics/en-gb/354"
+      }
+    ],
+    "reference_ranges": [
+      "csf",
+      "inflammatory_markers"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-adren-001",
+    "topic": "Medicine",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Cushing syndrome screening with overnight dexamethasone suppression test",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "Cushing syndrome",
+      "dexamethasone suppression test"
+    ],
+    "stem": "A 45-year-old woman is referred by her GP for investigation of possible Cushing syndrome. She has gained 12 kg over the past 18 months with central adiposity, developed facial plethora, and has new-onset hypertension requiring two agents. She also reports easy bruising and proximal muscle weakness. She takes amlodipine 10 mg daily and perindopril 5 mg daily. She does not take any glucocorticoid medications or herbal supplements. An overnight 1 mg dexamethasone suppression test returns a morning serum cortisol of 290 nmol/L.",
+    "data_table": {
+      "Vital signs": "BP 148/94, HR 78, BMI 34",
+      "Examination": "Central obesity, moon facies, dorsal fat pad, thin skin with ecchymoses on forearms, proximal lower limb weakness (MRC grade 4)",
+      "Investigations": "Fasting BSL 7.8 mmol/L, HbA1c 6.8%, K+ 3.2 mmol/L"
+    },
+    "lead_in": "What is the most appropriate next step in this patient's evaluation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Proceed directly to CT adrenal glands to identify the source",
+        "correct": false,
+        "rationale": "Imaging before biochemical confirmation of hypercortisolism is premature. Adrenal incidentalomas are common (found in 4-5% of CT scans), and imaging without establishing the diagnosis may lead to unnecessary surgery. Biochemical confirmation with a second test is required first. (Source: Endocrine Society Guideline: Cushing Syndrome)",
+        "source_refs": [
+          "Endocrine Society Guideline: Cushing Syndrome"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Repeat the overnight dexamethasone suppression test to confirm the result",
+        "correct": false,
+        "rationale": "Repeating the same screening test is not the recommended next step. Guidelines recommend confirming an abnormal screening result with a different test to reduce false positives. Appropriate confirmatory tests include 24-hour urinary free cortisol or late-night salivary cortisol. (Source: Endocrine Society Guideline: Cushing Syndrome)",
+        "source_refs": [
+          "Endocrine Society Guideline: Cushing Syndrome"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Measure 24-hour urinary free cortisol to confirm hypercortisolism",
+        "correct": true,
+        "rationale": "An abnormal 1 mg overnight DST (cortisol above 50 nmol/L, here 290 nmol/L) is a positive screening test for Cushing syndrome. Guidelines recommend confirming with at least one additional different biochemical test before proceeding to localisation. Suitable confirmatory tests are 24-hour urinary free cortisol or late-night salivary cortisol. Once two concordant abnormal tests confirm hypercortisolism, ACTH measurement is performed to determine the cause. (Source: Endocrine Society Guideline: Cushing Syndrome)",
+        "source_refs": [
+          "Endocrine Society Guideline: Cushing Syndrome",
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Measure serum ACTH to differentiate ACTH-dependent from ACTH-independent causes",
+        "correct": false,
+        "rationale": "ACTH measurement is the correct next step after hypercortisolism is biochemically confirmed by two concordant tests, not after a single screening test. Premature aetiological workup risks over-investigating a false-positive result. The stepwise approach is: screen, confirm, then determine the cause. (Source: Endocrine Society Guideline: Cushing Syndrome)",
+        "source_refs": [
+          "Endocrine Society Guideline: Cushing Syndrome"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Refer for inferior petrosal sinus sampling to localise the source",
+        "correct": false,
+        "rationale": "Inferior petrosal sinus sampling is a late-stage investigation reserved for confirmed ACTH-dependent Cushing syndrome when pituitary MRI is equivocal. It distinguishes pituitary from ectopic ACTH sources. Using it before confirming hypercortisolism is inappropriate and invasive. (Source: Endocrine Society Guideline: Cushing Syndrome)",
+        "source_refs": [
+          "Endocrine Society Guideline: Cushing Syndrome"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "The investigation of suspected Cushing syndrome follows a stepwise approach: screen, confirm, then localise. The 1 mg overnight DST is a widely used screening test, with a cortisol threshold of 50 nmol/L for a positive result. A positive screen requires confirmation with a different biochemical test. Only after two concordant positive results should ACTH-dependent vs independent causes be investigated.",
+      "key_points": [
+        "A cortisol above 50 nmol/L after 1 mg overnight DST is a positive Cushing screen",
+        "Confirmation requires a different test: 24-hour urinary free cortisol or late-night salivary cortisol",
+        "ACTH measurement follows biochemical confirmation, not a single positive screen",
+        "Imaging is reserved for after biochemical confirmation and ACTH-based classification",
+        "Hypokalaemia and new diabetes support clinical suspicion of cortisol excess"
+      ],
+      "pearls": "The 1 mg overnight DST has a false-positive rate of approximately 5% in the general population, rising to 15-20% in hospitalised or depressed patients - this is why confirmation with a second different test is mandatory before proceeding to aetiological workup."
+    },
+    "sources": [
+      {
+        "label": "Endocrine Society Guideline: Cushing Syndrome",
+        "url": "https://academic.oup.com/jcem/article/93/5/1526/2598096"
+      },
+      {
+        "label": "Therapeutic Guidelines: Endocrinology",
+        "url": "https://www.tg.org.au"
+      }
+    ],
+    "reference_ranges": [
+      "uec",
+      "glucose_hba1c"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-adren-002",
+    "topic": "Medicine",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Adrenal crisis management in known primary adrenal insufficiency",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "adrenal crisis",
+      "hydrocortisone",
+      "Addison disease"
+    ],
+    "stem": "A 34-year-old woman with known Addison disease on hydrocortisone 20 mg mane and 10 mg nocte replacement presents to the emergency department after 48 hours of vomiting and diarrhoea from a gastroenteritis illness. She has been unable to keep her oral hydrocortisone down for the past 24 hours. She is visibly unwell and drowsy. Her husband confirms she carries a steroid emergency card and intramuscular hydrocortisone injection kit but neither was used at home.",
+    "data_table": {
+      "Vital signs": "T 37.2, HR 128, BP 78/48 (supine), RR 24, SpO2 97% on room air, GCS 13 (E3 V4 M6)",
+      "Investigations": "Na+ 126 mmol/L, K+ 6.2 mmol/L, urea 14.2 mmol/L, creatinine 148 micromol/L, BSL 2.8 mmol/L, venous pH 7.28, lactate 4.1 mmol/L"
+    },
+    "lead_in": "What is the most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "IV normal saline 1 L stat followed by oral fludrocortisone 100 mcg",
+        "correct": false,
+        "rationale": "While fluid resuscitation with normal saline is correct, oral fludrocortisone cannot be given to a vomiting patient and would not address the acute cortisol deficit. Fludrocortisone is a mineralocorticoid used for chronic replacement, not for acute crisis management. The immediate need is parenteral glucocorticoid replacement. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "IV dexamethasone 4 mg stat and IV 5% dextrose 500 mL stat",
+        "correct": false,
+        "rationale": "Dexamethasone is sometimes used in adrenal crisis if a Synacthen test is planned simultaneously, as it does not cross-react with cortisol assays. However, dexamethasone has no mineralocorticoid activity and does not address the combined glucocorticoid and mineralocorticoid deficiency in Addison disease. IV hydrocortisone at stress doses provides both. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "IM hydrocortisone 100 mg stat and arrange outpatient review in 24 hours",
+        "correct": false,
+        "rationale": "While IM hydrocortisone 100 mg is the correct emergency injection for field use, this patient in the ED with hypotension, hypoglycaemia, and altered consciousness requires IV hydrocortisone plus aggressive IV fluid resuscitation and inpatient monitoring. Discharge for outpatient review would be unsafe. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "IV hydrocortisone 100 mg stat then 50 mg IV 6-hourly with IV normal saline",
+        "correct": true,
+        "rationale": "Adrenal crisis is a medical emergency requiring IV hydrocortisone 100 mg stat followed by 50 mg IV 6-8-hourly until the patient can resume oral replacement. Concurrent IV normal saline resuscitation corrects hypovolaemia and hyponatraemia. IV dextrose addresses hypoglycaemia. At stress doses (above 50 mg/day), hydrocortisone provides sufficient mineralocorticoid effect, making separate fludrocortisone unnecessary acutely. Hyperkalaemia typically resolves with cortisol and fluid replacement. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology",
+          "Endocrine Society: Adrenal Insufficiency"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "IV prednisolone 50 mg stat then 25 mg 12-hourly with IV Hartmann solution",
+        "correct": false,
+        "rationale": "IV prednisolone is not the standard agent for adrenal crisis - IV hydrocortisone is preferred because of its predictable mineralocorticoid activity at stress doses. Hartmann solution contains potassium (5 mmol/L), which is contraindicated in this patient with hyperkalaemia (K+ 6.2). Normal saline is the preferred resuscitation fluid. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Adrenal crisis in a patient with known Addison disease is precipitated by intercurrent illness with inability to take oral glucocorticoid replacement. The classic triad is hypotension, hyponatraemia, and hyperkalaemia, often with hypoglycaemia. Treatment is IV hydrocortisone 100 mg stat then 50 mg 6-8-hourly, with aggressive normal saline resuscitation. At stress doses, hydrocortisone provides adequate mineralocorticoid cover.",
+      "key_points": [
+        "IV hydrocortisone 100 mg stat then 50 mg 6-8-hourly is the standard adrenal crisis protocol",
+        "Normal saline is the resuscitation fluid of choice - avoid potassium-containing fluids",
+        "At stress doses above 50 mg/day hydrocortisone provides sufficient mineralocorticoid activity",
+        "Sick-day rules: double or triple oral hydrocortisone dose during febrile illness, switch to parenteral if vomiting"
+      ],
+      "pearls": "Hydrocortisone at doses above 50 mg/day provides approximately 0.1 mg fludrocortisone-equivalent mineralocorticoid activity - separate fludrocortisone is unnecessary during stress dosing and should only be reintroduced when the dose is weaned below 40-50 mg/day."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Endocrinology",
+        "url": "https://www.tg.org.au"
+      },
+      {
+        "label": "Endocrine Society: Adrenal Insufficiency",
+        "url": "https://academic.oup.com/jcem/article/101/2/364/2810222"
+      }
+    ],
+    "reference_ranges": [
+      "uec",
+      "abg"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-adren-003",
+    "topic": "Medicine",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Phaeochromocytoma preoperative alpha-blockade before beta-blockade",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "phaeochromocytoma",
+      "phenoxybenzamine",
+      "alpha-blockade"
+    ],
+    "stem": "A 41-year-old man is investigated for episodic headaches, palpitations, and diaphoresis. He was found to have severe paroxysmal hypertension (240/130 mmHg) during one episode in the emergency department. Twenty-four-hour urine fractionated metanephrines are markedly elevated, and CT abdomen reveals a 4 cm right adrenal mass with avid contrast enhancement. He is referred for laparoscopic adrenalectomy. He currently takes no regular medications. His resting heart rate between episodes is 62 bpm.",
+    "data_table": {
+      "Vital signs": "BP 152/96 (between episodes), HR 62, RR 16",
+      "Investigations": "24-hour urine normetanephrine 8400 nmol (ref < 900), metanephrine 3200 nmol (ref < 1800), fasting BSL 6.4 mmol/L, calcium 2.48 mmol/L"
+    },
+    "lead_in": "What is the most appropriate preoperative pharmacological preparation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Start metoprolol 25 mg twice daily and up-titrate to control heart rate",
+        "correct": false,
+        "rationale": "Beta-blockade must NEVER be started before adequate alpha-blockade in phaeochromocytoma. Unopposed alpha-adrenergic stimulation when beta-receptors are blocked can precipitate a life-threatening hypertensive crisis. Beta-blockers are only added after adequate alpha-blockade if tachycardia persists. (Source: Endocrine Society: Phaeochromocytoma)",
+        "source_refs": [
+          "Endocrine Society: Phaeochromocytoma"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Start amlodipine 10 mg daily as the sole preoperative antihypertensive agent",
+        "correct": false,
+        "rationale": "Calcium channel blockers can be used as adjunctive therapy but do not provide adequate alpha-adrenergic blockade for perioperative catecholamine surge prevention. The standard preparation requires an alpha-blocker as the foundation. (Source: Endocrine Society: Phaeochromocytoma)",
+        "source_refs": [
+          "Endocrine Society: Phaeochromocytoma"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Start phenoxybenzamine and atenolol simultaneously for dual blockade",
+        "correct": false,
+        "rationale": "Starting beta-blockade simultaneously is dangerous. Alpha-blockade must be established first (typically over 10-14 days) with documentation of adequate postural drop before beta-blockers are considered. Starting both together risks unopposed alpha stimulation if the beta-blocker takes effect before adequate alpha-blockade. (Source: Endocrine Society: Phaeochromocytoma)",
+        "source_refs": [
+          "Endocrine Society: Phaeochromocytoma"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Start prazosin and schedule surgery within 48 hours to minimise risk",
+        "correct": false,
+        "rationale": "A 48-hour preparation is inadequate. Preoperative alpha-blockade requires a minimum of 7-14 days to achieve adequate volume expansion and blood pressure control. Phenoxybenzamine is preferred over prazosin due to more complete and sustained alpha-blockade. (Source: Endocrine Society: Phaeochromocytoma)",
+        "source_refs": [
+          "Endocrine Society: Phaeochromocytoma"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Start phenoxybenzamine 10 mg twice daily and titrate over 10-14 days with salt loading",
+        "correct": true,
+        "rationale": "Preoperative preparation for phaeochromocytoma requires alpha-blockade with phenoxybenzamine, started at 10 mg twice daily and titrated upward over 10-14 days to achieve target blood pressure below 130/80 seated with a seated-to-standing systolic drop above 20 mmHg. Liberal salt and fluid intake is prescribed to expand the contracted intravascular volume. Beta-blockade is only added after adequate alpha-blockade if reflex tachycardia develops. (Source: Endocrine Society: Phaeochromocytoma)",
+        "source_refs": [
+          "Endocrine Society: Phaeochromocytoma",
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Phaeochromocytoma requires careful preoperative alpha-adrenergic blockade for 10-14 days before surgery to prevent intraoperative catecholamine-mediated hypertensive crisis. Phenoxybenzamine is the preferred agent due to its irreversible binding providing sustained alpha-blockade even during intraoperative catecholamine surges. The cardinal rule is alpha before beta - initiating beta-blockade without prior alpha-blockade causes unopposed alpha stimulation and potentially fatal hypertension.",
+      "key_points": [
+        "Alpha-blockade MUST precede beta-blockade in phaeochromocytoma by at least several days",
+        "Phenoxybenzamine 10 mg twice daily titrated over 10-14 days is the standard regimen",
+        "Target: seated BP below 130/80 with orthostatic drop above 20 mmHg systolic",
+        "Liberal salt and fluid intake corrects catecholamine-induced intravascular volume contraction"
+      ],
+      "pearls": "Nasal congestion is a reliable clinical sign of adequate alpha-blockade with phenoxybenzamine - its presence before surgery reassures the anaesthetist that alpha-receptor occupancy is sufficient to buffer intraoperative catecholamine surges."
+    },
+    "sources": [
+      {
+        "label": "Endocrine Society: Phaeochromocytoma",
+        "url": "https://academic.oup.com/jcem/article/99/6/1915/2537437"
+      },
+      {
+        "label": "Therapeutic Guidelines: Endocrinology",
+        "url": "https://www.tg.org.au"
+      }
+    ],
+    "reference_ranges": [
+      "uec",
+      "calcium_corrected"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-adren-004",
+    "topic": "Medicine",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Synacthen test interpretation in suspected primary adrenal insufficiency",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "Addison disease",
+      "Synacthen test"
+    ],
+    "stem": "A 29-year-old woman presents with a 6-month history of progressive fatigue, weight loss of 8 kg, and intermittent nausea. She has noticed darkening of her skin creases and buccal mucosa over the past 3 months. She takes no medications. A short Synacthen test is performed. Her baseline 0900h cortisol is 85 nmol/L, and her 30-minute post-Synacthen cortisol is 180 nmol/L.",
+    "data_table": {
+      "Vital signs": "BP 98/62 supine, 82/54 standing, HR 96, BMI 19.5",
+      "Investigations": "Na+ 131 mmol/L, K+ 5.6 mmol/L, urea 8.4 mmol/L, creatinine 88 micromol/L, TSH 5.8 mIU/L, fT4 10.2 pmol/L, BSL 3.6 mmol/L"
+    },
+    "lead_in": "What is the most appropriate interpretation and next investigation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Failed Synacthen test confirming adrenal insufficiency; measure serum ACTH to determine aetiology",
+        "correct": true,
+        "rationale": "A normal response to the short Synacthen test is a 30-minute cortisol above 450-550 nmol/L. This patient's peak of 180 nmol/L confirms adrenal insufficiency. The next step is measuring serum ACTH to distinguish primary (elevated ACTH) from secondary (low-normal ACTH) adrenal insufficiency. The hyperpigmentation, hyperkalaemia, and hyponatraemia strongly suggest primary disease. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology",
+          "Endocrine Society: Adrenal Insufficiency"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Borderline Synacthen result; repeat the test in 4 weeks with concurrent ACTH stimulation",
+        "correct": false,
+        "rationale": "A 30-minute cortisol of 180 nmol/L is not borderline - it is clearly inadequate, with most laboratories using a cut-off of 450-550 nmol/L. Combined with the clinical features, this is an unequivocal failed test. Delaying diagnosis risks adrenal crisis. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Normal Synacthen response; investigate alternative causes of fatigue and weight loss",
+        "correct": false,
+        "rationale": "A peak cortisol of 180 nmol/L is markedly below the adequate response threshold of 450-550 nmol/L. This is a failed test. The clinical features of hyperpigmentation, postural hypotension, hyponatraemia, and hyperkalaemia are classic for Addison disease. (Source: Endocrine Society: Adrenal Insufficiency)",
+        "source_refs": [
+          "Endocrine Society: Adrenal Insufficiency"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Failed Synacthen test; proceed directly to CT adrenal glands for structural assessment",
+        "correct": false,
+        "rationale": "While CT adrenals may eventually be warranted, the immediate next step after confirming adrenal insufficiency is measuring ACTH to determine whether the cause is primary or secondary. In secondary adrenal insufficiency, MRI pituitary would be indicated instead. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Failed Synacthen test; start hydrocortisone and measure 21-hydroxylase antibodies as the sole investigation",
+        "correct": false,
+        "rationale": "While starting hydrocortisone is appropriate and urgent, measuring ACTH first is essential to confirm primary vs secondary aetiology. Antibody testing alone would miss secondary causes and non-autoimmune primary causes such as tuberculosis or bilateral adrenal haemorrhage. (Source: Endocrine Society: Adrenal Insufficiency)",
+        "source_refs": [
+          "Endocrine Society: Adrenal Insufficiency"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "The short Synacthen test involves administering 250 mcg of synthetic ACTH and measuring cortisol at 0 and 30 minutes. An adequate response is a 30-minute cortisol above 450-550 nmol/L. Failure confirms adrenal insufficiency. The subsequent step is ACTH measurement: elevated ACTH indicates primary adrenal failure (Addison disease), while low or inappropriately normal ACTH suggests secondary insufficiency.",
+      "key_points": [
+        "A 30-minute post-Synacthen cortisol above 450-550 nmol/L indicates adequate adrenal reserve",
+        "After confirming adrenal insufficiency, ACTH measurement distinguishes primary from secondary causes",
+        "Hyperpigmentation indicates elevated ACTH driving melanocyte stimulation",
+        "Hyperkalaemia occurs in primary but not secondary adrenal insufficiency due to aldosterone deficiency",
+        "Concurrent subclinical hypothyroidism may indicate autoimmune polyendocrine syndrome"
+      ],
+      "pearls": "Cortisol replacement must be started before thyroxine in concurrent adrenal insufficiency and hypothyroidism - starting thyroxine first accelerates cortisol metabolism and can precipitate adrenal crisis."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Endocrinology",
+        "url": "https://www.tg.org.au"
+      },
+      {
+        "label": "Endocrine Society: Adrenal Insufficiency",
+        "url": "https://academic.oup.com/jcem/article/101/2/364/2810222"
+      }
+    ],
+    "reference_ranges": [
+      "uec",
+      "thyroid",
+      "glucose_hba1c"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-neurom-001",
+    "topic": "Medicine",
+    "subtopic": "Neurology",
+    "subtopic_detail": "Guillain-Barre syndrome respiratory monitoring and treatment",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "Guillain-Barre syndrome",
+      "IVIG"
+    ],
+    "stem": "A 48-year-old man presents with 4 days of progressive ascending weakness affecting both legs, now involving his hands. He reports paraesthesiae in his feet preceding the weakness by 2 days. He had a campylobacter gastroenteritis 2 weeks ago. On examination, reflexes are absent throughout and he has bilateral facial weakness. He can walk with assistance but has difficulty rising from a chair. His forced vital capacity is 2.1 L (predicted 4.2 L).",
+    "data_table": {
+      "Vital signs": "HR 84, BP 148/92, RR 20, SpO2 96% on room air",
+      "Examination": "MRC grade 3 hip flexion, grade 4- knee extension, grade 4- wrist extension, bilateral facial weakness, areflexia throughout, no sensory level",
+      "Investigations": "CSF protein 1.2 g/L, CSF WCC 2 cells/microL, nerve conduction studies show demyelinating pattern"
+    },
+    "lead_in": "What is the most appropriate management plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Start oral prednisolone 1 mg/kg daily and monitor FVC 4-hourly on the ward",
+        "correct": false,
+        "rationale": "Corticosteroids have no proven benefit in GBS and may delay recovery. Multiple randomised trials show no improvement. The evidence-based treatments are IVIG or plasma exchange. An FVC at 50% predicted warrants ICU-level monitoring. (Source: Therapeutic Guidelines: Neurology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Neurology"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Commence IV immunoglobulin 0.4 g/kg/day for 5 days and transfer to ICU for FVC monitoring",
+        "correct": true,
+        "rationale": "This patient has significant GBS with FVC at 50% of predicted, placing him at high risk of respiratory failure. IVIG 0.4 g/kg/day for 5 days is the standard first-line treatment, equivalent in efficacy to plasma exchange but more readily available. ICU monitoring allows for timely intubation if FVC drops further. The 20/30/40 rule guides ICU transfer thresholds. (Source: Therapeutic Guidelines: Neurology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Neurology",
+          "Cochrane: IVIG for GBS"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Arrange urgent plasma exchange followed by IV immunoglobulin for combined therapy",
+        "correct": false,
+        "rationale": "Combining IVIG and plasma exchange does not improve outcomes and increases adverse effects. The choice is one or the other. IVIG is generally preferred in Australian practice due to simpler administration. (Source: Cochrane: IVIG for GBS)",
+        "source_refs": [
+          "Cochrane: IVIG for GBS"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Start oral mycophenolate mofetil and monitor on the general neurology ward",
+        "correct": false,
+        "rationale": "Mycophenolate has no role in acute GBS. GBS is monophasic requiring acute immunomodulation, not long-term immunosuppression. Chronic immunosuppressants are used in CIDP, the chronic counterpart. (Source: Therapeutic Guidelines: Neurology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Neurology"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Commence IV immunoglobulin 0.4 g/kg/day for 5 days and monitor on the general ward",
+        "correct": false,
+        "rationale": "While IVIG is correct, general ward monitoring is inappropriate. His FVC is 50% of predicted and declining, bilateral facial weakness suggests bulbar involvement. These features mandate ICU or HDU monitoring with FVC measured at least 4-hourly. (Source: Therapeutic Guidelines: Neurology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Neurology"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Guillain-Barre syndrome is an acute inflammatory demyelinating polyneuropathy typically preceded by infection. Treatment is either IVIG or plasma exchange - corticosteroids are ineffective. Respiratory failure is the main life-threatening complication and FVC monitoring is the key parameter. The 20/30/40 rule provides ICU transfer thresholds.",
+      "key_points": [
+        "IVIG 0.4 g/kg/day for 5 days or plasma exchange are the two evidence-based treatments for GBS",
+        "Corticosteroids are NOT effective in GBS",
+        "The 20/30/40 rule for ICU transfer: FVC below 20 mL/kg, MIP worse than -30, MEP below 40",
+        "Albuminocytological dissociation supports the diagnosis"
+      ],
+      "pearls": "Anti-ganglioside antibodies (anti-GM1, anti-GD1a) are found in 50-60% of GBS cases and are particularly associated with preceding Campylobacter infection and the axonal variant (AMAN) - their presence predicts a more severe course."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Neurology",
+        "url": "https://www.tg.org.au"
+      },
+      {
+        "label": "Cochrane: IVIG for GBS",
+        "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD002063.pub6"
+      }
+    ],
+    "reference_ranges": [
+      "csf"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-neurom-002",
+    "topic": "Medicine",
+    "subtopic": "Neurology",
+    "subtopic_detail": "Miller Fisher syndrome recognition and anti-GQ1b antibody",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "Miller Fisher syndrome",
+      "anti-GQ1b",
+      "ophthalmoplegia"
+    ],
+    "stem": "A 36-year-old man presents with 3 days of progressive double vision and unsteady gait following a recent upper respiratory tract infection. He reports no limb weakness or numbness. On examination he has bilateral ptosis, complete external ophthalmoplegia, and wide-based ataxic gait. Limb power is full (MRC 5/5 throughout) and sensory examination is normal. Deep tendon reflexes are absent throughout.",
+    "data_table": {
+      "Vital signs": "HR 76, BP 122/78, RR 14, SpO2 99% on room air",
+      "Examination": "Bilateral ptosis, complete external ophthalmoplegia, normal pupils, wide-based cerebellar-type ataxia, areflexia, full limb power, normal sensation",
+      "Investigations": "MRI brain normal, CSF protein 0.6 g/L with WCC 1 cell/microL"
+    },
+    "lead_in": "Which antibody test would most strongly support the suspected diagnosis?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Anti-acetylcholine receptor (AChR) antibody testing",
+        "correct": false,
+        "rationale": "Anti-AChR antibodies are associated with myasthenia gravis, which causes ptosis and ophthalmoplegia but not areflexia or cerebellar ataxia. The triad of ophthalmoplegia, ataxia, and areflexia after infection points to Miller Fisher syndrome. (Source: BMJ Best Practice: GBS)",
+        "source_refs": [
+          "BMJ Best Practice: GBS"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Anti-neuronal nuclear antibody (ANNA-1/anti-Hu)",
+        "correct": false,
+        "rationale": "Anti-Hu antibodies are associated with paraneoplastic syndromes. The acute post-infectious onset and areflexia point to an immune-mediated post-infectious neuropathy rather than paraneoplastic disease. (Source: BMJ Best Practice: GBS)",
+        "source_refs": [
+          "BMJ Best Practice: GBS"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Anti-GQ1b ganglioside antibody panel testing",
+        "correct": true,
+        "rationale": "The triad of ophthalmoplegia, ataxia, and areflexia following a preceding infection defines Miller Fisher syndrome, a GBS variant. Anti-GQ1b antibodies are found in over 90% of cases and are highly specific. GQ1b is concentrated in cranial nerves III, IV, and VI and muscle spindles, explaining the phenotype. (Source: BMJ Best Practice: GBS)",
+        "source_refs": [
+          "BMJ Best Practice: GBS",
+          "Therapeutic Guidelines: Neurology"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Anti-MuSK (muscle-specific kinase) antibody testing",
+        "correct": false,
+        "rationale": "Anti-MuSK antibodies are associated with a subtype of seronegative MG causing bulbar and facial weakness. MuSK-positive MG does not cause areflexia or cerebellar ataxia. (Source: Therapeutic Guidelines: Neurology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Neurology"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Anti-aquaporin-4 (anti-AQP4) antibody testing",
+        "correct": false,
+        "rationale": "Anti-AQP4 antibodies are associated with NMOSD, which causes optic neuritis and transverse myelitis. NMOSD does not cause peripheral areflexia or cerebellar ataxia without CNS lesions on MRI. (Source: Therapeutic Guidelines: Neurology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Neurology"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Miller Fisher syndrome is a GBS variant characterised by the classic triad of ophthalmoplegia, ataxia, and areflexia, typically following infection. Anti-GQ1b antibodies are present in over 90% of cases. Most cases recover spontaneously over weeks to months, but up to 5% progress to overlap with typical GBS.",
+      "key_points": [
+        "Miller Fisher triad: ophthalmoplegia, ataxia, areflexia",
+        "Anti-GQ1b antibodies are positive in over 90% and highly specific",
+        "Most cases are self-limiting but require monitoring for GBS overlap",
+        "CSF may show albuminocytological dissociation"
+      ],
+      "pearls": "Anti-GQ1b antibodies cross-react with GT1a gangliosides in glossopharyngeal and vagal nerves - when bulbar weakness accompanies Miller Fisher syndrome, IVIG treatment is recommended."
+    },
+    "sources": [
+      {
+        "label": "BMJ Best Practice: GBS",
+        "url": "https://bestpractice.bmj.com/topics/en-gb/176"
+      },
+      {
+        "label": "Therapeutic Guidelines: Neurology",
+        "url": "https://www.tg.org.au"
+      }
+    ],
+    "reference_ranges": [
+      "csf"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-neurom-003",
+    "topic": "Medicine",
+    "subtopic": "Neurology",
+    "subtopic_detail": "Myasthenia gravis crisis and medication avoidance",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "myasthenia gravis",
+      "aminoglycosides"
+    ],
+    "stem": "A 62-year-old woman with known generalised myasthenia gravis on pyridostigmine 60 mg four times daily and prednisolone 15 mg daily presents with worsening dyspnoea and difficulty swallowing over 3 days. She had been recently treated by her GP for a urinary tract infection. On examination she has bilateral ptosis, nasal speech, weak cough, and neck flexion weakness. Her FVC is 1.1 L (predicted 2.8 L).",
+    "data_table": {
+      "Vital signs": "HR 92, BP 138/84, RR 24, SpO2 94% on room air",
+      "Examination": "Bilateral ptosis, nasal speech, weak palatal movement, weak cough, neck flexion MRC grade 3",
+      "Medications": "Pyridostigmine 60 mg QID, prednisolone 15 mg daily, gentamicin 5 mg/kg IV daily (started 2 days ago)"
+    },
+    "lead_in": "What is the single most important initial intervention?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Increase pyridostigmine to 90 mg four times daily and monitor clinically",
+        "correct": false,
+        "rationale": "Increasing anticholinesterase during crisis is potentially dangerous and may cause cholinergic crisis. The precipitant (gentamicin) must be addressed first. The FVC indicates impending respiratory failure requiring ICU management. (Source: Therapeutic Guidelines: Neurology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Neurology"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Start IV immunoglobulin 0.4 g/kg/day immediately and continue current antibiotics",
+        "correct": false,
+        "rationale": "IVIG is appropriate for myasthenic crisis, but continuing gentamicin addresses the consequence without removing the likely precipitant. Aminoglycosides worsen neuromuscular junction transmission and should be immediately ceased. (Source: Therapeutic Guidelines: Neurology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Neurology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Administer IV edrophonium to differentiate myasthenic from cholinergic crisis",
+        "correct": false,
+        "rationale": "The Tensilon test is no longer routinely performed due to cardiac arrhythmia risk. The clinical context strongly suggests myasthenic crisis precipitated by aminoglycoside exposure. The priority is removing the precipitant. (Source: Therapeutic Guidelines: Neurology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Neurology"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Cease gentamicin immediately and substitute a non-aminoglycoside antibiotic",
+        "correct": true,
+        "rationale": "Aminoglycosides impair neuromuscular junction transmission and are contraindicated in MG. They are a well-recognised precipitant of myasthenic crisis. Immediate cessation and substitution with a safe alternative (trimethoprim or cephalosporin) is the single most important intervention. IVIG or plasma exchange and ICU transfer should follow. (Source: Therapeutic Guidelines: Neurology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Neurology",
+          "AMH"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Intubate immediately for airway protection and commence plasma exchange",
+        "correct": false,
+        "rationale": "While this patient may need intubation if FVC continues to decline, her current SpO2 is 94% and she is maintaining her airway. Identifying and removing the precipitant first is the priority. The FVC warrants ICU admission but elective intubation is not yet indicated. (Source: Therapeutic Guidelines: Neurology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Neurology"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Myasthenic crisis can be precipitated by medications that impair neuromuscular junction transmission. Aminoglycosides are among the most dangerous. When a precipitant is identified, its immediate cessation is the most impactful intervention, alongside definitive treatment with IVIG or plasma exchange and ICU monitoring.",
+      "key_points": [
+        "Aminoglycosides are contraindicated in MG and can precipitate crisis",
+        "Removing the offending drug is the single most important initial step",
+        "FVC below 20 mL/kg or declining rapidly is an ICU transfer indication",
+        "IVIG or plasma exchange are definitive treatments for myasthenic crisis"
+      ],
+      "pearls": "Fluoroquinolones also impair neuromuscular transmission and carry a boxed warning in MG - when treating UTI in MG, trimethoprim, nitrofurantoin, or a cephalosporin are preferred safe alternatives."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Neurology",
+        "url": "https://www.tg.org.au"
+      },
+      {
+        "label": "AMH",
+        "url": "https://amhonline.amh.net.au"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-neurom-004",
+    "topic": "Medicine",
+    "subtopic": "Neurology",
+    "subtopic_detail": "Motor neuron disease recognition and initial investigation",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "motor neuron disease",
+      "riluzole",
+      "EMG"
+    ],
+    "stem": "A 58-year-old man is referred with a 9-month history of progressive weakness affecting his right hand, making it difficult to use his keys and button his shirt. Over the past 3 months he has also noticed his right foot catching on the ground when walking. He has lost 6 kg. His wife has noticed occasional slurred speech but no swallowing difficulty. He has no sensory symptoms, no bladder dysfunction, and no pain. On examination, there is wasting of the right hand intrinsics and right tibialis anterior. Fasciculations are visible in both upper limbs and the tongue.",
+    "data_table": {
+      "Examination": "Wasting right first dorsal interosseous and thenar eminence, fasciculations bilateral deltoids and biceps plus tongue, right foot drop, brisk reflexes throughout including jaw jerk, upgoing plantar responses bilaterally, no sensory deficit, normal eye movements",
+      "Investigations": "MRI cervical and thoracic spine shows no compressive lesion, B12 560 pmol/L, TSH 2.1 mIU/L, CK mildly elevated at 420 U/L"
+    },
+    "lead_in": "What investigation would best support the suspected diagnosis?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Lumbar puncture with CSF analysis including oligoclonal bands",
+        "correct": false,
+        "rationale": "CSF oligoclonal bands are used for MS diagnosis. MS causes UMN signs but not LMN features. The combination of UMN and LMN signs without sensory involvement points away from MS. (Source: BMJ Best Practice: MND)",
+        "source_refs": [
+          "BMJ Best Practice: MND"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Anti-acetylcholine receptor and anti-MuSK antibody testing",
+        "correct": false,
+        "rationale": "MG causes weakness but does not cause UMN signs (brisk reflexes, upgoing plantars) or muscle wasting. The presence of brisk reflexes and fasciculations is inconsistent with a neuromuscular junction disorder. (Source: BMJ Best Practice: MND)",
+        "source_refs": [
+          "BMJ Best Practice: MND"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Genetic testing for hereditary motor and sensory neuropathy",
+        "correct": false,
+        "rationale": "CMT causes distal wasting with sensory loss and reduced reflexes. This patient has brisk reflexes, upgoing plantars (UMN signs), tongue fasciculations, and no sensory deficit - inconsistent with CMT. (Source: BMJ Best Practice: MND)",
+        "source_refs": [
+          "BMJ Best Practice: MND"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "MRI brain with gadolinium focusing on the posterior fossa",
+        "correct": false,
+        "rationale": "Normal spinal MRI already excludes structural compressive causes. The clinical pattern of combined UMN and LMN signs across multiple body regions without sensory involvement is characteristic of motor neuron disease, not a focal structural lesion. (Source: BMJ Best Practice: MND)",
+        "source_refs": [
+          "BMJ Best Practice: MND"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Electromyography and nerve conduction studies across multiple regions",
+        "correct": true,
+        "rationale": "The combination of concurrent UMN signs (brisk reflexes, upgoing plantars, brisk jaw jerk) and LMN signs (wasting, fasciculations, weakness) across multiple body regions (bulbar, upper limb, lower limb) without sensory involvement is the hallmark of ALS. EMG/NCS is the key diagnostic investigation, demonstrating widespread active and chronic denervation with preserved sensory nerve action potentials. (Source: BMJ Best Practice: MND)",
+        "source_refs": [
+          "BMJ Best Practice: MND",
+          "Therapeutic Guidelines: Neurology"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Motor neuron disease presents with combined upper and lower motor neuron signs across multiple body regions without sensory involvement. EMG showing widespread denervation with preserved sensory nerve conduction is the key diagnostic investigation. Riluzole is the only disease-modifying agent with modest survival benefit.",
+      "key_points": [
+        "Combined UMN and LMN signs across multiple regions without sensory deficit is the hallmark of ALS",
+        "EMG demonstrates widespread denervation with preserved sensory nerve action potentials",
+        "Tongue fasciculations indicate bulbar involvement",
+        "Riluzole extends median survival by approximately 2-3 months"
+      ],
+      "pearls": "The split-hand sign (preferential wasting of the lateral hand with relative sparing of hypothenar muscles) is relatively specific to ALS and distinguishes it from cervical myelopathy or ulnar neuropathy."
+    },
+    "sources": [
+      {
+        "label": "BMJ Best Practice: MND",
+        "url": "https://bestpractice.bmj.com/topics/en-gb/199"
+      },
+      {
+        "label": "Therapeutic Guidelines: Neurology",
+        "url": "https://www.tg.org.au"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-pericard-001",
+    "topic": "Medicine",
+    "subtopic": "Cardiology",
+    "subtopic_detail": "Acute pericarditis diagnosis and treatment with colchicine",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "pericarditis",
+      "colchicine",
+      "NSAID"
+    ],
+    "stem": "A 27-year-old man presents with 2 days of sharp central chest pain that worsens on inspiration and lying flat and improves when sitting forward. He had a viral upper respiratory tract infection 10 days ago. He has no significant past medical history. His troponin I is 28 ng/L (reference less than 26) and his ECG shows widespread concave ST elevation with PR depression in limb leads.",
+    "data_table": {
+      "Vital signs": "T 37.6, HR 88, BP 118/74, RR 16, SpO2 99% on room air",
+      "Examination": "Pericardial friction rub on auscultation, no signs of heart failure, JVP not elevated",
+      "Investigations": "CRP 62 mg/L, troponin I 28 ng/L (ref < 26), echocardiogram shows trivial pericardial effusion with normal LV function"
+    },
+    "lead_in": "What is the most appropriate initial treatment?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Ibuprofen 600 mg three times daily plus colchicine 500 mcg twice daily for 3 months",
+        "correct": true,
+        "rationale": "Acute idiopathic/viral pericarditis is treated with an NSAID plus colchicine. The COPE and ICAP trials demonstrated that adding colchicine significantly reduces recurrence from approximately 30% to 10%. The NSAID is tapered over 2-4 weeks once symptoms resolve, while colchicine continues for 3 months. (Source: ESC Guideline: Pericardial Diseases)",
+        "source_refs": [
+          "ESC Guideline: Pericardial Diseases",
+          "Therapeutic Guidelines: Cardiovascular"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Prednisolone 0.5 mg/kg daily tapering over 4 weeks as first-line therapy",
+        "correct": false,
+        "rationale": "Corticosteroids are not first-line. The COPE trial showed corticosteroid use as initial therapy actually INCREASES recurrence by suppressing the normal immune resolution process. (Source: ESC Guideline: Pericardial Diseases)",
+        "source_refs": [
+          "ESC Guideline: Pericardial Diseases"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Aspirin 900 mg three times daily without colchicine and activity restriction for 6 weeks",
+        "correct": false,
+        "rationale": "Omitting colchicine significantly increases recurrence risk. The COPE and ICAP trials established colchicine as essential with NNT of approximately 5. (Source: ESC Guideline: Pericardial Diseases)",
+        "source_refs": [
+          "ESC Guideline: Pericardial Diseases"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Dual antiplatelet therapy with aspirin and clopidogrel for suspected ACS",
+        "correct": false,
+        "rationale": "The clinical features (pleuritic positional chest pain, pericardial rub, diffuse concave ST elevation with PR depression) are classic for pericarditis, not ACS. DAPT is inappropriate. (Source: Therapeutic Guidelines: Cardiovascular)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Pericardiocentesis to drain the effusion and relieve tamponade physiology",
+        "correct": false,
+        "rationale": "This patient has a trivial effusion with no haemodynamic compromise. Pericardiocentesis is indicated for tamponade or large effusions of uncertain aetiology, not trivial post-inflammatory effusions. (Source: ESC Guideline: Pericardial Diseases)",
+        "source_refs": [
+          "ESC Guideline: Pericardial Diseases"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Acute pericarditis requires at least two of four criteria: pleuritic chest pain, pericardial rub, diffuse ST elevation or PR depression, and new pericardial effusion. First-line treatment is NSAID plus colchicine. The COPE trial demonstrated colchicine halves recurrence. Corticosteroids should be avoided first-line.",
+      "key_points": [
+        "First-line treatment is NSAID plus colchicine - colchicine halves recurrence",
+        "Corticosteroids increase recurrence risk and are reserved for NSAID-contraindicated patients",
+        "Minor troponin elevation (myopericarditis) is common and does not change management if LV function is preserved",
+        "Diffuse concave ST elevation with PR depression distinguishes pericarditis from STEMI"
+      ],
+      "pearls": "Colchicine 500 mcg twice daily for 3 months in first episodes and 6 months for recurrent pericarditis - the CORP-2 trial showed shorter courses lead to significantly higher recurrence."
+    },
+    "sources": [
+      {
+        "label": "ESC Guideline: Pericardial Diseases",
+        "url": "https://academic.oup.com/eurheartj/article/36/42/2921/2293375"
+      },
+      {
+        "label": "Therapeutic Guidelines: Cardiovascular",
+        "url": "https://www.tg.org.au"
+      }
+    ],
+    "reference_ranges": [
+      "inflammatory_markers"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-pericard-002",
+    "topic": "Medicine",
+    "subtopic": "Cardiology",
+    "subtopic_detail": "Acute myocarditis with heart failure and CMR role",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "myocarditis",
+      "troponin",
+      "cardiac MRI"
+    ],
+    "stem": "A 31-year-old man presents with 5 days of progressive dyspnoea and a 1-day history of orthopnoea. He reports a febrile illness with myalgia 2 weeks ago. He has no cardiac history. His ECG shows sinus tachycardia with non-specific ST-T changes. Serial troponin I levels are 1840 ng/L and 1920 ng/L (reference less than 26). Coronary angiography shows normal coronary arteries.",
+    "data_table": {
+      "Vital signs": "T 37.8, HR 112, BP 102/68, RR 24, SpO2 93% on 4 L nasal prongs",
+      "Examination": "Elevated JVP, bibasal crackles, S3 gallop, no murmurs, mild peripheral oedema",
+      "Investigations": "BNP 1240 pg/mL, CRP 88 mg/L, echocardiogram shows globally reduced LV function with EF 28%, no regional wall motion abnormalities, trivial pericardial effusion"
+    },
+    "lead_in": "What is the most appropriate next investigation to confirm the diagnosis?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Repeat echocardiography in 48 hours to assess for interval change",
+        "correct": false,
+        "rationale": "Repeating echo does not establish the diagnosis. A tissue-characterisation imaging modality is needed to distinguish myocarditis from other causes of acute heart failure with normal coronaries. (Source: ESC Guideline: Myocarditis)",
+        "source_refs": [
+          "ESC Guideline: Myocarditis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Cardiac MRI with late gadolinium enhancement and T2 mapping",
+        "correct": true,
+        "rationale": "CMR is the gold-standard non-invasive investigation for suspected myocarditis. The updated Lake Louise criteria use T2-weighted imaging (myocardial oedema) and T1 mapping/late gadolinium enhancement (injury and fibrosis). The characteristic pattern is mid-wall or epicardial LGE (unlike subendocardial pattern of ischaemia). (Source: ESC Guideline: Myocarditis)",
+        "source_refs": [
+          "ESC Guideline: Myocarditis",
+          "Therapeutic Guidelines: Cardiovascular"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Endomyocardial biopsy from the right ventricle via femoral vein",
+        "correct": false,
+        "rationale": "EMB is the histological gold standard but is invasive with sampling error and 1-2% complication rate. It is reserved for haemodynamically unstable patients not responding to treatment or suspected giant cell myocarditis. Non-invasive CMR is the appropriate first-line investigation. (Source: ESC Guideline: Myocarditis)",
+        "source_refs": [
+          "ESC Guideline: Myocarditis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "CT coronary angiography to exclude subtle coronary artery disease",
+        "correct": false,
+        "rationale": "Invasive coronary angiography has already been performed and is normal - the gold standard for excluding CAD. CT coronary angiography would add nothing. (Source: Therapeutic Guidelines: Cardiovascular)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Viral serology panel including coxsackie B, adenovirus, and parvovirus B19",
+        "correct": false,
+        "rationale": "Serology has poor sensitivity and specificity for myocardial involvement - a positive titre only confirms recent infection, not cardiac tropism. Serology does not change acute management. CMR provides direct evidence of myocardial inflammation. (Source: ESC Guideline: Myocarditis)",
+        "source_refs": [
+          "ESC Guideline: Myocarditis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Acute myocarditis should be suspected in young patients with acute heart failure, troponin elevation, and normal coronaries after viral illness. CMR with Lake Louise criteria is the non-invasive gold standard. Mid-wall or epicardial LGE distinguishes myocarditis from ischaemic injury. Treatment is supportive heart failure management.",
+      "key_points": [
+        "CMR with Lake Louise criteria is the non-invasive gold standard for myocarditis",
+        "Mid-wall or epicardial LGE distinguishes myocarditis from ischaemic injury",
+        "EMB is reserved for haemodynamically unstable cases or suspected giant cell myocarditis",
+        "Viral serology does not confirm myocardial involvement and rarely changes management"
+      ],
+      "pearls": "Giant cell myocarditis has greater than 70% mortality without immunosuppression - suspect it when acute myocarditis is refractory to standard therapy within 1-2 weeks, especially with ventricular arrhythmias or high-degree AV block."
+    },
+    "sources": [
+      {
+        "label": "ESC Guideline: Myocarditis",
+        "url": "https://academic.oup.com/eurheartj/article/44/37/3488/7243894"
+      },
+      {
+        "label": "Therapeutic Guidelines: Cardiovascular",
+        "url": "https://www.tg.org.au"
+      }
+    ],
+    "reference_ranges": [
+      "inflammatory_markers"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-pleural-001",
+    "topic": "Medicine",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Pleural effusion Light criteria classification",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "pleural effusion",
+      "Light criteria"
+    ],
+    "stem": "A 68-year-old woman is investigated for a moderate right-sided pleural effusion. She has a history of congestive heart failure. A diagnostic thoracentesis is performed.",
+    "data_table": {
+      "Pleural fluid": "Appearance: straw-coloured, pH 7.38, protein 42 g/L, LDH 280 U/L, glucose 4.8 mmol/L, WCC 650 cells/microL (lymphocyte-predominant)",
+      "Serum": "Protein 65 g/L, LDH 180 U/L, albumin 32 g/L"
+    },
+    "lead_in": "What is the most appropriate interpretation and next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Transudative effusion consistent with heart failure; optimise diuretics",
+        "correct": false,
+        "rationale": "Applying Light's criteria: pleural protein/serum protein = 42/65 = 0.65 (above 0.5), pleural LDH/serum LDH = 280/180 = 1.56 (above 0.6). This meets exudative criteria and requires further investigation. (Source: Therapeutic Guidelines: Respiratory)",
+        "source_refs": [
+          "Therapeutic Guidelines: Respiratory"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Exudative effusion; start empiric antibiotics for parapneumonic cause",
+        "correct": false,
+        "rationale": "No features suggest infection. The pH is normal, glucose is normal, and the predominance is lymphocytic rather than neutrophilic. Antibiotics without evidence of infection are not indicated. (Source: BTS Guideline: Pleural Disease)",
+        "source_refs": [
+          "BTS Guideline: Pleural Disease"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Exudative effusion; send pleural fluid for cytology and consider CT thorax with contrast",
+        "correct": true,
+        "rationale": "This is exudative by Light's criteria. A lymphocyte-predominant exudate in a 68-year-old raises the differential of malignancy or tuberculosis. The appropriate next steps are pleural fluid cytology (sensitivity approximately 60% for malignancy) and CT thorax with contrast. (Source: BTS Guideline: Pleural Disease)",
+        "source_refs": [
+          "BTS Guideline: Pleural Disease",
+          "Therapeutic Guidelines: Respiratory"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Borderline effusion; repeat thoracentesis in 2 weeks after optimising diuretics",
+        "correct": false,
+        "rationale": "This clearly meets exudative criteria. Delaying investigation risks missing treatable pathology. Note that diuretics can occasionally convert a transudative effusion to a pseudo-exudate, but the high ratios here are not consistent with this. (Source: BTS Guideline: Pleural Disease)",
+        "source_refs": [
+          "BTS Guideline: Pleural Disease"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Exudative effusion; perform therapeutic drainage and discharge for GP follow-up",
+        "correct": false,
+        "rationale": "Discharging without investigating an exudative effusion is inappropriate. An undiagnosed lymphocytic exudate requires cytology, possible biopsy, and imaging. (Source: BTS Guideline: Pleural Disease)",
+        "source_refs": [
+          "BTS Guideline: Pleural Disease"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Light's criteria classify effusions as exudative if any one criterion is met: pleural/serum protein above 0.5, pleural/serum LDH above 0.6, or pleural LDH above 2/3 ULN. Exudative effusions require aetiological investigation.",
+      "key_points": [
+        "Light's criteria: exudate if pleural/serum protein above 0.5 OR pleural/serum LDH above 0.6 OR pleural LDH above 2/3 ULN",
+        "Exudative effusion in heart failure patient still requires investigation",
+        "Lymphocyte-predominant exudate differential includes malignancy and TB",
+        "Pleural fluid cytology sensitivity is approximately 60% for malignancy on first sample"
+      ],
+      "pearls": "The serum-effusion albumin gradient (serum albumin minus pleural albumin) can rescue misclassified transudates - a gradient of 12 g/L or more suggests transudate even when Light's criteria indicate exudate."
+    },
+    "sources": [
+      {
+        "label": "BTS Guideline: Pleural Disease",
+        "url": "https://thorax.bmj.com/content/65/Suppl_2/ii4"
+      },
+      {
+        "label": "Therapeutic Guidelines: Respiratory",
+        "url": "https://www.tg.org.au"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-pleural-002",
+    "topic": "Medicine",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Primary spontaneous pneumothorax management algorithm",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "pneumothorax",
+      "intercostal catheter"
+    ],
+    "stem": "A 22-year-old tall, thin man presents with sudden-onset right-sided pleuritic chest pain and mild dyspnoea. Chest X-ray confirms a right-sided primary spontaneous pneumothorax with 3 cm visible rim at the hilum. Needle aspiration removed 1.8 L of air, but repeat chest X-ray 4 hours later shows persistent large pneumothorax with 2.5 cm rim.",
+    "data_table": {
+      "Vital signs": "HR 92, BP 122/78, RR 18, SpO2 96% on room air",
+      "Examination": "Reduced air entry right hemithorax, no tracheal deviation",
+      "Investigations": "Post-aspiration CXR: persistent right pneumothorax with 2.5 cm rim at hilum"
+    },
+    "lead_in": "What is the most appropriate next step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Repeat needle aspiration with a larger-bore cannula and reassess",
+        "correct": false,
+        "rationale": "BTS guidelines recommend only one attempt at needle aspiration. After failed aspiration, the next step is small-bore intercostal catheter insertion. After removal of 1.8 L with persistent large pneumothorax, a persistent air leak is likely. (Source: BTS Guideline: Spontaneous Pneumothorax)",
+        "source_refs": [
+          "BTS Guideline: Spontaneous Pneumothorax"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Observe for 24 hours with high-flow oxygen and repeat imaging",
+        "correct": false,
+        "rationale": "Conservative management is for small pneumothoraces (rim less than 2 cm). This patient has a large pneumothorax that has already failed aspiration. (Source: BTS Guideline: Spontaneous Pneumothorax)",
+        "source_refs": [
+          "BTS Guideline: Spontaneous Pneumothorax"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Arrange urgent cardiothoracic surgical referral for VATS pleurodesis",
+        "correct": false,
+        "rationale": "Surgery is typically reserved for recurrent pneumothorax, persistent air leak beyond 5-7 days despite drainage, or high-risk occupations. Proceeding directly to surgery without trialling ICC skips a step. (Source: BTS Guideline: Spontaneous Pneumothorax)",
+        "source_refs": [
+          "BTS Guideline: Spontaneous Pneumothorax"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Insert a small-bore intercostal catheter connected to an underwater seal drain",
+        "correct": true,
+        "rationale": "After failed needle aspiration of a PSP, the next step is insertion of a small-bore (10-14 Fr) intercostal catheter connected to an underwater seal drain. Small-bore drains are preferred over large-bore as they are equally effective, less painful, and have fewer complications. Suction is not routinely applied initially. (Source: BTS Guideline: Spontaneous Pneumothorax)",
+        "source_refs": [
+          "BTS Guideline: Spontaneous Pneumothorax",
+          "Therapeutic Guidelines: Respiratory"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Insert a large-bore (28-32 Fr) intercostal catheter with immediate wall suction",
+        "correct": false,
+        "rationale": "Large-bore catheters are not recommended for PSP. Small-bore catheters are equally effective with fewer complications. Routine suction is not recommended initially. (Source: BTS Guideline: Spontaneous Pneumothorax)",
+        "source_refs": [
+          "BTS Guideline: Spontaneous Pneumothorax"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "The BTS algorithm for PSP: observe if small and stable; aspirate if large or symptomatic; drain if aspiration fails. Small-bore drains (10-14 Fr) are preferred. Surgical referral is indicated for persistent air leak beyond 48-72 hours or second recurrence.",
+      "key_points": [
+        "BTS PSP algorithm: observe if small; aspirate if large; drain if aspiration fails",
+        "Small-bore intercostal catheters are recommended over large-bore for PSP",
+        "Suction is not routinely applied initially",
+        "Surgical referral if air leak persists beyond 48-72 hours or on second recurrence"
+      ],
+      "pearls": "The recurrence rate after a first PSP is 30-50% within 5 years - smoking cessation reduces recurrence by approximately 40%."
+    },
+    "sources": [
+      {
+        "label": "BTS Guideline: Spontaneous Pneumothorax",
+        "url": "https://thorax.bmj.com/content/65/Suppl_2/ii18"
+      },
+      {
+        "label": "Therapeutic Guidelines: Respiratory",
+        "url": "https://www.tg.org.au"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-aodiss-001",
+    "topic": "Medicine",
+    "subtopic": "Cardiology",
+    "subtopic_detail": "Type A vs Type B aortic dissection management",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "aortic dissection",
+      "esmolol"
+    ],
+    "stem": "A 62-year-old man with poorly controlled hypertension presents with sudden-onset severe tearing chest pain radiating to his back. He is diaphoretic. His blood pressure is markedly different between arms. CT aortogram reveals an intimal flap originating in the ascending aorta and extending into the descending thoracic aorta. There is no pericardial effusion and his aortic valve is competent.",
+    "data_table": {
+      "Vital signs": "HR 104, BP 198/112 right arm, 152/88 left arm, RR 22, SpO2 95% on room air",
+      "Investigations": "CT aortogram: intimal flap arising 3 cm above the aortic valve extending through the arch into the descending thoracic aorta (Stanford Type A), true lumen patent, no malperfusion, no pericardial effusion",
+      "Examination": "Equal femoral pulses, no new murmur, no focal neurology"
+    },
+    "lead_in": "What is the most appropriate management approach?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "IV nitroprusside infusion to target systolic BP below 120 mmHg and surgical consultation",
+        "correct": false,
+        "rationale": "Nitroprusside causes reflex tachycardia increasing aortic wall shear stress. It should never be used as sole agent in dissection. The first-line is IV beta-blocker. Type A dissection requires emergency surgery. (Source: ESC Guideline: Aortic Diseases)",
+        "source_refs": [
+          "ESC Guideline: Aortic Diseases"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "IV esmolol infusion targeting HR below 60 and manage medically with serial CT surveillance",
+        "correct": false,
+        "rationale": "Medical management alone is appropriate for UNCOMPLICATED Type B dissection. Type A carries 1-2% mortality per hour without surgery. Type A requires emergency surgical repair. (Source: ESC Guideline: Aortic Diseases)",
+        "source_refs": [
+          "ESC Guideline: Aortic Diseases"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Emergency endovascular thoracic stent-graft repair as the primary intervention",
+        "correct": false,
+        "rationale": "TEVAR is preferred for complicated Type B dissection. Type A involving the ascending aorta requires open surgical repair due to proximity to coronary ostia and need for valve assessment. (Source: ESC Guideline: Aortic Diseases)",
+        "source_refs": [
+          "ESC Guideline: Aortic Diseases"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "IV hydralazine to achieve rapid BP control and monitor in ICU for 72 hours before deciding on surgery",
+        "correct": false,
+        "rationale": "Hydralazine causes reflex tachycardia and is contraindicated in dissection. Waiting 72 hours for Type A dissection would result in unacceptable mortality. (Source: ESC Guideline: Aortic Diseases)",
+        "source_refs": [
+          "ESC Guideline: Aortic Diseases"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "IV esmolol infusion targeting HR below 60 and SBP 100-120 mmHg with emergency open surgical repair",
+        "correct": true,
+        "rationale": "Type A dissection is a surgical emergency. Medical stabilisation with IV beta-blockade targets HR below 60 and SBP 100-120 mmHg to reduce aortic wall shear stress while emergency open surgical repair is arranged. Beta-blockers reduce both HR and dp/dt. (Source: ESC Guideline: Aortic Diseases)",
+        "source_refs": [
+          "ESC Guideline: Aortic Diseases",
+          "Therapeutic Guidelines: Cardiovascular"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Aortic dissection management depends on anatomical classification. Type A (ascending aorta) requires emergency open surgical repair. Type B (descending only) is managed medically unless complicated. Medical stabilisation centres on IV beta-blockade to reduce heart rate and blood pressure.",
+      "key_points": [
+        "Type A dissection is a surgical emergency with mortality 1-2% per hour untreated",
+        "Type B is managed medically unless complicated",
+        "IV beta-blockade is first-line: target HR below 60, SBP 100-120",
+        "Vasodilators causing reflex tachycardia are contraindicated as sole agents"
+      ],
+      "pearls": "Esmolol is preferred over labetalol in acute aortic dissection because its ultra-short half-life (9 minutes) allows rapid titration and cessation if the patient becomes hypotensive during surgical preparation."
+    },
+    "sources": [
+      {
+        "label": "ESC Guideline: Aortic Diseases",
+        "url": "https://academic.oup.com/eurheartj/article/35/41/2873/407693"
+      },
+      {
+        "label": "Therapeutic Guidelines: Cardiovascular",
+        "url": "https://www.tg.org.au"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-derme-001",
+    "topic": "Medicine",
+    "subtopic": "Dermatology",
+    "subtopic_detail": "TEN management and SCORTEN prognostic scoring",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "SJS-TEN",
+      "SCORTEN"
+    ],
+    "stem": "A 55-year-old woman is transferred to the burns unit with progressive painful erythroderma and skin detachment over 4 days. She was started on allopurinol 6 weeks ago for recurrent gout. On admission, greater than 40% of her body surface area shows full-thickness epidermal detachment with positive Nikolsky sign. Her mucous membranes are severely involved with haemorrhagic crusting of the lips and bilateral conjunctival pseudomembrane formation. She is oliguric.",
+    "data_table": {
+      "Vital signs": "T 38.6, HR 118, BP 92/58, RR 26, SpO2 92% on 6 L nasal prongs",
+      "Investigations": "Na+ 132 mmol/L, K+ 4.8 mmol/L, urea 18.4 mmol/L, creatinine 186 micromol/L, BSL 14.2 mmol/L, bicarbonate 18 mmol/L, albumin 22 g/L, WCC 2.8 x10^9/L",
+      "SCORTEN": "Age >40 (1), HR >120 (0), BSA >10% (1), urea >10 (1), glucose >14 (1), bicarbonate <20 (1) = 5/7"
+    },
+    "lead_in": "What is the most important immediate management priority alongside fluid resuscitation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Cease allopurinol permanently and initiate wound care in a burns unit environment",
+        "correct": true,
+        "rationale": "The immediate priority in TEN is identifying and permanently withdrawing the causative drug. Allopurinol is one of the most common causes of SJS-TEN globally and carries a strong HLA-B*5801 association. Burns unit wound care with non-adherent dressings, fluid management, temperature regulation, and nutritional support are the cornerstones. SCORTEN of 5 predicts mortality exceeding 60%. (Source: BAD Guideline: SJS-TEN)",
+        "source_refs": [
+          "BAD Guideline: SJS-TEN",
+          "Therapeutic Guidelines: Dermatology"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Start IV methylprednisolone 1 g daily pulse therapy for 3 consecutive days",
+        "correct": false,
+        "rationale": "The role of systemic corticosteroids in TEN is controversial. Observational data suggest they may increase infection risk and mortality. Drug withdrawal and supportive care in a burns unit are the established cornerstones. (Source: BAD Guideline: SJS-TEN)",
+        "source_refs": [
+          "BAD Guideline: SJS-TEN"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Administer IV immunoglobulin 3 g/kg total dose over 3-4 consecutive days",
+        "correct": false,
+        "rationale": "IVIG evidence is conflicting - several studies have not shown consistent mortality benefit. IVIG is not prioritised over drug cessation and burns unit supportive care. (Source: BAD Guideline: SJS-TEN)",
+        "source_refs": [
+          "BAD Guideline: SJS-TEN"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence oral cyclosporin 3 mg/kg daily as the primary disease-modifying agent",
+        "correct": false,
+        "rationale": "Cyclosporin has emerging evidence but is not established as primary management. The renal impairment (creatinine 186) may limit its use. Drug withdrawal and specialist supportive care remain fundamental. (Source: BAD Guideline: SJS-TEN)",
+        "source_refs": [
+          "BAD Guideline: SJS-TEN"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Apply silver sulfadiazine to affected areas and arrange outpatient dermatology review",
+        "correct": false,
+        "rationale": "Silver sulfadiazine is a sulfonamide - sulfonamides are themselves a common cause of SJS-TEN. Its use in TEN is contraindicated. Non-adherent dressings are preferred. (Source: Therapeutic Guidelines: Dermatology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Dermatology"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "TEN is defined by epidermal detachment exceeding 30% BSA. SCORTEN score of 5 predicts over 60% mortality. Management centres on immediate drug withdrawal, burns unit care, wound management, fluid resuscitation, and prevention of infection. Immunomodulatory therapies remain debated.",
+      "key_points": [
+        "Immediate permanent withdrawal of the causative drug is the most impactful intervention",
+        "SCORTEN is calculated within 24 hours and predicts mortality",
+        "Burns unit care with non-adherent dressings is essential - avoid silver sulfadiazine",
+        "HLA-B*5801 testing before allopurinol is recommended in high-risk populations including Aboriginal Australians"
+      ],
+      "pearls": "HLA-B*5801 prevalence is 6-8% in Aboriginal Australian and Southeast Asian populations versus less than 2% in European populations - pre-prescribing genotyping in high-risk groups virtually eliminates allopurinol-induced SJS-TEN risk."
+    },
+    "sources": [
+      {
+        "label": "BAD Guideline: SJS-TEN",
+        "url": "https://onlinelibrary.wiley.com/doi/10.1111/bjd.14530"
+      },
+      {
+        "label": "Therapeutic Guidelines: Dermatology",
+        "url": "https://www.tg.org.au"
+      }
+    ],
+    "reference_ranges": [
+      "uec",
+      "glucose_hba1c",
+      "fbc"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-acrev-001",
+    "topic": "Medicine",
+    "subtopic": "Haematology",
+    "subtopic_detail": "Warfarin reversal in life-threatening bleeding",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "warfarin",
+      "prothrombinex",
+      "vitamin K"
+    ],
+    "stem": "A 74-year-old man on warfarin for mechanical mitral valve replacement presents with large-volume haematemesis. He is haemodynamically unstable. His INR returns at 8.2. Gastroscopy is planned urgently once coagulation is corrected.",
+    "data_table": {
+      "Vital signs": "HR 118, BP 88/54, RR 24, SpO2 94% on room air",
+      "Investigations": "INR 8.2, Hb 72 g/L (baseline 132), platelets 188 x10^9/L, fibrinogen 2.8 g/L",
+      "Medications": "Warfarin 6 mg daily, atorvastatin 40 mg daily, bisoprolol 5 mg daily"
+    },
+    "lead_in": "What is the most appropriate coagulation reversal strategy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "IV vitamin K 10 mg alone and recheck INR in 6 hours before proceeding",
+        "correct": false,
+        "rationale": "Vitamin K alone takes 6-8 hours to reverse the INR and is inadequate for life-threatening bleeding requiring immediate correction. It must be combined with PCC. (Source: ASTH Guideline: Warfarin Reversal)",
+        "source_refs": [
+          "ASTH Guideline: Warfarin Reversal"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "IV prothrombinex-VF 50 IU/kg plus IV vitamin K 5 mg and packed red cell transfusion",
+        "correct": true,
+        "rationale": "Life-threatening bleeding requires immediate reversal with prothrombinex-VF 50 IU/kg IV plus IV vitamin K 5 mg (for sustained reversal) plus packed RBC transfusion. Prothrombinex-VF reverses INR within minutes. Recheck INR within 30 minutes. (Source: ASTH Guideline: Warfarin Reversal)",
+        "source_refs": [
+          "ASTH Guideline: Warfarin Reversal",
+          "AMH"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Fresh frozen plasma 15 mL/kg and IV vitamin K 1 mg with blood group crossmatch",
+        "correct": false,
+        "rationale": "FFP is slower, requires large volumes, and is less effective than PCC. The vitamin K dose of 1 mg is subtherapeutic for life-threatening bleeding. PCC is first-line in Australia. (Source: ASTH Guideline: Warfarin Reversal)",
+        "source_refs": [
+          "ASTH Guideline: Warfarin Reversal"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Recombinant factor VIIa 90 mcg/kg IV as a single dose with oral vitamin K 10 mg",
+        "correct": false,
+        "rationale": "rFVIIa is not recommended for routine warfarin reversal. It is expensive, has a short half-life, and carries significant thrombotic risk. Oral vitamin K is inappropriate in a patient with haematemesis. (Source: ASTH Guideline: Warfarin Reversal)",
+        "source_refs": [
+          "ASTH Guideline: Warfarin Reversal"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Tranexamic acid 1 g IV plus cryoprecipitate 10 units and withhold further warfarin",
+        "correct": false,
+        "rationale": "TXA is an antifibrinolytic that does not reverse warfarin. Cryoprecipitate provides fibrinogen and factor VIII but does not replace vitamin K-dependent factors depleted by warfarin. (Source: AMH)",
+        "source_refs": [
+          "AMH"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Warfarin reversal in life-threatening bleeding requires prothrombinex-VF (PCC) 50 IU/kg IV plus IV vitamin K 5 mg. PCC reverses INR within minutes. Vitamin K provides sustained reversal as PCC factors are consumed. FFP is second-line when PCC unavailable.",
+      "key_points": [
+        "Prothrombinex-VF 50 IU/kg IV is first-line for warfarin reversal in life-threatening bleeding in Australia",
+        "IV vitamin K 5 mg is given concurrently for sustained reversal",
+        "FFP is second-line when PCC unavailable",
+        "Recheck INR within 30 minutes post-PCC"
+      ],
+      "pearls": "Prothrombinex-VF is a 3-factor PCC (factors II, IX, X) used in Australia - it lacks factor VII. In most scenarios the residual factor VII is sufficient, but if INR remains elevated, consider FFP for additional factor VII."
+    },
+    "sources": [
+      {
+        "label": "ASTH Guideline: Warfarin Reversal",
+        "url": "https://www.asth.org.au/publications"
+      },
+      {
+        "label": "AMH",
+        "url": "https://amhonline.amh.net.au"
+      }
+    ],
+    "reference_ranges": [
+      "coags",
+      "fbc"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "psych-sewb-001",
+    "topic": "Psychiatry",
+    "subtopic": "Transcultural Psychiatry",
+    "subtopic_detail": "Aboriginal and Torres Strait Islander social and emotional wellbeing framework",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "SEWB",
+      "cultural safety"
+    ],
+    "stem": "A 32-year-old Aboriginal man from a rural community presents to his GP with 3 months of low mood, poor sleep, and withdrawal from family and community activities. He has recently lost his uncle, a significant elder, and has been unable to attend cultural ceremonies due to work commitments. He says he feels disconnected from his country. He is not suicidal. He is reluctant to see a psychologist, stating that previous mental health services did not understand his situation.",
+    "data_table": {
+      "Vital signs": "Normal",
+      "Examination": "Flat affect, normal cognition, no psychomotor changes, no perceptual disturbance"
+    },
+    "lead_in": "What is the most appropriate initial approach to this patient's care?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence sertraline 50 mg daily and refer to a general psychologist for CBT",
+        "correct": false,
+        "rationale": "Starting medication and referring to a general psychologist without first addressing the patient's cultural concerns and dissatisfaction with previous services risks repeating the same experience. A culturally safe approach incorporating the SEWB framework should be offered first. (Source: RANZCP: Aboriginal Mental Health)",
+        "source_refs": [
+          "RANZCP: Aboriginal Mental Health"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Explore alcohol use in detail and refer to an addiction medicine specialist",
+        "correct": false,
+        "rationale": "The patient describes moderate social alcohol use without evidence of harmful drinking. Focusing on alcohol when he presents with grief and cultural disconnection risks pathologising normal behaviour and alienating the patient. (Source: RANZCP: Aboriginal Mental Health)",
+        "source_refs": [
+          "RANZCP: Aboriginal Mental Health"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Explore his grief and disconnection using a SEWB framework and involve an Aboriginal health worker",
+        "correct": true,
+        "rationale": "The SEWB framework recognises that Aboriginal health encompasses connection to body, mind, family, community, culture, country, and spirituality. This patient's distress centres on grief and disconnection from country and ceremony. Involving an Aboriginal health worker provides culturally safe support. The SEWB framework identifies culturally embedded supports before or alongside Western therapeutic intervention. (Source: RANZCP: Aboriginal Mental Health)",
+        "source_refs": [
+          "RANZCP: Aboriginal Mental Health",
+          "Gayaa Dhuwi (Proud Spirit) Declaration"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Administer the PHQ-9 to quantify depression severity and manage accordingly",
+        "correct": false,
+        "rationale": "The PHQ-9 has not been validated in all Aboriginal populations and may not capture culturally specific expressions of distress. Applying screening tools without cultural context as the primary response misses the patient's stated concerns. (Source: RANZCP: Aboriginal Mental Health)",
+        "source_refs": [
+          "RANZCP: Aboriginal Mental Health"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Refer urgently to the community mental health team for comprehensive psychiatric assessment",
+        "correct": false,
+        "rationale": "Urgent psychiatric referral is not indicated. There is no suicidal ideation, no psychotic features, and no acute safety concerns. This patient's distress is best addressed initially in primary care with culturally appropriate support. (Source: RANZCP: Aboriginal Mental Health)",
+        "source_refs": [
+          "RANZCP: Aboriginal Mental Health"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "The SEWB framework is the accepted model for understanding Aboriginal and Torres Strait Islander mental health. It encompasses seven interconnected domains: body, mind and emotions, family and kinship, community, culture, country, and spirituality. When an Aboriginal patient presents with distress related to grief and cultural disconnection, applying this framework provides a culturally safe starting point.",
+      "key_points": [
+        "The SEWB framework encompasses body, mind, family, community, culture, country, and spirituality",
+        "Cultural disconnection and sorry business are significant sources of distress not captured by standard screening",
+        "Aboriginal health workers provide culturally safe support and navigation",
+        "Western screening tools have limited validation in Aboriginal populations"
+      ],
+      "pearls": "The Gayaa Dhuwi (Proud Spirit) Declaration establishes that Aboriginal and Torres Strait Islander SEWB requires self-determination, culturally valid definitions of wellbeing, and leadership of Aboriginal people in their own mental health care."
+    },
+    "sources": [
+      {
+        "label": "RANZCP: Aboriginal Mental Health",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications/aboriginal-and-torres-strait-islander-mental-health"
+      },
+      {
+        "label": "Gayaa Dhuwi (Proud Spirit) Declaration",
+        "url": "https://www.gayaadhuwi.org.au"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "psych-sewb-002",
+    "topic": "Psychiatry",
+    "subtopic": "Transcultural Psychiatry",
+    "subtopic_detail": "Intergenerational trauma and culturally safe psychiatric assessment",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "SEWB",
+      "intergenerational trauma",
+      "cultural safety"
+    ],
+    "stem": "A 45-year-old Torres Strait Islander woman is referred for persistent insomnia, hypervigilance, and emotional numbing for 6 months. She is a Stolen Generations survivor who was removed from her family at age 4. She has recently reconnected with extended family through a Link-Up service. She avoids hospitals and has not attended previous psychiatry appointments. Her daughter, aged 18, has also started experiencing anxiety symptoms. The GP arranged this appointment at a community-controlled Aboriginal health service.",
+    "data_table": {
+      "Vital signs": "Normal",
+      "Examination": "Guarded, avoids eye contact, flat affect, no thought disorder, denies suicidal ideation"
+    },
+    "lead_in": "Which approach best integrates evidence-based treatment with culturally appropriate care?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence prazosin for nightmares and refer to a mainstream psychologist for prolonged exposure therapy",
+        "correct": false,
+        "rationale": "Referring to a mainstream psychologist without addressing the patient's documented avoidance of non-Indigenous services risks non-attendance. Stolen Generations trauma requires specialised trauma-informed care in a culturally safe setting. (Source: RANZCP: Aboriginal Mental Health)",
+        "source_refs": [
+          "RANZCP: Aboriginal Mental Health"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Diagnose complex PTSD and commence EMDR therapy immediately at this first appointment",
+        "correct": false,
+        "rationale": "Commencing trauma processing at the first appointment is premature. Stabilisation, rapport-building, and ensuring safety are essential prerequisites. The patient's guarded presentation indicates trust has not been established. (Source: RANZCP: Aboriginal Mental Health)",
+        "source_refs": [
+          "RANZCP: Aboriginal Mental Health"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Focus exclusively on the daughter's anxiety as it is more likely to respond to standard treatment",
+        "correct": false,
+        "rationale": "Redirecting care to the daughter ignores the presenting patient's needs and misses the opportunity to address intergenerational trauma at its source. Both deserve assessment. (Source: Healing Foundation: Intergenerational Trauma)",
+        "source_refs": [
+          "Healing Foundation: Intergenerational Trauma"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Prioritise rapport-building and stabilisation, with culturally adapted trauma-informed therapy when ready",
+        "correct": true,
+        "rationale": "Stolen Generations survivors carry complex intergenerational trauma requiring a phased approach. Phase 1 focuses on safety, stabilisation, and rapport within a culturally safe setting. Aboriginal health worker involvement is essential. Trauma-focused therapy is introduced only after adequate stabilisation. Cultural identity restoration and reconnection are therapeutic in themselves. (Source: RANZCP: Aboriginal Mental Health)",
+        "source_refs": [
+          "RANZCP: Aboriginal Mental Health",
+          "Healing Foundation: Intergenerational Trauma"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Commence venlafaxine 75 mg daily for presumed PTSD and review in 4 weeks at the hospital clinic",
+        "correct": false,
+        "rationale": "Starting pharmacotherapy without adequate assessment and rapport is premature. Scheduling follow-up at a hospital clinic contradicts the GP's choice of community-controlled service and the patient's avoidance of hospital settings. (Source: RANZCP: Aboriginal Mental Health)",
+        "source_refs": [
+          "RANZCP: Aboriginal Mental Health"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Stolen Generations survivors carry complex trauma from childhood removal, institutional abuse, and cultural disconnection. Evidence-based care requires a phased trauma-informed approach beginning with safety and stabilisation, delivered within culturally safe settings. Community-controlled services provide the most appropriate setting. Cultural identity restoration and Aboriginal health worker involvement are therapeutic components.",
+      "key_points": [
+        "Stolen Generations trauma is complex and intergenerational",
+        "Phased treatment: stabilisation first, trauma processing only after safety and rapport",
+        "Community-controlled Aboriginal health services provide culturally safe treatment",
+        "Cultural identity restoration and reconnection are therapeutic in themselves"
+      ],
+      "pearls": "The Healing Foundation's research demonstrates that Stolen Generations survivors have 1.5 to 2 times higher rates of psychological distress than non-removed Aboriginal people, and their children also show elevated rates - making family-inclusive, intergenerational approaches essential."
+    },
+    "sources": [
+      {
+        "label": "RANZCP: Aboriginal Mental Health",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications/aboriginal-and-torres-strait-islander-mental-health"
+      },
+      {
+        "label": "Healing Foundation: Intergenerational Trauma",
+        "url": "https://healingfoundation.org.au/intergenerational-trauma/"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "psych-sewb-003",
+    "topic": "Psychiatry",
+    "subtopic": "Transcultural Psychiatry",
+    "subtopic_detail": "Sorry Business and culturally safe bereavement support",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "SEWB",
+      "bereavement",
+      "cultural safety"
+    ],
+    "stem": "A 28-year-old Aboriginal woman presents to the emergency department with acute distress, wailing, and self-inflicted scratches to her arms. Her cousin explains that a close family member passed away 3 days ago. The patient is engaged in Sorry Business and has been participating in cultural grieving practices. She is not suicidal and tells you directly that the scratching is part of her cultural expression of grief. Her cousin confirms this and says the family is supporting her. You are the intern in the emergency department.",
+    "data_table": {
+      "Vital signs": "HR 98, BP 128/82, RR 20, SpO2 99% on room air",
+      "Examination": "Superficial linear scratches to bilateral forearms, distressed but oriented, no thought disorder, no psychotic features"
+    },
+    "lead_in": "What is the most appropriate response?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Initiate an involuntary psychiatric assessment under the Mental Health Act for self-harm",
+        "correct": false,
+        "rationale": "Involuntary assessment is inappropriate when the patient is not mentally ill, has capacity, denies suicidal intent, and the self-injury is culturally recognised. Applying the MHA to cultural practices is culturally unsafe. (Source: RANZCP: Aboriginal Mental Health)",
+        "source_refs": [
+          "RANZCP: Aboriginal Mental Health"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Commence lorazepam 1 mg oral for acute distress and refer to crisis mental health team",
+        "correct": false,
+        "rationale": "Sedating a patient engaged in culturally appropriate grieving is not indicated. Crisis team referral pathologises a cultural grief response. (Source: RANZCP: Aboriginal Mental Health)",
+        "source_refs": [
+          "RANZCP: Aboriginal Mental Health"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Document the self-harm and make a mandatory report to child protection services",
+        "correct": false,
+        "rationale": "There is no child involved. The patient is a 28-year-old adult. A child protection report has no basis here. (Source: RANZCP: Aboriginal Mental Health)",
+        "source_refs": [
+          "RANZCP: Aboriginal Mental Health"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Refer to psychiatric registrar for urgent risk assessment and overnight observation",
+        "correct": false,
+        "rationale": "The patient has clearly stated she is not suicidal, the cultural context is corroborated, the injury is superficial, and she has family support. Escalating medicalises a cultural grief response. (Source: RANZCP: Aboriginal Mental Health)",
+        "source_refs": [
+          "RANZCP: Aboriginal Mental Health"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Treat the scratches with wound care, acknowledge her grief and cultural practices, and confirm supports",
+        "correct": true,
+        "rationale": "Sorry Business is a culturally significant mourning practice that may include visible expressions of grief. When a patient and family clearly identify these as cultural grieving, the clinician should provide wound care, acknowledge the context respectfully, confirm safety, and ensure supports. Documenting the cultural context prevents future misinterpretation. (Source: RANZCP: Aboriginal Mental Health)",
+        "source_refs": [
+          "RANZCP: Aboriginal Mental Health",
+          "Gayaa Dhuwi (Proud Spirit) Declaration"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Sorry Business encompasses cultural mourning practices that may include intense emotional expression and self-inflicted scratching. Clinicians must distinguish culturally recognised grief from psychiatric self-harm. Key discriminators are the patient's own explanation, family corroboration, absence of suicidal ideation, and contextual timing around a death.",
+      "key_points": [
+        "Sorry Business may include visible expressions of grief resembling self-harm but culturally distinct",
+        "The patient's and family's explanation of cultural context should be respected and documented",
+        "Involuntary assessment or sedation of cultural grief is inappropriate",
+        "Wound care should still be provided for any injuries requiring attention"
+      ],
+      "pearls": "Sorry Business refers broadly to cultural obligations around death and mourning, including funeral preparations, smoking ceremonies, and avoidance of the deceased's name - clinicians should be aware patients may need extended leave and flexible scheduling."
+    },
+    "sources": [
+      {
+        "label": "RANZCP: Aboriginal Mental Health",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications/aboriginal-and-torres-strait-islander-mental-health"
+      },
+      {
+        "label": "Gayaa Dhuwi (Proud Spirit) Declaration",
+        "url": "https://www.gayaadhuwi.org.au"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "psych-trauma-001",
+    "topic": "Psychiatry",
+    "subtopic": "Anxiety and Trauma Disorders",
+    "subtopic_detail": "First-line psychotherapy for PTSD",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "PTSD",
+      "trauma-focused CBT"
+    ],
+    "stem": "A 34-year-old female police officer presents 4 months after witnessing a fatal motor vehicle accident involving a child. She reports intrusive memories, nightmares 3-4 times per week, avoidance of the accident location, emotional numbing, irritability, and hyperstartle response. She meets DSM-5 criteria for PTSD. She has no psychiatric history and is willing to engage in treatment.",
+    "data_table": {
+      "Vital signs": "Normal",
+      "Examination": "Anxious affect, tearful when discussing the event, oriented and cooperative, no suicidal ideation"
+    },
+    "lead_in": "What is the most appropriate first-line treatment recommendation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Trauma-focused cognitive behavioural therapy with a trained therapist",
+        "correct": true,
+        "rationale": "Australian (Phoenix Australia) and international guidelines recommend trauma-focused psychological therapy as first-line for PTSD. TF-CBT has the strongest evidence base with effect sizes exceeding pharmacotherapy. SSRIs are second-line. (Source: Phoenix Australia: PTSD Guidelines)",
+        "source_refs": [
+          "Phoenix Australia: PTSD Guidelines",
+          "RANZCP CPG: PTSD"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Sertraline 50 mg daily titrated to 200 mg as the primary treatment",
+        "correct": false,
+        "rationale": "SSRIs are evidence-based but second-line to trauma-focused psychological therapy. In an engaged patient willing to participate, psychological treatment should be offered first. (Source: Phoenix Australia: PTSD Guidelines)",
+        "source_refs": [
+          "Phoenix Australia: PTSD Guidelines"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Non-trauma-focused supportive counselling focusing on current stressors",
+        "correct": false,
+        "rationale": "Non-trauma-focused therapies are inferior to trauma-focused approaches. Australian guidelines specifically recommend against them as primary treatment. (Source: Phoenix Australia: PTSD Guidelines)",
+        "source_refs": [
+          "Phoenix Australia: PTSD Guidelines"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Prazosin 1 mg at night titrated for nightmares alongside relaxation training",
+        "correct": false,
+        "rationale": "Prazosin addresses nightmares specifically but does not treat the full spectrum of PTSD symptoms. Relaxation training alone is also not first-line. (Source: Phoenix Australia: PTSD Guidelines)",
+        "source_refs": [
+          "Phoenix Australia: PTSD Guidelines"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Psychological debriefing within 1 week and venlafaxine 75 mg daily",
+        "correct": false,
+        "rationale": "Psychological debriefing is NOT recommended and may be harmful. Australian guidelines explicitly advise against single-session debriefing. (Source: Phoenix Australia: PTSD Guidelines)",
+        "source_refs": [
+          "Phoenix Australia: PTSD Guidelines"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "PTSD treatment guidelines universally recommend trauma-focused psychological therapy as first-line. TF-CBT includes gradual exposure, cognitive restructuring, and trauma narrative development. Pharmacotherapy with SSRIs is second-line. Critical incident debriefing is contraindicated.",
+      "key_points": [
+        "Trauma-focused CBT is first-line for PTSD",
+        "SSRIs are second-line when psychotherapy is unavailable or insufficient",
+        "Psychological debriefing is contraindicated",
+        "Non-trauma-focused therapies are inferior"
+      ],
+      "pearls": "EMDR has equivalent efficacy to TF-CBT for PTSD and is recommended as an alternative first-line therapy by NICE and Phoenix Australia - the choice depends on patient preference and therapist availability."
+    },
+    "sources": [
+      {
+        "label": "Phoenix Australia: PTSD Guidelines",
+        "url": "https://www.phoenixaustralia.org/australian-guidelines-for-ptsd/"
+      },
+      {
+        "label": "RANZCP CPG: PTSD",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "psych-trauma-002",
+    "topic": "Psychiatry",
+    "subtopic": "Anxiety and Trauma Disorders",
+    "subtopic_detail": "Complex PTSD phased treatment approach",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "complex PTSD",
+      "DBT",
+      "phase-based treatment"
+    ],
+    "stem": "A 29-year-old woman is referred for persistent trauma symptoms following years of childhood sexual abuse. She has difficulties with emotional regulation, oscillating between rage and dissociation. She has unstable relationships and chronic feelings of emptiness and shame. She frequently dissociates under stress. She has been diagnosed with BPD but her psychologist believes complex PTSD is more appropriate. She has attempted standard TF-CBT twice before but disengaged both times after becoming overwhelmed during exposure components.",
+    "data_table": {
+      "Vital signs": "Normal",
+      "Examination": "Dysphoric affect, episodes of dissociation during interview, no active suicidal ideation, insight present"
+    },
+    "lead_in": "What is the most appropriate therapeutic approach?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Restart standard prolonged exposure therapy with increased session frequency",
+        "correct": false,
+        "rationale": "This patient has twice disengaged from standard exposure therapy. Repeating the approach that caused decompensation is clinically inappropriate. A phased model is needed. (Source: ISTSS: Complex PTSD Treatment Guidelines)",
+        "source_refs": [
+          "ISTSS: Complex PTSD Treatment Guidelines"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Commence phase-based treatment with stabilisation skills training before any trauma processing",
+        "correct": true,
+        "rationale": "Complex PTSD from prolonged interpersonal trauma often presents with emotional dysregulation and dissociation beyond core PTSD. The expert consensus is phase-based treatment: Phase 1 stabilisation and affect regulation skills (drawing from DBT), Phase 2 trauma processing, Phase 3 social reconnection. This patient's dissociation and prior decompensation mandate a longer stabilisation phase. (Source: ISTSS: Complex PTSD Treatment Guidelines)",
+        "source_refs": [
+          "ISTSS: Complex PTSD Treatment Guidelines",
+          "Phoenix Australia: PTSD Guidelines"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Prescribe venlafaxine 225 mg daily and defer all psychological therapy until mood stabilises",
+        "correct": false,
+        "rationale": "Pharmacotherapy alone is insufficient for complex PTSD. The stabilisation phase of psychological therapy should begin alongside any pharmacological intervention. (Source: Phoenix Australia: PTSD Guidelines)",
+        "source_refs": [
+          "Phoenix Australia: PTSD Guidelines"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Refer for intensive EMDR therapy with daily sessions over a 2-week block",
+        "correct": false,
+        "rationale": "Intensive daily sessions are inappropriate for this patient. Her dissociation and decompensation history indicate she needs stabilisation first. Intensive protocols are for single-event trauma with good affect regulation. (Source: ISTSS: Complex PTSD Treatment Guidelines)",
+        "source_refs": [
+          "ISTSS: Complex PTSD Treatment Guidelines"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Commence sodium valproate for mood instability and group interpersonal therapy",
+        "correct": false,
+        "rationale": "Sodium valproate is for bipolar disorder, not complex PTSD. Emotional dysregulation in complex PTSD is better addressed through DBT skills training. Group therapy may eventually help but is not appropriate as initial intervention. (Source: RANZCP CPG: PTSD)",
+        "source_refs": [
+          "RANZCP CPG: PTSD"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Complex PTSD (ICD-11) from prolonged interpersonal trauma adds emotional dysregulation, negative self-concept, and interpersonal disturbance to core PTSD symptoms. Phase-based treatment is the expert consensus: stabilisation with affect regulation skills, then trauma processing, then social reconnection. Patients with prominent dissociation often cannot tolerate standard exposure until they have acquired regulation skills.",
+      "key_points": [
+        "Complex PTSD adds emotional dysregulation, negative self-concept, and interpersonal disturbance",
+        "Phase-based: stabilisation, trauma processing, social reconnection",
+        "Standard exposure may cause decompensation in patients with prominent dissociation",
+        "DBT skills training during stabilisation builds affect regulation capacity"
+      ],
+      "pearls": "The ISTSS recommends that stabilisation phase duration be individualised - in complex PTSD with severe dissociation, this phase may last 6-12 months before trauma processing begins."
+    },
+    "sources": [
+      {
+        "label": "ISTSS: Complex PTSD Treatment Guidelines",
+        "url": "https://istss.org/treating-trauma/new-istss-prevention-and-treatment-guidelines"
+      },
+      {
+        "label": "Phoenix Australia: PTSD Guidelines",
+        "url": "https://www.phoenixaustralia.org/australian-guidelines-for-ptsd/"
+      },
+      {
+        "label": "RANZCP CPG: PTSD",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "psych-fam-001",
+    "topic": "Psychiatry",
+    "subtopic": "Psychotherapy",
+    "subtopic_detail": "Family-based treatment for adolescent anorexia nervosa",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "anorexia nervosa",
+      "family-based treatment"
+    ],
+    "stem": "A 15-year-old girl is diagnosed with anorexia nervosa. She has lost 8 kg over 6 months and her BMI is 16.2 kg/m2. She is medically stable with normal vital signs and electrolytes. She lives with both parents and a younger sibling. She is resistant to eating but her parents are engaged and motivated. This is her first eating disorder presentation.",
+    "data_table": {
+      "Vital signs": "HR 58, BP 100/64, T 36.2",
+      "Investigations": "Na+ 140, K+ 3.8, Mg2+ 0.85, phosphate 1.1, ECG normal sinus bradycardia"
+    },
+    "lead_in": "What is the most appropriate first-line outpatient treatment?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Individual CBT-E with the adolescent focusing on dietary self-monitoring",
+        "correct": false,
+        "rationale": "CBT-E is evidence-based for adults but NOT first-line for adolescent anorexia nervosa. Family-based treatment has the strongest evidence in this age group. (Source: RANZCP CPG: Eating Disorders)",
+        "source_refs": [
+          "RANZCP CPG: Eating Disorders"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Fluoxetine 20 mg daily with dietary counselling from a dietitian alone",
+        "correct": false,
+        "rationale": "SSRIs have no evidence base for anorexia nervosa treatment. A dietitian is part of the team but counselling alone is insufficient. (Source: RANZCP CPG: Eating Disorders)",
+        "source_refs": [
+          "RANZCP CPG: Eating Disorders"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Family-based treatment (Maudsley approach) with the parents managing refeeding",
+        "correct": true,
+        "rationale": "FBT is the strongest evidence-based treatment for adolescent AN. Phase 1: parents take control of eating; Phase 2: gradual return of autonomy; Phase 3: broader developmental issues. FBT achieves remission in 40-50% by end of treatment. (Source: RANZCP CPG: Eating Disorders)",
+        "source_refs": [
+          "RANZCP CPG: Eating Disorders",
+          "NICE: Eating Disorders"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Inpatient admission for supervised refeeding with nasogastric supplementation",
+        "correct": false,
+        "rationale": "This patient is medically stable. Inpatient admission is reserved for medical instability (severe bradycardia below 50, electrolyte derangement, hypothermia). First-line outpatient treatment should be attempted first. (Source: RANZCP CPG: Eating Disorders)",
+        "source_refs": [
+          "RANZCP CPG: Eating Disorders"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Adolescent-focused psychodynamic therapy with fortnightly family sessions",
+        "correct": false,
+        "rationale": "AFT has some evidence but is less effective than FBT in head-to-head trials. With engaged parents, FBT is clearly the first choice. (Source: RANZCP CPG: Eating Disorders)",
+        "source_refs": [
+          "RANZCP CPG: Eating Disorders"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "FBT is the gold-standard outpatient treatment for adolescent AN. It externalises the illness, removes blame, and empowers parents to manage refeeding. SSRIs have no role in AN treatment.",
+      "key_points": [
+        "FBT is first-line for adolescent AN per RANZCP and NICE guidelines",
+        "FBT externalises the illness and empowers parents",
+        "SSRIs have no evidence base for AN",
+        "Inpatient admission is reserved for medical instability"
+      ],
+      "pearls": "FBT achieves full remission in 40-50% of adolescents at end of treatment, with 75% in full remission at 5-year follow-up in the original Maudsley trial."
+    },
+    "sources": [
+      {
+        "label": "RANZCP CPG: Eating Disorders",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications/eating-disorders"
+      },
+      {
+        "label": "NICE: Eating Disorders",
+        "url": "https://www.nice.org.uk/guidance/ng69"
+      }
+    ],
+    "reference_ranges": [
+      "uec"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "psych-fam-002",
+    "topic": "Psychiatry",
+    "subtopic": "Psychotherapy",
+    "subtopic_detail": "Family intervention in first-episode psychosis",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "psychosis",
+      "family intervention",
+      "relapse prevention"
+    ],
+    "stem": "A 21-year-old man is recovering from a first episode of psychosis. He has been stable on risperidone 3 mg daily for 3 months and is living with his parents. His mother is highly anxious and frequently checks on him, while his father is critical and frustrated about the patient's lack of motivation. The early psychosis team notes high expressed emotion. The patient is engaged in individual CBT for psychosis.",
+    "data_table": {
+      "Vital signs": "Normal",
+      "Examination": "Mild residual negative symptoms, no positive symptoms, good rapport with treating team"
+    },
+    "lead_in": "Which additional intervention has the strongest evidence for reducing relapse?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Switch risperidone to clozapine for superior long-term relapse prevention",
+        "correct": false,
+        "rationale": "Clozapine is for treatment-resistant schizophrenia (failure of two adequate trials). This patient is stable. The modifiable risk factor here is high expressed emotion. (Source: RANZCP CPG: Schizophrenia)",
+        "source_refs": [
+          "RANZCP CPG: Schizophrenia"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Increase risperidone to 6 mg daily to reduce residual negative symptoms",
+        "correct": false,
+        "rationale": "Increasing antipsychotic dose does not improve negative symptoms and may worsen them through increased sedation and EPS. (Source: RANZCP CPG: Schizophrenia)",
+        "source_refs": [
+          "RANZCP CPG: Schizophrenia"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Add sodium valproate as an adjunctive mood stabiliser for irritability",
+        "correct": false,
+        "rationale": "The irritability is the father's frustration, not the patient's symptom. Adding medication to the patient does not address family dynamics. Family intervention is the evidence-based approach. (Source: RANZCP CPG: Schizophrenia)",
+        "source_refs": [
+          "RANZCP CPG: Schizophrenia"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence structured family intervention for psychoeducation and communication",
+        "correct": true,
+        "rationale": "High expressed emotion is one of the strongest predictors of psychotic relapse. Family intervention programs reduce relapse by approximately 50% compared to standard care alone. They include psychoeducation, communication skills training, problem-solving, and reduction of expressed emotion. (Source: RANZCP CPG: Schizophrenia)",
+        "source_refs": [
+          "RANZCP CPG: Schizophrenia",
+          "NICE: Psychosis and Schizophrenia"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Advise the patient to move out of the family home to reduce interpersonal stress",
+        "correct": false,
+        "rationale": "Advising a recovering young person to leave the family is practically unrealistic and therapeutically counterproductive. The appropriate intervention is to modify the family dynamic through structured intervention. (Source: NICE: Psychosis and Schizophrenia)",
+        "source_refs": [
+          "NICE: Psychosis and Schizophrenia"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "High expressed emotion (criticism, hostility, over-involvement) is one of the strongest modifiable predictors of psychotic relapse. Family intervention programs reduce relapse by approximately 50%. They include psychoeducation, communication skills training, and problem-solving.",
+      "key_points": [
+        "High expressed emotion predicts psychotic relapse",
+        "Family intervention reduces relapse by approximately 50%",
+        "Programs include psychoeducation, communication skills, and problem-solving",
+        "Increasing antipsychotic dose does not improve negative symptoms"
+      ],
+      "pearls": "Patients returning to high-EE households have a 9-month relapse rate of approximately 50% versus 20% in low-EE households - making family EE a stronger predictor of relapse than medication non-adherence."
+    },
+    "sources": [
+      {
+        "label": "RANZCP CPG: Schizophrenia",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications/schizophrenia"
+      },
+      {
+        "label": "NICE: Psychosis and Schizophrenia",
+        "url": "https://www.nice.org.uk/guidance/cg178"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "psych-recov-001",
+    "topic": "Psychiatry",
+    "subtopic": "Mental Health Services",
+    "subtopic_detail": "Recovery-oriented practice principles",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "recovery model",
+      "person-centred care"
+    ],
+    "stem": "A 38-year-old man with schizophrenia has been stable on paliperidone depot for 2 years. He lives in supported accommodation and attends a day program. At a care review, he expresses a strong desire to get a part-time job and move to independent housing. His case manager is concerned about relapse risk.",
+    "data_table": {
+      "Vital signs": "Normal",
+      "Examination": "Stable mental state, mild residual negative symptoms, good insight, adherent to medication"
+    },
+    "lead_in": "Which approach best reflects recovery-oriented practice?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Advise him to remain in current accommodation and consolidate his stability further",
+        "correct": false,
+        "rationale": "Prioritising clinician-determined stability over the patient's goals contradicts recovery-oriented principles. Risk-taking towards meaningful goals is part of recovery. (Source: National Framework for Recovery-Oriented Mental Health Services)",
+        "source_refs": [
+          "National Framework for Recovery-Oriented Mental Health Services"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Set a 12-month minimum stability period before considering any changes",
+        "correct": false,
+        "rationale": "Arbitrary time-based thresholds are not evidence-based and are paternalistic. He has been stable for 2 years already. (Source: National Framework for Recovery-Oriented Mental Health Services)",
+        "source_refs": [
+          "National Framework for Recovery-Oriented Mental Health Services"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Refer him for a capacity assessment to determine if he can make this decision",
+        "correct": false,
+        "rationale": "A capacity assessment is not indicated. He has insight, is adherent, and is expressing reasonable goals. Requesting capacity assessment for normal life goals is stigmatising. (Source: National Framework for Recovery-Oriented Mental Health Services)",
+        "source_refs": [
+          "National Framework for Recovery-Oriented Mental Health Services"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Support his employment goal but advise against moving from supported accommodation",
+        "correct": false,
+        "rationale": "Selectively supporting some goals while blocking others based on clinician comfort is not recovery-oriented. Both goals deserve collaborative planning. (Source: National Framework for Recovery-Oriented Mental Health Services)",
+        "source_refs": [
+          "National Framework for Recovery-Oriented Mental Health Services"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Collaboratively develop a graduated plan for employment and independent living",
+        "correct": true,
+        "rationale": "Recovery-oriented practice centres on the person's goals supported by collaborative planning. The National Framework identifies self-determination, person-centred care, supported risk-taking, and hope. The plan should include vocational rehabilitation, IPS program, staged housing transition, and relapse prevention planning. (Source: National Framework for Recovery-Oriented Mental Health Services)",
+        "source_refs": [
+          "National Framework for Recovery-Oriented Mental Health Services",
+          "RANZCP CPG: Schizophrenia"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Recovery-oriented practice prioritises the person's goals as the central organising principle of care. The Australian National Framework outlines self-determination, individually tailored support, and supported risk-taking. IPS is an evidence-based supported employment model with 55% competitive employment rates.",
+      "key_points": [
+        "Recovery is defined by the person, not the clinician",
+        "Supported risk-taking is a core principle",
+        "IPS achieves competitive employment rates of 55%",
+        "Graduated transition with contingency planning is preferred"
+      ],
+      "pearls": "IPS programs achieve competitive employment rates of 55% compared to 25% for traditional vocational rehabilitation - key principles are rapid job search, integration with mental health treatment, and ongoing in-work support."
+    },
+    "sources": [
+      {
+        "label": "National Framework for Recovery-Oriented Mental Health Services",
+        "url": "https://www.health.gov.au/resources/publications/a-national-framework-for-recovery-oriented-mental-health-services"
+      },
+      {
+        "label": "RANZCP CPG: Schizophrenia",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications/schizophrenia"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "psych-recov-002",
+    "topic": "Psychiatry",
+    "subtopic": "Mental Health Law",
+    "subtopic_detail": "Supported decision making and psychiatric advance directives",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "supported decision making",
+      "CRPD",
+      "mental health law"
+    ],
+    "stem": "A 42-year-old woman with bipolar I disorder is being treated voluntarily during a depressive episode. She has capacity and is engaged in treatment planning. She wants to create a document outlining her treatment preferences for future manic episodes, including which medications she consents to, which she refuses, and who she nominates to be involved in decisions if she loses capacity.",
+    "data_table": {
+      "Vital signs": "Normal",
+      "Examination": "Euthymic at current review, good insight, capacity confirmed"
+    },
+    "lead_in": "What is this document called and how should the psychiatrist respond?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "This is a psychiatric advance directive; support its completion and document it in clinical records",
+        "correct": true,
+        "rationale": "A psychiatric advance directive allows a person to document treatment preferences while they have capacity, for future episodes when capacity may be impaired. The CRPD and Australian mental health legislation increasingly support advance directives. The psychiatrist should facilitate completion, discuss clinical implications, and document prominently. While not absolutely binding in all jurisdictions, it must be given significant weight. (Source: RANZCP: Advance Statements)",
+        "source_refs": [
+          "RANZCP: Advance Statements",
+          "UN CRPD"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "This is a guardianship application; refer to the state guardianship tribunal",
+        "correct": false,
+        "rationale": "Guardianship appoints a substitute decision maker for someone who lacks capacity. This patient HAS capacity and is planning proactively. She does not need a guardian. (Source: RANZCP: Advance Statements)",
+        "source_refs": [
+          "RANZCP: Advance Statements"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "This is inappropriate; treatment decisions during a manic episode must be made by the treating team",
+        "correct": false,
+        "rationale": "Refusing to support an advance directive is contrary to supported decision making principles, the CRPD, and contemporary mental health legislation. Advance directives must be given significant weight. (Source: UN CRPD)",
+        "source_refs": [
+          "UN CRPD"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "This is an enduring power of attorney; refer to a solicitor for legal drafting",
+        "correct": false,
+        "rationale": "An EPOA allows a nominated person to make decisions on behalf. What she describes - documenting her OWN preferences - is an advance directive, which can be completed with the treating psychiatrist. (Source: RANZCP: Advance Statements)",
+        "source_refs": [
+          "RANZCP: Advance Statements"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Advise against completing this document as it may compromise her future clinical care",
+        "correct": false,
+        "rationale": "Discouraging advance directives is contrary to recovery-oriented principles and the CRPD. They improve engagement and reduce coercive treatment. (Source: RANZCP: Advance Statements)",
+        "source_refs": [
+          "RANZCP: Advance Statements"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Psychiatric advance directives allow people with episodic mental illness to document treatment preferences while they have capacity. They are a key tool of supported decision making, consistent with the CRPD. They improve treatment satisfaction and reduce involuntary treatment.",
+      "key_points": [
+        "PADs document treatment preferences while the person has capacity",
+        "They are a supported decision making tool consistent with the CRPD",
+        "They should be documented in clinical records and communicated to future teams",
+        "They are not absolutely binding in emergencies but must be given significant weight"
+      ],
+      "pearls": "The PULSAR study from Melbourne demonstrated that facilitated advance directive completion reduced involuntary treatment episodes by 25% and improved working alliance scores."
+    },
+    "sources": [
+      {
+        "label": "RANZCP: Advance Statements",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications"
+      },
+      {
+        "label": "UN CRPD",
+        "url": "https://www.un.org/development/desa/disabilities/convention-on-the-rights-of-persons-with-disabilities.html"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "psych-perin-001",
+    "topic": "Psychiatry",
+    "subtopic": "Perinatal Psychiatry",
+    "subtopic_detail": "SSRI use in pregnancy risk counselling",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "SSRI",
+      "pregnancy",
+      "teratogenicity"
+    ],
+    "stem": "A 30-year-old woman with recurrent major depression stable on sertraline 100 mg daily presents for preconception counselling. She had two previous severe episodes requiring hospitalisation, both occurring after stopping antidepressants. She is planning her first pregnancy. Her current PHQ-9 score is 3 (remission).",
+    "data_table": {
+      "Vital signs": "Normal",
+      "Examination": "Euthymic, normal mental state examination"
+    },
+    "lead_in": "What is the most appropriate advice regarding sertraline?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Cease sertraline immediately as all SSRIs are teratogenic in the first trimester",
+        "correct": false,
+        "rationale": "SSRIs are NOT established teratogens. Sertraline has reassuring safety data in pregnancy. Ceasing an effective antidepressant in a patient with severe recurrent depression carries high relapse risk. (Source: COPE Guideline: Mental Health Care in the Perinatal Period)",
+        "source_refs": [
+          "COPE Guideline: Mental Health Care in the Perinatal Period"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Continue sertraline through pregnancy after discussing low absolute neonatal risk",
+        "correct": true,
+        "rationale": "For women with severe recurrent depression who have relapsed upon cessation, continuing sertraline through pregnancy is generally recommended. Sertraline has one of the most reassuring safety profiles among SSRIs. Neonatal adaptation syndrome occurs in approximately 30% but is typically mild. Relapse risk upon cessation is 50-70%. (Source: COPE Guideline: Mental Health Care in the Perinatal Period)",
+        "source_refs": [
+          "COPE Guideline: Mental Health Care in the Perinatal Period",
+          "AMH"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Switch to paroxetine as it is considered the safest SSRI option in pregnancy",
+        "correct": false,
+        "rationale": "Paroxetine has the MOST concerning pregnancy data among SSRIs with a small increased risk of cardiac malformations. Switching from sertraline to paroxetine is inappropriate. (Source: COPE Guideline: Mental Health Care in the Perinatal Period)",
+        "source_refs": [
+          "COPE Guideline: Mental Health Care in the Perinatal Period"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Taper sertraline over 4 weeks and substitute with St John's wort as a natural alternative",
+        "correct": false,
+        "rationale": "St John's wort is NOT recommended in pregnancy. It has unpredictable pharmacokinetics, significant drug interactions, and minimal safety data. 'Natural' does not equate to safety. (Source: AMH)",
+        "source_refs": [
+          "AMH"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Reduce sertraline to the minimum effective dose and plan to cease by 36 weeks gestation",
+        "correct": false,
+        "rationale": "Ceasing at 36 weeks risks maternal relapse during the highest-risk peripartum period. Neonatal adaptation syndrome is relatively benign and self-limiting. Current guidelines do not recommend routine third-trimester cessation. (Source: COPE Guideline: Mental Health Care in the Perinatal Period)",
+        "source_refs": [
+          "COPE Guideline: Mental Health Care in the Perinatal Period"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Antidepressant use in pregnancy requires individualised risk-benefit analysis. For severe recurrent depression, the risks of untreated maternal depression generally outweigh the low absolute risks of SSRI exposure. Sertraline and fluoxetine have the most reassuring data. Neonatal adaptation syndrome is typically mild and self-limiting.",
+      "key_points": [
+        "Sertraline has one of the most reassuring safety profiles among SSRIs in pregnancy",
+        "Neonatal adaptation syndrome occurs in approximately 30% but is typically mild",
+        "Paroxetine has the most concerning pregnancy data among SSRIs",
+        "Cessation of effective antidepressants in recurrent depression carries 50-70% relapse risk"
+      ],
+      "pearls": "The absolute risk increase for persistent pulmonary hypertension of the newborn with late-pregnancy SSRI exposure is approximately 1-2 per 1000 above the baseline rate of 1-2 per 1000."
+    },
+    "sources": [
+      {
+        "label": "COPE Guideline: Mental Health Care in the Perinatal Period",
+        "url": "https://www.cope.org.au/health-professionals/health-professionals-3/review-of-new-perinatal-mental-health-guidelines/"
+      },
+      {
+        "label": "AMH",
+        "url": "https://amhonline.amh.net.au"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "psych-perin-002",
+    "topic": "Psychiatry",
+    "subtopic": "Perinatal Psychiatry",
+    "subtopic_detail": "Lithium management in pregnancy - peripartum dosing",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "lithium",
+      "pregnancy",
+      "bipolar disorder"
+    ],
+    "stem": "A 33-year-old woman with bipolar I disorder has continued lithium throughout pregnancy after shared decision making. She is now 36 weeks gestation and stable. Her most recent lithium level is 0.7 mmol/L. Her renal and thyroid function are normal. She is planning a vaginal delivery. Her previous manic episodes were severe, requiring ICU admission during one episode.",
+    "data_table": {
+      "Vital signs": "BP 118/72, HR 82, normal foetal heart rate",
+      "Investigations": "Lithium 0.7 mmol/L, TSH 2.8 mIU/L, creatinine 58 micromol/L"
+    },
+    "lead_in": "What is the most appropriate lithium management strategy around delivery?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Continue current lithium dose through delivery and postpartum without changes",
+        "correct": false,
+        "rationale": "Renal lithium clearance increases by 50-100% during pregnancy. At delivery, GFR drops acutely, risking toxicity if the pregnancy dose is maintained. Dose adjustment is essential. (Source: COPE Guideline: Mental Health Care in the Perinatal Period)",
+        "source_refs": [
+          "COPE Guideline: Mental Health Care in the Perinatal Period"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Cease lithium at 36 weeks to avoid neonatal toxicity and restart 48 hours postpartum",
+        "correct": false,
+        "rationale": "Ceasing lithium leaves the mother unprotected during the highest-risk period for bipolar relapse. The early postpartum period carries 25-50% relapse risk in bipolar I. (Source: COPE Guideline: Mental Health Care in the Perinatal Period)",
+        "source_refs": [
+          "COPE Guideline: Mental Health Care in the Perinatal Period"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Reduce lithium to the pre-pregnancy dose at onset of labour and monitor levels closely postpartum",
+        "correct": true,
+        "rationale": "Reduce to the pre-pregnancy dose at onset of labour to account for the abrupt GFR decline at delivery. Monitor levels within 24 hours of delivery and twice weekly for 2 weeks. Adequate hydration during labour is essential. Lithium should be withheld during dehydration. Lithium must not be ceased entirely due to extremely high postpartum relapse risk. (Source: COPE Guideline: Mental Health Care in the Perinatal Period)",
+        "source_refs": [
+          "COPE Guideline: Mental Health Care in the Perinatal Period",
+          "RANZCP CPG: Bipolar Disorder"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Switch from lithium to sodium valproate at 36 weeks for safer peripartum management",
+        "correct": false,
+        "rationale": "Sodium valproate is absolutely contraindicated in women of reproductive age due to teratogenicity. Switching during pregnancy is inappropriate. Medication switches during the peripartum period also increase relapse risk. (Source: AMH)",
+        "source_refs": [
+          "AMH"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Increase lithium dose by 25% from 36 weeks to ensure therapeutic levels during delivery stress",
+        "correct": false,
+        "rationale": "Increasing dose would exacerbate post-delivery toxicity risk when GFR drops acutely. The opposite - dose reduction - is needed. (Source: COPE Guideline: Mental Health Care in the Perinatal Period)",
+        "source_refs": [
+          "COPE Guideline: Mental Health Care in the Perinatal Period"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Lithium pharmacokinetics change significantly during pregnancy. At delivery, GFR returns to baseline abruptly, requiring dose reduction. The recommended strategy is to reduce to the pre-pregnancy dose at onset of labour, maintain hydration, and monitor levels closely postpartum. Lithium should not be ceased entirely due to extremely high relapse risk.",
+      "key_points": [
+        "Renal lithium clearance increases 50-100% during pregnancy",
+        "At delivery, GFR drops acutely - dose must be reduced",
+        "Monitor lithium levels within 24 hours of delivery and twice weekly for 2 weeks",
+        "Never cease lithium entirely peripartum in severe bipolar I"
+      ],
+      "pearls": "The postpartum relapse risk in bipolar I is approximately 25-50% with treatment, rising to 70% or higher if mood stabilisers are ceased - making the early postpartum period the single highest-risk phase."
+    },
+    "sources": [
+      {
+        "label": "COPE Guideline: Mental Health Care in the Perinatal Period",
+        "url": "https://www.cope.org.au/health-professionals/health-professionals-3/review-of-new-perinatal-mental-health-guidelines/"
+      },
+      {
+        "label": "RANZCP CPG: Bipolar Disorder",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications/bipolar-disorder"
+      },
+      {
+        "label": "AMH",
+        "url": "https://amhonline.amh.net.au"
+      }
+    ],
+    "reference_ranges": [
+      "uec",
+      "thyroid"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "psych-foren-001",
+    "topic": "Psychiatry",
+    "subtopic": "Forensic Psychiatry",
+    "subtopic_detail": "Fitness to stand trial assessment",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "fitness to stand trial",
+      "forensic psychiatry"
+    ],
+    "stem": "A 35-year-old man with treatment-resistant schizophrenia has been charged with serious assault. During psychiatric assessment, he can name his solicitor and understands the charge. However, he holds a fixed delusional belief that his solicitor is conspiring with the prosecution against him and refuses to communicate with his lawyer. He cannot challenge prosecution witnesses because he believes they are government agents. He is on clozapine 400 mg daily with a level of 0.42 mg/L.",
+    "data_table": {
+      "Vital signs": "Normal",
+      "Examination": "Persecutory delusions involving legal representatives, mild thought disorder, suspicious and guarded affect, orientated"
+    },
+    "lead_in": "What is the most appropriate opinion regarding fitness to stand trial?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Fit to stand trial because he understands the charge and can identify his solicitor",
+        "correct": false,
+        "rationale": "Understanding and identifying are necessary but not sufficient. The legal test requires functional capacity to instruct counsel, follow proceedings, and challenge evidence. His delusions prevent this. (Source: RANZCP Forensic Psychiatry Guidelines)",
+        "source_refs": [
+          "RANZCP Forensic Psychiatry Guidelines"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Unfit on permanent basis with recommendation for indefinite forensic order",
+        "correct": false,
+        "rationale": "Fitness is not permanent. Treatment optimisation may improve the clinical picture. The clozapine level (0.42) has room for dose adjustment. (Source: RANZCP Forensic Psychiatry Guidelines)",
+        "source_refs": [
+          "RANZCP Forensic Psychiatry Guidelines"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Fitness assessment is premature; defer until clozapine level is above 0.60 mg/L",
+        "correct": false,
+        "rationale": "The court has requested the assessment. The assessor should provide their opinion on current fitness while noting treatment optimisation may improve the picture. Deferring is not appropriate. (Source: RANZCP Forensic Psychiatry Guidelines)",
+        "source_refs": [
+          "RANZCP Forensic Psychiatry Guidelines"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Currently unfit due to inability to instruct counsel; recommend treatment and reassessment",
+        "correct": true,
+        "rationale": "The Presser criteria require the accused to understand the charge AND be able to instruct counsel, follow proceedings, and challenge evidence. This patient meets some criteria but fails on instructing counsel due to persecutory delusions. The opinion should be 'currently unfit' with recommendation for treatment optimisation and reassessment. (Source: RANZCP Forensic Psychiatry Guidelines)",
+        "source_refs": [
+          "RANZCP Forensic Psychiatry Guidelines"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Fit to stand trial with a recommendation for a support person during proceedings",
+        "correct": false,
+        "rationale": "A support person cannot overcome active psychotic symptoms preventing the lawyer-client relationship. He is currently unfit due to the nature of his symptoms. (Source: RANZCP Forensic Psychiatry Guidelines)",
+        "source_refs": [
+          "RANZCP Forensic Psychiatry Guidelines"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Fitness to stand trial (Presser criteria) requires both understanding AND functional capacity to participate in one's defence. Knowledge alone is insufficient. Current unfitness due to treatable illness should include a recommendation for treatment and reassessment.",
+      "key_points": [
+        "Fitness requires both understanding AND functional capacity to instruct counsel and challenge evidence",
+        "Presser criteria include ability to instruct counsel, follow proceedings, and challenge evidence",
+        "Current unfitness due to treatable illness warrants treatment and reassessment recommendation",
+        "Fitness can change with treatment - it is not permanent"
+      ],
+      "pearls": "In Australian jurisdictions, unfitness does not equate to acquittal - the accused may be placed on a forensic order, and if fitness is not restored within 12-24 months, a special hearing determines whether they committed the act."
+    },
+    "sources": [
+      {
+        "label": "RANZCP Forensic Psychiatry Guidelines",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "psych-foren-002",
+    "topic": "Psychiatry",
+    "subtopic": "Forensic Psychiatry",
+    "subtopic_detail": "Structured professional judgement in violence risk assessment",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "risk assessment",
+      "HCR-20",
+      "forensic psychiatry"
+    ],
+    "stem": "A 40-year-old man with schizophrenia is being assessed by the forensic psychiatry team prior to a tribunal review. He was found not guilty by reason of mental impairment for a serious violent offence 5 years ago. He has been in a forensic facility since. His psychosis is well controlled on long-acting injectable aripiprazole. He has completed a violence prevention program. The tribunal has asked for a violence risk assessment.",
+    "data_table": {
+      "Vital signs": "Normal",
+      "Examination": "No active psychotic symptoms, good insight, cooperative, expresses remorse"
+    },
+    "lead_in": "Which risk assessment approach is most appropriate?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Unstructured clinical judgement based on interview and clinical experience",
+        "correct": false,
+        "rationale": "Unstructured clinical judgement has poor predictive validity (AUC approximately 0.55-0.65). It is vulnerable to cognitive biases and cannot be transparently communicated to tribunals. (Source: RANZCP Forensic Psychiatry Guidelines)",
+        "source_refs": [
+          "RANZCP Forensic Psychiatry Guidelines"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Static-99R actuarial tool to quantify recidivism probability",
+        "correct": false,
+        "rationale": "Static-99R is specifically for sexual offence recidivism, not general violence risk. Using the wrong tool would provide misleading information. (Source: RANZCP Forensic Psychiatry Guidelines)",
+        "source_refs": [
+          "RANZCP Forensic Psychiatry Guidelines"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "PCL-R (Psychopathy Checklist - Revised) as the primary assessment framework",
+        "correct": false,
+        "rationale": "The PCL-R assesses psychopathic traits, which are a risk factor but do not constitute a comprehensive violence risk assessment. It does not assess dynamic risk factors or protective factors. (Source: RANZCP Forensic Psychiatry Guidelines)",
+        "source_refs": [
+          "RANZCP Forensic Psychiatry Guidelines"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "GAF (Global Assessment of Functioning) scale to quantify current functioning",
+        "correct": false,
+        "rationale": "The GAF is a general functioning scale, not a violence risk assessment tool. It does not assess historical risk factors or risk management needs. (Source: RANZCP Forensic Psychiatry Guidelines)",
+        "source_refs": [
+          "RANZCP Forensic Psychiatry Guidelines"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "HCR-20 structured professional judgement framework with scenario planning",
+        "correct": true,
+        "rationale": "The HCR-20 is the gold-standard SPJ tool for violence risk in forensic psychiatric populations. It combines 10 historical, 5 clinical, and 5 risk management factors to inform a formulated judgement with scenario planning, not a numerical probability. It is recommended by RANZCP and is well-suited to tribunal communication. (Source: RANZCP Forensic Psychiatry Guidelines)",
+        "source_refs": [
+          "RANZCP Forensic Psychiatry Guidelines",
+          "Douglas et al: HCR-20 V3"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Violence risk assessment has evolved from unstructured judgement through actuarial approaches to structured professional judgement. The HCR-20 is the most widely used SPJ tool, assessing historical, clinical, and risk management factors to inform a formulated judgement with scenario planning.",
+      "key_points": [
+        "Unstructured clinical judgement has poor predictive validity",
+        "The HCR-20 is the gold-standard SPJ tool for forensic psychiatric populations",
+        "SPJ produces a formulated risk judgement, not a numerical probability",
+        "Dynamic clinical factors are most important for conditional release decisions"
+      ],
+      "pearls": "The HCR-20 V3 dynamic clinical items (insight, violent ideation, symptoms, instability, treatment responsiveness) are the most important for conditional release decisions because they identify modifiable targets."
+    },
+    "sources": [
+      {
+        "label": "RANZCP Forensic Psychiatry Guidelines",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications"
+      },
+      {
+        "label": "Douglas et al: HCR-20 V3",
+        "url": "https://hcr-20.com"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "psych-neurocog-001",
+    "topic": "Psychiatry",
+    "subtopic": "Old Age Psychiatry",
+    "subtopic_detail": "BPSD non-pharmacological management",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "BPSD",
+      "dementia",
+      "non-pharmacological"
+    ],
+    "stem": "An 82-year-old man with moderate Alzheimer disease in residential aged care has been increasingly agitated in the late afternoon for 3 weeks, pacing and calling out. There is no acute illness, pain, urinary retention, constipation, or medication changes. A urine dipstick and blood tests are unremarkable.",
+    "data_table": {
+      "Vital signs": "Normal",
+      "Investigations": "FBC normal, UEC normal, CRP 4 mg/L, urinalysis negative, BSL 6.2 mmol/L"
+    },
+    "lead_in": "What is the most appropriate initial management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Implement structured afternoon activities, environmental changes, and carer education",
+        "correct": true,
+        "rationale": "BPSD should be managed with non-pharmacological interventions first-line after excluding physical causes. This presentation is consistent with sundowning. Evidence-based approaches include structured activities, environmental modifications, and carer education. Antipsychotics increase mortality 1.5-1.7 fold in dementia. (Source: NHMRC Clinical Practice Guidelines: Dementia)",
+        "source_refs": [
+          "NHMRC Clinical Practice Guidelines: Dementia",
+          "RANZCP: Antipsychotic Use in Dementia"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Commence risperidone 0.25 mg twice daily for behavioural symptom management",
+        "correct": false,
+        "rationale": "Antipsychotics should not be first-line for BPSD. They carry significant risks including increased mortality (1.5-1.7 fold) and stroke (2-3 fold). They should only be considered after non-pharmacological measures have been trialled. (Source: RANZCP: Antipsychotic Use in Dementia)",
+        "source_refs": [
+          "RANZCP: Antipsychotic Use in Dementia"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Add memantine 5 mg daily titrating to 20 mg for behavioural symptoms",
+        "correct": false,
+        "rationale": "Memantine has modest evidence for agitation in moderate-severe AD but is not first-line for BPSD. Non-pharmacological approaches should be implemented first. (Source: NHMRC Clinical Practice Guidelines: Dementia)",
+        "source_refs": [
+          "NHMRC Clinical Practice Guidelines: Dementia"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Increase donepezil to 23 mg daily to target behavioural symptoms more effectively",
+        "correct": false,
+        "rationale": "Higher-dose donepezil is not approved in Australia at this dose for BPSD. Non-pharmacological interventions are first-line. (Source: AMH)",
+        "source_refs": [
+          "AMH"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Commence regular lorazepam 0.5 mg three times daily for anxiety-driven agitation",
+        "correct": false,
+        "rationale": "Benzodiazepines are generally avoided in dementia due to increased fall risk, paradoxical agitation, sedation, and worsening cognition. They are associated with increased mortality. (Source: RANZCP: Antipsychotic Use in Dementia)",
+        "source_refs": [
+          "RANZCP: Antipsychotic Use in Dementia"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "BPSD affects up to 90% of people with dementia. First-line management is always non-pharmacological after excluding physical causes. Antipsychotics increase mortality 1.5-1.7 fold in dementia.",
+      "key_points": [
+        "Non-pharmacological interventions are ALWAYS first-line for BPSD",
+        "Exclude physical causes: pain, infection, constipation, delirium, medications",
+        "Antipsychotics increase mortality 1.5-1.7 fold and stroke risk 2-3 fold in dementia",
+        "Sundowning responds well to structured activities and environmental modification"
+      ],
+      "pearls": "Risperidone is the only antipsychotic with TGA approval for BPSD in Australia, restricted to a maximum of 12 weeks at 0.25-1 mg daily - any use beyond this is off-label."
+    },
+    "sources": [
+      {
+        "label": "NHMRC Clinical Practice Guidelines: Dementia",
+        "url": "https://www.nhmrc.gov.au/about-us/publications/clinical-practice-guidelines-and-principles-care-people-dementia"
+      },
+      {
+        "label": "RANZCP: Antipsychotic Use in Dementia",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications"
+      },
+      {
+        "label": "AMH",
+        "url": "https://amhonline.amh.net.au"
+      }
+    ],
+    "reference_ranges": [
+      "fbc",
+      "uec"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "psych-neurocog-002",
+    "topic": "Psychiatry",
+    "subtopic": "Old Age Psychiatry",
+    "subtopic_detail": "Pseudodementia vs early Alzheimer disease differentiation",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "pseudodementia",
+      "depression",
+      "cognitive screening"
+    ],
+    "stem": "A 72-year-old retired teacher presents with her husband who reports 8 months of progressive memory difficulties. She has stopped reading novels because she cannot follow the plot. She is withdrawn and has lost interest in her garden. She has had two previous depressive episodes (ages 48 and 61), both fully remitting with sertraline. On testing, she scores 22/30 on the MoCA. When she cannot recall a word she becomes frustrated and says 'I don't know - I can't remember anything anymore.' She gives multiple 'don't know' responses. Her verbal fluency for animals is 8 in 60 seconds. Her FDG-PET shows bilateral temporoparietal hypometabolism.",
+    "data_table": {
+      "Vital signs": "Normal",
+      "Investigations": "TSH 2.4 mIU/L, B12 380 pmol/L, folate 18 nmol/L, MoCA 22/30, GDS-15 score 11/15",
+      "FDG-PET": "Bilateral temporoparietal hypometabolism with relative frontal sparing"
+    },
+    "lead_in": "Which feature most strongly suggests the cognitive impairment is not solely attributable to depression?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "The presence of 'don't know' responses on cognitive testing",
+        "correct": false,
+        "rationale": "'Don't know' responses are actually MORE characteristic of depressive pseudodementia. Alzheimer patients typically attempt answers, producing near-miss confabulations. This feature favours depression. (Source: Lishman's Organic Psychiatry)",
+        "source_refs": [
+          "Lishman's Organic Psychiatry"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "The bilateral temporoparietal hypometabolism on FDG-PET",
+        "correct": true,
+        "rationale": "Bilateral temporoparietal hypometabolism on FDG-PET is a hallmark biomarker pattern for Alzheimer disease, with approximately 85-90% specificity. Depression-related cognitive impairment typically shows frontal or diffuse hypometabolism that normalises after treatment. This finding strongly suggests underlying neurodegenerative pathology alongside the depressive symptoms. (Source: NIA-AA Research Framework)",
+        "source_refs": [
+          "NIA-AA Research Framework",
+          "Lishman's Organic Psychiatry"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "The GDS-15 score of 11/15 confirming significant depression",
+        "correct": false,
+        "rationale": "A high GDS-15 confirms depressive symptoms but depression occurs in 30-40% of AD patients. The GDS does not help differentiate whether cognitive impairment is solely depression-driven. (Source: Lishman's Organic Psychiatry)",
+        "source_refs": [
+          "Lishman's Organic Psychiatry"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "The verbal fluency score of 8 animals in 60 seconds",
+        "correct": false,
+        "rationale": "Reduced verbal fluency occurs in both depression and early dementia. A score of 8 is abnormal but not specific enough to differentiate the two. (Source: Lishman's Organic Psychiatry)",
+        "source_refs": [
+          "Lishman's Organic Psychiatry"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "The history of two previous fully remitting depressive episodes",
+        "correct": false,
+        "rationale": "Previous episodes with recovery could support pseudodementia. But late-life depression is also a risk factor for and early manifestation of AD. Previous episodes alone do not differentiate. (Source: Lishman's Organic Psychiatry)",
+        "source_refs": [
+          "Lishman's Organic Psychiatry"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Differentiating depressive pseudodementia from early AD is one of the most challenging diagnostic problems in old age psychiatry. FDG-PET temporoparietal hypometabolism is specific to Alzheimer pathology and is not a feature of depression alone. 'Don't know' responses actually favour depression. When biomarkers suggest coexisting pathology, both conditions should be treated.",
+      "key_points": [
+        "FDG-PET temporoparietal hypometabolism is specific to Alzheimer pathology",
+        "'Don't know' responses favour depression over dementia",
+        "Depression and AD coexist in 30-40% of cases",
+        "Late-life depression is both a risk factor for and early manifestation of AD"
+      ],
+      "pearls": "The Depressed ADNI cohort showed that late-life depression with concurrent biomarker-positive Alzheimer pathology has a 5-year conversion rate to dementia of approximately 85%, versus 20% for biomarker-negative depressive pseudodementia."
+    },
+    "sources": [
+      {
+        "label": "NIA-AA Research Framework",
+        "url": "https://www.nia.nih.gov/research/alzheimers-dementia-research-framework"
+      },
+      {
+        "label": "Lishman's Organic Psychiatry",
+        "url": "https://global.oup.com/academic/product/lishmans-organic-psychiatry-9780470675076"
+      }
+    ],
+    "reference_ranges": [
+      "thyroid",
+      "vitamins"
+    ],
+    "created": "2026-05-26"
+  }
+]
