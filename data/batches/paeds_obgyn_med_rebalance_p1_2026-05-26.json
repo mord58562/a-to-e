@@ -1,0 +1,935 @@
+[
+  {
+    "id": "paeds-rebal-001-l5",
+    "topic": "Paediatrics",
+    "subtopic": "Metabolic",
+    "subtopic_detail": "Inborn errors of metabolism - neonatal presentation",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "hypoglycaemia",
+      "infant",
+      "sepsis"
+    ],
+    "stem": "A 5-day-old term neonate born via uncomplicated vaginal delivery is brought to the emergency department with poor feeding, vomiting, and progressive lethargy over the past 24 hours. The parents are first cousins. The newborn screening results are not yet available. The neonate is hypotonic with a weak cry. There is no rash, fontanelle is flat, and there are no dysmorphic features.",
+    "data_table": {
+      "Vital signs": "HR 170, RR 55, SpO2 96% RA, Temp 36.4, Weight 3.2 kg",
+      "Investigations": "VBG: pH 7.18, pCO2 22 mmHg, HCO3 10 mmol/L, lactate 5.2 mmol/L, anion gap 24 mmol/L; BSL 3.8 mmol/L; ammonia 680 micromol/L (ref <50); FBC: WCC 11.2, Hb 165 g/L, platelets 220; CRP <1 mg/L"
+    },
+    "lead_in": "What is the most appropriate initial management step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Cease enteral feeds and commence IV 10% dextrose infusion",
+        "correct": true,
+        "rationale": "In suspected urea cycle defects or organic acidaemias presenting with hyperammonaemia, the immediate priority is to halt protein catabolism by ceasing enteral feeds (the protein source) and providing high-rate IV dextrose to suppress catabolism and provide energy substrate. This buys time while awaiting specialist metabolic input and definitive investigations. (Source: RCH CPG: Hyperammonaemia)",
+        "source_refs": [
+          "RCH CPG: Hyperammonaemia",
+          "JIMD Reports"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Administer IV sodium bicarbonate 1 mmol/kg as a slow bolus",
+        "correct": false,
+        "rationale": "Sodium bicarbonate corrects the acidosis symptomatically but does not address the underlying cause of hyperammonaemia. Ammonia continues to rise if protein catabolism is not halted. Bicarbonate may also cause paradoxical CNS acidosis and sodium load. (Source: RCH CPG: Hyperammonaemia)",
+        "source_refs": [
+          "RCH CPG: Hyperammonaemia"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Start IV ceftriaxone and obtain blood cultures urgently",
+        "correct": false,
+        "rationale": "Neonatal sepsis is a reasonable differential for an unwell neonate, and empiric antibiotics may be given alongside metabolic management. However, the markedly elevated ammonia (680 micromol/L) with a normal CRP, consanguinity, and high anion gap acidosis point strongly to a metabolic disorder. Antibiotics do not address the ammonia. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Arrange urgent haemodialysis for ammonia clearance",
+        "correct": false,
+        "rationale": "Haemodialysis is the most effective method of ammonia removal and is indicated when ammonia exceeds approximately 400-500 micromol/L depending on trajectory. However, it requires specialist setup and is not the initial management step - cessation of protein and IV glucose must begin immediately while dialysis is being arranged. (Source: JIMD Reports)",
+        "source_refs": [
+          "JIMD Reports"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Commence oral sodium benzoate as an ammonia scavenger",
+        "correct": false,
+        "rationale": "Sodium benzoate is an ammonia scavenger used in urea cycle defects, but it is given IV (not orally) in acute decompensation, and it is a secondary intervention after the immediate step of stopping protein intake and providing glucose. Oral administration in a vomiting neonate is also impractical. (Source: RCH CPG: Hyperammonaemia)",
+        "source_refs": [
+          "RCH CPG: Hyperammonaemia"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Neonatal hyperammonaemia is a metabolic emergency. The most common causes include urea cycle defects and organic acidaemias. The immediate management priority is to halt catabolism by ceasing protein-containing feeds and providing high-rate IV glucose. Definitive ammonia clearance via haemodialysis should be arranged in parallel when ammonia exceeds 400-500 micromol/L, but the first action is always metabolic stabilisation. Consanguinity raises the pre-test probability of autosomal recessive metabolic disorders.",
+      "key_points": [
+        "Hyperammonaemia >200 micromol/L in a neonate is a metabolic emergency requiring immediate intervention",
+        "Cease all protein intake and provide IV 10% dextrose at 1.5x maintenance to suppress catabolism",
+        "Haemodialysis is the most efficient ammonia removal method but requires specialist setup",
+        "Normal CRP and absence of risk factors for sepsis shift the differential towards inborn errors of metabolism",
+        "Newborn screening may not detect all urea cycle defects and results may not yet be available at day 5"
+      ],
+      "pearls": "Ammonia levels above 400 micromol/L in neonates warrant haemodialysis referral, but the first bedside action is always cessation of protein plus IV dextrose - this can be done within minutes while organising dialysis access."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Hyperammonaemia",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/hyperammonaemia/"
+      },
+      {
+        "label": "JIMD Reports",
+        "url": "https://onlinelibrary.wiley.com/journal/21926549"
+      },
+      {
+        "label": "Therapeutic Guidelines: Antibiotic"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_uec",
+      "abg",
+      "bsl_paeds",
+      "paeds_fbc"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "paeds-rebal-002-l4",
+    "topic": "Paediatrics",
+    "subtopic": "Neurology",
+    "subtopic_detail": "Complex febrile seizure - investigation",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "seizure",
+      "infant",
+      "meningitis"
+    ],
+    "stem": "A 14-month-old girl is brought to the emergency department after an 8-minute episode of left-sided rhythmic jerking associated with a fever of 39.2 degrees Celsius. The seizure was terminated with buccal midazolam by paramedics. She has been previously well with no developmental concerns and immunisations are up to date. On arrival she is drowsy but rousable to voice. The fontanelle is flat and soft. There is no neck stiffness, rash, or focal neurological deficit on examination. Tympanic membranes are dull bilaterally.",
+    "data_table": {
+      "Vital signs": "HR 155, RR 32, SpO2 98% RA, Temp 38.8 (post-midazolam)",
+      "Investigations": "BSL 5.4 mmol/L"
+    },
+    "lead_in": "What is the most appropriate next step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Discharge home with written febrile seizure safety advice",
+        "correct": false,
+        "rationale": "Discharge would be appropriate for a simple febrile seizure in a child over 12 months. However, this seizure is complex (focal, lasting >15 minutes equivalent with the 8-minute duration plus time to termination). In a child under 18 months with complex features, further investigation including LP consideration is warranted before discharge. (Source: RCH CPG: Febrile Seizure)",
+        "source_refs": [
+          "RCH CPG: Febrile Seizure"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Perform a lumbar puncture once the child is more alert",
+        "correct": true,
+        "rationale": "This child has a complex febrile seizure (focal, prolonged) at age 14 months. In children under 18 months with complex febrile seizures, the threshold for LP should be low because meningism is unreliable at this age. The flat fontanelle and absence of raised ICP signs make LP safe. Waiting until the child is more alert is appropriate post-ictal management. (Source: RCH CPG: Febrile Seizure)",
+        "source_refs": [
+          "RCH CPG: Febrile Seizure",
+          "NICE CG176: Fever in Under 5s"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence IV levetiracetam for seizure prophylaxis now",
+        "correct": false,
+        "rationale": "Antiepileptic prophylaxis is not indicated after febrile seizures, even complex ones. Febrile seizures do not constitute epilepsy and long-term antiepileptics carry side-effect risk that outweighs the modest recurrence reduction. Intermittent oral diazepam during febrile illnesses may be discussed for frequent recurrences. (Source: RCH CPG: Febrile Seizure)",
+        "source_refs": [
+          "RCH CPG: Febrile Seizure"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Arrange an urgent CT brain before any further workup",
+        "correct": false,
+        "rationale": "CT brain is not routinely indicated for febrile seizures, even complex ones, unless there are signs of raised intracranial pressure, persistent focal deficit, or clinical suspicion of an intracranial pathology. This child has a flat fontanelle and no focal signs post-ictally. CT would delay more important investigations. (Source: RCH CPG: Febrile Seizure)",
+        "source_refs": [
+          "RCH CPG: Febrile Seizure"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Request an EEG within the next 24 hours for assessment",
+        "correct": false,
+        "rationale": "EEG is not recommended acutely after febrile seizures. Post-ictal EEG findings are non-specific and do not reliably predict epilepsy risk. EEG may be considered if there are recurrent complex febrile seizures or afebrile seizures subsequently, but it is not part of the acute assessment. (Source: NICE CG176: Fever in Under 5s)",
+        "source_refs": [
+          "NICE CG176: Fever in Under 5s"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Complex febrile seizures are defined by focal features, duration greater than 15 minutes, or recurrence within 24 hours. In children under 18 months, signs of meningitis are unreliable, so the threshold for lumbar puncture should be low when complex features are present. The bilateral dull tympanic membranes suggest otitis media as the fever source, but this does not exclude concurrent meningitis. Neuroimaging and EEG are not part of routine febrile seizure workup.",
+      "key_points": [
+        "Complex febrile seizure features: focal, >15 min duration, recurrence within 24 hours, or post-ictal focal deficit",
+        "LP threshold is low in children <18 months with complex febrile seizures because meningism is unreliable",
+        "Antiepileptic prophylaxis is not indicated for febrile seizures",
+        "CT brain is only indicated if signs of raised ICP or persistent focal deficit",
+        "EEG is not useful in the acute febrile seizure setting"
+      ],
+      "pearls": "In children under 18 months with complex febrile seizures, perform LP even when the fontanelle is flat and there is no neck stiffness - meningeal signs are unreliable below this age and meningitis must be actively excluded."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Febrile Seizure",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/febrile_convulsion/"
+      },
+      {
+        "label": "NICE CG176: Fever in Under 5s",
+        "url": "https://www.nice.org.uk/guidance/cg176"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "paeds-rebal-003-l4",
+    "topic": "Paediatrics",
+    "subtopic": "Neurology",
+    "subtopic_detail": "Childhood absence epilepsy - AED selection",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "seizure",
+      "adolescent",
+      "valproate"
+    ],
+    "stem": "An 8-year-old girl is referred to the paediatric outpatient clinic by her teacher, who reports multiple daily episodes of staring blankly for 5 to 10 seconds, during which she does not respond. The episodes have been occurring for three months and are increasing in frequency. Her mother reports occasional eyelid fluttering during the episodes. She is otherwise developmentally normal and has no history of tonic-clonic seizures. There is no significant medical or family history. An EEG shows 3 Hz generalised spike-and-wave discharges provoked by hyperventilation.",
+    "data_table": {
+      "Examination": "Neurological examination normal, no dysmorphic features, growth on 50th centile"
+    },
+    "lead_in": "What is the most appropriate first-line antiepileptic drug?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Carbamazepine 5 mg/kg/day in two divided doses orally",
+        "correct": false,
+        "rationale": "Carbamazepine is contraindicated in absence epilepsy as it can worsen absence seizures and may precipitate absence status epilepticus. It acts on sodium channels and is ineffective against the thalamocortical T-type calcium channel mechanism underlying absences. (Source: Therapeutic Guidelines: Neurology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Neurology"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Sodium valproate 10 mg/kg/day in two divided doses orally",
+        "correct": false,
+        "rationale": "Sodium valproate is effective for absence epilepsy and was historically first-line. However, in girls and women of childbearing potential, valproate carries significant teratogenic risk and should be avoided as first-line where alternatives exist. Australian and international guidelines now recommend ethosuximide for pure absence epilepsy in females. (Source: Therapeutic Guidelines: Neurology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Neurology",
+          "ILAE Treatment Guidelines"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Ethosuximide 10 mg/kg/day in two divided doses orally",
+        "correct": true,
+        "rationale": "Ethosuximide is first-line for childhood absence epilepsy, particularly in females given the teratogenicity concerns with valproate. It specifically targets T-type calcium channels in the thalamocortical circuit responsible for absence seizures. The SANAD II trial confirmed equivalent efficacy to valproate for absence epilepsy with a better side-effect profile. (Source: Therapeutic Guidelines: Neurology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Neurology",
+          "ILAE Treatment Guidelines"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Lamotrigine 0.5 mg/kg/day with slow titration upwards",
+        "correct": false,
+        "rationale": "Lamotrigine is a reasonable second-line option for absence epilepsy and avoids valproate teratogenicity concerns. However, it is less effective than ethosuximide for absence seizures as monotherapy and requires very slow titration over weeks to months due to the risk of Stevens-Johnson syndrome, making it unsuitable as first choice. (Source: ILAE Treatment Guidelines)",
+        "source_refs": [
+          "ILAE Treatment Guidelines"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Levetiracetam 10 mg/kg/day in two divided doses orally",
+        "correct": false,
+        "rationale": "Levetiracetam is broadly used in paediatric epilepsy but has limited evidence for absence seizures specifically. It is not recommended as first-line for childhood absence epilepsy by Australian or ILAE guidelines. Its mechanism does not target the T-type calcium channels involved in absence seizure generation. (Source: Therapeutic Guidelines: Neurology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Neurology"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Childhood absence epilepsy is characterised by frequent brief absence seizures with 3 Hz spike-and-wave on EEG. Ethosuximide is first-line, particularly in females, as it avoids valproate teratogenicity while maintaining equivalent efficacy. Sodium valproate remains an option if generalised tonic-clonic seizures coexist but should be avoided in girls where possible. Carbamazepine and phenytoin are contraindicated as they worsen absences. The prognosis is good, with approximately 70% of children achieving remission by adolescence.",
+      "key_points": [
+        "Ethosuximide is first-line for childhood absence epilepsy, especially in females",
+        "Carbamazepine is contraindicated in absence epilepsy and can worsen seizures",
+        "Valproate is effective but avoided first-line in females due to teratogenicity",
+        "3 Hz generalised spike-and-wave on EEG provoked by hyperventilation is the classic finding",
+        "Lamotrigine is second-line but requires slow titration and is less effective for absences"
+      ],
+      "pearls": "Carbamazepine and phenytoin - both sodium channel blockers - can paradoxically worsen absence epilepsy and even trigger absence status epilepticus; always confirm the epilepsy syndrome before prescribing."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Neurology"
+      },
+      {
+        "label": "ILAE Treatment Guidelines",
+        "url": "https://www.ilae.org/guidelines"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "obgyn-rebal-001-l4",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Early pregnancy",
+    "subtopic_detail": "Ectopic pregnancy - methotrexate eligibility",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "pregnancy",
+      "ultrasound",
+      "antibiotics"
+    ],
+    "stem": "A 29-year-old woman presents to the early pregnancy assessment unit at 7 weeks gestation with mild left iliac fossa pain and light vaginal bleeding. She is haemodynamically stable. Transvaginal ultrasound shows a 22 mm left adnexal mass with a yolk sac but no cardiac activity, and an empty uterus. There is a small amount of free fluid in the pouch of Douglas. She has no significant past medical history, normal renal and hepatic function, and no history of methotrexate allergy.",
+    "data_table": {
+      "Vital signs": "HR 78, BP 118/72 mmHg, Temp 36.8",
+      "Investigations": "beta-hCG 4,200 IU/L; FBC: Hb 128 g/L, WCC 7.8, platelets 245; LFTs and UEC normal"
+    },
+    "lead_in": "What is the most appropriate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Expectant management with serial beta-hCG monitoring",
+        "correct": false,
+        "rationale": "Expectant management may be considered for tubal ectopics with beta-hCG below 1,500 IU/L and declining levels. With a beta-hCG of 4,200 IU/L and a visible adnexal mass with yolk sac, the ectopic is too advanced for safe expectant management due to increased rupture risk. (Source: RANZCOG: Ectopic Pregnancy)",
+        "source_refs": [
+          "RANZCOG: Ectopic Pregnancy"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Administer single-dose intramuscular methotrexate 50 mg/m2",
+        "correct": false,
+        "rationale": "Methotrexate is used for selected unruptured ectopic pregnancies but has specific eligibility criteria. The presence of a yolk sac within the ectopic and a beta-hCG above 4,000 IU/L are relative contraindications - RANZCOG guidelines suggest methotrexate is most effective when beta-hCG is below 5,000, but the visible yolk sac and size of 22 mm significantly increase failure risk. (Source: RANZCOG: Ectopic Pregnancy)",
+        "source_refs": [
+          "RANZCOG: Ectopic Pregnancy"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Repeat the beta-hCG in 48 hours to assess the trajectory",
+        "correct": false,
+        "rationale": "Repeating beta-hCG is useful when the diagnosis is uncertain (pregnancy of unknown location). Here the diagnosis is confirmed - an ectopic pregnancy with a visible adnexal mass containing a yolk sac. Delaying definitive management to await a repeat level risks tubal rupture with this beta-hCG level and ectopic size. (Source: RANZCOG: Ectopic Pregnancy)",
+        "source_refs": [
+          "RANZCOG: Ectopic Pregnancy"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Proceed with laparoscopic salpingostomy or salpingectomy",
+        "correct": true,
+        "rationale": "Surgical management is the most appropriate option for this ectopic pregnancy. The combination of a 22 mm adnexal mass with a visible yolk sac and beta-hCG of 4,200 IU/L indicates a relatively advanced ectopic pregnancy where methotrexate failure risk is high. Laparoscopic surgery allows definitive treatment. Salpingectomy is preferred unless the contralateral tube is damaged or absent. (Source: RANZCOG: Ectopic Pregnancy)",
+        "source_refs": [
+          "RANZCOG: Ectopic Pregnancy",
+          "NICE NG126: Ectopic Pregnancy"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Administer anti-D immunoglobulin and reassess in one week",
+        "correct": false,
+        "rationale": "Anti-D immunoglobulin should be given to Rh-negative women with ectopic pregnancy, but the question does not state she is Rh-negative. Regardless, anti-D is an adjunct, not a management strategy for the ectopic itself. Reassessing in one week without definitive treatment risks tubal rupture. (Source: RANZCOG: Ectopic Pregnancy)",
+        "source_refs": [
+          "RANZCOG: Ectopic Pregnancy"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Ectopic pregnancy management depends on clinical stability, beta-hCG level, ultrasound features, and patient preference. Methotrexate is suitable for selected small, unruptured ectopics with beta-hCG typically below 5,000 IU/L and no cardiac activity or yolk sac. When these criteria are not met, surgical management via laparoscopy is preferred. Salpingectomy is the standard approach unless there are fertility-preserving indications for salpingostomy. All Rh-negative women should receive anti-D.",
+      "key_points": [
+        "Methotrexate eligibility requires no cardiac activity, ideally no yolk sac, and beta-hCG below 5,000 IU/L",
+        "Visible yolk sac and ectopic size above 35 mm are relative contraindications to methotrexate",
+        "Laparoscopic salpingectomy is the standard surgical approach for tubal ectopics",
+        "Expectant management is only for beta-hCG below 1,500 IU/L with declining trend",
+        "Salpingostomy may be considered when the contralateral tube is damaged or absent"
+      ],
+      "pearls": "The presence of cardiac activity within an ectopic pregnancy is an absolute contraindication to methotrexate - these patients require surgical management regardless of beta-hCG level."
+    },
+    "sources": [
+      {
+        "label": "RANZCOG: Ectopic Pregnancy",
+        "url": "https://ranzcog.edu.au/resources/ectopic-pregnancy/"
+      },
+      {
+        "label": "NICE NG126: Ectopic Pregnancy",
+        "url": "https://www.nice.org.uk/guidance/ng126"
+      }
+    ],
+    "reference_ranges": [
+      "beta_hcg_pregnancy"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "paeds-rebal-004-l5",
+    "topic": "Paediatrics",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "Macrophage activation syndrome complicating sJIA",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "sepsis",
+      "corticosteroids",
+      "IVIG"
+    ],
+    "stem": "A 6-year-old boy with known systemic juvenile idiopathic arthritis on methotrexate and prednisolone presents with three days of worsening fever to 40 degrees Celsius, increasing lethargy, and a new petechial rash. His JIA had been in remission for 6 months. On arrival she is afebrile and her left hip examination is unremarkable.",
+    "data_table": {
+      "Vital signs": "HR 165, BP 85/50 mmHg, RR 34, SpO2 95% RA, Temp 40.1",
+      "Investigations": "FBC: Hb 92 g/L, WCC 2.1 x10^9/L, platelets 42 x10^9/L; ESR 8 mm/hr (previously 65); CRP 180 mg/L; ferritin 18,400 microg/L; fibrinogen 0.8 g/L (ref 2.0-4.0); triglycerides 4.8 mmol/L; ALT 285 U/L; AST 420 U/L; LDH 1,850 U/L"
+    },
+    "lead_in": "What is the most appropriate initial treatment?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Increase the methotrexate dose to achieve disease control",
+        "correct": false,
+        "rationale": "Methotrexate is a disease-modifying agent for JIA maintenance but is ineffective for acute macrophage activation syndrome (MAS). It also suppresses bone marrow and could worsen the cytopenias. MAS is an emergency requiring rapid immunosuppression with different agents. (Source: RCH CPG: Macrophage Activation Syndrome)",
+        "source_refs": [
+          "RCH CPG: Macrophage Activation Syndrome"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Commence IV ceftriaxone and vancomycin for presumed sepsis",
+        "correct": false,
+        "rationale": "The presentation overlaps with severe sepsis - fever, cytopenias, hepatosplenomegaly, coagulopathy. However, the paradoxically falling ESR (8, previously 65) with rising CRP, massively elevated ferritin (>10,000), low fibrinogen, and hypertriglyceridaemia in a child with sJIA are diagnostic of MAS. Antibiotics alone do not treat the underlying hyperinflammatory state. (Source: RCH CPG: Macrophage Activation Syndrome)",
+        "source_refs": [
+          "RCH CPG: Macrophage Activation Syndrome"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence urgent plasmapheresis for cytokine clearance",
+        "correct": false,
+        "rationale": "Plasmapheresis may be considered as a rescue therapy in refractory MAS or haemophagocytic lymphohistiocytosis (HLH), but it is not the initial treatment. First-line therapy for MAS complicating sJIA is high-dose corticosteroids, with ciclosporin added if refractory. Plasmapheresis requires central access and specialist support. (Source: Histiocyte Society HLH-2004 Protocol)",
+        "source_refs": [
+          "Histiocyte Society HLH-2004 Protocol"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Administer high-dose IV etoposide as per HLH protocol",
+        "correct": false,
+        "rationale": "Etoposide-based HLH protocols (HLH-94/2004) are used for primary HLH and refractory secondary HLH. MAS complicating sJIA typically responds well to high-dose corticosteroids and ciclosporin, and etoposide carries significant toxicity including myelosuppression. It would only be considered if first-line MAS treatment fails. (Source: Histiocyte Society HLH-2004 Protocol)",
+        "source_refs": [
+          "Histiocyte Society HLH-2004 Protocol"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Commence IV methylprednisolone pulse therapy 30 mg/kg/day",
+        "correct": true,
+        "rationale": "High-dose IV methylprednisolone (pulse dosing up to 30 mg/kg/day, max 1 g) is the first-line treatment for MAS complicating sJIA. The falling ESR with rising CRP and ferritin is a hallmark of MAS - the ESR falls because fibrinogen (an acute phase reactant and ESR determinant) is consumed by the coagulopathy. Ciclosporin is added if there is no response within 24-48 hours. (Source: RCH CPG: Macrophage Activation Syndrome)",
+        "source_refs": [
+          "RCH CPG: Macrophage Activation Syndrome",
+          "Histiocyte Society HLH-2004 Protocol"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Macrophage activation syndrome is a life-threatening complication of systemic JIA, representing a form of secondary haemophagocytic lymphohistiocytosis. The diagnostic hallmark is a paradoxically falling ESR (due to fibrinogen consumption) with markedly rising ferritin, in the context of cytopenias, hepatic dysfunction, and coagulopathy. First-line treatment is high-dose IV corticosteroids, with ciclosporin added for refractory cases. The HLH-2004 etoposide-based protocol is reserved for primary HLH or MAS not responding to steroids and ciclosporin.",
+      "key_points": [
+        "Falling ESR with rising CRP and ferritin is the hallmark of MAS - ESR drops because fibrinogen is consumed",
+        "Ferritin above 10,000 microg/L in a child with sJIA should trigger immediate investigation for MAS",
+        "First-line treatment is IV methylprednisolone pulse therapy",
+        "Ciclosporin is second-line for steroid-refractory MAS",
+        "MAS can be triggered by infections, medication changes, or disease flares in sJIA"
+      ],
+      "pearls": "A falling ESR in a child with sJIA who is clinically deteriorating is a red flag for MAS - the ESR drops because fibrinogen is being consumed by disseminated intravascular coagulation, not because the disease is improving."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Macrophage Activation Syndrome",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/macrophage_activation_syndrome/"
+      },
+      {
+        "label": "Histiocyte Society HLH-2004 Protocol",
+        "url": "https://histiocytesociety.org/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_fbc",
+      "inflammatory_markers",
+      "lfts",
+      "coags"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "paeds-rebal-005-l4",
+    "topic": "Paediatrics",
+    "subtopic": "Child protection",
+    "subtopic_detail": "Non-accidental injury - suspicious fracture",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "imaging",
+      "mandatory reporting",
+      "infant"
+    ],
+    "stem": "A 4-month-old male infant is brought to the emergency department by his father who reports the baby 'rolled off the couch' approximately two hours ago. The infant is irritable and holds his right arm still. There are no bruises visible. Examination reveals swelling and tenderness of the right mid-humerus. X-ray shows a spiral fracture of the right humeral shaft. The father appears anxious and provides inconsistent accounts of the mechanism when asked again by the nurse.",
+    "data_table": {
+      "Vital signs": "HR 160, RR 38, SpO2 99% RA, Temp 36.9",
+      "Investigations": "X-ray right humerus: spiral mid-shaft fracture with no periosteal reaction; no other injuries visible on this film"
+    },
+    "lead_in": "What is the most important next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Make a mandatory notification to child protection services",
+        "correct": true,
+        "rationale": "A spiral humeral fracture in a pre-mobile 4-month-old infant with an inconsistent and implausible mechanism (4-month-olds cannot roll off couches with enough force for a spiral humeral fracture) raises a high index of suspicion for non-accidental injury. All Australian states and territories have mandatory reporting legislation requiring notification. A skeletal survey and further workup should follow, but notification must not be delayed. (Source: RCH CPG: Child Abuse)",
+        "source_refs": [
+          "RCH CPG: Child Abuse",
+          "NSW Health: Mandatory Reporting"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Apply a splint and arrange orthopaedic follow-up this week",
+        "correct": false,
+        "rationale": "Fracture management is necessary but does not address the child protection concern. Treating the fracture and discharging the infant without notification places the child at risk of further harm. Orthopaedic management occurs in parallel with child protection assessment, not instead of it. (Source: RCH CPG: Child Abuse)",
+        "source_refs": [
+          "RCH CPG: Child Abuse"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Request a skeletal survey before considering notification",
+        "correct": false,
+        "rationale": "A skeletal survey is an important part of the non-accidental injury workup and may reveal occult fractures of different ages. However, waiting for the skeletal survey before notifying child protection is inappropriate - notification should occur as soon as reasonable suspicion exists, and a spiral fracture in a pre-mobile infant with inconsistent history meets that threshold. (Source: NSW Health: Mandatory Reporting)",
+        "source_refs": [
+          "NSW Health: Mandatory Reporting"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Obtain coagulation studies and calcium to exclude pathology",
+        "correct": false,
+        "rationale": "Metabolic bone disease (e.g. osteogenesis imperfecta) and coagulopathy should be considered in the differential for unexplained fractures. However, these are uncommon and do not negate the obligation to notify child protection when the clinical picture is suspicious. Investigation for organic causes and child protection notification should occur in parallel. (Source: RCH CPG: Child Abuse)",
+        "source_refs": [
+          "RCH CPG: Child Abuse"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Admit for observation and request social work consultation",
+        "correct": false,
+        "rationale": "Admission and social work involvement are appropriate adjuncts but are not substitutes for mandatory notification to the statutory child protection authority. Social workers can support the family and assist with the process, but the doctor has a legal obligation to notify directly. Delaying notification pending social work review risks the child's safety. (Source: NSW Health: Mandatory Reporting)",
+        "source_refs": [
+          "NSW Health: Mandatory Reporting"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Spiral fractures in pre-mobile infants are highly suspicious for non-accidental injury, particularly when the reported mechanism is inconsistent or biomechanically implausible. A 4-month-old cannot generate the rotational force required for a spiral humeral fracture by rolling off a couch. Mandatory reporting is a legal obligation for doctors across all Australian jurisdictions when there is reasonable suspicion of abuse. Investigation for organic causes (skeletal survey, bloods) and fracture treatment proceed in parallel with child protection involvement.",
+      "key_points": [
+        "Spiral long-bone fractures in pre-mobile infants are highly suspicious for non-accidental injury",
+        "Mandatory notification to child protection occurs as soon as reasonable suspicion exists",
+        "A skeletal survey should be performed but notification should not wait for results",
+        "Inconsistent or biomechanically implausible mechanisms raise the index of suspicion",
+        "Investigation for organic causes (osteogenesis imperfecta, metabolic bone disease) occurs in parallel with notification"
+      ],
+      "pearls": "The humeral shaft is the most common long-bone fracture site in physical child abuse in infants under 12 months - a spiral or oblique pattern in a pre-mobile child has a positive predictive value for abuse exceeding 80%."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Child Abuse",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/child_abuse/"
+      },
+      {
+        "label": "NSW Health: Mandatory Reporting",
+        "url": "https://www.health.nsw.gov.au/parvan/childprotect/Pages/mandatory-reporting.aspx"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "paeds-rebal-006-l4",
+    "topic": "Paediatrics",
+    "subtopic": "Musculoskeletal",
+    "subtopic_detail": "Septic arthritis vs transient synovitis",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "antibiotics",
+      "imaging",
+      "sepsis"
+    ],
+    "stem": "A 3-year-old boy presents with a 24-hour history of refusal to bear weight on his left leg. He had an upper respiratory tract infection five days ago that has resolved. He is febrile at 38.9 degrees Celsius. Examination shows the left hip held in flexion and external rotation with marked pain on attempted internal rotation. He screams when the hip is passively moved. He is able to bear weight briefly on the right leg only.",
+    "data_table": {
+      "Vital signs": "HR 140, RR 28, SpO2 98% RA, Temp 38.9, Weight 15 kg",
+      "Investigations": "FBC: WCC 16.8 x10^9/L, neutrophils 12.4; CRP 78 mg/L; ESR 42 mm/hr; hip ultrasound: moderate left hip joint effusion"
+    },
+    "lead_in": "What is the most appropriate next step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Prescribe oral ibuprofen and reassess in 24 to 48 hours",
+        "correct": false,
+        "rationale": "This approach would be appropriate for transient synovitis, which typically follows viral illness in a well-looking child with low-grade or absent fever and normal inflammatory markers. This child has fever above 38.5, elevated CRP and WCC, and inability to bear weight - features that satisfy Kocher criteria for a high probability of septic arthritis. (Source: RCH CPG: Limping Child)",
+        "source_refs": [
+          "RCH CPG: Limping Child"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Perform urgent ultrasound-guided hip joint aspiration",
+        "correct": true,
+        "rationale": "This child meets 3 of 4 Kocher criteria (fever >38.5, non-weight-bearing, WCC >12, ESR >40), giving a predicted probability of septic arthritis exceeding 90%. Joint aspiration is essential to confirm the diagnosis, identify the organism, and guide antibiotic therapy. The effusion confirmed on ultrasound makes aspiration technically feasible. (Source: RCH CPG: Limping Child)",
+        "source_refs": [
+          "RCH CPG: Limping Child",
+          "BMJ Best Practice: Septic Arthritis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence IV flucloxacillin empirically without aspiration",
+        "correct": false,
+        "rationale": "Empiric antibiotics are necessary for septic arthritis but should ideally be given after joint aspiration to maximise the chance of identifying the causative organism. Starting antibiotics before obtaining synovial fluid reduces culture yield and may lead to prolonged empiric therapy. Aspiration also serves a therapeutic role by decompressing the joint. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Arrange MRI of the left hip to clarify the diagnosis first",
+        "correct": false,
+        "rationale": "MRI can demonstrate joint effusion, synovial enhancement, and adjacent osteomyelitis, but it takes time to arrange, requires sedation in a 3-year-old, and delays definitive management. Ultrasound has already confirmed an effusion. Aspiration is both diagnostic and therapeutic and should not be delayed for MRI when the clinical picture is clear. (Source: RCH CPG: Limping Child)",
+        "source_refs": [
+          "RCH CPG: Limping Child"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Obtain a plain X-ray of the left hip and pelvis urgently",
+        "correct": false,
+        "rationale": "Plain X-ray is part of the initial workup for a limping child and can exclude fracture or bony pathology. However, X-ray is insensitive for early septic arthritis - it may show soft tissue swelling or widened joint space but cannot distinguish septic arthritis from transient synovitis. Ultrasound has already demonstrated the effusion. Aspiration is the priority. (Source: BMJ Best Practice: Septic Arthritis)",
+        "source_refs": [
+          "BMJ Best Practice: Septic Arthritis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "The Kocher criteria help distinguish septic arthritis from transient synovitis in children presenting with hip pain and effusion. The four criteria are: fever above 38.5, non-weight-bearing, WCC above 12 x10^9/L, and ESR above 40 mm/hr. With 3 or 4 criteria met, the probability of septic arthritis exceeds 90% and urgent joint aspiration is indicated. Staphylococcus aureus is the most common organism in this age group. Antibiotics should be withheld until after aspiration when possible, but not delayed if aspiration is impractical.",
+      "key_points": [
+        "Kocher criteria: fever >38.5, non-weight-bearing, WCC >12, ESR >40 - three or more predicts >90% probability of septic arthritis",
+        "Joint aspiration is both diagnostic and therapeutic and should precede antibiotics when feasible",
+        "Staphylococcus aureus is the most common cause of septic arthritis in children",
+        "Transient synovitis typically follows viral illness but presents with lower or absent fever and normal inflammatory markers",
+        "CRP above 20 mg/L is a useful additional predictor (Caird modification of Kocher criteria)"
+      ],
+      "pearls": "Adding CRP above 20 mg/L to the original Kocher criteria (the Caird modification) improves specificity - a child meeting 4 of 5 modified criteria has a predicted probability of septic arthritis exceeding 98%."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Limping Child",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/limping_child/"
+      },
+      {
+        "label": "BMJ Best Practice: Septic Arthritis"
+      },
+      {
+        "label": "Therapeutic Guidelines: Antibiotic"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "paeds_fbc",
+      "inflammatory_markers"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "paeds-rebal-007-l4",
+    "topic": "Paediatrics",
+    "subtopic": "Orthopaedics",
+    "subtopic_detail": "Slipped upper femoral epiphysis",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "imaging",
+      "adolescent",
+      "corticosteroids"
+    ],
+    "stem": "A 12-year-old boy is brought to the emergency department with a 3-week history of worsening left knee pain. He has a BMI of 32 kg/m2. He walks with an antalgic gait favouring the left side. On examination, the left knee has a full range of movement without effusion. When the left hip is flexed, it obligately externally rotates. Internal rotation of the left hip is limited to 10 degrees and reproduces his knee pain. The right hip examination is normal.",
+    "data_table": {
+      "Vital signs": "HR 88, BP 110/68 mmHg, Temp 36.7",
+      "Examination": "Left knee: no swelling, no tenderness, full ROM; Left hip: obligate external rotation on flexion, internal rotation 10 degrees (right 40 degrees), pain with log roll"
+    },
+    "lead_in": "What is the most appropriate initial investigation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "X-ray of the left knee in two views as the pain localises there",
+        "correct": false,
+        "rationale": "Knee pain in a child or adolescent with an unremarkable knee examination should prompt assessment of the hip, as referred pain from hip pathology is common via the obturator nerve. The normal knee examination and abnormal hip findings indicate the pathology is in the hip. An isolated knee X-ray would miss the diagnosis. (Source: RCH CPG: Limping Child)",
+        "source_refs": [
+          "RCH CPG: Limping Child"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Bilateral hip X-ray including anteroposterior and frog-leg lateral",
+        "correct": true,
+        "rationale": "The clinical picture - obese adolescent male with insidious onset knee pain, obligate external rotation of the hip on flexion, and limited internal rotation - is classic for slipped upper femoral epiphysis (SUFE). Bilateral hip X-rays including frog-leg lateral views are essential, as the slip is often seen on the lateral view (Trethowan sign) and up to 40% of cases have bilateral involvement. (Source: RCH CPG: Limping Child)",
+        "source_refs": [
+          "RCH CPG: Limping Child",
+          "POSNA: SCFE"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "MRI of the left hip to assess for avascular necrosis early",
+        "correct": false,
+        "rationale": "MRI is sensitive for early SUFE and avascular necrosis but is not the initial investigation. Plain X-ray will confirm the diagnosis in most cases and is faster, cheaper, and does not require sedation. MRI may be indicated if X-ray is inconclusive in a pre-slip or early SUFE. (Source: POSNA: SCFE)",
+        "source_refs": [
+          "POSNA: SCFE"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Ultrasound of the left hip to evaluate for a joint effusion",
+        "correct": false,
+        "rationale": "Hip ultrasound is useful for detecting effusion in younger children where transient synovitis or septic arthritis is suspected. In an afebrile obese 12-year-old with insidious onset symptoms and obligate external rotation, SUFE is far more likely than an inflammatory or infective process. Plain X-ray is the appropriate first-line investigation. (Source: RCH CPG: Limping Child)",
+        "source_refs": [
+          "RCH CPG: Limping Child"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Blood tests including FBC, CRP, and ESR to exclude infection",
+        "correct": false,
+        "rationale": "Inflammatory markers are useful when septic arthritis, osteomyelitis, or inflammatory arthritis is suspected. This child is afebrile with a chronic insidious history and classic mechanical signs of SUFE. Blood tests would not contribute to the diagnosis and could delay appropriate imaging. (Source: RCH CPG: Limping Child)",
+        "source_refs": [
+          "RCH CPG: Limping Child"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Slipped upper femoral epiphysis is a common hip disorder of adolescence where the femoral head displaces posteriorly and inferiorly relative to the neck through the growth plate. Classic risk factors include obesity and male sex. The hallmark examination finding is obligate external rotation of the hip on flexion, with limited internal rotation. Knee pain is a common presenting complaint due to referred pain via the obturator nerve. Bilateral X-rays are essential as bilateral involvement occurs in up to 40% of cases.",
+      "key_points": [
+        "Obligate external rotation on hip flexion with limited internal rotation is the hallmark of SUFE",
+        "Knee pain with normal knee examination in an adolescent should prompt hip examination",
+        "Bilateral AP and frog-leg lateral hip X-rays are the initial investigation of choice",
+        "Risk factors include obesity, male sex, adolescence, and endocrine disorders (hypothyroidism, growth hormone deficiency)",
+        "Up to 40% of SUFE cases have bilateral involvement - always image both hips"
+      ],
+      "pearls": "The frog-leg lateral view reveals early SUFE before it becomes visible on AP X-ray - Klein's line drawn along the superior femoral neck should intersect the lateral epiphysis; failure to do so (positive Trethowan sign) confirms the slip."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Limping Child",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/limping_child/"
+      },
+      {
+        "label": "POSNA: SCFE",
+        "url": "https://posna.org/physician-education/study-guide/slipped-capital-femoral-epiphysis"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "obgyn-rebal-002-l4",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Contraception",
+    "subtopic_detail": "Contraception in complex medical conditions",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "contraception",
+      "anticoagulation",
+      "VTE"
+    ],
+    "stem": "A 32-year-old woman with systemic lupus erythematosus and antiphospholipid syndrome is reviewed in the gynaecology clinic. She takes warfarin for a previous deep vein thrombosis and hydroxychloroquine for her SLE. She had a miscarriage at 14 weeks gestation six months ago and does not wish to become pregnant for at least three years. Her periods are regular and she is normotensive. She asks about the most effective reversible contraception that is safe for her.",
+    "data_table": {
+      "Vital signs": "BP 118/74 mmHg, BMI 24",
+      "Investigations": "INR 2.4 (target 2.0-3.0); recent FBC, UEC, LFTs all normal"
+    },
+    "lead_in": "What is the most appropriate contraceptive recommendation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Combined oral contraceptive pill containing low-dose oestrogen",
+        "correct": false,
+        "rationale": "Combined hormonal contraceptives (pill, patch, ring) are absolutely contraindicated in women with antiphospholipid syndrome or a history of VTE, as oestrogen increases thrombotic risk. This is a Category 4 (unacceptable health risk) in the WHO Medical Eligibility Criteria and the Australian adaptation. (Source: FSRH: Medical Eligibility Criteria)",
+        "source_refs": [
+          "FSRH: Medical Eligibility Criteria",
+          "RANZCOG: Contraception"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Depot medroxyprogesterone acetate injection every 12 weeks",
+        "correct": false,
+        "rationale": "Depot medroxyprogesterone acetate is a progestogen-only method and avoids oestrogen-related thrombotic risk. However, it is Category 3 (risks generally outweigh benefits) in women with current VTE on anticoagulation due to uncertain effects on coagulation and bone density concerns with long-term use. The levonorgestrel IUD offers superior efficacy and a better safety profile. (Source: FSRH: Medical Eligibility Criteria)",
+        "source_refs": [
+          "FSRH: Medical Eligibility Criteria"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Levonorgestrel intrauterine device for long-acting protection",
+        "correct": true,
+        "rationale": "The levonorgestrel IUD is Category 1 (no restriction) for women with a history of VTE or current anticoagulation. It provides highly effective long-acting reversible contraception with minimal systemic hormonal absorption. It may also reduce menstrual blood loss, which is beneficial in a woman on warfarin who may experience heavy menstrual bleeding. (Source: RANZCOG: Contraception)",
+        "source_refs": [
+          "RANZCOG: Contraception",
+          "FSRH: Medical Eligibility Criteria"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Etonogestrel subdermal implant inserted in the non-dominant arm",
+        "correct": false,
+        "rationale": "The etonogestrel implant is a progestogen-only method and is Category 2 (benefits generally outweigh risks) for women with VTE history. It is a reasonable option, but the levonorgestrel IUD is preferred in this scenario because it has even less systemic hormonal absorption and offers additional benefit of reducing menstrual bleeding in a woman on anticoagulation. (Source: FSRH: Medical Eligibility Criteria)",
+        "source_refs": [
+          "FSRH: Medical Eligibility Criteria"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Copper intrauterine device for non-hormonal long-acting effect",
+        "correct": false,
+        "rationale": "The copper IUD provides effective non-hormonal contraception. However, it typically increases menstrual blood loss by 20-50%, which is problematic for a woman on therapeutic anticoagulation with warfarin. The levonorgestrel IUD is preferable as it reduces menstrual bleeding while providing equivalent contraceptive efficacy. (Source: RANZCOG: Contraception)",
+        "source_refs": [
+          "RANZCOG: Contraception"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Contraceptive choice in women with antiphospholipid syndrome and VTE history requires avoidance of oestrogen-containing methods due to thrombotic risk. The levonorgestrel IUD is the optimal choice as it is highly effective, has minimal systemic absorption, is Category 1 for VTE, and reduces menstrual blood loss - a significant advantage for women on anticoagulation. The copper IUD, while non-hormonal, increases menstrual bleeding and is less suitable for anticoagulated women.",
+      "key_points": [
+        "Combined hormonal contraceptives are Category 4 (absolutely contraindicated) in antiphospholipid syndrome and VTE history",
+        "Levonorgestrel IUD is Category 1 (no restriction) and reduces menstrual bleeding",
+        "Copper IUD increases menstrual loss by 20-50% and is problematic with anticoagulation",
+        "The etonogestrel implant is acceptable but has more systemic hormonal absorption than the levonorgestrel IUD",
+        "Depot medroxyprogesterone is Category 3 in current VTE on anticoagulation"
+      ],
+      "pearls": "The levonorgestrel IUD achieves endometrial progestogen concentrations 1000 times higher than systemic levels, providing excellent contraception and menstrual control while maintaining a Category 1 safety rating even in women with VTE on anticoagulation."
+    },
+    "sources": [
+      {
+        "label": "RANZCOG: Contraception",
+        "url": "https://ranzcog.edu.au/resources/contraception/"
+      },
+      {
+        "label": "FSRH: Medical Eligibility Criteria",
+        "url": "https://www.fsrh.org/standards-and-guidance/guidelines/medical-eligibility-criteria/"
+      }
+    ],
+    "reference_ranges": [
+      "coags"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "paeds-rebal-008-l4",
+    "topic": "Paediatrics",
+    "subtopic": "Orthopaedics",
+    "subtopic_detail": "SUFE - acute unstable management",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "imaging",
+      "adolescent",
+      "corticosteroids"
+    ],
+    "stem": "A 13-year-old girl with a BMI of 34 kg/m2 presents to the emergency department unable to weight-bear on her right leg after tripping on a step one hour ago. She reports two weeks of intermittent right groin aching prior to the fall. On examination, the right leg lies shortened and externally rotated. Any attempt to internally rotate or flex the hip causes severe pain. She is afebrile and her left hip examination is unremarkable.",
+    "data_table": {
+      "Vital signs": "HR 105, BP 108/66 mmHg, Temp 36.6, SpO2 99% RA",
+      "Investigations": "AP pelvis X-ray: widened right proximal femoral physis with posterior displacement of the right femoral epiphysis; left hip normal"
+    },
+    "lead_in": "What is the most appropriate initial management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Allow protected weight-bearing and arrange outpatient review",
+        "correct": false,
+        "rationale": "This is an acute-on-chronic unstable SUFE - the patient cannot weight-bear. Unstable SUFE carries a high risk of avascular necrosis of the femoral head (up to 47%), and any further displacement must be prevented. Weight-bearing is contraindicated and urgent surgical fixation is required. (Source: RCH CPG: SUFE)",
+        "source_refs": [
+          "RCH CPG: SUFE"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Commence traction and arrange semi-urgent orthopaedic review",
+        "correct": false,
+        "rationale": "Traction was historically used for SUFE but is no longer recommended as it does not prevent further displacement and may delay definitive fixation. Current guidelines recommend bed rest with no manipulation and urgent orthopaedic consultation for in-situ fixation within 24 hours. (Source: POSNA: SCFE)",
+        "source_refs": [
+          "POSNA: SCFE"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Arrange urgent closed reduction under general anaesthesia today",
+        "correct": false,
+        "rationale": "Forced reduction of SUFE increases the risk of avascular necrosis by disrupting the remaining blood supply to the femoral head through the retinacular vessels. Current practice favours gentle in-situ fixation with a single cannulated screw rather than attempting to restore anatomy through reduction. (Source: RCH CPG: SUFE)",
+        "source_refs": [
+          "RCH CPG: SUFE"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Keep non-weight-bearing and arrange urgent in-situ screw fixation",
+        "correct": true,
+        "rationale": "This is an acute-on-chronic unstable SUFE based on the inability to weight-bear, pre-existing symptoms, and radiographic findings. Management is strict non-weight-bearing (bed rest, stretcher transport) and urgent in-situ fixation with a single cannulated screw to prevent further displacement. The aim is to stabilise the epiphysis in its current position, not to reduce it. (Source: RCH CPG: SUFE)",
+        "source_refs": [
+          "RCH CPG: SUFE",
+          "POSNA: SCFE"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Request MRI to assess femoral head vascularity before surgery",
+        "correct": false,
+        "rationale": "MRI can assess femoral head perfusion and predict avascular necrosis risk, but it should not delay urgent surgical fixation. Each hour of delay increases the risk of further displacement and vascular compromise. MRI may be obtained post-fixation if avascular necrosis is suspected clinically. (Source: POSNA: SCFE)",
+        "source_refs": [
+          "POSNA: SCFE"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Slipped upper femoral epiphysis is classified as stable (able to weight-bear) or unstable (unable to weight-bear). Unstable SUFE carries a significantly higher rate of avascular necrosis (up to 47% vs 0-5% for stable). The treatment for both is in-situ fixation with a cannulated screw, but unstable SUFE requires urgent fixation. Reduction is avoided as it increases avascular necrosis risk. The contralateral hip should be monitored as prophylactic pinning is controversial but discussed in high-risk patients.",
+      "key_points": [
+        "Unstable SUFE is defined by inability to weight-bear and carries up to 47% risk of avascular necrosis",
+        "Treatment is urgent in-situ screw fixation without reduction",
+        "Forced reduction increases avascular necrosis risk by disrupting retinacular blood supply",
+        "Traction is no longer recommended for SUFE management",
+        "Risk factors include obesity, endocrine disorders, and adolescence during the growth spurt"
+      ],
+      "pearls": "The Loder classification distinguishes stable (can weight-bear, even with crutches) from unstable (cannot weight-bear at all) SUFE - this single clinical distinction predicts avascular necrosis risk better than the degree of radiographic slip."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: SUFE",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/sufe/"
+      },
+      {
+        "label": "POSNA: SCFE",
+        "url": "https://posna.org/physician-education/study-guide/slipped-capital-femoral-epiphysis"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
+    "created": "2026-05-26"
+  }
+]
