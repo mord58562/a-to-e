@@ -32,10 +32,34 @@ Resume trigger phrase Rob may use in a future session: "resume the A to E omnibu
 - [x] Phase B: screenshot analysis - 4 reports in `screenshot_analysis/batch{1..4}.md`
 - [x] Phase D: targeted fixes (admin sidebar, AN removal, +glucose align, Anti-D rationale rewrite, magnesium spelling)
 - [x] Phase C: synthesised - `universal_rules_addendum.md`, `explanation_craft.md`, `mined_facts.md`
-- [~] Phase E: UI/UX redesign vs AI-tells - audit + plan written, implementation in progress (background agent)
-- [~] Phase F: bank audit + rewrites - in progress (background agent)
-- [ ] Phase G: final sweep + commit
-- [ ] Phase H: update generation prompt template in index.html with universal rule additions
+- [x] Phase E: UI/UX redesign - audit + plan written, implementation landed (commit 6e8281d). Verify in browser when resumed.
+- [partial] Phase F: bank auto-fixes landed (em-dash sweep, AU spellings, asterisk strip) across 70+ batches + main files; audit report + fix queue on disk. Agent STALLED on the diagnosis-leak heuristic - left a note that it was about to tighten the heuristic against false positives. Fix queue may include false positives in the diagnosis-leak severity tier; manually verify before acting on those entries.
+- [ ] Phase G: final sweep + smoke test in browser (UI redesign verification, fix-queue triage)
+- [ ] Phase H: update the generation-prompt template inside `index.html` (lines ~515-744) to incorporate the universal rule additions (see `universal_rules_addendum.md` section H "one-page generation-time checklist"). Also update `.remote-agent-context.md` so the scheduled cloud routine starts producing rule-compliant questions.
+
+## Resume next session (after 9pm Sydney 2026-05-27 limit reset)
+
+Rob may say: "resume the A to E omnibus session"
+
+Then:
+1. Read this file end-to-end.
+2. `git log --since='2026-05-27' --oneline` in `~/y4-mcq/` to confirm commit state. Expected HEAD ~= `6e8281d` (or later if cloud routine added more batches via the scheduled remote agent).
+3. Open localhost / GH Pages copy of the site and smoke-test the UI redesign changes. Verify:
+   - Admin sidebar tabs now click through (Overview/Add&Audit/Quality/Users/Account).
+   - AN button is gone.
+   - "(+ glucose)" sits on baseline with "A to E".
+   - Anti-D Q (`obgyn-anscreen-006` in `data/batches/obgyn_antenatal_screening.json`) shows the rewritten option-C rationale.
+4. Open `bank_audit_fix_queue.json` and triage manually - many diagnosis-leak entries may be false positives per agent's stall note. Tighten heuristic + re-run or apply by hand.
+5. Update `index.html` generation prompt template (lines ~515-744) with the new binding rules from `universal_rules_addendum.md` section H.
+6. Update `.remote-agent-context.md` so scheduled remote agent emits rule-compliant questions.
+7. Add what's-new entry to README / portfolio per the always-on rule.
+8. Final commit + push.
+
+## Incident log
+
+- 2026-05-27 16:14 AEST: subagent copied 181 emedici screenshots into `_imgs_tmp/` and they got auto-pushed to public repo. Force-pushed to remove from main (HEAD was rewritten over `d2c2cb5`); dangling commit will be GC'd by GitHub in ~90 days. Memory entry `feedback_no_source_material_in_repo.md` created. .gitignore updated.
+
+- 2026-05-27 ~20:55 AEST: hit usage limit (resets 9pm Sydney = ~5 min later). Bank-audit agent stalled mid-verification. Pushed all completed work in commit `6e8281d` so nothing is lost.
 
 ## Incident log
 
