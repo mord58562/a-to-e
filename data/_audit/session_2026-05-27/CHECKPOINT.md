@@ -31,11 +31,11 @@ Resume trigger phrase Rob may use in a future session: "resume the A to E omnibu
 - [x] Phase A: project orientation (key files read; rest read on-demand)
 - [x] Phase B: screenshot analysis - 4 reports in `screenshot_analysis/batch{1..4}.md`
 - [x] Phase D: targeted fixes (admin sidebar, AN removal, +glucose align, Anti-D rationale rewrite, magnesium spelling)
-- [ ] Phase C: synthesise universal rule additions + explanation craft tips
-- [ ] Phase E: UI/UX redesign vs AI-tells
-- [ ] Phase F: bank audit + rewrites
+- [x] Phase C: synthesised - `universal_rules_addendum.md`, `explanation_craft.md`, `mined_facts.md`
+- [~] Phase E: UI/UX redesign vs AI-tells - audit + plan written, implementation in progress (background agent)
+- [~] Phase F: bank audit + rewrites - in progress (background agent)
 - [ ] Phase G: final sweep + commit
-- [ ] Phase H: update generation prompt + remote agent context with new rules
+- [ ] Phase H: update generation prompt template in index.html with universal rule additions
 
 ## Incident log
 

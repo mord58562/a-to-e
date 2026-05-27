@@ -1,1 +1,754 @@
-[{"id": "med-htn-001", "topic": "Medicine", "subtopic": "Hypertensive emergency", "subtopic_detail": "Initial IV antihypertensive selection and BP target", "difficulty": 3, "model": "Claude Opus 4.7 (1M context)", "tags": ["hypertension", "labetalol"], "stem": "A 58-year-old man presents to the emergency department with a severe headache and blurred vision for 4 hours. He has a background of poorly controlled hypertension and stopped taking his amlodipine 3 weeks ago. On examination he has bilateral papilloedema and bilateral retinal haemorrhages consistent with hypertensive retinopathy.", "data_table": {"Vital signs": "HR 92 bpm, BP 232/138 mmHg, RR 18/min, SpO2 98% on room air, T 36.8 C", "Examination": "GCS 15, papilloedema bilaterally, flame haemorrhages, no focal neurological deficit", "Investigations": "Cr 148 micromol/L (baseline 90), K 4.2 mmol/L, urinalysis protein 2+"}, "lead_in": "What is the most appropriate initial management?", "options": [{"letter": "A", "text": "IV glyceryl trinitrate infusion titrated to reduce MAP by 25% in the first hour", "correct": true, "rationale": "Hypertensive emergency with end-organ damage (retinopathy, AKI) requires controlled IV BP reduction. The target is to reduce MAP by no more than 25% in the first hour to avoid watershed ischaemia, then gradually toward 160/100 mmHg over the next 2 to 6 hours. IV GTN or sodium nitroprusside are appropriate first-line agents. (Source: eTG: Cardiovascular; NHFA/CSANZ)", "source_refs": ["eTG: Cardiovascular", "NHFA/CSANZ Hypertension Guidelines"]}, {"letter": "B", "text": "Oral amlodipine 10 mg and observe for 6 hours before reassessing blood pressure", "correct": false, "rationale": "Oral agents are too slow and unpredictable in hypertensive emergency with acute end-organ damage. IV therapy is required for controlled, titratable reduction. Oral agents are appropriate for hypertensive urgency without end-organ damage. (Source: eTG: Cardiovascular)", "source_refs": ["eTG: Cardiovascular"]}, {"letter": "C", "text": "IV labetalol bolus titrated to normalise blood pressure to below 140/90 within 1 hour", "correct": false, "rationale": "While IV labetalol is an appropriate agent, targeting normal BP within 1 hour risks cerebral hypoperfusion and watershed infarction. The initial target is a 25% MAP reduction, not normalisation. Autoregulation is shifted rightward in chronic hypertension. (Source: eTG: Cardiovascular; NHFA/CSANZ)", "source_refs": ["eTG: Cardiovascular", "NHFA/CSANZ Hypertension Guidelines"]}, {"letter": "D", "text": "Sublingual glyceryl trinitrate 600 mcg repeated every 5 minutes until BP is controlled", "correct": false, "rationale": "Sublingual GTN causes unpredictable and precipitous drops in blood pressure that cannot be titrated. IV infusion allows minute-to-minute control, which is essential to avoid overshoot and ischaemic complications. (Source: eTG: Cardiovascular)", "source_refs": ["eTG: Cardiovascular"]}, {"letter": "E", "text": "IV hydralazine 10 mg bolus and arrange urgent CT brain before further BP management", "correct": false, "rationale": "IV hydralazine causes reflex tachycardia and unpredictable BP drops, making it a less ideal first-line choice. While neuroimaging is reasonable to exclude stroke, it should not delay initiation of controlled IV antihypertensive therapy. (Source: eTG: Cardiovascular; NHFA/CSANZ)", "source_refs": ["eTG: Cardiovascular", "NHFA/CSANZ Hypertension Guidelines"]}], "explanation": {"summary": "Hypertensive emergency is defined by severely elevated blood pressure with evidence of acute end-organ damage, including retinopathy, encephalopathy, acute kidney injury, aortic dissection, or acute pulmonary oedema. Management requires admission to a monitored bed with intravenous antihypertensive therapy titrated to reduce MAP by no more than 25% in the first hour. Further gradual reduction toward 160/100 mmHg occurs over the following 2 to 6 hours. The choice of IV agent depends on the specific end-organ involvement and contraindications.", "key_points": ["Hypertensive emergency requires IV antihypertensive therapy, not oral agents", "Target MAP reduction of no more than 25% in the first hour to avoid watershed ischaemia", "Autoregulation is shifted rightward in chronic hypertension so rapid normalisation is dangerous", "IV GTN, sodium nitroprusside, and labetalol are all acceptable first-line agents"], "pearls": "In chronic hypertension the cerebral autoregulatory curve shifts rightward, meaning a MAP that is normal for a healthy person may be below the ischaemic threshold in a chronically hypertensive patient - this is why the 25% MAP reduction ceiling exists."}, "sources": [{"label": "eTG: Cardiovascular"}, {"label": "NHFA/CSANZ Hypertension Guidelines", "url": "https://www.heartfoundation.org.au/bundles/your-heart/hypertension-guidelines"}], "reference_ranges": ["uec"], "created": "2026-05-26"}, {"id": "med-htn-002", "topic": "Medicine", "subtopic": "Hypertensive emergency", "subtopic_detail": "BP target variation by end-organ involvement - aortic dissection vs stroke", "difficulty": 4, "model": "Claude Opus 4.7 (1M context)", "tags": ["hypertension", "aortic dissection"], "stem": "A 66-year-old man presents with acute-onset tearing interscapular pain radiating to his abdomen. He has a history of poorly controlled hypertension. CT aortogram confirms a Stanford type B aortic dissection extending from the left subclavian artery to the infrarenal aorta without malperfusion syndrome. There is no evidence of contained rupture or visceral ischaemia.", "data_table": {"Vital signs": "HR 104 bpm, BP 218/126 mmHg (right arm), BP 196/112 mmHg (left arm), RR 20/min, SpO2 97% on room air", "Investigations": "Cr 102 micromol/L, lactate 1.4 mmol/L, Hb 138 g/L, troponin I 12 ng/L"}, "lead_in": "What is the most appropriate blood pressure target within the first hour?", "options": [{"letter": "A", "text": "Reduce MAP by no more than 25% and reassess at 6 hours in a monitored setting", "correct": false, "rationale": "The 25% MAP reduction target applies to most hypertensive emergencies but is insufficient for aortic dissection, where more aggressive SBP lowering is required to reduce aortic wall shear stress and limit propagation. (Source: eTG: Cardiovascular; ESC Aortic Disease Guidelines 2024)", "source_refs": ["eTG: Cardiovascular", "ESC Aortic Disease Guidelines"]}, {"letter": "B", "text": "Target SBP 100 to 120 mmHg and HR below 60 bpm using IV esmolol or labetalol", "correct": true, "rationale": "Acute aortic dissection requires aggressive SBP reduction to 100 to 120 mmHg and HR below 60 bpm to minimise aortic wall shear stress. IV beta-blockers (esmolol or labetalol) are first-line. Beta-blockade should precede vasodilators to avoid reflex tachycardia. Uncomplicated type B dissection is managed medically. (Source: eTG: Cardiovascular; ESC Aortic Disease Guidelines 2024)", "source_refs": ["eTG: Cardiovascular", "ESC Aortic Disease Guidelines"]}, {"letter": "C", "text": "Target SBP below 180 mmHg using IV sodium nitroprusside as the sole first-line agent", "correct": false, "rationale": "Sodium nitroprusside as monotherapy causes reflex tachycardia, which increases aortic wall shear stress and may worsen dissection propagation. If used, it must follow adequate beta-blockade. The SBP target of below 180 mmHg is also too liberal for dissection. (Source: ESC Aortic Disease Guidelines 2024)", "source_refs": ["ESC Aortic Disease Guidelines"]}, {"letter": "D", "text": "Target SBP 140 to 160 mmHg using IV hydralazine and arrange urgent surgical repair", "correct": false, "rationale": "Hydralazine causes reflex tachycardia and is contraindicated in aortic dissection. Uncomplicated Stanford type B dissection without malperfusion, rupture, or refractory pain is managed medically, not surgically. Surgical or endovascular repair is reserved for complicated type B. (Source: ESC Aortic Disease Guidelines 2024; eTG: Cardiovascular)", "source_refs": ["ESC Aortic Disease Guidelines", "eTG: Cardiovascular"]}, {"letter": "E", "text": "Target SBP 100 to 120 mmHg using IV esmolol and arrange emergent endovascular repair", "correct": false, "rationale": "While the BP target is correct, emergent endovascular repair is not indicated for uncomplicated type B dissection. The absence of malperfusion, rupture, or refractory symptoms means medical management alone is appropriate. Endovascular repair may be considered electively. (Source: ESC Aortic Disease Guidelines 2024)", "source_refs": ["ESC Aortic Disease Guidelines"]}], "explanation": {"summary": "Aortic dissection has a unique BP target compared with other hypertensive emergencies. The goal is SBP 100 to 120 mmHg and HR below 60 bpm, achieved primarily with IV beta-blockers to reduce both blood pressure and the rate of pressure rise (dP/dt). Stanford type B dissections are classified as uncomplicated or complicated. Complicated features include malperfusion syndrome, contained rupture, refractory pain, or rapid expansion, which mandate urgent endovascular or surgical intervention. Uncomplicated type B is managed with medical therapy and surveillance imaging.", "key_points": ["Aortic dissection target is SBP 100 to 120 mmHg and HR below 60 bpm", "IV beta-blockers are first-line to reduce both BP and dP/dt", "Vasodilators must follow beta-blockade to prevent reflex tachycardia", "Uncomplicated type B dissection is managed medically", "Complicated type B requires endovascular or surgical intervention"], "pearls": "IV esmolol is preferred over labetalol in aortic dissection when rapid titration is needed because its half-life is only 9 minutes, allowing minute-to-minute control if hypotension or bradycardia develops."}, "sources": [{"label": "eTG: Cardiovascular"}, {"label": "ESC Aortic Disease Guidelines", "url": "https://www.escardio.org/Guidelines/Clinical-Practice-Guidelines/Aortic-Diseases"}], "reference_ranges": ["uec"], "created": "2026-05-26"}, {"id": "med-htn-003", "topic": "Medicine", "subtopic": "Hypertensive emergency", "subtopic_detail": "PRES in eclampsia-mimicking presentation with atypical features", "difficulty": 5, "model": "Claude Opus 4.7 (1M context)", "tags": ["hypertension", "seizure"], "stem": "A 34-year-old woman who is 3 days postpartum after an uncomplicated vaginal delivery presents with a generalised tonic-clonic seizure. She had no pre-eclampsia during pregnancy and her antenatal blood pressures were all normal. She is currently breastfeeding and takes no regular medications. On arrival she is postictal with a GCS of 11. A repeat seizure occurs in the emergency department.", "data_table": {"Vital signs": "HR 108 bpm, BP 198/124 mmHg, RR 22/min, SpO2 95% on 6 L face mask, T 37.4 C", "Investigations": "Platelets 198 x10^9/L, ALT 32 U/L, Cr 68 micromol/L, urate 0.32 mmol/L, urine protein:creatinine ratio 18 mg/mmol, MRI brain shows bilateral symmetrical T2/FLAIR hyperintensity in the parieto-occipital white matter without restricted diffusion"}, "lead_in": "What is the most likely diagnosis and most appropriate immediate management?", "options": [{"letter": "A", "text": "Eclampsia - administer IV magnesium sulfate 4 g loading dose and commence IV labetalol infusion", "correct": false, "rationale": "Eclampsia typically occurs in the setting of pre-eclampsia features (hypertension, proteinuria, thrombocytopaenia, elevated transaminases). This patient has normal platelets, normal ALT, normal urate, and minimal proteinuria. While magnesium sulfate would not be harmful, the MRI findings of parieto-occipital vasogenic oedema without restricted diffusion are characteristic of PRES, not eclampsia per se. (Source: BMJ Best Practice: PRES; RANZCOG Hypertension in Pregnancy)", "source_refs": ["BMJ Best Practice: PRES", "RANZCOG Hypertension in Pregnancy"]}, {"letter": "B", "text": "Cerebral venous sinus thrombosis - commence IV heparin and arrange CT venography", "correct": false, "rationale": "CVST can present postpartum with seizures and headache, but MRI typically shows venous infarction with restricted diffusion and parenchymal haemorrhage, not bilateral symmetrical parieto-occipital vasogenic oedema. The MRI pattern here is characteristic of PRES. (Source: BMJ Best Practice: PRES; Stroke Foundation)", "source_refs": ["BMJ Best Practice: PRES", "Stroke Foundation Living Guidelines 2022"]}, {"letter": "C", "text": "Posterior reversible encephalopathy syndrome - commence IV labetalol and IV levetiracetam", "correct": true, "rationale": "The combination of acute severe hypertension, seizures, and bilateral parieto-occipital T2/FLAIR hyperintensity without restricted diffusion on MRI is the hallmark of PRES. The absence of pre-eclampsia features (normal platelets, normal ALT, minimal proteinuria) argues against eclampsia. PRES can occur postpartum even without preceding pre-eclampsia. Management centres on aggressive BP control and seizure treatment. PRES is typically reversible with prompt BP management. (Source: BMJ Best Practice: PRES; RANZCOG Hypertension in Pregnancy)", "source_refs": ["BMJ Best Practice: PRES", "RANZCOG Hypertension in Pregnancy"]}, {"letter": "D", "text": "Postpartum pre-eclampsia with seizures - administer IV magnesium sulfate and IV hydralazine", "correct": false, "rationale": "Post-partum pre-eclampsia can develop de novo after delivery, but the diagnostic criteria require hypertension plus at least one of proteinuria, thrombocytopaenia, renal impairment, elevated transaminases, or neurological features. Here the only feature is hypertension with seizures, and the MRI pattern specifically supports PRES. Hydralazine is also less favoured than labetalol due to unpredictable hypotension. (Source: RANZCOG Hypertension in Pregnancy)", "source_refs": ["RANZCOG Hypertension in Pregnancy"]}, {"letter": "E", "text": "Subarachnoid haemorrhage - arrange urgent CT angiography and neurosurgical consultation", "correct": false, "rationale": "SAH typically shows subarachnoid blood on CT or xanthochromia on LP. MRI in SAH does not show bilateral symmetrical parieto-occipital vasogenic oedema. The presentation with severe hypertension and this specific MRI pattern points to PRES rather than a vascular event. (Source: Stroke Foundation; BMJ Best Practice: PRES)", "source_refs": ["Stroke Foundation Living Guidelines 2022", "BMJ Best Practice: PRES"]}], "explanation": {"summary": "Posterior reversible encephalopathy syndrome is a clinico-radiological diagnosis characterised by acute hypertension, seizures, headache, and visual disturbance with bilateral parieto-occipital vasogenic oedema on MRI. It can occur postpartum even without a history of pre-eclampsia, and is thought to result from a failure of cerebral autoregulation leading to vasogenic oedema. The key MRI discriminator is T2/FLAIR hyperintensity WITHOUT restricted diffusion, distinguishing it from ischaemic stroke. Management is prompt blood pressure control and seizure treatment. Despite the name, PRES is not always reversible if treatment is delayed.", "key_points": ["PRES shows bilateral parieto-occipital T2/FLAIR hyperintensity without restricted diffusion", "Can occur postpartum without preceding pre-eclampsia", "Eclampsia and PRES have overlapping features but differing biochemical profiles", "Prompt BP control is the cornerstone of PRES management", "Despite its name PRES can cause permanent injury if untreated"], "pearls": "The absence of restricted diffusion on DWI-MRI distinguishes the vasogenic oedema of PRES from the cytotoxic oedema of ischaemic stroke - this single imaging discriminator often clinches the diagnosis when clinical features overlap with eclampsia or CVST."}, "sources": [{"label": "BMJ Best Practice: PRES", "url": "https://bestpractice.bmj.com/topics/en-gb/1522"}, {"label": "RANZCOG Hypertension in Pregnancy", "url": "https://ranzcog.edu.au/statements-guidelines/obstetrics/hypertension-in-pregnancy"}, {"label": "Stroke Foundation Living Guidelines 2022", "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"}], "reference_ranges": ["uec", "fbc", "lfts"], "created": "2026-05-26"}, {"id": "med-viral-001", "topic": "Medicine", "subtopic": "Infectious diseases", "subtopic_detail": "Influenza antiviral timing and indications for oseltamivir", "difficulty": 3, "model": "Claude Opus 4.7 (1M context)", "tags": ["antibiotics", "pregnancy"], "stem": "A 32-year-old woman who is 28 weeks pregnant presents to the emergency department in July with 2 days of high fever, myalgia, dry cough, and rhinorrhoea. She has no significant medical history and her pregnancy has been uncomplicated. A point-of-care influenza rapid antigen test is positive for influenza A.", "data_table": {"Vital signs": "HR 96 bpm, BP 112/68 mmHg, RR 18/min, SpO2 97% on room air, T 39.1 C", "Examination": "Clear chest on auscultation bilaterally, no signs of respiratory distress, uterine size consistent with dates, normal foetal movements reported"}, "lead_in": "What is the most appropriate next step in management?", "options": [{"letter": "A", "text": "Reassure that influenza is self-limiting and prescribe paracetamol for symptomatic relief only", "correct": false, "rationale": "Pregnant women are at significantly higher risk of severe influenza complications including pneumonia, hospitalisation, and preterm birth. Antiviral therapy is recommended for all pregnant women with confirmed or suspected influenza regardless of symptom duration. Withholding treatment exposes both mother and foetus to avoidable risk. (Source: RANZCOG; eTG: Antibiotic)", "source_refs": ["RANZCOG", "eTG: Antibiotic"]}, {"letter": "B", "text": "Prescribe zanamivir inhaled 10 mg twice daily as the preferred antiviral in pregnancy", "correct": false, "rationale": "Zanamivir is an alternative when oseltamivir is not tolerated, but oseltamivir remains the first-line antiviral in pregnancy because it has a larger evidence base for safety and efficacy in pregnant women. Inhaled zanamivir may also be poorly tolerated in women with respiratory symptoms. (Source: eTG: Antibiotic; RANZCOG)", "source_refs": ["eTG: Antibiotic", "RANZCOG"]}, {"letter": "C", "text": "Delay antiviral therapy until respiratory swab PCR confirms the diagnosis", "correct": false, "rationale": "Treatment should not be delayed awaiting confirmatory PCR when a rapid antigen test is positive in the appropriate clinical context. PCR has higher sensitivity but the clinical decision to treat should not await it, particularly in a high-risk patient. Empiric treatment based on clinical suspicion alone is also acceptable in pregnancy. (Source: eTG: Antibiotic)", "source_refs": ["eTG: Antibiotic"]}, {"letter": "D", "text": "Commence oral oseltamivir 75 mg twice daily for 5 days without delay regardless of duration", "correct": true, "rationale": "Oseltamivir is the first-line antiviral for influenza in pregnancy and should be commenced as soon as possible. Although benefit is greatest within 48 hours of symptom onset, treatment is recommended regardless of duration in high-risk groups including pregnant women. Oseltamivir is safe in all trimesters. The standard treatment dose is 75 mg twice daily for 5 days. (Source: eTG: Antibiotic; RANZCOG)", "source_refs": ["eTG: Antibiotic", "RANZCOG"]}, {"letter": "E", "text": "Admit for IV antibiotics and oseltamivir given the high risk of secondary bacterial pneumonia", "correct": false, "rationale": "This patient has normal oxygen saturation, clear lungs, and no signs of respiratory distress or sepsis. There is no indication for IV antibiotics or admission at this stage. Outpatient oral oseltamivir with safety-net advice and planned review is appropriate. Admission would be warranted if she developed hypoxia or respiratory distress. (Source: eTG: Antibiotic)", "source_refs": ["eTG: Antibiotic"]}], "explanation": {"summary": "Pregnant women are an established high-risk group for influenza complications due to altered immune function, increased oxygen consumption, and reduced functional residual capacity. Australian guidelines recommend oseltamivir 75 mg twice daily for 5 days for all pregnant women with confirmed or suspected influenza, regardless of symptom duration. Treatment should commence as soon as possible and should not be delayed for confirmatory testing. Vaccination remains the most important preventive strategy and is funded under the National Immunisation Program for all pregnant women.", "key_points": ["Pregnant women are high-risk for severe influenza and should receive antiviral treatment", "Oseltamivir 75 mg twice daily for 5 days is first-line regardless of trimester", "Treatment should not be delayed for confirmatory PCR when clinical suspicion is high", "Influenza vaccination is recommended for all pregnant women at any gestation", "Admission is indicated only if there are signs of severe disease or complications"], "pearls": "Oseltamivir provides the greatest benefit when started within 48 hours of symptom onset, but Australian guidelines recommend treatment at any duration in high-risk groups including pregnant women, immunosuppressed patients, Aboriginal and Torres Strait Islander peoples, and those aged 65 years and over."}, "sources": [{"label": "eTG: Antibiotic"}, {"label": "RANZCOG", "url": "https://ranzcog.edu.au/statements-guidelines"}], "reference_ranges": ["fbc"], "created": "2026-05-26"}, {"id": "med-viral-002", "topic": "Medicine", "subtopic": "Infectious diseases", "subtopic_detail": "COVID-19 severity assessment and dexamethasone indication", "difficulty": 3, "model": "Claude Opus 4.7 (1M context)", "tags": ["corticosteroids", "antibiotics"], "stem": "A 72-year-old man presents with 5 days of cough, fever, and progressive dyspnoea. He has type 2 diabetes and chronic kidney disease stage 3b. A SARS-CoV-2 rapid antigen test is positive. He is commenced on supplemental oxygen via nasal prongs at 4 L/min to maintain saturation above 92%.", "data_table": {"Vital signs": "HR 98 bpm, BP 136/78 mmHg, RR 24/min, SpO2 89% on room air (94% on 4 L NP), T 38.4 C", "Investigations": "WCC 8.2 x10^9/L, CRP 124 mg/L, lymphocytes 0.6 x10^9/L, Cr 186 micromol/L (baseline 152), chest X-ray bilateral peripheral ground-glass opacities"}, "lead_in": "What is the most appropriate pharmacological intervention at this stage?", "options": [{"letter": "A", "text": "Oral nirmatrelvir-ritonavir 300/100 mg twice daily for 5 days to reduce viral replication", "correct": false, "rationale": "Nirmatrelvir-ritonavir is indicated for mild-to-moderate COVID-19 in patients at high risk of progression, ideally within 5 days of symptom onset and BEFORE the need for supplemental oxygen. Once a patient requires oxygen, the disease has progressed beyond the antiviral-responsive phase into the hyperinflammatory phase. (Source: Australian National COVID-19 Clinical Evidence Taskforce)", "source_refs": ["National COVID-19 Clinical Evidence Taskforce"]}, {"letter": "B", "text": "IV remdesivir 200 mg loading dose then 100 mg daily as the sole additional treatment", "correct": false, "rationale": "Remdesivir may have a role in hospitalised patients with COVID-19, but the single most impactful intervention in patients requiring supplemental oxygen is systemic corticosteroids. Remdesivir alone without dexamethasone would omit the treatment with the strongest mortality benefit in this severity tier. (Source: National COVID-19 Clinical Evidence Taskforce; RECOVERY trial)", "source_refs": ["National COVID-19 Clinical Evidence Taskforce"]}, {"letter": "C", "text": "Commence empiric IV co-amoxiclav for presumed bacterial co-infection based on the CRP", "correct": false, "rationale": "Bacterial co-infection in acute COVID-19 is uncommon in the first week of illness. Empiric antibiotics are not recommended unless there is a clear clinical indication such as purulent sputum, lobar consolidation, or procalcitonin elevation suggesting superinfection. CRP alone is insufficient. (Source: National COVID-19 Clinical Evidence Taskforce; eTG: Antibiotic)", "source_refs": ["National COVID-19 Clinical Evidence Taskforce", "eTG: Antibiotic"]}, {"letter": "D", "text": "Oral paracetamol and supportive care only until further oxygen escalation is required", "correct": false, "rationale": "Withholding corticosteroids in a patient already requiring supplemental oxygen would miss the proven mortality benefit demonstrated in the RECOVERY trial. Dexamethasone reduced 28-day mortality in patients requiring oxygen or ventilation. Waiting for further deterioration is not appropriate. (Source: National COVID-19 Clinical Evidence Taskforce)", "source_refs": ["National COVID-19 Clinical Evidence Taskforce"]}, {"letter": "E", "text": "Oral dexamethasone 6 mg daily for up to 10 days alongside standard supportive care", "correct": true, "rationale": "The RECOVERY trial demonstrated that dexamethasone 6 mg daily for up to 10 days reduced 28-day mortality by approximately one-third in patients requiring supplemental oxygen. This patient requires oxygen and is therefore in the appropriate severity tier for corticosteroid therapy. Dexamethasone is the cornerstone of treatment for hospitalised COVID-19 patients with hypoxia. (Source: National COVID-19 Clinical Evidence Taskforce; RECOVERY trial)", "source_refs": ["National COVID-19 Clinical Evidence Taskforce"]}], "explanation": {"summary": "COVID-19 management is stratified by severity. Antiviral agents such as nirmatrelvir-ritonavir are most effective in the early viral replication phase before oxygen requirement. Once a patient requires supplemental oxygen, the disease has entered the hyperinflammatory phase where systemic corticosteroids provide the greatest benefit. The RECOVERY trial established that dexamethasone 6 mg daily for up to 10 days reduces 28-day mortality by about one-third in oxygen-dependent patients. Dexamethasone does not benefit and may harm patients who do not require oxygen.", "key_points": ["Dexamethasone 6 mg daily for up to 10 days is the cornerstone treatment for hypoxic COVID-19", "Antivirals are for early mild-to-moderate disease before oxygen requirement", "Corticosteroids do not benefit patients who are not hypoxic", "Bacterial co-infection is uncommon in early COVID-19 and antibiotics should not be empiric", "RECOVERY trial showed one-third mortality reduction in oxygen-requiring patients"], "pearls": "Dexamethasone in COVID-19 follows a severity threshold - it reduces mortality in patients requiring oxygen (number needed to treat approximately 8 for ventilated patients) but shows a non-significant trend toward harm in patients not requiring respiratory support."}, "sources": [{"label": "National COVID-19 Clinical Evidence Taskforce", "url": "https://covid19evidence.net.au/"}, {"label": "eTG: Antibiotic"}], "reference_ranges": ["fbc", "uec", "inflammatory_markers"], "created": "2026-05-26"}, {"id": "med-viral-003", "topic": "Medicine", "subtopic": "Infectious diseases", "subtopic_detail": "Nirmatrelvir-ritonavir drug interactions and eligibility", "difficulty": 4, "model": "Claude Opus 4.7 (1M context)", "tags": ["anticoagulation", "toxicology"], "stem": "A 68-year-old man with atrial fibrillation, stable ischaemic heart disease, and COPD presents to his GP on day 2 of mild COVID-19 symptoms confirmed by rapid antigen test. He has a persistent dry cough and mild fatigue but no dyspnoea or hypoxia. His regular medications include rivaroxaban 20 mg daily, ticagrelor 90 mg twice daily, atorvastatin 40 mg daily, tiotropium inhaler, and salbutamol as needed.", "data_table": {"Vital signs": "HR 78 bpm irregular, BP 128/76 mmHg, RR 16/min, SpO2 96% on room air, T 37.8 C", "Investigations": "eGFR 62 mL/min/1.73m2"}, "lead_in": "What is the most appropriate approach to antiviral therapy?", "options": [{"letter": "A", "text": "Switch rivaroxaban to enoxaparin, switch ticagrelor to clopidogrel, and suspend atorvastatin during the course", "correct": true, "rationale": "This addresses all major ritonavir-CYP3A4 interactions: enoxaparin replaces rivaroxaban (avoiding DOAC level increase), clopidogrel replaces ticagrelor (clopidogrel is not a CYP3A4 substrate for its active metabolite), and atorvastatin is suspended for the treatment plus washout period (avoiding rhabdomyolysis risk from statin accumulation). This allows nirmatrelvir-ritonavir to be used safely. (Source: AMH; National COVID-19 Clinical Evidence Taskforce)", "source_refs": ["AMH", "National COVID-19 Clinical Evidence Taskforce"]}, {"letter": "B", "text": "Withhold rivaroxaban and ticagrelor during the 5-day nirmatrelvir-ritonavir course plus 3 days after", "correct": false, "rationale": "Withholding both anticoagulation and antiplatelet therapy in a patient with AF and ischaemic heart disease creates unacceptable thromboembolic risk. The correct approach is to either manage interactions with dose adjustments and bridging or choose an alternative antiviral. Complete cessation of both agents is not appropriate. (Source: AMH; eTG: Cardiovascular)", "source_refs": ["AMH", "eTG: Cardiovascular"]}, {"letter": "C", "text": "Prescribe molnupiravir as an alternative antiviral that avoids these drug interactions entirely", "correct": false, "rationale": "Molnupiravir does not inhibit CYP3A4 and avoids ritonavir interactions, but it has lower efficacy than nirmatrelvir-ritonavir and is generally reserved as a second-line option. The preferred approach is to attempt interaction management with nirmatrelvir-ritonavir first, or use remdesivir if interactions cannot be managed. (Source: National COVID-19 Clinical Evidence Taskforce; AMH)", "source_refs": ["National COVID-19 Clinical Evidence Taskforce", "AMH"]}, {"letter": "D", "text": "Withhold ticagrelor and switch rivaroxaban to enoxaparin for the treatment course plus washout period", "correct": false, "rationale": "While switching rivaroxaban to therapeutic enoxaparin avoids the DOAC interaction, withholding ticagrelor in a patient with ischaemic heart disease increases acute coronary risk. Additionally, atorvastatin levels will still rise markedly. A comprehensive interaction management plan addressing all affected medications is needed rather than partial adjustment. (Source: AMH)", "source_refs": ["AMH"]}, {"letter": "E", "text": "Commence nirmatrelvir-ritonavir at standard dose with no medication adjustments needed", "correct": false, "rationale": "Ritonavir is a potent CYP3A4 and P-glycoprotein inhibitor. Co-administration with rivaroxaban and ticagrelor, both CYP3A4 substrates, significantly increases their plasma levels, raising the risk of major bleeding. Atorvastatin levels also increase substantially. Interaction management is mandatory before commencing. (Source: AMH; National COVID-19 Clinical Evidence Taskforce)", "source_refs": ["AMH", "National COVID-19 Clinical Evidence Taskforce"]}], "explanation": {"summary": "Nirmatrelvir-ritonavir is the most effective oral antiviral for mild-to-moderate COVID-19 in high-risk patients when started within 5 days of symptoms. However, the ritonavir component is a potent CYP3A4 and P-glycoprotein inhibitor that creates significant drug interactions with many common medications. Rivaroxaban, ticagrelor, and atorvastatin are all CYP3A4 substrates whose levels increase substantially with ritonavir. Managing these interactions requires temporary medication switches for the treatment course plus a 3-day washout. When interaction management is not feasible, alternative antivirals should be considered.", "key_points": ["Ritonavir inhibits CYP3A4 and P-glycoprotein causing major drug interactions", "Rivaroxaban and ticagrelor levels increase significantly with ritonavir co-administration", "Switching to enoxaparin and clopidogrel avoids the interaction while maintaining therapy", "Atorvastatin must be suspended due to rhabdomyolysis risk from CYP3A4 inhibition", "Interaction management should cover the 5-day course plus 3-day ritonavir washout"], "pearls": "Clopidogrel is a prodrug activated primarily by CYP2C19, not CYP3A4, so unlike ticagrelor and prasugrel it can be co-administered with ritonavir without loss of antiplatelet effect or dangerous level increases."}, "sources": [{"label": "AMH"}, {"label": "National COVID-19 Clinical Evidence Taskforce", "url": "https://covid19evidence.net.au/"}, {"label": "eTG: Cardiovascular"}], "reference_ranges": ["uec"], "created": "2026-05-26"}, {"id": "med-pd-001", "topic": "Medicine", "subtopic": "Neurodegenerative disease", "subtopic_detail": "Levodopa wearing-off phenomenon recognition and management", "difficulty": 3, "model": "Claude Opus 4.7 (1M context)", "tags": ["Parkinson's", "dementia"], "stem": "A 71-year-old man with Parkinson disease diagnosed 6 years ago presents with increasing difficulty with mobility over the past 4 months. He was initially well controlled on levodopa-carbidopa 100/25 mg three times daily. He now describes predictable worsening of tremor, rigidity, and slowness in the 30 to 60 minutes before each dose is due. He is independent with activities of daily living during on-periods.", "data_table": {"Medications": "Levodopa-carbidopa 100/25 mg TDS", "Examination": "Currently in off-state: moderate resting tremor right hand, cogwheel rigidity bilateral upper limbs, shuffling gait with reduced arm swing"}, "lead_in": "What is the most appropriate initial adjustment to manage this complication?", "options": [{"letter": "A", "text": "Add entacapone 200 mg with each levodopa dose to prolong peripheral levodopa availability", "correct": false, "rationale": "Entacapone is a COMT inhibitor that prolongs levodopa half-life and is a valid option for wearing-off. However, the recommended first step for predictable wearing-off is to increase dosing frequency (shorter intervals) before adding adjunct agents, as this is simpler and addresses the pharmacokinetic issue directly. (Source: eTG: Neurology; NICE Parkinson's Disease 2017)", "source_refs": ["eTG: Neurology", "NICE Parkinson's Disease 2017"]}, {"letter": "B", "text": "Increase dosing frequency to four times daily with a reduced individual dose to maintain total daily levodopa", "correct": true, "rationale": "Predictable end-of-dose wearing-off is best managed initially by shortening the dosing interval while adjusting individual doses to avoid peak-dose dyskinesia. Moving from TDS to QID with the same total daily dose provides more consistent dopaminergic stimulation. This is recommended as the first-line adjustment before adding adjunct therapies. (Source: eTG: Neurology; NICE Parkinson's Disease 2017)", "source_refs": ["eTG: Neurology", "NICE Parkinson's Disease 2017"]}, {"letter": "C", "text": "Switch entirely to a sustained-release levodopa formulation at the same total daily dose", "correct": false, "rationale": "Sustained-release levodopa has less predictable absorption and lower bioavailability than standard formulations. It is sometimes used as an adjunct at night but is not recommended as a complete replacement for standard levodopa for daytime wearing-off due to erratic absorption. (Source: eTG: Neurology; AMH)", "source_refs": ["eTG: Neurology", "AMH"]}, {"letter": "D", "text": "Add pramipexole as a dopamine agonist to provide more continuous dopaminergic stimulation", "correct": false, "rationale": "Adding a dopamine agonist is a valid strategy for motor fluctuations but carries significant risks including impulse control disorders, excessive daytime somnolence, and hallucinations, particularly in older patients. Simpler dose interval adjustments should be tried first. (Source: eTG: Neurology; NICE Parkinson's Disease 2017)", "source_refs": ["eTG: Neurology", "NICE Parkinson's Disease 2017"]}, {"letter": "E", "text": "Refer for deep brain stimulation assessment given the failure of current oral medication", "correct": false, "rationale": "Deep brain stimulation is reserved for patients with disabling motor fluctuations or dyskinesia despite optimised medical therapy. This patient has not yet had any dose adjustment and is still functionally independent during on-periods. Medical optimisation must be exhausted before surgical referral. (Source: eTG: Neurology; NICE Parkinson's Disease 2017)", "source_refs": ["eTG: Neurology", "NICE Parkinson's Disease 2017"]}], "explanation": {"summary": "Wearing-off is the most common motor complication in Parkinson disease on chronic levodopa therapy, typically appearing after 5 to 10 years of treatment as nigrostriatal dopaminergic neurons progressively decline, reducing buffering capacity. The initial management is to shorten the dosing interval while keeping total daily levodopa constant. If this is insufficient, COMT inhibitors (entacapone), MAO-B inhibitors (rasagiline), or dopamine agonists can be added as adjunct therapy. Deep brain stimulation is reserved for medically refractory motor fluctuations.", "key_points": ["Wearing-off presents as predictable return of motor symptoms before the next levodopa dose", "First-line management is to shorten the dosing interval while maintaining total daily dose", "COMT inhibitors and MAO-B inhibitors are second-line adjuncts for wearing-off", "Dopamine agonists carry risks of impulse control disorders especially in older patients", "Deep brain stimulation is a last resort after optimal medical therapy"], "pearls": "Wearing-off typically develops after 5 to 10 years of levodopa therapy and correlates with progressive loss of presynaptic dopaminergic neuron storage capacity - the remaining neurons cannot buffer levodopa levels between doses, leading to pulsatile stimulation of postsynaptic receptors."}, "sources": [{"label": "eTG: Neurology"}, {"label": "NICE Parkinson's Disease 2017", "url": "https://www.nice.org.uk/guidance/ng71"}, {"label": "AMH"}], "reference_ranges": [], "created": "2026-05-26"}, {"id": "med-pd-002", "topic": "Medicine", "subtopic": "Neurodegenerative disease", "subtopic_detail": "Impulse control disorder on dopamine agonist in Parkinson disease", "difficulty": 3, "model": "Claude Opus 4.7 (1M context)", "tags": ["Parkinson's"], "stem": "A 63-year-old man with Parkinson disease diagnosed 3 years ago returns for routine review. His motor symptoms are well controlled on pramipexole 1 mg three times daily. His wife reports he has spent over $18,000 on online gambling in the past 2 months and has also developed compulsive online shopping. He has no prior psychiatric history and had no behavioural issues before starting pramipexole.", "data_table": {"Medications": "Pramipexole 1 mg TDS, no other medications", "Examination": "Mild bilateral resting tremor, minimal rigidity, normal gait"}, "lead_in": "What is the most appropriate management of this complication?", "options": [{"letter": "A", "text": "Refer for cognitive behavioural therapy while continuing pramipexole at the current dose", "correct": false, "rationale": "CBT may have a supportive role, but the primary management is to reduce or cease the causative dopamine agonist. Continuing pramipexole at the same dose while attempting behavioural therapy alone will not resolve a pharmacologically driven impulse control disorder. (Source: eTG: Neurology; NICE Parkinson's Disease 2017)", "source_refs": ["eTG: Neurology", "NICE Parkinson's Disease 2017"]}, {"letter": "B", "text": "Add an SSRI for impulse control and maintain pramipexole at the current effective dose", "correct": false, "rationale": "SSRIs are not effective treatment for dopamine agonist-induced impulse control disorders. The mechanism is excessive mesolimbic dopaminergic stimulation, and the definitive management is dose reduction or cessation of the dopamine agonist. (Source: eTG: Neurology)", "source_refs": ["eTG: Neurology"]}, {"letter": "C", "text": "Gradually taper pramipexole and substitute levodopa to maintain motor symptom control", "correct": true, "rationale": "Dopamine agonist-induced impulse control disorders require gradual dose reduction or cessation of the agonist. Motor symptoms should be managed by substituting levodopa. Abrupt cessation risks dopamine agonist withdrawal syndrome (apathy, anxiety, pain). Impulse control disorders affect approximately 15 to 20% of patients on dopamine agonists and are a class effect. (Source: eTG: Neurology; NICE Parkinson's Disease 2017)", "source_refs": ["eTG: Neurology", "NICE Parkinson's Disease 2017"]}, {"letter": "D", "text": "Reduce pramipexole to the lowest effective motor dose and monitor gambling behaviour monthly", "correct": false, "rationale": "Dose reduction alone may be insufficient if the impulse control disorder is severe and causing significant financial harm. Complete cessation is often required. Monitoring alone without active management of a harmful behavioural complication is inadequate given the severity of financial loss. (Source: eTG: Neurology; NICE Parkinson's Disease 2017)", "source_refs": ["eTG: Neurology", "NICE Parkinson's Disease 2017"]}, {"letter": "E", "text": "Switch pramipexole to ropinirole as an alternative dopamine agonist with lower impulse risk", "correct": false, "rationale": "Impulse control disorders are a class effect of all dopamine agonists, not unique to pramipexole. Switching to ropinirole would not resolve the problem as both drugs act on D2/D3 receptors in the mesolimbic pathway. The appropriate management is to taper the entire class. (Source: eTG: Neurology; AMH)", "source_refs": ["eTG: Neurology", "AMH"]}], "explanation": {"summary": "Impulse control disorders are a recognised class effect of dopamine agonists in Parkinson disease, mediated by stimulation of D3 receptors in the ventral striatum and mesolimbic reward pathway. They include pathological gambling, compulsive shopping, hypersexuality, and binge eating. The prevalence is approximately 15 to 20% on dopamine agonists. Management requires gradual agonist cessation with levodopa substitution. Patients should be warned about this risk before starting any dopamine agonist, and regular screening during treatment is recommended.", "key_points": ["Impulse control disorders are a class effect of all dopamine agonists via D3 receptor stimulation", "Prevalence is approximately 15 to 20% on dopamine agonist therapy", "Management is gradual cessation of the agonist with levodopa substitution", "Abrupt withdrawal risks dopamine agonist withdrawal syndrome", "All patients should be screened for ICD before and during dopamine agonist therapy"], "pearls": "Dopamine agonist withdrawal syndrome (DAWS) occurs in approximately 15% of patients upon agonist cessation and presents with anxiety, panic, dysphoria, insomnia, and pain that does not respond to levodopa - gradual tapering over weeks to months is essential."}, "sources": [{"label": "eTG: Neurology"}, {"label": "NICE Parkinson's Disease 2017", "url": "https://www.nice.org.uk/guidance/ng71"}, {"label": "AMH"}], "reference_ranges": [], "created": "2026-05-26"}]
+[
+  {
+    "id": "med-htn-001",
+    "topic": "Medicine",
+    "subtopic": "Hypertensive emergency",
+    "subtopic_detail": "Initial IV antihypertensive selection and BP target",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "hypertension",
+      "labetalol"
+    ],
+    "stem": "A 58-year-old man presents to the emergency department with a severe headache and blurred vision for 4 hours. He has a background of poorly controlled hypertension and stopped taking his amlodipine 3 weeks ago. On examination he has bilateral papilloedema and bilateral retinal haemorrhages consistent with hypertensive retinopathy.",
+    "data_table": {
+      "Vital signs": "HR 92 bpm, BP 232/138 mmHg, RR 18/min, SpO2 98% on room air, T 36.8 C",
+      "Examination": "GCS 15, papilloedema bilaterally, flame haemorrhages, no focal neurological deficit",
+      "Investigations": "Cr 148 micromol/L (baseline 90), K 4.2 mmol/L, urinalysis protein 2+"
+    },
+    "lead_in": "What is the most appropriate initial management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "IV glyceryl trinitrate infusion titrated to reduce MAP by 25% in the first hour",
+        "correct": true,
+        "rationale": "Hypertensive emergency with end-organ damage (retinopathy, AKI) requires controlled IV BP reduction. The target is to reduce MAP by no more than 25% in the first hour to avoid watershed ischaemia, then gradually toward 160/100 mmHg over the next 2 to 6 hours. IV GTN or sodium nitroprusside are appropriate first-line agents. (Source: eTG: Cardiovascular; NHFA/CSANZ)",
+        "source_refs": [
+          "eTG: Cardiovascular",
+          "NHFA/CSANZ Hypertension Guidelines"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Oral amlodipine 10 mg and observe for 6 hours before reassessing blood pressure",
+        "correct": false,
+        "rationale": "Oral agents are too slow and unpredictable in hypertensive emergency with acute end-organ damage. IV therapy is required for controlled, titratable reduction. Oral agents are appropriate for hypertensive urgency without end-organ damage. (Source: eTG: Cardiovascular)",
+        "source_refs": [
+          "eTG: Cardiovascular"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "IV labetalol bolus titrated to normalise blood pressure to below 140/90 within 1 hour",
+        "correct": false,
+        "rationale": "While IV labetalol is an appropriate agent, targeting normal BP within 1 hour risks cerebral hypoperfusion and watershed infarction. The initial target is a 25% MAP reduction, not normalisation. Autoregulation is shifted rightward in chronic hypertension. (Source: eTG: Cardiovascular; NHFA/CSANZ)",
+        "source_refs": [
+          "eTG: Cardiovascular",
+          "NHFA/CSANZ Hypertension Guidelines"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Sublingual glyceryl trinitrate 600 mcg repeated every 5 minutes until BP is controlled",
+        "correct": false,
+        "rationale": "Sublingual GTN causes unpredictable and precipitous drops in blood pressure that cannot be titrated. IV infusion allows minute-to-minute control, which is essential to avoid overshoot and ischaemic complications. (Source: eTG: Cardiovascular)",
+        "source_refs": [
+          "eTG: Cardiovascular"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "IV hydralazine 10 mg bolus and arrange urgent CT brain before further BP management",
+        "correct": false,
+        "rationale": "IV hydralazine causes reflex tachycardia and unpredictable BP drops, making it a less ideal first-line choice. While neuroimaging is reasonable to exclude stroke, it should not delay initiation of controlled IV antihypertensive therapy. (Source: eTG: Cardiovascular; NHFA/CSANZ)",
+        "source_refs": [
+          "eTG: Cardiovascular",
+          "NHFA/CSANZ Hypertension Guidelines"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Hypertensive emergency is defined by severely elevated blood pressure with evidence of acute end-organ damage, including retinopathy, encephalopathy, acute kidney injury, aortic dissection, or acute pulmonary oedema. Management requires admission to a monitored bed with intravenous antihypertensive therapy titrated to reduce MAP by no more than 25% in the first hour. Further gradual reduction toward 160/100 mmHg occurs over the following 2 to 6 hours. The choice of IV agent depends on the specific end-organ involvement and contraindications.",
+      "key_points": [
+        "Hypertensive emergency requires IV antihypertensive therapy, not oral agents",
+        "Target MAP reduction of no more than 25% in the first hour to avoid watershed ischaemia",
+        "Autoregulation is shifted rightward in chronic hypertension so rapid normalisation is dangerous",
+        "IV GTN, sodium nitroprusside, and labetalol are all acceptable first-line agents"
+      ],
+      "pearls": "In chronic hypertension the cerebral autoregulatory curve shifts rightward, meaning a MAP that is normal for a healthy person may be below the ischaemic threshold in a chronically hypertensive patient - this is why the 25% MAP reduction ceiling exists."
+    },
+    "sources": [
+      {
+        "label": "eTG: Cardiovascular"
+      },
+      {
+        "label": "NHFA/CSANZ Hypertension Guidelines",
+        "url": "https://www.heartfoundation.org.au/bundles/your-heart/hypertension-guidelines"
+      }
+    ],
+    "reference_ranges": [
+      "uec"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-htn-002",
+    "topic": "Medicine",
+    "subtopic": "Hypertensive emergency",
+    "subtopic_detail": "BP target variation by end-organ involvement - aortic dissection vs stroke",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "hypertension",
+      "aortic dissection"
+    ],
+    "stem": "A 66-year-old man presents with acute-onset tearing interscapular pain radiating to his abdomen. He has a history of poorly controlled hypertension. CT aortogram confirms a Stanford type B aortic dissection extending from the left subclavian artery to the infrarenal aorta without malperfusion syndrome. There is no evidence of contained rupture or visceral ischaemia.",
+    "data_table": {
+      "Vital signs": "HR 104 bpm, BP 218/126 mmHg (right arm), BP 196/112 mmHg (left arm), RR 20/min, SpO2 97% on room air",
+      "Investigations": "Cr 102 micromol/L, lactate 1.4 mmol/L, Hb 138 g/L, troponin I 12 ng/L"
+    },
+    "lead_in": "What is the most appropriate blood pressure target within the first hour?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Reduce MAP by no more than 25% and reassess at 6 hours in a monitored setting",
+        "correct": false,
+        "rationale": "The 25% MAP reduction target applies to most hypertensive emergencies but is insufficient for aortic dissection, where more aggressive SBP lowering is required to reduce aortic wall shear stress and limit propagation. (Source: eTG: Cardiovascular; ESC Aortic Disease Guidelines 2024)",
+        "source_refs": [
+          "eTG: Cardiovascular",
+          "ESC Aortic Disease Guidelines"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Target SBP 100 to 120 mmHg and HR below 60 bpm using IV esmolol or labetalol",
+        "correct": true,
+        "rationale": "Acute aortic dissection requires aggressive SBP reduction to 100 to 120 mmHg and HR below 60 bpm to minimise aortic wall shear stress. IV beta-blockers (esmolol or labetalol) are first-line. Beta-blockade should precede vasodilators to avoid reflex tachycardia. Uncomplicated type B dissection is managed medically. (Source: eTG: Cardiovascular; ESC Aortic Disease Guidelines 2024)",
+        "source_refs": [
+          "eTG: Cardiovascular",
+          "ESC Aortic Disease Guidelines"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Target SBP below 180 mmHg using IV sodium nitroprusside as the sole first-line agent",
+        "correct": false,
+        "rationale": "Sodium nitroprusside as monotherapy causes reflex tachycardia, which increases aortic wall shear stress and may worsen dissection propagation. If used, it must follow adequate beta-blockade. The SBP target of below 180 mmHg is also too liberal for dissection. (Source: ESC Aortic Disease Guidelines 2024)",
+        "source_refs": [
+          "ESC Aortic Disease Guidelines"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Target SBP 140 to 160 mmHg using IV hydralazine and arrange urgent surgical repair",
+        "correct": false,
+        "rationale": "Hydralazine causes reflex tachycardia and is contraindicated in aortic dissection. Uncomplicated Stanford type B dissection without malperfusion, rupture, or refractory pain is managed medically, not surgically. Surgical or endovascular repair is reserved for complicated type B. (Source: ESC Aortic Disease Guidelines 2024; eTG: Cardiovascular)",
+        "source_refs": [
+          "ESC Aortic Disease Guidelines",
+          "eTG: Cardiovascular"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Target SBP 100 to 120 mmHg using IV esmolol and arrange emergent endovascular repair",
+        "correct": false,
+        "rationale": "While the BP target is correct, emergent endovascular repair is not indicated for uncomplicated type B dissection. The absence of malperfusion, rupture, or refractory symptoms means medical management alone is appropriate. Endovascular repair may be considered electively. (Source: ESC Aortic Disease Guidelines 2024)",
+        "source_refs": [
+          "ESC Aortic Disease Guidelines"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Aortic dissection has a unique BP target compared with other hypertensive emergencies. The goal is SBP 100 to 120 mmHg and HR below 60 bpm, achieved primarily with IV beta-blockers to reduce both blood pressure and the rate of pressure rise (dP/dt). Stanford type B dissections are classified as uncomplicated or complicated. Complicated features include malperfusion syndrome, contained rupture, refractory pain, or rapid expansion, which mandate urgent endovascular or surgical intervention. Uncomplicated type B is managed with medical therapy and surveillance imaging.",
+      "key_points": [
+        "Aortic dissection target is SBP 100 to 120 mmHg and HR below 60 bpm",
+        "IV beta-blockers are first-line to reduce both BP and dP/dt",
+        "Vasodilators must follow beta-blockade to prevent reflex tachycardia",
+        "Uncomplicated type B dissection is managed medically",
+        "Complicated type B requires endovascular or surgical intervention"
+      ],
+      "pearls": "IV esmolol is preferred over labetalol in aortic dissection when rapid titration is needed because its half-life is only 9 minutes, allowing minute-to-minute control if hypotension or bradycardia develops."
+    },
+    "sources": [
+      {
+        "label": "eTG: Cardiovascular"
+      },
+      {
+        "label": "ESC Aortic Disease Guidelines",
+        "url": "https://www.escardio.org/Guidelines/Clinical-Practice-Guidelines/Aortic-Diseases"
+      }
+    ],
+    "reference_ranges": [
+      "uec"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-htn-003",
+    "topic": "Medicine",
+    "subtopic": "Hypertensive emergency",
+    "subtopic_detail": "PRES in eclampsia-mimicking presentation with atypical features",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "hypertension",
+      "seizure"
+    ],
+    "stem": "A 34-year-old woman who is 3 days postpartum after an uncomplicated vaginal delivery presents with a generalised tonic-clonic seizure. She had no pre-eclampsia during pregnancy and her antenatal blood pressures were all normal. She is currently breastfeeding and takes no regular medications. On arrival she is postictal with a GCS of 11. A repeat seizure occurs in the emergency department.",
+    "data_table": {
+      "Vital signs": "HR 108 bpm, BP 198/124 mmHg, RR 22/min, SpO2 95% on 6 L face mask, T 37.4 C",
+      "Investigations": "Platelets 198 x10^9/L, ALT 32 U/L, Cr 68 micromol/L, urate 0.32 mmol/L, urine protein:creatinine ratio 18 mg/mmol, MRI brain shows bilateral symmetrical T2/FLAIR hyperintensity in the parieto-occipital white matter without restricted diffusion"
+    },
+    "lead_in": "What is the most likely diagnosis and most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Eclampsia - administer IV magnesium sulfate 4 g loading dose and commence IV labetalol infusion",
+        "correct": false,
+        "rationale": "Eclampsia typically occurs in the setting of pre-eclampsia features (hypertension, proteinuria, thrombocytopaenia, elevated transaminases). This patient has normal platelets, normal ALT, normal urate, and minimal proteinuria. While magnesium sulfate would not be harmful, the MRI findings of parieto-occipital vasogenic oedema without restricted diffusion are characteristic of PRES, not eclampsia per se. (Source: BMJ Best Practice: PRES; RANZCOG Hypertension in Pregnancy)",
+        "source_refs": [
+          "BMJ Best Practice: PRES",
+          "RANZCOG Hypertension in Pregnancy"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Cerebral venous sinus thrombosis - commence IV heparin and arrange CT venography",
+        "correct": false,
+        "rationale": "CVST can present postpartum with seizures and headache, but MRI typically shows venous infarction with restricted diffusion and parenchymal haemorrhage, not bilateral symmetrical parieto-occipital vasogenic oedema. The MRI pattern here is characteristic of PRES. (Source: BMJ Best Practice: PRES; Stroke Foundation)",
+        "source_refs": [
+          "BMJ Best Practice: PRES",
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Posterior reversible encephalopathy syndrome - commence IV labetalol and IV levetiracetam",
+        "correct": true,
+        "rationale": "The combination of acute severe hypertension, seizures, and bilateral parieto-occipital T2/FLAIR hyperintensity without restricted diffusion on MRI is the hallmark of PRES. The absence of pre-eclampsia features (normal platelets, normal ALT, minimal proteinuria) argues against eclampsia. PRES can occur postpartum even without preceding pre-eclampsia. Management centres on aggressive BP control and seizure treatment. PRES is typically reversible with prompt BP management. (Source: BMJ Best Practice: PRES; RANZCOG Hypertension in Pregnancy)",
+        "source_refs": [
+          "BMJ Best Practice: PRES",
+          "RANZCOG Hypertension in Pregnancy"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Postpartum pre-eclampsia with seizures - administer IV magnesium sulfate and IV hydralazine",
+        "correct": false,
+        "rationale": "Post-partum pre-eclampsia can develop de novo after delivery, but the diagnostic criteria require hypertension plus at least one of proteinuria, thrombocytopaenia, renal impairment, elevated transaminases, or neurological features. Here the only feature is hypertension with seizures, and the MRI pattern specifically supports PRES. Hydralazine is also less favoured than labetalol due to unpredictable hypotension. (Source: RANZCOG Hypertension in Pregnancy)",
+        "source_refs": [
+          "RANZCOG Hypertension in Pregnancy"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Subarachnoid haemorrhage - arrange urgent CT angiography and neurosurgical consultation",
+        "correct": false,
+        "rationale": "SAH typically shows subarachnoid blood on CT or xanthochromia on LP. MRI in SAH does not show bilateral symmetrical parieto-occipital vasogenic oedema. The presentation with severe hypertension and this specific MRI pattern points to PRES rather than a vascular event. (Source: Stroke Foundation; BMJ Best Practice: PRES)",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022",
+          "BMJ Best Practice: PRES"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Posterior reversible encephalopathy syndrome is a clinico-radiological diagnosis characterised by acute hypertension, seizures, headache, and visual disturbance with bilateral parieto-occipital vasogenic oedema on MRI. It can occur postpartum even without a history of pre-eclampsia, and is thought to result from a failure of cerebral autoregulation leading to vasogenic oedema. The key MRI discriminator is T2/FLAIR hyperintensity WITHOUT restricted diffusion, distinguishing it from ischaemic stroke. Management is prompt blood pressure control and seizure treatment. Despite the name, PRES is not always reversible if treatment is delayed.",
+      "key_points": [
+        "PRES shows bilateral parieto-occipital T2/FLAIR hyperintensity without restricted diffusion",
+        "Can occur postpartum without preceding pre-eclampsia",
+        "Eclampsia and PRES have overlapping features but differing biochemical profiles",
+        "Prompt BP control is the cornerstone of PRES management",
+        "Despite its name PRES can cause permanent injury if untreated"
+      ],
+      "pearls": "The absence of restricted diffusion on DWI-MRI distinguishes the vasogenic oedema of PRES from the cytotoxic oedema of ischaemic stroke - this single imaging discriminator often clinches the diagnosis when clinical features overlap with eclampsia or CVST."
+    },
+    "sources": [
+      {
+        "label": "BMJ Best Practice: PRES",
+        "url": "https://bestpractice.bmj.com/topics/en-gb/1522"
+      },
+      {
+        "label": "RANZCOG Hypertension in Pregnancy",
+        "url": "https://ranzcog.edu.au/statements-guidelines/obstetrics/hypertension-in-pregnancy"
+      },
+      {
+        "label": "Stroke Foundation Living Guidelines 2022",
+        "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"
+      }
+    ],
+    "reference_ranges": [
+      "uec",
+      "fbc",
+      "lfts"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-viral-001",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Influenza antiviral timing and indications for oseltamivir",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "antibiotics",
+      "pregnancy"
+    ],
+    "stem": "A 32-year-old woman who is 28 weeks pregnant presents to the emergency department in July with 2 days of high fever, myalgia, dry cough, and rhinorrhoea. She has no significant medical history and her pregnancy has been uncomplicated. A point-of-care influenza rapid antigen test is positive for influenza A.",
+    "data_table": {
+      "Vital signs": "HR 96 bpm, BP 112/68 mmHg, RR 18/min, SpO2 97% on room air, T 39.1 C",
+      "Examination": "Clear chest on auscultation bilaterally, no signs of respiratory distress, uterine size consistent with dates, normal foetal movements reported"
+    },
+    "lead_in": "What is the most appropriate next step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Reassure that influenza is self-limiting and prescribe paracetamol for symptomatic relief only",
+        "correct": false,
+        "rationale": "Pregnant women are at significantly higher risk of severe influenza complications including pneumonia, hospitalisation, and preterm birth. Antiviral therapy is recommended for all pregnant women with confirmed or suspected influenza regardless of symptom duration. Withholding treatment exposes both mother and foetus to avoidable risk. (Source: RANZCOG; eTG: Antibiotic)",
+        "source_refs": [
+          "RANZCOG",
+          "eTG: Antibiotic"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Prescribe zanamivir inhaled 10 mg twice daily as the preferred antiviral in pregnancy",
+        "correct": false,
+        "rationale": "Zanamivir is an alternative when oseltamivir is not tolerated, but oseltamivir remains the first-line antiviral in pregnancy because it has a larger evidence base for safety and efficacy in pregnant women. Inhaled zanamivir may also be poorly tolerated in women with respiratory symptoms. (Source: eTG: Antibiotic; RANZCOG)",
+        "source_refs": [
+          "eTG: Antibiotic",
+          "RANZCOG"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Delay antiviral therapy until respiratory swab PCR confirms the diagnosis",
+        "correct": false,
+        "rationale": "Treatment should not be delayed awaiting confirmatory PCR when a rapid antigen test is positive in the appropriate clinical context. PCR has higher sensitivity but the clinical decision to treat should not await it, particularly in a high-risk patient. Empiric treatment based on clinical suspicion alone is also acceptable in pregnancy. (Source: eTG: Antibiotic)",
+        "source_refs": [
+          "eTG: Antibiotic"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence oral oseltamivir 75 mg twice daily for 5 days without delay regardless of duration",
+        "correct": true,
+        "rationale": "Oseltamivir is the first-line antiviral for influenza in pregnancy and should be commenced as soon as possible. Although benefit is greatest within 48 hours of symptom onset, treatment is recommended regardless of duration in high-risk groups including pregnant women. Oseltamivir is safe in all trimesters. The standard treatment dose is 75 mg twice daily for 5 days. (Source: eTG: Antibiotic; RANZCOG)",
+        "source_refs": [
+          "eTG: Antibiotic",
+          "RANZCOG"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Admit for IV antibiotics and oseltamivir given the high risk of secondary bacterial pneumonia",
+        "correct": false,
+        "rationale": "This patient has normal oxygen saturation, clear lungs, and no signs of respiratory distress or sepsis. There is no indication for IV antibiotics or admission at this stage. Outpatient oral oseltamivir with safety-net advice and planned review is appropriate. Admission would be warranted if she developed hypoxia or respiratory distress. (Source: eTG: Antibiotic)",
+        "source_refs": [
+          "eTG: Antibiotic"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Pregnant women are an established high-risk group for influenza complications due to altered immune function, increased oxygen consumption, and reduced functional residual capacity. Australian guidelines recommend oseltamivir 75 mg twice daily for 5 days for all pregnant women with confirmed or suspected influenza, regardless of symptom duration. Treatment should commence as soon as possible and should not be delayed for confirmatory testing. Vaccination remains the most important preventive strategy and is funded under the National Immunisation Program for all pregnant women.",
+      "key_points": [
+        "Pregnant women are high-risk for severe influenza and should receive antiviral treatment",
+        "Oseltamivir 75 mg twice daily for 5 days is first-line regardless of trimester",
+        "Treatment should not be delayed for confirmatory PCR when clinical suspicion is high",
+        "Influenza vaccination is recommended for all pregnant women at any gestation",
+        "Admission is indicated only if there are signs of severe disease or complications"
+      ],
+      "pearls": "Oseltamivir provides the greatest benefit when started within 48 hours of symptom onset, but Australian guidelines recommend treatment at any duration in high-risk groups including pregnant women, immunosuppressed patients, Aboriginal and Torres Strait Islander peoples, and those aged 65 years and over."
+    },
+    "sources": [
+      {
+        "label": "eTG: Antibiotic"
+      },
+      {
+        "label": "RANZCOG",
+        "url": "https://ranzcog.edu.au/statements-guidelines"
+      }
+    ],
+    "reference_ranges": [
+      "fbc"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-viral-002",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "COVID-19 severity assessment and dexamethasone indication",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "corticosteroids",
+      "antibiotics"
+    ],
+    "stem": "A 72-year-old man presents with 5 days of cough, fever, and progressive dyspnoea. He has type 2 diabetes and chronic kidney disease stage 3b. A SARS-CoV-2 rapid antigen test is positive. He is commenced on supplemental oxygen via nasal prongs at 4 L/min to maintain saturation above 92%.",
+    "data_table": {
+      "Vital signs": "HR 98 bpm, BP 136/78 mmHg, RR 24/min, SpO2 89% on room air (94% on 4 L NP), T 38.4 C",
+      "Investigations": "WCC 8.2 x10^9/L, CRP 124 mg/L, lymphocytes 0.6 x10^9/L, Cr 186 micromol/L (baseline 152), chest X-ray bilateral peripheral ground-glass opacities"
+    },
+    "lead_in": "What is the most appropriate pharmacological intervention at this stage?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Oral nirmatrelvir-ritonavir 300/100 mg twice daily for 5 days to reduce viral replication",
+        "correct": false,
+        "rationale": "Nirmatrelvir-ritonavir is indicated for mild-to-moderate COVID-19 in patients at high risk of progression, ideally within 5 days of symptom onset and BEFORE the need for supplemental oxygen. Once a patient requires oxygen, the disease has progressed beyond the antiviral-responsive phase into the hyperinflammatory phase. (Source: Australian National COVID-19 Clinical Evidence Taskforce)",
+        "source_refs": [
+          "National COVID-19 Clinical Evidence Taskforce"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "IV remdesivir 200 mg loading dose then 100 mg daily as the sole additional treatment",
+        "correct": false,
+        "rationale": "Remdesivir may have a role in hospitalised patients with COVID-19, but the single most impactful intervention in patients requiring supplemental oxygen is systemic corticosteroids. Remdesivir alone without dexamethasone would omit the treatment with the strongest mortality benefit in this severity tier. (Source: National COVID-19 Clinical Evidence Taskforce; RECOVERY trial)",
+        "source_refs": [
+          "National COVID-19 Clinical Evidence Taskforce"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence empiric IV co-amoxiclav for presumed bacterial co-infection based on the CRP",
+        "correct": false,
+        "rationale": "Bacterial co-infection in acute COVID-19 is uncommon in the first week of illness. Empiric antibiotics are not recommended unless there is a clear clinical indication such as purulent sputum, lobar consolidation, or procalcitonin elevation suggesting superinfection. CRP alone is insufficient. (Source: National COVID-19 Clinical Evidence Taskforce; eTG: Antibiotic)",
+        "source_refs": [
+          "National COVID-19 Clinical Evidence Taskforce",
+          "eTG: Antibiotic"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Oral paracetamol and supportive care only until further oxygen escalation is required",
+        "correct": false,
+        "rationale": "Withholding corticosteroids in a patient already requiring supplemental oxygen would miss the proven mortality benefit demonstrated in the RECOVERY trial. Dexamethasone reduced 28-day mortality in patients requiring oxygen or ventilation. Waiting for further deterioration is not appropriate. (Source: National COVID-19 Clinical Evidence Taskforce)",
+        "source_refs": [
+          "National COVID-19 Clinical Evidence Taskforce"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Oral dexamethasone 6 mg daily for up to 10 days alongside standard supportive care",
+        "correct": true,
+        "rationale": "The RECOVERY trial demonstrated that dexamethasone 6 mg daily for up to 10 days reduced 28-day mortality by approximately one-third in patients requiring supplemental oxygen. This patient requires oxygen and is therefore in the appropriate severity tier for corticosteroid therapy. Dexamethasone is the cornerstone of treatment for hospitalised COVID-19 patients with hypoxia. (Source: National COVID-19 Clinical Evidence Taskforce; RECOVERY trial)",
+        "source_refs": [
+          "National COVID-19 Clinical Evidence Taskforce"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "COVID-19 management is stratified by severity. Antiviral agents such as nirmatrelvir-ritonavir are most effective in the early viral replication phase before oxygen requirement. Once a patient requires supplemental oxygen, the disease has entered the hyperinflammatory phase where systemic corticosteroids provide the greatest benefit. The RECOVERY trial established that dexamethasone 6 mg daily for up to 10 days reduces 28-day mortality by about one-third in oxygen-dependent patients. Dexamethasone does not benefit and may harm patients who do not require oxygen.",
+      "key_points": [
+        "Dexamethasone 6 mg daily for up to 10 days is the cornerstone treatment for hypoxic COVID-19",
+        "Antivirals are for early mild-to-moderate disease before oxygen requirement",
+        "Corticosteroids do not benefit patients who are not hypoxic",
+        "Bacterial co-infection is uncommon in early COVID-19 and antibiotics should not be empiric",
+        "RECOVERY trial showed one-third mortality reduction in oxygen-requiring patients"
+      ],
+      "pearls": "Dexamethasone in COVID-19 follows a severity threshold - it reduces mortality in patients requiring oxygen (number needed to treat approximately 8 for ventilated patients) but shows a non-significant trend toward harm in patients not requiring respiratory support."
+    },
+    "sources": [
+      {
+        "label": "National COVID-19 Clinical Evidence Taskforce",
+        "url": "https://covid19evidence.net.au/"
+      },
+      {
+        "label": "eTG: Antibiotic"
+      }
+    ],
+    "reference_ranges": [
+      "fbc",
+      "uec",
+      "inflammatory_markers"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-viral-003",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Nirmatrelvir-ritonavir drug interactions and eligibility",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "anticoagulation",
+      "toxicology"
+    ],
+    "stem": "A 68-year-old man with atrial fibrillation, stable ischaemic heart disease, and COPD presents to his GP on day 2 of mild COVID-19 symptoms confirmed by rapid antigen test. He has a persistent dry cough and mild fatigue but no dyspnoea or hypoxia. His regular medications include rivaroxaban 20 mg daily, ticagrelor 90 mg twice daily, atorvastatin 40 mg daily, tiotropium inhaler, and salbutamol as needed.",
+    "data_table": {
+      "Vital signs": "HR 78 bpm irregular, BP 128/76 mmHg, RR 16/min, SpO2 96% on room air, T 37.8 C",
+      "Investigations": "eGFR 62 mL/min/1.73m2"
+    },
+    "lead_in": "What is the most appropriate approach to antiviral therapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Switch rivaroxaban to enoxaparin, switch ticagrelor to clopidogrel, and suspend atorvastatin during the course",
+        "correct": true,
+        "rationale": "This addresses all major ritonavir-CYP3A4 interactions: enoxaparin replaces rivaroxaban (avoiding DOAC level increase), clopidogrel replaces ticagrelor (clopidogrel is not a CYP3A4 substrate for its active metabolite), and atorvastatin is suspended for the treatment plus washout period (avoiding rhabdomyolysis risk from statin accumulation). This allows nirmatrelvir-ritonavir to be used safely. (Source: AMH; National COVID-19 Clinical Evidence Taskforce)",
+        "source_refs": [
+          "AMH",
+          "National COVID-19 Clinical Evidence Taskforce"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Withhold rivaroxaban and ticagrelor during the 5-day nirmatrelvir-ritonavir course plus 3 days after",
+        "correct": false,
+        "rationale": "Withholding both anticoagulation and antiplatelet therapy in a patient with AF and ischaemic heart disease creates unacceptable thromboembolic risk. The correct approach is to either manage interactions with dose adjustments and bridging or choose an alternative antiviral. Complete cessation of both agents is not appropriate. (Source: AMH; eTG: Cardiovascular)",
+        "source_refs": [
+          "AMH",
+          "eTG: Cardiovascular"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Prescribe molnupiravir as an alternative antiviral that avoids these drug interactions entirely",
+        "correct": false,
+        "rationale": "Molnupiravir does not inhibit CYP3A4 and avoids ritonavir interactions, but it has lower efficacy than nirmatrelvir-ritonavir and is generally reserved as a second-line option. The preferred approach is to attempt interaction management with nirmatrelvir-ritonavir first, or use remdesivir if interactions cannot be managed. (Source: National COVID-19 Clinical Evidence Taskforce; AMH)",
+        "source_refs": [
+          "National COVID-19 Clinical Evidence Taskforce",
+          "AMH"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Withhold ticagrelor and switch rivaroxaban to enoxaparin for the treatment course plus washout period",
+        "correct": false,
+        "rationale": "While switching rivaroxaban to therapeutic enoxaparin avoids the DOAC interaction, withholding ticagrelor in a patient with ischaemic heart disease increases acute coronary risk. Additionally, atorvastatin levels will still rise markedly. A comprehensive interaction management plan addressing all affected medications is needed rather than partial adjustment. (Source: AMH)",
+        "source_refs": [
+          "AMH"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Commence nirmatrelvir-ritonavir at standard dose with no medication adjustments needed",
+        "correct": false,
+        "rationale": "Ritonavir is a potent CYP3A4 and P-glycoprotein inhibitor. Co-administration with rivaroxaban and ticagrelor, both CYP3A4 substrates, significantly increases their plasma levels, raising the risk of major bleeding. Atorvastatin levels also increase substantially. Interaction management is mandatory before commencing. (Source: AMH; National COVID-19 Clinical Evidence Taskforce)",
+        "source_refs": [
+          "AMH",
+          "National COVID-19 Clinical Evidence Taskforce"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Nirmatrelvir-ritonavir is the most effective oral antiviral for mild-to-moderate COVID-19 in high-risk patients when started within 5 days of symptoms. However, the ritonavir component is a potent CYP3A4 and P-glycoprotein inhibitor that creates significant drug interactions with many common medications. Rivaroxaban, ticagrelor, and atorvastatin are all CYP3A4 substrates whose levels increase substantially with ritonavir. Managing these interactions requires temporary medication switches for the treatment course plus a 3-day washout. When interaction management is not feasible, alternative antivirals should be considered.",
+      "key_points": [
+        "Ritonavir inhibits CYP3A4 and P-glycoprotein causing major drug interactions",
+        "Rivaroxaban and ticagrelor levels increase significantly with ritonavir co-administration",
+        "Switching to enoxaparin and clopidogrel avoids the interaction while maintaining therapy",
+        "Atorvastatin must be suspended due to rhabdomyolysis risk from CYP3A4 inhibition",
+        "Interaction management should cover the 5-day course plus 3-day ritonavir washout"
+      ],
+      "pearls": "Clopidogrel is a prodrug activated primarily by CYP2C19, not CYP3A4, so unlike ticagrelor and prasugrel it can be co-administered with ritonavir without loss of antiplatelet effect or dangerous level increases."
+    },
+    "sources": [
+      {
+        "label": "AMH"
+      },
+      {
+        "label": "National COVID-19 Clinical Evidence Taskforce",
+        "url": "https://covid19evidence.net.au/"
+      },
+      {
+        "label": "eTG: Cardiovascular"
+      }
+    ],
+    "reference_ranges": [
+      "uec"
+    ],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-pd-001",
+    "topic": "Medicine",
+    "subtopic": "Neurodegenerative disease",
+    "subtopic_detail": "Levodopa wearing-off phenomenon recognition and management",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "Parkinson's",
+      "dementia"
+    ],
+    "stem": "A 71-year-old man with Parkinson disease diagnosed 6 years ago presents with increasing difficulty with mobility over the past 4 months. He was initially well controlled on levodopa-carbidopa 100/25 mg three times daily. He now describes predictable worsening of tremor, rigidity, and slowness in the 30 to 60 minutes before each dose is due. He is independent with activities of daily living during on-periods.",
+    "data_table": {
+      "Medications": "Levodopa-carbidopa 100/25 mg TDS",
+      "Examination": "Currently in off-state: moderate resting tremor right hand, cogwheel rigidity bilateral upper limbs, shuffling gait with reduced arm swing"
+    },
+    "lead_in": "What is the most appropriate initial adjustment to manage this complication?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Add entacapone 200 mg with each levodopa dose to prolong peripheral levodopa availability",
+        "correct": false,
+        "rationale": "Entacapone is a COMT inhibitor that prolongs levodopa half-life and is a valid option for wearing-off. However, the recommended first step for predictable wearing-off is to increase dosing frequency (shorter intervals) before adding adjunct agents, as this is simpler and addresses the pharmacokinetic issue directly. (Source: eTG: Neurology; NICE Parkinson's Disease 2017)",
+        "source_refs": [
+          "eTG: Neurology",
+          "NICE Parkinson's Disease 2017"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Increase dosing frequency to four times daily with a reduced individual dose to maintain total daily levodopa",
+        "correct": true,
+        "rationale": "Predictable end-of-dose wearing-off is best managed initially by shortening the dosing interval while adjusting individual doses to avoid peak-dose dyskinesia. Moving from TDS to QID with the same total daily dose provides more consistent dopaminergic stimulation. This is recommended as the first-line adjustment before adding adjunct therapies. (Source: eTG: Neurology; NICE Parkinson's Disease 2017)",
+        "source_refs": [
+          "eTG: Neurology",
+          "NICE Parkinson's Disease 2017"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Switch entirely to a sustained-release levodopa formulation at the same total daily dose",
+        "correct": false,
+        "rationale": "Sustained-release levodopa has less predictable absorption and lower bioavailability than standard formulations. It is sometimes used as an adjunct at night but is not recommended as a complete replacement for standard levodopa for daytime wearing-off due to erratic absorption. (Source: eTG: Neurology; AMH)",
+        "source_refs": [
+          "eTG: Neurology",
+          "AMH"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Add pramipexole as a dopamine agonist to provide more continuous dopaminergic stimulation",
+        "correct": false,
+        "rationale": "Adding a dopamine agonist is a valid strategy for motor fluctuations but carries significant risks including impulse control disorders, excessive daytime somnolence, and hallucinations, particularly in older patients. Simpler dose interval adjustments should be tried first. (Source: eTG: Neurology; NICE Parkinson's Disease 2017)",
+        "source_refs": [
+          "eTG: Neurology",
+          "NICE Parkinson's Disease 2017"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Refer for deep brain stimulation assessment given the failure of current oral medication",
+        "correct": false,
+        "rationale": "Deep brain stimulation is reserved for patients with disabling motor fluctuations or dyskinesia despite optimised medical therapy. This patient has not yet had any dose adjustment and is still functionally independent during on-periods. Medical optimisation must be exhausted before surgical referral. (Source: eTG: Neurology; NICE Parkinson's Disease 2017)",
+        "source_refs": [
+          "eTG: Neurology",
+          "NICE Parkinson's Disease 2017"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Wearing-off is the most common motor complication in Parkinson disease on chronic levodopa therapy, typically appearing after 5 to 10 years of treatment as nigrostriatal dopaminergic neurons progressively decline, reducing buffering capacity. The initial management is to shorten the dosing interval while keeping total daily levodopa constant. If this is insufficient, COMT inhibitors (entacapone), MAO-B inhibitors (rasagiline), or dopamine agonists can be added as adjunct therapy. Deep brain stimulation is reserved for medically refractory motor fluctuations.",
+      "key_points": [
+        "Wearing-off presents as predictable return of motor symptoms before the next levodopa dose",
+        "First-line management is to shorten the dosing interval while maintaining total daily dose",
+        "COMT inhibitors and MAO-B inhibitors are second-line adjuncts for wearing-off",
+        "Dopamine agonists carry risks of impulse control disorders especially in older patients",
+        "Deep brain stimulation is a last resort after optimal medical therapy"
+      ],
+      "pearls": "Wearing-off typically develops after 5 to 10 years of levodopa therapy and correlates with progressive loss of presynaptic dopaminergic neuron storage capacity - the remaining neurons cannot buffer levodopa levels between doses, leading to pulsatile stimulation of postsynaptic receptors."
+    },
+    "sources": [
+      {
+        "label": "eTG: Neurology"
+      },
+      {
+        "label": "NICE Parkinson's Disease 2017",
+        "url": "https://www.nice.org.uk/guidance/ng71"
+      },
+      {
+        "label": "AMH"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  },
+  {
+    "id": "med-pd-002",
+    "topic": "Medicine",
+    "subtopic": "Neurodegenerative disease",
+    "subtopic_detail": "Impulse control disorder on dopamine agonist in Parkinson disease",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "Parkinson's"
+    ],
+    "stem": "A 63-year-old man with Parkinson disease diagnosed 3 years ago returns for routine review. His motor symptoms are well controlled on pramipexole 1 mg three times daily. His wife reports he has spent over $18,000 on online gambling in the past 2 months and has also developed compulsive online shopping. He has no prior psychiatric history and had no behavioural issues before starting pramipexole.",
+    "data_table": {
+      "Medications": "Pramipexole 1 mg TDS, no other medications",
+      "Examination": "Mild bilateral resting tremor, minimal rigidity, normal gait"
+    },
+    "lead_in": "What is the most appropriate management of this complication?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Refer for cognitive behavioural therapy while continuing pramipexole at the current dose",
+        "correct": false,
+        "rationale": "CBT may have a supportive role, but the primary management is to reduce or cease the causative dopamine agonist. Continuing pramipexole at the same dose while attempting behavioural therapy alone will not resolve a pharmacologically driven impulse control disorder. (Source: eTG: Neurology; NICE Parkinson's Disease 2017)",
+        "source_refs": [
+          "eTG: Neurology",
+          "NICE Parkinson's Disease 2017"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Add an SSRI for impulse control and maintain pramipexole at the current effective dose",
+        "correct": false,
+        "rationale": "SSRIs are not effective treatment for dopamine agonist-induced impulse control disorders. The mechanism is excessive mesolimbic dopaminergic stimulation, and the definitive management is dose reduction or cessation of the dopamine agonist. (Source: eTG: Neurology)",
+        "source_refs": [
+          "eTG: Neurology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Gradually taper pramipexole and substitute levodopa to maintain motor symptom control",
+        "correct": true,
+        "rationale": "Dopamine agonist-induced impulse control disorders require gradual dose reduction or cessation of the agonist. Motor symptoms should be managed by substituting levodopa. Abrupt cessation risks dopamine agonist withdrawal syndrome (apathy, anxiety, pain). Impulse control disorders affect approximately 15 to 20% of patients on dopamine agonists and are a class effect. (Source: eTG: Neurology; NICE Parkinson's Disease 2017)",
+        "source_refs": [
+          "eTG: Neurology",
+          "NICE Parkinson's Disease 2017"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Reduce pramipexole to the lowest effective motor dose and monitor gambling behaviour monthly",
+        "correct": false,
+        "rationale": "Dose reduction alone may be insufficient if the impulse control disorder is severe and causing significant financial harm. Complete cessation is often required. Monitoring alone without active management of a harmful behavioural complication is inadequate given the severity of financial loss. (Source: eTG: Neurology; NICE Parkinson's Disease 2017)",
+        "source_refs": [
+          "eTG: Neurology",
+          "NICE Parkinson's Disease 2017"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Switch pramipexole to ropinirole as an alternative dopamine agonist with lower impulse risk",
+        "correct": false,
+        "rationale": "Impulse control disorders are a class effect of all dopamine agonists, not unique to pramipexole. Switching to ropinirole would not resolve the problem as both drugs act on D2/D3 receptors in the mesolimbic pathway. The appropriate management is to taper the entire class. (Source: eTG: Neurology; AMH)",
+        "source_refs": [
+          "eTG: Neurology",
+          "AMH"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Impulse control disorders are a recognised class effect of dopamine agonists in Parkinson disease, mediated by stimulation of D3 receptors in the ventral striatum and mesolimbic reward pathway. They include pathological gambling, compulsive shopping, hypersexuality, and binge eating. The prevalence is approximately 15 to 20% on dopamine agonists. Management requires gradual agonist cessation with levodopa substitution. Patients should be warned about this risk before starting any dopamine agonist, and regular screening during treatment is recommended.",
+      "key_points": [
+        "Impulse control disorders are a class effect of all dopamine agonists via D3 receptor stimulation",
+        "Prevalence is approximately 15 to 20% on dopamine agonist therapy",
+        "Management is gradual cessation of the agonist with levodopa substitution",
+        "Abrupt withdrawal risks dopamine agonist withdrawal syndrome",
+        "All patients should be screened for ICD before and during dopamine agonist therapy"
+      ],
+      "pearls": "Dopamine agonist withdrawal syndrome (DAWS) occurs in approximately 15% of patients upon agonist cessation and presents with anxiety, panic, dysphoria, insomnia, and pain that does not respond to levodopa - gradual tapering over weeks to months is essential."
+    },
+    "sources": [
+      {
+        "label": "eTG: Neurology"
+      },
+      {
+        "label": "NICE Parkinson's Disease 2017",
+        "url": "https://www.nice.org.uk/guidance/ng71"
+      },
+      {
+        "label": "AMH"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-26"
+  }
+]
