@@ -28,14 +28,18 @@ Resume trigger phrase Rob may use in a future session: "resume the A to E omnibu
 ## Phase status
 
 - [x] Checkpoint infra
-- [ ] Phase A: project orientation (read app.js, styles.css, current rule docs end-to-end)
-- [ ] Phase B: screenshot analysis (4 parallel agents, outputs to `screenshot_analysis/batch{1..4}.md`)
+- [x] Phase A: project orientation (key files read; rest read on-demand)
+- [x] Phase B: screenshot analysis - 4 reports in `screenshot_analysis/batch{1..4}.md`
+- [x] Phase D: targeted fixes (admin sidebar, AN removal, +glucose align, Anti-D rationale rewrite, magnesium spelling)
 - [ ] Phase C: synthesise universal rule additions + explanation craft tips
-- [ ] Phase D: targeted fixes (admin sidebar, AN removal, +glucose align, Anti-D rationale rewrite)
 - [ ] Phase E: UI/UX redesign vs AI-tells
 - [ ] Phase F: bank audit + rewrites
 - [ ] Phase G: final sweep + commit
 - [ ] Phase H: update generation prompt + remote agent context with new rules
+
+## Incident log
+
+- 2026-05-27 16:14 AEST: subagent copied 181 emedici screenshots into `_imgs_tmp/` and they got auto-pushed to public repo. Force-pushed to remove from main; dangling commit `d2c2cb5` will be GC'd by GitHub in ~90 days. Memory entry created so future agents do not repeat (`feedback_no_source_material_in_repo.md`). .gitignore updated.
 
 ## Resilience policy this session
 
