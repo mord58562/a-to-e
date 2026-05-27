@@ -672,6 +672,17 @@
     if (!modal || !close) return;
     close.onclick = () => { modal.hidden = true; };
     modal.addEventListener("click", e => { if (e.target.id === "adminModal") modal.hidden = true; });
+    // Event-delegated sidebar tab click. Survives re-renders of the
+    // sidebar markup and clicks landing on the inner icon/label spans.
+    const sidebar = document.getElementById("adminSidebar");
+    if (sidebar) {
+      sidebar.addEventListener("click", e => {
+        const btn = e.target.closest(".admin-tab");
+        if (!btn || !sidebar.contains(btn)) return;
+        const id = btn.dataset.adminTab;
+        if (id) selectAdminTab(id);
+      });
+    }
   }
 
   function openAdmin(initialTab) {
@@ -682,10 +693,7 @@
     const sidebar = document.getElementById("adminSidebar");
     const title = document.getElementById("adminTitle");
     if (title) title.textContent = isAdmin ? "Admin" : "Account";
-    sidebar.innerHTML = tabs.map(t => `<button class="admin-tab" data-admin-tab="${t.id}"><span class="admin-tab-icon">${esc(t.icon || "·")}</span><span class="admin-tab-label">${esc(t.label)}</span></button>`).join("");
-    sidebar.querySelectorAll(".admin-tab").forEach(b => {
-      b.onclick = () => selectAdminTab(b.dataset.adminTab);
-    });
+    sidebar.innerHTML = tabs.map(t => `<button type="button" class="admin-tab" data-admin-tab="${t.id}"><span class="admin-tab-icon">${esc(t.icon || "·")}</span><span class="admin-tab-label">${esc(t.label)}</span></button>`).join("");
     const want = initialTab && tabs.some(t => t.id === initialTab) ? initialTab : tabs[0].id;
     selectAdminTab(want);
     modal.hidden = false;
@@ -1088,40 +1096,9 @@
     applyTheme(cur === "light" ? "dark" : "light");
   }
 
-  // Anki-style hover-card opt-out. Hover popups only ever activate in
-  // REVIEW mode (post-submit / summary review), never while the user is
-  // still committing to an answer. Persisted across reloads.
-  const ANKI_HOVER_KEY = "y4mcq.ankiHover.v1";
-  function ankiHoverEnabled() {
-    const v = localStorage.getItem(ANKI_HOVER_KEY);
-    // Default ON. Rob can toggle off with the AN button.
-    return v == null ? true : v === "1";
-  }
-  function setAnkiHover(on) {
-    localStorage.setItem(ANKI_HOVER_KEY, on ? "1" : "0");
-    refreshAnkiHoverButton();
-    document.body.classList.toggle("anki-hover-off", !on);
-  }
-  function refreshAnkiHoverButton() {
-    const b = document.getElementById("anBtn");
-    if (!b) return;
-    const on = ankiHoverEnabled();
-    b.setAttribute("aria-pressed", on ? "true" : "false");
-    b.classList.toggle("active", on);
-    b.title = on
-      ? "Hover-card definitions: ON (post-reveal only) - click to disable"
-      : "Hover-card definitions: OFF - click to enable (only activates post-reveal)";
-  }
-
   function wireMasthead() {
     document.getElementById("rangesBtn").onclick = () => toggleRefs();
     document.getElementById("themeBtn").onclick = toggleTheme;
-    const anBtn = document.getElementById("anBtn");
-    if (anBtn) {
-      anBtn.onclick = () => setAnkiHover(!ankiHoverEnabled());
-      refreshAnkiHoverButton();
-      document.body.classList.toggle("anki-hover-off", !ankiHoverEnabled());
-    }
     const goHome = e => {
       if (e) e.preventDefault();
       if (state.quiz && !state.quiz.finished &&
@@ -3414,12 +3391,9 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
       const re = new RegExp(escClue, "g");
       html = html.replace(re, m => `<mark class="stem-clue">${m}</mark>`);
     }
-    // Anki-style hover spans: wrap recognised medical terms in
+    // Term hover spans: wrap recognised medical terms in
     // <span class="term" data-term="..."> so the hover handler can
-    // surface the glossary entry. Only active post-reveal (the
-    // revealed branch above) and only when the user hasn't disabled
-    // hover cards via the AN button (CSS .anki-hover-off disables
-    // pointer-events on the spans).
+    // surface the glossary entry. Only active post-reveal.
     html = wrapTerms(html);
     el.innerHTML = html;
   }
@@ -3554,14 +3528,12 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
   function hideTermPopup() {
     if (_termPopup) _termPopup.hidden = true;
   }
-  // Delegated hover handler - attached once. The .anki-hover-off body
-  // class disables it from the CSS side (pointer-events: none on the
-  // spans). Mouseover bubbles; mouseout fires when leaving the span.
+  // Delegated hover handler - attached once. Mouseover bubbles; mouseout
+  // fires when leaving the span.
   document.addEventListener("mouseover", e => {
     const t = e.target;
     if (!(t instanceof HTMLElement)) return;
     if (!t.classList.contains("term")) return;
-    if (document.body.classList.contains("anki-hover-off")) return;
     showTermPopup(t);
   });
   document.addEventListener("mouseout", e => {
