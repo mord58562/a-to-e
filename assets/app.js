@@ -659,11 +659,14 @@
   // Live), we re-parent the existing wired DOM into the active panel
   // on tab activation so the original event handlers keep working.
   const ADMIN_TABS = [
-    { id: "overview", label: "Overview",     admin: true,  icon: "▤" },
-    { id: "addaudit", label: "Add & Audit",  admin: true,  icon: "+" },
-    { id: "quality",  label: "Quality",      admin: true,  icon: "★" },
-    { id: "users",    label: "Users",        admin: true,  icon: "◯" },
-    { id: "account",  label: "Account",      admin: false, icon: "●" },
+    // No icon glyphs - labels do the work; redundant icon+label rows are
+    // the macOS-template tell. The active-tab left stripe in --accent is
+    // the one place colour means selection inside the modal.
+    { id: "overview", label: "Overview",   admin: true,  icon: "" },
+    { id: "addaudit", label: "Add & audit", admin: true,  icon: "" },
+    { id: "quality",  label: "Quality",    admin: true,  icon: "" },
+    { id: "users",    label: "Users",      admin: true,  icon: "" },
+    { id: "account",  label: "Account",    admin: false, icon: "" },
   ];
 
   function wireAdminModal() {
@@ -693,7 +696,7 @@
     const sidebar = document.getElementById("adminSidebar");
     const title = document.getElementById("adminTitle");
     if (title) title.textContent = isAdmin ? "Admin" : "Account";
-    sidebar.innerHTML = tabs.map(t => `<button type="button" class="admin-tab" data-admin-tab="${t.id}"><span class="admin-tab-icon">${esc(t.icon || "·")}</span><span class="admin-tab-label">${esc(t.label)}</span></button>`).join("");
+    sidebar.innerHTML = tabs.map(t => `<button type="button" class="admin-tab" data-admin-tab="${t.id}"><span class="admin-tab-label">${esc(t.label)}</span></button>`).join("");
     const want = initialTab && tabs.some(t => t.id === initialTab) ? initialTab : tabs[0].id;
     selectAdminTab(want);
     modal.hidden = false;
@@ -749,19 +752,22 @@
     const reportsOpen = (state.reports || []).filter(r => (r.status || "open") === "open").length;
     const inboxCount = (state.inboxManifest && state.inboxManifest.inbox && state.inboxManifest.inbox.length) || 0;
     const max = Math.max(1, ...Object.values(byTopic));
+    // One editorial sentence beats five v0 stat tiles. The numbers that
+    // demand attention (open reports, inbox pending) get a warm tint
+    // inline so the reader scans them without a stat-grid widget.
+    const warnClass = (n) => n ? ' class="warn"' : '';
     root.innerHTML = `
       <div class="admin-pane">
         <header class="admin-pane-head">
-          <h2>Bank overview</h2>
-          <p class="dim">${esc(String(lastAdd))} · last batch added</p>
+          <h2>Bank</h2>
         </header>
-        <div class="admin-stat-grid">
-          <div class="ag-stat"><span class="ag-stat-val">${total}</span><span class="ag-stat-lbl">questions</span></div>
-          <div class="ag-stat"><span class="ag-stat-val">${answered}</span><span class="ag-stat-lbl">you've answered</span></div>
-          <div class="ag-stat"><span class="ag-stat-val">${flagged}</span><span class="ag-stat-lbl">flagged</span></div>
-          <div class="ag-stat"><span class="ag-stat-val ${reportsOpen ? 'warn' : ''}">${reportsOpen}</span><span class="ag-stat-lbl">open reports</span></div>
-          <div class="ag-stat"><span class="ag-stat-val ${inboxCount ? 'warn' : ''}">${inboxCount}</span><span class="ag-stat-lbl">inbox pending</span></div>
-        </div>
+        <p class="admin-overview-line">
+          <strong>${total}</strong> questions.
+          You've answered <strong>${answered}</strong>, flagged <strong>${flagged}</strong>.
+          <span${warnClass(reportsOpen)}><strong>${reportsOpen}</strong> open reports</span>,
+          <span${warnClass(inboxCount)}><strong>${inboxCount}</strong> in inbox</span>.
+          Last batch ${esc(String(lastAdd))}.
+        </p>
 
         <section class="admin-pane-section">
           <h3>By discipline</h3>
@@ -785,14 +791,13 @@
               return `<div class="ab-row"><div class="ab-label">${k}</div><div class="ab-bar-wrap"><span style="width:${widthPct}%"></span></div><div class="ab-val">${n} <span class="dim">· ${pct}%</span></div></div>`;
             }).join("")}
           </div>
-          <p class="dim small" style="margin-top:8px">Target shape: L3 and L4 each outnumber L2; L5 around 5% of total.</p>
         </section>
       </div>
     `;
   }
 
   async function renderAdminQualityTab(root) {
-    root.innerHTML = `<p class="dim">Loading...</p>`;
+    root.innerHTML = `<p class="dim"></p>`;
     let q = null;
     try { q = await apiFetch("/api/admin/quality"); } catch (_) {}
     const worst = (q && q.worst) || [];
@@ -807,23 +812,22 @@
       return `<div class="qr qid">${esc(r.question_id)}</div><div class="qr">${r.n}</div><div class="qr">${pct}%</div>`;
     }).join("");
     root.innerHTML = `
-      <h3>Engagement</h3>
-      <p class="dim">${totals.users || 0} users · ${totals.answers || 0} answers · ${totals.qs || 0} distinct questions answered.</p>
-      <h3>Lowest first-time correct (audit candidates, ≥5 answers)</h3>
+      <p class="admin-overview-line"><strong>${totals.users || 0}</strong> people, <strong>${totals.answers || 0}</strong> answers across <strong>${totals.qs || 0}</strong> questions.</p>
+      <h3>Lowest first-time correct</h3>
       <div class="account-quality-table">
         <div class="qh">Question id</div><div class="qh">N</div><div class="qh">Correct</div>
-        ${rowsWorst || '<div class="qr" style="grid-column:1/-1">No questions with 5+ answers yet.</div>'}
+        ${rowsWorst || '<div class="qr" style="grid-column:1/-1">Nothing with 5+ answers yet.</div>'}
       </div>
       <h3>Most answered</h3>
       <div class="account-quality-table">
         <div class="qh">Question id</div><div class="qh">N</div><div class="qh">Correct</div>
-        ${rowsTop || '<div class="qr" style="grid-column:1/-1">No data yet.</div>'}
+        ${rowsTop || '<div class="qr" style="grid-column:1/-1">Nothing yet.</div>'}
       </div>
     `;
   }
 
   async function renderAdminUsersTab(root) {
-    root.innerHTML = `<p class="dim">Loading users...</p>`;
+    root.innerHTML = `<p class="dim"></p>`;
     let users = [];
     try {
       const r = await apiFetch("/api/admin/users");
@@ -842,8 +846,7 @@
         <div class="ar">${isSelf ? '' : `<button class="btn-mini danger" data-act="delete" data-id="${esc(u.id)}" data-label="${esc(u.email)}">delete</button>`}</div>`;
     }).join("");
     root.innerHTML = `
-      <h3>Users</h3>
-      <p class="dim">${users.length} account${users.length === 1 ? "" : "s"}. You cannot delete or demote yourself from here - use the Account tab.</p>
+      <p class="admin-overview-line"><strong>${users.length}</strong> account${users.length === 1 ? "" : "s"}. To delete or demote yourself, use the Account tab.</p>
       <div class="account-users-table">
         <div class="ah">Name</div><div class="ah">Email</div><div class="ah">Answers</div><div class="ah">Role</div><div class="ah"></div><div class="ah"></div>
         ${rows}
@@ -992,7 +995,7 @@
     const avg = timedCount ? Math.round(totalMs / timedCount / 1000) : 0;
 
     if (!answered) {
-      body.innerHTML = `<p class="stats-empty">You haven't answered any questions yet. Pick a mode and hit Begin from the home screen; stats will appear here once you've worked through a few.</p>`;
+      body.innerHTML = `<p class="stats-empty">Stats land here once you've answered a few questions.</p>`;
       return;
     }
 
@@ -1246,12 +1249,12 @@
     app.appendChild(document.getElementById("tpl-home").content.cloneNode(true));
     document.getElementById("sessionMeta").textContent = "";
 
+    // No greeting line. The user's name already sits in the profile
+    // chip in the masthead; repeating it as "Hi, $name." reads as
+    // welcome-template copy. Keep the element in the DOM (hidden) so
+    // any callers that re-show it later still find it.
     const greet = document.getElementById("homeGreeting");
-    const greetName = currentProfile ? currentProfile.name : (cloudUser ? (cloudUser.display_name || cloudUser.email.split("@")[0]) : "");
-    if (greet && greetName) {
-      greet.textContent = `Hi, ${greetName}.`;
-      greet.hidden = false;
-    }
+    if (greet) { greet.hidden = true; greet.textContent = ""; }
     // Randomise the closing well-wish across the available languages.
     const luck = document.getElementById("luckPhrase");
     if (luck) {
@@ -1470,7 +1473,7 @@
   // Compact book-style position indicator (Previous / counter / Next).
   function renderTopbar() {
     document.getElementById("qtNumber").textContent =
-      `Q ${state.quiz.idx + 1} / ${state.quiz.pool.length}`;
+      `${state.quiz.idx + 1} / ${state.quiz.pool.length}`;
     document.getElementById("qtPrev").disabled = state.quiz.idx === 0;
     document.getElementById("qtNext").disabled = state.quiz.idx >= state.quiz.pool.length - 1;
     const list = document.getElementById("qtList");

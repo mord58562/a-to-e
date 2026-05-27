@@ -6,7 +6,10 @@
     "subtopic_detail": "Intravenous thrombolysis eligibility - time window",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["stroke", "tPA"],
+    "tags": [
+      "stroke",
+      "tPA"
+    ],
     "stem": "A 64-year-old man is brought to a metropolitan emergency department by paramedics with right-sided weakness and expressive aphasia first noticed by his wife when he woke at 06:30. He last spoke normally at 22:00 the night before. He arrives at 07:40. He has hypertension and atrial fibrillation; he takes apixaban 5 mg twice daily, last dose 18:00 yesterday. National Institutes of Health Stroke Scale (NIHSS) is 14. Non-contrast computed tomography (CT) brain shows no haemorrhage and no early ischaemic change. CT perfusion shows a 12 mL ischaemic core and 78 mL of penumbra with mismatch ratio 7.5.",
     "data_table": {
       "Vital signs": "HR 88 irregular, BP 168/92, SpO2 97% room air, RR 16, BSL 6.4 mmol/L.",
@@ -15,11 +18,52 @@
     },
     "lead_in": "Which is the single most appropriate reperfusion strategy?",
     "options": [
-      {"letter": "A", "text": "Intravenous alteplase 0.9 mg/kg now", "correct": false, "rationale": "Apixaban within 48 hours is a contraindication to intravenous thrombolysis unless a specific reversal pathway and DOAC level <30 ng/mL are documented. Last dose 18:00 yesterday is approximately 14 hours ago (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "B", "text": "Intravenous tenecteplase 0.25 mg/kg bolus then endovascular thrombectomy", "correct": false, "rationale": "Lytic therapy is contraindicated by recent apixaban. Bridging lysis would only apply to a thrombolysis-eligible patient (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "C", "text": "Endovascular thrombectomy without prior thrombolysis", "correct": true, "rationale": "Large vessel occlusion is implied by NIHSS 14 with favourable perfusion mismatch within an extended window. Thrombectomy alone is appropriate when lytics are contraindicated (recent DOAC), and benefit extends to 24 hours when CTP mismatch supports it (Stroke Foundation Living Guidelines 2022; DAWN/DEFUSE-3 criteria).", "source_refs": ["Stroke Foundation Living Guidelines 2022", "DAWN trial"]},
-      {"letter": "D", "text": "Aspirin 300 mg orally and admit to stroke unit", "correct": false, "rationale": "Antiplatelet alone is the default only when reperfusion therapy is not available or not indicated; large vessel occlusion with salvageable penumbra mandates thrombectomy referral (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "E", "text": "Andexanet alfa reversal then intravenous alteplase", "correct": false, "rationale": "Andexanet is not approved in Australia for facilitating thrombolysis and induces a prothrombotic state which may worsen stroke outcomes. Reversal-then-lysis is not a Stroke Foundation pathway (Stroke Foundation Living Guidelines 2022; TGA product information).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]}
+      {
+        "letter": "A",
+        "text": "Intravenous alteplase 0.9 mg/kg now",
+        "correct": false,
+        "rationale": "Apixaban within 48 hours is a contraindication to intravenous thrombolysis unless a specific reversal pathway and DOAC level <30 ng/mL are documented. Last dose 18:00 yesterday is approximately 14 hours ago (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Intravenous tenecteplase 0.25 mg/kg bolus then endovascular thrombectomy",
+        "correct": false,
+        "rationale": "Lytic therapy is contraindicated by recent apixaban. Bridging lysis would only apply to a thrombolysis-eligible patient (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Endovascular thrombectomy without prior thrombolysis",
+        "correct": true,
+        "rationale": "Large vessel occlusion is implied by NIHSS 14 with favourable perfusion mismatch within an extended window. Thrombectomy alone is appropriate when lytics are contraindicated (recent DOAC), and benefit extends to 24 hours when CTP mismatch supports it (Stroke Foundation Living Guidelines 2022; DAWN/DEFUSE-3 criteria).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022",
+          "DAWN trial"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Aspirin 300 mg orally and admit to stroke unit",
+        "correct": false,
+        "rationale": "Antiplatelet alone is the default only when reperfusion therapy is not available or not indicated; large vessel occlusion with salvageable penumbra mandates thrombectomy referral (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Andexanet alfa reversal then intravenous alteplase",
+        "correct": false,
+        "rationale": "Andexanet is not approved in Australia for facilitating thrombolysis and induces a prothrombotic state which may worsen stroke outcomes. Reversal-then-lysis is not a Stroke Foundation pathway (Stroke Foundation Living Guidelines 2022; TGA product information).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      }
     ],
     "explanation": {
       "summary": "When stroke onset is unwitnessed but last-known-well is >4.5 hours, eligibility for reperfusion depends on imaging selection. Recent DOAC use within 48 hours contraindicates intravenous thrombolysis, but endovascular thrombectomy remains available out to 24 hours when CT perfusion shows favourable mismatch.",
@@ -32,10 +76,19 @@
       "pearls": "Thrombolysis exclusion does not automatically exclude thrombectomy - the two pathways have different eligibility criteria."
     },
     "sources": [
-      {"label": "Stroke Foundation Living Guidelines 2022", "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"},
-      {"label": "Therapeutic Guidelines: Neurology - Stroke", "url": "https://tgldcdp.tg.org.au/"}
+      {
+        "label": "Stroke Foundation Living Guidelines 2022",
+        "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"
+      },
+      {
+        "label": "Therapeutic Guidelines: Neurology - Stroke",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["uec", "coag"],
+    "reference_ranges": [
+      "uec",
+      "coag"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -45,7 +98,10 @@
     "subtopic_detail": "Thrombolysis contraindications - blood pressure",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["stroke", "tPA"],
+    "tags": [
+      "stroke",
+      "tPA"
+    ],
     "stem": "A 58-year-old woman presents 90 minutes after sudden-onset left hemiparesis and dysarthria witnessed at work. NIHSS is 9. Non-contrast CT brain shows no haemorrhage. Blood pressure on three measurements 5 minutes apart is 198/112, 196/108 and 194/106. She has no other contraindications to intravenous thrombolysis.",
     "data_table": {
       "Vital signs": "HR 78, BP 196/108 mean of three, SpO2 98% room air.",
@@ -54,11 +110,52 @@
     },
     "lead_in": "Which is the single most appropriate next step?",
     "options": [
-      {"letter": "A", "text": "Proceed with alteplase as benefit outweighs the BP risk", "correct": false, "rationale": "Pre-lysis BP must be reduced to and sustained at <185/110 before alteplase administration; ignoring this raises symptomatic intracranial haemorrhage risk (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "B", "text": "Intravenous labetalol 10 to 20 mg bolus, recheck, then alteplase if BP <185/110", "correct": true, "rationale": "Labetalol bolus titration is the Stroke Foundation first-line agent to bring pre-lysis BP under 185/110; alteplase may proceed once target achieved within the time window. Post-lysis target is <180/105 for 24 hours (Stroke Foundation Living Guidelines 2022; eTG Neurology).", "source_refs": ["Stroke Foundation Living Guidelines 2022", "eTG Neurology"]},
-      {"letter": "C", "text": "Sublingual nifedipine 10 mg and reassess in 30 minutes", "correct": false, "rationale": "Sublingual nifedipine produces unpredictable hypotensive drops that risk extending the infarct and is contraindicated in acute stroke BP management (eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular"]},
-      {"letter": "D", "text": "Withhold thrombolysis and treat as ineligible due to severe hypertension", "correct": false, "rationale": "Severe hypertension is a relative not absolute exclusion; pharmacologic reduction within the lysis time window is the standard approach when other criteria are met (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "E", "text": "Intravenous glyceryl trinitrate infusion at 5 mcg/min titrated to BP <140/90", "correct": false, "rationale": "Aggressive reduction below 140/90 in acute ischaemic stroke risks expanding the penumbra into core. Target is <185/110 pre-lysis only (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]}
+      {
+        "letter": "A",
+        "text": "Proceed with alteplase as benefit outweighs the BP risk",
+        "correct": false,
+        "rationale": "Pre-lysis BP must be reduced to and sustained at <185/110 before alteplase administration; ignoring this raises symptomatic intracranial haemorrhage risk (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Intravenous labetalol 10 to 20 mg bolus, recheck, then alteplase if BP <185/110",
+        "correct": true,
+        "rationale": "Labetalol bolus titration is the Stroke Foundation first-line agent to bring pre-lysis BP under 185/110; alteplase may proceed once target achieved within the time window. Post-lysis target is <180/105 for 24 hours (Stroke Foundation Living Guidelines 2022; eTG Neurology).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022",
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Sublingual nifedipine 10 mg and reassess in 30 minutes",
+        "correct": false,
+        "rationale": "Sublingual nifedipine produces unpredictable hypotensive drops that risk extending the infarct and is contraindicated in acute stroke BP management (eTG Cardiovascular).",
+        "source_refs": [
+          "eTG Cardiovascular"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Withhold thrombolysis and treat as ineligible due to severe hypertension",
+        "correct": false,
+        "rationale": "Severe hypertension is a relative not absolute exclusion; pharmacologic reduction within the lysis time window is the standard approach when other criteria are met (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Intravenous glyceryl trinitrate infusion at 5 mcg/min titrated to BP <140/90",
+        "correct": false,
+        "rationale": "Aggressive reduction below 140/90 in acute ischaemic stroke risks expanding the penumbra into core. Target is <185/110 pre-lysis only (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Pre-thrombolysis blood pressure target is <185/110 mmHg; post-lysis target is <180/105 mmHg for 24 hours. Labetalol bolus is first-line in Australia. Sublingual nifedipine and aggressive reductions are harmful in acute ischaemic stroke.",
@@ -71,10 +168,18 @@
       "pearls": "Permissive hypertension applies outside the lysis pathway; lysis itself demands tight pre/post BP control to limit haemorrhagic conversion."
     },
     "sources": [
-      {"label": "Stroke Foundation Living Guidelines 2022", "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"},
-      {"label": "Therapeutic Guidelines: Neurology", "url": "https://tgldcdp.tg.org.au/"}
+      {
+        "label": "Stroke Foundation Living Guidelines 2022",
+        "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"
+      },
+      {
+        "label": "Therapeutic Guidelines: Neurology",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["uec"],
+    "reference_ranges": [
+      "uec"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -84,7 +189,10 @@
     "subtopic_detail": "NIHSS thresholds and thrombectomy referral",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["stroke", "NIHSS"],
+    "tags": [
+      "stroke",
+      "NIHSS"
+    ],
     "stem": "A 71-year-old woman presents to a regional hospital 2 hours after sudden right hemiparesis and global aphasia. NIHSS is 18. Non-contrast CT brain shows hyperdense left middle cerebral artery (MCA) sign and an ASPECTS score of 8. The nearest comprehensive stroke centre with endovascular thrombectomy is 90 minutes away by helicopter retrieval; her local hospital does intravenous thrombolysis only.",
     "data_table": {
       "Vital signs": "HR 84 regular, BP 158/82, SpO2 98% room air, BSL 5.6 mmol/L.",
@@ -93,11 +201,51 @@
     },
     "lead_in": "Which is the single most appropriate immediate management plan?",
     "options": [
-      {"letter": "A", "text": "Administer alteplase locally and arrange urgent retrieval for thrombectomy", "correct": true, "rationale": "The drip-and-ship pathway is recommended when a patient meets thrombolysis criteria at a non-thrombectomy centre and has features suggesting large vessel occlusion (NIHSS >=6, hyperdense MCA, ASPECTS >=6). Lysis is given immediately; retrieval runs in parallel (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "B", "text": "Aspirin 300 mg and admit locally without retrieval", "correct": false, "rationale": "Antiplatelet alone forgoes reperfusion benefit in a candidate for both lysis and thrombectomy. NIHSS 18 with ASPECTS 8 is a high-benefit thrombectomy profile (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "C", "text": "Direct retrieval to thrombectomy centre, withholding alteplase until arrival", "correct": false, "rationale": "Withholding lysis to await thrombectomy is not supported when local lysis is available; bridging therapy improves outcomes in randomised trials and is the Stroke Foundation recommendation (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "D", "text": "Decompressive hemicraniectomy referral", "correct": false, "rationale": "Hemicraniectomy is a consideration for malignant MCA syndrome at 48 hours when there is failure of medical management and oedema; it is not the immediate reperfusion strategy (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "E", "text": "Heparin infusion targeting aPTT 60 to 80 seconds", "correct": false, "rationale": "Therapeutic heparin in acute ischaemic stroke increases haemorrhagic conversion without reducing recurrent stroke and is not indicated (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]}
+      {
+        "letter": "A",
+        "text": "Administer alteplase locally and arrange urgent retrieval for thrombectomy",
+        "correct": true,
+        "rationale": "The drip-and-ship pathway is recommended when a patient meets thrombolysis criteria at a non-thrombectomy centre and has features suggesting large vessel occlusion (NIHSS >=6, hyperdense MCA, ASPECTS >=6). Lysis is given immediately; retrieval runs in parallel (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Aspirin 300 mg and admit locally without retrieval",
+        "correct": false,
+        "rationale": "Antiplatelet alone forgoes reperfusion benefit in a candidate for both lysis and thrombectomy. NIHSS 18 with ASPECTS 8 is a high-benefit thrombectomy profile (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Direct retrieval to thrombectomy centre, withholding alteplase until arrival",
+        "correct": false,
+        "rationale": "Withholding lysis to await thrombectomy is not supported when local lysis is available; bridging therapy improves outcomes in randomised trials and is the Stroke Foundation recommendation (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Decompressive hemicraniectomy referral",
+        "correct": false,
+        "rationale": "Hemicraniectomy is a consideration for malignant MCA syndrome at 48 hours when there is failure of medical management and oedema; it is not the immediate reperfusion strategy (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Heparin infusion targeting aPTT 60 to 80 seconds",
+        "correct": false,
+        "rationale": "Therapeutic heparin in acute ischaemic stroke increases haemorrhagic conversion without reducing recurrent stroke and is not indicated (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Drip-and-ship integrates local lysis with retrieval for endovascular thrombectomy. Criteria suggesting large vessel occlusion include NIHSS >=6, hyperdense vessel sign, and preserved ASPECTS (>=6). Lysis should not be delayed for transfer.",
@@ -110,10 +258,18 @@
       "pearls": "ASPECTS scores 1 point for each affected MCA territory subdivided; score <=5 suggests established infarct with reduced reperfusion benefit."
     },
     "sources": [
-      {"label": "Stroke Foundation Living Guidelines 2022", "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"},
-      {"label": "Therapeutic Guidelines: Neurology", "url": "https://tgldcdp.tg.org.au/"}
+      {
+        "label": "Stroke Foundation Living Guidelines 2022",
+        "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"
+      },
+      {
+        "label": "Therapeutic Guidelines: Neurology",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["uec"],
+    "reference_ranges": [
+      "uec"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -123,7 +279,10 @@
     "subtopic_detail": "Post-thrombolysis monitoring - sudden deterioration",
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["stroke", "haemorrhage"],
+    "tags": [
+      "stroke",
+      "haemorrhage"
+    ],
     "stem": "A 68-year-old man received intravenous alteplase 2 hours ago for acute ischaemic stroke. NIHSS was 11 pre-lysis, improved to 6 at 1 hour. He now has acute deterioration with NIHSS rising to 19, new vomiting, BP 220/118, HR 52, and reduced level of consciousness. He is on the stroke unit.",
     "data_table": {
       "Vital signs": "BP 220/118, HR 52, SpO2 94% room air, GCS 11.",
@@ -131,11 +290,51 @@
     },
     "lead_in": "Which is the single most appropriate next step?",
     "options": [
-      {"letter": "A", "text": "Stop any infusing alteplase, urgent non-contrast CT brain, cross-match and prepare cryoprecipitate", "correct": true, "rationale": "Acute neurological deterioration after alteplase with Cushing-like response (hypertension + bradycardia + falling GCS) is symptomatic intracranial haemorrhage until proven otherwise. Stop lysis, image urgently, and prepare reversal with cryoprecipitate 10 units (or fibrinogen concentrate) targeting fibrinogen >1.5 g/L (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "B", "text": "Intravenous mannitol 1 g/kg and reassess in 30 minutes", "correct": false, "rationale": "Osmotherapy treats raised intracranial pressure but does not address the precipitating haemorrhage; imaging and reversal must precede mannitol if haemorrhagic conversion is suspected (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "C", "text": "Increase alteplase rate to complete remaining dose faster", "correct": false, "rationale": "Continuing or accelerating lysis during deterioration is contraindicated; this is the classic anti-pattern of attributing deterioration to under-treatment (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "D", "text": "Aspirin 300 mg and antiemetic", "correct": false, "rationale": "Antiplatelet during suspected haemorrhagic conversion worsens bleeding; antiemetic addresses symptom not cause (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "E", "text": "Prothrombin complex concentrate (PCC) 50 units/kg", "correct": false, "rationale": "PCC reverses warfarin and factor Xa inhibitors but is not the primary lytic reversal; alteplase reversal targets fibrinogen depletion with cryoprecipitate or fibrinogen concentrate (Stroke Foundation Living Guidelines 2022; ANZSBT).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]}
+      {
+        "letter": "A",
+        "text": "Stop any infusing alteplase, urgent non-contrast CT brain, cross-match and prepare cryoprecipitate",
+        "correct": true,
+        "rationale": "Acute neurological deterioration after alteplase with Cushing-like response (hypertension + bradycardia + falling GCS) is symptomatic intracranial haemorrhage until proven otherwise. Stop lysis, image urgently, and prepare reversal with cryoprecipitate 10 units (or fibrinogen concentrate) targeting fibrinogen >1.5 g/L (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Intravenous mannitol 1 g/kg and reassess in 30 minutes",
+        "correct": false,
+        "rationale": "Osmotherapy treats raised intracranial pressure but does not address the precipitating haemorrhage; imaging and reversal must precede mannitol if haemorrhagic conversion is suspected (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Increase alteplase rate to complete remaining dose faster",
+        "correct": false,
+        "rationale": "Continuing or accelerating lysis during deterioration is contraindicated; this is the classic anti-pattern of attributing deterioration to under-treatment (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Aspirin 300 mg and antiemetic",
+        "correct": false,
+        "rationale": "Antiplatelet during suspected haemorrhagic conversion worsens bleeding; antiemetic addresses symptom not cause (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Prothrombin complex concentrate (PCC) 50 units/kg",
+        "correct": false,
+        "rationale": "PCC reverses warfarin and factor Xa inhibitors but is not the primary lytic reversal; alteplase reversal targets fibrinogen depletion with cryoprecipitate or fibrinogen concentrate (Stroke Foundation Living Guidelines 2022; ANZSBT).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Symptomatic intracranial haemorrhage complicates around 2 to 6% of alteplase-treated strokes. Sudden deterioration with rising BP, falling HR, and reduced GCS demands stop-image-reverse sequence. Reversal targets fibrinogen with cryoprecipitate.",
@@ -148,10 +347,19 @@
       "pearls": "Worsening NIHSS by >=4 points in the first 24 hours post-lysis is the trigger for repeat imaging."
     },
     "sources": [
-      {"label": "Stroke Foundation Living Guidelines 2022", "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"},
-      {"label": "ANZSBT Guidelines for transfusion practice", "url": "https://anzsbt.org.au/"}
+      {
+        "label": "Stroke Foundation Living Guidelines 2022",
+        "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"
+      },
+      {
+        "label": "ANZSBT Guidelines for transfusion practice",
+        "url": "https://anzsbt.org.au/"
+      }
     ],
-    "reference_ranges": ["coag", "fbc"],
+    "reference_ranges": [
+      "coag",
+      "fbc"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -161,7 +369,10 @@
     "subtopic_detail": "Wake-up stroke - imaging selection",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["stroke", "imaging"],
+    "tags": [
+      "stroke",
+      "imaging"
+    ],
     "stem": "A 56-year-old woman wakes at 06:00 with left-sided weakness. She last spoke normally at 23:00 the previous night. She arrives at the emergency department at 06:45. NIHSS is 12. Non-contrast CT brain at 07:00 shows no haemorrhage and no early ischaemic change.",
     "data_table": {
       "Vital signs": "BP 162/88, HR 76, SpO2 98% room air.",
@@ -170,11 +381,52 @@
     },
     "lead_in": "Which is the single most appropriate next investigation to determine thrombolysis eligibility?",
     "options": [
-      {"letter": "A", "text": "Magnetic resonance imaging brain with diffusion-weighted imaging and FLAIR", "correct": true, "rationale": "In wake-up stroke beyond 4.5 hours of last-known-well, MRI DWI-FLAIR mismatch (lesion visible on DWI but not on FLAIR) identifies patients within the metabolic 4.5-hour window who benefit from lysis (WAKE-UP trial; Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022", "WAKE-UP trial"]},
-      {"letter": "B", "text": "Repeat non-contrast CT in 4 hours", "correct": false, "rationale": "Serial CT delays decision-making; the time-window question is best resolved by MRI mismatch or CT perfusion now, not waiting for CT changes to evolve (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "C", "text": "Carotid Doppler ultrasound", "correct": false, "rationale": "Carotid Doppler informs secondary prevention but not acute reperfusion eligibility (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "D", "text": "Computed tomography venogram", "correct": false, "rationale": "CT venography evaluates cerebral venous sinus thrombosis, not arterial ischaemic stroke time-of-onset (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "E", "text": "Electroencephalogram", "correct": false, "rationale": "EEG screens for non-convulsive seizure as a stroke mimic but is not the next step when imaging mismatch can clarify reperfusion eligibility (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]}
+      {
+        "letter": "A",
+        "text": "Magnetic resonance imaging brain with diffusion-weighted imaging and FLAIR",
+        "correct": true,
+        "rationale": "In wake-up stroke beyond 4.5 hours of last-known-well, MRI DWI-FLAIR mismatch (lesion visible on DWI but not on FLAIR) identifies patients within the metabolic 4.5-hour window who benefit from lysis (WAKE-UP trial; Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022",
+          "WAKE-UP trial"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Repeat non-contrast CT in 4 hours",
+        "correct": false,
+        "rationale": "Serial CT delays decision-making; the time-window question is best resolved by MRI mismatch or CT perfusion now, not waiting for CT changes to evolve (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Carotid Doppler ultrasound",
+        "correct": false,
+        "rationale": "Carotid Doppler informs secondary prevention but not acute reperfusion eligibility (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Computed tomography venogram",
+        "correct": false,
+        "rationale": "CT venography evaluates cerebral venous sinus thrombosis, not arterial ischaemic stroke time-of-onset (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Electroencephalogram",
+        "correct": false,
+        "rationale": "EEG screens for non-convulsive seizure as a stroke mimic but is not the next step when imaging mismatch can clarify reperfusion eligibility (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Wake-up stroke with unknown onset beyond 4.5 hours can still be treated with thrombolysis when MRI DWI-FLAIR mismatch confirms the lesion is metabolically <4.5 hours old. CT perfusion mismatch is an alternative in centres without rapid MRI.",
@@ -187,8 +439,14 @@
       "pearls": "MRI DWI-FLAIR mismatch is the imaging equivalent of a clock when the actual clock is unknown."
     },
     "sources": [
-      {"label": "Stroke Foundation Living Guidelines 2022", "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"},
-      {"label": "WAKE-UP trial (Thomalla et al, NEJM 2018)", "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa1804355"}
+      {
+        "label": "Stroke Foundation Living Guidelines 2022",
+        "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"
+      },
+      {
+        "label": "WAKE-UP trial (Thomalla et al, NEJM 2018)",
+        "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa1804355"
+      }
     ],
     "reference_ranges": [],
     "created": "2026-05-25"
@@ -200,7 +458,10 @@
     "subtopic_detail": "First-line benzodiazepine - dose and route",
     "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["seizure", "status epilepticus"],
+    "tags": [
+      "seizure",
+      "status epilepticus"
+    ],
     "stem": "A 34-year-old man with known epilepsy is brought to the emergency department by ambulance. He has been seizing continuously for 8 minutes with generalised tonic-clonic activity. Intravenous access is in place. He weighs approximately 80 kg.",
     "data_table": {
       "Vital signs": "HR 132, BP 168/96, SpO2 91% room air, T 37.6 C, BSL 5.8 mmol/L.",
@@ -208,11 +469,51 @@
     },
     "lead_in": "Which is the single most appropriate first-line pharmacological treatment?",
     "options": [
-      {"letter": "A", "text": "Midazolam 10 mg intramuscular", "correct": false, "rationale": "Intramuscular midazolam is appropriate when intravenous access is unavailable; with IV access in place the intravenous benzodiazepine route is preferred (eTG Neurology; ESETT).", "source_refs": ["eTG Neurology"]},
-      {"letter": "B", "text": "Lorazepam 0.1 mg/kg intravenous (maximum 4 mg)", "correct": true, "rationale": "Lorazepam 0.1 mg/kg IV (commonly 4 mg) is the first-line benzodiazepine in convulsive status epilepticus when IV access is available, per Therapeutic Guidelines Neurology. Diazepam is an acceptable alternative; midazolam IM is for the no-IV scenario (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "C", "text": "Phenytoin 20 mg/kg intravenous infusion", "correct": false, "rationale": "Phenytoin is a second-line agent given after benzodiazepine failure, not first-line (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "D", "text": "Levetiracetam 60 mg/kg intravenous infusion", "correct": false, "rationale": "Levetiracetam is a second-line option after benzodiazepine failure per ESETT, not the initial agent (eTG Neurology; ESETT trial).", "source_refs": ["ESETT trial"]},
-      {"letter": "E", "text": "Propofol 2 mg/kg intravenous bolus and intubation", "correct": false, "rationale": "Propofol induction is reserved for refractory status epilepticus after first- and second-line agents have failed (eTG Neurology).", "source_refs": ["eTG Neurology"]}
+      {
+        "letter": "A",
+        "text": "Midazolam 10 mg intramuscular",
+        "correct": false,
+        "rationale": "Intramuscular midazolam is appropriate when intravenous access is unavailable; with IV access in place the intravenous benzodiazepine route is preferred (eTG Neurology; ESETT).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Lorazepam 0.1 mg/kg intravenous (maximum 4 mg)",
+        "correct": true,
+        "rationale": "Lorazepam 0.1 mg/kg IV (commonly 4 mg) is the first-line benzodiazepine in convulsive status epilepticus when IV access is available, per Therapeutic Guidelines Neurology. Diazepam is an acceptable alternative; midazolam IM is for the no-IV scenario (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Phenytoin 20 mg/kg intravenous infusion",
+        "correct": false,
+        "rationale": "Phenytoin is a second-line agent given after benzodiazepine failure, not first-line (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Levetiracetam 60 mg/kg intravenous infusion",
+        "correct": false,
+        "rationale": "Levetiracetam is a second-line option after benzodiazepine failure per ESETT, not the initial agent (eTG Neurology; ESETT trial).",
+        "source_refs": [
+          "ESETT trial"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Propofol 2 mg/kg intravenous bolus and intubation",
+        "correct": false,
+        "rationale": "Propofol induction is reserved for refractory status epilepticus after first- and second-line agents have failed (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Convulsive status epilepticus (seizure >5 minutes or recurrent without recovery) is treated stepwise: first-line benzodiazepine, second-line antiepileptic, then anaesthetic for refractory status. IV lorazepam is preferred when IV access is available; IM midazolam when not.",
@@ -225,10 +526,19 @@
       "pearls": "Underdosing the benzodiazepine is the most common error; give the full weight-based dose, not a cautious half-dose."
     },
     "sources": [
-      {"label": "Therapeutic Guidelines: Neurology - Status epilepticus", "url": "https://tgldcdp.tg.org.au/"},
-      {"label": "ESETT trial (Kapur et al, NEJM 2019)", "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa1905795"}
+      {
+        "label": "Therapeutic Guidelines: Neurology - Status epilepticus",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "ESETT trial (Kapur et al, NEJM 2019)",
+        "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa1905795"
+      }
     ],
-    "reference_ranges": ["bsl", "uec"],
+    "reference_ranges": [
+      "bsl",
+      "uec"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -238,7 +548,9 @@
     "subtopic_detail": "Second-line agent selection after benzodiazepine failure",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["status epilepticus"],
+    "tags": [
+      "status epilepticus"
+    ],
     "stem": "A 28-year-old woman has been seizing for 18 minutes. She received two doses of intravenous midazolam 5 mg, 5 minutes apart, with no cessation. She has no known epilepsy, is 16 weeks pregnant, and weighs 65 kg.",
     "data_table": {
       "Vital signs": "HR 140, BP 156/94, SpO2 88% on 15 L non-rebreather, T 38.2 C, BSL 6.2 mmol/L.",
@@ -246,11 +558,53 @@
     },
     "lead_in": "Which is the single most appropriate next pharmacological agent?",
     "options": [
-      {"letter": "A", "text": "Levetiracetam 60 mg/kg intravenous over 10 minutes", "correct": true, "rationale": "Levetiracetam 40 to 60 mg/kg IV is the preferred second-line agent in pregnancy due to absence of teratogenicity in trimester comparisons, and showed equivalence to phenytoin and valproate in ESETT. Sodium valproate is teratogenic and avoided in pregnancy (eTG Neurology; RANZCOG; ESETT).", "source_refs": ["eTG Neurology", "RANZCOG", "ESETT trial"]},
-      {"letter": "B", "text": "Sodium valproate 40 mg/kg intravenous", "correct": false, "rationale": "Sodium valproate is strongly teratogenic (neural tube defects, neurodevelopmental harm); avoided in pregnancy if alternatives exist (RANZCOG).", "source_refs": ["RANZCOG"]},
-      {"letter": "C", "text": "Phenytoin 20 mg/kg intravenous infusion", "correct": false, "rationale": "Phenytoin is acceptable but ranks behind levetiracetam in pregnancy due to fetal hydantoin syndrome risk and the cardiotoxicity risk if infused too rapidly (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "D", "text": "Magnesium sulfate 4 g intravenous over 20 minutes", "correct": false, "rationale": "Magnesium sulfate is first-line for eclampsia at >=20 weeks gestation; at 16 weeks pre-eclampsia is uncommon and her presentation lacks proteinuria, hypertension, or headache to indicate eclampsia (RANZCOG eclampsia).", "source_refs": ["RANZCOG"]},
-      {"letter": "E", "text": "Repeat midazolam 5 mg intravenous", "correct": false, "rationale": "After two adequate benzodiazepine doses without response, repeating the benzodiazepine without escalating is the classic anti-pattern; move to second-line antiepileptic (eTG Neurology).", "source_refs": ["eTG Neurology"]}
+      {
+        "letter": "A",
+        "text": "Levetiracetam 60 mg/kg intravenous over 10 minutes",
+        "correct": true,
+        "rationale": "Levetiracetam 40 to 60 mg/kg IV is the preferred second-line agent in pregnancy due to absence of teratogenicity in trimester comparisons, and showed equivalence to phenytoin and valproate in ESETT. Sodium valproate is teratogenic and avoided in pregnancy (eTG Neurology; RANZCOG; ESETT).",
+        "source_refs": [
+          "eTG Neurology",
+          "RANZCOG",
+          "ESETT trial"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Sodium valproate 40 mg/kg intravenous",
+        "correct": false,
+        "rationale": "Sodium valproate is strongly teratogenic (neural tube defects, neurodevelopmental harm); avoided in pregnancy if alternatives exist (RANZCOG).",
+        "source_refs": [
+          "RANZCOG"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Phenytoin 20 mg/kg intravenous infusion",
+        "correct": false,
+        "rationale": "Phenytoin is acceptable but ranks behind levetiracetam in pregnancy due to foetal hydantoin syndrome risk and the cardiotoxicity risk if infused too rapidly (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Magnesium sulfate 4 g intravenous over 20 minutes",
+        "correct": false,
+        "rationale": "Magnesium sulfate is first-line for eclampsia at >=20 weeks gestation; at 16 weeks pre-eclampsia is uncommon and her presentation lacks proteinuria, hypertension, or headache to indicate eclampsia (RANZCOG eclampsia).",
+        "source_refs": [
+          "RANZCOG"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Repeat midazolam 5 mg intravenous",
+        "correct": false,
+        "rationale": "After two adequate benzodiazepine doses without response, repeating the benzodiazepine without escalating is the classic anti-pattern; move to second-line antiepileptic (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      }
     ],
     "explanation": {
       "summary": "After benzodiazepine failure in convulsive status epilepticus, second-line agents are levetiracetam, phenytoin/fosphenytoin, or sodium valproate. In pregnancy levetiracetam is preferred; valproate is avoided due to teratogenicity. Magnesium is reserved for eclampsia.",
@@ -263,10 +617,19 @@
       "pearls": "Anyone with new-onset seizure in pregnancy >=20 weeks is eclampsia until proven otherwise; check BP, urinalysis, reflexes immediately."
     },
     "sources": [
-      {"label": "Therapeutic Guidelines: Neurology - Status epilepticus", "url": "https://tgldcdp.tg.org.au/"},
-      {"label": "RANZCOG - Hypertensive disorders of pregnancy", "url": "https://ranzcog.edu.au/"}
+      {
+        "label": "Therapeutic Guidelines: Neurology - Status epilepticus",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "RANZCOG - Hypertensive disorders of pregnancy",
+        "url": "https://ranzcog.edu.au/"
+      }
     ],
-    "reference_ranges": ["uec", "bsl"],
+    "reference_ranges": [
+      "uec",
+      "bsl"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -276,7 +639,10 @@
     "subtopic_detail": "Refractory status - anaesthetic induction",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["status epilepticus", "refractory"],
+    "tags": [
+      "status epilepticus",
+      "refractory"
+    ],
     "stem": "A 45-year-old man has had ongoing seizure activity for 45 minutes despite two doses of intravenous midazolam 10 mg and intravenous levetiracetam 60 mg/kg. He is now in the resuscitation bay with the anaesthetic registrar.",
     "data_table": {
       "Vital signs": "HR 138, BP 178/102, SpO2 86% on 15 L non-rebreather.",
@@ -284,11 +650,51 @@
     },
     "lead_in": "Which is the single most appropriate next step?",
     "options": [
-      {"letter": "A", "text": "Rapid sequence induction with propofol and intubation, then propofol or midazolam infusion with continuous EEG", "correct": true, "rationale": "Refractory status epilepticus (failure of first- and second-line) requires anaesthetic-depth induction with intubation, infusion of propofol or midazolam, and continuous EEG to confirm electrographic seizure cessation (eTG Neurology; NEJM refractory status review).", "source_refs": ["eTG Neurology"]},
-      {"letter": "B", "text": "Add a third antiepileptic (phenytoin 20 mg/kg) and wait 20 minutes", "correct": false, "rationale": "After two failed agents the patient is in refractory status; further sequential boluses delay airway protection and cerebral oxygenation. Anaesthetic management is now indicated (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "C", "text": "Therapeutic hypothermia to 33 degrees Celsius", "correct": false, "rationale": "Therapeutic hypothermia is not standard for status epilepticus; evidence does not show seizure benefit and there are coagulation and infection harms (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "D", "text": "Ketogenic diet via nasogastric tube", "correct": false, "rationale": "Ketogenic diet is a refractory-status adjunct after days of failed conventional therapy, not the acute step (NHMRC; eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "E", "text": "Lumbar puncture for cerebrospinal fluid analysis", "correct": false, "rationale": "Workup for cause is essential but must not delay seizure termination; LP follows airway control and seizure cessation (eTG Neurology).", "source_refs": ["eTG Neurology"]}
+      {
+        "letter": "A",
+        "text": "Rapid sequence induction with propofol and intubation, then propofol or midazolam infusion with continuous EEG",
+        "correct": true,
+        "rationale": "Refractory status epilepticus (failure of first- and second-line) requires anaesthetic-depth induction with intubation, infusion of propofol or midazolam, and continuous EEG to confirm electrographic seizure cessation (eTG Neurology; NEJM refractory status review).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Add a third antiepileptic (phenytoin 20 mg/kg) and wait 20 minutes",
+        "correct": false,
+        "rationale": "After two failed agents the patient is in refractory status; further sequential boluses delay airway protection and cerebral oxygenation. Anaesthetic management is now indicated (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Therapeutic hypothermia to 33 degrees Celsius",
+        "correct": false,
+        "rationale": "Therapeutic hypothermia is not standard for status epilepticus; evidence does not show seizure benefit and there are coagulation and infection harms (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Ketogenic diet via nasogastric tube",
+        "correct": false,
+        "rationale": "Ketogenic diet is a refractory-status adjunct after days of failed conventional therapy, not the acute step (NHMRC; eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Lumbar puncture for cerebrospinal fluid analysis",
+        "correct": false,
+        "rationale": "Workup for cause is essential but must not delay seizure termination; LP follows airway control and seizure cessation (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Refractory status epilepticus (>30 minutes or failure of two agents) requires anaesthetic induction with intubation and continuous EEG monitoring. Propofol or midazolam infusion is titrated to seizure suppression or burst suppression. Cause workup occurs in parallel.",
@@ -301,10 +707,20 @@
       "pearls": "Mortality in refractory status approaches 30%; the urgency is termination not diagnosis."
     },
     "sources": [
-      {"label": "Therapeutic Guidelines: Neurology - Status epilepticus", "url": "https://tgldcdp.tg.org.au/"},
-      {"label": "ANZICS Statement - Status epilepticus", "url": "https://www.anzics.com.au/"}
+      {
+        "label": "Therapeutic Guidelines: Neurology - Status epilepticus",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "ANZICS Statement - Status epilepticus",
+        "url": "https://www.anzics.com.au/"
+      }
     ],
-    "reference_ranges": ["uec", "bsl", "lft"],
+    "reference_ranges": [
+      "uec",
+      "bsl",
+      "lft"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -314,7 +730,10 @@
     "subtopic_detail": "Guillain-Barre syndrome - diagnosis and monitoring",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["GBS", "weakness"],
+    "tags": [
+      "GBS",
+      "weakness"
+    ],
     "stem": "A 42-year-old man presents to a regional hospital with 5 days of progressive ascending lower limb weakness, now involving the proximal upper limbs and mild facial droop. He had gastroenteritis 3 weeks ago. Examination shows symmetrical weakness 3/5 in the legs and 4/5 in the arms with absent ankle and knee reflexes. Cranial nerve examination shows bilateral mild facial weakness. Sensation is intact.",
     "data_table": {
       "Vital signs": "HR 102, BP 148/96 (was 124/78 on admission), SpO2 96% room air, RR 22.",
@@ -323,11 +742,52 @@
     },
     "lead_in": "Which is the single most appropriate immediate management priority?",
     "options": [
-      {"letter": "A", "text": "Intravenous immunoglobulin (IVIG) 0.4 g/kg/day for 5 days and admission to a monitored bed with respiratory and autonomic surveillance", "correct": true, "rationale": "Guillain-Barre syndrome (GBS) with FVC <20 mL/kg, bulbar involvement, or autonomic dysfunction (her labile BP and tachycardia) requires high-dependency monitoring. IVIG 0.4 g/kg/day for 5 days or plasma exchange are equivalent first-line treatments (eTG Neurology; ANZAN GBS guidance).", "source_refs": ["eTG Neurology", "ANZAN"]},
-      {"letter": "B", "text": "Methylprednisolone 1 g IV daily for 5 days", "correct": false, "rationale": "Corticosteroids do not improve outcomes in GBS and are not recommended; this distinguishes GBS treatment from CIDP (chronic inflammatory demyelinating polyneuropathy) which does respond to steroids (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "C", "text": "Pyridostigmine 60 mg orally four times daily", "correct": false, "rationale": "Pyridostigmine treats myasthenia gravis (presynaptic acetylcholine availability), not GBS; the differential matters because both cause neuromuscular weakness but mechanism differs (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "D", "text": "Outpatient nerve conduction studies and review in 1 week", "correct": false, "rationale": "Outpatient management is inappropriate when FVC is <20 mL/kg with bulbar signs; rapid respiratory decompensation is a real risk (ANZAN; eTG Neurology).", "source_refs": ["ANZAN"]},
-      {"letter": "E", "text": "Empirical aciclovir 10 mg/kg IV three times daily", "correct": false, "rationale": "Aciclovir is for HSV encephalitis; GBS is post-infectious autoimmune and does not respond to antivirals (eTG Antibiotic).", "source_refs": ["eTG Neurology"]}
+      {
+        "letter": "A",
+        "text": "Intravenous immunoglobulin (IVIG) 0.4 g/kg/day for 5 days and admission to a monitored bed with respiratory and autonomic surveillance",
+        "correct": true,
+        "rationale": "Guillain-Barre syndrome (GBS) with FVC <20 mL/kg, bulbar involvement, or autonomic dysfunction (her labile BP and tachycardia) requires high-dependency monitoring. IVIG 0.4 g/kg/day for 5 days or plasma exchange are equivalent first-line treatments (eTG Neurology; ANZAN GBS guidance).",
+        "source_refs": [
+          "eTG Neurology",
+          "ANZAN"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Methylprednisolone 1 g IV daily for 5 days",
+        "correct": false,
+        "rationale": "Corticosteroids do not improve outcomes in GBS and are not recommended; this distinguishes GBS treatment from CIDP (chronic inflammatory demyelinating polyneuropathy) which does respond to steroids (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Pyridostigmine 60 mg orally four times daily",
+        "correct": false,
+        "rationale": "Pyridostigmine treats myasthenia gravis (presynaptic acetylcholine availability), not GBS; the differential matters because both cause neuromuscular weakness but mechanism differs (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Outpatient nerve conduction studies and review in 1 week",
+        "correct": false,
+        "rationale": "Outpatient management is inappropriate when FVC is <20 mL/kg with bulbar signs; rapid respiratory decompensation is a real risk (ANZAN; eTG Neurology).",
+        "source_refs": [
+          "ANZAN"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Empirical aciclovir 10 mg/kg IV three times daily",
+        "correct": false,
+        "rationale": "Aciclovir is for HSV encephalitis; GBS is post-infectious autoimmune and does not respond to antivirals (eTG Antibiotic).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      }
     ],
     "explanation": {
       "summary": "GBS is an acute inflammatory demyelinating polyneuropathy classically following Campylobacter, viral GI or respiratory illness. Diagnosis is clinical (ascending symmetric weakness, areflexia) supported by CSF albuminocytological dissociation. First-line treatment is IVIG or plasma exchange; steroids do not work.",
@@ -340,10 +800,19 @@
       "pearls": "Serial FVC every 4-6 hours; intubate when FVC <15 mL/kg, negative inspiratory force less negative than -25 cmH2O, or bulbar failure."
     },
     "sources": [
-      {"label": "Therapeutic Guidelines: Neurology - GBS", "url": "https://tgldcdp.tg.org.au/"},
-      {"label": "ANZAN - Guillain-Barre syndrome", "url": "https://www.anzan.org.au/"}
+      {
+        "label": "Therapeutic Guidelines: Neurology - GBS",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "ANZAN - Guillain-Barre syndrome",
+        "url": "https://www.anzan.org.au/"
+      }
     ],
-    "reference_ranges": ["uec", "fbc"],
+    "reference_ranges": [
+      "uec",
+      "fbc"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -353,7 +822,10 @@
     "subtopic_detail": "Myasthenia gravis vs Guillain-Barre - discriminator",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["MG", "GBS"],
+    "tags": [
+      "MG",
+      "GBS"
+    ],
     "stem": "A 38-year-old woman presents with 3 weeks of intermittent diplopia worse in the evenings, fatigable proximal limb weakness, and dysphagia for solids that worsens through a meal. Reflexes are preserved. There is no sensory disturbance and no recent viral or gastrointestinal illness. Ice pack applied to the right eyelid for 2 minutes improves ptosis.",
     "data_table": {
       "Vital signs": "HR 78, BP 124/72, SpO2 99% room air, RR 14, FVC 42 mL/kg.",
@@ -361,11 +833,52 @@
     },
     "lead_in": "Which is the single most appropriate confirmatory investigation?",
     "options": [
-      {"letter": "A", "text": "Acetylcholine receptor antibody assay", "correct": true, "rationale": "Acetylcholine receptor (AChR) antibodies are positive in 80 to 90% of generalised myasthenia gravis (MG) and are the first-line serological test. MuSK antibodies are checked if AChR is negative. The clinical picture (fatigability, bulbar, ocular, ice pack response, preserved reflexes) is MG not GBS (eTG Neurology; ANZAN MG).", "source_refs": ["eTG Neurology", "ANZAN"]},
-      {"letter": "B", "text": "Lumbar puncture for cytological dissociation", "correct": false, "rationale": "Albuminocytological dissociation supports GBS not MG; this stem lacks ascending weakness, areflexia, or post-infectious context (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "C", "text": "Nerve conduction studies for demyelination", "correct": false, "rationale": "Demyelinating features support GBS or CIDP; in MG the diagnostic neurophysiology is repetitive nerve stimulation (decrement) or single-fibre EMG (jitter), not standard NCS (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "D", "text": "Stool culture for Campylobacter jejuni", "correct": false, "rationale": "Campylobacter precedes GBS not MG, and there is no GI history (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "E", "text": "Magnetic resonance imaging spine", "correct": false, "rationale": "Spine MRI evaluates myelopathy, which would present with sensory level and bladder/bowel involvement, not present here (eTG Neurology).", "source_refs": ["eTG Neurology"]}
+      {
+        "letter": "A",
+        "text": "Acetylcholine receptor antibody assay",
+        "correct": true,
+        "rationale": "Acetylcholine receptor (AChR) antibodies are positive in 80 to 90% of generalised myasthenia gravis (MG) and are the first-line serological test. MuSK antibodies are checked if AChR is negative. The clinical picture (fatigability, bulbar, ocular, ice pack response, preserved reflexes) is MG not GBS (eTG Neurology; ANZAN MG).",
+        "source_refs": [
+          "eTG Neurology",
+          "ANZAN"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Lumbar puncture for cytological dissociation",
+        "correct": false,
+        "rationale": "Albuminocytological dissociation supports GBS not MG; this stem lacks ascending weakness, areflexia, or post-infectious context (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Nerve conduction studies for demyelination",
+        "correct": false,
+        "rationale": "Demyelinating features support GBS or CIDP; in MG the diagnostic neurophysiology is repetitive nerve stimulation (decrement) or single-fibre EMG (jitter), not standard NCS (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Stool culture for Campylobacter jejuni",
+        "correct": false,
+        "rationale": "Campylobacter precedes GBS not MG, and there is no GI history (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Magnetic resonance imaging spine",
+        "correct": false,
+        "rationale": "Spine MRI evaluates myelopathy, which would present with sensory level and bladder/bowel involvement, not present here (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Myasthenia gravis is a postsynaptic neuromuscular junction disorder marked by fatigable weakness, ocular and bulbar involvement, and preserved reflexes/sensation. Acetylcholine receptor antibodies are the first-line confirmatory test; MuSK antibodies are checked when AChR is negative.",
@@ -378,10 +891,19 @@
       "pearls": "Ice pack test (improves ptosis) and rest test are bedside MG screens; both leverage temperature-sensitive AChR function."
     },
     "sources": [
-      {"label": "Therapeutic Guidelines: Neurology - Myasthenia gravis", "url": "https://tgldcdp.tg.org.au/"},
-      {"label": "ANZAN - Myasthenia gravis", "url": "https://www.anzan.org.au/"}
+      {
+        "label": "Therapeutic Guidelines: Neurology - Myasthenia gravis",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "ANZAN - Myasthenia gravis",
+        "url": "https://www.anzan.org.au/"
+      }
     ],
-    "reference_ranges": ["fbc", "uec"],
+    "reference_ranges": [
+      "fbc",
+      "uec"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -391,7 +913,10 @@
     "subtopic_detail": "Myasthenic crisis - precipitants and triage",
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["MG", "crisis"],
+    "tags": [
+      "MG",
+      "crisis"
+    ],
     "stem": "A 52-year-old woman with seropositive myasthenia gravis on pyridostigmine 60 mg four times daily and prednisolone 15 mg daily presents to a metropolitan emergency department with 24 hours of worsening dysphagia, breathlessness on lying flat, and inability to lift her head off the pillow. She was started on azithromycin 500 mg by her general practitioner 3 days ago for sinusitis. She is alert but tachypnoeic.",
     "data_table": {
       "Vital signs": "HR 122, BP 142/86, SpO2 92% on 4 L nasal prongs, RR 28.",
@@ -400,11 +925,52 @@
     },
     "lead_in": "Which is the single most appropriate immediate management priority?",
     "options": [
-      {"letter": "A", "text": "Stop azithromycin, transfer to intensive care for likely intubation, and start plasma exchange or intravenous immunoglobulin", "correct": true, "rationale": "Myasthenic crisis with FVC <15 mL/kg, paradoxical breathing, and bulbar failure mandates ICU admission with airway preparedness. Macrolides (including azithromycin), aminoglycosides, fluoroquinolones, and beta-blockers worsen MG and must be stopped. Plasma exchange or IVIG are first-line acute treatments (eTG Neurology; ANZAN; eTG Antibiotic).", "source_refs": ["eTG Neurology", "ANZAN"]},
-      {"letter": "B", "text": "Increase pyridostigmine to 120 mg orally hourly", "correct": false, "rationale": "Over-dosing pyridostigmine causes cholinergic crisis (indistinguishable weakness picture); escalating cholinesterase inhibitor without crisis treatment is dangerous (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "C", "text": "Methylprednisolone 1 g IV without stopping azithromycin", "correct": false, "rationale": "High-dose steroid initiation can transiently worsen MG (steroid dip) in the first 1 to 2 weeks; in crisis IVIG/plasma exchange precedes steroid escalation, and the precipitating drug must be stopped (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "D", "text": "Edrophonium test to differentiate myasthenic from cholinergic crisis", "correct": false, "rationale": "Edrophonium (Tensilon) testing is largely abandoned due to risks; bedside ventilatory assessment and treatment of crisis take priority (ANZAN).", "source_refs": ["ANZAN"]},
-      {"letter": "E", "text": "Non-invasive ventilation as a long-term plan, no specific MG-directed therapy", "correct": false, "rationale": "NIV may bridge respiratory support short-term but is not a substitute for crisis-directed plasma exchange/IVIG and offending-drug cessation (eTG Neurology; ANZICS).", "source_refs": ["eTG Neurology"]}
+      {
+        "letter": "A",
+        "text": "Stop azithromycin, transfer to intensive care for likely intubation, and start plasma exchange or intravenous immunoglobulin",
+        "correct": true,
+        "rationale": "Myasthenic crisis with FVC <15 mL/kg, paradoxical breathing, and bulbar failure mandates ICU admission with airway preparedness. Macrolides (including azithromycin), aminoglycosides, fluoroquinolones, and beta-blockers worsen MG and must be stopped. Plasma exchange or IVIG are first-line acute treatments (eTG Neurology; ANZAN; eTG Antibiotic).",
+        "source_refs": [
+          "eTG Neurology",
+          "ANZAN"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Increase pyridostigmine to 120 mg orally hourly",
+        "correct": false,
+        "rationale": "Over-dosing pyridostigmine causes cholinergic crisis (indistinguishable weakness picture); escalating cholinesterase inhibitor without crisis treatment is dangerous (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Methylprednisolone 1 g IV without stopping azithromycin",
+        "correct": false,
+        "rationale": "High-dose steroid initiation can transiently worsen MG (steroid dip) in the first 1 to 2 weeks; in crisis IVIG/plasma exchange precedes steroid escalation, and the precipitating drug must be stopped (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Edrophonium test to differentiate myasthenic from cholinergic crisis",
+        "correct": false,
+        "rationale": "Edrophonium (Tensilon) testing is largely abandoned due to risks; bedside ventilatory assessment and treatment of crisis take priority (ANZAN).",
+        "source_refs": [
+          "ANZAN"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Non-invasive ventilation as a long-term plan, no specific MG-directed therapy",
+        "correct": false,
+        "rationale": "NIV may bridge respiratory support short-term but is not a substitute for crisis-directed plasma exchange/IVIG and offending-drug cessation (eTG Neurology; ANZICS).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Myasthenic crisis is respiratory failure due to MG, precipitated by infection, surgery, pregnancy, or certain drugs (macrolides, aminoglycosides, fluoroquinolones, telithromycin, beta-blockers, magnesium). ICU admission, plasma exchange or IVIG, and removal of precipitants is the bundle.",
@@ -417,10 +983,19 @@
       "pearls": "Single breath count <20 correlates with FVC <1 L; useful when spirometer unavailable."
     },
     "sources": [
-      {"label": "Therapeutic Guidelines: Neurology - Myasthenia gravis", "url": "https://tgldcdp.tg.org.au/"},
-      {"label": "ANZAN - Myasthenia gravis", "url": "https://www.anzan.org.au/"}
+      {
+        "label": "Therapeutic Guidelines: Neurology - Myasthenia gravis",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "ANZAN - Myasthenia gravis",
+        "url": "https://www.anzan.org.au/"
+      }
     ],
-    "reference_ranges": ["uec", "fbc"],
+    "reference_ranges": [
+      "uec",
+      "fbc"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -430,7 +1005,10 @@
     "subtopic_detail": "Adult empirical antibiotic selection",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["meningitis", "empirical"],
+    "tags": [
+      "meningitis",
+      "empirical"
+    ],
     "stem": "A 67-year-old woman presents to a regional emergency department with 12 hours of fever, severe headache, neck stiffness and progressive confusion. She has type 2 diabetes mellitus. She has no penicillin allergy. Kernig sign is positive. There are no focal neurological signs and Glasgow Coma Scale (GCS) is 13.",
     "data_table": {
       "Vital signs": "HR 118, BP 102/64, SpO2 96% room air, T 39.2 C, RR 22.",
@@ -438,11 +1016,51 @@
     },
     "lead_in": "Which is the single most appropriate empirical antimicrobial regimen?",
     "options": [
-      {"letter": "A", "text": "Ceftriaxone 2 g intravenous 12-hourly plus benzylpenicillin 2.4 g intravenous 4-hourly plus dexamethasone 10 mg intravenous 6-hourly", "correct": true, "rationale": "Adults >50 years or with comorbidity (diabetes, alcohol misuse, immunocompromise) require Listeria cover, hence benzylpenicillin added to ceftriaxone (or use amoxicillin/ampicillin where stocked). Dexamethasone 10 mg IV 6-hourly given with or just before first antibiotic dose reduces neurological sequelae in pneumococcal meningitis (eTG Antibiotic).", "source_refs": ["eTG Antibiotic"]},
-      {"letter": "B", "text": "Ceftriaxone 2 g intravenous 12-hourly alone", "correct": false, "rationale": "Ceftriaxone monotherapy is adequate for adults 18 to 50 without comorbidity; at age 67 with diabetes, Listeria cover is mandated (eTG Antibiotic).", "source_refs": ["eTG Antibiotic"]},
-      {"letter": "C", "text": "Vancomycin 30 mg/kg intravenous loading dose plus meropenem 2 g intravenous 8-hourly", "correct": false, "rationale": "Meropenem with vancomycin is reserved for cephalosporin allergy or institutional resistance concerns; not first-line in straightforward community-acquired adult meningitis (eTG Antibiotic).", "source_refs": ["eTG Antibiotic"]},
-      {"letter": "D", "text": "Aciclovir 10 mg/kg intravenous 8-hourly alone", "correct": false, "rationale": "Aciclovir treats HSV encephalitis; bacterial meningitis cover takes priority when clinical features suggest bacterial cause. Aciclovir is added when encephalitic features (focal signs, seizures, altered behaviour) coexist (eTG Antibiotic).", "source_refs": ["eTG Antibiotic"]},
-      {"letter": "E", "text": "Defer antibiotics until lumbar puncture results return", "correct": false, "rationale": "Antibiotics must not wait for CSF; each hour of delay worsens mortality. Blood cultures then immediate empirical antibiotics; LP follows when safe (eTG Antibiotic; CDNA).", "source_refs": ["eTG Antibiotic"]}
+      {
+        "letter": "A",
+        "text": "Ceftriaxone 2 g intravenous 12-hourly plus benzylpenicillin 2.4 g intravenous 4-hourly plus dexamethasone 10 mg intravenous 6-hourly",
+        "correct": true,
+        "rationale": "Adults >50 years or with comorbidity (diabetes, alcohol misuse, immunocompromise) require Listeria cover, hence benzylpenicillin added to ceftriaxone (or use amoxicillin/ampicillin where stocked). Dexamethasone 10 mg IV 6-hourly given with or just before first antibiotic dose reduces neurological sequelae in pneumococcal meningitis (eTG Antibiotic).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Ceftriaxone 2 g intravenous 12-hourly alone",
+        "correct": false,
+        "rationale": "Ceftriaxone monotherapy is adequate for adults 18 to 50 without comorbidity; at age 67 with diabetes, Listeria cover is mandated (eTG Antibiotic).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Vancomycin 30 mg/kg intravenous loading dose plus meropenem 2 g intravenous 8-hourly",
+        "correct": false,
+        "rationale": "Meropenem with vancomycin is reserved for cephalosporin allergy or institutional resistance concerns; not first-line in straightforward community-acquired adult meningitis (eTG Antibiotic).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Aciclovir 10 mg/kg intravenous 8-hourly alone",
+        "correct": false,
+        "rationale": "Aciclovir treats HSV encephalitis; bacterial meningitis cover takes priority when clinical features suggest bacterial cause. Aciclovir is added when encephalitic features (focal signs, seizures, altered behaviour) coexist (eTG Antibiotic).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Defer antibiotics until lumbar puncture results return",
+        "correct": false,
+        "rationale": "Antibiotics must not wait for CSF; each hour of delay worsens mortality. Blood cultures then immediate empirical antibiotics; LP follows when safe (eTG Antibiotic; CDNA).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Empirical antibiotics for community-acquired adult bacterial meningitis cover Streptococcus pneumoniae and Neisseria meningitidis with ceftriaxone; adults over 50 or immunocompromised need Listeria cover (benzylpenicillin or amoxicillin). Dexamethasone given with or just before the first antibiotic dose reduces sequelae and mortality.",
@@ -455,10 +1073,20 @@
       "pearls": "Continue dexamethasone for 4 days only if CSF confirms pneumococcus; stop if other organism."
     },
     "sources": [
-      {"label": "Therapeutic Guidelines: Antibiotic - Meningitis", "url": "https://tgldcdp.tg.org.au/"},
-      {"label": "CDNA SoNG - Invasive meningococcal disease", "url": "https://www.health.gov.au/cdna-songs"}
+      {
+        "label": "Therapeutic Guidelines: Antibiotic - Meningitis",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "CDNA SoNG - Invasive meningococcal disease",
+        "url": "https://www.health.gov.au/cdna-songs"
+      }
     ],
-    "reference_ranges": ["fbc", "uec", "crp"],
+    "reference_ranges": [
+      "fbc",
+      "uec",
+      "crp"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -468,7 +1096,10 @@
     "subtopic_detail": "Lumbar puncture - imaging first criteria",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["meningitis", "LP"],
+    "tags": [
+      "meningitis",
+      "LP"
+    ],
     "stem": "A 54-year-old man presents to a tertiary emergency department with fever, headache, neck stiffness and a single focal seizure 1 hour ago. GCS is 12. He has a known history of HIV with CD4 count 180. There are no focal motor signs but he is post-ictal.",
     "data_table": {
       "Vital signs": "HR 110, BP 138/82, SpO2 97% room air, T 38.9 C.",
@@ -477,11 +1108,51 @@
     },
     "lead_in": "Which is the single most appropriate sequence of immediate steps?",
     "options": [
-      {"letter": "A", "text": "Blood cultures, empirical antibiotics and dexamethasone, then CT brain before lumbar puncture", "correct": true, "rationale": "Indications for CT before LP include immunocompromise, history of CNS disease, recent seizure, papilloedema, focal neurological signs, or reduced GCS. He has three (immunocompromise, seizure, reduced GCS). Empirical antibiotics and dexamethasone must precede imaging so therapy is not delayed (eTG Antibiotic).", "source_refs": ["eTG Antibiotic"]},
-      {"letter": "B", "text": "Immediate lumbar puncture without imaging", "correct": false, "rationale": "LP without imaging in this profile risks cerebral herniation if there is mass effect; imaging-first criteria apply (eTG Antibiotic).", "source_refs": ["eTG Antibiotic"]},
-      {"letter": "C", "text": "CT brain first, then antibiotics only if CT clear", "correct": false, "rationale": "Withholding antibiotics until after imaging delays therapy and worsens outcomes; antibiotics go in immediately after blood cultures, regardless of imaging plan (eTG Antibiotic).", "source_refs": ["eTG Antibiotic"]},
-      {"letter": "D", "text": "Magnetic resonance imaging brain first, then lumbar puncture", "correct": false, "rationale": "MRI is slower and unnecessary for the immediate question of mass effect; non-contrast CT is the screening tool for safe LP (eTG Antibiotic).", "source_refs": ["eTG Antibiotic"]},
-      {"letter": "E", "text": "Treat empirically and avoid lumbar puncture entirely", "correct": false, "rationale": "CSF identifies organism and tailors therapy duration; LP should be performed once imaging excludes mass effect, ideally within 24 hours (eTG Antibiotic).", "source_refs": ["eTG Antibiotic"]}
+      {
+        "letter": "A",
+        "text": "Blood cultures, empirical antibiotics and dexamethasone, then CT brain before lumbar puncture",
+        "correct": true,
+        "rationale": "Indications for CT before LP include immunocompromise, history of CNS disease, recent seizure, papilloedema, focal neurological signs, or reduced GCS. He has three (immunocompromise, seizure, reduced GCS). Empirical antibiotics and dexamethasone must precede imaging so therapy is not delayed (eTG Antibiotic).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Immediate lumbar puncture without imaging",
+        "correct": false,
+        "rationale": "LP without imaging in this profile risks cerebral herniation if there is mass effect; imaging-first criteria apply (eTG Antibiotic).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "CT brain first, then antibiotics only if CT clear",
+        "correct": false,
+        "rationale": "Withholding antibiotics until after imaging delays therapy and worsens outcomes; antibiotics go in immediately after blood cultures, regardless of imaging plan (eTG Antibiotic).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Magnetic resonance imaging brain first, then lumbar puncture",
+        "correct": false,
+        "rationale": "MRI is slower and unnecessary for the immediate question of mass effect; non-contrast CT is the screening tool for safe LP (eTG Antibiotic).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Treat empirically and avoid lumbar puncture entirely",
+        "correct": false,
+        "rationale": "CSF identifies organism and tailors therapy duration; LP should be performed once imaging excludes mass effect, ideally within 24 hours (eTG Antibiotic).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Criteria for CT before LP in suspected bacterial meningitis: immunocompromise, history of CNS disease, recent seizure, papilloedema, focal neurology, or reduced GCS. Antibiotics and dexamethasone must not be delayed for imaging.",
@@ -494,10 +1165,20 @@
       "pearls": "Paired CSF and serum glucose; CSF:serum glucose ratio <0.4 is more specific for bacterial than absolute CSF glucose."
     },
     "sources": [
-      {"label": "Therapeutic Guidelines: Antibiotic - Meningitis", "url": "https://tgldcdp.tg.org.au/"},
-      {"label": "Hasbun et al, IDSA practice guideline (Australian alignment via eTG)", "url": "https://tgldcdp.tg.org.au/"}
+      {
+        "label": "Therapeutic Guidelines: Antibiotic - Meningitis",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "Hasbun et al, IDSA practice guideline (Australian alignment via eTG)",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["fbc", "uec", "bsl"],
+    "reference_ranges": [
+      "fbc",
+      "uec",
+      "bsl"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -507,7 +1188,10 @@
     "subtopic_detail": "Dexamethasone timing and duration",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["meningitis", "steroids"],
+    "tags": [
+      "meningitis",
+      "steroids"
+    ],
     "stem": "A 42-year-old man with suspected bacterial meningitis has received blood cultures and is about to be given his first dose of intravenous ceftriaxone. The registrar asks about dexamethasone timing.",
     "data_table": {
       "Vital signs": "HR 110, BP 124/72, T 39.0 C, GCS 14.",
@@ -515,11 +1199,51 @@
     },
     "lead_in": "Which is the single most appropriate plan for dexamethasone?",
     "options": [
-      {"letter": "A", "text": "Dexamethasone 10 mg intravenous with or just before the first antibiotic dose, continued 6-hourly for 4 days only if CSF confirms pneumococcus", "correct": true, "rationale": "Dexamethasone reduces mortality and neurological sequelae in pneumococcal meningitis when given with or before the first antibiotic dose. Continue for 4 days if pneumococcus is confirmed; stop if another organism or no CSF growth (eTG Antibiotic).", "source_refs": ["eTG Antibiotic"]},
-      {"letter": "B", "text": "Dexamethasone 10 mg intravenous after the first antibiotic dose, continued for 10 days regardless of organism", "correct": false, "rationale": "Late steroid administration (after antibiotic) loses the protective effect against TNF release from bacterial lysis. Duration of 10 days exceeds evidence (eTG Antibiotic).", "source_refs": ["eTG Antibiotic"]},
-      {"letter": "C", "text": "Dexamethasone only after CSF Gram stain confirms organism", "correct": false, "rationale": "Awaiting Gram stain delays steroid past the antibiotic and forfeits benefit; give empirically and de-escalate if non-pneumococcal (eTG Antibiotic).", "source_refs": ["eTG Antibiotic"]},
-      {"letter": "D", "text": "Hydrocortisone 100 mg intravenous 6-hourly", "correct": false, "rationale": "Hydrocortisone has been studied in septic shock not meningitis; dexamethasone is the evidence-based steroid in bacterial meningitis (eTG Antibiotic).", "source_refs": ["eTG Antibiotic"]},
-      {"letter": "E", "text": "No steroids - steroid use is not part of bacterial meningitis management", "correct": false, "rationale": "Adjunctive dexamethasone is part of the recommended bundle for adult community-acquired bacterial meningitis (eTG Antibiotic; de Gans NEJM 2002).", "source_refs": ["eTG Antibiotic"]}
+      {
+        "letter": "A",
+        "text": "Dexamethasone 10 mg intravenous with or just before the first antibiotic dose, continued 6-hourly for 4 days only if CSF confirms pneumococcus",
+        "correct": true,
+        "rationale": "Dexamethasone reduces mortality and neurological sequelae in pneumococcal meningitis when given with or before the first antibiotic dose. Continue for 4 days if pneumococcus is confirmed; stop if another organism or no CSF growth (eTG Antibiotic).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Dexamethasone 10 mg intravenous after the first antibiotic dose, continued for 10 days regardless of organism",
+        "correct": false,
+        "rationale": "Late steroid administration (after antibiotic) loses the protective effect against TNF release from bacterial lysis. Duration of 10 days exceeds evidence (eTG Antibiotic).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Dexamethasone only after CSF Gram stain confirms organism",
+        "correct": false,
+        "rationale": "Awaiting Gram stain delays steroid past the antibiotic and forfeits benefit; give empirically and de-escalate if non-pneumococcal (eTG Antibiotic).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Hydrocortisone 100 mg intravenous 6-hourly",
+        "correct": false,
+        "rationale": "Hydrocortisone has been studied in septic shock not meningitis; dexamethasone is the evidence-based steroid in bacterial meningitis (eTG Antibiotic).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "No steroids - steroid use is not part of bacterial meningitis management",
+        "correct": false,
+        "rationale": "Adjunctive dexamethasone is part of the recommended bundle for adult community-acquired bacterial meningitis (eTG Antibiotic; de Gans NEJM 2002).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Adjunctive dexamethasone in adult bacterial meningitis reduces mortality and hearing loss specifically in pneumococcal disease. Timing matters: must be with or before the first antibiotic to blunt the cytokine surge from bacterial lysis.",
@@ -532,10 +1256,19 @@
       "pearls": "The cytokine-surge logic means steroid given hours after antibiotic provides no benefit; treat the timing as a hard cutoff."
     },
     "sources": [
-      {"label": "Therapeutic Guidelines: Antibiotic - Meningitis", "url": "https://tgldcdp.tg.org.au/"},
-      {"label": "de Gans, NEJM 2002 - Dexamethasone in adult meningitis", "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa021334"}
+      {
+        "label": "Therapeutic Guidelines: Antibiotic - Meningitis",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "de Gans, NEJM 2002 - Dexamethasone in adult meningitis",
+        "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa021334"
+      }
     ],
-    "reference_ranges": ["fbc", "uec"],
+    "reference_ranges": [
+      "fbc",
+      "uec"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -545,7 +1278,10 @@
     "subtopic_detail": "Secondary prevention - antiplatelet vs anticoagulation",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["stroke", "secondary prevention"],
+    "tags": [
+      "stroke",
+      "secondary prevention"
+    ],
     "stem": "A 74-year-old woman is admitted with a left middle cerebral artery territory ischaemic stroke. Echocardiogram and 72-hour cardiac monitor reveal paroxysmal atrial fibrillation. She has hypertension and previous transient ischaemic attack. Her CHA2DS2-VASc is 6. HAS-BLED is 2. She has no contraindication to anticoagulation. The stroke is moderate sized on MRI without haemorrhagic transformation.",
     "data_table": {
       "Vital signs": "BP 138/78, HR 76 (in sinus rhythm now).",
@@ -554,11 +1290,52 @@
     },
     "lead_in": "Which is the single most appropriate timing to start anticoagulation?",
     "options": [
-      {"letter": "A", "text": "Apixaban 5 mg twice daily commenced on day 6 to 8 after stroke onset", "correct": true, "rationale": "The 1-3-6-12 day rule guides DOAC initiation post-stroke based on infarct size: 1 day for TIA, 3 days for small, 6 days for moderate, 12 days for large or haemorrhagic. Moderate stroke without haemorrhagic transformation supports day 6 to 8 initiation. Apixaban is preferred in elderly with renal-friendly profile (Stroke Foundation Living Guidelines 2022; eTG Cardiovascular).", "source_refs": ["Stroke Foundation Living Guidelines 2022", "eTG Cardiovascular"]},
-      {"letter": "B", "text": "Aspirin 100 mg daily plus clopidogrel 75 mg daily long-term", "correct": false, "rationale": "Dual antiplatelet for AF-related stroke is inferior to anticoagulation and causes higher bleeding (ACTIVE-A; Stroke Foundation Living Guidelines 2022). DAPT is for non-cardioembolic minor stroke/TIA short-term only.", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "C", "text": "Warfarin commenced immediately on day 1", "correct": false, "rationale": "Immediate anticoagulation in moderate or large infarct increases haemorrhagic conversion; staged initiation per infarct size is recommended. DOACs are preferred over warfarin in non-valvular AF (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "D", "text": "Aspirin 100 mg daily alone", "correct": false, "rationale": "Aspirin alone for AF stroke prevention is inferior to anticoagulation and is reserved for true anticoagulation contraindications (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "E", "text": "Anticoagulation deferred until 6 weeks post-stroke", "correct": false, "rationale": "A 6-week delay leaves the patient unprotected during the highest-risk recurrence window; the 1-3-6-12 day rule is the AU pathway (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]}
+      {
+        "letter": "A",
+        "text": "Apixaban 5 mg twice daily commenced on day 6 to 8 after stroke onset",
+        "correct": true,
+        "rationale": "The 1-3-6-12 day rule guides DOAC initiation post-stroke based on infarct size: 1 day for TIA, 3 days for small, 6 days for moderate, 12 days for large or haemorrhagic. Moderate stroke without haemorrhagic transformation supports day 6 to 8 initiation. Apixaban is preferred in elderly with renal-friendly profile (Stroke Foundation Living Guidelines 2022; eTG Cardiovascular).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022",
+          "eTG Cardiovascular"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Aspirin 100 mg daily plus clopidogrel 75 mg daily long-term",
+        "correct": false,
+        "rationale": "Dual antiplatelet for AF-related stroke is inferior to anticoagulation and causes higher bleeding (ACTIVE-A; Stroke Foundation Living Guidelines 2022). DAPT is for non-cardioembolic minor stroke/TIA short-term only.",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Warfarin commenced immediately on day 1",
+        "correct": false,
+        "rationale": "Immediate anticoagulation in moderate or large infarct increases haemorrhagic conversion; staged initiation per infarct size is recommended. DOACs are preferred over warfarin in non-valvular AF (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Aspirin 100 mg daily alone",
+        "correct": false,
+        "rationale": "Aspirin alone for AF stroke prevention is inferior to anticoagulation and is reserved for true anticoagulation contraindications (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Anticoagulation deferred until 6 weeks post-stroke",
+        "correct": false,
+        "rationale": "A 6-week delay leaves the patient unprotected during the highest-risk recurrence window; the 1-3-6-12 day rule is the AU pathway (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Anticoagulation timing after AF-related ischaemic stroke follows the 1-3-6-12 day rule based on infarct size. DOACs are first-line over warfarin in non-valvular AF. Bridging with aspirin is reasonable during the delay window.",
@@ -571,10 +1348,19 @@
       "pearls": "ELAN trial (2023) supports earlier DOAC start than the 1-3-6-12 rule for some patients; guidelines updating gradually."
     },
     "sources": [
-      {"label": "Stroke Foundation Living Guidelines 2022", "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"},
-      {"label": "Therapeutic Guidelines: Cardiovascular - AF anticoagulation", "url": "https://tgldcdp.tg.org.au/"}
+      {
+        "label": "Stroke Foundation Living Guidelines 2022",
+        "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"
+      },
+      {
+        "label": "Therapeutic Guidelines: Cardiovascular - AF anticoagulation",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
-    "reference_ranges": ["uec", "fbc"],
+    "reference_ranges": [
+      "uec",
+      "fbc"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -584,7 +1370,9 @@
     "subtopic_detail": "TIA - ABCD2 risk and urgency",
     "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["TIA"],
+    "tags": [
+      "TIA"
+    ],
     "stem": "A 68-year-old man presents to his general practitioner having had a 45-minute episode of right arm weakness and word-finding difficulty that resolved 3 hours ago. He has hypertension and type 2 diabetes mellitus. Blood pressure today is 162/94 and he is in sinus rhythm. Examination is now normal.",
     "data_table": {
       "Vital signs": "HR 78, BP 162/94, BSL 9.2 mmol/L.",
@@ -593,11 +1381,51 @@
     },
     "lead_in": "Which is the single most appropriate immediate management plan?",
     "options": [
-      {"letter": "A", "text": "Same-day specialist stroke clinic or emergency department referral for imaging and carotid assessment", "correct": true, "rationale": "ABCD2 >=4 indicates high short-term recurrent stroke risk and warrants same-day urgent assessment with brain imaging and carotid imaging. Even at lower ABCD2 scores, all suspected TIA warrants urgent assessment per Stroke Foundation. Carotid endarterectomy if symptomatic stenosis >=50% provides the largest benefit within 2 weeks (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "B", "text": "Outpatient referral within 4 weeks", "correct": false, "rationale": "Delay risks early recurrent stroke, peak risk within 48 hours of TIA. Same-day assessment is the pathway (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "C", "text": "Aspirin 100 mg and review in 7 days", "correct": false, "rationale": "Aspirin alone underplays the urgency; dual antiplatelet (aspirin + clopidogrel) for 21 days is now standard for high-risk TIA, but requires same-day imaging to exclude haemorrhagic stroke first (Stroke Foundation Living Guidelines 2022; CHANCE/POINT).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "D", "text": "Increase antihypertensive and review in 2 weeks", "correct": false, "rationale": "BP optimisation is part of secondary prevention but is not the immediate priority over imaging and antiplatelet initiation (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "E", "text": "Reassurance as the episode has resolved", "correct": false, "rationale": "Resolved TIA carries 5 to 10% risk of stroke within 1 week; reassurance without workup is the classic anti-pattern (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]}
+      {
+        "letter": "A",
+        "text": "Same-day specialist stroke clinic or emergency department referral for imaging and carotid assessment",
+        "correct": true,
+        "rationale": "ABCD2 >=4 indicates high short-term recurrent stroke risk and warrants same-day urgent assessment with brain imaging and carotid imaging. Even at lower ABCD2 scores, all suspected TIA warrants urgent assessment per Stroke Foundation. Carotid endarterectomy if symptomatic stenosis >=50% provides the largest benefit within 2 weeks (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Outpatient referral within 4 weeks",
+        "correct": false,
+        "rationale": "Delay risks early recurrent stroke, peak risk within 48 hours of TIA. Same-day assessment is the pathway (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Aspirin 100 mg and review in 7 days",
+        "correct": false,
+        "rationale": "Aspirin alone underplays the urgency; dual antiplatelet (aspirin + clopidogrel) for 21 days is now standard for high-risk TIA, but requires same-day imaging to exclude haemorrhagic stroke first (Stroke Foundation Living Guidelines 2022; CHANCE/POINT).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Increase antihypertensive and review in 2 weeks",
+        "correct": false,
+        "rationale": "BP optimisation is part of secondary prevention but is not the immediate priority over imaging and antiplatelet initiation (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Reassurance as the episode has resolved",
+        "correct": false,
+        "rationale": "Resolved TIA carries 5 to 10% risk of stroke within 1 week; reassurance without workup is the classic anti-pattern (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      }
     ],
     "explanation": {
       "summary": "TIA is a medical emergency. ABCD2 score helps risk-stratify but all TIA warrants urgent (same-day or within 24 hours) assessment with imaging, carotid evaluation, and initiation of dual antiplatelet therapy for high-risk TIA or minor stroke.",
@@ -610,10 +1438,20 @@
       "pearls": "Highest stroke risk is in the first 48 hours; ABCD2 has been criticised as imperfect but the urgency message stands."
     },
     "sources": [
-      {"label": "Stroke Foundation Living Guidelines 2022", "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"},
-      {"label": "CHANCE/POINT trials (dual antiplatelet)", "url": "https://www.nejm.org/"}
+      {
+        "label": "Stroke Foundation Living Guidelines 2022",
+        "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"
+      },
+      {
+        "label": "CHANCE/POINT trials (dual antiplatelet)",
+        "url": "https://www.nejm.org/"
+      }
     ],
-    "reference_ranges": ["uec", "bsl", "lipids"],
+    "reference_ranges": [
+      "uec",
+      "bsl",
+      "lipids"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -623,7 +1461,9 @@
     "subtopic_detail": "Intracerebral haemorrhage - blood pressure target",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["ICH"],
+    "tags": [
+      "ICH"
+    ],
     "stem": "A 62-year-old man presents 2 hours after sudden severe headache, vomiting, and left hemiparesis. Non-contrast CT brain shows a 12 mL right basal ganglia haemorrhage without intraventricular extension. He takes amlodipine for hypertension. He is on no antiplatelet or anticoagulant. Glasgow Coma Scale is 13.",
     "data_table": {
       "Vital signs": "HR 84, BP 198/112, SpO2 98% room air.",
@@ -632,11 +1472,52 @@
     },
     "lead_in": "Which is the single most appropriate blood pressure target and timeframe?",
     "options": [
-      {"letter": "A", "text": "Systolic blood pressure 140 mmHg within 1 hour using titrated intravenous antihypertensive", "correct": true, "rationale": "INTERACT-2 and ATACH-II support intensive lowering to SBP <140 mmHg in acute spontaneous intracerebral haemorrhage within 6 hours of onset, reducing haematoma expansion. Use titrated IV agents (labetalol, GTN, clevidipine where available). Stroke Foundation endorses this target (Stroke Foundation Living Guidelines 2022; INTERACT-2).", "source_refs": ["Stroke Foundation Living Guidelines 2022", "INTERACT-2"]},
-      {"letter": "B", "text": "Permissive hypertension - no antihypertensive treatment", "correct": false, "rationale": "Permissive hypertension applies to acute ischaemic stroke outside the lysis pathway; for spontaneous ICH the evidence supports active lowering to SBP <140 (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "C", "text": "Systolic blood pressure <100 mmHg within 1 hour", "correct": false, "rationale": "Over-aggressive reduction risks cerebral hypoperfusion in the perihaematomal penumbra; the validated target is 140 not 100 (Stroke Foundation Living Guidelines 2022).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]},
-      {"letter": "D", "text": "Sublingual nifedipine 10 mg", "correct": false, "rationale": "Sublingual nifedipine produces unpredictable hypotension and is contraindicated in acute stroke (eTG Cardiovascular).", "source_refs": ["eTG Cardiovascular"]},
-      {"letter": "E", "text": "Lower over the next 24 hours to <160 mmHg", "correct": false, "rationale": "Slow lowering misses the haematoma-expansion window which is greatest in the first 6 hours; the 1-hour target is the validated approach (Stroke Foundation Living Guidelines 2022; INTERACT-2).", "source_refs": ["Stroke Foundation Living Guidelines 2022"]}
+      {
+        "letter": "A",
+        "text": "Systolic blood pressure 140 mmHg within 1 hour using titrated intravenous antihypertensive",
+        "correct": true,
+        "rationale": "INTERACT-2 and ATACH-II support intensive lowering to SBP <140 mmHg in acute spontaneous intracerebral haemorrhage within 6 hours of onset, reducing haematoma expansion. Use titrated IV agents (labetalol, GTN, clevidipine where available). Stroke Foundation endorses this target (Stroke Foundation Living Guidelines 2022; INTERACT-2).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022",
+          "INTERACT-2"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Permissive hypertension - no antihypertensive treatment",
+        "correct": false,
+        "rationale": "Permissive hypertension applies to acute ischaemic stroke outside the lysis pathway; for spontaneous ICH the evidence supports active lowering to SBP <140 (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Systolic blood pressure <100 mmHg within 1 hour",
+        "correct": false,
+        "rationale": "Over-aggressive reduction risks cerebral hypoperfusion in the perihaematomal penumbra; the validated target is 140 not 100 (Stroke Foundation Living Guidelines 2022).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Sublingual nifedipine 10 mg",
+        "correct": false,
+        "rationale": "Sublingual nifedipine produces unpredictable hypotension and is contraindicated in acute stroke (eTG Cardiovascular).",
+        "source_refs": [
+          "eTG Cardiovascular"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Lower over the next 24 hours to <160 mmHg",
+        "correct": false,
+        "rationale": "Slow lowering misses the haematoma-expansion window which is greatest in the first 6 hours; the 1-hour target is the validated approach (Stroke Foundation Living Guidelines 2022; INTERACT-2).",
+        "source_refs": [
+          "Stroke Foundation Living Guidelines 2022"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Acute spontaneous intracerebral haemorrhage benefits from intensive blood pressure lowering to SBP <140 mmHg within 1 hour, reducing haematoma expansion and improving functional outcome. Use titrated IV agents (labetalol, GTN); avoid sublingual nifedipine and over-aggressive reductions.",
@@ -649,10 +1530,19 @@
       "pearls": "INTERACT-2 was the practice-changing trial; ATACH-II tested lower targets without added benefit and signal of harm."
     },
     "sources": [
-      {"label": "Stroke Foundation Living Guidelines 2022", "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"},
-      {"label": "INTERACT-2 trial (Anderson et al, NEJM 2013)", "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa1214609"}
+      {
+        "label": "Stroke Foundation Living Guidelines 2022",
+        "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"
+      },
+      {
+        "label": "INTERACT-2 trial (Anderson et al, NEJM 2013)",
+        "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa1214609"
+      }
     ],
-    "reference_ranges": ["coag", "uec"],
+    "reference_ranges": [
+      "coag",
+      "uec"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -662,7 +1552,10 @@
     "subtopic_detail": "First seizure - admission vs discharge",
     "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["seizure", "first seizure"],
+    "tags": [
+      "seizure",
+      "first seizure"
+    ],
     "stem": "A 26-year-old man presents to a metropolitan emergency department after a witnessed first generalised tonic-clonic seizure lasting 90 seconds. He bit his tongue and was post-ictal for 20 minutes. He has fully recovered. He drinks 4 standard drinks on Fridays and Saturdays. No illicit drug use. He works as a courier driver. Examination, electrolytes, glucose and ECG are normal. Non-contrast CT brain is normal.",
     "data_table": {
       "Vital signs": "HR 78, BP 124/72, T 36.8 C, BSL 5.4 mmol/L.",
@@ -671,11 +1564,52 @@
     },
     "lead_in": "Which is the single most appropriate next step?",
     "options": [
-      {"letter": "A", "text": "Discharge with outpatient MRI brain and electroencephalogram (EEG), neurology follow-up within 4 weeks, no antiepileptic started, and advise non-driving per Austroads", "correct": true, "rationale": "After a first unprovoked seizure with normal examination, electrolytes and CT, the standard pathway is outpatient MRI and EEG to risk-stratify recurrence; antiepileptic medication is started only if recurrence risk is high (focal abnormality, epileptiform EEG) or after a second seizure. Austroads requires 6 months non-driving for private licence after first unprovoked seizure, 5 years for commercial (eTG Neurology; Austroads Assessing Fitness to Drive 2022).", "source_refs": ["eTG Neurology", "Austroads"]},
-      {"letter": "B", "text": "Start sodium valproate 500 mg twice daily and discharge", "correct": false, "rationale": "After a single unprovoked seizure with normal initial workup, antiepileptics are not routinely started; recurrence risk informs the decision (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "C", "text": "Admit for 48 hour video EEG", "correct": false, "rationale": "Inpatient video EEG is reserved for diagnostic uncertainty between epilepsy and non-epileptic events or for seizure characterisation in established epilepsy, not routine first-seizure workup (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "D", "text": "Discharge with no follow-up if examination remains normal", "correct": false, "rationale": "Failure to arrange neurology follow-up and imaging risks missing structural lesion and leaves driving advice and recurrence prevention unaddressed (eTG Neurology; Austroads).", "source_refs": ["Austroads"]},
-      {"letter": "E", "text": "Lumbar puncture for cerebrospinal fluid analysis", "correct": false, "rationale": "LP is indicated only when meningitis, encephalitis, or subarachnoid haemorrhage are clinically suggested; afebrile, alert, fully recovered patient does not need LP (eTG Antibiotic).", "source_refs": ["eTG Antibiotic"]}
+      {
+        "letter": "A",
+        "text": "Discharge with outpatient MRI brain and electroencephalogram (EEG), neurology follow-up within 4 weeks, no antiepileptic started, and advise non-driving per Austroads",
+        "correct": true,
+        "rationale": "After a first unprovoked seizure with normal examination, electrolytes and CT, the standard pathway is outpatient MRI and EEG to risk-stratify recurrence; antiepileptic medication is started only if recurrence risk is high (focal abnormality, epileptiform EEG) or after a second seizure. Austroads requires 6 months non-driving for private licence after first unprovoked seizure, 5 years for commercial (eTG Neurology; Austroads Assessing Fitness to Drive 2022).",
+        "source_refs": [
+          "eTG Neurology",
+          "Austroads"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Start sodium valproate 500 mg twice daily and discharge",
+        "correct": false,
+        "rationale": "After a single unprovoked seizure with normal initial workup, antiepileptics are not routinely started; recurrence risk informs the decision (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Admit for 48 hour video EEG",
+        "correct": false,
+        "rationale": "Inpatient video EEG is reserved for diagnostic uncertainty between epilepsy and non-epileptic events or for seizure characterisation in established epilepsy, not routine first-seizure workup (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Discharge with no follow-up if examination remains normal",
+        "correct": false,
+        "rationale": "Failure to arrange neurology follow-up and imaging risks missing structural lesion and leaves driving advice and recurrence prevention unaddressed (eTG Neurology; Austroads).",
+        "source_refs": [
+          "Austroads"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Lumbar puncture for cerebrospinal fluid analysis",
+        "correct": false,
+        "rationale": "LP is indicated only when meningitis, encephalitis, or subarachnoid haemorrhage are clinically suggested; afebrile, alert, fully recovered patient does not need LP (eTG Antibiotic).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      }
     ],
     "explanation": {
       "summary": "After a first unprovoked seizure, outpatient MRI brain and EEG inform recurrence risk and the decision to start antiepileptic. Provoked seizures (electrolyte derangement, withdrawal, fever) need treatment of the cause, not antiepileptic. Driving restrictions follow Austroads Assessing Fitness to Drive.",
@@ -688,10 +1622,19 @@
       "pearls": "Mandatory reporting to driver licensing is the doctor's role in some jurisdictions; in NSW driver self-reports but doctor may notify if non-compliance puts public at risk (Austroads)."
     },
     "sources": [
-      {"label": "Therapeutic Guidelines: Neurology - Seizures", "url": "https://tgldcdp.tg.org.au/"},
-      {"label": "Austroads Assessing Fitness to Drive 2022", "url": "https://austroads.com.au/publications/assessing-fitness-to-drive"}
+      {
+        "label": "Therapeutic Guidelines: Neurology - Seizures",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "Austroads Assessing Fitness to Drive 2022",
+        "url": "https://austroads.com.au/publications/assessing-fitness-to-drive"
+      }
     ],
-    "reference_ranges": ["uec", "bsl"],
+    "reference_ranges": [
+      "uec",
+      "bsl"
+    ],
     "created": "2026-05-25"
   },
   {
@@ -701,7 +1644,10 @@
     "subtopic_detail": "Meningococcal disease - contact prophylaxis",
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["meningococcal", "public health"],
+    "tags": [
+      "meningococcal",
+      "public health"
+    ],
     "stem": "A 19-year-old university student is admitted with confirmed invasive meningococcal disease (CSF and blood cultures positive for Neisseria meningitidis serogroup B). She lives in shared university accommodation with 4 housemates and attended a 5-hour party 2 days before admission with 12 other people. She is on appropriate antibiotics.",
     "data_table": {
       "Background": "Confirmed IMD serogroup B.",
@@ -709,11 +1655,52 @@
     },
     "lead_in": "Which is the single most appropriate public health response for close contacts?",
     "options": [
-      {"letter": "A", "text": "Notify public health unit; offer ciprofloxacin 500 mg orally single dose (or rifampicin) to household and prolonged close contacts; arrange meningococcal B vaccination via public health", "correct": true, "rationale": "Invasive meningococcal disease is a notifiable disease in all Australian jurisdictions. Public health coordinates contact tracing and chemoprophylaxis (ciprofloxacin 500 mg orally single dose first-line; rifampicin or ceftriaxone alternatives) for household and prolonged close contacts within the previous 7 days. Vaccination of contacts is recommended for serogroup-specific exposure where vaccine is available (CDNA SoNG Meningococcal Disease).", "source_refs": ["CDNA SoNG Meningococcal Disease", "eTG Antibiotic"]},
-      {"letter": "B", "text": "Treat the index case only; contacts only need treatment if they develop symptoms", "correct": false, "rationale": "Chemoprophylaxis for close contacts within 7 days of index case onset reduces secondary cases; delaying until symptoms develop misses the prophylaxis window (CDNA SoNG).", "source_refs": ["CDNA SoNG Meningococcal Disease"]},
-      {"letter": "C", "text": "Offer benzathine penicillin intramuscular to all contacts", "correct": false, "rationale": "Benzathine penicillin is not used for meningococcal prophylaxis; ciprofloxacin oral single dose is the AU first-line agent (eTG Antibiotic; CDNA SoNG).", "source_refs": ["eTG Antibiotic"]},
-      {"letter": "D", "text": "Casual contacts (classmates, gym buddies) also require prophylaxis", "correct": false, "rationale": "Prophylaxis is for household, intimate, and prolonged close contacts only (>8 hours in confined space, sharing utensils, kissing). Casual contact does not warrant prophylaxis (CDNA SoNG).", "source_refs": ["CDNA SoNG Meningococcal Disease"]},
-      {"letter": "E", "text": "Defer notification until microbiology confirms serogroup", "correct": false, "rationale": "Notification is on clinical suspicion or initial positive Gram stain/PCR - not after full serogroup characterisation. Delay forfeits prophylaxis window (Public Health Act NSW; CDNA SoNG).", "source_refs": ["CDNA SoNG Meningococcal Disease"]}
+      {
+        "letter": "A",
+        "text": "Notify public health unit; offer ciprofloxacin 500 mg orally single dose (or rifampicin) to household and prolonged close contacts; arrange meningococcal B vaccination via public health",
+        "correct": true,
+        "rationale": "Invasive meningococcal disease is a notifiable disease in all Australian jurisdictions. Public health coordinates contact tracing and chemoprophylaxis (ciprofloxacin 500 mg orally single dose first-line; rifampicin or ceftriaxone alternatives) for household and prolonged close contacts within the previous 7 days. Vaccination of contacts is recommended for serogroup-specific exposure where vaccine is available (CDNA SoNG Meningococcal Disease).",
+        "source_refs": [
+          "CDNA SoNG Meningococcal Disease",
+          "eTG Antibiotic"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Treat the index case only; contacts only need treatment if they develop symptoms",
+        "correct": false,
+        "rationale": "Chemoprophylaxis for close contacts within 7 days of index case onset reduces secondary cases; delaying until symptoms develop misses the prophylaxis window (CDNA SoNG).",
+        "source_refs": [
+          "CDNA SoNG Meningococcal Disease"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Offer benzathine penicillin intramuscular to all contacts",
+        "correct": false,
+        "rationale": "Benzathine penicillin is not used for meningococcal prophylaxis; ciprofloxacin oral single dose is the AU first-line agent (eTG Antibiotic; CDNA SoNG).",
+        "source_refs": [
+          "eTG Antibiotic"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Casual contacts (classmates, gym buddies) also require prophylaxis",
+        "correct": false,
+        "rationale": "Prophylaxis is for household, intimate, and prolonged close contacts only (>8 hours in confined space, sharing utensils, kissing). Casual contact does not warrant prophylaxis (CDNA SoNG).",
+        "source_refs": [
+          "CDNA SoNG Meningococcal Disease"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Defer notification until microbiology confirms serogroup",
+        "correct": false,
+        "rationale": "Notification is on clinical suspicion or initial positive Gram stain/PCR - not after full serogroup characterisation. Delay forfeits prophylaxis window (Public Health Act NSW; CDNA SoNG).",
+        "source_refs": [
+          "CDNA SoNG Meningococcal Disease"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Invasive meningococcal disease is a notifiable urgent public health event. Chemoprophylaxis with single-dose ciprofloxacin for household, intimate, and prolonged close contacts within 7 days of onset reduces secondary cases. Public health coordinates vaccine offer for serogroups with available vaccines (B, ACWY).",
@@ -726,8 +1713,14 @@
       "pearls": "The index patient also needs chemoprophylaxis prior to discharge unless treated with ceftriaxone (which eradicates carriage)."
     },
     "sources": [
-      {"label": "CDNA SoNG - Invasive meningococcal disease", "url": "https://www.health.gov.au/cdna-songs"},
-      {"label": "Therapeutic Guidelines: Antibiotic - Meningococcal prophylaxis", "url": "https://tgldcdp.tg.org.au/"}
+      {
+        "label": "CDNA SoNG - Invasive meningococcal disease",
+        "url": "https://www.health.gov.au/cdna-songs"
+      },
+      {
+        "label": "Therapeutic Guidelines: Antibiotic - Meningococcal prophylaxis",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
     ],
     "reference_ranges": [],
     "created": "2026-05-25"
@@ -739,7 +1732,10 @@
     "subtopic_detail": "Lambert-Eaton vs myasthenia - discriminator",
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["LEMS", "MG"],
+    "tags": [
+      "LEMS",
+      "MG"
+    ],
     "stem": "A 64-year-old man presents with 4 months of progressive proximal lower limb weakness, dry mouth, erectile dysfunction, and difficulty rising from a chair. He has a 50 pack-year smoking history. On examination, knee reflexes are absent at rest but become elicitable after 10 seconds of sustained quadriceps contraction. Strength initially weak but improves with repeated effort. No ptosis, no ocular involvement.",
     "data_table": {
       "Vital signs": "HR 78, BP 128/74, SpO2 97% room air.",
@@ -748,11 +1744,52 @@
     },
     "lead_in": "Which is the single most appropriate next investigation?",
     "options": [
-      {"letter": "A", "text": "Computed tomography (CT) thorax and voltage-gated calcium channel antibody assay", "correct": true, "rationale": "Lambert-Eaton myasthenic syndrome (LEMS) is paraneoplastic in 50 to 60% (most often small cell lung cancer) and identified by post-exercise facilitation, autonomic features, and proximal weakness. Voltage-gated calcium channel (VGCC) antibodies are diagnostic; CT thorax screens for underlying malignancy (eTG Neurology; ANZAN).", "source_refs": ["eTG Neurology", "ANZAN"]},
-      {"letter": "B", "text": "Acetylcholine receptor antibody assay alone", "correct": false, "rationale": "AChR antibodies are for myasthenia gravis (postsynaptic); LEMS is presynaptic. Post-exercise facilitation, autonomic features and absent ocular involvement point to LEMS not MG (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "C", "text": "Lumbar puncture for albuminocytological dissociation", "correct": false, "rationale": "Albuminocytological dissociation is for GBS; this presentation lacks ascending weakness and post-infectious context (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "D", "text": "Magnetic resonance imaging spine", "correct": false, "rationale": "Spinal cord disease would produce a sensory level, bladder/bowel involvement and hyperreflexia; this is a neuromuscular junction picture (eTG Neurology).", "source_refs": ["eTG Neurology"]},
-      {"letter": "E", "text": "Polysomnography", "correct": false, "rationale": "Sleep study does not address proximal weakness with autonomic features and post-exercise facilitation (eTG Neurology).", "source_refs": ["eTG Neurology"]}
+      {
+        "letter": "A",
+        "text": "Computed tomography (CT) thorax and voltage-gated calcium channel antibody assay",
+        "correct": true,
+        "rationale": "Lambert-Eaton myasthenic syndrome (LEMS) is paraneoplastic in 50 to 60% (most often small cell lung cancer) and identified by post-exercise facilitation, autonomic features, and proximal weakness. Voltage-gated calcium channel (VGCC) antibodies are diagnostic; CT thorax screens for underlying malignancy (eTG Neurology; ANZAN).",
+        "source_refs": [
+          "eTG Neurology",
+          "ANZAN"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Acetylcholine receptor antibody assay alone",
+        "correct": false,
+        "rationale": "AChR antibodies are for myasthenia gravis (postsynaptic); LEMS is presynaptic. Post-exercise facilitation, autonomic features and absent ocular involvement point to LEMS not MG (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Lumbar puncture for albuminocytological dissociation",
+        "correct": false,
+        "rationale": "Albuminocytological dissociation is for GBS; this presentation lacks ascending weakness and post-infectious context (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Magnetic resonance imaging spine",
+        "correct": false,
+        "rationale": "Spinal cord disease would produce a sensory level, bladder/bowel involvement and hyperreflexia; this is a neuromuscular junction picture (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Polysomnography",
+        "correct": false,
+        "rationale": "Sleep study does not address proximal weakness with autonomic features and post-exercise facilitation (eTG Neurology).",
+        "source_refs": [
+          "eTG Neurology"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Lambert-Eaton myasthenic syndrome (LEMS) is a presynaptic neuromuscular junction disorder, often paraneoplastic (small cell lung cancer). Distinguishing features from MG: proximal weakness predominates over ocular/bulbar, autonomic features (dry mouth, ED), absent reflexes that facilitate with sustained contraction, and antibodies to voltage-gated calcium channels.",
@@ -765,10 +1802,19 @@
       "pearls": "Post-exercise facilitation (Lambert sign) is the bedside hallmark distinguishing LEMS from MG; reflexes return after 10-15 seconds of sustained contraction."
     },
     "sources": [
-      {"label": "Therapeutic Guidelines: Neurology - LEMS", "url": "https://tgldcdp.tg.org.au/"},
-      {"label": "ANZAN - Neuromuscular junction disorders", "url": "https://www.anzan.org.au/"}
+      {
+        "label": "Therapeutic Guidelines: Neurology - LEMS",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "ANZAN - Neuromuscular junction disorders",
+        "url": "https://www.anzan.org.au/"
+      }
     ],
-    "reference_ranges": ["uec", "fbc"],
+    "reference_ranges": [
+      "uec",
+      "fbc"
+    ],
     "created": "2026-05-25"
   }
 ]

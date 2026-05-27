@@ -59,7 +59,7 @@
         <span>Password</span>
         <input id="cloudSignInPassword" type="password" required autocomplete="current-password" />
       </label>
-      <button class="primary gate-primary" type="submit">Continue</button>
+      <button class="primary gate-primary" type="submit">Sign in</button>
       <p id="cloudSignInErr" class="gate-err" hidden></p>
     </form>
 
@@ -90,12 +90,12 @@
         <input id="gateInput" type="password" autocomplete="off"
                autocorrect="off" autocapitalize="off" spellcheck="false" />
       </label>
-      <button id="gateSubmit" class="primary gate-primary" type="submit">Continue</button>
+      <button id="gateSubmit" class="primary gate-primary" type="submit">Unlock admin</button>
       <p id="gateErr" class="gate-err" hidden>Incorrect password.</p>
     </form>
 
     <footer class="gate-foot" data-hide-in-legacy>
-      <button type="button" id="gateGuestBtn" class="gate-foot-link gate-foot-primary">Continue as guest</button>
+      <button type="button" id="gateGuestBtn" class="gate-foot-link gate-foot-primary">Skip - try without saving</button>
       <span class="gate-foot-sep">·</span>
       <button type="button" class="gate-foot-link" data-gate-switch="legacy">Admin login</button>
       <button type="button" class="gate-foot-link" data-gate-switch="signin" data-gate-back hidden>Back to sign in</button>
@@ -179,7 +179,7 @@
   <section class="prose">
     <p class="greeting" id="homeGreeting" hidden></p>
     <h1 class="display">A to E</h1>
-    <p class="subhead">MCQs designed by JMP students for JMP students. Every claim is verifiable with a freely accessible resource. Please report any issues. <span id="luckPhrase">Good luck.</span></p>
+    <p class="subhead">MCQs by JMP students, for JMP students. Every claim cites a freely accessible source. <span id="luckPhrase">Good luck.</span></p>
 
     <div class="setup">
       <div class="setup-row">
@@ -419,13 +419,11 @@
              into #adminNative; activating this tab shows this block. -->
         <div id="adminAddAuditPane" class="admin-pane" hidden>
           <header class="admin-pane-head">
-            <h2>Add &amp; Audit</h2>
-            <p class="dim">Paste, submit, review the inbox, resolve reports, re-audit live content. All on one pane.</p>
+            <h2>Add &amp; audit</h2>
           </header>
 
           <section class="admin-pane-section">
-            <h3>1. Generation prompt</h3>
-            <p class="dim small">Self-contained prompt - works in any free LLM. Bank state + audit rules + schema embedded at copy time.</p>
+            <h3>Generation prompt</h3>
             <div class="prompt-actions">
               <button id="copyPromptBtn" class="primary">Copy prompt</button>
               <span id="copyPromptStatus" class="dim small"></span>
@@ -435,8 +433,7 @@
           </section>
 
           <section class="admin-pane-section">
-            <h3>2. Paste the JSON</h3>
-            <p class="dim small">Site validates the schema and submits to the bank. Falls back to this browser if the worker is unreachable.</p>
+            <h3>Paste the JSON</h3>
             <textarea id="pasteBox" class="paste-box" placeholder='[ { "id": "paeds-renal-001", "topic": "Paediatrics", ... } ]' spellcheck="false" autocomplete="off"></textarea>
             <div class="prompt-actions">
               <button id="pasteAddBtn" class="primary">Submit to bank</button>
@@ -451,8 +448,7 @@
           </section>
 
           <section class="admin-pane-section">
-            <h3>3. Inbox <span id="auditInboxCount" class="badge"></span></h3>
-            <p class="dim small">Pending batches awaiting an audit pass. Each needs review before being promoted to the per-topic files.</p>
+            <h3>Inbox <span id="auditInboxCount" class="badge"></span></h3>
             <div class="audit-llm-picker">
               <label for="auditLlmSelect">LLM for audit:</label>
               <select id="auditLlmSelect">
@@ -469,8 +465,7 @@
           </section>
 
           <section class="admin-pane-section">
-            <h3>4. Reports <span id="auditReportsCount" class="badge"></span></h3>
-            <p class="dim small">User-submitted issues against specific questions.</p>
+            <h3>Reports <span id="auditReportsCount" class="badge"></span></h3>
             <div class="reports-filters">
               <button class="opt selected" data-rep-filter="open">Open</button>
               <button class="opt" data-rep-filter="all">All</button>
@@ -485,8 +480,7 @@
           </section>
 
           <section class="admin-pane-section">
-            <h3>5. Live content audit <span id="auditLiveCount" class="badge"></span></h3>
-            <p class="dim small">Every batch + main per-topic file in the bank. Re-audit already-promoted content here.</p>
+            <h3>Live audit <span id="auditLiveCount" class="badge"></span></h3>
             <div class="audit-live-filters">
               <button class="opt selected" data-live-filter="all">All</button>
               <button class="opt" data-live-filter="batches">Batches</button>
