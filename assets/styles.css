@@ -1255,8 +1255,7 @@ body[data-screen="summary"] main { max-width: 760px; }
   letter-spacing: 0;
   font-size: 0.78em;
   margin-left: 6px;
-  position: relative;
-  top: -0.18em;
+  vertical-align: baseline;
 }
 
 .prompt-pre {
@@ -1742,15 +1741,9 @@ body:not(.is-admin) .admin-only { display: none !important; }
 /* ── Anki-style term hover (post-reveal only) ────────────────────── */
 .term {
   /* Subtle hint that the term has a definition behind it; the dotted
-   * underline reads as "look me up" without screaming for attention.
-   * Pointer-events disabled when the user turns off the AN button. */
+   * underline reads as "look me up" without screaming for attention. */
   border-bottom: 1px dotted color-mix(in srgb, var(--accent) 55%, transparent);
   cursor: help;
-}
-body.anki-hover-off .term {
-  border-bottom: none;
-  cursor: inherit;
-  pointer-events: none;
 }
 .term-popup {
   position: absolute;
