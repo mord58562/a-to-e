@@ -1,0 +1,192 @@
+[
+  {
+    "id": "p19-001",
+    "topic": "Paediatrics",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "Kawasaki disease",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "IVIG",
+      "infant"
+    ],
+    "stem": "You are the paediatric registrar reviewing a 3 year old girl on day 6 of fever (peak 39.8 degrees C). Her mother reports red eyes without discharge from day 2 and a bright red tongue from day 4. The local doctor started oral amoxicillin yesterday for presumed otitis media but the fever has persisted. She is irritable but consolable. There is no recent overseas travel.",
+    "data_table": {
+      "Vital signs": "T 39.4 degrees C, HR 152, RR 28, SpO2 99% room air, BP 96/58 mmHg",
+      "Examination": "Bilateral non-purulent conjunctival injection; cracked red lips with strawberry tongue; 2 cm right anterior cervical node; polymorphous truncal rash; firm non-pitting oedema of hands and feet",
+      "Investigations": "WCC 18.4 x10^9/L, neutrophils 14.1 x10^9/L, platelets 612 x10^9/L, CRP 168 mg/L, ESR 88 mm/h, ALT 76 U/L, albumin 28 g/L, urinalysis sterile pyuria",
+      "Medications": "Oral amoxicillin 250 mg three times daily (day 2)"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Send blood cultures and start IV flucloxacillin and ceftriaxone for occult bacteraemia",
+        "correct": false,
+        "rationale": "Empirical sepsis cover is appropriate when sepsis is the leading concern, but this child is well-perfused with classical Kawasaki features rather than septic shock markers. Antibiotics do not treat the underlying vasculitis. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Switch to oral cefalexin and review again in 48 hours if fever persists",
+        "correct": false,
+        "rationale": "Persisting fever after first-line oral antibiotics for presumed AOM is not an indication to escalate antibiotics when the clinical picture matches Kawasaki disease. Delaying IVIG beyond day 10 raises coronary aneurysm risk substantially. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Arrange echocardiogram and commence IVIG 2 g/kg with high-dose aspirin",
+        "correct": true,
+        "rationale": "She meets classical Kawasaki disease criteria (fever 5+ days plus 4 of 5 principal features: conjunctivitis, oral changes, peripheral changes, polymorphous rash, cervical lymphadenopathy) with strongly supportive labs. IVIG given within 10 days of fever onset reduces coronary aneurysm risk from approximately 25% to under 5%; baseline echo establishes coronary z-scores before treatment. (Source: RCH CPG: Kawasaki Disease)",
+        "source_refs": [
+          "RCH CPG: Kawasaki Disease"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Discharge home with paracetamol and a written safety net for fever beyond day 8",
+        "correct": false,
+        "rationale": "Discharging a child meeting Kawasaki criteria misses the narrow 10-day IVIG window. Outpatient observation while coronary inflammation progresses risks aneurysm formation that is largely preventable. (Source: RCH CPG: Kawasaki Disease)",
+        "source_refs": [
+          "RCH CPG: Kawasaki Disease"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Perform lumbar puncture and treat empirically for aseptic meningitis pending CSF",
+        "correct": false,
+        "rationale": "Sterile CSF pleocytosis can accompany Kawasaki disease and an LP risks delaying IVIG without changing management. There is no neck stiffness or altered conscious state to mandate LP. (Source: BMJ Best Practice: Kawasaki Disease)",
+        "source_refs": [
+          "BMJ Best Practice: Kawasaki Disease"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Kawasaki disease is a medium-vessel vasculitis of childhood whose principal preventable harm is coronary artery aneurysm. Diagnosis is clinical: fever 5+ days plus 4 of 5 principal features (bilateral non-purulent conjunctivitis, oral mucosal changes, polymorphous rash, peripheral changes, unilateral cervical lymphadenopathy >1.5 cm). IVIG 2 g/kg as a single infusion plus high-dose aspirin within 10 days reduces aneurysm rate from around 25% to under 5%. Baseline echocardiogram is performed at diagnosis and repeated at 2 and 6 weeks.",
+      "key_points": [
+        "Fever 5+ days plus 4 of 5 principal features satisfies classical KD criteria",
+        "IVIG 2 g/kg within 10 days of fever onset is the cornerstone of treatment",
+        "Sterile pyuria, raised CRP/ESR and thrombocytosis after week 1 are supportive lab features",
+        "Coronary artery z-scores are followed serially regardless of treatment timing"
+      ],
+      "pearls": "IVIG 2 g/kg as a single 12 hour infusion plus aspirin 3-5 mg/kg/day commenced within 10 days of fever onset (ideally before day 8) is the target; aspirin is continued at antiplatelet dose for at least 6 weeks or until coronary follow-up is clear."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Kawasaki Disease",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Kawasaki_disease/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "BMJ Best Practice: Kawasaki Disease",
+        "url": "https://bestpractice.bmj.com/topics/en-gb/3000111"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "inflammatory_markers",
+      "paeds_fbc"
+    ],
+    "created": "2026-05-29"
+  },
+  {
+    "id": "p19-002",
+    "topic": "Paediatrics",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "New-onset type 1 diabetes",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "insulin",
+      "DKA"
+    ],
+    "stem": "You are the paediatric registrar reviewing a 9 year old boy brought in by his mother with a 3 week history of polyuria, nocturia twice a night and a 2 kg unintentional weight loss. He is hungry and alert. He has not vomited and is tolerating oral fluids. A finger-prick glucose at the GP this morning was 21.4 mmol/L and the GP gave him oral fluids and referred him directly. He has no significant past history; no family history of diabetes.",
+    "data_table": {
+      "Vital signs": "T 36.7 degrees C, HR 96, RR 18, SpO2 99% room air, BP 110/68 mmHg, weight 28 kg",
+      "Examination": "Mucous membranes mildly dry; capillary refill 2 seconds; chest clear; abdomen soft; no Kussmaul breathing; GCS 15",
+      "Investigations": "Venous pH 7.36, HCO3 19 mmol/L, glucose 22.1 mmol/L, ketones (capillary) 0.8 mmol/L, Na 138, K 4.2, Cr 56 micromol/L, HbA1c 11.4%",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Admit for paediatric diabetes team assessment as the initial action",
+        "correct": true,
+        "rationale": "He has new-onset type 1 diabetes without DKA (pH 7.36, HCO3 19, ketones 0.8, no Kussmaul). Australian paediatric practice admits new-onset type 1 diabetes for initial education, carbohydrate counting and basal-bolus subcutaneous insulin titration rather than starting IV insulin. (Source: APEG/ISPAD Australian Paediatric Diabetes Guidelines)",
+        "source_refs": [
+          "APEG/ISPAD Australian Paediatric Diabetes Guidelines"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Commence IV 0.9% sodium chloride bolus 20 mL/kg as the initial action",
+        "correct": false,
+        "rationale": "Fluid bolus and IV insulin are reserved for DKA (pH <7.3 or HCO3 <15 with ketosis). Giving them when DKA criteria are not met risks cerebral oedema in a child who can be managed subcutaneously. (Source: RCH CPG: Diabetic ketoacidosis)",
+        "source_refs": [
+          "RCH CPG: Diabetic ketoacidosis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Repeat HbA1c in 6 weeks before committing to insulin therapy",
+        "correct": false,
+        "rationale": "Symptomatic hyperglycaemia with HbA1c 11.4% confirms diabetes; waiting risks progression to DKA. Type 1 diabetes in this age group requires insulin from diagnosis. (Source: APEG/ISPAD Australian Paediatric Diabetes Guidelines)",
+        "source_refs": [
+          "APEG/ISPAD Australian Paediatric Diabetes Guidelines"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Start oral metformin 500 mg twice daily and arrange OGTT outpatient",
+        "correct": false,
+        "rationale": "Metformin is first-line for paediatric type 2 diabetes, not new-onset type 1 disease with weight loss and modest ketosis. OGTT adds nothing once random glucose and HbA1c are diagnostic. (Source: APEG/ISPAD Australian Paediatric Diabetes Guidelines)",
+        "source_refs": [
+          "APEG/ISPAD Australian Paediatric Diabetes Guidelines"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Give 0.9% sodium chloride 10 mL/kg as the initial action in this clinical setting",
+        "correct": false,
+        "rationale": "Modest dry mucous membranes do not warrant a bolus when he is haemodynamically stable, alert and tolerating fluids; ongoing ketone monitoring alone delays initiation of definitive insulin therapy. (Source: RCH CPG: Diabetic ketoacidosis)",
+        "source_refs": [
+          "RCH CPG: Diabetic ketoacidosis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Paediatric type 1 diabetes presents with polyuria, polydipsia and weight loss; around 30% of children present in DKA. When DKA criteria are not met (venous pH >=7.3, HCO3 >=15, ketones <3.0, alert, tolerating oral intake), the standard Australian pathway is admission for paediatric endocrine team education and direct initiation of subcutaneous basal-bolus insulin rather than IV insulin. Total daily dose is typically 0.5-1.0 units/kg/day split between long-acting basal and rapid-acting prandial insulin, titrated against blood glucose monitoring and carbohydrate counting.",
+      "key_points": [
+        "Non-DKA new-onset type 1 diabetes is managed with subcutaneous basal-bolus insulin from day 1",
+        "DKA thresholds: pH <7.3 or HCO3 <15 with ketones >=3.0 mmol/L",
+        "Fluid bolus in mild hyperglycaemia without DKA carries cerebral-oedema risk without benefit",
+        "Inpatient stabilisation supports family education, sick-day rules and hypoglycaemia management"
+      ],
+      "pearls": "In a paediatric new-onset T1DM without DKA, typical starting total daily insulin is 0.5-0.75 units/kg/day in children and 0.75-1.0 units/kg/day in adolescents, with ~50% as basal long-acting and 50% split as rapid-acting prandial doses."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Diabetic ketoacidosis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Diabetes_Mellitus/"
+      },
+      {
+        "label": "APEG/ISPAD Australian Paediatric Diabetes Guidelines",
+        "url": "https://www.apeg.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "bsl_paeds",
+      "ketones",
+      "vbg"
+    ],
+    "created": "2026-05-29"
+  }
+]
