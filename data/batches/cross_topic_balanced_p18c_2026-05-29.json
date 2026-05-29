@@ -1,1 +1,402 @@
-PLACEHOLDER_P18C
+[
+  {
+    "id": "ctb-p18c-021",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Third stage of labour",
+    "subtopic_detail": "Retained placenta management",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["retained placenta", "manual removal", "haemorrhage"],
+    "stem": "You are the obstetric registrar reviewing a 29-year-old primigravid woman who delivered a healthy term infant 35 minutes ago after an active third stage with intramuscular oxytocin 10 IU. The placenta has not delivered despite controlled cord traction. Estimated blood loss so far is 400 mL with ongoing trickling. BP is 108/70, HR 96. The uterus is well contracted at the umbilicus. There is no inversion. She is otherwise well, has no penicillin allergy, and an epidural is in situ and functioning.",
+    "data_table": {
+      "Vital signs": "HR 96, BP 108/70, RR 16, SpO2 99%, Temp 36.8",
+      "Examination": "Uterus contracted at umbilicus; ongoing trickling bleeding; no inversion; cord still externally visible; bladder catheter draining 250 mL",
+      "Investigations": "Hb 116 pre-delivery; group and screen valid; FBC and coags pending",
+      "Medications": "Oxytocin 10 IU IM given; epidural in situ"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {"letter": "A", "text": "Transfer to theatre for examination under anaesthesia and manual removal of placenta with broad-spectrum prophylactic antibiotics", "correct": true, "rationale": "Placenta not delivered after 30 minutes of active management with ongoing bleeding is a retained placenta indication for transfer to theatre, manual removal under regional or general anaesthesia, and single-dose IV antibiotic prophylaxis. (Source: RANZCOG PPH Statement 2017)", "source_refs": ["RANZCOG PPH Statement 2017"]},
+      {"letter": "B", "text": "Inject 20 IU of oxytocin into the umbilical vein and wait a further 30 minutes for placental separation while observing for ongoing bleeding", "correct": false, "rationale": "Umbilical vein oxytocin has limited evidence and delays definitive management when ongoing bleeding is occurring; not the recommended Australian practice. (Source: RANZCOG PPH Statement 2017)", "source_refs": ["RANZCOG PPH Statement 2017"]},
+      {"letter": "C", "text": "Continue controlled cord traction with vigorous abdominal fundal pressure to expel the placenta from below over the next several minutes", "correct": false, "rationale": "Vigorous fundal pressure risks uterine inversion and cord avulsion; manual removal under anaesthesia is the safer next step. (Source: RANZCOG PPH Statement 2017)", "source_refs": ["RANZCOG PPH Statement 2017"]},
+      {"letter": "D", "text": "Wait a further 60 minutes for spontaneous placental separation before considering any active intervention or transfer to operating theatre", "correct": false, "rationale": "Further delay with ongoing bleeding risks evolving haemorrhage; intervention is indicated now. (Source: RANZCOG PPH Statement 2017)", "source_refs": ["RANZCOG PPH Statement 2017"]},
+      {"letter": "E", "text": "Administer carboprost 250 mcg intramuscularly as the principal pharmacological intervention for the retained placenta in this stable patient", "correct": false, "rationale": "Carboprost is for uterine atony with PPH, not for retained placenta with a contracted uterus; the indication here is mechanical separation under anaesthesia. (Source: RANZCOG PPH Statement 2017)", "source_refs": ["RANZCOG PPH Statement 2017"]}
+    ],
+    "explanation": {
+      "summary": "Retained placenta is defined as failure of placental delivery within 30 minutes of birth despite active management of the third stage. With ongoing bleeding, transfer to theatre for manual removal under regional or general anaesthesia is the standard Australian practice with single-dose IV broad-spectrum antibiotic prophylaxis. Bladder emptying, IV access, group and crossmatch, and uterotonics post-removal are part of the bundle. Examination of the uterine cavity after removal excludes retained products and accreta spectrum.",
+      "key_points": [
+        "Retained placenta >30 min with bleeding: transfer to theatre",
+        "Manual removal under regional or general anaesthesia",
+        "Single-dose prophylactic IV antibiotic (e.g. ampicillin + metronidazole)",
+        "Inspect uterine cavity after removal for retained tissue and accreta"
+      ],
+      "pearls": "If bleeding is brisk at 30 minutes with the placenta retained, transfer to theatre rather than persisting with cord traction - umbilical vein oxytocin and additional uterotonics do not address the mechanical issue of failed placental separation."
+    },
+    "sources": [
+      {"label": "RANZCOG PPH Statement 2017", "url": "https://ranzcog.edu.au/statements-guidelines"},
+      {"label": "Therapeutic Guidelines: Antibiotic 2019 - Surgical prophylaxis", "url": "https://www.tg.org.au"}
+    ],
+    "reference_ranges": ["fbc"],
+    "created": "2026-05-29"
+  },
+  {
+    "id": "ctb-p18c-022",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Intrapartum emergency",
+    "subtopic_detail": "Shoulder dystocia - HELPERR algorithm",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["shoulder dystocia", "HELPERR", "obstetric emergency"],
+    "stem": "You are the obstetric registrar called urgently to a birth suite. A 33-year-old multiparous woman with gestational diabetes (HbA1c 6.5%) at 40 weeks gestation has just delivered the head of a baby estimated at 4.3 kg at term ultrasound, but the head has retracted against the perineum (turtle sign) and the anterior shoulder is impacted behind the symphysis pubis. Routine downward traction has not resolved the impaction. There is no umbilical cord around the neck.",
+    "data_table": {
+      "Vital signs": "Maternal HR 102, BP 124/78; fetal HR not currently available with delivery in progress",
+      "Examination": "Turtle sign positive; anterior shoulder impacted behind symphysis; perineum intact at this point with no episiotomy",
+      "Investigations": "Group and hold valid; HbA1c 6.5% at booking",
+      "Medications": "Oxytocin infusion as augmentation; epidural in situ"
+    },
+    "lead_in": "Which manoeuvre is the most appropriate FIRST step within the HELPERR algorithm?",
+    "options": [
+      {"letter": "A", "text": "Immediately perform symphysiotomy to disimpact the shoulder as the initial obstetric manoeuvre attempted in this emergency", "correct": false, "rationale": "Symphysiotomy is a last-resort manoeuvre with high maternal morbidity reserved for cases where all other measures fail; it is not first-line. (Source: RANZCOG Shoulder Dystocia Statement 2020)", "source_refs": ["RANZCOG Shoulder Dystocia Statement 2020"]},
+      {"letter": "B", "text": "Cleidotomy (deliberate fracture of the fetal anterior clavicle) as the initial manoeuvre to disimpact the shoulder from below the symphysis", "correct": false, "rationale": "Deliberate cleidotomy is a last-resort manoeuvre with significant fetal morbidity and is reserved for failure of all other steps; not the first manoeuvre. (Source: RANZCOG Shoulder Dystocia Statement 2020)", "source_refs": ["RANZCOG Shoulder Dystocia Statement 2020"]},
+      {"letter": "C", "text": "Apply heavy fundal pressure to expel the baby through the obstructed pelvic outlet as the first step in this dystocic delivery sequence", "correct": false, "rationale": "Fundal pressure is contraindicated in shoulder dystocia because it worsens impaction and increases uterine rupture and brachial plexus injury risk. (Source: RANZCOG Shoulder Dystocia Statement 2020)", "source_refs": ["RANZCOG Shoulder Dystocia Statement 2020"]},
+      {"letter": "D", "text": "Perform internal rotation manoeuvres such as Wood's screw or Rubin as the first step in this established shoulder dystocia in the birth suite", "correct": false, "rationale": "Internal rotation manoeuvres come after McRoberts and suprapubic pressure in the HELPERR sequence; they are step 4-5, not step 1. (Source: RANZCOG Shoulder Dystocia Statement 2020)", "source_refs": ["RANZCOG Shoulder Dystocia Statement 2020"]},
+      {"letter": "E", "text": "Call for help, then hyperflex the maternal hips onto her abdomen (McRoberts) and add suprapubic pressure if shoulder remains impacted", "correct": true, "rationale": "RANZCOG HELPERR sequence opens with Help (call for additional team members), Evaluate for episiotomy, Legs (McRoberts), Pressure (suprapubic) before internal manoeuvres; McRoberts plus suprapubic pressure resolves around 50-60% of cases. (Source: RANZCOG Shoulder Dystocia Statement 2020)", "source_refs": ["RANZCOG Shoulder Dystocia Statement 2020"]}
+    ],
+    "explanation": {
+      "summary": "Shoulder dystocia is a clinical diagnosis when the head delivers but routine traction fails to deliver the anterior shoulder. The RANZCOG-endorsed HELPERR mnemonic is: Help (call), Evaluate for episiotomy, Legs (McRoberts hyperflexion), Pressure (suprapubic, directed away from impacted shoulder), Enter manoeuvres (Rubin, Wood's screw), Remove posterior arm, Roll the patient onto all fours. McRoberts plus suprapubic pressure resolves the majority of cases. Fundal pressure is contraindicated. Cleidotomy and symphysiotomy are last-resort manoeuvres.",
+      "key_points": [
+        "HELPERR: Help, Episiotomy assessment, Legs (McRoberts), Pressure, Enter, Remove arm, Roll",
+        "McRoberts + suprapubic pressure resolves around 50-60%",
+        "Fundal pressure is contraindicated",
+        "Document time intervals between manoeuvres"
+      ],
+      "pearls": "When the head delivers and turtles, call for help and hyperflex maternal hips (McRoberts) within 30 seconds rather than escalating traction or attempting internal rotation first - downward traction force should never exceed routine because brachial plexus injury rises sharply with axial force."
+    },
+    "sources": [
+      {"label": "RANZCOG Shoulder Dystocia Statement 2020", "url": "https://ranzcog.edu.au/statements-guidelines"},
+      {"label": "RCOG Green-top Guideline 42 Shoulder Dystocia 2012", "url": "https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-29"
+  },
+  {
+    "id": "ctb-p18c-023",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Gynaecological oncology",
+    "subtopic_detail": "Endometrial cancer initial workup and staging",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["endometrial cancer", "postmenopausal bleeding", "imaging"],
+    "stem": "A 62-year-old postmenopausal woman is referred to your gynaecology outpatient clinic with three episodes of vaginal bleeding over the past two months. She had menopause at 51 and has been on no hormone therapy. BMI is 34 with a history of type 2 diabetes. Transvaginal ultrasound shows an endometrial thickness of 14 mm with a heterogeneous appearance. Endometrial pipelle biopsy in clinic reveals grade 2 endometrioid adenocarcinoma. She has no symptoms of metastatic disease. Examination is unremarkable apart from cervix appearing normal.",
+    "data_table": {
+      "Vital signs": "HR 78, BP 134/82, BMI 34",
+      "Examination": "Abdomen soft, no masses; cervix normal on speculum; bimanual examination unremarkable",
+      "Investigations": "TVUS endometrial thickness 14 mm, heterogeneous; pipelle biopsy: grade 2 endometrioid adenocarcinoma; CA-125 pending",
+      "Medications": "Metformin 1 g twice daily"
+    },
+    "lead_in": "Which is the most appropriate next imaging investigation for staging?",
+    "options": [
+      {"letter": "A", "text": "Whole-body 18F-fluorodeoxyglucose PET-CT as the principal first-line staging investigation prior to discussion at gynaecology oncology MDM", "correct": false, "rationale": "PET-CT is not first-line staging for endometrial cancer; it is reserved for selected high-risk histology or recurrence assessment. (Source: Cancer Council Australia eviQ Endometrial Cancer 2022)", "source_refs": ["Cancer Council Australia eviQ Endometrial Cancer 2022"]},
+      {"letter": "B", "text": "Pelvic MRI with contrast to assess myometrial invasion and cervical involvement plus CT chest abdomen pelvis for distant disease assessment", "correct": true, "rationale": "Pelvic MRI is the modality of choice for assessing depth of myometrial invasion and cervical stromal involvement, both of which inform surgical planning; CT chest/abdomen/pelvis assesses metastatic disease. (Source: Cancer Council Australia eviQ Endometrial Cancer 2022)", "source_refs": ["Cancer Council Australia eviQ Endometrial Cancer 2022"]},
+      {"letter": "C", "text": "Abdominal ultrasound only as primary imaging with onward referral to the gynaecological oncology multidisciplinary team review meeting", "correct": false, "rationale": "Abdominal ultrasound is inadequate for staging because it cannot assess depth of myometrial invasion, lymph nodes or distant disease. (Source: Cancer Council Australia eviQ Endometrial Cancer 2022)", "source_refs": ["Cancer Council Australia eviQ Endometrial Cancer 2022"]},
+      {"letter": "D", "text": "Hysteroscopy with directed biopsy and dilatation and curettage to confirm histology and grade before any further imaging steps are taken", "correct": false, "rationale": "Histology is already established by pipelle biopsy; hysteroscopy is not required for staging once tissue diagnosis is made and may delay definitive surgical staging. (Source: Cancer Council Australia eviQ Endometrial Cancer 2022)", "source_refs": ["Cancer Council Australia eviQ Endometrial Cancer 2022"]},
+      {"letter": "E", "text": "Plain chest x-ray only to exclude metastatic disease before referral for surgical planning and definitive operative staging procedure", "correct": false, "rationale": "Plain CXR underdetects metastases; CT chest is preferred and combined with MRI pelvis for local staging. (Source: Cancer Council Australia eviQ Endometrial Cancer 2022)", "source_refs": ["Cancer Council Australia eviQ Endometrial Cancer 2022"]}
+    ],
+    "explanation": {
+      "summary": "Endometrial cancer is the most common gynaecological cancer in Australian women. After tissue diagnosis (typically by pipelle biopsy in clinic), staging requires pelvic MRI to assess depth of myometrial invasion and cervical stromal involvement, and CT chest/abdomen/pelvis to assess for metastatic disease. PET-CT is reserved for high-risk histology (serous, clear cell, carcinosarcoma) or recurrence. Definitive treatment is surgical staging (total hysterectomy and bilateral salpingo-oophorectomy, with or without sentinel lymph node biopsy) followed by adjuvant therapy based on FIGO stage and risk group.",
+      "key_points": [
+        "Pipelle biopsy first; MRI pelvis + CT chest/abdomen/pelvis for staging",
+        "MRI assesses myometrial invasion depth and cervical involvement",
+        "PET-CT for high-risk histology or recurrence",
+        "Definitive treatment is surgical staging"
+      ],
+      "pearls": "When endometrial pipelle confirms cancer, request pelvic MRI to assess myometrial invasion depth and CT chest/abdomen/pelvis simultaneously rather than waiting on MDM - this typically saves 7-14 days to definitive surgical planning."
+    },
+    "sources": [
+      {"label": "Cancer Council Australia eviQ Endometrial Cancer 2022", "url": "https://www.eviq.org.au"},
+      {"label": "RANZCOG College Statement: Investigation of postmenopausal bleeding 2020", "url": "https://ranzcog.edu.au/statements-guidelines"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-29"
+  },
+  {
+    "id": "ctb-p18c-024",
+    "topic": "Paediatrics",
+    "subtopic": "Neonatology",
+    "subtopic_detail": "Neonatal jaundice - exchange transfusion threshold",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["neonatal jaundice", "phototherapy", "exchange transfusion"],
+    "stem": "You are the paediatric registrar called by the neonatal nurse about a term baby born at 39+5 weeks gestation, now 60 hours of age. The baby is appropriate weight for age (3.4 kg), exclusively breastfed, and has been admitted to the special care nursery for visible jaundice extending to the legs. The infant is feeding well, alert, with no neurological abnormality. Mother is blood group O Rh positive; baby is group A Rh positive with positive direct Coombs test. Bloods show total serum bilirubin 410 micromol/L, unconjugated 390, conjugated 20, Hb 142 g/L, reticulocytes 5%.",
+    "data_table": {
+      "Vital signs": "HR 142, RR 44, SpO2 99%, Temp 36.9, weight 3.4 kg",
+      "Examination": "Jaundice to legs (Kramer zone 4); alert; tone normal; no opisthotonus or high-pitched cry",
+      "Investigations": "TSB 410 micromol/L (unconjugated 390, conjugated 20); Hb 142, retic 5%; DAT positive; baby A Rh+, mother O Rh+",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate immediate management?",
+    "options": [
+      {"letter": "A", "text": "Discharge home with general practitioner heel-prick total serum bilirubin re-check arranged within 24 hours of leaving the special care nursery", "correct": false, "rationale": "Bilirubin 410 micromol/L at 60 hours of age with positive DAT and ABO incompatibility approaches the exchange transfusion threshold; outpatient management is unsafe. (Source: Queensland Clinical Guideline Neonatal Jaundice 2022)", "source_refs": ["Queensland Clinical Guideline Neonatal Jaundice 2022"]},
+      {"letter": "B", "text": "Stop breastfeeding completely and switch to exclusive infant formula feeding for the next 48 hours while keeping the infant in special care nursery", "correct": false, "rationale": "Brief formula supplementation may be considered in dehydration but ceasing breastfeeding is not first-line for hyperbilirubinaemia and does not lower bilirubin rapidly enough. (Source: Queensland Clinical Guideline Neonatal Jaundice 2022)", "source_refs": ["Queensland Clinical Guideline Neonatal Jaundice 2022"]},
+      {"letter": "C", "text": "Commence intensive multiple-bank phototherapy, ensure adequate hydration, and recheck the serum bilirubin in 4-6 hours without scavenger therapy", "correct": false, "rationale": "Intensive phototherapy and close re-check are appropriate, but at TSB 410 micromol/L at 60 hours of age with DAT-positive haemolysis, immediate exchange criteria are likely already met under Australian charts; preparation should be active rather than contingent. (Source: Queensland Clinical Guideline Neonatal Jaundice 2022)", "source_refs": ["Queensland Clinical Guideline Neonatal Jaundice 2022"]},
+      {"letter": "D", "text": "Start intensive multi-bank phototherapy, give IVIG 0.5-1 g/kg over 2 hours, ensure hydration, prepare for exchange transfusion via tertiary unit", "correct": true, "rationale": "Australian and NICE guidance recommend intensive phototherapy plus IVIG 0.5-1 g/kg for haemolytic disease when TSB approaches exchange thresholds, with active preparation for double-volume exchange in a tertiary unit if rapid response is not achieved. (Source: Queensland Clinical Guideline Neonatal Jaundice 2022)", "source_refs": ["Queensland Clinical Guideline Neonatal Jaundice 2022"]},
+      {"letter": "E", "text": "Administer oral phenobarbitone 5 mg/kg as hepatic enzyme induction therapy to enhance bilirubin clearance over the next 24-48 hour treatment period", "correct": false, "rationale": "Phenobarbitone enzyme induction is not standard acute management for neonatal hyperbilirubinaemia in Australia and is not effective rapidly enough for this urgent presentation. (Source: Queensland Clinical Guideline Neonatal Jaundice 2022)", "source_refs": ["Queensland Clinical Guideline Neonatal Jaundice 2022"]}
+    ],
+    "explanation": {
+      "summary": "ABO haemolytic disease with DAT-positive haemolysis in a term infant produces rapidly rising unconjugated bilirubin. At 60 hours of age, total serum bilirubin 410 micromol/L approaches exchange transfusion thresholds on Australian nomograms. Management is intensive multi-bank phototherapy plus IVIG 0.5-1 g/kg in haemolytic disease, ensuring hydration, and active preparation for double-volume exchange transfusion in a tertiary neonatal unit if bilirubin does not fall or signs of acute bilirubin encephalopathy develop. Always plot age in hours against current bilirubin chart.",
+      "key_points": [
+        "Plot bilirubin against postnatal age in hours, not days",
+        "Intensive multi-bank phototherapy first-line for severe hyperbilirubinaemia",
+        "IVIG 0.5-1 g/kg in DAT-positive haemolytic disease near exchange threshold",
+        "Acute bilirubin encephalopathy signs trigger immediate exchange"
+      ],
+      "pearls": "In a DAT-positive ABO haemolytic newborn at 60 hours with TSB approaching the exchange line, give IVIG 0.5-1 g/kg over 2 hours alongside intensive phototherapy rather than waiting for the next bilirubin to fail therapy - IVIG reduces exchange need substantially in isoimmune haemolysis."
+    },
+    "sources": [
+      {"label": "Queensland Clinical Guideline Neonatal Jaundice 2022", "url": "https://www.health.qld.gov.au/qcg"},
+      {"label": "NICE CG98 Jaundice in newborn babies under 28 days 2010 (updated)", "url": "https://www.nice.org.uk/guidance/cg98"}
+    ],
+    "reference_ranges": ["paeds_jaundice"],
+    "created": "2026-05-29"
+  },
+  {
+    "id": "ctb-p18c-025",
+    "topic": "Paediatrics",
+    "subtopic": "Paediatric surgery",
+    "subtopic_detail": "Intussusception air enema reduction",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["intussusception", "abdominal pain", "imaging"],
+    "stem": "You are the paediatric registrar in the emergency department reviewing an 11-month-old boy brought in by his parents with three episodes of inconsolable crying with leg-drawing each lasting around 8 minutes over the past four hours. Between episodes he is pale but responsive. He vomited bile-stained fluid once. His last bowel motion 90 minutes ago had a small amount of dark-red jelly-like material. Examination reveals a sausage-shaped mass in the right upper quadrant, no peritonism, and capillary refill of 2 seconds. Abdominal ultrasound confirms ileocolic intussusception. There is no free air on AXR.",
+    "data_table": {
+      "Vital signs": "HR 158, BP 88/52, RR 36, SpO2 99%, Temp 37.4, weight 9.2 kg, CRT 2 s",
+      "Examination": "Lethargic between episodes; soft abdomen with palpable sausage mass RUQ; no peritonism",
+      "Investigations": "Ultrasound: target sign at ileocaecal junction with no free fluid; FBC, UEC, glucose normal; lactate 1.4; AXR no free air or obstruction",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate definitive management step now?",
+    "options": [
+      {"letter": "A", "text": "Discharge home with detailed parental safety-netting advice and primary care review arranged within 12 hours of leaving the emergency department", "correct": false, "rationale": "Untreated intussusception progresses to bowel ischaemia, perforation and shock; observation off-site is unsafe. (Source: RCH CPG: Intussusception 2020)", "source_refs": ["RCH CPG: Intussusception 2020"]},
+      {"letter": "B", "text": "Commence broad-spectrum intravenous antibiotics and observe for the next 24 hours before deciding on further imaging or operative interventions", "correct": false, "rationale": "Imaging has already confirmed the diagnosis; broad-spectrum antibiotics without reduction does not treat the obstruction. (Source: RCH CPG: Intussusception 2020)", "source_refs": ["RCH CPG: Intussusception 2020"]},
+      {"letter": "C", "text": "Resuscitate with isotonic IV fluid bolus 10-20 mL/kg, then transfer for air enema reduction by interventional radiology with paediatric surgery standby", "correct": true, "rationale": "Confirmed ileocolic intussusception without perforation or peritonitis is treated by air enema reduction in a tertiary or paediatric centre after resuscitation; paediatric surgery is on standby for perforation or failed reduction. (Source: RCH CPG: Intussusception 2020)", "source_refs": ["RCH CPG: Intussusception 2020"]},
+      {"letter": "D", "text": "Proceed directly to operative laparotomy and surgical reduction without first attempting any non-operative pneumatic or hydrostatic enema reduction", "correct": false, "rationale": "Non-operative reduction by air enema succeeds in 80-90% of cases without perforation or peritonitis and is the first-line definitive management. (Source: RCH CPG: Intussusception 2020)", "source_refs": ["RCH CPG: Intussusception 2020"]},
+      {"letter": "E", "text": "Trial a barium contrast enema with a delayed abdominal radiograph at 8 hours to confirm reduction before considering surgical intervention pathways", "correct": false, "rationale": "Air enema is preferred over barium because of lower perforation risk and cleaner imaging; barium delay is not part of current Australian practice. (Source: RCH CPG: Intussusception 2020)", "source_refs": ["RCH CPG: Intussusception 2020"]}
+    ],
+    "explanation": {
+      "summary": "Intussusception in a previously well infant or toddler presents with intermittent inconsolable crying with leg-drawing, vomiting, lethargy between episodes and the late sign of red-currant-jelly stool. Ultrasound confirms with the target or pseudo-kidney sign. After IV access and fluid resuscitation, definitive management is air (pneumatic) enema reduction performed by paediatric radiology with paediatric surgery on standby. Reduction is successful in 80-90% without perforation. Surgery is required for perforation, peritonitis, shock, failed reduction, or a pathological lead point.",
+      "key_points": [
+        "Triad: intermittent inconsolable crying, vomiting, red-currant-jelly stool (late)",
+        "Ultrasound first-line for diagnosis (target / pseudo-kidney sign)",
+        "Air enema reduction first-line definitive treatment",
+        "Surgery for perforation, peritonitis, failed reduction or pathological lead point"
+      ],
+      "pearls": "In an 11-month-old with ileocolic intussusception confirmed on ultrasound and no perforation, transfer for air enema rather than barium - pneumatic reduction has a 80-90 percent success rate with lower perforation risk, and tertiary radiology can usually accommodate within hours."
+    },
+    "sources": [
+      {"label": "RCH CPG: Intussusception 2020", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Intussusception"},
+      {"label": "NSW Health Paediatric Clinical Practice Guideline Acute Abdominal Pain 2019", "url": "https://www.health.nsw.gov.au/kidsfamilies/paediatric"}
+    ],
+    "reference_ranges": ["paeds_vitals_infant"],
+    "created": "2026-05-29"
+  },
+  {
+    "id": "ctb-p18c-026",
+    "topic": "Paediatrics",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Pertussis in young infants",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["pertussis", "macrolide", "infant"],
+    "stem": "You are the paediatric registrar in the ED reviewing a 7-week-old infant brought in by her mother with a 9-day history of progressively worsening cough. The infant has paroxysms of cough up to 12 per day, three episodes of apnoea overnight noted by the parents, and occasional cyanosis with coughing. She feeds intermittently. She has had her 6-week immunisations. Her older brother (4 years) had a coryzal illness with cough two weeks ago that has now resolved. On examination the chest is clear between paroxysms. NPA is sent for pertussis PCR. SpO2 between paroxysms is 96%.",
+    "data_table": {
+      "Vital signs": "HR 162, RR 50 between paroxysms, SpO2 96% between paroxysms, Temp 37.1, weight 4.6 kg",
+      "Examination": "Vigorous baby between episodes; paroxysmal cough with cyanosis and three apnoeas overnight; chest clear; capillary refill 2 s",
+      "Investigations": "FBC: WCC 28 with lymphocytosis 22; CXR clear; pertussis NPA PCR pending",
+      "Medications": "Nil regular"
+    },
+    "lead_in": "Which is the most appropriate antimicrobial?",
+    "options": [
+      {"letter": "A", "text": "Amoxicillin 25 mg/kg orally three times daily for a 7-day course as the principal antimicrobial therapy in this case", "correct": false, "rationale": "Amoxicillin has no activity against Bordetella pertussis; macrolides are the antimicrobial of choice in pertussis. (Source: Therapeutic Guidelines: Antibiotic 2019 - Pertussis)", "source_refs": ["Therapeutic Guidelines: Antibiotic 2019"]},
+      {"letter": "B", "text": "Azithromycin 10 mg/kg orally once daily for a 5-day course as first-line antimicrobial in this young infant presentation", "correct": true, "rationale": "Azithromycin is first-line antimicrobial therapy for pertussis in infants under 1 month and is preferred over erythromycin because of lower risk of infantile hypertrophic pyloric stenosis; 10 mg/kg daily for 5 days is the standard Australian regimen. (Source: Therapeutic Guidelines: Antibiotic 2019)", "source_refs": ["Therapeutic Guidelines: Antibiotic 2019"]},
+      {"letter": "C", "text": "Erythromycin 10 mg/kg orally four times daily for a 14-day course as the first-line macrolide for young infant pertussis", "correct": false, "rationale": "Erythromycin in infants under 1 month carries increased risk of infantile hypertrophic pyloric stenosis; azithromycin is preferred. Even in older infants the shorter azithromycin course is favoured. (Source: Therapeutic Guidelines: Antibiotic 2019)", "source_refs": ["Therapeutic Guidelines: Antibiotic 2019"]},
+      {"letter": "D", "text": "Trimethoprim-sulfamethoxazole 8/40 mg/kg orally twice daily for 14 days as first-choice antimicrobial in this young infant pertussis case", "correct": false, "rationale": "TMP-SMX is an alternative in macrolide intolerance only and is contraindicated in infants under 2 months because of kernicterus risk. (Source: Therapeutic Guidelines: Antibiotic 2019)", "source_refs": ["Therapeutic Guidelines: Antibiotic 2019"]},
+      {"letter": "E", "text": "Ciprofloxacin 15 mg/kg orally twice daily for a 7-day course as first-line antimicrobial therapy in this young infant pertussis presentation", "correct": false, "rationale": "Fluoroquinolones are not active against Bordetella pertussis and are not used for this indication. (Source: Therapeutic Guidelines: Antibiotic 2019)", "source_refs": ["Therapeutic Guidelines: Antibiotic 2019"]}
+    ],
+    "explanation": {
+      "summary": "Pertussis in young infants is a notifiable disease in Australia and admission is required for infants under 6 months with apnoea, cyanosis or feeding difficulty. Azithromycin 10 mg/kg orally once daily for 5 days is the first-line antimicrobial for pertussis in infants under 1 month and is preferred over erythromycin because of lower risk of infantile hypertrophic pyloric stenosis. Macrolides reduce transmission but do not modify illness once the paroxysmal phase is established. Post-exposure prophylaxis for close contacts including unimmunised infants is indicated. The lymphocytosis is characteristic.",
+      "key_points": [
+        "Azithromycin 10 mg/kg/day x 5 days - first line, especially under 1 month",
+        "Erythromycin in young infants risks hypertrophic pyloric stenosis",
+        "Notifiable to public health",
+        "Admission for under-6-month-olds with apnoea or feeding compromise"
+      ],
+      "pearls": "In any infant under 1 month with suspected pertussis, prescribe azithromycin 10 mg/kg daily for 5 days rather than erythromycin to avoid infantile hypertrophic pyloric stenosis - the absolute risk on erythromycin is increased about 10-fold."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Antibiotic 2019", "url": "https://www.tg.org.au"},
+      {"label": "Australian Immunisation Handbook - Pertussis", "url": "https://immunisationhandbook.health.gov.au"}
+    ],
+    "reference_ranges": ["paeds_vitals_infant", "paeds_fbc"],
+    "created": "2026-05-29"
+  },
+  {
+    "id": "ctb-p18c-027",
+    "topic": "Paediatrics",
+    "subtopic": "Paediatric surgery",
+    "subtopic_detail": "Pyloric stenosis - fluid resuscitation",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["pyloric stenosis", "fluid resuscitation", "alkalosis"],
+    "stem": "A 5-week-old male infant is referred to your paediatric surgical unit with a two-week history of progressively worsening non-bilious projectile vomiting after feeds. He is hungry between feeds. Examination reveals a palpable olive in the right upper quadrant and visible peristalsis. He has dry mucous membranes, capillary refill of 3 seconds, and depressed fontanelle. Weight has dropped from 4.0 kg to 3.6 kg over two weeks. VBG shows pH 7.55, HCO3 38, base excess +14, Cl 86, Na 134, K 2.9. Ultrasound confirms pyloric stenosis with muscle thickness 4.5 mm and channel length 18 mm.",
+    "data_table": {
+      "Vital signs": "HR 162, RR 38, SpO2 99%, weight 3.6 kg (was 4.0 kg), CRT 3 s",
+      "Examination": "Dry mucous membranes, depressed fontanelle, palpable olive RUQ, visible peristalsis; lethargic but rousable",
+      "Investigations": "VBG: pH 7.55, HCO3 38, BE +14, Cl 86, Na 134, K 2.9, glucose 4.2; ultrasound: muscle thickness 4.5 mm, channel 18 mm",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate immediate management?",
+    "options": [
+      {"letter": "A", "text": "Proceed directly to definitive pyloromyotomy operatively within the first hour of arrival to the paediatric surgical receiving unit", "correct": false, "rationale": "Surgery for pyloric stenosis is a semi-urgent rather than emergency procedure; the priority is correcting hypochloraemic, hypokalaemic metabolic alkalosis before anaesthesia to reduce apnoea risk. (Source: RCH CPG: Pyloric Stenosis 2019)", "source_refs": ["RCH CPG: Pyloric Stenosis 2019"]},
+      {"letter": "B", "text": "Commence 5% dextrose at a maintenance rate of 5 mL/kg/h with no sodium chloride or potassium electrolyte additives prescribed initially", "correct": false, "rationale": "Dextrose without sodium and chloride fails to correct the hypochloraemic alkalosis and worsens hyponatraemia risk; balanced sodium chloride containing fluid is required. (Source: RCH CPG: Pyloric Stenosis 2019)", "source_refs": ["RCH CPG: Pyloric Stenosis 2019"]},
+      {"letter": "C", "text": "Bolus 0.9% saline 20 mL/kg, then 0.45% saline with 5% dextrose plus KCl 20-40 mmol/L at 1.5 x maintenance, book surgery when Cl >100 HCO3 <30", "correct": true, "rationale": "RCH guidance: 20 mL/kg 0.9% saline bolus for hypoperfusion, then 0.45% saline with 5% dextrose and KCl 20-40 mmol/L at 1.5 x maintenance, with surgery once Cl >100 mmol/L and HCO3 <30 mmol/L because uncorrected alkalosis predisposes to post-anaesthetic apnoea. (Source: RCH CPG: Pyloric Stenosis 2019)", "source_refs": ["RCH CPG: Pyloric Stenosis 2019"]},
+      {"letter": "D", "text": "Give 40 mL/kg bolus of 0.9% saline followed by intravenous sodium bicarbonate to correct the metabolic alkalosis prior to operative planning", "correct": false, "rationale": "Giving bicarbonate worsens existing metabolic alkalosis and is contraindicated; the alkalosis resolves with chloride and potassium replacement. (Source: RCH CPG: Pyloric Stenosis 2019)", "source_refs": ["RCH CPG: Pyloric Stenosis 2019"]},
+      {"letter": "E", "text": "Place a nasogastric tube on free drainage and continue trial of small frequent oral feeds while awaiting elective surgical fixation in 24 hours", "correct": false, "rationale": "Continued oral feeds will worsen vomiting and electrolyte derangement; NPO with NG drainage and IV resuscitation is required. (Source: RCH CPG: Pyloric Stenosis 2019)", "source_refs": ["RCH CPG: Pyloric Stenosis 2019"]}
+    ],
+    "explanation": {
+      "summary": "Pyloric stenosis classically presents at 3-6 weeks with non-bilious projectile vomiting after feeds in a hungry infant. The metabolic derangement is hypochloraemic, hypokalaemic metabolic alkalosis from gastric acid loss. Surgical correction is semi-urgent; the priority before anaesthesia is to correct hypoperfusion (20 mL/kg 0.9% saline bolus), then to replace chloride and potassium with 0.45% saline with 5% dextrose plus KCl 20-40 mmol/L at 1.5 x maintenance, with serial VBG and electrolytes until Cl >100, HCO3 <30 and K >3.5. Uncorrected alkalosis predisposes to post-anaesthetic apnoea.",
+      "key_points": [
+        "Correct fluid and electrolyte derangement before surgery",
+        "Bolus 0.9% saline 20 mL/kg if hypoperfused, then 0.45% saline + 5% dextrose + KCl at 1.5 x maintenance",
+        "Target Cl >100 mmol/L, HCO3 <30 mmol/L before theatre",
+        "Avoid bicarbonate; the alkalosis is the problem"
+      ],
+      "pearls": "Aim for serum chloride above 100 mmol/L and bicarbonate below 30 mmol/L before pyloromyotomy rather than rushing to theatre - uncorrected hypochloraemic alkalosis raises postoperative apnoea risk substantially and is the single most modifiable peri-operative variable."
+    },
+    "sources": [
+      {"label": "RCH CPG: Pyloric Stenosis 2019", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Pyloric_stenosis"},
+      {"label": "Queensland Clinical Guideline Paediatric IV fluids 2021", "url": "https://www.health.qld.gov.au/qcg"}
+    ],
+    "reference_ranges": ["paeds_uec", "vbg"],
+    "created": "2026-05-29"
+  },
+  {
+    "id": "ctb-p18c-028",
+    "topic": "Paediatrics",
+    "subtopic": "Oncology emergency",
+    "subtopic_detail": "Febrile neutropenia empiric antimicrobial",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["febrile neutropenia", "oncology", "antibiotics"],
+    "stem": "A 6-year-old girl with ALL on maintenance chemotherapy presents to your tertiary paediatric ED via ambulance with a 2-hour history of fever 39.0 degrees and lethargy. She had vincristine 5 days ago. She has a tunnelled central venous catheter in situ. Capillary refill is 3 seconds, BP 88/52, HR 132, RR 28, SpO2 98%. The line site is clean. She has no penicillin allergy. Her last neutrophil count three days ago was 0.4 x 10^9/L. Blood cultures are about to be drawn from line and peripherally.",
+    "data_table": {
+      "Vital signs": "HR 132, BP 88/52, RR 28, SpO2 98%, Temp 39.0, weight 22 kg, CRT 3 s",
+      "Examination": "Mottled peripheries, alert but tired; CVC site clean; no focal source on full examination",
+      "Investigations": "Bloods drawn peripherally and from line; FBC pending; previous ANC 0.4 x 10^9/L three days ago",
+      "Medications": "6-mercaptopurine, methotrexate, recent vincristine; allopurinol; cotrimoxazole prophylaxis on Mondays and Tuesdays"
+    },
+    "lead_in": "Which is the most appropriate empiric antimicrobial regimen to commence within the first hour?",
+    "options": [
+      {"letter": "A", "text": "Piperacillin-tazobactam 100 mg/kg IV after cultures, adding vancomycin only for haemodynamic instability, mucositis or proven line infection", "correct": true, "rationale": "Australian paediatric oncology febrile neutropenia protocols recommend piperacillin-tazobactam as first-line empiric monotherapy after cultures, with vancomycin added for shock, mucositis, MRSA risk or proven line infection. (Source: COSA/eviQ Paediatric Febrile Neutropenia 2020)", "source_refs": ["COSA/eviQ Paediatric Febrile Neutropenia 2020"]},
+      {"letter": "B", "text": "Oral amoxicillin-clavulanate 25 mg/kg three times daily with outpatient discharge and clinic review at 24 hours in haematology day unit", "correct": false, "rationale": "Outpatient oral antibiotics are reserved for selected low-risk febrile neutropenia in older children with predicted short neutropenia, not for a 6-year-old with haemodynamic compromise. (Source: COSA/eviQ Paediatric Febrile Neutropenia 2020)", "source_refs": ["COSA/eviQ Paediatric Febrile Neutropenia 2020"]},
+      {"letter": "C", "text": "Ceftriaxone 50 mg/kg intravenously once daily as empiric monotherapy throughout the first 48 hours of suspected febrile neutropenia in this child", "correct": false, "rationale": "Ceftriaxone has limited Pseudomonas activity and is not recommended as monotherapy in febrile neutropenia in Australia; antipseudomonal beta-lactam is required. (Source: COSA/eviQ Paediatric Febrile Neutropenia 2020)", "source_refs": ["COSA/eviQ Paediatric Febrile Neutropenia 2020"]},
+      {"letter": "D", "text": "Meropenem 20 mg/kg IV every 8 hours plus amikacin 15 mg/kg IV once daily as routine first-line empiric combination for all febrile neutropenia", "correct": false, "rationale": "Carbapenems are reserved for escalation, suspected ESBL or septic shock not responding to first-line therapy; routine empirical use risks resistance. (Source: COSA/eviQ Paediatric Febrile Neutropenia 2020)", "source_refs": ["COSA/eviQ Paediatric Febrile Neutropenia 2020"]},
+      {"letter": "E", "text": "Withhold all antibiotics until the central venous catheter is removed and the blood culture microbiology results have returned to clinical team", "correct": false, "rationale": "Withholding empiric antibiotics in suspected febrile neutropenia substantially increases mortality; empiric therapy must start within 60 minutes of presentation. (Source: COSA/eviQ Paediatric Febrile Neutropenia 2020)", "source_refs": ["COSA/eviQ Paediatric Febrile Neutropenia 2020"]}
+    ],
+    "explanation": {
+      "summary": "Febrile neutropenia in paediatric oncology is a medical emergency. Australian COSA and eviQ guidance is to draw blood cultures (peripheral and from line) and start empiric antipseudomonal beta-lactam (piperacillin-tazobactam 100 mg/kg IV) within 60 minutes of presentation. Vancomycin is added for haemodynamic instability, severe mucositis, suspected line infection, MRSA colonisation, or proven Gram-positive isolate. Carbapenems are reserved for escalation. Source control of the central venous catheter is reassessed when there is persistent bacteraemia despite appropriate therapy.",
+      "key_points": [
+        "Door-to-antibiotic time within 60 minutes",
+        "First line: piperacillin-tazobactam 100 mg/kg IV after cultures",
+        "Add vancomycin for shock, mucositis, line infection or MRSA risk",
+        "Escalate to carbapenem for clinical deterioration or resistant isolate"
+      ],
+      "pearls": "Aim for door-to-antibiotic time under 60 minutes with piperacillin-tazobactam 100 mg/kg IV after blood cultures - every additional hour of delayed empiric antibiotic therapy is associated with measurable increases in paediatric febrile neutropenia mortality."
+    },
+    "sources": [
+      {"label": "COSA/eviQ Paediatric Febrile Neutropenia 2020", "url": "https://www.eviq.org.au"},
+      {"label": "Therapeutic Guidelines: Antibiotic 2019 - Febrile neutropenia", "url": "https://www.tg.org.au"}
+    ],
+    "reference_ranges": ["paeds_fbc", "paeds_vitals_child"],
+    "created": "2026-05-29"
+  },
+  {
+    "id": "ctb-p18c-029",
+    "topic": "Paediatrics",
+    "subtopic": "Orthopaedics",
+    "subtopic_detail": "Perthes vs slipped upper femoral epiphysis",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["Perthes disease", "SUFE", "hip pain"],
+    "stem": "A 12-year-old boy is brought to your general practice by his mother with a 3-week history of intermittent right hip pain and a limp. He is in the 95th centile for weight at 78 kg and 50th for height. He has noticed his right foot turns outward when he walks, and he keeps the leg externally rotated when sitting. There is no fever, no recent illness, and no trauma. Examination shows restricted internal rotation of the right hip with obligate external rotation when the hip is flexed (positive Drehmann sign). Bilateral AP and frog-leg lateral radiographs of both hips show mild posteromedial slippage of the right capital femoral epiphysis along the Klein line.",
+    "data_table": {
+      "Vital signs": "HR 78, BP 128/78, BMI 30",
+      "Examination": "Antalgic gait with externally rotated right limb; restricted internal rotation right hip; obligate external rotation on hip flexion (positive Drehmann); no warmth or effusion",
+      "Investigations": "AP and frog-leg lateral pelvis: right capital femoral epiphysis posteromedially displaced relative to Klein line; left hip: equivocal",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {"letter": "A", "text": "Recommend gradual weight loss and arrange clinic review with repeat plain radiographs of both hips in three months from today's primary care visit", "correct": false, "rationale": "SUFE is a surgical emergency; delaying definitive fixation risks progression and avascular necrosis. (Source: RCH CPG: SUFE 2019)", "source_refs": ["RCH CPG: SUFE 2019"]},
+      {"letter": "B", "text": "Commence ibuprofen analgesia and physiotherapy with planned outpatient orthopaedic review in six weeks once the symptoms have begun to improve", "correct": false, "rationale": "Anti-inflammatory and physiotherapy management is inappropriate for SUFE; mobilisation increases risk of further slip and AVN. (Source: RCH CPG: SUFE 2019)", "source_refs": ["RCH CPG: SUFE 2019"]},
+      {"letter": "C", "text": "Make him non-weight-bearing immediately, admit to paediatric orthopaedics, refer for urgent in-situ percutaneous single-screw fixation per RCH protocol", "correct": true, "rationale": "SUFE diagnosis on imaging requires immediate non-weight-bearing, admission and urgent in-situ percutaneous single-screw fixation to prevent progression and AVN; prophylactic contralateral fixation is considered for high-risk individuals. (Source: RCH CPG: SUFE 2019)", "source_refs": ["RCH CPG: SUFE 2019"]},
+      {"letter": "D", "text": "Order MRI of the pelvis to confirm the diagnosis radiographically before referring on for orthopaedic surgical opinion and operative planning later", "correct": false, "rationale": "Plain radiographs already confirm the diagnosis; MRI is not required and delays definitive treatment. (Source: RCH CPG: SUFE 2019)", "source_refs": ["RCH CPG: SUFE 2019"]},
+      {"letter": "E", "text": "Manage as Perthes disease with abduction bracing and physiotherapy with quarterly clinical and radiographic review by primary care general practitioner", "correct": false, "rationale": "Perthes typically presents in younger children (4-8 years) and has a different radiographic pattern; bracing is incorrect management for SUFE. (Source: RCH CPG: SUFE 2019)", "source_refs": ["RCH CPG: SUFE 2019"]}
+    ],
+    "explanation": {
+      "summary": "Slipped upper femoral epiphysis classically presents in obese pre-adolescent males (10-14 years) with knee or thigh pain, antalgic gait and externally rotated lower limb. Drehmann sign (obligate external rotation when the hip is flexed) and disruption of the Klein line on AP pelvis x-ray are diagnostic. SUFE is a surgical emergency requiring non-weight-bearing on diagnosis, admission and urgent in-situ percutaneous single-screw fixation. Prophylactic contralateral fixation is considered for high-risk patients (endocrine disease, very young, very obese). Avascular necrosis risk rises with weight-bearing and instability.",
+      "key_points": [
+        "Obese pre-adolescent male with externally rotated limb and limp",
+        "Drehmann sign and Klein line disruption are diagnostic",
+        "Non-weight-bearing immediately on diagnosis",
+        "Urgent in-situ single-screw fixation; consider prophylactic contralateral fixation"
+      ],
+      "pearls": "When SUFE is confirmed radiographically, instruct strict non-weight-bearing in the clinic that same visit and arrange same-day orthopaedic admission - the rate of avascular necrosis rises substantially with continued ambulation in an unstable slip."
+    },
+    "sources": [
+      {"label": "RCH CPG: SUFE 2019", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Slipped_upper_femoral_epiphysis"},
+      {"label": "AOA Position Statement: Paediatric hip emergencies 2019", "url": "https://aoa.org.au"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-29"
+  },
+  {
+    "id": "ctb-p18c-030",
+    "topic": "Paediatrics",
+    "subtopic": "Metabolic medicine",
+    "subtopic_detail": "Urea cycle disorder - hyperammonaemic crisis",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["hyperammonaemia", "metabolic", "neonatal encephalopathy"],
+    "stem": "You are the paediatric registrar called to the special care nursery to a previously well-appearing term male neonate born at 39 weeks who is now 60 hours of age. Over the past 12 hours he has become progressively lethargic, then irritable with hyperventilation, refusing feeds, with a brief tonic-clonic seizure 30 minutes ago. He has had no fever. There is no perinatal sepsis history. There was no antenatal newborn screening result yet because the heel prick was taken at 48 hours. Bloods show NH3 540 micromol/L, respiratory alkalosis (pH 7.51, PaCO2 26, HCO3 22), glucose 4.1, lactate 2.0, anion gap 12, normal LFTs, normal coagulation, normal infection markers. There is no ketonuria.",
+    "data_table": {
+      "Vital signs": "HR 168, RR 70 (hyperventilation), Temp 36.7, SpO2 99%, weight 3.4 kg",
+      "Examination": "Lethargic, hyperventilating, post-ictal; soft anterior fontanelle; tone normal",
+      "Investigations": "NH3 540 micromol/L; ABG pH 7.51, PaCO2 26, HCO3 22, BE -1; glucose 4.1; lactate 2.0; anion gap 12; no ketosis; LFTs normal; coagulation normal; CRP <5; CSF acellular",
+      "Medications": "IV maintenance fluids"
+    },
+    "lead_in": "Which is the most appropriate emergency management?",
+    "options": [
+      {"letter": "A", "text": "Increase enteral protein intake aggressively to drive metabolic ammonia clearance via the residual ureagenesis catabolic pathway in this neonate", "correct": false, "rationale": "Protein loading worsens hyperammonaemia in urea cycle disorders by adding nitrogen substrate; protein must be stopped acutely. (Source: RCH CPG: Hyperammonaemia 2020)", "source_refs": ["RCH CPG: Hyperammonaemia 2020"]},
+      {"letter": "B", "text": "Withhold all treatment until a definitive enzymatic urea cycle diagnosis is confirmed by tertiary metabolic biochemistry and molecular genetic testing", "correct": false, "rationale": "Each hour at ammonia >500 micromol/L worsens neurodevelopmental outcome; empirical treatment must begin before diagnostic confirmation. (Source: RCH CPG: Hyperammonaemia 2020)", "source_refs": ["RCH CPG: Hyperammonaemia 2020"]},
+      {"letter": "C", "text": "Commence broad-spectrum intravenous antibiotics and gut decontamination with oral lactulose to reduce enteric ammoniagenesis and clear circulating ammonia", "correct": false, "rationale": "Lactulose has no role in inborn-error hyperammonaemia; this is a urea cycle disorder, not portosystemic shunting. (Source: RCH CPG: Hyperammonaemia 2020)", "source_refs": ["RCH CPG: Hyperammonaemia 2020"]},
+      {"letter": "D", "text": "Stop protein, give 10% dextrose with intralipid, sodium benzoate plus phenylbutyrate plus arginine scavengers, prepare haemodialysis if NH3 stays >400-500", "correct": true, "rationale": "Australian metabolic services manage acute hyperammonaemia by stopping protein, reversing catabolism with high-dose IV dextrose and lipid, giving ammonia scavengers (sodium benzoate, sodium phenylbutyrate, arginine) and triggering haemodialysis at ammonia 400-500 micromol/L or rising; this is the time-critical sequence. (Source: RCH CPG: Hyperammonaemia 2020)", "source_refs": ["RCH CPG: Hyperammonaemia 2020"]},
+      {"letter": "E", "text": "Administer intravenous mannitol 0.5 g/kg as the principal pharmacological intervention to reverse acute hyperammonaemic encephalopathy in this neonatal presentation", "correct": false, "rationale": "Mannitol is reserved for raised intracranial pressure as adjunct in cerebral oedema and does not lower ammonia; it is not first-line. (Source: RCH CPG: Hyperammonaemia 2020)", "source_refs": ["RCH CPG: Hyperammonaemia 2020"]}
+    ],
+    "explanation": {
+      "summary": "A previously well neonate who becomes encephalopathic on day two or three of life with hyperventilation (respiratory alkalosis), no acidosis, no ketosis and ammonia greater than 200 micromol/L (often >500) is highly suspicious for a urea cycle disorder, most commonly ornithine transcarbamylase deficiency in males. Emergency management is to stop protein intake, reverse catabolism with high concentration IV dextrose with insulin if needed and intralipid, give ammonia scavengers (sodium benzoate, sodium phenylbutyrate, arginine) per state metabolic team protocol, and arrange emergency haemodialysis when ammonia exceeds 400-500 micromol/L or fails to fall. Neurodevelopmental outcome correlates closely with duration and peak of hyperammonaemia.",
+      "key_points": [
+        "Urea cycle disorders present with encephalopathy + respiratory alkalosis + hyperammonaemia + no ketosis",
+        "Stop protein, reverse catabolism with high IV dextrose and lipid",
+        "Sodium benzoate + sodium phenylbutyrate + arginine as scavengers",
+        "Haemodialysis at NH3 >400-500 micromol/L or rising"
+      ],
+      "pearls": "Trigger haemodialysis at ammonia 400-500 micromol/L or any rising trend despite scavengers rather than waiting for clinical deterioration - neurodevelopmental outcome correlates more tightly with duration of NH3 above 200 micromol/L than peak level."
+    },
+    "sources": [
+      {"label": "RCH CPG: Hyperammonaemia 2020", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Hyperammonaemia"},
+      {"label": "Therapeutic Guidelines: Paediatric metabolic emergencies 2021", "url": "https://www.tg.org.au"}
+    ],
+    "reference_ranges": ["paeds_uec", "abg"],
+    "created": "2026-05-29"
+  }
+]
