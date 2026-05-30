@@ -1,0 +1,935 @@
+[
+  {
+    "id": "ctb-p26-001",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Bronchiolitis - admission criteria and supportive management",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "bronchiolitis",
+      "RSV"
+    ],
+    "stem": "You are the paediatric registrar reviewing a 4-month-old, ex-37-week infant in ED with 3 days of coryza progressing to noisy breathing and reduced feeding. The parents report wet nappies have halved and the last feed was 80 mL of formula 5 hours ago, taken with several pauses for breath. The infant is alert when handled but tires. The mother smoked in pregnancy and there are no siblings.",
+    "data_table": {
+      "Vital signs": "T 37.6, HR 162, RR 62, SpO2 93% in room air, BP 88/52, weight 6.3 kg",
+      "Examination": "Mild tracheal tug and subcostal recession, fine bilateral crackles with scattered wheeze, capillary refill 2 seconds, anterior fontanelle flat",
+      "Investigations": "Nasopharyngeal aspirate positive for RSV, capillary blood gas pH 7.35 pCO2 45 HCO3 22, blood glucose 4.2",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate next step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Trial of nebulised salbutamol 2.5 mg with reassessment in 20 minutes to determine whether bronchodilator therapy should continue regularly",
+        "correct": false,
+        "rationale": "Salbutamol is not recommended in bronchiolitis under 12 months; trials show no meaningful benefit and may cause tachycardia and desaturation. (Source: RCH CPG Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Commence oral prednisolone 1 mg/kg daily for 3 days alongside supportive care, given the wheeze component and family history of maternal smoking exposure",
+        "correct": false,
+        "rationale": "Corticosteroids have no role in viral bronchiolitis even when wheeze is present; they do not shorten illness or reduce admission. (Source: RCH CPG Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Admit for observation with low-flow nasal cannula oxygen, nasogastric or small-volume oral feeds, and minimal handling with routine reassessment of work of breathing",
+        "correct": true,
+        "rationale": "SpO2 below 92%, feeding under 50% baseline and increased work of breathing meet admission criteria; supportive care with oxygen and assisted hydration is standard. (Source: RCH CPG Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence intravenous amoxicillin and benzylpenicillin empirically while awaiting blood culture results, treating possible bacterial co-infection causing the respiratory distress",
+        "correct": false,
+        "rationale": "Bacterial co-infection is uncommon in confirmed RSV bronchiolitis without focal consolidation or marked fever; antibiotics are not indicated. (Source: RCH CPG Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Discharge home with parental advice on small frequent feeds, nasal saline drops, and return immediately for any apnoea, cyanosis or worsening work of breathing observed",
+        "correct": false,
+        "rationale": "Hypoxia, reduced feeding and increased work of breathing in a 4-month-old preclude discharge; this infant needs inpatient observation. (Source: RCH CPG Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG Bronchiolitis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Bronchiolitis is a clinical diagnosis in infants under 12 months; investigations are not routinely required. Admission is guided by hypoxia (SpO2 persistently under 92%), feeding under 50% of normal, significant work of breathing, apnoea, or social risk. Therapy is supportive: minimal handling, oxygen if needed and nasogastric or intravenous fluids if feeding is poor. High-flow nasal cannula is escalated when standard oxygen fails. Salbutamol, steroids, hypertonic saline, adrenaline and antibiotics do not change outcomes in routine cases.",
+      "key_points": [
+        "Admit if SpO2 under 92%, feeds under 50% or apnoea episodes.",
+        "Supportive care only - no bronchodilators or steroids.",
+        "Escalate to high-flow if work of breathing persists on low-flow.",
+        "RSV is the most common pathogen, but co-infection is rare.",
+        "Chest x-ray is not routine and may prompt unnecessary antibiotics."
+      ],
+      "pearls": "Apnoea is the dominant deterioration in infants under 6 weeks or ex-premature; admit even with normal saturations if any apnoeic episode is reported by carers."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG Bronchiolitis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/"
+      },
+      {
+        "label": "PREDICT Australasian Bronchiolitis Guideline",
+        "url": "https://www.predict.org.au"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "vbg"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p26-002",
+    "topic": "Paediatrics",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Suspected meningococcal disease - empirical management",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "meningococcal",
+      "sepsis",
+      "ceftriaxone"
+    ],
+    "stem": "You are the rural ED registrar called urgently to a 3-year-old brought in by ambulance with 6 hours of fever, irritability and a new spreading purpuric rash on the trunk and limbs. The child cries when handled and is mottled peripherally. The nearest tertiary paediatric hospital is 2 hours by retrieval helicopter. The parents report no prior immunisations because of religious objection. You have already secured intraosseous access in the right tibia.",
+    "data_table": {
+      "Vital signs": "T 39.4, HR 178, RR 44, SpO2 96%, BP 78/40, capillary refill 4 seconds, weight 14 kg",
+      "Examination": "Non-blanching purpuric lesions on trunk, thighs and forearms, neck stiffness present, Kernig sign positive, GCS 13",
+      "Investigations": "Bedside glucose 3.6, lactate 4.1, awaiting bloods, no LP performed",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Perform lumbar puncture for cell count and culture before any antibiotic dose to maximise yield, then commence intravenous ceftriaxone after sample collection",
+        "correct": false,
+        "rationale": "LP is contraindicated in suspected meningococcal sepsis with shock or coagulopathy and must never delay antibiotics. (Source: eTG Acute Bacterial Meningitis)",
+        "source_refs": [
+          "eTG Acute Bacterial Meningitis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Administer intravenous ceftriaxone 100 mg/kg now, give a 20 mL/kg crystalloid bolus reassessing after each, and activate paediatric retrieval immediately for transfer",
+        "correct": true,
+        "rationale": "Empirical ceftriaxone within the first hour and titrated fluid resuscitation with early retrieval are the time-critical priorities in suspected meningococcal septicaemia. (Source: eTG Acute Bacterial Meningitis)",
+        "source_refs": [
+          "eTG Acute Bacterial Meningitis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Give intramuscular benzylpenicillin 1.2 g now while awaiting transfer team, withhold further fluid until blood pressure trend confirms the need for resuscitation",
+        "correct": false,
+        "rationale": "IV ceftriaxone is preferred where access exists and gives broader cover; withholding fluid in a shocked child with lactate 4 is dangerous. (Source: eTG Acute Bacterial Meningitis)",
+        "source_refs": [
+          "eTG Acute Bacterial Meningitis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence intravenous dexamethasone 0.15 mg/kg first to reduce neurological sequelae and then begin antibiotic therapy after the steroid dose has been administered",
+        "correct": false,
+        "rationale": "Dexamethasone is not recommended in meningococcal disease and any role in pneumococcal meningitis requires steroid with or just before antibiotics, never delaying them. (Source: eTG Acute Bacterial Meningitis)",
+        "source_refs": [
+          "eTG Acute Bacterial Meningitis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Take blood cultures and meningococcal PCR before any antibiotic to preserve microbiological diagnosis, then start ceftriaxone once samples have left the bedside",
+        "correct": false,
+        "rationale": "Antibiotic delay for microbiology is unacceptable in suspected meningococcal sepsis; PCR remains positive after antibiotics are given. (Source: eTG Acute Bacterial Meningitis)",
+        "source_refs": [
+          "eTG Acute Bacterial Meningitis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Meningococcal septicaemia is a time-critical emergency where empirical antibiotics must be given as soon as the diagnosis is suspected, not delayed for investigations or lumbar puncture. Intravenous ceftriaxone 100 mg/kg up to 2 g is the agent of choice; IM benzylpenicillin is the field alternative when no IV access exists. Fluid resuscitation should be cautious and reassessed after each bolus because of capillary leak and high risk of pulmonary oedema. Early activation of paediatric retrieval is critical in rural and remote sites. PCR remains positive for up to 72 hours after antibiotics.",
+      "key_points": [
+        "Antibiotics within 1 hour, never delayed by LP or imaging.",
+        "Ceftriaxone 100 mg/kg IV is first line.",
+        "Reassess after every 10 to 20 mL/kg bolus for fluid overload.",
+        "Dexamethasone not used in meningococcal disease.",
+        "Notify public health for household chemoprophylaxis."
+      ],
+      "pearls": "Single-dose ciprofloxacin 500 mg is preferred over rifampicin for adult household chemoprophylaxis because it is a single dose and avoids interactions with oral contraceptives."
+    },
+    "sources": [
+      {
+        "label": "eTG Acute Bacterial Meningitis",
+        "url": "https://tgldcdp.tg.org.au"
+      },
+      {
+        "label": "RCH CPG Meningococcal Infection",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Meningococcal_infection/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "inflammatory_markers"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p26-003",
+    "topic": "Paediatrics",
+    "subtopic": "Gastroenterology",
+    "subtopic_detail": "Pyloric stenosis - acid-base disturbance and pre-operative resuscitation",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "pyloric stenosis",
+      "vomiting",
+      "electrolytes"
+    ],
+    "stem": "You are the surgical registrar reviewing a 5-week-old male, the first-born of consanguineous parents, referred from the GP with 2 weeks of progressive non-bilious vomiting now described as forceful and projectile after every feed. The mother is anxious because feeds are taken hungrily yet weight has fallen below the 3rd centile. There is a palpable olive in the right upper quadrant after a test feed. He has not passed urine for 8 hours.",
+    "data_table": {
+      "Vital signs": "T 36.5, HR 168, RR 40, SpO2 99%, BP 78/45, weight 3.9 kg, capillary refill 3 seconds",
+      "Examination": "Sunken eyes, dry mucous membranes, visible left to right gastric peristalsis, anterior fontanelle depressed",
+      "Investigations": "Na 132, K 3.0, Cl 88, HCO3 34, urea 9.8, creatinine 48, venous pH 7.52 pCO2 50, ultrasound pyloric muscle 4.5 mm thickness 18 mm length",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate immediate management before surgical referral for pyloromyotomy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Proceed immediately to theatre for Ramstedt pyloromyotomy under general anaesthesia, correcting the electrolytes intraoperatively to avoid further delay to surgical cure",
+        "correct": false,
+        "rationale": "Pyloromyotomy is never an emergency; metabolic alkalosis must be corrected first to avoid post-anaesthetic apnoea from impaired respiratory drive. (Source: RCH CPG Pyloric Stenosis)",
+        "source_refs": [
+          "RCH CPG Pyloric Stenosis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Give a 20 mL/kg bolus of 4% albumin to restore intravascular volume rapidly then transition to half-normal saline with added potassium and dextrose for ongoing maintenance",
+        "correct": false,
+        "rationale": "Crystalloid is preferred over colloid for paediatric resuscitation; half-normal saline does not adequately replace chloride losses. (Source: RCH CPG Pyloric Stenosis)",
+        "source_refs": [
+          "RCH CPG Pyloric Stenosis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence intravenous Hartmann solution at 150 mL/kg/day with no potassium supplementation because the metabolic alkalosis will worsen with chloride poor crystalloid",
+        "correct": false,
+        "rationale": "Hartmann is relatively chloride poor and inadequate to correct the hypochloraemia driving the alkalosis; sodium chloride is preferred. (Source: RCH CPG Pyloric Stenosis)",
+        "source_refs": [
+          "RCH CPG Pyloric Stenosis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Insert a nasogastric tube on free drainage and restrict all fluid until vomiting settles to prevent further chloride loss and to allow spontaneous biochemical correction",
+        "correct": false,
+        "rationale": "Nil oral plus NG drainage without IV replacement worsens dehydration and electrolyte derangement; intravenous fluid is mandatory. (Source: RCH CPG Pyloric Stenosis)",
+        "source_refs": [
+          "RCH CPG Pyloric Stenosis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Commence intravenous 0.9% sodium chloride with 5% dextrose at maintenance and add potassium chloride only after a urine output of 1 mL/kg/hour is documented",
+        "correct": true,
+        "rationale": "Resuscitation requires sodium chloride with dextrose to replace chloride and avoid hypoglycaemia, with potassium added safely once renal output is confirmed. (Source: RCH CPG Pyloric Stenosis)",
+        "source_refs": [
+          "RCH CPG Pyloric Stenosis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Hypertrophic pyloric stenosis causes loss of gastric hydrochloric acid producing a characteristic hypochloraemic hypokalaemic metabolic alkalosis. The kidney initially excretes bicarbonate then switches to a paradoxical aciduria once volume contraction dominates. Pyloromyotomy is a semi-elective procedure that should never proceed until pH is below 7.45, bicarbonate is below 28 and chloride is above 100, because residual alkalosis depresses central respiratory drive after anaesthesia. Resuscitation uses sodium chloride with dextrose; potassium is added after urine output is established. Ultrasound criteria for diagnosis are pyloric muscle thickness above 3 mm and channel length above 15 mm.",
+      "key_points": [
+        "Hypochloraemic hypokalaemic metabolic alkalosis is pathognomonic.",
+        "Correct biochemistry before surgery to avoid post-op apnoea.",
+        "Sodium chloride with dextrose is the resuscitation fluid.",
+        "Add potassium only after urine output 1 mL/kg/hour.",
+        "Ultrasound: muscle thickness above 3 mm, length above 15 mm."
+      ],
+      "pearls": "Target pre-operative chloride above 100 mmol/L and bicarbonate below 28 mmol/L; if alkalosis persists despite saline, suspect inadequate volume replacement rather than ongoing vomiting alone."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG Pyloric Stenosis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Pyloric_Stenosis/"
+      },
+      {
+        "label": "BMJ Best Practice Pyloric Stenosis",
+        "url": "https://bestpractice.bmj.com"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_uec",
+      "vbg",
+      "paeds_vitals_infant"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p26-004",
+    "topic": "Paediatrics",
+    "subtopic": "Cardiology",
+    "subtopic_detail": "Supraventricular tachycardia in infancy - acute termination",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "SVT",
+      "arrhythmia"
+    ],
+    "stem": "You are the paediatric registrar called to the resuscitation bay for a 6-week-old breastfed infant brought in by ambulance with 4 hours of poor feeding, sweating during feeds and pallor. The infant was term, no antenatal concerns and immunisations up to date for age. The infant is alert but mottled. Cardiac monitoring shows a narrow complex tachycardia with no visible P waves and a fixed rate that does not vary with handling. IV access has been secured in an antecubital vein.",
+    "data_table": {
+      "Vital signs": "T 36.8, HR 280, RR 60, SpO2 95%, BP 72/40, capillary refill 4 seconds, weight 4.2 kg",
+      "Examination": "Pale, peripherally cool to mid-forearm, hepatomegaly 2 cm, no murmur audible at this rate, bilateral fine crackles at lung bases",
+      "Investigations": "12 lead ECG narrow QRS at 280, no discernible P waves, axis normal; bedside glucose 4.0; venous gas pH 7.28 lactate 3.2",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Apply a bag of crushed ice and water firmly to the central face for 15 to 30 seconds while continuous rhythm monitoring is observed for sinus rhythm restoration",
+        "correct": true,
+        "rationale": "Diving reflex with iced water to the face is first-line vagal manoeuvre in infants and terminates SVT in around 30% with minimal haemodynamic risk. (Source: RCH CPG SVT)",
+        "source_refs": [
+          "RCH CPG SVT"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Administer intravenous adenosine 0.1 mg/kg as a rapid push followed by a saline flush, with continuous rhythm strip and defibrillator pads on the chest ready",
+        "correct": false,
+        "rationale": "Adenosine is the correct pharmacological choice but vagal manoeuvres should be tried first in a stable infant before drug therapy. (Source: RCH CPG SVT)",
+        "source_refs": [
+          "RCH CPG SVT"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Synchronised DC cardioversion at 1 joule per kilogram under brief procedural sedation given the prolonged tachycardia and early signs of cardiogenic shock with poor perfusion",
+        "correct": false,
+        "rationale": "Synchronised cardioversion is reserved for haemodynamically unstable SVT or failure of vagal manoeuvres plus adenosine; this infant is still perfusing. (Source: RCH CPG SVT)",
+        "source_refs": [
+          "RCH CPG SVT"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Administer intravenous verapamil 0.1 mg/kg slow push with continuous ECG monitoring to slow conduction through the atrioventricular node and restore sinus rhythm",
+        "correct": false,
+        "rationale": "Verapamil is contraindicated under 1 year because of profound hypotension and cardiac arrest from negative inotropy. (Source: RCH CPG SVT)",
+        "source_refs": [
+          "RCH CPG SVT"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Commence intravenous amiodarone loading at 5 mg/kg over 30 minutes with continuous monitoring while preparing for transfer to a paediatric cardiac centre",
+        "correct": false,
+        "rationale": "Amiodarone is reserved for refractory or unstable arrhythmia after vagal manoeuvres and adenosine fail; it is not first line. (Source: RCH CPG SVT)",
+        "source_refs": [
+          "RCH CPG SVT"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Infant SVT typically presents as a narrow complex tachycardia at 220 to 300 bpm with no rate variability and no visible P waves; the absence of beat-to-beat variation distinguishes it from sinus tachycardia. Acute management of a stable infant follows a stepped algorithm: vagal manoeuvres first (iced water bag to face is most effective in infants), then adenosine 0.1 mg/kg with rapid saline flush, doubling to 0.2 mg/kg, then synchronised cardioversion 1 J/kg if unstable or unresponsive. Verapamil is contraindicated under 12 months. Heart failure features such as hepatomegaly and crackles can develop after prolonged SVT but do not yet mandate cardioversion if perfusion is preserved.",
+      "key_points": [
+        "Infant SVT rate usually 220 to 300, no rate variability.",
+        "Iced water diving reflex first, adenosine second.",
+        "Verapamil contraindicated under 1 year.",
+        "Cardioversion 1 J/kg if unstable or refractory.",
+        "Refer to paediatric cardiology after first episode."
+      ],
+      "pearls": "Wolff-Parkinson-White accounts for around half of infant SVT; once converted, an ECG in sinus rhythm may show a delta wave and short PR indicating accessory pathway."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG SVT",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Supraventricular_Tachycardia_SVT/"
+      },
+      {
+        "label": "ANZCOR Guideline 12.2 Paediatric Advanced Life Support",
+        "url": "https://www.anzcor.org"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "vbg"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p26-005",
+    "topic": "Paediatrics",
+    "subtopic": "Child protection",
+    "subtopic_detail": "Suspected non-accidental injury - infant fracture work-up",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "child protection",
+      "fracture",
+      "safeguarding"
+    ],
+    "stem": "You are the paediatric registrar reviewing a 4-month-old infant brought in by mother and her new partner for irritability and reluctance to use the right arm since this morning. The mother reports the infant rolled off the change table 24 hours ago but acted normally afterwards. The partner is the primary daytime carer. Child protection records show no prior notifications. X-ray of the right arm shows a spiral fracture of the midshaft humerus. The infant is not yet rolling on developmental assessment.",
+    "data_table": {
+      "Vital signs": "T 36.9, HR 150, RR 36, SpO2 99%, BP 86/52, weight 6.8 kg",
+      "Examination": "Inconsolable when right arm handled, bruising over right upper arm and posterior thorax, small healing bruise on left cheek, fundoscopy not yet performed, anterior fontanelle soft, alert",
+      "Investigations": "Right humerus spiral fracture midshaft, FBE and coagulation studies pending, CRP normal",
+      "Medications": "Paracetamol given by triage nurse"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Apply a collar and cuff immobilisation, prescribe regular paracetamol and ibuprofen, and discharge home with orthopaedic outpatient review and safety net advice",
+        "correct": false,
+        "rationale": "Discharging an infant with a suspicious spiral fracture and unexplained bruising without child protection involvement is a serious safety breach. (Source: RCH CPG Child Abuse)",
+        "source_refs": [
+          "RCH CPG Child Abuse"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Arrange urgent bone profile including alkaline phosphatase, vitamin D and parathyroid hormone, and refer for genetic testing for osteogenesis imperfecta before notifying authorities",
+        "correct": false,
+        "rationale": "Bone fragility work-up may be added but does not replace mandatory notification; child protection must be activated first. (Source: RCH CPG Child Abuse)",
+        "source_refs": [
+          "RCH CPG Child Abuse"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Apply a back slab for analgesia, take repeated histories from each parent separately to clarify the mechanism, then decide on imaging based on consistency of stories",
+        "correct": false,
+        "rationale": "Imaging and notification must not be delayed pending further history-taking; the fracture pattern is already inconsistent with the given mechanism. (Source: RCH CPG Child Abuse)",
+        "source_refs": [
+          "RCH CPG Child Abuse"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Admit the infant under paediatrics for a full skeletal survey, head CT or MRI, ophthalmology review for retinal haemorrhages, and mandatory notification to child protection",
+        "correct": true,
+        "rationale": "A spiral humeral fracture in a non-mobile infant with multiple bruises mandates admission for occult injury work-up and statutory child protection notification. (Source: RCH CPG Child Abuse)",
+        "source_refs": [
+          "RCH CPG Child Abuse"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Discuss with parents the differential of accidental injury and arrange community child health nurse follow-up within 48 hours, deferring notification pending nurse review",
+        "correct": false,
+        "rationale": "Mandatory reporting cannot be deferred to community follow-up; all clinicians are reporters when abuse is suspected. (Source: RCH CPG Child Abuse)",
+        "source_refs": [
+          "RCH CPG Child Abuse"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Suspected physical abuse in infancy requires a structured response: admission, multidisciplinary work-up for occult injury, and statutory notification to child protection. Spiral or metaphyseal corner fractures, rib fractures, and any fracture in a non-mobile infant are high-specificity injuries for abuse. Skeletal survey is the imaging gold standard with repeat at 2 weeks to detect callus formation. Head imaging and ophthalmology assessment screen for occult intracranial injury and retinal haemorrhages of abusive head trauma. Bruising in a child under 4 months who is not yet cruising should always prompt a safeguarding assessment.",
+      "key_points": [
+        "Bruise in a pre-mobile infant requires safeguarding work-up.",
+        "Skeletal survey with 2-week repeat is the imaging standard.",
+        "Head MRI and retinal review for occult abusive head trauma.",
+        "Mandatory notification by all clinicians where abuse is suspected.",
+        "Bone fragility work-up does not delay reporting."
+      ],
+      "pearls": "Bruises in babies who don't cruise should not be ignored - the TEN-4-FACESp clinical decision rule identifies high-risk patterns: bruising on torso, ear, neck in under 4 years or any bruising in infants under 4 months."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG Child Abuse",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Child_abuse/"
+      },
+      {
+        "label": "RACP Position Statement Child Abuse and Neglect",
+        "url": "https://www.racp.edu.au"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p26-006",
+    "topic": "Paediatrics",
+    "subtopic": "ENT",
+    "subtopic_detail": "Periorbital versus orbital cellulitis - imaging and admission",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "cellulitis",
+      "ophthalmology"
+    ],
+    "stem": "You are the paediatric ED registrar assessing a 6-year-old with 3 days of right eyelid swelling and pain. The mother reports a recent upper respiratory infection. The child now refuses to open the right eye fully. On examination there is marked eyelid oedema with erythema, the eye appears proptosed by 3 mm compared with the left, and the child complains of pain on attempted upgaze with restricted abduction. The pupil is mid-sized and reactive but vision testing is difficult through swelling.",
+    "data_table": {
+      "Vital signs": "T 38.9, HR 124, RR 22, SpO2 99%, BP 102/64, weight 22 kg",
+      "Examination": "Right eyelid erythema and oedema, proptosis, restricted abduction with pain on upgaze, conjunctival chemosis, sinus tenderness over right maxilla",
+      "Investigations": "WCC 18.6, neutrophils 14.2, CRP 138, blood culture taken",
+      "Medications": "Paracetamol given by triage"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Discharge home on oral cephalexin 25 mg/kg four times daily with ophthalmology outpatient review the following day given the absence of complete ophthalmoplegia in this child",
+        "correct": false,
+        "rationale": "Proptosis, restricted eye movement and pain on gaze meet criteria for orbital cellulitis; oral therapy and discharge are unsafe. (Source: RCH CPG Periorbital and Orbital Cellulitis)",
+        "source_refs": [
+          "RCH CPG Periorbital and Orbital Cellulitis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Admit for intravenous flucloxacillin 50 mg/kg six hourly alone, with CT orbits and sinuses only if there is no clinical improvement after 48 hours of monotherapy",
+        "correct": false,
+        "rationale": "Flucloxacillin alone does not cover the sinus organisms that complicate orbital infection; imaging cannot be delayed in suspected orbital involvement. (Source: RCH CPG Periorbital and Orbital Cellulitis)",
+        "source_refs": [
+          "RCH CPG Periorbital and Orbital Cellulitis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Admit for urgent contrast CT of orbits and paranasal sinuses, commence intravenous ceftriaxone with flucloxacillin or vancomycin, and request ENT and ophthalmology review",
+        "correct": true,
+        "rationale": "Proptosis and ophthalmoplegia indicate orbital cellulitis; urgent imaging defines abscess or subperiosteal collection and dictates whether surgical drainage is required. (Source: RCH CPG Periorbital and Orbital Cellulitis)",
+        "source_refs": [
+          "RCH CPG Periorbital and Orbital Cellulitis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Admit for intravenous ceftriaxone monotherapy with ophthalmology review in the morning, repeat clinical examination in 4 hours, and arrange imaging only if vision deteriorates",
+        "correct": false,
+        "rationale": "Imaging should not be deferred when proptosis and gaze restriction are already present; delaying CT risks intracranial extension. (Source: RCH CPG Periorbital and Orbital Cellulitis)",
+        "source_refs": [
+          "RCH CPG Periorbital and Orbital Cellulitis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Apply warm compresses, commence oral amoxicillin clavulanate 22.5 mg/kg twice daily, and arrange paediatric outpatient review within 24 hours with safety net advice",
+        "correct": false,
+        "rationale": "Outpatient oral therapy is appropriate only for uncomplicated preseptal cellulitis without orbital signs. (Source: RCH CPG Periorbital and Orbital Cellulitis)",
+        "source_refs": [
+          "RCH CPG Periorbital and Orbital Cellulitis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Periorbital (preseptal) cellulitis is anterior to the orbital septum and presents with eyelid swelling and erythema but no proptosis, no pain on eye movement and preserved vision. Orbital (postseptal) cellulitis extends behind the septum and causes proptosis, painful or restricted eye movement, chemosis and potentially reduced visual acuity or relative afferent pupil defect. Orbital cellulitis is a surgical emergency because subperiosteal abscess and intracranial extension are well-recognised complications. Contrast CT of orbits and sinuses is the imaging modality of choice; treatment is IV broad-spectrum antibiotics covering sinus organisms with prompt ophthalmology and ENT involvement.",
+      "key_points": [
+        "Proptosis or eye movement pain defines orbital cellulitis.",
+        "Urgent contrast CT orbits and sinuses, not delayed imaging.",
+        "Ceftriaxone with flucloxacillin or vancomycin as empirical cover.",
+        "Surgical drainage for abscess over 10 mm or vision threat.",
+        "Sinus disease is the most common source in children."
+      ],
+      "pearls": "Reduced colour vision and a relative afferent pupil defect signal optic nerve compromise from orbital pressure and require emergency surgical decompression regardless of antibiotic response."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG Periorbital and Orbital Cellulitis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Periorbital_and_orbital_cellulitis/"
+      },
+      {
+        "label": "eTG Skin and Soft Tissue Infections",
+        "url": "https://tgldcdp.tg.org.au"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "inflammatory_markers"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p26-007",
+    "topic": "Paediatrics",
+    "subtopic": "Haematology",
+    "subtopic_detail": "Iron deficiency anaemia in a toddler - management and counselling",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "iron deficiency",
+      "anaemia"
+    ],
+    "stem": "You are the general practice registrar reviewing an 18-month-old whose mother has noticed pallor and reduced energy for play over 6 weeks. Diet history reveals 900 mL of cow's milk daily taken from a bottle, limited intake of solids, and a strong preference for white bread and pasta. Birth history was unremarkable at term. Growth parameters are tracking along the 25th centile. Developmental milestones are age-appropriate. There is no history of pica or melaena. Family migrated from Eritrea 2 years ago.",
+    "data_table": {
+      "Vital signs": "T 36.7, HR 124, RR 26, SpO2 99%, BP 92/56, weight 11 kg",
+      "Examination": "Conjunctival pallor, no jaundice, no lymphadenopathy, no hepatosplenomegaly, no koilonychia, cardiovascular examination normal with no murmur",
+      "Investigations": "Hb 84, MCV 62, MCH 18, reticulocyte count 1.0%, ferritin 7, iron 4, transferrin saturation 6%, lead level pending, faecal occult blood negative",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Arrange urgent paediatric haematology referral for haemoglobin electrophoresis and bone marrow examination given the markedly low MCV and migration history from northeast Africa",
+        "correct": false,
+        "rationale": "Microcytic anaemia with low ferritin is diagnostic of iron deficiency; electrophoresis is added later only if iron repletion fails to correct anaemia. (Source: RCH CPG Iron Deficiency)",
+        "source_refs": [
+          "RCH CPG Iron Deficiency"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Admit for intravenous ferric carboxymaltose infusion as oral absorption is unreliable in toddlers and intravenous therapy guarantees full repletion of iron stores in a single dose",
+        "correct": false,
+        "rationale": "IV iron is reserved for failed oral therapy, malabsorption or non-adherence; first-line is oral with dietary advice. (Source: RCH CPG Iron Deficiency)",
+        "source_refs": [
+          "RCH CPG Iron Deficiency"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence oral ferrous sulfate elixir 3 mg/kg of elemental iron once daily and counsel to reduce cow's milk to under 500 mL with iron rich solids and vitamin C sources",
+        "correct": true,
+        "rationale": "Oral iron with dietary modification including milk reduction below 500 mL is first-line therapy in nutritional iron deficiency. (Source: RCH CPG Iron Deficiency)",
+        "source_refs": [
+          "RCH CPG Iron Deficiency"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence oral iron polymaltose 6 mg/kg of elemental iron three times daily with each meal for 12 weeks and review only after completion of the prescribed full course",
+        "correct": false,
+        "rationale": "Three times daily dosing is no more effective than once daily for iron deficiency in children and increases gastrointestinal side effects. (Source: RCH CPG Iron Deficiency)",
+        "source_refs": [
+          "RCH CPG Iron Deficiency"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Transfuse one unit of packed red cells with furosemide cover, repeat full blood count after 24 hours, and commence oral iron supplementation once haemoglobin is above 100",
+        "correct": false,
+        "rationale": "Transfusion is reserved for haemodynamic compromise or symptomatic anaemia under 70; this toddler is well-perfused. (Source: RCH CPG Iron Deficiency)",
+        "source_refs": [
+          "RCH CPG Iron Deficiency"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Nutritional iron deficiency anaemia is the most common haematological problem in Australian toddlers and peaks at 9 to 24 months. Excessive cow's milk intake above 500 to 600 mL daily is a key driver because milk is iron poor, displaces iron rich foods and causes microscopic enteric blood loss. First-line therapy is oral iron 3 mg/kg of elemental iron once daily with vitamin C sources to enhance absorption; once daily dosing is now preferred over divided dosing because it gives better fractional absorption and fewer side effects. Repeat haemoglobin and ferritin after 4 weeks; expect haemoglobin to rise by at least 10 g/L.",
+      "key_points": [
+        "Limit cow's milk to under 500 mL daily after 12 months.",
+        "Oral ferrous sulfate 3 mg/kg once daily is first line.",
+        "Vitamin C source with iron improves absorption.",
+        "Repeat Hb at 4 weeks; expect rise above 10 g/L.",
+        "Investigate alternative causes if no response after compliance."
+      ],
+      "pearls": "Alternate-day iron dosing has equivalent absorption to daily and fewer side effects in adults; in toddlers the practical preference is still once daily because of palatability and parental compliance."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG Iron Deficiency",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Iron_deficiency/"
+      },
+      {
+        "label": "NHMRC Infant Feeding Guidelines",
+        "url": "https://www.nhmrc.gov.au"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_fbc",
+      "iron_studies"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p26-008",
+    "topic": "Paediatrics",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "New presentation type 1 diabetes with DKA - initial fluid plan",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "DKA",
+      "T1DM"
+    ],
+    "stem": "You are the paediatric registrar reviewing a 9-year-old girl brought to ED with 5 days of polyuria, polydipsia and weight loss and 12 hours of abdominal pain and vomiting. There is no past medical history. She is rousable but drowsy. The school nurse noticed her breath smelled fruity yesterday. There is no family history of diabetes. She has had no recent illness apart from this presentation.",
+    "data_table": {
+      "Vital signs": "T 36.5, HR 134, RR 32 with Kussmaul pattern, SpO2 99%, BP 96/58, weight 28 kg, capillary refill 3 seconds",
+      "Examination": "Dry mucous membranes, sunken eyes, abdomen soft with mild generalised tenderness, GCS 14 (E4 V4 M6), no focal neurology",
+      "Investigations": "Bedside glucose 28, ketones 6.2, venous gas pH 7.05 HCO3 6 pCO2 18, Na 132 K 5.4 Cl 100 urea 9.2 creatinine 88, urine ketones 4+",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate initial fluid plan over the first hour?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Give 20 mL/kg of 0.9% sodium chloride as a rapid bolus over 15 minutes then commence insulin infusion at 0.1 unit/kg/hour with hourly neurological observations recorded",
+        "correct": false,
+        "rationale": "Rapid bolus and early insulin both increase cerebral oedema risk; bolus is reserved for shock and insulin starts after 1 hour of fluid resuscitation. (Source: ISPAD Clinical Practice Guidelines Paediatric DKA)",
+        "source_refs": [
+          "ISPAD Clinical Practice Guidelines Paediatric DKA"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Give 10 mL/kg of 0.9% sodium chloride over 30 to 60 minutes then continue maintenance plus deficit replacement at a calculated rate, deferring insulin infusion until 1 hour of fluids has been delivered",
+        "correct": true,
+        "rationale": "Cautious 10 mL/kg bolus, gradual deficit replacement over 48 hours and delayed insulin start reduce cerebral oedema risk in paediatric DKA. (Source: ISPAD Clinical Practice Guidelines Paediatric DKA)",
+        "source_refs": [
+          "ISPAD Clinical Practice Guidelines Paediatric DKA"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence intravenous sodium bicarbonate 1 mmol/kg over 1 hour given the severe acidosis with pH 7.05, then begin sodium chloride maintenance and insulin infusion concurrently",
+        "correct": false,
+        "rationale": "Bicarbonate is harmful in paediatric DKA, causing paradoxical CSF acidosis and increased cerebral oedema; it is contraindicated unless life-threatening hyperkalaemia is present. (Source: ISPAD Clinical Practice Guidelines Paediatric DKA)",
+        "source_refs": [
+          "ISPAD Clinical Practice Guidelines Paediatric DKA"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence Hartmann solution at 1.5 times maintenance with insulin infusion at 0.1 unit/kg/hour started immediately to halt ongoing ketogenesis without further delay to glycaemic control",
+        "correct": false,
+        "rationale": "Insulin must be delayed at least 1 hour after fluid resuscitation begins; immediate insulin worsens cerebral oedema risk. (Source: ISPAD Clinical Practice Guidelines Paediatric DKA)",
+        "source_refs": [
+          "ISPAD Clinical Practice Guidelines Paediatric DKA"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Give 30 mL/kg of 0.45% sodium chloride over 1 hour with added potassium 40 mmol/L from the outset, then halve the rate and start insulin once acidosis begins to resolve",
+        "correct": false,
+        "rationale": "Hypotonic fluid increases free water and worsens cerebral oedema; isotonic sodium chloride is mandatory and rates this high are unsafe. (Source: ISPAD Clinical Practice Guidelines Paediatric DKA)",
+        "source_refs": [
+          "ISPAD Clinical Practice Guidelines Paediatric DKA"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Paediatric DKA management balances correction of dehydration and acidosis against cerebral oedema risk, which carries 25% mortality. Bolus fluids are limited to 10 mL/kg unless overt shock; deficit assumed at 5 to 7% and replaced over 48 hours with isotonic fluid. Insulin starts at least 1 hour after fluids at 0.05 to 0.1 unit/kg/hour, never with a bolus. Potassium 40 mmol/L is added after serum potassium is known unless anuric. Bicarbonate is contraindicated. Watch for warning signs of cerebral oedema: headache, falling GCS, hypertension with bradycardia, cranial nerve palsy. Treat suspected oedema with mannitol or hypertonic saline and reduce fluid rate.",
+      "key_points": [
+        "Limit bolus to 10 mL/kg, deficit over 48 hours.",
+        "Delay insulin start by at least 1 hour after fluids.",
+        "Never bolus insulin; infuse 0.05 to 0.1 unit/kg/hour.",
+        "Bicarbonate contraindicated except life-threatening hyperkalaemia.",
+        "Cerebral oedema warning: headache, falling GCS, hypertension with bradycardia."
+      ],
+      "pearls": "Effective osmolality (2 x Na plus glucose) should fall by no more than 3 mOsm/kg/hour; faster correction is independently associated with cerebral oedema even with apparently appropriate fluids."
+    },
+    "sources": [
+      {
+        "label": "ISPAD Clinical Practice Guidelines Paediatric DKA",
+        "url": "https://www.ispad.org"
+      },
+      {
+        "label": "RCH CPG Diabetic Ketoacidosis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Diabetic_ketoacidosis/"
+      }
+    ],
+    "reference_ranges": [
+      "bsl_paeds",
+      "ketones",
+      "vbg",
+      "paeds_uec"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p26-009",
+    "topic": "Paediatrics",
+    "subtopic": "Neonatology",
+    "subtopic_detail": "Neonatal jaundice - SBR threshold decisions",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "neonatal jaundice",
+      "phototherapy"
+    ],
+    "stem": "You are the neonatal registrar reviewing a 60-hour-old term baby boy in the postnatal ward. Mother is blood group O Rh positive, baby is A Rh positive. Direct antiglobulin test is positive. The baby is breastfed but feeding has been hesitant. The midwives are concerned about increasing yellow tinge. The baby was born by uneventful vaginal birth at 39+5 weeks and weighed 3.4 kg. There is no perinatal infection risk. The mother is otherwise well.",
+    "data_table": {
+      "Vital signs": "T 36.9, HR 138, RR 44, SpO2 99%, weight 3.25 kg (down 4.4% from birth)",
+      "Examination": "Visibly jaundiced to chest, alert and responsive to handling, no hepatosplenomegaly, anterior fontanelle soft, primitive reflexes intact",
+      "Investigations": "Total SBR 320 micromol/L, conjugated 10 micromol/L, Hb 158, reticulocytes 5%, blood group A Rh positive DAT positive (anti-A)",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Continue exclusive breastfeeding with lactation support and repeat SBR in 12 hours, no phototherapy required as the value is below standard term thresholds for this age range",
+        "correct": false,
+        "rationale": "SBR 320 at 60 hours in a term infant with ABO incompatibility exceeds the phototherapy threshold; treatment is required now. (Source: RCH CPG Neonatal Jaundice)",
+        "source_refs": [
+          "RCH CPG Neonatal Jaundice"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Administer intravenous immunoglobulin 0.5 g/kg as first-line therapy to reduce antibody-mediated red cell destruction and avoid the need for phototherapy or further escalation",
+        "correct": false,
+        "rationale": "IVIg is an adjunct considered only when intensive phototherapy fails or exchange transfusion is imminent in haemolytic disease. (Source: RCH CPG Neonatal Jaundice)",
+        "source_refs": [
+          "RCH CPG Neonatal Jaundice"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Arrange immediate exchange transfusion with double-volume calculation through an umbilical venous catheter to remove bilirubin and antibody-coated red cells without delay",
+        "correct": false,
+        "rationale": "Exchange transfusion is reserved for failure of intensive phototherapy or signs of acute bilirubin encephalopathy, neither of which is present. (Source: RCH CPG Neonatal Jaundice)",
+        "source_refs": [
+          "RCH CPG Neonatal Jaundice"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Stop breastfeeding for 24 hours and switch to expressed formula to confirm breast milk jaundice as the cause, then reintroduce breastfeeding once SBR has begun to fall",
+        "correct": false,
+        "rationale": "Breastfeeding interruption is not first-line; haemolysis is the driver here and lactation support with phototherapy is correct. (Source: RCH CPG Neonatal Jaundice)",
+        "source_refs": [
+          "RCH CPG Neonatal Jaundice"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Commence intensive phototherapy with light source above and below, ensure adequate fluid intake by feeding or formula top-up if needed, and repeat SBR in 4 to 6 hours",
+        "correct": true,
+        "rationale": "SBR above the term phototherapy threshold with ABO haemolysis warrants intensive phototherapy with hydration optimisation and short-interval SBR monitoring. (Source: RCH CPG Neonatal Jaundice)",
+        "source_refs": [
+          "RCH CPG Neonatal Jaundice"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Neonatal hyperbilirubinaemia is plotted on a gestational-age-specific nomogram to set phototherapy and exchange thresholds. ABO incompatibility lowers the treatment threshold because of ongoing haemolysis. Conjugated bilirubin above 20 micromol/L or 20% of total is pathological and requires investigation for biliary atresia or sepsis. Acute bilirubin encephalopathy (kernicterus) presents with lethargy, poor feeding, hypertonia, opisthotonus and a high-pitched cry. Intensive phototherapy reduces unconjugated bilirubin within hours; exchange transfusion is reserved for failure of intensive phototherapy or encephalopathy. Discharge follow-up should include a community SBR check within 24 to 48 hours when risk factors are present.",
+      "key_points": [
+        "Use age-in-hours nomogram for phototherapy thresholds.",
+        "ABO incompatibility lowers treatment threshold.",
+        "Conjugated bilirubin above 20 needs separate work-up.",
+        "Exchange transfusion only for treatment failure or encephalopathy.",
+        "Adequate hydration is essential during phototherapy."
+      ],
+      "pearls": "Jaundice in the first 24 hours of life is always pathological - haemolytic disease, sepsis or G6PD deficiency until proven otherwise - and never attributable to physiological or breast milk jaundice."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG Neonatal Jaundice",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Jaundice_in_early_infancy/"
+      },
+      {
+        "label": "Queensland Clinical Guidelines Neonatal Jaundice",
+        "url": "https://www.health.qld.gov.au"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_jaundice",
+      "paeds_fbc"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p26-010",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Contraception",
+    "subtopic_detail": "Postpartum contraception in a breastfeeding woman",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "contraception",
+      "postnatal",
+      "breastfeeding"
+    ],
+    "stem": "You are the GP registrar reviewing a 32-year-old G2P2 at her 6-week postnatal check after a normal vaginal birth. She is exclusively breastfeeding her infant on demand. She has migraines without aura and a BMI of 27. She wants reliable, reversible contraception with the option to conceive again in 18 months. She finds taking daily medication unreliable. Pap history is up to date, blood pressure is normal and there is no history of venous thromboembolism. She declines any method that may reduce her milk supply.",
+    "data_table": {
+      "Vital signs": "BP 118/74, HR 70, BMI 27",
+      "Examination": "Uterus involuted, perineum healed, breasts soft with established feeding, no abdominal mass",
+      "Investigations": "Not required",
+      "Medications": "Nil"
+    },
+    "lead_in": "Which contraceptive option is most appropriate?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Combined oral contraceptive pill containing ethinylestradiol 30 micrograms and levonorgestrel 150 micrograms, commenced today with backup condoms for the first 7 days",
+        "correct": false,
+        "rationale": "Combined hormonal contraception is not recommended before 6 weeks postpartum in breastfeeding women and may reduce milk supply. (Source: Australian Contraception Handbook)",
+        "source_refs": [
+          "Australian Contraception Handbook"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Lactational amenorrhoea method counselling alone, with the patient relying on exclusive breastfeeding and amenorrhoea while introducing solid foods at 6 months",
+        "correct": false,
+        "rationale": "LAM efficacy falls rapidly once solids start, feeds drop below every 4 hours, or menses returns; the patient needs reliable longer-term contraception. (Source: Australian Contraception Handbook)",
+        "source_refs": [
+          "Australian Contraception Handbook"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Levonorgestrel intrauterine device inserted today after pregnancy is excluded by history and examination, providing 5 years of contraception with no impact on breastfeeding",
+        "correct": true,
+        "rationale": "LNG-IUD is long-acting, reversible, safe in breastfeeding and avoids daily compliance issues; insertion at the 6-week check is standard. (Source: Australian Contraception Handbook)",
+        "source_refs": [
+          "Australian Contraception Handbook"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Depot medroxyprogesterone acetate 150 mg intramuscular every 12 weeks, starting today, with counselling about potential weight gain and delayed return of fertility after stopping",
+        "correct": false,
+        "rationale": "DMPA is acceptable but delayed return to fertility for up to 12 months is a disadvantage when conception is planned in 18 months. (Source: Australian Contraception Handbook)",
+        "source_refs": [
+          "Australian Contraception Handbook"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Progestogen only pill containing norethisterone 350 micrograms taken at the same time each day with a 3-hour window, beginning today before resuming sexual activity",
+        "correct": false,
+        "rationale": "POP requires strict daily compliance with a 3-hour window which the patient has stated she cannot reliably maintain. (Source: Australian Contraception Handbook)",
+        "source_refs": [
+          "Australian Contraception Handbook"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Long-acting reversible contraceptives (LARCs) are first-line in postpartum women because of high effectiveness and minimal user dependency. The LNG-IUD provides 5 to 8 years of contraception, reduces menstrual bleeding and is compatible with breastfeeding. Insertion at the 6-week postnatal check is standard; immediate postpartum insertion (within 10 minutes of placental delivery) is gaining favour but has higher expulsion rates. Combined hormonal contraception is delayed until at least 6 weeks postpartum in breastfeeding women because of VTE risk and potential lactation reduction. Etonogestrel implant is an equally good LARC choice if intrauterine device is declined.",
+      "key_points": [
+        "LARC preferred in postpartum and most other settings.",
+        "Combined hormonal contraception delayed in breastfeeding until 6 weeks.",
+        "LAM unreliable once solids start or menses returns.",
+        "DMPA acceptable but delayed return to fertility.",
+        "POP needs strict daily timing within a 3-hour window."
+      ],
+      "pearls": "Etonogestrel subdermal implant offers 3 years of contraception with no insertion-related expulsion risk and is the preferred LARC if a patient declines an intrauterine procedure or wants the option to remove without a clinic visit."
+    },
+    "sources": [
+      {
+        "label": "Australian Contraception Handbook",
+        "url": "https://www.fpnsw.org.au"
+      },
+      {
+        "label": "RANZCOG Contraception Statement",
+        "url": "https://ranzcog.edu.au"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-30"
+  }
+]
