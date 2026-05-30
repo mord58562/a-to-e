@@ -1,0 +1,202 @@
+[
+  {
+    "id": "ctb-p31-021",
+    "topic": "Psychiatry",
+    "subtopic": "Toxicology",
+    "subtopic_detail": "Discriminating serotonin syndrome from neuroleptic malignant syndrome",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["serotonin syndrome", "NMS"],
+    "stem": "You are the medical registrar called to a 38-year-old woman on the psychiatric ward with sudden agitation, tremor and fever. She has bipolar I disorder and was started on tramadol 50 mg four-hourly for back pain yesterday in addition to her usual sertraline 100 mg and lithium 750 mg nocte. Symptoms began 6 hours ago and have worsened in the last hour. She has had no recent dose change of her antipsychotic.",
+    "data_table": {
+      "Vital signs": "T 39.4 °C, HR 132, BP 168/96, RR 28, SpO2 97% room air",
+      "Examination": "Agitated, diaphoretic, mydriasis, hyperreflexia and sustained clonus more marked in lower limbs, mild tremor, no lead-pipe rigidity",
+      "Investigations": "Creatine kinase 482 U/L, lactate 3.2 mmol/L, WCC 11.8 x10^9/L, Na 138, K 4.0, creatinine 78 micromol/L, lithium 0.9 mmol/L. ECG: sinus tachycardia."
+    },
+    "lead_in": "What is the most appropriate immediate management?",
+    "options": [
+      {"letter": "A", "text": "Cease the offending serotonergic agents, give intravenous benzodiazepines for agitation, commence active cooling and admit for monitoring and supportive care", "correct": true, "rationale": "Hunter criteria with clonus, hyperreflexia, agitation and autonomic instability after addition of tramadol to sertraline confirm serotonin syndrome; cessation, benzodiazepines and supportive care are first-line. (Source: Therapeutic Guidelines: Toxicology)", "source_refs": ["Therapeutic Guidelines: Toxicology", "Austin Toxicology Handbook"]},
+      {"letter": "B", "text": "Start bromocriptine 2.5 mg orally three times daily and intravenous dantrolene 1 mg/kg as definitive treatment for neuroleptic malignant syndrome before any other escalation", "correct": false, "rationale": "Bromocriptine and dantrolene are reserved for neuroleptic malignant syndrome with lead-pipe rigidity and dopamine antagonist exposure; the clonus and hyperreflexia point to serotonin syndrome, not NMS. (Source: Therapeutic Guidelines: Toxicology)", "source_refs": ["Therapeutic Guidelines: Toxicology"]},
+      {"letter": "C", "text": "Administer intravenous physostigmine 1 to 2 mg over 5 minutes targeting reversal of anticholinergic delirium and persisting tachycardia in this acutely confused febrile patient", "correct": false, "rationale": "Physostigmine reverses anticholinergic toxicity, which causes dry skin and absent bowel sounds rather than diaphoresis and clonus; it does not address serotonin syndrome. (Source: Therapeutic Guidelines: Toxicology)", "source_refs": ["Therapeutic Guidelines: Toxicology"]},
+      {"letter": "D", "text": "Give intravenous haloperidol 5 mg for the acute behavioural disturbance and increase her usual sertraline to 150 mg today to address mood-related agitation in this acute presentation", "correct": false, "rationale": "Adding antipsychotics or increasing serotonergic agents in suspected serotonin syndrome will worsen the syndrome and risk neuroleptic malignant syndrome from haloperidol. (Source: Therapeutic Guidelines: Toxicology)", "source_refs": ["Therapeutic Guidelines: Toxicology"]},
+      {"letter": "E", "text": "Hold lithium for 24 hours, continue sertraline and tramadol unchanged and recheck the lithium level in the morning before considering further changes to her medication regimen", "correct": false, "rationale": "Lithium is not the primary serotonergic agent here, and continuing tramadol and sertraline will perpetuate the syndrome; offending agents must be ceased immediately. (Source: Therapeutic Guidelines: Toxicology)", "source_refs": ["Therapeutic Guidelines: Toxicology"]}
+    ],
+    "explanation": {
+      "summary": "Serotonin syndrome arises within hours of a new serotonergic agent and is diagnosed by the Hunter criteria, which emphasise clonus, hyperreflexia, agitation, diaphoresis and autonomic instability. Tramadol is a common precipitant in patients already on selective serotonin reuptake inhibitors and should be flagged in medication review. Treatment is supportive: cease the agent, give benzodiazepines, cool and hydrate. Neuroleptic malignant syndrome by contrast develops over days, presents with lead-pipe rigidity and bradykinesia, and follows dopamine antagonist exposure.",
+      "key_points": [
+        "Hunter criteria: spontaneous clonus, or inducible clonus with agitation or diaphoresis",
+        "Serotonin syndrome develops within hours; NMS develops over 1 to 3 days",
+        "Treatment is cessation, benzodiazepines, active cooling and supportive care",
+        "Cyproheptadine 12 mg orally is considered in refractory cases",
+        "Tramadol, fentanyl, pethidine, linezolid and St John's wort are common co-precipitants"
+      ],
+      "pearls": "MAO inhibitors plus serotonergic agents can cause life-threatening serotonin syndrome that persists for weeks; a 14-day washout is required before switching from a MAO inhibitor to a selective serotonin reuptake inhibitor."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Toxicology", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Austin Toxicology Handbook", "url": "https://austintox.com/"}
+    ],
+    "reference_ranges": ["uec", "inflammatory_markers"],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p31-022",
+    "topic": "Psychiatry",
+    "subtopic": "Mood disorders",
+    "subtopic_detail": "Acute mania with psychotic features adjunctive antipsychotic choice",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["acute mania", "bipolar disorder"],
+    "stem": "You are the psychiatry registrar on the consultation-liaison service reviewing a 36-year-old man with known bipolar I disorder. He has been on lithium 1000 mg nocte for two years with previous good response. He presents in florid mania for the past four days with grandiose delusions, reduced sleep and hyperactivity. He is medication adherent and his lithium level is in range. He has no diabetes or known cardiac disease. He has no acute medical issues.",
+    "data_table": {
+      "Vital signs": "T 36.7 °C, HR 110, BP 132/82, RR 16, SpO2 99% room air",
+      "Examination": "Pressured speech, flight of ideas, grandiose delusions, no perceptual disturbance reported, no extrapyramidal signs",
+      "Investigations": "Serum lithium 0.9 mmol/L. TSH 2.2 mIU/L, creatinine 78 micromol/L, eGFR 95 mL/min/1.73 m^2, fasting glucose 4.8 mmol/L, fasting lipids unremarkable. ECG QTc 412 ms."
+    },
+    "lead_in": "What is the most appropriate next pharmacological step?",
+    "options": [
+      {"letter": "A", "text": "Increase his lithium dose to target a level of 1.2 mmol/L and continue this as monotherapy without addition of any antipsychotic agent during this episode", "correct": false, "rationale": "Lithium monotherapy is insufficient for severe mania with psychotic features and acute behavioural disturbance; combination with an antipsychotic is required. (Source: RANZCP Mood Disorders Guidelines)", "source_refs": ["RANZCP Mood Disorders Guidelines"]},
+      {"letter": "B", "text": "Switch his lithium to sodium valproate 1 g twice daily and reassess his response over a fortnight after a routine therapeutic drug level has been obtained from his bloods", "correct": false, "rationale": "Switching mood stabilisers in someone with a previously good lithium response is inappropriate; combination treatment with an antipsychotic is preferred. (Source: RANZCP Mood Disorders Guidelines)", "source_refs": ["RANZCP Mood Disorders Guidelines"]},
+      {"letter": "C", "text": "Add oral olanzapine 10 mg daily to his existing lithium and review the response over the following week with weekly weight, lipid and glucose monitoring", "correct": true, "rationale": "Adding a second-generation antipsychotic such as olanzapine to lithium is first-line for severe mania with psychotic features in Australia; combination therapy outperforms either agent alone. (Source: RANZCP Mood Disorders Guidelines)", "source_refs": ["RANZCP Mood Disorders Guidelines", "Therapeutic Guidelines: Psychotropic"]},
+      {"letter": "D", "text": "Commence sertraline 50 mg daily in addition to current therapy to address irritability and mood lability that may be driving his presenting acute behavioural disturbance", "correct": false, "rationale": "Antidepressants are contraindicated in acute mania because they risk worsening the manic episode and inducing rapid cycling. (Source: RANZCP Mood Disorders Guidelines)", "source_refs": ["RANZCP Mood Disorders Guidelines"]},
+      {"letter": "E", "text": "Add lamotrigine 25 mg daily, titrate over six weeks to 200 mg and continue ongoing monthly serum monitoring of his lithium level during the titration period", "correct": false, "rationale": "Lamotrigine has efficacy in bipolar maintenance and depressive episodes, not in acute mania; its slow titration over 6 weeks is unsuitable for acute control. (Source: RANZCP Mood Disorders Guidelines)", "source_refs": ["RANZCP Mood Disorders Guidelines"]}
+    ],
+    "explanation": {
+      "summary": "Acute mania with psychotic features is preferentially treated with combination therapy of a mood stabiliser plus a second-generation antipsychotic. Combination treatment achieves a higher response rate than either agent alone. Olanzapine, risperidone, quetiapine, aripiprazole and asenapine have evidence in acute mania; choice is guided by metabolic profile, sedation, prior response and patient preference. Antidepressants are avoided in acute mania because they can worsen the episode and induce rapid cycling.",
+      "key_points": [
+        "Combination of a mood stabiliser and antipsychotic outperforms either alone in acute mania",
+        "Olanzapine, risperidone, quetiapine, aripiprazole and asenapine are first-line antipsychotic options",
+        "Antidepressants are contraindicated in acute mania because they worsen the episode",
+        "Lamotrigine is for bipolar maintenance and depressive episodes, not acute mania",
+        "Metabolic monitoring at baseline and 12 weekly is required with second-generation antipsychotics"
+      ],
+      "pearls": "Aripiprazole at 15 to 30 mg has the lowest metabolic burden among the second-generation antipsychotics used in mania; it is preferred when long-term cardiometabolic risk is a concern."
+    },
+    "sources": [
+      {"label": "RANZCP Mood Disorders Guidelines", "url": "https://www.ranzcp.org/"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["lipids", "glucose_hba1c", "thyroid"],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p31-023",
+    "topic": "Medicine",
+    "subtopic": "Haematology",
+    "subtopic_detail": "Outpatient anticoagulation for provoked deep venous thrombosis",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["DVT", "anticoagulation"],
+    "stem": "You are the emergency department resident reviewing a 56-year-old man with a 5-day history of swelling and aching in the right leg. He returned 10 days ago from a 24-hour international flight. He has no chest pain or breathlessness. He has no personal or family history of clotting or bleeding. He is on no regular medications and has no allergies. His weight is 88 kg.",
+    "data_table": {
+      "Vital signs": "T 36.7 °C, HR 86, BP 124/78, RR 16, SpO2 98% room air",
+      "Examination": "Swollen erythematous right calf, tender along medial calf, asymmetric calf measurement 38 vs 35 cm, palpable distal pulses, no chest signs",
+      "Investigations": "Whole-leg compression ultrasound: non-compressible right popliteal vein with extension to the femoral vein. FBC, U&E and LFTs unremarkable. eGFR 92 mL/min/1.73 m^2."
+    },
+    "lead_in": "What is the most appropriate management plan?",
+    "options": [
+      {"letter": "A", "text": "Admit for intravenous unfractionated heparin titrated to APTT 60 to 80 seconds and bridge to warfarin maintaining INR 2 to 3 over the following days of admission", "correct": false, "rationale": "Inpatient unfractionated heparin and warfarin bridging is reserved for selected populations such as those with severe renal impairment or antiphospholipid syndrome; first-line outpatient management uses a direct oral anticoagulant. (Source: Thrombosis and Haemostasis Society of Australia and New Zealand)", "source_refs": ["Thrombosis and Haemostasis Society of Australia and New Zealand"]},
+      {"letter": "B", "text": "Commence apixaban 10 mg twice daily for 7 days then 5 mg twice daily for at least 3 months and arrange general practitioner follow-up to plan total duration of anticoagulation", "correct": true, "rationale": "Outpatient apixaban with the 10 mg twice daily lead-in for 7 days, then 5 mg twice daily for at least 3 months, is the Australian first-line treatment for provoked proximal DVT in a patient with normal renal function and no contraindications. (Source: Thrombosis and Haemostasis Society of Australia and New Zealand)", "source_refs": ["Thrombosis and Haemostasis Society of Australia and New Zealand", "Therapeutic Guidelines: Cardiovascular"]},
+      {"letter": "C", "text": "Refer urgently for thrombolysis with intravenous alteplase 100 mg over two hours to clear the venous thrombus and prevent post-thrombotic syndrome at long-term follow-up", "correct": false, "rationale": "Catheter-directed thrombolysis is reserved for limb-threatening phlegmasia cerulea dolens; routine thrombolysis is not used for typical proximal DVT. (Source: Thrombosis and Haemostasis Society of Australia and New Zealand)", "source_refs": ["Thrombosis and Haemostasis Society of Australia and New Zealand"]},
+      {"letter": "D", "text": "Place an inferior vena cava filter and start apixaban 5 mg twice daily without a lead-in phase to prevent pulmonary embolism in his routine outpatient anticoagulation pathway", "correct": false, "rationale": "Inferior vena cava filters are reserved for patients with contraindications to anticoagulation; placing one without justification is not standard care. (Source: Thrombosis and Haemostasis Society of Australia and New Zealand)", "source_refs": ["Thrombosis and Haemostasis Society of Australia and New Zealand"]},
+      {"letter": "E", "text": "Defer anticoagulation and arrange weekly compression ultrasounds for the next month to monitor whether the thrombus extends proximally before any treatment is initiated for him", "correct": false, "rationale": "Surveillance without anticoagulation is appropriate only for selected isolated distal DVT, not for confirmed proximal DVT, which carries a high pulmonary embolism risk. (Source: Thrombosis and Haemostasis Society of Australia and New Zealand)", "source_refs": ["Thrombosis and Haemostasis Society of Australia and New Zealand"]}
+    ],
+    "explanation": {
+      "summary": "Proximal deep venous thrombosis in a haemodynamically stable patient with adequate renal function is managed as an outpatient with a direct oral anticoagulant. Apixaban or rivaroxaban with the loading-dose regimen are first-line in Australia; warfarin remains used in antiphospholipid syndrome, mechanical heart valves and severe renal impairment. Total duration is at least 3 months for provoked DVT and indefinite for unprovoked or cancer-associated thrombosis. Compression stockings reduce post-thrombotic syndrome risk.",
+      "key_points": [
+        "Apixaban 10 mg twice daily for 7 days then 5 mg twice daily is the loading and treatment regimen",
+        "Rivaroxaban 15 mg twice daily for 21 days then 20 mg daily is an equivalent direct oral anticoagulant",
+        "Provoked DVT is treated for at least 3 months; unprovoked DVT typically indefinite",
+        "Warfarin is preferred in antiphospholipid syndrome and severe renal impairment",
+        "IVC filters are reserved for absolute contraindications to anticoagulation"
+      ],
+      "pearls": "Direct oral anticoagulants are contraindicated in mechanical heart valves and antiphospholipid syndrome with triple positivity because of inferior outcomes in trials versus warfarin."
+    },
+    "sources": [
+      {"label": "Thrombosis and Haemostasis Society of Australia and New Zealand", "url": "https://www.thanz.org.au/"},
+      {"label": "Therapeutic Guidelines: Cardiovascular", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["fbc", "uec", "lfts"],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p31-024",
+    "topic": "Medicine",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Acute exacerbation of chronic obstructive pulmonary disease corticosteroid duration",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["COPD exacerbation", "corticosteroid"],
+    "stem": "You are the general medical registrar admitting a 68-year-old man with a 3-day worsening of his usual breathlessness and a productive cough with purulent sputum. He has known COPD on tiotropium and salbutamol with two exacerbations in the last 12 months. He is afebrile and able to speak in short sentences. He has no diabetes and no recent antibiotics. His baseline FEV1 is 52% predicted.",
+    "data_table": {
+      "Vital signs": "T 37.0 °C, HR 102, BP 138/82, RR 26, SpO2 90% room air, rising to 94% on 2 L nasal prongs",
+      "Examination": "Bilateral wheeze, use of accessory muscles, no consolidation, no peripheral oedema, calves soft",
+      "Investigations": "Chest x-ray: hyperinflation, no consolidation. ABG on 2 L: pH 7.36, pCO2 52 mmHg, pO2 68 mmHg, HCO3 28 mmol/L. CRP 38 mg/L, WCC 12.4 x10^9/L."
+    },
+    "lead_in": "What is the most appropriate course of systemic corticosteroid?",
+    "options": [
+      {"letter": "A", "text": "Administer a single intravenous hydrocortisone 200 mg dose only with no oral corticosteroid follow-on therapy planned at discharge from the emergency department", "correct": false, "rationale": "A single hydrocortisone dose alone is insufficient; an oral prednisolone course is required to consolidate the anti-inflammatory effect on the airways. (Source: COPD-X Plan)", "source_refs": ["COPD-X Plan"]},
+      {"letter": "B", "text": "Prescribe oral prednisolone 50 mg daily for 14 days with weekly clinic review during the taper and a brief intravenous methylprednisolone bridge to commence treatment", "correct": false, "rationale": "Australian guidelines recommend a 5-day course of oral prednisolone for COPD exacerbations; longer courses do not improve outcomes and increase adverse effects. (Source: COPD-X Plan)", "source_refs": ["COPD-X Plan"]},
+      {"letter": "C", "text": "Order intravenous dexamethasone 8 mg every 6 hours for 72 hours and convert to ongoing oral maintenance prednisolone 10 mg daily on discharge for chronic obstructive pulmonary disease control", "correct": false, "rationale": "Continuous maintenance prednisolone is not recommended for COPD because of the side-effect burden; exacerbations are treated with short courses. (Source: COPD-X Plan)", "source_refs": ["COPD-X Plan"]},
+      {"letter": "D", "text": "Continue inhaled corticosteroid as currently prescribed with no oral course because this exacerbation is sufficiently mild and self-limiting and additional steroid will not change outcomes", "correct": false, "rationale": "Exacerbations with hypoxia and accessory muscle use require systemic corticosteroids; inhaled steroid alone does not address the acute airway inflammation. (Source: COPD-X Plan)", "source_refs": ["COPD-X Plan"]},
+      {"letter": "E", "text": "Start oral prednisolone 30 to 50 mg daily for 5 days without taper and add empirical amoxicillin or doxycycline based on the purulent sputum profile during this exacerbation", "correct": true, "rationale": "Oral prednisolone 30 to 50 mg daily for 5 days without taper is the Australian COPD-X recommendation; antibiotics are indicated when at least two of the Anthonisen criteria (increased dyspnoea, sputum volume, sputum purulence) are met. (Source: COPD-X Plan)", "source_refs": ["COPD-X Plan", "Therapeutic Guidelines: Antibiotic"]}
+    ],
+    "explanation": {
+      "summary": "Acute exacerbations of COPD are treated with short-acting bronchodilators, systemic corticosteroids and selective antibiotics. The COPD-X Plan recommends oral prednisolone 30 to 50 mg daily for 5 days; tapering is unnecessary and does not improve outcomes. Antibiotics are added when at least two of the Anthonisen criteria are met or when ventilatory support is required. Controlled oxygen targeting SpO2 88 to 92% prevents hypercapnic acidosis in CO2 retainers.",
+      "key_points": [
+        "Oral prednisolone 30 to 50 mg daily for 5 days without taper is the recommended course",
+        "Antibiotics if 2 of 3 Anthonisen criteria are met: dyspnoea, sputum volume, sputum purulence",
+        "Controlled oxygen to SpO2 88 to 92% avoids worsening hypercapnia",
+        "Non-invasive ventilation is indicated for pH below 7.35 with pCO2 above 45 mmHg",
+        "Smoking cessation and pulmonary rehabilitation reduce future exacerbations"
+      ],
+      "pearls": "Eosinophil count above 0.3 x10^9/L during exacerbation predicts greater response to corticosteroids and is increasingly used to guide steroid use in COPD."
+    },
+    "sources": [
+      {"label": "COPD-X Plan", "url": "https://copdx.org.au/"},
+      {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["abg", "inflammatory_markers", "fbc"],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p31-025",
+    "topic": "Medicine",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Metformin initiation in newly diagnosed type 2 diabetes",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["type 2 diabetes", "metformin"],
+    "stem": "You are the general practice registrar reviewing a 58-year-old woman with newly diagnosed type 2 diabetes confirmed by two fasting glucose readings and an HbA1c. She has no symptoms of polyuria or weight loss. She has hypertension on perindopril. She does not smoke and drinks one glass of wine on weekends. She has no chronic kidney disease history and no acute cardiovascular events. Her body mass index is 31 kg/m^2.",
+    "data_table": {
+      "Vital signs": "T 36.7 °C, HR 76, BP 132/82, RR 14",
+      "Examination": "Body mass index 31 kg/m^2, no peripheral oedema, foot examination intact, fundi unremarkable",
+      "Investigations": "HbA1c 7.8%, fasting glucose 9.2 mmol/L, eGFR 68 mL/min/1.73 m^2, creatinine 86 micromol/L, LFTs normal, urine albumin:creatinine ratio 2.4 mg/mmol"
+    },
+    "lead_in": "What is the most appropriate initial pharmacological step?",
+    "options": [
+      {"letter": "A", "text": "Start basal insulin 10 units at night and uptitrate by 2 units every 3 days targeting a fasting glucose below 6.0 mmol/L without using any oral hypoglycaemic agent first", "correct": false, "rationale": "Basal insulin is reserved for severe hyperglycaemia, symptomatic disease or failure of oral therapy; first-line for new type 2 diabetes is metformin. (Source: RACGP General Practice Management of Type 2 Diabetes)", "source_refs": ["RACGP General Practice Management of Type 2 Diabetes"]},
+      {"letter": "B", "text": "Commence empagliflozin 10 mg daily as initial monotherapy and arrange a follow-up appointment in three months for a repeat HbA1c and dose review with a structured plan", "correct": false, "rationale": "Sodium-glucose cotransporter 2 inhibitors are typically added to metformin or used first-line with confirmed cardiovascular or renal indications; they are not standard initial monotherapy. (Source: RACGP General Practice Management of Type 2 Diabetes)", "source_refs": ["RACGP General Practice Management of Type 2 Diabetes"]},
+      {"letter": "C", "text": "Recommend lifestyle measures only and review the HbA1c in 6 months before starting any glucose-lowering medication, regardless of her starting HbA1c or other clinical risk profile", "correct": false, "rationale": "An HbA1c of 7.8% at diagnosis warrants concurrent metformin initiation alongside lifestyle measures; lifestyle alone takes too long to achieve target. (Source: RACGP General Practice Management of Type 2 Diabetes)", "source_refs": ["RACGP General Practice Management of Type 2 Diabetes"]},
+      {"letter": "D", "text": "Start metformin 500 mg daily with food, uptitrate over 4 weeks to 1 g twice daily as tolerated and review HbA1c and renal function at 3 months", "correct": true, "rationale": "Metformin is first-line for new type 2 diabetes in Australia with renal function above eGFR 60 mL/min/1.73 m^2; gradual titration reduces gastrointestinal side effects and HbA1c review at 3 months guides escalation. (Source: RACGP General Practice Management of Type 2 Diabetes)", "source_refs": ["RACGP General Practice Management of Type 2 Diabetes", "Therapeutic Guidelines: Endocrinology"]},
+      {"letter": "E", "text": "Initiate gliclazide modified-release 30 mg daily with breakfast and aim for an HbA1c below 6.5% over the next six months without using any other glucose-lowering therapy", "correct": false, "rationale": "Sulfonylureas are second-line because they cause weight gain and hypoglycaemia; metformin is preferred first-line for new type 2 diabetes. (Source: RACGP General Practice Management of Type 2 Diabetes)", "source_refs": ["RACGP General Practice Management of Type 2 Diabetes"]}
+    ],
+    "explanation": {
+      "summary": "Metformin remains the first-line pharmacotherapy for newly diagnosed type 2 diabetes in Australia, alongside lifestyle modification. It is weight neutral, has no hypoglycaemia risk and reduces cardiovascular events in observational data. Renal function should be monitored: dose reduction is required when eGFR falls below 60 mL/min/1.73 m^2 and metformin is contraindicated below 30. Sodium-glucose cotransporter 2 inhibitors and glucagon-like peptide 1 agonists are added when cardiovascular, renal or weight indications exist.",
+      "key_points": [
+        "Metformin is first-line at HbA1c above 6.5% with eGFR above 60 mL/min/1.73 m^2",
+        "Dose reduce at eGFR 30 to 59 mL/min/1.73 m^2 and avoid below eGFR 30",
+        "SGLT2 inhibitors are added with cardiovascular disease, heart failure or chronic kidney disease",
+        "GLP-1 receptor agonists are added with obesity, atherosclerotic cardiovascular disease or for weight loss",
+        "Sulfonylureas remain useful third-line but cause weight gain and hypoglycaemia"
+      ],
+      "pearls": "Hold metformin for 48 hours around iodinated contrast administration if the eGFR is below 60 mL/min/1.73 m^2 to reduce lactic acidosis risk from contrast-induced renal impairment."
+    },
+    "sources": [
+      {"label": "RACGP General Practice Management of Type 2 Diabetes", "url": "https://www.racgp.org.au/"},
+      {"label": "Therapeutic Guidelines: Endocrinology", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["glucose_hba1c", "uec"],
+    "created": "2026-05-30"
+  }
+]
