@@ -87,5 +87,824 @@
       "vbg"
     ],
     "created": "2026-05-30"
+  },
+  {
+    "id": "cross-topic-balanced-p27-002",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Viral-induced wheeze",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "bronchiolitis",
+      "wheeze"
+    ],
+    "stem": "You are the GP registrar reviewing a 10-month-old boy at a follow-up visit two weeks after his first hospital admission for viral wheeze. His mother says the cough has resolved but he still has occasional noisy breathing when he gets a cold. There is no family history of atopy and he has no eczema. His father, who has well-controlled adult asthma, is asking whether the baby should start a preventer to stop further admissions.",
+    "data_table": {
+      "Vital signs": "HR 120 bpm, RR 28, SpO2 99% on room air, T 36.8°C",
+      "Examination": "Alert, well-perfused, normal work of breathing, clear chest, no eczema, growth on the 50th centile",
+      "Investigations": "Discharge summary: confirmed RSV positive, responded to oxygen and supportive care, no salbutamol response documented"
+    },
+    "lead_in": "What is the most appropriate management advice?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Start a daily low-dose inhaled budesonide preventer via spacer for the next twelve weeks",
+        "correct": false,
+        "rationale": "Inhaled corticosteroids in infants under 12 months with viral wheeze and no atopy do not reduce admission rates and expose the infant to potential growth effects without clear benefit. (Source: RCH CPG: Asthma)",
+        "source_refs": [
+          "RCH CPG: Asthma"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Refer urgently to a paediatric respiratory physician for cystic fibrosis sweat testing",
+        "correct": false,
+        "rationale": "A single bronchiolitic admission with normal growth and no chronic cough does not raise concern for cystic fibrosis; newborn screening already reduces residual risk. (Source: RCH CPG: Asthma)",
+        "source_refs": [
+          "RCH CPG: Asthma"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Prescribe a montelukast 4 mg granule sachet nightly during the winter respiratory virus season",
+        "correct": false,
+        "rationale": "Montelukast has only modest benefit in selected preschool wheezers older than 2 years and is not first-line in infants; behavioural and neuropsychiatric adverse effects further limit routine use. (Source: AMH; eTG: Respiratory)",
+        "source_refs": [
+          "AMH",
+          "eTG: Respiratory"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Trial regular salbutamol 100 micrograms twice daily via spacer through the winter period",
+        "correct": false,
+        "rationale": "Regular salbutamol in infants without documented bronchodilator response is unhelpful and may mask deterioration; in this child salbutamol gave no benefit during admission. (Source: RCH CPG: Asthma)",
+        "source_refs": [
+          "RCH CPG: Asthma"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Reassure the family, continue supportive care and review only if a further severe episode occurs",
+        "correct": true,
+        "rationale": "Under 12 months of age viral wheeze rarely represents atopic asthma and a documented poor salbutamol response confirms the bronchiolitis phenotype; routine preventers are not indicated and watchful waiting with safety-net advice is the standard approach. (Source: RCH CPG: Asthma)",
+        "source_refs": [
+          "RCH CPG: Asthma"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Most wheeze in the first year of life is viral and not steroid-responsive, even when a parent has atopic asthma. Australian guidance reserves a preventer trial for children over 12 months with frequent episodes, interval symptoms or atopic features. Salbutamol responsiveness should be documented before chronic bronchodilator therapy is prescribed to infants. Parental anxiety is best managed with a written action plan and clear escalation triggers rather than empirical preventers.",
+      "key_points": [
+        "Infant viral wheeze without atopy or salbutamol response does not justify a preventer trial.",
+        "Preventer trials become appropriate after 12 months when atopic features or interval symptoms appear.",
+        "Document bronchodilator response before prescribing regular salbutamol in any infant."
+      ],
+      "pearls": "Inhaled corticosteroids reduce neither admissions nor symptom days in non-atopic infants under 12 months with isolated viral wheeze."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Asthma",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Asthma/"
+      },
+      {
+        "label": "AMH"
+      },
+      {
+        "label": "eTG: Respiratory"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "cross-topic-balanced-p27-003",
+    "topic": "Paediatrics",
+    "subtopic": "Neonatology",
+    "subtopic_detail": "Late-onset neonatal sepsis",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "neonatal sepsis",
+      "antibiotics"
+    ],
+    "stem": "You are the paediatric registrar called to assess a 14-day-old term breastfed baby boy in the emergency department. He was born at 39 weeks by uncomplicated vaginal birth with a normal antenatal course and was discharged home day 2 with a normal newborn examination. Over the last 12 hours his mother reports poor feeding, decreased wet nappies and an episode of mottling. He has had no contact with unwell siblings.",
+    "data_table": {
+      "Vital signs": "HR 188 bpm, RR 64, SpO2 96% on room air, axillary T 38.4°C, capillary refill 3 seconds",
+      "Examination": "Lethargic, irritable on handling, mild jaundice, no rash, anterior fontanelle soft, no focal source",
+      "Investigations": "Venous gas pending; cultures from blood and urine taken; cerebrospinal fluid sample collected"
+    },
+    "lead_in": "What is the most appropriate empirical antibiotic regimen?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Intravenous cefotaxime and benzylpenicillin at standard neonatal doses",
+        "correct": true,
+        "rationale": "Late-onset community-acquired sepsis in a previously well term neonate is empirically treated with cefotaxime plus benzylpenicillin to cover Group B Streptococcus, Listeria and Gram-negatives including meningeal cover. (Source: eTG: Antibiotic)",
+        "source_refs": [
+          "eTG: Antibiotic"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Intravenous flucloxacillin and ceftriaxone at standard paediatric doses",
+        "correct": false,
+        "rationale": "Ceftriaxone is avoided in neonates under 28 days because of bilirubin displacement and a risk of kernicterus, particularly with concurrent calcium-containing fluids. (Source: AMH; eTG: Antibiotic)",
+        "source_refs": [
+          "AMH",
+          "eTG: Antibiotic"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Intravenous benzylpenicillin and gentamicin at standard neonatal doses",
+        "correct": false,
+        "rationale": "This combination targets early-onset sepsis pathogens but lacks reliable cover for community-acquired late-onset bacteraemia and meningitis; CNS penetration of gentamicin is poor. (Source: eTG: Antibiotic)",
+        "source_refs": [
+          "eTG: Antibiotic"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Intravenous vancomycin and meropenem at standard paediatric doses",
+        "correct": false,
+        "rationale": "Broad-spectrum vancomycin and meropenem are reserved for hospital-acquired late-onset sepsis or suspected resistant organisms; community-acquired presentations do not need this breadth empirically. (Source: eTG: Antibiotic)",
+        "source_refs": [
+          "eTG: Antibiotic"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Intravenous amoxicillin and oral acyclovir at standard neonatal doses",
+        "correct": false,
+        "rationale": "Acyclovir requires intravenous administration in suspected neonatal HSV and amoxicillin alone has inadequate Gram-negative cover; this combination undertreats both bacterial and viral targets. (Source: eTG: Antibiotic)",
+        "source_refs": [
+          "eTG: Antibiotic"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Late-onset neonatal sepsis spans the period from 72 hours to 28 days of life. Empiric antibiotic choice in community-acquired disease must cover Group B Streptococcus, Listeria, Escherichia coli and other Gram-negatives, with adequate CNS penetration because meningitis cannot be excluded. The standard Australian neonatal regimen is intravenous cefotaxime plus benzylpenicillin. Intravenous acyclovir should be added if vesicular rash, seizures, hepatitis or maternal HSV history exists.",
+      "key_points": [
+        "Ceftriaxone is contraindicated in neonates under 28 days because of bilirubin displacement.",
+        "Cefotaxime is the cephalosporin of choice for neonatal sepsis with meningitis cover.",
+        "Add intravenous acyclovir if any HSV red flags are present in a sick neonate."
+      ],
+      "pearls": "Cefotaxime plus benzylpenicillin is first-line for community-acquired neonatal sepsis from day 3 to day 28 of life across Australian neonatal units."
+    },
+    "sources": [
+      {
+        "label": "eTG: Antibiotic"
+      },
+      {
+        "label": "AMH"
+      },
+      {
+        "label": "RCH CPG: Sepsis"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "cross-topic-balanced-p27-004",
+    "topic": "Paediatrics",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Diabetic ketoacidosis with cerebral oedema",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "DKA",
+      "cerebral oedema"
+    ],
+    "stem": "You are the paediatric registrar on a tertiary inpatient ward managing a 9-year-old girl admitted four hours ago with new-onset diabetes mellitus and diabetic ketoacidosis. She received a 10 mL/kg sodium chloride 0.9% bolus over 60 minutes and is now on a maintenance plus deficit infusion calculated for a 7% deficit replaced over 48 hours, alongside an intravenous insulin infusion at 0.05 units/kg/hour. Two hours into therapy the nurse calls you because the patient has developed a headache, has become increasingly drowsy and her heart rate has fallen from 130 to 78 bpm.",
+    "data_table": {
+      "Vital signs": "HR 78 bpm, RR 14, SpO2 99% on room air, BP 132/88, T 36.8°C, GCS 12 (E3 V4 M5)",
+      "Examination": "Pupils 4 mm equal and sluggishly reactive, no focal weakness, fundi not seen",
+      "Investigations": "Capillary glucose 14.2 mmol/L, venous pH 7.20 (improved from 6.98), K 4.0 mmol/L, Na corrected 138 mmol/L, ketones 4.2 mmol/L"
+    },
+    "lead_in": "What is the most appropriate immediate action?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Increase the insulin infusion to 0.1 units/kg/hour and add intravenous dextrose 10%",
+        "correct": false,
+        "rationale": "Glucose is falling appropriately and ketosis is improving; increasing insulin further does not address the deteriorating neurology and risks worsening cerebral water shifts. (Source: ISPAD; APEG: Paediatric DKA)",
+        "source_refs": [
+          "ISPAD: Paediatric DKA",
+          "APEG: Paediatric DKA"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Give intravenous mannitol 0.5 g/kg over 15 minutes and reduce fluid rate by one third",
+        "correct": true,
+        "rationale": "Bradycardia, falling GCS and hypertension after fluid initiation in paediatric DKA define clinical cerebral oedema; mannitol or hypertonic saline plus a fluid rate reduction is the standard emergent response without waiting for imaging. (Source: ISPAD; APEG: Paediatric DKA)",
+        "source_refs": [
+          "ISPAD: Paediatric DKA",
+          "APEG: Paediatric DKA"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Urgently transfer for non-contrast CT brain to confirm cerebral oedema before treatment",
+        "correct": false,
+        "rationale": "Cerebral oedema in paediatric DKA is a clinical diagnosis; imaging delays definitive therapy and adds no early sensitivity, although CT may follow once the child is stabilised. (Source: ISPAD; APEG: Paediatric DKA)",
+        "source_refs": [
+          "ISPAD: Paediatric DKA",
+          "APEG: Paediatric DKA"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Give a further 10 mL/kg sodium chloride 0.9% bolus over 30 minutes for presumed hypovolaemia",
+        "correct": false,
+        "rationale": "A further bolus worsens cerebral oedema; the bradycardia here is a brainstem response to raised intracranial pressure, not hypovolaemic shock. (Source: ISPAD; APEG: Paediatric DKA)",
+        "source_refs": [
+          "ISPAD: Paediatric DKA",
+          "APEG: Paediatric DKA"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Stop the insulin infusion and continue maintenance fluids only for the next hour",
+        "correct": false,
+        "rationale": "Stopping insulin allows ketogenesis to resume and worsens acidosis without treating the cerebral oedema; insulin should continue alongside hyperosmolar therapy. (Source: ISPAD; APEG: Paediatric DKA)",
+        "source_refs": [
+          "ISPAD: Paediatric DKA",
+          "APEG: Paediatric DKA"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Cerebral oedema complicates approximately 1% of paediatric DKA episodes and carries 20 to 25% mortality. Risk peaks in younger children, first presentations, severe acidosis and high urea. Hyperosmolar therapy with intravenous mannitol 0.5 to 1 g/kg or hypertonic saline 3% at 2.5 to 5 mL/kg, combined with a one-third reduction in fluid rate, is initiated on clinical grounds. Headache, hypertension, bradycardia and falling conscious state form the Cushing triad equivalent in this setting.",
+      "key_points": [
+        "Diagnose cerebral oedema clinically; do not wait for imaging.",
+        "Mannitol 0.5 to 1 g/kg or hypertonic saline 3% at 2.5 to 5 mL/kg are first-line.",
+        "Reduce IV fluid rate by one third and elevate the head of bed to 30 degrees."
+      ],
+      "pearls": "Cushing triad in paediatric DKA - bradycardia, hypertension, falling GCS - means give mannitol 0.5 g/kg now and cut the fluid rate by a third before imaging."
+    },
+    "sources": [
+      {
+        "label": "ISPAD: Paediatric DKA"
+      },
+      {
+        "label": "APEG: Paediatric DKA"
+      },
+      {
+        "label": "RCH CPG: Diabetic ketoacidosis"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "vbg",
+      "bsl_paeds"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "cross-topic-balanced-p27-005",
+    "topic": "Paediatrics",
+    "subtopic": "Orthopaedics",
+    "subtopic_detail": "Septic arthritis vs transient synovitis",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "septic arthritis",
+      "limp"
+    ],
+    "stem": "You are the paediatric registrar in ED reviewing a 4-year-old boy who has refused to weight-bear since waking this morning. His mother reports a mild upper respiratory illness over the last week that resolved spontaneously. He has not taken any medications. There is no history of trauma. He is reluctant to allow examination of the right hip but shows no swelling or erythema. He has a low-grade temperature on triage of 38.1°C.",
+    "data_table": {
+      "Vital signs": "HR 132 bpm, RR 26, SpO2 99% on room air, T 38.1°C, BP 102/64",
+      "Examination": "Right hip held in flexion, abduction and external rotation, painful log roll, full passive range only achievable under analgesia",
+      "Investigations": "White cell count 14.2 x10^9/L, CRP 38 mg/L, ESR 42 mm/h, hip ultrasound shows a 5 mm joint effusion"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Discharge with simple analgesia, weight-bearing as tolerated and review by general practitioner in 48 to 72 hours",
+        "correct": false,
+        "rationale": "With three Kocher criteria positive the probability of septic arthritis is approximately 93% and outpatient management risks rapid joint destruction. (Source: RCH CPG: Acute limp)",
+        "source_refs": [
+          "RCH CPG: Acute limp"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Admit for empirical intravenous flucloxacillin and ward reassessment in 24 hours without joint aspiration",
+        "correct": false,
+        "rationale": "Antibiotics given before aspiration reduce culture yield and delay diagnosis; aspiration must precede empirical antibiotics whenever septic arthritis is plausible. (Source: RCH CPG: Acute limp)",
+        "source_refs": [
+          "RCH CPG: Acute limp"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Arrange urgent orthopaedic hip joint aspiration under image guidance for cell count, Gram stain and culture",
+        "correct": true,
+        "rationale": "Four Kocher criteria positive in this child (non-weight-bearing, fever 38.1°C, ESR over 40, WCC over 12 x10^9/L) gives a high pre-test probability of septic arthritis; aspiration is the definitive diagnostic step. (Source: RCH CPG: Acute limp)",
+        "source_refs": [
+          "RCH CPG: Acute limp"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Order outpatient magnetic resonance imaging of the right hip prior to any invasive procedure or admission",
+        "correct": false,
+        "rationale": "MRI is helpful for osteomyelitis or atypical presentations but delays joint sampling in a probable septic hip; ultrasound has already confirmed an effusion. (Source: RCH CPG: Acute limp)",
+        "source_refs": [
+          "RCH CPG: Acute limp"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Prescribe oral ibuprofen with hourly observations and review in the short stay unit at 4 to 6 hours",
+        "correct": false,
+        "rationale": "Symptomatic treatment risks masking deterioration in a child with four high-risk features; the priority is definitive sampling not analgesic monitoring. (Source: RCH CPG: Acute limp)",
+        "source_refs": [
+          "RCH CPG: Acute limp"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "The Kocher criteria - inability to weight-bear, temperature over 38.5°C (often relaxed to 38°C in Australia), ESR over 40 mm/h and WCC over 12 x10^9/L - guide pretest probability of septic arthritis. Three or four positive criteria correspond to a 93 to 99% probability respectively. Joint aspiration provides immediate diagnostic yield via cell count, Gram stain and culture, and must precede empirical antibiotics whenever possible. Empiric flucloxacillin is then commenced; kingella kingae cover with cefazolin or addition of a second agent may be considered in children under 4 years.",
+      "key_points": [
+        "Four Kocher criteria positive carries roughly 99% probability of septic arthritis.",
+        "Aspirate before antibiotics whenever feasible to maximise culture yield.",
+        "Empirical flucloxacillin covers Staphylococcus aureus; consider kingella kingae cover under 4 years."
+      ],
+      "pearls": "A non-weight-bearing febrile child with CRP above 20 mg/L plus ultrasound effusion warrants same-day joint aspiration; transient synovitis remains a diagnosis of exclusion."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Acute limp",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Acute_limp/"
+      },
+      {
+        "label": "eTG: Bone and joint infection"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "paeds_fbc",
+      "inflammatory_markers"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "cross-topic-balanced-p27-006",
+    "topic": "Paediatrics",
+    "subtopic": "Surgical",
+    "subtopic_detail": "Neonatal bilious vomiting",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "malrotation",
+      "vomiting"
+    ],
+    "stem": "You are the paediatric registrar called to ED at midnight to see a 5-day-old term boy with three episodes of green vomiting since this afternoon. He was born by uncomplicated vaginal birth and discharged home day 2 with normal newborn examination. He has been exclusively breastfed and had passed meconium within 24 hours of birth. He fed reluctantly today and his abdomen has become mildly distended over the last hour. He has not had a wet nappy for the last 5 hours.",
+    "data_table": {
+      "Vital signs": "HR 178 bpm, RR 60, SpO2 97% on room air, T 36.3°C, capillary refill 3 seconds",
+      "Examination": "Sleepy but rousable, mildly distended soft abdomen, no palpable mass, no peritonism, anal patency normal",
+      "Investigations": "Capillary blood gas: pH 7.28, lactate 2.6 mmol/L, glucose 3.2 mmol/L"
+    },
+    "lead_in": "What is the single most appropriate next investigation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Abdominal ultrasound looking specifically for the whirlpool sign of the mesenteric vessels",
+        "correct": false,
+        "rationale": "Ultrasound is operator-dependent and only supportive; a negative scan does not exclude malrotation and must not delay the definitive contrast study. (Source: RCH CPG: Bilious vomiting)",
+        "source_refs": [
+          "RCH CPG: Bilious vomiting"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Upper gastrointestinal contrast study performed urgently within the next hour",
+        "correct": true,
+        "rationale": "Bilious vomiting in a neonate is malrotation with midgut volvulus until proven otherwise; an urgent upper GI contrast study to confirm or exclude an abnormal duodenojejunal junction position is the definitive test before laparotomy. (Source: RCH CPG: Bilious vomiting)",
+        "source_refs": [
+          "RCH CPG: Bilious vomiting"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Plain supine and erect abdominal radiographs to look for free air or obstruction",
+        "correct": false,
+        "rationale": "Plain films are often normal in malrotation without established volvulus and cannot exclude the diagnosis; relying on them risks missing a surgical emergency. (Source: RCH CPG: Bilious vomiting)",
+        "source_refs": [
+          "RCH CPG: Bilious vomiting"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Sweat chloride testing arranged through the paediatric metabolic team in the morning",
+        "correct": false,
+        "rationale": "Sweat testing investigates cystic fibrosis-related meconium ileus equivalents, which present earlier and without bilious vomiting; it does not address the surgical emergency. (Source: RCH CPG: Bilious vomiting)",
+        "source_refs": [
+          "RCH CPG: Bilious vomiting"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Contrast enema to exclude Hirschsprung disease as the cause of the obstructive symptoms",
+        "correct": false,
+        "rationale": "Hirschsprung disease classically presents with delayed meconium passage and distal obstruction; bilious vomiting points to a proximal obstructive lesion, of which malrotation is the priority diagnosis. (Source: RCH CPG: Bilious vomiting)",
+        "source_refs": [
+          "RCH CPG: Bilious vomiting"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Bilious vomiting in any infant under 12 months is treated as midgut volvulus until imaging excludes it. Time-to-detorsion correlates directly with bowel survival, so the workup is compressed - nasogastric decompression, IV access, fluids, broad-spectrum antibiotics and an immediate paediatric surgical referral run in parallel with imaging. The upper GI contrast study showing a corkscrew or right-sided duodenojejunal junction confirms malrotation; whirlpool sign on ultrasound is supportive. Laparotomy and Ladd procedure are definitive.",
+      "key_points": [
+        "Bilious vomiting in infants is malrotation with volvulus until proven otherwise.",
+        "Upper GI contrast study is the definitive imaging test.",
+        "Time-to-theatre directly determines bowel survival."
+      ],
+      "pearls": "In a neonate with green vomiting, call paediatric surgery and book an upper GI contrast study before plain films or ultrasound delay the diagnosis."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Bilious vomiting",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Bilious_vomiting/"
+      },
+      {
+        "label": "Paediatric Surgery: malrotation chapter (BMJ Best Practice)"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "vbg"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "cross-topic-balanced-p27-007",
+    "topic": "Paediatrics",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Hypertonic dehydration",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "dehydration",
+      "sodium"
+    ],
+    "stem": "You are the paediatric registrar in a regional hospital reviewing a 6-month-old formula-fed boy admitted overnight with five days of viral gastroenteritis. The community nurse reports the family had been adding extra scoops of formula powder to the bottles to keep him fed during the illness. He has been increasingly lethargic since this morning. He weighs 7.0 kg and his pre-illness clinic weight one week ago was 7.5 kg. He has not had a wet nappy for 8 hours.",
+    "data_table": {
+      "Vital signs": "HR 178 bpm, RR 36, SpO2 99% on room air, T 37.6°C, BP 80/52, capillary refill 4 seconds",
+      "Examination": "Lethargic but rousable, sunken eyes, doughy abdominal skin turgor, no rash, anterior fontanelle depressed",
+      "Investigations": "Na 162 mmol/L, K 4.8 mmol/L, urea 12.4 mmol/L, creatinine 86 micromol/L, glucose 5.8 mmol/L, venous pH 7.28"
+    },
+    "lead_in": "What is the single most appropriate fluid plan for the next 48 hours?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Replace the 7% fluid deficit with sodium chloride 0.9% plus 5% glucose over 48 hours with sodium fall not exceeding 0.5 mmol/L per hour",
+        "correct": true,
+        "rationale": "Hypernatraemic dehydration requires slow correction with isotonic fluids over 48 to 72 hours; the deficit is replaced gradually so plasma sodium falls no faster than 0.5 mmol/L per hour or 12 mmol/L per 24 hours to avoid cerebral oedema. (Source: RCH CPG: Dehydration)",
+        "source_refs": [
+          "RCH CPG: Dehydration"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Give a 20 mL/kg bolus of sodium chloride 0.45% then replace the deficit with the same fluid over 24 hours with electrolyte checks every 6 hours",
+        "correct": false,
+        "rationale": "Hypotonic resuscitation fluids drop plasma sodium too rapidly and risk cerebral oedema; the bolus strength should be isotonic and the correction phase prolonged. (Source: RCH CPG: Dehydration)",
+        "source_refs": [
+          "RCH CPG: Dehydration"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Give a 20 mL/kg bolus of sodium chloride 0.9% then replace the deficit with 5% glucose over 24 hours with electrolyte checks every 6 hours",
+        "correct": false,
+        "rationale": "Pure glucose for maintenance after the bolus delivers free water too quickly and causes a precipitous sodium drop; correction must be paced over 48 hours minimum. (Source: RCH CPG: Dehydration)",
+        "source_refs": [
+          "RCH CPG: Dehydration"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Administer oral rehydration solution at 10 mL/kg/hour and recheck sodium after 6 hours of trial of oral therapy",
+        "correct": false,
+        "rationale": "A lethargic child with capillary refill of 4 seconds and 7% volume loss requires intravenous resuscitation, although oral therapy is valuable once intravascular volume is restored. (Source: RCH CPG: Dehydration)",
+        "source_refs": [
+          "RCH CPG: Dehydration"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Replace the deficit with sodium chloride 0.9% plus 5% glucose over 12 hours and reassess electrolytes every hour during correction",
+        "correct": false,
+        "rationale": "Rapid 12-hour correction predisposes to cerebral oedema and seizures despite using an isotonic fluid; rate of sodium fall not total volume is the safety variable. (Source: RCH CPG: Dehydration)",
+        "source_refs": [
+          "RCH CPG: Dehydration"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Hypernatraemic dehydration is most often caused by improperly mixed feeds, inadequate breastfeeding or large gastroenteritis losses without free water replacement. Rapid sodium correction draws water back into brain cells and causes cerebral oedema with herniation. The Australian paediatric standard replaces the deficit with isotonic sodium chloride plus dextrose over 48 to 72 hours, aiming to drop sodium no faster than 0.5 mmol/L per hour or 10 to 12 mmol/L per day. Boluses are reserved for true shock.",
+      "key_points": [
+        "Hypernatraemic deficit replacement runs over 48 to 72 hours not 24.",
+        "Plasma sodium must fall no faster than 0.5 mmol/L per hour.",
+        "Use isotonic fluids; hypotonic regimens accelerate dangerous sodium shifts."
+      ],
+      "pearls": "Slow correction with sodium chloride 0.9% plus glucose 5% over 48 hours, capped at a 10 mmol/L sodium drop per day, prevents the cerebral oedema and seizures that follow rapid correction of hypernatraemic dehydration."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Dehydration",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Dehydration/"
+      },
+      {
+        "label": "APLS Australia: Fluid resuscitation"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "paeds_uec",
+      "vbg"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "cross-topic-balanced-p27-008",
+    "topic": "Paediatrics",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Congenital adrenal hyperplasia",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "CAH",
+      "adrenal crisis"
+    ],
+    "stem": "You are the on-call paediatric registrar called by the neonatal screening service about a 12-day-old infant whose newborn screen returned a markedly raised 17-hydroxyprogesterone. The baby has been feeding poorly for 24 hours with three episodes of vomiting and a reduced wet-nappy count. On examination external genitalia show clitoromegaly with partial labial fusion. The infant looks pale and mottled and has lost 12% of birth weight since discharge.",
+    "data_table": {
+      "Vital signs": "HR 192 bpm, RR 60, SpO2 96% on room air, T 36.3°C, BP 56/34, capillary refill 4 seconds",
+      "Examination": "Lethargic, sunken anterior fontanelle, peripheral mottling, ambiguous genitalia, no palpable gonads, hyperpigmented areolae and scrotum-like rugae",
+      "Investigations": "Na 122 mmol/L, K 7.4 mmol/L, glucose 2.1 mmol/L, urea 9.8 mmol/L, venous pH 7.22, 17-OHP markedly elevated on repeat"
+    },
+    "lead_in": "Which combination of interventions should be initiated immediately?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Oral hydrocortisone 5 mg with oral fludrocortisone 50 micrograms and outpatient endocrinology phone review the next day",
+        "correct": false,
+        "rationale": "An unwell shocked infant in adrenal crisis cannot absorb oral therapy reliably; intravenous hydrocortisone with intravenous resuscitation is the correct route. (Source: RCH CPG: Adrenal crisis; APEG: CAH)",
+        "source_refs": [
+          "RCH CPG: Adrenal crisis",
+          "APEG: CAH"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Intravenous dexamethasone 0.5 mg stat with 10 mL/kg sodium chloride 0.45% bolus and routine endocrinology review next day",
+        "correct": false,
+        "rationale": "Dexamethasone lacks mineralocorticoid activity and is the wrong steroid in acute salt-wasting crisis; hypotonic fluids worsen hyponatraemia. (Source: RCH CPG: Adrenal crisis; APEG: CAH)",
+        "source_refs": [
+          "RCH CPG: Adrenal crisis",
+          "APEG: CAH"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Intravenous hydrocortisone 25 mg stat with 10 mL/kg sodium chloride 0.9% plus 10% glucose bolus and paediatric endocrinology referral",
+        "correct": true,
+        "rationale": "Salt-wasting CAH crisis requires immediate stress-dose hydrocortisone, isotonic volume resuscitation containing glucose to address hypoglycaemia, and urgent specialist involvement to guide ongoing replacement; fludrocortisone is added once enteral therapy is tolerated. (Source: RCH CPG: Adrenal crisis; APEG: CAH)",
+        "source_refs": [
+          "RCH CPG: Adrenal crisis",
+          "APEG: CAH"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Intravenous insulin infusion 0.05 units/kg/hour with calcium gluconate 0.5 mL/kg over 10 minutes for the hyperkalaemia",
+        "correct": false,
+        "rationale": "The hyperkalaemia of salt-wasting CAH responds rapidly to volume and steroid replacement; insulin is unnecessary and risks profound hypoglycaemia in a glucose-2.1 mmol/L infant. (Source: RCH CPG: Adrenal crisis; APEG: CAH)",
+        "source_refs": [
+          "RCH CPG: Adrenal crisis",
+          "APEG: CAH"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Intravenous broad-spectrum antibiotics and intravenous immunoglobulin pending neonatal sepsis screening culture results",
+        "correct": false,
+        "rationale": "Although a septic workup is reasonable to add in parallel, the diagnosis of salt-wasting CAH is already supported by ambiguous genitalia, raised 17-OHP and the electrolyte pattern; immunoglobulin has no role. (Source: RCH CPG: Adrenal crisis; APEG: CAH)",
+        "source_refs": [
+          "RCH CPG: Adrenal crisis",
+          "APEG: CAH"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Salt-wasting 21-hydroxylase deficiency presents around day 7 to 14 with vomiting, lethargy, hyponatraemia, hyperkalaemia, hypoglycaemia and metabolic acidosis. Female infants often have virilised genitalia; male infants have normal genitalia, which can delay recognition. Emergency management is intravenous stress-dose hydrocortisone (25 mg in infants under 6 years), isotonic volume with glucose, and correction of hypoglycaemia. Long-term replacement combines hydrocortisone, fludrocortisone and salt supplementation under endocrinology supervision.",
+      "key_points": [
+        "Intravenous hydrocortisone 25 mg is the stat dose in infants under 6 years with adrenal crisis.",
+        "Use isotonic fluids with glucose; avoid dexamethasone in acute crisis because of absent mineralocorticoid effect.",
+        "Hyperkalaemia of CAH usually resolves with volume and steroid, not insulin or beta-agonists."
+      ],
+      "pearls": "Day 7 to 14 vomiting infant with sodium under 130 mmol/L and potassium over 6 mmol/L is salt-wasting CAH until proven otherwise; give intravenous hydrocortisone 25 mg now."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Adrenal crisis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Adrenal_crisis_and_acute_adrenal_insufficiency/"
+      },
+      {
+        "label": "APEG: CAH"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "paeds_uec",
+      "vbg"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "cross-topic-balanced-p27-009",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Antenatal hypertension",
+    "subtopic_detail": "Severe-range postpartum hypertension",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "pre-eclampsia",
+      "labetalol"
+    ],
+    "stem": "You are the obstetric registrar reviewing a 32-year-old woman on day 1 postpartum after an uncomplicated spontaneous vaginal birth at 39+2 weeks. Her antenatal blood pressures were normal. She had no proteinuria documented at booking or in labour. Overnight she developed a severe occipital headache that did not respond to oral paracetamol and is photophobic. The midwife has just called you because her last three blood pressure recordings have all read above 160/110. She is breastfeeding her healthy term baby.",
+    "data_table": {
+      "Vital signs": "BP 168/112 mmHg confirmed on manual cuff, HR 92 bpm, RR 18, SpO2 99% on room air, T 36.8°C",
+      "Examination": "Hyperreflexic at the patellae, no clonus, no focal neurology, no peripheral oedema",
+      "Investigations": "Urinalysis 2+ protein, platelets 188 x10^9/L, ALT 28 U/L, creatinine 72 micromol/L, urate 0.38 mmol/L"
+    },
+    "lead_in": "What is the most appropriate immediate antihypertensive therapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Oral methyldopa 250 mg three times daily commenced as outpatient therapy on discharge tomorrow",
+        "correct": false,
+        "rationale": "Methyldopa is appropriate for chronic mild hypertension but is too slow-acting for acute severe-range readings and is avoided postpartum because of depressive side effects. (Source: SOMANZ: Hypertension in pregnancy)",
+        "source_refs": [
+          "SOMANZ: Hypertension in pregnancy"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Oral nifedipine immediate-release 10 mg with blood pressure reassessment in 30 minutes",
+        "correct": true,
+        "rationale": "Australian postpartum severe hypertension protocols accept oral immediate-release nifedipine 10 mg as a first-line acute agent when intravenous access is not yet established and the woman can take oral medication. (Source: SOMANZ: Hypertension in pregnancy)",
+        "source_refs": [
+          "SOMANZ: Hypertension in pregnancy"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Intravenous magnesium sulfate 4 g loading dose alone with no antihypertensive agent yet",
+        "correct": false,
+        "rationale": "Magnesium provides seizure prophylaxis but has minimal antihypertensive effect; sustained severe-range readings require a dedicated antihypertensive in parallel. (Source: SOMANZ: Hypertension in pregnancy)",
+        "source_refs": [
+          "SOMANZ: Hypertension in pregnancy"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Oral sublingual nifedipine immediate-release 20 mg crushed under the tongue urgently",
+        "correct": false,
+        "rationale": "Sublingual nifedipine causes uncontrolled rapid blood pressure drops and is contraindicated in any pregnancy or postpartum hypertensive emergency. (Source: SOMANZ: Hypertension in pregnancy)",
+        "source_refs": [
+          "SOMANZ: Hypertension in pregnancy"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Oral atenolol 50 mg once daily commenced today and continued through breastfeeding",
+        "correct": false,
+        "rationale": "Atenolol is avoided postpartum during breastfeeding because of significant infant exposure; labetalol or metoprolol are preferred when a beta-blocker is required. (Source: SOMANZ: Hypertension in pregnancy)",
+        "source_refs": [
+          "SOMANZ: Hypertension in pregnancy"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Postpartum severe hypertension carries elevated risk of stroke, eclampsia and posterior reversible encephalopathy. Acute treatment options recommended in SOMANZ guidance include oral immediate-release nifedipine 10 mg, intravenous labetalol 20 mg bolus or intravenous hydralazine 5 mg bolus. Magnesium sulfate is added when symptoms or signs of severe pre-eclampsia or imminent eclampsia are present, including persistent severe headache, visual disturbance, hyperreflexia with clonus or epigastric pain. Continued surveillance for two weeks postpartum is mandatory because peak risk extends to days 3 to 7.",
+      "key_points": [
+        "Oral nifedipine immediate-release 10 mg is acceptable first-line acute therapy where IV access is delayed.",
+        "Add magnesium when symptoms or signs of pre-eclampsia are present, not for hypertension alone.",
+        "Avoid sublingual nifedipine and avoid atenolol when breastfeeding."
+      ],
+      "pearls": "Persistent BP above 160/110 mmHg postpartum demands an acting antihypertensive within 60 minutes; labetalol IV 20 mg, hydralazine IV 5 mg or oral nifedipine 10 mg are all SOMANZ first-line."
+    },
+    "sources": [
+      {
+        "label": "SOMANZ: Hypertension in pregnancy"
+      },
+      {
+        "label": "RANZCOG: Hypertension in pregnancy"
+      }
+    ],
+    "reference_ranges": [
+      "obs_pregnancy_vitals",
+      "pre_eclampsia_bloods"
+    ],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "cross-topic-balanced-p27-010",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Late pregnancy",
+    "subtopic_detail": "Breech at term",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "breech",
+      "ECV"
+    ],
+    "stem": "You are the obstetric registrar in an antenatal clinic seeing a 28-year-old gravida 2 para 1 at 36+2 weeks gestation. Her previous pregnancy was a spontaneous vaginal birth at term. A growth scan today confirms a frank breech presentation, an anterior placenta, normal liquor volume and an estimated fetal weight on the 50th centile. She has no antepartum bleeding, no contractions, and no contraindications to vaginal birth. She asks about her options to avoid an elective caesarean.",
+    "data_table": {
+      "Vital signs": "BP 118/72 mmHg, HR 78 bpm, RR 16, T 36.7°C",
+      "Examination": "Symphysio-fundal height 35 cm, fetal head palpable in the fundus, fetal heart rate 138 bpm by auscultation",
+      "Investigations": "Anti-D negative at booking, group B streptococcus swab pending, recent normal full blood count"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Offer external cephalic version from 37 weeks gestation under tocolysis with continuous fetal cardiotocography monitoring",
+        "correct": true,
+        "rationale": "ECV from 37 weeks under terbutaline or salbutamol tocolysis converts approximately 50% of breech presentations and is associated with reduced caesarean rates when successful. (Source: RANZCOG: Breech management)",
+        "source_refs": [
+          "RANZCOG: Breech management"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Book a category 4 elective lower segment caesarean section for 39 completed weeks gestation under spinal anaesthesia",
+        "correct": false,
+        "rationale": "Elective caesarean remains an option if ECV is declined or unsuccessful, but should not be booked before discussing ECV which has a meaningful success rate. (Source: RANZCOG: Breech management)",
+        "source_refs": [
+          "RANZCOG: Breech management"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Plan a vaginal breech birth with epidural analgesia attended by an experienced obstetrician at 39 weeks gestation",
+        "correct": false,
+        "rationale": "Vaginal breech birth is restricted to highly selected cases with experienced operators in centres with appropriate protocols, and is not the default first offer at term. (Source: RANZCOG: Breech management)",
+        "source_refs": [
+          "RANZCOG: Breech management"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Begin moxibustion at the BL67 acupressure point twice daily for two weeks and review presentation at 38 weeks",
+        "correct": false,
+        "rationale": "Moxibustion has uncertain effect on cephalic version rates and is not a substitute for offering ECV, which has stronger evidence. (Source: RANZCOG: Breech management)",
+        "source_refs": [
+          "RANZCOG: Breech management"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Reassure that breech presentations spontaneously revert and review again at 39 weeks for a repeat presentation scan",
+        "correct": false,
+        "rationale": "Spontaneous version after 36 weeks in a multiparous woman is uncommon and delaying intervention narrows the ECV window; review at 37 weeks for ECV is preferred. (Source: RANZCOG: Breech management)",
+        "source_refs": [
+          "RANZCOG: Breech management"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "External cephalic version at 37 weeks is offered to women with uncomplicated singleton breech presentation. Australian success rates range from 40 to 60% with higher success in multiparous women, posterior placentae and adequate liquor. Tocolysis with terbutaline 250 micrograms subcutaneously or salbutamol immediately before the procedure improves success rates. Contraindications include placenta praevia, ruptured membranes, multiple pregnancy and previous classical caesarean.",
+      "key_points": [
+        "ECV is offered from 37 weeks for uncomplicated singleton breech.",
+        "Tocolysis improves success rates; anti-D is given to RhD-negative women.",
+        "Vaginal breech birth requires highly selected cases and experienced operators."
+      ],
+      "pearls": "Offer ECV at 37 weeks with terbutaline 250 micrograms subcutaneously 10 minutes before the procedure; anti-D 625 IU is given to RhD-negative women after the attempt."
+    },
+    "sources": [
+      {
+        "label": "RANZCOG: Breech management"
+      },
+      {
+        "label": "Cochrane: External cephalic version"
+      }
+    ],
+    "reference_ranges": [
+      "obs_pregnancy_vitals"
+    ],
+    "created": "2026-05-30"
   }
 ]
