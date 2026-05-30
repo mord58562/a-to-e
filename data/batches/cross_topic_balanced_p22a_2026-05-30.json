@@ -1,0 +1,72 @@
+[
+  {
+    "id": "ctb-p22a-001",
+    "topic": "Paediatrics",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Paediatric DKA initial fluid resuscitation",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["DKA", "paediatric", "fluids"],
+    "stem": "A 7-year-old boy is referred to the paediatric emergency department with two weeks of polyuria, polydipsia, and 4 kg weight loss. Today he developed vomiting, abdominal pain, and laboured breathing. He weighs 22 kg. He is alert, oriented, with deep sighing respirations and acetone breath. He has not previously been diagnosed with diabetes and has no shock features clinically, though he is moderately dehydrated.",
+    "data_table": {
+      "Vital signs": "HR 132, RR 36, SpO2 98% room air, BP 98/62, Temp 36.6",
+      "Examination": "Kussmaul breathing; dry mucous membranes; CRT 2s; alert (GCS 15); no focal neurology",
+      "Investigations": "BSL 28.4 mmol/L, ketones 5.8 mmol/L; venous pH 7.10, bicarbonate 8 mmol/L, sodium 134 mmol/L, potassium 4.6 mmol/L, urea 9.2 mmol/L",
+      "Medications": "Nil regular"
+    },
+    "lead_in": "What is the most appropriate initial fluid management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Intravenous 0.9 percent sodium chloride 20 mL/kg bolus over 15 minutes then reassess for further boluses",
+        "correct": false,
+        "rationale": "Aggressive 20 mL/kg boluses in non-shocked paediatric DKA increase cerebral oedema risk; bolus volumes are reserved for circulatory shock and given as 10 mL/kg with reassessment. (Source: APEG/RCH Paediatric DKA Guideline)",
+        "source_refs": ["APEG/RCH Paediatric DKA Guideline"]
+      },
+      {
+        "letter": "B",
+        "text": "Intravenous 0.9 percent sodium chloride 10 mL/kg over 30 minutes then maintenance plus deficit replacement over 48 hours",
+        "correct": true,
+        "rationale": "Australian paediatric DKA protocols use a single 10 mL/kg bolus only when perfusion is impaired, then estimate dehydration at 7 to 8 percent and replace the deficit evenly over 48 hours alongside maintenance to minimise cerebral oedema. (Source: APEG/RCH Paediatric DKA Guideline)",
+        "source_refs": ["APEG/RCH Paediatric DKA Guideline"]
+      },
+      {
+        "letter": "C",
+        "text": "Intravenous Hartmann solution 30 mL/kg over an hour with intravenous insulin started immediately at induction",
+        "correct": false,
+        "rationale": "Large volume Hartmann boluses risk dilutional fall in osmolality and rapid bicarbonate correction with cerebral oedema; insulin started before intravascular volume restoration accelerates the osmotic shift. (Source: APEG/RCH Paediatric DKA Guideline)",
+        "source_refs": ["APEG/RCH Paediatric DKA Guideline"]
+      },
+      {
+        "letter": "D",
+        "text": "Oral rehydration solution titrated to thirst with bedside ketone reassessment every two hours before any insulin",
+        "correct": false,
+        "rationale": "Oral rehydration is inadequate in vomiting children with significant acidosis; intravenous access and controlled deficit replacement with insulin infusion are mandatory. (Source: APEG/RCH Paediatric DKA Guideline)",
+        "source_refs": ["APEG/RCH Paediatric DKA Guideline"]
+      },
+      {
+        "letter": "E",
+        "text": "Intravenous sodium bicarbonate 1 mmol/kg over 30 minutes given the venous pH below 7.15 with normal saline alongside",
+        "correct": false,
+        "rationale": "Bicarbonate is not indicated in paediatric DKA except in life-threatening hyperkalaemia or cardiac arrest; routine use worsens intracellular acidosis and increases cerebral oedema risk. (Source: APEG/RCH Paediatric DKA Guideline)",
+        "source_refs": ["APEG/RCH Paediatric DKA Guideline"]
+      }
+    ],
+    "explanation": {
+      "summary": "Paediatric DKA fluid management balances volume restoration against cerebral oedema risk. A single 10 mL/kg 0.9 percent sodium chloride bolus is given only for circulatory compromise. Dehydration is estimated at 7 to 8 percent and replaced evenly over 48 hours alongside maintenance, with insulin started 1 hour after fluids at 0.05 to 0.1 units/kg/h. Bicarbonate is contraindicated outside arrest.",
+      "key_points": [
+        "Bolus only for shock; single 10 mL/kg dose then reassess",
+        "Deficit replaced over 48 hours, not 24",
+        "Insulin starts 1 hour after fluids at 0.05 to 0.1 units/kg/h",
+        "Bicarbonate worsens outcomes in paediatric DKA"
+      ],
+      "pearls": "Australian APEG paediatric DKA protocol: 10 mL/kg saline bolus only if shocked, then maintenance plus 7 to 8 percent deficit over 48 hours, insulin at 0.05 to 0.1 units/kg/h starting 1 hour after fluids."
+    },
+    "sources": [
+      {"label": "APEG/RCH Paediatric DKA Guideline", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Diabetic_Ketoacidosis/"},
+      {"label": "ISPAD Clinical Practice Consensus Guidelines: DKA", "url": "https://www.ispad.org/page/ISPADGuidelines2022"}
+    ],
+    "reference_ranges": ["paeds_vitals_child", "bsl_paeds", "ketones"],
+    "created": "2026-05-30"
+  }
+]
