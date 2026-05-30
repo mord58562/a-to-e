@@ -1,0 +1,91 @@
+[
+  {
+    "id": "cross-topic-balanced-p27-001",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Acute severe asthma",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "asthma",
+      "salbutamol"
+    ],
+    "stem": "You are the paediatric registrar in a tertiary ED reviewing a 6-year-old girl brought in by ambulance with an acute asthma exacerbation. She has a known background of mild-persistent asthma on a low-dose budesonide preventer and salbutamol as needed. Paramedics gave continuous nebulised salbutamol and ipratropium en route. On arrival 20 minutes ago she received oral prednisolone 1 mg/kg and a further three back-to-back salbutamol nebulisers. She is now sitting forward, talking in short phrases, with persistent moderate work of breathing.",
+    "data_table": {
+      "Vital signs": "HR 158 bpm, RR 38, SpO2 92% on 6 L/min via nebuliser, BP 102/64, T 37.1°C",
+      "Examination": "Tracheal tug, intercostal recession, bilateral wheeze with prolonged expiratory phase, air entry reduced at both bases, no focal crackles",
+      "Investigations": "Venous blood gas: pH 7.32, pCO2 48 mmHg, HCO3 22 mmol/L, lactate 3.8 mmol/L"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Intravenous hydrocortisone 4 mg/kg as a slow bolus and continue current nebulised therapy",
+        "correct": false,
+        "rationale": "Oral prednisolone has equivalent bioavailability and onset to IV hydrocortisone; she has already received an adequate corticosteroid dose, so switching steroid route is not the right escalation. (Source: RCH CPG: Asthma acute)",
+        "source_refs": [
+          "RCH CPG: Asthma acute"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Intramuscular adrenaline 10 micrograms/kg into the lateral thigh and observation for response",
+        "correct": false,
+        "rationale": "Adrenaline IM is reserved for anaphylaxis or near-arrest asthma where IV access is unavailable; this child has wheeze without urticaria, hypotension or angio-oedema. (Source: RCH CPG: Asthma acute)",
+        "source_refs": [
+          "RCH CPG: Asthma acute"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Intravenous aminophylline 10 mg/kg loading dose over 60 minutes on the general paediatric ward",
+        "correct": false,
+        "rationale": "Aminophylline is a third-line option used only after IV magnesium has failed and is given in PICU because of arrhythmia risk; jumping to it now skips a safer escalation. (Source: RCH CPG: Asthma acute)",
+        "source_refs": [
+          "RCH CPG: Asthma acute"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Switch to high-flow nasal cannula at 2 L/kg/min FiO2 0.5 and reassess in 30 minutes",
+        "correct": false,
+        "rationale": "HFNC does not deliver bronchodilator therapy and risks delaying definitive treatment in a child with rising pCO2; nebulised salbutamol via a tight-fitting mask remains the preferred delivery route during escalation. (Source: RCH CPG: Asthma acute)",
+        "source_refs": [
+          "RCH CPG: Asthma acute"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Intravenous magnesium sulfate 50 mg/kg infused over 20 minutes with cardiac monitoring",
+        "correct": true,
+        "rationale": "Severe asthma not responding to inhaled bronchodilators and oral corticosteroid escalates to IV magnesium sulfate as the next step before intubation; the rising pCO2 with persistent hypoxia and lactate signals failing ventilation despite maximal nebulised therapy. (Source: RCH CPG: Asthma acute)",
+        "source_refs": [
+          "RCH CPG: Asthma acute"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Children with severe acute asthma who do not respond to back-to-back nebulised salbutamol, ipratropium and adequate systemic corticosteroid require escalation. The standard Australian paediatric escalation is intravenous magnesium sulfate, followed by IV salbutamol or aminophylline infusions in a high-dependency or PICU setting if magnesium fails. A rising pCO2 in a tiring child despite high-dose bronchodilator therapy is an ominous sign of impending respiratory failure and mandates HDU or PICU transfer.",
+      "key_points": [
+        "IV magnesium sulfate 50 mg/kg over 20 minutes is the standard next step after failed inhaled therapy plus systemic steroid in paediatric severe asthma.",
+        "Oral prednisolone 1 to 2 mg/kg has equivalent onset to IV hydrocortisone in children who tolerate oral therapy.",
+        "Rising pCO2 in an asthmatic child is a pre-terminal sign and demands HDU or PICU level care."
+      ],
+      "pearls": "In paediatric severe asthma a venous pCO2 above 45 mmHg with persistent tachypnoea is the signal to give IV magnesium sulfate within 30 minutes and call the PICU."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Asthma acute",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Asthma_acute/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Respiratory"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "vbg"
+    ],
+    "created": "2026-05-30"
+  }
+]
