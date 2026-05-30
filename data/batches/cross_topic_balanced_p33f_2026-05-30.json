@@ -1,0 +1,352 @@
+[
+  {
+    "id": "ctb-p33-026",
+    "topic": "Medicine",
+    "subtopic": "Haematology",
+    "subtopic_detail": "Warfarin reversal in supratherapeutic INR without bleeding",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["warfarin reversal", "vitamin K"],
+    "stem": "You are the general medicine registrar reviewing a 76-year-old non-Aboriginal man with atrial fibrillation on warfarin for stroke prevention. He attends the anticoagulant clinic for a routine INR check after starting trimethoprim 5 days ago for a urinary tract infection. He has no signs of bleeding and feels well. He has no recent falls or head injury. His warfarin target range is 2.0 to 3.0. His other medications are bisoprolol and atorvastatin.",
+    "data_table": {
+      "Vital signs": "BP 132/78 mmHg, HR 72, RR 14, T 36.7 °C",
+      "Examination": "No bruising, gums not bleeding, no haematuria visually, neurologically intact, no flank tenderness",
+      "Investigations": "INR 9.4 (target 2.0 to 3.0), Hb 134 g/L, platelets 215 x10^9/L, creatinine 88 micromol/L, urinalysis nil blood, faecal occult blood not indicated"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Withhold warfarin, administer oral vitamin K 1 to 2 mg, repeat INR in 24 hours, and review for the need to continue trimethoprim or substitute alternative antibiotic",
+        "correct": true,
+        "rationale": "INR over 9 without bleeding is managed with warfarin cessation and oral vitamin K 1 to 2 mg; this corrects INR within 24 hours without overcorrection that complicates rewarfarinisation. (Source: Therapeutic Guidelines: Cardiovascular)",
+        "source_refs": ["Therapeutic Guidelines: Cardiovascular", "Australian Red Cross Lifeblood Warfarin Reversal Guidance"]
+      },
+      {
+        "letter": "B",
+        "text": "Withhold warfarin alone for 48 hours, recheck the INR at that point, and continue trimethoprim until urinary culture results return at follow-up in the clinic",
+        "correct": false,
+        "rationale": "INR over 9 carries a high bleeding risk in the next 48 hours; withholding warfarin alone is insufficient and vitamin K is required. (Source: Therapeutic Guidelines: Cardiovascular)",
+        "source_refs": ["Therapeutic Guidelines: Cardiovascular"]
+      },
+      {
+        "letter": "C",
+        "text": "Administer intravenous vitamin K 10 mg and Prothrombinex-VF 50 units/kg now, admit to a monitored bed, and recheck the INR at 1 hour after the infusion has completed",
+        "correct": false,
+        "rationale": "Prothrombin complex concentrate plus IV vitamin K is reserved for major bleeding or emergency surgery; in asymptomatic INR over 9 this overcorrects and risks rebound prothrombotic state. (Source: Australian Red Cross Lifeblood Warfarin Reversal Guidance)",
+        "source_refs": ["Australian Red Cross Lifeblood Warfarin Reversal Guidance"]
+      },
+      {
+        "letter": "D",
+        "text": "Administer fresh frozen plasma 4 units intravenously over 4 hours and recheck the INR immediately afterwards, with rewarfarinisation planned the following day in clinic",
+        "correct": false,
+        "rationale": "FFP is no longer first-line for warfarin reversal in Australia due to volume load and slow correction; vitamin K alone is sufficient for asymptomatic supratherapeutic INR. (Source: Australian Red Cross Lifeblood Warfarin Reversal Guidance)",
+        "source_refs": ["Australian Red Cross Lifeblood Warfarin Reversal Guidance"]
+      },
+      {
+        "letter": "E",
+        "text": "Continue current warfarin dose, advise to avoid contact activity, and arrange routine INR review at the next scheduled appointment in 7 days at the clinic",
+        "correct": false,
+        "rationale": "Continuing warfarin with INR over 9 risks major haemorrhage; routine 7-day review delays correction. (Source: Therapeutic Guidelines: Cardiovascular)",
+        "source_refs": ["Therapeutic Guidelines: Cardiovascular"]
+      }
+    ],
+    "explanation": {
+      "summary": "Warfarin reversal in supratherapeutic INR follows Australian Red Cross Lifeblood guidance based on INR and bleeding status. INR over 9 without bleeding: stop warfarin and give oral vitamin K 1 to 2 mg. INR 4.5 to 9 without bleeding: stop or reduce warfarin and recheck. Major bleeding or emergency surgery: Prothrombinex-VF (PCC) 25 to 50 units/kg plus IV vitamin K 5 to 10 mg. FFP is reserved for when PCC is unavailable. Trimethoprim, sulfamethoxazole, metronidazole and amiodarone potentiate warfarin and frequently cause supratherapeutic INRs.",
+      "key_points": [
+        "INR over 9 without bleeding: stop warfarin and oral vitamin K 1 to 2 mg",
+        "INR 4.5 to 9 without bleeding: stop or reduce warfarin and recheck",
+        "Major bleeding: Prothrombinex-VF plus IV vitamin K 5 to 10 mg",
+        "FFP only when Prothrombinex-VF is unavailable",
+        "Trimethoprim, metronidazole and amiodarone are common warfarin potentiators"
+      ],
+      "pearls": "Oral vitamin K is preferred over intravenous in non-emergency reversal because IV doses over 5 mg often cause warfarin resistance for 1 to 2 weeks, complicating re-anticoagulation in a patient who still needs stroke prevention."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Cardiovascular", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Red Cross Lifeblood Warfarin Reversal Guidance", "url": "https://www.lifeblood.com.au/"}
+    ],
+    "reference_ranges": ["coags", "fbc", "uec"],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p33-027",
+    "topic": "Medicine",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Tension pneumothorax recognition and decompression",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["tension pneumothorax", "needle decompression"],
+    "stem": "You are the medical registrar called urgently to the ward for a 68-year-old non-Aboriginal man with COPD whose dyspnoea has acutely worsened 2 hours after a CT-guided lung biopsy. He is anxious and clammy with marked respiratory distress. He has been on his usual COPD medications and just received nebulised salbutamol with no improvement. His oxygen saturation has fallen rapidly over the last 15 minutes. His ECG is not yet available.",
+    "data_table": {
+      "Vital signs": "T 36.8 °C, HR 138, RR 38, SpO2 84% on 8 L/min via Hudson mask, BP 88/52 mmHg",
+      "Examination": "Distressed, sweaty, tracheal deviation to the left, absent breath sounds on the right with hyperresonant percussion, raised jugular venous pressure, no peripheral oedema, no flail segment",
+      "Investigations": "Bedside ultrasound shows absent lung sliding on the right, ABG pH 7.30 pCO2 56 mmHg pO2 56 mmHg lactate 3.4 mmol/L, ECG pending"
+    },
+    "lead_in": "What is the single best initial intervention?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Arrange an urgent portable chest X-ray to confirm the diagnosis, escalate to ICU, and prepare for chest drain insertion once imaging has been formally reported by radiology",
+        "correct": false,
+        "rationale": "Imaging confirmation delays life-saving decompression in tension pneumothorax; the diagnosis is clinical and immediate needle thoracostomy is required. (Source: ANZCOR Guideline 11: Adult Advanced Life Support)",
+        "source_refs": ["ANZCOR Guideline 11: Adult Advanced Life Support"]
+      },
+      {
+        "letter": "B",
+        "text": "Perform immediate needle thoracostomy at the right 5th intercostal space anterior axillary line, then proceed to intercostal catheter insertion after decompression confirmed by clinical improvement",
+        "correct": true,
+        "rationale": "Tension pneumothorax with hypotension, tracheal deviation and absent breath sounds is a clinical emergency; immediate needle decompression at the 5th ICS anterior axillary line (preferred over 2nd ICS midclavicular in adults) followed by formal intercostal catheter is the Australian standard. (Source: ANZCOR Guideline 11: Adult Advanced Life Support)",
+        "source_refs": ["ANZCOR Guideline 11: Adult Advanced Life Support", "Therapeutic Guidelines: Respiratory"]
+      },
+      {
+        "letter": "C",
+        "text": "Commence non-invasive ventilation with bilevel positive airway pressure at 15/5 cm H2O and increase the inspired oxygen fraction, reassess the response in 15 minutes by the team",
+        "correct": false,
+        "rationale": "Positive pressure ventilation in tension pneumothorax worsens the situation by forcing more air into the pleural space; decompression is required first. (Source: ANZCOR Guideline 11: Adult Advanced Life Support)",
+        "source_refs": ["ANZCOR Guideline 11: Adult Advanced Life Support"]
+      },
+      {
+        "letter": "D",
+        "text": "Administer intravenous fluid bolus 1 litre, increase oxygen flow to 15 L/min via non-rebreather mask, and arrange immediate echocardiogram to exclude cardiac tamponade as the alternative cause",
+        "correct": false,
+        "rationale": "While fluids and oxygen are supportive, they do not address the mechanical obstruction; echocardiography delays decompression and the clinical signs strongly favour pneumothorax over tamponade. (Source: ANZCOR Guideline 11: Adult Advanced Life Support)",
+        "source_refs": ["ANZCOR Guideline 11: Adult Advanced Life Support"]
+      },
+      {
+        "letter": "E",
+        "text": "Administer intravenous adrenaline 50 micrograms boluses titrated to blood pressure response, intubate immediately and ventilate with high tidal volumes to recruit lung units",
+        "correct": false,
+        "rationale": "Intubation and high tidal volume ventilation accelerate tension physiology; adrenaline does not address the underlying mechanical problem. (Source: ANZCOR Guideline 11: Adult Advanced Life Support)",
+        "source_refs": ["ANZCOR Guideline 11: Adult Advanced Life Support"]
+      }
+    ],
+    "explanation": {
+      "summary": "Tension pneumothorax is a clinical diagnosis based on respiratory distress, hypotension, tracheal deviation, absent breath sounds and hyperresonance. ANZCOR recommends immediate needle thoracostomy in the 5th intercostal space anterior axillary line in adults (replacing the older 2nd ICS midclavicular site, which fails in around a third of adults due to chest wall thickness). Definitive treatment is intercostal catheter insertion. Imaging must not delay decompression.",
+      "key_points": [
+        "Tension pneumothorax is a clinical diagnosis",
+        "Adult needle thoracostomy site is 5th ICS anterior axillary line per ANZCOR",
+        "Imaging must not delay decompression",
+        "Definitive treatment is intercostal catheter",
+        "Positive pressure ventilation before decompression worsens tension physiology"
+      ],
+      "pearls": "Up to a third of adult needle decompressions at the 2nd intercostal space midclavicular line fail because of chest wall thickness exceeding 5 cm; the 5th intercostal space anterior axillary line is now the ANZCOR-preferred adult site."
+    },
+    "sources": [
+      {"label": "ANZCOR Guideline 11: Adult Advanced Life Support", "url": "https://resus.org.au/"},
+      {"label": "Therapeutic Guidelines: Respiratory", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["abg", "obs_pregnancy_vitals"],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p33-028",
+    "topic": "Medicine",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Cushing syndrome screening with 1 mg overnight dexamethasone suppression test",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["Cushing syndrome", "dexamethasone suppression"],
+    "stem": "You are the general medicine registrar reviewing a 42-year-old non-Aboriginal woman referred from primary care with a 12-month history of progressive central weight gain, easy bruising, proximal muscle weakness and new-onset hypertension. She has stretch marks on her abdomen and her HbA1c has risen from 5.4% to 6.6% over 12 months. She takes no glucocorticoid medication and has not used over-the-counter creams. There is no recent stress or major illness.",
+    "data_table": {
+      "Vital signs": "BP 158/96 mmHg, HR 84, RR 16, T 36.7 °C, BMI 32 kg/m2 (up from 27)",
+      "Examination": "Moon facies, supraclavicular fat pads, abdominal striae 1 cm wide and purple, proximal lower limb weakness Medical Research Council grade 4 of 5, multiple bruises on forearms",
+      "Investigations": "Sodium 142 mmol/L, potassium 3.4 mmol/L, fasting glucose 6.4 mmol/L, HbA1c 6.6%, ALT 28 U/L, TSH 1.5 mIU/L, urine drug screen negative, no exogenous steroid use disclosed"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Order a single random morning serum cortisol with paired ACTH, and refer to endocrinology if the cortisol is greater than 550 nmol/L on that specimen",
+        "correct": false,
+        "rationale": "Random cortisol has poor sensitivity and specificity for Cushing syndrome screening due to diurnal variation and physiological stress effects; structured testing is required. (Source: Endocrine Society Clinical Practice Guideline on Cushing Syndrome)",
+        "source_refs": ["Endocrine Society Clinical Practice Guideline on Cushing Syndrome"]
+      },
+      {
+        "letter": "B",
+        "text": "Order a high-dose 8 mg dexamethasone suppression test to differentiate pituitary from ectopic ACTH-driven Cushing syndrome before confirming hypercortisolism with any other screening test",
+        "correct": false,
+        "rationale": "High-dose dexamethasone testing distinguishes pituitary from ectopic source after hypercortisolism is confirmed; it is not the first-step screening test. (Source: Endocrine Society Clinical Practice Guideline on Cushing Syndrome)",
+        "source_refs": ["Endocrine Society Clinical Practice Guideline on Cushing Syndrome"]
+      },
+      {
+        "letter": "C",
+        "text": "Arrange overnight 1 mg dexamethasone suppression test and a 24-hour urinary free cortisol, with a confirmatory second test before endocrinology referral and further imaging",
+        "correct": true,
+        "rationale": "Endocrine Society and Australian guidance recommend any 2 of 1 mg overnight dexamethasone, 24-hour urinary free cortisol or late-night salivary cortisol as initial screening for Cushing syndrome; abnormal results trigger endocrinology referral for confirmation and source identification. (Source: Endocrine Society Clinical Practice Guideline on Cushing Syndrome)",
+        "source_refs": ["Endocrine Society Clinical Practice Guideline on Cushing Syndrome", "Therapeutic Guidelines: Endocrinology"]
+      },
+      {
+        "letter": "D",
+        "text": "Order an MRI pituitary as the first investigation given the clinical features of central weight gain and striae, with endocrine biochemistry to be added once the imaging result is available",
+        "correct": false,
+        "rationale": "Pituitary MRI is performed after biochemical confirmation of hypercortisolism and ACTH-dependent disease; first-line imaging without biochemistry leads to incidental finding misinterpretation. (Source: Endocrine Society Clinical Practice Guideline on Cushing Syndrome)",
+        "source_refs": ["Endocrine Society Clinical Practice Guideline on Cushing Syndrome"]
+      },
+      {
+        "letter": "E",
+        "text": "Commence empirical metyrapone 250 mg three times daily while awaiting investigations, with cardiovascular monitoring and review by endocrinology within 2 weeks for further plan",
+        "correct": false,
+        "rationale": "Steroidogenesis inhibitors are commenced only after diagnosis confirmation and under endocrinology supervision; empirical use without diagnosis is not safe. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+      }
+    ],
+    "explanation": {
+      "summary": "Cushing syndrome screening uses any two of three first-line tests: overnight 1 mg dexamethasone suppression test, 24-hour urinary free cortisol, or late-night salivary cortisol. Two abnormal results trigger specialist confirmation and source localisation. Pituitary MRI follows biochemical evidence of ACTH-dependent disease. Steroidogenesis inhibitors are reserved for confirmed disease under endocrine supervision. Pseudo-Cushing states (depression, alcohol, severe obesity) must be excluded.",
+      "key_points": [
+        "Use any 2 of: 1 mg overnight dexamethasone, 24-hour urinary free cortisol, late-night salivary cortisol",
+        "Two abnormal results trigger specialist confirmation and source workup",
+        "Pituitary MRI follows biochemical evidence of ACTH-dependent disease",
+        "Pseudo-Cushing must be excluded: depression, alcohol, severe obesity, late pregnancy",
+        "ACTH measurement differentiates ACTH-dependent (pituitary, ectopic) from ACTH-independent (adrenal) disease"
+      ],
+      "pearls": "Pregnancy, severe obesity, chronic alcohol use and depression cause pseudo-Cushing with elevated cortisol and incomplete suppression on the 1 mg dexamethasone test; the late-night salivary cortisol is the most specific screening test in obesity because it reflects loss of diurnal variation."
+    },
+    "sources": [
+      {"label": "Endocrine Society Clinical Practice Guideline on Cushing Syndrome", "url": "https://www.endocrine.org/"},
+      {"label": "Therapeutic Guidelines: Endocrinology", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["uec", "glucose_hba1c", "thyroid"],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p33-029",
+    "topic": "Medicine",
+    "subtopic": "Oncology emergencies",
+    "subtopic_detail": "Hypercalcaemia of malignancy",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["hypercalcaemia", "bisphosphonate"],
+    "stem": "You are the oncology medicine registrar called to see a 67-year-old non-Aboriginal woman with metastatic breast cancer admitted with 4 days of progressive confusion, polyuria and constipation. Her primary cancer was diagnosed 2 years ago with bone metastases. She has been on letrozole and palbociclib. There is no recent infection or thiazide use. She has had no falls and no head injury.",
+    "data_table": {
+      "Vital signs": "BP 102/64 mmHg lying, 86/52 mmHg standing, HR 102, RR 18, T 36.8 °C, SpO2 98% room air",
+      "Examination": "Confused and dehydrated, dry mucous membranes, no focal neurology, no signs of fluid overload, normal cardiovascular examination",
+      "Investigations": "Corrected calcium 3.4 mmol/L (normal 2.10 to 2.55), phosphate 0.8 mmol/L, creatinine 142 micromol/L (baseline 78), urea 15 mmol/L, albumin 30 g/L, ECG short QT interval, PTH less than 0.5 pmol/L (suppressed), 25-hydroxy vitamin D 60 nmol/L"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence calcitonin 4 units/kg subcutaneously every 12 hours as primary treatment, withhold intravenous fluid in view of the hypotension and dehydration documented",
+        "correct": false,
+        "rationale": "Calcitonin is adjunctive for rapid initial decrease but tachyphylaxis develops in 48 to 72 hours; volume resuscitation is the foundation of treatment, not contraindicated by orthostatic hypotension. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+      },
+      {
+        "letter": "B",
+        "text": "Administer cinacalcet 30 mg orally twice daily as initial therapy and arrange repeat corrected calcium in 24 hours, with further management based on the response to the initial dose given",
+        "correct": false,
+        "rationale": "Cinacalcet is reserved for parathyroid carcinoma and primary hyperparathyroidism, not hypercalcaemia of malignancy where PTH is suppressed. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+      },
+      {
+        "letter": "C",
+        "text": "Administer 0.9% sodium chloride 4 to 6 litres over 24 hours with cautious monitoring for fluid overload, give intravenous zoledronic acid 4 mg over 15 minutes once euvolaemic and renal function stabilises",
+        "correct": true,
+        "rationale": "Australian first-line management is aggressive crystalloid rehydration restoring renal calcium excretion, followed by intravenous zoledronic acid 4 mg once euvolaemic; zoledronic acid takes 2 to 4 days to peak effect but provides sustained reduction. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology", "eviQ Hypercalcaemia of Malignancy Protocol"]
+      },
+      {
+        "letter": "D",
+        "text": "Administer intravenous furosemide 40 mg with concurrent crystalloid replacement to promote calciuresis, withhold bisphosphonates pending an MRI spine to characterise the bone metastases",
+        "correct": false,
+        "rationale": "Routine loop diuretic use without volume overload is no longer recommended for hypercalcaemia management and risks worsening dehydration; bisphosphonate is the standard once euvolaemic. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+      },
+      {
+        "letter": "E",
+        "text": "Administer denosumab 60 mg subcutaneously without preceding intravenous fluid resuscitation, with the rationale that denosumab is the preferred agent regardless of renal function",
+        "correct": false,
+        "rationale": "Denosumab is preferred over zoledronic acid in renal impairment (eGFR under 35 mL/min/1.73m2) but volume resuscitation remains the first step in symptomatic hypercalcaemia. (Source: eviQ Hypercalcaemia of Malignancy Protocol)",
+        "source_refs": ["eviQ Hypercalcaemia of Malignancy Protocol"]
+      }
+    ],
+    "explanation": {
+      "summary": "Hypercalcaemia of malignancy presents with polyuria, dehydration, confusion, constipation and short QT interval. Management is staged: aggressive isotonic crystalloid 3 to 6 litres in the first 24 hours to restore renal calcium excretion, then intravenous zoledronic acid 4 mg once euvolaemic. Denosumab is preferred when eGFR is under 35 mL/min/1.73m2. Calcitonin is an adjunct for rapid 12 to 48 hour reduction. Loop diuretics are used only for fluid overload, not as primary calciuresis.",
+      "key_points": [
+        "Restore intravascular volume with isotonic crystalloid 3 to 6 litres in 24 hours first",
+        "Zoledronic acid 4 mg IV once euvolaemic is the standard antiresorptive",
+        "Denosumab preferred when eGFR under 35 mL/min/1.73m2",
+        "Calcitonin is adjunctive for the first 48 hours with tachyphylaxis",
+        "Loop diuretics are not first-line; reserved for fluid overload during rehydration"
+      ],
+      "pearls": "Zoledronic acid maximal calcium-lowering effect occurs at day 4 to 7, so calcitonin or denosumab is required as bridging therapy in patients with corrected calcium over 3.5 mmol/L or symptomatic neurological involvement requiring faster reduction."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Endocrinology", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "eviQ Hypercalcaemia of Malignancy Protocol", "url": "https://www.eviq.org.au/"}
+    ],
+    "reference_ranges": ["uec", "calcium_corrected", "vitamins"],
+    "created": "2026-05-30"
+  },
+  {
+    "id": "ctb-p33-030",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Severe community-acquired influenza pneumonia",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["influenza", "oseltamivir"],
+    "stem": "You are the medical registrar called to ED for a 58-year-old non-Aboriginal woman with type 2 diabetes and chronic kidney disease (eGFR 38 mL/min/1.73m2) presenting with 3 days of fever, myalgia, dyspnoea and productive cough during a documented community influenza A outbreak. She works at the local primary school where multiple staff have tested positive for influenza. Her usual medications are metformin and atorvastatin. She has not received this year's influenza vaccine. She lives independently and is otherwise functionally intact.",
+    "data_table": {
+      "Vital signs": "T 39.2 °C, HR 124, RR 30, SpO2 90% on 6 L/min via face mask, BP 96/58 mmHg",
+      "Examination": "Toxic appearance, bilateral basal crackles, no rash, no peripheral oedema, GCS 14, capillary refill 3 seconds",
+      "Investigations": "FBC WCC 14 x10^9/L, CRP 220 mg/L, procalcitonin 1.8 micrograms/L, sodium 128 mmol/L, urea 14 mmol/L, creatinine 168 micromol/L, lactate 3.2 mmol/L, chest X-ray bilateral patchy consolidation, nasopharyngeal PCR pending"
+    },
+    "lead_in": "What is the most appropriate antimicrobial plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence oseltamivir 30 mg twice daily with renal dose adjustment, ceftriaxone 1 g IV daily and azithromycin 500 mg IV daily, send nasopharyngeal PCR, and admit to a monitored bed",
+        "correct": false,
+        "rationale": "Although these antibiotics cover typical and atypical organisms, the oseltamivir dose 30 mg BD is too low for an eGFR of 38 mL/min/1.73m2; standard dose is 75 mg twice daily until eGFR falls below 30. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence ceftriaxone 1 g IV daily alone, withhold oseltamivir pending nasopharyngeal PCR confirmation, and admit to ED short stay for monitoring over the next 12 hours",
+        "correct": false,
+        "rationale": "Awaiting PCR delays antiviral therapy; oseltamivir is most effective started within 48 hours and should be given empirically to high-risk patients during an outbreak. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "C",
+        "text": "Commence oseltamivir 75 mg IV every 12 hours, intravenous benzylpenicillin 1.2 g every 4 hours, escalate oxygen and admit to ICU on the basis of CURB-65 score 3 and the lactate",
+        "correct": false,
+        "rationale": "Intravenous oseltamivir is not available in Australian inpatient formularies; oral oseltamivir at appropriate dose is used. Benzylpenicillin alone misses atypicals which are important in severe community-acquired pneumonia. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "D",
+        "text": "Commence oseltamivir 75 mg orally twice daily, ceftriaxone 1 g IV daily and azithromycin 500 mg IV daily, escalate to ICU for severe community-acquired pneumonia and continue oxygen support",
+        "correct": true,
+        "rationale": "Severe CAP plus suspected influenza during an outbreak warrants combined empirical antibiotic and antiviral therapy; oseltamivir 75 mg orally twice daily is standard for eGFR 30 to 60 mL/min/1.73m2, ceftriaxone plus azithromycin covers typical and atypical bacterial co-infection, and ICU is indicated for SMART-COP at least 3. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic", "ASID Influenza Antiviral Use Statement"]
+      },
+      {
+        "letter": "E",
+        "text": "Commence dexamethasone 6 mg daily as empirical therapy for inflammatory pneumonitis, withhold antiviral therapy in the setting of bacterial co-infection, and admit to a monitored ward bed",
+        "correct": false,
+        "rationale": "Routine corticosteroid use in influenza pneumonia is associated with worse outcomes outside specific indications; antiviral therapy is required for influenza and should not be withheld. (Source: ASID Influenza Antiviral Use Statement)",
+        "source_refs": ["ASID Influenza Antiviral Use Statement"]
+      }
+    ],
+    "explanation": {
+      "summary": "Severe influenza pneumonia in vulnerable adults requires combined antibiotic and antiviral therapy. Oseltamivir 75 mg orally twice daily is standard for eGFR over 30 mL/min/1.73m2; the dose is reduced to 30 mg daily for eGFR 10 to 30. Empirical antibiotic cover with ceftriaxone plus azithromycin (or doxycycline) addresses bacterial co-infection. Corticosteroids are reserved for specific indications and not routine. Annual influenza vaccination is the foundation of prevention and is funded for at-risk groups in Australia.",
+      "key_points": [
+        "Oseltamivir 75 mg orally twice daily is standard for eGFR over 30 mL/min/1.73m2",
+        "Reduce oseltamivir to 30 mg daily for eGFR 10 to 30",
+        "Severe CAP with influenza needs both antibiotic and antiviral cover",
+        "Corticosteroids are not routine in influenza pneumonia",
+        "Annual influenza vaccination is funded for at-risk groups under the National Immunisation Program"
+      ],
+      "pearls": "Bacterial co-infection in severe influenza is dominated by Streptococcus pneumoniae and Staphylococcus aureus; staphylococcal cover with vancomycin is added when there is cavitation, severe sepsis, or methicillin-resistant Staphylococcus aureus risk factors."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "ASID Influenza Antiviral Use Statement", "url": "https://www.asid.net.au/"}
+    ],
+    "reference_ranges": ["fbc", "uec", "inflammatory_markers", "abg", "obs_pregnancy_vitals"],
+    "created": "2026-05-30"
+  }
+]
