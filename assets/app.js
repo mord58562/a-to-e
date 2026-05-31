@@ -1586,17 +1586,38 @@
     }
 
     const dtWrap = document.getElementById("qDataTable");
+    // Humanise snake_case / camelCase keys for display.
+    const labelise = (k) => {
+      if (!k) return "";
+      const s = String(k)
+        .replace(/[_-]+/g, " ")
+        .replace(/([a-z])([A-Z])/g, "$1 $2")
+        .trim();
+      return s.charAt(0).toUpperCase() + s.slice(1);
+    };
+    // Flatten a value into an array of "Label · text" lines. Handles
+    // primitives, arrays, and shallow nested objects (seen in agent
+    // output where vitals/labs are sometimes a sub-dict instead of a
+    // single string). Skips empty / placeholder entries.
+    const isBlank = (s) => {
+      const t = String(s ?? "").trim().toLowerCase();
+      if (!t) return true;
+      return (
+        t === "-" || t === "—" || t === "n/a" || t === "na" ||
+        t === "nil" || t === "none" || t === "not performed"
+      );
+    };
     // Filter out empty / placeholder rows so an empty Investigations
     // entry (or any other row with a blank/n-a/nil value) doesn't
     // render its label with no content beside it.
     const dtEntries = (q.data_table ? Object.entries(q.data_table) : [])
       .filter(([k, v]) => {
         if (v == null) return false;
-        const s = String(v).trim().toLowerCase();
-        if (!s) return false;
-        if (s === "-" || s === "—" || s === "n/a" || s === "na" ||
-            s === "nil" || s === "none" || s === "not performed") return false;
-        return true;
+        if (Array.isArray(v)) return v.some((x) => !isBlank(x));
+        if (typeof v === "object") {
+          return Object.values(v).some((x) => !isBlank(x));
+        }
+        return !isBlank(v);
       });
     if (dtEntries.length) {
       dtWrap.hidden = false;
@@ -1604,8 +1625,28 @@
       dl.className = "patient-table";
       dl.id = "qDataTable";
       for (const [k, v] of dtEntries) {
-        const dt = document.createElement("dt"); dt.textContent = k;
-        const dd = document.createElement("dd"); dd.textContent = v;
+        const dt = document.createElement("dt");
+        dt.textContent = labelise(k);
+        const dd = document.createElement("dd");
+        if (Array.isArray(v)) {
+          dd.textContent = v.filter((x) => !isBlank(x)).join("; ");
+        } else if (v && typeof v === "object") {
+          const sub = document.createElement("dl");
+          sub.className = "patient-subtable";
+          for (const [kk, vv] of Object.entries(v)) {
+            if (isBlank(vv) && !Array.isArray(vv) && typeof vv !== "object") continue;
+            const sdt = document.createElement("dt");
+            sdt.textContent = labelise(kk);
+            const sdd = document.createElement("dd");
+            sdd.textContent = Array.isArray(vv)
+              ? vv.join("; ")
+              : (vv && typeof vv === "object" ? JSON.stringify(vv) : String(vv));
+            sub.appendChild(sdt); sub.appendChild(sdd);
+          }
+          dd.appendChild(sub);
+        } else {
+          dd.textContent = String(v);
+        }
         dl.appendChild(dt); dl.appendChild(dd);
       }
       dtWrap.replaceWith(dl);
