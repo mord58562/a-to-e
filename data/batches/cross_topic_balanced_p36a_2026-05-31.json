@@ -1,1 +1,461 @@
-[{"id": "ctb-p36a-001", "topic": "Paediatrics", "subtopic": "Neonatal", "subtopic_detail": "Asymptomatic hypoglycaemia in infant of diabetic mother", "difficulty": 3, "model": "Claude Opus 4.7 (1M context)", "tags": ["neonatal", "hypoglycaemia"], "stem": "You are the paediatric registrar on the postnatal ward reviewing a 2-hour-old term male infant born by uncomplicated vaginal delivery at 39+2 weeks weighing 4.3 kg to a woman with insulin-treated type 2 diabetes. He had skin-to-skin contact and an attempt at breastfeeding at one hour of age but latched only briefly. The midwife performed a routine pre-feed blood glucose at 2 hours which is 1.8 mmol/L on a calibrated cot-side meter. The infant is alert, pink, breathing at 48/min with no recession, and has a normal cardiovascular and neurological examination.", "data_table": {"Vital signs": "HR 142, RR 48, SpO2 97% in air, T 36.9 degrees C, capillary refill under 2 seconds", "Examination": "Vigorous, well-perfused, normal tone and reflexes, anterior fontanelle soft, no jitteriness", "Investigations": "Bedside BGL 1.8 mmol/L (laboratory confirmation pending)"}, "lead_in": "What is the most appropriate next step in management?", "options": [{"letter": "A", "text": "Reassure the mother that this glucose is a normal physiological postnatal nadir in an infant of a diabetic mother and arrange a routine recheck only with the next scheduled three-hourly feed in approximately one hour", "correct": false, "rationale": "A BGL under 2.0 mmol/L in any at-risk infant always triggers active management and a 30-minute recheck after feeding, not passive observation until the next routine feed time. (Source: Queensland Clinical Guideline: Newborn hypoglycaemia)", "source_refs": ["Queensland Clinical Guideline: Newborn hypoglycaemia"]}, {"letter": "B", "text": "Transfer the infant to the special care nursery immediately for insertion of a peripheral intravenous cannula and commencement of 10% dextrose at 60 mL/kg/day with hourly capillary glucose monitoring until two consecutive readings exceed 2.6 mmol/L", "correct": false, "rationale": "Intravenous 10% dextrose is reserved for symptomatic hypoglycaemia, BGL under 1.0 mmol/L, or persistent BGL under 2.6 mmol/L after feed plus buccal gel; an asymptomatic 1.8 mmol/L at first measurement is treated with feed first. (Source: Queensland Clinical Guideline: Newborn hypoglycaemia)", "source_refs": ["Queensland Clinical Guideline: Newborn hypoglycaemia"]}, {"letter": "C", "text": "Administer 200 mg/kg of 40% dextrose gel to the buccal mucosa now without offering an oral feed and recheck the capillary blood glucose 30 minutes later before deciding on any further escalation of management or further dextrose", "correct": false, "rationale": "Buccal 40% dextrose gel is used in combination with a feed, not instead of one, and only after the first low BGL persists or as second-line for the next low reading per the Sugar Babies and Queensland pathway. (Source: Queensland Clinical Guideline: Newborn hypoglycaemia)", "source_refs": ["Queensland Clinical Guideline: Newborn hypoglycaemia"]}, {"letter": "D", "text": "Encourage an immediate breastfeed or expressed-breast-milk top-up of 5 mL/kg and recheck the blood glucose 30 minutes after the feed before considering buccal dextrose gel or intravenous glucose escalation", "correct": true, "rationale": "ASID and Queensland Health newborn hypoglycaemia pathways treat an asymptomatic BGL of 1.0 to 2.5 mmol/L with an immediate feed of 5 mL/kg expressed colostrum or formula and a recheck 30 minutes after; persistent levels below 2.6 mmol/L then trigger 40% dextrose gel and senior review. (Source: Queensland Clinical Guideline: Newborn hypoglycaemia)", "source_refs": ["Queensland Clinical Guideline: Newborn hypoglycaemia"]}, {"letter": "E", "text": "Send a critical sample for plasma glucose, insulin, cortisol, growth hormone, ketones and free fatty acids before any intervention because the most likely cause is congenital hyperinsulinism rather than transitional neonatal hypoglycaemia", "correct": false, "rationale": "A critical hypoglycaemia screen is appropriate when BGL stays below 2.6 mmol/L despite adequate feeds at over 48 hours of age, not at the first reading at 2 hours of life in an infant of a diabetic mother. (Source: Queensland Clinical Guideline: Newborn hypoglycaemia)", "source_refs": ["Queensland Clinical Guideline: Newborn hypoglycaemia"]}], "explanation": {"summary": "Infants of diabetic mothers are at high risk of transient hyperinsulinaemic hypoglycaemia from in-utero glucose exposure. Australian pathways treat asymptomatic BGL between 1.0 and 2.5 mmol/L with a 5 mL/kg feed of expressed breast milk or formula and a 30-minute recheck. Persistent low levels then trigger 40% dextrose gel (200 mg/kg = 0.5 mL/kg) plus a feed. Intravenous 10% dextrose is for symptomatic infants, BGL under 1.0, or failure of feed plus gel. The target threshold for treatment in the first 48 hours is 2.6 mmol/L.", "key_points": ["IDM, LGA, SGA, late preterm are at-risk groups requiring screening", "Treatment threshold first 48h: BGL under 2.6 mmol/L", "First line: feed 5 mL/kg EBM or formula, recheck 30 min", "Second line: 200 mg/kg of 40% dextrose gel buccally plus feed", "IV 10% dextrose if symptomatic, under 1.0 mmol/L, or persistent failure"], "pearls": "Buccal 40% dextrose gel dose is 0.5 mL/kg (200 mg/kg) given with a feed, not instead of one - this single dose has reduced NICU admission in the Sugar Babies trial."}, "sources": [{"label": "Queensland Clinical Guideline: Newborn hypoglycaemia", "url": "https://www.health.qld.gov.au/qcg"}, {"label": "RCH Clinical Practice Guideline: Hypoglycaemia", "url": "https://www.rch.org.au/clinicalguide/"}], "reference_ranges": ["paeds_vitals_infant", "bsl_paeds"], "created": "2026-05-31"}]
+[
+  {
+    "id": "ctb-p36a-001",
+    "topic": "Paediatrics",
+    "subtopic": "Neonatal",
+    "subtopic_detail": "Asymptomatic hypoglycaemia in infant of diabetic mother",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "neonatal",
+      "hypoglycaemia"
+    ],
+    "stem": "You are the paediatric registrar on the postnatal ward reviewing a 2-hour-old term male infant born by uncomplicated vaginal delivery at 39+2 weeks weighing 4.3 kg to a woman with insulin-treated type 2 diabetes. He had skin-to-skin contact and an attempt at breastfeeding at one hour of age but latched only briefly. The midwife performed a routine pre-feed blood glucose at 2 hours which is 1.8 mmol/L on a calibrated cot-side meter. The infant is alert, pink, breathing at 48/min with no recession, and has a normal cardiovascular and neurological examination.",
+    "data_table": {
+      "Vital signs": "HR 142, RR 48, SpO2 97% in air, T 36.9 degrees C, capillary refill under 2 seconds",
+      "Examination": "Vigorous, well-perfused, normal tone and reflexes, anterior fontanelle soft, no jitteriness",
+      "Investigations": "Bedside BGL 1.8 mmol/L (laboratory confirmation pending)"
+    },
+    "lead_in": "What is the most appropriate next step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Reassure the mother that this glucose is a normal physiological postnatal nadir in an infant of a diabetic mother and arrange a routine recheck only with the next scheduled three-hourly feed in approximately one hour",
+        "correct": false,
+        "rationale": "A BGL under 2.0 mmol/L in any at-risk infant always triggers active management and a 30-minute recheck after feeding, not passive observation until the next routine feed time. (Source: Queensland Clinical Guideline: Newborn hypoglycaemia)",
+        "source_refs": [
+          "Queensland Clinical Guideline: Newborn hypoglycaemia"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Transfer the infant to the special care nursery immediately for insertion of a peripheral intravenous cannula and commencement of 10% dextrose at 60 mL/kg/day with hourly capillary glucose monitoring until two consecutive readings exceed 2.6 mmol/L",
+        "correct": false,
+        "rationale": "Intravenous 10% dextrose is reserved for symptomatic hypoglycaemia, BGL under 1.0 mmol/L, or persistent BGL under 2.6 mmol/L after feed plus buccal gel; an asymptomatic 1.8 mmol/L at first measurement is treated with feed first. (Source: Queensland Clinical Guideline: Newborn hypoglycaemia)",
+        "source_refs": [
+          "Queensland Clinical Guideline: Newborn hypoglycaemia"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Administer 200 mg/kg of 40% dextrose gel to the buccal mucosa now without offering an oral feed and recheck the capillary blood glucose 30 minutes later before deciding on any further escalation of management or further dextrose",
+        "correct": false,
+        "rationale": "Buccal 40% dextrose gel is used in combination with a feed, not instead of one, and only after the first low BGL persists or as second-line for the next low reading per the Sugar Babies and Queensland pathway. (Source: Queensland Clinical Guideline: Newborn hypoglycaemia)",
+        "source_refs": [
+          "Queensland Clinical Guideline: Newborn hypoglycaemia"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Encourage an immediate breastfeed or expressed-breast-milk top-up of 5 mL/kg and recheck the blood glucose 30 minutes after the feed before considering buccal dextrose gel or intravenous glucose escalation",
+        "correct": true,
+        "rationale": "ASID and Queensland Health newborn hypoglycaemia pathways treat an asymptomatic BGL of 1.0 to 2.5 mmol/L with an immediate feed of 5 mL/kg expressed colostrum or formula and a recheck 30 minutes after; persistent levels below 2.6 mmol/L then trigger 40% dextrose gel and senior review. (Source: Queensland Clinical Guideline: Newborn hypoglycaemia)",
+        "source_refs": [
+          "Queensland Clinical Guideline: Newborn hypoglycaemia"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Send a critical sample for plasma glucose, insulin, cortisol, growth hormone, ketones and free fatty acids before any intervention because the most likely cause is congenital hyperinsulinism rather than transitional neonatal hypoglycaemia",
+        "correct": false,
+        "rationale": "A critical hypoglycaemia screen is appropriate when BGL stays below 2.6 mmol/L despite adequate feeds at over 48 hours of age, not at the first reading at 2 hours of life in an infant of a diabetic mother. (Source: Queensland Clinical Guideline: Newborn hypoglycaemia)",
+        "source_refs": [
+          "Queensland Clinical Guideline: Newborn hypoglycaemia"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Infants of diabetic mothers are at high risk of transient hyperinsulinaemic hypoglycaemia from in-utero glucose exposure. Australian pathways treat asymptomatic BGL between 1.0 and 2.5 mmol/L with a 5 mL/kg feed of expressed breast milk or formula and a 30-minute recheck. Persistent low levels then trigger 40% dextrose gel (200 mg/kg = 0.5 mL/kg) plus a feed. Intravenous 10% dextrose is for symptomatic infants, BGL under 1.0, or failure of feed plus gel. The target threshold for treatment in the first 48 hours is 2.6 mmol/L.",
+      "key_points": [
+        "IDM, LGA, SGA, late preterm are at-risk groups requiring screening",
+        "Treatment threshold first 48h: BGL under 2.6 mmol/L",
+        "First line: feed 5 mL/kg EBM or formula, recheck 30 min",
+        "Second line: 200 mg/kg of 40% dextrose gel buccally plus feed",
+        "IV 10% dextrose if symptomatic, under 1.0 mmol/L, or persistent failure"
+      ],
+      "pearls": "Buccal 40% dextrose gel dose is 0.5 mL/kg (200 mg/kg) given with a feed, not instead of one - this single dose has reduced NICU admission in the Sugar Babies trial."
+    },
+    "sources": [
+      {
+        "label": "Queensland Clinical Guideline: Newborn hypoglycaemia",
+        "url": "https://www.health.qld.gov.au/qcg"
+      },
+      {
+        "label": "RCH Clinical Practice Guideline: Hypoglycaemia",
+        "url": "https://www.rch.org.au/clinicalguide/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "bsl_paeds"
+    ],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p36a-002",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Moderate croup with stridor at rest and mild recession",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "croup",
+      "dexamethasone"
+    ],
+    "stem": "You are the paediatric registrar in a regional emergency department reviewing a 22-month-old boy brought in by his mother at 0200 with a 1-day history of coryza followed by a sudden barking cough and noisy breathing on waking from sleep. He is upset and crying intermittently. On examination he has audible inspiratory stridor at rest, mild suprasternal and intercostal recession but no tracheal tug, and is well perfused with a respiratory rate of 36 and oxygen saturations of 97% in air. He has not had previous croup episodes and has no congenital airway concerns.",
+    "data_table": {
+      "Vital signs": "T 38.4 degrees C, HR 138, RR 36, SpO2 97% in air, CRT 1 second",
+      "Examination": "Inspiratory stridor at rest, mild recession, voice hoarse but cry strong, chest clear",
+      "Investigations": "Nil performed (clinical diagnosis)"
+    },
+    "lead_in": "What is the most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Give 0.15 mg/kg oral dexamethasone now and observe the child for at least four hours after the dose to assess clinical response before considering discharge home with a written croup advice sheet for the family",
+        "correct": true,
+        "rationale": "RCH and Therapeutic Guidelines recommend single-dose oral dexamethasone 0.15 mg/kg as first-line for moderate croup with at-least 4 hours of observation; nebulised adrenaline is reserved for severe disease with marked recession or tracheal tug. (Source: RCH CPG: Croup (laryngotracheobronchitis))",
+        "source_refs": [
+          "RCH CPG: Croup (laryngotracheobronchitis)"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Administer nebulised adrenaline 5 mL of 1:1000 via mask immediately and arrange for paediatric high-dependency admission with continuous monitoring for at least 24 hours regardless of the response to the initial nebulised dose",
+        "correct": false,
+        "rationale": "Nebulised adrenaline is reserved for severe croup with marked sternal recession, tracheal tug or hypoxia; mild recession with stridor at rest is moderate and treated with steroid alone in most cases. (Source: RCH CPG: Croup (laryngotracheobronchitis))",
+        "source_refs": [
+          "RCH CPG: Croup (laryngotracheobronchitis)"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Take a nasopharyngeal aspirate for respiratory viral PCR, perform a lateral soft-tissue neck X-ray to look for the steeple sign and withhold any pharmacological treatment until imaging and laboratory results have returned",
+        "correct": false,
+        "rationale": "Croup is a clinical diagnosis and routine imaging or viral PCR delays treatment without changing management; steroids should be given promptly on clinical grounds alone. (Source: RCH CPG: Croup (laryngotracheobronchitis))",
+        "source_refs": [
+          "RCH CPG: Croup (laryngotracheobronchitis)"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Administer high-flow humidified oxygen via nasal cannula at 2 L/kg/min and a single intramuscular dose of 50 mg/kg ceftriaxone empirically pending the result of a paired blood culture and full blood count",
+        "correct": false,
+        "rationale": "Croup is viral so antibiotics are not indicated; humidified oxygen is unhelpful in an infant with saturations of 97% and may distress the child further. (Source: RCH CPG: Croup (laryngotracheobronchitis))",
+        "source_refs": [
+          "RCH CPG: Croup (laryngotracheobronchitis)"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Discharge home immediately with written advice on steam-bath therapy and indications to return, without any pharmacological intervention because the child is comfortably saturating well and the stridor will likely settle overnight",
+        "correct": false,
+        "rationale": "Even mild croup benefits from a single dose of oral dexamethasone to reduce relapse and re-presentation; discharge without steroid is suboptimal in stridor-at-rest disease. (Source: RCH CPG: Croup (laryngotracheobronchitis))",
+        "source_refs": [
+          "RCH CPG: Croup (laryngotracheobronchitis)"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Moderate croup is defined as stridor at rest with mild to moderate recession. First-line treatment is single-dose oral dexamethasone 0.15 mg/kg (or prednisolone 1 mg/kg if dexamethasone unavailable). Nebulised adrenaline (0.5 mL/kg of 1:1000, max 5 mL) is added for severe disease with marked recession, tracheal tug, agitation or hypoxia. Children are observed for at least 4 hours post-steroid (or 4 hours post-last-adrenaline) before discharge. Antibiotics, imaging and routine humidification are not recommended.",
+      "key_points": [
+        "Croup severity: mild (barking cough, no stridor at rest), moderate (stridor at rest, mild recession), severe (marked recession, tracheal tug, agitation)",
+        "Oral dexamethasone 0.15 mg/kg for all moderate or severe croup",
+        "Add nebulised adrenaline for severe croup",
+        "Observe 4 hours post-treatment before discharge",
+        "Croup is a clinical diagnosis - no routine imaging"
+      ],
+      "pearls": "A child with croup who becomes drooling, very still and toxic should raise suspicion of bacterial tracheitis or epiglottitis - call ENT/anaesthetics for theatre intubation before any throat examination."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Croup (laryngotracheobronchitis)",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/croup_laryngotracheobronchitis/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Respiratory",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant"
+    ],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p36a-003",
+    "topic": "Paediatrics",
+    "subtopic": "Infectious Diseases",
+    "subtopic_detail": "Febrile infant under 3 months with possible UTI",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "UTI",
+      "febrile-infant"
+    ],
+    "stem": "You are the paediatric registrar in a metropolitan tertiary emergency department reviewing a 7-week-old previously well term male infant brought in by his parents with a 12-hour history of poor feeding, fussiness and a measured rectal temperature of 38.6 degrees C at home. On examination he is irritable but consolable, well perfused with a capillary refill of under 2 seconds, has a soft fontanelle and no focal source of infection on full examination including ENT, chest, abdomen and skin. He has had no recent antibiotics and his immunisations are up to date.",
+    "data_table": {
+      "Vital signs": "T 38.4 degrees C, HR 168, RR 48, SpO2 99% air, CRT under 2 sec",
+      "Examination": "Irritable but consolable, no rash, fontanelle soft, no meningism, normal genitalia",
+      "Investigations": "Bedside cap gas: pH 7.38, BE -1, lactate 1.4 mmol/L, glucose 4.6 mmol/L"
+    },
+    "lead_in": "What is the most appropriate next step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Arrange an urgent renal tract ultrasound and a micturating cystourethrogram before starting any antibiotic therapy because vesicoureteric reflux is the most likely underlying diagnosis in a male infant with fever",
+        "correct": false,
+        "rationale": "Imaging is not done before empirical antibiotics; renal tract US in confirmed UTI is arranged later per KHA-CARI and RCH timelines. (Source: RCH CPG: Urinary tract infection)",
+        "source_refs": [
+          "RCH CPG: Urinary tract infection"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Collect a clean-catch bag urine specimen for microscopy and culture and discharge home on oral cefalexin 25 mg/kg three times daily with a planned review by the general practitioner within 24 hours of presentation",
+        "correct": false,
+        "rationale": "Bag urine has a high contamination rate and is not acceptable for diagnosing UTI in infants; oral antibiotics and outpatient management are inappropriate for any febrile infant under 3 months. (Source: RCH CPG: Febrile child)",
+        "source_refs": [
+          "RCH CPG: Febrile child"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Reassure the parents that the child is well appearing with a normal lactate and observation alone in the emergency department for 4 hours with paracetamol is sufficient before discharge home without antibiotics or urine collection",
+        "correct": false,
+        "rationale": "Well-appearance is unreliable in infants under 3 months and serious bacterial infection prevalence is 5 to 10 percent; observation alone is inadequate. (Source: RCH CPG: Febrile child)",
+        "source_refs": [
+          "RCH CPG: Febrile child"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Send urine collected by clean catch only for dipstick analysis and start oral amoxicillin clavulanate if the dipstick is positive for leucocyte esterase or nitrites, deferring blood tests unless the child clinically deteriorates",
+        "correct": false,
+        "rationale": "Urine dipstick is unreliable in young infants and oral antibiotics are not first-line; full septic workup and IV antibiotics are mandated. (Source: RCH CPG: Febrile child)",
+        "source_refs": [
+          "RCH CPG: Febrile child"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Obtain a catheter or suprapubic aspirate urine sample plus blood culture and full septic workup including lumbar puncture, then commence intravenous benzylpenicillin and gentamicin pending results in a paediatric inpatient setting",
+        "correct": true,
+        "rationale": "RCH and the Therapeutic Guidelines treat a febrile infant under 3 months as full septic workup including catheter urine, blood culture, LP and empirical IV benzylpenicillin plus gentamicin (cefotaxime if LP delayed) regardless of well appearance. (Source: RCH CPG: Febrile child)",
+        "source_refs": [
+          "RCH CPG: Febrile child"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Any febrile infant under 3 months of age requires a full septic workup. RCH defines this as urinalysis and culture by catheter or suprapubic aspirate, blood culture, FBC, CRP, and lumbar puncture (unless contraindicated). Empirical IV benzylpenicillin (or amoxicillin) plus gentamicin covers Group B streptococcus, Listeria and Gram negatives; cefotaxime replaces gentamicin if meningitis suspected. The infant is admitted pending cultures. Well-appearance does not exclude serious bacterial infection in this age group.",
+      "key_points": [
+        "Under 1 month: always full septic workup plus admit on empirical IV antibiotics",
+        "1-3 months: full septic workup unless very well and low-risk per Rochester/Step-by-Step",
+        "Empirical IV penicillin plus gentamicin (cefotaxime if meningitis suspected)",
+        "Urine: catheter or SPA only, not bag",
+        "Renal tract US after confirmed UTI in infants under 6 months"
+      ],
+      "pearls": "Listeria monocytogenes covers the rationale for adding ampicillin/amoxicillin to gentamicin in neonates - it is intrinsically resistant to all cephalosporins."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Febrile child",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/febrile_child/"
+      },
+      {
+        "label": "RCH CPG: Urinary tract infection",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Urinary_tract_infection/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "paeds_fbc"
+    ],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p36a-004",
+    "topic": "Paediatrics",
+    "subtopic": "Allergy and Immunology",
+    "subtopic_detail": "Paediatric anaphylaxis dose, route and observation",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "anaphylaxis",
+      "adrenaline"
+    ],
+    "stem": "You are the paediatric registrar in a busy emergency department called to triage to assess a 6-year-old girl who developed lip swelling, generalised urticaria and a hoarse voice within 10 minutes of eating a cashew from a snack bag at her brother's birthday party 25 minutes ago. She has a history of mild asthma controlled with a salbutamol inhaler used twice in the last year, no known allergies and no chronic medication. On arrival she is anxious, has audible inspiratory stridor, wheeze on auscultation, widespread urticaria and is centrally well perfused.",
+    "data_table": {
+      "Vital signs": "HR 142, RR 36, SpO2 94% in air, BP 92/56 mmHg, T 36.8 degrees C",
+      "Examination": "Audible stridor, bilateral wheeze, widespread urticaria, mild peri-orbital oedema, alert",
+      "Investigations": "Bedside observations as above; weight estimated at 22 kg"
+    },
+    "lead_in": "What is the most appropriate immediate treatment?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Administer 10 mg of intramuscular promethazine and 200 mg of intravenous hydrocortisone as first-line therapy and observe for two hours of clinical improvement before re-evaluating the need for further pharmacological treatment",
+        "correct": false,
+        "rationale": "Antihistamines and corticosteroids are adjuncts only and never replace adrenaline for any feature of anaphylaxis; delaying IM adrenaline increases mortality. (Source: ASCIA Anaphylaxis Guidelines)",
+        "source_refs": [
+          "ASCIA Anaphylaxis Guidelines"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Give intravenous adrenaline 1 mcg/kg as a slow push followed by a continuous infusion at 0.05 mcg/kg/min, intubate immediately for the stridor and admit her directly to the paediatric intensive care unit for ongoing airway management",
+        "correct": false,
+        "rationale": "IV adrenaline is reserved for refractory anaphylaxis after two IM doses with persistent shock and senior clinician supervision; first-line is always IM adrenaline. (Source: ASCIA Anaphylaxis Guidelines)",
+        "source_refs": [
+          "ASCIA Anaphylaxis Guidelines"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Administer 0.3 mg of 1:1000 adrenaline by intramuscular injection into the mid anterolateral thigh now, lay her supine with legs elevated, give high-flow oxygen and observe for at least 4 hours after symptoms resolve before considering discharge",
+        "correct": true,
+        "rationale": "ASCIA action plan: IM adrenaline 0.01 mg/kg of 1:1000 (max 0.5 mg) into the mid anterolateral thigh, with supine positioning, high flow oxygen and a minimum 4-hour observation after symptom resolution before discharge with an adrenaline autoinjector and follow up. (Source: ASCIA Anaphylaxis Guidelines)",
+        "source_refs": [
+          "ASCIA Anaphylaxis Guidelines"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Give 10 puffs of inhaled salbutamol via spacer and 5 mL nebulised adrenaline 1:1000, then reassess in 15 minutes and only proceed to intramuscular adrenaline if wheeze and stridor have not resolved with these inhaled therapies",
+        "correct": false,
+        "rationale": "Inhaled salbutamol treats wheeze but not airway oedema or hypotension; nebulised adrenaline is for severe upper airway oedema as an adjunct only, never replacing IM adrenaline. (Source: ASCIA Anaphylaxis Guidelines)",
+        "source_refs": [
+          "ASCIA Anaphylaxis Guidelines"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Administer an immediate 20 mL/kg bolus of 0.9% sodium chloride intravenously and observe blood pressure response before deciding whether intramuscular adrenaline is required, given that the systolic blood pressure remains above 90 mmHg",
+        "correct": false,
+        "rationale": "Anaphylaxis is diagnosed by any combination of skin, airway or breathing involvement after exposure regardless of blood pressure; IM adrenaline is given immediately rather than awaiting hypotension. (Source: ASCIA Anaphylaxis Guidelines)",
+        "source_refs": [
+          "ASCIA Anaphylaxis Guidelines"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Anaphylaxis is diagnosed when there is any acute onset of typical skin or mucosal change PLUS either respiratory or cardiovascular involvement, or any hypotension after a known allergen. First-line treatment is IM adrenaline 0.01 mg/kg of 1:1000 (10 mcg/kg, max 0.5 mg) into the mid anterolateral thigh, repeated every 5 minutes as needed. Supine positioning, high flow oxygen and IV fluid 20 mL/kg if hypotensive complete the bundle. Observation for at least 4 hours post symptom resolution is required, with adrenaline autoinjector script, action plan and allergy referral on discharge.",
+      "key_points": [
+        "IM adrenaline first - always first - 0.01 mg/kg 1:1000 IM mid anterolateral thigh, max 0.5 mg",
+        "Repeat IM adrenaline every 5 minutes if no response",
+        "Supine with legs elevated unless pregnant (left lateral) or vomiting (lateral)",
+        "Antihistamines and steroids are adjuncts only",
+        "Observe at least 4 hours post symptom resolution"
+      ],
+      "pearls": "For a 22 kg child the IM dose is 0.22 mg, but ASCIA pre-calibrates by age band: 0.15 mg for under 20 kg, 0.30 mg for 20 to 50 kg and 0.5 mg for over 50 kg - the band is appropriate here despite slight under-dose."
+    },
+    "sources": [
+      {
+        "label": "ASCIA Anaphylaxis Guidelines",
+        "url": "https://www.allergy.org.au/hp/anaphylaxis"
+      },
+      {
+        "label": "RCH CPG: Anaphylaxis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Anaphylaxis/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p36a-005",
+    "topic": "Paediatrics",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "Kawasaki disease meeting full criteria at day 6",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "Kawasaki",
+      "IVIG"
+    ],
+    "stem": "You are the paediatric registrar admitting a 3-year-old boy who has been febrile for six days with temperatures above 39 degrees C unresponsive to paracetamol. His parents describe a polymorphous truncal rash since day three, red cracked lips since day four and bilateral non-purulent conjunctival injection that started yesterday. On examination today he has a tender 2 cm right cervical lymph node, swollen erythematous palms and soles, and pronounced strawberry tongue. He is irritable but well perfused and has no source of bacterial infection on workup.",
+    "data_table": {
+      "Vital signs": "T 39.4 degrees C, HR 152, RR 30, BP 96/58 mmHg, SpO2 98%",
+      "Examination": "Bilateral bulbar conjunctival injection without exudate, dry fissured lips, strawberry tongue, polymorphous truncal rash, oedema of hands and feet, single 2 cm right cervical node",
+      "Investigations": "WCC 16.2 x10^9/L (neutrophils 12.5), Hb 102 g/L, platelets 462 x10^9/L, CRP 168 mg/L, ALT 92 U/L, albumin 28 g/L, sterile pyuria on urinalysis"
+    },
+    "lead_in": "What is the most appropriate next step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Defer all definitive treatment until day 10 of fever to allow further inflammatory markers, echocardiogram and rheumatology consultation to confirm the diagnosis before committing the child to systemic immunoglobulin therapy and antiplatelet therapy",
+        "correct": false,
+        "rationale": "Delaying treatment beyond day 10 of fever loses the window of maximal IVIG efficacy in preventing coronary aneurysm; treat as soon as Kawasaki criteria are met. (Source: RCH CPG: Kawasaki disease)",
+        "source_refs": [
+          "RCH CPG: Kawasaki disease"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Treat empirically with intravenous flucloxacillin and ceftriaxone for staphylococcal scalded skin syndrome and toxic shock pending blood culture results, with serial daily examination for any new desquamation or hypotension over the coming 48 hours of admission",
+        "correct": false,
+        "rationale": "The combination of fever for 6 days plus 4 of 5 principal criteria fulfils Kawasaki disease; staphylococcal scalded skin would not give bilateral conjunctivitis and strawberry tongue with this lymph node pattern. (Source: RCH CPG: Kawasaki disease)",
+        "source_refs": [
+          "RCH CPG: Kawasaki disease"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence intravenous immunoglobulin 2 g/kg over 12 hours plus oral aspirin 30 to 50 mg/kg/day in four divided doses, and arrange an inpatient baseline transthoracic echocardiogram to assess for coronary artery aneurysms during this admission",
+        "correct": true,
+        "rationale": "Single dose IVIG 2 g/kg infused over 8 to 12 hours plus high or moderate dose aspirin started within 10 days of fever onset reduces coronary aneurysm risk from 25 percent to under 5 percent; baseline echo establishes coronary z-scores. (Source: RCH CPG: Kawasaki disease)",
+        "source_refs": [
+          "RCH CPG: Kawasaki disease"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence high-dose intravenous methylprednisolone 30 mg/kg pulse for 3 days as initial monotherapy without intravenous immunoglobulin and review the need for adjunctive aspirin once the inflammatory markers begin to fall on serial testing",
+        "correct": false,
+        "rationale": "Steroid monotherapy is not first line; high-risk Kawasaki may receive IVIG plus steroid combination (Kobayashi-style risk stratification), but never steroid without IVIG. (Source: RCH CPG: Kawasaki disease)",
+        "source_refs": [
+          "RCH CPG: Kawasaki disease"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Start oral aspirin 3 to 5 mg/kg/day alone without intravenous immunoglobulin and arrange outpatient transthoracic echocardiogram in 6 to 8 weeks because the platelet count is already markedly elevated suggesting late convalescent phase",
+        "correct": false,
+        "rationale": "Low-dose aspirin is the maintenance antiplatelet dose used after fever resolves; the acute high-inflammation phase always requires IVIG plus moderate-to-high dose aspirin until day 14 or 48 hours afebrile. (Source: RCH CPG: Kawasaki disease)",
+        "source_refs": [
+          "RCH CPG: Kawasaki disease"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Kawasaki disease is diagnosed clinically by fever for at least 5 days plus 4 of 5 principal features: bilateral non-exudative conjunctivitis, mucosal changes (cracked lips, strawberry tongue), extremity changes (palmar/plantar erythema or oedema, periungual desquamation), polymorphous rash, and cervical lymphadenopathy of at least 1.5 cm. Treatment with single-dose IVIG 2 g/kg plus aspirin within 10 days of fever onset reduces coronary aneurysm rates from 25 percent to under 5 percent. Aspirin is dosed at 30 to 50 mg/kg/day until 48 hours afebrile, then 3 to 5 mg/kg/day until echo follow up at 6 to 8 weeks.",
+      "key_points": [
+        "Diagnose by 5+ days fever plus 4 of 5 criteria (or incomplete KD by criteria plus echo)",
+        "Treat within 10 days of fever onset: IVIG 2 g/kg + aspirin",
+        "Baseline echo, repeat at 6 to 8 weeks",
+        "Steroid added upfront for high-risk (Kobayashi score) or IVIG resistance",
+        "Long-term cardiology follow up if z-score abnormal"
+      ],
+      "pearls": "Sterile pyuria, raised CRP, anaemia of inflammation and a normal-to-rising platelet count by week 2 are supportive markers used in incomplete KD scoring."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Kawasaki disease",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Kawasaki_disease/"
+      },
+      {
+        "label": "American Heart Association: Kawasaki disease scientific statement",
+        "url": "https://www.ahajournals.org/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "paeds_fbc",
+      "inflammatory_markers"
+    ],
+    "created": "2026-05-31"
+  }
+]
