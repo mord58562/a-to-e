@@ -65,5 +65,276 @@
     ],
     "reference_ranges": ["paeds_vitals_child"],
     "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p38-002",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Antenatal screening",
+    "subtopic_detail": "GDM diagnosis on 75g OGTT with ADIPS thresholds",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["GDM", "pregnancy"],
+    "stem": "You are the antenatal GP reviewing a 32-year-old G1P0 woman at 26 weeks gestation with results from her routine 75 g oral glucose tolerance test today. She is asymptomatic, pre-pregnancy BMI was 24, weight gain so far is 7 kg, has no family history of diabetes, is of Anglo-Australian background, and had a normal early pregnancy HbA1c of 5.2 percent at booking. Her pregnancy has otherwise been uncomplicated with normal morphology scan and appropriate fundal height. She has no glycosuria on dipstick today. She takes only pregnancy multivitamins and no medications that affect glucose metabolism.",
+    "data_table": {
+      "Vital signs": "BP 118/72, HR 84, BMI 26",
+      "Investigations": "75 g OGTT - fasting glucose 5.3 mmol/L, 1-hour 10.2 mmol/L, 2-hour 8.4 mmol/L; booking HbA1c 5.2%; urine dipstick negative for glucose, ketones and protein"
+    },
+    "lead_in": "What is the most appropriate diagnosis and initial management plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Diagnose gestational diabetes mellitus on the abnormal fasting and 1-hour values, refer to the diabetes-in-pregnancy multidisciplinary clinic, commence dietary advice and home blood glucose monitoring with targets fasting under 5.0 and 2-hour postprandial under 6.7 mmol/L",
+        "correct": true,
+        "rationale": "ADIPS diagnostic thresholds for GDM on the 75 g OGTT are fasting at or above 5.1, 1-hour at or above 10.0, or 2-hour at or above 8.5; only one abnormal value is required and this woman meets two. (Source: ADIPS Consensus Guidelines for GDM)",
+        "source_refs": ["ADIPS Consensus Guidelines for GDM"]
+      },
+      {
+        "letter": "B",
+        "text": "Diagnose overt diabetes in pregnancy on the basis of two abnormal OGTT values, commence metformin 500 mg twice daily immediately, refer urgently to obstetric medicine and arrange foetal echocardiography for screening of congenital cardiac anomalies",
+        "correct": false,
+        "rationale": "Overt diabetes in pregnancy requires fasting glucose at or above 7.0, random over 11.1 or HbA1c at or above 6.5 percent; her values meet GDM thresholds only, not overt diabetes. (Source: ADIPS Consensus Guidelines for GDM)",
+        "source_refs": ["ADIPS Consensus Guidelines for GDM"]
+      },
+      {
+        "letter": "C",
+        "text": "Reassure the patient that her test is within the normal range as only the fasting glucose is above 5.1 and a single abnormal value does not establish a diagnosis of gestational diabetes mellitus in Australia or internationally",
+        "correct": false,
+        "rationale": "ADIPS criteria diagnose GDM on a single abnormal value above the threshold; this woman has two abnormal values and clearly meets criteria. (Source: ADIPS Consensus Guidelines for GDM)",
+        "source_refs": ["ADIPS Consensus Guidelines for GDM"]
+      },
+      {
+        "letter": "D",
+        "text": "Repeat the 75 g OGTT in 4 weeks because borderline elevations at 26 weeks may resolve as pregnancy progresses and the patient has no risk factors for gestational diabetes including normal BMI and no family history",
+        "correct": false,
+        "rationale": "There is no role for repeating the OGTT when the diagnostic threshold is met; delay risks worsening glycaemic control and foetal macrosomia. (Source: ADIPS Consensus Guidelines for GDM)",
+        "source_refs": ["ADIPS Consensus Guidelines for GDM"]
+      },
+      {
+        "letter": "E",
+        "text": "Commence metformin 500 mg twice daily as first-line therapy without dietary trial because two abnormal values predict failure of lifestyle therapy alone and pharmacotherapy should not be delayed in pregnancy where the foetus is at risk",
+        "correct": false,
+        "rationale": "Initial GDM management in Australia is diet and exercise with self-monitored blood glucose; pharmacotherapy is added if glycaemic targets are not met after a trial of lifestyle measures. (Source: ADIPS Consensus Guidelines for GDM)",
+        "source_refs": ["ADIPS Consensus Guidelines for GDM"]
+      }
+    ],
+    "explanation": {
+      "summary": "ADIPS 2014 diagnostic thresholds on the 75 g OGTT are fasting at or above 5.1, 1-hour at or above 10.0, or 2-hour at or above 8.5 mmol/L; one abnormal value is sufficient for diagnosis of GDM. Initial management is dietary and exercise advice with home blood glucose monitoring and predefined targets. Pharmacotherapy is added if targets are not consistently met after about 1-2 weeks of lifestyle measures. Overt diabetes in pregnancy is a separate, more stringent diagnostic category.",
+      "key_points": [
+        "ADIPS GDM thresholds: fasting >=5.1, 1-hour >=10.0, 2-hour >=8.5; one abnormal value diagnostic",
+        "Targets: fasting <5.0, 1-hour <7.4 or 2-hour <6.7 mmol/L",
+        "Diet first; metformin or insulin added if targets not met"
+      ],
+      "pearls": "Overt diabetes in pregnancy (fasting >=7.0 or HbA1c >=6.5%) is distinct from GDM and warrants urgent referral plus foetal echocardiography due to higher congenital malformation risk."
+    },
+    "sources": [
+      {"label": "ADIPS Consensus Guidelines for GDM", "url": "https://www.adips.org/"},
+      {"label": "RANZCOG Statement: Diagnosis of GDM", "url": "https://ranzcog.edu.au/"}
+    ],
+    "reference_ranges": ["ogtt_pregnancy", "glucose_hba1c"],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p38-003",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Acute pyelonephritis empiric antibiotic choice when vomiting",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["pyelonephritis", "antibiotic stewardship"],
+    "stem": "You are the emergency department registrar reviewing a 28-year-old woman with 24 hours of right loin pain, fever to 39 degrees, rigors, dysuria and three episodes of vomiting today. She is not pregnant (negative urinary beta-hCG), has no diabetes mellitus, no known renal tract abnormalities and is not immunosuppressed. She has had two prior episodes of uncomplicated lower urinary tract infection three years apart, both successfully treated with oral trimethoprim. Today she has been unable to keep down oral fluids or paracetamol since this morning and last passed urine four hours ago.",
+    "data_table": {
+      "Vital signs": "T 38.9, HR 108, BP 108/68, RR 20, SpO2 99% room air",
+      "Examination": "Right renal angle tenderness, soft abdomen, no peritonism, normal pelvic examination",
+      "Investigations": "Urine dipstick LE++ nit+ blood+; urine MCS sent; bHCG negative; CRP 142, WCC 14.8, Cr 88, eGFR >90; blood cultures sent"
+    },
+    "lead_in": "What is the most appropriate empiric antibiotic plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Oral trimethoprim 300 mg daily for 7 days with paracetamol as required and discharge with advice to drink at least two litres of clear fluid daily and review in general practice in three days",
+        "correct": false,
+        "rationale": "Oral therapy is inappropriate when the patient cannot tolerate oral intake due to vomiting and has systemic features, and trimethoprim is no longer a recommended empiric choice for pyelonephritis given resistance rates. (Source: Therapeutic Guidelines Antibiotic: Acute Pyelonephritis)",
+        "source_refs": ["Therapeutic Guidelines Antibiotic: Acute Pyelonephritis"]
+      },
+      {
+        "letter": "B",
+        "text": "Admit for IV gentamicin 5 mg/kg daily plus IV ampicillin 2 g six-hourly with antiemetic and IV fluid resuscitation, narrowing therapy when urine and blood culture sensitivities are available within 48-72 hours",
+        "correct": true,
+        "rationale": "Australian first-line empiric therapy for acute pyelonephritis requiring admission is IV gentamicin plus IV ampicillin, providing cover for E. coli and enterococci with synergy and renal concentration. (Source: Therapeutic Guidelines Antibiotic: Acute Pyelonephritis)",
+        "source_refs": ["Therapeutic Guidelines Antibiotic: Acute Pyelonephritis"]
+      },
+      {
+        "letter": "C",
+        "text": "Oral ciprofloxacin 500 mg twice daily for 7 days commenced in the emergency department with discharge to home if she can tolerate two doses, and outpatient follow-up by her general practitioner within 24 hours",
+        "correct": false,
+        "rationale": "Fluoroquinolones are not first-line empiric pyelonephritis therapy in Australia due to resistance and adverse effect concerns, and oral therapy is unsuitable when the patient is vomiting. (Source: Therapeutic Guidelines Antibiotic: Acute Pyelonephritis)",
+        "source_refs": ["Therapeutic Guidelines Antibiotic: Acute Pyelonephritis"]
+      },
+      {
+        "letter": "D",
+        "text": "Admit for IV piperacillin-tazobactam 4.5 g eight-hourly with vasopressor on standby and HDU admission given the severity of presentation and to ensure broad coverage of all likely uropathogens including resistant organisms",
+        "correct": false,
+        "rationale": "Piperacillin-tazobactam is reserved for severe sepsis, healthcare-associated infection or known resistant pathogens; first-line for community pyelonephritis is gentamicin plus ampicillin. (Source: Therapeutic Guidelines Antibiotic: Acute Pyelonephritis)",
+        "source_refs": ["Therapeutic Guidelines Antibiotic: Acute Pyelonephritis"]
+      },
+      {
+        "letter": "E",
+        "text": "Oral nitrofurantoin 100 mg six-hourly for 5 days with discharge after a single dose of IM ceftriaxone in the emergency department and outpatient antibiotic service follow-up in 24 to 48 hours for assessment",
+        "correct": false,
+        "rationale": "Nitrofurantoin does not achieve adequate tissue or serum concentrations to treat upper urinary tract infection and is contraindicated for pyelonephritis. (Source: Therapeutic Guidelines Antibiotic: Acute Pyelonephritis)",
+        "source_refs": ["Therapeutic Guidelines Antibiotic: Acute Pyelonephritis"]
+      }
+    ],
+    "explanation": {
+      "summary": "Acute pyelonephritis with systemic features or inability to tolerate oral therapy requires IV antibiotics and admission. Australian first-line empiric therapy is gentamicin (covering most gram-negative uropathogens with renal concentration and synergy) plus ampicillin (for enterococcal cover). De-escalation is guided by culture sensitivity within 48-72 hours. Nitrofurantoin and oral fosfomycin do not penetrate the upper tract and are not used for pyelonephritis.",
+      "key_points": [
+        "Severe pyelonephritis: IV gentamicin + IV ampicillin first-line in Australia",
+        "Nitrofurantoin: lower-tract UTI only, not pyelonephritis",
+        "Ciprofloxacin: not empiric first-line due to resistance and adverse effect profile"
+      ],
+      "pearls": "If gentamicin contraindicated (significant renal impairment, ototoxicity risk), substitute IV ceftriaxone 1 g daily; consider ESBL coverage if recent healthcare exposure or known carriage."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines Antibiotic: Acute Pyelonephritis", "url": "https://www.tg.org.au/"},
+      {"label": "eTG Complete: Urinary tract infections in adults", "url": "https://www.tg.org.au/"}
+    ],
+    "reference_ranges": ["uec", "inflammatory_markers"],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p38-004",
+    "topic": "Psychiatry",
+    "subtopic": "Addiction",
+    "subtopic_detail": "Varenicline initiation for smoking cessation in a patient with treated depression",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["smoking cessation", "varenicline"],
+    "stem": "You are the general practice registrar reviewing a 52-year-old man who has decided to make another quit attempt after smoking 20 cigarettes per day for 30 years. His depression has been stable on sertraline 100 mg daily for the past three years with no recent suicidal ideation, self-harm, or psychiatric admission, and his GP-led mental health plan is current. He has no history of seizures, no significant renal impairment (eGFR 88), and no cardiovascular events. He has previously tried nicotine replacement therapy patches alone for two weeks but resumed smoking due to severe cravings. He asks for the most effective evidence-based pharmacotherapy.",
+    "data_table": {
+      "Vital signs": "BP 130/82, HR 76, BMI 27",
+      "Examination": "Mood euthymic on sertraline, no current suicidal ideation, normal cardiovascular and respiratory exam, no recent cardiac events documented",
+      "Investigations": "Recent eGFR 88, normal LFTs, normal ECG, exhaled CO 28 ppm"
+    },
+    "lead_in": "What is the most appropriate first-line pharmacotherapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Varenicline 0.5 mg daily for three days then 0.5 mg twice daily for four days then 1 mg twice daily for a 12-week course, with quit date in week two and monitoring for neuropsychiatric symptoms and abnormal dreams at routine review",
+        "correct": true,
+        "rationale": "Varenicline has the strongest evidence for sustained abstinence in moderate to heavy smokers who have failed monotherapy NRT, with no excess neuropsychiatric risk in stable treated depression per the EAGLES trial. (Source: RACGP Smoking Cessation Guidelines)",
+        "source_refs": ["RACGP Smoking Cessation Guidelines"]
+      },
+      {
+        "letter": "B",
+        "text": "Bupropion sustained release 150 mg daily for three days then 150 mg twice daily for nine weeks with quit date in week two, and counsel on the increased seizure risk if he has any past head injury or eating disorder history",
+        "correct": false,
+        "rationale": "Bupropion is effective but is generally less efficacious than varenicline and is relatively contraindicated with current serotonergic antidepressants due to seizure threshold and serotonergic interactions. (Source: RACGP Smoking Cessation Guidelines)",
+        "source_refs": ["RACGP Smoking Cessation Guidelines"]
+      },
+      {
+        "letter": "C",
+        "text": "Nicotine patch 21 mg per 24 hours combined with short-acting nicotine lozenges as needed for cravings for 8 to 12 weeks, with weekly review and gradual tapering of the patch dose over the final four weeks of treatment",
+        "correct": false,
+        "rationale": "Combination NRT is a reasonable option and is more effective than patch alone, but varenicline still has the strongest evidence of efficacy for heavy smokers with prior NRT failure. (Source: RACGP Smoking Cessation Guidelines)",
+        "source_refs": ["RACGP Smoking Cessation Guidelines"]
+      },
+      {
+        "letter": "D",
+        "text": "Nortriptyline 25 mg nocte titrated to 75 mg nocte commencing two weeks before quit date for a 12-week course, with baseline ECG to assess QTc and monitoring for orthostatic hypotension and anticholinergic adverse effects",
+        "correct": false,
+        "rationale": "Nortriptyline is a second-line option only when first-line therapies are contraindicated or have failed; it should not be combined with sertraline due to additive serotonergic and adverse effect risks. (Source: RACGP Smoking Cessation Guidelines)",
+        "source_refs": ["RACGP Smoking Cessation Guidelines"]
+      },
+      {
+        "letter": "E",
+        "text": "Brief motivational counselling alone without pharmacotherapy with structured weekly review for the first month and referral to the Quitline 13 78 48 telephone counselling service to consolidate the patient's stated motivation to quit",
+        "correct": false,
+        "rationale": "Brief advice without pharmacotherapy has low quit rates in heavy smokers and would represent under-treatment given his history of NRT failure and clear motivation. (Source: RACGP Smoking Cessation Guidelines)",
+        "source_refs": ["RACGP Smoking Cessation Guidelines"]
+      }
+    ],
+    "explanation": {
+      "summary": "Varenicline is the most effective single pharmacotherapy for smoking cessation, with sustained quit rates roughly twice those of placebo and superior to single-agent NRT. The EAGLES trial demonstrated no excess neuropsychiatric adverse events in stable treated depression. Initiation is by titration to 1 mg twice daily with a quit date in week two, and treatment continues for 12 weeks with extension if abstinence achieved. Combination NRT is a reasonable alternative when varenicline is contraindicated.",
+      "key_points": [
+        "Varenicline most effective; EAGLES showed safety in stable treated depression",
+        "Bupropion contraindicated with seizure risk and SSRI co-prescription is cautious",
+        "Combination NRT (patch + short-acting) > patch alone, but varenicline > combination NRT"
+      ],
+      "pearls": "Monitor for abnormal dreams, nausea, and any new suicidal ideation; warn that nicotine plasma levels may shift causing transient mood changes."
+    },
+    "sources": [
+      {"label": "RACGP Smoking Cessation Guidelines", "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/supporting-smoking-cessation"},
+      {"label": "Therapeutic Guidelines Psychotropic: Smoking cessation", "url": "https://www.tg.org.au/"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p38-005",
+    "topic": "Paediatrics",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "Kawasaki disease IVIG within 10 days plus high-dose aspirin",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["Kawasaki disease", "IVIG"],
+    "stem": "You are the paediatric registrar reviewing a 4-year-old boy admitted on day 6 of persistent fever to 39.5 degrees not responding to paracetamol or ibuprofen. He has bilateral non-purulent bulbar conjunctival injection sparing the limbus, a strawberry tongue with cracked red lips, a polymorphous truncal rash that is not vesicular, a single right cervical lymph node measuring 1.8 cm, and early peri-ungual desquamation around the fingertips of the right hand noted today. There has been no exposure to new medications. Echocardiography is being arranged for today and bloods are pending. He was previously well, fully immunised, with no travel and no sick contacts.",
+    "data_table": {
+      "Vital signs": "T 39.5, HR 152, RR 30, BP 96/58, SpO2 99% room air",
+      "Examination": "Bilateral non-exudative conjunctivitis, strawberry tongue, cracked lips, polymorphous trunk rash, right cervical node 1.8 cm, early fingertip desquamation, no hepatosplenomegaly",
+      "Investigations": "WCC 18.2, neutrophil 14, platelets 580, Hb 102, CRP 145, ESR 78, ALT 65, albumin 28, urine WCC 25 sterile, throat swab negative, ASOT not raised"
+    },
+    "lead_in": "What is the most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Single dose of intravenous immunoglobulin 2 g/kg over 10-12 hours plus high-dose aspirin 30-50 mg/kg/day divided four times daily until afebrile then low-dose aspirin to follow-up echocardiography at 6 weeks for coronary artery assessment",
+        "correct": true,
+        "rationale": "Kawasaki disease meeting four of five principal clinical criteria with fever beyond 5 days mandates IVIG 2 g/kg single dose plus high-dose aspirin within 10 days of fever onset to reduce coronary artery aneurysm risk. (Source: RCH CPG: Kawasaki Disease)",
+        "source_refs": ["RCH CPG: Kawasaki Disease"]
+      },
+      {
+        "letter": "B",
+        "text": "High-dose aspirin 30 mg/kg/day divided four times daily as monotherapy and observation in hospital with daily echocardiography while monitoring for spontaneous defervescence prior to commencing intravenous immunoglobulin therapy",
+        "correct": false,
+        "rationale": "Aspirin alone does not reduce coronary aneurysm risk; IVIG plus aspirin must be commenced together within 10 days of fever onset for maximum cardioprotection. (Source: RCH CPG: Kawasaki Disease)",
+        "source_refs": ["RCH CPG: Kawasaki Disease"]
+      },
+      {
+        "letter": "C",
+        "text": "Intravenous methylprednisolone pulse 30 mg/kg daily for three days as first-line therapy for refractory Kawasaki disease with planned IVIG at 48 hours if no clinical response is observed and serial inflammatory marker measurement",
+        "correct": false,
+        "rationale": "Initial high-dose steroid is reserved for high-risk patients in some protocols (e.g., Kobayashi score) but is not standard first-line in Australia; IVIG plus aspirin remains the standard first dose. (Source: RCH CPG: Kawasaki Disease)",
+        "source_refs": ["RCH CPG: Kawasaki Disease"]
+      },
+      {
+        "letter": "D",
+        "text": "Supportive care with paracetamol for fever, oral fluid encouragement and outpatient cardiology follow-up in four weeks with repeat echocardiography to assess for coronary changes and consideration of IVIG only if symptoms persist beyond 14 days",
+        "correct": false,
+        "rationale": "Delay beyond 10 days of fever onset substantially increases the risk of coronary aneurysm; this is unsafe under-treatment of an established Kawasaki diagnosis. (Source: RCH CPG: Kawasaki Disease)",
+        "source_refs": ["RCH CPG: Kawasaki Disease"]
+      },
+      {
+        "letter": "E",
+        "text": "Empirical broad-spectrum intravenous antibiotics with ceftriaxone 50 mg/kg daily and flucloxacillin 50 mg/kg six-hourly for an occult bacterial focus and pending blood culture results before considering immunomodulatory therapy",
+        "correct": false,
+        "rationale": "The clinical picture is diagnostic for Kawasaki disease rather than bacterial sepsis or scarlet fever; antibiotics are not the answer and delay of IVIG is harmful. (Source: RCH CPG: Kawasaki Disease)",
+        "source_refs": ["RCH CPG: Kawasaki Disease"]
+      }
+    ],
+    "explanation": {
+      "summary": "Kawasaki disease is a clinical diagnosis based on fever for at least 5 days plus four of five principal clinical criteria (bilateral non-purulent conjunctivitis, polymorphous rash, oromucosal changes, extremity changes including desquamation, and cervical lymphadenopathy at least 1.5 cm). Treatment with a single IVIG dose 2 g/kg plus high-dose aspirin within 10 days of fever onset reduces coronary aneurysm risk from ~25% to under 5%. Echocardiography at diagnosis, at 2 weeks and at 6-8 weeks is standard.",
+      "key_points": [
+        "IVIG 2 g/kg + high-dose aspirin within 10 days reduces coronary aneurysm risk",
+        "Aspirin is not coronary-protective by itself; IVIG is the key intervention",
+        "Echocardiography at diagnosis, 2 weeks, and 6-8 weeks"
+      ],
+      "pearls": "If IVIG-resistant fever persists at 36 hours after the first dose, a second dose of IVIG 2 g/kg is given; infliximab and corticosteroid are options in refractory cases per cardiology and rheumatology input."
+    },
+    "sources": [
+      {"label": "RCH CPG: Kawasaki Disease", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Kawasaki_disease/"},
+      {"label": "AHA Scientific Statement: Kawasaki Disease 2017", "url": "https://www.ahajournals.org/"}
+    ],
+    "reference_ranges": ["paeds_vitals_child", "paeds_fbc", "inflammatory_markers"],
+    "created": "2026-05-31"
   }
 ]
