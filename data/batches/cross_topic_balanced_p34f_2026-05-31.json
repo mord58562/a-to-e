@@ -1,0 +1,353 @@
+[
+  {
+    "id": "ctb-p34f-001",
+    "topic": "Medicine",
+    "subtopic": "Electrolytes",
+    "subtopic_detail": "SIADH workup and management of euvolaemic hyponatraemia",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["hyponatraemia", "SIADH"],
+    "stem": "You are the medical registrar reviewing a 68-year-old non-Aboriginal man with newly diagnosed small-cell lung cancer admitted for chemotherapy planning. He has had a single fall at home, mild headache and mild nausea over the last week. He has no peripheral oedema, normal jugular venous pressure and mucous membranes appear moist. His weight has not changed. He takes amlodipine for hypertension but no diuretics or antidepressants.",
+    "data_table": {
+      "Vital signs": "T 36.8 °C, HR 76, RR 14, SpO2 96% room air, BP 124/78 mmHg",
+      "Examination": "Mild dehydration not evident, no peripheral oedema, normal heart sounds, breath sounds reduced right base, no focal neurology, GCS 15",
+      "Investigations": "Na 118 K 4.2 urea 3.4 mmol/L creatinine 78 micromol/L, serum osmolality 248 mOsm/kg, urine osmolality 480 mOsm/kg, urine sodium 56 mmol/L, TSH 1.8 mU/L, 9 am cortisol 480 nmol/L, glucose 5.0 mmol/L, no current diuretic or SSRI"
+    },
+    "lead_in": "What is the most appropriate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence intravenous 3% hypertonic saline 150 mL bolus over 20 minutes targeting a sodium rise of 4 to 6 mmol/L in the first hour and continue hourly boluses to restore sodium to within normal range over 12 hours of monitoring",
+        "correct": false,
+        "rationale": "Hypertonic saline is reserved for severe symptomatic hyponatraemia (seizures, coma, severe vomiting); mild symptoms with chronic onset are managed with fluid restriction. (Source: BMJ Best Practice Hyponatraemia)",
+        "source_refs": ["BMJ Best Practice Hyponatraemia"]
+      },
+      {
+        "letter": "B",
+        "text": "Diagnose syndrome of inappropriate antidiuretic hormone secretion, commence fluid restriction to 800 mL/24 hours, treat the underlying malignancy and target sodium correction at no more than 10 mmol/L in 24 hours",
+        "correct": true,
+        "rationale": "Euvolaemic hyponatraemia with low serum osmolality, inappropriately concentrated urine and elevated urine sodium with no diuretic, normal thyroid and cortisol meets SIADH criteria; fluid restriction is first-line with correction limited to 10 mmol/L in 24 hours to avoid osmotic demyelination syndrome. (Source: BMJ Best Practice Hyponatraemia)",
+        "source_refs": ["BMJ Best Practice Hyponatraemia", "Therapeutic Guidelines: Endocrinology"]
+      },
+      {
+        "letter": "C",
+        "text": "Commence intravenous 0.9% sodium chloride at 125 mL/hour for 24 hours alongside intravenous demeclocycline and arrange a cosyntropin stimulation test if sodium has not improved within 48 hours from admission",
+        "correct": false,
+        "rationale": "Isotonic saline in SIADH can paradoxically worsen hyponatraemia as the sodium is excreted while the free water is retained; demeclocycline is third-line and rarely used. (Source: BMJ Best Practice Hyponatraemia)",
+        "source_refs": ["BMJ Best Practice Hyponatraemia"]
+      },
+      {
+        "letter": "D",
+        "text": "Commence oral tolvaptan 15 mg daily as first-line therapy with daily sodium monitoring and rapid up-titration to 60 mg daily over 1 week if sodium has not improved by 8 mmol/L within the first 48 hours of treatment",
+        "correct": false,
+        "rationale": "Tolvaptan is reserved for fluid-restriction failure and requires inpatient initiation with cautious titration due to over-rapid correction risk; it is not first-line. (Source: BMJ Best Practice Hyponatraemia)",
+        "source_refs": ["BMJ Best Practice Hyponatraemia"]
+      },
+      {
+        "letter": "E",
+        "text": "Commence oral salt tablets 1 g three times daily, encourage free fluid intake to thirst and arrange outpatient endocrinology review in 2 weeks once the underlying malignancy is being treated definitively with combination chemotherapy",
+        "correct": false,
+        "rationale": "Free fluid in SIADH worsens dilution; salt tablets without fluid restriction are inadequate. (Source: BMJ Best Practice Hyponatraemia)",
+        "source_refs": ["BMJ Best Practice Hyponatraemia"]
+      }
+    ],
+    "explanation": {
+      "summary": "SIADH is diagnosed when there is euvolaemic hyponatraemia with low serum osmolality, inappropriately concentrated urine (over 100 mOsm/kg), urine sodium over 30 mmol/L, normal thyroid and adrenal function and no diuretic. First-line management is fluid restriction to 800 to 1000 mL per day plus treatment of the underlying cause. Correction is limited to under 10 mmol/L per 24 hours to prevent osmotic demyelination syndrome. Tolvaptan and hypertonic saline are reserved for refractory or severe symptomatic cases.",
+      "key_points": [
+        "SIADH: euvolaemic hyponatraemia, low serum osmolality, urine osmolality over 100, urine sodium over 30",
+        "Exclude thyroid and adrenal insufficiency and diuretic use",
+        "First-line: fluid restriction 800-1000 mL/day plus treat the cause",
+        "Correct sodium under 10 mmol/L in 24 hours to avoid ODS",
+        "Hypertonic saline for severe symptomatic hyponatraemia only"
+      ],
+      "pearls": "Small-cell lung cancer is the commonest paraneoplastic cause of SIADH in adults; sodium correction over 10-12 mmol/L in 24 hours risks osmotic demyelination, presenting 2-6 days later with quadriparesis, dysarthria and locked-in syndrome."
+    },
+    "sources": [
+      {"label": "BMJ Best Practice Hyponatraemia", "url": "https://bestpractice.bmj.com/"},
+      {"label": "Therapeutic Guidelines: Endocrinology", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["uec", "thyroid"],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p34f-002",
+    "topic": "Medicine",
+    "subtopic": "Gastroenterology",
+    "subtopic_detail": "Acute pancreatitis severity stratification Modified Glasgow",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["pancreatitis", "severity score"],
+    "stem": "You are the medical registrar admitting a 58-year-old non-Aboriginal man with severe epigastric pain radiating to the back over the past 12 hours after a heavy alcohol bout. He has nausea and four episodes of vomiting since onset. He is haemodynamically stable but in significant pain. He has a 30-year history of heavy alcohol use and is not on any regular medications. He has been admitted twice previously with episodes of acute pancreatitis.",
+    "data_table": {
+      "Vital signs": "T 38.4 °C, HR 112, RR 24, SpO2 92% room air, BP 118/76 mmHg",
+      "Examination": "Tender epigastrium with voluntary guarding, no rebound, no Cullen or Grey-Turner signs, bowel sounds reduced but present, jaundice not present",
+      "Investigations": "Lipase 1800 U/L, FBC WCC 16.4 x10^9/L Hb 142 platelets 280, Na 136 K 3.8 urea 11.2 creatinine 96 micromol/L glucose 11.6 mmol/L, calcium 1.92 mmol/L corrected, ALT 88 ALP 110 albumin 30 g/L LDH 480 U/L, ABG pH 7.34 pCO2 32 pO2 58 mmHg HCO3 18, CRP 220 mg/L"
+    },
+    "lead_in": "What is the most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence oral hydration with electrolyte solution at 100 mL/hour, prescribe oxycodone immediate release 5 mg every 4 hours as needed and arrange ultrasound abdomen within 24 hours to assess for gallstone aetiology",
+        "correct": false,
+        "rationale": "Modified Glasgow score 4 (PaO2 under 60, urea over 16 not present here so 1 fewer; consider 3 with PaO2 + albumin + calcium + glucose) plus CRP 220 indicates severe acute pancreatitis requiring HDU/ICU care with aggressive IV resuscitation, not oral hydration. (Source: BMJ Best Practice Acute Pancreatitis)",
+        "source_refs": ["BMJ Best Practice Acute Pancreatitis"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence parenteral nutrition immediately to rest the pancreas, give intravenous broad-spectrum antibiotics with piperacillin-tazobactam empirically and arrange MRCP within 24 hours of admission for biliary evaluation",
+        "correct": false,
+        "rationale": "Enteral nutrition is preferred over parenteral; prophylactic antibiotics are not indicated unless infected necrosis or cholangitis is suspected. (Source: BMJ Best Practice Acute Pancreatitis)",
+        "source_refs": ["BMJ Best Practice Acute Pancreatitis"]
+      },
+      {
+        "letter": "C",
+        "text": "Diagnose severe acute pancreatitis, admit to high-dependency care, commence aggressive intravenous Hartmann's resuscitation, provide opioid analgesia, monitor urine output and arrange contrast-enhanced CT abdomen at 72-96 hours",
+        "correct": true,
+        "rationale": "Severe acute pancreatitis (Modified Glasgow with PaO2, calcium, albumin, glucose abnormalities and CRP over 150 in this index admission) mandates HDU level care, aggressive fluid resuscitation, analgesia and delayed CT (72-96 hours) to assess for necrosis. (Source: BMJ Best Practice Acute Pancreatitis)",
+        "source_refs": ["BMJ Best Practice Acute Pancreatitis", "Therapeutic Guidelines: Gastrointestinal"]
+      },
+      {
+        "letter": "D",
+        "text": "Arrange urgent endoscopic retrograde cholangiopancreatography within 6 hours of admission for sphincterotomy and ductal clearance because of the high lipase and significant systemic inflammatory response in this patient",
+        "correct": false,
+        "rationale": "ERCP is reserved for acute pancreatitis with cholangitis or persistent biliary obstruction; alcohol-related pancreatitis without biliary obstruction does not benefit. (Source: BMJ Best Practice Acute Pancreatitis)",
+        "source_refs": ["BMJ Best Practice Acute Pancreatitis"]
+      },
+      {
+        "letter": "E",
+        "text": "Arrange immediate laparotomy with surgical drainage of pancreatic necrosis and intra-abdominal sepsis source control given the elevated white cell count, raised CRP and clinical features of systemic inflammatory response",
+        "correct": false,
+        "rationale": "Surgery in necrotising pancreatitis is delayed to at least 4 weeks where possible and is reserved for infected necrosis; immediate laparotomy is harmful early in the disease. (Source: BMJ Best Practice Acute Pancreatitis)",
+        "source_refs": ["BMJ Best Practice Acute Pancreatitis"]
+      }
+    ],
+    "explanation": {
+      "summary": "Severe acute pancreatitis is identified by validated scores (Modified Glasgow 3 or more, APACHE II over 8) at 48 hours, organ failure or CRP over 150. Management is HDU/ICU care, aggressive intravenous crystalloid resuscitation to maintain urine output, multimodal analgesia, early enteral nutrition (within 24-72 hours) and contrast CT at 72-96 hours to assess for necrosis. Prophylactic antibiotics are not indicated. ERCP is reserved for cholangitis or persistent biliary obstruction. Necrosectomy is delayed.",
+      "key_points": [
+        "Severity scores: Modified Glasgow 3+, APACHE II over 8, BISAP over 3, CRP over 150",
+        "Severe pancreatitis: HDU/ICU, aggressive crystalloid, analgesia",
+        "Enteral nutrition preferred and early",
+        "CT at 72-96 hours to assess for necrosis",
+        "ERCP only for cholangitis or persistent biliary obstruction"
+      ],
+      "pearls": "Modified Glasgow uses mnemonic PANCREAS: PaO2 under 60, Age over 55, Neutrophils WCC over 15, Calcium under 2, Renal urea over 16, Enzymes LDH over 600 ALT over 200, Albumin under 32, Sugar glucose over 10; 3 or more positive at 48 hours indicates severe disease."
+    },
+    "sources": [
+      {"label": "BMJ Best Practice Acute Pancreatitis", "url": "https://bestpractice.bmj.com/"},
+      {"label": "Therapeutic Guidelines: Gastrointestinal", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["uec", "fbc", "lfts", "calcium_corrected", "abg", "inflammatory_markers"],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p34f-003",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Infective endocarditis empirical therapy native valve",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["endocarditis", "antibiotics"],
+    "stem": "You are the medical registrar admitting a 52-year-old non-Aboriginal man with a 2-week history of fevers, night sweats, fatigue and 3 kg weight loss. He has a known bicuspid aortic valve under cardiology surveillance and recently had a routine dental cleaning without antibiotic prophylaxis. On examination he has new splinter haemorrhages, two Janeway lesions on the soles and a new early diastolic murmur. He has no penicillin allergy and no recent intravenous drug use.",
+    "data_table": {
+      "Vital signs": "T 38.9 °C, HR 104, RR 18, SpO2 97% room air, BP 132/56 mmHg with wide pulse pressure",
+      "Examination": "New early diastolic murmur at the left sternal edge, splinter haemorrhages on three fingernails, two Janeway lesions on the right sole, no Osler nodes, no Roth spots on fundoscopy, no neurological deficit",
+      "Investigations": "FBC WCC 14.2 x10^9/L Hb 116 platelets 220, CRP 168 mg/L ESR 88 mm/h, UEC creatinine 102 micromol/L, blood cultures (3 sets from separate venipunctures over 1 hour pending), transthoracic echocardiogram shows aortic regurgitation with a 12 mm vegetation on the aortic valve"
+    },
+    "lead_in": "What is the most appropriate empirical intravenous antibiotic regimen pending cultures?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Intravenous ceftriaxone 2 g once daily monotherapy adjusted to culture results when available, continued for a total of 4 weeks of intravenous therapy with follow-up echocardiography at 2 and 6 weeks from initiation of antimicrobial cover",
+        "correct": false,
+        "rationale": "Empirical native valve endocarditis cover requires combination therapy targeting Staphylococcus aureus, streptococci and enterococci; monotherapy ceftriaxone is inadequate. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "B",
+        "text": "Intravenous vancomycin 25 mg/kg loading then 15 mg/kg every 12 hours, intravenous flucloxacillin 2 g every 4 hours and intravenous gentamicin 3 mg/kg once daily until culture and sensitivity results are reported by microbiology",
+        "correct": false,
+        "rationale": "Australian native-valve empirical regimen uses benzylpenicillin (not flucloxacillin) for streptococci, plus flucloxacillin OR vancomycin (not both) for staphylococci, plus gentamicin; this option triples antibiotic cover. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "C",
+        "text": "Intravenous benzylpenicillin 1.8 g every 4 hours, intravenous flucloxacillin 2 g every 4 hours, intravenous gentamicin 1 mg/kg every 8 hours and a single 1 g dose of intravenous vancomycin upfront for rapid coverage prior to confirmatory blood cultures",
+        "correct": false,
+        "rationale": "A single dose of vancomycin upfront is not appropriate; vancomycin replaces flucloxacillin if MRSA suspected. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "D",
+        "text": "Intravenous benzylpenicillin 1.8 g every 4 hours, intravenous flucloxacillin 2 g every 4 hours and intravenous gentamicin 1 mg/kg every 8 hours for an Australian native valve empirical regimen pending culture identification",
+        "correct": true,
+        "rationale": "Therapeutic Guidelines empirical native valve endocarditis cover is benzylpenicillin plus flucloxacillin plus gentamicin for streptococci, staphylococci and enterococci until culture-directed therapy is possible. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic", "ESC Infective Endocarditis Guidelines 2023"]
+      },
+      {
+        "letter": "E",
+        "text": "Intravenous meropenem 1 g every 8 hours as broad-spectrum monotherapy and arrange transoesophageal echocardiography within 24 hours for vegetation characterisation and complication assessment before further antibiotic adjustment",
+        "correct": false,
+        "rationale": "Meropenem is not a standard empirical regimen for endocarditis; combination therapy with the specific cover above is required. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      }
+    ],
+    "explanation": {
+      "summary": "Native-valve infective endocarditis empirical cover targets streptococci, staphylococci and enterococci. Australian Therapeutic Guidelines recommend benzylpenicillin plus flucloxacillin plus gentamicin until cultures are available. Vancomycin replaces flucloxacillin if MRSA is suspected. The modified Duke criteria classify cases as definite, possible or rejected. Transoesophageal echocardiography is performed when transthoracic is inconclusive or to assess for abscess. Surgical indications include heart failure, abscess, large vegetation, fungal aetiology and persistent bacteraemia despite appropriate therapy.",
+      "key_points": [
+        "Empirical native valve: benzylpenicillin plus flucloxacillin plus gentamicin",
+        "Replace flucloxacillin with vancomycin if MRSA",
+        "Three separate blood culture sets before antibiotics",
+        "TOE for inconclusive TTE or to assess abscess",
+        "Surgical indications: heart failure, abscess, large vegetation, fungal, persistent bacteraemia"
+      ],
+      "pearls": "Modified Duke criteria definite endocarditis requires 2 major, 1 major plus 3 minor, or 5 minor criteria; major criteria are typical organism in 2 cultures or persistent bacteraemia plus echocardiographic evidence of endocardial involvement or new valvular regurgitation."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "ESC Infective Endocarditis Guidelines 2023", "url": "https://www.escardio.org/Guidelines"}
+    ],
+    "reference_ranges": ["fbc", "uec", "inflammatory_markers"],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p34f-004",
+    "topic": "Medicine",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Adrenal crisis recognition and hydrocortisone dosing",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["adrenal insufficiency", "hydrocortisone"],
+    "stem": "You are the emergency department registrar reviewing a 42-year-old non-Aboriginal woman known to have primary adrenal insufficiency on regular hydrocortisone 20 mg in the morning and 10 mg at midday and fludrocortisone 100 micrograms daily. She has had 24 hours of fever, vomiting and diarrhoea and was unable to take her morning hydrocortisone dose today. She looks unwell, drowsy and hypotensive. Her family is with her and confirms she is fully adherent normally.",
+    "data_table": {
+      "Vital signs": "T 38.6 °C, HR 124, RR 24, SpO2 97% room air, BP 82/48 mmHg, capillary refill 4 seconds, capillary glucose 3.0 mmol/L",
+      "Examination": "Drowsy GCS 13, dry mucous membranes, abdomen soft non-tender, no focal neurology, hyperpigmentation of palmar creases consistent with her known underlying condition",
+      "Investigations": "Na 128 K 5.8 urea 9.2 mmol/L creatinine 132 micromol/L glucose 3.0 mmol/L, FBC WCC 12.4 x10^9/L, ECG no hyperkalaemic changes, blood cultures sent, urinalysis no nitrites"
+    },
+    "lead_in": "What is the most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Give intramuscular adrenaline 0.5 mg, commence intravenous adrenaline infusion 0.1 microgram/kg/min and arrange immediate intensive care admission for ongoing support of shock with vasopressors and inotropes as needed",
+        "correct": false,
+        "rationale": "Adrenaline is not the primary treatment of adrenal crisis; intravenous hydrocortisone with fluid resuscitation is first-line. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+      },
+      {
+        "letter": "B",
+        "text": "Increase her oral hydrocortisone to 30 mg three times daily for the duration of illness, arrange community follow-up tomorrow and provide oral fluid replacement with electrolyte solution overnight",
+        "correct": false,
+        "rationale": "Vomiting prevents oral absorption; she is in established adrenal crisis with hypotension and hypoglycaemia requiring intravenous therapy. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+      },
+      {
+        "letter": "C",
+        "text": "Administer intravenous hydrocortisone 100 mg immediately as a bolus, commence intravenous 0.9% sodium chloride 1 L over the first hour, give intravenous dextrose for hypoglycaemia and continue intravenous hydrocortisone 50 mg every 6 hours",
+        "correct": true,
+        "rationale": "Established adrenal crisis is treated with immediate intravenous hydrocortisone 100 mg, intravenous fluid resuscitation with normal saline, glucose correction and ongoing hydrocortisone 50 mg every 6 hours pending stabilisation. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology", "Endocrine Society Adrenal Insufficiency Guidelines"]
+      },
+      {
+        "letter": "D",
+        "text": "Administer intravenous dexamethasone 8 mg as an alternative to hydrocortisone so that a short Synacthen test can be performed within the next 24 hours of admission to confirm the diagnosis of primary adrenal insufficiency",
+        "correct": false,
+        "rationale": "Diagnosis is already established; hydrocortisone is preferred over dexamethasone for its mineralocorticoid activity. Synacthen testing is unnecessary in a known case. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+      },
+      {
+        "letter": "E",
+        "text": "Administer intravenous fludrocortisone 200 micrograms as a single dose to correct mineralocorticoid deficiency contributing to hyponatraemia and hyperkalaemia and continue her regular oral hydrocortisone schedule",
+        "correct": false,
+        "rationale": "Intravenous fludrocortisone is not available; high-dose intravenous hydrocortisone provides sufficient mineralocorticoid activity in adrenal crisis. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+      }
+    ],
+    "explanation": {
+      "summary": "Adrenal crisis is a life-threatening emergency requiring immediate intravenous hydrocortisone, intravenous fluid resuscitation, glucose correction and treatment of the precipitant. Standard initial dosing is 100 mg intravenous hydrocortisone followed by 50 mg every 6 hours or a continuous infusion. Hydrocortisone has both glucocorticoid and mineralocorticoid activity at these doses, so additional fludrocortisone is not needed acutely. Patients with known adrenal insufficiency should be educated to triple oral hydrocortisone during minor illness and use intramuscular hydrocortisone 100 mg if vomiting.",
+      "key_points": [
+        "Immediate IV hydrocortisone 100 mg then 50 mg q6h",
+        "IV 0.9% sodium chloride resuscitation 1 L in first hour",
+        "Correct hypoglycaemia with IV dextrose",
+        "No need for fludrocortisone acutely at IV hydrocortisone doses",
+        "Triple oral dose for minor illness; IM hydrocortisone 100 mg if vomiting"
+      ],
+      "pearls": "Issue every patient with adrenal insufficiency an emergency injection kit (intramuscular hydrocortisone 100 mg) for vomiting illness or accident; their MedicAlert bracelet and steroid emergency card alert paramedics and ED clinicians to give parenteral steroid before transfer."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Endocrinology", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Endocrine Society Adrenal Insufficiency Guidelines", "url": "https://www.endocrine.org/clinical-practice-guidelines"}
+    ],
+    "reference_ranges": ["uec", "glucose_hba1c", "fbc"],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p34f-005",
+    "topic": "Medicine",
+    "subtopic": "Haematology",
+    "subtopic_detail": "VTE provoked vs unprovoked anticoagulation duration",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["VTE", "anticoagulation"],
+    "stem": "You are the general practitioner reviewing a 56-year-old non-Aboriginal man 3 months after a confirmed proximal lower limb deep vein thrombosis. He has been on apixaban since diagnosis. He has no past or family history of thromboembolism, no known thrombophilia and no current malignancy on age-appropriate screening. The DVT occurred 2 weeks after a 12 hour transcontinental flight. He has not had any bleeding complications on apixaban and is keen to discuss duration of treatment.",
+    "data_table": {
+      "Vital signs": "T 36.7 °C, HR 72, RR 14, SpO2 99% room air, BP 124/78 mmHg",
+      "Examination": "Resolved calf swelling, no new oedema, no respiratory or cardiac signs of recurrent disease, no signs of malignancy",
+      "Investigations": "FBC, UEC and LFT within reference ranges, d-dimer 380 ng/mL after 4 weeks off anticoagulation simulation not yet performed, age-appropriate cancer screening up to date, thrombophilia screen not performed"
+    },
+    "lead_in": "What is the most appropriate anticoagulation plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Stop apixaban now at 3 months because this was a provoked deep vein thrombosis with a transient risk factor (long-haul flight), discuss recurrence risk and provide VTE prevention advice for future air travel and immobilisation",
+        "correct": true,
+        "rationale": "DVT provoked by a transient major risk factor (recent long-haul flight) without other risk factors typically requires only 3 months of anticoagulation; longer treatment does not improve outcomes once the provoking factor has resolved. (Source: Therapeutic Guidelines: Cardiovascular)",
+        "source_refs": ["Therapeutic Guidelines: Cardiovascular", "BMJ Best Practice DVT"]
+      },
+      {
+        "letter": "B",
+        "text": "Continue apixaban 5 mg twice daily indefinitely because all proximal deep vein thromboses regardless of provoking factor benefit from indefinite anticoagulation based on observational evidence of recurrence reduction without bleeding risk increase",
+        "correct": false,
+        "rationale": "Indefinite anticoagulation is for unprovoked or recurrent VTE; provoked DVT with resolved transient factor does not require indefinite anticoagulation. (Source: BMJ Best Practice DVT)",
+        "source_refs": ["BMJ Best Practice DVT"]
+      },
+      {
+        "letter": "C",
+        "text": "Continue apixaban at the reduced dose of 2.5 mg twice daily indefinitely as extended-duration secondary prevention because all transcontinental flight-related deep vein thromboses recur at higher rates than other transient provoked thromboses",
+        "correct": false,
+        "rationale": "Reduced-dose extended therapy applies to unprovoked VTE after 6 months of initial full-dose treatment; flight-associated DVT is provoked. (Source: BMJ Best Practice DVT)",
+        "source_refs": ["BMJ Best Practice DVT"]
+      },
+      {
+        "letter": "D",
+        "text": "Stop apixaban at 6 months and arrange thrombophilia screening before discontinuation to identify any inherited thrombophilia that would justify ongoing anticoagulation regardless of the transient nature of the provoking risk factor present",
+        "correct": false,
+        "rationale": "Routine thrombophilia screening rarely changes management and is not recommended after a single provoked VTE; identification of low-risk thrombophilias does not extend anticoagulation. (Source: HSANZ Thrombophilia Guidelines)",
+        "source_refs": ["HSANZ Thrombophilia Guidelines"]
+      },
+      {
+        "letter": "E",
+        "text": "Switch to aspirin 100 mg daily indefinitely as extended secondary prevention because aspirin has shown a meaningful reduction in recurrent VTE risk with a lower bleeding profile than ongoing direct oral anticoagulant therapy in this group",
+        "correct": false,
+        "rationale": "Aspirin reduces recurrent VTE risk less effectively than DOAC or warfarin and is reserved for those who decline ongoing anticoagulation; it is not the standard step after a provoked DVT. (Source: BMJ Best Practice DVT)",
+        "source_refs": ["BMJ Best Practice DVT"]
+      }
+    ],
+    "explanation": {
+      "summary": "Duration of anticoagulation in VTE depends on whether the event was provoked by a transient major risk factor (3 months typically), provoked by a persistent risk factor (continue while factor present), or unprovoked (consider extended therapy after 6 months). Aspirin reduces recurrence less than anticoagulants and is reserved for those declining anticoagulation. Routine thrombophilia screening after a single VTE rarely changes management. Reduced-dose apixaban or rivaroxaban is an option for extended therapy after unprovoked VTE.",
+      "key_points": [
+        "Provoked by transient factor: 3 months anticoagulation",
+        "Provoked by persistent factor: continue while factor present",
+        "Unprovoked: consider extended after 6 months",
+        "Reduced-dose apixaban or rivaroxaban for extended therapy in unprovoked",
+        "Thrombophilia screening rarely alters management after single VTE"
+      ],
+      "pearls": "HERDOO2 and DASH scores can identify a subset of women with unprovoked VTE who can stop anticoagulation safely at 6 to 12 months; men with unprovoked VTE have a higher recurrence rate and benefit from extended therapy."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Cardiovascular", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "BMJ Best Practice DVT", "url": "https://bestpractice.bmj.com/"},
+      {"label": "HSANZ Thrombophilia Guidelines", "url": "https://www.hsanz.org.au/"}
+    ],
+    "reference_ranges": ["fbc", "uec", "coags"],
+    "created": "2026-05-31"
+  }
+]
