@@ -52,11 +52,20 @@ Rate limit fired mid-execution. Future-Claude: pick up from "REMAINING" below.
    - `length_parity_all.json` (4913 lines): bank-wide length-parity
      scan; available for triage.
 
-## Session-end status (2026-06-01 end)
+## Session-end status (2026-06-01 end - extended round 2)
 
-The omnibus brief at `/Users/robrussell/Desktop/a to e prompt/` is substantially complete. Remaining items are curation-heavy tasks that need per-question review; they are listed under "REMAINING" below.
+Rob ran a second "resume the A to E omnibus session" pass. Major round-2 additions:
 
-Final commits today (in chronological order): 71950da, fdf545d (pre-rebase), c68ff9f, be0b798, 02f4f59, 2252c9f, da3dd41, 16d0d5c, 7fcc3d7, 1a98952, c2aef1c, 3abbe0f. Portfolio zip refreshed and pushed twice.
+- Subheading removal (commit bea3fe1): home-screen "MCQs by JMP students..." + 11-language good-luck phrase array deleted at Rob's request.
+- 3 research agents re-spawned and completed: AU medical system part 2 (592 lines covering compliance / Aboriginal and Torres Strait Islander health / aged care / DVA-NDIS / pharmacy practice / etc), emedici round 2 part 2 (168 lines with 5 new craft refinements + 3 new questions mined), RCH paeds audit (62 flags across 8 topics, structured JSON + summary MD).
+- Length parity bulk fix agent: top 30 worst offenders (psych + med) brought from ratios 5.6-36.7 down to mostly ~1.2-1.7. Plus obgyn-batch-006 PPROM (Rob's flagged Q, 2.05->1.20) + obgyn-multpre-007-l3 tocolysis (2.07->1.23) fixed in main thread.
+- L4 promotion applied: 436 Qs lifted from L3 to L4 per the v3 target of 15-20%. Post-promotion live distribution L1 1.9% / L2 49% / L3 29.7% / L4 19.3% / L5 0% (L5 awaiting fresh generation).
+- Similar-topic dedupe analysis: 17 high-overlap pairs identified, recommendations in dedupe_and_telegraph_triage.md. Bank is well-deduped at token level overall.
+- Give-away telegraph: obgyn-antenatal-014-l3 stem last sentence rewritten to drop the telegraph.
+- Rule 37 added to .remote-agent-context.md: RCH-specific cut-offs and protocols for UTI / bronchiolitis / croup / anaphylaxis / sepsis / fever-under-3-months / gastroenteritis - so the cloud generation routine stops producing NICE/AAP-leaning paediatric questions.
+- RCH paeds high-severity fixes (14 Qs): delegated to subagent (in progress at checkpoint time).
+
+Final commits today (round 2 partial list): bea3fe1, ff0c2f2, 9a2c42e, 0f345fb, e5b27d8, 90e8d03. Portfolio zip refreshed.
 
 ## ALSO completed this session (rolling update)
 
