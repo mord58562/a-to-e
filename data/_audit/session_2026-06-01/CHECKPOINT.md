@@ -63,7 +63,9 @@ Rob ran a second "resume the A to E omnibus session" pass. Major round-2 additio
 - Similar-topic dedupe analysis: 17 high-overlap pairs identified, recommendations in dedupe_and_telegraph_triage.md. Bank is well-deduped at token level overall.
 - Give-away telegraph: obgyn-antenatal-014-l3 stem last sentence rewritten to drop the telegraph.
 - Rule 37 added to .remote-agent-context.md: RCH-specific cut-offs and protocols for UTI / bronchiolitis / croup / anaphylaxis / sepsis / fever-under-3-months / gastroenteritis - so the cloud generation routine stops producing NICE/AAP-leaning paediatric questions.
-- RCH paeds high-severity fixes (14 Qs): delegated to subagent (in progress at checkpoint time).
+- RCH paeds high-severity fixes (14 Qs): COMPLETE in 4 rounds (UTI / bronchiolitis / croup / anaphylaxis / sepsis). Each Q renamed with `-rch` suffix per substantive-revision rule; audit log at `rch_paeds_fixes_applied.md`.
+- RCH paeds medium-severity mechanical fixes: 4 Qs (bronchiolitis SpO2 92->90, croup 4h->3h obs) in safe files.
+- `.remote-agent-context.md` Section 2 rewritten: L5 generation is now the TOP cloud-routine priority until L5 reaches 5% of bank (~150 Qs). After that, resume equal-module-balance generation.
 
 Final commits today (round 2 partial list): bea3fe1, ff0c2f2, 9a2c42e, 0f345fb, e5b27d8, 90e8d03. Portfolio zip refreshed.
 
