@@ -1490,32 +1490,78 @@
     list.hidden = !list.hidden;
   }
   function renderQtList() {
+    // Chip-grid sidebar redesign (2026-06-01) - replaces the row-list.
+    // See data/_audit/session_2026-06-01/emedici_sidebar_spec.md.
+    // Two regions: a progress ring at the top + a chip grid (one chip
+    // per question, 4 states: unanswered / correct / incorrect / current).
     const list = document.getElementById("qtList");
     list.innerHTML = "";
-    const ol = document.createElement("ol");
+
+    // Stats for the ring.
+    const total = state.quiz.pool.length;
+    const inTestModeMidFlight = state.quiz.mode === "test" && !state.quiz.finished;
+    let correct = 0, incorrect = 0, answered = 0;
     state.quiz.pool.forEach((q, i) => {
-      const li = document.createElement("li");
       const ans = state.quiz.answers[q.id];
-      const isC = ans && _shuffledOptions(q).find(o => o.letter === ans)?.correct;
-      const flagged = !!state.flags[q.id];
-      let statusGlyph = "·";
-      let statusClass = "";
-      if (ans) {
-        if (state.quiz.mode === "test" && !state.quiz.finished) {
-          statusGlyph = "•";
-        } else if (isC) { statusGlyph = "✓"; statusClass = "correct"; }
-        else            { statusGlyph = "✗"; statusClass = "incorrect"; }
+      if (!ans) return;
+      answered += 1;
+      if (!inTestModeMidFlight) {
+        const isC = !!_shuffledOptions(q).find(o => o.letter === ans)?.correct;
+        if (isC) correct += 1; else incorrect += 1;
       }
-      li.className = statusClass + (i === state.quiz.idx ? " current" : "") + (flagged ? " flagged" : "");
-      li.innerHTML = `
-        <span class="qtl-status">${statusGlyph}</span>
-        <span class="qtl-num">${String(i + 1).padStart(2, " ")}</span>
-        <span class="qtl-stem">${esc(q.stem.slice(0, 80))}${q.stem.length > 80 ? "…" : ""}</span>
-      `;
-      li.onclick = () => { jumpTo(i); document.getElementById("qtList").hidden = true; };
-      ol.appendChild(li);
     });
-    list.appendChild(ol);
+    const pct = total ? Math.round((answered / total) * 100) : 0;
+    // Donut ring as inline SVG. r=22 -> circumference ~138.
+    const r = 22, C = 2 * Math.PI * r;
+    const filled = (pct / 100) * C;
+    const remaining = C - filled;
+    const header = document.createElement("div");
+    header.className = "qt-summary";
+    header.innerHTML = `
+      <div class="qt-ring-wrap">
+        <svg class="qt-ring" viewBox="0 0 56 56" width="56" height="56" aria-hidden="true">
+          <circle cx="28" cy="28" r="${r}" fill="none" stroke="var(--surface-2)" stroke-width="6"/>
+          <circle cx="28" cy="28" r="${r}" fill="none" stroke="var(--accent)" stroke-width="6"
+                  stroke-dasharray="${filled} ${remaining}" stroke-dashoffset="${C / 4}"
+                  transform="rotate(-90 28 28)" stroke-linecap="butt"/>
+        </svg>
+        <div class="qt-ring-label" aria-hidden="true">${pct}%</div>
+      </div>
+      <div class="qt-summary-text">${answered} of ${total}<br><span class="qt-summary-sub">${inTestModeMidFlight ? "answered" : (correct + " correct, " + incorrect + " incorrect")}</span></div>
+    `;
+    list.appendChild(header);
+
+    // Chip grid.
+    const grid = document.createElement("div");
+    grid.className = "qt-chips";
+    state.quiz.pool.forEach((q, i) => {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "qt-chip";
+      const ans = state.quiz.answers[q.id];
+      const flagged = !!state.flags[q.id];
+      let stateClass = "unanswered";
+      if (ans) {
+        if (inTestModeMidFlight) stateClass = "answered";
+        else {
+          const isC = !!_shuffledOptions(q).find(o => o.letter === ans)?.correct;
+          stateClass = isC ? "correct" : "incorrect";
+        }
+      }
+      if (i === state.quiz.idx) stateClass += " current";
+      if (flagged) stateClass += " flagged";
+      chip.className = "qt-chip " + stateClass;
+      chip.textContent = String(i + 1);
+      chip.setAttribute("aria-label",
+        "Question " + (i + 1) +
+        (ans ? (inTestModeMidFlight ? " (answered)" : (stateClass.includes("correct") ? " (correct)" : " (incorrect)")) : " (unanswered)") +
+        (i === state.quiz.idx ? ", current" : "") +
+        (flagged ? ", flagged" : "")
+      );
+      chip.onclick = () => { jumpTo(i); document.getElementById("qtList").hidden = true; };
+      grid.appendChild(chip);
+    });
+    list.appendChild(grid);
   }
 
   function jumpTo(i) {

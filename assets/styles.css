@@ -699,41 +699,108 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   font-family: var(--sans);
 }
 .qt-caret { font-size: 9px; color: var(--ink-mute); }
+/* Chip-grid sidebar (2026-06-01) - replaces the row dropdown.
+ * Anatomy: a progress ring + summary text at the top (sticky), then a
+ * dense grid of fixed-diameter circular chips, one per question.
+ * Four states only: unanswered / answered (test mode mid-flight) /
+ * correct / incorrect. Current question gets a perimeter ring, not a
+ * fill change. Per emedici_sidebar_spec.md. */
 .qt-list {
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 var(--r-soft) var(--r-soft);
   margin: 0 18px;
-  max-height: 280px;
+  max-height: 360px;
   overflow-y: auto;
+  padding: 14px 18px 16px;
 }
-.qt-list ol {
-  list-style: none;
-  padding: 6px 14px 12px;
-  margin: 0;
+.qt-summary {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1px 16px;
+  grid-template-columns: 56px 1fr;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 12px;
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  z-index: 2;
 }
-.qt-list li {
+.qt-ring-wrap { position: relative; width: 56px; height: 56px; }
+.qt-ring { display: block; }
+.qt-ring-label {
+  position: absolute;
+  inset: 0;
   display: grid;
-  grid-template-columns: 22px 22px 1fr;
+  place-items: center;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  pointer-events: none;
+}
+.qt-summary-text {
+  font-size: 13px;
+  color: var(--ink);
+  font-weight: 600;
+  line-height: 1.3;
+}
+.qt-summary-sub {
+  font-size: 10.5px;
+  font-weight: 400;
+  color: var(--ink-mute);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.qt-chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(34px, 1fr));
   gap: 8px;
-  padding: 5px 6px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 12.5px;
-  color: var(--ink-2);
-  align-items: baseline;
 }
-.qt-list li:hover { background: var(--surface-2); }
-.qt-list li.current { background: var(--accent-bg); color: var(--ink); }
-.qt-list li .qtl-status { font-family: var(--sans); text-align: center; font-weight: 700; }
-.qt-list li.correct .qtl-status { color: var(--good); }
-.qt-list li.incorrect .qtl-status { color: var(--bad); }
-.qt-list li .qtl-num { font-family: var(--sans); color: var(--ink-mute); font-size: 11px; }
-.qt-list li .qtl-stem { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.qt-list li.flagged .qtl-stem::before { content: "⚐ "; color: var(--warn); }
+.qt-chip {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 12.5px;
+  font-weight: 600;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  transition: filter var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease);
+}
+.qt-chip:hover { filter: brightness(0.96); }
+.qt-chip.answered { background: var(--accent-bg); color: var(--ink); }
+.qt-chip.correct {
+  background: var(--good);
+  color: #ffffff;
+  font-weight: 700;
+}
+.qt-chip.incorrect {
+  background: var(--bad);
+  color: #ffffff;
+  font-weight: 700;
+}
+.qt-chip.current { border-color: var(--accent); }
+.qt-chip.current.correct { border-color: var(--good-bd); }
+.qt-chip.current.incorrect { border-color: var(--bad-bd); }
+.qt-chip.flagged::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--warn);
+}
+.qt-chip.flagged { position: relative; }
 
 .reading {
   background: var(--surface);
