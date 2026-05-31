@@ -244,7 +244,7 @@
     count: 20,
     timer: 0,
     disciplines: ["Paediatrics", "Obstetrics & Gynaecology", "Psychiatry", "Medicine"],
-    difficulties: [2, 3, 4, 5],
+    difficulties: [1, 2, 3, 4, 5],
     filter: "all",
     subtopics: null,   // null = all on; array of strings = subset
   };
@@ -281,10 +281,10 @@
   // include it, this is a no-op.
   function bankStateBlock() {
     const counts = { "Paediatrics": 0, "Obstetrics & Gynaecology": 0, "Psychiatry": 0, "Medicine": 0 };
-    const diff = { L2: 0, L3: 0, L4: 0, L5: 0 };
+    const diff = { L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 };
     (state.questions || []).forEach(q => {
       if (q.topic in counts) counts[q.topic]++;
-      if (q.difficulty >= 2 && q.difficulty <= 5) diff["L" + q.difficulty]++;
+      if (q.difficulty >= 1 && q.difficulty <= 5) diff["L" + q.difficulty]++;
     });
     const total = state.questions.length;
     const lines = [
@@ -295,8 +295,8 @@
       `- Medicine: ${counts["Medicine"]}`,
       `- TOTAL: ${total}`,
       ``,
-      `By difficulty: L2=${diff.L2}, L3=${diff.L3}, L4=${diff.L4}, L5=${diff.L5}`,
-      `Target ratios: L3 and L4 should each outnumber L2; L5 is ~5% of bank (extremely difficult, may be niche but ALWAYS requires complex reasoning, not just niche fact recall).`,
+      `By difficulty: L1=${diff.L1}, L2=${diff.L2}, L3=${diff.L3}, L4=${diff.L4}, L5=${diff.L5}`,
+      `Target ratios (overhaul v3, 2026-06-01): L2 ~50% baseline, L3 ~25%, L4 15-20%, L5 ~5%, L1 <=5%. >=50% of L4-L5 must centre on COMMON presentations where reasoning depth earns the rating.`,
     ];
     return lines.join("\n");
   }
@@ -737,13 +737,13 @@
   }
 
   function renderAdminOverview(root) {
-    const counts = { L2: 0, L3: 0, L4: 0, L5: 0 };
+    const counts = { L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 };
     const byTopic = {};
     const flagged = state.flags ? Object.keys(state.flags).filter(k => state.flags[k]).length : 0;
     const answered = state.history ? Object.keys(state.history).length : 0;
     (state.questions || []).forEach(q => {
       const d = q.difficulty;
-      if (d >= 2 && d <= 5) counts["L" + d]++;
+      if (d >= 1 && d <= 5) counts["L" + d]++;
       byTopic[q.topic] = (byTopic[q.topic] || 0) + 1;
     });
     const total = state.questions.length;
@@ -784,7 +784,7 @@
         <section class="admin-pane-section">
           <h3>By difficulty</h3>
           <div class="admin-bar-rows">
-            ${["L2","L3","L4","L5"].map(k => {
+            ${["L1","L2","L3","L4","L5"].map(k => {
               const n = counts[k];
               const pct = total ? Math.round((n / total) * 100) : 0;
               const widthPct = Math.round((n / Math.max(1, ...Object.values(counts))) * 100);
