@@ -90,43 +90,44 @@
 }
 
 [data-theme="light"] {
-  /* Softer paper tone (was stark blue-white #f3f6fa) - low-chroma
-   * off-white that's easier to read against for long sessions. Text
-   * darkened from pure-black toward a deep navy so the contrast is
-   * still WCAG AA but not eye-stabbing. Accent muted to a deeper teal
-   * with reduced chroma so the cyan doesn't bloom in light mode. */
-  --bg:          #f6f4ef;
-  --bg-2:        #fbfaf6;
-  --surface:     #fdfcf8;
-  --surface-2:   #f1eee6;
-  --line:        #d8d2c5;
-  --line-strong: #b5ad9c;
+  /* Clinical-reference palette (overhaul 2026-06-01). Replaces the
+   * cream/sepia "tasteful AI" trap. Cool near-white surface, neutral
+   * lines, institutional teal-navy accent, near-black ink-as-CTA
+   * (Stripe / Linear / Notion move). Reads as eMedici / NHS digital,
+   * not as Wix template. Recommended palette from ai_tells_round2.md
+   * section C4. */
+  --bg:          #fafbfc;
+  --bg-2:        #ffffff;
+  --surface:     #ffffff;
+  --surface-2:   #f3f5f7;
+  --line:        #dde2e8;
+  --line-strong: #b6bec8;
 
-  --ink:         #1a2734;
-  --ink-2:       #3c4a5d;
-  --ink-mute:    #6a7081;
-  --ink-faint:   #a09b8e;
+  --ink:         #0e1a26;
+  --ink-2:       #2b3947;
+  --ink-mute:    #5b6a7b;
+  --ink-faint:   #8a96a4;
 
-  --accent:      #0a8a92;
-  --accent-2:    #0c6f76;
-  --accent-bg:   rgba(10, 138, 146, 0.07);
-  --accent-bd:   rgba(10, 138, 146, 0.32);
+  --accent:      #1a6e8e;
+  --accent-2:    #135872;
+  --accent-bg:   rgba(26, 110, 142, 0.06);
+  --accent-bd:   rgba(26, 110, 142, 0.30);
 
   --good:        #1f6d3b;
-  --good-bg:     rgba(31, 109, 59, 0.07);
-  --good-bd:     rgba(31, 109, 59, 0.36);
+  --good-bg:     rgba(31, 109, 59, 0.06);
+  --good-bd:     rgba(31, 109, 59, 0.32);
   --bad:         #9b2a32;
-  --bad-bg:      rgba(155, 42, 50, 0.07);
-  --bad-bd:      rgba(155, 42, 50, 0.36);
-  --warn:        #7a5318;
-  --warn-bg:     rgba(122, 83, 24, 0.08);
+  --bad-bg:      rgba(155, 42, 50, 0.06);
+  --bad-bd:      rgba(155, 42, 50, 0.32);
+  --warn:        #8a6608;
+  --warn-bg:     rgba(138, 102, 8, 0.08);
 
-  --ink-3:       #5b6a82;
-  --cta:         #b25a18;
-  --cta-2:       #8a4310;
-  --cta-bg:      rgba(178, 90, 24, 0.06);
-  --cta-bd:      rgba(178, 90, 24, 0.32);
-  --cta-ink:     #fdfcf8;
+  --ink-3:       #46546a;
+  --cta:         #0e1a26;
+  --cta-2:       #2b3947;
+  --cta-bg:      rgba(14, 26, 38, 0.06);
+  --cta-bd:      rgba(14, 26, 38, 0.30);
+  --cta-ink:     #ffffff;
 }
 
 * { box-sizing: border-box; }
@@ -134,6 +135,10 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  /* Tabular + lining numerals site-wide so the body sans aligns
+   * digits in tables, counters, timers, IDs - removing the need to
+   * reach for monospace for non-code content. */
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 body {
   -webkit-tap-highlight-color: rgba(15, 202, 212, 0.18);
@@ -475,7 +480,7 @@ body.has-paeds .masthead .brand-glucose { display: inline; }
   line-height: 1;
   letter-spacing: 0;
   color: var(--ink-mute);
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-variant-numeric: tabular-nums;
   /* Plain selectable text - the cursor should signal that, not the
    * pointer that the surrounding clickable chrome uses. */
@@ -691,7 +696,7 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   align-items: center;
   gap: 6px;
   font-variant-numeric: tabular-nums;
-  font-family: var(--mono);
+  font-family: var(--sans);
 }
 .qt-caret { font-size: 9px; color: var(--ink-mute); }
 .qt-list {
@@ -723,10 +728,10 @@ body[data-screen="quiz"] main { padding-top: 16px; }
 }
 .qt-list li:hover { background: var(--surface-2); }
 .qt-list li.current { background: var(--accent-bg); color: var(--ink); }
-.qt-list li .qtl-status { font-family: var(--mono); text-align: center; font-weight: 700; }
+.qt-list li .qtl-status { font-family: var(--sans); text-align: center; font-weight: 700; }
 .qt-list li.correct .qtl-status { color: var(--good); }
 .qt-list li.incorrect .qtl-status { color: var(--bad); }
-.qt-list li .qtl-num { font-family: var(--mono); color: var(--ink-mute); font-size: 11px; }
+.qt-list li .qtl-num { font-family: var(--sans); color: var(--ink-mute); font-size: 11px; }
 .qt-list li .qtl-stem { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .qt-list li.flagged .qtl-stem::before { content: "⚐ "; color: var(--warn); }
 
@@ -736,6 +741,16 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   border-radius: 0 0 var(--r-soft) var(--r-soft);
   padding: 26px 28px 24px;
   margin-bottom: 24px;
+}
+/* When the topbar (the "n / YYY" header) is hidden - e.g. in study
+ * mode without the test-mode meta row - the reading card is the sole
+ * container and must round all four corners. Without this the top of
+ * the reading card reads square while the bottom reads rounded,
+ * which Rob flagged as the "pick one" inconsistency. The :has()
+ * selector lets us key off topbar visibility from the body level. */
+body:has(.quiz-topbar[hidden]) .reading,
+body:has(#quizTopbar[hidden]) .reading {
+  border-radius: var(--r-soft);
 }
 
 .reading-head {
@@ -776,10 +791,14 @@ body[data-screen="quiz"] main { padding-top: 16px; }
 }
 
 .patient-table {
-  background: var(--surface-2);
-  border: 1px solid var(--line);
-  border-radius: var(--r-soft);
-  padding: 14px 18px;
+  /* No card chrome (overhaul 2026-06-01) - the dt/dd pair stands on
+   * its own with typographic differentiation. Avoids the multi-layer
+   * rounded-box AI tell where the table sits inside the reading card
+   * inside the quiz container. */
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
   margin: 14px 0;
   display: grid;
   grid-template-columns: max-content 1fr;
@@ -789,7 +808,7 @@ body[data-screen="quiz"] main { padding-top: 16px; }
 }
 .patient-table dt {
   color: var(--ink-mute);
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 12.5px;
   font-weight: 400;
   letter-spacing: 0;
@@ -807,14 +826,19 @@ body[data-screen="quiz"] main { padding-top: 16px; }
 }
 .patient-subtable dt {
   color: var(--ink-mute);
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 12px;
   font-weight: 400;
   align-self: baseline;
 }
 .patient-subtable dd { margin: 0; color: var(--ink); }
 
-/* options */
+/* options (overhaul 2026-06-01: rows not cards). The .reading card
+ * is the only container; options are rows separated by a hairline.
+ * Hover adds a 2px accent rule on the left and shifts text colour -
+ * never a background change (that's the AI-tell pattern). Reveal
+ * state IS allowed to use background because at that point the card-
+ * ness has semantic weight (you finished the question). */
 .options { list-style: none; margin: 12px 0 0; padding: 0; }
 .options li {
   position: relative;
@@ -822,18 +846,24 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   grid-template-columns: 36px 1fr 32px;
   align-items: baseline;
   gap: 14px;
-  background: var(--surface-2);
-  border: 1px solid var(--line);
-  border-radius: var(--r-tight);
-  padding: 13px 16px;
-  margin-bottom: 8px;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  padding: 14px 0 14px 16px;
+  margin: 0;
   cursor: pointer;
   font-size: 14.5px;
   line-height: 1.5;
-  transition: border-color 0.18s cubic-bezier(0.2, 0, 0, 1),
-              background 0.18s cubic-bezier(0.2, 0, 0, 1);
+  transition: color var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease),
+              background var(--dur-fast) var(--ease);
 }
-.options li:hover:not(.revealed) { border-color: var(--line-strong); }
+.options li:first-child { border-top: none; }
+.options li:hover:not(.revealed) {
+  color: var(--ink);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
 .options li .opt-letter {
   font-family: var(--display);
   font-weight: 600;
@@ -864,19 +894,19 @@ body[data-screen="quiz"] main { padding-top: 16px; }
 
 .options li.selected {
   background: var(--accent-bg);
-  border-color: var(--accent-bd);
+  box-shadow: inset 2px 0 0 var(--accent);
 }
 .options li.struck .opt-text { text-decoration: line-through; opacity: 0.4; }
 
 .options li.revealed { cursor: default; }
 .options li.revealed.correct {
   background: var(--good-bg);
-  border-color: var(--good-bd);
+  box-shadow: inset 2px 0 0 var(--good);
 }
 .options li.revealed.correct .opt-letter { color: var(--good); }
 .options li.revealed.wrong {
   background: var(--bad-bg);
-  border-color: var(--bad-bd);
+  box-shadow: inset 2px 0 0 var(--bad);
 }
 .options li.revealed.wrong .opt-letter { color: var(--bad); }
 .options li .opt-rationale {
@@ -1011,7 +1041,7 @@ body[data-screen="quiz"] main { padding-top: 16px; }
 .setup-collapse > summary::-webkit-details-marker { display: none; }
 .setup-collapse > summary::before {
   content: "+"; display: inline-block; margin-right: 8px; color: var(--ink-mute);
-  font-family: var(--mono);
+  font-family: var(--sans);
 }
 .setup-collapse[open] > summary::before { content: "−"; }
 .setup-collapse-actions { display: flex; gap: 10px; }
@@ -1161,7 +1191,7 @@ body.refs-open {
 .range-cat table { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
 .range-cat td { padding: 4px 0; border-bottom: 1px dotted var(--line); vertical-align: top; }
 .range-cat td.test { color: var(--ink-mute); width: 50%; padding-right: 10px; }
-.range-cat td.value { color: var(--ink); font-family: var(--mono); font-size: 12px; }
+.range-cat td.value { color: var(--ink); font-family: var(--sans); font-size: 12px; }
 .range-cat .range-note { font-size: 11.5px; color: var(--ink-mute); margin: 8px 0 0; line-height: 1.5; }
 .range-cat.hidden { display: none; }
 
@@ -1186,7 +1216,7 @@ body.refs-open {
 .colophon-right { justify-content: flex-end; }
 .colophon-sep { color: var(--line); }
 #sessionTime, #questionTime {
-  font-family: var(--mono); font-size: 12px;
+  font-family: var(--sans); font-size: 12px;
   color: var(--ink-2); font-variant-numeric: tabular-nums;
 }
 #questionTime.warn { color: var(--warn); }
@@ -1242,12 +1272,12 @@ body[data-screen="summary"] main { max-width: 760px; }
   gap: 12px;
 }
 .review-list li:hover { background: var(--surface-2); }
-.review-list .rv-status { font-family: var(--mono); font-weight: 700; }
+.review-list .rv-status { font-family: var(--sans); font-weight: 700; }
 .review-list li.incorrect .rv-status { color: var(--bad); }
 .review-list li.correct   .rv-status { color: var(--good); }
 .review-list li.unanswered .rv-status { color: var(--ink-mute); }
 .review-list li.flagged { background: var(--warn-bg); }
-.review-list .rv-id { font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); }
+.review-list .rv-id { font-family: var(--sans); font-size: 11.5px; color: var(--ink-mute); }
 .review-list .rv-stem { color: var(--ink-2); }
 
 /* ── Modal (How-to) ───────────────────────────────────────────────── */
@@ -1297,7 +1327,7 @@ body[data-screen="summary"] main { max-width: 760px; }
   background: var(--bg);
   color: var(--ink-2);
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: var(--r-tight);
   padding: 10px 12px;
   font-family: var(--mono);
   font-size: 12px;
@@ -2017,7 +2047,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 }
 .account-quality-table .qh { font-weight: 600; color: var(--ink-mute); font-size: 11px; border-bottom: 1px solid var(--line); padding-bottom: 4px; }
 .account-quality-table .qr { padding: 4px 0; border-bottom: 1px solid var(--line); }
-.account-quality-table .qid { font-family: var(--mono); font-size: 11px; }
+.account-quality-table .qid { font-family: var(--sans); font-size: 11px; }
 
 /* ── Inline reference ranges (post-reveal) ───────────────────────── */
 .inline-ranges {
@@ -2104,7 +2134,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 }
 .range-cat .rr:last-child { border-bottom: none; }
 .range-cat .rr .test { color: var(--ink-mute); }
-.range-cat .rr .value { color: var(--ink); font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+.range-cat .rr .value { color: var(--ink); font-family: var(--sans); font-size: 12px; font-variant-numeric: tabular-nums; }
 .range-cat .rr.rr-hidden { display: none; }
 .range-cat.hidden { display: none; }
 
@@ -2261,7 +2291,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   max-width: 64ch;
 }
 .admin-overview-line strong {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-weight: 500;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
