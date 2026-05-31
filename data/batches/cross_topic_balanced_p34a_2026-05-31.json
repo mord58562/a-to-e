@@ -1,0 +1,142 @@
+[
+  {
+    "id": "ctb-p34a-001",
+    "topic": "Paediatrics",
+    "subtopic": "Acute respiratory",
+    "subtopic_detail": "Bronchiolitis severity and respiratory support escalation",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["bronchiolitis", "HFNC"],
+    "stem": "You are the paediatric resident on the inpatient ward reviewing a 7-week-old term infant on day 4 of a coryzal illness. He is breastfeeding only 40% of usual volumes and has had two episodes of brief apnoea overnight without colour change. He has no risk factors for chronic lung disease and is fully immunised for age. The night nursing team have escalated because of increasing work of breathing despite low-flow nasal prong oxygen at 1 L/min.",
+    "data_table": {
+      "Vital signs": "T 37.6 °C, HR 168, RR 64, SpO2 92% on 1 L nasal prongs, BP 78/48 mmHg, capillary refill 3 seconds",
+      "Examination": "Moderate subcostal and intercostal recession, tracheal tug, widespread fine inspiratory crackles, mild expiratory wheeze, alert but tiring, anterior fontanelle soft",
+      "Investigations": "Nasopharyngeal PCR positive for RSV, capillary blood gas pH 7.31, pCO2 56 mmHg, HCO3 24 mmol/L, lactate 1.4 mmol/L, no chest radiograph performed"
+    },
+    "lead_in": "What is the most appropriate next step in respiratory support?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Continue low-flow nasal prong oxygen at 1 L/min, encourage smaller more frequent breastfeeds and repeat the capillary blood gas in two hours before deciding on escalation",
+        "correct": false,
+        "rationale": "Persistent hypercapnia with sustained tachypnoea over 60 and recurrent apnoea identifies severe bronchiolitis; further passive observation risks decompensation before the next gas. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": ["RCH CPG: Bronchiolitis"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence inhaled salbutamol 6 puffs via spacer every 20 minutes and add nebulised hypertonic saline 3% three times daily to reduce mucus plugging and airway resistance",
+        "correct": false,
+        "rationale": "Australian guidance recommends against routine bronchodilators, nebulised hypertonic saline, corticosteroids or antibiotics in viral bronchiolitis under 12 months. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": ["RCH CPG: Bronchiolitis"]
+      },
+      {
+        "letter": "C",
+        "text": "Switch to humidified high-flow nasal cannula at 8 L/min with FiO2 titrated to keep SpO2 above 92% and place the infant on continuous cardiorespiratory monitoring in a paediatric ward bed",
+        "correct": false,
+        "rationale": "Standard high-flow weight-based flow for infants is 2 L/kg/min capped near the body weight in early bronchiolitis. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": ["RCH CPG: Bronchiolitis"]
+      },
+      {
+        "letter": "D",
+        "text": "Arrange immediate intubation and mechanical ventilation in the paediatric intensive care unit given the apnoeic episodes and rising carbon dioxide on the capillary blood gas reading",
+        "correct": false,
+        "rationale": "A graded escalation through high-flow with PICU liaison precedes intubation; intubation is reserved for failure of non-invasive support or recurrent apnoea with desaturation. (Source: PREDICT bronchiolitis evidence statement 2024)",
+        "source_refs": ["PREDICT bronchiolitis evidence statement 2024"]
+      },
+      {
+        "letter": "E",
+        "text": "Commence humidified high-flow nasal cannula at 2 L/kg/min with FiO2 titrated to maintain SpO2 above 92% in a monitored high-dependency bed and liaise early with paediatric retrieval and intensive care",
+        "correct": true,
+        "rationale": "Weight-based high-flow (2 L/kg/min, around 9 L/min for a 4.5 kg infant) is first-line escalation in moderate-severe bronchiolitis; recurrent apnoea and a pCO2 over 50 mandate HDU-level monitoring with early retrieval liaison. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": ["RCH CPG: Bronchiolitis", "PREDICT bronchiolitis evidence statement 2024"]
+      }
+    ],
+    "explanation": {
+      "summary": "Bronchiolitis severity is judged by feeding, work of breathing, oxygen requirement and apnoea rather than chest signs alone. Severe disease is defined by SpO2 under 92% in air, sustained tachypnoea over 60, marked recession, recurrent apnoea or rising pCO2. High-flow nasal cannula at 2 L/kg/min is the standard Australian first-line escalation beyond low-flow oxygen. Bronchodilators, steroids, nebulised hypertonic saline and antibiotics do not change outcomes in uncomplicated viral bronchiolitis. Early liaison with paediatric retrieval is required when infants need HDU-level support.",
+      "key_points": [
+        "Severe bronchiolitis: SpO2 under 92%, RR over 60, marked recession, apnoea, pCO2 over 50",
+        "HFNC starts at 2 L/kg/min; flow is not titrated to oxygen saturation",
+        "Apnoea under 8 weeks of age is a retrieval and HDU indication",
+        "Routine salbutamol, steroids and antibiotics are not recommended in bronchiolitis",
+        "Chest radiograph is not required unless atypical features or complications are suspected"
+      ],
+      "pearls": "In infants under 8 weeks with bronchiolitis the apnoea risk peaks around day 3-5; co-bedded continuous SpO2 plus respiratory rate trending detects deterioration earlier than intermittent observations."
+    },
+    "sources": [
+      {"label": "RCH CPG: Bronchiolitis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/"},
+      {"label": "PREDICT bronchiolitis evidence statement 2024", "url": "https://www.predict.org.au/"}
+    ],
+    "reference_ranges": ["paeds_vitals_infant", "vbg"],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p34a-002",
+    "topic": "Paediatrics",
+    "subtopic": "Acute respiratory",
+    "subtopic_detail": "Moderate-severe croup nebulised adrenaline and dexamethasone",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["croup", "dexamethasone"],
+    "stem": "You are the emergency department registrar reviewing a 16-month-old non-Aboriginal boy brought in at 02:00 with a 24-hour history of barking cough, hoarse voice and noisy breathing. He has stridor at rest and moderate sternal recession but remains pink in air. His mother says he has had similar but milder episodes twice before that settled at home. He is fully immunised and has no chronic conditions.",
+    "data_table": {
+      "Vital signs": "T 37.8 °C, HR 158, RR 42, SpO2 96% room air, BP 92/58 mmHg",
+      "Examination": "Audible inspiratory stridor at rest, moderate sternal and intercostal recession, hoarse cry, alert and consolable on mother's lap, no drooling, no tripod posture",
+      "Investigations": "No bloods or imaging performed; bedside Westley croup score 6"
+    },
+    "lead_in": "What is the most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Administer oral prednisolone 1 mg/kg as a single dose, give paracetamol for fever and discharge home with safety-net advice if symptoms have settled within four hours of observation",
+        "correct": false,
+        "rationale": "Stridor at rest with moderate recession is at least moderate croup; corticosteroid alone without nebulised adrenaline misses the rapid airway benefit and discharge at four hours is too early after adrenaline-eligible disease. (Source: RCH CPG: Croup (laryngotracheobronchitis))",
+        "source_refs": ["RCH CPG: Croup (laryngotracheobronchitis)"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence nebulised salbutamol 2.5 mg back-to-back, add ipratropium bromide and reassess in 30 minutes for response to bronchodilator therapy and need for paediatric admission",
+        "correct": false,
+        "rationale": "Bronchodilators target lower airway smooth muscle and have no role in supraglottic-subglottic oedema of croup. (Source: Therapeutic Guidelines: Respiratory)",
+        "source_refs": ["Therapeutic Guidelines: Respiratory"]
+      },
+      {
+        "letter": "C",
+        "text": "Administer nebulised adrenaline 1:1000 5 mL with oxygen and concurrent oral dexamethasone 0.6 mg/kg, then observe in the department for at least 4 hours with attention to recurrence of stridor at rest",
+        "correct": true,
+        "rationale": "Moderate-severe croup with stridor at rest mandates nebulised adrenaline plus a single dexamethasone dose; the benefit of adrenaline wanes by 2 hours so a 4-hour observation window screens for rebound. (Source: RCH CPG: Croup (laryngotracheobronchitis))",
+        "source_refs": ["RCH CPG: Croup (laryngotracheobronchitis)"]
+      },
+      {
+        "letter": "D",
+        "text": "Take lateral neck radiograph and arrange urgent ENT review for direct laryngoscopy in theatre because of recurrent stridor and possible foreign body or epiglottitis given his age and presentation",
+        "correct": false,
+        "rationale": "Imaging delays definitive treatment and provokes distress; classic prodrome, barking cough and absence of drooling or toxic appearance argue against epiglottitis. (Source: RCH CPG: Croup (laryngotracheobronchitis))",
+        "source_refs": ["RCH CPG: Croup (laryngotracheobronchitis)"]
+      },
+      {
+        "letter": "E",
+        "text": "Provide humidified oxygen via face mask, position on parent's lap and reassess every 15 minutes for spontaneous improvement before considering any pharmacological intervention or admission to the ward",
+        "correct": false,
+        "rationale": "Humidified air alone is no longer recommended and delays effective therapy that meaningfully reduces stridor and admission. (Source: RCH CPG: Croup (laryngotracheobronchitis))",
+        "source_refs": ["RCH CPG: Croup (laryngotracheobronchitis)"]
+      }
+    ],
+    "explanation": {
+      "summary": "Croup severity is graded by stridor and recession; stridor at rest with moderate recession defines moderate-severe disease and triggers nebulised adrenaline plus a single dose of dexamethasone. Adrenaline acts within 30 minutes and effects wane by 2 hours, so observation for at least 4 hours after the dose detects rebound stridor. Dexamethasone benefits all severities of croup and reduces re-presentation. Humidified air, antibiotics and bronchodilators are not recommended in viral croup. Children who remain stridor-free at rest after 4 hours can be discharged with safety-net advice.",
+      "key_points": [
+        "Stridor at rest defines moderate-severe croup",
+        "Nebulised adrenaline 1:1000 5 mL acts within 30 minutes and wanes by 2 hours",
+        "Single oral dexamethasone 0.6 mg/kg covers all severities",
+        "Observe for 4 hours after adrenaline to detect rebound",
+        "Avoid lateral neck X-ray in suspected epiglottitis-resembling presentations"
+      ],
+      "pearls": "Recurrent or atypical croup under 6 months or over 6 years warrants ENT review for subglottic stenosis or anatomical narrowing; dexamethasone 0.15 mg/kg single dose is non-inferior to 0.6 mg/kg in mild croup at the lower dose."
+    },
+    "sources": [
+      {"label": "RCH CPG: Croup (laryngotracheobronchitis)", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/"},
+      {"label": "Therapeutic Guidelines: Respiratory", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["paeds_vitals_child"],
+    "created": "2026-05-31"
+  }
+]
