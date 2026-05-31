@@ -1905,38 +1905,61 @@ mark.stem-clue {
 }
 
 /* ── House quote toast (every 50 questions) ──────────────────────── */
+/* Overhaul 2026-06-01: drop the italic-serif body, left accent stripe,
+ * and heavy shadow (the three stacked AI tells per ai_tells_round2.md
+ * C7). Sans body, no italic, no stripe. Serif glyph reserved for the
+ * opening/closing curly quotes only - that's the editorial flag. */
 .house-toast {
   position: fixed;
   right: 20px;
   bottom: 20px;
-  max-width: 360px;
-  background: var(--surface-2, var(--surface));
+  max-width: 320px;
+  background: var(--surface);
   border: 1px solid var(--line);
-  border-left: 3px solid var(--accent);
-  padding: 14px 18px;
-  border-radius: 8px;
-  box-shadow: 0 10px 28px rgba(0,0,0,0.18);
-  font-family: var(--serif, var(--display));
-  font-size: 14px;
-  line-height: 1.45;
-  color: var(--ink);
+  padding: 12px 14px;
+  border-radius: var(--r-soft);
+  box-shadow: 0 8px 24px -8px rgba(0,0,0,0.18);
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-2);
   z-index: 9999;
   opacity: 0;
   transform: translateY(8px);
-  transition: opacity 0.28s ease, transform 0.28s ease;
+  transition: opacity var(--dur-medium) var(--ease),
+              transform var(--dur-medium) var(--ease);
   cursor: pointer;
 }
 .house-toast.show { opacity: 1; transform: translateY(0); }
-.house-toast .hq-quote { font-style: italic; }
+.house-toast .hq-quote { font-style: normal; }
+.house-toast .hq-quote::before {
+  content: "\201C";
+  margin-right: 2px;
+  color: var(--ink-faint);
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 0;
+  vertical-align: -0.05em;
+}
+.house-toast .hq-quote::after {
+  content: "\201D";
+  margin-left: 1px;
+  color: var(--ink-faint);
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 0;
+  vertical-align: -0.05em;
+}
 .house-toast .hq-attrib {
   display: block;
-  margin-top: 8px;
+  margin-top: 6px;
   font-style: normal;
-  font-family: var(--sans, inherit);
+  font-family: inherit;
   font-size: 11.5px;
   color: var(--ink-mute);
   text-align: right;
 }
+.house-toast .hq-attrib::before { content: "- "; }
 @media (max-width: 540px) {
   .house-toast { right: 12px; left: 12px; max-width: none; }
 }
