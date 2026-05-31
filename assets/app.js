@@ -1436,6 +1436,10 @@
       state.quiz.deadline = Date.now() + state.quiz.timerMins * 60000;
     }
     state.sessionStart = Date.now();
+    // Tag body with mode so CSS can hide the test-only countdown row in
+    // study mode (Rob's "either fix or hide" call - per-question timer
+    // is meaningful only in test mode).
+    document.body.dataset.mode = s.mode;
     setScreen("quiz");
     document.getElementById("sessionMeta").textContent =
       (s.mode === "study" ? "Study session" : "Test session") +
@@ -2082,9 +2086,16 @@
       qEl.classList.toggle("warn",   remain < 5 * 60000 && remain >= 60000);
       qEl.classList.toggle("danger", remain < 60000);
       sep.hidden = false;
-    } else {
+    } else if (state.quiz.mode === "test") {
+      // Test mode without countdown: show stopwatch-style elapsed time
+      // for the current question. Per Rob's call we do NOT show a Q
+      // timer in study mode - the per-question stopwatch added noise
+      // without value.
       qEl.textContent = "Q " + fmtClock(Date.now() - state.questionStart);
       sep.hidden = false;
+    } else {
+      qEl.textContent = "";
+      sep.hidden = true;
     }
   }
   function togglePause() {
@@ -3344,14 +3355,53 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     { q: "If her DNA was off by one percentage point she'd be a dolphin.", who: "House" },
     { q: "You can't always get what you want.", who: "House" },
     { q: "Wisdom is acknowledging what you don't know.", who: "House" },
+    { q: "Almost dying changes nothing. Dying changes everything.", who: "House" },
+    { q: "You talk to God, you're religious. God talks back, congratulations - you're a schizophrenic.", who: "House" },
+    { q: "Differential diagnosis, people. The annoying thing about eliminating impossibilities is that it takes time.", who: "House" },
+    { q: "If nobody hates you, you're doing something wrong.", who: "House" },
+    { q: "The most successful marriages are based on lies. You're off to a great start.", who: "House" },
+    { q: "Everything's conditional. You just can't always anticipate the conditions.", who: "House" },
+    { q: "Tests take time. Treatment's quicker.", who: "House" },
+    { q: "Either he was thinking, or he was dead. Coma was my third guess.", who: "House" },
+    { q: "It's a good thing to assume you're wrong. It's also a good thing to assume the test is wrong.", who: "House" },
+    { q: "What would you prefer - a doctor who holds your hand while you die, or one who ignores you while you get better?", who: "House" },
+    { q: "I assume nothing. Except that the patient is lying.", who: "House" },
+    { q: "Symptoms don't lie. People do.", who: "House" },
+    { q: "Patients always want proof. We don't give them proof, we give them confidence. Sometimes wrongly.", who: "House" },
+    { q: "Occam's razor: the simplest explanation is almost always somebody screwed up.", who: "House" },
+    { q: "I see no reason to disbelieve the lab. Other than the fact that the lab is run by idiots.", who: "House" },
+    { q: "Boring people live longer. Or it just seems longer to them.", who: "House" },
   ];
   function maybeShowHouseQuote() {
-    const KEY = "y4mcq.house.sessionCount";
-    const next = (parseInt(sessionStorage.getItem(KEY) || "0", 10) || 0) + 1;
-    sessionStorage.setItem(KEY, String(next));
-    if (next % 50 !== 0) return;
-    const idx = Math.floor(Math.random() * HOUSE_QUOTES.length);
-    showHouseQuote(HOUSE_QUOTES[idx]);
+    // Rob's spec: fire reliably on every 50th UNIQUE answered question
+    // in this study session - Q50, Q100, Q150, etc. The trigger counts
+    // unique questions answered in the current in-memory pool, not raw
+    // answer-events (re-answers don't tick the counter). Falls back to
+    // the live tab session's sessionStorage so it survives navigation.
+    let count = 0;
+    if (state && state.quiz && state.quiz.pool && state.quiz.answers) {
+      const answered = new Set(Object.keys(state.quiz.answers));
+      const inPool = state.quiz.pool.filter(q => answered.has(q.id));
+      count = inPool.length;
+    } else {
+      const KEY = "y4mcq.house.sessionCount";
+      count = (parseInt(sessionStorage.getItem(KEY) || "0", 10) || 0) + 1;
+      sessionStorage.setItem(KEY, String(count));
+    }
+    if (count <= 0 || count % 50 !== 0) return;
+    // Track which quotes have fired this session so we cycle through
+    // them all before repeating.
+    const QKEY = "y4mcq.house.recent";
+    let recent = [];
+    try { recent = JSON.parse(sessionStorage.getItem(QKEY) || "[]"); } catch (_) {}
+    if (recent.length >= HOUSE_QUOTES.length) recent = [];
+    const remaining = HOUSE_QUOTES
+      .map((q, i) => ({ q, i }))
+      .filter(({ i }) => !recent.includes(i));
+    const pick = remaining[Math.floor(Math.random() * remaining.length)];
+    recent.push(pick.i);
+    sessionStorage.setItem(QKEY, JSON.stringify(recent));
+    showHouseQuote(pick.q);
   }
   function showHouseQuote({ q, who }) {
     const old = document.querySelector(".house-toast");
