@@ -1,0 +1,69 @@
+[
+  {
+    "id": "ctb-p38-001",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Mild croup outpatient corticosteroid management",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["croup", "paediatric emergency"],
+    "stem": "You are the paediatric registrar in the emergency department reviewing a 2-year-old girl with a 12-hour history of harsh barking cough preceded by a coryzal prodrome. On assessment now, she has a barking cough, mild stridor only when distressed or crying, no stridor at rest, no chest wall recession, normal mental state, and is interactive with her parents while sitting on her mother's lap. She has had no exposure to a foreign body, immunisations are up to date including Hib, and she has no past history of asthma or recurrent wheeze. Her older brother had viral croup two weeks ago. The Westley croup score is 1 and she has been observed for 30 minutes.",
+    "data_table": {
+      "Vital signs": "T 37.8, HR 118, RR 28, SpO2 99% room air, BP 95/55",
+      "Examination": "Barking cough on examination, no stridor at rest, no recession, alert and interactive, oropharynx unremarkable, chest auscultation clear, no drooling"
+    },
+    "lead_in": "What is the most appropriate management plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Administer nebulised adrenaline 5 mL of 1:1000 immediately followed by oral dexamethasone and observe in the short stay unit for at least four hours before reconsidering disposition with paediatric review",
+        "correct": false,
+        "rationale": "Nebulised adrenaline is reserved for moderate to severe croup with stridor at rest or significant recession; using it in mild croup risks rebound and unnecessary admission for observation. (Source: RCH CPG: Croup)",
+        "source_refs": ["RCH CPG: Croup"]
+      },
+      {
+        "letter": "B",
+        "text": "Give a single dose of oral dexamethasone 0.15 mg/kg now as a one-off and discharge home with written parental advice to return for stridor at rest, drooling, severe distress or any deterioration",
+        "correct": true,
+        "rationale": "Mild croup with no stridor at rest is managed with a single dose of oral dexamethasone and discharge with safety netting, since corticosteroid shortens illness duration and reduces representations. (Source: RCH CPG: Croup)",
+        "source_refs": ["RCH CPG: Croup"]
+      },
+      {
+        "letter": "C",
+        "text": "Admit for nebulised budesonide every four hours and supplemental oxygen as required with paediatric inpatient observation overnight on the children's ward for serial respiratory assessment by the nursing staff",
+        "correct": false,
+        "rationale": "Inpatient nebulised budesonide every four hours is not standard for mild croup, where a single dose of oral dexamethasone with discharge is preferred and oxygen is not indicated given SpO2 99%. (Source: RCH CPG: Croup)",
+        "source_refs": ["RCH CPG: Croup"]
+      },
+      {
+        "letter": "D",
+        "text": "Reassure the family, provide humidified room air at home and paracetamol as required without corticosteroid, with no need for routine review unless the child develops obvious respiratory distress or worsening symptoms",
+        "correct": false,
+        "rationale": "Humidified air is not effective for croup and corticosteroid should still be given even for mild disease because it shortens duration and reduces representation. (Source: RCH CPG: Croup)",
+        "source_refs": ["RCH CPG: Croup"]
+      },
+      {
+        "letter": "E",
+        "text": "Give intravenous dexamethasone and intramuscular ceftriaxone for possible bacterial tracheitis, then admit to the short stay unit overnight with ENT review and serial airway assessment given the persistent stridor on exertion",
+        "correct": false,
+        "rationale": "Bacterial tracheitis is suggested by toxic appearance, high fever and copious purulent secretions, none of which are present here; routine antibiotics and IV steroid are not warranted. (Source: RCH CPG: Croup)",
+        "source_refs": ["RCH CPG: Croup"]
+      }
+    ],
+    "explanation": {
+      "summary": "Mild croup is defined by a barking cough with no stridor at rest and no respiratory distress (Westley score 0-2). The Australian standard of care is a single dose of oral dexamethasone 0.15 mg/kg with discharge home and clear written safety-netting advice. Nebulised adrenaline is reserved for moderate or severe croup with stridor at rest or significant work of breathing. Humidified air is not evidence-based and corticosteroid should still be given even in mild disease.",
+      "key_points": [
+        "Mild croup: oral dexamethasone 0.15 mg/kg single dose plus discharge with safety net",
+        "Moderate or severe croup: add nebulised adrenaline 5 mL of 1:1000 and observe minimum 4 hours",
+        "Bacterial tracheitis: toxic child with high fever and copious purulent secretions, not classic croup"
+      ],
+      "pearls": "RCH uses dexamethasone 0.15 mg/kg single dose for mild croup; prednisolone 1 mg/kg for 2 days is an alternative when dexamethasone is unavailable, but dexamethasone has better evidence for reducing return visits."
+    },
+    "sources": [
+      {"label": "RCH CPG: Croup", "url": "https://www.rch.org.au/clinicalguide/guideline_index/croup_laryngotracheobronchitis/"},
+      {"label": "Therapeutic Guidelines Respiratory: Croup", "url": "https://www.tg.org.au/"}
+    ],
+    "reference_ranges": ["paeds_vitals_child"],
+    "created": "2026-05-31"
+  }
+]
