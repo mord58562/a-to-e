@@ -138,5 +138,217 @@
     ],
     "reference_ranges": ["paeds_vitals_child"],
     "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p34a-003",
+    "topic": "Paediatrics",
+    "subtopic": "Urology",
+    "subtopic_detail": "Infant febrile UTI imaging strategy",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["UTI", "ultrasound"],
+    "stem": "You are the paediatric registrar reviewing a previously well 5-month-old girl who has been admitted with her first febrile urinary tract infection. She responded to intravenous cefotaxime within 48 hours and is now afebrile and feeding well. Urine culture grew Escherichia coli over 100 x10^6 CFU/L sensitive to trimethoprim and cephalexin. Antenatal scans were normal and her parents have no family history of vesicoureteric reflux or renal disease.",
+    "data_table": {
+      "Vital signs": "T 36.9 °C, HR 132, RR 32, SpO2 99% room air, BP 88/52 mmHg",
+      "Examination": "Alert, well perfused, soft non-tender abdomen, no palpable bladder or flank mass, normal genitalia",
+      "Investigations": "Mid-stream clean catch urine: leucocytes 250/microL, nitrites positive, culture E. coli over 100 x10^6 CFU/L cefotaxime sensitive; FBC, UEC and CRP within paediatric reference ranges after treatment"
+    },
+    "lead_in": "What is the most appropriate imaging plan from here?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Arrange a renal tract ultrasound within 6 weeks of discharge and no further imaging unless the ultrasound is abnormal or she has a recurrent febrile urinary tract infection in the next 12 months",
+        "correct": false,
+        "rationale": "Infants under 6 months require ultrasound during the acute illness or shortly afterwards rather than at 6 weeks. (Source: RCH CPG: Urinary tract infection)",
+        "source_refs": ["RCH CPG: Urinary tract infection"]
+      },
+      {
+        "letter": "B",
+        "text": "Arrange a renal tract ultrasound during this admission and add a micturating cystourethrogram only if the ultrasound shows hydronephrosis, scarring or recurrent febrile urinary tract infection occurs subsequently",
+        "correct": true,
+        "rationale": "Australian paediatric guidance recommends ultrasound during the index admission for infants under 6 months with febrile UTI; MCUG is reserved for abnormal ultrasound, atypical UTI or recurrence. (Source: RCH CPG: Urinary tract infection)",
+        "source_refs": ["RCH CPG: Urinary tract infection", "Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "C",
+        "text": "Arrange a DMSA renogram within 4 weeks of discharge and a micturating cystourethrogram for all infants under 12 months after a first febrile urinary tract infection regardless of severity",
+        "correct": false,
+        "rationale": "Routine MCUG and DMSA after a single uncomplicated first febrile UTI in a treatment-responsive infant is not recommended in Australia. (Source: KHA-CARI Adolescent Paediatric UTI)",
+        "source_refs": ["KHA-CARI Adolescent Paediatric UTI"]
+      },
+      {
+        "letter": "D",
+        "text": "Arrange computed tomography of the urinary tract during this admission to exclude calculus and complex anatomical anomaly given the high colony count growth and the young age of the infant",
+        "correct": false,
+        "rationale": "CT is not first-line imaging in paediatric UTI because of radiation exposure; ultrasound is the appropriate modality. (Source: RCH CPG: Urinary tract infection)",
+        "source_refs": ["RCH CPG: Urinary tract infection"]
+      },
+      {
+        "letter": "E",
+        "text": "Commence long-term low-dose trimethoprim prophylaxis at 2 mg/kg nocte and defer all renal tract imaging until age 2 years unless she develops a further breakthrough febrile urinary tract infection",
+        "correct": false,
+        "rationale": "Prophylaxis is reserved for recurrent UTI or significant reflux; deferring all imaging in an infant under 6 months misses tract anomalies that need follow-up. (Source: RCH CPG: Urinary tract infection)",
+        "source_refs": ["RCH CPG: Urinary tract infection"]
+      }
+    ],
+    "explanation": {
+      "summary": "Infants under 6 months with their first febrile UTI need a renal tract ultrasound during or shortly after the admission to look for obstruction, hydronephrosis or duplex anatomy. Routine MCUG and DMSA are not required after an uncomplicated treatment-responsive first UTI; both are added selectively for atypical features, abnormal ultrasound or recurrence. Long-term prophylaxis after a first uncomplicated UTI is not recommended. Children with confirmed high-grade reflux or significant scarring need nephrology input.",
+      "key_points": [
+        "Ultrasound during admission is standard for infants under 6 months with febrile UTI",
+        "MCUG is reserved for abnormal ultrasound, atypical UTI or recurrence",
+        "DMSA is selective and not routine after a first uncomplicated UTI",
+        "CT and IV urogram are not first-line in paediatric UTI",
+        "Long-term prophylaxis is targeted, not universal"
+      ],
+      "pearls": "Atypical UTI features that escalate imaging include seriously unwell appearance, poor urine flow, non-E. coli organism, raised creatinine, sepsis or failure to respond within 48 hours of appropriate antibiotics."
+    },
+    "sources": [
+      {"label": "RCH CPG: Urinary tract infection", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Urinary_tract_infection/"},
+      {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "KHA-CARI Adolescent Paediatric UTI", "url": "https://www.cariguidelines.org/"}
+    ],
+    "reference_ranges": ["paeds_vitals_infant", "paeds_uec", "inflammatory_markers"],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p34a-004",
+    "topic": "Paediatrics",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Suspected meningococcal sepsis lumbar puncture timing",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["meningococcal", "sepsis"],
+    "stem": "You are the night paediatric registrar at a tertiary children's hospital. A 22-month-old non-Aboriginal boy has been transferred by retrieval after 8 hours of fever and a rapidly spreading purpuric rash on the trunk and limbs. He was alert in the field but is now drowsy, with rising oxygen requirements and prolonged capillary refill despite 40 mL/kg of crystalloid given pre-transfer. The retrieval team has commenced ceftriaxone empirically and asks what investigation pathway you want pursued on arrival.",
+    "data_table": {
+      "Vital signs": "T 39.4 °C, HR 188, RR 48, SpO2 92% on 6 L Hudson, BP 78/40 mmHg, capillary refill 5 seconds, GCS 12 (E3 V4 M5)",
+      "Examination": "Non-blanching purpuric rash on trunk and limbs with new lesions in the last hour, mottled peripheries, cool extremities, no neck stiffness, fontanelle closed, pupils equal and reactive",
+      "Investigations": "Venous gas pH 7.18, lactate 6.4 mmol/L, glucose 4.2 mmol/L, FBC WCC 22 x10^9/L platelets 78 x10^9/L, INR 1.6, fibrinogen 1.0 g/L, CRP 220 mg/L, blood culture pending"
+    },
+    "lead_in": "What is the most appropriate plan for lumbar puncture?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Perform lumbar puncture in the emergency department before any further fluid resuscitation to obtain cerebrospinal fluid before any further antibiotic doses alter culture yield and direct narrow-spectrum therapy",
+        "correct": false,
+        "rationale": "Shock, coagulopathy and rapidly progressive purpura are contraindications to immediate LP in suspected meningococcal disease; blood and skin biopsy PCR retain diagnostic yield. (Source: RCH CPG: Meningococcal disease)",
+        "source_refs": ["RCH CPG: Meningococcal disease"]
+      },
+      {
+        "letter": "B",
+        "text": "Perform lumbar puncture immediately after intubation and a second bolus of crystalloid, sending samples for cell count culture and meningococcal polymerase chain reaction before any further antibiotic doses",
+        "correct": false,
+        "rationale": "Intubation does not remove the LP contraindications of coagulopathy and shock; antibiotics should not be delayed for any LP in this scenario. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "C",
+        "text": "Defer lumbar puncture for at least 24 hours and arrange a non-contrast computed tomography of the brain before any lumbar puncture is attempted, irrespective of haemodynamic and coagulation status at that point",
+        "correct": false,
+        "rationale": "Routine CT before LP does not exclude raised intracranial pressure and adds delay without changing the immediate threshold for LP. (Source: NICE NG143 Meningitis (bacterial) and meningococcal disease in under 16s)",
+        "source_refs": ["NICE NG143 Meningitis (bacterial) and meningococcal disease in under 16s"]
+      },
+      {
+        "letter": "D",
+        "text": "Defer lumbar puncture, continue empirical ceftriaxone, send blood for meningococcal polymerase chain reaction and serology and consider lumbar puncture later only once shock coagulopathy and rapidly evolving rash have resolved",
+        "correct": true,
+        "rationale": "Shock, coagulopathy (INR 1.6, fibrinogen 1.0), rapidly evolving purpura and GCS under 13 are all contraindications to LP; PCR on blood and skin biopsy plus blood culture obtains the microbiological diagnosis without delay. (Source: RCH CPG: Meningococcal disease)",
+        "source_refs": ["RCH CPG: Meningococcal disease", "Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "E",
+        "text": "Defer lumbar puncture but discontinue ceftriaxone, switch to vancomycin and aciclovir empirically and recommence ceftriaxone only after blood polymerase chain reaction and culture results are available within 24 hours",
+        "correct": false,
+        "rationale": "Empirical ceftriaxone is the cornerstone of paediatric meningococcal sepsis therapy; switching to vancomycin plus aciclovir is not indicated in this clinical pattern. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      }
+    ],
+    "explanation": {
+      "summary": "Lumbar puncture is contraindicated in suspected meningococcal disease when there is shock, coagulopathy, rapidly evolving purpura, focal neurology, GCS under 13 or signs of raised intracranial pressure. Antibiotics should never be delayed for an LP in a deteriorating child. Blood culture, blood meningococcal PCR and skin lesion PCR have high yield in invasive meningococcal disease without requiring CSF. LP can be performed later once the child has stabilised and contraindications have resolved.",
+      "key_points": [
+        "Shock, coagulopathy, GCS under 13 and rapidly evolving purpura contraindicate LP",
+        "Empirical ceftriaxone must not be delayed for any LP",
+        "Blood and skin PCR retain meningococcal diagnostic yield",
+        "Routine CT before LP does not reliably exclude raised ICP",
+        "LP can be deferred and performed once contraindications resolve"
+      ],
+      "pearls": "In paediatric meningococcal sepsis, fluid resuscitation past 40 mL/kg without haemodynamic response is the trigger for intubation, vasopressor support and admission to intensive care; dexamethasone is not given when the dominant picture is sepsis without proven bacterial meningitis."
+    },
+    "sources": [
+      {"label": "RCH CPG: Meningococcal disease", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Meningococcal_disease/"},
+      {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "NICE NG143 Meningitis (bacterial) and meningococcal disease in under 16s", "url": "https://www.nice.org.uk/guidance/ng143"}
+    ],
+    "reference_ranges": ["paeds_vitals_child", "vbg", "paeds_fbc", "coags", "inflammatory_markers"],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p34a-005",
+    "topic": "Paediatrics",
+    "subtopic": "Child protection",
+    "subtopic_detail": "Suspected non-accidental injury workup in an infant",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["child protection", "fractures"],
+    "stem": "You are the paediatric registrar admitting a 4-month-old non-Aboriginal infant brought in by his father for being unsettled. On examination the child has a spiral fracture of the left humerus, multiple bruises of varying ages on the trunk and back and a small frenular tear. The father's explanation is that the baby rolled off the lounge yesterday and was crying intermittently. The infant is otherwise developmentally appropriate and feeds normally. He is medically stable and analgesia has been given.",
+    "data_table": {
+      "Vital signs": "T 36.8 °C, HR 148, RR 36, SpO2 99% room air, BP 86/50 mmHg",
+      "Examination": "Spiral fracture left humerus on radiograph, three trunk bruises of varying ages, frenular tear, no external head injury or seizure activity, anterior fontanelle soft, pupils equal and reactive",
+      "Investigations": "FBC, UEC, LFT, coagulation profile within paediatric reference ranges, left humerus radiograph confirms spiral fracture, no other imaging performed yet"
+    },
+    "lead_in": "What is the most appropriate immediate investigation pathway?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Admit for analgesia and arrange a full skeletal survey, fundoscopy by an ophthalmologist, non-contrast head computed tomography or magnetic resonance imaging and make a mandatory report to the child protection authority",
+        "correct": true,
+        "rationale": "Spiral long-bone fractures, frenular tear and unexplained multi-age bruising in a non-mobile infant mandate full child protection workup including skeletal survey, neuroimaging, fundoscopy and a statutory report. (Source: RCH CPG: Child Abuse)",
+        "source_refs": ["RCH CPG: Child Abuse", "RACGP: Child Abuse Identification and Management"]
+      },
+      {
+        "letter": "B",
+        "text": "Splint the humeral fracture, organise outpatient orthopaedic follow-up within 1 week and discharge home with social work liaison through the general paediatric clinic the following morning",
+        "correct": false,
+        "rationale": "Discharge home in suspected non-accidental injury before completing the workup and statutory report places the child at ongoing risk. (Source: RCH CPG: Child Abuse)",
+        "source_refs": ["RCH CPG: Child Abuse"]
+      },
+      {
+        "letter": "C",
+        "text": "Arrange a head computed tomography scan only, defer skeletal survey and ophthalmology until the family have given informed consent and discuss further investigation with the consultant paediatrician in the morning",
+        "correct": false,
+        "rationale": "Limiting imaging and deferring statutory reporting until family consent is obtained breaches mandatory reporting obligations and risks missed occult injury. (Source: RACGP: Child Abuse Identification and Management)",
+        "source_refs": ["RACGP: Child Abuse Identification and Management"]
+      },
+      {
+        "letter": "D",
+        "text": "Send extensive bone profile vitamin D and copper studies before any skeletal survey to first exclude metabolic bone disease as a cause of the spiral fracture, then reconsider child protection reporting in 48 hours",
+        "correct": false,
+        "rationale": "Metabolic bone disease is exceptionally rare and should not delay the standard non-accidental injury workup or mandatory reporting in this clinical pattern. (Source: RCH CPG: Child Abuse)",
+        "source_refs": ["RCH CPG: Child Abuse"]
+      },
+      {
+        "letter": "E",
+        "text": "Arrange a full skeletal survey now but defer fundoscopy and head imaging until the infant develops neurological signs such as seizures, vomiting, lethargy or focal weakness on serial paediatric review",
+        "correct": false,
+        "rationale": "Occult abusive head trauma occurs without external signs; fundoscopy and neuroimaging are part of the routine workup, not symptom-triggered. (Source: RCH CPG: Child Abuse)",
+        "source_refs": ["RCH CPG: Child Abuse"]
+      }
+    ],
+    "explanation": {
+      "summary": "Suspected non-accidental injury in a pre-mobile infant requires a structured workup including skeletal survey, neuroimaging, fundoscopy by ophthalmology, baseline bloods and a statutory report. Frenular tears, posterior trunk bruising and spiral long-bone fractures in non-mobile infants are sentinel injuries with a high yield for occult injury. Mandatory reporting obligations apply to all medical practitioners in every Australian jurisdiction. Care planning and discharge decisions are made jointly with the child protection authority and not by the treating team alone.",
+      "key_points": [
+        "Frenular tear, posterior bruising and spiral fracture in a non-mobile infant are sentinel for abuse",
+        "Workup is skeletal survey, neuroimaging, fundoscopy and baseline bloods",
+        "Mandatory reporting to the state child protection authority is required",
+        "Metabolic bone disease evaluation does not delay protective action",
+        "Discharge planning is joint with child protection"
+      ],
+      "pearls": "A skeletal survey repeat at 11-14 days improves yield for healing rib and metaphyseal fractures that are occult on the first set; classic metaphyseal lesions and posterior rib fractures are highly specific for non-accidental injury."
+    },
+    "sources": [
+      {"label": "RCH CPG: Child Abuse", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Child_Abuse/"},
+      {"label": "RACGP: Child Abuse Identification and Management", "url": "https://www.racgp.org.au/"}
+    ],
+    "reference_ranges": ["paeds_vitals_infant", "paeds_fbc", "paeds_uec", "lfts", "coags"],
+    "created": "2026-05-31"
   }
 ]
