@@ -11,7 +11,7 @@
     "https://www.rch.org.au/clinicalguide/guideline_index/Gastroenteritis/",
     "https://www.rch.org.au/clinicalguide/guideline_index/Sepsis_assessment_and_management/"
   ],
-  "topics_audited": ["uti", "bronchiolitis"],
+  "topics_audited": ["uti", "bronchiolitis", "croup", "asthma"],
   "topics_in_progress": [],
   "flags": [
     {
@@ -145,6 +145,314 @@
       "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Urinary_Tract_Infection_Guideline/",
       "severity": "low",
       "proposed_fix": "Simplify correct option to gentamicin monotherapy at this age, or reframe stem as septic-pathway-not-UTI-only."
+    },
+    {
+      "q_id": "paeds-001",
+      "file": "data/questions_paeds.json",
+      "topic": "bronchiolitis",
+      "stem_snippet": "4-month-old, July, 3 days coryza, increased work of breathing, half feeds.",
+      "issue": "Correct option targets SpO2 'at least 92%'. RCH Bronchiolitis CPG explicitly targets 90% (not 92%); brief desats <90% alone not an indication to start oxygen. The 92% target is from older NICE/AAP and is more aggressive than RCH.",
+      "rch_says": "Target SpO2 is 90% unless underlying cardiopulmonary disease. Brief desaturations <90% alone are not an indication to start supplemental oxygen.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/",
+      "severity": "medium",
+      "proposed_fix": "Change SpO2 target from 92% to 90% per RCH. Distinguish in rationale that 92% is NICE/older AAP, not RCH."
+    },
+    {
+      "q_id": "ctb-p20a-001",
+      "file": "data/batches/cross_topic_balanced_p20a_2026-05-30.json",
+      "topic": "bronchiolitis",
+      "stem_snippet": "8-month-old, 3 days coryza, wheeze, 60% feeds.",
+      "issue": "Correct option targets SpO2 92-96% for bronchiolitis. RCH targets 90%; the 92-96% band is a NICE/UK frame.",
+      "rch_says": "Target SpO2 90%; brief dips below 90% alone do not warrant oxygen.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/",
+      "severity": "medium",
+      "proposed_fix": "Change SpO2 target to 'maintain SpO2 at least 90%' per RCH."
+    },
+    {
+      "q_id": "balanced-p11-002",
+      "file": "data/batches/cross_topic_balanced_p11a_2026-05-29.json",
+      "topic": "bronchiolitis",
+      "stem_snippet": "6-week-old, 3 days coryza, sweaty during feeds, low-flow NP O2.",
+      "issue": "SpO2 target '92 percent or above'. RCH = 90%.",
+      "rch_says": "Target SpO2 90% in bronchiolitis.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/",
+      "severity": "medium",
+      "proposed_fix": "Change target from 92% to 90% per RCH."
+    },
+    {
+      "q_id": "balanced-p14-016",
+      "file": "data/batches/cross_topic_balanced_p14b_2026-05-29.json",
+      "topic": "bronchiolitis",
+      "stem_snippet": "10-month-old, mild bronchiolitis, deciding disposition.",
+      "issue": "Correct option uses '92% on room air' as admission threshold. RCH would use 90% target. The 92% threshold over-admits per RCH and is NICE-influenced.",
+      "rch_says": "RCH admission criteria are clinical (apnoea, prematurity <37/40, age <10 weeks, comorbidity, indigenous ethnicity, growth restriction, feeding <50%) plus inability to maintain SpO2 90% on room air, not 92%.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/",
+      "severity": "medium",
+      "proposed_fix": "Change SpO2 admit threshold from 92% to 90% per RCH and add the RCH risk factors as alternative admit triggers."
+    },
+    {
+      "q_id": "ctb-p34a-001",
+      "file": "data/batches/cross_topic_balanced_p34a_2026-05-31.json",
+      "topic": "bronchiolitis",
+      "stem_snippet": "7-week-old, day 4 coryza, 40% feeds, 2 brief apnoeas.",
+      "issue": "Correct option commences HFNC at 2 L/kg/min directly. RCH explicitly reserves HFNC for failure of standard low-flow oxygen after 2 hours with persistent SpO2 <90%. Stem does not establish prior low-flow trial. HFNC-as-first-line bypasses the RCH ladder.",
+      "rch_says": "HFNC reserved for failure of standard nasal prong oxygen, defined as SpO2 persistently <90% after 2 hours of low-flow oxygen with no respiratory improvement.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/",
+      "severity": "high",
+      "proposed_fix": "Either modify stem to establish failed low-flow trial (1-2 L/min for >=2 hr, persistent SpO2 <90%), or change correct option to 'standard low-flow nasal prong oxygen with NG feeds and reassessment'."
+    },
+    {
+      "q_id": "ctb-p39-001",
+      "file": "data/batches/cross_topic_balanced_p39a_2026-05-31.json",
+      "topic": "bronchiolitis",
+      "stem_snippet": "4-month-old, day 3 coryza, 40% feeds.",
+      "issue": "Correct option commences humidified HFNC at 2 L/kg/min as first-line respiratory support. Stem does not establish prior low-flow failure. Per RCH, HFNC is reserved for low-flow failure.",
+      "rch_says": "HFNC = second-line; only after >=2 hours low-flow oxygen with persistent SpO2 <90% and no improvement.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/",
+      "severity": "high",
+      "proposed_fix": "Reframe correct option as 'low-flow nasal prong oxygen and NG feeds; escalate to HFNC only if low-flow fails after 2 hours', or add a clear failed-low-flow stem element."
+    },
+    {
+      "q_id": "ctb-p40-001",
+      "file": "data/batches/cross_topic_balanced_p40a_2026-05-31.json",
+      "topic": "bronchiolitis",
+      "stem_snippet": "9-month-old, 3 days coryza, 24 hr increased work of breathing.",
+      "issue": "Correct option = HFNC at 2 L/kg/min as 'single best initial respiratory intervention'. RCH = low-flow first.",
+      "rch_says": "Initial respiratory support in bronchiolitis is standard low-flow nasal prong oxygen if SpO2 <90%; HFNC reserved for low-flow failure.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/",
+      "severity": "high",
+      "proposed_fix": "Change correct option to standard low-flow O2 as initial intervention; move HFNC into a distractor or sequel."
+    },
+    {
+      "q_id": "ctb-p30-001",
+      "file": "data/batches/cross_topic_balanced_p30a_2026-05-30.json",
+      "topic": "bronchiolitis",
+      "stem_snippet": "4-month-old, 3-day coryza, 50% feeds, no wet nappy 8 hr.",
+      "issue": "Correct option admits for 'nasal high-flow oxygen'. RCH would use low-flow first; HFNC reserved for low-flow failure. Stem doesn't establish low-flow trial.",
+      "rch_says": "Standard low-flow nasal prong O2 first-line; HFNC reserved for low-flow failure.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/",
+      "severity": "medium",
+      "proposed_fix": "Change to 'low-flow nasal prong O2 with NG feeds and observation', or add a failed-low-flow precondition to the stem."
+    },
+    {
+      "q_id": "ctb-p32-003",
+      "file": "data/batches/cross_topic_balanced_p32a_2026-05-30.json",
+      "topic": "bronchiolitis",
+      "stem_snippet": "10-week-old, 3 days coryza, feeding only every 5 hours.",
+      "issue": "Correct option targets SpO2 'above 92%'. RCH target = 90%.",
+      "rch_says": "Target SpO2 90% in uncomplicated bronchiolitis.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/",
+      "severity": "low",
+      "proposed_fix": "Change SpO2 target from 92% to 90% per RCH."
+    },
+    {
+      "q_id": "balanced-p7-001",
+      "file": "data/batches/cross_topic_balanced_p7a_2026-05-28.json",
+      "topic": "bronchiolitis",
+      "stem_snippet": "8-month-old, 3 days coryza, 50% feeds.",
+      "issue": "Correct option supplies 'supplemental oxygen as needed' which is acceptable but the vague phrasing doesn't lock in the RCH 90% target. Minor compared with other Qs.",
+      "rch_says": "Use SpO2 90% as oxygen titration target.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/",
+      "severity": "low",
+      "proposed_fix": "Add 'titrate to maintain SpO2 at least 90% per RCH CPG' to lock the target."
+    },
+    {
+      "q_id": "paeds-l4depth-001",
+      "file": "data/batches/paeds_psych_l4_depth_2026-05-21.json",
+      "topic": "bronchiolitis",
+      "stem_snippet": "7-week-old, 4 days coryza, refused feeds 8hr, 3 short apnoeas on low-flow.",
+      "issue": "Correct option escalates to NIV with PEEP 6 + PICU. RCH does not specifically mandate NIV with named PEEP; HFNC failure then intubation/PICU is the typical RCH-Australian path. NIV intermediate step is more BTS/NICE.",
+      "rch_says": "After HFNC failure escalate to PICU for intubation; NIV not specifically endorsed as routine in RCH CPG.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/",
+      "severity": "low",
+      "proposed_fix": "Soften correct option to 'escalate to PICU for advanced respiratory support (NIV or intubation per local PICU)' rather than naming PEEP 6 specifically."
+    },
+    {
+      "q_id": "paeds-deficit-002",
+      "file": "data/batches/paeds_obgyn_l4l5_deficit_2026-05-25.json",
+      "topic": "croup",
+      "stem_snippet": "2yo, 12hr barking cough, stridor at rest, oral dex given 30 min ago, persisting stridor.",
+      "issue": "Correct option = 'Nebulised adrenaline 0.5 mL/kg of 1:1000 solution'. This is the older AAP/AAFP per-kg formula. RCH Melbourne uses a flat dose: 5 mL of 1:1000 (for severe/life-threatening croup) regardless of weight. Per-kg dosing in a small child would underdose vs RCH; in a larger child would overshoot the flat 5 mL ceiling.",
+      "rch_says": "Nebulised adrenaline 5 mL of 1:1000 (flat dose) for severe/life-threatening croup.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "high",
+      "proposed_fix": "Change correct option to 'Nebulised adrenaline 5 mL of 1:1000 (flat dose) with concurrent oxygen and minimum 3-hour observation per RCH CPG'. Note in rationale that per-kg dosing is the AAP formula and is not the RCH practice."
+    },
+    {
+      "q_id": "paeds-batch-016-l3",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "topic": "croup",
+      "stem_snippet": "3yo with mild prior croup, Westley 4 (moderate); asks min observation post last adrenaline.",
+      "issue": "Correct option states 'Minimum 4 hours after the LAST adrenaline'. RCH CPG explicitly states 'A period of observation of 3 hours is required after nebulised adrenaline'. 4 hours is more conservative than RCH and contradicts the explicit RCH wording the Q purports to test.",
+      "rch_says": "Observation of 3 hours after nebulised adrenaline is required. Consider extending only for overnight presentations, limited access to care, recurrent stridor, or risk factors.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "high",
+      "proposed_fix": "Change '4 hours' to '3 hours' as the RCH minimum, with caveat about extending for risk factors. Keep clinical-stability criteria."
+    },
+    {
+      "q_id": "ctb-p34a-002",
+      "file": "data/batches/cross_topic_balanced_p34a_2026-05-31.json",
+      "topic": "croup",
+      "stem_snippet": "16-month-old, moderate croup, stridor at rest, moderate recession.",
+      "issue": "Correct option says 'observe for at least 4 hours' after nebulised adrenaline. RCH = 3 hours.",
+      "rch_says": "3-hour observation after nebulised adrenaline.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "medium",
+      "proposed_fix": "Change to '3 hours' per RCH."
+    },
+    {
+      "q_id": "ctb-p22a-002",
+      "file": "data/batches/cross_topic_balanced_p22a_2026-05-30.json",
+      "topic": "croup",
+      "stem_snippet": "2yo, stridor at rest, distressed; immediate treatment.",
+      "issue": "'Minimum 4 hour observation' post nebulised adrenaline. RCH = 3 hours.",
+      "rch_says": "3-hour post-adrenaline observation.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "medium",
+      "proposed_fix": "Change '4 hours' to '3 hours' per RCH."
+    },
+    {
+      "q_id": "ctb-p32-005",
+      "file": "data/batches/cross_topic_balanced_p32a_2026-05-30.json",
+      "topic": "croup",
+      "stem_snippet": "3yo, biphasic stridor at rest, sternal recession.",
+      "issue": "'Observe for at least 4 hours' post-adrenaline. RCH = 3 hours.",
+      "rch_says": "3-hour observation post nebulised adrenaline.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "medium",
+      "proposed_fix": "Change '4 hours' to '3 hours' per RCH."
+    },
+    {
+      "q_id": "ctb-p48-002",
+      "file": "data/batches/cross_topic_balanced_p48a_2026-05-31.json",
+      "topic": "croup",
+      "stem_snippet": "18-month-old, stridor at rest, settled on father's lap. Oral dex + 4-hr obs.",
+      "issue": "'Observe for 4 hours before discharge' after oral dexamethasone (no adrenaline given). RCH does not require a fixed 4-hour observation after dexamethasone alone; the 3-hour rule applies after nebulised adrenaline only.",
+      "rch_says": "3-hour observation rule applies after nebulised adrenaline. Post-dexamethasone observation should be 'until improvement' (peak dex effect ~1-2 hours).",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "low",
+      "proposed_fix": "Reframe: 'observe until stridor at rest settles and adequate oral intake demonstrated (typically 1-2 hours post-dex)'. 4 hours is over-conservative without adrenaline given."
+    },
+    {
+      "q_id": "ctb-p30-002",
+      "file": "data/batches/cross_topic_balanced_p30a_2026-05-30.json",
+      "topic": "croup",
+      "stem_snippet": "2yo, stridor at rest, mild intercostal recession, interactive.",
+      "issue": "Observation 4 hours after oral dex alone (no adrenaline). RCH 3-hour rule applies post-adrenaline only; 4 hr post-dex alone is over-conservative.",
+      "rch_says": "Post-dexamethasone alone, observe until clinical improvement; 3-hour rule is post-adrenaline.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "low",
+      "proposed_fix": "Reduce explicit duration from 4 hours; tie to clinical resolution of stridor at rest."
+    },
+    {
+      "q_id": "balanced-p11-001",
+      "file": "data/batches/cross_topic_balanced_p11a_2026-05-29.json",
+      "topic": "croup",
+      "stem_snippet": "2yo, biphasic stridor at rest, mild intercostal recession, alert.",
+      "issue": "Correct option = oral dexamethasone 0.6 mg/kg + 'observe in ED for 4 hours' (no adrenaline given). RCH does not require fixed 4-hour observation post-dex alone. Also 0.6 mg/kg is the RCH severe-croup dose; for this stem (mild-moderate features) RCH recommends 0.15 mg/kg.",
+      "rch_says": "Dex 0.15 mg/kg for mild/moderate; 0.6 mg/kg only for severe/life-threatening. Post-dex observation tied to clinical resolution, not a fixed 4-hour clock.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "medium",
+      "proposed_fix": "Change dexamethasone dose to 0.15 mg/kg (or relabel stem severity as severe to match 0.6 mg/kg). Reduce 4-hour fixed wait to clinical-resolution criterion."
+    },
+    {
+      "q_id": "ctb-p45-002",
+      "file": "data/batches/cross_topic_balanced_p45a_2026-05-31.json",
+      "topic": "croup",
+      "stem_snippet": "2yo, mild intermittent stridor at rest, mild recession on excitement, settles in mother's arms.",
+      "issue": "Correct option = oral dex 0.6 mg/kg + 4 hours observation. Stem describes mild croup (intermittent stridor at rest, settles when held). RCH dex dose for mild/moderate = 0.15 mg/kg, not 0.6 mg/kg. Observation 4 hours after dex alone is also over-conservative.",
+      "rch_says": "Dex 0.15 mg/kg for mild/moderate croup; 0.6 mg/kg reserved for severe/life-threatening.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "high",
+      "proposed_fix": "Change dose to 0.15 mg/kg per RCH for the moderate severity described, and lose the fixed 4-hour wait."
+    },
+    {
+      "q_id": "paeds-resp-hy-011-l3",
+      "file": "data/batches/paeds_acute_respiratory_hy.json",
+      "topic": "croup",
+      "stem_snippet": "2yo, barking cough, hoarse cry, audible stridor, increasing WoB - severe croup pathway.",
+      "issue": "'Minimum 4 hours after the last adrenaline dose' - RCH says 3 hours.",
+      "rch_says": "3-hour observation post nebulised adrenaline.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "medium",
+      "proposed_fix": "Change '4 hours' to '3 hours' per RCH."
+    },
+    {
+      "q_id": "ctb-p40-003",
+      "file": "data/batches/cross_topic_balanced_p40a_2026-05-31.json",
+      "topic": "croup",
+      "stem_snippet": "2yo, 4 hours barking cough, noisy breathing, alert; initial pharm management.",
+      "issue": "Correct option administers BOTH oral dex 0.6 mg/kg AND nebulised adrenaline. Stem describes a child who is 'alert, drinking small sips, pinker after being upset' - this reads as moderate not severe. RCH reserves combined dex 0.6 mg/kg + nebulised adrenaline for severe/life-threatening croup, and 0.15 mg/kg dex alone for mild/moderate.",
+      "rch_says": "Mild/moderate: dex 0.15 mg/kg PO alone. Severe/life-threatening: dex 0.6 mg/kg (max 12 mg) plus nebulised adrenaline.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "medium",
+      "proposed_fix": "Either upgrade the stem severity (stridor at rest, persistent recessions) to justify 0.6 mg/kg + adrenaline, or change correct option to 'oral dex 0.15 mg/kg alone'."
+    },
+    {
+      "q_id": "ctb-p25-003",
+      "file": "data/batches/cross_topic_balanced_p25a_2026-05-30.json",
+      "topic": "croup",
+      "stem_snippet": "18-month-old, stridor at rest but comfortable in mother's lap.",
+      "issue": "Correct option observes 'at least 30 minutes' post oral dexamethasone. Dexamethasone peak effect is around 1-2 hours; 30 minutes is too short to demonstrate response. If stridor at rest persists, observation should continue until that settles.",
+      "rch_says": "Observation should extend until clinical improvement in stridor at rest; dexamethasone peak effect 1-2 hours, not 30 minutes.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "medium",
+      "proposed_fix": "Change '30 minutes' to 'observe until stridor at rest settles (typically 1-2 hours)'."
+    },
+    {
+      "q_id": "ctb-p20a-002",
+      "file": "data/batches/cross_topic_balanced_p20a_2026-05-30.json",
+      "topic": "croup",
+      "stem_snippet": "2yo, barking cough + stridor wakes from sleep; management.",
+      "issue": "Correct option observes 'at least 30 minutes' before discharge. Inadequate for stridor-at-rest croup; dex effect peaks at 1-2 hours.",
+      "rch_says": "Observe until stridor at rest settles; dex effect 1-2 hours.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "medium",
+      "proposed_fix": "Extend observation to clinical resolution of stridor at rest (~1-2 hours)."
+    },
+    {
+      "q_id": "balanced-p15-003",
+      "file": "data/batches/cross_topic_balanced_p15a_2026-05-29.json",
+      "topic": "croup",
+      "stem_snippet": "2yo, intermittent stridor at rest, alert; local dexamethasone supply note.",
+      "issue": "'Reassess in 30 minutes' after oral dex. Dex peak action is 1-2 hours; 30 minutes is too early to judge response.",
+      "rch_says": "Allow 1-2 hours for dexamethasone effect before deciding next steps.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "low",
+      "proposed_fix": "Change reassessment interval to 1 hour."
+    },
+    {
+      "q_id": "ctb-p47-020",
+      "file": "data/batches/cross_topic_balanced_p47d_2026-05-31.json",
+      "topic": "croup",
+      "stem_snippet": "22-month-old, barking cough, alert, consolable; mild croup.",
+      "issue": "Observation 'at least 2 hours' after oral dex 0.15 mg/kg. Reasonable but slightly short; RCH suggests waiting for clinical improvement, peak dex effect 1-2 hours. Borderline.",
+      "rch_says": "Observe until stridor at rest settled; allow 1-2 hours for dexamethasone effect.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "low",
+      "proposed_fix": "Acceptable as-is for mild croup without stridor at rest; otherwise lengthen to clinical resolution."
+    },
+    {
+      "q_id": "paeds-l4depth-004",
+      "file": "data/batches/paeds_psych_l4_depth_2026-05-21.json",
+      "topic": "croup",
+      "stem_snippet": "22-month-old, severe croup, given dex 0.15 mg/kg + nebulised adrenaline; disposition.",
+      "issue": "Correct option observes '3 hours after nebulised adrenaline'. This is RCH-aligned; however the dex dose 0.15 mg/kg is for mild/moderate; severe-life-threatening croup that warranted nebulised adrenaline should be 0.6 mg/kg per RCH. Stem internal inconsistency, not a correctness flag on the disposition itself.",
+      "rch_says": "Severe/life-threatening croup: dex 0.6 mg/kg (max 12 mg). 3-hour observation post-adrenaline.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "low",
+      "proposed_fix": "Either upgrade the dex dose in the stem to 0.6 mg/kg (consistent with severity requiring adrenaline), or soften severity to moderate. Current answer choice (3-hour wait) is correct."
+    },
+    {
+      "q_id": "paeds-003",
+      "file": "data/questions_paeds.json",
+      "topic": "croup",
+      "stem_snippet": "2yo, severe croup; dex 8 mg + nebulised adrenaline 5 mL.",
+      "issue": "Correct option specifies 'observe at least 4 hours'. RCH = 3 hours post-adrenaline. The 8 mg flat dose is reasonable for a ~12-13 kg 2-year-old at 0.6 mg/kg (~7-8 mg); within RCH range.",
+      "rch_says": "3-hour observation post-adrenaline.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
+      "severity": "medium",
+      "proposed_fix": "Change '4 hours' to '3 hours' per RCH."
     }
   ]
 }
