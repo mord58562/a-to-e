@@ -1,4 +1,6 @@
-# Session checkpoint - 2026-06-01 A to E omnibus (round 2)
+# Session checkpoint - 2026-06-01 A to E omnibus (round 2, ROLLING)
+
+Last updated mid-session.
 
 Resume trigger phrase: "resume the A to E omnibus session" - then read this file and the 2026-05-27 CHECKPOINT.md (the prior session's, which is also in `data/_audit/session_2026-05-27/CHECKPOINT.md`).
 
@@ -49,6 +51,15 @@ Rate limit fired mid-execution. Future-Claude: pick up from "REMAINING" below.
      redesign.
    - `length_parity_all.json` (4913 lines): bank-wide length-parity
      scan; available for triage.
+
+## ALSO completed this session (rolling update)
+
+- **UI overhaul step 1** (commit 02f4f59): IBM Plex -> Public Sans single family + Source Serif 4 (editorial glyphs only) + JetBrains Mono (paste-box code only). --r-soft 10px -> 8px. Easing tokens added.
+- **UI overhaul step 2** (commit 2252c9f): light-theme palette cream/sepia -> cool clinical near-white + teal-navy. Mono dropped from 14 non-code selectors. Multi-layer-box AI tell removed from .options li (rows + hairline dividers + inset accent rule on hover; no per-item border or background). .patient-table card chrome dropped. Question-box corner fix via body:has(.quiz-topbar[hidden]).
+- **UI overhaul step 3** (commit da3dd41): House toast redesign (sans body, no left stripe, single curly-quote glyphs, "- " attrib prefix). House every-50 made reliable (counts unique answered Qs in pool, cycles through all quotes before repeating, 16 new quotes added). Study-mode per-question timer hidden (kept in test mode).
+- **Bank content fixes** (commit 16d0d5c): 4 specific Qs fixed - 2 garbled stems (paeds-allergy-derm-018 urticaria, obgyn-018 chronic HTN), incomplete miscarriage non-question rewritten as obgyn-batch-049-l3b with "what would you first recommend" framing + outpatient expectant management as correct, twin-2 transverse + instrumental delivery stems lose "consented antenatally to X" telegraph, UTI imaging Q rewritten as paeds-l4depth-007-rch aligned with RCH Melbourne CPG (no routine imaging for typical UTI).
+- **.remote-agent-context.md updated**: full new difficulty scheme (1-5/5 with target percentages), 10 new audit rules (last-sentence telegraph ban, "offer all options" ban, lay-language enforcement, numeric-not-adjectival, disconfirming finding for L3+, vitals fixed order, data_table flat-string requirement, reference-range mandatory, bhCG ectopic 5000 threshold, RCH-as-paeds-authority).
+- **What's-new entry** in README v2.1.0.
 
 ## REMAINING (resume here)
 

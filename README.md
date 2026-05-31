@@ -4,10 +4,17 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 **Live: <https://mord58562.github.io/a-to-e/>** — guest mode, no signup required.
 
+## What's new in 2.1.0
+
+- **Difficulty scale rebuilt as full 1-5/5.** Every question shifted down one level on 2026-06-01 to make room for a new top tier. The new 5/5 is reserved for items that combine atypical or contested presentation with calculation under uncertainty, a disconfirming finding that kills the textbook default, competing guidelines, or a multi-branch algorithm. Target: ~50% L2, ~25% L3, 15-20% L4, ~5% L5. Common presentations earn the higher tiers when reasoning is non-trivial.
+- **Cleaner visual language.** Dropped IBM Plex (the AI-generated-clinical-app default) for Public Sans throughout - one institutional sans, weight does the work. Mono dropped from data-table keys, counters, and IDs (tabular numerals come from the body sans). Cream/sepia light theme replaced with a cool clinical near-white + teal-navy palette. Option list now reads as rows with hairline dividers, not nested cards. House quote toast redesigned to stop looking like an AI testimonial card.
+- **Cluster of content fixes.** RCH Melbourne CPG is now the source-of-truth for paediatrics; the UTI imaging question rewritten to align with it. The incomplete-miscarriage "offer all options and let her choose" non-question rewritten to "what would you first recommend". Twin-2 transverse and instrumental-delivery stems lose the give-away "consented antenatally to X" last sentence. Two garbled stems (urticaria, chronic-HTN superimposed pre-eclampsia) repaired. The bhCG threshold for required surgical management of tubal ectopic is now flagged as >=5000 IU/L per RANZCOG in the generation rule pack.
+- **House every-50 made reliable.** Counter now tracks unique answered questions in the current pool (re-answers do not tick the counter); cycles through all 37 quotes before repeating; 16 new quotes added.
+- **Timer simplified.** Per-question stopwatch hidden in study mode (was noise without value). Test mode preserves the countdown and elapsed-time displays.
+
 ## What's new in 2.0.0
 
 - **Cloud accounts.** Email + password sign-in syncs progress across devices. Guest mode still keeps everything local. Admin accounts get the unified Admin dashboard (Overview, Add & Audit, Quality, Users, Account).
-- **Difficulty scale overhauled.** Bank now uses L2 as the floor (was L3-minimum). L3 and L4 dominate (~95% of the bank); L5 is a new extreme tier (~5% target) that requires complex reasoning *and* may require niche sub-specialty knowledge.
 - **Social stats panel.** Signed-in users see what proportion of other users picked each option after they submit.
 - **Difficulty toggles on the home screen.** Each level individually toggleable.
 - **Scheduled generation.** A cloud routine fires regularly producing fresh single-best-answer batches, each self-audited against the binding rule pack before commit.
@@ -24,7 +31,7 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 ## How to use
 
 1. Pick a **mode**: *Study* (continuous, instant explanation after each question, end whenever) or *Test* (no answers until the end, optional countdown timer).
-2. Pick a **discipline** (any combination of Paediatrics, O&G, Psychiatry, Medicine) and optionally narrow by **learning area**, **difficulty** (L2 / L3 / L4 / L5), or **filter** (All / Unseen / Previously incorrect / Flagged).
+2. Pick a **discipline** (any combination of Paediatrics, O&G, Psychiatry, Medicine) and optionally narrow by **learning area**, **difficulty** (L1 / L2 / L3 / L4 / L5), or **filter** (All / Unseen / Previously incorrect / Flagged).
 3. **Begin** and work through.
 
 ### Keyboard
