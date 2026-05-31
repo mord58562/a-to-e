@@ -66,5 +66,276 @@
     ],
     "reference_ranges": ["paeds_vitals_infant", "vbg"],
     "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p39-002",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Moderate acute asthma exacerbation salbutamol burst plus oral prednisolone",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["asthma", "paediatric emergency"],
+    "stem": "You are the emergency department registrar assessing a 6-year-old girl with known mild persistent asthma who presents with 8 hours of progressive cough, wheeze and increased work of breathing following a viral upper respiratory tract infection. She normally uses a salbutamol pMDI with spacer as needed and a low-dose budesonide preventer with reasonable adherence. She has not had a preventer dose today. She last presented 6 months ago with an uncomplicated mild exacerbation managed at home. She is alert and speaks in short phrases between breaths.",
+    "data_table": {
+      "Vital signs": "T 37.4, HR 132, RR 36, SpO2 93% room air, BP 100/62",
+      "Examination": "Subcostal and intercostal recession, widespread polyphonic wheeze, prolonged expiratory phase, no stridor, alert and oriented, peak flow not measurable due to distress",
+      "Investigations": "No imaging or bloods performed"
+    },
+    "lead_in": "What is the most appropriate initial management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Administer single nebulised ipratropium bromide 250 micrograms without salbutamol, observe for 20 minutes, then commence oral prednisolone 2 mg/kg if response is inadequate and admit the patient for inpatient observation overnight",
+        "correct": false,
+        "rationale": "Ipratropium is an adjunct, not monotherapy; salbutamol is the first-line bronchodilator in acute paediatric asthma with ipratropium added in moderate to severe disease. (Source: RCH CPG: Acute Asthma)",
+        "source_refs": ["RCH CPG: Acute Asthma"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence intravenous magnesium sulfate 50 mg/kg over 20 minutes immediately as first-line therapy, give intravenous hydrocortisone 4 mg/kg and admit to the paediatric high-dependency unit for continuous cardiorespiratory monitoring overnight",
+        "correct": false,
+        "rationale": "IV magnesium is reserved for severe or life-threatening asthma not responding to inhaled bronchodilators and oral corticosteroid; it is not first-line for moderate exacerbation. (Source: RCH CPG: Acute Asthma)",
+        "source_refs": ["RCH CPG: Acute Asthma"]
+      },
+      {
+        "letter": "C",
+        "text": "Give salbutamol pMDI with spacer 6 puffs every 20 minutes for 3 doses with oral prednisolone 1 mg/kg, reassess after the third dose, and stretch salbutamol to 1-2 hourly if improving with disposition decision at four hours",
+        "correct": true,
+        "rationale": "Moderate paediatric asthma is treated with salbutamol pMDI plus spacer (4-12 puffs by age) every 20 minutes for the first hour plus oral prednisolone 1 mg/kg, then stretch the salbutamol interval. (Source: RCH CPG: Acute Asthma)",
+        "source_refs": ["RCH CPG: Acute Asthma"]
+      },
+      {
+        "letter": "D",
+        "text": "Up-titrate her inhaled budesonide preventer to twice daily for two weeks, dispense a single dose of oral prednisolone for home use and discharge with safety netting and review by the general practitioner in seven days",
+        "correct": false,
+        "rationale": "Up-titrating the preventer and discharging from a moderate exacerbation in ED is inappropriate; acute treatment with salbutamol bursts and supervised reassessment is required. (Source: RCH CPG: Acute Asthma)",
+        "source_refs": ["RCH CPG: Acute Asthma"]
+      },
+      {
+        "letter": "E",
+        "text": "Intubate and ventilate the patient electively now for impending respiratory failure given the speech limitation and respiratory rate, with rapid-sequence induction using ketamine in the resuscitation cubicle and transfer to PICU",
+        "correct": false,
+        "rationale": "Speech in short phrases and SpO2 93% does not meet life-threatening asthma criteria; first-line is escalating inhaled bronchodilator and oral corticosteroid. (Source: RCH CPG: Acute Asthma)",
+        "source_refs": ["RCH CPG: Acute Asthma"]
+      }
+    ],
+    "explanation": {
+      "summary": "Moderate paediatric asthma exacerbation in a child aged 6 years is treated with salbutamol pMDI plus spacer 6 puffs every 20 minutes for the first hour (three doses) together with oral prednisolone 1 mg/kg. Reassessment after the third dose guides whether to stretch to 1-2 hourly salbutamol or escalate to ipratropium add-on, IV magnesium, or IV salbutamol. Spacer delivery is preferred over nebuliser in conscious cooperative children because it is at least as effective with fewer side effects. Disposition decision occurs after sustained 4 hours on stretched intervals.",
+      "key_points": [
+        "Salbutamol pMDI plus spacer 6 puffs (age 6+) every 20 minutes x 3 plus oral prednisolone 1 mg/kg",
+        "Ipratropium 4-8 puffs added if moderate-severe and inadequate response to salbutamol",
+        "IV magnesium 50 mg/kg reserved for severe/life-threatening not responding to inhaled therapy"
+      ],
+      "pearls": "Oral prednisolone 1 mg/kg daily for 3 days is standard; a single dose of dexamethasone 0.6 mg/kg is an alternative for milder cases or anticipated poor adherence."
+    },
+    "sources": [
+      {"label": "RCH CPG: Acute Asthma", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Asthma_acute/"},
+      {"label": "Australian Asthma Handbook", "url": "https://www.asthmahandbook.org.au/"}
+    ],
+    "reference_ranges": ["paeds_vitals_child"],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p39-003",
+    "topic": "Paediatrics",
+    "subtopic": "Neurology",
+    "subtopic_detail": "Simple febrile seizure outpatient discharge after first event",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["febrile seizure", "paediatric emergency"],
+    "stem": "You are the paediatric registrar assessing an 18-month-old previously well boy who had a single generalised tonic-clonic convulsion lasting 2 minutes at home, followed by 15 minutes of drowsiness and now full recovery in the emergency department. He has a temperature of 38.7 degrees with clinical findings of an uncomplicated viral upper respiratory tract infection. He is fully immunised, has no developmental concerns, no family history of epilepsy, no prior seizures and no medication exposure. He is now alert, interactive, taking sips of fluid and his neurological examination is unremarkable.",
+    "data_table": {
+      "Vital signs": "T 38.7, HR 132, RR 28, SpO2 99% room air, BP 96/58",
+      "Examination": "Alert and interactive, GCS 15, normal cranial nerves, normal tone power and reflexes, no neck stiffness, no rash, ENT consistent with viral URTI, no focal neurology",
+      "Investigations": "No bloods or imaging performed; bedside glucose 5.2 mmol/L"
+    },
+    "lead_in": "What is the most appropriate disposition and follow-up plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Discharge home with paracetamol or ibuprofen for fever relief, written first-aid febrile seizure advice, GP review within 48 hours and return precautions for any recurrent seizure, prolonged drowsiness or focal neurology",
+        "correct": true,
+        "rationale": "A simple febrile seizure (under 15 minutes, generalised, single in 24 hours) in a well-appearing child aged 6 months to 5 years requires no investigations and is managed with reassurance, antipyretic for comfort and safety-net advice. (Source: RCH CPG: Febrile seizures)",
+        "source_refs": ["RCH CPG: Febrile seizures"]
+      },
+      {
+        "letter": "B",
+        "text": "Perform a lumbar puncture, full blood examination, blood cultures and venous blood gas as routine workup, commence empirical intravenous ceftriaxone for possible meningitis and admit the patient for observation overnight on the paediatric ward",
+        "correct": false,
+        "rationale": "Routine lumbar puncture is not indicated for a simple febrile seizure in a well, fully immunised child without meningism; empirical antibiotics are not warranted. (Source: RCH CPG: Febrile seizures)",
+        "source_refs": ["RCH CPG: Febrile seizures"]
+      },
+      {
+        "letter": "C",
+        "text": "Arrange an electroencephalogram in the next week, refer to the paediatric neurology outpatient clinic for ongoing follow-up and counsel the family about the elevated lifetime risk of developing childhood epilepsy after a febrile seizure",
+        "correct": false,
+        "rationale": "EEG and neurology referral are not indicated after a simple febrile seizure as recurrence and epilepsy risk are not affected by EEG findings. (Source: RCH CPG: Febrile seizures)",
+        "source_refs": ["RCH CPG: Febrile seizures"]
+      },
+      {
+        "letter": "D",
+        "text": "Arrange an urgent non-contrast computed tomography of the brain in the emergency department to rule out intracranial pathology before discharge, with paediatric neurology phone consultation prior to leaving the department for safety",
+        "correct": false,
+        "rationale": "Neuroimaging is not indicated after a simple febrile seizure with normal neurological examination; it carries unjustified radiation and sedation risk. (Source: RCH CPG: Febrile seizures)",
+        "source_refs": ["RCH CPG: Febrile seizures"]
+      },
+      {
+        "letter": "E",
+        "text": "Commence regular oral diazepam 0.5 mg/kg daily as prophylaxis to be continued for 6 months, with written instructions on use of buccal midazolam for any breakthrough seizure activity at home and review in 1 month",
+        "correct": false,
+        "rationale": "Continuous antiepileptic prophylaxis is not recommended for simple febrile seizures; risks outweigh modest reduction in recurrence. (Source: RCH CPG: Febrile seizures)",
+        "source_refs": ["RCH CPG: Febrile seizures"]
+      }
+    ],
+    "explanation": {
+      "summary": "A simple febrile seizure is defined as a generalised tonic-clonic seizure under 15 minutes duration, single in 24 hours, in a child aged 6 months to 5 years, with no focal features and no postictal neurological deficit. The child requires no investigations beyond clinical assessment if well-appearing and fully immunised. Management is reassurance, antipyretic for comfort, written first-aid advice (lay safely on the side, time the seizure, call ambulance if over 5 minutes), and safety netting for atypical features. Lifetime risk of epilepsy after a simple febrile seizure is only slightly above population baseline.",
+      "key_points": [
+        "Simple febrile seizure: under 15 min, generalised, single in 24 hours, age 6 months to 5 years",
+        "No EEG, no neuroimaging, no lumbar puncture routinely required if well",
+        "Recurrence approximately 30%; epilepsy risk only marginally above baseline"
+      ],
+      "pearls": "Buccal midazolam 0.3 mg/kg may be prescribed for parental administration if seizures recur and exceed 5 minutes; routine daily antiepileptic prophylaxis is not recommended."
+    },
+    "sources": [
+      {"label": "RCH CPG: Febrile seizures", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Febrile_seizures/"},
+      {"label": "Therapeutic Guidelines Neurology: Seizures in children", "url": "https://www.tg.org.au/"}
+    ],
+    "reference_ranges": ["paeds_vitals_child"],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p39-004",
+    "topic": "Paediatrics",
+    "subtopic": "ENT",
+    "subtopic_detail": "Acute otitis media antibiotic threshold in child under 2 years",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["acute otitis media", "antibiotic stewardship"],
+    "stem": "You are the general practice registrar reviewing a 14-month-old girl with 36 hours of fever, fussiness, poor sleep and persistent ear-pulling on the right side. She is fully immunised including pneumococcal conjugate vaccine, has no previous episodes of acute otitis media, and has no chronic ear disease. There is no perforation visible. Her appetite is reduced but she is taking oral fluids and her nappies remain wet. Antibiotic susceptibility patterns in your local population are typical of community-acquired pneumococcus and Haemophilus influenzae.",
+    "data_table": {
+      "Vital signs": "T 38.6, HR 140, RR 28, SpO2 99% room air",
+      "Examination": "Right tympanic membrane bulging, opaque and erythematous with loss of normal landmarks; left tympanic membrane normal; no mastoid tenderness or post-auricular swelling; oropharynx mildly erythematous"
+    },
+    "lead_in": "What is the most appropriate initial management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Trial 48 hours of watchful waiting with paracetamol or ibuprofen analgesia and review in 48 hours by the general practitioner with antibiotics deferred unless the child deteriorates or remains symptomatic at the planned review",
+        "correct": false,
+        "rationale": "Watchful waiting is reserved for children 2 years or older with mild unilateral disease; under 2 years, antibiotic treatment is recommended given higher complication risk. (Source: Therapeutic Guidelines Antibiotic: Acute Otitis Media)",
+        "source_refs": ["Therapeutic Guidelines Antibiotic: Acute Otitis Media"]
+      },
+      {
+        "letter": "B",
+        "text": "Prescribe oral cefaclor 10 mg/kg three times daily for 5 days with paracetamol or ibuprofen as required for fever and pain, and review in the general practice clinic in one week to confirm resolution and tympanic membrane normalisation",
+        "correct": false,
+        "rationale": "Cefaclor is not first-line for acute otitis media in Australia; amoxicillin has narrower-spectrum cover and is the recommended first-line agent. (Source: Therapeutic Guidelines Antibiotic: Acute Otitis Media)",
+        "source_refs": ["Therapeutic Guidelines Antibiotic: Acute Otitis Media"]
+      },
+      {
+        "letter": "C",
+        "text": "Refer urgently to ear nose and throat outpatients for myringotomy and grommet insertion given the bulging tympanic membrane with constitutional symptoms in a young child, and provide paracetamol as required while awaiting the appointment",
+        "correct": false,
+        "rationale": "Surgical referral is not first-line for a single episode of acute otitis media; antibiotic plus analgesia is the standard initial approach. (Source: Therapeutic Guidelines Antibiotic: Acute Otitis Media)",
+        "source_refs": ["Therapeutic Guidelines Antibiotic: Acute Otitis Media"]
+      },
+      {
+        "letter": "D",
+        "text": "Prescribe oral amoxicillin 15 mg/kg three times daily for 5 days with paracetamol or ibuprofen for analgesia, provide parental return advice for vomiting or deterioration, and follow up by the GP in one week",
+        "correct": true,
+        "rationale": "Australian guidelines recommend oral amoxicillin 15 mg/kg three times daily for 5 days as first-line for acute otitis media in children under 2 years given higher complication risk. (Source: Therapeutic Guidelines Antibiotic: Acute Otitis Media)",
+        "source_refs": ["Therapeutic Guidelines Antibiotic: Acute Otitis Media"]
+      },
+      {
+        "letter": "E",
+        "text": "Prescribe ciprofloxacin otic drops 0.3% twice daily for 7 days with paracetamol or ibuprofen as required, advise warm compress to the affected ear and review in the general practice clinic in 48 hours for ongoing assessment",
+        "correct": false,
+        "rationale": "Topical ciprofloxacin is for chronic suppurative otitis media with perforation or grommets; intact tympanic membrane and systemic disease require oral therapy. (Source: Therapeutic Guidelines Antibiotic: Acute Otitis Media)",
+        "source_refs": ["Therapeutic Guidelines Antibiotic: Acute Otitis Media"]
+      }
+    ],
+    "explanation": {
+      "summary": "Acute otitis media in children under 2 years carries a higher risk of complications and slower spontaneous resolution. Australian Therapeutic Guidelines recommend oral amoxicillin 15 mg/kg three times daily for 5 days as first-line, with watchful waiting reserved for children aged 2 years or older with mild unilateral disease. Analgesia with paracetamol or ibuprofen is critical for symptom control. Treatment failure at 48-72 hours triggers escalation to amoxicillin-clavulanate to cover beta-lactamase producing Haemophilus influenzae.",
+      "key_points": [
+        "Amoxicillin 15 mg/kg TDS for 5 days is first-line under 2 years",
+        "Watchful waiting only if 2 years or older and mild unilateral disease",
+        "Escalate to amoxicillin-clavulanate at 48-72 hours if failing"
+      ],
+      "pearls": "In Aboriginal and Torres Strait Islander children with high rates of chronic suppurative otitis media, treatment thresholds and durations differ and ENT outreach review is standard."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines Antibiotic: Acute Otitis Media", "url": "https://www.tg.org.au/"},
+      {"label": "RCH CPG: Acute Otitis Media", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Acute_Otitis_Media/"}
+    ],
+    "reference_ranges": ["paeds_vitals_child"],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p39-005",
+    "topic": "Paediatrics",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "DKA cerebral oedema recognition and hypertonic saline management",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["DKA", "paediatric emergency"],
+    "stem": "You are the paediatric registrar managing an 8-year-old girl with new-onset diabetic ketoacidosis who has been on her calculated rehydration and 0.05 unit/kg/hour insulin infusion for 4 hours. Her presenting pH was 7.05, glucose 32 mmol/L, ketones 5.8 mmol/L, and corrected sodium was 138 mmol/L. Two hours ago her glucose had fallen to 18 mmol/L and 5% dextrose was added to her fluids. Over the last 30 minutes she has developed worsening headache, become more drowsy, and has had two episodes of vomiting. Her bedside glucose is now 14 mmol/L. Senior paediatric and intensive care support have been called.",
+    "data_table": {
+      "Vital signs": "T 37.0, HR 64 (was 110), RR 18, BP 138/86 (was 100/60), SpO2 99% room air, GCS now 12 (was 14)",
+      "Examination": "Drowsy, irritable when roused, sluggish pupillary reactions, no focal neurology, no neck stiffness, mild Kussmaul breathing reduced",
+      "Investigations": "Latest VBG: pH 7.18 HCO3 12 BE -10 lactate 1.6; glucose 14 mmol/L; ketones 3.4 mmol/L; Na 142 corrected, K 3.6"
+    },
+    "lead_in": "What is the most appropriate immediate management step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Increase the insulin infusion rate to 0.1 unit/kg/hour to accelerate ketone clearance and request urgent contrast magnetic resonance imaging of the brain to characterise the suspected cerebral oedema before further intervention",
+        "correct": false,
+        "rationale": "Increasing insulin will worsen rapid osmolar shifts and cerebral oedema; imaging is never the first step when cerebral oedema is clinically suspected. (Source: ISPAD/APEG: Paediatric DKA Guidelines)",
+        "source_refs": ["ISPAD/APEG: Paediatric DKA Guidelines"]
+      },
+      {
+        "letter": "B",
+        "text": "Give a 20 mL/kg normal saline bolus over 15 minutes to address suspected hypovolaemia from intravascular depletion and continue the same insulin infusion rate while reassessing neurological status every 5 minutes",
+        "correct": false,
+        "rationale": "Aggressive crystalloid bolus is contraindicated when cerebral oedema is suspected as it worsens cerebral fluid shifts; treatment is osmotic therapy and reducing fluid rate. (Source: ISPAD/APEG: Paediatric DKA Guidelines)",
+        "source_refs": ["ISPAD/APEG: Paediatric DKA Guidelines"]
+      },
+      {
+        "letter": "C",
+        "text": "Intubate immediately in the paediatric resuscitation cubicle for airway protection given the falling GCS and use propofol induction with bag-mask ventilation to mild hyperventilation aiming for an end-tidal CO2 of 30",
+        "correct": false,
+        "rationale": "Routine hyperventilation is harmful in DKA cerebral oedema; intubation is reserved for failed osmotherapy and airway compromise, and uses normocapnia not hypocapnia. (Source: ISPAD/APEG: Paediatric DKA Guidelines)",
+        "source_refs": ["ISPAD/APEG: Paediatric DKA Guidelines"]
+      },
+      {
+        "letter": "D",
+        "text": "Continue current management unchanged and recheck the venous blood gas in 1 hour because the pH has improved from 7.05 to 7.18 and the glucose is approaching target range, treating the symptoms as evolving recovery",
+        "correct": false,
+        "rationale": "The clinical pattern (headache, falling GCS, bradycardia, hypertension, vomiting) is Cushing's response indicating cerebral oedema; delay is dangerous. (Source: ISPAD/APEG: Paediatric DKA Guidelines)",
+        "source_refs": ["ISPAD/APEG: Paediatric DKA Guidelines"]
+      },
+      {
+        "letter": "E",
+        "text": "Administer 3% hypertonic saline 2.5 to 5 mL/kg over 15 minutes (or alternatively mannitol 0.5 to 1 g/kg over 20 minutes), reduce maintenance fluid rate by one-third, elevate the head of the bed to 30 degrees and call intensive care for transfer",
+        "correct": true,
+        "rationale": "Suspected cerebral oedema is treated with osmotic therapy (3% saline 2.5-5 mL/kg or mannitol 0.5-1 g/kg), reduced fluid rate by one-third, head-of-bed elevation, and ICU transfer. (Source: ISPAD/APEG: Paediatric DKA Guidelines)",
+        "source_refs": ["ISPAD/APEG: Paediatric DKA Guidelines"]
+      }
+    ],
+    "explanation": {
+      "summary": "Cerebral oedema is the leading cause of mortality in paediatric DKA and is recognised clinically by headache, vomiting, falling GCS, focal neurology, age-inappropriate incontinence, and Cushing's response (bradycardia plus hypertension). Treatment is immediate hypertonic saline 3% at 2.5-5 mL/kg or mannitol 0.5-1 g/kg over 20 minutes, reduction of maintenance fluid rate by one-third, head-of-bed elevation to 30 degrees, and transfer to the intensive care unit. Imaging is performed only after osmotherapy has been given and the patient is stabilised, never as the first step.",
+      "key_points": [
+        "Cushing's response (bradycardia, hypertension) plus falling GCS is suspected cerebral oedema",
+        "Treat first: 3% saline 2.5-5 mL/kg or mannitol 0.5-1 g/kg, reduce fluids by one-third",
+        "Imaging only after osmotic therapy and stabilisation"
+      ],
+      "pearls": "Risk factors for cerebral oedema include younger age, new-onset diabetes, severe acidosis at presentation, low corrected sodium, and high urea; bicarbonate use also raises risk and is reserved for cardiovascular instability."
+    },
+    "sources": [
+      {"label": "ISPAD/APEG: Paediatric DKA Guidelines", "url": "https://www.ispad.org/"},
+      {"label": "RCH CPG: Diabetic Ketoacidosis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Diabetic_Ketoacidosis/"}
+    ],
+    "reference_ranges": ["paeds_vitals_child", "vbg", "bsl_paeds", "ketones"],
+    "created": "2026-05-31"
   }
 ]
