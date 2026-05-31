@@ -11,7 +11,7 @@
     "https://www.rch.org.au/clinicalguide/guideline_index/Gastroenteritis/",
     "https://www.rch.org.au/clinicalguide/guideline_index/Sepsis_assessment_and_management/"
   ],
-  "topics_audited": ["uti", "bronchiolitis", "croup", "asthma"],
+  "topics_audited": ["uti", "bronchiolitis", "croup", "asthma", "anaphylaxis", "fever_infant", "gastroenteritis", "sepsis"],
   "topics_in_progress": [],
   "flags": [
     {
@@ -453,6 +453,138 @@
       "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/",
       "severity": "medium",
       "proposed_fix": "Change '4 hours' to '3 hours' per RCH."
+    },
+    {
+      "q_id": "paeds-rebal26-027",
+      "file": "data/batches/paeds_obgyn_med_rebalance_2026-05-27.json",
+      "topic": "asthma",
+      "stem_snippet": "5yo, 22 kg, anaphylaxis recovering, prescribing adrenaline autoinjector at discharge.",
+      "issue": "Correct option prescribes EpiPen Jr 150 mcg for a 22 kg 5-year-old. RCH/ASCIA threshold: 150 mcg autoinjector for 10-20 kg; 300 mcg for >=20 kg. At 22 kg the child should be prescribed the 300 mcg device, not the Jr 150 mcg.",
+      "rch_says": "Weight 10-20 kg = EpiPen Jr 150 mcg; weight >=20 kg = EpiPen 300 mcg. RCH adrenaline table explicitly lists 5-10 years (30 kg) = EpiPen 300 mcg.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Anaphylaxis/",
+      "severity": "high",
+      "proposed_fix": "Change correct option to 'Adrenaline autoinjector 300 mcg (EpiPen) with action plan and training - patient is 22 kg (>=20 kg threshold).'"
+    },
+    {
+      "q_id": "paeds-resp-hy-012",
+      "file": "data/batches/paeds_acute_respiratory_hy.json",
+      "topic": "asthma",
+      "stem_snippet": "10yo on low-dose ICS, poorly controlled; next step in controller.",
+      "issue": "Correct option = step up to ICS-LABA (fluticasone-salmeterol 100/50). Australian Asthma Handbook (the AU source-of-truth for chronic asthma; RCH defers to AAH for chronic management) since 2019 recommends ICS-formoterol (single maintenance and reliever therapy, SMART) as preferred step-up in age >=12. For a 10yo it is borderline; fluticasone-salmeterol is acceptable but not the AAH-preferred regimen.",
+      "rch_says": "RCH Asthma_acute focuses on exacerbations and defers to Australian Asthma Handbook for chronic stepping. AAH prefers ICS-formoterol SMART >=12; for 6-11 years, increase ICS dose or add LABA (salmeterol or formoterol).",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Asthma_acute/",
+      "severity": "low",
+      "proposed_fix": "Acceptable as-is at age 10; consider noting in rationale that ICS-formoterol becomes preferred at age 12."
+    },
+    {
+      "q_id": "ctb-p20b-012",
+      "file": "data/batches/cross_topic_balanced_p20b_2026-05-30.json",
+      "topic": "asthma",
+      "stem_snippet": "7yo on fluticasone 50 BD, poor control, next preventer step.",
+      "issue": "Correct option doubles ICS dose. Reasonable per AAH 6-11 step-up. No RCH contradiction.",
+      "rch_says": "AAH 6-11 years: optimise low-dose ICS then either increase ICS or add LABA. Either acceptable.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Asthma_acute/",
+      "severity": "low",
+      "proposed_fix": "No fix needed - documented for completeness."
+    },
+    {
+      "q_id": "paeds-bal28-001",
+      "file": "data/batches/cross_topic_balanced_p1_2026-05-28.json",
+      "topic": "asthma",
+      "stem_snippet": "9yo on budesonide-formoterol SMART, well-controlled 12 months, step-down.",
+      "issue": "Correct option steps down dose. AAH endorses step-down after >=3 months of control. RCH-aligned.",
+      "rch_says": "AAH supports step-down after 3 months stable control.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Asthma_acute/",
+      "severity": "low",
+      "proposed_fix": "No fix needed."
+    },
+    {
+      "q_id": "paeds-022",
+      "file": "data/questions_paeds.json",
+      "topic": "anaphylaxis",
+      "stem_snippet": "6yo 22 kg, peanut anaphylaxis after cetirizine; next dose adrenaline.",
+      "issue": "Correct option repeats IM adrenaline at 'IM 220 microg' (10 mcg/kg). At 22 kg the RCH banded table gives 5-10 years (30 kg) = 0.3 mL = 300 mcg. The per-kg ANZCOR figure of 220 mcg under-doses vs RCH band.",
+      "rch_says": "RCH table: 5-10 years (30 kg) = 0.3 mL of 1:1000 = 300 mcg; >=10 kg threshold for EpiPen Jr 150 mcg, >=20 kg threshold for EpiPen 300 mcg.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Anaphylaxis/",
+      "severity": "high",
+      "proposed_fix": "Change repeat IM adrenaline dose to 300 mcg (0.3 mL of 1:1000) per RCH band for 5-10 years. Update saline bolus to '20 mL/kg = 440 mL' (already approximately correct)."
+    },
+    {
+      "q_id": "ctb-p36a-004",
+      "file": "data/batches/cross_topic_balanced_p36a_2026-05-31.json",
+      "topic": "anaphylaxis",
+      "stem_snippet": "6yo, cashew anaphylaxis, lip swelling, urticaria, hoarse voice.",
+      "issue": "Correct option states 'observe for at least 4 hours AFTER SYMPTOMS RESOLVE'. RCH specifies '4 hours from last adrenaline dose OR symptom onset' (which RCH operationalises as last adrenaline dose). 'After symptoms resolve' is longer than RCH minimum and not the RCH wording.",
+      "rch_says": "All children with anaphylaxis observed for at least 4 hours from last adrenaline dose (or symptom onset).",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Anaphylaxis/",
+      "severity": "low",
+      "proposed_fix": "Change observation anchor to '4 hours from last adrenaline dose' per RCH."
+    },
+    {
+      "q_id": "paeds-deficit-008",
+      "file": "data/batches/paeds_obgyn_l4l5_deficit_2026-05-25.json",
+      "topic": "anaphylaxis",
+      "stem_snippet": "5yo, peanut anaphylaxis, EpiPen Jr already given 5 min ago, continued wheeze.",
+      "issue": "Correct option uses per-kg formula 'IM adrenaline 0.01 mg/kg'. RCH uses an age-band table for paediatric anaphylaxis with specified mL of 1:1000. Per-kg dosing here is acceptable per ANZCOR but is not the RCH banded approach.",
+      "rch_says": "RCH paediatric IM adrenaline dosing uses banded age/weight table; 5-10 years (30 kg) = 0.3 mL of 1:1000 = 300 mcg.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Anaphylaxis/",
+      "severity": "low",
+      "proposed_fix": "Replace per-kg phrasing with RCH banded dose (300 mcg = 0.3 mL of 1:1000 for a 5-year-old)."
+    },
+    {
+      "q_id": "paeds-batch-073",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "topic": "anaphylaxis",
+      "stem_snippet": "12yo, refractory anaphylaxis after 2 IM doses, fluid 60 mL/kg, adrenaline infusion already running.",
+      "issue": "Correct option commences IV vasopressin infusion. RCH refractory anaphylaxis algorithm does not specifically recommend vasopressin; it lists IV adrenaline infusion titration, plus glucagon for beta-blocker patients. Vasopressin appears in some intensive-care rescue protocols but is not the RCH-cited next step.",
+      "rch_says": "RCH refractory anaphylaxis: titrate IV adrenaline infusion, ensure airway/breathing, fluids, consider glucagon if on beta-blockers, ICU input. Vasopressin not in RCH algorithm.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Anaphylaxis/",
+      "severity": "medium",
+      "proposed_fix": "Either reframe correct option as 'PICU/anaesthetics review for advanced rescue; consider escalating adrenaline infusion and adding noradrenaline; vasopressin is a third-line ICU option' or add explicit RCH citation that this exceeds the published algorithm. Currently presents vasopressin as if it were RCH-standard."
+    },
+    {
+      "q_id": "paeds-allergy-derm-008",
+      "file": "data/batches/paeds_allergy_dermatology.json",
+      "topic": "anaphylaxis",
+      "stem_snippet": "3yo failed cow's milk challenge with urticaria only - plan includes EpiPen Jr.",
+      "issue": "Correct option prescribes EpiPen Jr after a failed challenge with urticaria-only reaction. ASCIA (and by extension RCH) recommends adrenaline autoinjectors for confirmed anaphylaxis or high-risk food allergy with asthma; urticaria-only on a single challenge does not meet anaphylaxis criteria, and routine EpiPen prescription after non-anaphylactic reaction is debated.",
+      "rch_says": "Adrenaline autoinjectors are for patients at risk of anaphylaxis. Isolated urticaria without respiratory/CV involvement is not anaphylaxis.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Anaphylaxis/",
+      "severity": "low",
+      "proposed_fix": "Either upgrade reaction severity in stem (add wheeze or vomiting+wheeze) to justify AAI, or change correct option to 'ASCIA Action Plan for Allergic Reactions (non-anaphylaxis) and antihistamine, with AAI only if risk factors emerge'."
+    },
+    {
+      "q_id": "paeds-deficit-012",
+      "file": "data/batches/paeds_obgyn_l4l5_deficit_2026-05-25.json",
+      "topic": "fever_infant",
+      "stem_snippet": "5-week-old, fever, full and tense fontanelle (meningitis features).",
+      "issue": "Correct option = IV cefotaxime plus ampicillin at meningitic doses. This is the AAP/US regimen. The AU pattern (RCH Febrile child + Therapeutic Guidelines + AMH) for an infant 1-3 months with meningitic features is benzylpenicillin (or ampicillin) PLUS gentamicin PLUS cefotaxime; pure cefotaxime+ampicillin omits the aminoglycoside which AU guidelines include for sepsis cover and Listeria/enterococcal coverage.",
+      "rch_says": "Empirical antibiotics for febrile infant 1-3 months guided by AU local protocols. RCH defers to Therapeutic Guidelines / local antimicrobial guidelines, which specify benzylpenicillin + gentamicin (+ cefotaxime if meningitis suspected) at this age.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Febrile_child/",
+      "severity": "medium",
+      "proposed_fix": "Change correct option to 'IV benzylpenicillin (or amoxicillin/ampicillin) PLUS gentamicin PLUS cefotaxime at meningitic doses' per AU/TG pattern. Add aciclovir if vesicles or focal seizure features per RCH HSV cover guidance."
+    },
+    {
+      "q_id": "paeds-id-002",
+      "file": "data/batches/paeds_infectious_diseases_depth.json",
+      "topic": "fever_infant",
+      "stem_snippet": "5-week-old, single fever 38.4, unsettled. Empirical regimen post-LP.",
+      "issue": "Correct option = 'IV ampicillin 50 mg/kg plus IV cefotaxime 50 mg/kg'. This is the AAP/Boston-criteria regimen. AU pattern is benzylpenicillin (or ampicillin) PLUS gentamicin (+/- cefotaxime if meningitis). Omitting gentamicin loses Gram-negative coverage that AU guidelines favour for this age band.",
+      "rch_says": "AU TG/AMH regimen for 1-3 mo febrile infant: benzylpenicillin + gentamicin; add cefotaxime if meningitis features. Cefotaxime + ampicillin alone is the US AAP regimen.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Febrile_child/",
+      "severity": "medium",
+      "proposed_fix": "Change correct option to AU regimen 'IV benzylpenicillin (or amoxicillin) PLUS gentamicin; add cefotaxime if meningitis suspected'. Keep current option as a US-derived distractor."
+    },
+    {
+      "q_id": "paeds-bal28-005",
+      "file": "data/batches/cross_topic_balanced_p1_2026-05-28.json",
+      "topic": "fever_infant",
+      "stem_snippet": "6-week-old, BRUE-like event (pale, limp 20s during feed, now normal).",
+      "issue": "Correct option observes 4 hours then discharge. RCH BRUE pathway for low-risk BRUE supports brief monitored observation, but at 6 weeks RCH considers the infant higher-risk (age <2 months is a higher-risk feature in AAP and AU guidance). 4-hour discharge for 6-week-old BRUE may be too short per AU practice.",
+      "rch_says": "RCH does not have a dedicated BRUE guideline; AAP/Australian practice would admit infants <2 months for observation after BRUE rather than 4-hour discharge.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Febrile_child/",
+      "severity": "low",
+      "proposed_fix": "Lengthen observation to overnight admission given age <8 weeks, or add explicit low-risk BRUE criteria to stem to justify 4-hour discharge."
     }
   ]
 }
