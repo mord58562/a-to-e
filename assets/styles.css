@@ -43,24 +43,37 @@
   --warn:        #e8b34a;
   --warn-bg:     rgba(232, 179, 74, 0.10);
 
-  /* Type stack. IBM Plex is loaded in the document <head> - actually
-   * reach for it here instead of falling through to system defaults.
-   * Plex Sans for UI, Plex Serif for display + the "(+ glucose)" gag
-   * + the house-quote toast (the site's editorial voice), Plex Mono
-   * for any digits that update in place. */
-  --sans:        "IBM Plex Sans", -apple-system, BlinkMacSystemFont,
-                 "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-  --display:     "IBM Plex Serif", "IBM Plex Sans", Georgia,
+  /* Type stack (overhaul 2026-06-01). Public Sans for everything
+   * (USWDS-built institutional sans, single-family with weight doing
+   * the work - the corrective for the Plex Serif AI tell). Source
+   * Serif 4 for the rare editorial moment (the opening/closing quote
+   * glyphs in the House toast). JetBrains Mono ONLY for literal code
+   * (the paste-box <code> element). Tabular numerals are enabled
+   * site-wide via font-feature-settings on html below - the body sans
+   * carries them, so we no longer reach for mono to align digits. */
+  --sans:        "Public Sans", -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", Helvetica, Arial, sans-serif;
+  --display:     "Public Sans", -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", Helvetica, Arial, sans-serif;
+  --serif:       "Source Serif 4", "Source Serif Pro", Georgia,
                  "Times New Roman", serif;
-  --serif:       "IBM Plex Serif", Georgia, "Times New Roman", serif;
-  --mono:        "IBM Plex Mono", ui-monospace, "SF Mono", Menlo,
+  --mono:        "JetBrains Mono", ui-monospace, "SF Mono", Menlo,
                  Consolas, monospace;
 
   /* Three-radius system. Pills/badges -> chip, controls/options -> tight,
-   * cards/modals -> soft. Stops the radius-soup of 6/7/8/12/14. */
+   * cards/modals -> soft. Stops the radius-soup of 6/7/8/12/14.
+   * --r-soft moved from 10px to 8px on 2026-06-01: 10px is the shadcn
+   * default and reads as AI-template; 8px pairs better with current
+   * macOS/iOS reference radii and reads as deliberate. */
   --r-chip:      999px;
   --r-tight:     4px;
-  --r-soft:      10px;
+  --r-soft:      8px;
+
+  /* Easing tokens (overhaul 2026-06-01). Single material-standard ease
+   * and two durations - replace every component-specific cubic-bezier. */
+  --ease:        cubic-bezier(0.2, 0, 0, 1);
+  --dur-fast:    120ms;
+  --dur-medium:  200ms;
 
   /* Two-tier secondary ink between body and faint, so headings, body,
    * label-secondary, and faint each occupy a deliberate level. */
