@@ -777,11 +777,18 @@ body:has(#quizTopbar[hidden]) .reading {
 }
 
 .stem {
-  font-family: var(--serif);
-  font-size: 17px;
-  line-height: 1.7;
+  /* Was --serif (Plex Serif then Source Serif 4) - Rob flagged the
+   * serif body as Wix-template / AI default. Move to sans body so
+   * the entire clinical prose surface is one institutional family.
+   * white-space: pre-line preserves the \n\n paragraph breaks added
+   * by the 2026-06-01 paragraphing pass without needing multiple
+   * <p> elements. */
+  font-family: var(--sans);
+  font-size: 16.5px;
+  line-height: 1.65;
   color: var(--ink);
   margin: 4px 0 16px;
+  white-space: pre-line;
 }
 .lead-in {
   font-size: 15px;
