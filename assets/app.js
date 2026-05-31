@@ -1255,25 +1255,6 @@
     // any callers that re-show it later still find it.
     const greet = document.getElementById("homeGreeting");
     if (greet) { greet.hidden = true; greet.textContent = ""; }
-    // Randomise the closing well-wish across the available languages.
-    const luck = document.getElementById("luckPhrase");
-    if (luck) {
-      const phrases = [
-        "Good luck.",
-        "Dī bene vertant.",
-        "Τύχῃ ἀγαθῇ.",
-        "सौभाग्यम्।",
-        "Ни пýха ни перá.",
-        "Sretno ti bilo.",
-        "Kila la kheri.",
-        "بالتوفيق.",
-        "Gutpela lak.",
-        "Gōd wyrd sīe þē.",
-        "සභ ගමන්."
-      ];
-      luck.textContent = phrases[Math.floor(Math.random() * phrases.length)];
-    }
-
     applySettingsToOptions();
 
     document.querySelectorAll('.setup-options:not(.multi)').forEach(row => {
