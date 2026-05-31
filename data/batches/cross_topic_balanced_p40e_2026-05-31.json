@@ -1,0 +1,447 @@
+[
+  {
+    "id": "ctb-p40-021",
+    "topic": "Psychiatry",
+    "subtopic": "Pharmacology",
+    "subtopic_detail": "Clozapine restart after missed doses",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "clozapine",
+      "retitration"
+    ],
+    "stem": "A 38-year-old man with treatment-resistant schizophrenia on clozapine 450 mg at night for 5 years was admitted to a general ward after a road traffic collision. He has been nil by mouth for 65 hours pending surgery and has not received any clozapine. Surgery is now postponed for 24 hours and oral intake can resume. He has had no agitation or psychotic relapse, his ECG is normal and he has a normal white cell count.",
+    "data_table": {
+      "Vital signs": "Temp 36.7 degrees Celsius, HR 84, BP 124/76 mmHg",
+      "Examination": "Calm, oriented, no psychotic symptoms",
+      "Investigations": "White cell count 6.4, neutrophils 4.1, ECG normal sinus rhythm, troponin normal, no QTc prolongation"
+    },
+    "lead_in": "What is the single most appropriate clozapine prescription tonight?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Restart clozapine at his usual maintenance dose of 450 mg tonight only",
+        "correct": false,
+        "rationale": "After more than 48 hours off clozapine, tolerance is lost and restarting at the previous full dose risks severe orthostatic hypotension, sedation and respiratory depression. (Source: Clopine Connect / Australian Clozapine Treatment Guidelines)",
+        "source_refs": [
+          "Clopine Connect Prescribing Information"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Restart clozapine at 12.5 mg tonight with day-by-day retitration as new",
+        "correct": true,
+        "rationale": "After 48 hours or more of missed clozapine, retitration is mandatory from a low test dose (12.5 to 25 mg) with day-by-day escalation, as if starting clozapine from scratch. (Source: Clopine Connect Prescribing Information)",
+        "source_refs": [
+          "Clopine Connect Prescribing Information"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Give clozapine 225 mg tonight as a half-dose then 450 mg from tomorrow",
+        "correct": false,
+        "rationale": "Halving the dose for one night is insufficient to manage lost tolerance; the patient remains at risk of hypotension and over-sedation with any dose larger than the test dose. (Source: Clopine Connect Prescribing Information)",
+        "source_refs": [
+          "Clopine Connect Prescribing Information"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Switch to intramuscular olanzapine pamoate 300 mg as a temporary bridge",
+        "correct": false,
+        "rationale": "Long-acting olanzapine is not used as a bridge in clozapine-eligible patients and carries its own post-injection syndrome risk requiring 3 hours of supervised observation. (Source: AMH: Olanzapine)",
+        "source_refs": [
+          "AMH: Olanzapine"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Restart clozapine at 200 mg tonight without using a test-dose initial step",
+        "correct": false,
+        "rationale": "Skipping the test dose at restart bypasses the safety check for hypotension and over-sedation in someone who has lost tolerance; Australian product information mandates test-dose retitration after 48 hours. (Source: Clopine Connect Prescribing Information)",
+        "source_refs": [
+          "Clopine Connect Prescribing Information"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Clozapine tolerance to hypotension, sedation and respiratory depression is lost after 48 hours without dosing. Australian product information and Clopine Connect mandate retitration as if commencing from scratch: a 12.5 to 25 mg test dose followed by daily incremental increases (50 mg, 100 mg etc.) targeting the previous maintenance dose. Concurrent enzyme inducers (smoking, carbamazepine) and inhibitors (ciprofloxacin, fluvoxamine) affect plasma levels significantly. Re-baseline FBC and ECG before re-initiation when restarting after prolonged interruption.",
+      "key_points": [
+        "More than 48 hours off clozapine = retitrate from 12.5 mg test dose",
+        "Tolerance loss applies to hypotension, sedation and respiratory effects",
+        "Re-baseline FBC and ECG before extended re-initiation"
+      ],
+      "pearls": "Smoking cessation during hospitalisation can double clozapine plasma levels because tobacco induces CYP1A2; a clozapine plasma level 2 weeks after admission is mandatory when a smoker is admitted to a non-smoking ward."
+    },
+    "sources": [
+      {
+        "label": "Clopine Connect Prescribing Information",
+        "url": "https://www.clopineconnect.com.au/"
+      },
+      {
+        "label": "AMH: Olanzapine",
+        "url": "https://amhonline.amh.net.au/"
+      }
+    ],
+    "reference_ranges": [
+      "fbc"
+    ],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p40-022",
+    "topic": "Psychiatry",
+    "subtopic": "Legal/ethics",
+    "subtopic_detail": "Capacity and the Mental Health Act",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "capacity",
+      "Mental Health Act"
+    ],
+    "stem": "A 28-year-old woman with severe major depressive disorder and active suicidal ideation refuses oral fluids and food on the medical ward, where she was admitted after a paracetamol overdose. She states she wants to die. She understands the proposed plan of IV fluids and N-acetylcysteine but says it does not matter because nothing will work. There are no psychotic features. She is calm and engaging.",
+    "data_table": {
+      "Examination": "Affect flat, mood subjectively low, no psychotic features, suicidal ideation with intent, cognitively intact on MMSE",
+      "Investigations": "Paracetamol level above nomogram, ALT 240 U/L, INR 1.3, lactate 1.6 mmol/L"
+    },
+    "lead_in": "What is the single most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Accept her refusal of treatment as competent and palliate symptoms",
+        "correct": false,
+        "rationale": "Severe depression with active suicidality compromises capacity to refuse life-saving treatment because the underlying disorder distorts the appreciation and weighing components of capacity, even if the patient can recite facts. (Source: Mental Health Act NSW 2007 / Vic 2014 explanatory material)",
+        "source_refs": [
+          "Mental Health Act 2014 (Victoria)"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Obtain a Supreme Court order prior to commencing any form of treatment",
+        "correct": false,
+        "rationale": "Supreme Court applications are reserved for complex enduring incapacity decisions or when the Mental Health Act does not apply; in acute mental-illness-driven refusal the Act is the correct legal mechanism. (Source: Mental Health Act 2014 (Victoria))",
+        "source_refs": [
+          "Mental Health Act 2014 (Victoria)"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Detain under the relevant state Mental Health Act and treat actively",
+        "correct": true,
+        "rationale": "Severe depression with intent constitutes a mental illness for which involuntary detention is justified when refusal of treatment would lead to serious harm; this allows life-saving NAC and psychiatric stabilisation. (Source: Mental Health Act 2014 (Victoria))",
+        "source_refs": [
+          "Mental Health Act 2014 (Victoria)"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Apply for tribunal guardianship before initiating any specific treatment",
+        "correct": false,
+        "rationale": "Guardianship is appropriate for enduring incapacity decisions and personal/financial matters; it is too slow for life-threatening paracetamol toxicity and is not the right mechanism for acute mental-illness-related refusal. (Source: Mental Health Act 2014 (Victoria))",
+        "source_refs": [
+          "Mental Health Act 2014 (Victoria)"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Give her 48 hours to reconsider with capacity reassessed every shift",
+        "correct": false,
+        "rationale": "Delaying NAC beyond 8 hours from ingestion sharply increases hepatic failure risk; capacity in acute suicidal depression rarely fluctuates back within hours, so delay is dangerous. (Source: Therapeutic Guidelines: Toxicology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Toxicology"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Capacity assessment requires the patient to understand, retain, weigh and communicate the decision. In severe depression with active suicidality, the depressive cognition (nihilism, hopelessness, distorted self-worth) typically impairs the weighing component, rendering treatment refusal non-competent. Australian state Mental Health Acts allow involuntary detention and treatment for mental illness when there is significant risk to the person or others. The Act covers psychiatric treatment; for related life-saving medical treatment, the Act, common law of necessity, or guardianship law may be needed depending on jurisdiction. Senior psychiatric and medical input is essential.",
+      "key_points": [
+        "Severe depression often impairs the weighing component of capacity",
+        "State Mental Health Acts allow involuntary treatment when refusal causes serious harm",
+        "Paracetamol toxicity is time-critical: do not delay NAC waiting on legal process"
+      ],
+      "pearls": "Under the Victorian Mental Health and Wellbeing Act 2022 and equivalent state legislation, the criteria for compulsory treatment include the presence of mental illness AND risk of serious harm AND no less-restrictive alternative."
+    },
+    "sources": [
+      {
+        "label": "Mental Health Act 2014 (Victoria)",
+        "url": "https://www.legislation.vic.gov.au/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Toxicology",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "lfts",
+      "coags"
+    ],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p40-023",
+    "topic": "Medicine",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "COPD exacerbation - NIV criteria",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "COPD",
+      "NIV"
+    ],
+    "stem": "A 72-year-old woman with severe COPD (FEV1 38% predicted) is brought in with 3 days of worsening dyspnoea, increased purulent sputum and confusion that started this morning. She has been on tiotropium and combined inhaled corticosteroid plus long-acting beta agonist. She has been treated for two exacerbations in the past year. Controlled oxygen at 28% has been started with target SpO2 88 to 92%.",
+    "data_table": {
+      "Vital signs": "Temp 37.4 degrees Celsius, HR 112, RR 30, SpO2 89% on 28% FiO2 venturi, BP 142/86 mmHg, GCS 14 (E4 V4 M6)",
+      "Examination": "Use of accessory muscles, prolonged expiratory phase, scattered wheeze, no peripheral oedema",
+      "Investigations": "ABG on 28% O2: pH 7.27, PaCO2 78 mmHg, PaO2 58 mmHg, HCO3 30 mmol/L; chest X-ray hyperinflation, no consolidation or pneumothorax"
+    },
+    "lead_in": "What is the single most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Administer intravenous aminophylline as adjunct bronchodilation therapy now",
+        "correct": false,
+        "rationale": "Aminophylline has marginal additional benefit in acute COPD exacerbation, a narrow therapeutic index and significant cardiac toxicity, and is no longer routinely recommended. (Source: TSANZ COPD-X)",
+        "source_refs": [
+          "TSANZ COPD-X"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Intubate immediately and transfer to the intensive care unit for ventilation",
+        "correct": false,
+        "rationale": "Intubation is reserved for failure of NIV, GCS less than 8, severe haemodynamic instability or contraindication to NIV; mild confusion alone is not such a contraindication when NIV is trialled. (Source: TSANZ COPD-X)",
+        "source_refs": [
+          "TSANZ COPD-X"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Increase oxygen flow to 8 L per minute via a Hudson mask to correct hypoxia",
+        "correct": false,
+        "rationale": "High-flow uncontrolled oxygen in hypercapnic COPD worsens CO2 retention and acidosis; targeted SpO2 88 to 92% via controlled delivery is the safer approach. (Source: TSANZ COPD-X)",
+        "source_refs": [
+          "TSANZ COPD-X"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence non-invasive ventilation (BiPAP) with controlled oxygen titration",
+        "correct": true,
+        "rationale": "Acute hypercapnic respiratory failure (pH 7.25 to 7.35 with PaCO2 above 45 mmHg) in COPD exacerbation that persists despite controlled oxygen and bronchodilators is a clear indication for NIV. (Source: TSANZ COPD-X)",
+        "source_refs": [
+          "TSANZ COPD-X"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Switch to a heliox 70:30 oxygen mixture via a non-rebreather face mask",
+        "correct": false,
+        "rationale": "Heliox is not routinely used in acute COPD exacerbation; it does not address hypercapnic acidosis and is not a substitute for NIV. (Source: TSANZ COPD-X)",
+        "source_refs": [
+          "TSANZ COPD-X"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "NIV is first-line ventilatory support for acute hypercapnic exacerbations of COPD with pH 7.25 to 7.35 and PaCO2 above 45 mmHg that persist despite controlled oxygen, bronchodilators and steroids. NIV reduces intubation and mortality, with contraindications including GCS less than 8, vomiting, facial trauma and haemodynamic instability. Failure within 1 to 2 hours triggers intubation. Standard medical therapy includes nebulised salbutamol and ipratropium, prednisolone 30 to 50 mg orally for 5 days, and antibiotics if sputum is purulent.",
+      "key_points": [
+        "NIV is indicated for pH 7.25 to 7.35 with PaCO2 above 45 mmHg despite controlled oxygen",
+        "Controlled oxygen targets SpO2 88 to 92% in COPD",
+        "Escalate to intubation if NIV fails or contraindicated"
+      ],
+      "pearls": "COPD-X recommends prednisolone 30 to 50 mg orally for 5 days in acute exacerbations; longer courses confer no additional benefit and increase steroid side effects."
+    },
+    "sources": [
+      {
+        "label": "TSANZ COPD-X",
+        "url": "https://copdx.org.au/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Respiratory",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "abg"
+    ],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p40-024",
+    "topic": "Medicine",
+    "subtopic": "Cardiology",
+    "subtopic_detail": "HFrEF - SGLT2 inhibitor addition",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "HFrEF",
+      "SGLT2"
+    ],
+    "stem": "A 64-year-old man with ischaemic cardiomyopathy (LVEF 28%) attends his cardiologist for routine review. He is in sinus rhythm, NYHA class II. He is on perindopril 10 mg daily, bisoprolol 10 mg daily, spironolactone 25 mg daily and frusemide 40 mg daily. eGFR is 62 mL/min/1.73 m2. He has no diabetes. He has been stable for 6 months and is asking what else can be done.",
+    "data_table": {
+      "Vital signs": "BP 118/72 mmHg, HR 64, RR 14",
+      "Examination": "JVP not raised, no peripheral oedema, chest clear, no third heart sound today",
+      "Investigations": "Hb 138, K 4.4, Na 140, urea 7.2, creatinine 110, NT-proBNP 1100 ng/L"
+    },
+    "lead_in": "What is the single most appropriate next addition to his guideline-directed therapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Increase frusemide to 80 mg orally twice daily as the next escalation",
+        "correct": false,
+        "rationale": "He is euvolaemic with no oedema and no orthopnoea; escalating diuretic worsens electrolytes and renal function without prognostic benefit. (Source: NHFA/CSANZ HF Guidelines 2022)",
+        "source_refs": [
+          "NHFA/CSANZ HF Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Add digoxin 125 micrograms orally once daily to his existing regimen",
+        "correct": false,
+        "rationale": "Digoxin reduces HF hospitalisations in symptomatic patients on optimal GDMT but does not reduce mortality and is reserved for ongoing symptoms despite all four pillars. (Source: NHFA/CSANZ HF Guidelines 2022)",
+        "source_refs": [
+          "NHFA/CSANZ HF Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Add ivabradine 5 mg orally twice daily to his existing regimen now",
+        "correct": false,
+        "rationale": "Ivabradine is added in sinus rhythm patients with resting HR above 70 despite maximal beta blocker; this patient has HR 64 so does not meet the heart-rate criterion. (Source: NHFA/CSANZ HF Guidelines 2022)",
+        "source_refs": [
+          "NHFA/CSANZ HF Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Add amlodipine 5 mg orally once daily to his existing regimen now",
+        "correct": false,
+        "rationale": "Amlodipine is acceptable for blood pressure or angina in HFrEF but does not improve HF outcomes; it is not the next pillar of HFrEF GDMT. (Source: NHFA/CSANZ HF Guidelines 2022)",
+        "source_refs": [
+          "NHFA/CSANZ HF Guidelines 2022"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Add dapagliflozin 10 mg orally once daily to the existing regimen",
+        "correct": true,
+        "rationale": "SGLT2 inhibitors (dapagliflozin or empagliflozin) reduce HF hospitalisation and cardiovascular death in HFrEF regardless of diabetes status and are now the fourth pillar of GDMT after RAAS inhibitor, beta blocker and MRA. (Source: NHFA/CSANZ HF Guidelines 2022)",
+        "source_refs": [
+          "NHFA/CSANZ HF Guidelines 2022"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "HFrEF GDMT is built on four pillars: an ACE inhibitor or ARB (or sacubitril/valsartan), a beta blocker, an MRA, and an SGLT2 inhibitor (dapagliflozin or empagliflozin). DAPA-HF and EMPEROR-Reduced established benefit independent of diabetes status. Sacubitril/valsartan substitutes the ACE inhibitor in suitable patients (typically with NT-proBNP elevated or recent HF hospitalisation). Ivabradine adds when sinus HR remains above 70 on maximal beta blocker. Diuretics control congestion but do not improve prognosis.",
+      "key_points": [
+        "Four pillars: RAAS inhibitor (or sacubitril/valsartan), beta blocker, MRA, SGLT2 inhibitor",
+        "SGLT2 inhibitor benefit is independent of diabetes status in HFrEF",
+        "Diuretics relieve symptoms but do not change mortality"
+      ],
+      "pearls": "DAPA-HF showed dapagliflozin reduced the composite of CV death and HF hospitalisation by around 26% in non-diabetic HFrEF, with NNT of about 21 over 18 months."
+    },
+    "sources": [
+      {
+        "label": "NHFA/CSANZ HF Guidelines 2022",
+        "url": "https://www.heartfoundation.org.au/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Cardiovascular",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "uec"
+    ],
+    "created": "2026-05-31"
+  },
+  {
+    "id": "ctb-p40-025",
+    "topic": "Medicine",
+    "subtopic": "Cardiology",
+    "subtopic_detail": "AF stroke prevention",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "AF",
+      "DOAC"
+    ],
+    "stem": "A 76-year-old woman is found to have asymptomatic atrial fibrillation on a routine ECG. She has a history of hypertension on amlodipine and type 2 diabetes on metformin. She has no prior stroke or TIA. eGFR is 64 mL/min/1.73 m2. She has no bleeding history.",
+    "data_table": {
+      "Vital signs": "BP 134/82 mmHg, HR 78, irregular, RR 16",
+      "Examination": "No murmurs, no heart failure, no carotid bruit, no focal neurology",
+      "Investigations": "ECG atrial fibrillation rate 78, FBC normal, K 4.3, creatinine 86, HbA1c 7.1%"
+    },
+    "lead_in": "What is the single most appropriate stroke-prevention therapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Apixaban 5 mg orally twice daily as oral anticoagulation",
+        "correct": true,
+        "rationale": "Her CHA2DS2-VA score is 4 (age, hypertension, diabetes), well above the threshold of 2 for oral anticoagulation; DOACs are first-line in non-valvular AF and apixaban is suitable with eGFR 64. (Source: NHFA/CSANZ AF Guidelines 2023)",
+        "source_refs": [
+          "NHFA/CSANZ AF Guidelines 2023"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Aspirin 100 mg orally once daily as oral antithrombotic",
+        "correct": false,
+        "rationale": "Aspirin is not recommended for stroke prevention in AF in current Australian guidelines; it is inferior to anticoagulation and offers little or no benefit at her risk. (Source: NHFA/CSANZ AF Guidelines 2023)",
+        "source_refs": [
+          "NHFA/CSANZ AF Guidelines 2023"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Clopidogrel 75 mg orally once daily as oral antithrombotic",
+        "correct": false,
+        "rationale": "Antiplatelet therapy alone is inferior to anticoagulation for AF stroke prevention; clopidogrel is not first-line and adds bleeding risk without matching DOAC efficacy. (Source: NHFA/CSANZ AF Guidelines 2023)",
+        "source_refs": [
+          "NHFA/CSANZ AF Guidelines 2023"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Warfarin orally with INR target 2.0 to 3.0 as anticoagulation",
+        "correct": false,
+        "rationale": "Warfarin is now reserved for AF with mechanical valves, moderate-severe mitral stenosis, or DOAC contraindication; DOACs are preferred for non-valvular AF in eligible patients. (Source: NHFA/CSANZ AF Guidelines 2023)",
+        "source_refs": [
+          "NHFA/CSANZ AF Guidelines 2023"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "No antithrombotic therapy with annual cardiovascular review",
+        "correct": false,
+        "rationale": "Withholding anticoagulation in non-valvular AF with CHA2DS2-VA of 4 carries an unacceptably high annual stroke risk (around 4 to 5%) and is not appropriate. (Source: NHFA/CSANZ AF Guidelines 2023)",
+        "source_refs": [
+          "NHFA/CSANZ AF Guidelines 2023"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "The 2023 NHFA/CSANZ AF guideline uses CHA2DS2-VA (sex removed) to assess stroke risk in non-valvular AF; a score of 2 or more is the threshold for oral anticoagulation. DOACs are first-line, with warfarin reserved for mechanical valves, moderate-severe mitral stenosis or DOAC contraindication. DOAC dose reduction follows specific drug criteria (age, weight, renal function, interactions). Antiplatelet therapy is not recommended for AF stroke prevention.",
+      "key_points": [
+        "CHA2DS2-VA replaces CHA2DS2-VASc in current Australian guidance",
+        "DOACs first-line; warfarin reserved for valvular AF and DOAC contraindications",
+        "Antiplatelets are not effective AF stroke prevention"
+      ],
+      "pearls": "Apixaban dose reduction to 2.5 mg twice daily requires any two of: age 80 or more, weight 60 kg or less, creatinine 133 micromol/L or more; this patient meets only one (age) so receives the full 5 mg twice daily dose."
+    },
+    "sources": [
+      {
+        "label": "NHFA/CSANZ AF Guidelines 2023",
+        "url": "https://www.heartfoundation.org.au/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Cardiovascular",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "uec"
+    ],
+    "created": "2026-05-31"
+  }
+]
