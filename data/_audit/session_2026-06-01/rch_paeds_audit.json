@@ -585,6 +585,105 @@
       "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Febrile_child/",
       "severity": "low",
       "proposed_fix": "Lengthen observation to overnight admission given age <8 weeks, or add explicit low-risk BRUE criteria to stem to justify 4-hour discharge."
+    },
+    {
+      "q_id": "paeds-008",
+      "file": "data/questions_paeds.json",
+      "topic": "gastroenteritis",
+      "stem_snippet": "2yo 12 kg, watery diarrhoea + vomiting, NG ORS at 300 mL/hr for 4 hours = 25 mL/kg/hr.",
+      "issue": "Correct option prescribes NG ORS at 300 mL/hr (= 25 mL/kg/hr) for 4 hours. This is the rapid-NG regimen (Powell et al), which is AU practice for selected dehydrated children, but RCH Gastroenteritis CPG explicitly states 'aim for 10 mL/kg/hr of ORS'. RCH does not detail a specific rapid-NG rate beyond 'rapid or slow NG rehydration may be appropriate' without specifying 25 mL/kg/hr.",
+      "rch_says": "RCH ORS target 10 mL/kg/hr. Rapid NG rehydration mentioned but rate not specified in the CPG.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Gastroenteritis/",
+      "severity": "low",
+      "proposed_fix": "Either reduce target rate to 10-15 mL/kg/hr standard NG/ORS aligned to RCH 'aim for 10 mL/kg/hr', or add a stem element justifying rapid NG (e.g. failure of standard ORS rate). Reference the RCH Gastroenteritis CPG explicitly in rationale."
+    },
+    {
+      "q_id": "paeds-acute-hy-004",
+      "file": "data/batches/paeds_acute_assessment_hy.json",
+      "topic": "gastroenteritis",
+      "stem_snippet": "2yo 12 kg, 5-6% dehydration, vomits with sips of water.",
+      "issue": "Correct option = NG ORS at 25 mL/kg/hr for 4 hours. Same as paeds-008: the rapid-NG rate is faster than the RCH-cited 10 mL/kg/hr ORS target.",
+      "rch_says": "RCH ORS target 10 mL/kg/hr; rapid NG rate not specified in CPG.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Gastroenteritis/",
+      "severity": "low",
+      "proposed_fix": "Align rate to RCH 10 mL/kg/hr standard, or explicitly justify rapid-NG choice in rationale and add proviso (failure of standard ORS, persistent vomiting refractory to ondansetron)."
+    },
+    {
+      "q_id": "ctb-p33-007",
+      "file": "data/batches/cross_topic_balanced_p33b_2026-05-30.json",
+      "topic": "gastroenteritis",
+      "stem_snippet": "14-month-old, mild dehydration, accepting sips; rehydration plan.",
+      "issue": "Correct option = ORS 50 mL/kg over 4 hours (= 12.5 mL/kg/hr). RCH says aim for 10 mL/kg/hr; this is just slightly higher but acceptable for the 'replace deficit over 4 hours' regimen. No real RCH conflict.",
+      "rch_says": "10 mL/kg/hr ORS; rapid-NG protocols permitted if standard fails.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Gastroenteritis/",
+      "severity": "low",
+      "proposed_fix": "Acceptable as-is; minor note in rationale that 10-12.5 mL/kg/hr both fall within RCH 'aim for 10 mL/kg/hr'."
+    },
+    {
+      "q_id": "ctb-p20b-011",
+      "file": "data/batches/cross_topic_balanced_p20b_2026-05-30.json",
+      "topic": "gastroenteritis",
+      "stem_snippet": "22-month-old, watery diarrhoea + vomiting; rehydration choice.",
+      "issue": "Correct option = ORS 50 mL/kg over 4 hours. No ondansetron offered despite recent vomiting (last vomit 90 min ago). RCH endorses ondansetron in >6 months with persistent vomiting to support ORS. Minor omission rather than contradiction.",
+      "rch_says": "Ondansetron PO/wafer for >6 months with persistent nausea/vomiting to support hydration therapy. 8-15 kg = 2 mg; 15-30 kg = 4 mg.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Gastroenteritis/",
+      "severity": "low",
+      "proposed_fix": "Add single dose oral ondansetron 2 mg (weight-banded) before/during ORS trial."
+    },
+    {
+      "q_id": "paeds-batch-highyield-004",
+      "file": "data/batches/paeds_user_paste_emergency_2026-05-20.json",
+      "topic": "sepsis",
+      "stem_snippet": "3yo, fever, lethargy, vomit, mottled, non-blanching purpuric rash; ambulance arrival.",
+      "issue": "Correct option = 'Commence peripheral IV adrenaline infusion' as the single best next intervention. RCH paediatric sepsis pathway puts IV antibiotics (ceftriaxone) and fluid resuscitation in the first hour BEFORE inotropes; inotropes are reserved for fluid-refractory shock after >=40 mL/kg. Going straight to adrenaline as the single next step omits the time-critical antibiotic + initial bolus.",
+      "rch_says": "Sepsis pathway: blood cultures, IV antibiotics within 60 minutes, 10-20 mL/kg fluid bolus reassessed after each; inotropes only after fluid-refractory shock (typically >=40 mL/kg).",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Sepsis_assessment_and_management/",
+      "severity": "high",
+      "proposed_fix": "Change correct option to 'Obtain IV/IO access, take blood cultures, give IV ceftriaxone 100 mg/kg and 20 mL/kg normal saline bolus within the first hour; reassess and consider inotropes if fluid-refractory'. Move adrenaline option to a later-step distractor."
+    },
+    {
+      "q_id": "ctb-p30-006",
+      "file": "data/batches/cross_topic_balanced_p30b_2026-05-30.json",
+      "topic": "sepsis",
+      "stem_snippet": "14yo girl, drowsy, fever 8hr, severe headache, non-blanching petechial rash; GP regional clinic.",
+      "issue": "Correct option = IM benzylpenicillin 60 mg/kg. AU/RCH preference is IV (or IO) benzylpenicillin whenever venous access can be obtained; IM is the fallback when no access. The option doesn't mention attempting IV first.",
+      "rch_says": "Pre-retrieval benzylpenicillin for suspected meningococcaemia: IV/IO preferred; IM acceptable only if no access.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Sepsis_assessment_and_management/",
+      "severity": "low",
+      "proposed_fix": "Reword to 'IV benzylpenicillin 60 mg/kg if access obtainable, otherwise IM' and add a 20 mL/kg saline bolus alongside."
+    },
+    {
+      "q_id": "paeds-acute-hy-011",
+      "file": "data/batches/paeds_acute_assessment_hy.json",
+      "topic": "sepsis",
+      "stem_snippet": "6yo 22 kg, septic shock, received 3 x 20 mL/kg = 60 mL/kg fluid; next step.",
+      "issue": "Correct option commences peripheral adrenaline infusion. RCH and AU sepsis pathway escalate to inotropes after fluid-refractory shock (~40 mL/kg). 60 mL/kg without inotrope start is over-resuscitated; the answer is right, the stem could call inotrope earlier. Minor.",
+      "rch_says": "After 40 mL/kg fluid without response, escalate to inotrope (peripheral adrenaline acceptable per RCH).",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Sepsis_assessment_and_management/",
+      "severity": "low",
+      "proposed_fix": "Trim the third 20 mL/kg bolus from the stem (or reframe as 'after 40 mL/kg fluid') so inotrope decision aligns with RCH 40 mL/kg threshold rather than 60 mL/kg."
+    },
+    {
+      "q_id": "creative-reasoning-017-au-cutoff-sepsis-paeds",
+      "file": "data/batches/creative_reasoning_types_2026-05-25.json",
+      "topic": "sepsis",
+      "stem_snippet": "3yo 14 kg, suspected meningococcaemia at John Hunter ED; first-hour bundle.",
+      "issue": "Correct option uses 20 mL/kg as initial bolus, citing NSW Health Paediatric Sepsis Pathway. RCH and the most recent NSW paediatric sepsis pathway (2023-2024 update) actually recommend 10-20 mL/kg per bolus with reassessment after each, given post-FEAST evidence; the 20 mL/kg up-front number is still acceptable but newer practice favours 10 mL/kg with rapid reassessment. Also the ceftriaxone dose for suspected meningococcaemia is 100 mg/kg (max 4 g) under AU AMH; the option states 50 mg/kg.",
+      "rch_says": "Sepsis bolus 10-20 mL/kg, reassess after each. Ceftriaxone meningitis/meningococcaemia dose is 100 mg/kg (max 4 g); 50 mg/kg is the standard non-meningitis sepsis dose.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Sepsis_assessment_and_management/",
+      "severity": "medium",
+      "proposed_fix": "Change ceftriaxone dose to 100 mg/kg (max 4 g) for suspected meningococcaemia per AMH/AU. Soften 20 mL/kg first bolus to '10-20 mL/kg reassessed after each' per current AU pathway."
+    },
+    {
+      "q_id": "ctb-p48-011",
+      "file": "data/batches/cross_topic_balanced_p48c_2026-05-31.json",
+      "topic": "sepsis",
+      "stem_snippet": "5yo, fever + headache + drowsy + rash, remote GP awaiting retrieval.",
+      "issue": "Correct option = 'IV ceftriaxone 100 mg/kg + 20 mL/kg crystalloid'. RCH-aligned; ceftriaxone 100 mg/kg for suspected meningococcaemia is correct. No flag - documented for completeness.",
+      "rch_says": "Suspected meningococcaemia: IV ceftriaxone 100 mg/kg + fluid resuscitation 10-20 mL/kg.",
+      "rch_url": "https://www.rch.org.au/clinicalguide/guideline_index/Sepsis_assessment_and_management/",
+      "severity": "low",
+      "proposed_fix": "No fix needed; RCH-aligned."
     }
   ]
 }
