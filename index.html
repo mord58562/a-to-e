@@ -521,31 +521,46 @@ question objects - no prose, no Markdown fences, nothing else.
 Distribute new questions evenly across all four disciplines.
 
 ============================
-1. DIFFICULTY (binding)
+1. DIFFICULTY (binding - overhaul v3, 2026-06-01)
 ============================
 
-The bank floor is L3 (do not produce L1/L2). The target per-topic
-shape is L3 ~50% / L4 ~45% / L5 ~5%. Difficulty is the COMPLEXITY OF
-REASONING required to land on the correct answer - not stem length,
-not topic rarity, not vocabulary.
+Five tiers, 1-5/5. Difficulty is the COMPLEXITY OF REASONING required
+to land on the correct answer - not stem length, not topic rarity,
+not vocabulary.
 
-  3/5  Integrate 2-3 data points and choose between PLAUSIBLE
+  1/5  Single-fact recall or single-step application. One data point
+       discriminates. 10-20 sec. Reserve for fundamentals that every
+       Y4 student should default-answer. <=5% of any batch.
+  2/5  Integrate 2-3 data points and choose between PLAUSIBLE
        distractors. Lead-in is "most appropriate next step", not
-       "what is it". 30-60 sec of real reasoning.
-  4/5  Multi-step pathway with trade-offs, OR application of an
+       "what is it". 30-60 sec of real reasoning. ~50% baseline.
+  3/5  Multi-step pathway with trade-offs, OR application of an
        AU-specific cut-off / threshold / dose-rule, with competing
        considerations. 60-90 sec.
-  5/5  Atypical or contested presentation, anti-pattern recognition,
-       calculation under uncertainty, OR niche sub-specialty fact
-       PLUS multi-step reasoning. Niche fact alone is never L5.
+  4/5  Atypical or contested presentation, anti-pattern recognition,
+       OR niche sub-specialty fact PLUS multi-step reasoning. Niche
+       fact alone is never L4. Target 15-20% of bank. 90-150 sec.
+  5/5  L4 plus one or more of: a calculation under uncertainty, a
+       disconfirming finding that kills the textbook default and
+       forces reasoning past it, competing guidelines requiring you
+       to choose one cut-off, a multi-branch algorithm where the
+       wrong branch is genuinely tempting. ~5% target. Reads as a
+       "stop-and-think" item, not "I recognise this." Niche topic
+       alone is NEVER L5.
 
-For a 30-Q batch aim ~0 L2 / ~12 L3 / ~12 L4 / ~6 L5.
-For a 50-Q batch aim ~0 L2 / ~20 L3 / ~20 L4 / ~10 L5.
+For a 30-Q batch aim ~1 L1 / ~12 L2 / ~10 L3 / ~5 L4 / ~2 L5.
+For a 50-Q batch aim ~2 L1 / ~22 L2 / ~17 L3 / ~7 L4 / ~3 L5.
 
-If a question can only legitimately reach L1 or L2, DISCARD it - do
-not commit. >=25% of L4-L5 must centre on COMMON presentations
-(sore throat, PPH, ACS, paracetamol overdose) where the reasoning
-earns the rating - not rare-topic recognition.
+>=50% of L4-L5 must centre on COMMON presentations (sore throat, PPH,
+ACS, paracetamol overdose, postnatal depression, asthma exacerbation)
+where reasoning depth EARNS the rating - not rare-topic recognition.
+
+History (do not regress): the bank shifted down by one level on
+2026-06-01 (overhaul v3). What was 5/5 is now 4/5, 4/5 is now 3/5,
+3/5 is now 2/5, 2/5 is now 1/5. New 5/5 is a separate even-harder
+tier (see above). Every shifted question has `difficulty_prior_v3`
+recording its pre-shift value; use this only for back-traceability,
+never as the displayed difficulty.
 
 Hard demote-to-discard patterns (= telegraphed answer):
 - Stem names the gold-standard treatment or pathognomonic triad.
@@ -553,14 +568,50 @@ Hard demote-to-discard patterns (= telegraphed answer):
 - Patient/clinician preference pre-commits the choice.
 - Risk-escalation telegraphing ("compounding the risk", "further
   increasing the risk").
+- Stem's last sentence describes the management plan the correct
+  option will use (e.g. "consented antenatally to internal manoeuvres
+  and breech extraction for a non-cephalic second twin" - that
+  sentence telegraphs internal podalic version as the answer).
+- "Offer X, Y, or Z and support patient choice" as the correct option
+  when no clinical feature actually discriminates - replace lead-in
+  with "what would you FIRST recommend given..." and let the rationale
+  acknowledge the shared decision.
 
 ============================
 2. STEM CRAFT
 ============================
 
 Write the stem exactly as long as the clinical scenario requires - no
-length floors, no padding. The only stem-length rule is the
-clinical-relevance audit in Section 7.
+length floors, no padding. Typical exam-range stems sit at 110-180
+words; trim ruthlessly to that band unless the case genuinely needs
+more (multi-step screening pathway, complex CTG cycle, sequential
+results). Use PARAGRAPH BREAKS when a stem exceeds ~80 words so it
+reads as scannable clinical prose, not a wall of text.
+
+LATE-ANCHOR PRINCIPLE: bury exactly ONE discriminating finding in the
+second-to-last sentence (or final clause before the lead-in). The rest
+of the stem must be plausibly consistent with three or more options.
+The signature finding is the only thing that flips the question.
+
+LAY-LANGUAGE PRINCIPLE: when the PATIENT or family reports a finding,
+use lay language ("dark coloured urine", "long thin lump in his right
+upper tummy", "starts crying suddenly, draws his legs up, then
+settles"). Reserve medical English for CLINICIAN-observed findings
+(auscultation, imaging interpretation, exam descriptions). Telegraph
+phrases like "currant-jelly stool", "sausage-shaped mass", "colicky
+abdominal pain" are stem-level auto-rejects unless the lead-in is
+"most likely diagnosis".
+
+DISCONFIRMING-FINDING PRINCIPLE (L3-L5): every L3+ question should
+contain at least one finding that rules out the textbook default
+differential, forcing the candidate to reason past it ("DAT negative,
+blood groups matched" kills HDN; "previous Hb >110 three years ago"
+kills inherited thalassaemia despite Mediterranean heritage; "renal
+function and electrolytes within normal limits" kills uraemia/SIADH).
+
+NUMERIC NOT ADJECTIVAL: "BP 165/110", not "severely hypertensive".
+"Myometrium 2 mm between gestational sac and bladder", not "thin
+myometrium". The candidate is expected to know the threshold.
 
 Typical AU-MD vignette shape when needed: demographics + presenting
 complaint + relevant history + exam + investigations + medications.
@@ -583,7 +634,31 @@ Hard anti-patterns in stems (auto-reject):
   Use neutral lead-ins ("most appropriate next step", "single best
   initial intervention").
 - Pertinent-negative pile-up (chains of "no X, no Y, no Z, no W"
-  beyond 2 items - they telegraph the answer).
+  beyond 2 items - they telegraph the answer). Max 2 explicit closures
+  per stem ("There is no recent overseas travel.", "She has no
+  personal or family history of venous thromboembolism."). 3+ becomes
+  a pile-up auto-reject.
+- Stem-level diagnosis disclosure followed by a withholding lead-in
+  ("...this likely represents pre-eclampsia..." then "Which one of
+  the following is the most likely diagnosis?") - choose ONE mode.
+- Garbled text: run-on words (no space between sentence end and next),
+  mid-word truncations, missing punctuation, sentences ending
+  mid-clause. Codepoint-grep before commit.
+
+VITALS FORMAT: one comma-separated prose sentence, fixed order: pulse
+rate / blood pressure / respiratory rate / SpO2 / temperature
+(maternal first, then foetal HR for obstetric). Either give all five
+or compress to "vital signs within normal limits". Do NOT mix.
+
+DATA TABLE: keys must be flat strings, NOT nested objects. The
+renderer flattens nested values defensively but the schema expects
+flat. Either give one key per finding ("Cervical length", "Funnelling",
+"Foetal presentation") or compress to "Ultrasound findings".
+
+REFERENCE RANGES: every load-bearing lab gets its range in parentheses
+on the same line: "haemoglobin 90 g/L (120-160)". Naked numbers without
+ranges signal to the candidate that the lab is decorative, which is
+itself a leak if the lab IS load-bearing. Omit decorative labs entirely.
 
 ============================
 3. OPTIONS (binding parity rules)

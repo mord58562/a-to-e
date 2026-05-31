@@ -4,9 +4,12 @@
     "topic": "Medicine",
     "subtopic": "Infectious diseases",
     "subtopic_detail": "Necrotising fasciitis recognition with LRINEC and urgent surgical referral",
-    "difficulty": 4,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["necrotising fasciitis", "sepsis"],
+    "tags": [
+      "necrotising fasciitis",
+      "sepsis"
+    ],
     "stem": "You are the surgical registrar called to a 65-year-old man admitted 24 hours ago with presumed cellulitis of the left calf treated with IV cefazolin. He is now describing pain markedly out of proportion to examination, has dusky discolouration extending proximally past the original margin marked overnight, and you palpate crepitus at the calf. His T2DM is poorly controlled with HbA1c 9.1 percent and his current observations show septic physiology. The leg has tense bullae that were not present on admission. He had a minor laceration cleaning his garden five days before admission.",
     "data_table": {
       "Vital signs": "T 38.9, HR 124, BP 96/58, RR 26, SpO2 95% room air, GCS 14",
@@ -15,107 +18,445 @@
     },
     "lead_in": "What is the most appropriate immediate management?",
     "options": [
-      {"letter": "A", "text": "Urgent operating theatre for surgical exploration and debridement of fascia, with concurrent IV piperacillin-tazobactam plus IV vancomycin plus IV clindamycin for toxin suppression, and aggressive fluid resuscitation in resus", "correct": true, "rationale": "Necrotising fasciitis is a surgical emergency requiring immediate fascial exploration with broad-spectrum antibiotics including clindamycin for protein synthesis inhibition and toxin suppression. (Source: Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection)", "source_refs": ["Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection"]},
-      {"letter": "B", "text": "Urgent CT of the lower limb with intravenous contrast to confirm fascial gas and the extent of involvement before booking the operating theatre, with continuation of intravenous cefazolin while awaiting imaging and surgical review", "correct": false, "rationale": "Imaging should never delay surgical intervention in clinically suspected necrotising fasciitis; LRINEC at or above 6 and crepitus already warrant theatre. (Source: Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection)", "source_refs": ["Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection"]},
-      {"letter": "C", "text": "Continue IV cefazolin and add IV gentamicin 5 mg/kg daily, mark the new margin in pen with hourly re-assessment, and reconsider operative debridement only if the patient deteriorates further over the next 6 to 12 hours", "correct": false, "rationale": "Cefazolin plus gentamicin does not cover anaerobes or provide toxin suppression and watchful waiting in necrotising fasciitis carries a mortality penalty for every hour of delay. (Source: Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection)", "source_refs": ["Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection"]},
-      {"letter": "D", "text": "Transfer the patient to a hyperbaric oxygen unit at the tertiary centre for adjunctive therapy as the first intervention given the high LRINEC score, with antibiotics continued during the transfer and surgical exploration planned on arrival", "correct": false, "rationale": "Hyperbaric oxygen is at best an adjunct after source control and is not a substitute for or higher priority than urgent fascial debridement at the presenting site. (Source: Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection)", "source_refs": ["Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection"]},
-      {"letter": "E", "text": "MRI of the leg with contrast to delineate the extent of fascial involvement and guide surgical planning, with antibiotics escalated to meropenem 1 g eight-hourly while awaiting access to MRI within four to six hours in business hours", "correct": false, "rationale": "MRI sensitivity is high but its delay is unacceptable; clinical and bedside features here already establish the need for theatre. (Source: Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection)", "source_refs": ["Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection"]}
+      {
+        "letter": "A",
+        "text": "Urgent operating theatre for surgical exploration and debridement of fascia, with concurrent IV piperacillin-tazobactam plus IV vancomycin plus IV clindamycin for toxin suppression, and aggressive fluid resuscitation in resus",
+        "correct": true,
+        "rationale": "Necrotising fasciitis is a surgical emergency requiring immediate fascial exploration with broad-spectrum antibiotics including clindamycin for protein synthesis inhibition and toxin suppression. (Source: Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection)",
+        "source_refs": [
+          "Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Urgent CT of the lower limb with intravenous contrast to confirm fascial gas and the extent of involvement before booking the operating theatre, with continuation of intravenous cefazolin while awaiting imaging and surgical review",
+        "correct": false,
+        "rationale": "Imaging should never delay surgical intervention in clinically suspected necrotising fasciitis; LRINEC at or above 6 and crepitus already warrant theatre. (Source: Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection)",
+        "source_refs": [
+          "Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Continue IV cefazolin and add IV gentamicin 5 mg/kg daily, mark the new margin in pen with hourly re-assessment, and reconsider operative debridement only if the patient deteriorates further over the next 6 to 12 hours",
+        "correct": false,
+        "rationale": "Cefazolin plus gentamicin does not cover anaerobes or provide toxin suppression and watchful waiting in necrotising fasciitis carries a mortality penalty for every hour of delay. (Source: Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection)",
+        "source_refs": [
+          "Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Transfer the patient to a hyperbaric oxygen unit at the tertiary centre for adjunctive therapy as the first intervention given the high LRINEC score, with antibiotics continued during the transfer and surgical exploration planned on arrival",
+        "correct": false,
+        "rationale": "Hyperbaric oxygen is at best an adjunct after source control and is not a substitute for or higher priority than urgent fascial debridement at the presenting site. (Source: Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection)",
+        "source_refs": [
+          "Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "MRI of the leg with contrast to delineate the extent of fascial involvement and guide surgical planning, with antibiotics escalated to meropenem 1 g eight-hourly while awaiting access to MRI within four to six hours in business hours",
+        "correct": false,
+        "rationale": "MRI sensitivity is high but its delay is unacceptable; clinical and bedside features here already establish the need for theatre. (Source: Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection)",
+        "source_refs": [
+          "Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection"
+        ]
+      }
     ],
-    "explanation": {"summary": "Necrotising fasciitis is a clinical diagnosis supported by pain out of proportion, rapid spread, dusky skin, bullae, crepitus and systemic toxicity. LRINEC at or above 6 indicates intermediate risk and at or above 8 high risk, but no score excludes the diagnosis. Management is immediate broad-spectrum antibiotics including a protein-synthesis inhibitor (clindamycin or linezolid) for toxin suppression, plus urgent surgical fascial exploration and debridement. Imaging should not delay theatre.", "key_points": ["Necrotising fasciitis: surgical emergency; do not wait for imaging", "Antibiotics: pip-tazo + vancomycin + clindamycin (toxin suppression)", "LRINEC >=6 intermediate, >=8 high risk; clinical features still trump score"], "pearls": "Clindamycin (or linezolid) is added specifically to inhibit toxin production from group A streptococci and Clostridium species; continue until clinical improvement and de-escalation guided by intra-operative cultures."},
-    "sources": [{"label": "Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection", "url": "https://www.tg.org.au/"}, {"label": "Stevens et al IDSA SSTI Guidelines", "url": "https://www.idsociety.org/practice-guideline/"}],
-    "reference_ranges": ["fbc", "uec", "inflammatory_markers"],
-    "created": "2026-05-31"
+    "explanation": {
+      "summary": "Necrotising fasciitis is a clinical diagnosis supported by pain out of proportion, rapid spread, dusky skin, bullae, crepitus and systemic toxicity. LRINEC at or above 6 indicates intermediate risk and at or above 8 high risk, but no score excludes the diagnosis. Management is immediate broad-spectrum antibiotics including a protein-synthesis inhibitor (clindamycin or linezolid) for toxin suppression, plus urgent surgical fascial exploration and debridement. Imaging should not delay theatre.",
+      "key_points": [
+        "Necrotising fasciitis: surgical emergency; do not wait for imaging",
+        "Antibiotics: pip-tazo + vancomycin + clindamycin (toxin suppression)",
+        "LRINEC >=6 intermediate, >=8 high risk; clinical features still trump score"
+      ],
+      "pearls": "Clindamycin (or linezolid) is added specifically to inhibit toxin production from group A streptococci and Clostridium species; continue until clinical improvement and de-escalation guided by intra-operative cultures."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines Antibiotic: Necrotising soft tissue infection",
+        "url": "https://www.tg.org.au/"
+      },
+      {
+        "label": "Stevens et al IDSA SSTI Guidelines",
+        "url": "https://www.idsociety.org/practice-guideline/"
+      }
+    ],
+    "reference_ranges": [
+      "fbc",
+      "uec",
+      "inflammatory_markers"
+    ],
+    "created": "2026-05-31",
+    "difficulty_prior_v3": 4
   },
   {
     "id": "ctb-p38-007",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Early pregnancy",
     "subtopic_detail": "Tubal ectopic pregnancy single-dose methotrexate eligibility",
-    "difficulty": 4,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["ectopic pregnancy", "methotrexate"],
+    "tags": [
+      "ectopic pregnancy",
+      "methotrexate"
+    ],
     "stem": "You are the emergency gynaecology registrar reviewing a 30-year-old G2P0 woman 6 weeks and 2 days from last menstrual period with intermittent right pelvic pain over 48 hours and minimal brown PV spotting. She is haemodynamically stable, the abdomen is soft with mild right iliac fossa tenderness only on deep palpation, no rebound, and the cervix is closed on speculum. Transvaginal ultrasound shows an empty uterus with thin endometrium, a right adnexal mass measuring 2.8 cm with no foetal pole and no foetal cardiac activity, and no free fluid in the pouch of Douglas. She has no prior abdominal surgery, normal liver and renal function, no breastfeeding, and is reliable for outpatient follow-up. She prefers fertility-sparing management if safe.",
-    "data_table": {"Vital signs": "BP 118/72, HR 86, T 36.7, SpO2 99% room air", "Examination": "Soft abdomen, mild RIF tenderness, no rebound, no guarding, closed cervix, no cervical excitation", "Investigations": "Serum bHCG 2840 IU/L, Hb 128, WCC 7.4, platelets 240, Cr 64 (eGFR >90), AST 22, ALT 19, blood group O Rh+, urine bHCG positive"},
+    "data_table": {
+      "Vital signs": "BP 118/72, HR 86, T 36.7, SpO2 99% room air",
+      "Examination": "Soft abdomen, mild RIF tenderness, no rebound, no guarding, closed cervix, no cervical excitation",
+      "Investigations": "Serum bHCG 2840 IU/L, Hb 128, WCC 7.4, platelets 240, Cr 64 (eGFR >90), AST 22, ALT 19, blood group O Rh+, urine bHCG positive"
+    },
     "lead_in": "What is the most appropriate management?",
     "options": [
-      {"letter": "A", "text": "Single-dose intramuscular methotrexate 50 mg/m squared with day-4 and day-7 bHCG monitoring, expecting >=15 percent fall between day 4 and day 7, and arranging weekly bHCG until non-pregnant levels are confirmed", "correct": true, "rationale": "She meets criteria for single-dose methotrexate (stable, bHCG below 5000, no FH, mass below 3.5 cm, no free fluid, normal LFTs and RFTs, reliable for follow-up). (Source: RANZCOG Statement: Ectopic Pregnancy)", "source_refs": ["RANZCOG Statement: Ectopic Pregnancy"]},
-      {"letter": "B", "text": "Expectant management with serial bHCG every 48 hours and weekly transvaginal ultrasound, accepting that intervention will only be required if bHCG plateaus or rises or if the patient develops worsening pain or instability", "correct": false, "rationale": "Expectant management is generally reserved for bHCG below ~1000 with falling trend; at 2840 with visible adnexal mass methotrexate or surgery is preferred. (Source: RANZCOG Statement: Ectopic Pregnancy)", "source_refs": ["RANZCOG Statement: Ectopic Pregnancy"]},
-      {"letter": "C", "text": "Urgent laparoscopic salpingectomy of the affected right fallopian tube as definitive surgical management with intraoperative tubal exploration to confirm diagnosis and histopathological assessment of the removed specimen postoperatively", "correct": false, "rationale": "Salpingectomy is appropriate when methotrexate criteria are not met or when the contralateral tube is healthy; this patient meets methotrexate criteria and prefers fertility-sparing therapy. (Source: RANZCOG Statement: Ectopic Pregnancy)", "source_refs": ["RANZCOG Statement: Ectopic Pregnancy"]},
-      {"letter": "D", "text": "Urgent laparoscopic salpingostomy to preserve the affected fallopian tube with intra-operative methotrexate as required and weekly bHCG follow-up to detect persistent trophoblast, since fertility preservation is the patient's priority", "correct": false, "rationale": "Salpingostomy is more morbid than methotrexate when methotrexate criteria are met, carries trophoblast-persistence risk, and is reserved for surgical cases where the tube is to be preserved. (Source: RANZCOG Statement: Ectopic Pregnancy)", "source_refs": ["RANZCOG Statement: Ectopic Pregnancy"]},
-      {"letter": "E", "text": "Two-dose intramuscular methotrexate 50 mg/m squared regimen given on day 1 and day 4 as a more effective protocol with the same follow-up schedule of day-4 and day-7 bHCG measurements as the single-dose protocol used in Australia", "correct": false, "rationale": "The two-dose regimen is reserved for higher bHCG (around 3500-5000) or larger masses; her values fit single-dose protocol which has lower toxicity. (Source: RANZCOG Statement: Ectopic Pregnancy)", "source_refs": ["RANZCOG Statement: Ectopic Pregnancy"]}
+      {
+        "letter": "A",
+        "text": "Single-dose intramuscular methotrexate 50 mg/m squared with day-4 and day-7 bHCG monitoring, expecting >=15 percent fall between day 4 and day 7, and arranging weekly bHCG until non-pregnant levels are confirmed",
+        "correct": true,
+        "rationale": "She meets criteria for single-dose methotrexate (stable, bHCG below 5000, no FH, mass below 3.5 cm, no free fluid, normal LFTs and RFTs, reliable for follow-up). (Source: RANZCOG Statement: Ectopic Pregnancy)",
+        "source_refs": [
+          "RANZCOG Statement: Ectopic Pregnancy"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Expectant management with serial bHCG every 48 hours and weekly transvaginal ultrasound, accepting that intervention will only be required if bHCG plateaus or rises or if the patient develops worsening pain or instability",
+        "correct": false,
+        "rationale": "Expectant management is generally reserved for bHCG below ~1000 with falling trend; at 2840 with visible adnexal mass methotrexate or surgery is preferred. (Source: RANZCOG Statement: Ectopic Pregnancy)",
+        "source_refs": [
+          "RANZCOG Statement: Ectopic Pregnancy"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Urgent laparoscopic salpingectomy of the affected right fallopian tube as definitive surgical management with intraoperative tubal exploration to confirm diagnosis and histopathological assessment of the removed specimen postoperatively",
+        "correct": false,
+        "rationale": "Salpingectomy is appropriate when methotrexate criteria are not met or when the contralateral tube is healthy; this patient meets methotrexate criteria and prefers fertility-sparing therapy. (Source: RANZCOG Statement: Ectopic Pregnancy)",
+        "source_refs": [
+          "RANZCOG Statement: Ectopic Pregnancy"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Urgent laparoscopic salpingostomy to preserve the affected fallopian tube with intra-operative methotrexate as required and weekly bHCG follow-up to detect persistent trophoblast, since fertility preservation is the patient's priority",
+        "correct": false,
+        "rationale": "Salpingostomy is more morbid than methotrexate when methotrexate criteria are met, carries trophoblast-persistence risk, and is reserved for surgical cases where the tube is to be preserved. (Source: RANZCOG Statement: Ectopic Pregnancy)",
+        "source_refs": [
+          "RANZCOG Statement: Ectopic Pregnancy"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Two-dose intramuscular methotrexate 50 mg/m squared regimen given on day 1 and day 4 as a more effective protocol with the same follow-up schedule of day-4 and day-7 bHCG measurements as the single-dose protocol used in Australia",
+        "correct": false,
+        "rationale": "The two-dose regimen is reserved for higher bHCG (around 3500-5000) or larger masses; her values fit single-dose protocol which has lower toxicity. (Source: RANZCOG Statement: Ectopic Pregnancy)",
+        "source_refs": [
+          "RANZCOG Statement: Ectopic Pregnancy"
+        ]
+      }
     ],
-    "explanation": {"summary": "Single-dose IM methotrexate is appropriate for haemodynamically stable women with unruptured tubal ectopic pregnancy, bHCG below ~5000 IU/L (varying by protocol), no foetal cardiac activity, adnexal mass below ~3.5 cm, no free fluid (or only minimal), normal LFTs and RFTs, no contraindications and capacity for follow-up. Dose is 50 mg/m squared with bHCG measured on day 4 and day 7; a >=15% fall between day 4 and day 7 predicts success. Failure or rising bHCG prompts a second dose or surgery.", "key_points": ["Methotrexate criteria: stable, bHCG <5000 (centres vary), no FH, mass <3.5 cm, no significant free fluid, normal LFT/RFT, reliable", "Surgical management preferred if ruptured, unstable, or methotrexate failure", "Counsel re: photosensitivity, avoid folate, avoid alcohol and conception for 3 months"], "pearls": "Two-dose regimen used when initial bHCG is 3500-5000 or marginal; single-dose preferred at lower bHCG due to less toxicity but with slightly higher need for second-dose rescue."},
-    "sources": [{"label": "RANZCOG Statement: Ectopic Pregnancy", "url": "https://ranzcog.edu.au/"}, {"label": "RCOG Green-top Guideline 21: Ectopic Pregnancy", "url": "https://www.rcog.org.uk/"}],
-    "reference_ranges": ["beta_hcg_pregnancy", "lfts", "uec"],
-    "created": "2026-05-31"
+    "explanation": {
+      "summary": "Single-dose IM methotrexate is appropriate for haemodynamically stable women with unruptured tubal ectopic pregnancy, bHCG below ~5000 IU/L (varying by protocol), no foetal cardiac activity, adnexal mass below ~3.5 cm, no free fluid (or only minimal), normal LFTs and RFTs, no contraindications and capacity for follow-up. Dose is 50 mg/m squared with bHCG measured on day 4 and day 7; a >=15% fall between day 4 and day 7 predicts success. Failure or rising bHCG prompts a second dose or surgery.",
+      "key_points": [
+        "Methotrexate criteria: stable, bHCG <5000 (centres vary), no FH, mass <3.5 cm, no significant free fluid, normal LFT/RFT, reliable",
+        "Surgical management preferred if ruptured, unstable, or methotrexate failure",
+        "Counsel re: photosensitivity, avoid folate, avoid alcohol and conception for 3 months"
+      ],
+      "pearls": "Two-dose regimen used when initial bHCG is 3500-5000 or marginal; single-dose preferred at lower bHCG due to less toxicity but with slightly higher need for second-dose rescue."
+    },
+    "sources": [
+      {
+        "label": "RANZCOG Statement: Ectopic Pregnancy",
+        "url": "https://ranzcog.edu.au/"
+      },
+      {
+        "label": "RCOG Green-top Guideline 21: Ectopic Pregnancy",
+        "url": "https://www.rcog.org.uk/"
+      }
+    ],
+    "reference_ranges": [
+      "beta_hcg_pregnancy",
+      "lfts",
+      "uec"
+    ],
+    "created": "2026-05-31",
+    "difficulty_prior_v3": 4
   },
   {
     "id": "ctb-p38-008",
     "topic": "Psychiatry",
     "subtopic": "Mood disorders",
     "subtopic_detail": "Long-term lithium monitoring with renal decline and parathyroid disturbance",
-    "difficulty": 4,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["lithium", "bipolar disorder"],
+    "tags": [
+      "lithium",
+      "bipolar disorder"
+    ],
     "stem": "You are the community psychiatrist reviewing a 35-year-old woman on lithium 750 mg nocte for 8 years for bipolar I disorder, who is currently euthymic with no relapse during this time. Her routine annual monitoring shows progressive renal decline (eGFR fallen from 95 three years ago to 65 today), a lithium level within range at 0.7 mmol/L, subclinical hypothyroidism with TSH 7.2 and normal free T4, mildly elevated corrected calcium 2.68 mmol/L with raised PTH 9.8 pmol/L, BMI 28 and BP 130/82. She is asymptomatic, takes no other medications, and is planning a family within 12 months.",
-    "data_table": {"Vital signs": "BP 130/82, HR 74, BMI 28", "Investigations": "Lithium 0.7 mmol/L, eGFR 65 (95 three years ago), TSH 7.2 (RR 0.4-4.0) free T4 normal, corrected calcium 2.68 (RR 2.20-2.60), PTH 9.8 (RR 1.6-6.9), urine ACR 4 mg/mmol, fasting glucose 5.2"},
+    "data_table": {
+      "Vital signs": "BP 130/82, HR 74, BMI 28",
+      "Investigations": "Lithium 0.7 mmol/L, eGFR 65 (95 three years ago), TSH 7.2 (RR 0.4-4.0) free T4 normal, corrected calcium 2.68 (RR 2.20-2.60), PTH 9.8 (RR 1.6-6.9), urine ACR 4 mg/mmol, fasting glucose 5.2"
+    },
     "lead_in": "What is the most appropriate next step?",
     "options": [
-      {"letter": "A", "text": "Continue lithium at current dose and recheck eGFR, lithium level, TSH and calcium in 12 months as part of standard annual monitoring, with no immediate change to therapy given her euthymia and lithium level within range", "correct": false, "rationale": "Progressive renal decline plus emerging hyperparathyroidism and subclinical hypothyroidism warrants a change in approach rather than another 12 months of unchanged therapy. (Source: RANZCP Clinical Practice Guidelines: Mood Disorders)", "source_refs": ["RANZCP Clinical Practice Guidelines: Mood Disorders"]},
-      {"letter": "B", "text": "Discuss with the patient cross-titration from lithium to an alternative mood stabiliser (e.g., quetiapine), continue lithium until the new agent is at therapeutic dose and stable for at least 6 weeks, and refer to nephrology and endocrinology for parallel management", "correct": true, "rationale": "Lithium-related progressive renal decline, hyperparathyroidism and subclinical hypothyroidism in a woman planning pregnancy warrant gradual cross-titration with specialist input rather than abrupt discontinuation. (Source: RANZCP Clinical Practice Guidelines: Mood Disorders)", "source_refs": ["RANZCP Clinical Practice Guidelines: Mood Disorders"]},
-      {"letter": "C", "text": "Reduce lithium dose to 500 mg nocte to limit further renal injury and recheck eGFR and lithium level in 4 weeks while continuing the same drug as lower dose is generally renoprotective with preserved mood stabilising effect", "correct": false, "rationale": "Dose reduction alone does not reliably reverse lithium nephropathy and risks subtherapeutic levels and relapse; it does not address parathyroid pathology. (Source: RANZCP Clinical Practice Guidelines: Mood Disorders)", "source_refs": ["RANZCP Clinical Practice Guidelines: Mood Disorders"]},
-      {"letter": "D", "text": "Add amiloride 5 mg daily as prophylaxis against lithium-induced nephrogenic diabetes insipidus and continue lithium at current dose, with no other change to therapy or referral and routine reassessment in 6 months", "correct": false, "rationale": "Amiloride may be considered for established nephrogenic DI but does not address the broader pattern of multi-organ lithium toxicity here, especially with pregnancy planned. (Source: RANZCP Clinical Practice Guidelines: Mood Disorders)", "source_refs": ["RANZCP Clinical Practice Guidelines: Mood Disorders"]},
-      {"letter": "E", "text": "Stop lithium abruptly today and commence sodium valproate 500 mg twice daily as alternative mood stabiliser with serum level check at 1 week, while accepting some risk of mood relapse from abrupt change in maintenance therapy", "correct": false, "rationale": "Abrupt lithium discontinuation markedly increases relapse risk, and valproate is contraindicated in women planning pregnancy due to major teratogenicity. (Source: RANZCP Clinical Practice Guidelines: Mood Disorders)", "source_refs": ["RANZCP Clinical Practice Guidelines: Mood Disorders"]}
+      {
+        "letter": "A",
+        "text": "Continue lithium at current dose and recheck eGFR, lithium level, TSH and calcium in 12 months as part of standard annual monitoring, with no immediate change to therapy given her euthymia and lithium level within range",
+        "correct": false,
+        "rationale": "Progressive renal decline plus emerging hyperparathyroidism and subclinical hypothyroidism warrants a change in approach rather than another 12 months of unchanged therapy. (Source: RANZCP Clinical Practice Guidelines: Mood Disorders)",
+        "source_refs": [
+          "RANZCP Clinical Practice Guidelines: Mood Disorders"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Discuss with the patient cross-titration from lithium to an alternative mood stabiliser (e.g., quetiapine), continue lithium until the new agent is at therapeutic dose and stable for at least 6 weeks, and refer to nephrology and endocrinology for parallel management",
+        "correct": true,
+        "rationale": "Lithium-related progressive renal decline, hyperparathyroidism and subclinical hypothyroidism in a woman planning pregnancy warrant gradual cross-titration with specialist input rather than abrupt discontinuation. (Source: RANZCP Clinical Practice Guidelines: Mood Disorders)",
+        "source_refs": [
+          "RANZCP Clinical Practice Guidelines: Mood Disorders"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Reduce lithium dose to 500 mg nocte to limit further renal injury and recheck eGFR and lithium level in 4 weeks while continuing the same drug as lower dose is generally renoprotective with preserved mood stabilising effect",
+        "correct": false,
+        "rationale": "Dose reduction alone does not reliably reverse lithium nephropathy and risks subtherapeutic levels and relapse; it does not address parathyroid pathology. (Source: RANZCP Clinical Practice Guidelines: Mood Disorders)",
+        "source_refs": [
+          "RANZCP Clinical Practice Guidelines: Mood Disorders"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Add amiloride 5 mg daily as prophylaxis against lithium-induced nephrogenic diabetes insipidus and continue lithium at current dose, with no other change to therapy or referral and routine reassessment in 6 months",
+        "correct": false,
+        "rationale": "Amiloride may be considered for established nephrogenic DI but does not address the broader pattern of multi-organ lithium toxicity here, especially with pregnancy planned. (Source: RANZCP Clinical Practice Guidelines: Mood Disorders)",
+        "source_refs": [
+          "RANZCP Clinical Practice Guidelines: Mood Disorders"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Stop lithium abruptly today and commence sodium valproate 500 mg twice daily as alternative mood stabiliser with serum level check at 1 week, while accepting some risk of mood relapse from abrupt change in maintenance therapy",
+        "correct": false,
+        "rationale": "Abrupt lithium discontinuation markedly increases relapse risk, and valproate is contraindicated in women planning pregnancy due to major teratogenicity. (Source: RANZCP Clinical Practice Guidelines: Mood Disorders)",
+        "source_refs": [
+          "RANZCP Clinical Practice Guidelines: Mood Disorders"
+        ]
+      }
     ],
-    "explanation": {"summary": "Long-term lithium use can cause progressive interstitial nephropathy, primary hyperparathyroidism and hypothyroidism, all of which are present here. In a woman planning pregnancy with multi-organ lithium effects and stable mood, cross-titration to an alternative mood stabiliser with multidisciplinary input (psychiatry, nephrology, endocrinology, obstetrics) is appropriate rather than continuing unchanged or abrupt cessation. Lithium should never be stopped abruptly outside of life-threatening toxicity due to high relapse risk.", "key_points": ["Lithium long-term effects: nephropathy, hyperparathyroidism, hypothyroidism, NDI", "Never stop lithium abruptly; cross-titrate over weeks", "Valproate contraindicated in women of childbearing age unless pregnancy-prevention program in place"], "pearls": "Annual monitoring: eGFR, electrolytes, calcium, PTH, TSH; lithium level 12 hours post-dose every 3-6 months; weight, BP, ECG as clinically indicated."},
-    "sources": [{"label": "RANZCP Clinical Practice Guidelines: Mood Disorders", "url": "https://www.ranzcp.org/"}, {"label": "AMH: Lithium monitoring", "url": "https://amhonline.amh.net.au/"}],
-    "reference_ranges": ["uec", "thyroid", "calcium_corrected"],
-    "created": "2026-05-31"
+    "explanation": {
+      "summary": "Long-term lithium use can cause progressive interstitial nephropathy, primary hyperparathyroidism and hypothyroidism, all of which are present here. In a woman planning pregnancy with multi-organ lithium effects and stable mood, cross-titration to an alternative mood stabiliser with multidisciplinary input (psychiatry, nephrology, endocrinology, obstetrics) is appropriate rather than continuing unchanged or abrupt cessation. Lithium should never be stopped abruptly outside of life-threatening toxicity due to high relapse risk.",
+      "key_points": [
+        "Lithium long-term effects: nephropathy, hyperparathyroidism, hypothyroidism, NDI",
+        "Never stop lithium abruptly; cross-titrate over weeks",
+        "Valproate contraindicated in women of childbearing age unless pregnancy-prevention program in place"
+      ],
+      "pearls": "Annual monitoring: eGFR, electrolytes, calcium, PTH, TSH; lithium level 12 hours post-dose every 3-6 months; weight, BP, ECG as clinically indicated."
+    },
+    "sources": [
+      {
+        "label": "RANZCP Clinical Practice Guidelines: Mood Disorders",
+        "url": "https://www.ranzcp.org/"
+      },
+      {
+        "label": "AMH: Lithium monitoring",
+        "url": "https://amhonline.amh.net.au/"
+      }
+    ],
+    "reference_ranges": [
+      "uec",
+      "thyroid",
+      "calcium_corrected"
+    ],
+    "created": "2026-05-31",
+    "difficulty_prior_v3": 4
   },
   {
     "id": "ctb-p38-009",
     "topic": "Paediatrics",
     "subtopic": "Endocrine",
     "subtopic_detail": "Paediatric DKA initial fluid resuscitation without cerebral oedema",
-    "difficulty": 3,
+    "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["DKA", "paediatric emergency"],
+    "tags": [
+      "DKA",
+      "paediatric emergency"
+    ],
     "stem": "You are the paediatric registrar in the emergency department assessing an 8-year-old girl with new-onset type 1 diabetes mellitus presenting with two weeks of polyuria and polydipsia and 24 hours of vomiting and lethargy. She is alert (GCS 15), has dry mucous membranes, capillary refill of 3 seconds and is tachycardic but not shocked. Her weight today is 28 kg. There are no focal neurological signs, the headache score is 0, and she has had no recent insulin (this is a new diagnosis). The PICU has been informed but admission to the children's ward is planned with one-hourly observation.",
-    "data_table": {"Vital signs": "T 36.6, HR 130, BP 95/60, RR 22 with deep breathing, SpO2 99% room air, GCS 15", "Examination": "Dry mucous membranes, capillary refill 3 sec, normal cardiovascular exam, deep sighing respirations, no focal neurology, weight 28 kg", "Investigations": "Capillary BSL 28.4, ketones 5.6, VBG pH 7.18 HCO3 9 pCO2 22, Na 134, K 5.0, urea 9.2, Cr 78, urine ketones ++++, HbA1c 11.8%"},
+    "data_table": {
+      "Vital signs": "T 36.6, HR 130, BP 95/60, RR 22 with deep breathing, SpO2 99% room air, GCS 15",
+      "Examination": "Dry mucous membranes, capillary refill 3 sec, normal cardiovascular exam, deep sighing respirations, no focal neurology, weight 28 kg",
+      "Investigations": "Capillary BSL 28.4, ketones 5.6, VBG pH 7.18 HCO3 9 pCO2 22, Na 134, K 5.0, urea 9.2, Cr 78, urine ketones ++++, HbA1c 11.8%"
+    },
     "lead_in": "What is the most appropriate initial fluid plan?",
     "options": [
-      {"letter": "A", "text": "Give 0.9 percent saline 10 mL/kg bolus over 60 minutes then commence calculated fluid as maintenance plus 5-7 percent dehydration replaced over 48 hours, and start IV insulin infusion at 0.05-0.1 units/kg/hour 1 hour after fluids begin", "correct": true, "rationale": "Australian paediatric DKA protocols use a single 10 mL/kg bolus (no shock) and 48-hour deficit replacement at 5-7 percent to minimise cerebral oedema risk, with insulin infusion starting after fluid resuscitation. (Source: APEG/RCH CPG: Diabetic Ketoacidosis)", "source_refs": ["APEG/RCH CPG: Diabetic Ketoacidosis"]},
-      {"letter": "B", "text": "Give 0.9 percent saline 20 mL/kg bolus rapidly over 10-15 minutes followed by a second 20 mL/kg bolus if perfusion has not normalised, and commence IV insulin bolus 0.1 units/kg before transitioning to infusion at 0.1 units/kg/hour", "correct": false, "rationale": "Large rapid boluses (20 mL/kg) and an insulin bolus increase cerebral oedema risk in paediatric DKA and should be avoided unless the child is in true hypovolaemic shock. (Source: APEG/RCH CPG: Diabetic Ketoacidosis)", "source_refs": ["APEG/RCH CPG: Diabetic Ketoacidosis"]},
-      {"letter": "C", "text": "Commence IV 0.45 percent saline at twice maintenance without any initial bolus, and start IV insulin infusion at 0.1 units/kg/hour immediately, with hourly capillary glucose and 2-hourly venous gas monitoring until acidosis resolves", "correct": false, "rationale": "Half-normal saline is not the appropriate initial fluid choice in paediatric DKA and skipping an initial bolus delays restoration of perfusion in a tachycardic, dry-mucous-membrane patient. (Source: APEG/RCH CPG: Diabetic Ketoacidosis)", "source_refs": ["APEG/RCH CPG: Diabetic Ketoacidosis"]},
-      {"letter": "D", "text": "Administer IV sodium bicarbonate 1 mmol/kg to correct the metabolic acidosis prior to other interventions, with 0.9 percent saline running concurrently and IV insulin commenced once the pH has improved above 7.20 on repeat gas", "correct": false, "rationale": "Sodium bicarbonate is not routinely indicated in paediatric DKA and is associated with worsened outcomes including cerebral oedema and hypokalaemia. (Source: APEG/RCH CPG: Diabetic Ketoacidosis)", "source_refs": ["APEG/RCH CPG: Diabetic Ketoacidosis"]},
-      {"letter": "E", "text": "Commence IV 5 percent dextrose with potassium 40 mmol/L at maintenance rate from the outset to prevent hypoglycaemia and hypokalaemia, with IV insulin infusion 0.05 units/kg/hour and target serum glucose between 6 and 10 mmol/L", "correct": false, "rationale": "Initial fluid should be 0.9 percent saline without dextrose; dextrose is added once glucose falls to ~14-15 mmol/L to allow continued insulin infusion to clear ketones. (Source: APEG/RCH CPG: Diabetic Ketoacidosis)", "source_refs": ["APEG/RCH CPG: Diabetic Ketoacidosis"]}
+      {
+        "letter": "A",
+        "text": "Give 0.9 percent saline 10 mL/kg bolus over 60 minutes then commence calculated fluid as maintenance plus 5-7 percent dehydration replaced over 48 hours, and start IV insulin infusion at 0.05-0.1 units/kg/hour 1 hour after fluids begin",
+        "correct": true,
+        "rationale": "Australian paediatric DKA protocols use a single 10 mL/kg bolus (no shock) and 48-hour deficit replacement at 5-7 percent to minimise cerebral oedema risk, with insulin infusion starting after fluid resuscitation. (Source: APEG/RCH CPG: Diabetic Ketoacidosis)",
+        "source_refs": [
+          "APEG/RCH CPG: Diabetic Ketoacidosis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Give 0.9 percent saline 20 mL/kg bolus rapidly over 10-15 minutes followed by a second 20 mL/kg bolus if perfusion has not normalised, and commence IV insulin bolus 0.1 units/kg before transitioning to infusion at 0.1 units/kg/hour",
+        "correct": false,
+        "rationale": "Large rapid boluses (20 mL/kg) and an insulin bolus increase cerebral oedema risk in paediatric DKA and should be avoided unless the child is in true hypovolaemic shock. (Source: APEG/RCH CPG: Diabetic Ketoacidosis)",
+        "source_refs": [
+          "APEG/RCH CPG: Diabetic Ketoacidosis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence IV 0.45 percent saline at twice maintenance without any initial bolus, and start IV insulin infusion at 0.1 units/kg/hour immediately, with hourly capillary glucose and 2-hourly venous gas monitoring until acidosis resolves",
+        "correct": false,
+        "rationale": "Half-normal saline is not the appropriate initial fluid choice in paediatric DKA and skipping an initial bolus delays restoration of perfusion in a tachycardic, dry-mucous-membrane patient. (Source: APEG/RCH CPG: Diabetic Ketoacidosis)",
+        "source_refs": [
+          "APEG/RCH CPG: Diabetic Ketoacidosis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Administer IV sodium bicarbonate 1 mmol/kg to correct the metabolic acidosis prior to other interventions, with 0.9 percent saline running concurrently and IV insulin commenced once the pH has improved above 7.20 on repeat gas",
+        "correct": false,
+        "rationale": "Sodium bicarbonate is not routinely indicated in paediatric DKA and is associated with worsened outcomes including cerebral oedema and hypokalaemia. (Source: APEG/RCH CPG: Diabetic Ketoacidosis)",
+        "source_refs": [
+          "APEG/RCH CPG: Diabetic Ketoacidosis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Commence IV 5 percent dextrose with potassium 40 mmol/L at maintenance rate from the outset to prevent hypoglycaemia and hypokalaemia, with IV insulin infusion 0.05 units/kg/hour and target serum glucose between 6 and 10 mmol/L",
+        "correct": false,
+        "rationale": "Initial fluid should be 0.9 percent saline without dextrose; dextrose is added once glucose falls to ~14-15 mmol/L to allow continued insulin infusion to clear ketones. (Source: APEG/RCH CPG: Diabetic Ketoacidosis)",
+        "source_refs": [
+          "APEG/RCH CPG: Diabetic Ketoacidosis"
+        ]
+      }
     ],
-    "explanation": {"summary": "Paediatric DKA management in Australia follows APEG/ISPAD guidance: assess for shock (rare), give a single 10 mL/kg bolus of 0.9% saline if not shocked, then replace assumed 5-7% deficit over 48 hours alongside maintenance. Insulin infusion at 0.05-0.1 units/kg/hour is started 1 hour after fluids commence; no insulin bolus. Bicarbonate is not used routinely. Dextrose is added once glucose approaches 14-15 mmol/L. Frequent neuro observations are essential to detect cerebral oedema.", "key_points": ["Initial bolus: 10 mL/kg of 0.9% saline (20 mL/kg only if shocked)", "Insulin: 0.05-0.1 U/kg/hr starting 1 hour after fluids; no bolus", "Bicarbonate not routine; monitor for cerebral oedema (headache, GCS drop)"], "pearls": "Cerebral oedema features include headache, vomiting, GCS deterioration, bradycardia and hypertension; treat with 3% saline or mannitol immediately and reduce fluid rate."},
-    "sources": [{"label": "APEG/RCH CPG: Diabetic Ketoacidosis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Diabetic_Ketoacidosis/"}, {"label": "ISPAD Clinical Practice Consensus Guidelines: DKA", "url": "https://www.ispad.org/"}],
-    "reference_ranges": ["bsl_paeds", "ketones", "vbg", "paeds_uec"],
-    "created": "2026-05-31"
+    "explanation": {
+      "summary": "Paediatric DKA management in Australia follows APEG/ISPAD guidance: assess for shock (rare), give a single 10 mL/kg bolus of 0.9% saline if not shocked, then replace assumed 5-7% deficit over 48 hours alongside maintenance. Insulin infusion at 0.05-0.1 units/kg/hour is started 1 hour after fluids commence; no insulin bolus. Bicarbonate is not used routinely. Dextrose is added once glucose approaches 14-15 mmol/L. Frequent neuro observations are essential to detect cerebral oedema.",
+      "key_points": [
+        "Initial bolus: 10 mL/kg of 0.9% saline (20 mL/kg only if shocked)",
+        "Insulin: 0.05-0.1 U/kg/hr starting 1 hour after fluids; no bolus",
+        "Bicarbonate not routine; monitor for cerebral oedema (headache, GCS drop)"
+      ],
+      "pearls": "Cerebral oedema features include headache, vomiting, GCS deterioration, bradycardia and hypertension; treat with 3% saline or mannitol immediately and reduce fluid rate."
+    },
+    "sources": [
+      {
+        "label": "APEG/RCH CPG: Diabetic Ketoacidosis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Diabetic_Ketoacidosis/"
+      },
+      {
+        "label": "ISPAD Clinical Practice Consensus Guidelines: DKA",
+        "url": "https://www.ispad.org/"
+      }
+    ],
+    "reference_ranges": [
+      "bsl_paeds",
+      "ketones",
+      "vbg",
+      "paeds_uec"
+    ],
+    "created": "2026-05-31",
+    "difficulty_prior_v3": 3
   },
   {
     "id": "ctb-p38-010",
     "topic": "Medicine",
     "subtopic": "Cardiology",
     "subtopic_detail": "Empiric antibiotic choice for native valve infective endocarditis in IVDU",
-    "difficulty": 3,
+    "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["endocarditis", "antibiotic stewardship"],
+    "tags": [
+      "endocarditis",
+      "antibiotic stewardship"
+    ],
     "stem": "You are the medical registrar admitting a 42-year-old man with a 5-day history of fever, malaise and night sweats. He has been injecting drugs intravenously for 6 years and currently injects daily, most recently in the right antecubital fossa. Examination reveals a new diastolic murmur loudest at the left sternal edge, splinter haemorrhages on three nail beds, a 3-mm tender lesion on the pulp of the left index finger, and no peripheral oedema. Three sets of peripheral blood cultures have been drawn from separate sites within the past hour and transthoracic echocardiography is being arranged today.",
-    "data_table": {"Vital signs": "T 38.5, HR 108, BP 122/68, RR 18, SpO2 97% room air", "Examination": "New diastolic murmur LSE, splinter haemorrhages, Osler node on left index finger pulp, no pulmonary oedema, injection sites visible at antecubital fossa", "Investigations": "Hb 105, WCC 16, CRP 280, Cr 110, lactate 1.6, blood cultures x 3 drawn, ECG sinus rhythm with first-degree AV block, urine dipstick microhaematuria"},
+    "data_table": {
+      "Vital signs": "T 38.5, HR 108, BP 122/68, RR 18, SpO2 97% room air",
+      "Examination": "New diastolic murmur LSE, splinter haemorrhages, Osler node on left index finger pulp, no pulmonary oedema, injection sites visible at antecubital fossa",
+      "Investigations": "Hb 105, WCC 16, CRP 280, Cr 110, lactate 1.6, blood cultures x 3 drawn, ECG sinus rhythm with first-degree AV block, urine dipstick microhaematuria"
+    },
     "lead_in": "What is the most appropriate empiric antibiotic regimen while awaiting culture results?",
     "options": [
-      {"letter": "A", "text": "Intravenous ceftriaxone 2 g daily as monotherapy with reassessment when blood cultures are available at 48 to 72 hours, given the broad spectrum of coverage including most likely organisms for native valve endocarditis in this patient population", "correct": false, "rationale": "Ceftriaxone monotherapy does not adequately cover MRSA or enterococci, both relevant in IVDU-associated native valve endocarditis. (Source: Therapeutic Guidelines Antibiotic: Infective endocarditis)", "source_refs": ["Therapeutic Guidelines Antibiotic: Infective endocarditis"]},
-      {"letter": "B", "text": "Intravenous flucloxacillin 2 g 4-hourly plus IV gentamicin 1 mg/kg 8-hourly empirically without MRSA cover, with planned addition of vancomycin only if cultures grow MRSA in the next 48 to 72 hours after drawing samples today", "correct": false, "rationale": "In intravenous drug users, MRSA prevalence is high enough that initial empirical cover should include vancomycin while awaiting cultures rather than waiting 48-72 hours. (Source: Therapeutic Guidelines Antibiotic: Infective endocarditis)", "source_refs": ["Therapeutic Guidelines Antibiotic: Infective endocarditis"]},
-      {"letter": "C", "text": "Intravenous vancomycin (loaded then dosed by TDM) plus IV flucloxacillin 2 g 4-hourly plus IV gentamicin 1 mg/kg 8-hourly synergistically, awaiting culture and sensitivity results with daily renal function and aminoglycoside trough monitoring", "correct": true, "rationale": "IVDU native valve endocarditis empirical cover includes vancomycin (MRSA), flucloxacillin (MSSA) and gentamicin (synergy, gram-negative cover), with de-escalation after culture sensitivities. (Source: Therapeutic Guidelines Antibiotic: Infective endocarditis)", "source_refs": ["Therapeutic Guidelines Antibiotic: Infective endocarditis"]},
-      {"letter": "D", "text": "Intravenous benzylpenicillin 1.8 g 4-hourly as monotherapy until streptococcal endocarditis confirmed on culture, given that viridans streptococci remain the most common organism overall in native valve infective endocarditis across populations", "correct": false, "rationale": "In an IVDU, Staphylococcus aureus is by far the most likely organism and benzylpenicillin alone is inadequate empirical cover. (Source: Therapeutic Guidelines Antibiotic: Infective endocarditis)", "source_refs": ["Therapeutic Guidelines Antibiotic: Infective endocarditis"]},
-      {"letter": "E", "text": "Oral amoxicillin-clavulanate 875 mg twice daily with discharge on outpatient parenteral antibiotic therapy after a single dose of IV ceftriaxone in the emergency department and outpatient antibiotic service review the next day", "correct": false, "rationale": "Oral therapy is inappropriate for suspected native valve endocarditis at initial presentation and OPAT before stabilisation is unsafe. (Source: Therapeutic Guidelines Antibiotic: Infective endocarditis)", "source_refs": ["Therapeutic Guidelines Antibiotic: Infective endocarditis"]}
+      {
+        "letter": "A",
+        "text": "Intravenous ceftriaxone 2 g daily as monotherapy with reassessment when blood cultures are available at 48 to 72 hours, given the broad spectrum of coverage including most likely organisms for native valve endocarditis in this patient population",
+        "correct": false,
+        "rationale": "Ceftriaxone monotherapy does not adequately cover MRSA or enterococci, both relevant in IVDU-associated native valve endocarditis. (Source: Therapeutic Guidelines Antibiotic: Infective endocarditis)",
+        "source_refs": [
+          "Therapeutic Guidelines Antibiotic: Infective endocarditis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Intravenous flucloxacillin 2 g 4-hourly plus IV gentamicin 1 mg/kg 8-hourly empirically without MRSA cover, with planned addition of vancomycin only if cultures grow MRSA in the next 48 to 72 hours after drawing samples today",
+        "correct": false,
+        "rationale": "In intravenous drug users, MRSA prevalence is high enough that initial empirical cover should include vancomycin while awaiting cultures rather than waiting 48-72 hours. (Source: Therapeutic Guidelines Antibiotic: Infective endocarditis)",
+        "source_refs": [
+          "Therapeutic Guidelines Antibiotic: Infective endocarditis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Intravenous vancomycin (loaded then dosed by TDM) plus IV flucloxacillin 2 g 4-hourly plus IV gentamicin 1 mg/kg 8-hourly synergistically, awaiting culture and sensitivity results with daily renal function and aminoglycoside trough monitoring",
+        "correct": true,
+        "rationale": "IVDU native valve endocarditis empirical cover includes vancomycin (MRSA), flucloxacillin (MSSA) and gentamicin (synergy, gram-negative cover), with de-escalation after culture sensitivities. (Source: Therapeutic Guidelines Antibiotic: Infective endocarditis)",
+        "source_refs": [
+          "Therapeutic Guidelines Antibiotic: Infective endocarditis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Intravenous benzylpenicillin 1.8 g 4-hourly as monotherapy until streptococcal endocarditis confirmed on culture, given that viridans streptococci remain the most common organism overall in native valve infective endocarditis across populations",
+        "correct": false,
+        "rationale": "In an IVDU, Staphylococcus aureus is by far the most likely organism and benzylpenicillin alone is inadequate empirical cover. (Source: Therapeutic Guidelines Antibiotic: Infective endocarditis)",
+        "source_refs": [
+          "Therapeutic Guidelines Antibiotic: Infective endocarditis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Oral amoxicillin-clavulanate 875 mg twice daily with discharge on outpatient parenteral antibiotic therapy after a single dose of IV ceftriaxone in the emergency department and outpatient antibiotic service review the next day",
+        "correct": false,
+        "rationale": "Oral therapy is inappropriate for suspected native valve endocarditis at initial presentation and OPAT before stabilisation is unsafe. (Source: Therapeutic Guidelines Antibiotic: Infective endocarditis)",
+        "source_refs": [
+          "Therapeutic Guidelines Antibiotic: Infective endocarditis"
+        ]
+      }
     ],
-    "explanation": {"summary": "Native valve infective endocarditis in an intravenous drug user is most commonly caused by Staphylococcus aureus, including MRSA. Empirical therapy should cover MRSA (vancomycin), MSSA (flucloxacillin) and gram-negatives with synergy (gentamicin). De-escalation follows blood culture sensitivities. Three sets of cultures from separate sites are drawn before antibiotics where possible, and echocardiography (transthoracic then transoesophageal if equivocal) confirms vegetations.", "key_points": ["IVDU native valve: vancomycin + flucloxacillin + gentamicin empirical", "Three blood culture sets from separate sites before antibiotics", "Echocardiography: TTE first, then TOE if equivocal or prosthetic valve"], "pearls": "PR interval prolongation on ECG can signal aortic root abscess; consider TOE and surgical consult; first-degree AV block here is a red flag."},
-    "sources": [{"label": "Therapeutic Guidelines Antibiotic: Infective endocarditis", "url": "https://www.tg.org.au/"}, {"label": "ESC Guidelines: Infective Endocarditis 2023", "url": "https://www.escardio.org/Guidelines"}],
-    "reference_ranges": ["fbc", "uec", "inflammatory_markers"],
-    "created": "2026-05-31"
+    "explanation": {
+      "summary": "Native valve infective endocarditis in an intravenous drug user is most commonly caused by Staphylococcus aureus, including MRSA. Empirical therapy should cover MRSA (vancomycin), MSSA (flucloxacillin) and gram-negatives with synergy (gentamicin). De-escalation follows blood culture sensitivities. Three sets of cultures from separate sites are drawn before antibiotics where possible, and echocardiography (transthoracic then transoesophageal if equivocal) confirms vegetations.",
+      "key_points": [
+        "IVDU native valve: vancomycin + flucloxacillin + gentamicin empirical",
+        "Three blood culture sets from separate sites before antibiotics",
+        "Echocardiography: TTE first, then TOE if equivocal or prosthetic valve"
+      ],
+      "pearls": "PR interval prolongation on ECG can signal aortic root abscess; consider TOE and surgical consult; first-degree AV block here is a red flag."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines Antibiotic: Infective endocarditis",
+        "url": "https://www.tg.org.au/"
+      },
+      {
+        "label": "ESC Guidelines: Infective Endocarditis 2023",
+        "url": "https://www.escardio.org/Guidelines"
+      }
+    ],
+    "reference_ranges": [
+      "fbc",
+      "uec",
+      "inflammatory_markers"
+    ],
+    "created": "2026-05-31",
+    "difficulty_prior_v3": 3
   }
 ]

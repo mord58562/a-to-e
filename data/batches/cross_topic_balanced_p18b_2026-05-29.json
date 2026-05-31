@@ -4,9 +4,13 @@
     "topic": "Medicine",
     "subtopic": "Rheumatology",
     "subtopic_detail": "RA early DMARD initiation",
-    "difficulty": 3,
+    "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["rheumatoid arthritis", "methotrexate", "DMARDs"],
+    "tags": [
+      "rheumatoid arthritis",
+      "methotrexate",
+      "DMARDs"
+    ],
     "stem": "A 46-year-old retail manager presents to your rheumatology outpatient clinic with progressive symmetrical polyarthritis affecting the MCP and PIP joints of both hands and wrists for the past three months, with morning stiffness of 90 minutes and difficulty opening jars. She has no chest, eye or skin symptoms. There is no family history of inflammatory arthritis. She does not smoke. Her bloods are listed below. Hand x-rays show periarticular osteopenia of MCP joints without erosions. She has no liver disease, no plan to become pregnant, and has had varicella infection in childhood.",
     "data_table": {
       "Vital signs": "HR 76, BP 124/78, RR 14, SpO2 99%",
@@ -16,11 +20,51 @@
     },
     "lead_in": "Which initial DMARD strategy best matches Australian guidance?",
     "options": [
-      {"letter": "A", "text": "Hydroxychloroquine 200 mg twice daily as solitary DMARD monotherapy for a planned six-month treatment trial", "correct": false, "rationale": "Hydroxychloroquine is a relatively weak DMARD reserved for milder disease or as a combination partner; in established seropositive RA with high CRP, methotrexate is preferred first-line. (Source: Therapeutic Guidelines: Rheumatology 2017)", "source_refs": ["Therapeutic Guidelines: Rheumatology 2017"]},
-      {"letter": "B", "text": "Tofacitinib 5 mg twice daily as initial targeted synthetic DMARD therapy ahead of conventional synthetic agents", "correct": false, "rationale": "JAK inhibitors are reserved for failure of methotrexate or other conventional synthetic DMARDs under PBS criteria; they are not Australian first-line therapy. (Source: Therapeutic Guidelines: Rheumatology 2017)", "source_refs": ["Therapeutic Guidelines: Rheumatology 2017"]},
-      {"letter": "C", "text": "Methotrexate titrating to 15-25 mg weekly with folic acid plus short bridging low-dose oral prednisolone over weeks", "correct": true, "rationale": "Methotrexate is the anchor first-line DMARD for seropositive RA with elevated CRP, titrated to 15-25 mg weekly with folic acid; low-dose corticosteroid bridges disease control while methotrexate takes effect over 6-12 weeks. (Source: Therapeutic Guidelines: Rheumatology 2017)", "source_refs": ["Therapeutic Guidelines: Rheumatology 2017"]},
-      {"letter": "D", "text": "Indefinite NSAID monotherapy with daily ibuprofen for sustained symptomatic control of inflammatory joint pain", "correct": false, "rationale": "NSAIDs do not modify disease progression in RA and indefinite use risks cardiovascular, gastrointestinal and renal harm; DMARD therapy must be initiated promptly. (Source: Therapeutic Guidelines: Rheumatology 2017)", "source_refs": ["Therapeutic Guidelines: Rheumatology 2017"]},
-      {"letter": "E", "text": "Adalimumab 40 mg subcutaneously every 14 days as initial biologic monotherapy without prior conventional DMARDs", "correct": false, "rationale": "Biologic DMARDs require PBS criteria of inadequate response to at least two conventional synthetic DMARDs (including methotrexate at therapeutic dose) for at least three months; not first-line. (Source: Therapeutic Guidelines: Rheumatology 2017)", "source_refs": ["Therapeutic Guidelines: Rheumatology 2017"]}
+      {
+        "letter": "A",
+        "text": "Hydroxychloroquine 200 mg twice daily as solitary DMARD monotherapy for a planned six-month treatment trial",
+        "correct": false,
+        "rationale": "Hydroxychloroquine is a relatively weak DMARD reserved for milder disease or as a combination partner; in established seropositive RA with high CRP, methotrexate is preferred first-line. (Source: Therapeutic Guidelines: Rheumatology 2017)",
+        "source_refs": [
+          "Therapeutic Guidelines: Rheumatology 2017"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Tofacitinib 5 mg twice daily as initial targeted synthetic DMARD therapy ahead of conventional synthetic agents",
+        "correct": false,
+        "rationale": "JAK inhibitors are reserved for failure of methotrexate or other conventional synthetic DMARDs under PBS criteria; they are not Australian first-line therapy. (Source: Therapeutic Guidelines: Rheumatology 2017)",
+        "source_refs": [
+          "Therapeutic Guidelines: Rheumatology 2017"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Methotrexate titrating to 15-25 mg weekly with folic acid plus short bridging low-dose oral prednisolone over weeks",
+        "correct": true,
+        "rationale": "Methotrexate is the anchor first-line DMARD for seropositive RA with elevated CRP, titrated to 15-25 mg weekly with folic acid; low-dose corticosteroid bridges disease control while methotrexate takes effect over 6-12 weeks. (Source: Therapeutic Guidelines: Rheumatology 2017)",
+        "source_refs": [
+          "Therapeutic Guidelines: Rheumatology 2017"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Indefinite NSAID monotherapy with daily ibuprofen for sustained symptomatic control of inflammatory joint pain",
+        "correct": false,
+        "rationale": "NSAIDs do not modify disease progression in RA and indefinite use risks cardiovascular, gastrointestinal and renal harm; DMARD therapy must be initiated promptly. (Source: Therapeutic Guidelines: Rheumatology 2017)",
+        "source_refs": [
+          "Therapeutic Guidelines: Rheumatology 2017"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Adalimumab 40 mg subcutaneously every 14 days as initial biologic monotherapy without prior conventional DMARDs",
+        "correct": false,
+        "rationale": "Biologic DMARDs require PBS criteria of inadequate response to at least two conventional synthetic DMARDs (including methotrexate at therapeutic dose) for at least three months; not first-line. (Source: Therapeutic Guidelines: Rheumatology 2017)",
+        "source_refs": [
+          "Therapeutic Guidelines: Rheumatology 2017"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Australian guidance and PBS criteria require methotrexate as the anchor first-line DMARD for newly diagnosed seropositive RA. Initial dose is 10 mg weekly titrated to 15-25 mg weekly over 4-8 weeks, with folic acid 5 mg weekly (taken on a different day) to reduce mucosal and hepatic side effects. Bridging low-dose prednisolone (e.g. 10-15 mg daily tapered over 8-12 weeks) controls inflammation while methotrexate reaches therapeutic effect. Biologic and targeted synthetic DMARDs require documented failure of conventional therapy.",
@@ -33,20 +77,35 @@
       "pearls": "In seropositive RA with CRP over 20 mg/L, start methotrexate at 10 mg weekly with folic acid 5 mg on a different day, escalate by 2.5-5 mg every 2-4 weeks to 15-25 mg, and bridge with prednisolone 15 mg daily tapered over 12 weeks."
     },
     "sources": [
-      {"label": "Therapeutic Guidelines: Rheumatology 2017", "url": "https://www.tg.org.au"},
-      {"label": "Australian Rheumatology Association methotrexate patient information", "url": "https://rheumatology.org.au"}
+      {
+        "label": "Therapeutic Guidelines: Rheumatology 2017",
+        "url": "https://www.tg.org.au"
+      },
+      {
+        "label": "Australian Rheumatology Association methotrexate patient information",
+        "url": "https://rheumatology.org.au"
+      }
     ],
-    "reference_ranges": ["fbc", "lfts", "inflammatory_markers"],
-    "created": "2026-05-29"
+    "reference_ranges": [
+      "fbc",
+      "lfts",
+      "inflammatory_markers"
+    ],
+    "created": "2026-05-29",
+    "difficulty_prior_v3": 3
   },
   {
     "id": "ctb-p18b-012",
     "topic": "Medicine",
     "subtopic": "Vascular emergency",
     "subtopic_detail": "Acute aortic dissection workup",
-    "difficulty": 3,
+    "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["aortic dissection", "imaging", "hypertension"],
+    "tags": [
+      "aortic dissection",
+      "imaging",
+      "hypertension"
+    ],
     "stem": "You are the ED resident assessing a 62-year-old man with sudden severe interscapular tearing pain that started 45 minutes ago while gardening. He is sweaty, anxious, and rates pain 10/10. Past history includes hypertension (often unmonitored) and bicuspid aortic valve. Right arm BP is 178/96 and left arm BP is 142/72. Femoral pulses are present and equal. Cardiac examination reveals a soft early diastolic murmur. The chest is clear. ECG shows sinus rhythm with non-specific lateral T wave changes and no ST elevation. CXR shows a widened mediastinum.",
     "data_table": {
       "Vital signs": "HR 96 sinus, BP right 178/96, BP left 142/72, RR 22, SpO2 96%, Temp 36.8",
@@ -56,11 +115,51 @@
     },
     "lead_in": "Which is the most appropriate next investigation?",
     "options": [
-      {"letter": "A", "text": "Urgent CT aortogram from the neck through to the femoral bifurcation acquired with arterial-phase contrast", "correct": true, "rationale": "Inter-arm BP differential exceeding 20 mmHg, tearing interscapular pain, widened mediastinum and bicuspid aortic valve make acute aortic dissection the leading diagnosis; CT aortogram is the most sensitive and rapidly available confirmatory test in Australian EDs. (Source: Therapeutic Guidelines: Cardiovascular 2018)", "source_refs": ["Therapeutic Guidelines: Cardiovascular 2018"]},
-      {"letter": "B", "text": "Bedside transthoracic echocardiogram by ED clinician as the sole definitive investigation before specialty referral", "correct": false, "rationale": "TTE has limited sensitivity for ascending aortic dissection and cannot adequately visualise the descending aorta; it complements but does not replace cross-sectional imaging. (Source: Therapeutic Guidelines: Cardiovascular 2018)", "source_refs": ["Therapeutic Guidelines: Cardiovascular 2018"]},
-      {"letter": "C", "text": "Coronary angiography to exclude STEMI before any further imaging or treatment decisions are made for this patient", "correct": false, "rationale": "ECG shows no ST elevation and the dominant differential is dissection; angiography could delay diagnosis and cardiac catheterisation in undiagnosed dissection is hazardous. (Source: Therapeutic Guidelines: Cardiovascular 2018)", "source_refs": ["Therapeutic Guidelines: Cardiovascular 2018"]},
-      {"letter": "D", "text": "Exercise stress test once analgesia controls his pain to risk-stratify before further investigation choices are made", "correct": false, "rationale": "Stress testing in a patient with suspected dissection is absolutely contraindicated and would not be feasible in this acute presentation. (Source: Therapeutic Guidelines: Cardiovascular 2018)", "source_refs": ["Therapeutic Guidelines: Cardiovascular 2018"]},
-      {"letter": "E", "text": "Outpatient transoesophageal echocardiogram within 24 hours after admission to a chest-pain short-stay observation unit", "correct": false, "rationale": "Suspected acute aortic dissection requires same-hour imaging; deferring to outpatient TOE risks rupture and death. (Source: Therapeutic Guidelines: Cardiovascular 2018)", "source_refs": ["Therapeutic Guidelines: Cardiovascular 2018"]}
+      {
+        "letter": "A",
+        "text": "Urgent CT aortogram from the neck through to the femoral bifurcation acquired with arterial-phase contrast",
+        "correct": true,
+        "rationale": "Inter-arm BP differential exceeding 20 mmHg, tearing interscapular pain, widened mediastinum and bicuspid aortic valve make acute aortic dissection the leading diagnosis; CT aortogram is the most sensitive and rapidly available confirmatory test in Australian EDs. (Source: Therapeutic Guidelines: Cardiovascular 2018)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular 2018"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Bedside transthoracic echocardiogram by ED clinician as the sole definitive investigation before specialty referral",
+        "correct": false,
+        "rationale": "TTE has limited sensitivity for ascending aortic dissection and cannot adequately visualise the descending aorta; it complements but does not replace cross-sectional imaging. (Source: Therapeutic Guidelines: Cardiovascular 2018)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular 2018"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Coronary angiography to exclude STEMI before any further imaging or treatment decisions are made for this patient",
+        "correct": false,
+        "rationale": "ECG shows no ST elevation and the dominant differential is dissection; angiography could delay diagnosis and cardiac catheterisation in undiagnosed dissection is hazardous. (Source: Therapeutic Guidelines: Cardiovascular 2018)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular 2018"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Exercise stress test once analgesia controls his pain to risk-stratify before further investigation choices are made",
+        "correct": false,
+        "rationale": "Stress testing in a patient with suspected dissection is absolutely contraindicated and would not be feasible in this acute presentation. (Source: Therapeutic Guidelines: Cardiovascular 2018)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular 2018"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Outpatient transoesophageal echocardiogram within 24 hours after admission to a chest-pain short-stay observation unit",
+        "correct": false,
+        "rationale": "Suspected acute aortic dissection requires same-hour imaging; deferring to outpatient TOE risks rupture and death. (Source: Therapeutic Guidelines: Cardiovascular 2018)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular 2018"
+        ]
+      }
     ],
     "explanation": {
       "summary": "The combination of tearing interscapular pain, inter-arm BP differential greater than 20 mmHg, a widened mediastinum and a known bicuspid aortic valve makes acute aortic dissection the leading diagnosis. CT aortogram is the most rapidly available high-sensitivity confirmatory test in Australian emergency departments. While imaging is being arranged, target heart rate around 60 using IV beta-blocker (esmolol or metoprolol), then add nitroprusside or GTN to achieve systolic BP 100-120 mmHg, and call the cardiothoracic team for type A dissection.",
@@ -73,20 +172,31 @@
       "pearls": "If the inter-arm systolic gap exceeds 20 mmHg, order CT aortogram and prepare IV esmolol 500 mcg/kg load then 50-200 mcg/kg/min infusion in parallel rather than sending a D-dimer or arranging TTE."
     },
     "sources": [
-      {"label": "Therapeutic Guidelines: Cardiovascular 2018", "url": "https://www.tg.org.au"},
-      {"label": "ESC Guidelines for diagnosis and treatment of aortic diseases 2014", "url": "https://www.escardio.org/Guidelines"}
+      {
+        "label": "Therapeutic Guidelines: Cardiovascular 2018",
+        "url": "https://www.tg.org.au"
+      },
+      {
+        "label": "ESC Guidelines for diagnosis and treatment of aortic diseases 2014",
+        "url": "https://www.escardio.org/Guidelines"
+      }
     ],
     "reference_ranges": [],
-    "created": "2026-05-29"
+    "created": "2026-05-29",
+    "difficulty_prior_v3": 3
   },
   {
     "id": "ctb-p18b-013",
     "topic": "Medicine",
     "subtopic": "Neurology",
     "subtopic_detail": "Multiple sclerosis - McDonald criteria",
-    "difficulty": 4,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["multiple sclerosis", "MRI", "neuroimmunology"],
+    "tags": [
+      "multiple sclerosis",
+      "MRI",
+      "neuroimmunology"
+    ],
     "stem": "You are the neurology registrar reviewing a 31-year-old woman who presents with a four-day history of right eye pain on movement and blurring of central vision. She had a self-limited bout of left-sided sensory loss in the leg six months ago lasting two weeks that she did not seek care for. Visual acuity is 6/18 right and 6/6 left with a right RAPD. Fundus examination shows mild right optic disc swelling. MRI brain shows three T2 hyperintense lesions: one periventricular, one juxtacortical and one infratentorial, with one demonstrating contrast enhancement. MRI of the spinal cord shows a single non-enhancing cervical T2 lesion. CSF analysis is pending.",
     "data_table": {
       "Vital signs": "HR 72, BP 118/74, RR 14, SpO2 99%",
@@ -96,11 +206,51 @@
     },
     "lead_in": "Which statement best applies the 2017 McDonald criteria here?",
     "options": [
-      {"letter": "A", "text": "Diagnosis requires a second clinical attack before multiple sclerosis can be confirmed even with current MRI findings", "correct": false, "rationale": "The 2017 McDonald criteria allow MS diagnosis after a single clinical attack if dissemination in space and time are demonstrated by MRI or CSF; a second clinical attack is not mandatory. (Source: 2017 McDonald criteria - Lancet Neurology 2018)", "source_refs": ["2017 McDonald criteria - Lancet Neurology 2018"]},
-      {"letter": "B", "text": "DIS is met by MRI but dissemination in time requires repeat MRI in three months before MS can be formally diagnosed", "correct": false, "rationale": "Dissemination in time can be met by the simultaneous presence of enhancing and non-enhancing lesions on a single MRI, or by CSF-specific oligoclonal bands plus DIS; repeat imaging is not required. (Source: 2017 McDonald criteria - Lancet Neurology 2018)", "source_refs": ["2017 McDonald criteria - Lancet Neurology 2018"]},
-      {"letter": "C", "text": "DIS and DIT are met on a single MRI but CSF oligoclonal bands are required before MS diagnosis can be formally made", "correct": false, "rationale": "Once DIS and DIT are met by MRI, CSF is not required for the 2017 criteria; CSF supports diagnosis when DIT cannot be demonstrated by MRI alone. (Source: 2017 McDonald criteria - Lancet Neurology 2018)", "source_refs": ["2017 McDonald criteria - Lancet Neurology 2018"]},
-      {"letter": "D", "text": "Diagnosis cannot be made without first confirming negative aquaporin-4 antibodies plus complete CSF analysis results", "correct": false, "rationale": "NMOSD must be considered and AQP4 testing performed to exclude it, but once excluded and DIS and DIT are met clinically and on MRI, MS can be diagnosed under the 2017 criteria without mandatory CSF. (Source: 2017 McDonald criteria - Lancet Neurology 2018)", "source_refs": ["2017 McDonald criteria - Lancet Neurology 2018"]},
-      {"letter": "E", "text": "CIS with DIS and DIT satisfied on single MRI fulfils 2017 McDonald criteria allowing diagnosis after exclusion of mimics", "correct": true, "rationale": "DIS is met by lesions in at least 2 of 4 typical locations (this patient has periventricular, juxtacortical, infratentorial and spinal cord involvement); DIT is met by simultaneous enhancing and non-enhancing lesions on the same scan. Mimics including NMOSD and MOGAD must be excluded; MS can then be diagnosed and DMT discussed. (Source: 2017 McDonald criteria - Lancet Neurology 2018)", "source_refs": ["2017 McDonald criteria - Lancet Neurology 2018"]}
+      {
+        "letter": "A",
+        "text": "Diagnosis requires a second clinical attack before multiple sclerosis can be confirmed even with current MRI findings",
+        "correct": false,
+        "rationale": "The 2017 McDonald criteria allow MS diagnosis after a single clinical attack if dissemination in space and time are demonstrated by MRI or CSF; a second clinical attack is not mandatory. (Source: 2017 McDonald criteria - Lancet Neurology 2018)",
+        "source_refs": [
+          "2017 McDonald criteria - Lancet Neurology 2018"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "DIS is met by MRI but dissemination in time requires repeat MRI in three months before MS can be formally diagnosed",
+        "correct": false,
+        "rationale": "Dissemination in time can be met by the simultaneous presence of enhancing and non-enhancing lesions on a single MRI, or by CSF-specific oligoclonal bands plus DIS; repeat imaging is not required. (Source: 2017 McDonald criteria - Lancet Neurology 2018)",
+        "source_refs": [
+          "2017 McDonald criteria - Lancet Neurology 2018"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "DIS and DIT are met on a single MRI but CSF oligoclonal bands are required before MS diagnosis can be formally made",
+        "correct": false,
+        "rationale": "Once DIS and DIT are met by MRI, CSF is not required for the 2017 criteria; CSF supports diagnosis when DIT cannot be demonstrated by MRI alone. (Source: 2017 McDonald criteria - Lancet Neurology 2018)",
+        "source_refs": [
+          "2017 McDonald criteria - Lancet Neurology 2018"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Diagnosis cannot be made without first confirming negative aquaporin-4 antibodies plus complete CSF analysis results",
+        "correct": false,
+        "rationale": "NMOSD must be considered and AQP4 testing performed to exclude it, but once excluded and DIS and DIT are met clinically and on MRI, MS can be diagnosed under the 2017 criteria without mandatory CSF. (Source: 2017 McDonald criteria - Lancet Neurology 2018)",
+        "source_refs": [
+          "2017 McDonald criteria - Lancet Neurology 2018"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "CIS with DIS and DIT satisfied on single MRI fulfils 2017 McDonald criteria allowing diagnosis after exclusion of mimics",
+        "correct": true,
+        "rationale": "DIS is met by lesions in at least 2 of 4 typical locations (this patient has periventricular, juxtacortical, infratentorial and spinal cord involvement); DIT is met by simultaneous enhancing and non-enhancing lesions on the same scan. Mimics including NMOSD and MOGAD must be excluded; MS can then be diagnosed and DMT discussed. (Source: 2017 McDonald criteria - Lancet Neurology 2018)",
+        "source_refs": [
+          "2017 McDonald criteria - Lancet Neurology 2018"
+        ]
+      }
     ],
     "explanation": {
       "summary": "The 2017 McDonald criteria allow MS diagnosis after a single clinical attack if dissemination in space (DIS) and dissemination in time (DIT) are demonstrated. DIS requires lesions in at least 2 of 4 typical CNS locations: periventricular, cortical or juxtacortical, infratentorial, or spinal cord. DIT can be met by simultaneous enhancing and non-enhancing lesions on a single MRI, by a new lesion on a later MRI, or by CSF-specific oligoclonal bands together with DIS. Exclusion of mimics (NMOSD, MOGAD, sarcoid, vasculitis) is essential.",
@@ -113,20 +263,31 @@
       "pearls": "If a single MRI in a CIS patient shows lesions in two or more typical locations and at least one enhancing plus one non-enhancing lesion, the 2017 McDonald criteria are satisfied; refer for AQP4/MOG and discuss disease-modifying therapy."
     },
     "sources": [
-      {"label": "2017 McDonald criteria - Lancet Neurology 2018", "url": "https://doi.org/10.1016/S1474-4422(17)30470-2"},
-      {"label": "MS Australia Clinical Guidelines for Diagnosis 2021", "url": "https://www.msaustralia.org.au"}
+      {
+        "label": "2017 McDonald criteria - Lancet Neurology 2018",
+        "url": "https://doi.org/10.1016/S1474-4422(17)30470-2"
+      },
+      {
+        "label": "MS Australia Clinical Guidelines for Diagnosis 2021",
+        "url": "https://www.msaustralia.org.au"
+      }
     ],
     "reference_ranges": [],
-    "created": "2026-05-29"
+    "created": "2026-05-29",
+    "difficulty_prior_v3": 4
   },
   {
     "id": "ctb-p18b-014",
     "topic": "Medicine",
     "subtopic": "Geriatric medicine",
     "subtopic_detail": "Dementia with Lewy bodies - antipsychotic sensitivity",
-    "difficulty": 4,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["Lewy body dementia", "antipsychotic", "delirium"],
+    "tags": [
+      "Lewy body dementia",
+      "antipsychotic",
+      "delirium"
+    ],
     "stem": "A 78-year-old man with a 14-month history of fluctuating cognition, recurrent vivid visual hallucinations of small animals, mild bradykinesia and REM sleep behaviour disorder is admitted under your geriatrics team with new agitation overnight after a urinary tract infection has been identified. The night staff request a sedating medication. He is not a danger to himself. He is normally on rivastigmine 9.5 mg patch daily and trimethoprim was started six hours ago. He has had no benzodiazepines or antipsychotics previously.",
     "data_table": {
       "Vital signs": "HR 92, BP 122/76, RR 18, SpO2 95% on room air, Temp 37.6",
@@ -136,11 +297,51 @@
     },
     "lead_in": "Which is the most appropriate medication choice for sedation tonight?",
     "options": [
-      {"letter": "A", "text": "Haloperidol 0.5 mg orally as required for agitation overnight with hourly nursing observations of motor status", "correct": false, "rationale": "Typical antipsychotics including haloperidol carry up to 50% risk of severe neuroleptic sensitivity reactions in DLB, including worsening parkinsonism, autonomic instability and NMS-like syndrome; absolutely avoided. (Source: NHMRC Clinical Practice Guidelines for Dementia 2016)", "source_refs": ["NHMRC Clinical Practice Guidelines for Dementia 2016"]},
-      {"letter": "B", "text": "Risperidone 0.5 mg orally as required overnight aiming to reduce hallucinations and agitation during the night shift", "correct": false, "rationale": "Risperidone has D2 affinity comparable to typical antipsychotics in this context and is associated with severe sensitivity in DLB; it should be avoided. (Source: NHMRC Clinical Practice Guidelines for Dementia 2016)", "source_refs": ["NHMRC Clinical Practice Guidelines for Dementia 2016"]},
-      {"letter": "C", "text": "Olanzapine 5 mg orally as required overnight as the sedating atypical antipsychotic of choice for nocturnal agitation", "correct": false, "rationale": "Olanzapine has been associated with severe neuroleptic sensitivity reactions in DLB and is not recommended; if an antipsychotic is unavoidable, quetiapine at very low dose is preferred. (Source: NHMRC Clinical Practice Guidelines for Dementia 2016)", "source_refs": ["NHMRC Clinical Practice Guidelines for Dementia 2016"]},
-      {"letter": "D", "text": "Address reversible delirium triggers with non-pharmacological measures, reserving low-dose quetiapine for refractory severe distress", "correct": true, "rationale": "DLB carries high neuroleptic sensitivity risk; the first response to delirium is to address triggers and use non-pharmacological measures, with low-dose quetiapine reserved for severe distress that cannot be otherwise managed. (Source: NHMRC Clinical Practice Guidelines for Dementia 2016)", "source_refs": ["NHMRC Clinical Practice Guidelines for Dementia 2016"]},
-      {"letter": "E", "text": "Diazepam 5 mg orally as required overnight for sedation as the standard first-line agent in agitated older inpatients", "correct": false, "rationale": "Long-acting benzodiazepines precipitate prolonged sedation, falls and paradoxical worsening of delirium in older adults; if benzodiazepine is unavoidable, short-acting low-dose lorazepam is preferred. (Source: NHMRC Clinical Practice Guidelines for Dementia 2016)", "source_refs": ["NHMRC Clinical Practice Guidelines for Dementia 2016"]}
+      {
+        "letter": "A",
+        "text": "Haloperidol 0.5 mg orally as required for agitation overnight with hourly nursing observations of motor status",
+        "correct": false,
+        "rationale": "Typical antipsychotics including haloperidol carry up to 50% risk of severe neuroleptic sensitivity reactions in DLB, including worsening parkinsonism, autonomic instability and NMS-like syndrome; absolutely avoided. (Source: NHMRC Clinical Practice Guidelines for Dementia 2016)",
+        "source_refs": [
+          "NHMRC Clinical Practice Guidelines for Dementia 2016"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Risperidone 0.5 mg orally as required overnight aiming to reduce hallucinations and agitation during the night shift",
+        "correct": false,
+        "rationale": "Risperidone has D2 affinity comparable to typical antipsychotics in this context and is associated with severe sensitivity in DLB; it should be avoided. (Source: NHMRC Clinical Practice Guidelines for Dementia 2016)",
+        "source_refs": [
+          "NHMRC Clinical Practice Guidelines for Dementia 2016"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Olanzapine 5 mg orally as required overnight as the sedating atypical antipsychotic of choice for nocturnal agitation",
+        "correct": false,
+        "rationale": "Olanzapine has been associated with severe neuroleptic sensitivity reactions in DLB and is not recommended; if an antipsychotic is unavoidable, quetiapine at very low dose is preferred. (Source: NHMRC Clinical Practice Guidelines for Dementia 2016)",
+        "source_refs": [
+          "NHMRC Clinical Practice Guidelines for Dementia 2016"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Address reversible delirium triggers with non-pharmacological measures, reserving low-dose quetiapine for refractory severe distress",
+        "correct": true,
+        "rationale": "DLB carries high neuroleptic sensitivity risk; the first response to delirium is to address triggers and use non-pharmacological measures, with low-dose quetiapine reserved for severe distress that cannot be otherwise managed. (Source: NHMRC Clinical Practice Guidelines for Dementia 2016)",
+        "source_refs": [
+          "NHMRC Clinical Practice Guidelines for Dementia 2016"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Diazepam 5 mg orally as required overnight for sedation as the standard first-line agent in agitated older inpatients",
+        "correct": false,
+        "rationale": "Long-acting benzodiazepines precipitate prolonged sedation, falls and paradoxical worsening of delirium in older adults; if benzodiazepine is unavoidable, short-acting low-dose lorazepam is preferred. (Source: NHMRC Clinical Practice Guidelines for Dementia 2016)",
+        "source_refs": [
+          "NHMRC Clinical Practice Guidelines for Dementia 2016"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Dementia with Lewy bodies is associated with severe neuroleptic sensitivity (occurring in up to half of patients exposed) which can present as worsening parkinsonism, autonomic instability and NMS-like syndromes. First-line management of delirium superimposed on DLB is to identify and treat reversible causes (infection, dehydration, pain, urinary retention) and use non-pharmacological strategies. If a sedating agent is required for refractory severe distress, low-dose quetiapine (12.5-25 mg) is preferred, but it is not first-line.",
@@ -153,20 +354,31 @@
       "pearls": "When DLB patients become agitated with delirium, fix the UTI, hydrate, analgesia and orient first; if pharmacotherapy is unavoidable, use quetiapine 12.5-25 mg orally rather than haloperidol or risperidone, which can precipitate severe neuroleptic sensitivity reactions."
     },
     "sources": [
-      {"label": "NHMRC Clinical Practice Guidelines for Dementia 2016", "url": "https://www.dementia.org.au/clinical-practice-guidelines"},
-      {"label": "Therapeutic Guidelines: Psychotropic 2021 - Dementia", "url": "https://www.tg.org.au"}
+      {
+        "label": "NHMRC Clinical Practice Guidelines for Dementia 2016",
+        "url": "https://www.dementia.org.au/clinical-practice-guidelines"
+      },
+      {
+        "label": "Therapeutic Guidelines: Psychotropic 2021 - Dementia",
+        "url": "https://www.tg.org.au"
+      }
     ],
     "reference_ranges": [],
-    "created": "2026-05-29"
+    "created": "2026-05-29",
+    "difficulty_prior_v3": 4
   },
   {
     "id": "ctb-p18b-015",
     "topic": "Medicine",
     "subtopic": "Haematology",
     "subtopic_detail": "VTE duration of anticoagulation",
-    "difficulty": 4,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["VTE", "anticoagulation", "pulmonary embolism"],
+    "tags": [
+      "VTE",
+      "anticoagulation",
+      "pulmonary embolism"
+    ],
     "stem": "A 56-year-old woman who works as a school administrator is reviewed in your haematology clinic three months after a first unprovoked segmental pulmonary embolism. She presented at the time with breathlessness on exertion and was treated with apixaban with full clinical and radiological recovery. There is no personal or family history of malignancy, no recent surgery, immobilisation or pregnancy, and no oestrogen-containing therapy. A thrombophilia screen at three months shows no high-risk hereditary thrombophilia. Her HAS-BLED score is 1.",
     "data_table": {
       "Vital signs": "HR 72, BP 118/72, RR 14, SpO2 98%",
@@ -176,11 +388,51 @@
     },
     "lead_in": "What is the most appropriate plan for ongoing anticoagulation?",
     "options": [
-      {"letter": "A", "text": "Stop apixaban now at the three-month mark with no ongoing oral anticoagulation or antiplatelet substitution prescribed", "correct": false, "rationale": "First unprovoked PE carries a recurrence risk around 30% over five years off anticoagulation; stopping at three months is appropriate for provoked VTE with reversible trigger only. (Source: THANZ guidance on VTE 2019)", "source_refs": ["THANZ guidance on VTE 2019"]},
-      {"letter": "B", "text": "Continue apixaban 5 mg twice daily for a further nine months and then stop without further haematology review of risk", "correct": false, "rationale": "Stopping at twelve months after an unprovoked event still leaves the patient with substantial annual recurrence risk; current guidance favours indefinite anticoagulation with periodic review unless bleeding risk increases. (Source: THANZ guidance on VTE 2019)", "source_refs": ["THANZ guidance on VTE 2019"]},
-      {"letter": "C", "text": "Continue extended indefinite anticoagulation with apixaban 2.5 mg twice daily with annual bleeding and recurrence review", "correct": true, "rationale": "Australian and international guidance recommend extended anticoagulation after first unprovoked VTE; apixaban 2.5 mg twice daily after the initial treatment period maintains efficacy with reduced bleeding versus full dose. (Source: THANZ guidance on VTE 2019)", "source_refs": ["THANZ guidance on VTE 2019"]},
-      {"letter": "D", "text": "Switch to aspirin 100 mg daily as ongoing long-term secondary prevention against recurrent venous thromboembolic events", "correct": false, "rationale": "Aspirin reduces recurrence by around 30% versus 80% with anticoagulant therapy after unprovoked VTE; it is not equivalent to extended DOAC therapy. (Source: THANZ guidance on VTE 2019)", "source_refs": ["THANZ guidance on VTE 2019"]},
-      {"letter": "E", "text": "Switch to warfarin with target INR 2.0-3.0 because of well-established long-term safety data and lower drug acquisition cost", "correct": false, "rationale": "Warfarin and DOACs both have long-term efficacy data; switching to warfarin in a patient stable on apixaban adds INR monitoring burden without clinical benefit. (Source: THANZ guidance on VTE 2019)", "source_refs": ["THANZ guidance on VTE 2019"]}
+      {
+        "letter": "A",
+        "text": "Stop apixaban now at the three-month mark with no ongoing oral anticoagulation or antiplatelet substitution prescribed",
+        "correct": false,
+        "rationale": "First unprovoked PE carries a recurrence risk around 30% over five years off anticoagulation; stopping at three months is appropriate for provoked VTE with reversible trigger only. (Source: THANZ guidance on VTE 2019)",
+        "source_refs": [
+          "THANZ guidance on VTE 2019"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Continue apixaban 5 mg twice daily for a further nine months and then stop without further haematology review of risk",
+        "correct": false,
+        "rationale": "Stopping at twelve months after an unprovoked event still leaves the patient with substantial annual recurrence risk; current guidance favours indefinite anticoagulation with periodic review unless bleeding risk increases. (Source: THANZ guidance on VTE 2019)",
+        "source_refs": [
+          "THANZ guidance on VTE 2019"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Continue extended indefinite anticoagulation with apixaban 2.5 mg twice daily with annual bleeding and recurrence review",
+        "correct": true,
+        "rationale": "Australian and international guidance recommend extended anticoagulation after first unprovoked VTE; apixaban 2.5 mg twice daily after the initial treatment period maintains efficacy with reduced bleeding versus full dose. (Source: THANZ guidance on VTE 2019)",
+        "source_refs": [
+          "THANZ guidance on VTE 2019"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Switch to aspirin 100 mg daily as ongoing long-term secondary prevention against recurrent venous thromboembolic events",
+        "correct": false,
+        "rationale": "Aspirin reduces recurrence by around 30% versus 80% with anticoagulant therapy after unprovoked VTE; it is not equivalent to extended DOAC therapy. (Source: THANZ guidance on VTE 2019)",
+        "source_refs": [
+          "THANZ guidance on VTE 2019"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Switch to warfarin with target INR 2.0-3.0 because of well-established long-term safety data and lower drug acquisition cost",
+        "correct": false,
+        "rationale": "Warfarin and DOACs both have long-term efficacy data; switching to warfarin in a patient stable on apixaban adds INR monitoring burden without clinical benefit. (Source: THANZ guidance on VTE 2019)",
+        "source_refs": [
+          "THANZ guidance on VTE 2019"
+        ]
+      }
     ],
     "explanation": {
       "summary": "After a first unprovoked VTE, current Australian guidance recommends extended (indefinite) anticoagulation with periodic bleeding-risk review unless bleeding risk becomes prohibitive. Reduced-dose apixaban (2.5 mg twice daily) or reduced-dose rivaroxaban (10 mg daily) after the initial 6-month treatment period maintain efficacy versus full dose with lower bleeding risk. Aspirin is inferior to anticoagulation for recurrence prevention. Provoked VTE with a fully reversible trigger is typically anticoagulated for 3 months only.",
@@ -193,20 +445,33 @@
       "pearls": "Step apixaban down from 5 mg twice daily to 2.5 mg twice daily at six months in extended therapy for unprovoked VTE; review HAS-BLED score and bleeding history annually to balance ongoing benefit and risk."
     },
     "sources": [
-      {"label": "THANZ guidance on VTE 2019", "url": "https://www.thanz.org.au"},
-      {"label": "Therapeutic Guidelines: Cardiovascular 2018 - Anticoagulation", "url": "https://www.tg.org.au"}
+      {
+        "label": "THANZ guidance on VTE 2019",
+        "url": "https://www.thanz.org.au"
+      },
+      {
+        "label": "Therapeutic Guidelines: Cardiovascular 2018 - Anticoagulation",
+        "url": "https://www.tg.org.au"
+      }
     ],
-    "reference_ranges": ["coags"],
-    "created": "2026-05-29"
+    "reference_ranges": [
+      "coags"
+    ],
+    "created": "2026-05-29",
+    "difficulty_prior_v3": 4
   },
   {
     "id": "ctb-p18b-016",
     "topic": "Medicine",
     "subtopic": "Critical care",
     "subtopic_detail": "Tension pneumothorax under mechanical ventilation",
-    "difficulty": 5,
+    "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["tension pneumothorax", "ventilation", "haemodynamics"],
+    "tags": [
+      "tension pneumothorax",
+      "ventilation",
+      "haemodynamics"
+    ],
     "stem": "You are the ICU registrar called urgently to bed 4. A 64-year-old man intubated for ARDS secondary to community-acquired pneumonia three days ago suddenly becomes haemodynamically unstable. He is on volume-controlled ventilation with tidal volume 6 mL/kg, PEEP 12 cm H2O, FiO2 0.6. Over the past three minutes, peak airway pressures have risen from 28 to 46 cm H2O, plateau pressures from 22 to 38 cm H2O, BP has fallen from 118/72 to 70/40, HR has risen from 96 to 138 sinus, and SpO2 has dropped from 94% to 80%. The trachea appears deviated to the left, the right hemithorax is hyperresonant with absent breath sounds, and there is distended neck veins. He is on noradrenaline 0.15 mcg/kg/min already.",
     "data_table": {
       "Vital signs": "HR 138 sinus, BP 70/40, SpO2 80%, peak airway pressure 46 cm H2O, plateau 38 cm H2O",
@@ -216,11 +481,51 @@
     },
     "lead_in": "What is the most appropriate immediate next intervention?",
     "options": [
-      {"letter": "A", "text": "Immediate finger or needle thoracostomy in the right 4th-5th intercostal space anterior axillary line followed by ICC", "correct": true, "rationale": "Clinical signs match tension pneumothorax superimposed on positive-pressure ventilation; immediate decompression at the safer 4th-5th ICS anterior or mid-axillary site (preferred over 2nd ICS midclavicular in ventilated adults due to chest-wall thickness) restores cardiac output, with definitive ICC to follow. (Source: ANZCOR Guideline 11.5 Special Circumstances)", "source_refs": ["ANZCOR Guideline 11.5 Special Circumstances"]},
-      {"letter": "B", "text": "Briefly disconnect the ventilator and manually bag-mask ventilate to confirm tension pneumothorax before any decompression", "correct": false, "rationale": "Brief disconnection may transiently improve haemodynamics by reducing intrathoracic pressure but delays decompression and is not the definitive next step; the clinical picture mandates immediate thoracostomy. (Source: ANZCOR Guideline 11.5 Special Circumstances)", "source_refs": ["ANZCOR Guideline 11.5 Special Circumstances"]},
-      {"letter": "C", "text": "Obtain an urgent portable supine chest radiograph for tension pneumothorax confirmation before any decompression is performed", "correct": false, "rationale": "Tension pneumothorax is a clinical diagnosis and treatment must not be delayed for imaging; CXR confirmation post-decompression is acceptable. (Source: ANZCOR Guideline 11.5 Special Circumstances)", "source_refs": ["ANZCOR Guideline 11.5 Special Circumstances"]},
-      {"letter": "D", "text": "Increase noradrenaline infusion to 0.5 mcg/kg/min and add vasopressin while continuing current ventilator settings unchanged", "correct": false, "rationale": "Vasopressor escalation cannot overcome obstructive shock from tension pneumothorax; without decompression the patient will arrest. (Source: ANZCOR Guideline 11.5 Special Circumstances)", "source_refs": ["ANZCOR Guideline 11.5 Special Circumstances"]},
-      {"letter": "E", "text": "Increase PEEP to 18 cm H2O and perform a sustained-inflation lung recruitment manoeuvre on the affected hemithorax", "correct": false, "rationale": "Increasing PEEP and recruitment manoeuvres worsen tension pneumothorax by adding gas to the pleural space and dropping venous return further; this risks immediate cardiac arrest. (Source: ANZCOR Guideline 11.5 Special Circumstances)", "source_refs": ["ANZCOR Guideline 11.5 Special Circumstances"]}
+      {
+        "letter": "A",
+        "text": "Immediate finger or needle thoracostomy in the right 4th-5th intercostal space anterior axillary line followed by ICC",
+        "correct": true,
+        "rationale": "Clinical signs match tension pneumothorax superimposed on positive-pressure ventilation; immediate decompression at the safer 4th-5th ICS anterior or mid-axillary site (preferred over 2nd ICS midclavicular in ventilated adults due to chest-wall thickness) restores cardiac output, with definitive ICC to follow. (Source: ANZCOR Guideline 11.5 Special Circumstances)",
+        "source_refs": [
+          "ANZCOR Guideline 11.5 Special Circumstances"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Briefly disconnect the ventilator and manually bag-mask ventilate to confirm tension pneumothorax before any decompression",
+        "correct": false,
+        "rationale": "Brief disconnection may transiently improve haemodynamics by reducing intrathoracic pressure but delays decompression and is not the definitive next step; the clinical picture mandates immediate thoracostomy. (Source: ANZCOR Guideline 11.5 Special Circumstances)",
+        "source_refs": [
+          "ANZCOR Guideline 11.5 Special Circumstances"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Obtain an urgent portable supine chest radiograph for tension pneumothorax confirmation before any decompression is performed",
+        "correct": false,
+        "rationale": "Tension pneumothorax is a clinical diagnosis and treatment must not be delayed for imaging; CXR confirmation post-decompression is acceptable. (Source: ANZCOR Guideline 11.5 Special Circumstances)",
+        "source_refs": [
+          "ANZCOR Guideline 11.5 Special Circumstances"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Increase noradrenaline infusion to 0.5 mcg/kg/min and add vasopressin while continuing current ventilator settings unchanged",
+        "correct": false,
+        "rationale": "Vasopressor escalation cannot overcome obstructive shock from tension pneumothorax; without decompression the patient will arrest. (Source: ANZCOR Guideline 11.5 Special Circumstances)",
+        "source_refs": [
+          "ANZCOR Guideline 11.5 Special Circumstances"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Increase PEEP to 18 cm H2O and perform a sustained-inflation lung recruitment manoeuvre on the affected hemithorax",
+        "correct": false,
+        "rationale": "Increasing PEEP and recruitment manoeuvres worsen tension pneumothorax by adding gas to the pleural space and dropping venous return further; this risks immediate cardiac arrest. (Source: ANZCOR Guideline 11.5 Special Circumstances)",
+        "source_refs": [
+          "ANZCOR Guideline 11.5 Special Circumstances"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Sudden rise in peak and plateau pressures with hypotension, hypoxia, tracheal deviation, distended neck veins and absent unilateral breath sounds in a ventilated patient defines tension pneumothorax. Immediate decompression is the priority and is now recommended at the 4th or 5th intercostal space anterior or mid-axillary line in adults (preferred over the historical 2nd ICS midclavicular site) because of more reliable pleural entry through thinner chest wall. Needle decompression is a temporising measure; definitive intercostal catheter insertion follows. CXR confirmation is post-decompression.",
@@ -233,20 +538,33 @@
       "pearls": "If peak airway pressure rises more than 10 cm H2O over baseline within minutes alongside hypotension and unilateral absent breath sounds, decompress at the 4th-5th ICS mid-axillary rather than 2nd ICS midclavicular - the lateral approach has higher first-pass success in adults with thick anterior chest walls."
     },
     "sources": [
-      {"label": "ANZCOR Guideline 11.5 Special Circumstances", "url": "https://www.resus.org.au"},
-      {"label": "Therapeutic Guidelines: Emergency 2022 - Thoracic Emergencies", "url": "https://www.tg.org.au"}
+      {
+        "label": "ANZCOR Guideline 11.5 Special Circumstances",
+        "url": "https://www.resus.org.au"
+      },
+      {
+        "label": "Therapeutic Guidelines: Emergency 2022 - Thoracic Emergencies",
+        "url": "https://www.tg.org.au"
+      }
     ],
-    "reference_ranges": ["abg"],
-    "created": "2026-05-29"
+    "reference_ranges": [
+      "abg"
+    ],
+    "created": "2026-05-29",
+    "difficulty_prior_v3": 5
   },
   {
     "id": "ctb-p18b-017",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Hypertensive disorders of pregnancy",
     "subtopic_detail": "Gestational hypertension first-line therapy",
-    "difficulty": 3,
+    "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["pre-eclampsia", "hypertension", "pregnancy"],
+    "tags": [
+      "pre-eclampsia",
+      "hypertension",
+      "pregnancy"
+    ],
     "stem": "You are the obstetric registrar in the antenatal day-stay unit reviewing a 30-year-old primigravid woman at 34 weeks gestation referred for elevated blood pressure. Blood pressure has been consistently 152/96 on three readings over 90 minutes after rest. Urine dipstick is negative for protein. She reports no headache, no visual changes, no epigastric pain and feels well with normal fetal movements. CTG is reassuring. Bloods including FBC, LFTs, UEC and uric acid are within reference range, and the protein:creatinine ratio is below the pre-eclampsia threshold.",
     "data_table": {
       "Vital signs": "BP 152/96 (averaged over 3 readings), HR 84, RR 16, SpO2 99%, Temp 36.6",
@@ -256,11 +574,51 @@
     },
     "lead_in": "Which is the most appropriate first-line antihypertensive?",
     "options": [
-      {"letter": "A", "text": "Atenolol 50 mg daily titrated upward to BP response as first-line oral antihypertensive in the antenatal day-stay setting", "correct": false, "rationale": "Atenolol is associated with reduced fetal growth in pregnancy and is not recommended as first-line; labetalol, methyldopa or nifedipine are preferred. (Source: SOMANZ Hypertension in Pregnancy 2014)", "source_refs": ["SOMANZ Hypertension in Pregnancy 2014"]},
-      {"letter": "B", "text": "Labetalol 100 mg twice daily titrated to a target around 135/85 mmHg with weekly review and serial growth scans", "correct": true, "rationale": "Labetalol is a SOMANZ first-line antihypertensive in pregnancy alongside methyldopa and nifedipine; target BP is around 135/85 mmHg under the CHIPS trial-informed approach now adopted in Australian practice. (Source: SOMANZ Hypertension in Pregnancy 2014)", "source_refs": ["SOMANZ Hypertension in Pregnancy 2014"]},
-      {"letter": "C", "text": "Perindopril 5 mg daily titrated upward to BP response as the primary oral agent for new-onset hypertension in pregnancy", "correct": false, "rationale": "ACE inhibitors are contraindicated in pregnancy because of fetal renal injury and oligohydramnios; absolute contraindication after the first trimester. (Source: SOMANZ Hypertension in Pregnancy 2014)", "source_refs": ["SOMANZ Hypertension in Pregnancy 2014"]},
-      {"letter": "D", "text": "Hydralazine 25 mg orally three times daily as initial outpatient antihypertensive therapy in day-stay assessment review", "correct": false, "rationale": "Oral hydralazine has unpredictable absorption and is not a SOMANZ first-line oral agent; IV hydralazine is reserved for acute severe hypertension. (Source: SOMANZ Hypertension in Pregnancy 2014)", "source_refs": ["SOMANZ Hypertension in Pregnancy 2014"]},
-      {"letter": "E", "text": "Indapamide 1.5 mg daily as thiazide-like diuretic antihypertensive in this new-onset late pregnancy hypertensive presentation", "correct": false, "rationale": "Thiazide-like diuretics are not first-line in pregnancy because of intravascular volume depletion in patients already at risk of placental hypoperfusion. (Source: SOMANZ Hypertension in Pregnancy 2014)", "source_refs": ["SOMANZ Hypertension in Pregnancy 2014"]}
+      {
+        "letter": "A",
+        "text": "Atenolol 50 mg daily titrated upward to BP response as first-line oral antihypertensive in the antenatal day-stay setting",
+        "correct": false,
+        "rationale": "Atenolol is associated with reduced fetal growth in pregnancy and is not recommended as first-line; labetalol, methyldopa or nifedipine are preferred. (Source: SOMANZ Hypertension in Pregnancy 2014)",
+        "source_refs": [
+          "SOMANZ Hypertension in Pregnancy 2014"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Labetalol 100 mg twice daily titrated to a target around 135/85 mmHg with weekly review and serial growth scans",
+        "correct": true,
+        "rationale": "Labetalol is a SOMANZ first-line antihypertensive in pregnancy alongside methyldopa and nifedipine; target BP is around 135/85 mmHg under the CHIPS trial-informed approach now adopted in Australian practice. (Source: SOMANZ Hypertension in Pregnancy 2014)",
+        "source_refs": [
+          "SOMANZ Hypertension in Pregnancy 2014"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Perindopril 5 mg daily titrated upward to BP response as the primary oral agent for new-onset hypertension in pregnancy",
+        "correct": false,
+        "rationale": "ACE inhibitors are contraindicated in pregnancy because of fetal renal injury and oligohydramnios; absolute contraindication after the first trimester. (Source: SOMANZ Hypertension in Pregnancy 2014)",
+        "source_refs": [
+          "SOMANZ Hypertension in Pregnancy 2014"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Hydralazine 25 mg orally three times daily as initial outpatient antihypertensive therapy in day-stay assessment review",
+        "correct": false,
+        "rationale": "Oral hydralazine has unpredictable absorption and is not a SOMANZ first-line oral agent; IV hydralazine is reserved for acute severe hypertension. (Source: SOMANZ Hypertension in Pregnancy 2014)",
+        "source_refs": [
+          "SOMANZ Hypertension in Pregnancy 2014"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Indapamide 1.5 mg daily as thiazide-like diuretic antihypertensive in this new-onset late pregnancy hypertensive presentation",
+        "correct": false,
+        "rationale": "Thiazide-like diuretics are not first-line in pregnancy because of intravascular volume depletion in patients already at risk of placental hypoperfusion. (Source: SOMANZ Hypertension in Pregnancy 2014)",
+        "source_refs": [
+          "SOMANZ Hypertension in Pregnancy 2014"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Gestational hypertension is defined as new hypertension after 20 weeks without proteinuria or end-organ dysfunction. Australian SOMANZ-endorsed first-line oral antihypertensives are labetalol, methyldopa and slow-release nifedipine. ACE inhibitors, ARBs and atenolol are contraindicated. Target BP is around 135/85 mmHg based on the CHIPS trial; close monitoring for progression to pre-eclampsia is essential with repeat bloods and urine PCR weekly.",
@@ -273,20 +631,34 @@
       "pearls": "Choose labetalol 100 mg twice daily titrating to 200 mg three times daily and aim BP around 135/85 mmHg per CHIPS rather than tighter or looser targets - delays of further escalation often track to BP exceeding 160/110 mmHg requiring acute therapy."
     },
     "sources": [
-      {"label": "SOMANZ Hypertension in Pregnancy 2014", "url": "https://www.somanz.org/guidelines"},
-      {"label": "RANZCOG Statement: Management of Hypertensive Disorders of Pregnancy 2020", "url": "https://ranzcog.edu.au/statements-guidelines"}
+      {
+        "label": "SOMANZ Hypertension in Pregnancy 2014",
+        "url": "https://www.somanz.org/guidelines"
+      },
+      {
+        "label": "RANZCOG Statement: Management of Hypertensive Disorders of Pregnancy 2020",
+        "url": "https://ranzcog.edu.au/statements-guidelines"
+      }
     ],
-    "reference_ranges": ["obs_pregnancy_vitals", "pre_eclampsia_bloods"],
-    "created": "2026-05-29"
+    "reference_ranges": [
+      "obs_pregnancy_vitals",
+      "pre_eclampsia_bloods"
+    ],
+    "created": "2026-05-29",
+    "difficulty_prior_v3": 3
   },
   {
     "id": "ctb-p18b-018",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Hypertensive disorders of pregnancy",
     "subtopic_detail": "Magnesium sulfate for severe pre-eclampsia",
-    "difficulty": 3,
+    "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["pre-eclampsia", "magnesium sulfate", "eclampsia"],
+    "tags": [
+      "pre-eclampsia",
+      "magnesium sulfate",
+      "eclampsia"
+    ],
     "stem": "You are the obstetric registrar called to the birth suite. A 26-year-old primigravid woman at 36+3 weeks gestation is admitted with severe pre-eclampsia. BP is persistently 170/112 with 3+ proteinuria, severe headache and right upper quadrant pain. ALT is 88 U/L and platelets 92. Reflexes are brisk with 3 beats of clonus. She has had no seizures so far. She is being prepared for induction of labour. She has normal renal function.",
     "data_table": {
       "Vital signs": "BP 170/112, HR 96, RR 18, SpO2 99%, Temp 36.7",
@@ -296,11 +668,51 @@
     },
     "lead_in": "Which is the most appropriate magnesium sulfate regimen for seizure prophylaxis?",
     "options": [
-      {"letter": "A", "text": "Magnesium sulfate 1 g IV loading over 5 minutes followed by 0.5 g/h IV infusion until 12 hours postpartum on labour ward", "correct": false, "rationale": "Loading dose of 1 g is sub-therapeutic; standard SOMANZ regimen is 4 g IV over 20 minutes followed by 1 g/h IV maintenance. (Source: SOMANZ Hypertension in Pregnancy 2014)", "source_refs": ["SOMANZ Hypertension in Pregnancy 2014"]},
-      {"letter": "B", "text": "Magnesium sulfate 10 g intramuscular loading then 5 g IM every 4 hours for 24 hours postpartum using Pritchard schedule", "correct": false, "rationale": "The IM Pritchard regimen is an alternative in low-resource settings without IV pump capacity; in an Australian birth suite, the IV regimen is standard. (Source: SOMANZ Hypertension in Pregnancy 2014)", "source_refs": ["SOMANZ Hypertension in Pregnancy 2014"]},
-      {"letter": "C", "text": "Magnesium sulfate 8 g IV loading over 5 minutes followed by 2 g/h IV continuous infusion until 24 hours postpartum review", "correct": false, "rationale": "Loading at 8 g exceeds safety threshold and risks respiratory and cardiac depression; standard load is 4 g IV over 20 minutes. (Source: SOMANZ Hypertension in Pregnancy 2014)", "source_refs": ["SOMANZ Hypertension in Pregnancy 2014"]},
-      {"letter": "D", "text": "Magnesium sulfate 2 g IV bolus only at presentation without subsequent maintenance infusion or postpartum continuation", "correct": false, "rationale": "A single bolus does not maintain therapeutic plasma levels for seizure prophylaxis; sustained infusion is required for at least 24 hours postpartum. (Source: SOMANZ Hypertension in Pregnancy 2014)", "source_refs": ["SOMANZ Hypertension in Pregnancy 2014"]},
-      {"letter": "E", "text": "Magnesium sulfate 4 g IV loading over 20 minutes then 1 g/h IV infusion continued for at least 24 hours after delivery", "correct": true, "rationale": "Standard Australian SOMANZ regimen is 4 g IV over 20 minutes then 1 g/h IV infusion continued for at least 24 hours postpartum or post-seizure, with regular reflex, respiratory and urine output monitoring to detect early toxicity. (Source: SOMANZ Hypertension in Pregnancy 2014)", "source_refs": ["SOMANZ Hypertension in Pregnancy 2014"]}
+      {
+        "letter": "A",
+        "text": "Magnesium sulfate 1 g IV loading over 5 minutes followed by 0.5 g/h IV infusion until 12 hours postpartum on labour ward",
+        "correct": false,
+        "rationale": "Loading dose of 1 g is sub-therapeutic; standard SOMANZ regimen is 4 g IV over 20 minutes followed by 1 g/h IV maintenance. (Source: SOMANZ Hypertension in Pregnancy 2014)",
+        "source_refs": [
+          "SOMANZ Hypertension in Pregnancy 2014"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Magnesium sulfate 10 g intramuscular loading then 5 g IM every 4 hours for 24 hours postpartum using Pritchard schedule",
+        "correct": false,
+        "rationale": "The IM Pritchard regimen is an alternative in low-resource settings without IV pump capacity; in an Australian birth suite, the IV regimen is standard. (Source: SOMANZ Hypertension in Pregnancy 2014)",
+        "source_refs": [
+          "SOMANZ Hypertension in Pregnancy 2014"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Magnesium sulfate 8 g IV loading over 5 minutes followed by 2 g/h IV continuous infusion until 24 hours postpartum review",
+        "correct": false,
+        "rationale": "Loading at 8 g exceeds safety threshold and risks respiratory and cardiac depression; standard load is 4 g IV over 20 minutes. (Source: SOMANZ Hypertension in Pregnancy 2014)",
+        "source_refs": [
+          "SOMANZ Hypertension in Pregnancy 2014"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Magnesium sulfate 2 g IV bolus only at presentation without subsequent maintenance infusion or postpartum continuation",
+        "correct": false,
+        "rationale": "A single bolus does not maintain therapeutic plasma levels for seizure prophylaxis; sustained infusion is required for at least 24 hours postpartum. (Source: SOMANZ Hypertension in Pregnancy 2014)",
+        "source_refs": [
+          "SOMANZ Hypertension in Pregnancy 2014"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Magnesium sulfate 4 g IV loading over 20 minutes then 1 g/h IV infusion continued for at least 24 hours after delivery",
+        "correct": true,
+        "rationale": "Standard Australian SOMANZ regimen is 4 g IV over 20 minutes then 1 g/h IV infusion continued for at least 24 hours postpartum or post-seizure, with regular reflex, respiratory and urine output monitoring to detect early toxicity. (Source: SOMANZ Hypertension in Pregnancy 2014)",
+        "source_refs": [
+          "SOMANZ Hypertension in Pregnancy 2014"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Severe pre-eclampsia (BP at least 160/110 with end-organ dysfunction such as transaminitis, thrombocytopenia, severe headache or right upper quadrant pain) is an indication for magnesium sulfate seizure prophylaxis. The standard SOMANZ regimen is 4 g IV loading over 20 minutes followed by 1 g/h IV infusion continued for at least 24 hours after delivery or the last seizure. Toxicity is monitored by reflexes (loss of patellar reflex at 4-7 mmol/L), respiratory rate (depression at 7-12 mmol/L) and urine output (over 30 mL/h). Calcium gluconate 1 g IV reverses toxicity.",
@@ -313,20 +725,34 @@
       "pearls": "Loss of patellar reflexes is the earliest clinical marker of magnesium toxicity (plasma level 4-7 mmol/L); stop the infusion and give calcium gluconate 1 g IV slowly rather than rechecking levels and waiting."
     },
     "sources": [
-      {"label": "SOMANZ Hypertension in Pregnancy 2014", "url": "https://www.somanz.org/guidelines"},
-      {"label": "RANZCOG Statement: Management of Hypertensive Disorders of Pregnancy 2020", "url": "https://ranzcog.edu.au/statements-guidelines"}
+      {
+        "label": "SOMANZ Hypertension in Pregnancy 2014",
+        "url": "https://www.somanz.org/guidelines"
+      },
+      {
+        "label": "RANZCOG Statement: Management of Hypertensive Disorders of Pregnancy 2020",
+        "url": "https://ranzcog.edu.au/statements-guidelines"
+      }
     ],
-    "reference_ranges": ["pre_eclampsia_bloods", "obs_pregnancy_vitals"],
-    "created": "2026-05-29"
+    "reference_ranges": [
+      "pre_eclampsia_bloods",
+      "obs_pregnancy_vitals"
+    ],
+    "created": "2026-05-29",
+    "difficulty_prior_v3": 3
   },
   {
     "id": "ctb-p18b-019",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Maternal infection",
     "subtopic_detail": "Intrapartum chorioamnionitis",
-    "difficulty": 3,
+    "difficulty": 2,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["chorioamnionitis", "sepsis", "antibiotics"],
+    "tags": [
+      "chorioamnionitis",
+      "sepsis",
+      "antibiotics"
+    ],
     "stem": "You are the obstetric registrar on the birth suite caring for a 28-year-old multiparous woman at 39 weeks gestation. She has been labouring for 14 hours with spontaneous rupture of membranes 18 hours ago. Over the past 90 minutes she has developed a temperature of 38.6 degrees, maternal heart rate 118 sinus, fetal tachycardia 178, foul-smelling amniotic fluid, and uterine tenderness between contractions. Her GBS status is unknown. She has no penicillin allergy. She is not yet fully dilated and continued labour is appropriate.",
     "data_table": {
       "Vital signs": "Temp 38.6, HR 118, BP 108/68, RR 22, SpO2 97%, fetal HR 178",
@@ -336,11 +762,51 @@
     },
     "lead_in": "What is the most appropriate empiric antibiotic regimen?",
     "options": [
-      {"letter": "A", "text": "Ampicillin 2 g IV every 6 hours alone as empiric monotherapy throughout the remainder of labour and immediate postpartum", "correct": false, "rationale": "Ampicillin alone covers GBS but lacks coverage for the Gram-negative and anaerobic flora typical of chorioamnionitis; combination therapy is required. (Source: Therapeutic Guidelines: Antibiotic 2019)", "source_refs": ["Therapeutic Guidelines: Antibiotic 2019"]},
-      {"letter": "B", "text": "Cefazolin 2 g IV every 8 hours as empiric single-agent monotherapy throughout labour and the immediate postpartum interval", "correct": false, "rationale": "Cefazolin alone does not adequately cover anaerobes and Enterococcus implicated in chorioamnionitis; combination regimen is preferred. (Source: Therapeutic Guidelines: Antibiotic 2019)", "source_refs": ["Therapeutic Guidelines: Antibiotic 2019"]},
-      {"letter": "C", "text": "Ampicillin 2 g IV 6 hourly plus gentamicin 5 mg/kg IV daily; add metronidazole 500 mg IV 12 hourly if caesarean is required", "correct": true, "rationale": "Australian Therapeutic Guidelines recommend ampicillin plus gentamicin for chorioamnionitis with metronidazole added if caesarean is required for anaerobic coverage of operative wound and endometritis risk. (Source: Therapeutic Guidelines: Antibiotic 2019)", "source_refs": ["Therapeutic Guidelines: Antibiotic 2019"]},
-      {"letter": "D", "text": "Vancomycin 25 mg/kg IV plus ceftriaxone 2 g IV daily as empiric combination directed at suspected polymicrobial uterine infection", "correct": false, "rationale": "Vancomycin and ceftriaxone are not the recommended Australian empiric combination for chorioamnionitis and provide unnecessary MRSA coverage with reduced enterococcal cover. (Source: Therapeutic Guidelines: Antibiotic 2019)", "source_refs": ["Therapeutic Guidelines: Antibiotic 2019"]},
-      {"letter": "E", "text": "Withhold antibiotics until amniotic fluid and blood culture microbiology results return to allow targeted antimicrobial therapy", "correct": false, "rationale": "Withholding empiric antibiotics in clinical chorioamnionitis with maternal sepsis features and fetal tachycardia increases neonatal sepsis and maternal endometritis risk; therapy must begin immediately. (Source: Therapeutic Guidelines: Antibiotic 2019)", "source_refs": ["Therapeutic Guidelines: Antibiotic 2019"]}
+      {
+        "letter": "A",
+        "text": "Ampicillin 2 g IV every 6 hours alone as empiric monotherapy throughout the remainder of labour and immediate postpartum",
+        "correct": false,
+        "rationale": "Ampicillin alone covers GBS but lacks coverage for the Gram-negative and anaerobic flora typical of chorioamnionitis; combination therapy is required. (Source: Therapeutic Guidelines: Antibiotic 2019)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic 2019"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Cefazolin 2 g IV every 8 hours as empiric single-agent monotherapy throughout labour and the immediate postpartum interval",
+        "correct": false,
+        "rationale": "Cefazolin alone does not adequately cover anaerobes and Enterococcus implicated in chorioamnionitis; combination regimen is preferred. (Source: Therapeutic Guidelines: Antibiotic 2019)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic 2019"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Ampicillin 2 g IV 6 hourly plus gentamicin 5 mg/kg IV daily; add metronidazole 500 mg IV 12 hourly if caesarean is required",
+        "correct": true,
+        "rationale": "Australian Therapeutic Guidelines recommend ampicillin plus gentamicin for chorioamnionitis with metronidazole added if caesarean is required for anaerobic coverage of operative wound and endometritis risk. (Source: Therapeutic Guidelines: Antibiotic 2019)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic 2019"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Vancomycin 25 mg/kg IV plus ceftriaxone 2 g IV daily as empiric combination directed at suspected polymicrobial uterine infection",
+        "correct": false,
+        "rationale": "Vancomycin and ceftriaxone are not the recommended Australian empiric combination for chorioamnionitis and provide unnecessary MRSA coverage with reduced enterococcal cover. (Source: Therapeutic Guidelines: Antibiotic 2019)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic 2019"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Withhold antibiotics until amniotic fluid and blood culture microbiology results return to allow targeted antimicrobial therapy",
+        "correct": false,
+        "rationale": "Withholding empiric antibiotics in clinical chorioamnionitis with maternal sepsis features and fetal tachycardia increases neonatal sepsis and maternal endometritis risk; therapy must begin immediately. (Source: Therapeutic Guidelines: Antibiotic 2019)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic 2019"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Clinical chorioamnionitis is diagnosed by maternal fever plus features including maternal tachycardia, fetal tachycardia, uterine tenderness, foul-smelling amniotic fluid or leucocytosis. Australian Therapeutic Guidelines recommend ampicillin 2 g IV every 6 hours plus gentamicin 5 mg/kg IV daily as empiric therapy, with metronidazole 500 mg IV every 12 hours added if caesarean delivery is required to cover anaerobes. Delivery is part of treatment; antibiotics should not delay delivery decisions. Postpartum antibiotic course continues until clinical improvement and afebrile for 24 hours.",
@@ -353,20 +819,34 @@
       "pearls": "When chorioamnionitis is suspected, give ampicillin 2 g IV plus gentamicin 5 mg/kg IV within the first hour and book the caesarean theatre if clinical deterioration follows; adding metronidazole at the start of caesarean prevents post-caesarean endometritis."
     },
     "sources": [
-      {"label": "Therapeutic Guidelines: Antibiotic 2019", "url": "https://www.tg.org.au"},
-      {"label": "RANZCOG Statement: Maternal Group B Streptococcus 2019", "url": "https://ranzcog.edu.au/statements-guidelines"}
+      {
+        "label": "Therapeutic Guidelines: Antibiotic 2019",
+        "url": "https://www.tg.org.au"
+      },
+      {
+        "label": "RANZCOG Statement: Maternal Group B Streptococcus 2019",
+        "url": "https://ranzcog.edu.au/statements-guidelines"
+      }
     ],
-    "reference_ranges": ["fbc", "inflammatory_markers"],
-    "created": "2026-05-29"
+    "reference_ranges": [
+      "fbc",
+      "inflammatory_markers"
+    ],
+    "created": "2026-05-29",
+    "difficulty_prior_v3": 3
   },
   {
     "id": "ctb-p18b-020",
     "topic": "Obstetrics & Gynaecology",
     "subtopic": "Intrapartum emergency",
     "subtopic_detail": "Umbilical cord prolapse",
-    "difficulty": 4,
+    "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["cord prolapse", "intrapartum", "caesarean"],
+    "tags": [
+      "cord prolapse",
+      "intrapartum",
+      "caesarean"
+    ],
     "stem": "You are the obstetric registrar in the birth suite. A 32-year-old multiparous woman at 38 weeks gestation has had spontaneous rupture of membranes one minute ago. The midwife performing the post-rupture examination palpates a pulsating cord through the cervix. The cervix is 6 cm dilated, the head is high at -3 station, and the CTG immediately shows a prolonged deceleration to 60 bpm sustained over 90 seconds. The woman has had two previous uncomplicated vaginal births. The on-call anaesthetist is available and theatre staff have been called.",
     "data_table": {
       "Vital signs": "Maternal HR 96, BP 122/76, fetal HR 60 sustained 90 s, then variable",
@@ -376,11 +856,51 @@
     },
     "lead_in": "Which is the most appropriate immediate management?",
     "options": [
-      {"letter": "A", "text": "Attempt manual replacement of the cord into the uterus and continue labour towards expected vaginal delivery in birth suite", "correct": false, "rationale": "Manual cord reduction is not recommended outside of selected expert-led trials and is associated with cord vasospasm and fetal demise; the immediate priority is to relieve compression and expedite delivery. (Source: RANZCOG Cord Prolapse Statement 2020)", "source_refs": ["RANZCOG Cord Prolapse Statement 2020"]},
-      {"letter": "B", "text": "Place the woman in left lateral recumbent position and reassess the cardiotocograph trace in 10 minutes before any further action", "correct": false, "rationale": "Left lateral alone is insufficient for established cord prolapse with a sustained deceleration; immediate elevation of the presenting part and theatre transfer are required. (Source: RANZCOG Cord Prolapse Statement 2020)", "source_refs": ["RANZCOG Cord Prolapse Statement 2020"]},
-      {"letter": "C", "text": "Commence intravenous oxytocin to augment labour for rapid vaginal delivery before transferring her to operating theatre", "correct": false, "rationale": "Oxytocin will worsen cord compression by increasing uterine contractions; tocolysis with terbutaline is often added while the patient is transferred to theatre. (Source: RANZCOG Cord Prolapse Statement 2020)", "source_refs": ["RANZCOG Cord Prolapse Statement 2020"]},
-      {"letter": "D", "text": "Elevate the presenting part manually, position knee-chest or exaggerated Sims, fill the bladder, prepare for category 1 caesarean", "correct": true, "rationale": "RANZCOG recommends immediate elevation of the presenting part to relieve cord compression, knee-chest or exaggerated Sims position, bladder filling 500-700 mL if transfer is prolonged, and category 1 caesarean within 30 minutes for non-imminent vaginal delivery. (Source: RANZCOG Cord Prolapse Statement 2020)", "source_refs": ["RANZCOG Cord Prolapse Statement 2020"]},
-      {"letter": "E", "text": "Perform immediate fetal scalp blood sampling to assess acidosis severity before deciding on the appropriate mode of delivery", "correct": false, "rationale": "Fetal blood sampling is contraindicated when there is acute cord compression and an immediate delivery indication; the diagnosis is clinical and management is immediate. (Source: RANZCOG Cord Prolapse Statement 2020)", "source_refs": ["RANZCOG Cord Prolapse Statement 2020"]}
+      {
+        "letter": "A",
+        "text": "Attempt manual replacement of the cord into the uterus and continue labour towards expected vaginal delivery in birth suite",
+        "correct": false,
+        "rationale": "Manual cord reduction is not recommended outside of selected expert-led trials and is associated with cord vasospasm and fetal demise; the immediate priority is to relieve compression and expedite delivery. (Source: RANZCOG Cord Prolapse Statement 2020)",
+        "source_refs": [
+          "RANZCOG Cord Prolapse Statement 2020"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Place the woman in left lateral recumbent position and reassess the cardiotocograph trace in 10 minutes before any further action",
+        "correct": false,
+        "rationale": "Left lateral alone is insufficient for established cord prolapse with a sustained deceleration; immediate elevation of the presenting part and theatre transfer are required. (Source: RANZCOG Cord Prolapse Statement 2020)",
+        "source_refs": [
+          "RANZCOG Cord Prolapse Statement 2020"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence intravenous oxytocin to augment labour for rapid vaginal delivery before transferring her to operating theatre",
+        "correct": false,
+        "rationale": "Oxytocin will worsen cord compression by increasing uterine contractions; tocolysis with terbutaline is often added while the patient is transferred to theatre. (Source: RANZCOG Cord Prolapse Statement 2020)",
+        "source_refs": [
+          "RANZCOG Cord Prolapse Statement 2020"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Elevate the presenting part manually, position knee-chest or exaggerated Sims, fill the bladder, prepare for category 1 caesarean",
+        "correct": true,
+        "rationale": "RANZCOG recommends immediate elevation of the presenting part to relieve cord compression, knee-chest or exaggerated Sims position, bladder filling 500-700 mL if transfer is prolonged, and category 1 caesarean within 30 minutes for non-imminent vaginal delivery. (Source: RANZCOG Cord Prolapse Statement 2020)",
+        "source_refs": [
+          "RANZCOG Cord Prolapse Statement 2020"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Perform immediate fetal scalp blood sampling to assess acidosis severity before deciding on the appropriate mode of delivery",
+        "correct": false,
+        "rationale": "Fetal blood sampling is contraindicated when there is acute cord compression and an immediate delivery indication; the diagnosis is clinical and management is immediate. (Source: RANZCOG Cord Prolapse Statement 2020)",
+        "source_refs": [
+          "RANZCOG Cord Prolapse Statement 2020"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Umbilical cord prolapse with a pulsating cord and sustained fetal deceleration is a category 1 obstetric emergency. The first responder elevates the presenting part with the examining hand and positions the woman in knee-chest or exaggerated Sims to relieve compression. Bladder filling via a Foley catheter with 500-700 mL of saline can substitute for manual elevation if transfer is prolonged. Tocolysis (terbutaline 250 mcg SC) reduces contractions. Definitive management is category 1 caesarean within 30 minutes unless vaginal delivery is imminent and faster.",
@@ -393,10 +913,19 @@
       "pearls": "Fill the bladder with 500-700 mL of saline through a Foley catheter when transfer to theatre will be more than 10 minutes - this maintains presenting-part elevation without an exhausted clinician's hand and buys time."
     },
     "sources": [
-      {"label": "RANZCOG Cord Prolapse Statement 2020", "url": "https://ranzcog.edu.au/statements-guidelines"},
-      {"label": "RCOG Green-top Guideline 50 Umbilical Cord Prolapse 2014", "url": "https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines"}
+      {
+        "label": "RANZCOG Cord Prolapse Statement 2020",
+        "url": "https://ranzcog.edu.au/statements-guidelines"
+      },
+      {
+        "label": "RCOG Green-top Guideline 50 Umbilical Cord Prolapse 2014",
+        "url": "https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines"
+      }
     ],
-    "reference_ranges": ["ctg_baseline"],
-    "created": "2026-05-29"
+    "reference_ranges": [
+      "ctg_baseline"
+    ],
+    "created": "2026-05-29",
+    "difficulty_prior_v3": 4
   }
 ]
