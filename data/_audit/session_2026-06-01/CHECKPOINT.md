@@ -52,6 +52,12 @@ Rate limit fired mid-execution. Future-Claude: pick up from "REMAINING" below.
    - `length_parity_all.json` (4913 lines): bank-wide length-parity
      scan; available for triage.
 
+## Session-end status (2026-06-01 end)
+
+The omnibus brief at `/Users/robrussell/Desktop/a to e prompt/` is substantially complete. Remaining items are curation-heavy tasks that need per-question review; they are listed under "REMAINING" below.
+
+Final commits today (in chronological order): 71950da, fdf545d (pre-rebase), c68ff9f, be0b798, 02f4f59, 2252c9f, da3dd41, 16d0d5c, 7fcc3d7, 1a98952, c2aef1c, 3abbe0f. Portfolio zip refreshed and pushed twice.
+
 ## ALSO completed this session (rolling update)
 
 - **UI overhaul step 1** (commit 02f4f59): IBM Plex -> Public Sans single family + Source Serif 4 (editorial glyphs only) + JetBrains Mono (paste-box code only). --r-soft 10px -> 8px. Easing tokens added.
@@ -60,8 +66,14 @@ Rate limit fired mid-execution. Future-Claude: pick up from "REMAINING" below.
 - **Bank content fixes** (commit 16d0d5c): 4 specific Qs fixed - 2 garbled stems (paeds-allergy-derm-018 urticaria, obgyn-018 chronic HTN), incomplete miscarriage non-question rewritten as obgyn-batch-049-l3b with "what would you first recommend" framing + outpatient expectant management as correct, twin-2 transverse + instrumental delivery stems lose "consented antenatally to X" telegraph, UTI imaging Q rewritten as paeds-l4depth-007-rch aligned with RCH Melbourne CPG (no routine imaging for typical UTI).
 - **.remote-agent-context.md updated**: full new difficulty scheme (1-5/5 with target percentages), 10 new audit rules (last-sentence telegraph ban, "offer all options" ban, lay-language enforcement, numeric-not-adjectival, disconfirming finding for L3+, vitals fixed order, data_table flat-string requirement, reference-range mandatory, bhCG ectopic 5000 threshold, RCH-as-paeds-authority).
 - **What's-new entry** in README v2.1.0.
+- **Paragraphing pass** (commit 1a98952): 1294 stems (of 1746 eligible >80 words) now have \n\n paragraph breaks at sensible sentence boundaries (~60-90 words per paragraph). 150 files touched. .stem CSS moved from serif to sans + `white-space: pre-line` so the breaks render.
+- **x/YYY dropdown rewritten as chip-grid sidebar** (commit c2aef1c) per `emedici_sidebar_spec.md`. Progress ring + 34px circular chips, 4-state model (unanswered / answered / correct / incorrect / current), aria-labels for accessibility.
+- **L1 wired through UI** (commit 3abbe0f): home-screen difficulty toggles 1/5-5/5; state.settings default includes 1; admin overview counts L1; bankStateBlock prompt-builder updated.
+- **Portfolio sync** (2 commits to mord58562.github.io): a-to-e.zip refreshed after UI overhaul + after chip-grid sidebar.
 
 ## REMAINING (resume here)
+
+These items remain after the 2026-06-01 omnibus pass. They are mostly curation-heavy and need per-question review.
 
 ### High priority (Rob's specific complaints from the brief)
 
