@@ -1,0 +1,283 @@
+[
+  {
+    "id": "l5-seed-001-paeds",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Severe asthma exacerbation - guideline-conflict + calculation",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["asthma", "ICU", "magnesium sulfate"],
+    "stem": "A 9-year-old girl (28 kg) presents to a regional ED with a severe asthma exacerbation that has not responded to back-to-back salbutamol and ipratropium nebulisers over the past 30 minutes, oral prednisolone 1 mg/kg 25 minutes ago, and a stat dose of intravenous magnesium sulfate 50 mg/kg given 10 minutes ago. The Royal Children's Hospital Melbourne CPG suggests proceeding to IV salbutamol or aminophylline next; the Therapeutic Guidelines: Respiratory algorithm lists IV salbutamol as preferred. Both guidelines explicitly note that aminophylline retains an indication when IV salbutamol is unavailable or not tolerated.\n\nShe has known atopic asthma on inhaled budesonide 200 mcg BD with a salbutamol reliever, last admitted 8 months ago for an exacerbation without ICU. She has had no recent steroid course. She does not have congenital long QT syndrome and her ECG today shows sinus tachycardia at 158 bpm with normal QTc (392 ms).\n\nThe regional hospital does not stock IV salbutamol; the pharmacy can have it from a tertiary centre in 90 minutes. IV aminophylline is stocked. The retrieval service has been activated and the transfer team will arrive in approximately 75 minutes.",
+    "data_table": {
+      "Vital signs": "Pulse 158 bpm, BP 105/68 mmHg, RR 42 with marked accessory muscle use, SpO2 88% on 8 L/min via Hudson mask, temperature 37.4 degrees C",
+      "Examination": "Silent chest in upper zones bilaterally; able to speak in single words; alert; no cyanosis",
+      "Investigations": "Venous gas pH 7.27, pCO2 52 mmHg, lactate 4.2 mmol/L (0.5-2.0); ECG sinus tachycardia, QTc 392 ms; electrolytes within normal limits"
+    },
+    "lead_in": "What is the most appropriate next step in management while awaiting the retrieval team?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence intravenous aminophylline loading dose 10 mg/kg over 60 minutes (capped at 500 mg) followed by maintenance infusion 1 mg/kg/hour, with continuous cardiac monitoring and serum theophylline level at 2 hours",
+        "correct": true,
+        "rationale": "This child meets imminent respiratory failure criteria (silent chest, rising pCO2, lactic acidosis, exhaustion). IV salbutamol is the preferred AU second-line intravenous agent per the Royal Children's Hospital Melbourne CPG and Therapeutic Guidelines: Respiratory, but the regional pharmacy does not stock it and the retrieval window is 75 minutes. Aminophylline is a valid AU-listed alternative when IV salbutamol is unavailable; both guidelines retain it for this scenario. Loading at 10 mg/kg (280 mg here) over 60 minutes, capped at 500 mg, with continuous cardiac monitoring is the AMH dose and route. Serum theophylline at 2 hours guides the maintenance infusion. (Sources: Royal Children's Hospital Melbourne CPG: Asthma acute; Therapeutic Guidelines: Respiratory; Australian Medicines Handbook)",
+        "source_refs": ["RCH Melbourne CPG: Asthma acute", "Therapeutic Guidelines: Respiratory", "AMH"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence intravenous salbutamol loading dose 15 mcg/kg over 10 minutes followed by infusion 1 to 5 mcg/kg/min, with continuous cardiac monitoring and electrolytes every 2 hours",
+        "correct": false,
+        "rationale": "Intravenous salbutamol is the AU preferred second-line agent when stocked and is generally first-line over aminophylline. However the regional pharmacy does not stock IV salbutamol and the retrieval window is 75 minutes; aminophylline is the appropriate available alternative. Would be the correct first choice in a tertiary centre with IV salbutamol immediately available. (Source: Royal Children's Hospital Melbourne CPG: Asthma acute)",
+        "source_refs": ["RCH Melbourne CPG: Asthma acute"]
+      },
+      {
+        "letter": "C",
+        "text": "Repeat the intravenous magnesium sulfate bolus at 50 mg/kg over 20 minutes with continuous BP monitoring and a held dose if systolic falls below 90 mmHg",
+        "correct": false,
+        "rationale": "A single 50 mg/kg dose of intravenous magnesium sulfate is given and not routinely repeated; further magnesium does not address the persisting bronchospasm and risks hypotension. The next step is a second-line bronchodilator (IV salbutamol or aminophylline). Would be correct only if the patient improved on the first dose and the team wished to bridge a short delay; the AU guidelines do not endorse a routine repeat. (Source: Royal Children's Hospital Melbourne CPG: Asthma acute)",
+        "source_refs": ["RCH Melbourne CPG: Asthma acute"]
+      },
+      {
+        "letter": "D",
+        "text": "Proceed to rapid sequence induction and intubation with ketamine 1 to 2 mg/kg and rocuronium 1 mg/kg, planning low tidal volume mandatory ventilation pending retrieval team arrival",
+        "correct": false,
+        "rationale": "Intubation in paediatric severe asthma is high-risk (worsened air-trapping, peri-intubation arrest) and is reserved for true respiratory or cardiorespiratory failure after exhausting non-invasive escalations. The child is still alert and is a candidate for further pharmacological escalation; aminophylline before intubation is the AU pathway. Would be correct only with imminent or actual cardiorespiratory arrest. (Source: Royal Children's Hospital Melbourne CPG: Asthma acute; ANZCOR Paediatric guidelines)",
+        "source_refs": ["RCH Melbourne CPG: Asthma acute", "ANZCOR Paediatric"]
+      },
+      {
+        "letter": "E",
+        "text": "Commence non-invasive bilevel positive airway pressure (BiPAP) 12 over 5 cmH2O with FiO2 titrated to SpO2 of 94 to 98 percent, while awaiting retrieval",
+        "correct": false,
+        "rationale": "Non-invasive ventilation has a limited and contested role in paediatric acute severe asthma; it does not address the underlying bronchospasm and may delay definitive bronchodilator escalation. Pharmacological escalation (IV aminophylline here) is the AU next step. Would be considered only at a tertiary centre with respiratory team involvement after IV bronchodilator escalation has been exhausted. (Source: Royal Children's Hospital Melbourne CPG: Asthma acute)",
+        "source_refs": ["RCH Melbourne CPG: Asthma acute"]
+      }
+    ],
+    "explanation": {
+      "summary": "This is severe acute asthma with imminent respiratory failure (silent chest, hypercapnia, lactic acidosis) refractory to first-line nebulised bronchodilators plus systemic steroid plus a single dose of intravenous magnesium sulfate. The AU pathway escalates to intravenous bronchodilator therapy next: IV salbutamol is preferred where available, with aminophylline as the AU-listed alternative when salbutamol is unavailable. The discriminator is the regional context: IV salbutamol is not stocked and the retrieval window is 75 minutes, so aminophylline is the right answer despite being second-line at a tertiary centre. The candidate must hold the textbook hierarchy (IV salbutamol first) in tension with the practical AU consideration (stock + retrieval timing) and choose the available agent. In context, escalation pathways must always account for setting and stock; the AU guidelines explicitly preserve aminophylline for this reason.",
+      "key_points": [
+        "AU severe asthma escalation order (RCH Melbourne CPG): nebulised salbutamol + ipratropium, systemic steroid, IV magnesium sulfate 50 mg/kg, then IV salbutamol OR aminophylline.",
+        "IV salbutamol is the AU preferred IV second-line; aminophylline is the AU-listed alternative when IV salbutamol is unavailable.",
+        "Aminophylline loading 10 mg/kg over 60 minutes (max 500 mg), maintenance 1 mg/kg/hour, serum theophylline at 2 hours per AMH.",
+        "Intubation in paediatric severe asthma is high-risk and is reserved for true cardiorespiratory failure, not as a substitute for IV bronchodilator escalation."
+      ],
+      "pearls": "Regional ED with retrieval pending often forces aminophylline over IV salbutamol despite the textbook hierarchy; cite the stock + retrieval window explicitly in the team handover."
+    },
+    "sources": [
+      { "label": "RCH Melbourne CPG: Asthma acute", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Asthma_acute/" },
+      { "label": "Therapeutic Guidelines: Respiratory" },
+      { "label": "Australian Medicines Handbook (AMH)" }
+    ],
+    "created": "2026-06-01",
+    "l5_seed": true
+  },
+  {
+    "id": "l5-seed-002-obgyn",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Early pregnancy",
+    "subtopic_detail": "Ectopic with prior contralateral salpingectomy - historical-bilaterality flip",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["ectopic", "salpingectomy", "fertility"],
+    "stem": "A 33-year-old G3P1 woman presents to the early pregnancy assessment unit with a positive urine pregnancy test, 6 weeks of amenorrhoea, right iliac fossa pain rated 5 out of 10, and minimal vaginal spotting. She is haemodynamically stable.\n\nHer obstetric history includes a left tubal ectopic pregnancy three years ago managed by laparoscopic left salpingectomy, and a normal vaginal birth two years ago. She and her partner have been trying to conceive for 5 months and she very much hopes to have at least one more child.\n\nTransvaginal ultrasound shows an empty uterus, a 28 mm right adnexal mass with a yolk sac and no foetal cardiac activity, and a small amount of free fluid in the pouch of Douglas. Beta-hCG today is 4800 IU/L. The right fallopian tube on prior imaging and intra-operative records from her left salpingectomy is structurally normal. There is no other contralateral pelvic pathology.\n\nThe gynaecology team is choosing between methotrexate medical management, laparoscopic right salpingostomy with tube preservation, and laparoscopic right salpingectomy.",
+    "data_table": {
+      "Vital signs": "Pulse 84 bpm, BP 118/72 mmHg, RR 16, SpO2 99% on room air, temperature 36.8 degrees C",
+      "Examination": "Right iliac fossa tenderness, no peritonism, no cervical motion tenderness",
+      "Investigations": "TVUS as described; Hb 122 g/L (115-160); blood group A Rh positive; LFTs and renal function within normal limits",
+      "Past surgical history": "Laparoscopic left salpingectomy three years ago; structurally normal right tube on prior records"
+    },
+    "lead_in": "What would you first recommend as her definitive management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Single-dose methotrexate 50 mg/m^2 intramuscularly with serial beta-hCG day 1, day 4, and day 7; expect more than 15 per cent fall in beta-hCG between day 4 and day 7",
+        "correct": false,
+        "rationale": "Methotrexate medical management is appropriate when beta-hCG is below 5000 IU/L, the mass is less than 3.5 cm, there is no foetal cardiac activity, the patient is haemodynamically stable, and she can attend reliable follow-up. This patient is at the upper end (beta-hCG 4800, mass 28 mm); a yolk sac alone (without foetal cardiac activity) does not exclude medical management. However the dominant clinical concern here is the prior contralateral salpingectomy: the right tube is now her only remaining tube and the risk of a recurrent ectopic in the SAME tube after persistence following methotrexate (or after salpingostomy) is substantial. The Royal Australian and New Zealand College of Obstetricians and Gynaecologists notes recurrent ipsilateral ectopic risk around 15 per cent after salpingostomy; persistence risk after methotrexate adds further complexity. Would be the appropriate first recommendation if the contralateral tube were intact. (Source: RANZCOG: Ectopic Pregnancy)",
+        "source_refs": ["RANZCOG: Ectopic Pregnancy"]
+      },
+      {
+        "letter": "B",
+        "text": "Laparoscopic right salpingostomy with linear incision over the antimesenteric border, evacuation of the ectopic, and haemostasis without tube removal, with serial beta-hCG follow-up",
+        "correct": false,
+        "rationale": "Salpingostomy is the standard first-line surgical option when the contralateral tube is intact and the woman wishes to preserve fertility; it leaves the affected tube in situ for future natural conception. This patient has NO contralateral tube (prior left salpingectomy). Preserving the affected right tube exposes her to a recurrent ipsilateral ectopic in her ONLY remaining tube (approximately 15 per cent risk per RANZCOG) and to persistent trophoblast requiring methotrexate. With a structurally normal right tube confirmed pre-operatively, definitive salpingectomy is the preferred management given the historical-bilaterality consideration. Would be the appropriate first surgical choice if the left tube were intact. (Source: RANZCOG: Ectopic Pregnancy)",
+        "source_refs": ["RANZCOG: Ectopic Pregnancy"]
+      },
+      {
+        "letter": "C",
+        "text": "Laparoscopic right salpingectomy with removal of the affected tube, with counselling that future conception will require in vitro fertilisation (IVF) given the prior contralateral salpingectomy",
+        "correct": true,
+        "rationale": "This is the appropriate first recommendation. With a prior contralateral salpingectomy, the affected right tube is the patient's only remaining tube. Recurrent ipsilateral ectopic risk after salpingostomy or methotrexate is approximately 15 per cent per RANZCOG; persistent trophoblast after methotrexate or salpingostomy can require repeat intervention. Definitive salpingectomy removes this risk at the cost of natural conception, with IVF as the path to future pregnancy. Counselling on fertility implications and shared decision-making are required, and the rationale acknowledges that the patient hopes for another child. RANZCOG recommends salpingectomy when the contralateral tube has previously been removed, even where standard criteria would favour tube preservation. (Source: RANZCOG: Ectopic Pregnancy)",
+        "source_refs": ["RANZCOG: Ectopic Pregnancy"]
+      },
+      {
+        "letter": "D",
+        "text": "Two-dose methotrexate protocol with methotrexate 50 mg/m^2 IM on day 0 and day 4, with serial beta-hCG day 1, day 4, day 7, and weekly until negative",
+        "correct": false,
+        "rationale": "The two-dose protocol is an option for ectopics with beta-hCG between 3000 and 5000 IU/L or with a larger mass than the single-dose pathway accommodates; it can be appropriate where single-dose methotrexate is borderline. The dominant issue here remains the prior contralateral salpingectomy and the persistence risk to her only remaining tube. Would be a defensible non-surgical option only if she declined salpingectomy after counselling. (Source: RANZCOG: Ectopic Pregnancy)",
+        "source_refs": ["RANZCOG: Ectopic Pregnancy"]
+      },
+      {
+        "letter": "E",
+        "text": "Expectant management with weekly outpatient beta-hCG and TVUS, intervention reserved for failure to fall by more than 50 per cent at one week or for clinical deterioration",
+        "correct": false,
+        "rationale": "Expectant management is reserved for very early ectopics with beta-hCG below 1000 to 1500 IU/L, falling levels, and absent or minimal symptoms. This patient has beta-hCG of 4800 IU/L, a defined adnexal mass with a yolk sac, and active symptoms; expectant management is not appropriate and risks tubal rupture in her only remaining tube. (Source: RANZCOG: Ectopic Pregnancy)",
+        "source_refs": ["RANZCOG: Ectopic Pregnancy"]
+      }
+    ],
+    "explanation": {
+      "summary": "This question tests the historical-bilaterality flip in ectopic pregnancy management. The textbook hierarchy preserves the affected tube where the contralateral tube is intact; salpingostomy and methotrexate both have salvage rates around 70 to 85 per cent. The flip occurs when the patient has already had a contralateral salpingectomy: the affected tube is the only remaining tube and the recurrent ipsilateral ectopic risk plus persistence risk make definitive salpingectomy preferred, with IVF as the path to future conception. The Royal Australian and New Zealand College of Obstetricians and Gynaecologists explicitly addresses this scenario in its Ectopic Pregnancy guideline. In context, prior contralateral surgical history of any reproductive structure (mastectomy, nephrectomy, orchidectomy, salpingectomy) can invert the standard fertility-preserving or organ-preserving answer.",
+      "key_points": [
+        "Standard ectopic management favours tube preservation (salpingostomy or methotrexate) when the contralateral tube is intact.",
+        "Prior contralateral salpingectomy inverts this: definitive ipsilateral salpingectomy is preferred over preservation, with IVF as the future-conception path.",
+        "RANZCOG recurrent ipsilateral ectopic risk after salpingostomy is approximately 15 per cent.",
+        "Counselling on fertility implications and shared decision-making is required - the rationale acknowledges shared decision-making but the question asks the first recommendation."
+      ],
+      "pearls": "Prior contralateral surgical history flips fertility-preserving answers across many domains: ectopic, breast cancer, renal mass, testicular mass. Always check what the patient still has."
+    },
+    "sources": [
+      { "label": "RANZCOG: Ectopic Pregnancy", "url": "https://ranzcog.edu.au/wp-content/uploads/Tubal-ectopic-pregnancy-Diagnosis-and-management-of.pdf" }
+    ],
+    "created": "2026-06-01",
+    "l5_seed": true
+  },
+  {
+    "id": "l5-seed-003-psych",
+    "topic": "Psychiatry",
+    "subtopic": "Antipsychotic metabolic monitoring",
+    "subtopic_detail": "Clozapine + sodium valproate ineffective - calculation + disconfirming finding",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["clozapine", "augmentation", "treatment-resistant schizophrenia"],
+    "stem": "A 31-year-old man with treatment-resistant schizophrenia (failed adequate trials of risperidone 6 mg, olanzapine 20 mg, and paliperidone palmitate long-acting injection) has been on clozapine for 14 months, currently 425 mg at night with trough plasma clozapine 387 nanograms/mL (target range 350 to 600). He has had partial response (PANSS-positive reduction approximately 30 per cent) but continues to report distressing persistent auditory hallucinations and persecutory delusions despite adherence confirmed by a community case manager and pharmacy weekly dispensing.\n\nSodium valproate 1000 mg BD was added three months ago for augmentation, with serum valproate trough today at 612 micromol/L (target 350 to 700 for mood-disorder dosing). His PANSS-positive score has not changed in the past 8 weeks. He has gained 4 kg, fasting glucose is now 5.9 mmol/L, and his absolute neutrophil count remains 3.8 x 10^9/L (within range).\n\nHe is not depressed, not catatonic, and has no extrapyramidal symptoms or akathisia. He has no history of self-harm or aggression. He is engaged in psychosocial rehabilitation. He has never had electroconvulsive therapy.",
+    "data_table": {
+      "Vital signs": "Pulse 78 bpm, BP 122/78 mmHg, RR 14, SpO2 99% on room air, temperature 36.7 degrees C",
+      "Investigations": "Plasma clozapine 387 ng/mL (target 350-600); norclozapine 195 ng/mL; clozapine:norclozapine ratio 1.98; ANC 3.8 x 10^9/L; fasting glucose 5.9 mmol/L; HbA1c 5.4%; lipids within normal limits; weight gain 4 kg over 3 months",
+      "Examination": "No EPS, no akathisia, no orthostatic hypotension; AIMS score 0",
+      "Medications": "Clozapine 425 mg nocte; sodium valproate 1000 mg BD; no other psychotropic; smoker 10 cigarettes/day"
+    },
+    "lead_in": "Which one of the following augmentation strategies has the strongest evidence for partial-response clozapine-treated schizophrenia in this patient?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Add a course of electroconvulsive therapy (ECT) of 8 to 12 sessions twice weekly, continue clozapine, and review response at 4 weeks of ECT before further escalation",
+        "correct": true,
+        "rationale": "Electroconvulsive therapy is the augmentation strategy with the strongest evidence in partial-response clozapine-treated schizophrenia. The CLO-ECT meta-analysis and the Royal Australian and New Zealand College of Psychiatrists clinical practice guideline on schizophrenia both list ECT as a Level A or B recommendation for clozapine-augmentation in patients with persisting positive symptoms despite adequate clozapine dosing and trough level. Bilateral or right unilateral ECT 8 to 12 sessions twice weekly while continuing clozapine produces approximately 50 per cent response in this population. Sodium valproate adjunct does NOT have evidence for positive-symptom augmentation (it is added in clozapine for seizure prophylaxis or mood targets) and has not added benefit here. The disconfirming finding is the failed valproate adjunct of 3 months at therapeutic trough - this rules out 'continue current regimen' or 'increase valproate'. (Source: Royal Australian and New Zealand College of Psychiatrists CPG: Schizophrenia; Therapeutic Guidelines: Psychotropic; CLO-ECT meta-analysis)",
+        "source_refs": ["RANZCP CPG: Schizophrenia", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "B",
+        "text": "Increase clozapine to 525 mg nocte with re-checked trough level at 1 week, smoking cessation counselling, and review of clinical response at 6 weeks",
+        "correct": false,
+        "rationale": "Trough clozapine of 387 ng/mL is already within the target range (350 to 600) and the clozapine-to-norclozapine ratio of 1.98 is within typical bounds. Further dose increase without a low trough is not the evidence-based next step and adds toxicity risk (seizures, sedation, metabolic). Smoking cessation is an appropriate parallel intervention but is not the strongest evidence-based augmentation. (Source: RANZCP CPG: Schizophrenia)",
+        "source_refs": ["RANZCP CPG: Schizophrenia"]
+      },
+      {
+        "letter": "C",
+        "text": "Add aripiprazole 5 mg daily titrated to 15 mg over 4 weeks as antipsychotic augmentation of clozapine, with continuous metabolic monitoring",
+        "correct": false,
+        "rationale": "Aripiprazole augmentation of clozapine has been studied for clozapine-induced metabolic effects and shows weight and lipid benefit; it has weak evidence for positive-symptom augmentation. The CLOZ-AUG meta-analyses rank aripiprazole below ECT for positive-symptom response. Would be the correct first augmentation choice if the dominant unmet need were metabolic side-effects rather than persisting positive symptoms. (Source: RANZCP CPG: Schizophrenia)",
+        "source_refs": ["RANZCP CPG: Schizophrenia"]
+      },
+      {
+        "letter": "D",
+        "text": "Cease sodium valproate, commence lamotrigine 25 mg daily titrated to 200 mg over 6 weeks as a clozapine adjunct, and review response at 12 weeks",
+        "correct": false,
+        "rationale": "Lamotrigine adjunct has small-to-moderate effect for positive-symptom augmentation in clozapine in some meta-analyses but the effect size is below ECT. It is reasonable when ECT is declined or contraindicated. The slow titration (8 weeks to therapeutic dose) plus 12-week review delays response in a patient with distressing persistent symptoms. (Source: RANZCP CPG: Schizophrenia)",
+        "source_refs": ["RANZCP CPG: Schizophrenia"]
+      },
+      {
+        "letter": "E",
+        "text": "Continue clozapine and valproate at current doses, optimise psychosocial rehabilitation including cognitive behaviour therapy for psychosis, and review at 12 weeks",
+        "correct": false,
+        "rationale": "CBT for psychosis is an evidence-based adjunct but is not a substitute for pharmacological or somatic augmentation when positive symptoms remain distressing after 14 months of clozapine at therapeutic trough plus 3 months of valproate adjunct. The patient is already engaged in psychosocial rehabilitation. Continued waiting is not the strongest evidence-based next step. (Source: RANZCP CPG: Schizophrenia)",
+        "source_refs": ["RANZCP CPG: Schizophrenia"]
+      }
+    ],
+    "explanation": {
+      "summary": "Partial-response clozapine-treated schizophrenia (persisting positive symptoms despite 14 months of clozapine at therapeutic trough) requires augmentation. The Royal Australian and New Zealand College of Psychiatrists CPG and the CLO-ECT evidence base list electroconvulsive therapy as the augmentation strategy with the strongest evidence; approximately 50 per cent of clozapine-resistant patients respond to ECT. The disconfirming finding is the failed sodium valproate trial at therapeutic trough over 3 months - this rules out 'continue current' or 'increase valproate' answers. The multi-branch algorithm asks the candidate to choose between ECT (strongest), antipsychotic augmentation (weak for positive symptoms), mood-stabiliser switch (modest), and waiting (not evidence-based). In context, partial-responders to clozapine should be offered ECT augmentation in line with the AU evidence base.",
+      "key_points": [
+        "Clozapine at therapeutic trough (350 to 600 ng/mL) plus partial response: next step is augmentation, not dose increase.",
+        "ECT is the AU evidence-based augmentation with the strongest effect on positive symptoms in clozapine partial-responders.",
+        "Sodium valproate adjunct does NOT have evidence for positive-symptom augmentation in clozapine.",
+        "Aripiprazole augmentation is for metabolic / weight; lamotrigine has modest effect; CBT for psychosis is an adjunct not a substitute.",
+        "Therapeutic clozapine trough varies with smoking status; current trough is in range and ratio 1.98 suggests adherence."
+      ],
+      "pearls": "Clozapine partial-responders with persisting positive symptoms have an approximately 50 per cent response rate to ECT augmentation per the CLO-ECT meta-analysis; offer it before further pharmacological augmentation."
+    },
+    "sources": [
+      { "label": "RANZCP CPG: Schizophrenia" },
+      { "label": "Therapeutic Guidelines: Psychotropic" }
+    ],
+    "created": "2026-06-01",
+    "l5_seed": true
+  },
+  {
+    "id": "l5-seed-004-medicine",
+    "topic": "Medicine",
+    "subtopic": "Other",
+    "subtopic_detail": "Hyperkalaemia in CKD with competing guideline cutoffs",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["hyperkalaemia", "CKD", "ECG"],
+    "stem": "A 68-year-old man with CKD stage 4 (baseline eGFR 22 mL/min/1.73 m^2) presents to the emergency department with worsening fatigue and palpitations. He takes perindopril 8 mg, spironolactone 25 mg, and metformin 500 mg BD, all unchanged for 6 months. His last potassium 4 weeks ago was 5.1 mmol/L. The treating intern has already given him 10 mL of 10 per cent calcium gluconate IV and salbutamol 20 mg via nebuliser, with a repeat ECG pending and a venous gas drawn.\n\nThe man is alert, has chest discomfort rated 3 out of 10, and has had no syncope. He has had no missed dialysis (he is pre-dialysis under the renal team and is on a low-potassium diet).",
+    "data_table": {
+      "Vital signs": "Pulse 56 bpm regular, BP 142/86 mmHg, RR 16, SpO2 97% on room air, temperature 36.6 degrees C",
+      "Investigations": "Potassium 7.4 mmol/L (3.5-5.0); sodium 138; bicarbonate 16; eGFR 18 mL/min/1.73 m^2; creatinine 280 micromol/L (baseline 220); pH 7.28 on VBG; ECG sinus bradycardia 54 bpm with tall peaked T waves V2-V5, PR interval 220 ms, QRS 110 ms (was 90 ms at baseline)",
+      "Medications": "Perindopril 8 mg daily, spironolactone 25 mg daily, metformin 500 mg BD"
+    },
+    "lead_in": "Following the initial calcium and salbutamol, what is the most appropriate next step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence intravenous insulin 10 units in 50 mL of 50 per cent dextrose over 20 minutes with paired blood glucose at 30 and 60 minutes, repeat ECG, and concurrently contact the nephrology team for emergency haemodialysis",
+        "correct": true,
+        "rationale": "Hyperkalaemia of 7.4 mmol/L with ECG changes beyond peaked T waves (PR prolongation, QRS widening from 90 to 110 ms) is life-threatening and requires both ongoing shifting therapy AND definitive removal of potassium. Insulin-dextrose is the second-line shifting agent after calcium and salbutamol; calcium stabilises the myocardium but does NOT lower potassium. Salbutamol shifts potassium intracellularly by approximately 0.5 to 1.0 mmol/L for 2 to 6 hours. The CKD stage 4 (eGFR 18) means the kidney cannot excrete the potassium load and the patient will rebound; emergency haemodialysis is the definitive removal therapy and should be arranged concurrently, not after the medical management has failed. (Source: KHA-CARI: Acute Kidney Injury and Hyperkalaemia; Therapeutic Guidelines: Endocrinology; Australian Resuscitation Council guideline 11.5.1)",
+        "source_refs": ["KHA-CARI: Hyperkalaemia", "Therapeutic Guidelines: Endocrinology"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence intravenous sodium bicarbonate 100 mmol over 60 minutes with paired blood gas at 30 and 60 minutes, monitor calcium and sodium, and recheck potassium at 60 minutes",
+        "correct": false,
+        "rationale": "Sodium bicarbonate has a small and variable effect on potassium shift and is not recommended as routine first-line shifting therapy in AU guidelines; its role is limited to severe metabolic acidosis with concurrent hyperkalaemia where the acidosis is the dominant contributor. The pH of 7.28 is mild-moderate and the dominant issue is the potassium of 7.4 with ECG changes. Insulin-dextrose plus emergency dialysis is the AU pathway. (Source: KHA-CARI: Hyperkalaemia)",
+        "source_refs": ["KHA-CARI: Hyperkalaemia"]
+      },
+      {
+        "letter": "C",
+        "text": "Administer sodium polystyrene sulfonate (Resonium) 30 g orally now and 15 g 4-hourly with sorbitol, with repeat potassium at 6 hours and rectal Resonium if the patient cannot tolerate oral",
+        "correct": false,
+        "rationale": "Sodium polystyrene sulfonate is slow-acting (4 to 6 hours), has limited evidence for emergency hyperkalaemia, and carries a risk of intestinal necrosis (particularly with sorbitol). The Therapeutic Goods Administration has issued warnings; AU practice now favours patiromer or zirconium cyclosilicate for chronic management. In acute life-threatening hyperkalaemia with ECG changes, Resonium is NOT the next step. (Source: KHA-CARI: Hyperkalaemia; Australian Medicines Handbook)",
+        "source_refs": ["KHA-CARI: Hyperkalaemia", "AMH"]
+      },
+      {
+        "letter": "D",
+        "text": "Cease perindopril and spironolactone, repeat potassium at 6 hours, ensure low-potassium diet, and arrange outpatient nephrology review within 1 week",
+        "correct": false,
+        "rationale": "Stopping the offending medications is appropriate as part of the management but is not sufficient when potassium is 7.4 with ECG changes; the patient needs ongoing shifting therapy and emergency dialysis or other definitive removal. Outpatient review in 1 week does not address acute hyperkalaemia. (Source: KHA-CARI: Hyperkalaemia)",
+        "source_refs": ["KHA-CARI: Hyperkalaemia"]
+      },
+      {
+        "letter": "E",
+        "text": "Repeat the calcium gluconate 10 mL of 10 per cent IV over 10 minutes, repeat the salbutamol 20 mg nebuliser, and re-check ECG and potassium in 30 minutes before further escalation",
+        "correct": false,
+        "rationale": "Repeating calcium is appropriate if ECG changes persist (every 30 to 60 minutes), but calcium does NOT lower potassium - it only stabilises the myocardium. Repeating salbutamol can add a further 0.3 to 0.5 mmol/L drop. Neither addresses the underlying need to remove potassium from the body in a patient with eGFR 18. Insulin-dextrose plus dialysis activation is the next step. (Source: KHA-CARI: Hyperkalaemia)",
+        "source_refs": ["KHA-CARI: Hyperkalaemia"]
+      }
+    ],
+    "explanation": {
+      "summary": "This is life-threatening hyperkalaemia (potassium 7.4 mmol/L with PR prolongation and QRS widening beyond peaked T waves) in CKD stage 4. The AU pathway is concurrent: stabilise myocardium (calcium), shift potassium intracellularly (salbutamol then insulin-dextrose), and definitively remove potassium (haemodialysis when eGFR cannot excrete the load). The candidate must NOT confuse calcium and salbutamol with potassium-lowering definitive therapy; both are bridges only. The disconfirming finding is the QRS widening from 90 to 110 ms, indicating progression beyond first-degree changes and the need for both ongoing shifting and definitive removal. Competing guideline cutoffs (KDIGO international vs KHA-CARI Australian) on dialysis indications are similar but the AU framing emphasises early renal team activation in CKD stage 4 with acute hyperkalaemia rather than waiting for a fixed potassium threshold. In context, every acute hyperkalaemia with ECG changes in CKD requires concurrent action on three fronts (stabilise, shift, remove) and an immediate dialysis decision rather than a sequential pathway.",
+      "key_points": [
+        "Calcium stabilises myocardium; does NOT lower potassium.",
+        "Salbutamol and insulin-dextrose are temporising shifting agents (0.5 to 1.0 mmol/L drop, 2 to 6 hour effect).",
+        "Definitive removal requires kidneys, gut binders (slow, chronic), or dialysis (acute, fast).",
+        "Sodium polystyrene sulfonate is slow and carries intestinal necrosis risk; not for emergency use.",
+        "QRS widening beyond peaked T waves is a sign of progression and an indication for emergency dialysis activation."
+      ],
+      "pearls": "In acute hyperkalaemia with ECG changes in CKD stage 4 or 5, call the renal team for emergency dialysis concurrently with insulin-dextrose - do not wait for medical management to fail."
+    },
+    "sources": [
+      { "label": "KHA-CARI: Hyperkalaemia" },
+      { "label": "Therapeutic Guidelines: Endocrinology" },
+      { "label": "Australian Resuscitation Council Guideline 11.5.1" }
+    ],
+    "created": "2026-06-01",
+    "l5_seed": true
+  }
+]
