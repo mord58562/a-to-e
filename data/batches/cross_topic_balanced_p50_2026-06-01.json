@@ -1,0 +1,73 @@
+[
+  {
+    "id": "rabe50-001",
+    "topic": "Paediatrics",
+    "subtopic": "Endocrine emergency",
+    "subtopic_detail": "Paediatric DKA fluid resuscitation",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["DKA", "fluid resuscitation"],
+    "stem": "A 7-year-old (weight 26 kg) presents with two days of polyuria, weight loss, and vomiting today. Mother reports rapid deep breathing for six hours. He responds to voice and is orientated but mildly drowsy. He has not received any insulin previously. Capillary glucose is 28 mmol/L (3.5-7.8 fasting), venous pH 7.10, HCO3 8 mmol/L (22-32), ketones 5.6 mmol/L. Sodium is 134 mmol/L (135-145) and potassium 4.8 mmol/L (3.5-5.0). He is alert but lethargic with capillary refill 3 seconds and dry mucous membranes. He weighs 26 kg.
+
+The registrar is preparing the first hour of management.",
+    "data_table": {
+      "Vital signs": "Pulse 132, BP 98/60 mmHg, RR 38, SpO2 99%, temperature 36.6°C",
+      "Examination": "Drowsy but rousable, Kussmaul breathing, capillary refill 3 seconds, dry mucous membranes",
+      "Investigations": "Glucose 28 mmol/L, venous pH 7.10, HCO3 8 mmol/L, ketones 5.6 mmol/L, sodium 134 mmol/L, potassium 4.8 mmol/L, creatinine 78 micromol/L",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate first-hour fluid plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "10 mL/kg 0.9% sodium chloride bolus, then maintenance plus deficit over 48 hours",
+        "correct": true,
+        "rationale": "RCH and ISPAD recommend a cautious 10 mL/kg crystalloid bolus only if shocked, then deficit replacement over 48 hours to reduce cerebral oedema risk. (Source: RCH CPG: Diabetic Ketoacidosis)",
+        "source_refs": ["RCH CPG: Diabetic Ketoacidosis"]
+      },
+      {
+        "letter": "B",
+        "text": "20 mL/kg 0.9% sodium chloride bolus over 15 minutes, repeated to 60 mL/kg if needed",
+        "correct": false,
+        "rationale": "Aggressive bolus volumes used in paediatric sepsis are not recommended in DKA; they increase cerebral oedema risk in a child who is not in frank shock. (Source: RCH CPG: Diabetic Ketoacidosis)",
+        "source_refs": ["RCH CPG: Diabetic Ketoacidosis"]
+      },
+      {
+        "letter": "C",
+        "text": "Commence IV insulin 0.1 unit/kg/hour immediately before any fluid resuscitation",
+        "correct": false,
+        "rationale": "Insulin is started one hour after fluids in paediatric DKA to avoid rapid osmotic shifts and cerebral oedema. (Source: RCH CPG: Diabetic Ketoacidosis)",
+        "source_refs": ["RCH CPG: Diabetic Ketoacidosis"]
+      },
+      {
+        "letter": "D",
+        "text": "8.4% sodium bicarbonate 1 mmol/kg over 30 minutes to correct acidosis",
+        "correct": false,
+        "rationale": "Bicarbonate is contraindicated in paediatric DKA; it worsens intracellular acidosis and increases cerebral oedema risk. (Source: RCH CPG: Diabetic Ketoacidosis)",
+        "source_refs": ["RCH CPG: Diabetic Ketoacidosis"]
+      },
+      {
+        "letter": "E",
+        "text": "0.45% sodium chloride 5 mL/kg/hour with no initial bolus and no potassium",
+        "correct": false,
+        "rationale": "Hypotonic fluid as initial resuscitation in paediatric DKA risks rapid osmotic shifts and is not the AU initial fluid; isotonic crystalloid is standard. (Source: RCH CPG: Diabetic Ketoacidosis)",
+        "source_refs": ["RCH CPG: Diabetic Ketoacidosis"]
+      }
+    ],
+    "explanation": {
+      "summary": "Paediatric DKA fluid resuscitation differs from sepsis. Initial bolus is restricted to 10 mL/kg of isotonic crystalloid, given only if there are objective signs of shock. The estimated deficit (5-7% in moderate DKA) is replaced over 48 hours alongside maintenance to minimise cerebral oedema, which carries a mortality of 20-25% and is the leading cause of paediatric DKA death.",
+      "key_points": [
+        "Initial bolus 10 mL/kg isotonic crystalloid only if shocked",
+        "Replace deficit over 48 hours, not 24",
+        "Bicarbonate is contraindicated; insulin starts at 1 hour"
+      ],
+      "pearls": "If GCS drops or headache develops, give mannitol 0.5 g/kg or 3% saline 5 mL/kg IV within 5 minutes - do not wait for CT."
+    },
+    "sources": [
+      {"label": "RCH CPG: Diabetic Ketoacidosis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Diabetic_Ketoacidosis/"},
+      {"label": "ISPAD Clinical Practice Consensus Guidelines 2022: DKA", "url": "https://www.ispad.org/"}
+    ],
+    "reference_ranges": ["paeds_vitals_child", "vbg", "bsl_paeds", "ketones", "paeds_uec"],
+    "created": "2026-06-01"
+  }
+]
