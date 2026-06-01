@@ -1,0 +1,929 @@
+[
+  {
+    "id": "rabe50-001",
+    "topic": "Paediatrics",
+    "subtopic": "Endocrine emergency",
+    "subtopic_detail": "Paediatric DKA fluid resuscitation",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "DKA",
+      "fluid resuscitation"
+    ],
+    "stem": "A 7-year-old (weight 26 kg) presents with two days of polyuria, weight loss, and vomiting today. Mother reports rapid deep breathing for six hours. He responds to voice and is orientated but mildly drowsy. He has not received any insulin previously. Capillary glucose is 28 mmol/L (3.5-7.8 fasting), venous pH 7.10, HCO3 8 mmol/L (22-32), ketones 5.6 mmol/L. Sodium is 134 mmol/L (135-145) and potassium 4.8 mmol/L (3.5-5.0). He is alert but lethargic with capillary refill 3 seconds and dry mucous membranes. He weighs 26 kg.\n\nThe registrar is preparing the first hour of management.",
+    "data_table": {
+      "Vital signs": "Pulse 132, BP 98/60 mmHg, RR 38, SpO2 99%, temperature 36.6°C",
+      "Examination": "Drowsy but rousable, Kussmaul breathing, capillary refill 3 seconds, dry mucous membranes",
+      "Investigations": "Glucose 28 mmol/L, venous pH 7.10, HCO3 8 mmol/L, ketones 5.6 mmol/L, sodium 134 mmol/L, potassium 4.8 mmol/L, creatinine 78 micromol/L",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate first-hour fluid plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "10 mL/kg 0.9% sodium chloride bolus, then maintenance plus deficit over 48 hours",
+        "correct": true,
+        "rationale": "RCH and ISPAD recommend a cautious 10 mL/kg crystalloid bolus only if shocked, then deficit replacement over 48 hours to reduce cerebral oedema risk. (Source: RCH CPG: Diabetic Ketoacidosis)",
+        "source_refs": [
+          "RCH CPG: Diabetic Ketoacidosis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "20 mL/kg 0.9% sodium chloride bolus over 15 minutes, repeated to 60 mL/kg if needed",
+        "correct": false,
+        "rationale": "Aggressive bolus volumes used in paediatric sepsis are not recommended in DKA; they increase cerebral oedema risk in a child who is not in frank shock. (Source: RCH CPG: Diabetic Ketoacidosis)",
+        "source_refs": [
+          "RCH CPG: Diabetic Ketoacidosis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence IV insulin 0.1 unit/kg/hour immediately before any fluid resuscitation",
+        "correct": false,
+        "rationale": "Insulin is started one hour after fluids in paediatric DKA to avoid rapid osmotic shifts and cerebral oedema. (Source: RCH CPG: Diabetic Ketoacidosis)",
+        "source_refs": [
+          "RCH CPG: Diabetic Ketoacidosis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "8.4% sodium bicarbonate 1 mmol/kg over 30 minutes to correct acidosis",
+        "correct": false,
+        "rationale": "Bicarbonate is contraindicated in paediatric DKA; it worsens intracellular acidosis and increases cerebral oedema risk. (Source: RCH CPG: Diabetic Ketoacidosis)",
+        "source_refs": [
+          "RCH CPG: Diabetic Ketoacidosis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "0.45% sodium chloride 5 mL/kg/hour with no initial bolus and no potassium",
+        "correct": false,
+        "rationale": "Hypotonic fluid as initial resuscitation in paediatric DKA risks rapid osmotic shifts and is not the AU initial fluid; isotonic crystalloid is standard. (Source: RCH CPG: Diabetic Ketoacidosis)",
+        "source_refs": [
+          "RCH CPG: Diabetic Ketoacidosis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Paediatric DKA fluid resuscitation differs from sepsis. Initial bolus is restricted to 10 mL/kg of isotonic crystalloid, given only if there are objective signs of shock. The estimated deficit (5-7% in moderate DKA) is replaced over 48 hours alongside maintenance to minimise cerebral oedema, which carries a mortality of 20-25% and is the leading cause of paediatric DKA death.",
+      "key_points": [
+        "Initial bolus 10 mL/kg isotonic crystalloid only if shocked",
+        "Replace deficit over 48 hours, not 24",
+        "Bicarbonate is contraindicated; insulin starts at 1 hour"
+      ],
+      "pearls": "If GCS drops or headache develops, give mannitol 0.5 g/kg or 3% saline 5 mL/kg IV within 5 minutes - do not wait for CT."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Diabetic Ketoacidosis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Diabetic_Ketoacidosis/"
+      },
+      {
+        "label": "ISPAD Clinical Practice Consensus Guidelines 2022: DKA",
+        "url": "https://www.ispad.org/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "vbg",
+      "bsl_paeds",
+      "ketones",
+      "paeds_uec"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe50-002",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Foreign body aspiration partial obstruction",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "foreign body",
+      "wheeze"
+    ],
+    "stem": "A 2-year-old boy is brought in because he started coughing and choking suddenly two days ago while eating peanuts. The episode settled within a minute and he resumed playing. Since then his parents have noticed intermittent cough and some breathlessness on running. He has no fever. On auscultation there is reduced air entry over the left lower zone and a localised expiratory wheeze on the left only. Chest X-ray with expiratory phase shows left-sided hyperinflation that does not deflate.\n\nHe is comfortable at rest with no stridor.",
+    "data_table": {
+      "Vital signs": "Pulse 110, BP 96/62 mmHg, RR 28, SpO2 97%, temperature 36.8°C",
+      "Examination": "Reduced left lower zone air entry, localised left expiratory wheeze, no stridor",
+      "Investigations": "Chest X-ray: left-sided hyperinflation persisting on expiratory film, mediastinal shift to the right on expiration",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "B",
+        "text": "Urgent rigid bronchoscopy in theatre with paediatric ENT and anaesthetics",
+        "correct": true,
+        "rationale": "Persistent unilateral hyperinflation after a witnessed choking episode is presumed retained airway foreign body; rigid bronchoscopy under general anaesthetic is the AU and international standard for retrieval. (Source: RCH CPG: Foreign Body Aspiration)",
+        "source_refs": [
+          "RCH CPG: Foreign Body Aspiration"
+        ]
+      },
+      {
+        "letter": "A",
+        "text": "Trial of inhaled salbutamol 6 puffs via spacer and reassess in one hour",
+        "correct": false,
+        "rationale": "Asymmetric wheeze with a clear aspiration history is foreign body until proven otherwise; bronchodilators delay definitive retrieval. (Source: RCH CPG: Foreign Body Aspiration)",
+        "source_refs": [
+          "RCH CPG: Foreign Body Aspiration"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Oral prednisolone 1 mg/kg for five days and review in clinic",
+        "correct": false,
+        "rationale": "Steroids do not dislodge an airway foreign body and risk masking obstructive sequelae or post-obstructive pneumonia. (Source: RCH CPG: Foreign Body Aspiration)",
+        "source_refs": [
+          "RCH CPG: Foreign Body Aspiration"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Five back blows then five chest thrusts performed in the emergency department",
+        "correct": false,
+        "rationale": "Back blows and chest thrusts are reserved for an effective cough being lost or complete obstruction; they are contraindicated in a stable partial obstruction. (Source: ANZCOR Guideline 4: Airway)",
+        "source_refs": [
+          "ANZCOR Guideline 4: Airway"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Discharge with safety netting and review in 48 hours by general practice",
+        "correct": false,
+        "rationale": "Retained foreign body causes obstructive pneumonia and bronchiectasis if not removed; delayed retrieval is associated with worse outcomes. (Source: RCH CPG: Foreign Body Aspiration)",
+        "source_refs": [
+          "RCH CPG: Foreign Body Aspiration"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "A witnessed choking episode in a toddler followed by persistent unilateral findings (localised wheeze, reduced air entry, expiratory hyperinflation on chest X-ray) is foreign body aspiration until proven otherwise. The retained object acts as a ball-valve, trapping air distally on expiration. Rigid bronchoscopy under general anaesthetic is the definitive procedure. A normal X-ray does not exclude foreign body and should not delay bronchoscopy when the history is suggestive.",
+      "key_points": [
+        "Witnessed choking plus unilateral signs equals presumed foreign body",
+        "Ball-valve effect causes expiratory hyperinflation, not collapse",
+        "Rigid bronchoscopy is the definitive intervention"
+      ],
+      "pearls": "Peanut is the most common AU paediatric airway foreign body and releases an oil that causes lipoid pneumonitis if retained beyond 48 hours."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Foreign Body Aspiration",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Foreign_body_aspiration/"
+      },
+      {
+        "label": "ANZCOR Guideline 4: Airway",
+        "url": "https://www.anzcor.org/home/basic-life-support/guideline-4-airway/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe50-003",
+    "topic": "Paediatrics",
+    "subtopic": "Cardiology",
+    "subtopic_detail": "Kawasaki disease IVIG resistance",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "Kawasaki disease"
+    ],
+    "stem": "A 3-year-old girl was admitted three days ago with confirmed Kawasaki disease (fever for six days, bilateral non-purulent conjunctivitis, strawberry tongue, polymorphous rash, right cervical lymphadenopathy 1.8 cm, and peripheral oedema). She received IVIG 2 g/kg over 12 hours plus aspirin 30 mg/kg/day on day 2 of admission. Her fever defervesced within 24 hours of IVIG. Today, 48 hours after the IVIG infusion completed, she has a temperature of 39.1°C, irritability, and recurrence of conjunctivitis. CRP has risen from 35 to 168 mg/L (0-5). The echocardiogram shows normal coronary arteries.\n\nThe paediatric cardiology team has been called.",
+    "data_table": {
+      "Vital signs": "Pulse 138, BP 96/56 mmHg, RR 30, SpO2 98%, temperature 39.1°C",
+      "Examination": "Bilateral non-purulent conjunctivitis, strawberry tongue, irritable",
+      "Investigations": "CRP 168 mg/L (rose from 35), ESR 78 mm/h, WCC 18.4 x10^9/L, platelets 612 x10^9/L; echocardiogram coronary arteries normal",
+      "Medications": "IVIG 2 g/kg completed 48 h ago; aspirin 30 mg/kg/day"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "C",
+        "text": "Second IVIG 2 g/kg infusion over 12 hours plus continued aspirin",
+        "correct": true,
+        "rationale": "IVIG resistance is defined as persistent or recurrent fever >=36 h after the first IVIG dose; the AU and AAP standard is a second IVIG 2 g/kg dose. (Source: AHA Kawasaki Disease Statement 2017)",
+        "source_refs": [
+          "AHA Kawasaki Disease Statement 2017"
+        ]
+      },
+      {
+        "letter": "A",
+        "text": "Switch aspirin to clopidogrel and observe without further immunotherapy",
+        "correct": false,
+        "rationale": "Antiplatelet change does not address the underlying vasculitis; IVIG-resistant Kawasaki disease requires further immunomodulation. (Source: AHA Kawasaki Disease Statement 2017)",
+        "source_refs": [
+          "AHA Kawasaki Disease Statement 2017"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Initiate infliximab 5 mg/kg as first-line second therapy",
+        "correct": false,
+        "rationale": "Infliximab is an option for second IVIG resistance; AU and AHA pathways use a second IVIG dose before TNF-alpha inhibition. (Source: AHA Kawasaki Disease Statement 2017)",
+        "source_refs": [
+          "AHA Kawasaki Disease Statement 2017"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Empiric IV ceftriaxone 50 mg/kg for occult bacterial co-infection",
+        "correct": false,
+        "rationale": "Recurrence of fever with a rising CRP after IVIG response is the defining pattern of IVIG resistance, not occult bacterial infection. (Source: AHA Kawasaki Disease Statement 2017)",
+        "source_refs": [
+          "AHA Kawasaki Disease Statement 2017"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Cease aspirin and start oral prednisolone 2 mg/kg/day monotherapy",
+        "correct": false,
+        "rationale": "Steroid monotherapy without further IVIG is not the AU pathway for IVIG resistance; corticosteroids are adjunctive, often with the second IVIG. (Source: AHA Kawasaki Disease Statement 2017)",
+        "source_refs": [
+          "AHA Kawasaki Disease Statement 2017"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "IVIG-resistant Kawasaki disease is defined as persistent or recurrent fever 36 hours or more after the first IVIG dose, occurring in approximately 10-20% of children. The standard second-line treatment in Australian paediatric centres is a second 2 g/kg IVIG infusion. High-risk patients (coronary changes, age under 12 months, persistent inflammatory markers) may receive adjunctive methylprednisolone or infliximab. Aspirin is continued throughout.",
+      "key_points": [
+        "IVIG resistance: fever recurrence at 36 h+ post-first dose",
+        "Second IVIG 2 g/kg is the AU first second-line",
+        "Infliximab and pulse steroids are third-line"
+      ],
+      "pearls": "Kobayashi score predicts IVIG resistance; a score of 5 or more identifies high-risk patients who benefit from steroid plus IVIG up-front."
+    },
+    "sources": [
+      {
+        "label": "AHA Kawasaki Disease Statement 2017",
+        "url": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000000484"
+      },
+      {
+        "label": "RCH CPG: Kawasaki Disease",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Kawasaki_disease/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "paeds_fbc",
+      "inflammatory_markers"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe50-004",
+    "topic": "Paediatrics",
+    "subtopic": "Surgical emergency",
+    "subtopic_detail": "Intussusception shock vs stable",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "intussusception"
+    ],
+    "stem": "A 14-month-old boy presents with eight hours of intermittent episodes where he suddenly starts crying, draws his legs up, and then settles. He has vomited twice but is not bilious. His mother saw dark red jelly-like material in his nappy this morning. On examination he is pale, mottled, with capillary refill 4 seconds and a palpable long thin lump in his right upper tummy. Ultrasound confirms an ileocolic target sign. Venous lactate is 4.2 mmol/L (0.5-2.0) and pH 7.31.\n\nIV access has been obtained.",
+    "data_table": {
+      "Vital signs": "Pulse 168, BP 78/42 mmHg, RR 36, SpO2 99%, temperature 36.4°C",
+      "Examination": "Pale, mottled, capillary refill 4 seconds, palpable right upper quadrant mass, dark red jelly stool",
+      "Investigations": "Ultrasound: ileocolic target sign; lactate 4.2 mmol/L; pH 7.31",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "D",
+        "text": "20 mL/kg 0.9% sodium chloride bolus and urgent surgical reduction in theatre",
+        "correct": true,
+        "rationale": "Shock and acidosis are contraindications to air enema; resuscitation precedes surgical reduction by paediatric surgery. (Source: RCH CPG: Intussusception)",
+        "source_refs": [
+          "RCH CPG: Intussusception"
+        ]
+      },
+      {
+        "letter": "A",
+        "text": "Proceed directly to air enema reduction under fluoroscopy",
+        "correct": false,
+        "rationale": "Air enema is contraindicated in shock or peritonitis; perforation rates rise sharply and surgical access is delayed. (Source: RCH CPG: Intussusception)",
+        "source_refs": [
+          "RCH CPG: Intussusception"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Trial of oral rehydration with frequent small volumes and observe four hours",
+        "correct": false,
+        "rationale": "Shocked patient with peripheral mottling and rising lactate needs IV resuscitation, not oral rehydration. (Source: RCH CPG: Intussusception)",
+        "source_refs": [
+          "RCH CPG: Intussusception"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Insert nasogastric tube and admit for serial abdominal examinations",
+        "correct": false,
+        "rationale": "Observation alone misses ongoing bowel ischaemia in a shocked child with confirmed intussusception; surgical reduction is needed. (Source: RCH CPG: Intussusception)",
+        "source_refs": [
+          "RCH CPG: Intussusception"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Glycerol suppository to assist spontaneous reduction with bowel evacuation",
+        "correct": false,
+        "rationale": "Glycerol does not reduce intussusception and delays definitive management. (Source: RCH CPG: Intussusception)",
+        "source_refs": [
+          "RCH CPG: Intussusception"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Stable intussusception with no peritonitis, no shock, and a typical ileocolic ultrasound is reduced by air enema (success ~85% within 24 hours of symptom onset). Shock, peritonitis, free air on imaging, or persistent failure of air enema are indications for surgical reduction. This child is shocked with rising lactate; resuscitation and theatre are needed without delay. Recurrence after air enema occurs in approximately 10%.",
+      "key_points": [
+        "Air enema reduction is first-line in stable intussusception",
+        "Shock and peritonitis are contraindications to enema reduction",
+        "Surgical reduction follows resuscitation in unstable patients"
+      ],
+      "pearls": "A pathological lead point (Meckel diverticulum, lymphoma, polyp) is found in <5% under 2 years but increases with age above 2; consider in atypical or recurrent cases."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Intussusception",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Intussusception/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Surgical",
+        "url": "https://www.tg.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "vbg"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe50-005",
+    "topic": "Paediatrics",
+    "subtopic": "Haematology-oncology",
+    "subtopic_detail": "ALL presentation with tumour lysis prevention",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "leukaemia",
+      "tumour lysis"
+    ],
+    "stem": "A 5-year-old presents with three weeks of fatigue, bruising, and bilateral knee pain. His mother noted pallor. On examination he has petechiae, hepatomegaly 3 cm and splenomegaly 4 cm below the costal margin. The full blood count shows haemoglobin 64 g/L (115-155), white cells 96 x10^9/L (5.0-15.0) with 84% blasts on film, and platelets 24 x10^9/L (150-450). Urate is 0.62 mmol/L (0.20-0.42), potassium 5.4 mmol/L (3.5-5.0), phosphate 2.1 mmol/L (1.2-1.8), and creatinine 56 micromol/L (30-50). Lactate dehydrogenase is 4800 U/L.\n\nThe paediatric haematology team is en route.",
+    "data_table": {
+      "Vital signs": "Pulse 124, BP 102/64 mmHg, RR 24, SpO2 99%, temperature 37.5°C",
+      "Examination": "Pallor, petechiae, hepatomegaly 3 cm, splenomegaly 4 cm",
+      "Investigations": "Haemoglobin 64 g/L, white cells 96 x10^9/L (84% blasts), platelets 24 x10^9/L, urate 0.62 mmol/L, potassium 5.4 mmol/L, phosphate 2.1 mmol/L, creatinine 56 micromol/L, LDH 4800 U/L",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate first-line tumour lysis prevention?",
+    "options": [
+      {
+        "letter": "E",
+        "text": "IV hyperhydration 3 L/m^2/day without potassium and rasburicase 0.2 mg/kg",
+        "correct": true,
+        "rationale": "High-risk tumour lysis (WCC >100, blasts, urate >0.48 mmol/L) requires hyperhydration with potassium-free fluid plus rasburicase, not allopurinol. (Source: COG Tumour Lysis Syndrome guideline)",
+        "source_refs": [
+          "COG Tumour Lysis Syndrome guideline"
+        ]
+      },
+      {
+        "letter": "A",
+        "text": "Allopurinol 10 mg/kg/day orally with normal maintenance fluids",
+        "correct": false,
+        "rationale": "Allopurinol prevents new urate formation but does not lower existing urate; high-risk patients need rasburicase plus hyperhydration. (Source: COG Tumour Lysis Syndrome guideline)",
+        "source_refs": [
+          "COG Tumour Lysis Syndrome guideline"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "IV sodium bicarbonate infusion targeting urine pH 7.5 plus allopurinol",
+        "correct": false,
+        "rationale": "Urinary alkalinisation is no longer recommended; it promotes calcium phosphate precipitation as phosphate rises. (Source: COG Tumour Lysis Syndrome guideline)",
+        "source_refs": [
+          "COG Tumour Lysis Syndrome guideline"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Furosemide 1 mg/kg IV every 6 hours to force diuresis with normal saline",
+        "correct": false,
+        "rationale": "Loop diuretics are reserved for fluid overload; routine forced diuresis is not part of tumour lysis prevention. (Source: COG Tumour Lysis Syndrome guideline)",
+        "source_refs": [
+          "COG Tumour Lysis Syndrome guideline"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Withhold all fluids and chemotherapy until urate normalises spontaneously",
+        "correct": false,
+        "rationale": "Spontaneous tumour lysis is already occurring with rising urate and LDH; delay of fluids and rasburicase worsens AKI risk. (Source: COG Tumour Lysis Syndrome guideline)",
+        "source_refs": [
+          "COG Tumour Lysis Syndrome guideline"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "This child has high-risk tumour lysis features at presentation: WCC over 100 x10^9/L with blasts, hyperuricaemia, hyperphosphataemia, and elevated LDH. AU and COG management uses hyperhydration with potassium-free isotonic fluid at 3 L/m^2/day plus rasburicase 0.2 mg/kg IV. Urinary alkalinisation is no longer recommended because it promotes calcium phosphate precipitation. Allopurinol is reserved for low or intermediate risk patients without established hyperuricaemia.",
+      "key_points": [
+        "High-risk TLS: rasburicase + hyperhydration",
+        "Avoid potassium in initial fluids",
+        "Bicarbonate alkalinisation is no longer recommended"
+      ],
+      "pearls": "Rasburicase is contraindicated in G6PD deficiency; screen patients of African, Mediterranean, or Southeast Asian descent before administration."
+    },
+    "sources": [
+      {
+        "label": "COG Tumour Lysis Syndrome guideline",
+        "url": "https://www.childrensoncologygroup.org/"
+      },
+      {
+        "label": "RCH CPG: Acute Leukaemia",
+        "url": "https://www.rch.org.au/clinicalguide/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "paeds_fbc",
+      "paeds_uec"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe50-006",
+    "topic": "Paediatrics",
+    "subtopic": "Inborn errors of metabolism",
+    "subtopic_detail": "Urea cycle disorder vs Reye in encephalopathy",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "hyperammonaemia"
+    ],
+    "stem": "A previously well 3-year-old presents with three days of vomiting after a viral illness, now confused and agitated with intermittent posturing. He has received paracetamol 15 mg/kg every six hours but no aspirin or other medications. Glucose is 4.6 mmol/L (3.5-7.8). Liver function shows ALT 220 U/L (0-40), AST 240 U/L (0-40), bilirubin 12 micromol/L (3-21), INR 1.2 (0.9-1.2). Ammonia is 380 micromol/L (less than 50). Venous gas shows pH 7.51, pCO2 28 mmHg, HCO3 22 mmol/L. Lactate is 1.8 mmol/L (0.5-2.0). Urine ketones are negative.\n\nMetabolic and intensive care teams have been notified.",
+    "data_table": {
+      "Vital signs": "Pulse 128, BP 102/64 mmHg, RR 32, SpO2 99%, temperature 37.0°C",
+      "Examination": "Confused, intermittent decorticate posturing, no rash, no hepatomegaly",
+      "Investigations": "Ammonia 380 micromol/L, ALT 220 U/L, AST 240 U/L, bilirubin 12 micromol/L, INR 1.2, glucose 4.6 mmol/L, venous pH 7.51, pCO2 28 mmHg, lactate 1.8 mmol/L, urine ketones negative",
+      "Medications": "Paracetamol 15 mg/kg six-hourly for three days"
+    },
+    "lead_in": "Which is the most likely underlying disorder?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Late-onset ornithine transcarbamylase deficiency",
+        "correct": true,
+        "rationale": "Respiratory alkalosis with marked hyperammonaemia and absent ketosis in a previously well boy after catabolic stress is classic for a urea cycle disorder, most often OTC. (Source: RCH CPG: Hyperammonaemia)",
+        "source_refs": [
+          "RCH CPG: Hyperammonaemia"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Reye syndrome related to viral illness and aspirin exposure",
+        "correct": false,
+        "rationale": "Reye syndrome features metabolic acidosis with hypoglycaemia and exposure to salicylates; this child has alkalosis, normal glucose, and no aspirin. (Source: BMJ Best Practice: Reye syndrome)",
+        "source_refs": [
+          "BMJ Best Practice: Reye syndrome"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Paracetamol-induced acute fulminant liver failure",
+        "correct": false,
+        "rationale": "Therapeutic paracetamol dosing rarely causes liver failure; INR is normal and bilirubin is normal, arguing against acute liver failure. (Source: AMH: Paracetamol)",
+        "source_refs": [
+          "AMH: Paracetamol"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Medium-chain acyl-CoA dehydrogenase (MCAD) deficiency",
+        "correct": false,
+        "rationale": "MCAD causes hypoketotic hypoglycaemia during fasting illness; this child is normoglycaemic and has only mild ammonia rise relative to MCAD episodes. (Source: HumGenome MCAD overview)",
+        "source_refs": [
+          "HumGenome MCAD overview"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Acute viral hepatitis A with hepatic encephalopathy",
+        "correct": false,
+        "rationale": "Acute viral hepatitis with encephalopathy would show jaundice and an INR above 1.5; INR is normal here. (Source: GESA: Acute viral hepatitis)",
+        "source_refs": [
+          "GESA: Acute viral hepatitis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "The triad of respiratory alkalosis (ammonia stimulates the brainstem), marked hyperammonaemia, and absent ketosis in a previously well child following catabolic stress is highly suggestive of a urea cycle disorder. OTC deficiency is X-linked and most commonly presents in heterozygote females or partial-deficiency males triggered by illness, surgery, or protein load. Immediate management is to stop protein intake, give IV 10% dextrose at 1.5x maintenance, and start sodium benzoate plus sodium phenylbutyrate while haemofiltration is arranged for ammonia above 400.",
+      "key_points": [
+        "Respiratory alkalosis + hyperammonaemia + no ketosis suggests urea cycle disorder",
+        "Trigger is usually a catabolic illness with protein breakdown",
+        "Haemofiltration is indicated for ammonia >400 micromol/L"
+      ],
+      "pearls": "An ammonia >200 micromol/L in any encephalopathic child mandates a metabolic workup including plasma amino acids, urine orotic acid, and acylcarnitine profile - the genetic diagnosis follows."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Hyperammonaemia",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Hyperammonaemia/"
+      },
+      {
+        "label": "BMJ Best Practice: Reye syndrome",
+        "url": "https://bestpractice.bmj.com/"
+      },
+      {
+        "label": "AMH: Paracetamol",
+        "url": "https://amhonline.amh.net.au/"
+      },
+      {
+        "label": "HumGenome MCAD overview",
+        "url": "https://www.ncbi.nlm.nih.gov/books/NBK1424/"
+      },
+      {
+        "label": "GESA: Acute viral hepatitis",
+        "url": "https://www.gesa.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "lfts",
+      "vbg",
+      "bsl_paeds"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe50-007",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Antepartum haemorrhage",
+    "subtopic_detail": "Placenta praevia bleed at 32 weeks",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "placenta praevia",
+      "antepartum haemorrhage"
+    ],
+    "stem": "A 30-year-old G3P1 at 32 weeks' gestation presents after a 200 mL painless fresh vaginal bleed at home. The bleed has now stopped. Her anomaly scan documented a complete placenta praevia. Her blood group is A positive. The foetus is moving normally and CTG shows a reassuring trace with baseline 140 bpm, variability 10 bpm, accelerations present, no decelerations. Speculum was deferred. Bedside ultrasound confirms cephalic presentation and placenta covering the os. Haemoglobin is 112 g/L (115-165) and platelets 198 x10^9/L (150-400).\n\nThe maternal foetal medicine team is on-site.",
+    "data_table": {
+      "Vital signs": "Pulse 88, BP 124/78 mmHg, RR 16, SpO2 99%, temperature 36.7°C, foetal HR 140",
+      "Examination": "Soft abdomen, no uterine tenderness, no contractions",
+      "Investigations": "Haemoglobin 112 g/L, platelets 198 x10^9/L, fibrinogen 4.2 g/L, blood group A positive; ultrasound complete praevia, cephalic, normal EFW",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate management plan?",
+    "options": [
+      {
+        "letter": "B",
+        "text": "Admit, betamethasone IM, cross-match 2 units, and plan caesarean at 36-37 weeks",
+        "correct": true,
+        "rationale": "RANZCOG advises inpatient observation for sentinel praevia bleeds, corticosteroids 24-34+6 weeks, and elective caesarean at 36-37 weeks for complete praevia. (Source: RANZCOG Placenta Praevia 2022)",
+        "source_refs": [
+          "RANZCOG Placenta Praevia 2022"
+        ]
+      },
+      {
+        "letter": "A",
+        "text": "Discharge home with safety netting after 4 hours of observation",
+        "correct": false,
+        "rationale": "A sentinel bleed in placenta praevia mandates admission; the next bleed is often the dangerous one. (Source: RANZCOG Placenta Praevia 2022)",
+        "source_refs": [
+          "RANZCOG Placenta Praevia 2022"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Immediate category 1 caesarean section regardless of foetal status",
+        "correct": false,
+        "rationale": "Category 1 is reserved for ongoing haemorrhage, maternal compromise, or non-reassuring CTG; bleeding has settled and CTG is reassuring. (Source: RANZCOG Placenta Praevia 2022)",
+        "source_refs": [
+          "RANZCOG Placenta Praevia 2022"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Induction of labour with vaginal prostaglandin and aim for vaginal birth",
+        "correct": false,
+        "rationale": "Complete placenta praevia is an absolute contraindication to vaginal birth; the placenta covers the os. (Source: RANZCOG Placenta Praevia 2022)",
+        "source_refs": [
+          "RANZCOG Placenta Praevia 2022"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Outpatient management with twice-weekly midwifery review and aspirin 100 mg",
+        "correct": false,
+        "rationale": "Outpatient management is only appropriate after no bleeding for at least 48 hours, immediate hospital access, and stable haemoglobin; aspirin is not indicated. (Source: RANZCOG Placenta Praevia 2022)",
+        "source_refs": [
+          "RANZCOG Placenta Praevia 2022"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "A painless antepartum haemorrhage with confirmed placenta praevia at 32 weeks requires inpatient observation after the sentinel bleed because the next bleed is often heavier and unpredictable. Antenatal corticosteroids are given between 24 and 34+6 weeks for foetal lung maturation if delivery within 7 days is anticipated. Cross-match is held given the bleeding risk. Complete praevia mandates elective caesarean at 36+0 to 37+0 weeks; vaginal birth is contraindicated. Outpatient management is only considered after at least 48 hours of stability and immediate hospital access.",
+      "key_points": [
+        "Sentinel praevia bleed: admit for observation",
+        "Steroids 24-34+6 weeks if delivery within 7 days possible",
+        "Complete praevia: elective caesarean 36-37 weeks"
+      ],
+      "pearls": "If the placenta is anterior and there was a previous caesarean, screen for placenta accreta spectrum with grey-scale plus colour Doppler ultrasound before delivery planning."
+    },
+    "sources": [
+      {
+        "label": "RANZCOG Placenta Praevia 2022",
+        "url": "https://ranzcog.edu.au/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Obstetrics",
+        "url": "https://www.tg.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "obs_pregnancy_vitals",
+      "fbc",
+      "ctg_baseline"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe50-008",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Postpartum care",
+    "subtopic_detail": "VTE prophylaxis post-caesarean obesity",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "VTE",
+      "thromboprophylaxis"
+    ],
+    "stem": "A 34-year-old G2P2 has just delivered a healthy 3.8 kg infant by emergency caesarean at 39 weeks for failure to progress. Her BMI booking weight was 41 kg/m^2. She has no personal or family history of VTE. The operation was uncomplicated with an estimated blood loss of 600 mL. She has no current bleeding and her blood pressure has returned to baseline. She has not received any anticoagulation. Her platelet count is 220 x10^9/L (150-400) and her creatinine is 64 micromol/L (45-90).\n\nThe postnatal ward team is preparing her discharge medications.",
+    "data_table": {
+      "Vital signs": "Pulse 82, BP 122/76 mmHg, RR 14, SpO2 99%, temperature 36.7°C",
+      "Examination": "Wound clean and dry, uterus contracted, lochia minimal",
+      "Investigations": "Haemoglobin 108 g/L, platelets 220 x10^9/L, creatinine 64 micromol/L",
+      "Medications": "Paracetamol, ibuprofen, oxycodone PRN"
+    },
+    "lead_in": "What is the most appropriate VTE prophylaxis plan?",
+    "options": [
+      {
+        "letter": "C",
+        "text": "Enoxaparin 40 mg subcutaneous daily for 6 weeks postpartum",
+        "correct": true,
+        "rationale": "BMI >=40 plus caesarean section is two risk factors; RANZCOG recommends LMWH thromboprophylaxis for at least 6 weeks postpartum for high-risk women. (Source: RANZCOG Maternal VTE Prevention 2020)",
+        "source_refs": [
+          "RANZCOG Maternal VTE Prevention 2020"
+        ]
+      },
+      {
+        "letter": "A",
+        "text": "Aspirin 100 mg orally daily for one week as sole prophylaxis",
+        "correct": false,
+        "rationale": "Aspirin is not adequate VTE prophylaxis postpartum for a high-risk woman; LMWH is the AU standard. (Source: RANZCOG Maternal VTE Prevention 2020)",
+        "source_refs": [
+          "RANZCOG Maternal VTE Prevention 2020"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Enoxaparin 40 mg subcutaneous daily for 10 days only",
+        "correct": false,
+        "rationale": "10 days is the standard postpartum duration after uncomplicated caesarean with only one risk factor; this patient has two risk factors and warrants 6 weeks. (Source: RANZCOG Maternal VTE Prevention 2020)",
+        "source_refs": [
+          "RANZCOG Maternal VTE Prevention 2020"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Mechanical prophylaxis with calf compression and mobilisation",
+        "correct": false,
+        "rationale": "Mechanical alone is insufficient for a woman with BMI 41 plus caesarean; LMWH is required. (Source: RANZCOG Maternal VTE Prevention 2020)",
+        "source_refs": [
+          "RANZCOG Maternal VTE Prevention 2020"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Apixaban 2.5 mg orally twice daily for 6 weeks postpartum",
+        "correct": false,
+        "rationale": "DOACs are not approved during breastfeeding by AMH; LMWH is preferred postpartum. (Source: AMH: Apixaban)",
+        "source_refs": [
+          "AMH: Apixaban"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Postpartum VTE risk peaks in the first six weeks. RANZCOG and ANZSPM categorise risk: caesarean delivery, BMI >=30, age >=35, parity >=3, smoking, immobility, and family or personal VTE history each add risk. Two or more risk factors warrant LMWH for the full 6 weeks postpartum; a single intermediate risk factor warrants 10 days. DOACs are avoided in breastfeeding women per AMH because of limited safety data.",
+      "key_points": [
+        "Two risk factors postpartum: 6 weeks LMWH",
+        "One intermediate risk factor: 10 days LMWH",
+        "DOACs avoided in breastfeeding"
+      ],
+      "pearls": "Weight-adjust enoxaparin to 0.5 mg/kg twice daily for BMI >=40 or weight >=100 kg, since fixed 40 mg daily is subtherapeutic in higher-weight women."
+    },
+    "sources": [
+      {
+        "label": "RANZCOG Maternal VTE Prevention 2020",
+        "url": "https://ranzcog.edu.au/"
+      },
+      {
+        "label": "AMH: Apixaban",
+        "url": "https://amhonline.amh.net.au/"
+      }
+    ],
+    "reference_ranges": [
+      "obs_pregnancy_vitals",
+      "fbc",
+      "uec"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe50-009",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Intrapartum emergency",
+    "subtopic_detail": "Cord prolapse manoeuvres",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "cord prolapse"
+    ],
+    "stem": "A 28-year-old G2P1 at 38 weeks is admitted in spontaneous labour. After artificial rupture of membranes a midwife feels a pulsating loop of cord through the cervix. The cervix is 4 cm dilated and the foetal head is at -3 station. CTG shows variable decelerations to 70 bpm with slow recovery. The bedside theatre team has been activated and the obstetric consultant is en route. The mother is in the antenatal ward bed.\n\nThe team has been briefed and she gives full consent.",
+    "data_table": {
+      "Vital signs": "Pulse 96, BP 128/74 mmHg, RR 18, SpO2 99%, temperature 36.8°C, foetal HR 70 (decelerations)",
+      "Examination": "Cervix 4 cm dilated, foetal head -3 station, pulsating cord in vagina",
+      "Investigations": "CTG variable decelerations to 70 bpm",
+      "Medications": "Nil oxytocin running"
+    },
+    "lead_in": "What is the most appropriate immediate action while waiting for caesarean?",
+    "options": [
+      {
+        "letter": "E",
+        "text": "Knee-chest or steep Trendelenburg, elevating the presenting part",
+        "correct": true,
+        "rationale": "Manual elevation of the presenting part plus gravity position relieves cord compression until delivery; both knee-chest and Trendelenburg are AU first-line. (Source: RANZCOG Cord Prolapse 2020)",
+        "source_refs": [
+          "RANZCOG Cord Prolapse 2020"
+        ]
+      },
+      {
+        "letter": "A",
+        "text": "Cover the cord with warm saline-soaked gauze and otherwise leave undisturbed",
+        "correct": false,
+        "rationale": "Warming gauze does not relieve compression; the priority is to elevate the presenting part off the cord. (Source: RANZCOG Cord Prolapse 2020)",
+        "source_refs": [
+          "RANZCOG Cord Prolapse 2020"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Push the cord back into the uterus and start oxytocin to expedite delivery",
+        "correct": false,
+        "rationale": "Replacing the cord is contraindicated; oxytocin would worsen compression. (Source: RANZCOG Cord Prolapse 2020)",
+        "source_refs": [
+          "RANZCOG Cord Prolapse 2020"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Insert catheter and infuse 500-750 mL into bladder for transfer",
+        "correct": false,
+        "rationale": "Bladder filling is an alternative when manual elevation is not feasible (e.g. transfer to a distant facility); manual elevation is faster when theatre is on site. (Source: RANZCOG Cord Prolapse 2020)",
+        "source_refs": [
+          "RANZCOG Cord Prolapse 2020"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Start magnesium sulfate 4 g IV bolus to suppress contractions",
+        "correct": false,
+        "rationale": "Tocolysis (terbutaline 250 mcg SC) is an option to relieve contractions during transfer but is second to elevation; magnesium is not the AU tocolytic choice in cord prolapse. (Source: RANZCOG Cord Prolapse 2020)",
+        "source_refs": [
+          "RANZCOG Cord Prolapse 2020"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Cord prolapse with foetal compromise is a category 1 obstetric emergency. Immediate priority is to relieve compression of the cord against the presenting part: the examiner keeps two fingers in the vagina elevating the presenting part while the patient is placed in knee-chest or steep Trendelenburg. Tocolysis (terbutaline) and bladder filling are reserved for prolonged transfers. Delivery is by category 1 caesarean unless full dilatation allows immediate instrumental.",
+      "key_points": [
+        "Manual elevation plus gravity position is first-line",
+        "Category 1 caesarean unless full dilatation",
+        "Bladder fill for prolonged transfers only"
+      ],
+      "pearls": "Decision-to-delivery interval should be under 30 minutes for category 1 caesarean; document time of prolapse and time of delivery for clinical governance."
+    },
+    "sources": [
+      {
+        "label": "RANZCOG Cord Prolapse 2020",
+        "url": "https://ranzcog.edu.au/"
+      },
+      {
+        "label": "RCOG Umbilical Cord Prolapse 2014",
+        "url": "https://www.rcog.org.uk/"
+      }
+    ],
+    "reference_ranges": [
+      "obs_pregnancy_vitals",
+      "ctg_baseline"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe50-010",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Antepartum haemorrhage",
+    "subtopic_detail": "Concealed placental abruption",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "placental abruption"
+    ],
+    "stem": "A 33-year-old G3P2 at 34 weeks presents with sudden severe constant abdominal pain that began two hours ago. She reports no vaginal bleeding. She is normotensive with mild tachycardia. The uterus is tense and tender between contractions. CTG shows a sinusoidal pattern with reduced variability and late decelerations. Maternal haemoglobin is 92 g/L (115-165), platelets 88 x10^9/L (150-400), fibrinogen 1.4 g/L (2.0-4.5), INR 1.4 (0.9-1.2). Ultrasound shows a retroplacental clot with no praevia.\n\nThe team has been briefed and consent obtained.",
+    "data_table": {
+      "Vital signs": "Pulse 118, BP 116/72 mmHg, RR 24, SpO2 98%, temperature 36.8°C, foetal HR sinusoidal",
+      "Examination": "Tense tender uterus, no external bleeding",
+      "Investigations": "Haemoglobin 92 g/L, platelets 88 x10^9/L, fibrinogen 1.4 g/L, INR 1.4; ultrasound retroplacental clot",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "B",
+        "text": "Category 1 caesarean section with massive transfusion protocol activation",
+        "correct": true,
+        "rationale": "Concealed abruption with non-reassuring CTG and developing DIC is a category 1 emergency; delivery and blood product support cannot be delayed. (Source: RANZCOG Placental Abruption 2020)",
+        "source_refs": [
+          "RANZCOG Placental Abruption 2020"
+        ]
+      },
+      {
+        "letter": "A",
+        "text": "Tocolysis with nifedipine and steroids, plan delivery at 36 weeks",
+        "correct": false,
+        "rationale": "Tocolysis is contraindicated in significant abruption; foetal compromise and DIC mandate immediate delivery. (Source: RANZCOG Placental Abruption 2020)",
+        "source_refs": [
+          "RANZCOG Placental Abruption 2020"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Induction of labour with oxytocin aiming for vaginal birth",
+        "correct": false,
+        "rationale": "Vaginal birth is possible only if foetus is dead or rapidly deliverable; a sinusoidal CTG with active DIC requires caesarean. (Source: RANZCOG Placental Abruption 2020)",
+        "source_refs": [
+          "RANZCOG Placental Abruption 2020"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Conservative management with continuous CTG and serial coagulation",
+        "correct": false,
+        "rationale": "Conservative management is reserved for stable, small abruption with reassuring CTG and no coagulopathy. (Source: RANZCOG Placental Abruption 2020)",
+        "source_refs": [
+          "RANZCOG Placental Abruption 2020"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Cryoprecipitate alone targeting fibrinogen >2 g/L, then reassess delivery",
+        "correct": false,
+        "rationale": "Cryoprecipitate is part of resuscitation but does not replace delivery; the source of DIC must be removed. (Source: RANZCOG Placental Abruption 2020)",
+        "source_refs": [
+          "RANZCOG Placental Abruption 2020"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Concealed placental abruption can hide a major haemorrhage; tense uterus, anaemia, thrombocytopenia, hypofibrinogenaemia and a sinusoidal CTG together indicate DIC with foetal compromise. Immediate category 1 caesarean is required, with massive transfusion protocol activation. Fibrinogen below 2 g/L in obstetric haemorrhage predicts severe haemorrhage; replacement with cryoprecipitate or fibrinogen concentrate is included in the protocol.",
+      "key_points": [
+        "Concealed abruption with DIC + non-reassuring CTG: category 1 caesarean",
+        "Activate massive transfusion protocol",
+        "Fibrinogen <2 g/L is the obstetric red flag"
+      ],
+      "pearls": "Couvelaire uterus (myometrial bleeding) seen at caesarean is not an indication for hysterectomy unless uterine atony does not respond to uterotonics."
+    },
+    "sources": [
+      {
+        "label": "RANZCOG Placental Abruption 2020",
+        "url": "https://ranzcog.edu.au/"
+      },
+      {
+        "label": "NBA Patient Blood Management Obstetrics",
+        "url": "https://www.blood.gov.au/"
+      }
+    ],
+    "reference_ranges": [
+      "obs_pregnancy_vitals",
+      "fbc",
+      "coags",
+      "ctg_baseline"
+    ],
+    "created": "2026-06-01"
+  }
+]
