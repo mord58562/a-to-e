@@ -69,6 +69,16 @@ Rob ran a second "resume the A to E omnibus session" pass. Major round-2 additio
 
 Final commits today (round 2 partial list): bea3fe1, ff0c2f2, 9a2c42e, 0f345fb, e5b27d8, 90e8d03. Portfolio zip refreshed.
 
+## Round 3 additions (same day, second "resume" pass)
+
+- RCH medium-severity mechanical batch 2: 9 more Qs bulk-fixed via regex (bronchiolitis SpO2 92->90, croup 4h->3h, croup 30 min -> clinical resolution).
+- RCH medium-severity nuanced fixes: subagent applied 11 Qs (UTI cefalexin vs trimethoprim + BD->TDS + typical-first-UTI imaging removal; bronchiolitis HFNC -> low-flow first; croup dex 0.15 mg/kg for mild/moderate; anaphylaxis refractory pathway; AU fever-under-3-months regimen benzylpenicillin/amoxicillin + gentamicin + cefotaxime; sepsis 10-20 mL/kg + ceftriaxone 100 mg/kg per AMH). All renamed with -rch suffix.
+- Manifest pruning of duplicates: 3 Qs archived (med-fill-020 + med-rebal27b-008 pericarditis dupes; obgyn-defmay27-006 ectopic dupe). Archive copies at data/_archived_dupes/.
+- Rule 38 added to .remote-agent-context.md (emedici round 2 craft refinements): "within normal limits" shorthand, sentence-2 anchor flexibility, name-the-test bedside-finding pattern, parallel-grammar break legitimacy, near-miss distractor rationale requirements, AU RCPA reference ranges, textbook citation for embryology Qs, "most clinically significant" lead-in ban, T14 historical-bilaterality flip lever.
+- Local paste-flow gen prompt updated (index.html) with the matching round-2 craft refinements.
+- Length-parity round 2 subagent: targeting top 25 next-worst offenders (ratios ~4.0-5.6); in progress at checkpoint time.
+- L5 SEED BATCH committed: 4 exemplar L5 Qs (1 per module) demonstrating the overhaul v3 criteria - guideline-conflict + calculation (paeds asthma), historical-bilaterality flip (obgyn ectopic), disconfirming finding + multi-branch (psych clozapine partial response), multi-step pathway with ECG progression discriminator (medicine hyperkalaemia in CKD). Live L5 distribution now 4 of 3027 (0.13%); cloud routine continues toward 5% target per .remote-agent-context.md Section 2.
+
 ## ALSO completed this session (rolling update)
 
 - **UI overhaul step 1** (commit 02f4f59): IBM Plex -> Public Sans single family + Source Serif 4 (editorial glyphs only) + JetBrains Mono (paste-box code only). --r-soft 10px -> 8px. Easing tokens added.
