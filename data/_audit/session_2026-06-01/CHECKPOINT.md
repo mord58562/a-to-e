@@ -78,6 +78,8 @@ Final commits today (round 2 partial list): bea3fe1, ff0c2f2, 9a2c42e, 0f345fb, 
 - Local paste-flow gen prompt updated (index.html) with the matching round-2 craft refinements.
 - Length-parity round 2 subagent: targeting top 25 next-worst offenders (ratios ~4.0-5.6); in progress at checkpoint time.
 - L5 SEED BATCH committed: 4 exemplar L5 Qs (1 per module) demonstrating the overhaul v3 criteria - guideline-conflict + calculation (paeds asthma), historical-bilaterality flip (obgyn ectopic), disconfirming finding + multi-branch (psych clozapine partial response), multi-step pathway with ECG progression discriminator (medicine hyperkalaemia in CKD). Live L5 distribution now 4 of 3027 (0.13%); cloud routine continues toward 5% target per .remote-agent-context.md Section 2.
+- Length-parity round 2 agent stalled after committing 15 of 25; of the remaining 15, 9 were caught up by incremental commits, 6 manually completed (med-gerip-001 + med-gerip-017 + psych-anxocd-012-l4 + psych-substance-015-l3 + psych-substance-017-l5 + psych-lithium-deep-014-l3, all 4.30-4.39 -> 1.10-1.35).
+- Bank-wide length parity status: 615 initial violations (ratio >1.4) -> 560 after all rounds. Top tier (>4.0) eliminated. Remaining 560 are at ratios 1.4-4.2, diminishing-returns curation territory.
 
 ## ALSO completed this session (rolling update)
 
