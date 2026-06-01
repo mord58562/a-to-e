@@ -94,5 +94,804 @@
       "inflammatory_markers"
     ],
     "created": "2026-06-01"
+  },
+  {
+    "id": "rabe52-002",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Bronchiolitis HFNC escalation timing",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "bronchiolitis",
+      "oxygen therapy"
+    ],
+    "stem": "An 8-month-old boy on day 4 of RSV bronchiolitis was started on low-flow nasal-prong oxygen at 2 L/min two hours ago after his SpO2 dropped to 88% in room air. Despite this he has worsening intercostal and subcostal recessions and is now too tired to feed.\n\nHe was born at 38 weeks with no chronic lung disease or congenital cardiac disease. He has had no apnoeas. A repeat capillary blood gas has just returned.",
+    "data_table": {
+      "Vital signs": "Pulse 178, BP 92/58 mmHg, RR 72, SpO2 91% on 2 L/min nasal prongs, temperature 37.6 °C",
+      "Examination": "Marked recessions and tracheal tug, head bobbing, scattered crackles and wheeze, alert but exhausted",
+      "Investigations": "Capillary blood gas pH 7.31, pCO2 56 mmHg, HCO3 25 mmol/L, base excess -1; chest X-ray hyperinflation without consolidation",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the single most appropriate next respiratory support step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Add nebulised hypertonic saline 3% three times daily",
+        "correct": false,
+        "rationale": "Hypertonic saline is not recommended in the RCH pathway because randomised data show no consistent reduction in length of stay or admission rates, and it may worsen bronchospasm. It does not address impending respiratory failure. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Proceed to elective intubation and conventional mechanical ventilation",
+        "correct": false,
+        "rationale": "Intubation is reserved for failure of non-invasive escalation (HFNC then CPAP), apnoeas requiring repeated stimulation, or refractory hypoxaemia. He should first be offered HFNC because most infants respond. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Escalate to heated humidified high-flow nasal cannula at 2 L/kg/min",
+        "correct": true,
+        "rationale": "RCH bronchiolitis pathway reserves HFNC for infants who fail a trial of low-flow oxygen, defined by ongoing distress or rising pCO2 after 1 to 2 hours. He has now had a fair trial of low-flow with rising work of breathing, hypoxia despite 2 L/min, and a pCO2 of 56 with feeding failure - this meets the escalation criterion. HFNC at 2 L/kg/min is the next step before CPAP or intubation. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence nebulised salbutamol 2.5 mg and ipratropium 250 micrograms",
+        "correct": false,
+        "rationale": "Bronchodilators are not recommended in infants under 12 months with bronchiolitis because randomised data show no benefit and adverse effects of tachycardia and tremor. The pathophysiology is mucus plugging and airway oedema, not bronchospasm. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Continue low-flow oxygen at 2 L/min and reassess in a further 2 hours",
+        "correct": false,
+        "rationale": "Continuing low-flow misses the failure-of-low-flow criterion (rising pCO2, feeding inability, recessions despite 2 L/min) and risks decompensation. RCH explicitly defines this as the trigger to escalate. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "RCH bronchiolitis pathway makes low-flow nasal-prong oxygen the first step (target SpO2 above 90%) and reserves HFNC for failure of low-flow after about 1 to 2 hours. Rising pCO2, ongoing distress, and feeding inability define failure. HFNC is set at 2 L/kg/min for the first 10 kg.",
+      "key_points": [
+        "Low-flow first, HFNC second, CPAP third in the RCH bronchiolitis pathway",
+        "Failure-of-low-flow criteria: rising pCO2, persistent recessions, feeding inability, SpO2 below 90% despite oxygen",
+        "Bronchodilators, steroids, hypertonic saline and chest physiotherapy are NOT routine in infant bronchiolitis"
+      ],
+      "pearls": "Target SpO2 in RCH is 90% or above, not 92 to 94% (the higher target leads to longer admissions without outcome benefit). HFNC weight-based flow is capped at 2 L/kg/min up to 10 kg, then 50 L/min absolute thereafter."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Bronchiolitis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/bronchiolitis/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "vbg"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe52-003",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Moderate croup steroid dose and disposition",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "croup",
+      "dexamethasone"
+    ],
+    "stem": "A 2-year-old presents at 2300 with a 1-day barking cough and stridor that is now audible at rest. His mother says he sounded \"like a dog\" all evening and is now \"breathing harder\". He is alert, engages with his parents, and tolerates examination.\n\nHe has been previously well and is fully immunised.",
+    "data_table": {
+      "Vital signs": "Pulse 142, BP 96/62 mmHg, RR 38, SpO2 96% in room air, temperature 38.2 °C",
+      "Examination": "Audible inspiratory stridor at rest, moderate intercostal recession, no cyanosis, soft barking cough, no drool, no tripod posture",
+      "Investigations": "Nil performed",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the single most appropriate management plan in ED?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Nebulised adrenaline 5 mL of 1:1000 plus dexamethasone 0.15 mg/kg, observe 3 hours",
+        "correct": false,
+        "rationale": "Nebulised adrenaline is reserved for severe croup or in moderate croup that does not respond to steroid. RCH protocol is the flat 5 mL of 1:1000 (not weight-based) but only after the patient meets severe criteria - agitation, cyanosis, marked retractions, or exhaustion. (Source: RCH CPG: Croup)",
+        "source_refs": [
+          "RCH CPG: Croup"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Intramuscular dexamethasone 0.6 mg/kg with admission to short-stay unit",
+        "correct": false,
+        "rationale": "Oral dexamethasone has equivalent efficacy to intramuscular in croup and is preferred because intramuscular causes pain in a distressed child. The dose is also too high for moderate croup. (Source: RCH CPG: Croup)",
+        "source_refs": [
+          "RCH CPG: Croup"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Dexamethasone 0.6 mg/kg orally with admission and 4-hourly review",
+        "correct": false,
+        "rationale": "RCH reserves the 0.6 mg/kg dose for severe croup with significant respiratory distress, marked recession, agitation, or hypoxia. Moderate croup gets the lower dose, and giving the higher dose does not improve outcomes but does increase nausea. (Source: RCH CPG: Croup)",
+        "source_refs": [
+          "RCH CPG: Croup"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Humidified air via face mask and reassess respiratory effort in 30 minutes",
+        "correct": false,
+        "rationale": "Humidified mist has been removed from croup guidelines because randomised data show no benefit. Withholding steroid delays the treatment that improves natural history. (Source: RCH CPG: Croup)",
+        "source_refs": [
+          "RCH CPG: Croup"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Dexamethasone 0.15 mg/kg orally, observe 30 minutes, then plan disposition",
+        "correct": true,
+        "rationale": "RCH defines moderate croup as stridor at rest with some recessions but the child is alert, well-perfused, and not exhausted. First-line is dexamethasone 0.15 mg/kg orally; he does not yet meet severe criteria so nebulised adrenaline is not indicated. Most moderate croup can be discharged after a single dose of dexamethasone with 30 to 60 minutes observation for response. (Source: RCH CPG: Croup)",
+        "source_refs": [
+          "RCH CPG: Croup"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "RCH grades croup as mild, moderate or severe. Moderate has stridor at rest with some recession in an alert, well-perfused child; first-line is dexamethasone 0.15 mg/kg orally with brief observation. The 0.6 mg/kg dose is reserved for severe croup. Nebulised adrenaline is also for severe croup, with a flat 5 mL of 1:1000.",
+      "key_points": [
+        "Dexamethasone 0.15 mg/kg orally for mild and moderate croup",
+        "Dexamethasone 0.6 mg/kg orally only for severe croup",
+        "Observe at least 3 hours after the LAST dose of nebulised adrenaline because of rebound risk"
+      ],
+      "pearls": "Cooler outside air or humidified mist does NOT improve croup. Nebulised adrenaline rebounds at about 2 hours so the 3-hour post-last-dose observation rule exists to catch deterioration. Bacterial tracheitis is the look-alike if the child is toxic or has drool."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Croup",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/croup_laryngotracheobronchitis/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe52-004",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Severe paediatric asthma escalation past back-to-back salbutamol",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "asthma",
+      "magnesium sulfate"
+    ],
+    "stem": "A 12-year-old girl with known asthma is brought to ED at 0200 by her parents. She has had a viral coryza for 3 days and a worsening cough; she used her salbutamol inhaler eight times over the past 6 hours with limited relief. Her usual preventer is fluticasone 100 micrograms twice daily but she has been non-adherent. She has previously had one ICU admission for asthma at age 9.\n\nShe has been given continuous nebulised salbutamol 10 mg, nebulised ipratropium 250 micrograms three times, and a single dose of oral prednisolone 1 mg/kg in the last hour. She remains in significant distress and is now sitting forward in tripod posture and answering only in single words. The senior decision-maker has reviewed her in person.",
+    "data_table": {
+      "Vital signs": "Pulse 152, BP 132/76 mmHg, RR 38, SpO2 91% on 8 L/min via Hudson mask, temperature 37.1 °C",
+      "Examination": "Tripod posture, marked intercostal and subcostal recession, widespread polyphonic wheeze with prolonged expiratory phase, mild drowsiness on direct questioning",
+      "Investigations": "VBG pH 7.30, pCO2 48 mmHg, HCO3 22 mmol/L, lactate 3.2; peak flow not obtainable",
+      "Medications": "Continuous nebulised salbutamol, nebulised ipratropium, oral prednisolone 1 mg/kg given 1 hour ago"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Immediate rapid sequence intubation with ketamine and rocuronium",
+        "correct": false,
+        "rationale": "Intubation in severe asthma carries very high risk of cardiac arrest from breath-stacking and hypotension and is reserved for exhaustion, persistent hypoxia, severe acidosis, or coma despite maximal medical therapy. She is hypercapnic for asthma but still mentating; medical escalation should be attempted first. (Source: RCH CPG: Acute Asthma)",
+        "source_refs": [
+          "RCH CPG: Acute Asthma"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Loading dose intravenous aminophylline 5 mg/kg over 60 minutes",
+        "correct": false,
+        "rationale": "Aminophylline is reserved for asthma not responding to IV magnesium and salbutamol infusion. Going to aminophylline ahead of magnesium skips the better-evidenced step and increases the risk of tachyarrhythmia and seizures. (Source: RCH CPG: Acute Asthma)",
+        "source_refs": [
+          "RCH CPG: Acute Asthma"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Nebulised hypertonic saline 7% and chest physiotherapy",
+        "correct": false,
+        "rationale": "Neither hypertonic saline nor chest physiotherapy has a role in acute paediatric asthma; physiotherapy may precipitate bronchospasm. They are not in the RCH pathway. (Source: RCH CPG: Acute Asthma)",
+        "source_refs": [
+          "RCH CPG: Acute Asthma"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Intravenous magnesium sulfate 50 mg/kg over 20 minutes",
+        "correct": true,
+        "rationale": "Severe asthma not responding to first-hour bronchodilators plus steroid (the RCH definition of life-threatening exacerbation if pCO2 is normal or rising) - the next step in the RCH pathway is intravenous magnesium sulfate 50 mg/kg (maximum 2 g) over 20 minutes, then reassess. A normal-to-rising pCO2 in someone tiring is a warning sign but does not yet mandate intubation. (Source: RCH CPG: Acute Asthma)",
+        "source_refs": [
+          "RCH CPG: Acute Asthma"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Intramuscular adrenaline 10 micrograms/kg into the lateral thigh",
+        "correct": false,
+        "rationale": "IM adrenaline is for anaphylaxis or as a temporising measure if IV access is unobtainable; she has access and her presentation is bronchospastic without urticaria, angioedema or hypotension. Adrenaline does not have a role in pure severe asthma at this point in the RCH pathway. (Source: RCH CPG: Acute Asthma)",
+        "source_refs": [
+          "RCH CPG: Acute Asthma"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "RCH severe asthma escalation past first-hour salbutamol-ipratropium-steroid is intravenous magnesium sulfate 50 mg/kg over 20 minutes. If that fails, intravenous salbutamol infusion is the next step, then aminophylline. Intubation is high-risk and reserved for failure of medical escalation.",
+      "key_points": [
+        "IV magnesium sulfate 50 mg/kg (max 2 g) over 20 minutes is the first IV escalation in RCH severe asthma",
+        "Rising pCO2 in a tiring asthmatic is a warning sign but does not by itself mandate intubation",
+        "Intubation in severe asthma is associated with high rates of peri-intubation cardiac arrest due to dynamic hyperinflation"
+      ],
+      "pearls": "If you do intubate, use ketamine for induction (bronchodilator), low respiratory rate, long expiratory time, permissive hypercapnia, and disconnect from the circuit if you suspect breath-stacking arrest. Magnesium is given over 20 minutes (not as a bolus) to avoid hypotension."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Acute Asthma",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/asthma_acute/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "vbg"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe52-005",
+    "topic": "Paediatrics",
+    "subtopic": "Oncology",
+    "subtopic_detail": "Febrile neutropenia empirical antibiotic timing",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "febrile neutropenia",
+      "piperacillin tazobactam"
+    ],
+    "stem": "A 6-year-old girl with B-cell acute lymphoblastic leukaemia, on day 12 post-induction chemotherapy, presents with a single temperature of 38.4 °C recorded by her parents 90 minutes ago. She has had no rigors, no localising symptoms, and no antibiotics in the last 7 days. She has a tunnelled central venous catheter that looks clean and non-tender. Her oncology unit has a written febrile neutropenia pathway and the on-call oncologist has been notified.",
+    "data_table": {
+      "Vital signs": "Pulse 122, BP 102/68 mmHg, RR 22, SpO2 99% in room air, temperature 38.1 °C on arrival",
+      "Examination": "Pale but well-perfused, capillary refill 2 seconds, no mucositis, central line site clean, no rash, chest clear, abdomen soft",
+      "Investigations": "FBC neutrophils 0.3 x10^9/L (1.5-8.0), Hb 92 g/L (115-160), platelets 88 x10^9/L (150-400); CRP 28 mg/L (<5); urinalysis nil; blood cultures from line and peripherally just drawn",
+      "Medications": "Tunnelled CVC, on maintenance phase intravenous chemotherapy due in 7 days"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Wait for repeat temperature to confirm a true fever before starting antibiotics",
+        "correct": false,
+        "rationale": "Repeating the temperature to wait for confirmation adds delay; a single temperature 38.5 or two of 38.0 within an hour meets RCH neutropenic fever criteria. Mortality rises with each hour antibiotics are delayed. (Source: RCH CPG: Febrile Neutropenia)",
+        "source_refs": [
+          "RCH CPG: Febrile Neutropenia"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Give oral amoxicillin-clavulanate and ciprofloxacin and discharge for outpatient follow-up",
+        "correct": false,
+        "rationale": "Outpatient oral antibiotics are an option only in selected low-risk febrile neutropenia in adolescents on standardised pathways and never within the first 24 hours of an episode. Children with ALL on induction-phase chemotherapy are high-risk by default. (Source: RCH CPG: Febrile Neutropenia)",
+        "source_refs": [
+          "RCH CPG: Febrile Neutropenia"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Withhold antibiotics pending the chest X-ray result and abdominal examination by the oncology registrar",
+        "correct": false,
+        "rationale": "Withholding antibiotics for any further imaging delays the time-critical first dose. Imaging proceeds after the first dose is in. (Source: RCH CPG: Febrile Neutropenia)",
+        "source_refs": [
+          "RCH CPG: Febrile Neutropenia"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence intravenous piperacillin-tazobactam 100 mg/kg as soon as the cultures have been taken",
+        "correct": true,
+        "rationale": "RCH febrile neutropenia pathway requires empirical broad-spectrum antibiotics within 60 minutes of fever recognition, immediately after cultures (peripheral and from each lumen of the CVC). Piperacillin-tazobactam 100 mg/kg per dose is the standard AU paediatric empirical regimen for haemodynamically stable febrile neutropenia. (Source: RCH CPG: Febrile Neutropenia)",
+        "source_refs": [
+          "RCH CPG: Febrile Neutropenia"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Add intravenous vancomycin to piperacillin-tazobactam empirically due to the central line",
+        "correct": false,
+        "rationale": "Vancomycin is added only if the line is overtly infected, the child is septic, there is mucositis with toxic shock features, or there is known MRSA colonisation. Routine vancomycin add-on does not improve survival and selects for resistance. (Source: RCH CPG: Febrile Neutropenia)",
+        "source_refs": [
+          "RCH CPG: Febrile Neutropenia"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Febrile neutropenia is fever 38.5 °C once or 38.0 °C twice in an hour, plus an absolute neutrophil count under 0.5 x10^9/L (or under 1.0 expected to fall). Empirical broad-spectrum antibiotics within 60 minutes after cultures are the cornerstone of survival in paediatric oncology.",
+      "key_points": [
+        "AU first-line for paediatric febrile neutropenia is piperacillin-tazobactam 100 mg/kg per dose",
+        "Vancomycin add-on only for septic shock, line infection, mucositis, or MRSA colonisation",
+        "Outpatient oral pathway only in selected low-risk adolescents past 24 hours"
+      ],
+      "pearls": "Time to first antibiotic is a key quality metric. The 60-minute door-to-needle target applies. Always culture both peripherally AND through each lumen of the central line - this differentiates line infection from a primary bloodstream infection."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Febrile Neutropenia",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/febrile_neutropenia/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://www.tg.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_fbc",
+      "inflammatory_markers",
+      "paeds_vitals_child"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe52-006",
+    "topic": "Paediatrics",
+    "subtopic": "Surgical",
+    "subtopic_detail": "Intussusception lay-language presentation and air enema vs surgery",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "intussusception",
+      "air enema"
+    ],
+    "stem": "An 11-month-old previously well boy is brought in by his mother. Over the past 6 hours she describes him as repeatedly \"starting to cry, drawing both his legs up, then settling for 20 minutes\" before another episode begins. Earlier today he passed a stool that she describes as \"slimy and dark, a bit like jelly\". He has vomited twice; the most recent vomit looked yellow-green. He has had no fever and no diarrhoea.\n\nHe was alert on triage and is now sleepy between episodes.",
+    "data_table": {
+      "Vital signs": "Pulse 158, BP 88/56 mmHg, RR 36, SpO2 98% in room air, temperature 37.2 °C",
+      "Examination": "Pale, capillary refill 2.5 seconds, soft abdomen with a vague long thin lump felt in the right upper quadrant, normal genitalia, no peritonism, no abdominal distension",
+      "Investigations": "FBC unremarkable; UEC normal; abdominal ultrasound just performed shows a target-sign lesion in the right upper quadrant with peristalsis",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Observe for 4 hours and reassess if any new symptoms develop",
+        "correct": false,
+        "rationale": "Watchful waiting in confirmed intussusception risks bowel ischaemia and perforation; the window for non-operative pneumatic reduction narrows with duration of symptoms. (Source: RCH CPG: Intussusception)",
+        "source_refs": [
+          "RCH CPG: Intussusception"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Proceed to air enema reduction under fluoroscopy after fluid resuscitation",
+        "correct": true,
+        "rationale": "Ultrasound-confirmed ileocolic intussusception in a stable child with no peritonitis is managed by air (pneumatic) enema reduction with 80 to 90% success. Bilious vomiting and somnolence are concerning but he is haemodynamically compensated and has no peritonism. Surgical reduction is the backup if pneumatic reduction fails or peritonitis develops. (Source: RCH CPG: Intussusception)",
+        "source_refs": [
+          "RCH CPG: Intussusception"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Give barium contrast enema for both diagnosis and therapeutic reduction",
+        "correct": false,
+        "rationale": "Barium enema for reduction has largely been replaced by air enema in AU paediatric practice because air enema avoids barium peritonitis if perforation occurs. RCH and Royal Children's image-guided pathways use air. (Source: RCH CPG: Intussusception)",
+        "source_refs": [
+          "RCH CPG: Intussusception"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Give a single dose of nasogastric polyethylene glycol and reassess in 6 hours",
+        "correct": false,
+        "rationale": "Osmotic laxatives have no role in intussusception and would worsen ileus and dehydration. (Source: RCH CPG: Intussusception)",
+        "source_refs": [
+          "RCH CPG: Intussusception"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Proceed straight to laparotomy and manual reduction after induction",
+        "correct": false,
+        "rationale": "Primary surgery is reserved for failed pneumatic reduction, evidence of peritonitis or perforation, shock unresponsive to resuscitation, or a clear pathological lead point. None of those criteria are met. (Source: RCH CPG: Intussusception)",
+        "source_refs": [
+          "RCH CPG: Intussusception"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Lay-language clues to intussusception in an infant are screaming episodes with leg-drawing-up, intervals of lethargy, and red jelly stool. Ultrasound shows a target sign. Pneumatic (air) enema is first-line if there is no peritonism or perforation, with surgery as backup.",
+      "key_points": [
+        "Air enema reduces 80 to 90% of stable ileocolic intussusception",
+        "Surgical reduction is reserved for peritonitis, perforation, failed pneumatic reduction, or a pathological lead point",
+        "Bilious vomiting is concerning but does not by itself mandate primary laparotomy"
+      ],
+      "pearls": "Lead points (Meckel diverticulum, lymphoma, polyp) are more common above 2 years and below 3 months. Recurrence after reduction is 5 to 10% and usually within 24 hours, so observation post-reduction is mandatory."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Intussusception",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/intussusception/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "paeds_fbc",
+      "paeds_uec"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe52-007",
+    "topic": "Paediatrics",
+    "subtopic": "Renal",
+    "subtopic_detail": "First UTI in infant under 6 months - RCH imaging cascade",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "UTI",
+      "ultrasound"
+    ],
+    "stem": "A 4-month-old boy is admitted with his first urinary tract infection. Suprapubic-aspirate culture grows Escherichia coli 100 sensitive to oral cephalexin. He responded clinically to 48 hours of IV gentamicin and benzylpenicillin and is now afebrile, feeding well, and ready to transition to oral antibiotics for 7 days total.\n\nHe was born at term with no antenatal renal abnormalities documented on the routine 20-week scan. He has had no other infections.",
+    "data_table": {
+      "Vital signs": "Pulse 132, BP 78/52 mmHg, RR 34, SpO2 99% in room air, temperature 36.8 °C",
+      "Examination": "Active, well-hydrated, abdomen soft, no flank tenderness, normal genitalia, circumcised",
+      "Investigations": "Suprapubic urine culture: E. coli >10^8 CFU/L, sensitive to cephalexin; UEC normal; inflammatory markers improving",
+      "Medications": "IV gentamicin and benzylpenicillin (last dose 6 hours ago)"
+    },
+    "lead_in": "What is the most appropriate post-discharge imaging plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Renal ultrasound during the current inpatient admission",
+        "correct": true,
+        "rationale": "RCH advises renal ultrasound for any infant under 6 months with a first UTI to look for obstructive uropathy or structural abnormality, even with a typical organism that responds to first-line antibiotics. Ideally done during admission. The further DMSA and MCUG investigations are NOT in the routine RCH cascade. (Source: RCH CPG: Urinary Tract Infection)",
+        "source_refs": [
+          "RCH CPG: Urinary Tract Infection"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "No imaging - documented antenatal scan is sufficient",
+        "correct": false,
+        "rationale": "The 20-week morphology scan does not reliably exclude posterior urethral valves, vesicoureteric reflux, or duplex systems in a young infant; RCH still requires postnatal ultrasound under 6 months. (Source: RCH CPG: Urinary Tract Infection)",
+        "source_refs": [
+          "RCH CPG: Urinary Tract Infection"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "DMSA scan in 4 to 6 months to assess for renal scarring",
+        "correct": false,
+        "rationale": "DMSA is a NICE construct not in the RCH routine cascade. RCH reserves nuclear imaging for recurrent or atypical UTI, not a first-typical UTI even under 6 months. (Source: RCH CPG: Urinary Tract Infection)",
+        "source_refs": [
+          "RCH CPG: Urinary Tract Infection"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Repeat urine microscopy and culture in 1 week to confirm clearance",
+        "correct": false,
+        "rationale": "Routine test-of-cure urine is not recommended in afebrile, clinically improving infants because of false positives from contaminants and because most relapses present clinically. (Source: RCH CPG: Urinary Tract Infection)",
+        "source_refs": [
+          "RCH CPG: Urinary Tract Infection"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Micturating cystourethrogram performed before discharge",
+        "correct": false,
+        "rationale": "MCUG carries radiation and procedural distress and is not in the RCH cascade for a first typical UTI. It is considered only for atypical or recurrent UTI or where the ultrasound is abnormal. (Source: RCH CPG: Urinary Tract Infection)",
+        "source_refs": [
+          "RCH CPG: Urinary Tract Infection"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "RCH UTI imaging cascade requires renal ultrasound for any infant under 6 months with a first UTI, ideally during the admission. DMSA and MCUG are reserved for atypical UTI (non-E. coli, sepsis, raised creatinine, poor 48-hour response, abdominal mass) or recurrent UTI.",
+      "key_points": [
+        "Under 6 months first UTI: renal ultrasound (RCH); no routine DMSA or MCUG",
+        "Atypical UTI features trigger DMSA or MCUG: non-E. coli organism, sepsis, raised creatinine, abdominal mass, poor 48-hour response",
+        "RCH diverges from NICE: do NOT auto-cite KHA-CARI or NICE thresholds when AU practice is RCH"
+      ],
+      "pearls": "Atypical UTI is itself an indication for inpatient renal ultrasound during the admission. The 6-month threshold reflects the higher prevalence of structural abnormalities in this age group and the limits of antenatal imaging."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Urinary Tract Infection",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/urinary_tract_infection_guideline/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "paeds_uec"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe52-008",
+    "topic": "Paediatrics",
+    "subtopic": "Endocrine",
+    "subtopic_detail": "Paediatric DKA fluid plan with cerebral oedema risk",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "DKA",
+      "cerebral oedema"
+    ],
+    "stem": "A 6-year-old girl, body weight 20 kg, presents with a 1-week history of polyuria, polydipsia and 3 kg weight loss. She vomited three times today and is now drowsy.\n\nThe paediatric registrar has confirmed new-onset type 1 diabetes mellitus with DKA. She is clinically about 7% dehydrated. There has been one fluid bolus of 10 mL/kg of 0.9% sodium chloride given over 30 minutes for poor peripheral perfusion. Her conscious state is now stable with GCS 13.",
+    "data_table": {
+      "Vital signs": "Pulse 140, BP 90/60 mmHg, RR 32 (Kussmaul pattern), SpO2 98% in room air, temperature 36.6 °C",
+      "Examination": "Drowsy but rousable, dry mucous membranes, sunken eyes, capillary refill 3 seconds, no focal neurology, no headache",
+      "Investigations": "BSL 28 mmol/L, blood ketones 5.6, VBG pH 7.10 pCO2 18 mmHg HCO3 8 mmol/L, sodium 132 mmol/L (135-145), potassium 4.2 mmol/L (3.5-5.0), corrected sodium 138 mmol/L",
+      "Medications": "Nil; no insulin yet given"
+    },
+    "lead_in": "What is the most appropriate next fluid and insulin plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Give intravenous sodium bicarbonate 50 mmol over 30 minutes to correct the metabolic acidosis",
+        "correct": false,
+        "rationale": "Bicarbonate is not routine in paediatric DKA because it does not improve recovery, can paradoxically lower CSF pH, and is associated with cerebral oedema. Reserved for life-threatening hyperkalaemia with cardiac instability. (Source: RCH CPG: Diabetes Mellitus)",
+        "source_refs": [
+          "RCH CPG: Diabetes Mellitus"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Commence 0.9% sodium chloride at maintenance with 7% deficit over 48 hours and insulin after 1 hour",
+        "correct": true,
+        "rationale": "RCH paediatric DKA pathway gives maintenance plus a deficit calculated at 5 to 8% over 48 hours (not 24), starts insulin after at least 1 hour of fluids at 0.05 to 0.1 unit/kg/hour, and uses 0.9% saline initially with potassium 40 mmol/L once urine is documented. This minimises the cerebral oedema risk that is highest in younger, sicker children with new-onset diabetes. (Source: RCH CPG: Diabetes Mellitus)",
+        "source_refs": [
+          "RCH CPG: Diabetes Mellitus"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence 5% dextrose / 0.45% sodium chloride immediately with insulin 0.1 unit/kg/hour bolus",
+        "correct": false,
+        "rationale": "Hypotonic fluids and an insulin bolus both increase the cerebral oedema risk in paediatric DKA. Initial fluids should be 0.9% sodium chloride; dextrose is added later when BSL falls below 14 to 15. (Source: RCH CPG: Diabetes Mellitus)",
+        "source_refs": [
+          "RCH CPG: Diabetes Mellitus"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Start subcutaneous rapid-acting insulin 0.1 unit/kg and intravenous fluids at maintenance only",
+        "correct": false,
+        "rationale": "Subcutaneous insulin in DKA gives unpredictable absorption with the peripheral vasoconstriction of dehydration; the standard is IV insulin infusion. Maintenance-only fluids underestimate the volume needed to correct dehydration. (Source: RCH CPG: Diabetes Mellitus)",
+        "source_refs": [
+          "RCH CPG: Diabetes Mellitus"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Repeat 20 mL/kg 0.9% sodium chloride bolus then commence insulin 0.1 unit/kg/hour immediately",
+        "correct": false,
+        "rationale": "Aggressive bolus fluids and early insulin both raise the cerebral oedema risk in paediatric DKA. RCH and ISPAD permit one 10 mL/kg bolus only if shocked, then move to maintenance plus replacement over 48 hours. (Source: RCH CPG: Diabetes Mellitus)",
+        "source_refs": [
+          "RCH CPG: Diabetes Mellitus"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "RCH paediatric DKA management replaces deficit slowly (over 48 hours) with isotonic saline and starts insulin at least 1 hour into fluids at 0.05 to 0.1 unit/kg/hour, to reduce cerebral oedema risk. Bicarbonate is not routine. Headache, drowsiness, irritability, bradycardia, or rising BP signal evolving cerebral oedema needing 3% saline or mannitol.",
+      "key_points": [
+        "Replace deficit over 48 hours, not 24, in paediatric DKA",
+        "Start insulin 0.05 to 0.1 unit/kg/hour after at least 1 hour of fluid - no bolus",
+        "Sodium bicarbonate is contraindicated for routine paediatric DKA correction"
+      ],
+      "pearls": "Cerebral oedema usually presents 4 to 12 hours after starting treatment. Risk factors: age under 5, new-onset diabetes, severe acidosis, high blood urea, treatment with bicarbonate, rapid fluid replacement. Treat with 3% saline 3 to 5 mL/kg or mannitol 0.5 to 1 g/kg IV."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Diabetes Mellitus",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/diabetes_mellitus/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "vbg",
+      "paeds_uec",
+      "bsl_paeds",
+      "ketones"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe52-009",
+    "topic": "Paediatrics",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "Incomplete Kawasaki disease diagnosis and IVIG decision",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "Kawasaki disease",
+      "IVIG"
+    ],
+    "stem": "A 14-month-old boy of Korean heritage has had 7 days of fever, peaking at 39.6 °C, unresponsive to paracetamol and ibuprofen. He is irritable but consolable. His mother reports he had a rash for 24 hours on day 3 that has now resolved and one episode of conjunctival redness without discharge that also resolved. He has had no cervical lymphadenopathy and no mucosal changes.\n\nThe paediatric registrar has reviewed and the AHA \"incomplete Kawasaki\" supplementary criteria have been considered. An echocardiogram has been ordered.",
+    "data_table": {
+      "Vital signs": "Pulse 158, BP 96/58 mmHg, RR 32, SpO2 99% in room air, temperature 39.1 °C",
+      "Examination": "Irritable, mild peri-anal desquamation, no oral mucosal changes today, no cervical lymphadenopathy, no rash visible, no peripheral oedema",
+      "Investigations": "WCC 19 x10^9/L (5-15), neutrophils 14 x10^9/L (1.5-8), platelets 612 x10^9/L (150-400) on day 7, CRP 156 mg/L (<5), ESR 78 mm/hr (<20), albumin 28 g/L (35-50), ALT 96 U/L (<45), Na 132 mmol/L (135-145), urinalysis 25 leukocytes/HPF with sterile culture",
+      "Medications": "Paracetamol and ibuprofen prn"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence intravenous ceftriaxone 50 mg/kg for occult bacteraemia and reassess in 24 hours",
+        "correct": false,
+        "rationale": "Ceftriaxone for occult bacteraemia in a stable child does not address the highly elevated cardiovascular risk of incomplete Kawasaki and risks delaying IVIG past the 10-day treatment window. (Source: RCH CPG: Kawasaki Disease)",
+        "source_refs": [
+          "RCH CPG: Kawasaki Disease"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Await echocardiogram and treat only if coronary artery dilatation is documented",
+        "correct": false,
+        "rationale": "Awaiting echocardiogram for confirmation delays IVIG. Coronary aneurysms develop in 25% of untreated cases; the window for prevention by IVIG closes around day 10. Echocardiogram informs prognosis but the decision to treat in incomplete Kawasaki is laboratory-criteria driven. (Source: RCH CPG: Kawasaki Disease)",
+        "source_refs": [
+          "RCH CPG: Kawasaki Disease"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence intravenous flucloxacillin and ceftriaxone for staphylococcal scalded skin syndrome",
+        "correct": false,
+        "rationale": "SSSS presents with widespread erythema and bullae, not isolated peri-anal desquamation in a child without oral mucosal changes. The laboratory pattern (thrombocytosis, hypoalbuminaemia, raised ALT, sterile pyuria) points away from staphylococcal infection. (Source: RCH CPG: Kawasaki Disease)",
+        "source_refs": [
+          "RCH CPG: Kawasaki Disease"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence intravenous methylprednisolone 30 mg/kg pulse for 3 days as primary therapy",
+        "correct": false,
+        "rationale": "Corticosteroid pulse is reserved for patients at very high risk of IVIG resistance (Kobayashi score, age <12 months, severe anaemia) and used as adjunct to IVIG rather than primary monotherapy. Primary monotherapy with steroids is not AU standard. (Source: RCH CPG: Kawasaki Disease)",
+        "source_refs": [
+          "RCH CPG: Kawasaki Disease"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Commence intravenous immunoglobulin 2 g/kg with high-dose aspirin 30 to 50 mg/kg in four divided doses",
+        "correct": true,
+        "rationale": "This presentation meets the AHA / RCH criteria for incomplete Kawasaki: fever 5 or more days with fewer than 4 classic criteria, plus supportive laboratory features (4 of: CRP ≥3, ESR ≥40, platelets ≥450 after day 7, albumin ≤30, sterile pyuria, ALT raised, WCC ≥15, anaemia for age). She meets 6 of 7 laboratory criteria so treatment proceeds even before echocardiogram returns - delaying IVIG past day 10 increases coronary aneurysm risk. (Source: RCH CPG: Kawasaki Disease)",
+        "source_refs": [
+          "RCH CPG: Kawasaki Disease"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Incomplete Kawasaki is diagnosed when there are fewer than 4 of the 5 classic criteria but the child has prolonged fever and supportive laboratory features. RCH and AHA use the 6-of-7 laboratory criteria to confirm. IVIG 2 g/kg and aspirin must be given by day 10 to minimise coronary aneurysm risk - do not wait for echocardiogram.",
+      "key_points": [
+        "Incomplete Kawasaki uses 6 laboratory criteria (CRP, ESR, platelets, albumin, ALT, pyuria, WCC, anaemia) to confirm when classical criteria are not met",
+        "IVIG 2 g/kg over 10 hours with high-dose aspirin 30 to 50 mg/kg/day is the AU first-line regimen",
+        "Day 10 of illness is the IVIG-window cut-off for preventing coronary aneurysm"
+      ],
+      "pearls": "Aspirin is one of the few paediatric indications where the Reye's risk is accepted because of the larger cardiovascular benefit. Switch to low-dose aspirin (3 to 5 mg/kg/day) once afebrile for 48 hours, continue for 6 to 8 weeks until repeat echo at 6 to 8 weeks. Risk of IVIG resistance is up to 20%; second-dose IVIG or infliximab are options."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Kawasaki Disease",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/kawasaki_disease/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "paeds_fbc",
+      "inflammatory_markers",
+      "lfts"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe52-010",
+    "topic": "Paediatrics",
+    "subtopic": "Neurology",
+    "subtopic_detail": "Anti-NMDA receptor encephalitis in adolescent",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "encephalitis",
+      "autoimmune"
+    ],
+    "stem": "A 15-year-old previously well girl is brought in by her parents with a 10-day history of progressive personality change. They report new agitation, paranoid statements that strangers are stealing from her, and a 4 kg weight loss. Yesterday she had a witnessed generalised tonic-clonic seizure lasting 90 seconds with full recovery, and this morning she developed orofacial dyskinesias and rhythmic limb posturing. There has been no fever, no recent infection, no overseas travel, and no drug use.\n\nThe family history is unremarkable. Toxicology screen on arrival is negative. She is currently being investigated as part of a paediatric neurology workup.",
+    "data_table": {
+      "Vital signs": "Pulse 122, BP 138/86 mmHg, RR 18, SpO2 98% in room air, temperature 37.0 °C",
+      "Examination": "Fluctuant agitation alternating with mutism, intermittent orofacial dyskinesia, mild autonomic instability with episodic BP swings, no focal weakness, no neck stiffness",
+      "Investigations": "FBC and UEC within normal limits, CRP 4 mg/L (<5), MRI brain normal, EEG generalised slowing without focal epileptiform activity, CSF protein 0.42 g/L (0.15-0.45) lymphocytes 18 x10^6/L (<5) glucose 3.6 mmol/L (paired BSL 5.2), HSV PCR negative, serum and CSF anti-NMDA receptor antibodies pending",
+      "Medications": "Lorazepam 2 mg IV given for dyskinesia 1 hour ago"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Refer to mental health for first-episode psychosis and start olanzapine 10 mg orally daily",
+        "correct": false,
+        "rationale": "Treating this as primary psychosis misses the encephalitic features (dyskinesias, seizure, autonomic instability, CSF pleocytosis) that mandate organic workup and immunotherapy. Antipsychotics also worsen NMS-like reactions and movement disorders in anti-NMDA encephalitis. (Source: RANZCP Practice Guidelines)",
+        "source_refs": [
+          "RANZCP Practice Guidelines"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Arrange routine MRI brain with contrast on the next available outpatient slot and review in clinic",
+        "correct": false,
+        "rationale": "An outpatient delay misses the inpatient time-critical immunotherapy window. Anti-NMDA receptor encephalitis has up to 25% mortality if untreated and 80% functional recovery with early immunotherapy. (Source: RCH CPG: Encephalitis)",
+        "source_refs": [
+          "RCH CPG: Encephalitis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence high-dose methylprednisolone and IVIG and arrange pelvic ultrasound for ovarian teratoma",
+        "correct": true,
+        "rationale": "Subacute psychiatric prodrome plus seizures plus orofacial dyskinesias plus autonomic instability plus a CSF lymphocytic pleocytosis is the textbook anti-NMDA receptor encephalitis presentation. AU paediatric neurology starts first-line immunotherapy (steroid plus IVIG, plus or minus plasma exchange) empirically before the antibody result returns, because delay worsens outcomes. Ovarian teratoma is identified in up to half of post-pubertal girls and removal is curative. (Source: RCH CPG: Encephalitis)",
+        "source_refs": [
+          "RCH CPG: Encephalitis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence intravenous aciclovir 10 mg/kg three times daily and complete a 14-day course pending HSV PCR",
+        "correct": false,
+        "rationale": "Aciclovir is appropriate empirical cover for HSV encephalitis until the PCR returns, but the CSF HSV PCR is already negative, and the constellation of orofacial dyskinesias and prolonged psychiatric prodrome is not HSV. Continuing aciclovir to 14 days when PCR is negative does not address the autoimmune diagnosis. (Source: RCH CPG: Encephalitis)",
+        "source_refs": [
+          "RCH CPG: Encephalitis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Commence levetiracetam 60 mg/kg/day for seizure prophylaxis without other intervention",
+        "correct": false,
+        "rationale": "Antiepileptic monotherapy treats the seizure symptom but not the underlying autoimmune encephalitis; the dyskinesias, autonomic instability, and progressive course will worsen and the prognosis depends on early immunotherapy. (Source: RCH CPG: Encephalitis)",
+        "source_refs": [
+          "RCH CPG: Encephalitis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Anti-NMDA receptor encephalitis in adolescents and young adults presents with a subacute psychiatric prodrome, seizures, orofacial dyskinesias, autonomic instability and CSF lymphocytic pleocytosis. AU first-line immunotherapy is steroid plus IVIG plus or minus plasma exchange, started empirically before antibody confirmation. Ovarian teratoma is present in up to half of post-pubertal girls and is curative when removed.",
+      "key_points": [
+        "The psychiatric prodrome can dominate the early picture and delay the diagnosis - always do an organic workup including CSF in subacute psychosis with movement disorder",
+        "First-line immunotherapy: steroid + IVIG plus or minus plasma exchange, before antibody confirmation",
+        "Look for ovarian teratoma in post-pubertal girls and testicular tumour in young men"
+      ],
+      "pearls": "Rituximab and cyclophosphamide are second-line if first-line therapies fail at 10 to 14 days. Antipsychotics commonly worsen the dyskinetic features and may cause NMS-like reactions; minimise their use. The CSF anti-NMDA antibody is more sensitive than serum and should be sent."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Encephalitis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/encephalitis/"
+      },
+      {
+        "label": "RANZCP Practice Guidelines",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "paeds_fbc",
+      "csf",
+      "paeds_uec"
+    ],
+    "created": "2026-06-01"
   }
 ]
