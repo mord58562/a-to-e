@@ -1,0 +1,93 @@
+[
+  {
+    "id": "rabe51-001",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Bronchiolitis oxygen escalation",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "bronchiolitis",
+      "oxygen therapy"
+    ],
+    "stem": "A 7-month-old presents in early winter on day 3 of coryza followed by cough, wheeze and poor feeding. He has had no apnoeas. His mother says he is taking about half his usual feeds and is drowsier than usual but still rousable. He is on no regular medications and has no significant past history.\n\nNasopharyngeal aspirate is positive for RSV. Chest X-ray shows hyperinflation without focal consolidation. He has just been transferred to the paediatric ward.",
+    "data_table": {
+      "Vital signs": "Pulse 160, BP 88/54 mmHg, RR 62, SpO2 89% in room air, temperature 37.4 °C",
+      "Examination": "Mild intercostal recession, scattered fine inspiratory crackles, no grunting, alert when handled",
+      "Investigations": "RSV positive, chest X-ray hyperinflation only, capillary blood gas pH 7.38 pCO2 42 mmHg",
+      "Medications": "Nil regular"
+    },
+    "lead_in": "What is the most appropriate initial respiratory support?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Trial of nebulised salbutamol 2.5 mg with reassessment in 20 minutes",
+        "correct": false,
+        "rationale": "Bronchodilators are not recommended in viral bronchiolitis in infants under 12 months because there is no consistent benefit and they cause tachycardia and tremor; the issue here is oxygenation and feeding, not bronchospasm. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Heated humidified high-flow nasal cannula at 2 L/kg/min as first-line support",
+        "correct": false,
+        "rationale": "HFNC is not the first-line oxygen step in the RCH pathway; it is reserved for infants who fail to respond to a trial of low-flow nasal-prong oxygen, because PARIS trial data did not show benefit when HFNC is used upfront. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Continuous positive airway pressure via paediatric mask at 6 cmH2O",
+        "correct": false,
+        "rationale": "CPAP is escalation beyond HFNC and is used after low-flow then HFNC have failed or where there is impending respiratory failure; this infant has compensated mild work of breathing and is not yet at that point. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Low-flow oxygen via nasal prongs at 1-2 L/min titrated to SpO2 ≥90%",
+        "correct": true,
+        "rationale": "RCH bronchiolitis pathway uses low-flow nasal-prong oxygen as the first escalation step, titrated to a target SpO2 of 90% or above; reserve HFNC for failure of low-flow after at least 60-120 minutes. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Nebulised hypertonic saline 3% every 6 hours for airway clearance",
+        "correct": false,
+        "rationale": "Routine nebulised hypertonic saline is not recommended in Australian bronchiolitis pathways; recent meta-analyses show no clinically important reduction in length of stay or improvement in severity. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Bronchiolitis is a clinical diagnosis in infants under 12 months with viral lower-airway inflammation, peaking in winter. AU paediatric pathways are explicitly supportive: feeding support and oxygen for hypoxaemia, with HFNC and CPAP escalation reserved for failure of low-flow oxygen. Routine bronchodilators, corticosteroids, hypertonic saline, antibiotics and chest physiotherapy are not recommended in typical disease. Apnoea risk is highest in infants under 8 weeks and ex-prems; those infants need a lower threshold for admission and monitoring.",
+      "key_points": [
+        "RCH target SpO2 is 90% or above (not 92-94%) on minimal supplemental oxygen.",
+        "Low-flow nasal-prong oxygen is the first oxygen escalation; HFNC follows after failure of low-flow.",
+        "Bronchodilators, corticosteroids and hypertonic saline are not indicated in routine bronchiolitis.",
+        "Feeding via NGT or IV is indicated when oral intake falls below approximately 50% of normal."
+      ],
+      "pearls": "RCH bronchiolitis SpO2 target is 90% on the lowest effective oxygen; PARIS trial showed no benefit from upfront HFNC over low-flow."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Bronchiolitis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/"
+      },
+      {
+        "label": "PARIS trial NEJM 2018",
+        "url": "https://www.nejm.org/doi/full/10.1056/NEJMoa1714855"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant"
+    ],
+    "created": "2026-06-01"
+  }
+]
