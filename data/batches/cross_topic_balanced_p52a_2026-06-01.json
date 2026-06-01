@@ -1,0 +1,98 @@
+[
+  {
+    "id": "rabe52-001",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Pertussis with apnoea in young infant",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "pertussis",
+      "apnoea"
+    ],
+    "stem": "A 4-week-old girl is brought in by her mother on day 7 of what was initially a coryzal illness. Today she has had three coughing fits, each ending with brief cyanosis and a 10 to 15 second pause in breathing that resolved with stimulation. Between fits she has fed about half her usual volume and appears alert. Her mother had several weeks of a paroxysmal night cough that has since settled; she received Boostrix at 26 weeks gestation. The infant has had no fever and no vomiting between coughing fits.\n\nShe is now in the resuscitation cubicle on continuous monitoring.",
+    "data_table": {
+      "Vital signs": "Pulse 162, BP 78/52 mmHg, RR 56, SpO2 96% in room air, temperature 36.9 °C",
+      "Examination": "Pink and alert between fits, mild bilateral fine crackles, no recessions or grunting, anterior fontanelle soft",
+      "Investigations": "FBC WCC 28 x10^9/L (5-19), lymphocytes 70%, neutrophils 18%; CRP 6 mg/L (<5); chest X-ray non-specific peribronchial markings; NPA PCR pending",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the single most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Trial nebulised salbutamol 2.5 mg and reassess respiratory effort in 20 minutes",
+        "correct": false,
+        "rationale": "Pertussis is not a bronchospastic illness; salbutamol does not abort paroxysms and risks tachycardia and tremor. RCH explicitly advises against bronchodilators in infants under 12 months with viral lower respiratory illness. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Admit and start oral azithromycin 10 mg/kg daily on cardiorespiratory monitoring",
+        "correct": true,
+        "rationale": "Paroxysmal cough with cyanotic apnoeas, lymphocytosis above 20, and a household contact with prolonged cough is clinical pertussis until NPA PCR returns. Infants under 6 months with documented apnoea need admission for cardiorespiratory monitoring because apnoea drives the case-fatality. Azithromycin 10 mg/kg orally daily for 5 days reduces transmission and is the AU first-line macrolide under 1 month and beyond. (Source: RCH CPG: Pertussis)",
+        "source_refs": [
+          "RCH CPG: Pertussis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Admit for low-flow oxygen 1 L/min via nasal prongs without antibiotics",
+        "correct": false,
+        "rationale": "She is saturating 96% in room air so does not need oxygen, and withholding azithromycin misses both the case-management and public-health intervention - household contacts need post-exposure prophylaxis. (Source: RCH CPG: Pertussis)",
+        "source_refs": [
+          "RCH CPG: Pertussis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence cefotaxime 50 mg/kg intravenously and perform a lumbar puncture",
+        "correct": false,
+        "rationale": "Empirical cefotaxime plus LP is the right step for an unwell febrile infant under 3 months with sepsis features, but this infant is afebrile, alert between fits, with CRP 6 and a lymphocyte-predominant white cell count - the picture points to Bordetella pertussis rather than bacteraemic sepsis. (Source: RCH CPG: Sepsis)",
+        "source_refs": [
+          "RCH CPG: Sepsis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Arrange discharge home with red-flag advice and review in 24 hours",
+        "correct": false,
+        "rationale": "Discharging an under-6-month-old with documented apnoeic episodes ignores the apnoea-driven mortality of infant pertussis; she may have a further unwitnessed apnoea at home. Even with reassuring inter-fit observations she meets RCH admission criteria. (Source: RCH CPG: Pertussis)",
+        "source_refs": [
+          "RCH CPG: Pertussis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Infants under 6 months with paroxysmal cough and apnoea require admission for cardiorespiratory monitoring and empirical azithromycin pending NPA PCR. Maternal Boostrix at 26 weeks gestation reduces but does not eliminate neonatal pertussis risk in the first 6 weeks of life. Lymphocytosis above 20 with a low CRP supports the diagnosis. Notification to public health is mandatory within 24 hours.",
+      "key_points": [
+        "Apnoea drives mortality in infant pertussis - cardiorespiratory monitoring is mandatory under 6 months",
+        "Azithromycin 10 mg/kg orally once daily for 5 days is AU first-line, including in neonates",
+        "Household contact with prolonged paroxysmal cough is a high-yield epidemiological clue even when maternal vaccination is up to date"
+      ],
+      "pearls": "Erythromycin has been replaced by azithromycin in AU paediatric pertussis because of the pyloric-stenosis risk in neonates. NPA PCR is the diagnostic test of choice; serology is unreliable in infants. Notify public health within 24 hours and arrange post-exposure prophylaxis for at-risk contacts."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Pertussis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/whooping_cough_pertussis/"
+      },
+      {
+        "label": "RCH CPG: Bronchiolitis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/bronchiolitis/"
+      },
+      {
+        "label": "RCH CPG: Sepsis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/sepsis_assessment_and_management/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "paeds_fbc",
+      "inflammatory_markers"
+    ],
+    "created": "2026-06-01"
+  }
+]
