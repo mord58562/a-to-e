@@ -142,3 +142,127 @@ Applied 14 high-severity flags from rch_paeds_audit.json. Each question id has b
 
 ---
 
+
+# Medium round 3 (nuanced) - 2026-06-01
+
+## ctb-p34a-003-rch
+
+**File**: `data/batches/cross_topic_balanced_p34a_2026-05-31.json`
+
+**Before (correct)**: Arrange a renal tract ultrasound during this admission and add a micturating cystourethrogram only if the ultrasound shows hydronephrosis, scarring or recurrent febrile urinary tract infection occurs subsequently
+
+**After (correct)**: No additional imaging is required after this typical first urinary tract infection; counsel the family on prompt presentation for any future febrile illness
+
+**Length parity**: max:min ratio = 1.22 ([147, 156, 174, 166, 180])
+
+---
+## paeds-deficit-013-rch
+
+**File**: `data/batches/paeds_obgyn_l4l5_deficit_2026-05-25.json`
+
+**Before (correct)**: Renal tract ultrasound within 2 weeks of the acute infection
+
+**After (correct)**: No routine imaging is required after this typical first urinary tract infection; counsel the family on prompt urine testing with any future fever
+
+**Length parity**: max:min ratio = 1.05 ([145, 144, 142, 138, 144])
+
+---
+## paeds-deficit-012-rch
+
+**File**: `data/batches/paeds_obgyn_l4l5_deficit_2026-05-25.json`
+
+**Before (correct)**: Intravenous cefotaxime plus ampicillin at meningitic doses
+
+**After (correct)**: Intravenous benzylpenicillin (or amoxicillin) plus gentamicin plus cefotaxime, all at meningitic doses, as the Australian regimen for this presentation
+
+**Length parity**: max:min ratio = 1.28 ([118, 151, 128, 135, 148])
+
+---
+## ctb-p31-004-rch
+
+**File**: `data/batches/cross_topic_balanced_p31a_2026-05-30.json`
+
+**Before (correct)**: Start oral trimethoprim plus sulfamethoxazole at standard paediatric dosing for 7 days and arrange follow-up with the GP at the end of the course
+
+**After (correct)**: Start oral cefalexin 25 mg/kg/dose three times daily for 7 days while awaiting culture and review at the end of the course with the GP
+
+**Length parity**: max:min ratio = 1.28 ([134, 122, 145, 140, 156])
+
+---
+## balanced-p15-001-rch
+
+**File**: `data/batches/cross_topic_balanced_p15a_2026-05-29.json`
+
+**Before (correct)**: Oral cefalexin 25 mg/kg/dose twice daily for 7 days starting now
+
+**After (correct)**: Oral cefalexin 25 mg/kg/dose three times daily for 7 days starting now as the first-line empirical oral antibiotic
+
+**Length parity**: max:min ratio = 1.16 ([103, 119, 108, 114, 115])
+
+---
+## ctb-p30-001-rch
+
+**File**: `data/batches/cross_topic_balanced_p30a_2026-05-30.json`
+
+**Before (correct)**: Admit to the paediatric ward for nasal high-flow oxygen and supported feeding via nasogastric tube
+
+**After (correct)**: Admit to the paediatric ward for standard low-flow nasal prong oxygen titrated to SpO2 at least 90% with nasogastric feeding
+
+**Length parity**: max:min ratio = 1.29 ([103, 110, 124, 129, 133])
+
+---
+## balanced-p11-001-rch
+
+**File**: `data/batches/cross_topic_balanced_p11a_2026-05-29.json`
+
+**Before (correct)**: Oral dexamethasone 0.6 mg/kg single dose; observe in ED 3 hours (RCH minimum) then reassess for discharge
+
+**After (correct)**: Oral dexamethasone 0.15 mg/kg single dose; observe until stridor at rest settles and oral intake adequate (typically 1-2 hours)
+
+**Length parity**: max:min ratio = 1.09 ([127, 127, 129, 139, 130])
+
+---
+## ctb-p40-003-rch
+
+**File**: `data/batches/cross_topic_balanced_p40a_2026-05-31.json`
+
+**Before (correct)**: Oral dexamethasone 0.6 mg/kg plus nebulised adrenaline 5 mL of 1:1000
+
+**After (correct)**: Oral dexamethasone 0.15 mg/kg single dose; observe until stridor at rest settles and oral intake is adequate (typically 1-2 hours)
+
+**Length parity**: max:min ratio = 1.16 ([130, 121, 114, 132, 126])
+
+---
+## paeds-batch-073-rch
+
+**File**: `data/batches/paeds_user_paste_emergency_2026-05-20.json`
+
+**Before (correct)**: Start intravenous vasopressin infusion at 0.01 units/min
+
+**After (correct)**: Call PICU and anaesthetics now for bedside takeover, continue titrating the adrenaline infusion upward, and add a noradrenaline infusion if perfusion does not improve
+
+**Length parity**: max:min ratio = 1.34 ([138, 132, 124, 166, 131])
+
+---
+## paeds-id-002-rch
+
+**File**: `data/batches/paeds_infectious_diseases_depth.json`
+
+**Before (correct)**: IV ampicillin 50 mg/kg plus IV cefotaxime 50 mg/kg
+
+**After (correct)**: Intravenous benzylpenicillin (or amoxicillin) plus gentamicin as the Australian regimen, adding cefotaxime at meningitic doses if meningitis is suspected
+
+**Length parity**: max:min ratio = 1.24 ([123, 153, 129, 145, 131])
+
+---
+## creative-reasoning-017-au-cutoff-sepsis-paeds-rch
+
+**File**: `data/batches/creative_reasoning_types_2026-05-25.json`
+
+**Before (correct)**: 20 mL/kg of 0.9% saline (280 mL) over 5-10 min, reassess, repeat to max 40-60 mL/kg with cardiovascular monitoring; ceftriaxone 50 mg/kg IV (max 2 g) within 60 min of recognition; consider early inotropes if no response to second bolus
+
+**After (correct)**: 10-20 mL/kg of 0.9% sodium chloride over 5-10 minutes, reassess after each bolus to a usual maximum of 40-60 mL/kg, plus ceftriaxone 100 mg/kg (max 4 g) IV within 60 minutes
+
+**Length parity**: max:min ratio = 1.34 ([129, 173, 132, 149, 142])
+
+---
