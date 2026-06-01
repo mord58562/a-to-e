@@ -1,0 +1,919 @@
+[
+  {
+    "id": "rabe53-001",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Bronchiolitis escalation",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "bronchiolitis",
+      "HFNC"
+    ],
+    "stem": "A 4-month-old boy is brought to the paediatric emergency department by his parents in winter with 3 days of runny nose, cough and noisy breathing. He has been feeding only half his usual volumes for 24 hours and his nappies are drier. He was born at 38 weeks and has had no previous admissions. His parents are non-smokers and he is up to date with immunisations.\n\nHe has been on nasal prong oxygen 1.5 L/min for 2 hours since arrival. The bedside nurse asks you to review him because his work of breathing has worsened over the last 20 minutes.",
+    "data_table": {
+      "Vital signs": "Pulse 168, BP 86/52 mmHg, RR 72, SpO2 89% on nasal prong 1.5 L/min, temperature 37.8 °C",
+      "Examination": "Alert but tiring, marked subcostal and intercostal recession, head bobbing, widespread fine inspiratory crackles and expiratory wheeze, capillary refill 2 seconds, no apnoeas observed",
+      "Investigations": "Capillary blood gas pH 7.30, pCO2 56 mmHg, HCO3 26, lactate 1.6; nasopharyngeal viral PCR pending; chest X-ray hyperinflation with no focal consolidation",
+      "Medications": "Nil regular"
+    },
+    "lead_in": "What is the most appropriate next step in respiratory support?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence humidified high-flow nasal cannula oxygen at 2 L/kg/min",
+        "correct": true,
+        "rationale": "RCH bronchiolitis pathway escalates to HFNC at 2 L/kg/min after failure of low-flow nasal prong (defined by persisting work of breathing, SpO2 below 90% despite 1-2 L/min, or rising CO2) for at least 1-2 hours. HFNC provides PEEP and washout of upper-airway dead space; trials including PARIS support its use for moderate-severe bronchiolitis under 12 months. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Start nebulised salbutamol 2.5 mg back-to-back for three doses",
+        "correct": false,
+        "rationale": "Bronchodilators are not recommended in bronchiolitis under 12 months and add no benefit in this age group; trials show no change in admission rate or oxygen requirement. They are not part of the RCH bronchiolitis algorithm. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Give a single intramuscular dose of dexamethasone 0.6 mg/kg",
+        "correct": false,
+        "rationale": "Corticosteroids do not change outcome in bronchiolitis and are not recommended in the RCH guideline. Dexamethasone has a role in croup, not bronchiolitis. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Intubate and commence pressure-controlled ventilation",
+        "correct": false,
+        "rationale": "Intubation is reserved for true respiratory failure (severe acidosis, recurrent apnoeas, exhaustion despite HFNC). A pH of 7.30 with mild hypercapnia and a tiring but alert infant is an indication to escalate to HFNC before considering invasive ventilation. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Trial nebulised hypertonic saline 3% with chest physiotherapy",
+        "correct": false,
+        "rationale": "Hypertonic saline has inconsistent evidence and is not first-line escalation in RCH guidance. Routine chest physiotherapy is contraindicated in bronchiolitis as it does not improve outcomes and can worsen distress. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "RCH bronchiolitis pathway uses low-flow nasal prong oxygen 1-2 L/min as first-line, with SpO2 target of 90%. HFNC at 2 L/kg/min is the next-step escalation when low-flow fails after a 1-2 hour trial, indicated by persisting work of breathing, falling SpO2, or rising CO2. Bronchodilators, steroids and routine physiotherapy are NOT used in bronchiolitis under 12 months. Intubation is reserved for HFNC failure or apnoeas.",
+      "key_points": [
+        "RCH SpO2 target in bronchiolitis is 90% (not 92-94%)",
+        "Low-flow 1-2 L/min first; HFNC 2 L/kg/min only after low-flow fails",
+        "Bronchodilators, steroids and routine physiotherapy not recommended under 12 months"
+      ],
+      "pearls": "PARIS trial supports HFNC for escalation only; do not start it before a low-flow trial as it does not reduce ICU admission compared with standard oxygen as primary therapy."
+    },
+    "sources": [
+      {
+        "label": "RCH Melbourne CPG",
+        "url": "https://www.rch.org.au/clinicalguide/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Respiratory",
+        "url": "https://www.tg.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "vbg"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe53-002",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Severe acute asthma escalation",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "asthma",
+      "magnesium"
+    ],
+    "stem": "A 9-year-old girl with known asthma is brought to the paediatric resuscitation bay by ambulance after 6 hours of worsening shortness of breath at home. She normally uses fluticasone 100 mcg twice daily and salbutamol PRN. Her last admission was 18 months ago with a 2-day ward stay.\n\nOn arrival paramedics had given continuous nebulised salbutamol with ipratropium and a single oral prednisolone dose. She has had three back-to-back salbutamol/ipratropium nebulisers in the resuscitation bay over the last 20 minutes with minimal change. The paediatric registrar is at the bedside.",
+    "data_table": {
+      "Vital signs": "Pulse 152, BP 110/68 mmHg, RR 44, SpO2 90% on 8 L/min via face mask, temperature 36.9 °C",
+      "Examination": "Sitting forward, speaking 2-3 word sentences, subcostal recession, widespread expiratory wheeze with reduced air entry bilaterally, no silent chest, alert and frightened",
+      "Investigations": "Venous blood gas pH 7.34, pCO2 44 mmHg (rising from 38 on arrival), HCO3 23, lactate 3.2; chest X-ray hyperinflation, no pneumothorax",
+      "Medications": "Salbutamol 2.5 mg/ipratropium 250 mcg back-to-back nebulisers x 3, oral prednisolone 1 mg/kg given 30 minutes ago"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Switch to continuous nebulised salbutamol 10 mg/hour for the next hour",
+        "correct": false,
+        "rationale": "Continuous salbutamol provides no benefit over back-to-back dosing once delivery is already maximised; this patient has already failed three back-to-back nebulisers with rising CO2 and lactate. Escalation, not repetition, is needed. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Give intravenous magnesium sulfate 50 mg/kg (maximum 2 g) over 20 minutes",
+        "correct": true,
+        "rationale": "RCH severe acute asthma pathway escalates to IV magnesium sulfate 50 mg/kg (maximum 2 g) over 20 minutes after failure of inhaled bronchodilators and systemic corticosteroid. Magnesium acts as a smooth muscle relaxant and is the first parenteral agent to add. The rising CO2 and lactate plus reduced air entry indicate severe disease requiring this step. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence intravenous aminophylline loading dose 5 mg/kg over 60 minutes",
+        "correct": false,
+        "rationale": "IV aminophylline is reserved for asthma not responding to magnesium AND salbutamol infusion; it is a later-line agent because of its narrow therapeutic index. Magnesium is the next escalation here. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Give intramuscular adrenaline 10 mcg/kg into the lateral thigh",
+        "correct": false,
+        "rationale": "Intramuscular adrenaline is the first-line treatment for anaphylaxis, not for acute asthma without anaphylactic features. There is no urticaria, angioedema, or hypotension to suggest anaphylaxis. (Source: ASCIA Anaphylaxis Guidelines)",
+        "source_refs": [
+          "ASCIA Anaphylaxis Guidelines"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Intubate and ventilate after rapid-sequence induction with ketamine",
+        "correct": false,
+        "rationale": "Intubation is reserved for actual or imminent respiratory arrest (exhaustion, silent chest, coma, or severe acidosis). This child is alert, talking in short sentences and has not yet had IV magnesium - parenteral pharmacotherapy is the next step before intubation. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Severe asthma not responding to inhaled bronchodilators and oral steroid escalates to IV magnesium sulfate 50 mg/kg (maximum 2 g) over 20 minutes per the RCH pathway. IV salbutamol infusion (5 mcg/kg/min) is the next addition if magnesium fails. Aminophylline is third-line. Intubation is reserved for true respiratory failure - alert, talking patients are managed pharmacologically first.",
+      "key_points": [
+        "RCH severe asthma escalation order: nebulised salbutamol/ipratropium -> oral steroid -> IV magnesium -> IV salbutamol -> aminophylline",
+        "IV magnesium sulfate 50 mg/kg (maximum 2 g) over 20 minutes",
+        "Intubation reserved for actual or imminent respiratory arrest"
+      ],
+      "pearls": "A rising CO2 from a previously hyperventilating asthmatic is a red flag for fatigue; the venous pCO2 normalising or rising in severe asthma signals decompensation rather than improvement."
+    },
+    "sources": [
+      {
+        "label": "RCH Melbourne CPG",
+        "url": "https://www.rch.org.au/clinicalguide/"
+      },
+      {
+        "label": "ASCIA Anaphylaxis Guidelines",
+        "url": "https://www.allergy.org.au/hp/papers"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "vbg"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe53-003",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Severe croup management",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "croup",
+      "dexamethasone"
+    ],
+    "stem": "A 2-year-old boy is brought to the paediatric emergency department at 2 am by his parents with a 12-hour history of barking cough and 2 hours of noisy breathing. He has had a coryzal illness for 3 days. He is not immunised against any disease because his parents have not yet engaged with their GP. He has no previous admissions and no known allergies.\n\nOn the way to the ambulance bay he became increasingly distressed. The triage nurse has placed him in his mother's lap in the resuscitation cubicle and called you.",
+    "data_table": {
+      "Vital signs": "Pulse 158, BP 96/60 mmHg, RR 38, SpO2 93% in room air, temperature 38.4 °C",
+      "Examination": "Loud biphasic stridor at rest, marked tracheal tug and intercostal recession, agitated and clinging to mother, barking cough, no drooling, no trismus, no neck swelling",
+      "Investigations": "Not yet performed - imaging or bloods would distress the child further",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate initial pharmacological management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Oral dexamethasone 0.15 mg/kg single dose and discharge home after 1 hour observation",
+        "correct": false,
+        "rationale": "0.15 mg/kg is the RCH dose for mild to moderate croup. This child has biphasic stridor at rest with tracheal tug and agitation - severe croup. He needs the higher dose AND nebulised adrenaline, with longer observation. Discharge after 1 hour is unsafe. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Nebulised budesonide 2 mg as monotherapy and admit for observation",
+        "correct": false,
+        "rationale": "Nebulised budesonide is an alternative when oral or IV dexamethasone is not tolerated, but it is not the first-line monotherapy in severe croup. Dexamethasone (oral or IV) with concurrent nebulised adrenaline is the standard combination. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Oral dexamethasone 0.6 mg/kg with concurrent nebulised adrenaline 5 mL of 1:1000",
+        "correct": true,
+        "rationale": "Severe croup (stridor at rest with marked respiratory distress or agitation) is treated with dexamethasone 0.6 mg/kg orally (or IV/IM if oral not tolerated) AND nebulised adrenaline 5 mL of 1 in 1000 (a flat dose, not per kg). Observe for at least 3 hours after the last adrenaline nebuliser because of rebound. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Intravenous ceftriaxone 50 mg/kg empirically with airway preparation in theatre",
+        "correct": false,
+        "rationale": "There is no drooling, no tripod position, no muffled voice and no marked toxicity to suggest epiglottitis. Manipulation including IV cannulation in a child with possible epiglottitis is contraindicated. Empirical antibiotics are not part of croup management. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Intubate in theatre with an anaesthetist and ENT surgeon present",
+        "correct": false,
+        "rationale": "Intubation is reserved for impending or actual airway obstruction unresponsive to medical therapy. Initial management with steroid plus nebulised adrenaline resolves the majority of severe croup. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Severe croup is defined by stridor at rest with marked retractions, decreased air entry or agitation. Treatment is oral dexamethasone 0.6 mg/kg (0.15 mg/kg is mild-moderate) PLUS nebulised adrenaline 5 mL of 1:1000 (flat dose). Minimum observation 3 hours after the last adrenaline dose because of rebound stridor.",
+      "key_points": [
+        "Dexamethasone 0.15 mg/kg for mild-moderate, 0.6 mg/kg for severe",
+        "Nebulised adrenaline 5 mL of 1:1000 is a FLAT dose, not weight-based",
+        "Observe minimum 3 hours after last nebulised adrenaline"
+      ],
+      "pearls": "If a child needs more than 2-3 doses of nebulised adrenaline within an hour, escalate to ICU for closer monitoring or consideration of airway support; rebound is a normal phenomenon, not a treatment failure marker."
+    },
+    "sources": [
+      {
+        "label": "RCH Melbourne CPG",
+        "url": "https://www.rch.org.au/clinicalguide/"
+      },
+      {
+        "label": "BMJ Best Practice",
+        "url": "https://bestpractice.bmj.com/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe53-004",
+    "topic": "Paediatrics",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Pertussis in young infant",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "pertussis",
+      "macrolide"
+    ],
+    "stem": "A 6-week-old girl is brought to the children's hospital ED by her mother with a 9-day history of cough. She was born at term by spontaneous vaginal delivery and has been well otherwise. Her mother declined the pertussis vaccine in pregnancy. Her older brother (age 4) has had a runny nose and cough for 3 weeks.\n\nHer cough comes in clusters and she goes red and then briefly blue with the spells, followed by exhausted feeding. Between spells she looks well. She has had two brief pauses in breathing during spells today.",
+    "data_table": {
+      "Vital signs": "Pulse 144, BP 78/46 mmHg, RR 36, SpO2 96% in room air between spells (drops to 88% during spells), temperature 37.0 °C",
+      "Examination": "Well-perfused between spells, chest clear, no recession at rest, paroxysmal coughing fits with brief facial cyanosis observed",
+      "Investigations": "FBC WCC 32 x10^9/L with marked lymphocytosis 22 x10^9/L (1.5-8.5), CRP 6 mg/L, chest X-ray clear, nasopharyngeal PCR pertussis pending",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Discharge home with safety-netting advice and outpatient follow-up review in 3 days",
+        "correct": false,
+        "rationale": "Infants under 6 months with paroxysmal cough and observed apnoea or cyanosis must be admitted regardless of how well they appear between spells, because apnoea, secondary pneumonia and pulmonary hypertension can develop rapidly. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Admit for inpatient cardiorespiratory observation alone while awaiting PCR confirmation",
+        "correct": false,
+        "rationale": "Empirical treatment should not wait for PCR confirmation when clinical suspicion is high (paroxysmal cough, cyanotic spells, marked lymphocytosis, contact, unimmunised). Delaying treatment delays infectivity reduction and prolongs household risk. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Admit and start intravenous ceftriaxone 50 mg/kg daily for community-acquired pneumonia",
+        "correct": false,
+        "rationale": "Ceftriaxone covers neither Bordetella pertussis nor the clinical picture, which is consistent with pertussis rather than bacterial pneumonia (clear chest, no infiltrate, classic paroxysms with lymphocytosis). (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Admit and start oral azithromycin 10 mg/kg daily for 5 days plus contact prophylaxis",
+        "correct": true,
+        "rationale": "RCH and the Australian Immunisation Handbook recommend macrolide treatment for pertussis in infants under 6 months. Azithromycin (10 mg/kg daily for 5 days) is preferred in this age group because erythromycin in under-1-month-olds is associated with pyloric stenosis - azithromycin is the safer macrolide. Treatment reduces infectivity and household contacts (especially the older brother and pregnant women) need prophylaxis. Admission is mandatory for monitoring of apnoea and oxygen need. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Admit and start oral erythromycin 10 mg/kg four times daily for 7 days with monitoring",
+        "correct": false,
+        "rationale": "Erythromycin in infants under 1 month is associated with pyloric stenosis and is no longer preferred. Azithromycin is the recommended macrolide for young infants. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Pertussis in infants under 6 months is treated with azithromycin 10 mg/kg daily for 5 days and requires admission for monitoring of apnoea, cyanotic spells and secondary complications. Household contacts (especially under-6-month-olds and pregnant women) need prophylaxis. Erythromycin is avoided under 1 month because of pyloric stenosis association. Treatment reduces infectivity even if started in the paroxysmal phase.",
+      "key_points": [
+        "Azithromycin preferred over erythromycin in under-1-month-olds (pyloric stenosis)",
+        "Admit all under-6-month-olds with pertussis for monitoring",
+        "Household contact prophylaxis essential"
+      ],
+      "pearls": "Marked lymphocytosis (>20 x10^9/L) with normal CRP in an infant with paroxysmal cough is highly suggestive of pertussis; raise the index of suspicion even before PCR returns."
+    },
+    "sources": [
+      {
+        "label": "RCH Melbourne CPG",
+        "url": "https://www.rch.org.au/clinicalguide/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://www.tg.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "paeds_fbc"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe53-005",
+    "topic": "Paediatrics",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Acute otitis media in young child",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "otitis media",
+      "amoxicillin"
+    ],
+    "stem": "A 19-month-old Aboriginal boy presents with his mother to the remote area clinic with 36 hours of ear pulling and fever to 39.0 °C. He was treated for an acute otitis media in the same ear 6 weeks ago with a 5-day course of amoxicillin. He has been drinking less but is still wetting nappies normally. He has had two previous courses of antibiotics for ear infections this year.\n\nToday he is irritable but consolable. His mother says he has been pulling at the same ear and crying with feeds.",
+    "data_table": {
+      "Vital signs": "Pulse 138, BP 96/58 mmHg, RR 28, SpO2 99% in room air, temperature 38.6 °C",
+      "Examination": "Right tympanic membrane bulging, opaque and erythematous with no perforation; left tympanic membrane normal; no mastoid tenderness or post-auricular swelling; alert and consolable",
+      "Investigations": "Not indicated",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Watchful waiting for 48 to 72 hours with paracetamol cover and clinical review",
+        "correct": false,
+        "rationale": "Watchful waiting is appropriate for non-severe acute otitis media in healthy children over 2 years; Aboriginal children, those under 2 years, those with severe symptoms or recurrent episodes warrant immediate antibiotics because of high rates of chronic suppurative otitis media. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Oral cefuroxime 15 mg/kg twice daily for 5 days as second-line cover",
+        "correct": false,
+        "rationale": "Cefuroxime is not the preferred first or second-line agent for acute otitis media in Australian guidelines. Amoxicillin at high dose or amoxicillin-clavulanate are preferred. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Oral azithromycin 10 mg/kg once daily for 3 days as second-line cover",
+        "correct": false,
+        "rationale": "Azithromycin has poor activity against drug-resistant Streptococcus pneumoniae, the most common organism in acute otitis media after recent amoxicillin exposure, and is not recommended as a first or second-line agent. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Intramuscular benzathine benzylpenicillin 50 mg/kg as a single one-off dose",
+        "correct": false,
+        "rationale": "Intramuscular benzathine penicillin is used for syphilis, group A strep eradication and rheumatic fever prophylaxis. It is not a treatment for acute otitis media; it does not provide useful middle-ear concentrations of beta-lactamase-resistant cover. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Oral amoxicillin-clavulanate 22.5 mg/kg twice daily for 5 days as second-line",
+        "correct": true,
+        "rationale": "When acute otitis media recurs within 30 days of amoxicillin OR fails high-dose amoxicillin, Australian guidelines escalate to amoxicillin-clavulanate to cover beta-lactamase-producing H. influenzae and M. catarrhalis. Aboriginal children with recurrent AOM are prioritised for immediate treatment because of high rates of chronic suppurative otitis media. The 5-day course is appropriate for this age. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Acute otitis media in Aboriginal children, those under 2 years, or with recurrent episodes warrants immediate antibiotic therapy because of the high risk of chronic suppurative otitis media. First-line is high-dose amoxicillin 30 mg/kg every 8 hours for 5 days; recurrence within 30 days or failure escalates to amoxicillin-clavulanate. Watchful waiting is reserved for non-severe AOM in over-2-year-olds without these risk factors.",
+      "key_points": [
+        "Aboriginal children with AOM are not candidates for watchful waiting",
+        "Recurrence within 30 days of amoxicillin escalates to amoxicillin-clavulanate",
+        "5-day course for under 2 years, longer courses NOT routinely needed"
+      ],
+      "pearls": "Chronic suppurative otitis media prevalence in remote Aboriginal communities can exceed 10-20%; aggressive treatment of acute episodes plus regular ENT follow-up is the cornerstone of preventing conductive hearing loss and educational impact."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://www.tg.org.au/"
+      },
+      {
+        "label": "RCH Melbourne CPG",
+        "url": "https://www.rch.org.au/clinicalguide/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe53-006",
+    "topic": "Paediatrics",
+    "subtopic": "Gastroenterology",
+    "subtopic_detail": "Functional constipation - disimpaction",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "constipation",
+      "macrogol"
+    ],
+    "stem": "A 5-year-old girl is brought to the paediatric outpatient clinic by her parents with an 18-month history of infrequent stools. She passes hard pebble-like stools every 4 to 6 days with abdominal pain and occasional soiling of her underwear between motions. She has tried lactulose and dietary fibre for 8 weeks without improvement. She is otherwise developmentally normal, has been growing along the 50th centile and has no red flags.\n\nHer parents report she now actively withholds stool because passing them is painful.",
+    "data_table": {
+      "Vital signs": "Within normal limits",
+      "Examination": "Soft non-tender abdomen with a palpable faecal mass in the left lower quadrant; perianal inspection unremarkable; spine and lower limb neurology unremarkable; growth on the 50th centile for weight and height",
+      "Investigations": "Not indicated - functional constipation is a clinical diagnosis",
+      "Medications": "Lactulose 10 mL twice daily for 8 weeks (poor response)"
+    },
+    "lead_in": "What is the most appropriate next step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Oral macrogol 3350 disimpaction for 3 days then maintenance dose for 6 months",
+        "correct": true,
+        "rationale": "Functional constipation with a palpable faecal mass on examination indicates impaction, which must be treated with a disimpaction regimen before maintenance therapy can work. Macrogol 3350 (PEG with electrolytes) at escalating disimpaction dose for 3 to 7 days is first-line in Australian and international guidance, followed by maintenance dose for at least 6 months to prevent relapse. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Increase the lactulose dose and add senna stimulant at bedtime for 8 weeks",
+        "correct": false,
+        "rationale": "Lactulose has already failed for 8 weeks. Stimulant laxatives like senna may be added later in maintenance, but disimpaction with macrogol is the priority when there is a palpable faecal mass. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Refer for a contrast enema study to exclude Hirschsprung disease this week",
+        "correct": false,
+        "rationale": "Hirschsprung disease typically presents in the first weeks of life with delayed passage of meconium or in the first year with failure to thrive. A normally growing 5-year-old with classic withholding behaviour does not require structural imaging. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Admit for a phosphate enema and digital rectal examination under anaesthetic",
+        "correct": false,
+        "rationale": "Phosphate enemas are reserved for failure of oral disimpaction and have significant electrolyte risks (hyperphosphataemia, hypocalcaemia) in young children. Anaesthetic disimpaction is a last resort. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Refer to paediatric gastroenterology for anorectal manometry under sedation",
+        "correct": false,
+        "rationale": "Anorectal manometry is used when an organic cause is suspected (Hirschsprung disease, anorectal dysmotility). In the absence of red flags, functional constipation is a clinical diagnosis and treated empirically with macrogol first. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Functional constipation with faecal impaction is treated with macrogol 3350 (PEG with electrolytes) at disimpaction dose for 3 to 7 days, followed by maintenance dose for at least 6 months. Lactulose alone is often insufficient. Behavioural toileting program and education about withholding are essential adjuncts. Red flags (failure to thrive, delayed meconium, neurological signs) require structural workup.",
+      "key_points": [
+        "Disimpaction with macrogol before maintenance therapy",
+        "Maintenance for at least 6 months to prevent relapse",
+        "Lactulose is inferior to macrogol for disimpaction"
+      ],
+      "pearls": "Soiling between hard stools is overflow soiling, not encopresis as a primary behavioural issue; treating the constipation resolves the soiling without the need for behavioural therapy in most cases."
+    },
+    "sources": [
+      {
+        "label": "RCH Melbourne CPG",
+        "url": "https://www.rch.org.au/clinicalguide/"
+      },
+      {
+        "label": "BMJ Best Practice",
+        "url": "https://bestpractice.bmj.com/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe53-007",
+    "topic": "Paediatrics",
+    "subtopic": "Neonatology",
+    "subtopic_detail": "Persistent neonatal hypoglycaemia",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "hypoglycaemia",
+      "hyperinsulinism"
+    ],
+    "stem": "A term male newborn weighing 4.6 kg (above 97th centile) is admitted to the neonatal unit on day 1 with recurrent symptomatic hypoglycaemia. He was born at 39 weeks by emergency caesarean section for failure to progress to a 32-year-old G2P1 woman whose pregnancy was complicated by gestational diabetes treated with insulin from 28 weeks. The baby developed jitteriness and a low blood glucose of 1.4 mmol/L at 90 minutes after birth, treated with feeds and IV dextrose.\n\nHe has now required escalating dextrose infusions. Despite a glucose infusion rate of 14 mg/kg/min he has had two further symptomatic episodes.",
+    "data_table": {
+      "Vital signs": "Pulse 162, BP 64/38 mmHg, RR 52, SpO2 98% in room air, temperature 36.7 °C",
+      "Examination": "Macrosomic, mild plethora, no obvious dysmorphism, no organomegaly, no umbilical defect, tone slightly reduced when hypoglycaemic, normal between episodes; cardiac and respiratory examinations within normal limits",
+      "Investigations": "BSL during episode 1.6 mmol/L (>2.6); insulin 18 mIU/L (suppressed when normoglycaemic), C-peptide elevated, beta-hydroxybutyrate 0.1 mmol/L (low), free fatty acids low, ammonia 38 micromol/L (<50), cortisol 380 nmol/L, growth hormone 14 mIU/L, lactate 1.1; karyotype 46XY pending; abdominal ultrasound and brain MRI unremarkable; ear examination normal pinnae",
+      "Medications": "Intravenous 10% dextrose at 12.5 mg/kg/min glucose infusion rate"
+    },
+    "lead_in": "What is the most appropriate next step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Increase glucose infusion rate to 18 mg/kg/min through a central venous line",
+        "correct": false,
+        "rationale": "Persistent glucose infusion rates above 10 mg/kg/min in a macrosomic infant with detectable insulin during hypoglycaemia, low ketones and low free fatty acids confirms congenital hyperinsulinism. Simply pushing more dextrose treats the symptom not the cause and risks fluid overload and hyperosmolality - pharmacotherapy is now indicated. (Source: BMJ Best Practice)",
+        "source_refs": [
+          "BMJ Best Practice"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Commence oral diazoxide 5 mg/kg per day in divided doses plus chlorothiazide",
+        "correct": true,
+        "rationale": "Congenital hyperinsulinism is the diagnosis: persistent hypoglycaemia with glucose infusion rate above 10 mg/kg/min, detectable insulin during a low BSL, suppressed ketones (beta-hydroxybutyrate below 1.5 mmol/L) and suppressed free fatty acids. Diazoxide opens KATP channels on beta cells to suppress insulin secretion; chlorothiazide is added to counter sodium and fluid retention and may potentiate the effect. Diazoxide responsiveness suggests a focal or diffuse KATP channel disorder amenable to medical therapy; non-response triggers 18F-DOPA PET to localise focal lesions for partial pancreatectomy. (Source: BMJ Best Practice)",
+        "source_refs": [
+          "BMJ Best Practice"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Start hydrocortisone 5 mg/kg per day for possibly inadequate stress cortisol",
+        "correct": false,
+        "rationale": "Cortisol of 380 nmol/L during stress is appropriate; hydrocortisone is not indicated and does not address hyperinsulinism. Stress-dose steroid would only apply if adrenal insufficiency were proven. (Source: BMJ Best Practice)",
+        "source_refs": [
+          "BMJ Best Practice"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Refer urgently for partial pancreatectomy without medical trial of diazoxide",
+        "correct": false,
+        "rationale": "Surgery is reserved for diazoxide-unresponsive focal disease confirmed by 18F-DOPA PET. A medical trial is essential before surgical referral. (Source: BMJ Best Practice)",
+        "source_refs": [
+          "BMJ Best Practice"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Continue current management as macrosomic infants typically resolve by 72 hours",
+        "correct": false,
+        "rationale": "Infant-of-diabetic-mother hyperinsulinism usually resolves by 48 to 72 hours and does not require a glucose infusion rate above 10 mg/kg/min. Persistent requirement at this level points to congenital hyperinsulinism rather than transient. The biochemistry (low ketones, low FFA, detectable insulin) confirms this. (Source: BMJ Best Practice)",
+        "source_refs": [
+          "BMJ Best Practice"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Congenital hyperinsulinism is diagnosed by hypoglycaemia with detectable insulin, suppressed ketones (BOHB below 1.5 mmol/L) and low free fatty acids, plus a glucose infusion rate above 10 mg/kg/min. First-line therapy is diazoxide with chlorothiazide. Non-responders undergo 18F-DOPA PET to identify focal versus diffuse disease - focal lesions are cured by partial pancreatectomy while diffuse disease requires near-total pancreatectomy with subsequent diabetes risk.",
+      "key_points": [
+        "Glucose infusion rate above 10 mg/kg/min is the threshold for diagnosing hyperinsulinism",
+        "Diazoxide opens KATP channels; chlorothiazide is added for synergy and to counter fluid retention",
+        "18F-DOPA PET differentiates focal from diffuse disease in diazoxide non-responders"
+      ],
+      "pearls": "Beckwith-Wiedemann syndrome is on the differential for hyperinsulinaemic hypoglycaemia in a macrosomic baby - look for macroglossia, ear pits/creases, omphalocele, hemihypertrophy, and order methylation studies of 11p15.5 if features are present."
+    },
+    "sources": [
+      {
+        "label": "BMJ Best Practice",
+        "url": "https://bestpractice.bmj.com/"
+      },
+      {
+        "label": "StatPearls",
+        "url": "https://www.ncbi.nlm.nih.gov/books/NBK430685/"
+      },
+      {
+        "label": "RCH Melbourne CPG",
+        "url": "https://www.rch.org.au/clinicalguide/"
+      }
+    ],
+    "reference_ranges": [
+      "bsl_paeds",
+      "paeds_vitals_infant",
+      "ketones"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe53-008",
+    "topic": "Paediatrics",
+    "subtopic": "Cardiology",
+    "subtopic_detail": "Duct-dependent cyanotic congenital heart disease",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "congenital heart disease",
+      "prostaglandin"
+    ],
+    "stem": "A term male newborn becomes cyanotic in the postnatal ward at 6 hours of age. He was born at 39 weeks by uncomplicated vaginal delivery to a 28-year-old G1P0 woman with no antenatal concerns; her 20-week anomaly scan was reported as normal. Apgars were 8 and 9 at 1 and 5 minutes. He fed once at the breast and pinked up initially.\n\nOn nursing review for cyanosis he has central blue discolouration but is not in respiratory distress. The paediatric registrar is at the bedside.",
+    "data_table": {
+      "Vital signs": "Pulse 162, BP 64/40 mmHg in right arm and 62/38 mmHg in right calf, RR 48, SpO2 65% pre-ductal (right hand) and 64% post-ductal (right foot), temperature 36.8 °C",
+      "Examination": "Centrally cyanosed, well perfused, no respiratory distress, single S2 with no murmur, femoral pulses palpable and equal, liver not enlarged, no facial features of trisomy 21 or DiGeorge phenotype",
+      "Investigations": "Hyperoxia test SpO2 rose to 69% after 10 minutes in 100% O2 face mask; chest X-ray shows narrow superior mediastinum with \"egg on side\" cardiac silhouette and pulmonary plethora; ECG normal neonatal axis; capillary blood gas pH 7.32, pCO2 38, lactate 2.6",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Increase inspired oxygen to FiO2 1.0 by head box and reassess in 20 minutes",
+        "correct": false,
+        "rationale": "The hyperoxia test has already failed (SpO2 rose only marginally with FiO2 1.0). Continuing to push oxygen has minimal benefit in fixed right-to-left shunting and may even close the ductus in some duct-dependent lesions, worsening cyanosis. (Source: BMJ Best Practice)",
+        "source_refs": [
+          "BMJ Best Practice"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Intubate, ventilate and administer surfactant via the endotracheal tube immediately",
+        "correct": false,
+        "rationale": "There is no tachypnoea or respiratory distress and the chest X-ray shows a cardiac silhouette, not the ground-glass appearance of RDS. Cyanosis without distress and a failed hyperoxia test points to cyanotic congenital heart disease. (Source: BMJ Best Practice)",
+        "source_refs": [
+          "BMJ Best Practice"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence intravenous prostaglandin E1 (alprostadil) 10 ng/kg/min and urgent echo",
+        "correct": true,
+        "rationale": "Cyanosis with a failed hyperoxia test, egg-on-side cardiac silhouette and equal pre and post-ductal saturations is highly suggestive of transposition of the great arteries (TGA) with restricted intracardiac mixing. The duct must be kept open with prostaglandin E1 (alprostadil) starting at 10 nanograms/kg/min until urgent echo confirms the diagnosis and a balloon atrial septostomy (Rashkind) or arterial switch can be planned. Lower starting doses (5 to 10 ng/kg/min) reduce apnoea risk compared with the older 50 ng/kg/min dose. (Source: BMJ Best Practice)",
+        "source_refs": [
+          "BMJ Best Practice"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Administer intramuscular vitamin K plus intravenous frusemide for cardiac failure",
+        "correct": false,
+        "rationale": "Vitamin K should already have been given routinely; diuretics treat pulmonary congestion but the issue here is fixed right-to-left shunt requiring ductal patency, not pulmonary overcirculation alone. (Source: BMJ Best Practice)",
+        "source_refs": [
+          "BMJ Best Practice"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Perform four-limb blood pressure measurement and arrange aortic CT angiogram",
+        "correct": false,
+        "rationale": "Four-limb BPs have already been recorded as equal; coarctation typically presents with weak femoral pulses and right-arm-to-leg gradient, not equal pressures with cyanosis. Echocardiography is the first-line modality, not CT. (Source: BMJ Best Practice)",
+        "source_refs": [
+          "BMJ Best Practice"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Cyanosis with failed hyperoxia test (PaO2 fails to rise above 100 mmHg or SpO2 below 90% in FiO2 1.0) indicates duct-dependent cyanotic congenital heart disease until proven otherwise. Start prostaglandin E1 at 10 nanograms/kg/min and arrange urgent echocardiography. TGA classically shows an egg-on-side cardiac silhouette and equal pre and post-ductal saturations because mixing depends on PFO/ASD plus PDA. Lower-dose PGE1 (10 ng/kg/min) reduces apnoea while maintaining ductal patency.",
+      "key_points": [
+        "Failed hyperoxia test = cyanotic congenital heart disease until proven otherwise",
+        "TGA: equal pre and post-ductal saturations, egg-on-side cardiac silhouette",
+        "Prostaglandin E1 10 ng/kg/min - lower doses reduce apnoea risk"
+      ],
+      "pearls": "Equal pre and post-ductal saturations rule out simple right-to-left ductal shunting (which gives a saturation gradient); they suggest fixed intracardiac mixing as in TGA. A balloon atrial septostomy (Rashkind procedure) is often the first definitive intervention before arterial switch."
+    },
+    "sources": [
+      {
+        "label": "BMJ Best Practice",
+        "url": "https://bestpractice.bmj.com/"
+      },
+      {
+        "label": "StatPearls",
+        "url": "https://www.ncbi.nlm.nih.gov/books/NBK430685/"
+      },
+      {
+        "label": "RCH Melbourne CPG",
+        "url": "https://www.rch.org.au/clinicalguide/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "vbg"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe53-009",
+    "topic": "Paediatrics",
+    "subtopic": "Surgical/GI",
+    "subtopic_detail": "Intussusception management",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "intussusception"
+    ],
+    "stem": "A 9-month-old boy is brought to the children's hospital emergency department by his mother. Over the past 18 hours he has had episodes of inconsolable crying lasting 10 to 15 minutes during which he draws his legs up to his tummy, then falls asleep exhausted between episodes. He had a single episode of redcurrant jelly nappy this morning and his mother says he has been pale and very tired. He had a runny nose a week ago.\n\nHe last fed 6 hours ago and has vomited twice. The paediatric surgical registrar has been called.",
+    "data_table": {
+      "Vital signs": "Pulse 156, BP 92/56 mmHg, RR 36, SpO2 99% in room air, temperature 37.5 °C",
+      "Examination": "Sleepy but rousable, slightly pale, soft abdomen with a palpable long thin lump in the right upper quadrant during a quiet period; no peritonism, no abdominal distension; capillary refill 2 seconds; rectal inspection shows red mucoid stool on the gloved finger",
+      "Investigations": "FBC haemoglobin 108 g/L (105-135), WCC 14 x10^9/L; UEC within normal limits; venous blood gas pH 7.36, lactate 2.0; abdominal ultrasound shows a target sign in the right upper quadrant consistent with ileocolic intussusception, no free fluid, no pneumatosis",
+      "Medications": "Nil"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Trial of bowel rest with intravenous fluid resuscitation and reassess in 6 hours",
+        "correct": false,
+        "rationale": "Conservative observation risks bowel ischaemia and perforation. Once intussusception is confirmed on ultrasound and there is no contraindication, reduction should proceed promptly. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Proceed immediately to open laparotomy for manual reduction without enema trial",
+        "correct": false,
+        "rationale": "Surgical reduction is reserved for failed pneumatic/hydrostatic reduction, peritonitis, free intraperitoneal air or shock. None of these are present, so a non-operative approach should be attempted first. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Diagnostic laparoscopy to look for a pathological lead point before reduction",
+        "correct": false,
+        "rationale": "A pathological lead point (Meckel diverticulum, polyp, lymphoma) is more common in children over 2 years or recurrent cases; in a 9-month-old with classic presentation and ultrasound diagnosis, non-operative reduction is first-line and laparoscopy is reserved for failures or atypical cases. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Resuscitate with intravenous fluids then proceed to air enema with surgical standby",
+        "correct": true,
+        "rationale": "Air enema (or hydrostatic) reduction with fluoroscopic guidance is the first-line treatment for uncomplicated ileocolic intussusception, with success rates of 80 to 95%. Surgical standby is mandatory because of the 0.5 to 1% perforation risk during reduction. IV access, fluid resuscitation and theatre availability should be arranged before the procedure. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Insert nasogastric tube and give intravenous antibiotics with observation only",
+        "correct": false,
+        "rationale": "Antibiotic administration is appropriate adjunct but does not address the obstruction. The definitive next step is reduction (air enema), not observation. (Source: RCH Melbourne CPG)",
+        "source_refs": [
+          "RCH Melbourne CPG"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Ileocolic intussusception is the commonest cause of intestinal obstruction in 3 to 36-month-olds. Classic triad is intermittent severe colicky pain, palpable mass and redcurrant jelly stool, though most patients have only one or two features. Ultrasound (target sign) is diagnostic. First-line treatment is air enema reduction under fluoroscopy with surgical standby. Surgery is reserved for failure, perforation or shock.",
+      "key_points": [
+        "Air enema reduction first-line, 80-95% success",
+        "Surgical standby mandatory because of 0.5-1% perforation risk",
+        "Surgery reserved for failed reduction, peritonitis, or shock"
+      ],
+      "pearls": "Children under 3 months or over 5 years with intussusception have a higher rate of pathological lead point; in these atypical age groups, plan for CT or laparoscopic assessment after reduction even if reduction succeeds."
+    },
+    "sources": [
+      {
+        "label": "RCH Melbourne CPG",
+        "url": "https://www.rch.org.au/clinicalguide/"
+      },
+      {
+        "label": "BMJ Best Practice",
+        "url": "https://bestpractice.bmj.com/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "paeds_fbc",
+      "vbg"
+    ],
+    "created": "2026-06-01"
+  },
+  {
+    "id": "rabe53-010",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Hypertensive disorders of pregnancy",
+    "subtopic_detail": "HELLP syndrome and timing of delivery",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "HELLP",
+      "pre-eclampsia"
+    ],
+    "stem": "A 28-year-old G2P1 woman at 32+3 weeks gestation is admitted to the high-risk obstetrics ward with right upper quadrant pain and headache. Her previous pregnancy was uncomplicated. She has no chronic hypertension. Her booking BP was 110/70 mmHg. She had no prior obstetric admissions this pregnancy. She received antenatal corticosteroids (betamethasone) for fetal lung maturity 14 hours ago after her platelet count began to fall.\n\nOver the last 6 hours her platelets have dropped further despite stable BP control with oral labetalol. She remains alert and oriented. Cardiotocograph shows a reassuring trace.",
+    "data_table": {
+      "Vital signs": "Pulse 92, BP 146/94 mmHg (on labetalol), RR 18, SpO2 99% in room air, temperature 36.8 °C, fetal heart rate 145 bpm with reactive trace",
+      "Examination": "Right upper quadrant tenderness without peritonism, 3+ proteinuria on dipstick, no clonus, normal reflexes, no facial oedema",
+      "Investigations": "Platelets 62 x10^9/L (down from 95 6 hours ago, baseline 220), AST 320 U/L (<35), ALT 280 U/L (<35), LDH 820 U/L (<250), haemoglobin 96 g/L with schistocytes on film, creatinine 92 micromol/L (45-90), urate 0.42 mmol/L (<0.36), urine PCR 580 mg/mmol",
+      "Medications": "Labetalol 200 mg PO TDS, magnesium sulfate IV (loading 4 g + 1 g/hour maintenance), betamethasone 11.4 mg IM doses x 2 (last dose 14 hours ago)"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Continue expectant management with daily bloods until 34 weeks then plan delivery",
+        "correct": false,
+        "rationale": "Falling platelets with HELLP criteria met is not stable disease - it is HELLP syndrome with progression. Expectant management beyond 48 hours after steroid completion is not justified in HELLP because of risks of placental abruption, hepatic haematoma rupture, DIC and maternal death. RANZCOG and the SOMANZ pre-eclampsia guideline recommend delivery once HELLP is established and the steroid window is complete or near complete. (Source: RANZCOG Statements)",
+        "source_refs": [
+          "RANZCOG Statements"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Increase the labetalol dose and continue magnesium sulfate, review at 12 hours",
+        "correct": false,
+        "rationale": "Antihypertensive intensification and seizure prophylaxis do not address the underlying disease. HELLP at 32 weeks with progressive thrombocytopenia and after a completed steroid course requires planned delivery. (Source: RANZCOG Statements)",
+        "source_refs": [
+          "RANZCOG Statements"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Transfuse a single adult dose of platelets and continue expectant management",
+        "correct": false,
+        "rationale": "Platelet transfusion is only indicated for active bleeding or before regional anaesthesia/operative delivery with platelets below 50 x10^9/L. Prophylactic transfusion to continue expectancy does not change the natural history of HELLP. (Source: RANZCOG Statements)",
+        "source_refs": [
+          "RANZCOG Statements"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence intravenous heparin for presumed HELLP thrombotic microangiopathy",
+        "correct": false,
+        "rationale": "Heparin is not used for HELLP. The condition is a placental disorder of pre-eclamptic origin, not a primary thrombotic microangiopathy like TTP/aHUS; the treatment is delivery, not anticoagulation. (Source: RANZCOG Statements)",
+        "source_refs": [
+          "RANZCOG Statements"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Plan delivery within 6 to 12 hours by the most appropriate route after steroids",
+        "correct": true,
+        "rationale": "HELLP at 32+ weeks with completed antenatal corticosteroid course (last dose at least 12 to 24 hours ago) and progressive disease (platelets dropping from 95 to 62) is an indication for delivery. Corticosteroids do NOT reverse HELLP - they improve neonatal lung outcome and a brief window (up to 48 hours after steroid completion) may be permitted if stable, but progressive thrombocytopenia disqualifies further delay. Mode of delivery is dictated by Bishop score, fetal status and platelet count for regional anaesthesia. Magnesium continues until 24 hours postpartum. (Source: RANZCOG Statements)",
+        "source_refs": [
+          "RANZCOG Statements"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "HELLP syndrome (haemolysis, elevated liver enzymes, low platelets) at any gestation above 34 weeks mandates delivery. Between 24 and 34 weeks, antenatal corticosteroids are given and delivery planned once the steroid window is maximised (typically 24 to 48 hours), with earlier delivery if disease progresses or maternal status deteriorates. Continue magnesium for 24 hours postpartum. Platelet transfusion only for active bleeding or imminent operative/regional anaesthesia.",
+      "key_points": [
+        "HELLP at 34 weeks or more: immediate delivery",
+        "HELLP at 24-34 weeks: steroids then delivery within 24-48 hours, sooner if progressive",
+        "Magnesium continues 24 hours postpartum"
+      ],
+      "pearls": "A subcapsular hepatic haematoma is a life-threatening HELLP complication; sudden worsening of right-upper-quadrant pain with hypotension requires urgent CT or focused ultrasound and may need interventional radiology embolisation or surgery."
+    },
+    "sources": [
+      {
+        "label": "RANZCOG Statements",
+        "url": "https://ranzcog.edu.au/statements-guidelines/"
+      },
+      {
+        "label": "BMJ Best Practice",
+        "url": "https://bestpractice.bmj.com/"
+      }
+    ],
+    "reference_ranges": [
+      "obs_pregnancy_vitals",
+      "pre_eclampsia_bloods",
+      "fbc"
+    ],
+    "created": "2026-06-01"
+  }
+]
