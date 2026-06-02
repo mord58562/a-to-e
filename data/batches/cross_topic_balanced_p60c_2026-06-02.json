@@ -1,0 +1,642 @@
+[
+  {
+    "id": "medicine-p60-001",
+    "topic": "Medicine",
+    "subtopic": "Cardiology emergency",
+    "subtopic_detail": "Type B aortic dissection rate control before vasodilator",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "aortic dissection",
+      "hypertension",
+      "beta-blocker"
+    ],
+    "stem": "You are the medical registrar in a tertiary ED. A 58-year-old previously well man presents with sudden severe interscapular pain radiating to his lower back that began 90 minutes ago while walking. He is on no regular medications and has no past medical history beyond untreated hypertension. He smokes 20 per day. CT aortogram has confirmed a type B aortic dissection beginning distal to the left subclavian artery with no end-organ ischaemia and no rupture.\n\nOn examination he is restless and uncomfortable but cooperating. He has equal radial pulses, neurologically intact lower limbs, and a soft non-tender abdomen. He has no clinical signs of cardiac tamponade. The vascular surgeon has been consulted and recommends initial medical management. The intensive care team is preparing a bed and the consultant cardiologist has been informed.",
+    "data_table": {
+      "Vital signs": "Pulse 105/min, BP 196/118 mmHg, RR 22/min, SpO2 96% room air, temperature 36.8 °C",
+      "Examination": "Restless, cooperating; equal radial pulses; abdomen soft, non-tender; lower limbs warm with intact pulses and sensation",
+      "Investigations": "ECG sinus tachycardia, no ischaemic changes; troponin 8 ng/L (under 14); creatinine 88 micromol/L (60-110); lactate 1.8 mmol/L"
+    },
+    "lead_in": "What is the single most appropriate initial intravenous therapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Intravenous labetalol infusion alone targeting mean arterial pressure under 80",
+        "correct": false,
+        "rationale": "Labetalol alone is acceptable as both rate and BP control but the target MAP is too low and would risk end-organ ischaemia; usual target is SBP 100-120 with HR 60-80, not aggressively low MAP. (Source: Therapeutic Guidelines: Cardiovascular)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Intravenous sodium nitroprusside infusion immediately to drop systolic BP under 120",
+        "correct": false,
+        "rationale": "Pure vasodilator without prior rate control causes reflex tachycardia and increased aortic shear stress, propagating the dissection; rate control with beta-blocker must precede vasodilator. (Source: Therapeutic Guidelines: Cardiovascular)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Intravenous glyceryl trinitrate infusion as the first-line vasodilator titrated to BP",
+        "correct": false,
+        "rationale": "GTN without prior beta-blockade causes reflex tachycardia and propagates dissection; rate control comes first. (Source: Therapeutic Guidelines: Cardiovascular)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "IV esmolol or labetalol to HR <60 first, then add IV vasodilator (GTN or nicardipine) for BP",
+        "correct": true,
+        "rationale": "AU and international guidance for type B aortic dissection is rate control with beta-blocker first (esmolol or labetalol) to a heart rate under 60, then add a vasodilator if BP remains elevated; this sequence prevents reflex tachycardia and dissection propagation. (Source: Therapeutic Guidelines: Cardiovascular)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Oral metoprolol 50 mg plus oral amlodipine 5 mg as adequate initial control",
+        "correct": false,
+        "rationale": "Oral therapy lacks the titration speed and reliability required in acute dissection; IV titratable agents are mandatory in the initial hours. (Source: Therapeutic Guidelines: Cardiovascular)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Acute aortic dissection management aims to reduce aortic shear stress (dP/dt) by first controlling heart rate with a beta-blocker, then adding a vasodilator if BP remains above target. Starting with vasodilator alone causes reflex tachycardia and propagates the dissection. Targets are heart rate under 60 and systolic BP 100-120 mmHg with adequate organ perfusion.",
+      "key_points": [
+        "First beta-blocker (esmolol, labetalol), then vasodilator (GTN, nicardipine).",
+        "Heart rate target under 60; systolic BP 100-120 mmHg.",
+        "Type A dissection (proximal) is a surgical emergency; type B is initially medical unless complicated.",
+        "Avoid pure vasodilator without prior beta-blockade due to reflex tachycardia."
+      ],
+      "pearls": "The sequence in aortic dissection BP control is rate first, pressure second; the order matters because reflex tachycardia accelerates the tear."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Cardiovascular",
+        "url": "https://tgldcdp.tg.org.au/cardiovascularGuidelines"
+      },
+      {
+        "label": "ACC/AHA 2022 Aortic Disease Guideline",
+        "url": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000001106"
+      }
+    ],
+    "reference_ranges": [
+      "uec"
+    ],
+    "created": "2026-06-02"
+  },
+  {
+    "id": "medicine-p60-002",
+    "topic": "Medicine",
+    "subtopic": "Electrolytes",
+    "subtopic_detail": "Hyperkalaemia with ECG changes acute management",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "hyperkalaemia",
+      "ECG",
+      "renal"
+    ],
+    "stem": "You are the medical registrar in a tertiary ED reviewing a 72-year-old woman with heart failure on lisinopril 10 mg daily and spironolactone 25 mg daily who has presented with generalised weakness and palpitations. She has been less active over the past week with reduced oral intake. Her baseline eGFR was 45 mL/min and her last potassium 2 weeks ago was 5.0 mmol/L. She has no diabetes and is on no insulin.\n\nOn arrival she is alert but feels weak. The ECG shows tall peaked T waves in the precordial leads, a PR interval of 220 ms, and a QRS duration of 110 ms. She has no chest pain and no focal neurology. Her potassium has just returned at 7.3 mmol/L. The renal registrar has been informed and a HDU bed is being arranged.",
+    "data_table": {
+      "Vital signs": "Pulse 56/min, BP 122/78 mmHg, RR 16/min, SpO2 98% room air, temperature 36.6 °C",
+      "Examination": "Alert; mild proximal weakness lower limbs; abdomen soft non-tender; no peripheral oedema",
+      "Investigations": "K 7.3 mmol/L (3.5-5.0); creatinine 215 micromol/L (45-90), eGFR 28 mL/min; HCO3 18 mmol/L (22-26); ECG peaked T waves, PR 220 ms, QRS 110 ms; venous gas pH 7.30"
+    },
+    "lead_in": "What is the single most appropriate first intervention?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Intravenous insulin 10 units plus 50 mL of 50% dextrose over 15 minutes",
+        "correct": false,
+        "rationale": "Insulin-dextrose shifts potassium but does not protect the myocardium; calcium for membrane stabilisation must come first when ECG changes are present. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Nebulised salbutamol 10 mg by mask as first-line treatment of hyperkalaemia",
+        "correct": false,
+        "rationale": "Salbutamol shifts potassium intracellularly but does not stabilise the myocardium; calcium gluconate is given first when ECG changes are present. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Intravenous sodium bicarbonate 100 mmol bolus to correct acidosis and shift potassium",
+        "correct": false,
+        "rationale": "Bicarbonate is reserved for severe metabolic acidosis as adjunct; its effect on potassium is modest and slower than calcium. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Oral resonium 30 g (sodium polystyrene sulfonate) with sorbitol as binder",
+        "correct": false,
+        "rationale": "Resin binders act over hours, are slow, and do not address acute cardiac membrane risk; they are an adjunct after stabilisation and shifting. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "IV calcium gluconate 10% 10 mL over 5 min for cardiac membrane stabilisation",
+        "correct": true,
+        "rationale": "When hyperkalaemia produces ECG changes (peaked T waves, PR prolongation, QRS widening), calcium gluconate is the first intervention to stabilise the cardiac membrane, followed by potassium-shifting (insulin-dextrose, salbutamol) and removal (resin, dialysis). (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Hyperkalaemia with ECG changes is managed in three sequential steps: stabilise (calcium gluconate or chloride), shift (insulin-dextrose, salbutamol), and remove (resin binder or dialysis). The first step prevents arrhythmic death; the second buys time; the third corrects the total body potassium. ACE inhibitor plus aldosterone antagonist plus declining renal function is a common precipitant.",
+      "key_points": [
+        "Stabilise: IV calcium gluconate 10% 10 mL over 5 min (or calcium chloride 10% 10 mL via central line).",
+        "Shift: IV insulin 10 units + 50% dextrose 50 mL; nebulised salbutamol 10 mg.",
+        "Remove: cation exchange resin or dialysis depending on burden.",
+        "Cease the precipitating ACE inhibitor, ARB, or potassium-sparing diuretic."
+      ],
+      "pearls": "Peaked T waves with a potassium above 6 mmol/L on an ACE inhibitor plus spironolactone gets calcium gluconate first; insulin-dextrose alone does not protect the heart in the next 5 minutes."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Endocrinology",
+        "url": "https://tgldcdp.tg.org.au/endocrinologyGuidelines"
+      },
+      {
+        "label": "KDIGO Clinical Practice Guidelines",
+        "url": "https://kdigo.org/guidelines/"
+      }
+    ],
+    "reference_ranges": [
+      "uec"
+    ],
+    "created": "2026-06-02"
+  },
+  {
+    "id": "medicine-p60-003",
+    "topic": "Medicine",
+    "subtopic": "Electrolytes",
+    "subtopic_detail": "Severe symptomatic hyponatraemia hypertonic saline bolus",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "hyponatraemia",
+      "SIADH",
+      "saline"
+    ],
+    "stem": "You are the medical registrar in a tertiary ED reviewing a 78-year-old woman commenced on sertraline 50 mg daily and amitriptyline 25 mg nocte 2 weeks ago for depression and chronic pain. She was found by her daughter having a witnessed generalised tonic-clonic seizure lasting 90 seconds with post-ictal drowsiness. She has no other medical history of note and was previously well. She has not been drinking excessive fluid.\n\nOn examination she is post-ictal but rousable to voice. She is clinically euvolaemic with normal jugular venous pressure, no peripheral oedema, and warm peripheries. Cortisol and TSH are within range. She has no clinical evidence of heart failure, cirrhosis, or hypovolaemia. The renal team and intensive care team are aware and a HDU bed is being prepared.",
+    "data_table": {
+      "Vital signs": "Pulse 92/min, BP 120/70 mmHg, RR 16/min, SpO2 98% room air, temperature 36.7 °C",
+      "Examination": "Post-ictal but rousable; euvolaemic; chest clear; abdomen soft; no peripheral oedema",
+      "Investigations": "Na 112 mmol/L (135-145), K 3.8 mmol/L; urine osmolality 480 mOsm/kg, plasma osmolality 248 mOsm/kg; urine Na 65 mmol/L; cortisol within range; TSH 2.1 mIU/L (0.4-4.0); creatinine within normal limits"
+    },
+    "lead_in": "What is the single most appropriate initial treatment?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "IV 3% hypertonic saline 150 mL bolus over 10 minutes, repeat to raise Na 4-6 mmol/L",
+        "correct": true,
+        "rationale": "Severe symptomatic hyponatraemia (seizure, coma) is treated with bolus 3% hypertonic saline 150 mL over 10 minutes, repeated to raise sodium 4-6 mmol/L in the first hour, with strict caution not to exceed 8-10 mmol/L in 24 hours to prevent osmotic demyelination; the SSRI is a likely precipitant. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Intravenous 0.9% saline at 250 mL/hour with daily sodium monitoring",
+        "correct": false,
+        "rationale": "Isotonic saline corrects too slowly for symptomatic severe hyponatraemia with seizure and can worsen SIADH-driven hyponatraemia; bolus hypertonic is required. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Fluid restriction to 500 mL/day alone with repeat sodium in 12 hours",
+        "correct": false,
+        "rationale": "Fluid restriction is for chronic asymptomatic SIADH; severe acute symptomatic hyponatraemia with seizure mandates immediate hypertonic saline. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Intravenous tolvaptan 30 mg as a vasopressin receptor antagonist infusion",
+        "correct": false,
+        "rationale": "Tolvaptan is oral, not IV; it is reserved for sub-acute SIADH management, not acute symptomatic severe hyponatraemia. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Intravenous mannitol 25 g infusion for presumed cerebral oedema management",
+        "correct": false,
+        "rationale": "Mannitol is not used for hyponatraemia-related cerebral oedema; the specific treatment is hypertonic saline to raise serum sodium directly. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Severe symptomatic hyponatraemia (seizure, coma, vomiting) is treated with bolus 3% hypertonic saline 150 mL over 10 minutes, repeated up to 3 times if needed, aiming to raise serum sodium 4-6 mmol/L in the first hour. Overcorrection above 8-10 mmol/L in 24 hours risks osmotic demyelination syndrome. SSRIs and TCAs are common precipitants of SIADH in older adults.",
+      "key_points": [
+        "Hypertonic saline bolus dose: 150 mL of 3% saline over 10 min, up to 3 doses.",
+        "Target sodium rise: 4-6 mmol/L in the first hour, then a maximum of 8-10 mmol/L per 24 hours.",
+        "SSRIs, TCAs, thiazides, and carbamazepine are common medication precipitants.",
+        "Overcorrection risk: osmotic demyelination syndrome (former central pontine myelinolysis)."
+      ],
+      "pearls": "Seizure plus sodium of 112 mmol/L on a new SSRI gets 3% saline bolus 150 mL now, not 0.9% saline maintenance; the target is up by 5 in the first hour, then slow."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Endocrinology",
+        "url": "https://tgldcdp.tg.org.au/endocrinologyGuidelines"
+      },
+      {
+        "label": "European Society of Endocrinology Hyponatraemia Guideline",
+        "url": "https://www.eje-online.org/view/journals/eje/170/3/G1.xml"
+      }
+    ],
+    "reference_ranges": [
+      "uec"
+    ],
+    "created": "2026-06-02"
+  },
+  {
+    "id": "medicine-p60-004",
+    "topic": "Medicine",
+    "subtopic": "Endocrinology emergency",
+    "subtopic_detail": "Adrenal crisis stress-dose hydrocortisone",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "adrenal insufficiency",
+      "hydrocortisone",
+      "shock"
+    ],
+    "stem": "You are the medical registrar in a regional ED reviewing a 52-year-old woman with long-standing primary adrenal insufficiency on hydrocortisone 10 mg morning, 5 mg lunch, 5 mg evening, and fludrocortisone 100 mcg daily. She has had 24 hours of vomiting from a presumed gastroenteritis and was unable to keep her medications down today. She has presented to the ED feeling weak, dizzy, and confused.\n\nOn examination she is drowsy with a Glasgow Coma Scale of 13. Her peripheries are cool and her capillary refill is 3 seconds. She has no fever and no focal infection on examination. She has had no recent surgery or other intercurrent illness. The endocrine team is on the way but you are managing the acute resuscitation. The HDU bed has been requested.",
+    "data_table": {
+      "Vital signs": "Pulse 122/min, BP 84/52 mmHg, RR 22/min, SpO2 98% room air, temperature 36.4 °C",
+      "Examination": "Drowsy GCS 13; cool peripheries; capillary refill 3 seconds; mucous membranes dry; abdomen soft non-tender",
+      "Investigations": "Na 126 mmol/L (135-145), K 5.6 mmol/L (3.5-5.0); glucose 3.4 mmol/L (3.5-7.8); creatinine 132 micromol/L (45-90); cortisol pending; venous gas pH 7.30"
+    },
+    "lead_in": "What is the single most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Intravenous ondansetron 4 mg and oral rehydration salt trial over 2 hours",
+        "correct": false,
+        "rationale": "Anti-emetics and oral rehydration alone do not address adrenal crisis; immediate IV hydrocortisone and saline are required. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "IV hydrocortisone 100 mg plus 0.9% saline 1 L bolus and dextrose if hypoglycaemic",
+        "correct": true,
+        "rationale": "Adrenal crisis is treated with IV hydrocortisone 100 mg stat (then 50 mg every 6 hours or infusion), 0.9% saline 1 L bolus for hypovolaemia, and dextrose if hypoglycaemic; this is the AU first-hour bundle and should not wait for the cortisol result. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Intravenous fludrocortisone 200 mcg as the primary mineralocorticoid replacement",
+        "correct": false,
+        "rationale": "Fludrocortisone is for chronic mineralocorticoid replacement; high-dose IV hydrocortisone has sufficient mineralocorticoid activity in the acute phase, and oral fludrocortisone is irrelevant when vomiting. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Oral hydrocortisone 50 mg with intravenous fluids only and no IV glucocorticoid",
+        "correct": false,
+        "rationale": "Oral therapy is unreliable in a vomiting patient with adrenal crisis; IV hydrocortisone is mandatory. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Intravenous dexamethasone 4 mg as preferred glucocorticoid in adrenal crisis",
+        "correct": false,
+        "rationale": "Dexamethasone has no mineralocorticoid activity and is reserved for when biochemical confirmation of adrenal insufficiency is required (will not interfere with cortisol assay); in known adrenal insufficiency, hydrocortisone is preferred. (Source: Therapeutic Guidelines: Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Adrenal crisis is treated with immediate IV hydrocortisone 100 mg, IV 0.9% saline 1 L bolus, and IV dextrose if hypoglycaemic. Hydrocortisone has both glucocorticoid and mineralocorticoid activity at high dose, sufficient for the acute phase. Dexamethasone is reserved for when biochemical confirmation is needed (it does not interfere with cortisol assay) but hydrocortisone is the preferred treatment in known adrenal insufficiency.",
+      "key_points": [
+        "First hour: IV hydrocortisone 100 mg stat + IV 0.9% saline 1 L + dextrose if hypoglycaemic.",
+        "Maintenance: IV hydrocortisone 50 mg every 6 hours or 200 mg/24 h infusion until oral tolerated.",
+        "Do not delay treatment for cortisol or ACTH result.",
+        "Dexamethasone is used when biochemical confirmation pending; otherwise hydrocortisone."
+      ],
+      "pearls": "A vomiting patient on long-term hydrocortisone gets 100 mg IV in resus before bloods come back, not after; the sick-day rules trump the cortisol level."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Endocrinology",
+        "url": "https://tgldcdp.tg.org.au/endocrinologyGuidelines"
+      },
+      {
+        "label": "ESE Adrenal Insufficiency Guideline",
+        "url": "https://academic.oup.com/jcem/article/101/2/364/2810222"
+      }
+    ],
+    "reference_ranges": [
+      "uec"
+    ],
+    "created": "2026-06-02"
+  },
+  {
+    "id": "medicine-p60-005",
+    "topic": "Medicine",
+    "subtopic": "Allergy",
+    "subtopic_detail": "Adult anaphylaxis IM adrenaline",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "anaphylaxis",
+      "adrenaline",
+      "allergy"
+    ],
+    "stem": "You are the GP registrar reviewing a 30-year-old woman in your suburban clinic after she was stung by a bee on her arm 8 minutes ago in the waiting room. She has no prior allergy history but has developed generalised urticaria, marked lip and tongue swelling, hoarse voice, audible stridor, and an audible wheeze over the past 5 minutes. She feels dizzy on standing.\n\nOn examination she is anxious and unable to complete sentences. The practice nurse has placed her supine on the floor, has cannulated her, and has the emergency drug box open. An ambulance has been called and is 8 minutes away. The practice has IM and IV adrenaline available in standard ampoules of 1:1000 strength. There is no anaphylaxis action plan on file.",
+    "data_table": {
+      "Vital signs": "Pulse 138/min, BP 80/52 mmHg, RR 28/min, SpO2 91% room air, temperature 36.8 °C",
+      "Examination": "Anxious, sentence fragments only; generalised urticaria; lip and tongue swelling; stridor at rest; bilateral wheeze; capillary refill 3 seconds",
+      "Investigations": "Glucose 6.4 mmol/L; no other bedside investigations available; cannula in situ"
+    },
+    "lead_in": "What is the single most appropriate immediate intervention?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Intravenous adrenaline 100 mcg bolus given via the peripheral cannula",
+        "correct": false,
+        "rationale": "IV adrenaline boluses are reserved for refractory anaphylaxis after IM doses fail and only by clinicians with critical care familiarity due to arrhythmia and myocardial ischaemia risk; IM is first-line. (Source: ASCIA Guidelines for acute management of anaphylaxis)",
+        "source_refs": [
+          "ASCIA Guidelines for acute management of anaphylaxis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Nebulised adrenaline 5 mL of 1:1000 as the primary therapy for stridor",
+        "correct": false,
+        "rationale": "Nebulised adrenaline is an adjunct for upper airway oedema after IM dosing; it is not first-line treatment for systemic anaphylaxis. (Source: ASCIA Guidelines for acute management of anaphylaxis)",
+        "source_refs": [
+          "ASCIA Guidelines for acute management of anaphylaxis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Intramuscular adrenaline 0.5 mg (0.5 mL of 1:1000) into the anterolateral mid-thigh",
+        "correct": true,
+        "rationale": "Adult anaphylaxis with hypotension, airway, and circulatory features is treated with IM adrenaline 0.5 mg into the anterolateral mid-thigh as the first action; repeat every 5 minutes if no improvement. (Source: ASCIA Guidelines for acute management of anaphylaxis)",
+        "source_refs": [
+          "ASCIA Guidelines for acute management of anaphylaxis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Intravenous hydrocortisone 200 mg first while preparing adrenaline",
+        "correct": false,
+        "rationale": "Steroids do not act in time and are an adjunct, not first-line; their use as primary therapy delays the only proven life-saving step. (Source: ASCIA Guidelines for acute management of anaphylaxis)",
+        "source_refs": [
+          "ASCIA Guidelines for acute management of anaphylaxis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Intravenous promethazine 25 mg to reduce histamine-mediated effects",
+        "correct": false,
+        "rationale": "Promethazine causes vasodilation and sedation in anaphylaxis and is contraindicated; antihistamines treat skin symptoms only and have no primary role. (Source: ASCIA Guidelines for acute management of anaphylaxis)",
+        "source_refs": [
+          "ASCIA Guidelines for acute management of anaphylaxis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Adult anaphylaxis is treated with IM adrenaline 0.5 mg (0.5 mL of 1:1000) into the anterolateral mid-thigh as the first action, repeated every 5 minutes if no improvement. IV adrenaline boluses are reserved for refractory anaphylaxis. Steroids and antihistamines are adjuncts that do not act in time and must not delay adrenaline.",
+      "key_points": [
+        "Adult IM adrenaline dose: 0.5 mg (0.5 mL of 1:1000) into anterolateral mid-thigh.",
+        "Repeat every 5 minutes if no improvement; move to IV infusion if multiple IM doses fail.",
+        "Steroids and antihistamines are adjuncts only; they do not act fast enough as primary therapy.",
+        "Promethazine is contraindicated due to vasodilation and sedation."
+      ],
+      "pearls": "The needle should be in the anterolateral thigh within 30 seconds of recognising adult anaphylaxis; IV access can come after the IM dose."
+    },
+    "sources": [
+      {
+        "label": "ASCIA Guidelines for acute management of anaphylaxis",
+        "url": "https://www.allergy.org.au/hp/papers/acute-management-of-anaphylaxis-guidelines"
+      },
+      {
+        "label": "Therapeutic Guidelines: Respiratory",
+        "url": "https://tgldcdp.tg.org.au/respiratoryGuidelines"
+      }
+    ],
+    "reference_ranges": [
+      "glucose_hba1c"
+    ],
+    "created": "2026-06-02"
+  },
+  {
+    "id": "medicine-p60-006",
+    "topic": "Medicine",
+    "subtopic": "Trauma haematology",
+    "subtopic_detail": "Massive transfusion protocol activation with TXA timing",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "transfusion",
+      "trauma",
+      "TXA"
+    ],
+    "stem": "You are the trauma team registrar in a tertiary trauma centre when a 28-year-old man arrives 90 minutes after a high-speed motor vehicle collision. He is hypotensive despite 1 L of crystalloid given by ambulance, with a rigid abdomen on examination and a clinically unstable pelvic fracture. His Glasgow Coma Scale is 12. FAST scan is positive in the right upper quadrant and pelvis.\n\nOn arrival the airway is intact and he is breathing spontaneously. He has 2 large bore cannulae and a third intraosseous in his left tibia. Group and hold has been sent and the blood bank has been called. The general surgery and orthopaedics teams have been activated and theatre is being prepared. The trauma consultant is leading the resuscitation and asks you to direct the next blood product and pharmacological intervention.",
+    "data_table": {
+      "Vital signs": "Pulse 132/min, BP 78/40 mmHg, RR 28/min, SpO2 96% room air, temperature 35.8 °C",
+      "Examination": "Pale, cool peripheries; rigid abdomen; clinically unstable pelvis on gentle compression (no springing); GCS 12 (E3 V4 M5)",
+      "Investigations": "Hb 78 g/L (130-170); lactate 5.4 mmol/L (0.5-2.2); base excess -8 mmol/L; INR 1.4; fibrinogen 1.5 g/L (1.5-4.0); platelets 110 x10^9/L; FAST positive RUQ and pelvis"
+    },
+    "lead_in": "What is the single most appropriate next intervention?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "4 units of packed red blood cells plus 4 units of fresh frozen plasma given over 2 hours",
+        "correct": false,
+        "rationale": "Slow ratio transfusion in active haemorrhage worsens dilutional coagulopathy and hypothermia; massive transfusion protocol with rapid 1:1:1 ratio is the standard. (Source: NBA Patient Blood Management Guidelines)",
+        "source_refs": [
+          "NBA Patient Blood Management Guidelines"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Packed red blood cells alone plus crystalloid until INR confirms coagulopathy",
+        "correct": false,
+        "rationale": "Crystalloid worsens dilutional coagulopathy in trauma haemorrhage and is restricted to a minimum; FFP and platelets are given empirically as part of the MTP. (Source: NBA Patient Blood Management Guidelines)",
+        "source_refs": [
+          "NBA Patient Blood Management Guidelines"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Whole blood transfusion 4 units only as sole product, without ratio mix or TXA",
+        "correct": false,
+        "rationale": "Whole blood is an option where available but is not the universal standard; the MTP fixed ratio with TXA addresses both shock and coagulopathy. (Source: NBA Patient Blood Management Guidelines)",
+        "source_refs": [
+          "NBA Patient Blood Management Guidelines"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Activate MTP at 1:1:1 ratio of PRBC:FFP:platelets plus IV tranexamic acid 1 g over 10 min",
+        "correct": true,
+        "rationale": "Trauma haemorrhage at 90 minutes from injury still falls within the 3 hour TXA window where CRASH-2 demonstrated mortality benefit; MTP with 1:1:1 ratio plus TXA is the AU NBA standard. (Source: NBA Patient Blood Management Guidelines, CRASH-2)",
+        "source_refs": [
+          "NBA Patient Blood Management Guidelines"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Recombinant factor VIIa 90 micrograms/kg as initial haemostatic adjunct",
+        "correct": false,
+        "rationale": "Recombinant factor VIIa is not first-line in trauma haemorrhage, raises thrombosis risk, and is reserved for selected refractory cases; MTP and TXA come first. (Source: NBA Patient Blood Management Guidelines)",
+        "source_refs": [
+          "NBA Patient Blood Management Guidelines"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Trauma haemorrhage with shock and a positive FAST scan triggers Massive Transfusion Protocol activation with fixed 1:1:1 ratio of red cells, FFP, and platelets, plus IV tranexamic acid 1 g within 3 hours of injury (and a further 1 g infusion over 8 hours). TXA mortality benefit was established by the CRASH-2 trial and is sustained when given inside the window. Crystalloid is minimised to limit dilutional coagulopathy.",
+      "key_points": [
+        "TXA mortality benefit window: within 3 hours of trauma; loading dose 1 g IV over 10 minutes.",
+        "MTP fixed ratio 1:1:1 PRBC:FFP:platelets reduces dilutional coagulopathy.",
+        "Crystalloid is restricted (no more than 1 L) once MTP active.",
+        "Cease MTP when haemodynamically stable, surgical control achieved, and lactate trending down."
+      ],
+      "pearls": "TXA mortality benefit in trauma is preserved up to 3 hours from injury; this patient at 90 minutes is well within the window and gets 1 g IV alongside the first MTP pack."
+    },
+    "sources": [
+      {
+        "label": "NBA Patient Blood Management Guidelines",
+        "url": "https://www.blood.gov.au/pbm-guidelines"
+      },
+      {
+        "label": "Therapeutic Guidelines: Cardiovascular",
+        "url": "https://tgldcdp.tg.org.au/cardiovascularGuidelines"
+      }
+    ],
+    "reference_ranges": [
+      "fbc",
+      "coags"
+    ],
+    "created": "2026-06-02"
+  },
+  {
+    "id": "medicine-p60-007",
+    "topic": "Medicine",
+    "subtopic": "Respiratory emergency",
+    "subtopic_detail": "Tension pneumothorax decompression site",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "pneumothorax",
+      "trauma",
+      "thoracostomy"
+    ],
+    "stem": "You are the ED registrar in a tertiary trauma centre as a 24-year-old man arrives 20 minutes after a high-speed motorbike crash. He has blunt right-sided chest trauma and is in extreme respiratory distress on arrival. The paramedics report decreasing oxygen saturations and a falling blood pressure in transit. His airway is patent but he is using accessory muscles markedly.\n\nOn examination his trachea is deviated to the left, there are no breath sounds over the right hemithorax, and his right hemithorax is hyper-resonant to percussion. His jugular venous pressure is raised at 8 cm. He is becoming progressively obtunded. There is no obvious open chest wound. A finger thoracostomy kit is at the bedside and the trauma consultant has just arrived.",
+    "data_table": {
+      "Vital signs": "Pulse 138/min, BP 80/40 mmHg, RR 38/min, SpO2 89% on 15 L non-rebreather, temperature 36.0 °C",
+      "Examination": "Distressed, drowsy; tracheal deviation to left; absent right-sided breath sounds; hyper-resonant right hemithorax; JVP raised at 8 cm",
+      "Investigations": "No imaging performed (no time); ECG sinus tachycardia; no other bedside investigations"
+    },
+    "lead_in": "What is the single most appropriate immediate decompression site and follow-up?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "14G needle in 2nd ICS mid-clavicular line right, no follow-up tube needed",
+        "correct": false,
+        "rationale": "The 2nd ICS mid-clavicular line is the historical landmark but adult chest wall thickness commonly exceeds the needle length; ATLS 10th edition and AU practice now prefer the 4th-5th ICS in the anterior or mid-axillary line, and a chest tube must follow needle decompression. (Source: ATLS 10th Edition; Therapeutic Guidelines: Respiratory)",
+        "source_refs": [
+          "ATLS 10th Edition",
+          "Therapeutic Guidelines: Respiratory"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "14 gauge needle in the xiphisternum for pericardiocentesis as primary intervention",
+        "correct": false,
+        "rationale": "Pericardiocentesis treats tamponade, not tension pneumothorax; the clinical picture is decompensated lung collapse, not cardiac tamponade. (Source: ATLS 10th Edition)",
+        "source_refs": [
+          "ATLS 10th Edition"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Intercostal catheter at 5th ICS mid-axillary line first, before needle decompression",
+        "correct": false,
+        "rationale": "Definitive chest drain is the end-point but in true tension pneumothorax with cardiovascular collapse, immediate needle or finger thoracostomy is performed first to relieve the pressure, then the formal drain is inserted. (Source: ATLS 10th Edition)",
+        "source_refs": [
+          "ATLS 10th Edition"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Bag-mask ventilation with high-flow oxygen for 5 minutes then reassess thoracic",
+        "correct": false,
+        "rationale": "Bag-mask ventilation worsens tension pneumothorax by adding positive pressure through a non-intact pleura; immediate decompression is mandatory. (Source: ATLS 10th Edition)",
+        "source_refs": [
+          "ATLS 10th Edition"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "14G needle at 4th-5th ICS anterior axillary line right, then intercostal catheter",
+        "correct": true,
+        "rationale": "ATLS 10th edition and AU practice updated the recommended needle decompression site to the 4th-5th intercostal space anterior or mid-axillary line because adult chest wall thickness at the 2nd ICS often exceeds the needle length; needle decompression must be followed by definitive chest drain insertion. (Source: ATLS 10th Edition; Therapeutic Guidelines: Respiratory)",
+        "source_refs": [
+          "ATLS 10th Edition",
+          "Therapeutic Guidelines: Respiratory"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "ATLS 10th edition updated the recommended adult tension pneumothorax needle decompression site from the 2nd intercostal space mid-clavicular line to the 4th-5th intercostal space anterior or mid-axillary line, reflecting evidence that adult chest wall thickness at the 2nd ICS frequently exceeds standard cannula length. Needle decompression is a temporising measure that must be followed by definitive intercostal catheter insertion. Finger thoracostomy is an alternative in intubated patients.",
+      "key_points": [
+        "ATLS 10e adult site: 4th-5th ICS anterior or mid-axillary line, not 2nd ICS mid-clavicular line.",
+        "Paediatric site is still 2nd ICS mid-clavicular line.",
+        "Needle decompression is temporising; intercostal catheter follows.",
+        "Finger thoracostomy is an alternative, especially in intubated patients."
+      ],
+      "pearls": "If you teach the 2nd ICS mid-clavicular line as the only adult site, you risk the needle not reaching pleura; ATLS 10e moved adults to the 4th-5th ICS anterior axillary line."
+    },
+    "sources": [
+      {
+        "label": "ATLS 10th Edition",
+        "url": "https://www.facs.org/quality-programs/trauma/education/advanced-trauma-life-support/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Respiratory",
+        "url": "https://tgldcdp.tg.org.au/respiratoryGuidelines"
+      }
+    ],
+    "reference_ranges": [
+      "abg"
+    ],
+    "created": "2026-06-02"
+  }
+]
