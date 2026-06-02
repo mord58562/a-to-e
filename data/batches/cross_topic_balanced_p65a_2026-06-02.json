@@ -1,0 +1,36 @@
+[
+  {
+    "id": "paeds-p65-001",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Bronchiolitis oxygen escalation - first-line low-flow",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["bronchiolitis", "hypoxia"],
+    "stem": "A 7-month-old previously well girl is brought to the emergency department on day 3 of coryza and worsening cough. She has been feeding two-thirds of her usual volume overnight and her parents say she is breathing faster than usual but still smiles at them between coughs. She has not had any apnoea. Birth was at term and her vaccinations are up to date.\n\nOn examination she has moderate subcostal recession, scattered wheeze and fine inspiratory crackles bilaterally, with a wet cough. She is alert and pink centrally. There is no nasal flaring or grunting.",
+    "data_table": {
+      "Vital signs": "pulse 158 /min, blood pressure 92/58 mmHg, respiratory rate 56 /min, SpO2 88% on room air, temperature 37.9 degrees Celsius",
+      "Examination": "alert, moderate work of breathing with subcostal recession, bilateral wheeze and fine inspiratory crackles, capillary refill 2 seconds",
+      "Investigations": "clinical diagnosis of bronchiolitis, no routine bloods or chest x-ray indicated"
+    },
+    "lead_in": "What is the most appropriate initial respiratory support?",
+    "options": [
+      { "letter": "A", "text": "Low-flow nasal prong oxygen at 1 to 2 L/min titrated to SpO2 at or above 90 percent", "correct": true, "rationale": "RCH bronchiolitis CPG recommends starting with low-flow nasal prong oxygen targeting SpO2 of at least 90 percent. High-flow nasal cannula is reserved for failure of low-flow after a 2-hour trial. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
+      { "letter": "B", "text": "High-flow nasal cannula at 2 L/kg/min targeting SpO2 at or above 94 percent", "correct": false, "rationale": "HFNC is reserved for failure of low-flow therapy after 2 hours per RCH; using it first-line increases ICU admissions without changing outcomes. The SpO2 target of 94 percent is also higher than RCH guidance. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
+      { "letter": "C", "text": "Nebulised salbutamol 2.5 mg with oxygen via Hudson mask at 8 L/min", "correct": false, "rationale": "Salbutamol is not recommended in bronchiolitis as wheeze is from small airway obstruction not bronchospasm. A Hudson mask delivers far more flow than needed. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
+      { "letter": "D", "text": "Non-invasive bi-level positive airway pressure with FiO2 0.4 in resus bay", "correct": false, "rationale": "BiPAP is reserved for impending respiratory failure with rising CO2 despite escalation through HFNC. This infant has moderate work of breathing only, not failure. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
+      { "letter": "E", "text": "Observation without supplemental oxygen with SpO2 monitoring every 30 minutes", "correct": false, "rationale": "SpO2 of 88 percent on room air is below the RCH threshold of 90 percent and warrants supplemental oxygen. Observing without escalation risks deterioration. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] }
+    ],
+    "explanation": {
+      "summary": "RCH bronchiolitis CPG uses a stepwise oxygen ladder: low-flow nasal prongs first, escalating to HFNC only after a 2-hour trial of low-flow fails. The SpO2 target is 90 percent or above, not the 92 to 94 percent used in older protocols. Bronchodilators, corticosteroids, antibiotics and nebulised hypertonic saline are not recommended. Adequate hydration via NGT or IV is supportive only.",
+      "key_points": ["RCH SpO2 target in bronchiolitis is at least 90 percent", "Low-flow nasal prongs 1 to 2 L/min are first-line", "HFNC only after 2-hour failure of low-flow", "No role for salbutamol, steroids, adrenaline or antibiotics in classic bronchiolitis"],
+      "pearls": "RCH explicitly downgrades SpO2 target to 90 percent to avoid prolonged hospitalisation; auditing your hospital's bronchiolitis pathway against this number is a fast quality lever."
+    },
+    "sources": [
+      { "label": "RCH CPG: Bronchiolitis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/" },
+      { "label": "Australasian Bronchiolitis Guideline (PREDICT)", "url": "https://www.predict.org.au/research/bronchiolitis-guideline/" }
+    ],
+    "reference_ranges": ["paeds_vitals_infant"],
+    "created": "2026-06-02"
+  }
+]
