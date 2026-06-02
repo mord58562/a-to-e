@@ -1,0 +1,931 @@
+[
+  {
+    "id": "paeds-p60-001",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Bronchiolitis escalation after low-flow failure",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "bronchiolitis",
+      "oxygen",
+      "RSV"
+    ],
+    "stem": "You are the paediatric registrar overnight on a metropolitan general paediatric ward. A 7-week-old boy admitted with RSV-positive bronchiolitis has been on low-flow nasal prong oxygen at 1 L/min for the past 2 hours. He was born at 36+5 weeks gestation and his mother reports he has been feeding poorly today with his last wet nappy 6 hours ago.\n\nOn reassessment he is now drowsy and pale with moderate to severe intercostal and subcostal recession and audible expiratory wheeze. Auscultation reveals widespread crackles bilaterally. SpO2 has stabilised at 91% on 1 L/min only with continued tactile stimulation between paroxysmal coughing episodes. He had one brief witnessed apnoea 15 minutes ago.",
+    "data_table": {
+      "Vital signs": "Pulse 178/min, BP 76/48 mmHg, RR 68/min, SpO2 91% on nasal prong 1 L/min, temperature 37.6 °C",
+      "Examination": "Drowsy, pale; moderate to severe intercostal and subcostal recession; widespread crackles and wheeze bilaterally; one brief witnessed apnoea",
+      "Investigations": "Capillary blood gas pH 7.28, pCO2 58 mmHg (35-45), HCO3 24 mmol/L (22-26), lactate 1.8 mmol/L (0.5-2.2); CXR hyperinflation, no focal consolidation"
+    },
+    "lead_in": "What is the single most appropriate next step in respiratory support?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence high-flow nasal cannula at 2 L/kg/min titrating FiO2 to SpO2 90-94%",
+        "correct": true,
+        "rationale": "Drowsiness, witnessed apnoea, persistent recession, and rising pCO2 after a 2 hour trial of low-flow oxygen meet RCH criteria for escalation; HFNC at 2 L/kg/min is the next step before nasal CPAP or intubation in moderate to severe bronchiolitis. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Increase low-flow nasal prong oxygen to 4 L/min and review in 1 hour",
+        "correct": false,
+        "rationale": "Low-flow nasal prong delivery in infants is capped at around 2 L/min before drying causes mucosal injury; higher flows require humidification via HFNC, and clinical failure mandates escalation rather than dose-up. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Intubate and commence mechanical ventilation in the resuscitation bay now",
+        "correct": false,
+        "rationale": "Intubation is reserved for failure of non-invasive escalation, recurrent severe apnoea, or impending respiratory arrest; a stepwise trial of HFNC then CPAP precedes mechanical ventilation in non-arrested infants. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Nebulised salbutamol 2.5 mg via face mask and reassess work of breathing",
+        "correct": false,
+        "rationale": "Bronchodilators are not recommended in bronchiolitis as the obstruction is from mucus plugging and inflammation, not bronchospasm; trials show no reduction in admission or duration. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Nebulised hypertonic saline 3% 4 mL with monitoring of airway tolerance",
+        "correct": false,
+        "rationale": "RCH and AAP no longer recommend nebulised hypertonic saline in acute bronchiolitis due to inconsistent evidence and risk of bronchospasm; supportive escalation is the appropriate next step. (Source: RCH CPG: Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "An ex-late-preterm infant with bronchiolitis who has failed 2 hours of low-flow oxygen, with apnoea and a CO2 of 58 mmHg, meets the RCH threshold for escalation. The next step is high-flow nasal cannula at 2 L/kg/min, not intubation or bronchodilators. Apnoea and rising pCO2 in young infants with RSV are independent predictors of intubation if escalation is delayed.",
+      "key_points": [
+        "Low-flow nasal prong is the first-line oxygen mode per RCH; HFNC is escalation, not first-line.",
+        "HFNC at 2 L/kg/min provides humidified flow and some PEEP, reducing intubation rates in trial data.",
+        "SpO2 target in bronchiolitis is 90-94%, not 95+; higher targets prolong stay without benefit.",
+        "Bronchodilators and hypertonic saline are not routinely indicated in bronchiolitis."
+      ],
+      "pearls": "Apnoea plus pCO2 >55 mmHg in an infant under 3 months on low-flow oxygen mandates HFNC escalation within the next hour, not bronchodilator trials."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Bronchiolitis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/"
+      },
+      {
+        "label": "PREDICT Bronchiolitis Guideline",
+        "url": "https://www.predict.org.au/wp-content/uploads/2024/03/Bronchiolitis-Guideline.pdf"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "vbg"
+    ],
+    "created": "2026-06-02"
+  },
+  {
+    "id": "paeds-p60-002",
+    "topic": "Paediatrics",
+    "subtopic": "Allergy",
+    "subtopic_detail": "Anaphylaxis IM adrenaline banded dose",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "anaphylaxis",
+      "adrenaline",
+      "allergy"
+    ],
+    "stem": "You are the ED paediatric registrar at a tertiary children's hospital. A 5-year-old boy weighing 22 kg is brought in by his school teacher after eating a peanut at lunch. He developed generalised hives, lip swelling, a hoarse voice, and audible wheeze within 5 minutes. The teacher gave the school's EpiPen Jr (150 mcg adrenaline) at 7 minutes after onset; he is now 12 minutes from the original ingestion.\n\nOn arrival in resus he remains distressed with persistent wheeze, stridor, and a sense of impending doom. The hives have not faded. He has known peanut allergy with one previous mild reaction confined to urticaria. He has no other medical conditions.",
+    "data_table": {
+      "Vital signs": "Pulse 158/min, BP 76/40 mmHg, RR 42/min, SpO2 90% room air, temperature 36.8 °C",
+      "Examination": "Distressed; widespread urticaria; lip swelling; stridor at rest; bilateral wheeze; capillary refill 3 seconds",
+      "Investigations": "Glucose 5.2 mmol/L (3.5-7.8); no other immediate investigations performed"
+    },
+    "lead_in": "What is the single most appropriate immediate intervention?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Repeat IM adrenaline 150 mcg (EpiPen Jr equivalent) into the anterolateral thigh",
+        "correct": false,
+        "rationale": "A 5-year-old weighing 22 kg is above the 20 kg threshold and requires the 300 mcg banded dose; repeating the paediatric dose under-treats the ongoing reaction. (Source: ASCIA Guidelines for acute management of anaphylaxis)",
+        "source_refs": [
+          "ASCIA Guidelines for acute management of anaphylaxis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "IM adrenaline 300 mcg (0.3 mL of 1:1000) into the anterolateral mid-thigh",
+        "correct": true,
+        "rationale": "The ASCIA banded weight table specifies 300 mcg for children 20 kg and over; with ongoing airway and circulatory features after one dose, the next dose should be repeated within 5 minutes at the appropriate band. (Source: ASCIA Guidelines for acute management of anaphylaxis)",
+        "source_refs": [
+          "ASCIA Guidelines for acute management of anaphylaxis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "IV adrenaline 100 mcg bolus while securing intravenous access",
+        "correct": false,
+        "rationale": "IV adrenaline boluses are reserved for refractory anaphylaxis after repeated IM doses fail and only by clinicians familiar with critical care dosing, due to arrhythmia and ischaemia risk; IM is first-line. (Source: ASCIA Guidelines for acute management of anaphylaxis)",
+        "source_refs": [
+          "ASCIA Guidelines for acute management of anaphylaxis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Nebulised salbutamol 5 mg plus IV hydrocortisone 4 mg/kg first",
+        "correct": false,
+        "rationale": "Bronchodilators and steroids are adjuncts only; delaying repeat adrenaline to give these costs minutes during which airway compromise can become irreversible. (Source: ASCIA Guidelines for acute management of anaphylaxis)",
+        "source_refs": [
+          "ASCIA Guidelines for acute management of anaphylaxis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "IM promethazine 25 mg plus oral cetirizine 10 mg to suppress histamine",
+        "correct": false,
+        "rationale": "Promethazine causes vasodilation and sedation in anaphylaxis and is contraindicated by ASCIA; antihistamines treat skin symptoms only and have no role as primary therapy. (Source: ASCIA Guidelines for acute management of anaphylaxis)",
+        "source_refs": [
+          "ASCIA Guidelines for acute management of anaphylaxis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "ASCIA uses banded weight categories rather than mg/kg calculation to standardise paediatric adrenaline dosing under stress. At 22 kg this child is firmly in the 20+ kg band requiring 300 mcg IM. The first dose at 150 mcg has not abolished airway or cardiovascular signs, so the next dose must be the correctly banded one delivered within 5 minutes of the previous dose.",
+      "key_points": [
+        "ASCIA banded IM adrenaline: 7.5-10 kg = 100 mcg, 10-20 kg = 150 mcg, 20+ kg = 300 mcg, adult/over 50 kg = 500 mcg.",
+        "Repeat IM adrenaline every 5 minutes until improvement, before moving to IV infusion.",
+        "Avoid weight-based mg/kg calculation under stress; the banded table reduces error.",
+        "Promethazine is contraindicated in anaphylaxis."
+      ],
+      "pearls": "A child whose weight straddles a band boundary should receive the higher band when symptoms include airway or circulatory compromise."
+    },
+    "sources": [
+      {
+        "label": "ASCIA Guidelines for acute management of anaphylaxis",
+        "url": "https://www.allergy.org.au/hp/papers/acute-management-of-anaphylaxis-guidelines"
+      },
+      {
+        "label": "RCH CPG: Anaphylaxis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Anaphylaxis/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
+    "created": "2026-06-02"
+  },
+  {
+    "id": "paeds-p60-003",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Severe croup combined adrenaline and dexamethasone",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "croup",
+      "dexamethasone",
+      "stridor"
+    ],
+    "stem": "You are the ED registrar in a regional hospital. A 3-year-old girl presents with a 2 day history of barking cough and is now in obvious respiratory distress. Her mother reports she has been getting worse over the last 6 hours and tonight became too agitated to drink. She has no history of atopy or previous intubation. She is not vaccinated for diphtheria.\n\nOn arrival she is agitated, sitting forwards, with marked stridor at rest, tracheal tug, and intercostal recession. Her voice is hoarse but she is not drooling. She has received no treatment prior to arrival. Examination otherwise is unremarkable with no facial swelling and no rash.",
+    "data_table": {
+      "Vital signs": "Pulse 162/min, BP 92/58 mmHg, RR 50/min, SpO2 91% room air, temperature 38.4 °C",
+      "Examination": "Agitated, sitting forwards; severe stridor at rest; tracheal tug; intercostal recession; no drooling; oropharynx not inspected to avoid distress",
+      "Investigations": "No bloods or imaging performed (would distress and worsen airway); throat swab deferred"
+    },
+    "lead_in": "What is the single most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Nebulised adrenaline 5 mL of 1:1000 alone, observe for 30 minutes only",
+        "correct": false,
+        "rationale": "Adrenaline acts within 10-30 minutes but lasts only 2 hours; without concurrent dexamethasone there is rebound after wearing off, so steroids must accompany the adrenaline. (Source: RCH CPG: Croup)",
+        "source_refs": [
+          "RCH CPG: Croup"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Oral dexamethasone 0.15 mg/kg alone, observe response over 1 hour",
+        "correct": false,
+        "rationale": "The 0.15 mg/kg dose is for mild to moderate croup; severe croup with stridor at rest and recession needs both 0.6 mg/kg dexamethasone and nebulised adrenaline together. (Source: RCH CPG: Croup)",
+        "source_refs": [
+          "RCH CPG: Croup"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Nebulised adrenaline 5 mL of 1:1000 plus oral dexamethasone 0.6 mg/kg, observe 3 hours",
+        "correct": true,
+        "rationale": "Severe croup with agitation and stridor at rest mandates combined treatment: nebulised adrenaline as a flat 5 mL of 1:1000 plus a 0.6 mg/kg steroid dose, with a minimum 3 hour post-adrenaline observation to detect rebound. (Source: RCH CPG: Croup)",
+        "source_refs": [
+          "RCH CPG: Croup"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Immediate gas induction and intubation by the most experienced clinician available",
+        "correct": false,
+        "rationale": "Intubation is reserved for failure of medical therapy or impending respiratory arrest; the vast majority of severe croup responds to combined adrenaline and steroid without airway intervention. (Source: RCH CPG: Croup)",
+        "source_refs": [
+          "RCH CPG: Croup"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Heliox 70:30 by face mask while awaiting paediatric retrieval team",
+        "correct": false,
+        "rationale": "Heliox has limited evidence in croup and is not first-line in any Australian guideline; combined adrenaline and steroid is the priority and works within 30 minutes. (Source: RCH CPG: Croup)",
+        "source_refs": [
+          "RCH CPG: Croup"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Severe croup is defined by stridor at rest with agitation, marked recession, or hypoxia, and is treated with nebulised adrenaline at a flat dose of 5 mL of 1:1000 (regardless of weight) plus oral dexamethasone 0.6 mg/kg. Observation must continue for at least 3 hours after the last nebulised adrenaline to detect rebound. The candidate must avoid the common error of conflating mild-moderate dosing (0.15 mg/kg) with severe dosing.",
+      "key_points": [
+        "Nebulised adrenaline dose in croup is a flat 5 mL of 1:1000, not weight-based.",
+        "Dexamethasone 0.15 mg/kg PO for mild-moderate; 0.6 mg/kg for severe.",
+        "Minimum 3 hours observation after last nebulised adrenaline before discharge.",
+        "Do not inspect the oropharynx if epiglottitis is on the differential."
+      ],
+      "pearls": "Severe croup needs both an immediate-acting nebulised adrenaline and a long-acting steroid started together within minutes, not sequentially."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Croup",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/croup_laryngotracheobronchitis/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Respiratory",
+        "url": "https://tgldcdp.tg.org.au/respiratoryGuidelines"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child"
+    ],
+    "created": "2026-06-02"
+  },
+  {
+    "id": "paeds-p60-004",
+    "topic": "Paediatrics",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Paediatric DKA fluid plan no bolus",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "DKA",
+      "diabetes",
+      "fluids"
+    ],
+    "stem": "You are the paediatric registrar at a tertiary hospital reviewing an 11-year-old girl, weight 35 kg, who is a new presentation of type 1 diabetes with diabetic ketoacidosis. Her mother reports 3 weeks of polyuria and polydipsia and 2 days of vomiting. On arrival she is mildly tachycardic but warm with capillary refill 2 seconds and a clear mental state.\n\nVenous gas confirms a moderate ketoacidosis. There are no signs of shock and her conscious state remains preserved. She has had no prior insulin and no IV fluid has been commenced. The PICU registrar and consultant are aware and have asked you to prescribe the initial fluid plan according to the RCH paediatric DKA guideline.",
+    "data_table": {
+      "Vital signs": "Pulse 118/min, BP 105/68 mmHg, RR 28/min (deep), SpO2 99% room air, temperature 36.8 °C",
+      "Examination": "Alert, oriented; capillary refill 2 seconds; mucosae dry; mild tachypnoea; no peripheral cyanosis",
+      "Investigations": "BSL 28.4 mmol/L (3.5-7.8); venous pH 7.10, HCO3 9 mmol/L (22-26); blood ketones 5.2 mmol/L; Na 134 mmol/L (135-145), K 4.4 mmol/L (3.5-5.0), corrected Na 138 mmol/L; weight 35 kg"
+    },
+    "lead_in": "What is the single most appropriate initial fluid and insulin plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "0.9% saline 20 mL/kg bolus stat, then insulin 0.1 unit/kg/hour after the bolus",
+        "correct": false,
+        "rationale": "She is not shocked, so routine fluid bolus is no longer recommended; large boluses worsen hyperchloraemic acidosis and contribute to cerebral oedema risk in paediatric DKA. (Source: RCH CPG: Diabetic ketoacidosis)",
+        "source_refs": [
+          "RCH CPG: Diabetic ketoacidosis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "0.9% saline 10 mL/kg over 30 minutes, then commence insulin infusion immediately",
+        "correct": false,
+        "rationale": "Insulin started concurrently with or before fluids increases cerebral oedema risk; the RCH protocol delays insulin until 1 hour after fluid commencement. (Source: RCH CPG: Diabetic ketoacidosis)",
+        "source_refs": [
+          "RCH CPG: Diabetic ketoacidosis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Insulin 0.1 unit/kg/hour immediately followed by deficit replacement over 24 hours",
+        "correct": false,
+        "rationale": "Early insulin without prior rehydration is associated with cerebral oedema in paediatric DKA; the AU paediatric protocol delays insulin to 1 hour after fluids begin and uses 48 hour deficit replacement. (Source: RCH CPG: Diabetic ketoacidosis)",
+        "source_refs": [
+          "RCH CPG: Diabetic ketoacidosis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Maintenance plus 5% deficit over 48 hours, no bolus, insulin 0.05 unit/kg/hour at 1 hour",
+        "correct": true,
+        "rationale": "An alert, non-shocked child with DKA in Australia receives the RCH 48 hour replacement protocol (maintenance plus 5% deficit, no routine bolus); insulin starts at 1 hour at 0.05 unit/kg/hour to limit cerebral oedema risk. (Source: RCH CPG: Diabetic ketoacidosis)",
+        "source_refs": [
+          "RCH CPG: Diabetic ketoacidosis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Hartmann's bolus 20 mL/kg, then insulin 0.1 unit/kg/hour plus sodium bicarbonate",
+        "correct": false,
+        "rationale": "Routine bicarbonate is contraindicated in paediatric DKA as it worsens intracellular acidosis and is associated with cerebral oedema; the acidosis corrects with insulin and rehydration. (Source: RCH CPG: Diabetic ketoacidosis)",
+        "source_refs": [
+          "RCH CPG: Diabetic ketoacidosis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Non-shocked paediatric DKA in Australia is managed with no routine bolus, a 48 hour replacement of maintenance plus an assumed 5% deficit, and insulin delayed to 1 hour after fluids start at 0.05 unit/kg/hour. The candidate must resist the adult sepsis instinct to bolus and start insulin together. The slower fluid and delayed insulin approach reduces cerebral oedema, the principal cause of mortality in paediatric DKA.",
+      "key_points": [
+        "Bolus only if true shock (e.g. CR >3 s, hypotension): 10 mL/kg 0.9% saline cautiously, reassess.",
+        "Replace assumed deficit (5% for moderate, 7% for severe) evenly over 48 hours, not 24.",
+        "Insulin starts at 1 hour at 0.05 unit/kg/hour, never as a bolus.",
+        "Bicarbonate is contraindicated except in extreme cardiovascular compromise."
+      ],
+      "pearls": "An alert child with moderate DKA does NOT need a fluid bolus; bolusing reflexively imports an adult sepsis algorithm and increases cerebral oedema risk."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Diabetic ketoacidosis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Diabetes_Mellitus/"
+      },
+      {
+        "label": "ISPAD 2022 Paediatric DKA",
+        "url": "https://www.ispad.org/page/ISPAD2022Guidelines"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "vbg",
+      "bsl_paeds",
+      "ketones"
+    ],
+    "created": "2026-06-02"
+  },
+  {
+    "id": "paeds-p60-005",
+    "topic": "Paediatrics",
+    "subtopic": "Nephrology",
+    "subtopic_detail": "UTI imaging cascade for recurrent under 2 years",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "UTI",
+      "ultrasound",
+      "imaging"
+    ],
+    "stem": "You are the general paediatrics registrar reviewing a 14-month-old girl referred by her GP after her second confirmed E coli urinary tract infection in 4 months. Both episodes were typical lower tract UTIs that responded clinically within 48 hours of oral cefalexin. Her antenatal renal ultrasound at 20 weeks was normal and she has had no hospital admissions.\n\nShe is well between episodes, growing along the 50th centile, and her examination today is unremarkable. Her urine culture from the most recent illness was 10^8 cfu/mL pure E coli, sensitive to cefalexin. Her family ask what investigation she now needs to look for a structural cause.",
+    "data_table": {
+      "Vital signs": "Pulse 110/min, BP 92/56 mmHg, RR 24/min, SpO2 99% room air, temperature 36.7 °C",
+      "Examination": "Well; abdomen soft, non-tender; no flank fullness or scars; growth on 50th centile for weight and length",
+      "Investigations": "Most recent urine: pure E coli 10^8 cfu/mL, sensitive to cefalexin; UEC and creatinine within normal limits; antenatal renal ultrasound normal at 20 weeks"
+    },
+    "lead_in": "What is the single most appropriate next investigation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "DMSA renal cortical scan in 4 to 6 months to assess for cortical scarring",
+        "correct": false,
+        "rationale": "DMSA is a NICE construct and is not part of the RCH imaging cascade in Australia; RCH does not routinely recommend DMSA after recurrent typical UTI under 2 years. (Source: RCH CPG: Urinary tract infection)",
+        "source_refs": [
+          "RCH CPG: Urinary tract infection"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Micturating cystourethrogram urgently to exclude vesicoureteric reflux",
+        "correct": false,
+        "rationale": "MCUG is invasive and not recommended by RCH for recurrent typical UTI in a well-appearing child; ultrasound is the appropriate first imaging modality. (Source: RCH CPG: Urinary tract infection)",
+        "source_refs": [
+          "RCH CPG: Urinary tract infection"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Renal ultrasound during the current illness rather than after recovery",
+        "correct": false,
+        "rationale": "She has clinically recovered and the infection responded promptly; ultrasound during illness is reserved for atypical UTI (poor response after 48 hours, non-E coli, sepsis, abdominal mass, raised creatinine). (Source: RCH CPG: Urinary tract infection)",
+        "source_refs": [
+          "RCH CPG: Urinary tract infection"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Combined DMSA scan plus MCUG to maximise diagnostic yield in this group",
+        "correct": false,
+        "rationale": "Combined nuclear and contrast imaging adds radiation, intervention, and cost without changing management in a well-recovered child; RCH does not recommend this combination. (Source: RCH CPG: Urinary tract infection)",
+        "source_refs": [
+          "RCH CPG: Urinary tract infection"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Renal ultrasound as an outpatient within 6 weeks of recovery",
+        "correct": true,
+        "rationale": "Recurrent UTI under 2 years of age is an indication for renal ultrasound after recovery in the RCH cascade; further imaging is only added if the ultrasound is abnormal. (Source: RCH CPG: Urinary tract infection)",
+        "source_refs": [
+          "RCH CPG: Urinary tract infection"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "The RCH imaging cascade for paediatric UTI in Australia uses renal ultrasound as the index investigation; DMSA and MCUG sit outside the RCH algorithm and follow a NICE pathway. Recurrent UTI under 2 years triggers an outpatient ultrasound after recovery, not during illness, because the index is structural anomaly rather than acute scarring. The candidate must avoid importing the NICE pathway, which over-investigates Australian children.",
+      "key_points": [
+        "Ultrasound during illness only for atypical UTI (poor response, non-E coli, sepsis, abdominal mass, raised creatinine).",
+        "Outpatient ultrasound after recovery for recurrent UTI or infants under 6 months without antenatal monitoring.",
+        "Further imaging only if ultrasound is abnormal.",
+        "DMSA and MCUG are not in the RCH cascade and are reserved for specialist follow-up."
+      ],
+      "pearls": "If you are citing RCH, do not make DMSA the correct answer; the RCH pathway uses ultrasound as the single first-line imaging modality."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Urinary tract infection",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/urinary_tract_infection/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://tgldcdp.tg.org.au/antibioticGuidelines"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "paeds_uec"
+    ],
+    "created": "2026-06-02"
+  },
+  {
+    "id": "paeds-p60-006",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Severe acute asthma IV magnesium threshold",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "asthma",
+      "magnesium",
+      "salbutamol"
+    ],
+    "stem": "You are the paediatric registrar in a tertiary ED. A 9-year-old boy, known asthmatic on low-dose budesonide, presents in severe respiratory distress. He has received 1 hour of back-to-back nebulised salbutamol 5 mg combined with ipratropium 250 mcg, IV hydrocortisone 4 mg/kg, and supplemental oxygen. There has been minimal clinical improvement.\n\nHe remains in severe distress with marked accessory muscle use, tracheal tug, and a soft chest with quiet wheeze in lower zones. He is too breathless to complete a sentence. He has not previously needed PICU admission. His mother reports he has been increasingly symptomatic over the past 3 days with multiple salbutamol doses at home and no infective prodrome.",
+    "data_table": {
+      "Vital signs": "Pulse 168/min, BP 108/64 mmHg, RR 40/min, SpO2 91% on 6 L/min nasal prong, temperature 36.9 °C",
+      "Examination": "Sitting forwards, distressed; tracheal tug, marked subcostal recession; quiet wheeze in lower zones bilaterally; speaking in single words",
+      "Investigations": "Capillary blood gas pH 7.30, pCO2 48 mmHg (35-45), HCO3 22 mmol/L (22-26); lactate 3.6 mmol/L (0.5-2.2); CXR hyperinflation, no pneumothorax"
+    },
+    "lead_in": "What is the single most appropriate next intravenous therapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Intravenous magnesium sulfate 50 mg/kg over 20 minutes to a maximum of 2 g",
+        "correct": true,
+        "rationale": "Severe asthma failing maximal nebulised therapy is escalated with IV magnesium sulfate as the first intravenous bronchodilator in Australian paediatric guidelines; it precedes IV salbutamol or aminophylline in the RCH escalation. (Source: RCH CPG: Asthma acute)",
+        "source_refs": [
+          "RCH CPG: Asthma acute"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Intravenous salbutamol loading dose of 15 mcg/kg over 10 minutes",
+        "correct": false,
+        "rationale": "IV salbutamol is reserved for failure of magnesium and carries higher lactate and tachyarrhythmia risk; the RCH algorithm places magnesium ahead of IV salbutamol. (Source: RCH CPG: Asthma acute)",
+        "source_refs": [
+          "RCH CPG: Asthma acute"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Intravenous aminophylline loading dose 5 mg/kg over 60 minutes",
+        "correct": false,
+        "rationale": "Aminophylline is a later-line agent in the RCH algorithm with a narrow therapeutic window; it is not the next escalation when IV magnesium has not yet been trialled. (Source: RCH CPG: Asthma acute)",
+        "source_refs": [
+          "RCH CPG: Asthma acute"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Immediate intubation and mechanical ventilation in the resuscitation bay",
+        "correct": false,
+        "rationale": "He is hypoxic but not in respiratory failure (pCO2 still normal-range, GCS preserved); intubation is reserved for failure of escalation or impending arrest. (Source: RCH CPG: Asthma acute)",
+        "source_refs": [
+          "RCH CPG: Asthma acute"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Heliox 70:30 mixture via tight-fitting face mask while awaiting PICU",
+        "correct": false,
+        "rationale": "Heliox is not first-line in the RCH algorithm and trial data are equivocal; IV magnesium is the evidence-based next step in severe paediatric asthma. (Source: RCH CPG: Asthma acute)",
+        "source_refs": [
+          "RCH CPG: Asthma acute"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "When a paediatric severe asthma exacerbation fails maximal nebulised salbutamol and ipratropium plus oral or IV steroid, the next step in the RCH algorithm is IV magnesium sulfate. IV salbutamol and aminophylline are reserved for failure of magnesium. A normal-range pCO2 with severe work of breathing is a danger signal heralding fatigue but not yet requiring intubation if escalation succeeds.",
+      "key_points": [
+        "RCH escalation order: maximal nebulised therapy plus systemic steroid → IV magnesium → IV salbutamol → IV aminophylline → intubation.",
+        "Magnesium sulfate dose 50 mg/kg over 20 minutes, maximum 2 g.",
+        "Normal or rising pCO2 in severe asthma is a danger signal, not reassurance.",
+        "Avoid IV salbutamol before magnesium due to lactic acidosis and arrhythmia."
+      ],
+      "pearls": "A child working hard with severe asthma, a normalising pCO2, and a quiet chest is heading for arrest; magnesium first, salbutamol IV later."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Asthma acute",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Asthma_acute/"
+      },
+      {
+        "label": "Australian Asthma Handbook (NAC)",
+        "url": "https://www.asthmahandbook.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "vbg"
+    ],
+    "created": "2026-06-02"
+  },
+  {
+    "id": "paeds-p60-007",
+    "topic": "Paediatrics",
+    "subtopic": "Infectious disease",
+    "subtopic_detail": "Septic workup in young infant under 3 months",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "sepsis",
+      "meningitis",
+      "fever"
+    ],
+    "stem": "You are the paediatric registrar in a tertiary ED reviewing a 5-week-old girl brought in by her parents with a 12 hour history of fever, poor feeding, and reduced activity. She was a term spontaneous vaginal delivery, GBS-unknown maternal status, and her mother had a urinary tract infection in late pregnancy. She has had no vaccines yet.\n\nOn examination she is lethargic and pale with a bulging anterior fontanelle and decreased tone. Capillary refill is 3 seconds and her extremities are cool. She has had no focal symptoms apart from one episode of vomiting after a small feed. Empirical antibiotics have not yet been given and the team has just sited an IV cannula and obtained blood cultures.",
+    "data_table": {
+      "Vital signs": "Pulse 188/min, BP 78/44 mmHg, RR 52/min, SpO2 96% room air, temperature 38.6 °C",
+      "Examination": "Lethargic, pale; bulging anterior fontanelle; reduced tone; capillary refill 3 seconds; cool peripheries",
+      "Investigations": "Capillary BSL 4.1 mmol/L (3.5-7.8); blood cultures taken; FBC, UEC, CRP, lactate sent; LP not yet performed; venous gas pH 7.32, lactate 3.4 mmol/L (0.5-2.2)"
+    },
+    "lead_in": "What is the single most appropriate empirical antibiotic plan within the next hour?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "IV ceftriaxone 50 mg/kg alone after lumbar puncture is performed first in resus",
+        "correct": false,
+        "rationale": "Ceftriaxone alone does not reliably cover Listeria monocytogenes, which remains a concern up to 3 months of age; AU guidelines add amoxicillin or ampicillin in this age group. (Source: Therapeutic Guidelines: Antibiotic, paediatric sepsis)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "IV cefotaxime 50 mg/kg plus IV amoxicillin 50 mg/kg within the hour, defer LP until stable",
+        "correct": true,
+        "rationale": "An unwell infant under 3 months needs cover for Listeria and group B streptococcus (amoxicillin) plus Gram-negative and pneumococcal cover (cefotaxime), given within 1 hour; LP is deferred if she is haemodynamically unstable or has signs of raised intracranial pressure. (Source: Therapeutic Guidelines: Antibiotic, paediatric sepsis)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic",
+          "RCH CPG: Sepsis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Urinalysis and blood cultures then await results before commencing antibiotics",
+        "correct": false,
+        "rationale": "Withholding antibiotics for results in an unwell infant under 3 months with sepsis signs is unsafe and breaches the 1 hour sepsis pathway target. (Source: RCH CPG: Sepsis)",
+        "source_refs": [
+          "RCH CPG: Sepsis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "IV gentamicin 7 mg/kg plus IV amoxicillin 50 mg/kg as sole empirical therapy",
+        "correct": false,
+        "rationale": "Gentamicin penetrates CSF poorly and is inadequate empirical cover when meningitis is on the differential at this age; a third-generation cephalosporin is required. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Discharge home on oral cefalexin with safety netting and review in 24 hours",
+        "correct": false,
+        "rationale": "Any unwell infant under 3 months with fever and reduced tone requires admission, IV antibiotics, and full septic workup; outpatient oral therapy is contraindicated. (Source: RCH CPG: Febrile infant)",
+        "source_refs": [
+          "RCH CPG: Febrile infant"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Any unwell-appearing infant under 3 months with fever needs prompt IV antibiotics within the hour covering Listeria, group B streptococcus, pneumococcus, and Gram-negative meningitis pathogens. The Australian first-line is cefotaxime plus amoxicillin (or ampicillin), not ceftriaxone alone. Lumbar puncture is part of the workup but is deferred if the infant is haemodynamically unstable or has signs of raised intracranial pressure such as a bulging fontanelle with reduced tone.",
+      "key_points": [
+        "Under 3 months: cefotaxime plus amoxicillin (or ampicillin) for Listeria and GBS cover.",
+        "Ceftriaxone is avoided in neonates and very young infants due to bilirubin displacement.",
+        "Defer LP if unstable; do not delay antibiotics for LP.",
+        "Add aciclovir if there are seizures, encephalopathy, or vesicular rash."
+      ],
+      "pearls": "A bulging fontanelle plus shock signs in a 5-week-old means cefotaxime plus amoxicillin in the resus bay within 60 minutes, LP deferred."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://tgldcdp.tg.org.au/antibioticGuidelines"
+      },
+      {
+        "label": "RCH CPG: Sepsis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Sepsis_assessment_and_management/"
+      },
+      {
+        "label": "RCH CPG: Febrile infant",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/febrile_child/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "vbg",
+      "paeds_uec"
+    ],
+    "created": "2026-06-02"
+  },
+  {
+    "id": "paeds-p60-008",
+    "topic": "Paediatrics",
+    "subtopic": "Gastroenterology",
+    "subtopic_detail": "Gastroenteritis NGT rehydration with ondansetron",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "gastroenteritis",
+      "rehydration",
+      "ondansetron"
+    ],
+    "stem": "You are the paediatric registrar in a regional ED reviewing an 18-month-old boy weighing 12 kg with 3 days of watery diarrhoea and 24 hours of vomiting. His mother reports he is drinking less and his last wet nappy was 6 hours ago. He has had no fever and no blood in the stool. He is fully vaccinated and otherwise well.\n\nOn examination he is alert but listless with dry mucous membranes and capillary refill of 2.5 seconds. He has just vomited 5 mL of oral rehydration solution within 2 minutes of a small sip offered by his mother. His weight from last clinic visit 2 weeks ago was 12.6 kg.",
+    "data_table": {
+      "Vital signs": "Pulse 144/min, BP 95/58 mmHg, RR 30/min, SpO2 99% room air, temperature 37.0 °C",
+      "Examination": "Alert but listless; dry mucous membranes; capillary refill 2.5 seconds; abdomen soft, non-tender; current weight 12 kg (previous 12.6 kg)",
+      "Investigations": "Capillary BSL 4.6 mmol/L (3.5-7.8); UEC and ketones not yet performed; estimated dehydration 5% (mild-moderate)"
+    },
+    "lead_in": "What is the single most appropriate immediate management strategy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "0.9% saline 20 mL/kg intravenous bolus then maintenance over 24 hours",
+        "correct": false,
+        "rationale": "IV bolus is reserved for severe dehydration, shock, or failure of enteral routes; an alert child with moderate dehydration who has not yet been trialled on NG rehydration does not yet need IV fluids. (Source: RCH CPG: Gastroenteritis)",
+        "source_refs": [
+          "RCH CPG: Gastroenteritis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Continued small sips of oral rehydration solution every 5 minutes and review in 1 hour",
+        "correct": false,
+        "rationale": "She has already failed oral trial by vomiting within 2 minutes; persisting with the same approach delays effective rehydration in a child losing weight. (Source: RCH CPG: Gastroenteritis)",
+        "source_refs": [
+          "RCH CPG: Gastroenteritis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Single oral ondansetron 2 mg, then nasogastric ORS at 50 mL/kg over 4 hours",
+        "correct": true,
+        "rationale": "RCH first-line for moderate dehydration failing oral trial is a weight-banded single oral ondansetron (2 mg for 8-15 kg) plus nasogastric rehydration with ORS at 50 mL/kg over 4 hours; this is faster, safer, and cheaper than IV fluids. (Source: RCH CPG: Gastroenteritis)",
+        "source_refs": [
+          "RCH CPG: Gastroenteritis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Loperamide 0.1 mg/kg orally plus continued oral rehydration solution and review",
+        "correct": false,
+        "rationale": "Antimotility agents are contraindicated in children with acute gastroenteritis due to risk of paralytic ileus, bacterial overgrowth, and HUS in shigatoxin-producing E coli infection. (Source: RCH CPG: Gastroenteritis)",
+        "source_refs": [
+          "RCH CPG: Gastroenteritis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "IV maintenance fluids alone without rehydration of the estimated deficit",
+        "correct": false,
+        "rationale": "Maintenance alone does not correct the deficit and leaves the child progressively dehydrated; both deficit and maintenance must be replaced over the rehydration window. (Source: RCH CPG: Gastroenteritis)",
+        "source_refs": [
+          "RCH CPG: Gastroenteritis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Moderate dehydration in paediatric gastroenteritis is best treated with nasogastric rehydration after a single weight-banded oral ondansetron dose. Nasogastric rehydration is as effective as IV, less invasive, less expensive, and avoids hyponatraemia from poorly chosen IV fluid types. IV fluids are reserved for severe dehydration, shock, or NG failure.",
+      "key_points": [
+        "Ondansetron banded oral dose: 2 mg for 8-15 kg, 4 mg for 15-30 kg.",
+        "NG ORS: 50 mL/kg over 4 hours for the deficit, then maintenance.",
+        "Avoid loperamide and antimotility agents in children.",
+        "Use isotonic IV fluids (0.9% saline plus 5% dextrose) if IV needed; never hypotonic."
+      ],
+      "pearls": "If a child vomits the first small sip of ORS, the next step is one ondansetron and an NG tube, not an IV cannula."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Gastroenteritis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Gastroenteritis/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Gastrointestinal",
+        "url": "https://tgldcdp.tg.org.au/gastrointestinalGuidelines"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_child",
+      "bsl_paeds"
+    ],
+    "created": "2026-06-02"
+  },
+  {
+    "id": "paeds-p60-009",
+    "topic": "Paediatrics",
+    "subtopic": "Critical care",
+    "subtopic_detail": "Refractory paediatric septic shock inotrope escalation",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "sepsis",
+      "meningococcal",
+      "shock"
+    ],
+    "stem": "You are the paediatric registrar in a tertiary ED. A 6-month-old infant, weight 8 kg, has presented with rapidly progressive purpuric rash, fever, and reduced level of consciousness consistent with meningococcal sepsis. You have given IV ceftriaxone 100 mg/kg within 20 minutes of arrival and three sequential 20 mL/kg 0.9% saline boluses over 30 minutes (cumulative 60 mL/kg). The PICU registrar is on the phone and the retrieval team is 90 minutes away.\n\nDespite the fluid resuscitation he remains mottled with capillary refill of 4 seconds, cool peripheries, and is now drowsy. The peripheral cannula remains patent. The intraosseous needle from the initial resuscitation is still in place in his left tibia. He has no known cardiac history and there is no clinical evidence of pulmonary oedema or hepatomegaly to suggest fluid overload.",
+    "data_table": {
+      "Vital signs": "Pulse 198/min, BP 60/32 mmHg, RR 50/min, SpO2 95% on 8 L/min mask, temperature 39.4 °C",
+      "Examination": "Drowsy; widespread purpura; mottled, cool peripheries; capillary refill 4 seconds; chest clear; liver edge 1 cm below costal margin (unchanged from arrival)",
+      "Investigations": "Venous pH 7.21, lactate 6.5 mmol/L (0.5-2.2), HCO3 14 mmol/L (22-26), K 4.4 mmol/L (3.5-5.0), glucose 4.8 mmol/L; FBC and coags pending"
+    },
+    "lead_in": "What is the single most appropriate next intervention?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Fourth 20 mL/kg 0.9% saline bolus over 15 minutes then reassess perfusion",
+        "correct": false,
+        "rationale": "Beyond 40 to 60 mL/kg total fluid in paediatric septic shock, further crystalloid boluses without inotropes raise the risk of pulmonary oedema and worsened outcomes; escalation to inotropes is the priority. (Source: RCH CPG: Sepsis)",
+        "source_refs": [
+          "RCH CPG: Sepsis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Albumin 5% 20 mL/kg IV bolus as colloid replacement instead of further crystalloid",
+        "correct": false,
+        "rationale": "Albumin does not replace the role of inotropic support once fluid-refractory shock is established; the FEAST trial in resource-limited settings raised mortality concern with bolus colloid. (Source: RCH CPG: Sepsis)",
+        "source_refs": [
+          "RCH CPG: Sepsis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Whole blood transfusion 10 mL/kg empirically for possible occult haemorrhage",
+        "correct": false,
+        "rationale": "There is no evidence of bleeding and Hb is unknown; reflexive blood transfusion ahead of inotropes is not the recommended escalation in fluid-refractory septic shock. (Source: RCH CPG: Sepsis)",
+        "source_refs": [
+          "RCH CPG: Sepsis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Peripheral adrenaline infusion 0.1 mcg/kg/min via intraosseous, intubate, request PICU",
+        "correct": true,
+        "rationale": "Fluid-refractory cold paediatric septic shock requires early adrenaline as first-line inotrope (noradrenaline preferred in warm shock); peripheral or intraosseous routes are acceptable until central access is sited, and intubation reduces oxygen consumption. (Source: RCH CPG: Sepsis)",
+        "source_refs": [
+          "RCH CPG: Sepsis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "IV hydrocortisone 50 mg/m² stat for presumed adrenal insufficiency",
+        "correct": false,
+        "rationale": "Stress-dose hydrocortisone is reserved for catecholamine-resistant shock (i.e. shock persisting despite inotropes), not for fluid-refractory shock prior to inotrope commencement. (Source: RCH CPG: Sepsis)",
+        "source_refs": [
+          "RCH CPG: Sepsis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "After 40 to 60 mL/kg of crystalloid, persistent shock in a paediatric patient is by definition fluid-refractory and requires immediate inotrope escalation rather than continued boluses. Adrenaline is the AU first-line inotrope for cold shock (peripheral hypoperfusion) and is given peripherally or intraosseously while central access is arranged. Hydrocortisone is reserved for shock that persists despite inotropes (catecholamine-resistant shock).",
+      "key_points": [
+        "Bolus ceiling 40 to 60 mL/kg crystalloid in paediatric septic shock without invasive monitoring.",
+        "Adrenaline first-line in cold shock; noradrenaline first-line in warm shock.",
+        "Peripheral or IO route is acceptable for adrenaline infusion until central access is sited.",
+        "Hydrocortisone for catecholamine-resistant shock only."
+      ],
+      "pearls": "After 60 mL/kg of saline in a shocked toddler the next prescription is adrenaline, not more saline; another 20 mL/kg costs lung function with no haemodynamic gain."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Sepsis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Sepsis_assessment_and_management/"
+      },
+      {
+        "label": "ANZICS Paediatric Sepsis Pathway",
+        "url": "https://www.anzics.com.au/paediatric-sepsis-pathway/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "vbg",
+      "paeds_uec"
+    ],
+    "created": "2026-06-02"
+  },
+  {
+    "id": "paeds-p60-010",
+    "topic": "Paediatrics",
+    "subtopic": "Neonatology",
+    "subtopic_detail": "Late-onset neonatal sepsis empirical antimicrobial choice",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "sepsis",
+      "meningitis",
+      "neonatal"
+    ],
+    "stem": "You are the paediatric registrar in a regional ED reviewing a 12-day-old term boy brought in lethargic and febrile by his parents. He was born by uncomplicated vaginal delivery, mother GBS-negative, and was feeding well until 24 hours ago when intake halved. His parents report he has been increasingly hard to rouse, with a single brief episode of facial twitching this morning that lasted about 30 seconds.\n\nOn examination he is mottled with cool peripheries, capillary refill 4 seconds, and a bulging anterior fontanelle. His tone is reduced and he has had no further seizure activity since arrival. Vesicles are not seen on the skin or mucous membranes. He has had no antibiotics, no IV fluids, and no blood cultures yet. The senior registrar from the children's hospital is on the phone preparing for retrieval.",
+    "data_table": {
+      "Vital signs": "Pulse 192/min, BP 62/34 mmHg, RR 56/min, SpO2 96% on 2 L nasal prong, temperature 38.4 °C",
+      "Examination": "Mottled, cool peripheries; capillary refill 4 seconds; bulging anterior fontanelle; reduced tone; no vesicular rash",
+      "Investigations": "Capillary BSL 2.8 mmol/L (3.5-7.8); venous pH 7.18, lactate 5.2 mmol/L (0.5-2.2); coags and LFTs pending; blood cultures not yet taken"
+    },
+    "lead_in": "What is the single most appropriate first-hour management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Lumbar puncture before any antibiotics to obtain accurate CSF microbiology",
+        "correct": false,
+        "rationale": "LP is unsafe in a shocked neonate with signs of raised intracranial pressure; delaying antibiotics for LP breaches the 1 hour sepsis target and harms outcomes. (Source: RCH CPG: Sepsis)",
+        "source_refs": [
+          "RCH CPG: Sepsis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Withhold antibiotics until results of FBC, CRP, and blood culture are available",
+        "correct": false,
+        "rationale": "Empirical antibiotics within the hour are standard for septic neonates; waiting for results worsens mortality in sepsis and meningitis. (Source: RCH CPG: Sepsis)",
+        "source_refs": [
+          "RCH CPG: Sepsis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "IV ceftriaxone 50 mg/kg as a single agent because Listeria risk falls after the first week",
+        "correct": false,
+        "rationale": "Ceftriaxone is avoided in neonates due to bilirubin displacement and biliary sludging; cefotaxime is preferred, and Listeria cover remains needed up to 3 months. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Resuscitate with 10 mL/kg crystalloid bolus and start IV amoxicillin alone",
+        "correct": false,
+        "rationale": "Amoxicillin alone does not cover Gram-negative meningitis pathogens or staphylococci; a third-generation cephalosporin must accompany it in neonatal sepsis. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Resuscitate, defer LP, give IV cefotaxime plus amoxicillin plus aciclovir within the hour",
+        "correct": true,
+        "rationale": "Late-onset neonatal sepsis with focal seizure activity requires triple empirical cover: cefotaxime plus amoxicillin (Listeria, GBS) plus aciclovir (HSV) within the hour after blood cultures; LP is deferred while the child is shocked. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic",
+          "RCH CPG: Sepsis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "A neonate under 28 days with sepsis features plus a focal seizure must be assumed to have HSV encephalitis until proven otherwise and receives aciclovir alongside cefotaxime and amoxicillin within the first hour. Ceftriaxone is contraindicated due to bilirubin displacement and biliary sludging in this age group. LP is deferred while the infant is shocked or has signs of raised intracranial pressure.",
+      "key_points": [
+        "Triple empirical cover for febrile neonate with seizure or encephalopathy: cefotaxime + amoxicillin + aciclovir.",
+        "Cefotaxime preferred over ceftriaxone in neonates.",
+        "Amoxicillin (or ampicillin) for Listeria and GBS cover up to 3 months.",
+        "LP deferred if shocked or signs of raised intracranial pressure; perform after stabilisation."
+      ],
+      "pearls": "A neonate with focal seizure plus sepsis features needs aciclovir within the hour; missing HSV encephalitis at this age leaves devastating neurologic sequelae."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://tgldcdp.tg.org.au/antibioticGuidelines"
+      },
+      {
+        "label": "RCH CPG: Sepsis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Sepsis_assessment_and_management/"
+      }
+    ],
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "vbg",
+      "bsl_paeds"
+    ],
+    "created": "2026-06-02"
+  }
+]
