@@ -3,204 +3,90 @@
     "id": "paeds-p65-001",
     "topic": "Paediatrics",
     "subtopic": "Respiratory",
-    "subtopic_detail": "Bronchiolitis oxygen escalation - first-line low-flow",
-    "difficulty": 3,
+    "subtopic_detail": "Bronchiolitis - oxygen ladder",
+    "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["bronchiolitis", "hypoxia"],
-    "stem": "A 7-month-old previously well girl is brought to the emergency department on day 3 of coryza and worsening cough. She has been feeding two-thirds of her usual volume overnight and her parents say she is breathing faster than usual but still smiles at them between coughs. She has not had any apnoea. Birth was at term and her vaccinations are up to date.\n\nOn examination she has moderate subcostal recession, scattered wheeze and fine inspiratory crackles bilaterally, with a wet cough. She is alert and pink centrally. There is no nasal flaring or grunting.",
+    "tags": [
+      "bronchiolitis",
+      "infant"
+    ],
+    "stem": "A 5-week-old infant born at 37 weeks presents to the emergency department with 3 days of coryza, worsening work of breathing, and feeding at about a third of normal volume. The parents report fewer wet nappies in the last 12 hours and a quiet, less interactive baby.\n\nOn arrival he is alert but irritable with audible wheeze and moderate subcostal and intercostal recessions. There is no apnoea witnessed in the cubicle. Bedside viral PCR is positive for RSV. Chest x-ray shows hyperinflation only.",
     "data_table": {
-      "Vital signs": "pulse 158 /min, blood pressure 92/58 mmHg, respiratory rate 56 /min, SpO2 88% on room air, temperature 37.9 degrees Celsius",
-      "Examination": "alert, moderate work of breathing with subcostal recession, bilateral wheeze and fine inspiratory crackles, capillary refill 2 seconds",
-      "Investigations": "clinical diagnosis of bronchiolitis, no routine bloods or chest x-ray indicated"
+      "Vital signs": "pulse 168 /min, blood pressure 78/46 mmHg, respiratory rate 70 /min, SpO2 88% on room air, temperature 37.4 degrees Celsius",
+      "Examination": "alert but irritable, subcostal and intercostal recessions, audible wheeze with widespread fine crackles, capillary refill 2 seconds, anterior fontanelle slightly sunken",
+      "Investigations": "RSV PCR positive, chest x-ray hyperinflated lungs with no focal consolidation, venous blood gas pH 7.34 pCO2 48 mmHg HCO3 24 mmol/L"
     },
     "lead_in": "What is the most appropriate initial respiratory support?",
     "options": [
-      { "letter": "A", "text": "Low-flow nasal prong oxygen at 1 to 2 L/min titrated to SpO2 at or above 90 percent", "correct": true, "rationale": "RCH bronchiolitis CPG recommends starting with low-flow nasal prong oxygen targeting SpO2 of at least 90 percent. High-flow nasal cannula is reserved for failure of low-flow after a 2-hour trial. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
-      { "letter": "B", "text": "High-flow nasal cannula at 2 L/kg/min targeting SpO2 at or above 94 percent", "correct": false, "rationale": "HFNC is reserved for failure of low-flow therapy after 2 hours per RCH; using it first-line increases ICU admissions without changing outcomes. The SpO2 target of 94 percent is also higher than RCH guidance. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
-      { "letter": "C", "text": "Nebulised salbutamol 2.5 mg with oxygen via Hudson mask at 8 L/min", "correct": false, "rationale": "Salbutamol is not recommended in bronchiolitis as wheeze is from small airway obstruction not bronchospasm. A Hudson mask delivers far more flow than needed. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
-      { "letter": "D", "text": "Non-invasive bi-level positive airway pressure with FiO2 0.4 in resus bay", "correct": false, "rationale": "BiPAP is reserved for impending respiratory failure with rising CO2 despite escalation through HFNC. This infant has moderate work of breathing only, not failure. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
-      { "letter": "E", "text": "Observation without supplemental oxygen with SpO2 monitoring every 30 minutes", "correct": false, "rationale": "SpO2 of 88 percent on room air is below the RCH threshold of 90 percent and warrants supplemental oxygen. Observing without escalation risks deterioration. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] }
+      {
+        "letter": "A",
+        "text": "Commence low-flow nasal prong oxygen at 1 L/min and titrate to maintain SpO2 at or above 90 percent",
+        "correct": true,
+        "rationale": "RCH bronchiolitis guidance directs low-flow nasal prong oxygen (typically 1 to 2 L/min) as the first respiratory support with an SpO2 target of 90 percent or above. High-flow is reserved for failure of low-flow after a defined trial. Starting low-flow first prevents premature escalation and the associated nursing acuity. (Source: RCH CPG Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Commence high-flow nasal cannula at 2 L/kg/min with FiO2 titrated to SpO2 92 to 94 percent",
+        "correct": false,
+        "rationale": "High-flow nasal cannula is reserved for infants who fail low-flow oxygen after 1 to 2 hours of trial or who are showing severe respiratory distress. The SpO2 target in RCH guidance is 90 percent and above, not 92 to 94 percent, so starting at HFNC with a tighter target overshoots the cascade. (Source: RCH CPG Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Administer nebulised salbutamol 2.5 mg with ipratropium bromide 250 micrograms and reassess in 20 minutes",
+        "correct": false,
+        "rationale": "Inhaled bronchodilators are not recommended in bronchiolitis in infants under 12 months because the wheeze is from airway oedema and debris, not bronchospasm. Trials show no clinically meaningful improvement and risk of tachycardia masking deterioration. (Source: RCH CPG Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Give nebulised 3 percent hypertonic saline 4 mL and reassess respiratory effort in 1 hour",
+        "correct": false,
+        "rationale": "Nebulised hypertonic saline is not recommended in RCH guidance for routine bronchiolitis management; the limited evidence does not support meaningful reduction in admission length, and it can trigger bronchospasm. (Source: RCH CPG Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Give oral prednisolone 1 mg/kg once daily for 3 days and observe in short-stay unit",
+        "correct": false,
+        "rationale": "Corticosteroids are not indicated in bronchiolitis. Cochrane and RCH guidance both find no benefit on admission rate or length of stay, and there is concern about prolonged viral shedding. (Source: RCH CPG Bronchiolitis)",
+        "source_refs": [
+          "RCH CPG Bronchiolitis"
+        ]
+      }
     ],
     "explanation": {
-      "summary": "RCH bronchiolitis CPG uses a stepwise oxygen ladder: low-flow nasal prongs first, escalating to HFNC only after a 2-hour trial of low-flow fails. The SpO2 target is 90 percent or above, not the 92 to 94 percent used in older protocols. Bronchodilators, corticosteroids, antibiotics and nebulised hypertonic saline are not recommended. Adequate hydration via NGT or IV is supportive only.",
-      "key_points": ["RCH SpO2 target in bronchiolitis is at least 90 percent", "Low-flow nasal prongs 1 to 2 L/min are first-line", "HFNC only after 2-hour failure of low-flow", "No role for salbutamol, steroids, adrenaline or antibiotics in classic bronchiolitis"],
-      "pearls": "RCH explicitly downgrades SpO2 target to 90 percent to avoid prolonged hospitalisation; auditing your hospital's bronchiolitis pathway against this number is a fast quality lever."
+      "summary": "Initial oxygen support in moderate bronchiolitis is low-flow nasal prong oxygen titrated to SpO2 90 percent or above, with high-flow reserved for failure of low-flow after a trial period. Bronchodilators, hypertonic saline, and corticosteroids do not change outcomes in typical bronchiolitis under 12 months. The candidate must resist defaulting to the most resource-intensive option early.",
+      "key_points": [
+        "RCH SpO2 target in bronchiolitis is at or above 90 percent, not 92 to 94 percent.",
+        "Low-flow oxygen first, HFNC after 1 to 2 hours of failed low-flow.",
+        "No role for salbutamol or ipratropium under 12 months in bronchiolitis.",
+        "Steroids and hypertonic saline are not recommended."
+      ],
+      "pearls": "Low-flow nasal prong oxygen at 1 to 2 L/min titrated to SpO2 at or above 90 percent is first-line in bronchiolitis under RCH CPG; reassess at 1 to 2 hours before escalating to HFNC."
     },
     "sources": [
-      { "label": "RCH CPG: Bronchiolitis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/" },
-      { "label": "Australasian Bronchiolitis Guideline (PREDICT)", "url": "https://www.predict.org.au/research/bronchiolitis-guideline/" }
+      {
+        "label": "RCH CPG Bronchiolitis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/"
+      },
+      {
+        "label": "Cochrane review of bronchodilators in bronchiolitis",
+        "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD001266.pub4/full"
+      }
     ],
-    "reference_ranges": ["paeds_vitals_infant"],
-    "created": "2026-06-02"
-  },
-  {
-    "id": "paeds-p65-002",
-    "topic": "Paediatrics",
-    "subtopic": "Respiratory",
-    "subtopic_detail": "Mild croup corticosteroid dose",
-    "difficulty": 3,
-    "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["croup", "corticosteroids"],
-    "stem": "A 2-year-old boy is brought to the emergency department at 11pm with 6 hours of barking cough and a hoarse voice that began after a 2-day coryzal illness. He has stridor only when crying and settles in his father's arms. He has had no choking episodes, drinks his bottle without difficulty, and is fully vaccinated.\n\nOn examination he is alert and interactive. There is no stridor at rest and no tracheal tug. Air entry is symmetrical with no wheeze or focal crackles.",
-    "data_table": {
-      "Vital signs": "pulse 124 /min, blood pressure 96/60 mmHg, respiratory rate 28 /min, SpO2 98% on room air, temperature 37.6 degrees Celsius",
-      "Examination": "barking cough on prompting, hoarse voice, no stridor at rest, no recession, alert and interactive on father's lap",
-      "Investigations": "clinical diagnosis, no imaging or bloods indicated"
-    },
-    "lead_in": "What is the most appropriate next pharmacological treatment?",
-    "options": [
-      { "letter": "A", "text": "Oral dexamethasone 0.6 mg/kg as a single dose with admission for 6-hour observation", "correct": false, "rationale": "0.6 mg/kg is the RCH dose reserved for severe croup. Mild croup uses 0.15 mg/kg, and routine admission is not indicated for mild disease. (Source: RCH CPG: Croup)", "source_refs": ["RCH CPG: Croup"] },
-      { "letter": "B", "text": "Oral dexamethasone 0.15 mg/kg single dose then discharge after a 30-minute observation period", "correct": true, "rationale": "RCH recommends oral dexamethasone 0.15 mg/kg single dose for mild or moderate croup, with discharge after a short observation if the child remains in mild category. Dexamethasone 0.6 mg/kg is reserved for severe croup or when oral intake is uncertain. (Source: RCH CPG: Croup)", "source_refs": ["RCH CPG: Croup"] },
-      { "letter": "C", "text": "Nebulised adrenaline 5 mL of 1 in 1000 with mandatory 3-hour observation post-nebulisation", "correct": false, "rationale": "Nebulised adrenaline is reserved for moderate or severe croup with stridor at rest. After last nebulised dose, minimum observation is 3 hours per RCH. This child has stridor only when crying. (Source: RCH CPG: Croup)", "source_refs": ["RCH CPG: Croup"] },
-      { "letter": "D", "text": "Nebulised budesonide 2 mg single dose with discharge once parents are educated", "correct": false, "rationale": "Nebulised budesonide is an alternative only when oral or IM dexamethasone is not possible (vomiting, refusal). Oral dexamethasone is first-line and easier to administer. (Source: RCH CPG: Croup)", "source_refs": ["RCH CPG: Croup"] },
-      { "letter": "E", "text": "Oral prednisolone 1 mg/kg daily for 3 days with regular paracetamol for symptomatic relief", "correct": false, "rationale": "Although prednisolone has been studied, single-dose dexamethasone is the AU standard with stronger evidence and a longer half-life that covers the typical illness course. A 3-day course is unnecessary. (Source: RCH CPG: Croup)", "source_refs": ["RCH CPG: Croup"] }
+    "reference_ranges": [
+      "paeds_vitals_infant"
     ],
-    "explanation": {
-      "summary": "RCH croup CPG separates mild, moderate and severe categories by presence of stridor at rest, work of breathing and behavioural changes. Mild and moderate croup receive oral dexamethasone 0.15 mg/kg single dose; severe receives 0.6 mg/kg plus nebulised adrenaline. Stridor only when crying is mild. A short ED observation after dexamethasone with appropriate safety netting is sufficient.",
-      "key_points": ["Mild and moderate croup: oral dexamethasone 0.15 mg/kg single dose", "Severe croup: 0.6 mg/kg plus nebulised adrenaline", "Nebulised adrenaline mandates 3-hour observation post-last-dose", "Routine antibiotics and bronchodilators have no role"],
-      "pearls": "Croup severity is reset 30 to 60 minutes after dexamethasone takes effect; the same child after observation may meet discharge criteria even if presenting borderline-moderate."
-    },
-    "sources": [
-      { "label": "RCH CPG: Croup", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/" },
-      { "label": "Therapeutic Guidelines: Respiratory", "url": "https://www.tg.org.au" }
-    ],
-    "reference_ranges": ["paeds_vitals_child"],
-    "created": "2026-06-02"
-  },
-  {
-    "id": "paeds-p65-003",
-    "topic": "Paediatrics",
-    "subtopic": "Neurology",
-    "subtopic_detail": "Simple febrile seizure - investigation and disposition",
-    "difficulty": 3,
-    "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["febrile seizure", "paediatric neurology"],
-    "stem": "An 18-month-old boy is brought by ambulance after a witnessed generalised tonic-clonic seizure lasting 2 minutes while at home with a temperature his mother measured at 39.4 degrees Celsius. He had been coryzal for 2 days. By the time the paramedics arrived he was sleepy but rousable, and on ED arrival 30 minutes later he is alert, walking around the cubicle and asking for water.\n\nHe is fully vaccinated, developmentally normal, and has no past seizures. His older sister had a single similar episode at age 2 with no sequelae. On examination ears, throat and chest are unremarkable and there is no rash, neck stiffness or focal neurology.",
-    "data_table": {
-      "Vital signs": "pulse 132 /min, blood pressure 98/62 mmHg, respiratory rate 24 /min, SpO2 99% on room air, temperature 38.6 degrees Celsius",
-      "Examination": "fully alert and walking, GCS 15, no neck stiffness, normal tone and power, no rash, ears throat and chest unremarkable",
-      "Investigations": "clinical assessment; bedside glucose 5.2 mmol/L"
-    },
-    "lead_in": "What is the most appropriate next step in management?",
-    "options": [
-      { "letter": "A", "text": "Lumbar puncture, IV ceftriaxone 50 mg/kg empirically and admit pending CSF results", "correct": false, "rationale": "RCH and NICE both advise that LP is not routinely required in a simple febrile seizure when the child is over 12 months and has fully recovered to baseline without meningism. Empirical antibiotics are not indicated without a clinical concern for sepsis or meningitis. (Source: RCH CPG: Febrile seizures)", "source_refs": ["RCH CPG: Febrile seizures"] },
-      { "letter": "B", "text": "Non-contrast CT brain followed by paediatric neurology referral before discharge", "correct": false, "rationale": "Neuroimaging is not indicated in a simple febrile seizure with a normal neurological examination and full recovery. Neurology referral is reserved for complex or recurrent presentations. (Source: RCH CPG: Febrile seizures)", "source_refs": ["RCH CPG: Febrile seizures"] },
-      { "letter": "C", "text": "Reassure parents, treat the febrile illness symptomatically and discharge with safety-net advice", "correct": true, "rationale": "This is a classic simple febrile seizure: a single generalised seizure under 15 minutes in a 6-month to 5-year-old who has returned to baseline. RCH advises discharge with parental education on seizure first aid and reassurance about benign prognosis. (Source: RCH CPG: Febrile seizures)", "source_refs": ["RCH CPG: Febrile seizures"] },
-      { "letter": "D", "text": "Prescribe a buccal midazolam rescue kit and arrange outpatient EEG within 2 weeks", "correct": false, "rationale": "Rescue benzodiazepine and EEG are reserved for prolonged or recurrent febrile seizures or suspected epilepsy. Routine prescribing after a single simple febrile seizure is not recommended. (Source: RCH CPG: Febrile seizures)", "source_refs": ["RCH CPG: Febrile seizures"] },
-      { "letter": "E", "text": "Admit for overnight observation with 4-hourly neurological observations and oral antipyretics on schedule", "correct": false, "rationale": "Routine admission and scheduled antipyretics do not change outcomes after a simple febrile seizure. Antipyretics do not prevent recurrence. (Source: RCH CPG: Febrile seizures)", "source_refs": ["RCH CPG: Febrile seizures"] }
-    ],
-    "explanation": {
-      "summary": "Simple febrile seizures (single, generalised, under 15 minutes, full recovery, age 6 months to 5 years, no focal features) do not warrant LP, imaging, EEG or admission in a well-appearing child. Parental reassurance and safety-net advice are the primary interventions. Recurrence risk is about 30 percent; antipyretics neither prevent recurrence nor improve outcomes.",
-      "key_points": ["Simple febrile seizure: single, generalised, under 15 min, full recovery, age 6 mo to 5 y", "No routine LP, imaging or EEG when fully recovered with normal neuro exam", "Antipyretics do not prevent recurrence", "Rescue benzodiazepine only for prolonged or recurrent seizures"],
-      "pearls": "If the seizure is over 15 minutes, focal, or recurs within 24 hours it becomes complex febrile seizure and lowers the threshold for LP and admission - but the routine simple case is a teaching opportunity, not a workup."
-    },
-    "sources": [
-      { "label": "RCH CPG: Febrile seizures", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Febrile_seizures/" },
-      { "label": "NICE CKS: Febrile seizure", "url": "https://cks.nice.org.uk/topics/febrile-seizure/" }
-    ],
-    "reference_ranges": ["paeds_vitals_child", "gcs"],
-    "created": "2026-06-02"
-  },
-  {
-    "id": "paeds-p65-004",
-    "topic": "Paediatrics",
-    "subtopic": "Rheumatology",
-    "subtopic_detail": "HSP renal surveillance after discharge",
-    "difficulty": 4,
-    "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["HSP", "vasculitis"],
-    "stem": "A 7-year-old boy was admitted 5 days ago with a 4-day history of palpable purpura over the buttocks and legs, bilateral ankle swelling and colicky abdominal pain after a viral upper respiratory illness. Inpatient ultrasound excluded intussusception. His urinalysis on admission was clear and his blood pressure was normal throughout admission. Renal function and complement were normal. His symptoms have settled with paracetamol and rest, and he is now being discharged.\n\nHis mother asks about long-term monitoring because she has read online that some children with this condition develop kidney problems.",
-    "data_table": {
-      "Examination at discharge": "fading non-blanching purpura over buttocks, no joint swelling, abdomen soft and non-tender",
-      "Investigations": "FBC normal, creatinine 38 micromol/L, albumin 38 g/L, urinalysis blood negative protein negative, blood pressure normal for age",
-      "Vital signs": "vital signs within normal limits"
-    },
-    "lead_in": "What is the most appropriate renal surveillance plan?",
-    "options": [
-      { "letter": "A", "text": "Repeat urinalysis and blood pressure once at the 6-week GP review, with no further surveillance if normal", "correct": false, "rationale": "Nephritis can develop weeks after the initial illness, so a single 6-week check misses delayed onset. RCH advises serial surveillance for at least 6 months. (Source: RCH CPG: Henoch-Schonlein purpura)", "source_refs": ["RCH CPG: Henoch-Schonlein purpura"] },
-      { "letter": "B", "text": "Renal ultrasound at 4 weeks and 12 weeks, with referral to nephrology if pelvicalyceal dilatation develops", "correct": false, "rationale": "Imaging is not the surveillance tool for HSP nephritis. Urinalysis and blood pressure detect glomerular involvement before structural change. (Source: RCH CPG: Henoch-Schonlein purpura)", "source_refs": ["RCH CPG: Henoch-Schonlein purpura"] },
-      { "letter": "C", "text": "Empirical prednisolone 1 mg/kg daily for 2 weeks to prevent nephritis, with no urinalysis follow-up needed", "correct": false, "rationale": "Steroids do not prevent HSP nephritis. They may shorten joint and abdominal symptoms but do not change renal outcomes. Skipping urinalysis surveillance is unsafe. (Source: RCH CPG: Henoch-Schonlein purpura)", "source_refs": ["RCH CPG: Henoch-Schonlein purpura"] },
-      { "letter": "D", "text": "Weekly urinalysis and blood pressure for 4 weeks then monthly to 6 months, refer to nephrology if new positive findings", "correct": true, "rationale": "RCH advises serial urinalysis and blood pressure to detect delayed-onset nephritis which can appear weeks after presentation. Weekly initially then monthly to 6 months captures the typical window of onset, and any new positive finding triggers nephrology referral. (Source: RCH CPG: Henoch-Schonlein purpura)", "source_refs": ["RCH CPG: Henoch-Schonlein purpura"] },
-      { "letter": "E", "text": "Outpatient renal biopsy at 6 weeks regardless of urinalysis to risk-stratify progression of nephritis", "correct": false, "rationale": "Renal biopsy is reserved for established nephrotic-range proteinuria, declining renal function or significant persistent haematuria with proteinuria. Routine biopsy is invasive and not indicated. (Source: RCH CPG: Henoch-Schonlein purpura)", "source_refs": ["RCH CPG: Henoch-Schonlein purpura"] }
-    ],
-    "explanation": {
-      "summary": "HSP nephritis is the long-term morbidity of HSP and can develop up to 6 months after presentation despite a clear initial urinalysis. The discharge plan is serial urinalysis and blood pressure - weekly for the first month then monthly to 6 months. New haematuria, proteinuria, hypertension or rising creatinine triggers nephrology referral and consideration of biopsy. Steroids reduce abdominal and joint pain but do not prevent or treat nephritis.",
-      "key_points": ["Serial urinalysis and BP for 6 months post-HSP", "Steroids do not prevent nephritis", "Refer to nephrology for new proteinuria, haematuria or hypertension", "Biopsy reserved for nephrotic-range or declining function"],
-      "pearls": "About one-third of HSP children develop renal involvement and about 1 to 2 percent progress to chronic kidney disease - the surveillance schedule exists precisely because initial urinalysis cannot exclude delayed disease."
-    },
-    "sources": [
-      { "label": "RCH CPG: Henoch-Schonlein purpura", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Henoch_Schonlein_Purpura/" },
-      { "label": "KDIGO IgA Nephropathy/IgA Vasculitis Guideline", "url": "https://kdigo.org/guidelines/" }
-    ],
-    "reference_ranges": ["paeds_uec", "paeds_vitals_child"],
-    "created": "2026-06-02"
-  },
-  {
-    "id": "paeds-p65-005",
-    "topic": "Paediatrics",
-    "subtopic": "Cardiology",
-    "subtopic_detail": "Incomplete Kawasaki disease - supplementary lab criteria",
-    "difficulty": 4,
-    "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["kawasaki", "IVIG"],
-    "stem": "A 5-year-old girl presents on day 7 of persistent fever above 39 degrees Celsius. She has had a polymorphous truncal rash for 4 days, non-purulent bilateral conjunctival injection and red cracked lips. There is no cervical lymphadenopathy, no extremity changes and no oropharyngeal exudate. Two short courses of amoxicillin from her GP did not change the fever curve. A urine culture and throat swab from day 4 are negative.\n\nShe is irritable and difficult to console but cardiovascularly stable. Her parents are anxious because their friend's child had a coronary aneurysm from a similar illness.",
-    "data_table": {
-      "Vital signs": "pulse 142 /min, blood pressure 102/64 mmHg, respiratory rate 26 /min, SpO2 99% on room air, temperature 39.4 degrees Celsius",
-      "Examination": "irritable, polymorphous trunk rash, bilateral non-purulent conjunctival injection, red fissured lips, hands and feet without oedema or desquamation, no cervical lymphadenopathy",
-      "Investigations": "CRP 142 mg/L (less than 5), ESR 78 mm/hr, WCC 18.6 x10^9/L, platelets 612 x10^9/L, ALT 96 U/L (less than 40), albumin 28 g/L (35 to 50), urine microscopy 28 white cells per microlitre, blood and urine cultures negative at 48 hours"
-    },
-    "lead_in": "What is the most appropriate next step in management?",
-    "options": [
-      { "letter": "A", "text": "Continue empirical antibiotics for a further 48 hours pending blood culture extended incubation", "correct": false, "rationale": "Blood cultures are already negative at 48 hours and the picture fits incomplete Kawasaki disease. Continuing antibiotics delays IVIG and increases coronary aneurysm risk. (Source: RCH CPG: Kawasaki disease)", "source_refs": ["RCH CPG: Kawasaki disease"] },
-      { "letter": "B", "text": "Arrange outpatient transthoracic echocardiogram within 2 weeks and treat as viral exanthem in the interim", "correct": false, "rationale": "An echo can be normal in the first 10 days even when aneurysms are forming. Delaying IVIG past day 10 increases coronary aneurysm risk and is not appropriate when supplementary criteria are met. (Source: RCH CPG: Kawasaki disease)", "source_refs": ["RCH CPG: Kawasaki disease"] },
-      { "letter": "C", "text": "Commence high-dose oral prednisolone 2 mg/kg daily and reassess clinical response in 48 hours", "correct": false, "rationale": "Steroids are not the primary treatment for Kawasaki. They are adjunctive (alongside IVIG) in high-risk or IVIG-resistant disease. Monotherapy with prednisolone delays definitive IVIG. (Source: RCH CPG: Kawasaki disease)", "source_refs": ["RCH CPG: Kawasaki disease"] },
-      { "letter": "D", "text": "Discharge home with planned outpatient review at 48 hours and serial CRP trending", "correct": false, "rationale": "This child has met the AHA supplementary lab criteria for incomplete Kawasaki on day 7. Outpatient observation risks crossing day 10 untreated, when aneurysm risk rises significantly. (Source: RCH CPG: Kawasaki disease)", "source_refs": ["RCH CPG: Kawasaki disease"] },
-      { "letter": "E", "text": "Admit for IV immunoglobulin 2 g/kg with oral aspirin 3 to 5 mg/kg daily and baseline echocardiogram", "correct": true, "rationale": "This child has fever 5 or more days plus 3 of 5 classic features (rash, conjunctivitis, mucositis) which meets incomplete KD when supported by laboratory criteria. Her CRP over 30 mg/L, ESR over 40 mm/hr, albumin under 30 g/L, ALT elevation and platelets over 450 x10^9/L combined satisfy the AHA supplementary criteria. IVIG 2 g/kg and aspirin within 10 days of fever onset reduce coronary aneurysm rate from 25 percent to under 5 percent. (Source: RCH CPG: Kawasaki disease)", "source_refs": ["RCH CPG: Kawasaki disease", "AHA Kawasaki Disease Scientific Statement"] }
-    ],
-    "explanation": {
-      "summary": "Incomplete Kawasaki disease is diagnosed when fever for 5 or more days plus only 2 or 3 classic features (instead of the standard 4 of 5) is supported by AHA supplementary laboratory criteria: CRP 30 mg/L or above, ESR 40 mm/hr or above, plus 3 or more of albumin under 30 g/L, anaemia for age, ALT elevation, platelets 450 x10^9/L or above after day 7, WCC 15 x10^9/L or above, urine WCC 10 per high-power field or above. Treatment is IVIG 2 g/kg and aspirin within 10 days of fever onset. Coronary aneurysm risk drops from 25 percent to under 5 percent with timely IVIG.",
-      "key_points": ["Incomplete KD: fever 5 plus days plus 2 or 3 features and supplementary labs", "AHA labs: CRP 30 mg/L plus, ESR 40 mm/hr plus, plus 3 of 5 supplementary", "IVIG 2 g/kg plus aspirin within 10 days of fever onset", "Echo baseline plus week 2 plus week 6 to 8", "Steroids adjunctive in high-risk or IVIG-resistant disease only"],
-      "pearls": "Day 10 is the critical cutoff - aneurysm risk rises steeply after this, so a working diagnosis of incomplete KD on day 7 with supportive labs warrants empirical IVIG even if features look incomplete."
-    },
-    "sources": [
-      { "label": "RCH CPG: Kawasaki disease", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Kawasaki_disease/" },
-      { "label": "AHA Kawasaki Disease Scientific Statement", "url": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000000484" }
-    ],
-    "reference_ranges": ["paeds_vitals_child", "paeds_fbc", "lfts", "inflammatory_markers"],
-    "created": "2026-06-02"
-  },
-  {
-    "id": "paeds-p65-006",
-    "topic": "Paediatrics",
-    "subtopic": "Surgical / Gastroenterology",
-    "subtopic_detail": "Pyloric stenosis preoperative fluid and electrolyte correction",
-    "difficulty": 4,
-    "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["pyloric stenosis", "electrolytes"],
-    "stem": "A 4-week-old boy is referred with 10 days of progressively projectile non-bilious vomiting after every feed. He is the firstborn of healthy parents and has dropped from the 50th to the 5th centile for weight. His mother has been making up the feeds correctly. On examination he is pale, sleepy but rousable, with sunken fontanelle and dry mucous membranes. An olive-shaped mass is palpable in the right upper abdomen and visible gastric peristalsis is seen across the upper abdomen during a feed.\n\nBedside ultrasound confirms hypertrophic pyloric stenosis. The surgical registrar plans pyloromyotomy but asks you to optimise him first.",
-    "data_table": {
-      "Vital signs": "pulse 168 /min, blood pressure 78/48 mmHg, respiratory rate 38 /min, SpO2 99% on room air, temperature 36.6 degrees Celsius",
-      "Examination": "sleepy, sunken fontanelle, dry mucous membranes, capillary refill 3 to 4 seconds, olive mass in right upper quadrant, visible gastric peristalsis",
-      "Investigations": "venous blood gas pH 7.52 (7.35 to 7.45), bicarbonate 34 mmol/L (22 to 26), chloride 84 mmol/L (95 to 105), sodium 132 mmol/L (135 to 145), potassium 3.0 mmol/L (3.5 to 5.0), glucose 4.1 mmol/L, urea 9.8 mmol/L, creatinine 38 micromol/L"
-    },
-    "lead_in": "What is the most appropriate preoperative fluid plan?",
-    "options": [
-      { "letter": "A", "text": "Intravenous 0.45 percent saline plus 5 percent dextrose with 20 mmol/L potassium chloride at 1.5 times maintenance", "correct": true, "rationale": "Pyloric stenosis causes hypochloraemic hypokalaemic metabolic alkalosis from sustained gastric acid loss. Correction is with chloride-containing maintenance plus potassium and dextrose, at 1.5 times maintenance. Surgery is delayed until biochemistry corrects (chloride above 100, bicarbonate below 28) to avoid post-anaesthetic apnoea from persistent alkalosis. (Source: RCH CPG: Pyloric stenosis)", "source_refs": ["RCH CPG: Pyloric stenosis"] },
-      { "letter": "B", "text": "Intravenous 0.9 percent sodium chloride 20 mL/kg bolus then proceed to theatre within the hour", "correct": false, "rationale": "A single bolus does not correct the metabolic alkalosis or potassium. Anaesthesia before biochemical correction increases post-operative apnoea risk because residual alkalosis blunts respiratory drive. (Source: RCH CPG: Pyloric stenosis)", "source_refs": ["RCH CPG: Pyloric stenosis"] },
-      { "letter": "C", "text": "Intravenous Hartmann solution at maintenance rate with electrolyte reassessment every 6 hours", "correct": false, "rationale": "Hartmann's has only 109 mmol/L chloride and contains lactate which can worsen alkalosis on metabolism. It is not the preferred correction fluid for hypochloraemic alkalosis. (Source: RCH CPG: Pyloric stenosis)", "source_refs": ["RCH CPG: Pyloric stenosis"] },
-      { "letter": "D", "text": "Intravenous 5 percent dextrose only at 1.5 times maintenance with no added electrolytes", "correct": false, "rationale": "Dextrose alone provides no chloride or potassium. This will not correct the hypochloraemic hypokalaemic alkalosis and risks hyponatraemia from free-water overload. (Source: RCH CPG: Pyloric stenosis)", "source_refs": ["RCH CPG: Pyloric stenosis"] },
-      { "letter": "E", "text": "Continue oral electrolyte rehydration solution under NGT with potassium supplementation in feeds", "correct": false, "rationale": "Gastric outlet obstruction means oral or NGT fluids will be vomited back, providing no correction. IV is mandatory until pyloromyotomy is done. (Source: RCH CPG: Pyloric stenosis)", "source_refs": ["RCH CPG: Pyloric stenosis"] }
-    ],
-    "explanation": {
-      "summary": "Pyloromyotomy is a semi-elective operation done after biochemical correction, not an emergency. Hypochloraemic hypokalaemic metabolic alkalosis arises from sustained HCl loss and renal compensation. Correction uses 0.45 percent saline with 5 percent dextrose plus 20 mmol/L KCl at 1.5 times maintenance until chloride is above 100 mmol/L and bicarbonate below 28 mmol/L. Operating before correction increases post-operative apnoea and cardiac arrhythmia risk.",
-      "key_points": ["Pyloric stenosis biochemistry: hypochloraemic hypokalaemic metabolic alkalosis", "Correct with 0.45% NaCl plus 5% dextrose plus 20 mmol/L KCl at 1.5x maintenance", "Surgery delayed until Cl above 100 and HCO3 below 28", "Bolus only if shocked", "NGT decompression continues until theatre"],
-      "pearls": "The pyloromyotomy itself is short and safe - the morbidity is from anaesthetising an alkalotic infant, which is why the registrar's pre-op review is the question."
-    },
-    "sources": [
-      { "label": "RCH CPG: Pyloric stenosis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Pyloric_stenosis/" },
-      { "label": "Therapeutic Guidelines: Paediatric fluids", "url": "https://www.tg.org.au" }
-    ],
-    "reference_ranges": ["paeds_vitals_infant", "paeds_uec", "vbg"],
     "created": "2026-06-02"
   }
 ]
