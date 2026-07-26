@@ -7,7 +7,9 @@
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
     "tags": ["Kawasaki disease", "IVIG"],
-    "stem": "A 3-year-old boy has had a fever above 39 degrees for 6 days despite 48 hours of oral amoxicillin. His parents report cracked red lips, red eyes without pus, and a fine truncal rash that comes and goes. On examination he is irritable but not toxic, with a single 20 mm right anterior cervical node. Palms and soles are not swollen or peeling. Throat swab for group A streptococcus and blood culture are negative.\n\nHe has no household exposure to measles, no travel history and is fully immunised. The ED registrar has already arranged a formal echocardiogram, which shows a left anterior descending coronary artery Z score of +2.7.",
+    "stem": "A 3-year-old boy has had a fever above 39 degrees for 6 days despite 48 hours of oral amoxicillin. His parents report cracked red lips, red eyes without pus, and a fine truncal rash that comes and goes. On examination he is irritable but not toxic, with a single 20 mm right anterior cervical node. Palms and soles are not swollen or peeling. Throat swab for group A streptococcus and blood culture are negative.
+
+He has no household exposure to measles, no travel history and is fully immunised. The ED registrar has already arranged a formal echocardiogram, which shows a left anterior descending coronary artery Z score of +2.7.",
     "data_table": {
       "Vital signs": "Pulse 148/min, blood pressure 92/56 mmHg, respiratory rate 30/min, SpO2 99 percent on room air, temperature 39.4 degrees C",
       "Examination": "Cracked lips, bilateral non-purulent bulbar conjunctival injection, polymorphous truncal rash, single 20 mm right anterior cervical node; hands and feet not swollen; no BCG scar reaction",
@@ -36,6 +38,211 @@
       { "label": "AHA Scientific Statement 2017: Diagnosis and Treatment of Kawasaki Disease" }
     ],
     "reference_ranges": ["paeds_vitals_child", "paeds_fbc", "inflammatory_markers"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "paeds-p70-002",
+    "topic": "Paediatrics",
+    "subtopic": "Neonatology",
+    "subtopic_detail": "Hyperbilirubinaemia treatment threshold",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["neonatal jaundice", "phototherapy"],
+    "stem": "A term female infant born by uncomplicated vaginal delivery at 39 weeks is reviewed on the postnatal ward at 28 hours of age because she looks yellow to the midwife. Her mother is blood group O positive with negative antibody screen; the baby's cord blood group is A positive with a positive direct antiglobulin test. Birthweight was 3.4 kg, she is breastfeeding on demand and has passed meconium and urine.
+
+She is alert, feeding well, has moist mucous membranes and normal tone. There is no cephalohaematoma and no significant bruising.",
+    "data_table": {
+      "Vital signs": "Pulse 148/min, respiratory rate 44/min, SpO2 99 percent on room air, temperature 36.9 degrees C",
+      "Examination": "Alert, well-perfused, jaundice to the chest, no hepatosplenomegaly, no petechiae; feeding effectively at breast",
+      "Investigations": "Serum bilirubin 260 micromol/L (unconjugated); haemoglobin 165 g/L (140-220); reticulocytes 6 percent (2-6); blood film unremarkable"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      { "letter": "A", "text": "Increase breastfeeding frequency and reassess bilirubin in 12 to 24 hours", "correct": false, "rationale": "A bilirubin of 260 micromol/L at 28 hours in an ABO incompatible DAT-positive infant is well above the phototherapy line; observation alone risks kernicterus. (Source: RCH CPG: Neonatal jaundice)", "source_refs": ["RCH CPG: Neonatal jaundice"] },
+      { "letter": "B", "text": "Start intensive phototherapy now and repeat serum bilirubin in 6 hours", "correct": true, "rationale": "At 28 hours in a haemolytic infant the treatment line sits close to 240 micromol/L; intensive phototherapy is indicated and response reassessed within 6 hours per the RCH nomogram. (Source: RCH CPG: Neonatal jaundice)", "source_refs": ["RCH CPG: Neonatal jaundice"] },
+      { "letter": "C", "text": "Arrange immediate double volume exchange transfusion in the neonatal unit", "correct": false, "rationale": "Exchange transfusion in a stable term infant requires bilirubin to cross the exchange line despite phototherapy or the bilirubin/albumin ratio to exceed threshold; not yet indicated. (Source: RCH CPG: Neonatal jaundice)", "source_refs": ["RCH CPG: Neonatal jaundice"] },
+      { "letter": "D", "text": "Give a single dose of intravenous immunoglobulin one gram per kilogram now", "correct": false, "rationale": "IVIG is reserved for isoimmune haemolysis when bilirubin continues to rise despite intensive phototherapy or approaches the exchange line; not first-line here. (Source: RCH CPG: Neonatal jaundice)", "source_refs": ["RCH CPG: Neonatal jaundice"] },
+      { "letter": "E", "text": "Formula supplementation only with recheck of bilirubin the following morning", "correct": false, "rationale": "Feed supplementation without phototherapy does not adequately lower bilirubin in haemolytic disease and delays effective treatment; overnight recheck is unsafe. (Source: RCH CPG: Neonatal jaundice)", "source_refs": ["RCH CPG: Neonatal jaundice"] }
+    ],
+    "explanation": {
+      "summary": "The Australian bilirubin nomogram plots serum bilirubin against postnatal age in hours and adjusts thresholds for risk factors including DAT-positive isoimmune haemolysis. A DAT-positive infant with ABO incompatibility at 28 hours postnatal is high risk; phototherapy is initiated well below the standard line. IVIG and exchange transfusion escalate only if bilirubin continues to rise on maximal phototherapy or approaches the exchange line. Reassessment at 6 hours confirms response.",
+      "key_points": [
+        "DAT-positive haemolysis lowers the phototherapy threshold.",
+        "Age-in-hours nomogram is the standard, not fixed bilirubin cutoffs.",
+        "IVIG is second-line if bilirubin keeps rising on intensive phototherapy.",
+        "Exchange transfusion is reserved for failure of maximum medical therapy."
+      ],
+      "pearls": "A DAT-positive ABO baby with bilirubin over 250 micromol/L in the first 24 to 48 hours crosses the intensive phototherapy line on the RCH nomogram; start phototherapy immediately and recheck within 6 hours."
+    },
+    "sources": [
+      { "label": "RCH CPG: Neonatal jaundice", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Jaundice_in_early_infancy/" },
+      { "label": "Queensland Clinical Guidelines: Neonatal jaundice" }
+    ],
+    "reference_ranges": ["paeds_jaundice", "paeds_vitals_infant"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "paeds-p70-003",
+    "topic": "Paediatrics",
+    "subtopic": "Nephrology",
+    "subtopic_detail": "Febrile UTI imaging in infancy",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["urinary tract infection", "ultrasound"],
+    "stem": "A previously well 5-month-old boy is admitted with a first febrile urinary tract infection. Suprapubic aspirate grew pure Escherichia coli sensitive to trimethoprim and cefalexin. He responded within 24 hours to intravenous benzylpenicillin and gentamicin and is now afebrile, feeding well and passing clear urine. A routine antenatal ultrasound at 20 weeks documented normal renal tract anatomy, and he is thriving on the 50th centile.
+
+He has no family history of vesicoureteric reflux or renal disease. The ED consultant asks whether imaging is required before discharge.",
+    "data_table": {
+      "Vital signs": "Pulse 138/min, blood pressure 92/54 mmHg, respiratory rate 32/min, SpO2 99 percent on room air, temperature 36.9 degrees C",
+      "Examination": "Alert, well-perfused; abdomen soft with no mass; genitalia normal circumcised; no dysmorphic features",
+      "Investigations": "Suprapubic aspirate urine: pure Escherichia coli >10^8 CFU/L, sensitive to trimethoprim and cefalexin; creatinine 32 micromol/L; normal antenatal renal tract ultrasound at 20 weeks"
+    },
+    "lead_in": "What imaging strategy is most appropriate before discharge?",
+    "options": [
+      { "letter": "A", "text": "Micturating cystourethrogram planned once the acute illness has resolved", "correct": false, "rationale": "MCUG is not routine in the RCH pathway after a first typical UTI; it is considered only when renal ultrasound is abnormal or infections recur. (Source: RCH CPG: Urinary tract infection)", "source_refs": ["RCH CPG: Urinary tract infection"] },
+      { "letter": "B", "text": "DMSA scan at 4 to 6 months to detect renal cortical scarring reliably", "correct": false, "rationale": "DMSA is a NICE construct and is not part of the routine RCH cascade after a first typical UTI in an infant with documented antenatal imaging. (Source: RCH CPG: Urinary tract infection)", "source_refs": ["RCH CPG: Urinary tract infection"] },
+      { "letter": "C", "text": "No renal tract imaging is indicated as antenatal ultrasound was normal", "correct": true, "rationale": "For a first typical UTI in an infant under 6 months who responded within 48 hours and had documented normal antenatal renal imaging, RCH does not recommend routine repeat imaging. (Source: RCH CPG: Urinary tract infection)", "source_refs": ["RCH CPG: Urinary tract infection"] },
+      { "letter": "D", "text": "Renal tract ultrasound within 6 weeks of resolution in the community", "correct": false, "rationale": "RCH reserves post-illness ultrasound for infants without documented antenatal imaging or with atypical UTI; documented normal antenatal scan makes this unnecessary. (Source: RCH CPG: Urinary tract infection)", "source_refs": ["RCH CPG: Urinary tract infection"] },
+      { "letter": "E", "text": "Contrast-enhanced voiding urosonography before discharge from hospital", "correct": false, "rationale": "Contrast voiding urosonography is not part of the standard AU cascade for a first typical UTI and is unnecessary given normal antenatal anatomy and rapid response. (Source: RCH CPG: Urinary tract infection)", "source_refs": ["RCH CPG: Urinary tract infection"] }
+    ],
+    "explanation": {
+      "summary": "The RCH UTI cascade in infants distinguishes typical from atypical UTI. Typical UTI (E coli, sensitive to first-line antibiotics, response within 48 hours, no sepsis, no abdominal mass, normal creatinine) requires renal ultrasound only if the child is under 6 months without documented antenatal imaging or if infections recur. Documented normal antenatal anatomy in an infant with a typical UTI removes the ultrasound requirement. DMSA and MCUG are not routine in the RCH pathway; they are NICE constructs.",
+      "key_points": [
+        "Typical UTI in an infant does not always require imaging.",
+        "Documented normal antenatal ultrasound removes the routine US indication.",
+        "DMSA and MCUG are not in the RCH cascade for typical UTI.",
+        "Atypical features trigger US during the acute illness."
+      ],
+      "pearls": "The RCH pathway asks two questions after a first UTI: was it atypical, and was there documented antenatal imaging; if the answers are no atypical features and yes to antenatal imaging, no follow-up imaging is required."
+    },
+    "sources": [
+      { "label": "RCH CPG: Urinary tract infection", "url": "https://www.rch.org.au/clinicalguide/guideline_index/urinary_tract_infection_guideline/" },
+      { "label": "Australian eTG: Antibiotic - Urinary tract infections in children" }
+    ],
+    "reference_ranges": ["paeds_vitals_infant", "paeds_uec"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "paeds-p70-004",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Bronchiolitis HFNC escalation timing",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["bronchiolitis", "oxygen therapy"],
+    "stem": "A 3-month-old former term infant has been on low-flow nasal cannula oxygen at 1 L/min for 90 minutes on the paediatric ward for RSV bronchiolitis. On arrival his SpO2 was 84 percent on room air; it improved to 91 percent on low flow, then dropped to 88 percent over the last 30 minutes. Work of breathing is now increasing with tracheal tug and audible grunting.
+
+He is not feeding, has had a wet nappy 3 hours ago and remains alert. Capillary blood gas at 90 minutes shows pH 7.32, pCO2 52 mmHg, HCO3 24 mmol/L. His mother stayed at the bedside overnight.",
+    "data_table": {
+      "Vital signs": "Pulse 172/min, blood pressure 82/50 mmHg, respiratory rate 68/min, SpO2 88 percent on 1 L/min low-flow, temperature 37.6 degrees C",
+      "Examination": "Alert; marked subcostal and intercostal recessions; tracheal tug; audible grunt; wheeze and fine crackles bilaterally",
+      "Investigations": "Nasopharyngeal PCR RSV positive; capillary gas pH 7.32, pCO2 52 mmHg (35-45), HCO3 24 mmol/L, lactate 1.6 mmol/L"
+    },
+    "lead_in": "What is the most appropriate next step in oxygen therapy?",
+    "options": [
+      { "letter": "A", "text": "Continue low-flow oxygen and reassess after another 60 minutes of therapy", "correct": false, "rationale": "The RCH pathway defines low-flow failure at 2 hours as the trigger to escalate; observation with worsening pCO2 and desaturation would delay appropriate escalation. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
+      { "letter": "B", "text": "Increase low-flow oxygen to 3 L/min through the same nasal prong device", "correct": false, "rationale": "Beyond 2 L/min low-flow prong oxygen becomes uncomfortable and inefficient without humidification; the guideline steps to HFNC rather than higher unheated flows. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
+      { "letter": "C", "text": "Nebulised adrenaline 5 mL of 1 in 1000 with a repeat gas in 30 minutes", "correct": false, "rationale": "Nebulised adrenaline is not recommended in bronchiolitis by RCH; there is no evidence of reduced admission or ventilation and it is a distractor from oxygen escalation. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
+      { "letter": "D", "text": "Escalate to high flow nasal cannula at 2 L/kg/min with FiO2 titrated to SpO2 90", "correct": true, "rationale": "RCH escalates from low-flow to HFNC after 2 hours of low-flow failure defined by rising work of breathing, hypoxia or hypercapnia; HFNC 2 L/kg/min titrated to SpO2 90 percent is the next step. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
+      { "letter": "E", "text": "Intubate immediately for mechanical ventilation and transfer to intensive care", "correct": false, "rationale": "Intubation is reserved for HFNC failure with impending respiratory failure or apnoea; an alert child with mild hypercapnia should first trial HFNC. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] }
+    ],
+    "explanation": {
+      "summary": "The RCH bronchiolitis pathway escalates oxygen in stepwise fashion: low-flow nasal prong 1 to 2 L/min first, HFNC 2 L/kg/min after 2 hours of low-flow failure, and intubation reserved for HFNC failure. Failure is defined by rising respiratory rate, worsening work of breathing, desaturation below the SpO2 90 percent target or hypercapnia. Nebulised adrenaline and salbutamol are not recommended. Escalation timing matters: earlier HFNC does not reduce ICU admission but delaying appropriate step-up when the child is decompensating risks progression to intubation.",
+      "key_points": [
+        "Low-flow first, escalate to HFNC after 2 hours of failure.",
+        "HFNC starting dose is 2 L/kg/min titrated to SpO2 90 percent.",
+        "Nebulised adrenaline is not recommended in bronchiolitis by RCH.",
+        "Intubation is reserved for HFNC failure or apnoea."
+      ],
+      "pearls": "In bronchiolitis, escalate low-flow to HFNC when 2 hours of low-flow trial has failed on any of rising RR, increased work of breathing, SpO2 below 90 percent, or rising pCO2."
+    },
+    "sources": [
+      { "label": "RCH CPG: Bronchiolitis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/" },
+      { "label": "Australasian Bronchiolitis Guideline (PREDICT)" }
+    ],
+    "reference_ranges": ["paeds_vitals_infant", "vbg"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "paeds-p70-005",
+    "topic": "Paediatrics",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "HSP nephritis surveillance",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["Henoch-Schonlein purpura", "urinalysis"],
+    "stem": "A 6-year-old girl presented three weeks ago with a palpable purpuric rash on the buttocks and lower limbs, right knee arthritis and colicky abdominal pain. Skin biopsy at that admission showed leukocytoclastic vasculitis and she was managed with paracetamol and outpatient follow-up. Symptoms have fully resolved. Blood pressure was normal throughout admission and initial urine dipstick was clear.
+
+She returns for the planned review. Her mother reports she has been well, eating normally and returned to school. The GP has done no interval investigations since discharge.",
+    "data_table": {
+      "Vital signs": "Pulse 92/min, blood pressure 108/64 mmHg, respiratory rate 20/min, SpO2 100 percent on room air, temperature 36.7 degrees C",
+      "Examination": "Well-appearing, no residual rash or joint swelling; abdomen soft; no oedema",
+      "Investigations": "Today: urine dipstick trace protein, no blood; formal urine protein/creatinine ratio pending; urea and electrolytes within normal limits"
+    },
+    "lead_in": "What is the most appropriate surveillance plan?",
+    "options": [
+      { "letter": "A", "text": "Discharge from follow-up as the acute illness has resolved without complication", "correct": false, "rationale": "HSP nephritis can develop up to 6 months after acute presentation; discharge at 3 weeks misses late-onset nephritis and abandons the standard surveillance window. (Source: RCH CPG: Henoch-Schonlein purpura)", "source_refs": ["RCH CPG: Henoch-Schonlein purpura"] },
+      { "letter": "B", "text": "Renal biopsy this week to detect and characterise late-onset HSP nephritis", "correct": false, "rationale": "Biopsy is reserved for persistent significant proteinuria, hypertension or falling GFR; not indicated with trace protein and no other features. (Source: RCH CPG: Henoch-Schonlein purpura)", "source_refs": ["RCH CPG: Henoch-Schonlein purpura"] },
+      { "letter": "C", "text": "Start oral prednisolone 1 mg/kg daily for 4 weeks to prevent renal complications", "correct": false, "rationale": "Steroids do not prevent HSP nephritis onset; they are used only in established significant renal disease or severe extrarenal symptoms. (Source: RCH CPG: Henoch-Schonlein purpura)", "source_refs": ["RCH CPG: Henoch-Schonlein purpura"] },
+      { "letter": "D", "text": "Weekly BP and urine dipstick surveillance for 6 months from initial presentation", "correct": true, "rationale": "RCH recommends weekly BP and urinalysis for the first 2 months then monthly to 6 months; late-onset nephritis is uncommon after 6 months if surveillance is normal. (Source: RCH CPG: Henoch-Schonlein purpura)", "source_refs": ["RCH CPG: Henoch-Schonlein purpura"] },
+      { "letter": "E", "text": "Immediate nephrology referral for consideration of ACE inhibitor prophylaxis", "correct": false, "rationale": "ACE inhibitors are used for established persistent proteinuria; prophylactic use in asymptomatic children with only trace protein at 3 weeks is not recommended. (Source: RCH CPG: Henoch-Schonlein purpura)", "source_refs": ["RCH CPG: Henoch-Schonlein purpura"] }
+    ],
+    "explanation": {
+      "summary": "Henoch-Schonlein purpura nephritis is the main long-term complication and can present up to 6 months after the acute illness. Australian surveillance uses weekly blood pressure and urinalysis for the first 2 months, then monthly to 6 months from presentation. Renal referral is triggered by persistent proteinuria, hypertension, macroscopic haematuria, or falling GFR. Steroids do not prevent onset of nephritis and are reserved for established significant renal disease or severe extrarenal symptoms.",
+      "key_points": [
+        "HSP nephritis can develop up to 6 months after acute illness.",
+        "Weekly BP and urinalysis for 2 months then monthly to 6 months.",
+        "Steroids do not prevent nephritis onset.",
+        "Renal referral is triggered by proteinuria, hypertension or falling GFR."
+      ],
+      "pearls": "After HSP, teach the family to bring the child weekly for BP and urine dipstick for 2 months and monthly to 6 months; refer only when protein persists on formal urine protein to creatinine ratio, BP rises above the 95th centile, or haematuria becomes macroscopic."
+    },
+    "sources": [
+      { "label": "RCH CPG: Henoch-Schonlein purpura", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Henoch_Schonlein_Purpura/" },
+      { "label": "KDIGO 2021 Glomerular Diseases Guideline" }
+    ],
+    "reference_ranges": ["paeds_vitals_child", "paeds_uec"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "paeds-p70-006",
+    "topic": "Paediatrics",
+    "subtopic": "Neurology",
+    "subtopic_detail": "Migraine prophylaxis in adolescents",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["migraine", "prophylaxis"],
+    "stem": "A 14-year-old girl attends the general paediatric clinic with a 12-month history of migraine without aura. She now has 6 attacks per month, each lasting most of a day, and has missed 4 days of school in the last month. Simple analgesics are effective when taken early, and she has responded to oral sumatriptan on 3 occasions. Her diary shows no clear food triggers, sleep is regular, and she is not on any hormonal contraception.
+
+Mother describes similar migraines through her own adolescence. Neurological examination and fundoscopy today are normal, blood pressure is normal for her age and weight is on the 50th centile.",
+    "data_table": {
+      "Vital signs": "Pulse 78/min, blood pressure 116/68 mmHg, respiratory rate 16/min, SpO2 100 percent on room air, temperature 36.6 degrees C",
+      "Examination": "Neurological examination and fundoscopy within normal limits; no papilloedema; no meningism; growth on the 50th centile",
+      "Investigations": "Headache diary confirms 6 attacks per month over 3 months; MRI brain not indicated on clinical features"
+    },
+    "lead_in": "What is the most appropriate prophylactic strategy?",
+    "options": [
+      { "letter": "A", "text": "Start oral propranolol 10 mg twice daily and review response at 8 weeks", "correct": true, "rationale": "Propranolol is a first-line paediatric migraine prophylactic per Australian consensus and is favoured over topiramate for adolescent girls because it avoids cognitive side effects and pregnancy-related teratogenicity. (Source: RCH CPG: Headache)", "source_refs": ["RCH CPG: Headache"] },
+      { "letter": "B", "text": "Start oral topiramate 25 mg nightly and titrate slowly to a target 100 mg daily", "correct": false, "rationale": "Topiramate is effective but is teratogenic and causes cognitive side effects; propranolol is preferred first-line in adolescent girls of childbearing potential. (Source: RCH CPG: Headache)", "source_refs": ["RCH CPG: Headache"] },
+      { "letter": "C", "text": "Start oral amitriptyline 10 mg nightly and review response at 8 weeks in clinic", "correct": false, "rationale": "Amitriptyline is second-line paediatric prophylaxis; use follows failure or intolerance of first-line beta blockade or riboflavin trial. (Source: RCH CPG: Headache)", "source_refs": ["RCH CPG: Headache"] },
+      { "letter": "D", "text": "Start rizatriptan 5 mg regularly at bedtime nightly as an oral prophylactic", "correct": false, "rationale": "Triptans are acute abortive agents, not prophylactics; daily use risks medication overuse headache and is not evidence-based prevention. (Source: RCH CPG: Headache)", "source_refs": ["RCH CPG: Headache"] },
+      { "letter": "E", "text": "Arrange urgent MRI brain with contrast for further diagnostic assessment", "correct": false, "rationale": "MRI is not indicated where examination and history are typical of migraine without red flags; scanning does not change management and delays effective prophylaxis. (Source: RCH CPG: Headache)", "source_refs": ["RCH CPG: Headache"] }
+    ],
+    "explanation": {
+      "summary": "Paediatric migraine prophylaxis is offered when headaches occur more than 4 to 6 times per month or cause significant disability. Propranolol is first-line for most adolescents; it is favoured over topiramate in adolescent girls of childbearing potential because topiramate is teratogenic and causes cognitive slowing. Riboflavin, magnesium and coenzyme Q10 have supporting evidence and are often trialled together. Amitriptyline is second-line. Response is reviewed at 8 weeks. Triptans are acute agents and daily use causes medication overuse headache.",
+      "key_points": [
+        "Prophylaxis is offered for 4 or more disabling attacks per month.",
+        "Propranolol is first-line in adolescents including girls of childbearing potential.",
+        "Topiramate is teratogenic; avoid as first choice in girls.",
+        "Triptans are acute abortives, not preventives."
+      ],
+      "pearls": "For an adolescent girl with 6 or more migraine days a month, start propranolol 10 mg twice daily and reassess at 8 weeks; reserve topiramate for propranolol failure or asthma coexistence."
+    },
+    "sources": [
+      { "label": "RCH CPG: Headache", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Headache/" },
+      { "label": "Australian Therapeutic Guidelines: Neurology - Migraine" }
+    ],
+    "reference_ranges": ["paeds_vitals_child"],
     "created": "2026-07-26"
   }
 ]
