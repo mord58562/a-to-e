@@ -1,0 +1,236 @@
+[
+  {
+    "id": "paeds-p69-007",
+    "topic": "Paediatrics",
+    "subtopic": "Nephrology",
+    "subtopic_detail": "UTI imaging RCH cascade",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["UTI", "ultrasound"],
+    "stem": "A 14-month-old girl presented four days ago with fever, foul-smelling urine and a positive catheter urine culture growing more than 10^8 CFU/L of Escherichia coli fully sensitive to trimethoprim. She was commenced on oral trimethoprim and has been afebrile within 36 hours.\n\nAntenatal ultrasounds at 20 and 32 weeks gestation were normal. She has been feeding normally, growing along her expected centile, and has had no prior urinary tract infections. Her mother asks what imaging her daughter now needs.",
+    "data_table": {
+      "Vital signs": "Pulse 118/min, blood pressure 92/58 mmHg, respiratory rate 24/min, SpO2 99 percent on room air, temperature 36.8 degrees C",
+      "Examination": "Alert, well hydrated, playful; abdomen soft with no palpable masses; genitalia normal appearing",
+      "Investigations": "Urine culture Escherichia coli sensitive to trimethoprim; creatinine 32 micromol/L (within paediatric range); resolution of fever within 36 hours of therapy"
+    },
+    "lead_in": "What is the most appropriate imaging plan now?",
+    "options": [
+      { "letter": "A", "text": "Renal tract ultrasound during this illness within 48 hours of admission", "correct": false, "rationale": "RCH restricts illness-phase renal ultrasound to atypical UTI: poor response to 48 h antibiotics, non E coli, sepsis, abdominal mass, or raised creatinine. (Source: RCH CPG: Urinary tract infection)", "source_refs": ["RCH CPG: UTI"] },
+      { "letter": "B", "text": "Micturating cystourethrogram (MCUG) at completion of antibiotic course", "correct": false, "rationale": "MCUG is a NICE construct, not part of the RCH pathway for a single typical UTI; do not order routinely. (Source: RCH CPG: Urinary tract infection)", "source_refs": ["RCH CPG: UTI"] },
+      { "letter": "C", "text": "No imaging indicated; safety net advice for recurrent urinary symptoms only", "correct": true, "rationale": "RCH does not require imaging after a single typical UTI even under 24 months when antenatal scans were normal; safety net for recurrence. (Source: RCH CPG: Urinary tract infection)", "source_refs": ["RCH CPG: UTI"] },
+      { "letter": "D", "text": "DMSA renal cortical scan at four to six months to assess renal scarring", "correct": false, "rationale": "DMSA is not part of the RCH cascade for a single typical UTI; it is a NICE tool, not AU standard practice here. (Source: RCH CPG: Urinary tract infection)", "source_refs": ["RCH CPG: UTI"] },
+      { "letter": "E", "text": "Renal tract ultrasound routinely at four to six weeks post infection", "correct": false, "rationale": "Routine post-infection ultrasound is not required for a single typical UTI under 24 months per RCH when antenatal monitoring was normal. (Source: RCH CPG: Urinary tract infection)", "source_refs": ["RCH CPG: UTI"] }
+    ],
+    "explanation": {
+      "summary": "RCH deliberately narrowed UTI imaging following evidence that most abnormalities were antenatally detected. A single typical UTI in a well child under 24 months, responding to antibiotics with normal antenatal scans, needs no imaging. Illness-phase ultrasound is reserved for atypical features (poor response, non-E coli, sepsis, abdominal mass, raised creatinine). DMSA and MCUG are NICE constructs and not routine in the RCH pathway.",
+      "key_points": [
+        "Typical UTI plus normal antenatal scans equals no imaging.",
+        "Illness-phase ultrasound only for atypical UTI features.",
+        "DMSA and MCUG are not routine in RCH.",
+        "Follow-up ultrasound only for recurrent UTI or infants under 6 months without antenatal monitoring."
+      ],
+      "pearls": "Under RCH, a typical E coli UTI in a well child under 24 months with normal antenatal scans needs no imaging; do not default to DMSA or MCUG."
+    },
+    "sources": [
+      { "label": "RCH CPG: UTI", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Urinary_Tract_Infection_Guideline/" },
+      { "label": "Therapeutic Guidelines: Antibiotic" }
+    ],
+    "reference_ranges": ["paeds_vitals_child", "paeds_uec"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "obgyn-p69-001",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Intrapartum",
+    "subtopic_detail": "PPH tone atony pharmacology",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["PPH", "oxytocin"],
+    "stem": "A 32-year-old G2P1 has just delivered a 3900 g baby vaginally after a spontaneous labour and second stage of 40 minutes. Twenty minutes after birth she has ongoing bright red vaginal bleeding estimated at 1000 mL with clot expression. Her uterus feels soft and bulky above the umbilicus.\n\nShe has already received 10 units of intramuscular oxytocin as third-stage prophylaxis and the placenta was delivered complete. Her booking blood pressure was 118/72 mmHg. She had no antenatal hypertension and has taken no cardiovascular medications.",
+    "data_table": {
+      "Vital signs": "Pulse 118/min, blood pressure 96/62 mmHg, respiratory rate 22/min, SpO2 99 percent on room air, temperature 36.9 degrees C",
+      "Examination": "Boggy uterus above umbilicus, actively bleeding; placenta delivered complete; no cervical or vaginal tears identified on inspection",
+      "Investigations": "Group and hold sent, cross-match ordered; venous access with two 16G cannulae; oxytocin infusion prepared"
+    },
+    "lead_in": "What is the most appropriate next pharmacological step?",
+    "options": [
+      { "letter": "A", "text": "Intramuscular ergometrine 250 micrograms with intravenous tranexamic acid 1 g", "correct": true, "rationale": "Ergometrine is the second-line uterotonic (after oxytocin) for atonic PPH in a normotensive woman, and TXA within 3 hours reduces PPH mortality. (Source: RANZCOG PPH statement; WOMAN trial)", "source_refs": ["RANZCOG: Management of postpartum haemorrhage"] },
+      { "letter": "B", "text": "Intramuscular carboprost 250 micrograms into the deltoid with continued oxytocin", "correct": false, "rationale": "Carboprost is third-line after failure of oxytocin plus ergometrine and is administered intramuscular into a large muscle mass at 250 micrograms up to eight doses. (Source: RANZCOG: Management of postpartum haemorrhage)", "source_refs": ["RANZCOG: Management of postpartum haemorrhage"] },
+      { "letter": "C", "text": "Intravenous ergometrine 500 micrograms slow push with continuous oxytocin infusion", "correct": false, "rationale": "IV ergometrine is second choice route (IM preferred), 500 micrograms is above standard dose, and giving without TXA misses the mortality benefit. (Source: RANZCOG: Management of postpartum haemorrhage)", "source_refs": ["RANZCOG: Management of postpartum haemorrhage"] },
+      { "letter": "D", "text": "Sublingual misoprostol 800 micrograms and observe for uterine tone response", "correct": false, "rationale": "Misoprostol is a fourth-line uterotonic when oxytocin, ergometrine and carboprost fail or are contraindicated; not appropriate before trying second-line. (Source: RANZCOG: Management of postpartum haemorrhage)", "source_refs": ["RANZCOG: Management of postpartum haemorrhage"] },
+      { "letter": "E", "text": "Intramuscular oxytocin 10 units second dose with continuous oxytocin infusion 40 units", "correct": false, "rationale": "Repeat oxytocin bolus adds little once the receptor is saturated; escalation to ergometrine plus TXA is standard second-line. (Source: RANZCOG: Management of postpartum haemorrhage)", "source_refs": ["RANZCOG: Management of postpartum haemorrhage"] }
+    ],
+    "explanation": {
+      "summary": "The RANZCOG PPH algorithm escalates uterotonics through oxytocin, then ergometrine, then carboprost, then misoprostol, with tranexamic acid 1 g IV added early once PPH is diagnosed. The WOMAN trial established a mortality benefit for TXA within three hours of PPH onset. Ergometrine is contraindicated in hypertension and pre-eclampsia; carboprost is contraindicated in asthma. Concurrent mechanical measures (bimanual compression, catheterisation) run alongside pharmacology.",
+      "key_points": [
+        "Uterotonic sequence: oxytocin then ergometrine then carboprost then misoprostol.",
+        "TXA 1 g IV within 3 hours of PPH onset (WOMAN trial).",
+        "Ergometrine contraindicated in hypertension.",
+        "Carboprost contraindicated in asthma."
+      ],
+      "pearls": "Give ergometrine 250 mcg IM plus tranexamic acid 1 g IV as second-line for atonic PPH in a normotensive woman; TXA within 3 hours halves PPH mortality."
+    },
+    "sources": [
+      { "label": "RANZCOG: Management of postpartum haemorrhage", "url": "https://ranzcog.edu.au/wp-content/uploads/2022/05/Management-of-Postpartum-Haemorrhage-PPH.pdf" },
+      { "label": "WOMAN trial (Lancet 2017)" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "obgyn-p69-002",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Early pregnancy",
+    "subtopic_detail": "Ectopic pregnancy management",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["ectopic pregnancy", "methotrexate"],
+    "stem": "A 28-year-old G2P1 presents to the early pregnancy unit at 6 weeks by LMP with right iliac fossa discomfort and vaginal spotting. She is haemodynamically stable and pain is mild. Serum beta hCG is 4200 IU/L.\n\nTransvaginal ultrasound shows an empty uterine cavity and a 2.6 cm right adnexal mass separate from the ovary with a yolk sac visible but no foetal pole and no cardiac activity. She has stopped breastfeeding her first child three months ago and is keen to avoid surgery if possible.",
+    "data_table": {
+      "Vital signs": "Pulse 84/min, blood pressure 118/72 mmHg, respiratory rate 16/min, SpO2 99 percent on room air, temperature 36.8 degrees C",
+      "Examination": "Alert, comfortable at rest; mild right iliac fossa tenderness on palpation without guarding or rebound; no cervical excitation",
+      "Investigations": "Beta hCG 4200 IU/L, haemoglobin 128 g/L (115 to 165), liver and renal function within normal limits, no free fluid on ultrasound"
+    },
+    "lead_in": "What is the most appropriate management?",
+    "options": [
+      { "letter": "A", "text": "Expectant management with serial beta hCG measurement every 48 to 72 hours", "correct": false, "rationale": "Expectant management is reserved for asymptomatic women with hCG under 1500 IU/L and falling trends; this hCG is far too high. (Source: RANZCOG: Ectopic pregnancy)", "source_refs": ["RANZCOG: Diagnosis and management of ectopic pregnancy"] },
+      { "letter": "B", "text": "Laparoscopic salpingectomy of the affected tube under the acute gynaecology list", "correct": false, "rationale": "Salpingectomy is not first-choice when the patient is stable, meets methotrexate criteria and has fertility preservation goals with a healthy contralateral tube. (Source: RANZCOG: Ectopic pregnancy)", "source_refs": ["RANZCOG: Diagnosis and management of ectopic pregnancy"] },
+      { "letter": "C", "text": "Laparoscopic salpingostomy with preservation of the affected tube and cornual repair", "correct": false, "rationale": "Salpingostomy carries higher persistent trophoblast risk and is preferred only when the contralateral tube is absent or diseased. (Source: RANZCOG: Ectopic pregnancy)", "source_refs": ["RANZCOG: Diagnosis and management of ectopic pregnancy"] },
+      { "letter": "D", "text": "Intramuscular methotrexate 50 mg/m2 single dose with day 4 and day 7 hCG follow-up", "correct": true, "rationale": "This ectopic meets RANZCOG criteria for methotrexate: hCG under 5000, no cardiac activity, mass under 3.5 cm, minimal pain, stable, normal LFTs, reliable follow-up. (Source: RANZCOG: Ectopic pregnancy)", "source_refs": ["RANZCOG: Diagnosis and management of ectopic pregnancy"] },
+      { "letter": "E", "text": "Mifepristone 200 mg orally followed by misoprostol 800 micrograms vaginally at 48 hours", "correct": false, "rationale": "Mifepristone plus misoprostol is a medical abortion regimen for intrauterine pregnancy, not for ectopic pregnancy. (Source: RANZCOG: Ectopic pregnancy)", "source_refs": ["RANZCOG: Diagnosis and management of ectopic pregnancy"] }
+    ],
+    "explanation": {
+      "summary": "RANZCOG methotrexate criteria for ectopic pregnancy are: haemodynamic stability, no foetal cardiac activity, adnexal mass under 3.5 cm, serum hCG under 5000 IU/L, minimal pain, no significant haemoperitoneum, reliable follow-up and no methotrexate contraindications. Surgical management (salpingectomy preferred, salpingostomy if contralateral tube absent or diseased) is required when hCG is 5000 or above, cardiac activity is present, mass is 3.5 cm or larger, significant pain or haemodynamic compromise. Follow-up hCG on days 4 and 7 aims for at least a 15 percent drop between those two days; failing this triggers a second dose or surgery.",
+      "key_points": [
+        "MTX threshold: hCG under 5000, no cardiac activity, mass under 3.5 cm.",
+        "MTX regimen: 50 mg/m2 IM single dose, day 4 and day 7 hCG.",
+        "Salpingectomy preferred over salpingostomy when contralateral tube healthy.",
+        "Mifepristone plus misoprostol is medical abortion, not ectopic treatment."
+      ],
+      "pearls": "RANZCOG surgical threshold for tubal ectopic is hCG 5000 IU/L or above; below 5000 with all other MTX criteria met, single-dose IM methotrexate is preferred."
+    },
+    "sources": [
+      { "label": "RANZCOG: Diagnosis and management of ectopic pregnancy", "url": "https://ranzcog.edu.au/wp-content/uploads/2022/05/Diagnosis-and-management-of-ectopic-pregnancy.pdf" },
+      { "label": "Therapeutic Guidelines: Reproductive Health" }
+    ],
+    "reference_ranges": ["beta_hcg_pregnancy", "obs_pregnancy_vitals", "lfts", "uec"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "obgyn-p69-003",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Antenatal care",
+    "subtopic_detail": "GDM OGTT ADIPS diagnosis",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["GDM", "OGTT"],
+    "stem": "A 33-year-old G3P2 attends her 28-week antenatal appointment after a routine 75 g oral glucose tolerance test. She has been well throughout pregnancy with a normal 20-week morphology scan and appropriate fundal height. Her BMI at booking was 27 kg/m2 and her father has type 2 diabetes.\n\nHer results are fasting glucose 5.2 mmol/L, one-hour glucose 10.4 mmol/L and two-hour glucose 7.9 mmol/L. She reports no polyuria or polydipsia and her home glucose monitoring since triage has shown fasting values ranging from 4.6 to 4.9 mmol/L.",
+    "data_table": {
+      "Vital signs": "Pulse 80/min, blood pressure 118/72 mmHg, respiratory rate 16/min, SpO2 99 percent on room air, temperature 36.7 degrees C, foetal heart rate 148/min",
+      "Examination": "Fundal height 28 cm at 28 weeks, longitudinal cephalic presentation, foetal movements normal",
+      "Investigations": "OGTT fasting 5.2 mmol/L, 1 hour 10.4 mmol/L, 2 hour 7.9 mmol/L; HbA1c 5.4 percent (below 5.7)"
+    },
+    "lead_in": "Which is the most appropriate diagnostic interpretation and next step?",
+    "options": [
+      { "letter": "A", "text": "GDM diagnosed on fasting glucose criterion, refer for immediate insulin commencement", "correct": false, "rationale": "Fasting is below the ADIPS 5.1 mmol/L threshold; the diagnosis is made on the 1 hour value alone. (Source: ADIPS GDM Consensus 2014)", "source_refs": ["ADIPS Consensus Guidelines for GDM Testing in Australia"] },
+      { "letter": "B", "text": "GDM diagnosed on the 1 hour value; start lifestyle plus home glucose monitoring", "correct": true, "rationale": "ADIPS criteria: fasting 5.1 or above, 1 hour 10.0 or above, or 2 hour 8.5 or above; the 1 hour of 10.4 meets threshold; lifestyle plus monitoring is initial management. (Source: ADIPS GDM Consensus 2014)", "source_refs": ["ADIPS Consensus Guidelines for GDM Testing in Australia"] },
+      { "letter": "C", "text": "Normal test; reassure and no further monitoring or intervention required in this pregnancy", "correct": false, "rationale": "The 1 hour value 10.4 is above the ADIPS 10.0 threshold, so this cannot be labelled as normal. (Source: ADIPS GDM Consensus 2014)", "source_refs": ["ADIPS Consensus Guidelines for GDM Testing in Australia"] },
+      { "letter": "D", "text": "Overt diabetes in pregnancy; refer for endocrinology-led insulin initiation this week", "correct": false, "rationale": "Overt diabetes is fasting 7.0 or above, random 11.1 or above, or HbA1c 6.5 or above; this OGTT does not meet those criteria. (Source: ADIPS Consensus Guidelines for GDM Testing in Australia)", "source_refs": ["ADIPS Consensus Guidelines for GDM Testing in Australia"] },
+      { "letter": "E", "text": "Impaired glucose tolerance; repeat 75 g OGTT in four weeks with same thresholds applied", "correct": false, "rationale": "IGT is not the ADIPS diagnostic category in pregnancy; the OGTT is not repeated when a threshold is already crossed. (Source: ADIPS Consensus Guidelines for GDM Testing in Australia)", "source_refs": ["ADIPS Consensus Guidelines for GDM Testing in Australia"] }
+    ],
+    "explanation": {
+      "summary": "ADIPS 2014 criteria for GDM use fasting 5.1 or above, one-hour 10.0 or above, or two-hour 8.5 or above (any one criterion suffices). Overt diabetes in pregnancy requires fasting 7.0 or above, random 11.1 or above, or HbA1c 6.5 or above. Initial management is diet and exercise with home glucose monitoring; metformin or insulin is added if targets are not met after two weeks. Fasting target under 5.1 mmol/L and postprandial targets under 6.7 mmol/L at 2 hours are typical for AU maternity units.",
+      "key_points": [
+        "ADIPS OGTT: fasting 5.1, 1 hour 10.0, 2 hour 8.5 (any one).",
+        "Overt diabetes: fasting 7.0, random 11.1, HbA1c 6.5.",
+        "First line: diet, exercise, home glucose monitoring.",
+        "Add metformin or insulin at 2 weeks if targets missed."
+      ],
+      "pearls": "ADIPS diagnosis of GDM requires only ONE abnormal OGTT value; a 1 hour of 10.4 mmol/L alone is enough even with normal fasting and 2 hour values."
+    },
+    "sources": [
+      { "label": "ADIPS Consensus Guidelines for GDM Testing in Australia", "url": "https://www.adips.org/downloads/2014ADIPSGDMGuidelinesV18.11.2014.pdf" },
+      { "label": "RANZCOG: Diagnosis of GDM" }
+    ],
+    "reference_ranges": ["ogtt_pregnancy", "obs_pregnancy_vitals", "glucose_hba1c"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "obgyn-p69-004",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Antenatal care",
+    "subtopic_detail": "Anti-D routine antenatal prophylaxis",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["anti-D", "rhesus"],
+    "stem": "A 26-year-old G1P0 attends her 28-week antenatal appointment. Her blood group at booking was O rhesus D negative and her antibody screen was negative. Her partner is known to be rhesus D positive. She has had no vaginal bleeding, no antenatal invasive procedures, and no abdominal trauma this pregnancy.\n\nShe is asymptomatic today with a normal midwifery review. Fundal height and foetal heart tones are unremarkable. She asks about routine anti-D administration.",
+    "data_table": {
+      "Vital signs": "Pulse 78/min, blood pressure 110/68 mmHg, respiratory rate 16/min, SpO2 99 percent on room air, temperature 36.6 degrees C, foetal heart rate 142/min",
+      "Examination": "Fundal height 28 cm at 28 weeks; longitudinal lie, cephalic presentation; foetal movements reported normal",
+      "Investigations": "Blood group O rhesus D negative; antibody screen negative at 28 weeks; midstream urine and full blood count within normal limits"
+    },
+    "lead_in": "What is the most appropriate anti-D dosing schedule?",
+    "options": [
+      { "letter": "A", "text": "Anti-D immunoglobulin 250 IU intramuscular now, one further dose at delivery", "correct": false, "rationale": "250 IU is the correct dose for sensitising events in the first trimester, not for routine second and third trimester prophylaxis. (Source: NBA Anti-D guideline)", "source_refs": ["NBA: Guidelines for the use of Rh(D) immunoglobulin"] },
+      { "letter": "B", "text": "Anti-D immunoglobulin 625 IU intramuscular at 34 weeks only, plus post-delivery dose", "correct": false, "rationale": "The NBA regimen requires 625 IU at both 28 and 34 weeks; a single-dose schedule at 34 weeks alone is inadequate. (Source: NBA: Guidelines for the use of Rh(D) immunoglobulin)", "source_refs": ["NBA: Guidelines for the use of Rh(D) immunoglobulin"] },
+      { "letter": "C", "text": "Anti-D immunoglobulin 625 IU intramuscular now and again at 34 weeks", "correct": true, "rationale": "NBA routine antenatal prophylaxis is 625 IU at both 28 and 34 weeks gestation, plus a post-delivery dose within 72 hours if baby is Rh D positive. (Source: NBA: Guidelines for the use of Rh(D) immunoglobulin)", "source_refs": ["NBA: Guidelines for the use of Rh(D) immunoglobulin"] },
+      { "letter": "D", "text": "Anti-D immunoglobulin 1500 IU intramuscular now as a single-dose regimen", "correct": false, "rationale": "1500 IU single-dose regimen is a UK NICE alternative; the AU NBA program uses two-dose 625 IU at 28 and 34 weeks. (Source: NBA: Guidelines for the use of Rh(D) immunoglobulin)", "source_refs": ["NBA: Guidelines for the use of Rh(D) immunoglobulin"] },
+      { "letter": "E", "text": "No anti-D required unless a sensitising event occurs before delivery", "correct": false, "rationale": "Routine antenatal prophylaxis reduces sensitisation from silent foeto-maternal haemorrhage; withholding it fails Australian standard care. (Source: NBA: Guidelines for the use of Rh(D) immunoglobulin)", "source_refs": ["NBA: Guidelines for the use of Rh(D) immunoglobulin"] }
+    ],
+    "explanation": {
+      "summary": "The National Blood Authority anti-D program in Australia gives 625 IU intramuscular at 28 and 34 weeks gestation to all non-sensitised rhesus D negative women, plus 625 IU within 72 hours of delivery if the baby is rhesus D positive. Sensitising events (bleeding, ECV, amniocentesis, chorionic villus sampling, trauma) trigger extra dosing: 250 IU in first trimester, 625 IU from 13 weeks with Kleihauer testing to assess feto-maternal haemorrhage volume. Additional doses are calculated at 125 IU per mL of foetal red cells above the baseline detection.",
+      "key_points": [
+        "AU regimen: 625 IU at 28 and 34 weeks routinely.",
+        "Post-delivery: 625 IU within 72 hours if baby Rh D positive.",
+        "First trimester sensitising event: 250 IU.",
+        "13 weeks or later sensitising event: 625 IU with Kleihauer."
+      ],
+      "pearls": "AU routine antenatal anti-D is 625 IU at 28 and 34 weeks; the 1500 IU single-dose regimen is UK NICE, not NBA."
+    },
+    "sources": [
+      { "label": "NBA: Guidelines for the use of Rh(D) immunoglobulin", "url": "https://www.blood.gov.au/pubs/anti-d/" },
+      { "label": "RANZCOG: Routine antenatal assessment" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals", "fbc"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "obgyn-p69-005",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Antepartum haemorrhage",
+    "subtopic_detail": "Placenta praevia versus abruption",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["APH", "placenta praevia"],
+    "stem": "A 34-year-old G3P2 at 33 weeks gestation presents with sudden onset of moderate painless bright red vaginal bleeding while at rest. Her previous births were two lower segment caesarean sections. Her 20-week morphology scan reported an anterior placenta reaching to the internal os.\n\nShe has soaked one large pad. Foetal movements have been active throughout. She has had no abdominal trauma, no contractions and no ruptured membranes. She last ate two hours ago.",
+    "data_table": {
+      "Vital signs": "Pulse 102/min, blood pressure 108/64 mmHg, respiratory rate 20/min, SpO2 99 percent on room air, temperature 36.8 degrees C, foetal heart rate 148/min baseline with normal variability",
+      "Examination": "Soft, non-tender abdomen; uterus relaxed between reassuring foetal movements; speculum deferred pending imaging",
+      "Investigations": "Full blood count and group and hold sent; CTG reactive with reassuring baseline; large-bore IV access secured"
+    },
+    "lead_in": "What is the most appropriate next single step?",
+    "options": [
+      { "letter": "A", "text": "Digital vaginal examination to assess cervical dilation and any presenting cord", "correct": false, "rationale": "Digital examination is contraindicated in known or suspected placenta praevia before ultrasound has excluded a low-lying placenta at the os. (Source: RANZCOG: Placenta accreta and placenta praevia)", "source_refs": ["RANZCOG: Placenta accreta spectrum"] },
+      { "letter": "B", "text": "Speculum examination in lithotomy after gentle betadine cleaning of the vulva", "correct": false, "rationale": "Speculum examination is safe once praevia excluded but should not be the immediate next step before imaging in ongoing bleeding. (Source: RANZCOG: Placenta accreta and placenta praevia)", "source_refs": ["RANZCOG: Placenta accreta spectrum"] },
+      { "letter": "C", "text": "Immediate emergency caesarean section under general anaesthesia in theatre", "correct": false, "rationale": "The mother is stable, foetus reassuring; category 1 caesarean is reserved for maternal or foetal compromise, not for painless bleeding at 33 weeks. (Source: RANZCOG: Placenta accreta spectrum)", "source_refs": ["RANZCOG: Placenta accreta spectrum"] },
+      { "letter": "D", "text": "Kleihauer test only and outpatient follow-up given painless nature of bleed", "correct": false, "rationale": "Any antepartum haemorrhage at 33 weeks requires admission, imaging, foetal monitoring and steroids; outpatient management is unsafe. (Source: RANZCOG: Antepartum haemorrhage)", "source_refs": ["RANZCOG: Antepartum haemorrhage"] },
+      { "letter": "E", "text": "Bedside transabdominal then transvaginal ultrasound to confirm placental position", "correct": true, "rationale": "Painless bleeding at 33 weeks with anterior low placenta and two prior caesareans mandates urgent ultrasound to confirm praevia or accreta before any vaginal examination. (Source: RANZCOG: Placenta accreta spectrum)", "source_refs": ["RANZCOG: Placenta accreta spectrum"] }
+    ],
+    "explanation": {
+      "summary": "Painless bright red bleeding at 33 weeks with a low anterior placenta and prior caesareans is placenta praevia (with placenta accreta risk) until proven otherwise. Digital vaginal examination is contraindicated before imaging. Transabdominal then transvaginal ultrasound confirms placental position and screens for accreta features. Management includes admission, betamethasone for lung maturity between 24 and 34 weeks, tocolysis only if in threatened preterm labour, magnesium sulfate for neuroprotection if birth is anticipated within 24 hours, and elective caesarean section at 36 to 37 weeks if praevia persists.",
+      "key_points": [
+        "Painless bright red APH implicates praevia over abruption.",
+        "Never examine digitally before ultrasound in suspected praevia.",
+        "Two prior caesareans plus anterior praevia raises accreta risk.",
+        "Betamethasone from 24 to 34 weeks reduces neonatal RDS."
+      ],
+      "pearls": "For painless APH at 33 weeks with prior caesareans and low anterior placenta, get transvaginal ultrasound before any digital examination; accreta risk is high."
+    },
+    "sources": [
+      { "label": "RANZCOG: Placenta accreta spectrum", "url": "https://ranzcog.edu.au/wp-content/uploads/2022/05/Placenta-accreta-spectrum.pdf" },
+      { "label": "RANZCOG: Antepartum haemorrhage" }
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals", "ctg_baseline", "fbc"],
+    "created": "2026-07-26"
+  }
+]
