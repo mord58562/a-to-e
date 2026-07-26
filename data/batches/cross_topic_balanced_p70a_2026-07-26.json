@@ -1,0 +1,41 @@
+[
+  {
+    "id": "paeds-p70-001",
+    "topic": "Paediatrics",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "Incomplete Kawasaki disease",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["Kawasaki disease", "IVIG"],
+    "stem": "A 3-year-old boy has had a fever above 39 degrees for 6 days despite 48 hours of oral amoxicillin. His parents report cracked red lips, red eyes without pus, and a fine truncal rash that comes and goes. On examination he is irritable but not toxic, with a single 20 mm right anterior cervical node. Palms and soles are not swollen or peeling. Throat swab for group A streptococcus and blood culture are negative.\n\nHe has no household exposure to measles, no travel history and is fully immunised. The ED registrar has already arranged a formal echocardiogram, which shows a left anterior descending coronary artery Z score of +2.7.",
+    "data_table": {
+      "Vital signs": "Pulse 148/min, blood pressure 92/56 mmHg, respiratory rate 30/min, SpO2 99 percent on room air, temperature 39.4 degrees C",
+      "Examination": "Cracked lips, bilateral non-purulent bulbar conjunctival injection, polymorphous truncal rash, single 20 mm right anterior cervical node; hands and feet not swollen; no BCG scar reaction",
+      "Investigations": "CRP 142 mg/L (<5), ESR 74 mm/hr, WCC 18.4 x10^9/L (5-15), platelets 612 x10^9/L (150-450), ALT 78 U/L (<40), albumin 28 g/L (35-50), sterile pyuria 40 leucocytes/HPF; blood culture and throat swab negative"
+    },
+    "lead_in": "What is the most appropriate immediate management?",
+    "options": [
+      { "letter": "A", "text": "IVIG 2 g/kg intravenously over 10 hours together with high dose aspirin", "correct": true, "rationale": "Fever over 5 days plus 3 principal features and supportive labs (CRP over 30, platelets over 450, sterile pyuria, ALT elevation, albumin under 30) plus a coronary Z score over +2.5 meets incomplete Kawasaki criteria and mandates IVIG within 10 days of fever onset per the RCH pathway. (Source: RCH CPG: Kawasaki disease)", "source_refs": ["RCH CPG: Kawasaki disease"] },
+      { "letter": "B", "text": "Await the fifth principal clinical feature before starting definitive therapy", "correct": false, "rationale": "The AHA and RCH algorithms explicitly treat incomplete disease that meets supplementary lab criteria plus coronary changes; delay increases aneurysm risk. (Source: RCH CPG: Kawasaki disease)", "source_refs": ["RCH CPG: Kawasaki disease"] },
+      { "letter": "C", "text": "Oral prednisolone 2 mg/kg daily as sole first-line anti-inflammatory therapy", "correct": false, "rationale": "Corticosteroid monotherapy is not first-line in Australia; steroids are used with IVIG in high risk groups (Kobayashi score high, under 12 months, coronary dilation at diagnosis), not alone. (Source: RCH CPG: Kawasaki disease)", "source_refs": ["RCH CPG: Kawasaki disease"] },
+      { "letter": "D", "text": "Escalate to intravenous ceftriaxone for presumed occult bacterial infection", "correct": false, "rationale": "Blood culture is negative, and the syndrome is not compatible with occult sepsis; antibiotics do not treat the underlying vasculitis and delay definitive care. (Source: RCH CPG: Kawasaki disease)", "source_refs": ["RCH CPG: Kawasaki disease"] },
+      { "letter": "E", "text": "Discharge with 48-hour ambulatory review and antipyretic advice at home", "correct": false, "rationale": "Coronary dilation is already present and the risk of progression to aneurysm is highest within the first 10 days; discharge would miss the treatment window. (Source: RCH CPG: Kawasaki disease)", "source_refs": ["RCH CPG: Kawasaki disease"] }
+    ],
+    "explanation": {
+      "summary": "Incomplete Kawasaki disease is common in preschool children and easily missed because fewer than 4 principal features are present. AHA and RCH algorithms treat when fever exceeds 5 days plus 2 or 3 principal features and supportive labs (CRP over 30, ESR over 40, platelets over 450 after day 7, albumin under 30, elevated ALT, WCC over 15, sterile pyuria) OR any coronary Z score over +2.5. IVIG 2 g/kg over 10 to 12 hours plus aspirin is standard first-line, and the treatment window is within the first 10 days of fever to minimise aneurysm risk.",
+      "key_points": [
+        "Incomplete Kawasaki disease is treated on lab criteria plus coronary imaging.",
+        "IVIG 2 g/kg is the definitive treatment; aspirin is adjunct.",
+        "Coronary Z score over +2.5 alone meets treatment criteria.",
+        "Steroids are added, not substituted, in high risk cases."
+      ],
+      "pearls": "In fever over 5 days with cracked lips, non-purulent conjunctivitis and a raised CRP, do not wait for the fifth criterion; check LAD Z score and give IVIG 2 g/kg if any coronary dilation is present."
+    },
+    "sources": [
+      { "label": "RCH CPG: Kawasaki disease", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Kawasaki_disease/" },
+      { "label": "AHA Scientific Statement 2017: Diagnosis and Treatment of Kawasaki Disease" }
+    ],
+    "reference_ranges": ["paeds_vitals_child", "paeds_fbc", "inflammatory_markers"],
+    "created": "2026-07-26"
+  }
+]
