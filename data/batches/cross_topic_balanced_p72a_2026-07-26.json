@@ -6,86 +6,135 @@
     "subtopic_detail": "Bronchiolitis oxygen escalation threshold",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": [
-      "bronchiolitis",
-      "oxygen therapy"
-    ],
+    "tags": ["bronchiolitis", "oxygen therapy"],
     "stem": "A 4-month-old boy presents to the paediatric emergency department with 3 days of coryza, cough and increasing work of breathing. He is bottle-feeding at about 50 percent of normal intake and has had wet nappies overnight. He was born at 39 weeks by normal vaginal delivery with no neonatal issues and is fully immunised for age.\n\nOn arrival he has audible wheeze with mild subcostal recession. He accepts a small feed on your assessment and settles when held. His SpO2 on room air is 89 percent and stays at 89 to 90 percent when he is calm and awake.",
-    "data_table": {
-      "Vital signs": "Pulse 148/min, blood pressure not routinely measured, respiratory rate 52/min, SpO2 89 percent on room air, temperature 37.4 degrees C",
-      "Examination": "Alert, pink centrally; mild subcostal recession; widespread expiratory wheeze and fine crackles; capillary refill under 2 seconds; anterior fontanelle flat",
-      "Investigations": "No routine bloods or chest X-ray required"
-    },
+    "data_table": {"Vital signs": "Pulse 148/min, blood pressure not routinely measured, respiratory rate 52/min, SpO2 89 percent on room air, temperature 37.4 degrees C", "Examination": "Alert, pink centrally; mild subcostal recession; widespread expiratory wheeze and fine crackles; capillary refill under 2 seconds; anterior fontanelle flat", "Investigations": "No routine bloods or chest X-ray required"},
     "lead_in": "What is the most appropriate initial oxygen strategy?",
     "options": [
-      {
-        "letter": "A",
-        "text": "Give low-flow nasal prong oxygen at 1 to 2 L/min targeting SpO2 at or above 90 percent",
-        "correct": true,
-        "rationale": "RCH CPG uses low-flow nasal prong oxygen as first-line when SpO2 drops below 90 percent when awake, with 90 percent as the maintenance target. (Source: RCH CPG Bronchiolitis)",
-        "source_refs": [
-          "RCH CPG Bronchiolitis"
-        ]
-      },
-      {
-        "letter": "B",
-        "text": "Withhold oxygen and observe overnight because he remains alert and feeding",
-        "correct": false,
-        "rationale": "Sustained awake SpO2 below 90 percent meets the RCH threshold for oxygen therapy irrespective of feeding. (Source: RCH CPG Bronchiolitis)",
-        "source_refs": [
-          "RCH CPG Bronchiolitis"
-        ]
-      },
-      {
-        "letter": "C",
-        "text": "Trial nebulised salbutamol 2.5 mg once before considering any oxygen therapy",
-        "correct": false,
-        "rationale": "Bronchodilators are not recommended for infants under 12 months with typical bronchiolitis in the RCH pathway. (Source: RCH CPG Bronchiolitis)",
-        "source_refs": [
-          "RCH CPG Bronchiolitis"
-        ]
-      },
-      {
-        "letter": "D",
-        "text": "Start CPAP via a paediatric interface at 6 cm H2O and admit to ICU immediately",
-        "correct": false,
-        "rationale": "CPAP or intubation follows escalation through low-flow then HFNC when respiratory failure develops; it is not first-line here. (Source: RCH CPG Bronchiolitis)",
-        "source_refs": [
-          "RCH CPG Bronchiolitis"
-        ]
-      },
-      {
-        "letter": "E",
-        "text": "Start high-flow nasal cannula at 2 L/kg/min heated humidified oxygen now",
-        "correct": false,
-        "rationale": "HFNC is reserved for failure of low-flow oxygen after a trial of at least 1 to 2 hours; it is not the first oxygen escalation. (Source: RCH CPG Bronchiolitis)",
-        "source_refs": [
-          "RCH CPG Bronchiolitis"
-        ]
-      }
+      {"letter": "A", "text": "Give low-flow nasal prong oxygen at 1 to 2 L/min targeting SpO2 at or above 90 percent", "correct": true, "rationale": "RCH CPG uses low-flow nasal prong oxygen as first-line when SpO2 drops below 90 percent when awake, with 90 percent as the maintenance target. (Source: RCH CPG Bronchiolitis)", "source_refs": ["RCH CPG Bronchiolitis"]},
+      {"letter": "B", "text": "Withhold oxygen and observe overnight because he remains alert and feeding", "correct": false, "rationale": "Sustained awake SpO2 below 90 percent meets the RCH threshold for oxygen therapy irrespective of feeding. (Source: RCH CPG Bronchiolitis)", "source_refs": ["RCH CPG Bronchiolitis"]},
+      {"letter": "C", "text": "Trial nebulised salbutamol 2.5 mg once before considering any oxygen therapy", "correct": false, "rationale": "Bronchodilators are not recommended for infants under 12 months with typical bronchiolitis in the RCH pathway. (Source: RCH CPG Bronchiolitis)", "source_refs": ["RCH CPG Bronchiolitis"]},
+      {"letter": "D", "text": "Start CPAP via a paediatric interface at 6 cm H2O and admit to ICU immediately", "correct": false, "rationale": "CPAP or intubation follows escalation through low-flow then HFNC when respiratory failure develops; it is not first-line here. (Source: RCH CPG Bronchiolitis)", "source_refs": ["RCH CPG Bronchiolitis"]},
+      {"letter": "E", "text": "Start high-flow nasal cannula at 2 L/kg/min heated humidified oxygen now", "correct": false, "rationale": "HFNC is reserved for failure of low-flow oxygen after a trial of at least 1 to 2 hours; it is not the first oxygen escalation. (Source: RCH CPG Bronchiolitis)", "source_refs": ["RCH CPG Bronchiolitis"]}
     ],
-    "explanation": {
-      "summary": "The RCH bronchiolitis pathway uses SpO2 of 90 percent as the maintenance target for infants over 6 weeks with typical bronchiolitis, and starts oxygen with low-flow nasal prongs at 1 to 2 L/min when SpO2 falls below 90 percent awake. HFNC is reserved for infants who fail low-flow after a 1 to 2 hour trial. Bronchodilators, steroids, adrenaline and antibiotics are not recommended in typical bronchiolitis. The pathway is one of supportive feeding, oxygenation and minimal handling.",
-      "key_points": [
-        "SpO2 target on the RCH pathway is 90 percent, not 92 to 94 percent.",
-        "Low-flow nasal prongs 1 to 2 L/min are first-line oxygen.",
-        "HFNC follows failure of low-flow after 1 to 2 hours.",
-        "Bronchodilators and steroids are not recommended in bronchiolitis under 12 months."
-      ],
-      "pearls": "On the RCH CPG start nasal prong oxygen at 1 to 2 L/min once SpO2 sits below 90 percent when the infant is calm and awake; only escalate to HFNC after 1 to 2 hours of failed low-flow."
-    },
-    "sources": [
-      {
-        "label": "RCH CPG Bronchiolitis",
-        "url": "https://www.rch.org.au/clinicalguide/guideline_index/bronchiolitis/"
-      },
-      {
-        "label": "Australian eTG: Paediatrics - Bronchiolitis"
-      }
+    "explanation": {"summary": "The RCH bronchiolitis pathway uses SpO2 of 90 percent as the maintenance target for infants over 6 weeks with typical bronchiolitis, and starts oxygen with low-flow nasal prongs at 1 to 2 L/min when SpO2 falls below 90 percent awake. HFNC is reserved for infants who fail low-flow after a 1 to 2 hour trial. Bronchodilators, steroids, adrenaline and antibiotics are not recommended in typical bronchiolitis. The pathway is one of supportive feeding, oxygenation and minimal handling.", "key_points": ["SpO2 target on the RCH pathway is 90 percent, not 92 to 94 percent.", "Low-flow nasal prongs 1 to 2 L/min are first-line oxygen.", "HFNC follows failure of low-flow after 1 to 2 hours.", "Bronchodilators and steroids are not recommended in bronchiolitis under 12 months."], "pearls": "On the RCH CPG start nasal prong oxygen at 1 to 2 L/min once SpO2 sits below 90 percent when the infant is calm and awake; only escalate to HFNC after 1 to 2 hours of failed low-flow."},
+    "sources": [{"label": "RCH CPG Bronchiolitis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/bronchiolitis/"}, {"label": "Australian eTG: Paediatrics - Bronchiolitis"}],
+    "reference_ranges": ["paeds_vitals_infant"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "paeds-p72-002",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Croup steroid dose selection",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["croup", "corticosteroid"],
+    "stem": "A 2-year-old girl is brought to the paediatric emergency department at midnight with a barking cough and hoarse voice for 6 hours. She has a mild coryzal illness for 2 days. She is fully immunised, was born at term with no neonatal issues and has never previously been hospitalised.\n\nOn arrival she is alert, sitting comfortably in her father's arms and has an audible barking cough with intermittent inspiratory stridor when upset. Between episodes of crying she has no stridor at rest and mild suprasternal recession only when distressed. She accepts a sip of water.",
+    "data_table": {"Vital signs": "Pulse 128/min, blood pressure not measured, respiratory rate 32/min, SpO2 98 percent on room air, temperature 37.6 degrees C", "Examination": "Alert, well perfused, barking cough on examination; stridor with crying only; no drooling; chest clear to auscultation between coughs", "Investigations": "No bloods or imaging indicated"},
+    "lead_in": "What is the most appropriate first steroid dose?",
+    "options": [
+      {"letter": "A", "text": "Oral prednisolone 1 mg/kg once now and reassess after 2 hours", "correct": false, "rationale": "Prednisolone is second-line to dexamethasone in Australian croup pathways because of shorter duration and reduced evidence base. (Source: RCH CPG Croup)", "source_refs": ["RCH CPG Croup"]},
+      {"letter": "B", "text": "Oral dexamethasone 0.15 mg/kg once now and observe for at least 30 minutes", "correct": true, "rationale": "RCH CPG dexamethasone dose for mild to moderate croup is 0.15 mg/kg orally; observation continues until stridor at rest resolves. (Source: RCH CPG Croup)", "source_refs": ["RCH CPG Croup"]},
+      {"letter": "C", "text": "Oral dexamethasone 0.6 mg/kg once now and admit for overnight monitoring", "correct": false, "rationale": "0.6 mg/kg is reserved for severe croup with stridor at rest and respiratory distress; this presentation is mild to moderate. (Source: RCH CPG Croup)", "source_refs": ["RCH CPG Croup"]},
+      {"letter": "D", "text": "Nebulised budesonide 2 mg once and discharge home after 15 minutes of observation", "correct": false, "rationale": "Nebulised budesonide is an alternative when oral is not tolerated; oral dexamethasone is first-line and observation is longer. (Source: RCH CPG Croup)", "source_refs": ["RCH CPG Croup"]},
+      {"letter": "E", "text": "Nebulised adrenaline 5 mL of 1:1000 with no steroid until stridor at rest returns", "correct": false, "rationale": "Adrenaline is added for severe croup or stridor at rest; steroids are still given at the same time to reduce rebound. (Source: RCH CPG Croup)", "source_refs": ["RCH CPG Croup"]}
     ],
-    "reference_ranges": [
-      "paeds_vitals_infant"
+    "explanation": {"summary": "The RCH croup pathway uses oral dexamethasone 0.15 mg/kg as the default dose for mild to moderate croup. Severe croup with stridor at rest and marked respiratory distress warrants 0.6 mg/kg oral dexamethasone plus nebulised adrenaline 5 mL of 1:1000 as a flat dose (not weight-based). After nebulised adrenaline the child must be observed for at least 3 hours from the last dose because of rebound. Prednisolone is second-line if dexamethasone is unavailable. Nebulised budesonide 2 mg is an alternative when oral steroid is not tolerated.", "key_points": ["Dexamethasone 0.15 mg/kg orally is standard for mild to moderate croup on the RCH pathway.", "0.6 mg/kg is reserved for severe croup with stridor at rest.", "Nebulised adrenaline is a flat 5 mL of 1:1000 and requires 3 hours observation.", "Steroids are given alongside adrenaline to reduce rebound."], "pearls": "Give oral dexamethasone 0.15 mg/kg for mild or moderate croup and reserve 0.6 mg/kg for severe croup with resting stridor. Adrenaline is a flat 5 mL of 1:1000 and mandates 3 hours of observation from the last dose."},
+    "sources": [{"label": "RCH CPG Croup", "url": "https://www.rch.org.au/clinicalguide/guideline_index/croup/"}, {"label": "Australian eTG: Paediatrics - Croup"}],
+    "reference_ranges": ["paeds_vitals_child"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "paeds-p72-003",
+    "topic": "Paediatrics",
+    "subtopic": "Gastroenterology",
+    "subtopic_detail": "Gastroenteritis rehydration route selection",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["gastroenteritis", "rehydration"],
+    "stem": "A 22-month-old boy presents with 24 hours of watery non-bloody diarrhoea (six loose stools today) and three episodes of non-bilious vomiting. He weighs 12 kg. His mother reports reduced but not absent oral intake and one wet nappy in the past 8 hours. There has been no fever, no rash and no unwell contacts other than a similar mild illness in his older sibling.\n\nOn arrival he is clingy but consolable, has slightly dry mucous membranes and reduced skin turgor over the abdomen. Capillary refill is 2 seconds centrally, extremities are warm. He gags on the first oral rehydration sip and vomits it back within 5 minutes despite a small volume.",
+    "data_table": {"Vital signs": "Pulse 132/min, blood pressure 96/60 mmHg, respiratory rate 28/min, SpO2 99 percent on room air, temperature 36.8 degrees C", "Examination": "Alert; mildly dry mucous membranes; capillary refill 2 seconds central; abdomen soft, non-tender; no rash; weight 12 kg (usual 12.4 kg)", "Investigations": "No routine bloods indicated at this stage"},
+    "lead_in": "What is the most appropriate next step in rehydration?",
+    "options": [
+      {"letter": "A", "text": "Admit for IV maintenance fluids alone without any enteral rehydration attempt", "correct": false, "rationale": "Maintenance IV fluid does not replace the existing deficit; enteral rehydration is preferred where feasible. (Source: RCH CPG Gastroenteritis)", "source_refs": ["RCH CPG Gastroenteritis"]},
+      {"letter": "B", "text": "Insert an IV cannula and give 20 mL/kg normal saline bolus over 20 minutes now", "correct": false, "rationale": "IV rehydration is reserved for severe dehydration, shock, or failure of enteral rehydration; a nasogastric trial is preferred first. (Source: RCH CPG Gastroenteritis)", "source_refs": ["RCH CPG Gastroenteritis"]},
+      {"letter": "C", "text": "Insert a nasogastric tube and give oral rehydration solution at 20 mL/kg over 1 hour", "correct": true, "rationale": "RCH CPG recommends nasogastric rehydration as first-line when oral intake fails in mild to moderate dehydration; NG delivery avoids gag-triggered vomiting. (Source: RCH CPG Gastroenteritis)", "source_refs": ["RCH CPG Gastroenteritis"]},
+      {"letter": "D", "text": "Discharge home with advice to offer small frequent oral fluids and review in 4 hours", "correct": false, "rationale": "He has failed one oral trial in your presence and shows features of mild to moderate dehydration; discharge without a rehydration trial is unsafe. (Source: RCH CPG Gastroenteritis)", "source_refs": ["RCH CPG Gastroenteritis"]},
+      {"letter": "E", "text": "Give a single oral ondansetron 4 mg and repeat oral rehydration attempt after 20 minutes", "correct": false, "rationale": "Ondansetron 2 mg is the dose for 8 to 15 kg children in RCH and 4 mg is the 15 to 30 kg dose; nasogastric rehydration is the preferred escalation. (Source: RCH CPG Gastroenteritis)", "source_refs": ["RCH CPG Gastroenteritis"]}
     ],
+    "explanation": {"summary": "RCH CPG for paediatric gastroenteritis places nasogastric rehydration as first-line when oral rehydration fails in mild to moderate dehydration, with IV rehydration reserved for severe dehydration, shock, or failure of the NG trial. Oral rehydration solution delivered by NG is generally 20 mL/kg over 1 hour repeated as needed. Ondansetron single-dose supports oral rehydration in vomiting children at weight-banded doses: 2 mg for 8 to 15 kg and 4 mg for 15 to 30 kg. Antibiotics are reserved for specific proven pathogens.", "key_points": ["Nasogastric rehydration is first-line in mild to moderate dehydration failing oral trials.", "IV bolus 20 mL/kg is for severe dehydration, shock or NG failure.", "Ondansetron oral dose is banded: 2 mg for 8 to 15 kg, 4 mg for 15 to 30 kg.", "Discharge without a rehydration trial is unsafe with dry mucous membranes and reduced turgor."], "pearls": "In a 12 kg child with mild to moderate dehydration who cannot keep oral fluids down, RCH recommends nasogastric ORS at 20 mL/kg over 1 hour before any IV cannulation."},
+    "sources": [{"label": "RCH CPG Gastroenteritis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Gastroenteritis/"}, {"label": "Australian eTG: Paediatrics - Gastroenteritis"}],
+    "reference_ranges": ["paeds_vitals_child"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "paeds-p72-004",
+    "topic": "Paediatrics",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Febrile infant under 3 months workup",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["febrile infant", "sepsis"],
+    "stem": "A 5-week-old boy is brought to the emergency department by his parents with a rectal temperature of 38.4 degrees C recorded at home and confirmed on arrival. He was born at 39 weeks by normal vaginal delivery with an uneventful pregnancy and postnatal course. He has been feeding poorly for 12 hours and has had reduced wet nappies today, with two brief episodes of pallor described by his mother.\n\nOn examination he is alert but has a weak cry and is difficult to rouse for feeds. His anterior fontanelle is flat, capillary refill is 3 seconds centrally, and the abdomen is soft. There is no rash, no bulging fontanelle and no localising focus. He has not received any recent vaccinations.",
+    "data_table": {"Vital signs": "Pulse 178/min, blood pressure 74/48 mmHg, respiratory rate 62/min, SpO2 96 percent on room air, temperature 38.4 degrees C", "Examination": "Weak cry; capillary refill 3 seconds central; anterior fontanelle flat; chest clear; abdomen soft; no rash; no focal source", "Investigations": "Point of care glucose 4.2 mmol/L (2.6-6.0)"},
+    "lead_in": "What is the most appropriate next set of investigations and treatment?",
+    "options": [
+      {"letter": "A", "text": "Blood tests and urine dipstick only and start oral amoxicillin after clean-catch urine", "correct": false, "rationale": "Oral therapy and dipstick-only sampling are inadequate for a sick febrile infant under 3 months; parenteral empirical antibiotics are needed. (Source: RCH CPG Febrile child)", "source_refs": ["RCH CPG Febrile child"]},
+      {"letter": "B", "text": "Observation for 6 hours with paracetamol and only investigate if temperature rises further", "correct": false, "rationale": "Watchful waiting is unsafe in an unwell-appearing infant under 3 months with fever; empirical antibiotics must not be delayed. (Source: RCH CPG Febrile child)", "source_refs": ["RCH CPG Febrile child"]},
+      {"letter": "C", "text": "Chest X-ray, viral swab, blood cultures and inhaled bronchodilator without lumbar puncture", "correct": false, "rationale": "The presentation is not respiratory-focused and LP is mandatory in an unwell infant under 3 months with fever unless immediately contraindicated. (Source: RCH CPG Febrile child)", "source_refs": ["RCH CPG Febrile child"]},
+      {"letter": "D", "text": "Full septic workup including lumbar puncture followed by IV cefotaxime and benzylpenicillin now", "correct": true, "rationale": "Any unwell-appearing infant under 3 months with fever needs a full septic workup including LP and empirical IV cefotaxime plus benzylpenicillin per RCH sepsis pathway. (Source: RCH CPG Febrile child)", "source_refs": ["RCH CPG Febrile child"]},
+      {"letter": "E", "text": "Blood cultures, urine microscopy and IV ceftriaxone with observation only for 4 hours", "correct": false, "rationale": "Ceftriaxone is not preferred in the first weeks due to bilirubin displacement; LP cannot be deferred in an unwell-appearing infant under 3 months. (Source: RCH CPG Febrile child)", "source_refs": ["RCH CPG Febrile child"]}
+    ],
+    "explanation": {"summary": "RCH guidance for the febrile infant under 3 months mandates a full septic workup including blood culture, urine microscopy and culture, chest X-ray if respiratory symptoms are present, and lumbar puncture in any unwell-appearing infant or under 28 days old. Empirical parenteral antibiotics are IV cefotaxime plus benzylpenicillin (or ampicillin) to cover Listeria in the first weeks of life; ceftriaxone is avoided in neonates because of bilirubin displacement. Delay in antibiotics is a major cause of preventable death. Well-appearing infants aged 1 to 3 months follow a stepwise pathway but still receive full culture set and empirical antibiotics if criteria are unmet.", "key_points": ["Unwell infants under 3 months need full septic workup including LP.", "Empirical antibiotics are cefotaxime plus benzylpenicillin in the first weeks.", "Ceftriaxone is avoided in neonates due to bilirubin displacement.", "Delay in antibiotics is a preventable cause of paediatric sepsis death."], "pearls": "For a 5 week old with fever and any red flag (weak cry, poor feeding, cap refill above 2 seconds) do the full septic workup with LP and give IV cefotaxime plus benzylpenicillin without waiting for cultures."},
+    "sources": [{"label": "RCH CPG Febrile child", "url": "https://www.rch.org.au/clinicalguide/guideline_index/febrile_child/"}, {"label": "Australian eTG: Paediatrics - Sepsis"}],
+    "reference_ranges": ["paeds_vitals_infant", "bsl_paeds"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "paeds-p72-005",
+    "topic": "Paediatrics",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Paediatric sepsis intervention order",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["sepsis", "resuscitation"],
+    "stem": "A 3-year-old girl presents with 12 hours of fever, lethargy and a non-blanching rash on her legs that has spread to her trunk over the past hour. She has been unwell since yesterday with 24 hours of vomiting and reduced oral intake. She is fully immunised and previously well. Her weight is 15 kg.\n\nOn arrival she is drowsy but rouseable, has cool peripheries, capillary refill of 4 seconds centrally and a non-blanching purpuric rash on her lower limbs and abdomen. Her SpO2 is 96 percent on room air and she has no stridor, wheeze or focal chest signs. Point of care lactate is 4.2 mmol/L.",
+    "data_table": {"Vital signs": "Pulse 168/min, blood pressure 78/40 mmHg, respiratory rate 40/min, SpO2 96 percent on room air, temperature 39.2 degrees C", "Examination": "Drowsy but rouseable; capillary refill 4 seconds central; cool peripheries; non-blanching rash on lower limbs and abdomen; no meningism yet", "Investigations": "Point of care lactate 4.2 mmol/L; venous access not yet obtained"},
+    "lead_in": "What is the correct order for the first three resuscitation actions?",
+    "options": [
+      {"letter": "A", "text": "Give a 20 mL/kg normal saline bolus, then take blood cultures, then give antibiotics", "correct": false, "rationale": "Blood cultures must be drawn before antibiotics ideally but antibiotic delivery must not be delayed by fluid; culture then antibiotic is preferred once access is secured. (Source: RCH CPG Sepsis)", "source_refs": ["RCH CPG Sepsis"]},
+      {"letter": "B", "text": "Start adrenaline infusion first, then obtain access and then give antibiotics after fluids", "correct": false, "rationale": "Inotropes are added only after 40 to 60 mL/kg fluid fails to restore perfusion; they are not the opening move. (Source: RCH CPG Sepsis)", "source_refs": ["RCH CPG Sepsis"]},
+      {"letter": "C", "text": "Perform lumbar puncture immediately for CSF then give antibiotics tailored to CSF findings", "correct": false, "rationale": "LP is deferred until circulation is stable and coagulation is safe; empirical antibiotics must not wait for CSF in septic shock. (Source: RCH CPG Sepsis)", "source_refs": ["RCH CPG Sepsis"]},
+      {"letter": "D", "text": "Intubate first for airway protection then obtain access and give antibiotics after airway is secured", "correct": false, "rationale": "Intubation is not the first step in an alert though drowsy 3 year old with adequate SpO2; resuscitation and antibiotics come first. (Source: RCH CPG Sepsis)", "source_refs": ["RCH CPG Sepsis"]},
+      {"letter": "E", "text": "Obtain IV or intraosseous access, take blood cultures, then give first IV antibiotic within the hour", "correct": true, "rationale": "The Australian paediatric sepsis pathway is IV/IO access, blood cultures, then first antibiotic within the sepsis-6 hour, before fluid bolus is delivered. (Source: RCH CPG Sepsis)", "source_refs": ["RCH CPG Sepsis"]}
+    ],
+    "explanation": {"summary": "The RCH paediatric sepsis pathway sequences resuscitation as: obtain IV or intraosseous access within minutes, draw blood cultures (do not delay antibiotics for this), give the first IV antibiotic within the hour, and start 20 mL/kg saline boluses (over 5 to 10 minutes) repeated to a total of 40 to 60 mL/kg while reassessing. Inotropes such as adrenaline are started when perfusion remains poor after fluid resuscitation. Lumbar puncture is deferred in septic shock until the child is stable and coagulation is safe.", "key_points": ["Sequence is access, cultures, first antibiotic within the hour.", "Fluid boluses are 20 mL/kg saline over 5 to 10 minutes to a total of 40 to 60 mL/kg.", "Inotropes come after fluid fails, not before.", "LP is deferred in shock until circulation is stable."], "pearls": "In paediatric septic shock the hour bundle is IO/IV access, blood cultures, empirical antibiotics and 20 mL/kg saline boluses to 60 mL/kg; adrenaline starts if perfusion stays poor after fluids."},
+    "sources": [{"label": "RCH CPG Sepsis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Sepsis/"}, {"label": "Australian eTG: Paediatrics - Sepsis"}],
+    "reference_ranges": ["paeds_vitals_child"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "paeds-p72-006",
+    "topic": "Paediatrics",
+    "subtopic": "Renal",
+    "subtopic_detail": "UTI imaging pathway in a toddler",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["urinary tract infection", "ultrasound"],
+    "stem": "A 20-month-old girl is brought to your general practice for review one week after her first confirmed urinary tract infection. She had 48 hours of fever and irritability, urine culture grew Escherichia coli with clean-catch collection, and she was treated with 5 days of oral trimethoprim-sulfamethoxazole. She defervesced within 36 hours of starting antibiotics.\n\nShe is now clinically well with normal feeding and activity. She had an unremarkable antenatal ultrasound at 20 weeks that documented normal kidneys and bladder. She has no family history of vesicoureteric reflux, no palpable abdominal mass on examination today, and no growth concerns.",
+    "data_table": {"Vital signs": "Pulse 112/min, blood pressure not routinely measured, respiratory rate 24/min, SpO2 99 percent on room air, temperature 36.8 degrees C", "Examination": "Alert and active; abdomen soft with no palpable mass; genitalia normal; growth on the 50th centile", "Investigations": "Urine culture from admission grew E coli fully sensitive; renal function during illness within normal limits"},
+    "lead_in": "What is the most appropriate imaging plan?",
+    "options": [
+      {"letter": "A", "text": "No routine imaging required now; safety-net for recurrence and any atypical features later", "correct": true, "rationale": "RCH does not recommend routine renal ultrasound after a single typical UTI in a well child under 24 months with a normal antenatal scan. (Source: RCH CPG UTI)", "source_refs": ["RCH CPG UTI"]},
+      {"letter": "B", "text": "Micturating cystourethrogram within 4 weeks to identify any vesicoureteric reflux", "correct": false, "rationale": "MCUG is invasive with radiation exposure and is not indicated after a typical single UTI in the RCH cascade. (Source: RCH CPG UTI)", "source_refs": ["RCH CPG UTI"]},
+      {"letter": "C", "text": "Start daily prophylactic trimethoprim for 6 months and re-image only if breakthrough occurs", "correct": false, "rationale": "Long-term prophylaxis is not indicated after a single typical UTI in a well child. (Source: RCH CPG UTI)", "source_refs": ["RCH CPG UTI"]},
+      {"letter": "D", "text": "Renal tract ultrasound within 6 weeks and a follow-up ultrasound at 12 months routinely", "correct": false, "rationale": "Routine ultrasound after a single typical UTI is not on the RCH pathway when antenatal imaging was normal. (Source: RCH CPG UTI)", "source_refs": ["RCH CPG UTI"]},
+      {"letter": "E", "text": "Renal tract ultrasound within 6 weeks and DMSA scan at 6 months regardless of ultrasound findings", "correct": false, "rationale": "RCH does not routinely require DMSA after a first typical UTI in a well child; DMSA is a NICE construct. (Source: RCH CPG UTI)", "source_refs": ["RCH CPG UTI"]}
+    ],
+    "explanation": {"summary": "RCH guidance for a first UTI in a well child under 24 months with normal antenatal imaging does not recommend routine renal ultrasound, DMSA or MCUG. Ultrasound during illness is reserved for atypical UTI - poor response to 48 hours of appropriate antibiotics, non-E coli organism, sepsis, abdominal mass or raised creatinine. Infants under 6 months without antenatal monitoring get ultrasound after a first UTI. DMSA and MCUG are not part of the standard RCH cascade; they are NICE constructs. The family should be safety-netted for recurrence.", "key_points": ["First typical UTI in a well child over 6 months does not need routine ultrasound if antenatal scan was normal.", "Ultrasound during illness is only for atypical UTI.", "DMSA and MCUG are not part of the RCH cascade.", "Recurrent UTIs prompt further imaging and referral."], "pearls": "Do not order routine renal ultrasound after a single typical UTI in a well toddler with a normal antenatal renal scan; safety-net for recurrence and reserve imaging for atypical features."},
+    "sources": [{"label": "RCH CPG UTI", "url": "https://www.rch.org.au/clinicalguide/guideline_index/urinary_tract_infection/"}, {"label": "Australian eTG: Paediatrics - UTI"}],
+    "reference_ranges": [],
     "created": "2026-07-26"
   }
 ]
