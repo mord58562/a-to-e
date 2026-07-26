@@ -1,0 +1,541 @@
+[
+  {
+    "id": "med-p68-003",
+    "topic": "Medicine",
+    "subtopic": "Haematology",
+    "subtopic_detail": "DOAC reversal for life-threatening bleeding",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "DOAC"
+    ],
+    "stem": "A 72-year-old woman is brought to the emergency department after a fall onto her head at home. She has an obvious right-sided haematoma over the temporal region and has vomited twice. On arrival her GCS is 13 (E3V4M6) and she is confused about time and place. A non-contrast CT scan of the brain shows a 15 mm right frontal intraparenchymal haemorrhage with 6 mm midline shift.\n\nShe has atrial fibrillation and takes apixaban 5 mg twice daily for stroke prevention (CHA2DS2-VA score 5). Her last dose was this morning approximately 4 hours ago. Her renal function is normal with creatinine 68 micromol/L (45-90) and her weight is 68 kg. She has no other bleeding sources and no ongoing extracranial haemorrhage. Neurosurgical consultation has been sought and they advise urgent reversal is required.",
+    "data_table": {
+      "Vital signs": "pulse rate 92, blood pressure 148/86, respiratory rate 18, SpO2 98 percent on room air, temperature 36.8 degrees, GCS 13",
+      "Investigations": "haemoglobin 128 g/L (115-165), platelets 240 x10 to the 9 per litre (150-400), creatinine 68 micromol/L (45-90), INR 1.1 (0.9-1.2), activated partial thromboplastin time 32 seconds (25-35)",
+      "Imaging": "non-contrast CT brain with 15 mm right frontal intraparenchymal haemorrhage and 6 mm midline shift"
+    },
+    "lead_in": "What is the most appropriate reversal agent?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Administer intravenous idarucizumab 5 g in two 2.5 g intravenous bolus doses within 15 minutes of each other for urgent DOAC reversal now",
+        "correct": false,
+        "rationale": "Idarucizumab is specific for the direct thrombin inhibitor dabigatran, not the factor Xa inhibitor apixaban. It has no effect on apixaban. (Source: HSANZ Warfarin and DOAC Reversal Consensus)",
+        "source_refs": [
+          "HSANZ Warfarin and DOAC Reversal Consensus"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Administer intravenous andexanet alfa in a bolus and infusion regimen dosed per the last dose and time since ingestion of apixaban",
+        "correct": true,
+        "rationale": "Andexanet alfa is a specific reversal agent for the factor Xa inhibitors apixaban and rivaroxaban and is approved in Australia for life-threatening or uncontrolled bleeding. Dosing is stratified by last dose amount and time since last dose. (Source: HSANZ Warfarin and DOAC Reversal Consensus)",
+        "source_refs": [
+          "HSANZ Warfarin and DOAC Reversal Consensus"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Administer intravenous vitamin K 10 mg with 4-factor prothrombin complex concentrate at 25 units/kg for warfarin-type coagulopathy reversal",
+        "correct": false,
+        "rationale": "This is the AU reversal protocol for warfarin-associated bleeding, not apixaban. Vitamin K has no role in reversing DOACs. (Source: HSANZ Warfarin and DOAC Reversal Consensus)",
+        "source_refs": [
+          "HSANZ Warfarin and DOAC Reversal Consensus"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Administer intravenous fresh frozen plasma 15 mL/kg as the first-line reversal for apixaban-associated intracerebral haemorrhage in this patient",
+        "correct": false,
+        "rationale": "Fresh frozen plasma does not effectively reverse DOAC anticoagulant effect and is not recommended as first-line. (Source: HSANZ Warfarin and DOAC Reversal Consensus)",
+        "source_refs": [
+          "HSANZ Warfarin and DOAC Reversal Consensus"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Administer intravenous tranexamic acid 1 g bolus as monotherapy for apixaban reversal in this haemorrhagic stroke without other reversal agents",
+        "correct": false,
+        "rationale": "Tranexamic acid does not reverse the DOAC anticoagulant effect. It has an emerging adjunct role but is not a specific DOAC reversal agent. (Source: HSANZ Warfarin and DOAC Reversal Consensus)",
+        "source_refs": [
+          "HSANZ Warfarin and DOAC Reversal Consensus"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Reversal agents for direct oral anticoagulants are drug-specific. Andexanet alfa reverses the factor Xa inhibitors apixaban and rivaroxaban; idarucizumab reverses the direct thrombin inhibitor dabigatran. Where andexanet alfa is unavailable, 4-factor prothrombin complex concentrate at 50 units/kg is used off-label. Vitamin K and fresh frozen plasma are ineffective for DOAC reversal.",
+      "key_points": [
+        "Andexanet alfa for apixaban and rivaroxaban; idarucizumab for dabigatran",
+        "4-factor PCC at 50 units/kg is off-label alternative for factor Xa inhibitor reversal",
+        "Vitamin K, FFP, TXA are not effective DOAC reversal agents"
+      ],
+      "pearls": "Match the reversal to the DOAC mechanism. Confusing idarucizumab and andexanet is the classic exam trap."
+    },
+    "sources": [
+      {
+        "label": "HSANZ Warfarin and DOAC Reversal Consensus",
+        "url": "https://www.hsanz.org.au/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Cardiovascular - Anticoagulant reversal",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "fbc",
+      "coags",
+      "uec"
+    ],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "med-p68-004",
+    "topic": "Medicine",
+    "subtopic": "Infectious disease",
+    "subtopic_detail": "Sepsis hour-1 bundle ordering",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "sepsis"
+    ],
+    "stem": "A 68-year-old woman presents to a metropolitan emergency department with 24 hours of loin pain, dysuria and fever. On arrival she is confused, cool peripherally, and has a mottled abdomen. Her past history includes type 2 diabetes on metformin and long-standing recurrent urinary tract infection. She has no known drug allergies.\n\nOn examination she has significant right renal angle tenderness and a distended bladder. Her point-of-care ultrasound shows moderate right hydronephrosis with debris in the collecting system. A urinary catheter has been placed with 300 mL of purulent urine drained on insertion. The Australian Sepsis Network hour-1 bundle has been activated. Urology have been contacted regarding potential percutaneous nephrostomy.",
+    "data_table": {
+      "Vital signs": "pulse rate 128, blood pressure 78/48, respiratory rate 28, SpO2 96 percent on room air, temperature 39.4 degrees",
+      "Investigations": "haemoglobin 118 g/L (115-165), white cell count 18 x10 to the 9 per litre (4.0-11.0), venous lactate 4.8 mmol/L (0.5-2.2), creatinine 168 micromol/L (45-90), CRP 240 mg/L (less than 5)",
+      "Bedside investigations": "catheter urine dip 4+ leukocytes, nitrites positive, moderate blood; blood glucose 12.4 mmol/L"
+    },
+    "lead_in": "What is the correct order of the hour-1 bundle interventions?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence vasopressors first for hypotension, then administer broad-spectrum antibiotics, then measure lactate, then obtain cultures, then commence 30 mL/kg crystalloid resuscitation over 3 hours in a controlled ICU setting",
+        "correct": false,
+        "rationale": "Vasopressors are added only after fluid resuscitation has failed to restore MAP to 65 or above. Starting them first violates the bundle. (Source: Australian Sepsis Network Adult Sepsis Pathway)",
+        "source_refs": [
+          "Australian Sepsis Network Adult Sepsis Pathway"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Administer antibiotics first without cultures, then measure lactate, then commence crystalloid resuscitation at 20 mL/kg to reduce risk of pulmonary oedema, then obtain blood and urine cultures",
+        "correct": false,
+        "rationale": "Cultures should be obtained BEFORE antibiotics whenever possible without delaying antibiotics. Fluid dose is 30 mL/kg, not 20. (Source: Australian Sepsis Network Adult Sepsis Pathway)",
+        "source_refs": [
+          "Australian Sepsis Network Adult Sepsis Pathway"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Await urinary culture results before administering antibiotics to guide narrow-spectrum therapy, commence 30 mL/kg crystalloid, measure lactate, and consider vasopressors once organism identified in the microbiology laboratory",
+        "correct": false,
+        "rationale": "Antibiotics must be given within 1 hour empirically for septic shock. Waiting for cultures increases mortality. (Source: Australian Sepsis Network Adult Sepsis Pathway)",
+        "source_refs": [
+          "Australian Sepsis Network Adult Sepsis Pathway"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Measure lactate, obtain blood and urine cultures, administer broad-spectrum antibiotics (empirical piperacillin-tazobactam and gentamicin), commence 30 mL/kg crystalloid resuscitation, and start vasopressors for persistent hypotension after fluid",
+        "correct": true,
+        "rationale": "The Surviving Sepsis and Australian Sepsis Network hour-1 bundle is: measure lactate, obtain cultures before antibiotics, administer broad-spectrum antibiotics, commence 30 mL/kg crystalloid for hypotension or lactate above 4, and start vasopressors if MAP under 65 despite fluid. Urgent source control (nephrostomy) is added in obstructed pyelonephritis. (Source: Australian Sepsis Network Adult Sepsis Pathway)",
+        "source_refs": [
+          "Australian Sepsis Network Adult Sepsis Pathway"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Perform urgent contrast CT abdomen and pelvis to identify the source, then obtain blood cultures, administer broad-spectrum antibiotics, commence 30 mL/kg crystalloid, and measure lactate after resuscitation is completed",
+        "correct": false,
+        "rationale": "Imaging should not delay the bundle. The source is already identified on point-of-care ultrasound with confirmed obstruction and pyuria. (Source: Australian Sepsis Network Adult Sepsis Pathway)",
+        "source_refs": [
+          "Australian Sepsis Network Adult Sepsis Pathway"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "The Australian Sepsis Network hour-1 bundle is a fixed sequence: measure lactate, obtain cultures before antibiotics, administer broad-spectrum empirical antibiotics, commence 30 mL/kg crystalloid for hypotension or lactate above 4, and start vasopressors if MAP under 65 despite fluid. Source control (in this case percutaneous nephrostomy for the obstructed infected kidney) is added urgently but does not delay the bundle.",
+      "key_points": [
+        "Cultures before antibiotics unless drawing cultures would delay antibiotics",
+        "30 mL/kg crystalloid for hypotension or lactate greater than 4",
+        "Vasopressor of choice is noradrenaline; target MAP at least 65 mmHg",
+        "Source control in obstructed pyelonephritis is percutaneous nephrostomy urgently"
+      ],
+      "pearls": "Empiric AU cover for community urosepsis is piperacillin-tazobactam plus gentamicin (or ceftriaxone plus gentamicin). Adjust with cultures at 24 to 48 hours."
+    },
+    "sources": [
+      {
+        "label": "Australian Sepsis Network Adult Sepsis Pathway",
+        "url": "https://www.australiansepsisnetwork.net.au/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Antibiotic - Sepsis and septic shock",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "fbc",
+      "uec",
+      "inflammatory_markers",
+      "vbg"
+    ],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "med-p68-005",
+    "topic": "Medicine",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Adrenal crisis in known Addison's during acute illness",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "adrenal crisis"
+    ],
+    "stem": "A 42-year-old woman with known primary adrenal insufficiency (Addison's disease) is brought to a rural emergency department with 24 hours of vomiting from gastroenteritis. She takes hydrocortisone 15 mg on waking and 5 mg at 4 p.m., and fludrocortisone 100 microgram in the morning. She reports she doubled her hydrocortisone dose orally 12 hours ago but has vomited each subsequent dose within 30 minutes of taking it.\n\nShe is drowsy and confused. Her family confirms she has been unable to keep down fluids. There is no fever and no localising infective source apart from the gastroenteritis. She wears a medical alert bracelet identifying her as having primary adrenal insufficiency. Her partner has brought her intramuscular hydrocortisone emergency kit from home.",
+    "data_table": {
+      "Vital signs": "pulse rate 128, blood pressure 74/44, respiratory rate 22, SpO2 98 percent on room air, temperature 36.4 degrees",
+      "Investigations": "sodium 128 mmol/L (135-145), potassium 5.6 mmol/L (3.5-5.0), glucose 3.2 mmol/L (3.5-5.5), creatinine 118 micromol/L (45-90), venous pH 7.30",
+      "Bedside investigations": "12-lead ECG with sinus tachycardia and peaked T waves in the precordial leads"
+    },
+    "lead_in": "What is the most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Administer intravenous dexamethasone 4 mg immediately in place of hydrocortisone and await the results of a short synacthen test performed later today at bedside",
+        "correct": false,
+        "rationale": "Dexamethasone is used only when the diagnosis of primary adrenal insufficiency is not yet made and a synacthen test is planned in the next few hours. Diagnosis is already established; hydrocortisone is the correct choice. (Source: Therapeutic Guidelines: Endocrinology - Adrenal insufficiency)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology - Adrenal insufficiency"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Administer intravenous calcium gluconate 10 percent 10 mL for hyperkalaemia and defer steroid dosing until potassium is under 5.0 mmol/L on repeat testing",
+        "correct": false,
+        "rationale": "The hyperkalaemia will correct with steroid, fluid and glucose (via insulin) therapy. Deferring hydrocortisone is dangerous and inappropriate; calcium can be given for ECG changes but does not replace hydrocortisone. (Source: Therapeutic Guidelines: Endocrinology - Adrenal insufficiency)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology - Adrenal insufficiency"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Administer oral prednisolone 25 mg with an antiemetic and observe for 4 hours before deciding on intravenous replacement therapy in the resuscitation area",
+        "correct": false,
+        "rationale": "Oral steroid in a vomiting patient is unreliable and delays effective replacement. Parenteral hydrocortisone is required immediately. (Source: Therapeutic Guidelines: Endocrinology - Adrenal insufficiency)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology - Adrenal insufficiency"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Administer intravenous fludrocortisone 200 microgram immediately as mineralocorticoid replacement therapy for the electrolyte disturbance in adrenal crisis",
+        "correct": false,
+        "rationale": "Fludrocortisone is oral only and its mineralocorticoid effect is provided by high-dose hydrocortisone (which has intrinsic mineralocorticoid activity at 100 mg doses). (Source: Therapeutic Guidelines: Endocrinology - Adrenal insufficiency)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology - Adrenal insufficiency"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Administer intramuscular or intravenous hydrocortisone 100 mg immediately, then 200 mg over 24 hours by infusion or 50 mg every 6 hours, with concurrent saline and dextrose resuscitation",
+        "correct": true,
+        "rationale": "Suspected or confirmed adrenal crisis requires immediate parenteral hydrocortisone 100 mg then 200 mg over 24 hours, plus fluid and glucose resuscitation. Delay for confirmatory testing is inappropriate. (Source: Endocrine Society of Australia Adrenal Insufficiency Guidelines; Therapeutic Guidelines Endocrinology)",
+        "source_refs": [
+          "Therapeutic Guidelines: Endocrinology - Adrenal insufficiency"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Adrenal crisis in a known Addison's patient with vomiting and hypotension requires immediate parenteral hydrocortisone 100 mg IM or IV followed by 200 mg over 24 hours (or 50 mg every 6 hours). Concurrent 0.9 percent sodium chloride and dextrose correct volume, glucose, and electrolyte disturbances. Fludrocortisone is not needed acutely because high-dose hydrocortisone provides mineralocorticoid effect.",
+      "key_points": [
+        "Hydrocortisone 100 mg IM or IV stat, then 200 mg over 24 hours or 50 mg every 6 hours",
+        "0.9 percent saline resuscitation and 5 percent dextrose for hypoglycaemia and volume",
+        "Sick day rules: double or triple oral dose for illness; parenteral if vomiting; carry emergency kit"
+      ],
+      "pearls": "The single commonest cause of death in Addison's is failure to give parenteral hydrocortisone during acute illness. Never wait for confirmatory tests when the diagnosis is known."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Endocrinology - Adrenal insufficiency",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "Endocrine Society of Australia Adrenal Insufficiency Guidelines",
+        "url": "https://www.endocrinesociety.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "uec",
+      "glucose_hba1c",
+      "vbg"
+    ],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "med-p68-006",
+    "topic": "Medicine",
+    "subtopic": "Nephrology",
+    "subtopic_detail": "Hyponatraemia correction rate ceiling to avoid osmotic demyelination",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "hyponatraemia"
+    ],
+    "stem": "A 78-year-old woman is admitted from a residential aged care facility with 5 days of increasing confusion after a viral gastroenteritis and 4 days of poor oral intake. She takes hydrochlorothiazide 25 mg daily for hypertension and citalopram 20 mg daily for depression. On admission her serum sodium is 112 mmol/L (135-145), potassium 3.4 mmol/L, urea 4.8 mmol/L (3-8), and urine sodium 42 mmol/L (spot).\n\nShe is drowsy but rousable, has no seizures, and has a GCS of 12 (E3V4M5). Serum osmolality is 240 mOsm/kg (275-295) and urine osmolality is 380 mOsm/kg. She has no oedema and has an estimated 1 to 2 percent volume depletion on clinical assessment. She has no known alcohol use disorder and no history of chronic kidney disease. Family confirm the confusion has been progressive over the past 3 days.",
+    "data_table": {
+      "Vital signs": "pulse rate 92, blood pressure 118/72, respiratory rate 16, SpO2 98 percent on room air, temperature 36.7 degrees, GCS 12",
+      "Investigations": "sodium 112 mmol/L (135-145), potassium 3.4 mmol/L (3.5-5.0), urea 4.8 mmol/L (3.0-8.0), creatinine 62 micromol/L (45-90), serum osmolality 240 mOsm/kg (275-295), urine osmolality 380 mOsm/kg, urine sodium 42 mmol/L"
+    },
+    "lead_in": "Given her symptoms, what is the most appropriate rate ceiling for correction of her serum sodium over the first 24 hours?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Correction should not exceed 8 mmol/L in the first 24 hours (with 6 mmol/L preferred in high-risk patients), after an initial 100 mL 3 percent saline bolus for symptomatic hyponatraemia",
+        "correct": true,
+        "rationale": "AU/international consensus recommends a maximum sodium rise of 8 mmol/L in 24 hours (some experts prefer 6 in high-risk groups: elderly, hypokalaemia, chronic hyponatraemia, malnutrition). Given severe symptoms, initial 100 mL 3 percent saline bolus is given, then repeat until symptoms improve, targeting an initial 4 to 6 mmol/L rise in the first few hours, but the 24-hour ceiling remains 8. (Source: European Society of Endocrinology Hyponatraemia Guideline; ANZ Renal Society)",
+        "source_refs": [
+          "ANZ Renal Society Hyponatraemia Consensus"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Correction may safely proceed at 15 mmol/L in the first 24 hours if the patient has severe neurological symptoms, using continuous 3 percent hypertonic saline infusion",
+        "correct": false,
+        "rationale": "Rapid correction exceeding 10 to 12 mmol/L per 24 hours substantially raises the risk of osmotic demyelination syndrome. This is unsafe. (Source: ANZ Renal Society Hyponatraemia Consensus)",
+        "source_refs": [
+          "ANZ Renal Society Hyponatraemia Consensus"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Correction should aim for a return to normal sodium (135 mmol/L) within 12 hours of admission, as the confusion and drowsiness indicate impending herniation and immediate normalisation is life-saving",
+        "correct": false,
+        "rationale": "Attempting to normalise sodium quickly is a classical error and directly causes osmotic demyelination. Immediate life-threatening features are addressed with a small bolus, not full normalisation. (Source: ANZ Renal Society Hyponatraemia Consensus)",
+        "source_refs": [
+          "ANZ Renal Society Hyponatraemia Consensus"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Correction should be limited to 4 mmol/L in the first 24 hours because the patient is asymptomatic and there is no urgency to correct the sodium in this setting",
+        "correct": false,
+        "rationale": "She is not asymptomatic (drowsy, GCS 12) and 4 mmol/L is too conservative for a symptomatic presentation. The correct ceiling is 8 mmol/L. (Source: ANZ Renal Society Hyponatraemia Consensus)",
+        "source_refs": [
+          "ANZ Renal Society Hyponatraemia Consensus"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Correction should proceed at 12 mmol/L in the first 24 hours because the risk of osmotic demyelination syndrome only becomes significant beyond that rate of correction in a healthy adult",
+        "correct": false,
+        "rationale": "The safety threshold is 10 mmol/L per 24 hours; most guidelines set a lower operating ceiling of 8 mmol/L to leave margin for error. 12 exceeds the safe range. (Source: ANZ Renal Society Hyponatraemia Consensus)",
+        "source_refs": [
+          "ANZ Renal Society Hyponatraemia Consensus"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "In chronic or subacute symptomatic hyponatraemia, the correction rate ceiling is 8 mmol/L in 24 hours (6 in high-risk groups). Severe symptoms (seizures, coma) are treated with a 100 mL 3 percent saline bolus, repeated as needed until symptoms improve, targeting an initial 4 to 6 mmol/L rise. Overcorrection is treated with 5 percent dextrose infusion and desmopressin if the rate exceeds the ceiling.",
+      "key_points": [
+        "Maximum sodium rise in 24 hours: 8 mmol/L (6 in elderly, hypokalaemic, chronic, malnourished)",
+        "Severe symptoms: 100 mL 3 percent saline bolus, may repeat every 10 min for symptomatic control",
+        "Overcorrection re-lowered with 5 percent dextrose and desmopressin"
+      ],
+      "pearls": "Osmotic demyelination classically manifests 2 to 6 days after overcorrection with pseudobulbar palsy, quadriparesis and locked-in state. Once occurred it is largely irreversible."
+    },
+    "sources": [
+      {
+        "label": "ANZ Renal Society Hyponatraemia Consensus",
+        "url": "https://www.nephrology.edu.au/"
+      },
+      {
+        "label": "Spasovski et al. European Society of Endocrinology Hyponatraemia Guideline. Eur J Endocrinol 2014",
+        "url": "https://academic.oup.com/ejendo/article/170/3/G1/6663923"
+      }
+    ],
+    "reference_ranges": [
+      "uec"
+    ],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "med-p68-007",
+    "topic": "Medicine",
+    "subtopic": "Cardiology",
+    "subtopic_detail": "Type A aortic dissection with hypertension and stroke",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "aortic dissection"
+    ],
+    "stem": "A 64-year-old man presents to a metropolitan emergency department with sudden onset tearing central chest pain radiating to the back that began 90 minutes ago while shovelling in his garden. He has hypertension treated with amlodipine 5 mg daily and hyperlipidaemia treated with atorvastatin 40 mg nightly. He is now hemodynamically stable but continues to describe severe pain.\n\nOn arrival his right arm blood pressure is 176/98 and his left arm blood pressure is 128/72. His radial pulses are asymmetric. Neurological examination reveals right-sided hemiparesis (arm and leg 3 out of 5) and expressive dysphasia that began after arrival. A CT aortogram completed 15 minutes ago demonstrates a Stanford Type A dissection extending from the aortic root through the arch and involving the innominate artery, with a moderate pericardial effusion but no cardiac tamponade. Cardiothoracic surgery has been contacted.",
+    "data_table": {
+      "Vital signs": "pulse rate 96, blood pressure 176/98 right arm and 128/72 left arm, respiratory rate 20, SpO2 97 percent on room air, temperature 36.8 degrees",
+      "Investigations": "haemoglobin 138 g/L (130-180), platelets 240 x10 to the 9 per litre (150-400), troponin I 0.02 microgram/L (less than 0.03), creatinine 88 micromol/L (60-110), ECG with sinus rhythm and no acute ischaemic changes",
+      "Imaging": "CT aortogram with Stanford Type A dissection root through arch, innominate artery involved, moderate pericardial effusion without tamponade"
+    },
+    "lead_in": "In addition to arranging emergency cardiothoracic transfer, what is the most appropriate initial medical management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence intravenous alteplase 0.9 mg/kg for the acute ischaemic stroke, aiming to complete infusion within 60 minutes of stroke onset to salvage the penumbra",
+        "correct": false,
+        "rationale": "Thrombolysis is contraindicated in aortic dissection because of the catastrophic haemorrhagic risk. The hemiparesis reflects innominate artery involvement, not thromboembolic stroke. (Source: Therapeutic Guidelines: Cardiovascular - Aortic dissection)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular - Aortic dissection"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Administer intravenous esmolol infusion titrated to target heart rate under 60 with intravenous glyceryl trinitrate for target systolic under 120 in the higher-reading arm, and analgesia",
+        "correct": true,
+        "rationale": "Type A dissection medical management is impulse control: a rate-limiting beta blocker (esmolol or labetalol) FIRST to blunt shear stress, followed by a vasodilator to reduce blood pressure to a systolic under 120 mmHg (measured in the higher-reading arm). Reversing this order can cause reflex tachycardia and worsen dissection. (Source: ANZ Society for Vascular Surgery Aortic Dissection Statement; Therapeutic Guidelines Cardiovascular)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular - Aortic dissection"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Administer intravenous glyceryl trinitrate infusion alone without a rate-limiting beta blocker to rapidly reduce systolic blood pressure to under 120 mmHg",
+        "correct": false,
+        "rationale": "Vasodilator without a rate-limiting agent causes reflex tachycardia and increased aortic wall shear stress, worsening dissection propagation. (Source: Therapeutic Guidelines: Cardiovascular - Aortic dissection)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular - Aortic dissection"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Administer subcutaneous enoxaparin 1 mg/kg twice daily for suspected pulmonary embolism prophylaxis pending completion of CT pulmonary angiogram results",
+        "correct": false,
+        "rationale": "Anticoagulation is contraindicated in acute aortic dissection because of haemorrhage risk into the false lumen and pericardium. (Source: Therapeutic Guidelines: Cardiovascular - Aortic dissection)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular - Aortic dissection"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Perform urgent pericardiocentesis for the moderate pericardial effusion demonstrated on the CT aortogram before any medical or surgical intervention is undertaken",
+        "correct": false,
+        "rationale": "Pericardiocentesis in Type A dissection without tamponade is contraindicated because it can precipitate haemodynamic collapse from re-bleeding into the pericardium. Definitive treatment is emergency cardiothoracic surgery. (Source: Therapeutic Guidelines: Cardiovascular - Aortic dissection)",
+        "source_refs": [
+          "Therapeutic Guidelines: Cardiovascular - Aortic dissection"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Type A aortic dissection needs impulse control before pressure control: rate-limiting beta blocker first to blunt wall shear stress, then vasodilator to bring systolic blood pressure under 120 mmHg (measured in the higher arm). Emergency cardiothoracic surgery is definitive. Thrombolysis is contraindicated despite stroke features, which reflect innominate branch involvement rather than thromboembolic stroke.",
+      "key_points": [
+        "Beta blocker FIRST for impulse control (target heart rate under 60), THEN vasodilator (target systolic under 120)",
+        "Thrombolysis and anticoagulation are contraindicated",
+        "Pericardiocentesis contraindicated in dissection with pericardial effusion without tamponade; if tamponade, only minimal drainage to restore perfusion until surgical repair"
+      ],
+      "pearls": "Measure blood pressure in the higher-reading arm to avoid under-treating on a compromised limb. A pulse deficit alone does not mean systemic hypotension."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Cardiovascular - Aortic dissection",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "ANZ Society for Vascular Surgery Aortic Dissection Statement",
+        "url": "https://anzsvs.org.au/"
+      }
+    ],
+    "reference_ranges": [
+      "fbc",
+      "uec"
+    ],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "med-p68-008",
+    "topic": "Medicine",
+    "subtopic": "Infectious disease",
+    "subtopic_detail": "Necrotising soft tissue infection despite borderline LRINEC",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "necrotising fasciitis"
+    ],
+    "stem": "A 58-year-old man with type 2 diabetes on metformin presents with a 24-hour history of severe left lower leg pain following a minor gardening scratch 3 days ago. The pain is disproportionate to the visible skin findings, which show a 6 cm area of erythema with poorly demarcated edges and a small area of dusky violaceous discolouration in the centre. There is subcutaneous crepitus on palpation of the medial calf. He appears systemically unwell with a temperature of 38.6 degrees and rigors.\n\nHis white cell count is 16 x10 to the 9 per litre, C-reactive protein 180 mg/L, sodium 136 mmol/L, creatinine 108 micromol/L, glucose 12 mmol/L (previous HbA1c 8.4 percent), and haemoglobin 138 g/L. His LRINEC score today is 6 (borderline: 6 to 7 indicates intermediate risk, 8 or above indicates high risk). Plain radiograph of the calf shows subcutaneous gas along the fascial planes. Blood cultures are pending.",
+    "data_table": {
+      "Vital signs": "pulse rate 122, blood pressure 96/58, respiratory rate 24, SpO2 98 percent on room air, temperature 38.6 degrees",
+      "Investigations": "haemoglobin 138 g/L (130-180), white cell count 16 x10 to the 9 per litre (4.0-11.0), CRP 180 mg/L (less than 5), sodium 136 mmol/L (135-145), creatinine 108 micromol/L (60-110), glucose 12 mmol/L, LRINEC score 6",
+      "Imaging": "plain radiograph left calf with subcutaneous gas along fascial planes"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Await magnetic resonance imaging of the calf before proceeding to any operative intervention to define fascial involvement and target debridement extent precisely",
+        "correct": false,
+        "rationale": "MRI is helpful when the diagnosis is uncertain but must NOT delay surgery when clinical and plain radiographic features are already diagnostic. Delay is directly associated with mortality. (Source: Therapeutic Guidelines: Antibiotic - Necrotising soft tissue infection)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic - Necrotising soft tissue infection"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Commence intravenous flucloxacillin monotherapy at 2 g every 6 hours for community-acquired cellulitis and mark the area of erythema for reassessment in 6 hours",
+        "correct": false,
+        "rationale": "Flucloxacillin monotherapy is inadequate for polymicrobial necrotising soft tissue infection and does not provide toxin suppression. Marking and observation misses the operative window. (Source: Therapeutic Guidelines: Antibiotic - Necrotising soft tissue infection)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic - Necrotising soft tissue infection"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Activate the emergency theatre pathway for urgent surgical exploration and debridement while starting empirical intravenous meropenem plus clindamycin and resuscitation",
+        "correct": true,
+        "rationale": "Necrotising soft tissue infection is a clinical and radiological diagnosis. The combination of pain out of proportion, dusky violaceous skin, subcutaneous crepitus, and radiological subcutaneous gas is highly specific despite a borderline LRINEC score. LRINEC has poor negative predictive value and should never delay surgery. Empirical broad-spectrum antibiotics with clindamycin (for toxin suppression) are given IMMEDIATELY but do not substitute for surgical debridement, which is the only definitive treatment. (Source: Therapeutic Guidelines: Antibiotic - Necrotising soft tissue infection)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic - Necrotising soft tissue infection"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Repeat the LRINEC score in 6 hours and defer surgical exploration if the score remains below 8, using oral doxycycline for outpatient management in the meantime",
+        "correct": false,
+        "rationale": "LRINEC is a decision-aid not a rule-out tool. A borderline or low score does not exclude necrotising fasciitis with high pretest probability. Delaying surgery is unsafe. (Source: Therapeutic Guidelines: Antibiotic - Necrotising soft tissue infection)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic - Necrotising soft tissue infection"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Administer intravenous immunoglobulin as first-line empirical monotherapy for suspected streptococcal toxic shock syndrome and observe for haemodynamic response over 2 hours",
+        "correct": false,
+        "rationale": "IVIG has an adjunctive role in streptococcal toxic shock syndrome once diagnosis is confirmed but does not replace surgery and antibiotics as first-line management of necrotising soft tissue infection. (Source: Therapeutic Guidelines: Antibiotic - Necrotising soft tissue infection)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic - Necrotising soft tissue infection"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Necrotising soft tissue infection is diagnosed clinically and radiologically; the LRINEC score has poor negative predictive value and cannot rule it out when pretest probability is high (pain out of proportion, dusky skin, crepitus, and radiological gas are highly specific). Immediate broad-spectrum antibiotics with clindamycin (for toxin suppression) plus urgent surgical debridement are life-saving. Delay to imaging or scoring re-check increases mortality substantially.",
+      "key_points": [
+        "High pretest probability features: pain out of proportion, dusky skin, crepitus, systemic toxicity, radiological subcutaneous gas",
+        "LRINEC is a decision-aid not a rule-out; borderline or low scores do not exclude the diagnosis",
+        "Empirical AU antibiotics: meropenem OR piperacillin-tazobactam plus clindamycin for toxin suppression (add vancomycin if MRSA risk)"
+      ],
+      "pearls": "The clinical triage rule: if you are consulting surgery about NSTI, you are probably right. Delay to imaging is the commonest fatal error."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Antibiotic - Necrotising soft tissue infection",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "Stevens et al. IDSA Guidelines for Diagnosis and Management of Skin and Soft Tissue Infections",
+        "url": "https://academic.oup.com/cid/article/59/2/e10/2895845"
+      }
+    ],
+    "reference_ranges": [
+      "fbc",
+      "uec",
+      "inflammatory_markers",
+      "glucose_hba1c"
+    ],
+    "created": "2026-07-26"
+  }
+]
