@@ -1,0 +1,236 @@
+[
+  {
+    "id": "paeds-p69-001",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Bronchiolitis oxygen escalation",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["bronchiolitis", "oxygen therapy"],
+    "stem": "A 4-month-old former term infant presents to a tertiary paediatric ED in July with three days of coryza, worsening cough and feeding half his usual volume. He is alert but has moderate subcostal recessions and audible wheeze. Nasal swab PCR is positive for RSV.\n\nHis mother reports his lips looked slightly grey on the drive in, though they now look pink. He has never had wheeze before, was born at 39 weeks, and had no neonatal respiratory support.",
+    "data_table": {
+      "Vital signs": "Pulse 158/min, blood pressure 88/54 mmHg, respiratory rate 62/min, SpO2 87% on room air, temperature 37.9 degrees C",
+      "Examination": "Alert, mildly dehydrated, wet nappy 4 hours ago; widespread fine crackles with expiratory wheeze; no focal consolidation",
+      "Investigations": "Capillary blood gas: pH 7.36, pCO2 45 mmHg, HCO3 23 mmol/L, lactate 1.8 mmol/L"
+    },
+    "lead_in": "What is the most appropriate initial oxygen therapy?",
+    "options": [
+      { "letter": "A", "text": "High-flow nasal cannulae at 2 L/kg/min with FiO2 titrated to SpO2 92%", "correct": false, "rationale": "HFNC is reserved for failure of low-flow after 2 hours per RCH; jumping straight to HFNC bypasses the guideline step. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
+      { "letter": "B", "text": "Facemask oxygen at 6 L/min with SpO2 target 94 to 98 percent", "correct": false, "rationale": "RCH bronchiolitis target is SpO2 90 percent, not 94 to 98; facemask flow is also excessive first-line. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
+      { "letter": "C", "text": "Low-flow nasal cannula oxygen at 1 L/min titrated to SpO2 90 percent", "correct": true, "rationale": "RCH CPG makes low-flow nasal cannula the first-line oxygen delivery in bronchiolitis with SpO2 90 percent as the target; HFNC only after 2 hours of low-flow failure. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
+      { "letter": "D", "text": "Nebulised salbutamol 2.5 mg with supplemental oxygen delivered via mask", "correct": false, "rationale": "Salbutamol is not recommended in bronchiolitis under 12 months as beta-2 receptor density is insufficient for benefit. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] },
+      { "letter": "E", "text": "Nebulised 3 percent hypertonic saline with room air observation off oxygen", "correct": false, "rationale": "Hypertonic saline is not routinely used in Australian bronchiolitis pathways, and off-oxygen management with SpO2 87 percent is unsafe. (Source: RCH CPG: Bronchiolitis)", "source_refs": ["RCH CPG: Bronchiolitis"] }
+    ],
+    "explanation": {
+      "summary": "Bronchiolitis in Australian tertiary practice follows the RCH CPG oxygen escalation ladder. Low-flow nasal cannula oxygen is first-line for hypoxia, with SpO2 90 percent as the accepted floor. HFNC is stepped up only after two hours of low-flow failure, and bronchodilators are not indicated under 12 months. Aggressive early HFNC does not reduce ICU admission and delays escalation to appropriate senior review.",
+      "key_points": [
+        "RCH SpO2 target in bronchiolitis is 90 percent, not 92 to 94.",
+        "Low-flow nasal prong oxygen is first-line; HFNC after 2 hours of failure.",
+        "Salbutamol is not recommended under 12 months.",
+        "NGT feeds are preferred over IV in mild to moderate dehydration."
+      ],
+      "pearls": "RCH bronchiolitis pathway targets SpO2 90 percent on low-flow nasal cannula 1 to 2 L/min before considering HFNC after 2 hours; do not chase 94 to 98 percent saturations."
+    },
+    "sources": [
+      { "label": "RCH CPG: Bronchiolitis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/" },
+      { "label": "Australasian Bronchiolitis Guideline (PREDICT)" }
+    ],
+    "reference_ranges": ["paeds_vitals_infant", "vbg"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "paeds-p69-002",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Croup dexamethasone dosing",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["croup", "dexamethasone"],
+    "stem": "A 20-month-old girl is brought to a regional ED at 2 am with a 24-hour history of coryza and a barking cough that started that evening. On arrival she has audible inspiratory stridor when upset but none at rest, and mild suprasternal tug when crying.\n\nShe settles quickly on her mother's lap and takes sips of juice. She has had no fever, no drooling and no cyanotic episodes.",
+    "data_table": {
+      "Vital signs": "Pulse 130/min, blood pressure 96/58 mmHg, respiratory rate 32/min, SpO2 98 percent on room air, temperature 37.4 degrees C",
+      "Examination": "Alert, playful when settled, barking cough on stimulation; chest clear apart from transmitted upper airway sounds; oropharynx normal",
+      "Investigations": "No investigations performed; clinical Westley score 2"
+    },
+    "lead_in": "What is the most appropriate corticosteroid dose?",
+    "options": [
+      { "letter": "A", "text": "Prednisolone 1 mg/kg orally daily for three days as a course", "correct": false, "rationale": "Prednisolone has been shown less effective than single-dose dexamethasone for croup and is not the AU first-line agent. (Source: RCH CPG: Croup)", "source_refs": ["RCH CPG: Croup"] },
+      { "letter": "B", "text": "Dexamethasone 0.15 mg/kg orally as a single dose observed in ED", "correct": true, "rationale": "RCH CPG uses dexamethasone 0.15 mg/kg orally for mild and moderate croup; 0.6 mg/kg is reserved for severe presentations. (Source: RCH CPG: Croup)", "source_refs": ["RCH CPG: Croup"] },
+      { "letter": "C", "text": "Dexamethasone 0.6 mg/kg orally as a single dose then discharge", "correct": false, "rationale": "0.6 mg/kg is the severe-croup dose per RCH; a Westley score of 2 is mild and does not require it. (Source: RCH CPG: Croup)", "source_refs": ["RCH CPG: Croup"] },
+      { "letter": "D", "text": "Nebulised budesonide 2 mg once with observation for two hours", "correct": false, "rationale": "Nebulised budesonide is a fallback if oral dexamethasone is refused or vomited; oral is preferred first-line. (Source: RCH CPG: Croup)", "source_refs": ["RCH CPG: Croup"] },
+      { "letter": "E", "text": "Nebulised adrenaline 5 mL of 1 in 1000 with 3 hours observation", "correct": false, "rationale": "Nebulised adrenaline is reserved for moderate to severe croup with stridor at rest, not mild presentations. (Source: RCH CPG: Croup)", "source_refs": ["RCH CPG: Croup"] }
+    ],
+    "explanation": {
+      "summary": "The RCH croup pathway separates mild and severe management by dexamethasone dose. Mild and moderate croup receive 0.15 mg/kg orally as a single dose; severe croup receives 0.6 mg/kg orally with nebulised adrenaline. Nebulised adrenaline requires a minimum three-hour observation window because of rebound stridor risk after the effect wears off. Prednisolone is not recommended as an alternative because relapse rates are higher.",
+      "key_points": [
+        "Mild or moderate croup: dexamethasone 0.15 mg/kg orally, single dose.",
+        "Severe croup: dexamethasone 0.6 mg/kg orally plus nebulised adrenaline.",
+        "Nebulised adrenaline 5 mL of 1 in 1000 is a flat dose (not per kg).",
+        "Minimum three-hour observation after last adrenaline dose."
+      ],
+      "pearls": "Dexamethasone 0.15 mg/kg orally is the RCH default for mild to moderate croup; escalate to 0.6 mg/kg only when stridor is present at rest with recessions."
+    },
+    "sources": [
+      { "label": "RCH CPG: Croup", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Croup_Laryngotracheobronchitis/" },
+      { "label": "Therapeutic Guidelines: Respiratory" }
+    ],
+    "reference_ranges": ["paeds_vitals_child"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "paeds-p69-003",
+    "topic": "Paediatrics",
+    "subtopic": "Gastroenterology",
+    "subtopic_detail": "Gastroenteritis rehydration route",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["gastroenteritis", "rehydration"],
+    "stem": "An 18-month-old girl weighing 12 kg presents with two days of profuse watery diarrhoea and vomiting. On arrival she has dry mucous membranes, reduced skin turgor and a capillary refill of 3 seconds centrally. Her mother has been offering water and diluted juice but she has vomited all attempts in the last three hours.\n\nHer weight two weeks ago at a GP visit was 12.7 kg. She has been alert throughout the assessment and stopped vomiting after receiving oral ondansetron thirty minutes ago in triage. Blood glucose on finger prick is 4.1 mmol/L.",
+    "data_table": {
+      "Vital signs": "Pulse 148/min, blood pressure 92/58 mmHg, respiratory rate 30/min, SpO2 99 percent on room air, temperature 37.6 degrees C",
+      "Examination": "Alert, dry lips, delayed skin turgor, sunken eyes; abdomen soft, no guarding; capillary refill 3 seconds centrally",
+      "Investigations": "Weight loss 5.5 percent from baseline; blood glucose 4.1 mmol/L; urea and electrolytes not yet available"
+    },
+    "lead_in": "What is the most appropriate rehydration approach now?",
+    "options": [
+      { "letter": "A", "text": "Continue small volume oral rehydration solution sips over the next four hours", "correct": false, "rationale": "Oral trial has already failed with vomiting; further oral-only attempts risk under-resuscitation despite the ondansetron effect. (Source: RCH CPG: Gastroenteritis)", "source_refs": ["RCH CPG: Gastroenteritis"] },
+      { "letter": "B", "text": "Intravenous 0.9 percent sodium chloride 20 mL/kg bolus over 15 minutes then reassess", "correct": false, "rationale": "IV boluses are reserved for shock or severe dehydration; central capillary refill 3 seconds with preserved BP and alertness is moderate, not severe. (Source: RCH CPG: Gastroenteritis)", "source_refs": ["RCH CPG: Gastroenteritis"] },
+      { "letter": "C", "text": "Intravenous 0.9 percent sodium chloride with 5 percent glucose infusion over 24 hours", "correct": false, "rationale": "Slow IV replacement bypasses the NGT step that RCH mandates when oral rehydration fails and dehydration is mild to moderate. (Source: RCH CPG: Gastroenteritis)", "source_refs": ["RCH CPG: Gastroenteritis"] },
+      { "letter": "D", "text": "Nasogastric rapid rehydration with oral rehydration solution over four hours", "correct": true, "rationale": "For mild to moderate dehydration where oral has failed, RCH makes nasogastric rapid rehydration first-line over IV; equally effective and avoids cannulation. (Source: RCH CPG: Gastroenteritis)", "source_refs": ["RCH CPG: Gastroenteritis"] },
+      { "letter": "E", "text": "Admit for observation and re-attempt oral rehydration solution in six hours", "correct": false, "rationale": "Delaying active rehydration with ongoing losses risks progression to severe dehydration and worsening electrolyte disturbance. (Source: RCH CPG: Gastroenteritis)", "source_refs": ["RCH CPG: Gastroenteritis"] }
+    ],
+    "explanation": {
+      "summary": "RCH gastroenteritis pathway places nasogastric rapid rehydration ahead of intravenous fluids when oral rehydration has failed in a child with mild to moderate dehydration. NGT rehydration matches IV for rate of correction with fewer complications and no cannulation. IV bolus is reserved for shock or severe dehydration (weight loss more than 9 percent, altered conscious level, poor peripheral perfusion). Ondansetron 0.15 mg/kg once (2 mg for 8 to 15 kg) improves oral tolerance and reduces IV need.",
+      "key_points": [
+        "NGT rehydration is first-line for mild to moderate dehydration failing oral.",
+        "IV bolus is reserved for shock or severe dehydration.",
+        "Ondansetron 2 mg (8 to 15 kg) supports oral tolerance.",
+        "Weight loss is the most reliable dehydration marker."
+      ],
+      "pearls": "For a 12 kg toddler with 5 to 6 percent weight loss and failed oral trial, NGT ORS at 25 mL/kg/hour for four hours is RCH first-line; do not skip to IV."
+    },
+    "sources": [
+      { "label": "RCH CPG: Gastroenteritis", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Gastroenteritis/" },
+      { "label": "Therapeutic Guidelines: Gastrointestinal" }
+    ],
+    "reference_ranges": ["paeds_vitals_child", "bsl_paeds"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "paeds-p69-004",
+    "topic": "Paediatrics",
+    "subtopic": "Allergy",
+    "subtopic_detail": "Anaphylaxis adrenaline banded dosing",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["anaphylaxis", "adrenaline"],
+    "stem": "A 3-year-old boy weighing 15 kg presents to a GP clinic after eating a cashew biscuit at daycare. Ten minutes later he developed generalised urticaria, then hoarse voice and now audible stridor.\n\nHis mother had brought his previously prescribed EpiPen Jr for daycare use but has not administered it. He has been alert throughout but is becoming agitated. He is a known cashew-sensitised child with previous mild reactions but no prior anaphylaxis.",
+    "data_table": {
+      "Vital signs": "Pulse 158/min, blood pressure 78/44 mmHg, respiratory rate 42/min, SpO2 92 percent on room air, temperature 36.6 degrees C",
+      "Examination": "Alert but agitated; generalised urticaria; audible stridor; increased work of breathing; peripheries cool with capillary refill 3 seconds",
+      "Investigations": "No time for investigations; call for ambulance already made"
+    },
+    "lead_in": "What is the most appropriate immediate adrenaline dose?",
+    "options": [
+      { "letter": "A", "text": "Intramuscular adrenaline 150 micrograms via EpiPen Jr into anterolateral thigh", "correct": true, "rationale": "ASCIA uses banded IM adrenaline: 150 micrograms (EpiPen Jr) for 10 to 20 kg body weight; this child is 15 kg. (Source: ASCIA Anaphylaxis Guidelines)", "source_refs": ["ASCIA Anaphylaxis Guidelines"] },
+      { "letter": "B", "text": "Intramuscular adrenaline 300 micrograms via EpiPen into anterolateral thigh", "correct": false, "rationale": "300 microgram EpiPen is the ASCIA band for 20 kg and above; overdose in a 15 kg child risks tachyarrhythmia. (Source: ASCIA Anaphylaxis Guidelines)", "source_refs": ["ASCIA Anaphylaxis Guidelines"] },
+      { "letter": "C", "text": "Intravenous adrenaline 10 micrograms/kg diluted and titrated to response", "correct": false, "rationale": "IV adrenaline is reserved for refractory anaphylaxis with cardiac monitoring after two IM doses have failed. (Source: ASCIA Anaphylaxis Guidelines)", "source_refs": ["ASCIA Anaphylaxis Guidelines"] },
+      { "letter": "D", "text": "Nebulised adrenaline 5 mL of 1 in 1000 with high flow facemask oxygen", "correct": false, "rationale": "Nebulised adrenaline treats upper airway oedema symptomatically only and does not reverse systemic anaphylaxis. (Source: ASCIA Anaphylaxis Guidelines)", "source_refs": ["ASCIA Anaphylaxis Guidelines"] },
+      { "letter": "E", "text": "Intramuscular adrenaline 75 micrograms drawn from ampoule based on weight", "correct": false, "rationale": "ASCIA uses banded dosing not mg/kg arithmetic to reduce dose errors; 75 micrograms is under-dosed and is not a recognised band. (Source: ASCIA Anaphylaxis Guidelines)", "source_refs": ["ASCIA Anaphylaxis Guidelines"] }
+    ],
+    "explanation": {
+      "summary": "ASCIA uses a banded IM adrenaline table rather than mg/kg calculation to reduce dose errors under stress. The 10 to 20 kg band receives 150 micrograms (EpiPen Jr), and 20 kg and above receives 300 micrograms (EpiPen). IV adrenaline is reserved for refractory anaphylaxis after two IM doses fail and requires cardiac monitoring. Nebulised adrenaline is a symptomatic adjunct for airway oedema only.",
+      "key_points": [
+        "10 to 20 kg: EpiPen Jr 150 micrograms IM.",
+        "20 kg and above: EpiPen 300 micrograms IM.",
+        "Banded dosing beats mg/kg arithmetic under stress.",
+        "IV adrenaline reserved for refractory cases with monitoring."
+      ],
+      "pearls": "ASCIA banded adrenaline: 150 mcg for 10 to 20 kg, 300 mcg for 20 kg and above; the mg/kg calculation is a distraction that causes dose errors."
+    },
+    "sources": [
+      { "label": "ASCIA Anaphylaxis Guidelines", "url": "https://www.allergy.org.au/hp/papers/acute-management-of-anaphylaxis-guidelines" },
+      { "label": "Therapeutic Guidelines: Emergency" }
+    ],
+    "reference_ranges": ["paeds_vitals_child"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "paeds-p69-005",
+    "topic": "Paediatrics",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Fever under 3 months septic workup",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["neonatal sepsis", "meningitis"],
+    "stem": "A 5-week-old male infant is brought to ED by his parents with a two-hour history of poor feeding and one axillary temperature of 38.4 degrees C at home. He is a former term infant of an uneventful pregnancy and was well until this evening.\n\nOn arrival he is alert, moves symmetrically and takes 20 mL of formula in front of you. His anterior fontanelle is flat, no rash is present and his mother reports he is different from his usual self.",
+    "data_table": {
+      "Vital signs": "Pulse 168/min, blood pressure 82/48 mmHg, respiratory rate 48/min, SpO2 99 percent on room air, temperature 38.2 degrees C rectally",
+      "Examination": "Alert, moves symmetrically, tone appropriate; no rash; anterior fontanelle soft and flat; chest and abdomen unremarkable",
+      "Investigations": "Urine dip: leucocytes negative, nitrites negative; CRP 12 mg/L (less than 5); WCC 14.5 x10^9/L; blood cultures pending"
+    },
+    "lead_in": "What is the most appropriate next investigation and management step?",
+    "options": [
+      { "letter": "A", "text": "Observe overnight with hourly paediatric early warning scores and repeat inflammatory markers in six hours", "correct": false, "rationale": "RCH mandates full septic workup and empirical IV antibiotics for any fever in an infant under 3 months, not observation alone. (Source: RCH CPG: Febrile child)", "source_refs": ["RCH CPG: Febrile child"] },
+      { "letter": "B", "text": "Empirical oral amoxicillin at 30 mg/kg discharge home with paediatric review at 24 hours", "correct": false, "rationale": "Oral antibiotics and discharge are unsafe for an infant under 3 months with a documented fever regardless of appearance. (Source: RCH CPG: Febrile child)", "source_refs": ["RCH CPG: Febrile child"] },
+      { "letter": "C", "text": "Perform blood culture only then start empirical intravenous ceftriaxone and admit for observation", "correct": false, "rationale": "Blood culture without lumbar puncture in an infant under 3 months misses meningitis, which changes duration and choice of antibiotics. (Source: RCH CPG: Febrile child)", "source_refs": ["RCH CPG: Febrile child"] },
+      { "letter": "D", "text": "Chest x-ray then empirical oral cefalexin with paediatric outpatient review at 24 hours", "correct": false, "rationale": "Imaging first without a full septic screen and IV antibiotics is not the RCH pathway for infants under 3 months. (Source: RCH CPG: Febrile child)", "source_refs": ["RCH CPG: Febrile child"] },
+      { "letter": "E", "text": "Full septic workup with lumbar puncture and empirical intravenous cefotaxime plus benzylpenicillin", "correct": true, "rationale": "RCH requires full septic screen (blood culture, urine catheter or SPA, CSF) and empirical IV cefotaxime plus benzylpenicillin for any infant under 3 months with fever. (Source: RCH CPG: Febrile child)", "source_refs": ["RCH CPG: Febrile child"] }
+    ],
+    "explanation": {
+      "summary": "Any infant under 3 months with a documented fever mandates a full septic workup because clinical assessment is unreliable and meningitis can present without focal signs. RCH requires blood culture, catheter or SPA urine, and lumbar puncture before empirical intravenous cefotaxime plus benzylpenicillin for GBS and Listeria cover. Reassuring appearance and normal CRP do not remove the LP requirement. Wait until CSF is obtained before giving the first dose only if it will not delay antibiotics beyond one hour.",
+      "key_points": [
+        "Any fever in infant under 3 months triggers full septic workup.",
+        "LP is included unless clinically contraindicated.",
+        "Empirical IV cefotaxime plus benzylpenicillin covers Listeria and GBS.",
+        "Do not delay antibiotics beyond one hour for procedures."
+      ],
+      "pearls": "Fever in an infant under 3 months means blood, urine and CSF cultures then IV cefotaxime plus benzylpenicillin within 60 minutes; do not observe."
+    },
+    "sources": [
+      { "label": "RCH CPG: Febrile child", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Febrile_child/" },
+      { "label": "Therapeutic Guidelines: Antibiotic" }
+    ],
+    "reference_ranges": ["paeds_vitals_infant", "inflammatory_markers", "paeds_fbc"],
+    "created": "2026-07-26"
+  },
+  {
+    "id": "paeds-p69-006",
+    "topic": "Paediatrics",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "DKA fluid rate and cerebral oedema risk",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["DKA", "cerebral oedema"],
+    "stem": "A 7-year-old girl weighing 22 kg presents with a two-day history of polyuria and polydipsia and today, vomiting and drowsiness. She has newly diagnosed diabetes based on a random glucose of 28 mmol/L, blood ketones 6.1 mmol/L, and venous pH 7.10.\n\nHer initial GCS was 14 (E3 V5 M6) on arrival and she has received a single 10 mL/kg 0.9 percent sodium chloride bolus over 30 minutes. Sodium is 132 mmol/L and corrected sodium is 141 mmol/L. Bicarbonate is 6 mmol/L. She has just been re-examined 30 minutes after the bolus.",
+    "data_table": {
+      "Vital signs": "Pulse 138/min, blood pressure 108/72 mmHg, respiratory rate 38/min (Kussmaul), SpO2 99 percent on room air, temperature 36.4 degrees C",
+      "Examination": "GCS 13 (E3 V4 M6), pupils equal 3 mm reactive, mildly complaining of headache; abdomen soft, no focal deficit",
+      "Investigations": "Glucose 27 mmol/L, ketones 6.1 mmol/L, pH 7.11, HCO3 6 mmol/L, sodium 132 mmol/L (corrected 141), potassium 4.9 mmol/L, urea 8.4 mmol/L"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      { "letter": "A", "text": "Give another 10 mL/kg 0.9 percent sodium chloride bolus over 30 minutes and continue rehydration", "correct": false, "rationale": "Further boluses in a child with a falling GCS and worsening headache during DKA rehydration risk precipitating overt cerebral oedema. (Source: RCH CPG: Diabetic ketoacidosis; APEG DKA guidelines)", "source_refs": ["RCH CPG: DKA"] },
+      { "letter": "B", "text": "Give intravenous mannitol 0.5 to 1 g/kg over 15 minutes and reduce fluid rate to maintenance", "correct": true, "rationale": "Deteriorating GCS with headache mid-rehydration is presumptive cerebral oedema; RCH and APEG recommend immediate mannitol 0.5 to 1 g/kg over 15 minutes and fluid rate reduction. (Source: RCH CPG: Diabetic ketoacidosis)", "source_refs": ["RCH CPG: DKA"] },
+      { "letter": "C", "text": "Start intravenous insulin infusion at 0.1 units/kg/hour immediately to reverse ongoing ketosis", "correct": false, "rationale": "Insulin without addressing the cerebral event and while GCS is falling does not treat the emergent problem; APEG delays insulin one hour after fluid start regardless. (Source: RCH CPG: Diabetic ketoacidosis)", "source_refs": ["RCH CPG: DKA"] },
+      { "letter": "D", "text": "Administer intravenous sodium bicarbonate 1 mmol/kg over 60 minutes to correct the metabolic acidosis", "correct": false, "rationale": "Sodium bicarbonate in paediatric DKA is associated with cerebral oedema and is not indicated at pH 7.11; it is reserved for pH under 6.9 with cardiovascular compromise. (Source: RCH CPG: Diabetic ketoacidosis)", "source_refs": ["RCH CPG: DKA"] },
+      { "letter": "E", "text": "Change intravenous fluid to 0.45 percent sodium chloride with 5 percent glucose over the next hour", "correct": false, "rationale": "Hypotonic fluids in early DKA rehydration accelerate cerebral oedema risk; RCH keeps isotonic fluids until glucose falls below 15 mmol/L. (Source: RCH CPG: Diabetic ketoacidosis)", "source_refs": ["RCH CPG: DKA"] }
+    ],
+    "explanation": {
+      "summary": "Cerebral oedema is the leading cause of death in paediatric DKA and typically emerges 4 to 12 hours into rehydration. Warning signs include falling GCS, new headache, bradycardia, hypertension, and pupillary changes. The APEG and RCH DKA pathways specify immediate mannitol 0.5 to 1 g/kg over 15 minutes (or hypertonic saline 3 percent 2.5 to 5 mL/kg) and a reduction in fluid rate on presumptive cerebral oedema. Isotonic fluids and delayed insulin (one hour after fluid start) are used across the whole rehydration phase to minimise osmolar shift.",
+      "key_points": [
+        "Falling GCS plus headache mid-rehydration is cerebral oedema until proven otherwise.",
+        "Mannitol 0.5 to 1 g/kg IV over 15 minutes is first-line.",
+        "Isotonic fluids only until glucose below 15 mmol/L.",
+        "Bicarbonate is not used in paediatric DKA unless pH under 6.9 with shock."
+      ],
+      "pearls": "Neurological deterioration during paediatric DKA rehydration is cerebral oedema; mannitol 0.5 to 1 g/kg IV within minutes and halve the fluid rate."
+    },
+    "sources": [
+      { "label": "RCH CPG: DKA", "url": "https://www.rch.org.au/clinicalguide/guideline_index/Diabetic_Ketoacidosis/" },
+      { "label": "APEG DKA in children and adolescents 2020" }
+    ],
+    "reference_ranges": ["paeds_vitals_child", "vbg", "bsl_paeds", "ketones", "uec"],
+    "created": "2026-07-26"
+  }
+]
