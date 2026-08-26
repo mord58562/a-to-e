@@ -4,6 +4,11 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 **Live: <https://mord58562.github.io/a-to-e/>** - guest mode, no signup required.
 
+## What's new in 2.1.2
+
+- Bug fixes and minor polish. Escape now closes whichever overlay is on top (report, how-to, stats, admin, reference panel). Ctrl or Cmd + Enter submits a bug report from inside the textarea. Sign-in errors give specific copy instead of a generic "failed" message. The empty-filter state now explains how to loosen your selection instead of just greying out the Begin button. Countdown announces to screen readers.
+- Under the hood: tighter Content Security Policy, one fewer font weight downloaded, faster subsequent-visit loads via data-cache-busting keyed to bank freshness rather than release tag.
+
 ## What's new in 2.1.1
 
 - Bug fixes and minor polish. Question rows are now keyboard-focusable with a visible outline, motion respects `prefers-reduced-motion`, and the reference panel on phones stops short of full-bleed so the question column stays visible behind it.
