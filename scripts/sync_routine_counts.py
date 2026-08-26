@@ -13,16 +13,29 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CTX  = os.path.join(REPO, '.remote-agent-context.md')
 
 def live_totals():
+    """Count unique served question ids across the four main files and every
+    batch in the manifest. Dedupe by id so the number matches what the loader
+    actually shows."""
+    seen = set()
     totals = collections.Counter()
     for p in [os.path.join(REPO,'data/questions_paeds.json'),
-              os.path.join(REPO,'data/questions_obgyn.json')]:
+              os.path.join(REPO,'data/questions_obgyn.json'),
+              os.path.join(REPO,'data/questions_psych.json'),
+              os.path.join(REPO,'data/questions_medicine.json')]:
         try:
-            for q in json.load(open(p)): totals[q.get('topic','?')] += 1
+            for q in json.load(open(p)):
+                qid = q.get('id')
+                if not qid or qid in seen: continue
+                seen.add(qid)
+                totals[q.get('topic','?')] += 1
         except FileNotFoundError: pass
     mani = json.load(open(os.path.join(REPO,'data/batches_manifest.json')))
     for b in mani.get('batches',[]):
         try:
             for q in json.load(open(os.path.join(REPO,'data',b))):
+                qid = q.get('id')
+                if not qid or qid in seen: continue
+                seen.add(qid)
                 totals[q.get('topic','?')] += 1
         except FileNotFoundError: pass
     return {
@@ -57,13 +70,11 @@ def update_context(totals):
         f"- Medicine: {totals['Medicine']}\n"
         f"- Total: {sum(totals.values())}\n"
     )
-    new = re.sub(
-        r'Current snapshot \(.*?\):\n(?:- [^\n]*\n){4,6}',
-        block,
-        text, count=1, flags=re.DOTALL
-    )
-    if new == text:
-        print('WARNING: snapshot block not found / unchanged in .remote-agent-context.md')
+    pattern = r'Current snapshot \(.*?\):\n(?:- [^\n]*\n){4,6}'
+    if not re.search(pattern, text, flags=re.DOTALL):
+        print('WARNING: snapshot block not found in .remote-agent-context.md')
+        return False
+    new = re.sub(pattern, block, text, count=1, flags=re.DOTALL)
     open(CTX,'w').write(new)
     return new != text
 
@@ -76,7 +87,7 @@ def build_prompt(totals):
         total=sum(totals.values()),
     )
 
-PROMPT_TEMPLATE = """You are the scheduled remote agent for the A to E MCQ Bank (Rob Russell, Y4 Australian medical exam prep).
+PROMPT_TEMPLATE = """You are the scheduled remote agent for the A to E MCQ Bank (a Y4 Australian medical exam prep project).
 
 =================================================================
 LIVE BANK STATE (autosynced by scripts/sync_routine_counts.py)
@@ -95,7 +106,7 @@ These numbers may be slightly stale; ALWAYS run the live state-check in `.remote
 STEP 0 - PUSH PROBE. RUN THIS FIRST. NO EXCEPTIONS.
 =================================================================
 
-Rob has a STRICT 15-runs-per-day quota. Every aborted run that did not push wasted a slot. Before generating ANYTHING, prove push works. If it does not, exit IMMEDIATELY before generating a single question. Generation costs tokens; the push probe costs ~3 git commands.
+The maintainer has a STRICT 15-runs-per-day quota. Every aborted run that did not push wasted a slot. Before generating ANYTHING, prove push works. If it does not, exit IMMEDIATELY before generating a single question. Generation costs tokens; the push probe costs ~3 git commands.
 
 ```
 cd a-to-e || cd y4-pocket-companion || {{ echo 'REPO NOT FOUND - abort'; exit 1; }}
@@ -110,7 +121,7 @@ if [ ${{PIPESTATUS[0]}} -ne 0 ]; then
   cat /tmp/probe.log
   echo '======================================'
   echo 'Quota saved: 0 questions generated, 0 tokens spent on generation.'
-  echo 'Rob: investigate push path before re-enabling routine.'
+  echo 'Maintainer: investigate push path before re-enabling routine.'
   exit 1
 fi
 git push origin --delete $PROBE 2>/dev/null || true
@@ -155,9 +166,9 @@ Hard constraints
 
 - ONE batch per run, EXACTLY 30 questions. Do not bundle multiple clusters.
 - **Module choice is determined by the algorithm in STEP 4, applied against LIVE totals each run.** Do not hardcode which module to target.
-- Long-term target: 500 of each module (2000 total). After hitting that, KEEP GENERATING with equal distribution across all four modules; the bank does not have a stop point until Rob disables the routine.
+- Long-term target: 500 of each module (2000 total). After hitting that, KEEP GENERATING with equal distribution across all four modules; the bank does not have a stop point until the maintainer disables the routine.
 - ZERO em-dashes (U+2014). Audit by `grep -P '\\x{{2014}}'` on every generated file.
-- NEVER the abbreviation 'ATSI'. NEVER the word 'canonical'. NEVER uni-specific framing (UNE, JMP, MEDI6101).
+- NEVER the abbreviation 'ATSI'. NEVER 'the c-word' (spelled c-a-n-o-n-i-c-a-l). NEVER uni-specific framing (UNE, JMP, MEDI6101).
 - Mandatory `model` field on every question = your specific model version string (e.g. 'Claude Opus 4.7 (1M context)').
 - Australian sources first; AU SI units; AU spellings (paediatric, gynaecology, foetal, oesophagus, oedema, anaemia, leukaemia, caesarean, dyspnoea, diarrhoea). Exception: drug INN 'magnesium sulfate' per AMH.
 - Every option's `source_refs` must match a label in the question's `sources` array exactly.
@@ -169,9 +180,9 @@ Hard constraints
 Why this matters
 =================================================================
 
-Rob's plan caps the routine at 15 fires per day. Each wasted run reduces tomorrow's generation capacity. Token cost of a failed run with generation is ~50x the cost of a probe-only abort. ALWAYS run STEP 0 first.
+The maintainer's plan caps the routine at 15 fires per day. Each wasted run reduces tomorrow's generation capacity. Token cost of a failed run with generation is ~50x the cost of a probe-only abort. ALWAYS run STEP 0 first.
 
-The long-term goal is a balanced 2000+ question bank across all four modules. There is no hard upper bound; once each module hits 500, keep going with equal distribution until Rob disables the routine.
+The long-term goal is a balanced 2000+ question bank across all four modules. There is no hard upper bound; once each module hits 500, keep going with equal distribution until the maintainer disables the routine.
 
 Begin now. Read `.remote-agent-context.md` AFTER the push probe succeeds, not before."""
 

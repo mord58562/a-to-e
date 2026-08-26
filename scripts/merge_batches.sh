@@ -11,7 +11,7 @@
 # This is a manual sync step. The site loader already pulls live from
 # data/batches/ via batches_manifest.json, so questions are visible
 # even before merging - but merging cleans up the staging area and
-# locks the IDs into the canonical main files.
+# locks the IDs into the primary main files.
 
 set -euo pipefail
 cd "$(dirname "$0")/.."

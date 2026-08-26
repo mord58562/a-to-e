@@ -9,6 +9,8 @@ The new account API needs **Cloudflare D1** (the worker's edge SQLite). Setup on
 
 ## One-time setup
 
+Prerequisites: Node.js 18+ and npm 8+ (macOS: `brew install node`).
+
 ```sh
 cd cloudflare-worker
 

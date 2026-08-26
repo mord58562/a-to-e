@@ -1063,10 +1063,16 @@
     // yet exist (in-flight batches, expected inbox drops).
     const batchPaths = (batchManifest && batchManifest.batches) || [];
     const inboxPaths = (inboxManifest && inboxManifest.inbox) || [];
+    const allPaths = [...batchPaths, ...inboxPaths];
+    let batchFailures = 0;
     const extra = await Promise.all(
-      [...batchPaths, ...inboxPaths].map(p => fetchJson("data/" + p).catch(() => []))
+      allPaths.map(p => fetchJson("data/" + p).catch(() => { batchFailures++; return []; }))
     );
     const extraQuestions = extra.flat();
+    state.batchLoadStats = { total: allPaths.length, failed: batchFailures };
+    if (batchFailures > 0 && console && console.warn) {
+      console.warn(`[a-to-e] ${batchFailures} of ${allPaths.length} batch files failed to load`);
+    }
 
     // Locally pasted questions live only in this browser's localStorage.
     // They merge into the bank the same way as inbox files.
@@ -3416,14 +3422,14 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
       const inPool = state.quiz.pool.filter(q => answered.has(q.id));
       count = inPool.length;
     } else {
-      const KEY = "y4mcq.house.sessionCount";
+      const KEY = ns("y4mcq.house.sessionCount");
       count = (parseInt(sessionStorage.getItem(KEY) || "0", 10) || 0) + 1;
       sessionStorage.setItem(KEY, String(count));
     }
     if (count <= 0 || count % 50 !== 0) return;
     // Track which quotes have fired this session so we cycle through
     // them all before repeating.
-    const QKEY = "y4mcq.house.recent";
+    const QKEY = ns("y4mcq.house.recent");
     let recent = [];
     try { recent = JSON.parse(sessionStorage.getItem(QKEY) || "[]"); } catch (_) {}
     if (recent.length >= HOUSE_QUOTES.length) recent = [];
