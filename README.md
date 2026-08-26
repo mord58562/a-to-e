@@ -6,7 +6,7 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 ## What's new in 2.1.1
 
-- Bug fixes and minor polish. Question rows are now keyboard-focusable with a visible outline, motion respects `prefers-reduced-motion`, and 34 previously-hidden questions are now served (four cross-file id collisions resolved, six orphan batch files reconnected to the manifest, one malformed batch dropped).
+- Bug fixes and minor polish. Question rows are now keyboard-focusable with a visible outline, motion respects `prefers-reduced-motion`, and the reference panel on phones stops short of full-bleed so the question column stays visible behind it.
 
 ## What's new in 2.1.0
 
