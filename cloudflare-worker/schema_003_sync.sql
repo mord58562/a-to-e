@@ -28,6 +28,11 @@ CREATE TABLE IF NOT EXISTS flags (
 
 CREATE INDEX IF NOT EXISTS idx_flags_user ON flags(user_id);
 
+-- ─── answers: per-user index for history reads ────────────────────────────
+-- handleHistory() and handleState() query answers WHERE user_id = ?; without
+-- this index those degrade to full scans as the table grows.
+CREATE INDEX IF NOT EXISTS idx_answers_user ON answers(user_id);
+
 -- ─── settings: per-user session preferences ───────────────────────────────
 -- One row per user holding the serialized settings blob (JSON). Settings
 -- are small and read together; one BLOB column is simpler than a per-key

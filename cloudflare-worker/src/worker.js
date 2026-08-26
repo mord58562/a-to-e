@@ -37,6 +37,11 @@ import { argon2id } from "@noble/hashes/argon2";
 
 const JSON_HEADERS = { "Content-Type": "application/json" };
 
+// Reject any POST body larger than this to keep the Worker from wasting CPU
+// parsing hostile payloads. Legitimate payloads (paste of ~50 questions, audit
+// of ~500 kept objects) fit inside this cap comfortably.
+const MAX_BODY_BYTES = 1_000_000;
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -44,10 +49,19 @@ export default {
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: cors });
     }
+    // Body-size cap for POSTs. Not a substitute for per-endpoint rate limits
+    // but it prevents an unauth POST from tying up the isolate for seconds.
+    if (request.method === "POST") {
+      const len = parseInt(request.headers.get("Content-Length") || "0", 10);
+      if (len > MAX_BODY_BYTES) {
+        return json({ ok: false, error: "payload too large" }, 413, cors);
+      }
+    }
     try {
       // Account + stats API: GET allowed for /api/me, /api/stats/:qid.
       if (url.pathname === "/api/register" && request.method === "POST") return await handleRegister(request, env, cors);
       if (url.pathname === "/api/login"    && request.method === "POST") return await handleLogin(request, env, cors);
+      if (url.pathname === "/api/logout"   && request.method === "POST") return await handleLogout(request, env, cors);
       if (url.pathname === "/api/me"       && request.method === "GET")  return await handleMe(request, env, cors);
       if (url.pathname === "/api/answer"   && request.method === "POST") return await handleAnswer(request, env, cors);
       if (url.pathname === "/api/history"  && request.method === "GET")  return await handleHistory(request, env, cors);
@@ -500,6 +514,20 @@ async function handleMe(request, env, cors) {
   return json({ ok: true, user: publicUser(user) }, 200, cors);
 }
 
+async function handleLogout(request, env, cors) {
+  // Best-effort: if a Bearer token is present, drop the matching session row so
+  // the token can't be replayed even if it leaks. Silent on no-token / bad-token.
+  const auth = request.headers.get("Authorization") || "";
+  const m = auth.match(/^Bearer\s+([a-f0-9]{32,})$/i);
+  if (m && env.DB) {
+    try {
+      const tokenH = await hashSessionToken(env, m[1]);
+      await env.DB.prepare("DELETE FROM sessions WHERE token_hash = ?").bind(tokenH).run();
+    } catch { /* swallow; client will clear its local token anyway */ }
+  }
+  return json({ ok: true }, 200, cors);
+}
+
 async function handleAccountDelete(request, env, cors) {
   const user = await authUser(request, env);
   if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
@@ -798,6 +826,27 @@ async function handlePaste(request, env, cors) {
 /* ── /report ─────────────────────────────────────────────────────────── */
 
 async function handleReport(request, env, cors) {
+  // Public endpoint: rate-limit per-IP to stop reports.json growing without
+  // bound. 10 reports/hour/IP is generous for legitimate use and cheap to
+  // check against the existing login_attempts table (reused as a general
+  // sliding-window counter keyed by a synthetic "ip:report" identifier).
+  if (env.DB) {
+    const ipH = await ipHash(request, env);
+    const key = "report:" + ipH;
+    const now = Math.floor(Date.now() / 1000);
+    const windowSec = 3600;
+    const limit = 10;
+    const row = await env.DB.prepare(
+      "SELECT COUNT(*) AS n FROM login_attempts WHERE email_lookup = ? AND ts > ?"
+    ).bind(key, now - windowSec).first();
+    if (row && row.n >= limit) {
+      return json({ ok: false, error: "too many reports, try later" }, 429, cors);
+    }
+    await env.DB.prepare(
+      "INSERT INTO login_attempts (email_lookup, ts, ok, ip_hash) VALUES (?, ?, 1, ?)"
+    ).bind(key, now, ipH).run();
+  }
+
   const body = await request.json().catch(() => null);
   const qid = body && body.question_id;
   const issue = body && body.issue;
@@ -921,8 +970,11 @@ async function handleApplyLiveAudit(request, env, cors) {
   if (!filePath || typeof filePath !== "string") {
     return json({ ok: false, error: "missing file_path" }, 400, cors);
   }
-  const isBatch = filePath.startsWith("data/batches/") && filePath.endsWith(".json")
-                  && !filePath.includes("..") && !filePath.includes("/_");
+  // Strict allowlist regex for batch paths: only a flat filename directly
+  // under data/batches/, alphanumerics + . _ -, ending in .json. Blocks any
+  // subdirectory traversal or shell-glob character.
+  const isBatch = /^data\/batches\/[a-zA-Z0-9._-]+\.json$/.test(filePath)
+                  && !filePath.startsWith("data/batches/_");
   const isMain = ALLOWED_LIVE_FILES.has(filePath);
   if (!isBatch && !isMain) {
     return json({ ok: false, error: "file_path must be data/batches/*.json or a main questions file" }, 400, cors);

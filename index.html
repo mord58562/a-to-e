@@ -9,14 +9,22 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="A to E" />
 <meta name="format-detection" content="telephone=no" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<!-- Content Security Policy: same-origin for scripts and images, plus the
+     Worker for API calls and Google Fonts for typography. Report-only style
+     unset here (we don't have a report endpoint); the policy is defensive
+     against XSS-injected external resource loads if a stem ever slips
+     through the sanitiser. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://a-to-e-inbox.mord58562.workers.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
 <title>A to E - Australian clinical-years MCQ bank</title>
 <meta name="description" content="A to E - practice MCQs for Australian medical students in their clinical years." />
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 <link rel="apple-touch-icon" href="assets/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260826a" />
+<link rel="dns-prefetch" href="https://a-to-e-inbox.mord58562.workers.dev">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css?v=20260826b" />
 <script>
   // Pre-paint auth probe. If a cloud auth token is in localStorage we
   // assume the gate will pass and pre-hide it before first paint -
@@ -149,10 +157,10 @@
     <button class="link-btn" id="exitBtn">Exit session</button>
   </span>
   <span class="colophon-block colophon-center">
-    <span id="sessionTime"></span>
+    <span id="sessionTime" aria-live="off"></span>
     <span class="colophon-sep" id="qTimerSep" hidden>·</span>
-    <span id="questionTime"></span>
-    <button class="ghost-x" id="pauseBtn" title="Pause">⏸</button>
+    <span id="questionTime" aria-live="polite" aria-atomic="true"></span>
+    <button class="ghost-x" id="pauseBtn" title="Pause" aria-label="Pause session">⏸</button>
   </span>
   <span class="colophon-block colophon-right">
     <button class="link-btn" id="endNowBtn">End &amp; see results</button>
@@ -838,6 +846,6 @@ For every question:
 Output the JSON array. Nothing else.
 </script>
 
-<script src="assets/app.js?v=20260826a" defer></script>
+<script src="assets/app.js?v=20260826b" defer></script>
 </body>
 </html>
