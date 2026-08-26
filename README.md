@@ -2,7 +2,11 @@
 
 A free, open practice MCQ bank for Australian medical students in their clinical years. Single-best-answer clinical reasoning across paediatrics, obstetrics & gynaecology, psychiatry, and adult medicine, with Australian units and Australian guideline sources throughout.
 
-**Live: <https://mord58562.github.io/a-to-e/>** — guest mode, no signup required.
+**Live: <https://mord58562.github.io/a-to-e/>** - guest mode, no signup required.
+
+## What's new in 2.1.1
+
+- Bug fixes and minor polish. Question rows are now keyboard-focusable with a visible outline, motion respects `prefers-reduced-motion`, and 34 previously-hidden questions are now served (four cross-file id collisions resolved, six orphan batch files reconnected to the manifest, one malformed batch dropped).
 
 ## What's new in 2.1.0
 

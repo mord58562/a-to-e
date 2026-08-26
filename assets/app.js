@@ -312,11 +312,13 @@
     const targets = [];
     if (WORKER_URL) targets.push(WORKER_URL.replace(/\/$/, "") + "/" + endpoint.replace(/^\//, ""));
     targets.push("api/" + endpoint.replace(/^\//, ""));
+    const headers = { "Content-Type": "application/json" };
+    if (authToken) headers["Authorization"] = `Bearer ${authToken}`;
     for (const url of targets) {
       try {
         const r = await fetch(url, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers,
           body: JSON.stringify(body),
         });
         if (r.ok) return await r.json().catch(() => ({ ok: true }));
@@ -1692,6 +1694,9 @@
     shuffled.forEach(opt => {
       const li = document.createElement("li");
       li.dataset.letter = opt.letter;
+      li.setAttribute("role", "button");
+      li.setAttribute("tabindex", "0");
+      li.setAttribute("aria-label", `Option ${opt.letter}: ${opt.text}`);
       const cite = opt.source_refs && opt.source_refs.length
         ? `<span class="cite">· ${esc(opt.source_refs.join(", "))}</span>` : "";
       li.innerHTML = `
@@ -1700,7 +1705,7 @@
           <div class="opt-text">${esc(opt.text)}</div>
           <div class="opt-rationale"><b>${opt.correct ? "Correct." : "Incorrect."}</b> ${esc(opt.rationale)}${cite}</div>
         </div>
-        <button class="opt-strike" title="Cross out (X)" data-letter="${opt.letter}">×</button>
+        <button class="opt-strike" title="Cross out (X)" data-letter="${opt.letter}" aria-label="Strike out option ${opt.letter}">×</button>
       `;
       li.onclick = e => {
         if (e.target.classList.contains("opt-strike")) {
