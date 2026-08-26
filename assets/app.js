@@ -80,9 +80,27 @@
     if (!WORKER_URL) throw new Error("Cloud backend not configured");
     const headers = { "Content-Type": "application/json", ...(options && options.headers || {}) };
     if (authToken) headers["Authorization"] = `Bearer ${authToken}`;
-    const r = await fetch(WORKER_URL.replace(/\/$/, "") + path, { ...(options || {}), headers });
+    let r;
+    try {
+      r = await fetch(WORKER_URL.replace(/\/$/, "") + path, { ...(options || {}), headers });
+    } catch (netErr) {
+      // Distinguish offline / DNS / TLS failures from a well-formed server
+      // 4xx/5xx. The signup + signin forms surface this straight to the user.
+      throw new Error("Can't reach the server. Check your connection.");
+    }
     const data = await r.json().catch(() => ({}));
-    if (!r.ok || data.ok === false) throw new Error(data.error || `HTTP ${r.status}`);
+    if (!r.ok || data.ok === false) {
+      const serverMsg = data.error || "";
+      let friendly = serverMsg;
+      if (r.status === 401) friendly = "Wrong email or password.";
+      else if (r.status === 429) friendly = "Too many attempts. Try again in a few minutes.";
+      else if (r.status === 413) friendly = "That's too much data for one request.";
+      else if (r.status >= 500) friendly = serverMsg || "Server error. Try again in a moment.";
+      const e = new Error(friendly || `HTTP ${r.status}`);
+      e.status = r.status;
+      e.serverError = serverMsg;
+      throw e;
+    }
     return data;
   }
 
@@ -115,6 +133,14 @@
     return user;
   }
   function cloudSignOut() {
+    // Best-effort server-side session revoke so the token can't be replayed
+    // even if it leaked between issue and sign-out. Fire-and-forget; the
+    // client-side clear below happens unconditionally so a network failure
+    // never traps a user in a signed-in state locally.
+    const wasToken = authToken;
+    if (wasToken) {
+      apiFetch("/api/logout", { method: "POST" }).catch(() => {});
+    }
     authToken = null; cloudUser = null;
     localStorage.removeItem(AUTH_TOKEN_KEY);
   }
@@ -1044,16 +1070,25 @@
   }
 
   async function loadData() {
+    // Data JSON files don't carry the CSS/JS cache-bust query string, so a
+    // browser-cached manifest can hide brand-new batches for hours after they
+    // land. Fetch meta first (small, always fresh via short TTL) then reuse
+    // its `updated` timestamp as the effective cache-bust key on everything
+    // downstream, so a new deploy or a scheduled routine push invalidates the
+    // JSON caches even without a code release.
+    const metaPre = await fetchJson("data/meta.json?t=" + Date.now()).catch(() => ({}));
+    const v = metaPre && metaPre.updated ? String(metaPre.updated).replace(/[^0-9-]/g, "") : String(Math.floor(Date.now()/3600000));
+    const bust = "?v=" + v;
     const [paeds, obgyn, psych, medicine, ranges, meta, batchManifest, inboxManifest, reportsFile] = await Promise.all([
-      fetchJson("data/questions_paeds.json").catch(() => []),
-      fetchJson("data/questions_obgyn.json").catch(() => []),
-      fetchJson("data/questions_psych.json").catch(() => []),
-      fetchJson("data/questions_medicine.json").catch(() => []),
-      fetchJson("data/reference_ranges.json").catch(() => null),
-      fetchJson("data/meta.json").catch(() => ({})),
-      fetchJson("data/batches_manifest.json").catch(() => ({ batches: [] })),
-      fetchJson("data/inbox_manifest.json").catch(() => ({ inbox: [] })),
-      fetchJson("data/reports.json").catch(() => ({ reports: [] })),
+      fetchJson("data/questions_paeds.json" + bust).catch(() => []),
+      fetchJson("data/questions_obgyn.json" + bust).catch(() => []),
+      fetchJson("data/questions_psych.json" + bust).catch(() => []),
+      fetchJson("data/questions_medicine.json" + bust).catch(() => []),
+      fetchJson("data/reference_ranges.json" + bust).catch(() => null),
+      Promise.resolve(metaPre),
+      fetchJson("data/batches_manifest.json" + bust).catch(() => ({ batches: [] })),
+      fetchJson("data/inbox_manifest.json" + bust).catch(() => ({ inbox: [] })),
+      fetchJson("data/reports.json" + bust).catch(() => ({ reports: [] })),
     ]);
     state.reports = (reportsFile && reportsFile.reports) || [];
 
@@ -1066,7 +1101,7 @@
     const allPaths = [...batchPaths, ...inboxPaths];
     let batchFailures = 0;
     const extra = await Promise.all(
-      allPaths.map(p => fetchJson("data/" + p).catch(() => { batchFailures++; return []; }))
+      allPaths.map(p => fetchJson("data/" + p + bust).catch(() => { batchFailures++; return []; }))
     );
     const extraQuestions = extra.flat();
     state.batchLoadStats = { total: allPaths.length, failed: batchFailures };
@@ -1391,12 +1426,20 @@
     const startBtn = document.getElementById("startBtn");
     if (!el || !startBtn) return;
     const s = state.settings;
-    if (s.mode === "study") {
+    if (n === 0) {
+      el.textContent = "No questions match. Try adding a difficulty level, another discipline, or clearing the Learning-areas filter.";
+    } else if (s.mode === "study") {
       el.textContent = `${n} questions match · Study mode shuffles through them all - end whenever.`;
     } else {
       const take = s.count === 0 ? n : Math.min(s.count, n);
       const time = s.timer ? ` · ${s.timer} min` : " · untimed";
       el.textContent = `${take} of ${n} matching questions${time}.`;
+    }
+    // If any batch file failed to load, surface it once so the user knows
+    // the bank they're seeing is a subset. Non-blocking (Begin still works).
+    const bl = state.batchLoadStats;
+    if (bl && bl.failed > 0) {
+      el.textContent += `  (${bl.failed} of ${bl.total} batch files unavailable this load; refresh to retry.)`;
     }
     startBtn.disabled = n === 0;
   }
@@ -2023,18 +2066,23 @@
     }
 
     // Quick-jump pills: only render those whose key exists in the data
-    // and isn't restricted away by a question-specific subset.
+    // and isn't restricted away by a question-specific subset. Uses a
+    // single delegated listener on the container instead of one per pill
+    // so re-renders don't accumulate handlers.
     if (jump && (!restrictKeys || !restrictKeys.length)) {
       jump.innerHTML = REF_JUMP_PILLS
         .filter(p => cats[p.key])
         .map(p => `<button class="ref-pill" data-key="${esc(p.key)}">${esc(p.label)}</button>`)
         .join("");
-      jump.querySelectorAll(".ref-pill").forEach(btn => {
-        btn.addEventListener("click", () => {
+      if (!jump.dataset.wired) {
+        jump.addEventListener("click", e => {
+          const btn = e.target.closest(".ref-pill");
+          if (!btn) return;
           const target = body.querySelector(`.range-cat[data-key="${btn.dataset.key}"]`);
           if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
         });
-      });
+        jump.dataset.wired = "1";
+      }
     }
 
     keys.forEach(k => {
@@ -2091,7 +2139,9 @@
   // ── Timers ──────────────────────────────────────────────────────────────
   function startSessionTimer() {
     stopSessionTimer();
-    state.timerInterval = setInterval(tick, 500);
+    // 1-second precision is enough for both the session clock and any
+    // countdown; halving from 500ms cuts tick work by 50% over long sessions.
+    state.timerInterval = setInterval(tick, 1000);
     tick();
   }
   function stopSessionTimer() {
@@ -2365,8 +2415,17 @@
     });
     document.addEventListener("keydown", e => {
       if (e.key !== "Escape") return;
-      if (!document.getElementById("howToModal").hidden) closeHowTo();
-      else if (state.refsOpen) closeRefs();
+      // Close whichever overlay is topmost. Order matches z-stacking so a
+      // report opened from within the admin modal closes first.
+      const reportM = document.getElementById("reportModal");
+      const statsM  = document.getElementById("statsModal");
+      const adminM  = document.getElementById("adminModal");
+      const howToM  = document.getElementById("howToModal");
+      if (reportM && !reportM.hidden) { closeReportModal(); return; }
+      if (howToM && !howToM.hidden)   { closeHowTo(); return; }
+      if (statsM && !statsM.hidden)   { statsM.hidden = true; return; }
+      if (adminM && !adminM.hidden)   { adminM.hidden = true; return; }
+      if (state.refsOpen)             { closeRefs(); return; }
     });
     const toggleBtn = document.getElementById("promptToggleBtn");
     const promptPre = document.getElementById("promptText");
@@ -2455,11 +2514,21 @@
     _reportingQId = qid;
     _reportingModel = model || null;
     document.getElementById("reportQId").textContent = `Question: ${qid}`;
-    document.getElementById("reportText").value = "";
+    const ta = document.getElementById("reportText");
+    ta.value = "";
     document.getElementById("reportStatus").textContent = "";
     document.getElementById("reportStatus").className = "dim small";
     document.getElementById("reportModal").hidden = false;
-    setTimeout(() => document.getElementById("reportText").focus(), 50);
+    // Ctrl/Cmd + Enter submits the report from inside the textarea so the
+    // whole flow is keyboard-completable. Wired once per open to avoid
+    // handler accumulation.
+    ta.onkeydown = e => {
+      if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        submitReport();
+      }
+    };
+    setTimeout(() => ta.focus(), 50);
   }
   function closeReportModal() {
     document.getElementById("reportModal").hidden = true;
