@@ -73,8 +73,7 @@ for bpath in merged_files:
 try:
     manifest = json.load(open('data/batches_manifest.json'))
     remaining = [p for p in manifest.get('batches', [])
-                 if not os.path.exists('data/' + p) is False
-                 and os.path.exists('data/' + p)]
+                 if os.path.exists('data/' + p)]
     manifest['batches'] = remaining
     json.dump(manifest, open('data/batches_manifest.json', 'w'), indent=2)
 except Exception as e:

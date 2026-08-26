@@ -759,6 +759,10 @@ function json(obj, status, extraHeaders) {
 /* ── /paste ──────────────────────────────────────────────────────────── */
 
 async function handlePaste(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user || !user.is_admin) {
+    return json({ ok: false, error: "admin session required" }, 401, cors);
+  }
   const body = await request.json().catch(() => null);
   const questions = body && body.questions;
   if (!Array.isArray(questions) || !questions.length) {
@@ -829,8 +833,7 @@ async function handleReport(request, env, cors) {
  *    contents-delete which requires SHA roundtrip).
  *  - Appends a one-line summary + per-Q decisions to audit_log.md.
  *
- *  Only Rob's profile should call this; the worker doesn't enforce
- *  that, but the frontend does.
+ *  Admin session required.
  */
 const TOPIC_TO_FILE = {
   "Paediatrics":               "data/questions_paeds.json",
@@ -840,6 +843,10 @@ const TOPIC_TO_FILE = {
 };
 
 async function handleApplyAudit(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user || !user.is_admin) {
+    return json({ ok: false, error: "admin session required" }, 401, cors);
+  }
   const body = await request.json().catch(() => null);
   const audit = body && body.audit;
   const batchPath = body && body.batch_path;   // e.g. "inbox/pasted-...json"
@@ -904,6 +911,10 @@ const ALLOWED_LIVE_FILES = new Set([
   "data/questions_medicine.json",
 ]);
 async function handleApplyLiveAudit(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user || !user.is_admin) {
+    return json({ ok: false, error: "admin session required" }, 401, cors);
+  }
   const body = await request.json().catch(() => null);
   const filePath = body && body.file_path;
   const audit = body && body.audit;
@@ -942,6 +953,10 @@ async function handleApplyLiveAudit(request, env, cors) {
  *    or if action=='drop' remove the question.
  */
 async function handleApplyReport(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user || !user.is_admin) {
+    return json({ ok: false, error: "admin session required" }, 401, cors);
+  }
   const body = await request.json().catch(() => null);
   const resolutions = body && body.resolutions;
   if (!Array.isArray(resolutions) || !resolutions.length) {

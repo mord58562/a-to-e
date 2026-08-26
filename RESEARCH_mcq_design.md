@@ -1,6 +1,6 @@
 # Research: MCQ Design for the Y4 Australian Medical Practice Bank
 
-A canonical reference compiled from the medical-education psychometrics literature, national-board item-writing manuals, and assessment-design research. Intended to drive (a) generation-prompt refinement for our single-best-answer (SBA) bank and (b) planning for new question formats in the static site.
+A reference compiled from the medical-education psychometrics literature, national-board item-writing manuals, and assessment-design research. Intended to drive (a) generation-prompt refinement for the single-best-answer (SBA) bank and (b) planning for new question formats in the static site.
 
 All claims are cited inline. No em-dashes are used (space-hyphen-space throughout). No fabricated quotations.
 
@@ -8,7 +8,7 @@ All claims are cited inline. No em-dashes are used (space-hyphen-space throughou
 
 ## Part 1 - Single-Best-Answer (SBA) Item Design
 
-### 1.1 The canonical manuals: NBME, Haladyna, and friends
+### 1.1 The core manuals: NBME, Haladyna, and friends
 
 Two documents anchor virtually all serious medical-MCQ writing advice:
 
@@ -78,7 +78,7 @@ Practical takeaway: build an auto-linter for our bank that flags any item contai
 
 The classical-test-theory triad ([U Arizona CoM Phoenix item analysis page](https://phoenixmed.arizona.edu/assessment/item-analysis); [ASC Metrics on point-biserial](https://assess.com/the-point-biserial-item-discrimination/); [Mehta 2018 in PMC5892816](https://pmc.ncbi.nlm.nih.gov/articles/PMC5892816/)):
 
-- **Difficulty index (p-value, facility):** proportion of examinees who got the item right. Acceptable range 0.30 to 0.85. Ideal range 0.30 to 0.70 for discrimination, 0.50 being theoretical maximum for variance and therefore for discrimination power. Lord & Novick (*Statistical Theories of Mental Test Scores*, 1968) is the canonical source.
+- **Difficulty index (p-value, facility):** proportion of examinees who got the item right. Acceptable range 0.30 to 0.85. Ideal range 0.30 to 0.70 for discrimination, 0.50 being theoretical maximum for variance and therefore for discrimination power. Lord & Novick (*Statistical Theories of Mental Test Scores*, 1968) is the primary source.
 - **Discrimination index (D, or point-biserial correlation r_pb):** correlation between getting the item right and getting the total score high. Thresholds in medical-education practice: D >= 0.20 acceptable, D >= 0.30 good, D >= 0.40 excellent. Negative D means an item that low scorers get more often than high scorers - always a defect ([Phoenix Med item analysis](https://phoenixmed.arizona.edu/assessment/item-analysis); [ASC Metrics](https://assess.com/the-point-biserial-item-discrimination/)).
 - **Distractor analysis:** each distractor should be selected by >= 5% of examinees and selected more by the low-scoring third than the high-scoring third (Haladyna 2004; Gierl, Bulut, Guo & Zhang 2017, "Developing, Analyzing, and Using Distractors", *Review of Educational Research*, [Sage abstract](https://journals.sagepub.com/doi/10.3102/0034654317726529)). A distractor failing both is "non-functional" and should be rewritten.
 
@@ -101,7 +101,7 @@ Stem patterns for each level:
 | Evaluate | Critique, judge, justify, prioritise | "Which is the single most appropriate next step given the deteriorating sats trend?" |
 | Create | Design, plan, compose | (Rarely tested in SBA; better suited to OSCE / case write-up) |
 
-Phillips, Aktan, Bay & Mobley 2017 (PMC8368900, [Bloom's in MCQs paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC8368900/)) found that faculty intent and student-perceived level often diverge: an item written as "Apply" is frequently solved as "Remember" because the examinee has already memorised the canonical script. This is critical for our Y4 bank: a vignette of textbook-typical pneumococcal pneumonia is an Apply item only in faculty intent; in practice it is Remember. To force higher-level reasoning we must include atypical features, conflicting findings, or competing differentials in the stem.
+Phillips, Aktan, Bay & Mobley 2017 (PMC8368900, [Bloom's in MCQs paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC8368900/)) found that faculty intent and student-perceived level often diverge: an item written as "Apply" is frequently solved as "Remember" because the examinee has already memorised the textbook script. This is critical for our Y4 bank: a vignette of textbook-typical pneumococcal pneumonia is an Apply item only in faculty intent; in practice it is Remember. To force higher-level reasoning we must include atypical features, conflicting findings, or competing differentials in the stem.
 
 Tofade 2013's pharmacotherapeutics study (PMC3425929) showed that application and evaluation items had significantly higher discrimination indices than recall items.
 
@@ -124,7 +124,7 @@ Practical takeaway: at Y4 final-prep level, the highest-yield design move is to 
 
 Vyas & Supe 2008 ("Multiple choice questions: a literature review on the optimal number of options", *National Medical Journal of India* 21(3), [NMJI PDF](https://nmji.in/nmji/archives/Volume_21/Issue-3/PDF-volume-21-issue-3/Volume-21-issue-3-Med-Edu.pdf)); Brame 2013 (Vanderbilt CFT); Gierl et al. 2017 (Sage); Tarrant & Ware 2010 ("A framework for improving the quality of multiple-choice assessments", *Nurse Educator*); Hingorjo & Jaleel 2012 (*JPMA*) on distractor efficiency.
 
-The canonical findings:
+The core findings:
 
 - Distractors should derive from **common student errors**, not random plausible-sounding wrong answers. Catalogue real misconceptions, near-misses, and competing entities in the differential (Brame 2013).
 - **Each distractor must be defensible** as a possible answer for a partially-trained candidate. If a distractor is "clearly absurd" it is non-functional.
@@ -521,7 +521,7 @@ Stem 2: A G2P1 at 38+0 with sudden severe abdominal pain, woody-hard uterus, CTG
 
 ## Recommendations for the Y4 MCQ Bank
 
-### Top 5 SBA-writing improvements (highest leverage first)
+### Top 5 SBA-writing improvements (highest impact first)
 
 1. **Implement an automated linter for technical flaws.** Flag items containing absolute terms ("always", "never", "all", "none", "EXCEPT"), "all of the above"/"none of the above", any vague qualifiers ("usually", "sometimes"), and correct-option-length outliers (correct > 1.2 x mean distractor length). Auto-blocks publication until resolved. This catches ~70% of Tariq 2013's documented flaw prevalence with near-zero ongoing effort.
 
