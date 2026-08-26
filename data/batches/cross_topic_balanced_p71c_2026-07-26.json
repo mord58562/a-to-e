@@ -6,7 +6,10 @@
     "subtopic_detail": "Puerperal sepsis empirical antibiotics",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["puerperal sepsis", "antibiotic"],
+    "tags": [
+      "puerperal sepsis",
+      "antibiotic"
+    ],
     "stem": "A 32-year-old woman (G1P1) presents to the emergency department on day 4 postpartum after a spontaneous vaginal delivery complicated by a manual removal of retained placental tissue at the time of delivery. She reports 24 hours of fever, offensive-smelling vaginal discharge and lower abdominal pain. She is exclusively breastfeeding without any breast concerns.\n\nOn examination the fundus is 4 finger-breadths above the symphysis pubis and boggy, with cervical excitation and marked lower abdominal tenderness. She has no signs of skin infection at the perineum. She has no known drug allergies. She has not received antibiotics since delivery.",
     "data_table": {
       "Vital signs": "Pulse 122/min, blood pressure 96/58 mmHg, respiratory rate 24/min, SpO2 97 percent on room air, temperature 39.0 degrees C",
@@ -15,11 +18,51 @@
     },
     "lead_in": "What is the most appropriate initial antibiotic regimen?",
     "options": [
-      {"letter": "A", "text": "IV vancomycin 25 mg/kg loading dose alone until formal culture sensitivity is available", "correct": false, "rationale": "Vancomycin covers Gram positives only and misses Gram negatives and anaerobes that dominate polymicrobial endometritis. (Source: Australian eTG: Antibiotic - Puerperal sepsis)", "source_refs": ["Australian eTG: Antibiotic - Puerperal sepsis"]},
-      {"letter": "B", "text": "Oral amoxicillin/clavulanate 875/125 mg twice daily for 7 days from ED discharge home", "correct": false, "rationale": "Sepsis with SIRS features and lactate above 2 requires IV therapy and admission; oral outpatient management is inadequate. (Source: Australian eTG: Antibiotic - Puerperal sepsis)", "source_refs": ["Australian eTG: Antibiotic - Puerperal sepsis"]},
-      {"letter": "C", "text": "IV amoxicillin 2 g plus metronidazole 500 mg plus gentamicin 5 mg/kg all 8-hourly", "correct": true, "rationale": "Amoxicillin plus gentamicin plus metronidazole is the standard Australian empirical regimen for severe puerperal sepsis, covering group A strep, Gram negatives and anaerobes. (Source: Australian eTG: Antibiotic - Puerperal sepsis)", "source_refs": ["Australian eTG: Antibiotic - Puerperal sepsis"]},
-      {"letter": "D", "text": "IV ceftriaxone 2 g daily monotherapy as broad Gram negative and Gram positive cover", "correct": false, "rationale": "Ceftriaxone monotherapy lacks reliable anaerobic cover which is essential in polymicrobial puerperal sepsis. (Source: Australian eTG: Antibiotic - Puerperal sepsis)", "source_refs": ["Australian eTG: Antibiotic - Puerperal sepsis"]},
-      {"letter": "E", "text": "IV clindamycin 600 mg 8-hourly with intravenous fluids only as first-line therapy today", "correct": false, "rationale": "Clindamycin alone lacks adequate Gram negative cover; a triple regimen or a beta-lactam plus metronidazole is required. (Source: Australian eTG: Antibiotic - Puerperal sepsis)", "source_refs": ["Australian eTG: Antibiotic - Puerperal sepsis"]}
+      {
+        "letter": "A",
+        "text": "IV vancomycin 25 mg/kg loading dose alone until formal culture sensitivity is available",
+        "correct": false,
+        "rationale": "Vancomycin covers Gram positives only and misses Gram negatives and anaerobes that dominate polymicrobial endometritis. (Source: Australian eTG: Antibiotic - Puerperal sepsis)",
+        "source_refs": [
+          "Australian eTG: Antibiotic - Puerperal sepsis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Oral amoxicillin/clavulanate 875/125 mg twice daily for 7 days from ED discharge home",
+        "correct": false,
+        "rationale": "Sepsis with SIRS features and lactate above 2 requires IV therapy and admission; oral outpatient management is inadequate. (Source: Australian eTG: Antibiotic - Puerperal sepsis)",
+        "source_refs": [
+          "Australian eTG: Antibiotic - Puerperal sepsis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "IV amoxicillin 2 g plus metronidazole 500 mg plus gentamicin 5 mg/kg all 8-hourly",
+        "correct": true,
+        "rationale": "Amoxicillin plus gentamicin plus metronidazole is the standard Australian empirical regimen for severe puerperal sepsis, covering group A strep, Gram negatives and anaerobes. (Source: Australian eTG: Antibiotic - Puerperal sepsis)",
+        "source_refs": [
+          "Australian eTG: Antibiotic - Puerperal sepsis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "IV ceftriaxone 2 g daily monotherapy as broad Gram negative and Gram positive cover",
+        "correct": false,
+        "rationale": "Ceftriaxone monotherapy lacks reliable anaerobic cover which is essential in polymicrobial puerperal sepsis. (Source: Australian eTG: Antibiotic - Puerperal sepsis)",
+        "source_refs": [
+          "Australian eTG: Antibiotic - Puerperal sepsis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "IV clindamycin 600 mg 8-hourly with intravenous fluids only as first-line therapy today",
+        "correct": false,
+        "rationale": "Clindamycin alone lacks adequate Gram negative cover; a triple regimen or a beta-lactam plus metronidazole is required. (Source: Australian eTG: Antibiotic - Puerperal sepsis)",
+        "source_refs": [
+          "Australian eTG: Antibiotic - Puerperal sepsis"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Puerperal sepsis is a leading cause of maternal death worldwide. Empirical therapy must cover Group A streptococcus, Gram negatives (including E coli), Gram positives and anaerobes; Australian eTG recommends IV amoxicillin (or benzylpenicillin) plus gentamicin plus metronidazole for severe endometritis and puerperal sepsis. Retained products of conception require evacuation once the patient is stable on antibiotics. Early sepsis recognition using SIRS or qSOFA, source control and hour-1 IV antibiotics are critical.",
@@ -32,10 +75,18 @@
       "pearls": "Postpartum sepsis with boggy uterus and offensive lochia after a manual removal needs triple IV amoxicillin + gentamicin + metronidazole within the sepsis hour bundle, then imaging for retained products."
     },
     "sources": [
-      {"label": "Australian eTG: Antibiotic - Puerperal sepsis", "url": "https://tgldcdp.tg.org.au/"},
-      {"label": "RANZCOG maternal sepsis statement"}
+      {
+        "label": "Australian eTG: Antibiotic - Puerperal sepsis",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "RANZCOG maternal sepsis statement"
+      }
     ],
-    "reference_ranges": ["inflammatory_markers", "fbc"],
+    "reference_ranges": [
+      "inflammatory_markers",
+      "fbc"
+    ],
     "created": "2026-07-26"
   },
   {
@@ -45,7 +96,10 @@
     "subtopic_detail": "Von Willebrand disease delivery planning",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["von Willebrand disease", "haemostasis"],
+    "tags": [
+      "von Willebrand disease",
+      "haemostasis"
+    ],
     "stem": "A 26-year-old primigravida with known type 1 von Willebrand disease is reviewed at 34 weeks in the combined obstetric-haematology clinic. Her sister has the same diagnosis. She has a history of heavy menstrual bleeding since menarche and prolonged bleeding after wisdom tooth extraction that responded to tranexamic acid and desmopressin.\n\nHer third trimester coagulation screen today shows von Willebrand factor:antigen 92 IU/dL (50-150), von Willebrand factor:ristocetin cofactor activity 88 IU/dL (50-150), factor VIII activity 110 IU/dL (50-150). She has had an uncomplicated pregnancy so far. Baseline haemoglobin is 120 g/L and platelets are 240 x10^9/L.",
     "data_table": {
       "Vital signs": "Pulse 78/min, blood pressure 116/72 mmHg, respiratory rate 14/min, SpO2 99 percent on room air, temperature 36.6 degrees C, foetal heart rate 140/min",
@@ -54,11 +108,51 @@
     },
     "lead_in": "What is the most appropriate delivery plan?",
     "options": [
-      {"letter": "A", "text": "Recommend termination of pregnancy given the significant peripartum bleeding risk exists", "correct": false, "rationale": "There is no clinical indication for termination in a well-controlled type 1 vWD pregnancy with autocorrected factor levels. (Source: HSANZ vWD in pregnancy guideline)", "source_refs": ["HSANZ vWD in pregnancy guideline"]},
-      {"letter": "B", "text": "Elective caesarean section at 38 weeks under general anaesthesia to avoid regional block", "correct": false, "rationale": "Caesarean is not indicated on haematological grounds when VWF activity is above 50; regional anaesthesia is acceptable at these levels. (Source: HSANZ vWD in pregnancy guideline)", "source_refs": ["HSANZ vWD in pregnancy guideline"]},
-      {"letter": "C", "text": "Prophylactic von Willebrand factor concentrate infusion at onset of established labour", "correct": false, "rationale": "VWF concentrate is reserved for VWF activity under 50 IU/dL at delivery or type 2 or 3 disease; her third trimester levels have autocorrected. (Source: HSANZ vWD in pregnancy guideline)", "source_refs": ["HSANZ vWD in pregnancy guideline"]},
-      {"letter": "D", "text": "Plan vaginal delivery with active third stage and prophylactic tranexamic acid at delivery", "correct": true, "rationale": "Type 1 vWD with third trimester VWF activity above 50 IU/dL can deliver vaginally with active third stage and prophylactic TXA, without requiring VWF concentrate. (Source: HSANZ vWD in pregnancy guideline)", "source_refs": ["HSANZ vWD in pregnancy guideline"]},
-      {"letter": "E", "text": "Avoid all regional anaesthesia in labour due to unacceptable haematoma risk in this patient", "correct": false, "rationale": "Regional anaesthesia is safe when VWF and FVIII activity are above 50 IU/dL; blanket avoidance denies effective analgesia. (Source: HSANZ vWD in pregnancy guideline)", "source_refs": ["HSANZ vWD in pregnancy guideline"]}
+      {
+        "letter": "A",
+        "text": "Recommend termination of pregnancy given the significant peripartum bleeding risk exists",
+        "correct": false,
+        "rationale": "There is no clinical indication for termination in a well-controlled type 1 vWD pregnancy with autocorrected factor levels. (Source: HSANZ vWD in pregnancy guideline)",
+        "source_refs": [
+          "HSANZ vWD in pregnancy guideline"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Elective caesarean section at 38 weeks under general anaesthesia to avoid regional block",
+        "correct": false,
+        "rationale": "Caesarean is not indicated on haematological grounds when VWF activity is above 50; regional anaesthesia is acceptable at these levels. (Source: HSANZ vWD in pregnancy guideline)",
+        "source_refs": [
+          "HSANZ vWD in pregnancy guideline"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Prophylactic von Willebrand factor concentrate infusion at onset of established labour",
+        "correct": false,
+        "rationale": "VWF concentrate is reserved for VWF activity under 50 IU/dL at delivery or type 2 or 3 disease; her third trimester levels have autocorrected. (Source: HSANZ vWD in pregnancy guideline)",
+        "source_refs": [
+          "HSANZ vWD in pregnancy guideline"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Plan vaginal delivery with active third stage and prophylactic tranexamic acid at delivery",
+        "correct": true,
+        "rationale": "Type 1 vWD with third trimester VWF activity above 50 IU/dL can deliver vaginally with active third stage and prophylactic TXA, without requiring VWF concentrate. (Source: HSANZ vWD in pregnancy guideline)",
+        "source_refs": [
+          "HSANZ vWD in pregnancy guideline"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Avoid all regional anaesthesia in labour due to unacceptable haematoma risk in this patient",
+        "correct": false,
+        "rationale": "Regional anaesthesia is safe when VWF and FVIII activity are above 50 IU/dL; blanket avoidance denies effective analgesia. (Source: HSANZ vWD in pregnancy guideline)",
+        "source_refs": [
+          "HSANZ vWD in pregnancy guideline"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Von Willebrand factor and factor VIII levels rise physiologically in pregnancy and often reach normal levels in type 1 vWD by the third trimester. Peripartum planning is based on VWF:RCo and FVIII activity at 34-36 weeks: above 50 IU/dL allows vaginal delivery, active third stage, and regional anaesthesia without VWF concentrate; below 50 requires DDAVP (if responsive and outside pre-eclampsia risk) or VWF concentrate at the onset of labour. Tranexamic acid can be given prophylactically for 5-7 days postpartum to reduce secondary PPH risk. Types 2 and 3 vWD, and any active bleeding, need haematologist-led planning.",
@@ -71,10 +165,18 @@
       "pearls": "Type 1 vWD with third trimester VWF:RCo and FVIII both above 50 IU/dL delivers vaginally with active third stage and prophylactic TXA; VWF concentrate is only needed if activity remains below 50."
     },
     "sources": [
-      {"label": "HSANZ vWD in pregnancy guideline", "url": "https://www.hsanz.org.au/"},
-      {"label": "RANZCOG bleeding disorders in pregnancy statement"}
+      {
+        "label": "HSANZ vWD in pregnancy guideline",
+        "url": "https://www.hsanz.org.au/"
+      },
+      {
+        "label": "RANZCOG bleeding disorders in pregnancy statement"
+      }
     ],
-    "reference_ranges": ["coags", "fbc"],
+    "reference_ranges": [
+      "coags",
+      "fbc"
+    ],
     "created": "2026-07-26"
   },
   {
@@ -84,7 +186,10 @@
     "subtopic_detail": "PPROM latency antibiotics",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["PPROM", "antibiotic"],
+    "tags": [
+      "PPROM",
+      "antibiotic"
+    ],
     "stem": "A 27-year-old primigravida presents at 29+3 weeks with a sudden gush of clear fluid per vagina and a steady leak since. Sterile speculum examination confirms pooling of clear liquor in the posterior fornix. There are no contractions on the tocograph, the CTG is reactive and there is no vaginal bleeding or foul discharge.\n\nShe is afebrile and haemodynamically stable. Her white cell count is normal and CRP is unremarkable. A high vaginal swab is sent for microscopy and culture; group B streptococcus status is currently unknown. She has no known drug allergies. She has completed her first dose of betamethasone in ED.",
     "data_table": {
       "Vital signs": "Pulse 86/min, blood pressure 112/68 mmHg, respiratory rate 16/min, SpO2 99 percent on room air, temperature 36.7 degrees C, foetal heart rate 148/min",
@@ -93,11 +198,51 @@
     },
     "lead_in": "What is the most appropriate latency antibiotic regimen?",
     "options": [
-      {"letter": "A", "text": "No antibiotics unless the patient develops fever or foetal tachycardia during the admission", "correct": false, "rationale": "Withholding latency antibiotics ignores the ORACLE I benefit of shorter time to delivery and lower neonatal morbidity in PPROM. (Source: RANZCOG preterm labour and birth statement)", "source_refs": ["RANZCOG preterm labour and birth statement"]},
-      {"letter": "B", "text": "Oral amoxicillin-clavulanate 875/125 mg twice daily for 10 days from ED admission today", "correct": false, "rationale": "Amoxicillin-clavulanate is avoided in PPROM because of increased neonatal necrotising enterocolitis risk in the ORACLE I trial. (Source: RANZCOG preterm labour and birth statement)", "source_refs": ["RANZCOG preterm labour and birth statement"]},
-      {"letter": "C", "text": "IV benzylpenicillin 1.2 g every 4 hours until membrane rupture reaches 24 hours in duration", "correct": false, "rationale": "Intrapartum GBS prophylaxis (not latency antibiotics) is warranted with penicillin at delivery; oral erythromycin is the latency regimen. (Source: RANZCOG preterm labour and birth statement)", "source_refs": ["RANZCOG preterm labour and birth statement"]},
-      {"letter": "D", "text": "Oral metronidazole 400 mg twice daily for 7 days for anaerobic cover of the genital tract", "correct": false, "rationale": "Metronidazole monotherapy does not prolong pregnancy in PPROM and is not first-line for latency; erythromycin is preferred. (Source: RANZCOG preterm labour and birth statement)", "source_refs": ["RANZCOG preterm labour and birth statement"]},
-      {"letter": "E", "text": "Oral erythromycin 250 mg four times daily for 10 days or until delivery", "correct": true, "rationale": "Erythromycin latency antibiotics per ORACLE I are the AU standard for PPROM to prolong pregnancy and reduce neonatal morbidity; co-amoxiclav is avoided due to NEC risk. (Source: RANZCOG preterm labour and birth statement)", "source_refs": ["RANZCOG preterm labour and birth statement"]}
+      {
+        "letter": "A",
+        "text": "No antibiotics unless the patient develops fever or foetal tachycardia during the admission",
+        "correct": false,
+        "rationale": "Withholding latency antibiotics ignores the ORACLE I benefit of shorter time to delivery and lower neonatal morbidity in PPROM. (Source: RANZCOG preterm labour and birth statement)",
+        "source_refs": [
+          "RANZCOG preterm labour and birth statement"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Oral amoxicillin-clavulanate 875/125 mg twice daily for 10 days from ED admission today",
+        "correct": false,
+        "rationale": "Amoxicillin-clavulanate is avoided in PPROM because of increased neonatal necrotising enterocolitis risk in the ORACLE I trial. (Source: RANZCOG preterm labour and birth statement)",
+        "source_refs": [
+          "RANZCOG preterm labour and birth statement"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "IV benzylpenicillin 1.2 g every 4 hours until membrane rupture reaches 24 hours in duration",
+        "correct": false,
+        "rationale": "Intrapartum GBS prophylaxis (not latency antibiotics) is warranted with penicillin at delivery; oral erythromycin is the latency regimen. (Source: RANZCOG preterm labour and birth statement)",
+        "source_refs": [
+          "RANZCOG preterm labour and birth statement"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Oral metronidazole 400 mg twice daily for 7 days for anaerobic cover of the genital tract",
+        "correct": false,
+        "rationale": "Metronidazole monotherapy does not prolong pregnancy in PPROM and is not first-line for latency; erythromycin is preferred. (Source: RANZCOG preterm labour and birth statement)",
+        "source_refs": [
+          "RANZCOG preterm labour and birth statement"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Oral erythromycin 250 mg four times daily for 10 days or until delivery",
+        "correct": true,
+        "rationale": "Erythromycin latency antibiotics per ORACLE I are the AU standard for PPROM to prolong pregnancy and reduce neonatal morbidity; co-amoxiclav is avoided due to NEC risk. (Source: RANZCOG preterm labour and birth statement)",
+        "source_refs": [
+          "RANZCOG preterm labour and birth statement"
+        ]
+      }
     ],
     "explanation": {
       "summary": "For preterm prelabour rupture of membranes (PPROM) before 34 weeks, the aim is expectant management with corticosteroids (24-34+6 weeks), magnesium sulfate for neuroprotection under 30 weeks, and latency antibiotics. RANZCOG endorses oral erythromycin 250 mg 4 times daily for 10 days (or until delivery) based on the ORACLE I trial - prolongs pregnancy, reduces chorioamnionitis and reduces neonatal morbidity. Co-amoxiclav is avoided due to increased NEC risk. GBS-positive women receive intrapartum penicillin as well. Delivery is planned by 37 weeks or earlier for infection, foetal compromise or maternal indication.",
@@ -110,10 +255,17 @@
       "pearls": "PPROM before 34 weeks: oral erythromycin 250 mg QID for 10 days (or until delivery), corticosteroids, magnesium under 30 weeks; avoid co-amoxiclav due to NEC signal."
     },
     "sources": [
-      {"label": "RANZCOG preterm labour and birth statement", "url": "https://ranzcog.edu.au/statements-guidelines"},
-      {"label": "Cochrane 2013: Erythromycin for PPROM (ORACLE I)"}
+      {
+        "label": "RANZCOG preterm labour and birth statement",
+        "url": "https://ranzcog.edu.au/statements-guidelines"
+      },
+      {
+        "label": "Cochrane 2013: Erythromycin for PPROM (ORACLE I)"
+      }
     ],
-    "reference_ranges": ["inflammatory_markers"],
+    "reference_ranges": [
+      "inflammatory_markers"
+    ],
     "created": "2026-07-26"
   },
   {
@@ -123,7 +275,10 @@
     "subtopic_detail": "Atypical HELLP without severe hypertension",
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["HELLP syndrome", "pre-eclampsia"],
+    "tags": [
+      "HELLP syndrome",
+      "pre-eclampsia"
+    ],
     "stem": "A 29-year-old primigravida presents at 32+4 weeks with 6 hours of steady right upper quadrant pain, nausea and vomiting. Her booking blood pressure was 110/68 and today it is 138/86, then 132/82 on repeat 15 minutes later. She has no visual disturbance, headache or peripheral oedema. Urine dipstick shows trace protein and spot urine protein:creatinine ratio is 24 mg/mmol.\n\nThe obstetric registrar wondered aloud about biliary colic and requested an abdominal ultrasound which showed a normal gallbladder without stones and an unremarkable liver. Her platelet count 4 weeks ago was 245 x10^9/L. She has had no PV bleeding and the CTG is reactive. She feels foetal movements normally.",
     "data_table": {
       "Vital signs": "Pulse 96/min, blood pressure 132/82 mmHg, respiratory rate 20/min, SpO2 99 percent on room air, temperature 36.6 degrees C, foetal heart rate 148/min",
@@ -132,11 +287,51 @@
     },
     "lead_in": "What is the most likely diagnosis driving your management plan?",
     "options": [
-      {"letter": "A", "text": "HELLP syndrome with delivery planned once corticosteroids are commenced and BP controlled", "correct": true, "rationale": "Platelets under 100, LDH raised with low haptoglobin and schistocytes plus AST/ALT above 70 meets Tennessee HELLP criteria even without severe hypertension or heavy proteinuria; delivery is the definitive treatment. (Source: SOMANZ HDP guideline)", "source_refs": ["SOMANZ HDP guideline"]},
-      {"letter": "B", "text": "Acute fatty liver of pregnancy with plans for immediate broad hepatic support and delivery", "correct": false, "rationale": "AFLP typically shows hypoglycaemia, hyperammonaemia, coagulopathy with markedly raised INR and normal platelets initially; her INR is normal and haemolysis features fit HELLP. (Source: SOMANZ HDP guideline)", "source_refs": ["SOMANZ HDP guideline"]},
-      {"letter": "C", "text": "Symptomatic gallstone pancreatitis given RUQ pain and elevated liver enzymes on presentation", "correct": false, "rationale": "Gallbladder is normal and lipase was not raised; thrombocytopenia and microangiopathic haemolysis fit HELLP rather than pancreatitis. (Source: SOMANZ HDP guideline)", "source_refs": ["SOMANZ HDP guideline"]},
-      {"letter": "D", "text": "Isolated pregnancy-related idiopathic thrombocytopenia (gestational) with likely spontaneous resolution", "correct": false, "rationale": "Gestational thrombocytopenia rarely drops below 100 and does not cause haemolysis or transaminitis; her biochemistry fits HELLP. (Source: SOMANZ HDP guideline)", "source_refs": ["SOMANZ HDP guideline"]},
-      {"letter": "E", "text": "Viral hepatitis with expectant management and monitoring of foetal wellbeing over the next week", "correct": false, "rationale": "Viral hepatitis presents with much higher ALT/AST (thousands), positive viral serology and no MAHA; the picture is HELLP. (Source: SOMANZ HDP guideline)", "source_refs": ["SOMANZ HDP guideline"]}
+      {
+        "letter": "A",
+        "text": "HELLP syndrome with delivery planned once corticosteroids are commenced and BP controlled",
+        "correct": true,
+        "rationale": "Platelets under 100, LDH raised with low haptoglobin and schistocytes plus AST/ALT above 70 meets Tennessee HELLP criteria even without severe hypertension or heavy proteinuria; delivery is the definitive treatment. (Source: SOMANZ HDP guideline)",
+        "source_refs": [
+          "SOMANZ HDP guideline"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Acute fatty liver of pregnancy with plans for immediate broad hepatic support and delivery",
+        "correct": false,
+        "rationale": "AFLP typically shows hypoglycaemia, hyperammonaemia, coagulopathy with markedly raised INR and normal platelets initially; her INR is normal and haemolysis features fit HELLP. (Source: SOMANZ HDP guideline)",
+        "source_refs": [
+          "SOMANZ HDP guideline"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Symptomatic gallstone pancreatitis given RUQ pain and elevated liver enzymes on presentation",
+        "correct": false,
+        "rationale": "Gallbladder is normal and lipase was not raised; thrombocytopenia and microangiopathic haemolysis fit HELLP rather than pancreatitis. (Source: SOMANZ HDP guideline)",
+        "source_refs": [
+          "SOMANZ HDP guideline"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Isolated pregnancy-related idiopathic thrombocytopenia (gestational) with likely spontaneous resolution",
+        "correct": false,
+        "rationale": "Gestational thrombocytopenia rarely drops below 100 and does not cause haemolysis or transaminitis; her biochemistry fits HELLP. (Source: SOMANZ HDP guideline)",
+        "source_refs": [
+          "SOMANZ HDP guideline"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Viral hepatitis with expectant management and monitoring of foetal wellbeing over the next week",
+        "correct": false,
+        "rationale": "Viral hepatitis presents with much higher ALT/AST (thousands), positive viral serology and no MAHA; the picture is HELLP. (Source: SOMANZ HDP guideline)",
+        "source_refs": [
+          "SOMANZ HDP guideline"
+        ]
+      }
     ],
     "explanation": {
       "summary": "HELLP syndrome is a variant of pre-eclampsia defined by haemolysis (LDH raised, haptoglobin low, schistocytes on blood film), elevated liver enzymes (AST or ALT over 70) and low platelets (under 100 x10^9/L). Up to 15 to 20 percent of HELLP cases occur without severe hypertension or proteinuria; failure to recognise this atypical presentation delays delivery. Definitive management is expedited delivery once maternal stabilised: corticosteroids for foetal lung maturation before 34 weeks, magnesium sulfate for seizure prophylaxis, and blood product support (platelets under 50 for caesarean, under 20 for vaginal delivery). Watch for subcapsular liver haematoma and DIC as complications.",
@@ -149,10 +344,19 @@
       "pearls": "New RUQ pain in the third trimester with platelets 82, LDH 620 and AST 240 is HELLP even at BP 132/82; give steroids, magnesium and plan delivery within 48 hours."
     },
     "sources": [
-      {"label": "SOMANZ HDP guideline", "url": "https://www.somanz.org/downloads/HTPregnancyGuidelineJuly2014.pdf"},
-      {"label": "RANZCOG HDP statement"}
+      {
+        "label": "RANZCOG HDP statement"
+      },
+      {
+        "label": "SOMANZ HDP guideline",
+        "url": "https://www.somanz.org/downloads/HTPregnancyGuidelineJuly2014.pdf"
+      }
     ],
-    "reference_ranges": ["pre_eclampsia_bloods", "fbc", "lfts"],
+    "reference_ranges": [
+      "pre_eclampsia_bloods",
+      "fbc",
+      "lfts"
+    ],
     "created": "2026-07-26"
   },
   {
@@ -162,7 +366,10 @@
     "subtopic_detail": "Postmenopausal complex ovarian mass triage",
     "difficulty": 4,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["ovarian mass", "CA125"],
+    "tags": [
+      "ovarian mass",
+      "CA125"
+    ],
     "stem": "A 63-year-old woman presents to your general practice with 3 months of vague abdominal bloating and early satiety. She has no vaginal bleeding, no bowel disturbance and no urinary symptoms. Her last menstrual period was 12 years ago. Her mother had breast cancer at age 71 and her paternal aunt had ovarian cancer at age 58. She has no BRCA testing.\n\nYou arrange a pelvic ultrasound which shows a 6.2 cm left adnexal mass with 3 solid nodular papillary projections greater than 3 mm, thick internal septations and moderate colour flow. There is no free fluid and the right ovary is atrophic. Serum CA125 is 88 kU/L, serum HE4 elevated, and calculated risk of malignancy index (RMI) is 528.",
     "data_table": {
       "Vital signs": "Pulse 74/min, blood pressure 128/78 mmHg, respiratory rate 16/min, SpO2 99 percent on room air, temperature 36.5 degrees C",
@@ -171,11 +378,51 @@
     },
     "lead_in": "What is the most appropriate next step?",
     "options": [
-      {"letter": "A", "text": "Repeat ultrasound in 3 months to observe any change in the mass or serum CA125 rise", "correct": false, "rationale": "Interval observation of a complex postmenopausal mass with RMI over 200 delays definitive diagnosis of malignancy and worsens survival. (Source: eviQ Cancer Council: Ovarian cancer referral)", "source_refs": ["eviQ Cancer Council: Ovarian cancer referral"]},
-      {"letter": "B", "text": "Referral to a gynaecological oncology centre for surgical staging as the primary management", "correct": true, "rationale": "RMI over 200 with complex ultrasound morphology and family history mandates referral to a gynaecological oncology multidisciplinary service, not to a general gynaecologist. (Source: eviQ Cancer Council: Ovarian cancer referral)", "source_refs": ["eviQ Cancer Council: Ovarian cancer referral"]},
-      {"letter": "C", "text": "Referral to a general gynaecologist for laparoscopic ovarian cystectomy on the next list", "correct": false, "rationale": "Laparoscopic cystectomy risks intraoperative rupture and upstaging in an RMI 528 mass; specialist oncology referral is required. (Source: eviQ Cancer Council: Ovarian cancer referral)", "source_refs": ["eviQ Cancer Council: Ovarian cancer referral"]},
-      {"letter": "D", "text": "Percutaneous ultrasound guided biopsy of the adnexal mass by an interventional radiologist", "correct": false, "rationale": "Percutaneous biopsy of a suspicious ovarian mass risks intraperitoneal seeding and upstaging; primary surgical staging is preferred. (Source: eviQ Cancer Council: Ovarian cancer referral)", "source_refs": ["eviQ Cancer Council: Ovarian cancer referral"]},
-      {"letter": "E", "text": "Empirical neoadjuvant carboplatin plus paclitaxel chemotherapy before any surgical intervention", "correct": false, "rationale": "Neoadjuvant chemotherapy is a valid pathway for high-volume disease but must be initiated by gynaecological oncology after histological confirmation. (Source: eviQ Cancer Council: Ovarian cancer referral)", "source_refs": ["eviQ Cancer Council: Ovarian cancer referral"]}
+      {
+        "letter": "A",
+        "text": "Repeat ultrasound in 3 months to observe any change in the mass or serum CA125 rise",
+        "correct": false,
+        "rationale": "Interval observation of a complex postmenopausal mass with RMI over 200 delays definitive diagnosis of malignancy and worsens survival. (Source: eviQ Cancer Council: Ovarian cancer referral)",
+        "source_refs": [
+          "eviQ Cancer Council: Ovarian cancer referral"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Referral to a gynaecological oncology centre for surgical staging as the primary management",
+        "correct": true,
+        "rationale": "RMI over 200 with complex ultrasound morphology and family history mandates referral to a gynaecological oncology multidisciplinary service, not to a general gynaecologist. (Source: eviQ Cancer Council: Ovarian cancer referral)",
+        "source_refs": [
+          "eviQ Cancer Council: Ovarian cancer referral"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Referral to a general gynaecologist for laparoscopic ovarian cystectomy on the next list",
+        "correct": false,
+        "rationale": "Laparoscopic cystectomy risks intraoperative rupture and upstaging in an RMI 528 mass; specialist oncology referral is required. (Source: eviQ Cancer Council: Ovarian cancer referral)",
+        "source_refs": [
+          "eviQ Cancer Council: Ovarian cancer referral"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Percutaneous ultrasound guided biopsy of the adnexal mass by an interventional radiologist",
+        "correct": false,
+        "rationale": "Percutaneous biopsy of a suspicious ovarian mass risks intraperitoneal seeding and upstaging; primary surgical staging is preferred. (Source: eviQ Cancer Council: Ovarian cancer referral)",
+        "source_refs": [
+          "eviQ Cancer Council: Ovarian cancer referral"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Empirical neoadjuvant carboplatin plus paclitaxel chemotherapy before any surgical intervention",
+        "correct": false,
+        "rationale": "Neoadjuvant chemotherapy is a valid pathway for high-volume disease but must be initiated by gynaecological oncology after histological confirmation. (Source: eviQ Cancer Council: Ovarian cancer referral)",
+        "source_refs": [
+          "eviQ Cancer Council: Ovarian cancer referral"
+        ]
+      }
     ],
     "explanation": {
       "summary": "The Risk of Malignancy Index (RMI) combines menopausal status, ultrasound morphology score (multilocular, solid areas, bilaterality, ascites, intra-abdominal metastases) and CA125 to triage adnexal masses. RMI over 200 identifies high risk of ovarian cancer and warrants referral to a gynaecological oncology centre for primary surgical staging, ideally by a subspecialist. Percutaneous biopsy risks upstaging via seeding and is avoided when primary surgery is feasible. Family history strengthens the case for genetic counselling and BRCA testing. Neoadjuvant chemotherapy may replace primary debulking in selected high-volume disease after histological confirmation.",
@@ -188,8 +435,13 @@
       "pearls": "RMI 528 in a postmenopausal woman with papillary projections needs direct gynae-oncology referral for primary staging surgery; do not biopsy percutaneously and do not defer for interval imaging."
     },
     "sources": [
-      {"label": "eviQ Cancer Council: Ovarian cancer referral", "url": "https://www.eviq.org.au/"},
-      {"label": "RANZCOG ovarian cancer statement"}
+      {
+        "label": "eviQ Cancer Council: Ovarian cancer referral",
+        "url": "https://www.eviq.org.au/"
+      },
+      {
+        "label": "RANZCOG ovarian cancer statement"
+      }
     ],
     "reference_ranges": [],
     "created": "2026-07-26"
@@ -201,7 +453,10 @@
     "subtopic_detail": "Lithium long-term monitoring - renal decline",
     "difficulty": 3,
     "model": "Claude Opus 4.7 (1M context)",
-    "tags": ["lithium", "bipolar disorder"],
+    "tags": [
+      "lithium",
+      "bipolar disorder"
+    ],
     "stem": "A 52-year-old man with bipolar I disorder has been maintained on lithium carbonate 900 mg nocte for 18 years with excellent mood control and no admissions in the last decade. He also takes atorvastatin 20 mg for hypercholesterolaemia. His lithium level 3 months ago was 0.7 mmol/L (0.6-1.0). His eGFR has declined progressively: 78 mL/min/1.73 m2 four years ago, 62 two years ago, and 48 today.\n\nHe is asymptomatic and works full-time. He has no polyuria, oedema or dyspnoea. Blood pressure and urinary sediment are normal. Urine albumin/creatinine ratio is 1.5 mg/mmol. He is anxious about changing his medication because his last three relapses on other agents required hospital admission. He has never taken sodium valproate and previously failed carbamazepine.",
     "data_table": {
       "Vital signs": "Pulse 72/min, blood pressure 124/78 mmHg, respiratory rate 14/min, SpO2 99 percent on room air, temperature 36.5 degrees C",
@@ -210,11 +465,51 @@
     },
     "lead_in": "What is the most appropriate next step in his medication management?",
     "options": [
-      {"letter": "A", "text": "Reduce lithium to 450 mg nocte in the community and target a serum level of 0.4 mmol/L", "correct": false, "rationale": "Sub-therapeutic lithium levels risk relapse without necessarily arresting renal decline; specialist joint review is required before dose reduction. (Source: RANZCP bipolar disorder guideline)", "source_refs": ["RANZCP bipolar disorder guideline"]},
-      {"letter": "B", "text": "Continue current dose unchanged and repeat renal function testing again in 12 months", "correct": false, "rationale": "Watching an eGFR that has fallen 30 mL/min over 4 years risks reaching dialysis-dependent CKD; specialist review is warranted now, not deferred a year. (Source: RANZCP bipolar disorder guideline)", "source_refs": ["RANZCP bipolar disorder guideline"]},
-      {"letter": "C", "text": "Refer to renal and psychiatric services to plan a slow lithium taper and alternative selection", "correct": true, "rationale": "Progressive decline to CKD stage 3b (eGFR 48) with a rate that suggests lithium nephrotoxicity warrants joint psychiatric-renal review before further decline compromises future options. (Source: RANZCP bipolar disorder guideline)", "source_refs": ["RANZCP bipolar disorder guideline"]},
-      {"letter": "D", "text": "Ceasing lithium abruptly to arrest the fall in renal function and starting oral olanzapine", "correct": false, "rationale": "Abrupt lithium cessation carries high relapse risk within 6 months; any change requires slow taper over months with cover from a well-planned alternative. (Source: RANZCP bipolar disorder guideline)", "source_refs": ["RANZCP bipolar disorder guideline"]},
-      {"letter": "E", "text": "Add amiloride 5 mg daily to preserve renal tubular function without stopping lithium therapy", "correct": false, "rationale": "Amiloride helps lithium-induced nephrogenic diabetes insipidus, not chronic interstitial nephropathy; it does not address progressive CKD in this scenario. (Source: RANZCP bipolar disorder guideline)", "source_refs": ["RANZCP bipolar disorder guideline"]}
+      {
+        "letter": "A",
+        "text": "Reduce lithium to 450 mg nocte in the community and target a serum level of 0.4 mmol/L",
+        "correct": false,
+        "rationale": "Sub-therapeutic lithium levels risk relapse without necessarily arresting renal decline; specialist joint review is required before dose reduction. (Source: RANZCP bipolar disorder guideline)",
+        "source_refs": [
+          "RANZCP bipolar disorder guideline"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Continue current dose unchanged and repeat renal function testing again in 12 months",
+        "correct": false,
+        "rationale": "Watching an eGFR that has fallen 30 mL/min over 4 years risks reaching dialysis-dependent CKD; specialist review is warranted now, not deferred a year. (Source: RANZCP bipolar disorder guideline)",
+        "source_refs": [
+          "RANZCP bipolar disorder guideline"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Refer to renal and psychiatric services to plan a slow lithium taper and alternative selection",
+        "correct": true,
+        "rationale": "Progressive decline to CKD stage 3b (eGFR 48) with a rate that suggests lithium nephrotoxicity warrants joint psychiatric-renal review before further decline compromises future options. (Source: RANZCP bipolar disorder guideline)",
+        "source_refs": [
+          "RANZCP bipolar disorder guideline"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Ceasing lithium abruptly to arrest the fall in renal function and starting oral olanzapine",
+        "correct": false,
+        "rationale": "Abrupt lithium cessation carries high relapse risk within 6 months; any change requires slow taper over months with cover from a well-planned alternative. (Source: RANZCP bipolar disorder guideline)",
+        "source_refs": [
+          "RANZCP bipolar disorder guideline"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Add amiloride 5 mg daily to preserve renal tubular function without stopping lithium therapy",
+        "correct": false,
+        "rationale": "Amiloride helps lithium-induced nephrogenic diabetes insipidus, not chronic interstitial nephropathy; it does not address progressive CKD in this scenario. (Source: RANZCP bipolar disorder guideline)",
+        "source_refs": [
+          "RANZCP bipolar disorder guideline"
+        ]
+      }
     ],
     "explanation": {
       "summary": "Chronic lithium therapy (typically over 10 years) causes chronic tubulointerstitial nephropathy in a subset of patients, presenting as slowly progressive CKD. Once eGFR falls below 60 mL/min/1.73 m2, joint renal and psychiatric review is recommended; below 45 the risk of dialysis dependence rises and lithium should usually be tapered under psychiatric guidance with an alternative mood stabiliser. Alternatives after lithium failure or intolerance include sodium valproate (avoid in women of childbearing age), lamotrigine (better for bipolar depression), quetiapine, or olanzapine, tailored to the individual. Abrupt lithium cessation causes rebound mania and should always be avoided; taper over at least 4 weeks.",
@@ -227,10 +522,18 @@
       "pearls": "Progressive fall in eGFR to 48 in an 18-year lithium user needs specialist psych/renal referral for a planned slow taper and alternative agent; abrupt cessation causes rebound mania within 6 months."
     },
     "sources": [
-      {"label": "RANZCP bipolar disorder guideline", "url": "https://www.ranzcp.org/clinical-guidelines-publications"},
-      {"label": "Australian eTG: Psychotropic - Lithium"}
+      {
+        "label": "RANZCP bipolar disorder guideline",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications"
+      },
+      {
+        "label": "Australian eTG: Psychotropic - Lithium"
+      }
     ],
-    "reference_ranges": ["uec", "thyroid"],
+    "reference_ranges": [
+      "uec",
+      "thyroid"
+    ],
     "created": "2026-07-26"
   }
 ]

@@ -1487,7 +1487,9 @@ body[data-screen="summary"] main { max-width: 760px; }
   }
   .colophon-center { justify-content: center; }
   .colophon-right { justify-content: flex-end; }
-  .ref-panel { width: 100%; max-width: 100%; }
+  /* Panel stops short of full-bleed so the question column stays visible
+     behind it -- matches the desktop "no scrim, question interactable" spec. */
+  .ref-panel { width: 88vw; max-width: 88vw; }
   .score-strip { grid-template-columns: 1fr; }
   .quiz-topbar { border-radius: 8px 8px 0 0; padding: 10px 12px; }
 }
@@ -1539,7 +1541,8 @@ body[data-screen="summary"] main { max-width: 760px; }
   }
   .options li .opt-letter { font-size: 15px; }
   .options li .opt-strike {
-    width: 32px; height: 32px; font-size: 14px;
+    /* 44x44 tap target on phones (WCAG 2.5.5); glyph stays small. */
+    width: 44px; height: 44px; font-size: 14px;
   }
 
   /* Buttons that act as primary tap targets need ~44pt height. */
