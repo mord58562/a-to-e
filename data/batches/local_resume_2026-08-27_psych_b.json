@@ -1,0 +1,562 @@
+[
+  {
+    "id": "psych-lb-001",
+    "topic": "Psychiatry",
+    "subtopic": "Neurodevelopmental Disorders",
+    "subtopic_detail": "Adult ADHD DSM-5 diagnostic criteria",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["ADHD", "diagnosis"],
+    "stem": "A 29-year-old software developer presents to her GP requesting assessment for ADHD after her 7-year-old son was recently diagnosed. She describes lifelong difficulty finishing tasks, losing keys and wallets, being easily distracted in meetings, and starting many projects without completing them. She recalls being told at school she was bright but disorganised, though her Year 6 report card describes her as an average student without significant behavioural concerns. Her current symptoms cause her to miss deadlines at work and she has been passed over for promotion twice. She has no history of head injury and no current substance use. Screening for depression and anxiety is negative. Mental state examination reveals restlessness but no thought disorder.\n\nShe asks whether she meets criteria for adult ADHD.",
+    "data_table": {
+      "History": "Symptoms present since primary school; no clear teacher-reported concerns before age 12",
+      "Occupational impact": "Missed deadlines; passed over for promotion twice",
+      "Screening": "K10 within normal range; AUDIT-C negative"
+    },
+    "lead_in": "Which feature is most important to establish before confirming the diagnosis?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "That she meets at least six inattention symptoms on an adult self-report scale",
+        "correct": false,
+        "rationale": "Adults require at least five (not six) inattention or hyperactivity-impulsivity symptoms under DSM-5. Six is the paediatric threshold. Self-report scales support but do not replace clinician-verified symptom count and cross-setting evidence. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)"]
+      },
+      {
+        "letter": "B",
+        "text": "That her symptoms respond to a methylphenidate trial over four weeks",
+        "correct": false,
+        "rationale": "Symptomatic response to stimulants is not diagnostic; healthy individuals also show attentional improvement. The AADPA guideline treats medication response as a treatment marker, not a diagnostic test. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)"]
+      },
+      {
+        "letter": "C",
+        "text": "That several symptoms causing impairment were present before age 12",
+        "correct": false,
+        "rationale": "Childhood onset is required, but the more central issue in this vignette is documenting cross-setting impairment. Age of onset is necessary but insufficient without demonstrated functional impairment in more than one domain. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)"]
+      },
+      {
+        "letter": "D",
+        "text": "That her symptoms are present and impairing in two or more settings",
+        "correct": true,
+        "rationale": "DSM-5 adult ADHD requires several symptoms before age 12, five or more current symptoms, AND clear evidence of impairment in two or more settings (e.g. work AND home). The stem documents workplace impact but not home/social functioning; cross-setting evidence is the most commonly missed criterion in adult first-presentation and the strongest safeguard against over-diagnosis. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)", "RANZCP Professional Practice Guideline"]
+      },
+      {
+        "letter": "E",
+        "text": "That functional MRI or QEEG shows evidence of executive dysfunction",
+        "correct": false,
+        "rationale": "Neuroimaging and QEEG are not recommended for ADHD diagnosis in Australian practice. Findings overlap with healthy controls and other disorders. AADPA explicitly recommends against these investigations for diagnostic purposes. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)"]
+      }
+    ],
+    "explanation": {
+      "summary": "Adult ADHD diagnosis under DSM-5 requires five or more persistent inattention or hyperactivity-impulsivity symptoms, several present before age 12, evident across two or more settings, causing functional impairment, and not better explained by another disorder. Cross-setting impairment is essential to distinguish ADHD from a context-specific issue (workplace mismatch, relationship stress) and is the most under-documented criterion in adult first-presentations.",
+      "key_points": [
+        "Adult DSM-5 threshold is 5 symptoms (paediatric threshold is 6)",
+        "Symptoms and impairment must be evident in 2 or more settings",
+        "Several symptoms must be documented before age 12",
+        "Neuropsych testing and neuroimaging are not diagnostic"
+      ],
+      "pearls": "AADPA 2022 endorses collateral information from a partner, parent, or workplace as the strongest evidence for the cross-setting criterion in adult first-presentations, and school reports are the highest-yield corroboration for the age-of-onset criterion."
+    },
+    "sources": [
+      {"label": "Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)", "url": "https://adhdguideline.aadpa.com.au/"},
+      {"label": "RANZCP Professional Practice Guideline", "url": "https://www.ranzcp.org/clinical-guidelines-publications"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "psych-lb-002",
+    "topic": "Psychiatry",
+    "subtopic": "Neurodevelopmental Disorders",
+    "subtopic_detail": "Pre-stimulant cardiac screening",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["ADHD", "stimulant", "cardiovascular"],
+    "stem": "A 34-year-old man has confirmed adult ADHD combined presentation. You are considering starting lisdexamfetamine. He plays social soccer without symptoms, has never had chest pain, palpitations, or syncope, and does not use recreational stimulants. He takes no regular medications. His father had coronary stenting at age 62. On examination his pulse is 74 bpm regular, blood pressure 128/78 mmHg, BMI 26 kg/m2, and cardiovascular examination is unremarkable with normal heart sounds and no murmurs.\n\nHe asks what cardiac workup is required before you can prescribe.",
+    "data_table": {
+      "Family history": "Father CAD at 62; no premature (<50) cardiac death or inherited arrhythmia",
+      "Vital signs": "HR 74, BP 128/78 mmHg, RR 14, SpO2 99%, temp 36.7",
+      "Examination": "Normal heart sounds, no murmurs, no signs of Marfan features"
+    },
+    "lead_in": "What is the most appropriate pre-treatment cardiac assessment?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Baseline troponin and NT-proBNP with 24-hour Holter monitoring for arrhythmia surveillance",
+        "correct": false,
+        "rationale": "Biomarkers and ambulatory monitoring have no role in pre-stimulant screening in asymptomatic adults. Neither AADPA nor AMH endorses this workup. (Source: AMH)",
+        "source_refs": ["AMH"]
+      },
+      {
+        "letter": "B",
+        "text": "Baseline 12-lead ECG for all adults before commencing any stimulant medication",
+        "correct": false,
+        "rationale": "Routine ECG is not recommended for all adults; it does not improve outcomes and generates false-positive referrals. ECG is indicated only where the history, examination, or family screen identifies cardiac risk. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)"]
+      },
+      {
+        "letter": "C",
+        "text": "Transthoracic echocardiogram and exercise stress test given family history of coronary disease",
+        "correct": false,
+        "rationale": "Paternal coronary stenting at age 62 is not premature cardiac disease and does not trigger structural imaging or stress testing. The AADPA screen targets premature (<50 years) sudden cardiac death or inherited arrhythmia syndromes. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)"]
+      },
+      {
+        "letter": "D",
+        "text": "Referral to cardiology for exclusion of hypertrophic cardiomyopathy before commencement",
+        "correct": false,
+        "rationale": "Cardiology referral is reserved for patients with red-flag symptoms, abnormal examination (e.g. dynamic murmur), or family history of hypertrophic cardiomyopathy or sudden cardiac death under 50. Routine referral introduces delay without benefit. (Source: RANZCP Professional Practice Guideline)",
+        "source_refs": ["RANZCP Professional Practice Guideline"]
+      },
+      {
+        "letter": "E",
+        "text": "Baseline heart rate and blood pressure with targeted ECG if cardiac risk is identified",
+        "correct": true,
+        "rationale": "AADPA and RANZCP guidance recommends routine cardiovascular history, examination, pulse and blood pressure measurement before stimulants. Baseline ECG is reserved for those with personal cardiac symptoms, examination findings, or family history of premature sudden death or inherited arrhythmia. This patient has none of these features. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)", "AMH"]
+      }
+    ],
+    "explanation": {
+      "summary": "Pre-stimulant cardiovascular screening in adults consists of a focused personal and family cardiac history, examination, and baseline pulse and blood pressure. Further investigations are targeted to positive findings on this screen. This risk-based approach is endorsed by AADPA, RANZCP, and AMH, and mirrors overseas paediatric-adult concordance since routine ECG in low-risk populations shows a high false-positive rate.",
+      "key_points": [
+        "Routine baseline ECG is not required in asymptomatic adults",
+        "Trigger ECG or cardiology on personal symptoms, examination signs, or premature sudden death under 50",
+        "Ongoing HR and BP monitoring at each dose titration is required",
+        "Paternal CAD at age 62 is not premature disease"
+      ],
+      "pearls": "Ongoing surveillance for stimulants means measuring HR and BP at each dose change and at least every 6 months; sustained resting HR above 100 or BP above 140/90 warrants dose review before continuing."
+    },
+    "sources": [
+      {"label": "Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)", "url": "https://adhdguideline.aadpa.com.au/"},
+      {"label": "AMH", "url": "https://amhonline.amh.net.au"},
+      {"label": "RANZCP Professional Practice Guideline"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "psych-lb-003",
+    "topic": "Psychiatry",
+    "subtopic": "Neurodevelopmental Disorders",
+    "subtopic_detail": "ADHD with comorbid substance use disorder",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["ADHD", "substance use", "atomoxetine"],
+    "stem": "A 27-year-old man is referred for management of ADHD. He was diagnosed at age 9 and treated with methylphenidate until age 16 with good response. He now reports daily cannabis use for the last three years and weekly binge drinking (10 standard drinks per session). He denies methamphetamine or non-prescribed stimulant use, and a urine drug screen confirms cannabis only. He wants to reduce his cannabis intake but has not yet done so. His inattention and disorganisation are markedly impairing his apprenticeship.\n\nCardiovascular examination is normal and he has no family history of premature cardiac death.",
+    "data_table": {
+      "Substance use": "Cannabis daily; alcohol 10 standard drinks weekly; no stimulant misuse",
+      "Urine drug screen": "THC positive; amphetamines negative; opioids negative",
+      "Vital signs": "HR 82, BP 126/78 mmHg, RR 14, SpO2 99%, temp 36.5"
+    },
+    "lead_in": "What is the most appropriate initial pharmacotherapy for ADHD?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Immediate-release dexamfetamine 5 mg twice daily titrated to symptom response",
+        "correct": false,
+        "rationale": "Short-acting formulations have higher diversion and misuse risk in patients with active substance use disorders and are avoided as first-line in this context. Long-acting stimulants would be preferred if a stimulant is chosen. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)"]
+      },
+      {
+        "letter": "B",
+        "text": "Immediate-release methylphenidate 10 mg three times daily titrated to effect",
+        "correct": false,
+        "rationale": "Immediate-release methylphenidate carries greater misuse and diversion risk than long-acting formulations. In active substance use, guidelines steer away from short-acting stimulants as the initial choice. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)"]
+      },
+      {
+        "letter": "C",
+        "text": "Atomoxetine 40 mg daily titrated toward a target of 80 mg over four weeks",
+        "correct": true,
+        "rationale": "In adult ADHD with active substance use disorder, non-stimulant treatment with atomoxetine is preferred first-line because it has no misuse or diversion potential and treats ADHD symptoms; guidelines recommend it while concurrent substance use is being addressed. Long-acting stimulants may be considered later once substance use stabilises. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)", "AMH"]
+      },
+      {
+        "letter": "D",
+        "text": "Bupropion sustained-release 150 mg daily for concurrent ADHD and cannabis dependence",
+        "correct": false,
+        "rationale": "Bupropion is not TGA-approved for ADHD and has weaker evidence than atomoxetine. It also lowers the seizure threshold, which is relevant given heavy alcohol use and potential withdrawal. (Source: AMH)",
+        "source_refs": ["AMH"]
+      },
+      {
+        "letter": "E",
+        "text": "Deferral of pharmacotherapy until at least six months of documented cannabis abstinence",
+        "correct": false,
+        "rationale": "Withholding treatment until abstinence is achieved is not supported by AADPA guidance. Treating ADHD in parallel with substance use intervention improves both outcomes; non-stimulants allow this without diversion risk. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)"]
+      }
+    ],
+    "explanation": {
+      "summary": "ADHD with a co-occurring substance use disorder is common and worsens outcomes for both. AADPA recommends integrated treatment rather than sequential abstinence-first approaches. Non-stimulants (atomoxetine, guanfacine) are preferred initially where active substance misuse exists because they lack misuse liability. Long-acting stimulants may be introduced once substance use is stable and monitored under Schedule 8 arrangements.",
+      "key_points": [
+        "Do not withhold ADHD treatment pending abstinence",
+        "Atomoxetine is first-line where active substance misuse coexists",
+        "If a stimulant is used, choose long-acting to minimise diversion",
+        "Concurrent substance use treatment is essential"
+      ],
+      "pearls": "Lisdexamfetamine, a prodrug requiring gastrointestinal enzymatic conversion, has lower intranasal and IV misuse potential than dexamfetamine and is often preferred if a stimulant is later commenced in this population."
+    },
+    "sources": [
+      {"label": "Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)", "url": "https://adhdguideline.aadpa.com.au/"},
+      {"label": "AMH", "url": "https://amhonline.amh.net.au"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "psych-lb-004",
+    "topic": "Psychiatry",
+    "subtopic": "Neurodevelopmental Disorders",
+    "subtopic_detail": "Stimulant response monitoring and switch",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["ADHD", "methylphenidate", "lisdexamfetamine"],
+    "stem": "A 38-year-old woman with ADHD combined presentation has been on osmotic-release methylphenidate 54 mg once daily for eight weeks. She has been titrated up from 18 mg using a weekly protocol. Her inattention and disorganisation are only modestly improved on the Adult ADHD Self-Report Scale, and her partner also reports minimal change at home. She reports mild dry mouth but no palpitations, no weight loss beyond 1 kg, no sleep disturbance, and no mood change. Her resting pulse is 82 bpm and blood pressure 122/78 mmHg. She takes the medication reliably every morning with breakfast.\n\nShe asks what should happen next.",
+    "data_table": {
+      "Current medication": "Methylphenidate osmotic-release 54 mg mane, taken with food, adherent",
+      "Response": "Modest improvement only on ASRS and partner-report after 8 weeks at target dose",
+      "Vital signs": "HR 82, BP 122/78 mmHg"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Add clonidine 100 mcg at night to augment the methylphenidate response",
+        "correct": false,
+        "rationale": "Augmentation with alpha-2 agonists is not the recommended next step in adults with inadequate response to one stimulant class. AADPA advises switching to the alternative stimulant class first. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)"]
+      },
+      {
+        "letter": "B",
+        "text": "Continue methylphenidate 54 mg and add cognitive behavioural therapy for ADHD in adults",
+        "correct": false,
+        "rationale": "CBT is a useful adjunct but does not address inadequate pharmacological response. When one stimulant class fails, the guideline directs a switch of stimulant class before adding non-pharmacological augmentation as the sole change. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)"]
+      },
+      {
+        "letter": "C",
+        "text": "Switch to lisdexamfetamine 30 mg once daily and titrate to response",
+        "correct": true,
+        "rationale": "Approximately 30 percent of adults do not respond adequately to methylphenidate but do respond to a dexamfetamine-class stimulant. AADPA recommends switching to the alternative stimulant class when the first has been adequately trialled at target dose with poor response before considering non-stimulants. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)", "AMH"]
+      },
+      {
+        "letter": "D",
+        "text": "Increase methylphenidate to 72 mg daily and reassess after four further weeks",
+        "correct": false,
+        "rationale": "The AMH lists 54 mg as the usual adult maximum for osmotic-release methylphenidate; exceeding this is not first-line. Continuing to push dose without response is unlikely to yield benefit and increases side-effect burden. (Source: AMH)",
+        "source_refs": ["AMH"]
+      },
+      {
+        "letter": "E",
+        "text": "Cease stimulant medication and start atomoxetine as a non-stimulant alternative",
+        "correct": false,
+        "rationale": "Atomoxetine is generally reserved for after both stimulant classes have failed, or where stimulants are contraindicated or misused. It would be premature before trialling the alternative stimulant class. (Source: Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022))",
+        "source_refs": ["Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)"]
+      }
+    ],
+    "explanation": {
+      "summary": "Adult ADHD pharmacotherapy follows a sequential ladder: adequate trial of one stimulant class at target dose, switch to the alternative stimulant class if response is inadequate, then non-stimulants if both stimulant classes fail. Methylphenidate and amphetamine-class stimulants have distinct pharmacology and non-response to one does not predict non-response to the other.",
+      "key_points": [
+        "Methylphenidate and dexamfetamine-class stimulants are the two first-line classes",
+        "Switch class before switching to non-stimulant if response is inadequate at target dose",
+        "Osmotic-release methylphenidate usual adult maximum is 54 mg per AMH",
+        "About one-third of methylphenidate non-responders respond to dexamfetamine class"
+      ],
+      "pearls": "Lisdexamfetamine is the prodrug form of dexamfetamine and requires gut peptidase activation, giving a smoother onset over roughly 60 to 90 minutes and a duration of 10 to 14 hours, useful for adults with long working days."
+    },
+    "sources": [
+      {"label": "Australian Evidence-Based Clinical Practice Guideline for ADHD (AADPA 2022)", "url": "https://adhdguideline.aadpa.com.au/"},
+      {"label": "AMH", "url": "https://amhonline.amh.net.au"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "psych-lb-005",
+    "topic": "Psychiatry",
+    "subtopic": "Catatonia",
+    "subtopic_detail": "Bush-Francis recognition and lorazepam challenge",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["catatonia", "lorazepam"],
+    "stem": "A 26-year-old woman with a known history of bipolar I disorder is brought to the emergency department by her family. Over three days she has become progressively withdrawn, is not eating or drinking, and now barely speaks. On examination she is alert with eyes open but does not answer questions, resists passive movement of her limbs, holds an arm in whatever position it is placed, and stares vacantly. There is no fever, no tremor, and no muscle rigidity beyond the postural holding. She takes no antipsychotic medications and has not commenced any new medications recently. Bloods including creatine kinase, thyroid function, sodium, and calcium are within normal limits.\n\nA CT brain is unremarkable.",
+    "data_table": {
+      "Examination": "Mute; negativism; waxy flexibility; posturing on formal testing",
+      "Vital signs": "HR 88, BP 118/72 mmHg, RR 14, SpO2 98%, temp 36.8",
+      "Investigations": "CK within normal limits; TSH within normal limits; sodium within normal limits; calcium within normal limits; CT brain unremarkable"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence intravenous fluid resuscitation and observe overnight before further intervention",
+        "correct": false,
+        "rationale": "Passive rehydration alone delays specific treatment. Lorazepam challenge is diagnostic and often produces rapid symptomatic improvement enabling oral intake to resume. (Source: RANZCP Professional Practice Guideline)",
+        "source_refs": ["RANZCP Professional Practice Guideline"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence olanzapine 10 mg intramuscularly for the withdrawn presentation",
+        "correct": false,
+        "rationale": "Antipsychotic use in untreated catatonia risks precipitating neuroleptic malignant syndrome. Antipsychotics should be withheld until catatonia is treated and resolved with benzodiazepine or ECT. (Source: eTG: Psychotropic)",
+        "source_refs": ["eTG: Psychotropic"]
+      },
+      {
+        "letter": "C",
+        "text": "Arrange urgent electroconvulsive therapy within the next 24 hours",
+        "correct": false,
+        "rationale": "ECT is second-line for catatonia after lorazepam trial, or first-line where catatonia is life-threatening (e.g. malignant catatonia with autonomic instability). Vital signs here are stable and a lorazepam challenge should be attempted first. (Source: RANZCP Professional Practice Guideline)",
+        "source_refs": ["RANZCP Professional Practice Guideline"]
+      },
+      {
+        "letter": "D",
+        "text": "Administer lorazepam 2 mg intramuscularly and reassess response after 10 minutes",
+        "correct": true,
+        "rationale": "The clinical picture (mutism, negativism, waxy flexibility, posturing) meets Bush-Francis criteria for catatonia. A parenteral lorazepam challenge, 1 to 2 mg IM or IV with reassessment within 10 to 15 minutes, is both diagnostic and therapeutic and is the recommended first step. (Source: RANZCP Professional Practice Guideline)",
+        "source_refs": ["RANZCP Professional Practice Guideline", "eTG: Psychotropic"]
+      },
+      {
+        "letter": "E",
+        "text": "Administer dantrolene 1 mg/kg intravenously for suspected neuroleptic malignant syndrome",
+        "correct": false,
+        "rationale": "NMS requires antipsychotic exposure, rigidity, hyperthermia, and elevated CK. She has none of these features and no antipsychotic exposure. Dantrolene is not appropriate here. (Source: AMH)",
+        "source_refs": ["AMH"]
+      }
+    ],
+    "explanation": {
+      "summary": "Catatonia is a syndrome of psychomotor dysregulation that occurs in mood disorders (most common), psychotic disorders, and general medical conditions. The Bush-Francis Catatonia Rating Scale identifies core features including mutism, negativism, waxy flexibility, posturing, echopraxia, and stereotypy. A lorazepam challenge (1 to 2 mg IM or IV with reassessment within 10 to 15 minutes) is both diagnostic and therapeutic. Antipsychotics should be withheld in untreated catatonia because they can precipitate malignant catatonia or NMS.",
+      "key_points": [
+        "DSM-5 catatonia requires 3 or more of 12 features",
+        "Lorazepam 1 to 2 mg IM or IV is first-line diagnostic and therapeutic step",
+        "Withhold antipsychotics until catatonia resolves",
+        "Consider ECT if benzodiazepine response is inadequate or catatonia is malignant"
+      ],
+      "pearls": "A positive lorazepam challenge is a partial or complete reduction in Bush-Francis score at 10 to 15 minutes; responders proceed to scheduled lorazepam typically 2 mg every 4 to 8 hours titrated upward as needed."
+    },
+    "sources": [
+      {"label": "RANZCP Professional Practice Guideline", "url": "https://www.ranzcp.org/clinical-guidelines-publications"},
+      {"label": "eTG: Psychotropic", "url": "https://www.tg.org.au"},
+      {"label": "AMH", "url": "https://amhonline.amh.net.au"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "psych-lb-006",
+    "topic": "Psychiatry",
+    "subtopic": "Catatonia",
+    "subtopic_detail": "NMS versus malignant catatonia discrimination",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["catatonia", "NMS", "clozapine"],
+    "stem": "A 41-year-old man with treatment-resistant schizophrenia was recently switched from olanzapine to haloperidol depot four weeks ago. He now presents to the emergency department after 48 hours of confusion, muteness, and diaphoresis. His examination shows generalised lead-pipe rigidity, temperature 39.2, pulse 132 bpm, blood pressure 168/104 mmHg, and reduced conscious state. He is not moving spontaneously, does not follow commands, and there is no posturing or waxy flexibility. Creatine kinase is 6800 U/L, white cell count 14.2, and urine dipstick shows myoglobin. Prior to the depot switch he was fully independent and euthymic.\n\nAmbulance staff report no seizure activity was witnessed.",
+    "data_table": {
+      "Recent medications": "Switched from olanzapine to haloperidol depot 4 weeks ago",
+      "Vital signs": "HR 132, BP 168/104 mmHg, RR 22, SpO2 96%, temp 39.2",
+      "Examination": "Lead-pipe rigidity; mute; reduced conscious state; no waxy flexibility; no posturing",
+      "Investigations": "CK 6800 U/L (<200); WCC 14.2 x10^9/L (4-11); myoglobinuria on dipstick"
+    },
+    "lead_in": "What is the single most appropriate initial intervention after cessation of the offending agent?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Intramuscular lorazepam 2 mg with rapid reassessment for a diagnostic response",
+        "correct": false,
+        "rationale": "The clinical picture (recent antipsychotic exposure, hyperthermia, lead-pipe rigidity, autonomic instability, CK 6800, absence of waxy flexibility or posturing) is neuroleptic malignant syndrome, not catatonia. Lorazepam has an adjunctive role but is not the primary initial intervention. Cooling, aggressive IV hydration, and dantrolene or bromocriptine are the primary directed interventions. (Source: eTG: Psychotropic)",
+        "source_refs": ["eTG: Psychotropic"]
+      },
+      {
+        "letter": "B",
+        "text": "Intravenous fluid resuscitation and active cooling with consideration of dantrolene",
+        "correct": true,
+        "rationale": "NMS management requires immediate cessation of the antipsychotic, aggressive IV rehydration to prevent acute kidney injury from myoglobinuria, active cooling for hyperthermia, and consideration of dantrolene or bromocriptine for severe rigidity or hyperthermia. This is the highest-yield first bundle. (Source: eTG: Psychotropic)",
+        "source_refs": ["eTG: Psychotropic", "AMH"]
+      },
+      {
+        "letter": "C",
+        "text": "Urgent electroconvulsive therapy within the next 12 hours as definitive treatment",
+        "correct": false,
+        "rationale": "ECT is a recognised option for NMS that fails to respond to supportive care and pharmacotherapy, or for malignant catatonia, but is not the first intervention. Supportive care and dantrolene precede ECT in the treatment ladder. (Source: RANZCP Professional Practice Guideline)",
+        "source_refs": ["RANZCP Professional Practice Guideline"]
+      },
+      {
+        "letter": "D",
+        "text": "Restart olanzapine at 5 mg orally to reverse the withdrawal-related presentation",
+        "correct": false,
+        "rationale": "Rechallenging with any antipsychotic during active NMS worsens the syndrome. Antipsychotics are withheld until at least two weeks after complete resolution, and rechallenge uses a low-potency agent from a different class. (Source: AMH)",
+        "source_refs": ["AMH"]
+      },
+      {
+        "letter": "E",
+        "text": "Empirical intravenous ceftriaxone 2 g with lumbar puncture to exclude bacterial meningitis",
+        "correct": false,
+        "rationale": "Sepsis and CNS infection are important differentials and workup is reasonable, but the constellation of recent antipsychotic exposure, lead-pipe rigidity, CK 6800, and myoglobinuria makes NMS the leading diagnosis requiring directed intervention. Empirical antibiotics do not address the primary pathology. (Source: eTG: Antibiotic)",
+        "source_refs": ["eTG: Antibiotic"]
+      }
+    ],
+    "explanation": {
+      "summary": "NMS and malignant catatonia share features (mutism, hyperthermia, autonomic instability) and lie on a shared spectrum. NMS is distinguished by clear antipsychotic exposure, lead-pipe rigidity, and markedly elevated CK, whereas catatonia is characterised by waxy flexibility, negativism, and posturing without necessary antipsychotic exposure. NMS management is stopping the offending drug, aggressive supportive care, and directed pharmacotherapy (dantrolene, bromocriptine); ECT is reserved for refractory cases.",
+      "key_points": [
+        "NMS: antipsychotic exposure + lead-pipe rigidity + hyperthermia + CK rise",
+        "Catatonia: waxy flexibility, negativism, posturing, mutism; often without CK rise",
+        "First-line NMS management: cease drug, cool, hydrate, dantrolene",
+        "Depot antipsychotics prolong recovery and are relevant to prognosis"
+      ],
+      "pearls": "Dantrolene 1 to 2.5 mg/kg IV can be repeated up to 10 mg/kg per 24 hours in severe NMS; bromocriptine 2.5 mg 6- to 8-hourly is the oral alternative, and depot antipsychotic depletion may take weeks to months, prolonging the course."
+    },
+    "sources": [
+      {"label": "eTG: Psychotropic", "url": "https://www.tg.org.au"},
+      {"label": "AMH", "url": "https://amhonline.amh.net.au"},
+      {"label": "RANZCP Professional Practice Guideline"},
+      {"label": "eTG: Antibiotic"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "psych-lb-007",
+    "topic": "Psychiatry",
+    "subtopic": "Catatonia",
+    "subtopic_detail": "Medical workup for new-onset catatonia",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["catatonia", "delirium"],
+    "stem": "A 62-year-old woman with no prior psychiatric history is admitted after her family found her staring, mute, and refusing to eat for two days. On examination she resists movement, holds imposed limb positions, and does not respond verbally. She has become incontinent of urine. Her temperature is 37.4, pulse 96 bpm, blood pressure 138/84 mmHg. On admission bloods, her sodium is 133 mmol/L, calcium 2.32 mmol/L, TSH 2.1 mIU/L, creatine kinase 180 U/L, C-reactive protein 12 mg/L, and urinalysis is negative. A CT brain is reported as normal. She has been on stable citalopram 20 mg for two years and takes no other medications.\n\nHer family reports she had a mild viral upper respiratory illness three weeks ago.",
+    "data_table": {
+      "Vital signs": "HR 96, BP 138/84 mmHg, RR 16, SpO2 97%, temp 37.4",
+      "Examination": "Mute; negativism; waxy flexibility; new urinary incontinence",
+      "Investigations": "Na 133 mmol/L (135-145); Ca 2.32 mmol/L (2.15-2.55); TSH 2.1 mIU/L (0.4-4.0); CK 180 U/L (<200); CRP 12 mg/L (<5); urinalysis negative; CT brain unremarkable"
+    },
+    "lead_in": "What is the most appropriate next investigation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Repeat MSU with culture and start empirical trimethoprim for occult urinary tract infection",
+        "correct": false,
+        "rationale": "Urinalysis is negative and there are no urinary symptoms beyond the new incontinence, which is part of the catatonic presentation. Empirical antibiotics are not indicated. (Source: eTG: Antibiotic)",
+        "source_refs": ["eTG: Antibiotic"]
+      },
+      {
+        "letter": "B",
+        "text": "MRI brain and lumbar puncture including NMDA receptor antibodies and viral PCR",
+        "correct": true,
+        "rationale": "New-onset catatonia in a 62-year-old with no prior psychiatric history, recent viral illness, and new urinary incontinence warrants exclusion of autoimmune encephalitis (particularly anti-NMDA receptor encephalitis) and infectious encephalitis. MRI brain and CSF studies including autoantibody panels and viral PCR are the next-tier investigation once CT is unremarkable. (Source: RANZCP Professional Practice Guideline)",
+        "source_refs": ["RANZCP Professional Practice Guideline", "eTG: Psychotropic"]
+      },
+      {
+        "letter": "C",
+        "text": "Serum ceruloplasmin and 24-hour urinary copper for Wilson disease exclusion",
+        "correct": false,
+        "rationale": "Wilson disease presents in adolescence and early adulthood with movement disorders and Kayser-Fleischer rings. First presentation at 62 with catatonia is not consistent with Wilson disease. (Source: RANZCP Professional Practice Guideline)",
+        "source_refs": ["RANZCP Professional Practice Guideline"]
+      },
+      {
+        "letter": "D",
+        "text": "EEG for non-convulsive status epilepticus without cross-sectional imaging first",
+        "correct": false,
+        "rationale": "Non-convulsive status is on the differential and EEG is important, but structural and infectious/autoimmune workup (MRI + LP) is higher-yield in this vignette. EEG typically accompanies rather than replaces this workup. (Source: RANZCP Professional Practice Guideline)",
+        "source_refs": ["RANZCP Professional Practice Guideline"]
+      },
+      {
+        "letter": "E",
+        "text": "Serotonin syndrome workup and immediate withdrawal of citalopram 20 mg daily",
+        "correct": false,
+        "rationale": "Serotonin syndrome features autonomic instability, clonus, hyperreflexia, and often serotonergic combinations. Isolated citalopram at stable dose over two years does not fit. (Source: AMH)",
+        "source_refs": ["AMH"]
+      }
+    ],
+    "explanation": {
+      "summary": "Catatonia has a broad medical differential including general medical illness (metabolic derangement, infection, autoimmune encephalitis), neurological disease (frontal lobe pathology, non-convulsive status), and drug-induced states, as well as primary psychiatric causes. First-presentation catatonia in later life with no prior psychiatric history should prompt an accelerated organic workup including MRI brain, CSF cell count, protein, glucose, viral PCR, and autoantibody panels (NMDA-R, LGI1, CASPR2, GABA-B).",
+      "key_points": [
+        "New catatonia after age 40 without prior psychiatric history is organic until proven otherwise",
+        "MRI brain and LP with autoantibody panel are next-tier after unremarkable CT",
+        "Anti-NMDA receptor encephalitis classically presents with psychiatric prodrome, catatonia, seizures, dysautonomia",
+        "Lorazepam challenge remains appropriate as a parallel therapeutic step"
+      ],
+      "pearls": "Anti-NMDA receptor encephalitis is treatable with early first-line immunotherapy (steroids, IVIG, plasma exchange) and second-line rituximab or cyclophosphamide; delay to treatment is the strongest predictor of poor neurological outcome."
+    },
+    "sources": [
+      {"label": "RANZCP Professional Practice Guideline", "url": "https://www.ranzcp.org/clinical-guidelines-publications"},
+      {"label": "eTG: Psychotropic", "url": "https://www.tg.org.au"},
+      {"label": "AMH", "url": "https://amhonline.amh.net.au"},
+      {"label": "eTG: Antibiotic"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "psych-lb-008",
+    "topic": "Psychiatry",
+    "subtopic": "Catatonia",
+    "subtopic_detail": "ECT for benzodiazepine-refractory catatonia",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["catatonia", "ECT"],
+    "stem": "A 34-year-old man with major depressive disorder has been in hospital for six days with catatonia (Bush-Francis score 18). He received an initial diagnostic dose of lorazepam 2 mg IM with partial response and has been on scheduled lorazepam 4 mg orally every 6 hours for four days. He remains mute, minimally oral, and has now lost 3 kg. He has no active medical illness on repeat examination, his metabolic and infective workup is unremarkable, and he consents through his substitute decision-maker under the state Mental Health Act after formal capacity assessment.\n\nThe treating team is planning next-line treatment.",
+    "data_table": {
+      "Current treatment": "Lorazepam 4 mg orally 6-hourly for 4 days after initial 2 mg IM challenge",
+      "Response": "Partial only; Bush-Francis remains 18; ongoing mutism and poor intake",
+      "Vital signs": "HR 92, BP 118/72 mmHg, RR 14, SpO2 98%, temp 36.9",
+      "Consent": "Substitute decision-maker consent per state Mental Health Act after capacity assessment"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Transfer to intensive care unit for propofol sedation and mechanical ventilation cover",
+        "correct": false,
+        "rationale": "ICU-level sedation is not a recognised catatonia treatment and would worsen nutritional status and mobility. It is reserved for airway or haemodynamic failure, neither of which is present. (Source: RANZCP Professional Practice Guideline)",
+        "source_refs": ["RANZCP Professional Practice Guideline"]
+      },
+      {
+        "letter": "B",
+        "text": "Increase lorazepam to a total daily dose of 24 mg and reassess after 48 hours",
+        "correct": false,
+        "rationale": "Lorazepam can be titrated to 20 to 30 mg per day in catatonia, but at four days of adequate scheduled dosing with persistent Bush-Francis score of 18 and functional decline, further escalation delays effective treatment. ECT is next-line. (Source: eTG: Psychotropic)",
+        "source_refs": ["eTG: Psychotropic"]
+      },
+      {
+        "letter": "C",
+        "text": "Add olanzapine 10 mg daily for the underlying depressive episode with psychotic features",
+        "correct": false,
+        "rationale": "Antipsychotics carry a risk of precipitating malignant catatonia or NMS in untreated catatonia and are typically deferred until catatonia has resolved. There is also no evidence of psychotic features here. (Source: eTG: Psychotropic)",
+        "source_refs": ["eTG: Psychotropic"]
+      },
+      {
+        "letter": "D",
+        "text": "Add memantine 5 mg daily for glutamatergic augmentation of the catatonia response",
+        "correct": false,
+        "rationale": "NMDA antagonists (amantadine, memantine) have limited evidence and are third-line options considered when ECT is unavailable or contraindicated. They are not the standard next step. (Source: RANZCP Professional Practice Guideline)",
+        "source_refs": ["RANZCP Professional Practice Guideline"]
+      },
+      {
+        "letter": "E",
+        "text": "Proceed to bilateral electroconvulsive therapy as the recommended next-line treatment",
+        "correct": true,
+        "rationale": "Bilateral ECT is the second-line treatment for benzodiazepine-refractory catatonia and has response rates of 80 to 100 percent. Adequate benzodiazepine trial has been given without full response. Substitute consent under the Mental Health Act is in place. (Source: RANZCP Professional Practice Guideline)",
+        "source_refs": ["RANZCP Professional Practice Guideline", "eTG: Psychotropic"]
+      }
+    ],
+    "explanation": {
+      "summary": "ECT is second-line treatment for catatonia after adequate benzodiazepine trial has failed, and it is first-line for malignant catatonia with autonomic instability. Response rates for bilateral ECT in catatonia are 80 to 100 percent, often within the first several sessions. In Australia, ECT for an involuntary patient without capacity requires consent from a substitute decision-maker (or Mental Health Tribunal approval, depending on jurisdiction) and independent psychiatric assessment.",
+      "key_points": [
+        "ECT is second-line for lorazepam-refractory catatonia",
+        "ECT is first-line for malignant catatonia with autonomic instability",
+        "Response is often rapid and complete with bilateral ECT",
+        "State Mental Health Act consent processes apply for involuntary patients"
+      ],
+      "pearls": "Bilateral (bitemporal or bifrontal) electrode placement is preferred over right unilateral for catatonia because response is faster and rates of complete response are higher, typically within 3 to 6 sessions."
+    },
+    "sources": [
+      {"label": "RANZCP Professional Practice Guideline", "url": "https://www.ranzcp.org/clinical-guidelines-publications"},
+      {"label": "eTG: Psychotropic", "url": "https://www.tg.org.au"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-08-27"
+  }
+]

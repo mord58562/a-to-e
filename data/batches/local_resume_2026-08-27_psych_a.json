@@ -1,0 +1,561 @@
+[
+  {
+    "id": "psych-la-001",
+    "topic": "Psychiatry",
+    "subtopic": "Antipsychotic metabolic monitoring",
+    "subtopic_detail": "Baseline metabolic screen before SGA initiation",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["antipsychotic", "metabolic syndrome"],
+    "stem": "A 23-year-old woman is being admitted informally for a first episode of psychosis and the consultant plans to commence a second-generation antipsychotic tomorrow. She has no known chronic illness, takes only the combined oral contraceptive pill, and denies illicit substance use on urine drug screen. Her mother has type 2 diabetes diagnosed at 52.\n\nOn examination she is settled. Vital signs are within normal limits. She has never had blood tests through this service and the intern is asked to organise the baseline metabolic panel per the RANZCP monitoring schedule before the first dose is given tomorrow morning.",
+    "data_table": {
+      "Anthropometry": "Weight 62 kg, height 165 cm, BMI 22.8 kg/m2, waist not yet measured.",
+      "Bloods": "None on file for this admission."
+    },
+    "lead_in": "Which set of baseline investigations best matches the recommended pre-initiation metabolic panel?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Waist circumference, blood pressure, fasting glucose or HbA1c, fasting lipids, and 12-lead ECG",
+        "correct": true,
+        "rationale": "The RANZCP-endorsed Lambert schedule requires anthropometry (weight, BMI, waist), blood pressure, fasting glucose or HbA1c, and a fasting lipid profile at baseline, plus a 12-lead ECG to establish a QTc reference before any antipsychotic (Source: RANZCP Antipsychotic Medication Monitoring).",
+        "source_refs": ["RANZCP Antipsychotic Medication Monitoring", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "B",
+        "text": "Fasting glucose, fasting lipids, blood pressure, and prolactin as the mandatory pre-initiation panel",
+        "correct": false,
+        "rationale": "Prolactin is not part of the routine baseline metabolic screen for every SGA and is measured only if a prolactin-raising agent is chosen or if the patient develops symptoms; anthropometry and ECG are also required at baseline (Source: RANZCP Antipsychotic Medication Monitoring).",
+        "source_refs": ["RANZCP Antipsychotic Medication Monitoring"]
+      },
+      {
+        "letter": "C",
+        "text": "Oral glucose tolerance test, fasting insulin, HOMA-IR, blood pressure, and echocardiogram",
+        "correct": false,
+        "rationale": "OGTT, fasting insulin and HOMA-IR are research-tier measures and not part of the routine schedule; baseline echocardiogram is required for clozapine, not for a first SGA choice (Source: Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "D",
+        "text": "Weight, waist circumference, blood pressure, urea and electrolytes, and thyroid function tests only",
+        "correct": false,
+        "rationale": "UEC and TFTs are appropriate for lithium initiation, not for baseline SGA metabolic screening; fasting glucose or HbA1c and fasting lipids are the required metabolic bloods (Source: AMH: antipsychotic monitoring).",
+        "source_refs": ["Australian Medicines Handbook: antipsychotic monitoring"]
+      },
+      {
+        "letter": "E",
+        "text": "Weight, blood pressure and urinalysis alone, deferring all bloods until the six-month review",
+        "correct": false,
+        "rationale": "Deferring baseline bloods leaves no reference point when adverse metabolic changes appear in the first 12 weeks and is inconsistent with the RANZCP schedule (Source: RANZCP Antipsychotic Medication Monitoring).",
+        "source_refs": ["RANZCP Antipsychotic Medication Monitoring"]
+      }
+    ],
+    "explanation": {
+      "summary": "Baseline SGA monitoring per RANZCP is anthropometry (weight, BMI, waist), BP, fasting glucose or HbA1c, fasting lipids, and 12-lead ECG. Prolactin is symptom-driven or agent-driven (risperidone, amisulpride). Clozapine adds baseline echocardiogram, troponin and CRP.",
+      "key_points": [
+        "Baseline panel: anthropometry, BP, fasting glucose or HbA1c, fasting lipids, ECG",
+        "Repeat at 6 weeks, 12 weeks, then annually",
+        "Prolactin only when agent-driven or symptomatic",
+        "Clozapine adds echo, troponin, CRP at baseline"
+      ],
+      "pearls": "The 10 to 20 year mortality gap in schizophrenia is largely cardiometabolic and preventable with a structured schedule."
+    },
+    "sources": [
+      {"label": "RANZCP Antipsychotic Medication Monitoring", "url": "https://www.ranzcp.org/"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook: antipsychotic monitoring", "url": "https://amhonline.amh.net.au/"}
+    ],
+    "reference_ranges": ["glucose_hba1c", "lipids"],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "psych-la-002",
+    "topic": "Psychiatry",
+    "subtopic": "Antipsychotic metabolic monitoring",
+    "subtopic_detail": "Prolactin monitoring on risperidone",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["risperidone", "hyperprolactinaemia"],
+    "stem": "A 28-year-old woman with schizophrenia has been on risperidone 4 mg daily for six months with excellent symptom control. At her routine review she reports that her periods have stopped over the last three cycles and she has developed a small amount of milky discharge from both nipples on gentle expression.\n\nShe has no headache, no visual change and no galactorrhoea spontaneously. She is not sexually active, uses no hormonal contraception and a urine beta hCG done today is negative. TSH is within normal limits. Her weight, BP, fasting glucose and fasting lipids have all been stable since baseline.",
+    "data_table": {
+      "Observations": "Weight 64 kg, BMI 23.5 kg/m2, BP 118/74 mmHg.",
+      "Bloods today": "Urine beta hCG negative; TSH 1.8 mIU/L (0.4 to 4.0)."
+    },
+    "lead_in": "What is the most appropriate next investigation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Pelvic ultrasound to assess for primary ovarian or uterine pathology",
+        "correct": false,
+        "rationale": "Amenorrhoea and galactorrhoea on a known dopamine antagonist are most likely medication-mediated hyperprolactinaemia; pelvic imaging without checking prolactin first puts the cart before the horse (Source: RANZCP Antipsychotic Medication Monitoring).",
+        "source_refs": ["RANZCP Antipsychotic Medication Monitoring"]
+      },
+      {
+        "letter": "B",
+        "text": "MRI pituitary with contrast to exclude a prolactinoma before any bloods",
+        "correct": false,
+        "rationale": "Imaging is indicated only after prolactin is measured and only if the value is disproportionately high (typically over 3000 mIU/L) or does not fall with dose reduction or switch (Source: AMH: risperidone).",
+        "source_refs": ["AMH: risperidone"]
+      },
+      {
+        "letter": "C",
+        "text": "Repeat TSH, free T4, morning cortisol and LH/FSH as a broad endocrine screen",
+        "correct": false,
+        "rationale": "TSH is already normal today and hypothyroidism is not causing the picture; broad endocrine screening does not change the immediate step, which is to check the pituitary hormone most likely elevated by this drug (Source: Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "D",
+        "text": "Fasting serum prolactin level with a repeat sample if elevated",
+        "correct": true,
+        "rationale": "Risperidone is a strongly prolactin-elevating antipsychotic; amenorrhoea and galactorrhoea with pregnancy and thyroid disease excluded should trigger a fasting serum prolactin before any imaging or endocrine referral (Source: Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "AMH: risperidone"]
+      },
+      {
+        "letter": "E",
+        "text": "Bone mineral density DEXA scan of lumbar spine and both hips",
+        "correct": false,
+        "rationale": "DEXA becomes relevant later if sustained hyperprolactinaemia and hypogonadism are confirmed; it is not the first test at symptom onset (Source: RANZCP Antipsychotic Medication Monitoring).",
+        "source_refs": ["RANZCP Antipsychotic Medication Monitoring"]
+      }
+    ],
+    "explanation": {
+      "summary": "Risperidone and amisulpride cross the blood brain barrier poorly at the tuberoinfundibular tract and raise prolactin more than other SGAs. Menstrual disturbance, galactorrhoea, sexual dysfunction or new gynaecomastia on these agents should prompt a fasting serum prolactin, with pregnancy and thyroid disease excluded first.",
+      "key_points": [
+        "Risperidone and amisulpride are the SGA prolactin offenders",
+        "Aripiprazole is prolactin-sparing and often the switch target",
+        "Values under 3000 mIU/L usually drug-related; higher values warrant pituitary MRI",
+        "Sustained hypogonadism risks bone loss over years"
+      ],
+      "pearls": "Menstrual change on risperidone is not just an inconvenience - it flags hypogonadism and future osteoporosis risk."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "AMH: risperidone", "url": "https://amhonline.amh.net.au/"},
+      {"label": "RANZCP Antipsychotic Medication Monitoring", "url": "https://www.ranzcp.org/"}
+    ],
+    "reference_ranges": ["thyroid"],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "psych-la-003",
+    "topic": "Psychiatry",
+    "subtopic": "Antipsychotic metabolic monitoring",
+    "subtopic_detail": "SGA choice with metabolic risk factors",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["antipsychotic", "aripiprazole"],
+    "stem": "A 42-year-old man with a new diagnosis of schizophrenia has been reviewed by the community team for antipsychotic initiation. He was diagnosed with type 2 diabetes eight months ago, is on metformin 1 g twice daily with the most recent HbA1c 58 mmol/mol, and has a BMI of 34 with waist 118 cm. His father died from a myocardial infarction at 54.\n\nHe has never taken an antipsychotic before, has a normal ECG with QTc 410 ms, and has no known allergy. He tells you he is very worried about further weight gain because he lost his last job partly because of fatigue from his diabetes.",
+    "data_table": {
+      "Anthropometry": "Weight 104 kg, BMI 34.0 kg/m2, waist 118 cm.",
+      "Bloods": "HbA1c 58 mmol/mol (target under 53), fasting lipids: LDL 3.4 mmol/L, HDL 0.9 mmol/L, triglycerides 2.2 mmol/L.",
+      "ECG": "Sinus rhythm, QTc 410 ms."
+    },
+    "lead_in": "Which antipsychotic is the most appropriate first choice?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Olanzapine 10 mg orally at night, titrated to response",
+        "correct": false,
+        "rationale": "Olanzapine has the highest weight gain, dyslipidaemia and dysglycaemia signal of the SGAs and would compound established type 2 diabetes and central obesity (Source: RANZCP CPG: Schizophrenia).",
+        "source_refs": ["RANZCP CPG: Schizophrenia"]
+      },
+      {
+        "letter": "B",
+        "text": "Quetiapine 300 mg orally at night, titrated to response",
+        "correct": false,
+        "rationale": "Quetiapine carries an intermediate to high metabolic burden with meaningful weight gain and dyslipidaemia, and is not the preferred first choice when cardiometabolic risk is already established (Source: Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "C",
+        "text": "Aripiprazole 10 mg orally daily, titrated to response",
+        "correct": true,
+        "rationale": "Aripiprazole and lurasidone have the lowest weight gain and metabolic burden among the SGAs and are the preferred first choice when baseline cardiometabolic risk is high; efficacy for positive symptoms is comparable in first-episode schizophrenia (Source: Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "RANZCP CPG: Schizophrenia"]
+      },
+      {
+        "letter": "D",
+        "text": "Risperidone 3 mg orally daily, titrated to response",
+        "correct": false,
+        "rationale": "Risperidone has intermediate weight gain and dysglycaemia risk and raises prolactin; when a metabolically friendlier alternative is equally effective, it is not the preferred first choice here (Source: RANZCP CPG: Schizophrenia).",
+        "source_refs": ["RANZCP CPG: Schizophrenia"]
+      },
+      {
+        "letter": "E",
+        "text": "Clozapine 12.5 mg orally at night, titrated per protocol",
+        "correct": false,
+        "rationale": "Clozapine is reserved for treatment-resistant schizophrenia after two adequate trials of other antipsychotics and carries the highest metabolic burden of all agents (Source: AMH: clozapine).",
+        "source_refs": ["AMH: clozapine"]
+      }
+    ],
+    "explanation": {
+      "summary": "For first-episode schizophrenia the SGA choice should be individualised to baseline cardiometabolic risk. Aripiprazole and lurasidone have the lowest weight, glucose and lipid signal; olanzapine and clozapine the highest; risperidone and quetiapine sit intermediate.",
+      "key_points": [
+        "Lowest metabolic burden: aripiprazole, lurasidone",
+        "Highest metabolic burden: olanzapine, clozapine",
+        "Match the drug profile to the patient's baseline risk",
+        "All SGAs still need scheduled metabolic monitoring"
+      ],
+      "pearls": "In diabetes plus central obesity, aripiprazole is the pragmatic first-line SGA - not because it is stronger, but because you are not adding a second chronic disease to an existing one."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "RANZCP CPG: Schizophrenia", "url": "https://www.ranzcp.org/"},
+      {"label": "AMH: clozapine", "url": "https://amhonline.amh.net.au/"}
+    ],
+    "reference_ranges": ["glucose_hba1c", "lipids"],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "psych-la-004",
+    "topic": "Psychiatry",
+    "subtopic": "Antipsychotic metabolic monitoring",
+    "subtopic_detail": "Diabetes screening cadence on olanzapine",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["olanzapine", "diabetes"],
+    "stem": "A 31-year-old man with schizoaffective disorder has been on olanzapine 15 mg at night for four months since discharge from his index admission. He has gained 6 kg over that period (weight now 92 kg, BMI 28.8, waist 100 cm) despite dietitian input arranged through the community team. His baseline HbA1c was 34 mmol/mol and today it is 43 mmol/mol; fasting glucose is 5.8 mmol/L. Fasting lipids are borderline (LDL 3.2, HDL 1.0, triglycerides 1.9).\n\nHe has no symptoms of hyperglycaemia, no personal history of diabetes and no Aboriginal or Torres Strait Islander heritage. His father was diagnosed with type 2 diabetes at 60. He is due for his scheduled 12-week metabolic review today and asks how often his diabetes bloods should be checked from now on.",
+    "data_table": {
+      "Trend": "Baseline HbA1c 34, week 12 HbA1c 43 mmol/mol; fasting glucose 5.8 mmol/L (3.9 to 5.4).",
+      "Anthropometry": "Weight 92 kg (+6 kg), BMI 28.8 kg/m2, waist 100 cm.",
+      "Lipids": "LDL 3.2 mmol/L, HDL 1.0 mmol/L, triglycerides 1.9 mmol/L."
+    },
+    "lead_in": "What is the most appropriate diabetes-screening cadence from this review onward?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Repeat HbA1c and fasting glucose in 12 months as part of the annual metabolic review",
+        "correct": false,
+        "rationale": "Annual review is the baseline schedule for a stable patient without a rising trajectory; a rise in HbA1c into the impaired-glucose-regulation range within 12 weeks warrants tighter follow-up (Source: RANZCP Antipsychotic Medication Monitoring).",
+        "source_refs": ["RANZCP Antipsychotic Medication Monitoring"]
+      },
+      {
+        "letter": "B",
+        "text": "Repeat HbA1c and fasting glucose within three months with reassessment of weight and lifestyle",
+        "correct": true,
+        "rationale": "A jump into the pre-diabetes range with concurrent weight gain and central obesity on the most metabolically active SGA requires early re-testing within three months, coupled with intensified lifestyle input, to catch progression to diabetes and inform the switch or metformin discussion (Source: Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "RANZCP Antipsychotic Medication Monitoring"]
+      },
+      {
+        "letter": "C",
+        "text": "Proceed straight to a 75 g oral glucose tolerance test today and repeat annually",
+        "correct": false,
+        "rationale": "OGTT is not the standard first-line screen; HbA1c and fasting glucose per the RANZCP schedule are sufficient, and OGTT is reserved for discordant results or specific clinical uncertainty (Source: RACGP Red Book).",
+        "source_refs": ["RACGP Red Book"]
+      },
+      {
+        "letter": "D",
+        "text": "Screen with fasting glucose only every six months and drop HbA1c from the panel to reduce cost",
+        "correct": false,
+        "rationale": "HbA1c is more informative than fasting glucose alone for tracking trajectory on an SGA and is part of the RANZCP schedule; dropping it loses the earliest signal (Source: RANZCP Antipsychotic Medication Monitoring).",
+        "source_refs": ["RANZCP Antipsychotic Medication Monitoring"]
+      },
+      {
+        "letter": "E",
+        "text": "Screen only when he develops symptoms of polyuria, polydipsia or unexplained weight loss",
+        "correct": false,
+        "rationale": "SGA-associated dysglycaemia is often silent until well established; symptom-triggered screening misses the intervention window that structured monitoring is designed to catch (Source: Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      }
+    ],
+    "explanation": {
+      "summary": "The RANZCP schedule is baseline, 6 weeks, 12 weeks, then annually. A rising HbA1c into pre-diabetes range within 12 weeks is a trigger to tighten cadence rather than defer to annual, and to intensify lifestyle input, consider metformin, or switch to a lower-burden SGA.",
+      "key_points": [
+        "Baseline, 6 wk, 12 wk, then annual is the default schedule",
+        "Tighten to 3-monthly if HbA1c is rising or over 42 mmol/mol",
+        "Metformin has the best evidence for antipsychotic-induced weight gain",
+        "Switch to aripiprazole or lurasidone if lifestyle plus adjuncts fail"
+      ],
+      "pearls": "Any HbA1c that crosses into pre-diabetes on an SGA earns a three-month re-check, not a twelve-month wait."
+    },
+    "sources": [
+      {"label": "RANZCP Antipsychotic Medication Monitoring", "url": "https://www.ranzcp.org/"},
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "RACGP Red Book", "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/red-book"}
+    ],
+    "reference_ranges": ["glucose_hba1c", "lipids"],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "psych-la-005",
+    "topic": "Psychiatry",
+    "subtopic": "Antipsychotic metabolic monitoring",
+    "subtopic_detail": "Statin threshold in serious mental illness",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["antipsychotic", "cardiovascular risk"],
+    "stem": "A 52-year-old woman with schizophrenia on quetiapine 400 mg at night attends the community clinic for her annual metabolic review. She is a lifelong non-smoker, has a BP of 138/86 mmHg, and her fasting lipid panel today shows total cholesterol 6.1 mmol/L, LDL 3.9 mmol/L, HDL 1.1 mmol/L and triglycerides 1.6 mmol/L. HbA1c is 41 mmol/mol and she has no diagnosis of diabetes or chronic kidney disease.\n\nShe has never had a cardiovascular event. She has no Aboriginal or Torres Strait Islander heritage. Her Australian absolute cardiovascular disease risk calculator score today is 9 percent over five years. She is currently on no lipid-lowering therapy and asks whether she needs to start one.",
+    "data_table": {
+      "Anthropometry": "Weight 78 kg, BMI 28.6 kg/m2, waist 96 cm.",
+      "Bloods": "TC 6.1 mmol/L, LDL 3.9 mmol/L, HDL 1.1 mmol/L, TG 1.6 mmol/L, HbA1c 41 mmol/mol, eGFR over 90 mL/min/1.73 m2.",
+      "Risk score": "AU CVD 5-year risk 9%."
+    },
+    "lead_in": "What is the most appropriate lipid management step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Repeat lifestyle counselling only and reassess absolute CVD risk in 12 months",
+        "correct": false,
+        "rationale": "Absolute CVD risk of 9% over five years combined with a chronic serious mental illness reclassifies her into the higher-risk group where statin therapy is recommended alongside lifestyle change (Source: NVDPA Absolute CVD Risk Guidelines).",
+        "source_refs": ["NVDPA Absolute CVD Risk Guidelines"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence fenofibrate 145 mg daily as first-line lipid-lowering therapy",
+        "correct": false,
+        "rationale": "Fibrates are not first-line for LDL-driven risk reduction; they are reserved for severe hypertriglyceridaemia, which is not the picture here (Source: Therapeutic Guidelines: Cardiovascular).",
+        "source_refs": ["Therapeutic Guidelines: Cardiovascular"]
+      },
+      {
+        "letter": "C",
+        "text": "Add ezetimibe 10 mg daily as monotherapy alongside lifestyle counselling",
+        "correct": false,
+        "rationale": "Ezetimibe monotherapy has weaker outcome data than statins and is used as add-on when statins are insufficient or not tolerated; it is not first-line (Source: Therapeutic Guidelines: Cardiovascular).",
+        "source_refs": ["Therapeutic Guidelines: Cardiovascular"]
+      },
+      {
+        "letter": "D",
+        "text": "Switch quetiapine to aripiprazole and defer any lipid therapy decision until after the switch",
+        "correct": false,
+        "rationale": "A switch may lower future metabolic burden but does not correct her current five-year risk; deferring statin therapy in an intermediate-risk patient with a risk-enhancer misses the primary prevention window (Source: Australian CVD Risk Guideline 2023).",
+        "source_refs": ["Australian CVD Risk Guideline 2023"]
+      },
+      {
+        "letter": "E",
+        "text": "Commence a moderate-intensity statin such as atorvastatin 20 mg daily plus lifestyle counselling",
+        "correct": true,
+        "rationale": "Australian absolute CVD risk of 5 to under 10 percent is intermediate risk, and serious mental illness plus antipsychotic therapy is a risk-enhancer that shifts intermediate-risk patients into treatment; a moderate-intensity statin is first-line (Source: Australian CVD Risk Guideline 2023).",
+        "source_refs": ["Australian CVD Risk Guideline 2023", "Therapeutic Guidelines: Cardiovascular"]
+      }
+    ],
+    "explanation": {
+      "summary": "The Australian CVD Risk Guideline 2023 recognises serious mental illness as a risk-enhancer that pushes intermediate-risk patients into pharmacological therapy. A five-year absolute risk of 5 to under 10 percent plus SMI warrants a moderate-intensity statin alongside lifestyle change.",
+      "key_points": [
+        "AU CVD risk under 5% low; 5 to under 10% intermediate; 10% or over high",
+        "SMI, Aboriginal and Torres Strait Islander heritage, family history and CKD are risk-enhancers",
+        "Moderate-intensity statin is first-line lipid therapy",
+        "Fibrates for severe hypertriglyceridaemia only"
+      ],
+      "pearls": "Serious mental illness deserves the same primary prevention aggression as diabetes at the intermediate-risk band."
+    },
+    "sources": [
+      {"label": "Australian CVD Risk Guideline 2023", "url": "https://www.cvdcheck.org.au/"},
+      {"label": "NVDPA Absolute CVD Risk Guidelines", "url": "https://www.cvdcheck.org.au/"},
+      {"label": "Therapeutic Guidelines: Cardiovascular", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["lipids", "glucose_hba1c"],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "psych-la-006",
+    "topic": "Psychiatry",
+    "subtopic": "Antipsychotic metabolic monitoring",
+    "subtopic_detail": "Metformin for antipsychotic-induced weight gain",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["olanzapine", "metabolic syndrome"],
+    "stem": "A 29-year-old man with schizophrenia has responded well to olanzapine 15 mg at night after two prior antipsychotics were stopped for extrapyramidal effects (haloperidol) and akathisia (risperidone). Over eight months on olanzapine he has gained 12 kg (baseline 78 kg, now 90 kg, BMI 29.4, waist 103 cm) despite four months of engagement with a dietitian and a supervised gym program.\n\nToday his HbA1c is 44 mmol/mol (baseline 33) and fasting lipids show LDL 3.6 mmol/L and triglycerides 2.4 mmol/L. He is psychiatrically stable and adamantly does not want to change antipsychotic because 'nothing else has worked for me'. eGFR is over 90 mL/min/1.73 m2 and LFTs are normal.",
+    "data_table": {
+      "Trend": "Weight +12 kg over 8 months, waist 103 cm, BMI 29.4 kg/m2.",
+      "Bloods": "HbA1c 44 mmol/mol (baseline 33), LDL 3.6 mmol/L, TG 2.4 mmol/L, eGFR over 90, LFTs normal.",
+      "History": "Failed haloperidol (EPS) and risperidone (akathisia)."
+    },
+    "lead_in": "What is the most appropriate next pharmacological step, in addition to continuing lifestyle input?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Halve the olanzapine dose to 7.5 mg at night to reduce metabolic load",
+        "correct": false,
+        "rationale": "Halving an effective dose risks psychiatric relapse when he has already failed two alternatives; dose reduction is not the recommended first pharmacological step for antipsychotic-induced weight gain (Source: AMH: olanzapine).",
+        "source_refs": ["AMH: olanzapine"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence orlistat 120 mg with each main meal as first-line adjunct",
+        "correct": false,
+        "rationale": "Orlistat has a smaller evidence base than metformin for antipsychotic-induced weight gain and gastrointestinal tolerability limits use; it is not first-line in this setting (Source: Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "C",
+        "text": "Commence metformin 500 mg twice daily with meals and titrate as tolerated",
+        "correct": true,
+        "rationale": "Metformin has the strongest evidence base and is the recommended first pharmacological adjunct for antipsychotic-induced weight gain and dysglycaemia when lifestyle measures have not achieved control, with renal function safely permitting use (Source: Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "AMH: metformin"]
+      },
+      {
+        "letter": "D",
+        "text": "Refer for bariatric surgery consideration as the next weight intervention",
+        "correct": false,
+        "rationale": "His BMI of 29 is below the accepted bariatric surgery threshold and pharmacological and lifestyle steps have not been exhausted; bariatric surgery is not the next step (Source: NHMRC Obesity Guidelines).",
+        "source_refs": ["NHMRC Obesity Guidelines"]
+      },
+      {
+        "letter": "E",
+        "text": "Add topiramate 25 mg twice daily as an appetite suppressant",
+        "correct": false,
+        "rationale": "Topiramate has cognitive side effects and a weaker evidence base than metformin in this context, and is not the recommended first pharmacological adjunct in Australian psychiatric practice (Source: Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      }
+    ],
+    "explanation": {
+      "summary": "When lifestyle measures fail to control antipsychotic-induced weight gain in a patient responding to their current agent, metformin is the first pharmacological adjunct in Australian practice. It attenuates weight, HbA1c and lipid worsening and is safe in patients with normal renal function.",
+      "key_points": [
+        "Metformin is first-line adjunct for antipsychotic weight gain",
+        "Dose-halving risks relapse in known responders with prior failures",
+        "Orlistat and topiramate have weaker evidence in this setting",
+        "Switch remains an option if adjunct plus lifestyle still fails"
+      ],
+      "pearls": "In a known responder with prior failures, protect the antipsychotic first and treat the metabolic syndrome with an evidence-based adjunct."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "AMH: metformin", "url": "https://amhonline.amh.net.au/"},
+      {"label": "NHMRC Obesity Guidelines", "url": "https://www.nhmrc.gov.au/"}
+    ],
+    "reference_ranges": ["glucose_hba1c", "lipids"],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "psych-la-007",
+    "topic": "Psychiatry",
+    "subtopic": "Antipsychotic metabolic monitoring",
+    "subtopic_detail": "Interpreting elevated prolactin on amisulpride",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["amisulpride", "hyperprolactinaemia"],
+    "stem": "A 37-year-old woman with schizophrenia has been on amisulpride 600 mg daily for two years with good symptom control after failed trials of quetiapine and olanzapine. She has developed amenorrhoea over the past six months. Her fasting serum prolactin today is 2400 mIU/L (reference under 500 in females). Repeat sample confirms 2280 mIU/L. Urine beta hCG is negative, TSH is 1.6 mIU/L and creatinine is 62 micromol/L.\n\nShe has no headache, no visual field disturbance and no galactorrhoea. She weighs 68 kg with BMI 24 and waist 82 cm. HbA1c is 34 mmol/mol and fasting lipids are within range. She has no personal or family history of pituitary tumour, has never taken opioids, metoclopramide or a proton pump inhibitor, and asks how you plan to sort out her elevated prolactin.",
+    "data_table": {
+      "Bloods": "Prolactin 2400 mIU/L then 2280 mIU/L (under 500 in females), beta hCG negative, TSH 1.6 mIU/L (0.4 to 4.0), creatinine 62 micromol/L.",
+      "Anthropometry": "Weight 68 kg, BMI 24 kg/m2, waist 82 cm.",
+      "Other": "HbA1c 34 mmol/mol, fasting lipids within range."
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Urgent MRI pituitary with contrast to exclude a macroadenoma before any medication change",
+        "correct": false,
+        "rationale": "Values under about 3000 mIU/L on a strongly prolactin-elevating antipsychotic like amisulpride are almost always drug-related; imaging is reserved for higher values, discordant clinical features or failure of prolactin to fall after switching or reducing the offending drug (Source: AMH: amisulpride).",
+        "source_refs": ["AMH: amisulpride", "Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "B",
+        "text": "Add cabergoline 0.25 mg twice weekly to lower prolactin while continuing amisulpride unchanged",
+        "correct": false,
+        "rationale": "Dopamine agonists risk aggravating psychosis in patients on antipsychotics and are not first-line for drug-induced hyperprolactinaemia; addressing the offending agent is preferred (Source: Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      },
+      {
+        "letter": "C",
+        "text": "Switch amisulpride to aripiprazole, monitor mental state closely, and repeat prolactin in 6 to 8 weeks",
+        "correct": true,
+        "rationale": "Aripiprazole is prolactin-sparing (partial dopamine agonism) and is the recommended switch target for symptomatic drug-induced hyperprolactinaemia when the primary agent is prolactin-elevating; a cross-titrated switch with prolactin re-check in 6 to 8 weeks is the pragmatic step here (Source: Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "AMH: aripiprazole"]
+      },
+      {
+        "letter": "D",
+        "text": "Continue amisulpride unchanged and start a combined oral contraceptive pill to restore withdrawal bleeds",
+        "correct": false,
+        "rationale": "Restoring withdrawal bleeds masks the underlying hypogonadism, does not address bone loss risk over years, and leaves a modifiable prolactin driver untreated (Source: RANZCP Antipsychotic Medication Monitoring).",
+        "source_refs": ["RANZCP Antipsychotic Medication Monitoring"]
+      },
+      {
+        "letter": "E",
+        "text": "Refer directly to endocrinology and defer any antipsychotic change to the endocrinologist",
+        "correct": false,
+        "rationale": "A moderately elevated prolactin on a known prolactin-elevating antipsychotic with a clear management pathway does not require endocrinology gatekeeping; refer only if prolactin does not fall after switch or if the value is disproportionately high (Source: Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      }
+    ],
+    "explanation": {
+      "summary": "Amisulpride and risperidone are the strongest prolactin-elevating antipsychotics. Symptomatic values under about 3000 mIU/L are almost always drug-related and the first move is to switch to a prolactin-sparing agent such as aripiprazole, then re-check prolactin. Values above about 3000 mIU/L or non-resolving after switch warrant pituitary imaging.",
+      "key_points": [
+        "Under 3000 mIU/L on offending agent: switch first, image later",
+        "Aripiprazole is the prolactin-sparing switch target",
+        "Cabergoline risks worsening psychosis and is not first-line",
+        "Address hypogonadism, not just the withdrawal bleed"
+      ],
+      "pearls": "Prolactin under 3000 on amisulpride is drug guilt until proven otherwise; MRI is not the first move."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "AMH: amisulpride", "url": "https://amhonline.amh.net.au/"},
+      {"label": "AMH: aripiprazole", "url": "https://amhonline.amh.net.au/"},
+      {"label": "RANZCP Antipsychotic Medication Monitoring", "url": "https://www.ranzcp.org/"}
+    ],
+    "reference_ranges": ["thyroid"],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "psych-la-008",
+    "topic": "Psychiatry",
+    "subtopic": "Antipsychotic metabolic monitoring",
+    "subtopic_detail": "Clozapine 12-week review with new metabolic derangement",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["clozapine", "metabolic syndrome"],
+    "stem": "A 33-year-old man with treatment-resistant schizophrenia has been on clozapine for 12 weeks, currently 350 mg at night, with PANSS reduction from 98 to 66 and a return to part-time work he had lost during his last relapse. He had failed adequate trials of olanzapine and risperidone in the preceding two years. He attends the community clozapine clinic for his scheduled 12-week metabolic review with his case manager.\n\nBaseline values were weight 80 kg, BMI 26.1, waist 94 cm, BP 122/76 mmHg, fasting glucose 5.0 mmol/L, HbA1c 34 mmol/mol, LDL 2.7 mmol/L, HDL 1.2 mmol/L, triglycerides 1.3 mmol/L. Today he weighs 89 kg (BMI 29.1, +11.3%), waist 104 cm, BP 132/84 mmHg, fasting glucose 6.0 mmol/L, HbA1c 40 mmol/mol, LDL 3.5 mmol/L, HDL 0.9 mmol/L, triglycerides 2.6 mmol/L. He denies chest pain or dyspnoea. Today's ANC is 3.6 x 10^9/L (green zone).",
+    "data_table": {
+      "Baseline (week 0)": "Weight 80 kg, BMI 26.1, waist 94 cm, FG 5.0, HbA1c 34, LDL 2.7, HDL 1.2, TG 1.3.",
+      "Week 12": "Weight 89 kg (+11.3%), BMI 29.1, waist 104 cm, BP 132/84, FG 6.0, HbA1c 40, LDL 3.5, HDL 0.9, TG 2.6.",
+      "Haematology": "ANC 3.6 x 10^9/L (green zone)."
+    },
+    "lead_in": "What is the single most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Stop clozapine now and cross-titrate to aripiprazole monotherapy over the next four weeks",
+        "correct": false,
+        "rationale": "Abrupt cessation of clozapine in a clear responder without a life-threatening adverse event risks rapid rebound psychosis, which for clozapine can be severe; the metabolic changes are significant but do not justify walking away from the only effective agent (Source: AMH: clozapine).",
+        "source_refs": ["AMH: clozapine", "RANZCP Antipsychotic Medication Monitoring"]
+      },
+      {
+        "letter": "B",
+        "text": "Continue clozapine, add lifestyle intervention plus metformin, repeat metabolic panel in 4 to 6 weeks",
+        "correct": true,
+        "rationale": "Weight gain over 7% and new impaired fasting glucose with atherogenic dyslipidaemia in a clear clozapine responder meets the RANZCP threshold for intensified intervention rather than cessation; metformin has the best evidence for clozapine-associated weight gain and the metabolic panel should be repeated to track response (Source: Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic", "AMH: clozapine", "RANZCP Antipsychotic Medication Monitoring"]
+      },
+      {
+        "letter": "C",
+        "text": "Continue clozapine unchanged and defer the next metabolic review to the 12-month anniversary",
+        "correct": false,
+        "rationale": "A 12-week jump into pre-diabetes plus dyslipidaemia is exactly the trigger for tightening the schedule, not deferring it; the annual interval assumes stable metabolic parameters (Source: RANZCP Antipsychotic Medication Monitoring).",
+        "source_refs": ["RANZCP Antipsychotic Medication Monitoring"]
+      },
+      {
+        "letter": "D",
+        "text": "Halve the clozapine dose to 175 mg at night to lower his overall metabolic burden",
+        "correct": false,
+        "rationale": "Halving an effective dose risks loss of response and is not the recommended first step for clozapine-associated metabolic adverse effects when lifestyle plus adjunctive pharmacotherapy have not been trialled (Source: AMH: clozapine).",
+        "source_refs": ["AMH: clozapine"]
+      },
+      {
+        "letter": "E",
+        "text": "Add low-dose aripiprazole 5 mg daily as prolactin-sparing augmentation to reduce clozapine dose",
+        "correct": false,
+        "rationale": "Adding a second antipsychotic to allow clozapine dose reduction is not the recommended first step for metabolic adverse effects and does not address the primary metabolic driver, which is clozapine itself (Source: Therapeutic Guidelines: Psychotropic).",
+        "source_refs": ["Therapeutic Guidelines: Psychotropic"]
+      }
+    ],
+    "explanation": {
+      "summary": "In a clear clozapine responder with new pre-diabetes and atherogenic dyslipidaemia at 12 weeks, protect the antipsychotic and treat the metabolic syndrome: intensified lifestyle input, metformin, and a repeat panel in 4 to 6 weeks. Cessation is reserved for life-threatening adverse events; dose reduction risks loss of response after failed trials of alternatives.",
+      "key_points": [
+        "Trigger for action: over 7% weight gain, new IFG, new dyslipidaemia",
+        "Metformin has the best evidence for clozapine weight gain",
+        "Repeat panel at 4 to 6 weeks to track response",
+        "Cessation only for life-threatening adverse events"
+      ],
+      "pearls": "In a clozapine responder, treat the metabolic syndrome around the antipsychotic, not by walking away from it."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "AMH: clozapine", "url": "https://amhonline.amh.net.au/"},
+      {"label": "RANZCP Antipsychotic Medication Monitoring", "url": "https://www.ranzcp.org/"}
+    ],
+    "reference_ranges": ["glucose_hba1c", "lipids"],
+    "created": "2026-08-27"
+  }
+]
