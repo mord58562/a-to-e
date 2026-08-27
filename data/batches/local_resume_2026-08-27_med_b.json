@@ -1,0 +1,563 @@
+[
+  {
+    "id": "med-lb-001",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Uncomplicated cystitis in a non-pregnant woman",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["UTI", "antibiotics"],
+    "stem": "A 28-year-old woman presents to a suburban general practice with two days of dysuria, urinary frequency and suprapubic discomfort. She has never had a urinary tract infection before, is not sexually active in the past three months and takes no regular medications. She uses reliable contraception, her last menstrual period was 10 days ago, and a bedside urine beta-hCG is negative. She has no fever, flank pain, vomiting or vaginal discharge.\n\nExamination reveals a comfortable woman with mild suprapubic tenderness. Bedside urinalysis is positive for nitrites and leucocyte esterase, negative for blood. She reports no penicillin, sulfonamide or nitrofuran allergy, and her estimated GFR at a recent workplace medical was above 60 mL/min/1.73m^2.",
+    "data_table": {
+      "Vital signs": "HR 76, BP 118/72, RR 14, SpO2 99 percent room air, T 36.8 C.",
+      "Examination": "Mild suprapubic tenderness, no flank tenderness, no vaginal discharge on external inspection.",
+      "Investigations": "Urinalysis nitrites positive, leucocyte esterase positive, blood negative. Urine beta-hCG negative."
+    },
+    "lead_in": "What is the most appropriate empirical oral antibiotic regimen?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Amoxicillin 500 mg orally every 8 hours for 5 days",
+        "correct": false,
+        "rationale": "Amoxicillin monotherapy is not recommended empirically for uncomplicated cystitis in Australia because of high E. coli resistance rates. It is only appropriate when susceptibility is confirmed on culture (Source: Australian Medicines Handbook - Amoxicillin).",
+        "source_refs": ["Australian Medicines Handbook - Amoxicillin"]
+      },
+      {
+        "letter": "B",
+        "text": "Cefalexin 500 mg orally every 12 hours for 5 days",
+        "correct": false,
+        "rationale": "Cefalexin is an eTG alternative when first-line agents are unsuitable, not the primary choice for uncomplicated cystitis. It has broader ecological impact and is preferred in pregnancy rather than in non-pregnant women with normal renal function (Source: Therapeutic Guidelines: Antibiotic - Acute cystitis).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Acute cystitis"]
+      },
+      {
+        "letter": "C",
+        "text": "Trimethoprim 300 mg orally once daily for 3 days",
+        "correct": true,
+        "rationale": "eTG lists trimethoprim 300 mg orally, daily for 3 days as a first-line option for acute cystitis in non-pregnant women with normal renal function, alongside nitrofurantoin 100 mg orally 6-hourly for 5 days. Either agent is acceptable first-line; local resistance patterns and tolerability guide the choice (Source: Therapeutic Guidelines: Antibiotic - Acute cystitis).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Acute cystitis"]
+      },
+      {
+        "letter": "D",
+        "text": "Ciprofloxacin 500 mg orally every 12 hours for 3 days",
+        "correct": false,
+        "rationale": "Fluoroquinolones are reserved for complicated infections or resistant organisms in Australia and are not first-line for uncomplicated cystitis because of collateral resistance and tendinopathy or QT risk. Reflexive fluoroquinolone use is a labelled anti-pattern (Source: Therapeutic Guidelines: Antibiotic - Acute cystitis).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Acute cystitis"]
+      },
+      {
+        "letter": "E",
+        "text": "Nitrofurantoin 100 mg orally every 6 hours for 3 days",
+        "correct": false,
+        "rationale": "Nitrofurantoin is a first-line agent but the eTG duration for acute uncomplicated cystitis is 5 days, not 3. A 3-day course underdoses the regimen and risks early recurrence (Source: Therapeutic Guidelines: Antibiotic - Acute cystitis).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Acute cystitis"]
+      }
+    ],
+    "explanation": {
+      "summary": "Uncomplicated cystitis in non-pregnant women with normal renal function is treated empirically with a short course of trimethoprim (3 days) or nitrofurantoin (5 days) per eTG. Culture is not required for a first uncomplicated episode with a classic presentation. Cefalexin and beta-lactams are second-line or reserved for pregnancy. Fluoroquinolones are avoided outside complicated infections.",
+      "key_points": [
+        "Trimethoprim 300 mg daily for 3 days OR nitrofurantoin 100 mg 6-hourly for 5 days are eTG first-line.",
+        "Amoxicillin is inadequate empirically due to E. coli resistance in Australia.",
+        "Fluoroquinolones are reserved for complicated or resistant infection.",
+        "Nitrofurantoin duration is 5 days, not 3 - a common prescribing error."
+      ],
+      "pearls": "Nitrofurantoin needs eGFR above 45 mL/min/1.73m^2 to concentrate in urine adequately; below that, switch to trimethoprim or cefalexin."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Antibiotic - Acute cystitis", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook - Amoxicillin", "url": "https://amhonline.amh.net.au/"},
+      {"label": "RACGP - Urinary tract infection in adults", "url": "https://www.racgp.org.au/"}
+    ],
+    "reference_ranges": ["uec"],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "med-lb-002",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Acute pyelonephritis - oral versus IV thresholds",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["pyelonephritis", "antibiotics"],
+    "stem": "A 34-year-old woman presents to a metropolitan emergency department with 24 hours of right flank pain, rigors and vomiting on a background of two days of dysuria and frequency. She is not pregnant (urine beta-hCG negative), has no structural urinary tract abnormality, no indwelling catheter and no recent antibiotic exposure. She has taken oral fluids overnight and passed urine twice this morning.\n\nOn examination she is uncomfortable but alert and cooperative. There is right renal angle tenderness and no suprapubic mass. Vitals: HR 102, BP 118/74, RR 18, SpO2 98 percent room air, T 38.6 C. Bedside bloods show WCC 14.2 x10^9/L, CRP 96 mg/L, creatinine 78 micromol/L (baseline 72), lactate 1.4 mmol/L. Blood and urine cultures have been sent. She has no vomiting since arrival, tolerated 200 mL of oral fluid and has no allergies.",
+    "data_table": {
+      "Vital signs": "HR 102, BP 118/74, RR 18, SpO2 98 percent, T 38.6 C.",
+      "Examination": "Right renal angle tenderness, no suprapubic mass, no vaginal discharge.",
+      "Investigations": "WCC 14.2 x10^9/L, CRP 96 mg/L, creatinine 78 micromol/L (baseline 72), lactate 1.4 mmol/L, urinalysis nitrites and leucocytes positive."
+    },
+    "lead_in": "What is the most appropriate empirical antibiotic regimen?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "IV ceftriaxone 1 g daily plus IV gentamicin 5 mg/kg loading",
+        "correct": false,
+        "rationale": "Dual IV therapy is unnecessary when she is haemodynamically stable, tolerating oral fluids and without sepsis criteria. eTG reserves combination IV beta-lactam plus aminoglycoside for severe sepsis, septic shock or failed initial therapy (Source: Therapeutic Guidelines: Antibiotic - Acute pyelonephritis).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Acute pyelonephritis"]
+      },
+      {
+        "letter": "B",
+        "text": "IV gentamicin 5 mg/kg single dose then oral trimethoprim 300 mg daily",
+        "correct": true,
+        "rationale": "eTG recommends a single loading dose of IV gentamicin (4 to 7 mg/kg IBW) followed by oral step-down for non-severe pyelonephritis in patients able to tolerate oral therapy. Trimethoprim 300 mg daily for a total 10-14 day course is a listed oral option pending susceptibilities (Source: Therapeutic Guidelines: Antibiotic - Acute pyelonephritis).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Acute pyelonephritis"]
+      },
+      {
+        "letter": "C",
+        "text": "Oral nitrofurantoin 100 mg every 6 hours for 14 days total",
+        "correct": false,
+        "rationale": "Nitrofurantoin does not achieve adequate tissue concentrations in renal parenchyma and is contraindicated in pyelonephritis. Its use is restricted to lower urinary tract infection (Source: Australian Medicines Handbook - Nitrofurantoin).",
+        "source_refs": ["Australian Medicines Handbook - Nitrofurantoin"]
+      },
+      {
+        "letter": "D",
+        "text": "Oral cefalexin 500 mg every 6 hours for 14 days total",
+        "correct": false,
+        "rationale": "Oral cefalexin has inadequate serum concentrations for empirical pyelonephritis therapy and is not an eTG first-line option. Cefalexin is reserved for cystitis in pregnancy, not pyelonephritis (Source: Therapeutic Guidelines: Antibiotic - Acute pyelonephritis).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Acute pyelonephritis"]
+      },
+      {
+        "letter": "E",
+        "text": "Oral ciprofloxacin 500 mg every 12 hours for 7 to 10 days",
+        "correct": false,
+        "rationale": "Oral ciprofloxacin is an eTG alternative when aminoglycosides are contraindicated, but is not first-line given Australian E. coli fluoroquinolone resistance and adverse effect profile. Reserve for confirmed susceptibility or beta-lactam contraindication (Source: Therapeutic Guidelines: Antibiotic - Acute pyelonephritis).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Acute pyelonephritis"]
+      }
+    ],
+    "explanation": {
+      "summary": "eTG stratifies pyelonephritis by severity. Non-severe cases who tolerate oral fluids and are haemodynamically stable receive a single IV gentamicin loading dose plus early oral step-down (trimethoprim, amoxicillin-clavulanate, or cefalexin depending on culture) for a total 10-14 days. Severe sepsis, pregnancy, obstruction or failed oral therapy triggers full IV therapy and admission.",
+      "key_points": [
+        "Single-dose gentamicin plus oral step-down is the eTG default for non-severe pyelonephritis.",
+        "Nitrofurantoin is contraindicated - inadequate tissue penetration.",
+        "Oral cefalexin monotherapy is not recommended for pyelonephritis.",
+        "Total course is 10-14 days, longer than cystitis."
+      ],
+      "pearls": "Gentamicin dosing uses ideal body weight (or dose-adjusted weight if BMI over 30) at 4-7 mg/kg; a single loading dose rarely requires level monitoring."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Antibiotic - Acute pyelonephritis", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook - Nitrofurantoin", "url": "https://amhonline.amh.net.au/"}
+    ],
+    "reference_ranges": ["fbc", "uec", "inflammatory_markers"],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "med-lb-003",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Catheter-associated bacteriuria - when to treat",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["UTI", "catheter"],
+    "stem": "You are the medical registrar reviewing a 78-year-old man on the rehabilitation ward six weeks after a right total hip replacement. He has an indwelling urinary catheter placed intraoperatively for peri-operative retention that has remained in situ due to ongoing voiding trials.\n\nThe nursing team sent a routine mid-stream catheter specimen this morning that has just returned: greater than 10^5 CFU/mL Escherichia coli, sensitive to trimethoprim, amoxicillin-clavulanate and cefalexin. He is afebrile, feels well, is eating and mobilising with physiotherapy, and has no suprapubic pain, flank tenderness, delirium or new confusion. Vital signs are within normal limits and his most recent bloods 48 hours ago showed WCC 7.1 x10^9/L, CRP 8 mg/L and creatinine 82 micromol/L (baseline 78). His trial of void is planned for tomorrow morning.",
+    "data_table": {
+      "Vital signs": "Within normal limits.",
+      "Examination": "Well, afebrile, no suprapubic or flank tenderness, no delirium.",
+      "Investigations": "Catheter urine culture E. coli greater than 10^5 CFU/mL sensitive to trimethoprim, cefalexin, augmentin. WCC 7.1 x10^9/L, CRP 8 mg/L 48 h ago."
+    },
+    "lead_in": "What is the most appropriate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence oral trimethoprim 300 mg daily for 7 days empirically",
+        "correct": false,
+        "rationale": "Treating asymptomatic catheter-associated bacteriuria promotes resistance and Clostridioides difficile infection without altering outcomes. eTG explicitly recommends against antibiotic treatment in this scenario (Source: Therapeutic Guidelines: Antibiotic - Catheter-associated UTI).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Catheter-associated UTI"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence oral cefalexin 500 mg 12-hourly for 5 days empirically",
+        "correct": false,
+        "rationale": "Any antibiotic prescription for asymptomatic catheter bacteriuria is inappropriate. Choice of agent does not change the recommendation - no treatment is indicated (Source: Therapeutic Guidelines: Antibiotic - Catheter-associated UTI).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Catheter-associated UTI"]
+      },
+      {
+        "letter": "C",
+        "text": "Change the catheter and commence trimethoprim 300 mg daily for 7 days",
+        "correct": false,
+        "rationale": "Neither empirical antibiotics nor routine catheter change is indicated for asymptomatic bacteriuria. Catheter change without symptoms simply reseeds the bladder with new organisms (Source: Therapeutic Guidelines: Antibiotic - Catheter-associated UTI).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Catheter-associated UTI"]
+      },
+      {
+        "letter": "D",
+        "text": "No antibiotics and proceed with the planned trial of void tomorrow",
+        "correct": true,
+        "rationale": "Asymptomatic catheter-associated bacteriuria in a patient without local or systemic symptoms should not be treated with antibiotics. Repeat culture is also not indicated and simply generates more positive results. Proceed with catheter removal as planned (Source: Therapeutic Guidelines: Antibiotic - Catheter-associated UTI).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Catheter-associated UTI"]
+      },
+      {
+        "letter": "E",
+        "text": "Send blood cultures and start IV ceftriaxone 1 g daily pending sensitivities",
+        "correct": false,
+        "rationale": "Blood cultures and IV antibiotics are reserved for suspected sepsis or systemic infection. He has no fever, tachycardia, hypotension, delirium or raised inflammatory markers (Source: Therapeutic Guidelines: Antibiotic - Catheter-associated UTI).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Catheter-associated UTI"]
+      }
+    ],
+    "explanation": {
+      "summary": "Catheter-associated bacteriuria is almost universal after several days of catheterisation, but is not itself an indication for treatment. eTG and IDSA guidance treat only symptomatic CAUTI, defined by new fever, suprapubic or flank pain, delirium in older adults, rigors, or clinical sepsis. Antibiotics for asymptomatic bacteriuria drive resistance and C. difficile without benefit. Exceptions are pregnancy and immediately before urological procedures with mucosal trauma.",
+      "key_points": [
+        "Do not routinely culture catheter urine in asymptomatic patients.",
+        "Treat only symptomatic CAUTI (fever, suprapubic or flank pain, delirium, sepsis).",
+        "Remove or replace long-standing catheters when symptomatic CAUTI is diagnosed.",
+        "Pregnancy and pre-urological procedure are the only asymptomatic exceptions."
+      ],
+      "pearls": "New unexplained delirium in an older catheterised patient with no other localising features is not enough to diagnose CAUTI - look for a second sign (fever, pain, rigors) before starting antibiotics."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Antibiotic - Catheter-associated UTI", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "IDSA - Asymptomatic Bacteriuria (2019)", "url": "https://www.idsociety.org/"}
+    ],
+    "reference_ranges": ["fbc", "inflammatory_markers"],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "med-lb-004",
+    "topic": "Medicine",
+    "subtopic": "Obstetric medicine",
+    "subtopic_detail": "UTI in pregnancy - agent selection by gestation",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["UTI", "pregnancy"],
+    "stem": "A 32-year-old primigravida at 38 weeks and 2 days gestation presents to her GP with two days of dysuria and urinary frequency. She has no fever, flank pain, uterine tenderness, contractions, per-vaginal loss or reduced foetal movements. Her antenatal course has been uncomplicated, her group B streptococcus swab at 36 weeks was negative, and she has no penicillin, sulfonamide or nitrofuran allergy.\n\nExamination is unremarkable with a soft non-tender uterus, cephalic presentation, foetal heart rate 142 bpm and normal maternal vitals. Bedside urinalysis is positive for nitrites and leucocytes. A midstream urine sample has been sent for culture. She is booked for a routine antenatal review in one week and has no immediate delivery plan.",
+    "data_table": {
+      "Vital signs": "Within normal limits; foetal HR 142 bpm.",
+      "Examination": "Soft non-tender uterus, cephalic, no PV loss.",
+      "Investigations": "Urinalysis nitrites positive, leucocytes positive. MSU sent for culture. GBS swab negative at 36 weeks."
+    },
+    "lead_in": "What is the most appropriate empirical oral antibiotic regimen?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Cefalexin 500 mg orally every 12 hours for 5 days",
+        "correct": true,
+        "rationale": "Cefalexin is the eTG-preferred oral empirical agent for cystitis in pregnancy at any gestation because it is safe throughout pregnancy and has predictable coverage of common uropathogens. A 5-day course is standard (Source: Therapeutic Guidelines: Antibiotic - UTI in pregnancy).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - UTI in pregnancy"]
+      },
+      {
+        "letter": "B",
+        "text": "Nitrofurantoin 100 mg orally every 6 hours for 5 days",
+        "correct": false,
+        "rationale": "Nitrofurantoin is avoided at or near term (from 38 weeks and during labour) because of the neonatal haemolytic anaemia risk if the neonate has G6PD deficiency. It is otherwise acceptable earlier in pregnancy (Source: Australian Medicines Handbook - Nitrofurantoin in pregnancy).",
+        "source_refs": ["Australian Medicines Handbook - Nitrofurantoin in pregnancy"]
+      },
+      {
+        "letter": "C",
+        "text": "Trimethoprim 300 mg orally daily for 3 days",
+        "correct": false,
+        "rationale": "Trimethoprim is a folate antagonist and is avoided particularly in the first trimester (neural tube defect risk) and generally throughout pregnancy when alternatives exist. Cefalexin is preferred (Source: Australian Medicines Handbook - Trimethoprim in pregnancy).",
+        "source_refs": ["Australian Medicines Handbook - Trimethoprim in pregnancy"]
+      },
+      {
+        "letter": "D",
+        "text": "Amoxicillin 500 mg orally every 8 hours for 5 days",
+        "correct": false,
+        "rationale": "Amoxicillin monotherapy is inadequate empirically in Australia because of high E. coli resistance; it can be used only when susceptibility is confirmed on culture (Source: Therapeutic Guidelines: Antibiotic - UTI in pregnancy).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - UTI in pregnancy"]
+      },
+      {
+        "letter": "E",
+        "text": "Norfloxacin 400 mg orally every 12 hours for 3 days",
+        "correct": false,
+        "rationale": "Fluoroquinolones are contraindicated in pregnancy because of foetal cartilage toxicity concerns and are not empirical options for UTI in pregnancy at any gestation (Source: Australian Medicines Handbook - Fluoroquinolones in pregnancy).",
+        "source_refs": ["Australian Medicines Handbook - Fluoroquinolones in pregnancy"]
+      }
+    ],
+    "explanation": {
+      "summary": "UTI in pregnancy requires prompt treatment because it increases risk of preterm labour, low birth weight and pyelonephritis. Cefalexin is the safe default across all gestations. Nitrofurantoin is acceptable in first and second trimesters but avoided at or near term (from about 38 weeks) due to neonatal G6PD-related haemolysis risk. Trimethoprim is avoided in the first trimester (folate antagonist) and generally when alternatives exist. Asymptomatic bacteriuria in pregnancy is also treated because of pyelonephritis and preterm birth risk.",
+      "key_points": [
+        "Cefalexin 500 mg 12-hourly for 5 days is the eTG default in pregnancy.",
+        "Nitrofurantoin: avoid at term (from 38 weeks) and during labour.",
+        "Trimethoprim: avoid in first trimester (folate antagonist).",
+        "Fluoroquinolones are contraindicated in pregnancy.",
+        "Treat asymptomatic bacteriuria in pregnancy - unlike non-pregnant adults."
+      ],
+      "pearls": "In a woman at 38+ weeks with UTI, choose cefalexin first line - nitrofurantoin should be off the mental menu because delivery may occur during the course and the neonate is unshielded by placental folate metabolism."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Antibiotic - UTI in pregnancy", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook - Nitrofurantoin in pregnancy", "url": "https://amhonline.amh.net.au/"},
+      {"label": "Australian Medicines Handbook - Trimethoprim in pregnancy", "url": "https://amhonline.amh.net.au/"},
+      {"label": "Australian Medicines Handbook - Fluoroquinolones in pregnancy", "url": "https://amhonline.amh.net.au/"},
+      {"label": "RANZCOG - Routine antenatal assessment", "url": "https://ranzcog.edu.au/"}
+    ],
+    "reference_ranges": ["obs_pregnancy_vitals"],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "med-lb-005",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Recurrent UTI - continuous prophylaxis threshold",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["UTI", "prophylaxis"],
+    "stem": "A 42-year-old woman attends her GP for review of recurrent uncomplicated cystitis. Over the past 12 months she has had four culture-confirmed episodes, all growing E. coli sensitive to trimethoprim and nitrofurantoin, each responding promptly to a 5-day course. Between episodes she is entirely well.\n\nShe is post-menopausal since 40 following bilateral oophorectomy for BRCA1 mutation, is not on hormone therapy, and reports no vaginal dryness or dyspareunia currently. She has had a renal tract ultrasound (normal), a post-void residual scan (12 mL) and a cystoscopy performed by a urologist (normal). She drinks 2 L of fluid daily, voids post-coitally and does not use spermicides. Behavioural and hydration measures have not reduced her episode frequency. She has no penicillin, sulfa or nitrofuran allergy, eGFR is above 60 mL/min/1.73m^2 and she is not planning pregnancy.",
+    "data_table": {
+      "Vital signs": "Within normal limits.",
+      "Examination": "No suprapubic or flank tenderness.",
+      "Investigations": "Renal tract ultrasound normal, PVR 12 mL, cystoscopy normal, eGFR above 60."
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Continuous nitrofurantoin 50 mg orally nocte for 6 months",
+        "correct": true,
+        "rationale": "eTG recommends continuous antibiotic prophylaxis with nitrofurantoin 50 mg nocte (alternative trimethoprim 150 mg nocte) for 6 months in women with two or more UTIs in 6 months, or three or more in 12 months, unresponsive to behavioural measures. Structural workup has excluded a treatable cause (Source: Therapeutic Guidelines: Antibiotic - Recurrent UTI in women).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Recurrent UTI in women"]
+      },
+      {
+        "letter": "B",
+        "text": "Post-coital single-dose trimethoprim 150 mg after each episode of intercourse",
+        "correct": false,
+        "rationale": "Post-coital prophylaxis is an option when UTIs are temporally linked to intercourse. Her history does not identify a coital trigger and she is post-menopausal following oophorectomy, so continuous prophylaxis is more appropriate (Source: Therapeutic Guidelines: Antibiotic - Recurrent UTI in women).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Recurrent UTI in women"]
+      },
+      {
+        "letter": "C",
+        "text": "Self-initiated stand-by short-course trimethoprim at symptom onset",
+        "correct": false,
+        "rationale": "Patient-initiated stand-by therapy is reasonable for women who reliably recognise symptoms and prefer to avoid daily antibiotics. It does not prevent recurrence and is a step below continuous prophylaxis when frequency meets threshold (Source: Therapeutic Guidelines: Antibiotic - Recurrent UTI in women).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Recurrent UTI in women"]
+      },
+      {
+        "letter": "D",
+        "text": "CT urogram to exclude urolithiasis and upper tract lesions",
+        "correct": false,
+        "rationale": "Advanced imaging is reserved for complicated recurrent UTI, suspected upper tract disease, non-E. coli organisms, or persistent haematuria. She has a normal ultrasound and cystoscopy, and CT would add ionising radiation without expected yield (Source: RACGP - Recurrent UTI in women).",
+        "source_refs": ["RACGP - Recurrent UTI in women"]
+      },
+      {
+        "letter": "E",
+        "text": "Cranberry supplements 500 mg twice daily for 6 months as prophylaxis",
+        "correct": false,
+        "rationale": "Cranberry products have inconsistent evidence and are not recommended by eTG or RACGP as a substitute for antibiotic prophylaxis when threshold criteria are met. May be a patient adjunct but not the primary answer (Source: RACGP - Recurrent UTI in women).",
+        "source_refs": ["RACGP - Recurrent UTI in women"]
+      }
+    ],
+    "explanation": {
+      "summary": "Recurrent UTI is defined as two episodes in 6 months or three in 12 months. Workup includes urinary tract imaging and PVR, with cystoscopy considered by urology for atypical features. Once complicating pathology is excluded, behavioural measures come first (hydration, post-coital voiding, avoiding spermicides). If insufficient, options are post-coital, patient-initiated stand-by, or continuous nightly prophylaxis for 6 months. Topical vaginal oestrogen is a strong option in post-menopausal women.",
+      "key_points": [
+        "Recurrent UTI threshold: 2 in 6 months or 3 in 12 months.",
+        "Nitrofurantoin 50 mg nocte OR trimethoprim 150 mg nocte for 6 months.",
+        "Post-coital prophylaxis when temporally linked to intercourse.",
+        "Vaginal oestrogen for post-menopausal women reduces recurrence."
+      ],
+      "pearls": "Vaginal oestrogen (estriol cream twice weekly) reduces UTI recurrence in post-menopausal women by roughly half - consider adding it in this patient given surgical menopause at 40."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Antibiotic - Recurrent UTI in women", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "RACGP - Recurrent UTI in women", "url": "https://www.racgp.org.au/"}
+    ],
+    "reference_ranges": ["uec"],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "med-lb-006",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Complicated UTI in a man - workup priority",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["UTI", "prostatitis"],
+    "stem": "A 58-year-old man presents to his GP with a 5-day history of dysuria, urinary hesitancy and perineal ache. He has type 2 diabetes on metformin (HbA1c 51 mmol/mol) and mild lower urinary tract symptoms attributed to benign prostatic hyperplasia but is not on any prostate medication. He has not previously had a urinary tract infection.\n\nExamination reveals a mildly tender lower abdomen. Digital rectal examination discloses a smooth, exquisitely tender prostate. He is afebrile with normal vital signs. Bedside urinalysis is positive for nitrites and leucocytes. A mid-stream urine has been sent. He has no penicillin, sulfonamide or fluoroquinolone allergy and eGFR is 78 mL/min/1.73m^2.",
+    "data_table": {
+      "Vital signs": "Within normal limits.",
+      "Examination": "Mild lower abdominal tenderness; DRE reveals a smooth, exquisitely tender prostate.",
+      "Investigations": "Urinalysis nitrites and leucocytes positive; MSU sent; eGFR 78; HbA1c 51 mmol/mol."
+    },
+    "lead_in": "What is the most appropriate empirical oral antibiotic regimen?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Nitrofurantoin 100 mg orally every 6 hours for 7 days",
+        "correct": false,
+        "rationale": "Nitrofurantoin does not penetrate prostatic tissue and is not effective for acute bacterial prostatitis. It is restricted to lower urinary tract infection in women (Source: Australian Medicines Handbook - Nitrofurantoin).",
+        "source_refs": ["Australian Medicines Handbook - Nitrofurantoin"]
+      },
+      {
+        "letter": "B",
+        "text": "Trimethoprim 300 mg orally daily for 5 days empirically",
+        "correct": false,
+        "rationale": "A 5-day course is the duration for uncomplicated cystitis, not acute prostatitis. Undertreated prostatitis can progress to abscess or chronic bacterial prostatitis (Source: Therapeutic Guidelines: Antibiotic - Acute prostatitis).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Acute prostatitis"]
+      },
+      {
+        "letter": "C",
+        "text": "Cefalexin 500 mg orally every 12 hours for 7 days",
+        "correct": false,
+        "rationale": "Cephalexin has poor prostatic penetration and inadequate coverage for acute prostatitis. It is not an eTG option for this indication (Source: Therapeutic Guidelines: Antibiotic - Acute prostatitis).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Acute prostatitis"]
+      },
+      {
+        "letter": "D",
+        "text": "Amoxicillin-clavulanate 875/125 mg orally every 12 hours for 7 days",
+        "correct": false,
+        "rationale": "Beta-lactams have poor prostatic penetration and are not first-line for acute prostatitis. eTG prefers trimethoprim, cotrimoxazole or ciprofloxacin (Source: Therapeutic Guidelines: Antibiotic - Acute prostatitis).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Acute prostatitis"]
+      },
+      {
+        "letter": "E",
+        "text": "Trimethoprim 300 mg orally daily for 14 days empirically",
+        "correct": true,
+        "rationale": "Acute bacterial prostatitis needs an agent with prostatic penetration and a prolonged course. eTG recommends trimethoprim 300 mg orally daily for 14 days (alternative sulfamethoxazole plus trimethoprim or ciprofloxacin) as first-line empirical therapy in men without severe features (Source: Therapeutic Guidelines: Antibiotic - Acute prostatitis).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Acute prostatitis"]
+      }
+    ],
+    "explanation": {
+      "summary": "All UTIs in men are considered complicated and require a full workup and a longer course than uncomplicated female cystitis. Acute bacterial prostatitis presents with dysuria, pelvic or perineal pain and an exquisitely tender prostate on DRE (avoid vigorous prostate massage - bacteraemia risk). Empirical eTG therapy is trimethoprim 300 mg daily, cotrimoxazole 160/800 mg 12-hourly, or ciprofloxacin 500 mg 12-hourly, all for 14 days pending culture. Severe features (sepsis, urinary retention) prompt IV therapy and admission.",
+      "key_points": [
+        "All UTIs in men are complicated - always culture, always longer course.",
+        "Trimethoprim 300 mg daily for 14 days is first-line for acute prostatitis.",
+        "Avoid nitrofurantoin, cefalexin, amoxicillin - poor prostatic penetration.",
+        "Avoid vigorous DRE prostate massage in acute prostatitis - bacteraemia risk."
+      ],
+      "pearls": "Chronic bacterial prostatitis (recurrent UTI in a man with the same organism) usually needs 4-6 weeks of ciprofloxacin, reflecting sustained deep prostatic clearance."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Antibiotic - Acute prostatitis", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Australian Medicines Handbook - Nitrofurantoin", "url": "https://amhonline.amh.net.au/"}
+    ],
+    "reference_ranges": ["uec"],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "med-lb-007",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Severe pyelonephritis with sepsis - source control priority",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["sepsis", "pyelonephritis"],
+    "stem": "A 66-year-old woman presents to a regional emergency department with a 12-hour history of rigors, right flank pain and vomiting. She has type 2 diabetes on metformin and had a left ureteric stone treated with ureteroscopy and stent insertion three weeks ago. The stent remains in situ. She last passed urine four hours ago and has produced 20 mL in a bedpan since arrival 90 minutes ago.\n\nShe is confused with a Glasgow Coma Scale of 13. Vital signs: HR 128, BP 82/48 (unchanged after 1 L crystalloid), RR 28, SpO2 94 percent on 2 L nasal prongs, T 39.4 C. Examination reveals right renal angle tenderness and mottled peripheries. Venous blood gas shows pH 7.28, lactate 4.8 mmol/L, bicarbonate 16 mmol/L. WCC 18.6 x10^9/L, creatinine 214 micromol/L (baseline 74), CRP 288 mg/L. Blood and urine cultures have been drawn and IV piperacillin-tazobactam 4.5 g plus a single dose of gentamicin have been given. A bedside renal ultrasound shows right-sided hydronephrosis with a dilated ureter above the retained stent.",
+    "data_table": {
+      "Vital signs": "HR 128, BP 82/48 (unchanged after 1 L fluid), RR 28, SpO2 94 percent on 2 L, T 39.4 C.",
+      "Examination": "GCS 13, confused, mottled peripheries, right renal angle tenderness.",
+      "Investigations": "pH 7.28, lactate 4.8 mmol/L, WCC 18.6 x10^9/L, creatinine 214 micromol/L (baseline 74), CRP 288 mg/L. Renal ultrasound: right hydronephrosis above retained ureteric stent."
+    },
+    "lead_in": "In addition to ongoing fluid resuscitation and vasopressor support, what is the most important next intervention?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Add IV vancomycin 25 mg/kg loading dose to broaden gram-positive cover empirically",
+        "correct": false,
+        "rationale": "Broadening antibiotic spectrum without source control will not reverse septic shock driven by an obstructed infected upper tract. Vancomycin is not indicated for typical urosepsis unless MRSA is suspected (Source: Therapeutic Guidelines: Antibiotic - Sepsis and septic shock).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Sepsis and septic shock"]
+      },
+      {
+        "letter": "B",
+        "text": "Urgent urology referral for nephrostomy or stent exchange to decompress the obstruction",
+        "correct": true,
+        "rationale": "Obstructed infected upper urinary tract is a surgical emergency and source control - percutaneous nephrostomy or retrograde stent exchange - is time-critical and must not be delayed for imaging or antibiotic re-dosing. Antibiotics alone will not resolve pyonephrosis (Source: Urological Society of Australia and New Zealand - Obstructed infected kidney; Surviving Sepsis Campaign 2021).",
+        "source_refs": ["Urological Society of Australia and New Zealand - Obstructed infected kidney", "Surviving Sepsis Campaign 2021"]
+      },
+      {
+        "letter": "C",
+        "text": "CT abdomen and pelvis with contrast to define the obstruction before intervention",
+        "correct": false,
+        "rationale": "The obstruction is already demonstrated on bedside ultrasound and a contrast CT will delay definitive source control by hours in a patient with vasopressor-requiring septic shock and worsening kidney function. Non-contrast CT may be arranged en route to intervention if genuinely required (Source: Surviving Sepsis Campaign 2021).",
+        "source_refs": ["Surviving Sepsis Campaign 2021"]
+      },
+      {
+        "letter": "D",
+        "text": "IV hydrocortisone 200 mg daily as an early adjunct for relative adrenal insufficiency",
+        "correct": false,
+        "rationale": "Hydrocortisone is a Surviving Sepsis adjunct only after adequate fluids and vasopressors have failed to restore perfusion, and never replaces source control. It is not the priority in obstructed pyonephrosis (Source: Surviving Sepsis Campaign 2021).",
+        "source_refs": ["Surviving Sepsis Campaign 2021"]
+      },
+      {
+        "letter": "E",
+        "text": "Insert a urethral catheter to monitor hourly urine output and reassess in one hour",
+        "correct": false,
+        "rationale": "A urethral catheter measures bladder output but does not decompress an obstructed upper tract above a retained ureteric stent. Delaying source control by an hour in vasopressor-requiring urosepsis worsens outcome (Source: Surviving Sepsis Campaign 2021).",
+        "source_refs": ["Surviving Sepsis Campaign 2021"]
+      }
+    ],
+    "explanation": {
+      "summary": "An obstructed infected upper urinary tract - most commonly caused by a retained stone or blocked stent - is a surgical emergency. Antibiotics alone cannot penetrate an obstructed collecting system; decompression by percutaneous nephrostomy (interventional radiology) or ureteric stent exchange (urology) is the definitive intervention and must occur within hours. Source control failure is the most common reason for progression to septic shock and death in urosepsis. The Surviving Sepsis Campaign lists source control as one of the hour-1 bundle priorities.",
+      "key_points": [
+        "Obstructed infected kidney = surgical emergency: source control within hours.",
+        "Percutaneous nephrostomy or retrograde stent exchange are both acceptable.",
+        "Antibiotics do not penetrate an obstructed system.",
+        "Hydrocortisone is an adjunct for refractory shock, not initial therapy.",
+        "Retained stents can become nidus for encrustation and obstruction over weeks."
+      ],
+      "pearls": "Any ureteric stent left beyond its labelled dwell time (commonly 3 to 12 months) is a source-control failure waiting to happen; document stent removal or exchange dates in the discharge summary."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Antibiotic - Sepsis and septic shock", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "Surviving Sepsis Campaign 2021", "url": "https://www.sccm.org/"},
+      {"label": "Urological Society of Australia and New Zealand - Obstructed infected kidney", "url": "https://www.usanz.org.au/"}
+    ],
+    "reference_ranges": ["fbc", "uec", "vbg", "inflammatory_markers"],
+    "created": "2026-08-27"
+  },
+  {
+    "id": "med-lb-008",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Asymptomatic bacteriuria pre-urological procedure",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["UTI", "prophylaxis"],
+    "stem": "You are the on-call medical registrar asked to review a 74-year-old man booked for elective transurethral resection of the prostate (TURP) tomorrow morning. He is being admitted overnight for pre-operative optimisation. He takes ramipril for hypertension and has no allergies.\n\nAs part of routine pre-operative screening, his midstream urine collected in clinic yesterday has returned this evening growing greater than 10^5 CFU/mL Enterococcus faecalis, susceptible to amoxicillin and vancomycin. He is asymptomatic - no dysuria, frequency, suprapubic pain, flank pain or fever. He does not have an indwelling catheter. His inflammatory markers, renal function and vital signs are within normal limits, and he is not immunosuppressed or pregnant (male). The urology team has asked for your input on antibiotics before he goes to theatre.",
+    "data_table": {
+      "Vital signs": "Within normal limits.",
+      "Examination": "Asymptomatic, no suprapubic or flank tenderness, no catheter.",
+      "Investigations": "Preoperative MSU: Enterococcus faecalis greater than 10^5 CFU/mL, susceptible to amoxicillin and vancomycin. WCC, CRP, creatinine within normal limits."
+    },
+    "lead_in": "What is the most appropriate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Proceed to surgery with the standard cefazolin skin-prophylaxis dose at induction only",
+        "correct": false,
+        "rationale": "Standard skin-flora surgical prophylaxis is inadequate when a resistant or specifically identified uropathogen is known to be present pre-operatively. Manipulation of infected urothelium risks bacteraemia and sepsis (Source: Therapeutic Guidelines: Antibiotic - Surgical prophylaxis; Urological Society of Australia and New Zealand).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Surgical prophylaxis"]
+      },
+      {
+        "letter": "B",
+        "text": "Defer surgery indefinitely until repeat urine cultures are sterile on two occasions",
+        "correct": false,
+        "rationale": "Indefinite deferral is not required. Treatment targeted to the identified organism starting shortly before the procedure is sufficient; sterilisation of urine over multiple cultures is not the standard (Source: IDSA - Asymptomatic Bacteriuria (2019)).",
+        "source_refs": ["IDSA - Asymptomatic Bacteriuria (2019)"]
+      },
+      {
+        "letter": "C",
+        "text": "Give a single dose of oral amoxicillin 1 g at the time of surgery only, no other cover",
+        "correct": false,
+        "rationale": "A single oral dose does not provide reliable peri-operative tissue and urine concentrations and does not treat the underlying bacteriuria. IV targeted therapy starting shortly before the procedure is preferred (Source: Therapeutic Guidelines: Antibiotic - Surgical prophylaxis).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Surgical prophylaxis"]
+      },
+      {
+        "letter": "D",
+        "text": "Give targeted IV amoxicillin 2 g at induction with a short peri-operative course",
+        "correct": true,
+        "rationale": "Asymptomatic bacteriuria should NOT normally be treated - the two exceptions are pregnancy and before a urological procedure with mucosal trauma (such as TURP). eTG and IDSA recommend targeted therapy based on the identified organism starting shortly before the procedure, with continuation only for the peri-operative period (Source: Therapeutic Guidelines: Antibiotic - Surgical prophylaxis; IDSA - Asymptomatic Bacteriuria (2019)).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Surgical prophylaxis", "IDSA - Asymptomatic Bacteriuria (2019)"]
+      },
+      {
+        "letter": "E",
+        "text": "Give IV vancomycin 25 mg/kg at induction to broaden enterococcal cover empirically",
+        "correct": false,
+        "rationale": "Vancomycin is reserved for vancomycin-resistant enterococcus or beta-lactam allergy. This isolate is amoxicillin-susceptible and vancomycin adds nothing but ecological cost and nephrotoxicity risk (Source: Therapeutic Guidelines: Antibiotic - Surgical prophylaxis).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic - Surgical prophylaxis"]
+      }
+    ],
+    "explanation": {
+      "summary": "Asymptomatic bacteriuria is normally not treated because it does not improve outcomes and drives resistance. The two accepted exceptions are pregnancy (risk of pyelonephritis and preterm labour) and before a urological procedure that breaches mucosa (TURP, ureteroscopy, prostate biopsy). In both scenarios, targeted therapy based on the identified organism replaces empirical prophylaxis. For TURP, IV targeted therapy at induction plus a short peri-operative course is the eTG and IDSA-endorsed approach.",
+      "key_points": [
+        "Treat asymptomatic bacteriuria only in: pregnancy or before urological mucosal-breach procedures.",
+        "Target therapy to the identified organism, not generic prophylaxis.",
+        "Standard cefazolin skin prophylaxis alone is inadequate when a known uropathogen exists.",
+        "Prostate biopsy prophylaxis is separately covered by eTG - targeted to prior rectal swab organisms.",
+        "Vancomycin is reserved for VRE or true beta-lactam allergy."
+      ],
+      "pearls": "For trans-rectal prostate biopsy, current AU practice is a peri-procedural augmented regimen guided by pre-procedure rectal swab or targeted culture (given rising fluoroquinolone resistance in E. coli) - not routine ciprofloxacin monotherapy."
+    },
+    "sources": [
+      {"label": "Therapeutic Guidelines: Antibiotic - Surgical prophylaxis", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "IDSA - Asymptomatic Bacteriuria (2019)", "url": "https://www.idsociety.org/"},
+      {"label": "Urological Society of Australia and New Zealand", "url": "https://www.usanz.org.au/"}
+    ],
+    "reference_ranges": ["fbc", "uec", "inflammatory_markers"],
+    "created": "2026-08-27"
+  }
+]
