@@ -1,0 +1,2720 @@
+[
+  {
+    "id": "sch829-001",
+    "topic": "Paediatrics",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Bronchiolitis escalation to HFNC",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "respiratory",
+      "resus"
+    ],
+    "stem": "A 4-month-old term male infant presents to your rural emergency department in July with 3 days of coryza and 24 hours of worsening cough and feed refusal. He weighs 6 kg and is on nasal prong oxygen 1 L/min. Bedside nasopharyngeal aspirate is positive for RSV. There is no history of prematurity, congenital heart disease or immune compromise.",
+    "data_table": {
+      "Vital signs": "HR 168, RR 68, SpO2 89 percent on 1 L/min NP, temp 37.9 C",
+      "Examination": "Head bobbing, moderate subcostal and intercostal recessions, widespread wheeze and fine crackles, capillary refill 2 seconds",
+      "Investigations": "Bedside gas pH 7.34, pCO2 48 mmHg, lactate 1.4 mmol/L"
+    },
+    "lead_in": "What is the most appropriate next step in oxygen delivery?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence heated humidified high flow nasal cannula at 2 L/kg/min via age-appropriate interface, titrating FiO2 to keep SpO2 92 to 96 percent",
+        "correct": true,
+        "rationale": "AU bronchiolitis pathways use HFNC at 2 L/kg/min for infants failing standard flow oxygen with recessions and desaturation, before CPAP or intubation. FiO2 is titrated to a target SpO2 of 92 to 96 percent.",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Continue nasal prong oxygen at 1 L/min and add regular nebulised salbutamol 2.5 mg every 20 minutes with careful cardiorespiratory monitoring",
+        "correct": false,
+        "rationale": "Salbutamol has no proven benefit in typical infant bronchiolitis and does not correct the ventilation deficit driving hypoxia and worsening work of breathing here.",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Change to non-rebreather mask at 15 L/min and give nebulised adrenaline 5 mg with oral dexamethasone 0.6 mg/kg for prompt symptomatic relief",
+        "correct": false,
+        "rationale": "Non-rebreather masks are poorly tolerated in infants and give no positive pressure; adrenaline and steroid are croup pathway treatments, not bronchiolitis.",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Continue nasal prong oxygen at 1 L/min and administer a 20 mL/kg normal saline bolus intravenously over 15 minutes to improve tissue perfusion",
+        "correct": false,
+        "rationale": "There is no shock: capillary refill is 2 seconds and lactate is normal. A fluid bolus risks worsening pulmonary oedema in bronchiolitis without indication.",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Intubate and ventilate at pressure control 22/6 with FiO2 60 percent and admit to the local high dependency bed for ongoing ventilatory management",
+        "correct": false,
+        "rationale": "Intubation is premature before a trial of non-invasive escalation; PaCO2 48 with pH 7.34 is not immediate respiratory failure and HFNC or CPAP have not been tried.",
+        "source_refs": [
+          "RCH CPG: Bronchiolitis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Infant bronchiolitis failing standard flow oxygen is escalated to heated humidified HFNC at 2 L/kg/min with FiO2 titrated to a target SpO2 of 92 to 96 percent. Salbutamol, adrenaline and steroids are not routine bronchiolitis therapies. Fluid boluses are reserved for shock, and intubation is a last resort after non-invasive support fails.",
+      "key_points": [
+        "HFNC 2 L/kg/min is the first AU escalation for bronchiolitis with hypoxia",
+        "Bronchodilators, adrenaline and steroids do not treat classic bronchiolitis",
+        "Fluid boluses only if shocked; NG feeds preferred otherwise",
+        "Escalate to CPAP or intubate only after HFNC failure"
+      ],
+      "pearls": "In an infant on HFNC, heart rate that has not fallen and respiratory rate still above 60 after 60 minutes predicts HFNC failure and prompts CPAP or intubation planning."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Bronchiolitis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/bronchiolitis/"
+      },
+      {
+        "label": "Australasian Bronchiolitis Guideline (PREDICT)",
+        "url": "https://www.predict.org.au/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "vbg"
+    ]
+  },
+  {
+    "id": "sch829-002",
+    "topic": "Paediatrics",
+    "subtopic": "ENT",
+    "subtopic_detail": "Acute otitis media antibiotic threshold",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "infection",
+      "antibiotics"
+    ],
+    "stem": "A 3-year-old Aboriginal boy presents to your remote community clinic with 24 hours of right ear pain, fever to 38.5 C and irritability. He has had two prior otitis media episodes this year. On otoscopy the right tympanic membrane is bulging, red and opaque without perforation. He is systemically well, feeding, alert and drinking normally with no mastoid tenderness and no facial nerve involvement.",
+    "data_table": {
+      "Vital signs": "HR 118, RR 24, SpO2 99 percent, temp 38.5 C",
+      "Examination": "Right TM bulging, red, opaque; no perforation, no discharge; contralateral TM normal; no mastoid swelling; hydration adequate"
+    },
+    "lead_in": "What is the most appropriate antibiotic decision?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Symptomatic treatment with paracetamol only and review in 48 hours to reassess before starting any antibiotic therapy for the ear infection",
+        "correct": false,
+        "rationale": "Watchful waiting is inappropriate here because he is Aboriginal and remote, a group at very high risk of chronic suppurative otitis media, where immediate antibiotics are recommended.",
+        "source_refs": [
+          "Therapeutic Guidelines: Acute otitis media"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Oral amoxicillin 30 mg/kg twice daily for 7 days plus regular paracetamol for symptom relief, with safety-net review in 48 hours if not improving",
+        "correct": true,
+        "rationale": "AU guidance recommends immediate high-dose amoxicillin for 7 days in Aboriginal children, children under 2 years, or those with bilateral or severe disease. High-dose amoxicillin covers penicillin-non-susceptible pneumococcus.",
+        "source_refs": [
+          "Therapeutic Guidelines: Acute otitis media"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Oral amoxicillin 15 mg/kg three times daily for 5 days plus regular paracetamol for symptomatic relief throughout the treatment course",
+        "correct": false,
+        "rationale": "For Aboriginal, remote, or under-2 children immediate high-dose amoxicillin is first line, and the standard course length in this group is 7 days rather than 5.",
+        "source_refs": [
+          "Therapeutic Guidelines: Acute otitis media"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Oral amoxicillin-clavulanate 22.5 mg/kg twice daily for 7 days as first line to cover beta-lactamase producing pathogens implicated in recurrent disease",
+        "correct": false,
+        "rationale": "Amoxicillin-clavulanate is reserved for treatment failure at 48 to 72 hours or documented recurrence; high-dose amoxicillin monotherapy is first line for uncomplicated disease.",
+        "source_refs": [
+          "Therapeutic Guidelines: Acute otitis media"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Intramuscular ceftriaxone 50 mg/kg as a single dose plus oral paracetamol and clinical review in the community clinic the following day",
+        "correct": false,
+        "rationale": "IM ceftriaxone is reserved for children unable to tolerate oral therapy or those with treatment failure; it is not first line in a well child able to take oral medication.",
+        "source_refs": [
+          "Therapeutic Guidelines: Acute otitis media"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Australian guidance treats Aboriginal children, children under 2 years, and children with bilateral or severe acute otitis media with immediate high-dose amoxicillin for 7 days because of high risk of chronic suppurative otitis media and pneumococcal complications. Watchful waiting is only for well older children in low-risk populations. Amoxicillin-clavulanate is reserved for treatment failure at 48 to 72 hours.",
+      "key_points": [
+        "Immediate amoxicillin for Aboriginal, under-2, or severe or bilateral disease",
+        "High-dose amoxicillin 30 mg/kg BD covers non-susceptible pneumococcus",
+        "Course length is 7 days in high-risk groups",
+        "Amoxicillin-clavulanate reserved for treatment failure"
+      ],
+      "pearls": "Always examine both TMs and note any perforation size and discharge; a perforation with discharge changes management to topical ciprofloxacin drops alongside oral amoxicillin."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Acute otitis media",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "CARPA Standard Treatment Manual: Ear infections",
+        "url": "https://www.carpa.org.au/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "paeds_vitals_1_5y"
+    ]
+  },
+  {
+    "id": "sch829-003",
+    "topic": "Paediatrics",
+    "subtopic": "Gastroenterology",
+    "subtopic_detail": "Functional constipation disimpaction",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "gastro"
+    ],
+    "stem": "A 5-year-old girl presents to your general practice with 6 months of hard infrequent bowel motions, faecal soiling of her underwear four times a week, and abdominal pain. On abdominal examination there is a firm indentable mass in the left iliac fossa reaching to the umbilicus. There is no vomiting, growth is on the 50th centile, and there is no history of delayed passage of meconium.",
+    "data_table": {
+      "Vital signs": "HR 92, RR 18, temp 36.7 C, weight 18 kg",
+      "Examination": "Alert well-hydrated child; abdomen soft with palpable faecal mass in left iliac fossa; perianal skin intact; no anal fissure seen on inspection"
+    },
+    "lead_in": "What is the most appropriate first step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Refer to paediatric surgery for a manual disimpaction under general anaesthesia within the next two weeks in her local paediatric surgical service",
+        "correct": false,
+        "rationale": "Manual disimpaction under GA is reserved for children who fail oral or rectal disimpaction after several days; oral therapy is first line and effective in most children.",
+        "source_refs": [
+          "RCH CPG: Constipation"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Prescribe daily microlax rectal enemas for 3 days plus a fibre-rich diet and increased fluids while awaiting response before further review",
+        "correct": false,
+        "rationale": "Rectal enemas are second line after oral macrogol has failed or been refused; they are more distressing for the child and family and are not more effective than oral macrogol.",
+        "source_refs": [
+          "RCH CPG: Constipation"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Escalating oral macrogol regimen starting at 4 sachets on day 1 and increasing by 2 sachets daily for up to 7 days until liquid stool is passed",
+        "correct": true,
+        "rationale": "AU paediatric guidance recommends escalating oral macrogol as first-line disimpaction, titrated by weight and age to a ceiling around 12 sachets per day, over 3 to 7 days until liquid stool is passed.",
+        "source_refs": [
+          "RCH CPG: Constipation"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Prescribe daily lactulose 10 mL twice daily and review her again in 4 weeks to reassess symptoms, stool pattern and any need for further therapy",
+        "correct": false,
+        "rationale": "Lactulose alone is inadequate for disimpaction; a maintenance dose osmotic laxative will not clear established faecal loading, and 4 weeks allows further soiling.",
+        "source_refs": [
+          "RCH CPG: Constipation"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Arrange abdominal x-ray and rectal biopsy to exclude Hirschsprung disease and other structural causes before starting any pharmacological therapy for constipation",
+        "correct": false,
+        "rationale": "Hirschsprung disease presents with delayed meconium and failure to thrive from infancy, absent here. Imaging and biopsy are not needed to start therapy for typical functional constipation.",
+        "source_refs": [
+          "RCH CPG: Constipation"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Functional constipation with faecal loading is treated with escalating oral macrogol as first line disimpaction, titrated over 3 to 7 days until liquid stool is passed. Rectal enemas are second line and manual disimpaction under GA is rare. Investigations for organic causes are pursued only when red flags such as delayed meconium, failure to thrive, or abnormal perianal exam are present.",
+      "key_points": [
+        "Escalating oral macrogol is first line disimpaction",
+        "Rectal enemas are second line, not first line",
+        "Maintenance osmotic laxatives will not clear an established impaction",
+        "Hirschsprung suspected only with delayed meconium and failure to thrive"
+      ],
+      "pearls": "Continue maintenance macrogol for at least 3 months after regular painless stools resume; earlier withdrawal is the commonest reason for relapse of soiling."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Constipation",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/constipation/"
+      },
+      {
+        "label": "NICE CG99: Constipation in children",
+        "url": "https://www.nice.org.uk/guidance/cg99"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "paeds_vitals_1_5y"
+    ]
+  },
+  {
+    "id": "sch829-004",
+    "topic": "Paediatrics",
+    "subtopic": "Emergency",
+    "subtopic_detail": "Anaphylaxis IM adrenaline dose",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "resus",
+      "allergy"
+    ],
+    "stem": "A 6-year-old boy weighing 22 kg presents to your emergency department 20 minutes after eating a peanut biscuit. He has facial swelling, an urticarial rash on his chest, hoarse voice and stridor at rest. His mother has an EpiPen Jr (150 microgram) at home but did not use it. He has no cardiovascular collapse, IV access has just been secured, and he has no history of asthma.",
+    "data_table": {
+      "Vital signs": "HR 148, BP 92/60, RR 34, SpO2 94 percent room air, temp 36.9 C",
+      "Examination": "Facial and lip swelling, hoarse voice, stridor at rest, widespread urticaria; chest with mild wheeze; capillary refill 2 seconds"
+    },
+    "lead_in": "What is the immediate adrenaline dose and route you would give?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Adrenaline 150 microgram intramuscular into the mid-anterolateral thigh, repeated every 5 minutes if no response and rising respiratory distress",
+        "correct": false,
+        "rationale": "150 microgram is the paediatric autoinjector for children 7.5 to 20 kg; this child is 22 kg so weight-based IM dose is 220 microgram, given as an autoinjector or 0.22 mL 1:1000.",
+        "source_refs": [
+          "ASCIA Guidelines: Acute management of anaphylaxis"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Adrenaline 300 microgram intravenous bolus given over 60 seconds, then commence a maintenance intravenous infusion at 0.1 microgram/kg/min for sustained cover",
+        "correct": false,
+        "rationale": "IV bolus adrenaline is not first line and carries significant risk of arrhythmia and hypertensive crisis; IM adrenaline is first line and IV infusion is reserved for refractory anaphylaxis.",
+        "source_refs": [
+          "ASCIA Guidelines: Acute management of anaphylaxis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Adrenaline 500 microgram intramuscular into the deltoid muscle, repeated every 5 minutes if no adequate response to the initial dose is observed",
+        "correct": false,
+        "rationale": "500 microgram is the adult IM dose; the deltoid is not the preferred site because absorption is slower than the mid-anterolateral thigh.",
+        "source_refs": [
+          "ASCIA Guidelines: Acute management of anaphylaxis"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Adrenaline 220 microgram intramuscular into the mid-anterolateral thigh (0.22 mL of 1:1000), repeated every 5 minutes as needed if no clinical response",
+        "correct": true,
+        "rationale": "Weight-based IM adrenaline for anaphylaxis is 10 microgram/kg to a maximum 500 microgram; for 22 kg this is 220 microgram (0.22 mL of 1:1000) IM into the mid-anterolateral thigh.",
+        "source_refs": [
+          "ASCIA Guidelines: Acute management of anaphylaxis"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Adrenaline 220 microgram nebulised via 6 L/min oxygen mask, plus IV hydrocortisone 100 mg for airway swelling and cardiovascular protection during transport",
+        "correct": false,
+        "rationale": "Nebulised adrenaline is not first line for anaphylaxis and does not treat cardiovascular or systemic manifestations; IM adrenaline is the standard first line therapy.",
+        "source_refs": [
+          "ASCIA Guidelines: Acute management of anaphylaxis"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Anaphylaxis is treated with IM adrenaline 10 microgram/kg (maximum 500 microgram) into the mid-anterolateral thigh, repeated every 5 minutes as needed. For a 22 kg child this is 220 microgram given as 0.22 mL of 1:1000. IV bolus adrenaline is arrhythmogenic and reserved for refractory cases where an infusion is being initiated in a monitored setting.",
+      "key_points": [
+        "IM adrenaline 10 microgram/kg to max 500 microgram is first line",
+        "Mid-anterolateral thigh gives faster absorption than deltoid",
+        "IV bolus adrenaline carries arrhythmia risk and is not first line",
+        "Repeat IM dose at 5 minutes if inadequate response"
+      ],
+      "pearls": "After two IM doses without adequate response, commence a peripheral adrenaline infusion at 0.1 to 1 microgram/kg/min while awaiting central access and senior support."
+    },
+    "sources": [
+      {
+        "label": "ASCIA Guidelines: Acute management of anaphylaxis",
+        "url": "https://www.allergy.org.au/hp/papers/acute-management-of-anaphylaxis-guidelines"
+      },
+      {
+        "label": "RCH CPG: Anaphylaxis",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Anaphylaxis/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "paeds_vitals_school"
+    ]
+  },
+  {
+    "id": "sch829-005",
+    "topic": "Paediatrics",
+    "subtopic": "Haematology",
+    "subtopic_detail": "Immune thrombocytopenia observation versus IVIG",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "haem",
+      "bleeding"
+    ],
+    "stem": "A previously well 4-year-old girl presents to your paediatric emergency department with a 3 day history of new petechiae and bruising, appearing after a viral illness 2 weeks earlier. She has no active mucosal bleeding, no melaena and no headache. Examination shows scattered petechiae on trunk and limbs, some shin ecchymoses, and no hepatosplenomegaly or lymphadenopathy. She feels well and is playing normally in the cubicle.",
+    "data_table": {
+      "Vital signs": "HR 96, RR 22, BP 100/62, SpO2 99 percent, temp 37.1 C",
+      "Examination": "Petechiae trunk and limbs, wet purpura absent, no oral bleeding, no hepatosplenomegaly, no lymphadenopathy",
+      "Investigations": "Hb 122, WCC 7.1, platelets 9 x 10^9/L, film shows large platelets and no blasts; coagulation studies normal"
+    },
+    "lead_in": "What is the most appropriate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Admit for a 5 day course of oral prednisolone 2 mg/kg daily and repeat the platelet count on day 5 before deciding on inpatient discharge",
+        "correct": false,
+        "rationale": "Corticosteroids are considered for wet purpura, active bleeding, or a rising bleeding score; asymptomatic petechial disease in a well child does not warrant steroid exposure and admission.",
+        "source_refs": [
+          "RCH CPG: Immune thrombocytopenia"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Admit for a single dose of IV immunoglobulin 0.8 g/kg over 6 hours and repeat platelet count at 24 hours to assess treatment response and safety",
+        "correct": false,
+        "rationale": "IVIG is reserved for significant bleeding or a high bleeding risk score (wet purpura, mucosal bleeding, or planned procedure); it is not indicated in asymptomatic petechial disease.",
+        "source_refs": [
+          "RCH CPG: Immune thrombocytopenia"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Admit for a single dose of anti-D immunoglobulin 50 microgram/kg intravenously as first-line therapy to raise the platelet count promptly overnight",
+        "correct": false,
+        "rationale": "Anti-D is limited to Rh-positive non-splenectomised children with intact haemoglobin and carries a risk of severe haemolysis; it is not first line for asymptomatic ITP in Australia.",
+        "source_refs": [
+          "RCH CPG: Immune thrombocytopenia"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Perform urgent bone marrow aspirate and trephine to exclude acute leukaemia before starting any specific therapy for the thrombocytopenia observed today",
+        "correct": false,
+        "rationale": "Bone marrow examination is not required in classic ITP with a normal film, normal WCC and no atypical features; it is reserved for atypical presentations or before some centres start steroids.",
+        "source_refs": [
+          "RCH CPG: Immune thrombocytopenia"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Discharge home on active observation with strict return precautions and follow up review in the outpatient paediatric clinic one week from today",
+        "correct": true,
+        "rationale": "AU guidance supports observation for asymptomatic or minor bleeding phenotype ITP regardless of platelet count, with head injury and wet purpura advice, in preference to routine drug therapy.",
+        "source_refs": [
+          "RCH CPG: Immune thrombocytopenia"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "In children ITP is a clinical diagnosis and platelet count alone does not drive therapy; the Buchanan bleeding score guides decisions. A well child with only cutaneous petechiae and no wet purpura or active bleeding is managed with observation, safety advice and outpatient review regardless of platelet count. Steroids, IVIG and anti-D are reserved for higher-grade bleeding phenotypes and bone marrow only if atypical.",
+      "key_points": [
+        "Manage by bleeding phenotype, not by platelet count alone",
+        "Observation is first line for cutaneous-only bleeding",
+        "IVIG and steroids reserved for wet purpura or active bleeding",
+        "Bone marrow only if atypical features present"
+      ],
+      "pearls": "The Buchanan bleeding score grades from 0 (none) to 5 (life-threatening); scores of 3 or more (mucosal bleeding or worse) prompt IVIG or steroid therapy, not the platelet count."
+    },
+    "sources": [
+      {
+        "label": "RCH CPG: Immune thrombocytopenia",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Immune_thrombocytopenia_ITP/"
+      },
+      {
+        "label": "ASH ITP guideline 2019",
+        "url": "https://www.hematology.org/education/clinicians/guidelines-and-quality-care/clinical-practice-guidelines/immune-thrombocytopenia-guidelines"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "paeds_vitals_1_5y",
+      "fbc"
+    ]
+  },
+  {
+    "id": "sch829-006",
+    "topic": "Paediatrics",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "DKA transition to subcutaneous insulin",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "endocrine",
+      "dka"
+    ],
+    "stem": "A 12-year-old girl with new onset type 1 diabetes has completed 20 hours of DKA management on your paediatric high dependency unit. She weighs 44 kg and is on an IV insulin infusion at 0.05 units/kg/hour with maintenance fluids and dextrose. She is fully alert, tolerating oral fluids, hungry, and has passed urine three times. Venous gas pH 7.34, bicarbonate 18 mmol/L, beta-hydroxybutyrate 0.4 mmol/L, glucose 9.2 mmol/L.",
+    "data_table": {
+      "Vital signs": "HR 92, BP 118/70, RR 16, SpO2 99 percent, temp 36.8 C",
+      "Examination": "Fully alert, well hydrated, no abdominal tenderness, no Kussmaul breathing, no focal neurology",
+      "Investigations": "Venous pH 7.34, bicarbonate 18 mmol/L, glucose 9.2 mmol/L, ketones 0.4 mmol/L, sodium 138, potassium 4.1"
+    },
+    "lead_in": "What is the most appropriate next step in insulin management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Give subcutaneous long-acting insulin glargine 0.3 units/kg now, continue the IV insulin infusion for 2 hours, then stop the infusion at breakfast time",
+        "correct": true,
+        "rationale": "AU DKA guidance transitions once pH is above 7.3, bicarbonate above 15 and ketones under 1: give SC basal insulin, continue the IV infusion for at least 60 minutes for basal onset, then stop at a meal.",
+        "source_refs": [
+          "APEG DKA guideline"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Cease the IV insulin infusion now and commence oral carbohydrate with correction doses of rapid-acting insulin only given when the meals are actually eaten",
+        "correct": false,
+        "rationale": "Ceasing IV insulin before subcutaneous insulin has taken effect leaves an unopposed gap that causes rebound ketosis; overlap between IV and SC insulin is required.",
+        "source_refs": [
+          "APEG DKA guideline"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Increase the IV insulin infusion to 0.1 units/kg/hour and continue at this higher rate for another 6 hours before attempting subcutaneous transition to insulin",
+        "correct": false,
+        "rationale": "Acidosis and ketosis have already resolved; increasing the infusion rate now causes hypoglycaemia and delays her discharge planning without clinical benefit.",
+        "source_refs": [
+          "APEG DKA guideline"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Give a single subcutaneous dose of rapid-acting insulin lispro 0.15 units/kg, cease IV infusion 15 minutes later and place her nil by mouth for observation",
+        "correct": false,
+        "rationale": "Rapid-acting insulin alone does not provide basal cover and nil by mouth removes the carbohydrate that mealtime bolus insulin is intended to cover; basal insulin is required.",
+        "source_refs": [
+          "APEG DKA guideline"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Continue the IV insulin infusion overnight and reassess for subcutaneous transition when the endocrine consultant reviews her in the morning ward round",
+        "correct": false,
+        "rationale": "Prolonging the infusion after resolution wastes HDU resources, delays education and diet, and offers no clinical benefit once acidosis and ketosis have cleared.",
+        "source_refs": [
+          "APEG DKA guideline"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "DKA resolves when pH exceeds 7.3, bicarbonate 15 mmol/L, and beta-hydroxybutyrate is under 1 mmol/L, with the child alert and tolerating oral intake. Transition is achieved by giving subcutaneous basal insulin (glargine or detemir), overlapping the IV insulin infusion for 60 to 120 minutes so basal insulin takes effect. The infusion is then stopped at a meal when a rapid-acting bolus is also given. Ceasing IV insulin without this overlap produces rebound ketosis, and rapid-acting insulin alone cannot substitute for basal cover.",
+      "key_points": [
+        "Resolution: pH > 7.3, HCO3 > 15, ketones < 1 mmol/L, oral tolerating",
+        "Give basal SC insulin then overlap IV for 60 to 120 minutes",
+        "Never cease IV insulin without overlap or ketosis returns",
+        "Time the switch to a meal so rapid-acting cover can begin"
+      ],
+      "pearls": "For a newly diagnosed child, an initial total daily dose of 0.7 to 1.0 units/kg split as 40 to 50 percent basal glargine and the remainder as prandial rapid-acting is a reasonable starting regimen."
+    },
+    "sources": [
+      {
+        "label": "APEG DKA guideline",
+        "url": "https://www.apeg.org.au/"
+      },
+      {
+        "label": "ISPAD 2022 DKA guideline",
+        "url": "https://www.ispad.org/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "paeds_vitals_school",
+      "vbg",
+      "glucose"
+    ]
+  },
+  {
+    "id": "sch829-007",
+    "topic": "Paediatrics",
+    "subtopic": "Nephrology",
+    "subtopic_detail": "Nephrotic syndrome first relapse steroid regimen",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "renal",
+      "steroids"
+    ],
+    "stem": "A 6-year-old boy with steroid-sensitive nephrotic syndrome, in remission for 4 months after his initial 12 week prednisolone course, presents to your general paediatric clinic with 3 days of periorbital swelling and morning-tested urinary protein 3 plus on dipstick at home. He is well with normal blood pressure and passing urine normally. Weight is 24 kg. There is no history of thromboembolism or infection.",
+    "data_table": {
+      "Vital signs": "HR 92, BP 104/64, RR 20, temp 36.7 C",
+      "Examination": "Periorbital and mild pretibial oedema, no ascites, no scrotal oedema, chest clear",
+      "Investigations": "Urine dipstick protein 3+; serum albumin 22 g/L; creatinine 40 micromol/L (baseline 40)"
+    },
+    "lead_in": "What is the most appropriate steroid regimen for this first relapse?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Oral prednisolone 60 mg/m2 daily for 6 weeks, then 40 mg/m2 alternate days for 6 weeks and taper over a further 8 weeks over subsequent visits",
+        "correct": false,
+        "rationale": "This is the initial presentation regimen (extended 12 week course), not the shorter first-relapse regimen used once a child has already had induction therapy.",
+        "source_refs": [
+          "KDIGO 2021 GN guideline: Nephrotic syndrome in children"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Oral prednisolone 60 mg/m2 daily until urine is protein-free for 3 consecutive days, then 40 mg/m2 on alternate days for 4 weeks and then stop",
+        "correct": true,
+        "rationale": "This is the standard AU first-relapse regimen: daily prednisolone at 60 mg/m2 until 3 consecutive days of protein-free urine, then alternate day 40 mg/m2 for 4 weeks and cease.",
+        "source_refs": [
+          "KDIGO 2021 GN guideline: Nephrotic syndrome in children"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Oral cyclophosphamide 2 mg/kg daily for 12 weeks with pneumocystis prophylaxis, as prednisolone should be avoided in this first-relapse presentation for now",
+        "correct": false,
+        "rationale": "Cyclophosphamide is reserved for frequent relapsers or steroid-dependent disease, not for a single first relapse in a previously well-controlled child.",
+        "source_refs": [
+          "KDIGO 2021 GN guideline: Nephrotic syndrome in children"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Intravenous methylprednisolone 500 mg/m2 daily for 3 days, then oral prednisolone 60 mg/m2 daily for 4 weeks and review the case for renal biopsy referral",
+        "correct": false,
+        "rationale": "IV methylprednisolone pulses and biopsy are considered for steroid-resistant nephrotic syndrome, not a steroid-sensitive first relapse in a child previously responsive to oral steroids.",
+        "source_refs": [
+          "KDIGO 2021 GN guideline: Nephrotic syndrome in children"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Oral tacrolimus 0.1 mg/kg twice daily aiming for a trough level of 4 to 8 microgram/L and cease prednisolone entirely to avoid growth impact for now",
+        "correct": false,
+        "rationale": "Calcineurin inhibitors are steroid-sparing agents reserved for frequent-relapsing or steroid-dependent disease, not a first relapse in a previously stable child on prednisolone.",
+        "source_refs": [
+          "KDIGO 2021 GN guideline: Nephrotic syndrome in children"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "First relapse of steroid-sensitive nephrotic syndrome is treated with oral prednisolone 60 mg/m2 daily until three consecutive days of urine protein-free, then 40 mg/m2 on alternate days for 4 weeks and stop. Extended 12 week courses are reserved for the initial presentation. Steroid-sparing agents such as cyclophosphamide or calcineurin inhibitors are added only for frequent relapses or steroid dependence.",
+      "key_points": [
+        "First relapse: 60 mg/m2 daily until 3 days protein-free, then 40 mg/m2 alt-day 4 weeks",
+        "Initial presentation regimen is longer and should not be re-used",
+        "Cyclophosphamide, tacrolimus for frequent relapse or steroid dependence",
+        "Biopsy only if steroid-resistant or atypical"
+      ],
+      "pearls": "Steroid dependence is defined as two consecutive relapses during taper or within 14 days of ceasing; frequent-relapsing is 2 relapses in 6 months or 4 in 12 months, either of which prompts steroid-sparing discussion."
+    },
+    "sources": [
+      {
+        "label": "KDIGO 2021 GN guideline: Nephrotic syndrome in children",
+        "url": "https://kdigo.org/guidelines/gd/"
+      },
+      {
+        "label": "RCH CPG: Nephrotic syndrome",
+        "url": "https://www.rch.org.au/clinicalguide/guideline_index/Nephrotic_Syndrome/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "paeds_vitals_school",
+      "upcr"
+    ]
+  },
+  {
+    "id": "sch829-008",
+    "topic": "Paediatrics",
+    "subtopic": "Neonatology",
+    "subtopic_detail": "Ductal-dependent circulation PGE1 titration",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "cardiology",
+      "neonatal"
+    ],
+    "stem": "A 3-day-old term male infant is brought to your regional emergency department after collapsing at home during a feed. He is grey, mottled and floppy. Femoral pulses are absent and brachial pulses weak. Urgent echocardiogram by the paediatric cardiology fellow shows critical coarctation with a restrictive ductus arteriosus. You commence PGE1 at 0.05 microgram/kg/min. Over 30 minutes SpO2 rises to 88 percent but he becomes progressively apnoeic, hypotonic and temperature drops to 35.4 C. Weight 3.2 kg.",
+    "data_table": {
+      "Vital signs": "HR 172, BP 54/28 (right arm), SpO2 pre-ductal 82 to 88 percent, post-ductal 76 percent, temp 35.4 C, RR now 6",
+      "Examination": "Grey infant, apnoeic episodes 20 seconds, capillary refill 4 seconds, femoral pulses now palpable, brachial pulses stronger",
+      "Investigations": "Venous pH 7.18, lactate 6.8 mmol/L, glucose 3.4 mmol/L, potassium 4.9 mmol/L"
+    },
+    "lead_in": "What is the most appropriate next step in his airway and infusion management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Reduce the PGE1 infusion to 0.01 microgram/kg/min and continue high flow nasal cannula oxygen at 2 L/kg/min for further ventilatory support and stabilisation",
+        "correct": false,
+        "rationale": "Apnoea from PGE1 requires airway control not dose reduction alone; the duct is only just opening and dose reduction without airway support risks re-closure and unsupported apnoea.",
+        "source_refs": [
+          "NETS retrieval guideline: Neonatal cardiac emergencies"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Give caffeine citrate 20 mg/kg IV as loading dose, continue nasal prong oxygen and continue PGE1 at 0.05 microgram/kg/min for the retrieval transfer",
+        "correct": false,
+        "rationale": "Caffeine has slow onset and does not reliably prevent PGE1-induced apnoea; established apnoea with dropping temperature and rising lactate requires definitive airway control before transport.",
+        "source_refs": [
+          "NETS retrieval guideline: Neonatal cardiac emergencies"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Intubate and ventilate now, continue PGE1 at 0.05 microgram/kg/min, then titrate the infusion down to the lowest effective dose of 0.01 to 0.02 microgram/kg/min",
+        "correct": true,
+        "rationale": "PGE1-induced apnoea is expected: once ductal patency and pre and post-ductal oxygenation are confirmed the infusion can be titrated down to the lowest effective dose while the airway is safely controlled by intubation.",
+        "source_refs": [
+          "NETS retrieval guideline: Neonatal cardiac emergencies"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Cease PGE1 infusion, give a 20 mL/kg normal saline fluid bolus and administer IV adrenaline 10 microgram/kg for the cardiovascular shock and hypoperfusion",
+        "correct": false,
+        "rationale": "Ceasing PGE1 will close the duct and cause immediate collapse in a ductal-dependent lesion; the priority here is airway control and continuing PGE1, not adrenaline.",
+        "source_refs": [
+          "NETS retrieval guideline: Neonatal cardiac emergencies"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Increase PGE1 to 0.1 microgram/kg/min for maximal ductal patency, apply CPAP 5 cm H2O and rewarm the infant using a radiant warmer during preparation for transfer",
+        "correct": false,
+        "rationale": "Higher dose PGE1 increases apnoea, fever and hypotension without additional ductal benefit once patency is achieved; the maintenance dose window is 0.01 to 0.02 microgram/kg/min.",
+        "source_refs": [
+          "NETS retrieval guideline: Neonatal cardiac emergencies"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "PGE1 opens and maintains a patent ductus arteriosus in ductal-dependent lesions such as critical coarctation. Higher initial doses of 0.05 to 0.1 microgram/kg/min are used to reopen a closed duct; once patency is confirmed the infusion is titrated to the lowest effective dose of 0.01 to 0.02 microgram/kg/min to minimise apnoea, hypotension and vasodilatation. Intubation before transfer is standard practice.",
+      "key_points": [
+        "Reopen closed duct with 0.05 to 0.1 microgram/kg/min PGE1",
+        "Once open, titrate to 0.01 to 0.02 microgram/kg/min lowest effective dose",
+        "Apnoea, hypotension, fever and flushing are dose-related side effects",
+        "Intubate before retrieval; do not rely on caffeine or CPAP alone"
+      ],
+      "pearls": "In critical coarctation, aim for pre-ductal SpO2 around 75 to 85 percent to balance Qp and Qs; higher pre-ductal SpO2 risks systemic hypoperfusion from pulmonary steal."
+    },
+    "sources": [
+      {
+        "label": "NETS retrieval guideline: Neonatal cardiac emergencies",
+        "url": "https://www.nets.org.au/"
+      },
+      {
+        "label": "eTG complete: Prostaglandin E1 in ductal-dependent lesions",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "paeds_vitals_infant",
+      "vbg"
+    ]
+  },
+  {
+    "id": "sch829-009",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Preterm labour",
+    "subtopic_detail": "Intrapartum GBS prophylaxis in preterm labour",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "obstetric",
+      "antibiotics"
+    ],
+    "stem": "A 27-year-old G2P1 woman at 32+2 weeks presents to your labour ward with regular painful contractions every 4 minutes. Vaginal examination shows the cervix 4 cm dilated and fully effaced. Membranes are intact. Her last GBS swab was negative at 26 weeks in her previous pregnancy; no GBS swab has been performed in this pregnancy. She has no penicillin allergy and no other risk factors for infection. Fetal heart rate is reassuring.",
+    "data_table": {
+      "Vital signs": "HR 88, BP 118/74, RR 16, temp 36.7 C",
+      "Examination": "Cervix 4 cm dilated, fully effaced, membranes intact; regular contractions every 4 minutes; fundus at 33 cm; presenting part cephalic at station -2"
+    },
+    "lead_in": "What is the most appropriate antibiotic decision for GBS prophylaxis?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "No intrapartum antibiotics as her previous pregnancy swab was negative and there are no additional risk factors present in this pregnancy so far",
+        "correct": false,
+        "rationale": "A GBS swab from a previous pregnancy does not carry over; preterm labour without a current negative GBS status is treated as GBS positive with intrapartum penicillin.",
+        "source_refs": [
+          "RANZCOG: Prevention of early-onset neonatal GBS disease"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Take a low vaginal and rectal swab now for GBS PCR and defer intravenous antibiotics until the result is available in approximately 4 hours from now",
+        "correct": false,
+        "rationale": "Delivery is imminent at 4 cm and four-minutely contractions; delaying antibiotics for a PCR result risks inadequate cover and PCR has variable turnaround times.",
+        "source_refs": [
+          "RANZCOG: Prevention of early-onset neonatal GBS disease"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Give IV amoxicillin 2 g loading dose then 1 g every four hours plus IV gentamicin 5 mg/kg once daily for broad-spectrum cover during her labour",
+        "correct": false,
+        "rationale": "Broad-spectrum cover including gentamicin is used for clinical chorioamnionitis, not intrapartum GBS prophylaxis in a woman without infection features.",
+        "source_refs": [
+          "RANZCOG: Prevention of early-onset neonatal GBS disease"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "IV benzylpenicillin 3 g loading dose then 1.8 g every 4 hours until delivery, treating preterm labour without a current negative GBS status as GBS positive",
+        "correct": true,
+        "rationale": "AU RANZCOG guidance treats preterm labour under 37 weeks without a current negative GBS status as GBS positive; benzylpenicillin 3 g load then 1.8 g four-hourly is the regimen.",
+        "source_refs": [
+          "RANZCOG: Prevention of early-onset neonatal GBS disease"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Give IV clindamycin 900 mg every eight hours until delivery, as clindamycin covers GBS reliably regardless of the culture status in this preterm patient",
+        "correct": false,
+        "rationale": "Clindamycin is used only when penicillin is contraindicated and only after confirming isolate susceptibility; up to 20 percent of GBS isolates in AU are resistant.",
+        "source_refs": [
+          "RANZCOG: Prevention of early-onset neonatal GBS disease"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Preterm labour before 37 weeks without a current negative GBS status is managed as GBS positive with intrapartum penicillin. The standard regimen is benzylpenicillin 3 g IV load then 1.8 g four-hourly until delivery. A prior pregnancy swab does not carry across. In true penicillin allergy cefazolin is used for low-risk anaphylaxis and clindamycin only if the isolate is confirmed susceptible.",
+      "key_points": [
+        "Preterm labour without current negative GBS swab is treated as GBS positive",
+        "Prior pregnancy GBS swab does not carry over",
+        "Regimen: benzylpenicillin 3 g load then 1.8 g Q4H until delivery",
+        "Clindamycin only if penicillin allergy AND susceptible isolate"
+      ],
+      "pearls": "In severe penicillin allergy (anaphylaxis), request GBS susceptibility on any available swab before defaulting to clindamycin; up to 20 percent of AU GBS isolates are clindamycin resistant and vancomycin becomes the alternative."
+    },
+    "sources": [
+      {
+        "label": "RANZCOG: Prevention of early-onset neonatal GBS disease",
+        "url": "https://ranzcog.edu.au/"
+      },
+      {
+        "label": "Therapeutic Guidelines: Intrapartum GBS prophylaxis",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals"
+    ]
+  },
+  {
+    "id": "sch829-010",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Antenatal care",
+    "subtopic_detail": "Anti-D immunoglobulin dosing for sensitising event",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "obstetric",
+      "transfusion"
+    ],
+    "stem": "A 29-year-old G2P1 RhD-negative woman at 15 weeks gestation presents to your emergency department 4 hours after a moderate abdominal blow from a motor vehicle accident. She has mild lower abdominal tenderness but no vaginal bleeding. Ultrasound shows a live fetus with normal fetal heart rate and no retroplacental clot. She is otherwise well. Her partner is RhD-positive and she is confirmed RhD-negative on her routine antenatal group and screen.",
+    "data_table": {
+      "Vital signs": "HR 82, BP 110/70, RR 16, temp 36.8 C",
+      "Examination": "Mild lower abdominal tenderness, no vaginal bleeding, fundus not palpable abdominally at this gestation",
+      "Investigations": "Group and hold: O-negative; antibody screen negative; ultrasound live fetus, no retroplacental clot"
+    },
+    "lead_in": "What is the most appropriate anti-D dose and Kleihauer approach?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "No anti-D immunoglobulin is required as there is no visible vaginal bleeding and ultrasound shows no retroplacental clot on this presentation today",
+        "correct": false,
+        "rationale": "Any potentially sensitising event including abdominal trauma requires anti-D regardless of visible bleeding; feto-maternal haemorrhage may occur without external signs.",
+        "source_refs": [
+          "NBA guideline: Anti-D immunoglobulin"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Administer 250 IU (50 microgram) intramuscular anti-D immunoglobulin now with no Kleihauer required at this gestation, then routine follow-up in clinic",
+        "correct": false,
+        "rationale": "250 IU is the standard dose for sensitising events before 12 weeks; at 15 weeks the standard sensitising event dose is 625 IU, and Kleihauer is not required before 20 weeks.",
+        "source_refs": [
+          "NBA guideline: Anti-D immunoglobulin"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Administer 625 IU (125 microgram) IM anti-D immunoglobulin now and request Kleihauer to determine any additional dose required for the sensitising event today",
+        "correct": false,
+        "rationale": "Kleihauer is required at or after 20 weeks only; before 20 weeks a single standard dose reliably covers the expected feto-maternal haemorrhage volume.",
+        "source_refs": [
+          "NBA guideline: Anti-D immunoglobulin"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Administer 1500 IU IM anti-D immunoglobulin now and repeat 625 IU every 6 weeks until delivery in view of the trauma and the perceived ongoing risk",
+        "correct": false,
+        "rationale": "1500 IU is the routine antenatal prophylactic dose given at 28 and 34 weeks; the sensitising event dose at this gestation is 625 IU, not 1500.",
+        "source_refs": [
+          "NBA guideline: Anti-D immunoglobulin"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Administer 625 IU (125 microgram) intramuscular anti-D immunoglobulin now, and Kleihauer testing is not required at gestations before 20 weeks",
+        "correct": true,
+        "rationale": "AU NBA advice is 625 IU IM anti-D for sensitising events from 12 weeks up to and including delivery; Kleihauer is not needed before 20 weeks as the standard dose covers likely feto-maternal haemorrhage.",
+        "source_refs": [
+          "NBA guideline: Anti-D immunoglobulin"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "In an RhD-negative pregnant woman, any potentially sensitising event including abdominal trauma requires anti-D immunoglobulin. Before 12 weeks the dose is 250 IU IM; from 12 weeks the dose is 625 IU IM. Kleihauer testing is not required before 20 weeks because a single 625 IU dose neutralises any likely feto-maternal haemorrhage volume; at or after 20 weeks Kleihauer guides additional doses.",
+      "key_points": [
+        "Any sensitising event triggers anti-D regardless of visible bleeding",
+        "Under 12 weeks 250 IU; from 12 weeks 625 IU IM",
+        "Kleihauer required only at 20 weeks or later",
+        "Routine antenatal prophylaxis is 1500 IU at 28 and 34 weeks"
+      ],
+      "pearls": "Sensitising events include amniocentesis, external cephalic version, antepartum haemorrhage and abdominal trauma; give anti-D within 72 hours of the event but a dose given within 10 days still offers partial protection."
+    },
+    "sources": [
+      {
+        "label": "NBA guideline: Anti-D immunoglobulin",
+        "url": "https://www.blood.gov.au/anti-d"
+      },
+      {
+        "label": "RANZCOG: RhD alloimmunisation prevention",
+        "url": "https://ranzcog.edu.au/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals"
+    ]
+  },
+  {
+    "id": "sch829-011",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Gynaecology",
+    "subtopic_detail": "Postmenopausal bleeding endometrial thickness",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "gynae",
+      "cancer"
+    ],
+    "stem": "A 62-year-old woman who reached menopause at age 51 presents to your gynaecology clinic with one episode of light postmenopausal bleeding 2 weeks ago. She is not on hormone replacement therapy. Body mass index is 34 kg/m2 and she has type 2 diabetes. She has no vaginal atrophy on examination and no cervical lesion is visible. Her transvaginal ultrasound today shows an endometrial thickness of 6 mm with a smooth outline and no focal lesion.",
+    "data_table": {
+      "Vital signs": "HR 76, BP 138/84, RR 16, temp 36.7 C, BMI 34 kg/m2",
+      "Examination": "External genitalia normal, no vaginal atrophy, cervix healthy on speculum, no lesion; bimanual normal size uterus, no adnexal masses",
+      "Investigations": "TVUS endometrial thickness 6 mm, smooth outline, no focal lesion, ovaries normal"
+    },
+    "lead_in": "What is the most appropriate next step in evaluation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Arrange outpatient hysteroscopy with directed endometrial biopsy to obtain histological diagnosis of the thickened endometrium seen at transvaginal ultrasound today",
+        "correct": true,
+        "rationale": "Endometrial thickness greater than 4 mm in a postmenopausal woman with bleeding requires endometrial sampling. Outpatient hysteroscopy with biopsy is the preferred AU approach when available, especially in obesity and diabetes.",
+        "source_refs": [
+          "RANZCOG C-Gyn 26: Postmenopausal bleeding"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Reassure and discharge with safety-net advice, since an endometrial thickness under 10 mm makes malignancy very unlikely in this postmenopausal patient population",
+        "correct": false,
+        "rationale": "The AU RANZCOG threshold to reassure without tissue is 4 mm or less; at 6 mm with risk factors of obesity and diabetes, tissue diagnosis is required for safety.",
+        "source_refs": [
+          "RANZCOG C-Gyn 26: Postmenopausal bleeding"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Repeat transvaginal ultrasound in 6 weeks to assess for persistent thickening of the endometrium before considering endometrial biopsy or referral for hysteroscopy",
+        "correct": false,
+        "rationale": "A delay of 6 weeks in a symptomatic postmenopausal woman with an above threshold endometrium is inappropriate; tissue diagnosis is needed now to exclude malignancy.",
+        "source_refs": [
+          "RANZCOG C-Gyn 26: Postmenopausal bleeding"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Trial 3 months of vaginal oestrogen cream and review symptoms and endometrial thickness at the end of the treatment period before further investigation",
+        "correct": false,
+        "rationale": "Vaginal oestrogen would not be given to a woman with unexplained postmenopausal bleeding and could worsen an occult endometrial cancer if present under the endometrium.",
+        "source_refs": [
+          "RANZCOG C-Gyn 26: Postmenopausal bleeding"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Refer for MRI pelvis to further characterise the endometrium and adnexa before deciding whether an endometrial biopsy is required for tissue diagnosis at all",
+        "correct": false,
+        "rationale": "MRI is not first line; it is used for staging once endometrial malignancy has been histologically confirmed, not for the initial diagnostic decision in postmenopausal bleeding.",
+        "source_refs": [
+          "RANZCOG C-Gyn 26: Postmenopausal bleeding"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Postmenopausal bleeding with a transvaginal ultrasound endometrial thickness greater than 4 mm requires endometrial sampling. Outpatient hysteroscopy with directed biopsy is preferred where available, particularly in women with high pretest probability such as obesity, diabetes, or Lynch syndrome. Blind pipelle sampling is acceptable when hysteroscopy is not immediately available.",
+      "key_points": [
+        "PMB with endometrial thickness > 4 mm needs tissue diagnosis",
+        "Outpatient hysteroscopy plus biopsy preferred where available",
+        "Obesity, diabetes, unopposed oestrogen and tamoxifen raise pretest probability",
+        "Do not use vaginal oestrogen before diagnosis is made"
+      ],
+      "pearls": "In women with Lynch syndrome, endometrial cancer risk is high and screening should include annual endometrial biopsy and TVUS from age 35, not the 4 mm threshold applied to sporadic PMB."
+    },
+    "sources": [
+      {
+        "label": "RANZCOG C-Gyn 26: Postmenopausal bleeding",
+        "url": "https://ranzcog.edu.au/"
+      },
+      {
+        "label": "eviQ: Endometrial cancer diagnosis",
+        "url": "https://www.eviq.org.au/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals"
+    ]
+  },
+  {
+    "id": "sch829-012",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Contraception",
+    "subtopic_detail": "Contraception choice in migraine with aura",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "contraception",
+      "neurology"
+    ],
+    "stem": "A 24-year-old woman presents to your general practice for contraception advice. She has migraine with aura, described as bilateral scintillating scotoma lasting 30 minutes preceding a headache, occurring about once monthly. She smokes 5 cigarettes daily. She has regular menstrual cycles and no other cardiovascular risk factors. Her BMI is 22 kg/m2 and her blood pressure is 118/72. She wants long-acting reversible contraception.",
+    "data_table": {
+      "Vital signs": "HR 72, BP 118/72, RR 14, BMI 22 kg/m2",
+      "Examination": "Well woman, no focal neurology, cardiovascular examination normal"
+    },
+    "lead_in": "What is the most appropriate contraceptive option?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Combined oral contraceptive pill containing ethinyloestradiol 20 microgram and levonorgestrel 100 microgram taken daily for continuous cycle control",
+        "correct": false,
+        "rationale": "Migraine with aura is a UKMEC category 4 contraindication to combined hormonal contraception at any dose due to ischaemic stroke risk associated with oestrogen exposure.",
+        "source_refs": [
+          "UKMEC 2016 (with 2019 update): Migraine with aura"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Levonorgestrel intrauterine device (52 mg) inserted for 5 years, providing highly effective progestogen-only long-acting reversible contraception without oestrogen exposure",
+        "correct": true,
+        "rationale": "Progestogen-only intrauterine contraception is UKMEC category 1 in migraine with aura; it is highly effective, long-acting, reversible and does not carry the oestrogen-related ischaemic stroke risk.",
+        "source_refs": [
+          "UKMEC 2016 (with 2019 update): Migraine with aura"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Combined transdermal patch delivering ethinyloestradiol 20 microgram and norelgestromin 150 microgram daily for continuous contraceptive cover in the community",
+        "correct": false,
+        "rationale": "Any oestrogen-containing method is UKMEC category 4 in migraine with aura, regardless of the route of oestrogen administration used or the specific progestogen combined with it.",
+        "source_refs": [
+          "UKMEC 2016 (with 2019 update): Migraine with aura"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Depot medroxyprogesterone acetate 150 mg intramuscular every 12 weeks, starting today and continuing as long-term contraceptive cover through further clinic reviews",
+        "correct": false,
+        "rationale": "DMPA is UKMEC category 2 in migraine with aura and is a reasonable option, but is not as long-acting or as low-risk for bone loss and weight gain as a LNG-IUD.",
+        "source_refs": [
+          "UKMEC 2016 (with 2019 update): Migraine with aura"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Vaginal ring delivering ethinyloestradiol 15 microgram and etonogestrel 120 microgram daily, replaced every 3 weeks with a hormone-free week to allow bleeding",
+        "correct": false,
+        "rationale": "The vaginal ring contains oestrogen and remains UKMEC category 4 in migraine with aura; the route does not change the ischaemic stroke risk assessment for combined hormonal methods.",
+        "source_refs": [
+          "UKMEC 2016 (with 2019 update): Migraine with aura"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Migraine with aura is a UKMEC category 4 contraindication to any oestrogen-containing contraception because of ischaemic stroke risk; this includes combined oral pill, patch and vaginal ring at any dose. Progestogen-only methods are safe. The levonorgestrel intrauterine device is UKMEC category 1, highly effective and long-acting, and is the preferred option here. DMPA is acceptable but has other drawbacks compared with an IUD.",
+      "key_points": [
+        "Migraine with aura: UKMEC 4 for any oestrogen-containing method",
+        "LNG-IUD is UKMEC 1 and preferred LARC in aura",
+        "Progestogen-only pill and DMPA are UKMEC 2",
+        "Route of oestrogen (oral, patch, ring) does not change the category"
+      ],
+      "pearls": "Aura features that trigger UKMEC 4 include any focal neurological symptom lasting under 60 minutes (visual, sensory, dysphasia); a nonspecific prodrome or postdrome without focal neurology is not aura."
+    },
+    "sources": [
+      {
+        "label": "UKMEC 2016 (with 2019 update): Migraine with aura",
+        "url": "https://www.fsrh.org/documents/ukmec-2016/"
+      },
+      {
+        "label": "RANZCOG: Contraception",
+        "url": "https://ranzcog.edu.au/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals"
+    ]
+  },
+  {
+    "id": "sch829-013",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Placental disorders",
+    "subtopic_detail": "Planned caesarean for placenta accreta spectrum",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "obstetric",
+      "surgical"
+    ],
+    "stem": "A 36-year-old G4P3 woman with three previous caesarean sections has an anterior placenta praevia at 32 weeks. MRI at 30 weeks shows features of placenta increta with focal loss of the retroplacental clear zone, bulging of placenta into bladder wall, and abnormal vascularity. She is stable with no bleeding. Delivery is being planned at your tertiary maternal-fetal medicine centre. She is fully counselled and has consented to caesarean hysterectomy if required.",
+    "data_table": {
+      "Vital signs": "HR 82, BP 122/76, RR 14, temp 36.8 C, BMI 32",
+      "Examination": "Abdomen soft, fundus 32 cm, cephalic, no tenderness",
+      "Investigations": "MRI 30 weeks: features of placenta increta; MSU negative; Hb 118, platelets 258; group and hold complete"
+    },
+    "lead_in": "What is the most appropriate delivery planning strategy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Planned classical caesarean under general anaesthesia at 39 weeks with immediate hysterectomy avoiding attempts at placental removal, with a 4 unit red cell cross-match",
+        "correct": false,
+        "rationale": "For placenta accreta spectrum, planned delivery is 34+0 to 35+6 weeks after antenatal steroids, not 39 weeks; delay to 39 weeks risks unscheduled bleeding and emergency surgery.",
+        "source_refs": [
+          "RANZCOG C-Obs 20: Placenta accreta spectrum"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Continue expectant management with weekly ultrasound and plan for spontaneous labour with continuous fetal monitoring at term with a low threshold for emergency caesarean",
+        "correct": false,
+        "rationale": "Vaginal delivery is contraindicated with placenta praevia and accreta due to unmanageable haemorrhage risk; expectant management to term is unsafe in placenta accreta spectrum.",
+        "source_refs": [
+          "RANZCOG C-Obs 20: Placenta accreta spectrum"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Planned caesarean hysterectomy at 34+0 to 35+6 weeks after antenatal corticosteroids, leaving placenta in situ, with MDT and IR standby and 4 to 6 unit cross-match",
+        "correct": true,
+        "rationale": "AU MFM guidance advises delivery between 34+0 and 35+6 weeks after antenatal steroids, with an MDT including anaesthesia, urology, IR and blood bank; the placenta is left in situ during hysterectomy.",
+        "source_refs": [
+          "RANZCOG C-Obs 20: Placenta accreta spectrum"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Planned lower segment caesarean at 37 weeks with attempted manual removal of the placenta and bimanual compression plus uterotonic infusion if uterine bleeding occurs",
+        "correct": false,
+        "rationale": "Attempted manual removal in placenta accreta causes catastrophic haemorrhage; the placenta must be left in situ during hysterectomy or conservative management is chosen.",
+        "source_refs": [
+          "RANZCOG C-Obs 20: Placenta accreta spectrum"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Planned classical caesarean at 34 weeks with insertion of a Rusch balloon before uterine closure to allow later delivery of the placenta 6 weeks postpartum",
+        "correct": false,
+        "rationale": "Delayed hysterectomy at 6 weeks is a conservative alternative in selected fertility-preserving cases; a Rusch balloon does not have a role and planned caesarean hysterectomy is standard.",
+        "source_refs": [
+          "RANZCOG C-Obs 20: Placenta accreta spectrum"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Placenta accreta spectrum is delivered by planned caesarean between 34+0 and 35+6 weeks after a course of antenatal corticosteroids, in a tertiary centre with an MDT including obstetric anaesthesia, urology, interventional radiology and blood bank. Cross-match at least 4 to 6 units of red cells. The placenta is left in situ during hysterectomy; attempted removal causes catastrophic haemorrhage.",
+      "key_points": [
+        "Planned delivery 34+0 to 35+6 weeks after antenatal steroids",
+        "Do not attempt to remove the placenta at CS",
+        "MDT: MFM, anaesthesia, urology, IR, blood bank",
+        "Cross-match 4 to 6 units red cells minimum"
+      ],
+      "pearls": "For women declining hysterectomy who wish to preserve fertility, a Triple-P procedure or leaving the placenta in situ with methotrexate is an option, but with substantial infection and delayed bleeding risk."
+    },
+    "sources": [
+      {
+        "label": "RANZCOG C-Obs 20: Placenta accreta spectrum",
+        "url": "https://ranzcog.edu.au/"
+      },
+      {
+        "label": "FIGO consensus on PAS management",
+        "url": "https://www.figo.org/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals",
+      "fbc"
+    ]
+  },
+  {
+    "id": "sch829-014",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Placental disorders",
+    "subtopic_detail": "Vasa praevia antenatal management",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "obstetric",
+      "surgical"
+    ],
+    "stem": "A 32-year-old G1P0 woman at 32 weeks has a transvaginal ultrasound today for a low-lying placenta, which has now migrated. However, colour Doppler shows fetal vessels running through membranes over the internal cervical os, confirming vasa praevia. She has had no bleeding, is asymptomatic and cervical length is 34 mm. Fetal movements are normal and fetal growth is at the 50th centile.",
+    "data_table": {
+      "Vital signs": "HR 78, BP 116/74, RR 14, temp 36.7 C",
+      "Examination": "Fundus 32 cm, cephalic presentation, no vaginal bleeding",
+      "Investigations": "TVUS: vasa praevia confirmed with fetal vessels overlying internal os, cervical length 34 mm, EFW 50th centile"
+    },
+    "lead_in": "What is the most appropriate antenatal management plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Continue routine antenatal care with delivery by elective caesarean at 39 weeks and expectant management until then, with fetal movement education for the mother",
+        "correct": false,
+        "rationale": "39 weeks is too late; the risk of membrane rupture and fetal exsanguination rises after 34 weeks. Inpatient admission and steroids are usually recommended from around 32 weeks.",
+        "source_refs": [
+          "RANZCOG C-Obs 47: Vasa praevia"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Inpatient admission from 32 weeks with betamethasone 11.4 mg IM twice 24 hours apart, then elective caesarean at 39 weeks unless she develops any bleeding beforehand",
+        "correct": false,
+        "rationale": "Waiting to 39 weeks after admission and steroids exposes the pregnancy to spontaneous rupture and fetal exsanguination; planned delivery is at 34+0 to 35+6 weeks after steroids.",
+        "source_refs": [
+          "RANZCOG C-Obs 47: Vasa praevia"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Outpatient management with weekly cardiotocography and TVUS until 37 weeks, at which point an elective caesarean is performed under regional anaesthesia after discussion",
+        "correct": false,
+        "rationale": "Outpatient management to 37 weeks exposes the pregnancy to risk of membrane rupture during transit; inpatient admission and earlier planned delivery are preferred.",
+        "source_refs": [
+          "RANZCOG C-Obs 47: Vasa praevia"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Inpatient admission from 32 weeks with betamethasone 11.4 mg IM in two doses 24 hours apart, then elective caesarean at 34+0 to 35+6 weeks",
+        "correct": true,
+        "rationale": "AU RANZCOG supports inpatient admission around 32 weeks, antenatal steroids completing before 34 weeks, and elective caesarean at 34+0 to 35+6 weeks before spontaneous rupture and haemorrhage can occur.",
+        "source_refs": [
+          "RANZCOG C-Obs 47: Vasa praevia"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Immediate emergency caesarean at 32 weeks under general anaesthesia given the risk of catastrophic haemorrhage from any spontaneous membrane rupture that might occur",
+        "correct": false,
+        "rationale": "Immediate delivery at 32 weeks exposes the neonate to unnecessary preterm complications; the risk-benefit balance favours planned delivery at 34 to 36 weeks after steroids.",
+        "source_refs": [
+          "RANZCOG C-Obs 47: Vasa praevia"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Confirmed vasa praevia requires planned inpatient admission around 32 weeks with a course of antenatal corticosteroids completed before 34 weeks. Elective caesarean is performed at 34+0 to 35+6 weeks before spontaneous rupture of membranes can cause fetal exsanguination. Outpatient management to term risks membrane rupture in transit and is not standard AU practice. Immediate delivery at 32 weeks unnecessarily commits the neonate to preterm complications when planned delivery a few weeks later is safer.",
+      "key_points": [
+        "Confirmed vasa praevia: admit around 32 weeks, steroids, deliver 34 to 36 weeks",
+        "Vaginal delivery contraindicated",
+        "Outpatient management to term is not standard",
+        "Emergency caesarean if any ROM or bleeding regardless of gestation"
+      ],
+      "pearls": "A 50 mL fetal bleed can exsanguinate a term fetus; do not wait for an abnormal CTG. If membranes rupture with bleeding, category 1 caesarean is warranted for suspected vasa praevia bleeding."
+    },
+    "sources": [
+      {
+        "label": "RANZCOG C-Obs 47: Vasa praevia",
+        "url": "https://ranzcog.edu.au/"
+      },
+      {
+        "label": "RCOG Green-top 27b: Vasa praevia",
+        "url": "https://www.rcog.org.uk/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals"
+    ]
+  },
+  {
+    "id": "sch829-015",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Reproductive medicine",
+    "subtopic_detail": "Ovarian hyperstimulation syndrome grade and management",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "gynae",
+      "fluids"
+    ],
+    "stem": "A 34-year-old woman, day 8 after oocyte retrieval, presents to your emergency department with abdominal distension, oliguria and calf pain. She underwent IVF with 25 oocytes retrieved. She is dyspnoeic on exertion. Weight is up 4 kg since collection. On examination she has tense ascites and reduced air entry at the right lung base with dullness to percussion. Serum sodium 129, potassium 5.4, creatinine 130, haematocrit 0.51.",
+    "data_table": {
+      "Vital signs": "HR 118, BP 100/62, RR 24, SpO2 93 percent, temp 37.2 C",
+      "Examination": "Tense ascites, right pleural effusion clinically, calf oedema and tenderness left leg, no chest pain",
+      "Investigations": "Na 129, K 5.4, creatinine 130, haematocrit 0.51, WCC 16, platelets 420; urine output 20 mL/hour over 6 hours"
+    },
+    "lead_in": "What is the most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Discharge home on 3 litres oral fluids daily, oral cabergoline 0.5 mg twice weekly for 8 weeks, and a follow-up specialist appointment in the fertility clinic tomorrow",
+        "correct": false,
+        "rationale": "Cabergoline is a preventative pre-trigger measure; this severe hospital-requiring presentation cannot be safely managed as an outpatient with oral therapy and follow-up.",
+        "source_refs": [
+          "RCOG Green-top 5: Ovarian hyperstimulation syndrome"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "IV furosemide 40 mg for the fluid overload plus 3 litres of normal saline over 6 hours to improve renal perfusion and correct the low urine output during observation",
+        "correct": false,
+        "rationale": "Furosemide worsens intravascular depletion and haemoconcentration in OHSS; loop diuretics are contraindicated in the third-space phase of the illness where extravascular fluid predominates.",
+        "source_refs": [
+          "RCOG Green-top 5: Ovarian hyperstimulation syndrome"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Commence therapeutic anticoagulation with enoxaparin 1 mg/kg twice daily for suspected pulmonary embolism and proceed to CT pulmonary angiogram for further evaluation",
+        "correct": false,
+        "rationale": "Prophylactic-dose enoxaparin is standard for severe OHSS; therapeutic dose is reserved for confirmed VTE and CT-PA is only warranted if suspicion is high, not from ascites-related dyspnoea alone.",
+        "source_refs": [
+          "RCOG Green-top 5: Ovarian hyperstimulation syndrome"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Prescribe oral spironolactone 100 mg daily, restrict oral fluid intake to 800 mL per day and follow up as an outpatient in 3 days for repeat electrolyte assessment and review",
+        "correct": false,
+        "rationale": "Fluid restriction and diuretics worsen haemoconcentration and thrombotic risk in severe OHSS; outpatient care is inappropriate with haematocrit above 0.45 plus oliguria and tense ascites.",
+        "source_refs": [
+          "RCOG Green-top 5: Ovarian hyperstimulation syndrome"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Admit for cautious IV crystalloid, prophylactic-dose enoxaparin, human albumin infusion for oncotic support, and ultrasound-guided paracentesis if respiratory compromise persists",
+        "correct": true,
+        "rationale": "Severe OHSS with tense ascites, oliguria, haemoconcentration and effusion requires admission with careful crystalloid or colloid, VTE prophylaxis and paracentesis for symptomatic relief.",
+        "source_refs": [
+          "RCOG Green-top 5: Ovarian hyperstimulation syndrome"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Severe OHSS with tense ascites, oliguria, haemoconcentration (haematocrit above 0.45) and pleural effusion requires hospital admission. Manage with cautious IV crystalloid or colloid to restore intravascular volume, human albumin as oncotic support, prophylactic-dose enoxaparin (severe OHSS is a strong VTE risk), and ultrasound-guided paracentesis for symptomatic ascites or effusion. Diuretics and fluid restriction are contraindicated as they worsen haemoconcentration and thrombosis.",
+      "key_points": [
+        "Severe OHSS: admit, cautious IV fluids, VTE prophylaxis",
+        "Paracentesis for symptomatic tense ascites or effusion",
+        "Diuretics contraindicated in third-space phase",
+        "Cabergoline is a preventive measure, not a treatment at this stage"
+      ],
+      "pearls": "Cabergoline 0.5 mg daily started on the day of hCG trigger for 8 days reduces the incidence of moderate-to-severe OHSS by modulating VEGF-mediated vascular permeability."
+    },
+    "sources": [
+      {
+        "label": "RCOG Green-top 5: Ovarian hyperstimulation syndrome",
+        "url": "https://www.rcog.org.uk/"
+      },
+      {
+        "label": "RANZCOG: OHSS prevention and management",
+        "url": "https://ranzcog.edu.au/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals",
+      "fbc",
+      "uec"
+    ]
+  },
+  {
+    "id": "sch829-016",
+    "topic": "Obstetrics & Gynaecology",
+    "subtopic": "Postpartum complications",
+    "subtopic_detail": "Sheehan syndrome hormone replacement priority",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "endocrine",
+      "postpartum"
+    ],
+    "stem": "A 30-year-old woman presents to your emergency department 8 days postpartum after a delivery complicated by placental abruption with 2.8 L blood loss and 6 units red cell transfusion. Today she is drowsy, hypotensive, hypoglycaemic and hyponatraemic. She has failed to lactate. Random cortisol 42 nmol/L, TSH 0.6 mIU/L, free T4 8 pmol/L, sodium 122 mmol/L, glucose 2.6 mmol/L. She is drowsy but rousable.",
+    "data_table": {
+      "Vital signs": "HR 108, BP 84/50, RR 20, SpO2 97 percent, temp 35.9 C",
+      "Examination": "Drowsy but rousable, GCS 13, cool peripheries, capillary refill 3 seconds; breasts not lactating; no goitre, no adrenal skin pigmentation",
+      "Investigations": "Cortisol 42 nmol/L, TSH 0.6 mIU/L, free T4 8 pmol/L, Na 122, K 4.1, glucose 2.6, Hb 92"
+    },
+    "lead_in": "What is the most appropriate immediate hormone replacement order?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "IV hydrocortisone 100 mg every 6 hours first, IV 10 percent dextrose for hypoglycaemia, cautious 3 percent saline for symptomatic hyponatraemia, then thyroxine after 24 hours",
+        "correct": true,
+        "rationale": "In panhypopituitarism, glucocorticoid replacement must precede thyroxine to avoid precipitating adrenal crisis, along with dextrose for hypoglycaemia and cautious hypertonic saline for symptomatic hyponatraemia.",
+        "source_refs": [
+          "Endocrine Society: Diagnosis and treatment of hypopituitarism"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Give IV levothyroxine 200 microgram now, followed by oral levothyroxine 100 microgram daily, then IV hydrocortisone 100 mg six-hourly to complete the replacement",
+        "correct": false,
+        "rationale": "Thyroxine before glucocorticoid replacement in panhypopituitarism can precipitate adrenal crisis by increasing metabolic demand on unreplaced cortisol; steroids must be given first.",
+        "source_refs": [
+          "Endocrine Society: Diagnosis and treatment of hypopituitarism"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "IV hydrocortisone 100 mg every 6 hours, avoid dextrose and hypertonic saline as these overcorrect the sodium too rapidly, and defer thyroxine replacement indefinitely to prevent rebound",
+        "correct": false,
+        "rationale": "Symptomatic hypoglycaemia needs dextrose and severe symptomatic hyponatraemia at 122 warrants cautious hypertonic saline; deferring thyroxine indefinitely once cortisol is replaced is inappropriate.",
+        "source_refs": [
+          "Endocrine Society: Diagnosis and treatment of hypopituitarism"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Give fludrocortisone 100 microgram orally daily as first-line steroid, then oral levothyroxine 100 microgram once the mineralocorticoid effect has been established over 24 hours",
+        "correct": false,
+        "rationale": "Fludrocortisone is not required in secondary adrenal insufficiency since aldosterone secretion is preserved via the RAAS; hydrocortisone is the correct first agent for the cortisol deficit.",
+        "source_refs": [
+          "Endocrine Society: Diagnosis and treatment of hypopituitarism"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Give IV dexamethasone 8 mg and then perform a diagnostic short synacthen test before instituting any further hormone replacement therapy or dextrose or saline supplementation today",
+        "correct": false,
+        "rationale": "Delaying life-saving replacement to complete a synacthen test in a haemodynamically unstable postpartum woman is inappropriate; treat first and confirm the diagnosis later.",
+        "source_refs": [
+          "Endocrine Society: Diagnosis and treatment of hypopituitarism"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Sheehan syndrome from postpartum haemorrhage causes panhypopituitarism with hypocortisolism, hypothyroidism and central diabetes insipidus in some patients. The immediate priority is hydrocortisone 100 mg IV every 6 hours to prevent adrenal crisis, correction of hypoglycaemia with dextrose, and cautious hypertonic saline for symptomatic hyponatraemia. Thyroxine must be started after glucocorticoid replacement because unopposed thyroxine can precipitate adrenal crisis.",
+      "key_points": [
+        "Hydrocortisone before thyroxine in panhypopituitarism",
+        "Dextrose for hypoglycaemia, cautious hypertonic saline for symptomatic hyponatraemia",
+        "Fludrocortisone not required in secondary adrenal insufficiency",
+        "Synacthen test and other confirmatory tests come after treatment"
+      ],
+      "pearls": "The classical Sheehan triad of failure to lactate, secondary amenorrhoea and postural symptoms may not appear until months after the causative haemorrhage; a low index of suspicion for hypopituitarism in postpartum fatigue and hyponatraemia is warranted."
+    },
+    "sources": [
+      {
+        "label": "Endocrine Society: Diagnosis and treatment of hypopituitarism",
+        "url": "https://www.endocrine.org/clinical-practice-guidelines"
+      },
+      {
+        "label": "eTG complete: Adrenal insufficiency",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals",
+      "uec",
+      "glucose"
+    ]
+  },
+  {
+    "id": "sch829-017",
+    "topic": "Psychiatry",
+    "subtopic": "Trauma",
+    "subtopic_detail": "PTSD first-line pharmacotherapy",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "psychopharm",
+      "ptsd"
+    ],
+    "stem": "A 34-year-old male veteran presents to your general practice with 8 months of intrusive memories of combat, hypervigilance, sleep disturbance and avoidance of crowds after his return from deployment. He meets criteria for post-traumatic stress disorder and has completed 8 sessions of trauma-focused cognitive behavioural therapy with partial response. He is not currently suicidal. He has no history of psychosis, bipolar disorder or substance dependence. He has agreed to add pharmacotherapy.",
+    "data_table": {
+      "Vital signs": "HR 78, BP 128/82, RR 14, temp 36.7 C",
+      "Examination": "Alert, cooperative, mood low, no thought disorder, no suicidal ideation, no substance intoxication"
+    },
+    "lead_in": "What is the most appropriate first-line pharmacotherapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Oral quetiapine 25 mg at night, titrated up to 300 mg daily total for management of hyperarousal, sleep disturbance and residual anxiety symptoms during the day",
+        "correct": false,
+        "rationale": "Second-generation antipsychotics are not first line for PTSD; quetiapine is considered only as an augmentation agent and its metabolic risks argue against routine use in this setting.",
+        "source_refs": [
+          "Phoenix Australia: Australian PTSD guidelines 2020"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Oral sertraline 50 mg daily, titrated up to 100 to 200 mg daily based on response and tolerability over 4 to 6 weeks with symptom and side effect monitoring",
+        "correct": true,
+        "rationale": "AU RANZCP guidance recommends an SSRI (sertraline or paroxetine) as first-line pharmacotherapy for PTSD in adults, starting at 50 mg daily and titrating to a therapeutic dose over 4 to 6 weeks.",
+        "source_refs": [
+          "Phoenix Australia: Australian PTSD guidelines 2020"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Oral benzodiazepine diazepam 5 mg three times daily to manage hyperarousal and improve sleep in the short term while awaiting response to psychological therapies",
+        "correct": false,
+        "rationale": "Benzodiazepines are contraindicated as first line in PTSD; they worsen extinction of trauma memories and carry dependence risk in a chronic condition like this.",
+        "source_refs": [
+          "Phoenix Australia: Australian PTSD guidelines 2020"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Oral prazosin 1 mg at night titrated up to 5 mg for nightmares as first-line pharmacotherapy addressing the full spectrum of post-traumatic symptoms he is experiencing",
+        "correct": false,
+        "rationale": "Prazosin has a specific role for trauma-related nightmares but does not address the full PTSD symptom cluster; SSRIs remain first line by RCT evidence.",
+        "source_refs": [
+          "Phoenix Australia: Australian PTSD guidelines 2020"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Oral mirtazapine 15 mg at night as first-line pharmacotherapy given its sedative properties and appetite stimulation useful in patients with PTSD and comorbid insomnia now",
+        "correct": false,
+        "rationale": "Mirtazapine has limited evidence in PTSD and is a second- or third-line option; SSRIs remain first line based on stronger RCT evidence in this population.",
+        "source_refs": [
+          "Phoenix Australia: Australian PTSD guidelines 2020"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "The RANZCP and NHMRC-endorsed Australian PTSD guidelines recommend an SSRI (sertraline or paroxetine) as first-line pharmacotherapy for PTSD in adults, ideally as an adjunct to trauma-focused psychotherapy. Sertraline is typically started at 50 mg daily and titrated to 100 to 200 mg over 4 to 6 weeks. Benzodiazepines are contraindicated because they impair extinction learning; antipsychotics are augmentation agents only.",
+      "key_points": [
+        "SSRIs (sertraline, paroxetine) are first-line pharmacotherapy for PTSD",
+        "Benzodiazepines should be avoided in PTSD",
+        "Antipsychotics are augmentation, not first line",
+        "Prazosin is specifically for trauma-related nightmares"
+      ],
+      "pearls": "For trauma-related nightmares refractory to SSRI, add prazosin starting at 1 mg at night with blood pressure monitoring; titrate weekly by 1 mg to a maximum of about 15 mg at night."
+    },
+    "sources": [
+      {
+        "label": "Phoenix Australia: Australian PTSD guidelines 2020",
+        "url": "https://www.phoenixaustralia.org/australian-guidelines-for-ptsd/"
+      },
+      {
+        "label": "RANZCP CPG PTSD",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals"
+    ]
+  },
+  {
+    "id": "sch829-018",
+    "topic": "Psychiatry",
+    "subtopic": "Personality disorder",
+    "subtopic_detail": "Borderline PD self-harm ED management",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "risk",
+      "personality"
+    ],
+    "stem": "A 26-year-old woman with known borderline personality disorder presents to your emergency department after superficial cutting to her forearm following an argument with her partner. She has been drinking wine but is coherent. She reports fleeting suicidal thoughts but no current intent or plan. She has attended the emergency department 12 times in the past 6 months for similar presentations. She is currently engaged with a dialectical behaviour therapy program.",
+    "data_table": {
+      "Vital signs": "HR 92, BP 118/72, RR 16, SpO2 99 percent, temp 36.7 C",
+      "Examination": "Superficial linear lacerations left forearm, no active bleeding, no tendon or nerve involvement, coherent conversation, no gross intoxication",
+      "Investigations": "Alcohol breath test 0.06; paracetamol undetectable; ECG normal sinus rhythm"
+    },
+    "lead_in": "What is the most appropriate management plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Admit her as an involuntary patient to a general psychiatric ward under the Mental Health Act for 7 days of containment and to allow safety planning to occur",
+        "correct": false,
+        "rationale": "Involuntary admission for chronic self-harm in BPD is generally counter-therapeutic, reinforcing crisis behaviours and worsening long-term outcomes for the patient over time.",
+        "source_refs": [
+          "NHMRC BPD clinical practice guideline"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Administer intramuscular olanzapine 10 mg for behavioural containment and admit for 24 hours of observation to prevent escalation of her presenting complaint tonight",
+        "correct": false,
+        "rationale": "IM olanzapine is not indicated in a coherent cooperative patient without acute agitation, psychosis or mania and would reinforce sedation as a coping strategy long term.",
+        "source_refs": [
+          "NHMRC BPD clinical practice guideline"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Wound care and dressing, collaborative safety planning, contact her DBT therapist, then discharge with clear crisis contacts and a written safety plan for home",
+        "correct": true,
+        "rationale": "Best-practice ED management of chronic BPD self-harm is wound care, collaborative safety planning, communication with the treating team and structured discharge; hospital admission is avoided unless acute major mental illness risk is present.",
+        "source_refs": [
+          "NHMRC BPD clinical practice guideline"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Commence oral fluoxetine 20 mg daily for chronic suicidality and prescribe a 3 month supply on discharge from the emergency department tonight without further review",
+        "correct": false,
+        "rationale": "There is no strong evidence for SSRIs specifically for chronic self-harm in BPD, and prescribing 3 months of an antidepressant to a patient with chronic suicidality raises overdose risk.",
+        "source_refs": [
+          "NHMRC BPD clinical practice guideline"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Refer her to a general medical ward under the medical registrar for observation and then transfer to a psychiatry inpatient bed on the morning ward round tomorrow",
+        "correct": false,
+        "rationale": "Medical admission for uncomplicated superficial cutting is not indicated and delays discharge planning without adding clinical benefit for a patient engaged with DBT.",
+        "source_refs": [
+          "NHMRC BPD clinical practice guideline"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Chronic self-harm in borderline personality disorder is best managed in the emergency department by medical wound care, collaborative safety planning with the patient, and communication with the treating DBT team. Discharge is structured with crisis contacts and clear plans for follow-up. Involuntary admission is avoided unless a superimposed acute major mental illness or an escalating atypical presentation raises acute risk. Intramuscular sedation of a cooperative patient reinforces sedation as a coping strategy and is not indicated.",
+      "key_points": [
+        "Involuntary admission for chronic self-harm in BPD is usually counter-therapeutic",
+        "ED management: wound care, collaborative safety plan, treating team contact",
+        "Sedation for a cooperative patient is not indicated",
+        "Limit medication quantities to reduce overdose risk"
+      ],
+      "pearls": "Reserve inpatient admission for BPD when there is superimposed major mental illness, an atypical or escalating pattern, or when brief admission is planned for a specific goal with an agreed discharge date."
+    },
+    "sources": [
+      {
+        "label": "NHMRC BPD clinical practice guideline",
+        "url": "https://www.nhmrc.gov.au/"
+      },
+      {
+        "label": "RANZCP CPG Deliberate self-harm",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals"
+    ]
+  },
+  {
+    "id": "sch829-019",
+    "topic": "Psychiatry",
+    "subtopic": "Psychopharmacology",
+    "subtopic_detail": "Antipsychotic-induced hyperprolactinaemia switch",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "psychopharm",
+      "endocrine"
+    ],
+    "stem": "A 28-year-old woman with first-episode psychosis has been stable on risperidone 4 mg daily for 8 months. She presents to your clinic complaining of secondary amenorrhoea for 5 months, galactorrhoea and reduced libido. Her serum prolactin is 2800 mIU/L (normal under 500). Pituitary MRI is normal. Beta-hCG is negative. She is otherwise well and has no history of seizures, cardiovascular disease or diabetes. She wants to preserve her current mental state.",
+    "data_table": {
+      "Vital signs": "HR 78, BP 118/72, RR 14, temp 36.7 C",
+      "Examination": "Alert, cooperative, mood euthymic, no thought disorder, galactorrhoea on breast expression, no visual field defect",
+      "Investigations": "Prolactin 2800 mIU/L, MRI pituitary normal, beta-hCG negative, TSH 1.8, LFTs normal, U&E normal"
+    },
+    "lead_in": "What is the most appropriate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Add oral cabergoline 0.25 mg twice weekly to lower the prolactin level over time while continuing her current dose of risperidone 4 mg daily unchanged during this period",
+        "correct": false,
+        "rationale": "Adding a dopamine agonist to an antipsychotic risks triggering relapse of psychosis; the guideline-preferred approach is to switch to a prolactin-sparing antipsychotic rather than add a dopamine agonist.",
+        "source_refs": [
+          "RANZCP CPG Schizophrenia"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Reduce risperidone to 2 mg daily and repeat the prolactin level in 4 weeks to determine whether the level normalises with a lower dose of the current antipsychotic",
+        "correct": false,
+        "rationale": "Prolactin elevation is only weakly dose-related for risperidone at therapeutic doses; halving the dose may destabilise psychosis without normalising the prolactin level in this patient.",
+        "source_refs": [
+          "RANZCP CPG Schizophrenia"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Cease risperidone entirely and commence oral haloperidol 5 mg daily as a first-generation alternative antipsychotic in order to reduce elevated serum prolactin level to normal",
+        "correct": false,
+        "rationale": "Haloperidol raises prolactin at least as much as risperidone; it is not a prolactin-sparing option and would not resolve the endocrine adverse effect she is experiencing.",
+        "source_refs": [
+          "RANZCP CPG Schizophrenia"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Switch antipsychotic to aripiprazole 10 mg daily using a cross-titration schedule over 4 weeks, monitoring closely for relapse of any psychotic symptoms during the switch period",
+        "correct": true,
+        "rationale": "Aripiprazole is prolactin-sparing as a partial dopamine agonist and is the AU-preferred switch strategy for antipsychotic-induced hyperprolactinaemia; olanzapine and quetiapine are also lower-risk options for switching.",
+        "source_refs": [
+          "RANZCP CPG Schizophrenia"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Refer her to endocrinology and continue risperidone at 4 mg daily unchanged while awaiting specialist input over the next 3 to 6 months for further formal assessment",
+        "correct": false,
+        "rationale": "An untreated prolactin above 2000 mIU/L over months increases the risk of bone mineral density loss and persistent amenorrhoea; specific action from psychiatry is needed now.",
+        "source_refs": [
+          "RANZCP CPG Schizophrenia"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Antipsychotic-induced hyperprolactinaemia is most reliably managed by switching to a prolactin-sparing agent. Aripiprazole (partial dopamine agonist) is first choice; olanzapine and quetiapine are lower-risk alternatives compared with risperidone and paliperidone. Cross-titration should be done over 4 weeks with monitoring for symptom recurrence. Adding a dopamine agonist to the current antipsychotic risks psychotic relapse and is generally avoided.",
+      "key_points": [
+        "Switch to aripiprazole is preferred over adding a dopamine agonist",
+        "Prolactin elevation is weakly dose-related for risperidone at therapeutic doses",
+        "Cross-titrate over 4 weeks and monitor for psychotic relapse",
+        "Persistent hyperprolactinaemia risks bone loss and amenorrhoea"
+      ],
+      "pearls": "For patients where a switch is not tolerated, low-dose adjunctive aripiprazole 5 to 10 mg added to the existing antipsychotic has emerging evidence for lowering prolactin without triggering psychosis relapse."
+    },
+    "sources": [
+      {
+        "label": "RANZCP CPG Schizophrenia",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library"
+      },
+      {
+        "label": "Maudsley Prescribing Guidelines 14th ed",
+        "url": "https://www.wiley.com/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals",
+      "hormones"
+    ]
+  },
+  {
+    "id": "sch829-020",
+    "topic": "Psychiatry",
+    "subtopic": "Perinatal",
+    "subtopic_detail": "Antidepressant choice in pregnancy",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "psychopharm",
+      "perinatal"
+    ],
+    "stem": "A 30-year-old woman in her first trimester (10 weeks) presents to your general practice with a 6 week history of persistent low mood, anhedonia, poor sleep and thoughts of worthlessness. She has a history of major depressive disorder and has been off medication since planning pregnancy 4 months ago. She has no suicidal intent. She has moderate depression on PHQ-9 (score 16) and has already been referred for perinatal psychology. She wants to consider pharmacotherapy.",
+    "data_table": {
+      "Vital signs": "HR 82, BP 118/72, RR 14, temp 36.7 C",
+      "Examination": "Alert, tearful at times, cooperative, no psychotic features, no suicidal intent, PHQ-9 16"
+    },
+    "lead_in": "What is the most appropriate first-line antidepressant?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Oral paroxetine 20 mg daily titrated based on response, then continued throughout pregnancy and into the lactation period with obstetric and mental health team follow-up",
+        "correct": false,
+        "rationale": "Paroxetine is associated with a small increased risk of fetal cardiac malformations (ventricular septal defect) and is generally avoided as a new prescription in pregnancy.",
+        "source_refs": [
+          "COPE: Perinatal mental health guideline"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Oral fluoxetine 20 mg daily titrated based on response, then continued throughout the pregnancy and lactation period with regular obstetric and mental health team monitoring reviews",
+        "correct": false,
+        "rationale": "Fluoxetine is reasonable but has a longer half-life and higher milk-plasma ratio than sertraline; sertraline is preferred as a new prescription in pregnancy for these reasons.",
+        "source_refs": [
+          "COPE: Perinatal mental health guideline"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Oral venlafaxine 75 mg daily titrated based on response, then continued throughout the pregnancy and lactation period with regular obstetric and mental health team monitoring for tolerability",
+        "correct": false,
+        "rationale": "Venlafaxine is associated with increased risk of maternal hypertension and neonatal adaptation syndrome; SSRIs are preferred as first line in pregnancy over SNRIs like venlafaxine.",
+        "source_refs": [
+          "COPE: Perinatal mental health guideline"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Oral mirtazapine 30 mg at night titrated based on response, then continued throughout pregnancy and lactation with regular obstetric and mental health monitoring at each visit",
+        "correct": false,
+        "rationale": "Mirtazapine has a smaller safety database than SSRIs in pregnancy and is not first line; SSRIs remain the preferred first choice for treating depression in the perinatal period.",
+        "source_refs": [
+          "COPE: Perinatal mental health guideline"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Oral sertraline 50 mg daily titrated to therapeutic dose, with obstetric and mental health follow-up throughout pregnancy and continuation planned into the postnatal period",
+        "correct": true,
+        "rationale": "Sertraline is the AU-preferred SSRI for depression in pregnancy due to the largest safety database, minimal placental transfer, and low breast milk concentrations for future breastfeeding.",
+        "source_refs": [
+          "COPE: Perinatal mental health guideline"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "For a new prescription in pregnancy, sertraline is the AU-preferred SSRI due to the largest safety database, minimal placental transfer, and lowest breast milk concentrations for future breastfeeding. Paroxetine is avoided in pregnancy because of a small increased risk of fetal cardiac malformations. Fluoxetine and venlafaxine are reasonable if already effective for the woman but are not first-choice new prescriptions.",
+      "key_points": [
+        "Sertraline is first-choice SSRI for a new prescription in pregnancy",
+        "Paroxetine avoided due to small VSD risk",
+        "Fluoxetine acceptable if already effective, longer half-life",
+        "Venlafaxine risks maternal hypertension and neonatal adaptation syndrome"
+      ],
+      "pearls": "Neonatal adaptation syndrome (jitteriness, feeding difficulty, transient tachypnoea) affects 10 to 30 percent of SSRI-exposed neonates; it is short-lived and stopping SSRIs in the third trimester is not recommended because relapse risk exceeds neonatal risk."
+    },
+    "sources": [
+      {
+        "label": "COPE: Perinatal mental health guideline",
+        "url": "https://www.cope.org.au/"
+      },
+      {
+        "label": "RANZCP CPG Perinatal",
+        "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals"
+    ]
+  },
+  {
+    "id": "sch829-021",
+    "topic": "Psychiatry",
+    "subtopic": "Psychopharmacology",
+    "subtopic_detail": "Serotonin syndrome versus NMS differentiation and treatment",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "psychopharm",
+      "toxicology"
+    ],
+    "stem": "A 42-year-old woman on sertraline 200 mg daily was started on tramadol 50 mg four times daily for back pain 6 hours ago. She now presents to your emergency department with tremor, agitation, diaphoresis and diarrhoea. On examination she has lower limb hyperreflexia and inducible clonus at the ankles, sustained on the right. Muscle tone is normal in the upper limbs. Temperature is 38.9 C. There is no rigidity of the neck or trunk.",
+    "data_table": {
+      "Vital signs": "HR 128, BP 158/95, RR 24, SpO2 97 percent, temp 38.9 C",
+      "Examination": "Diaphoretic, agitated, dilated pupils, hyperreflexia lower limbs, inducible ankle clonus (sustained right), no lead-pipe rigidity, no dyskinesia",
+      "Investigations": "CK 340 U/L, WCC 12, glucose 6.2, U&E normal, ECG sinus tachycardia"
+    },
+    "lead_in": "What is the most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Cease serotonergic agents (sertraline and tramadol), give IV benzodiazepines (diazepam 5 to 10 mg titrated), active external cooling if temperature above 38.5 C, add cyproheptadine 12 mg PO",
+        "correct": true,
+        "rationale": "Serotonin syndrome from a serotonergic combination is treated by ceasing offending agents, benzodiazepines for agitation, active cooling for hyperthermia, and cyproheptadine 12 mg PO stat as an antidote in refractory cases.",
+        "source_refs": [
+          "Therapeutic Guidelines: Serotonin syndrome"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "IV dantrolene 2.5 mg/kg push, then cool to 37 C, cease serotonergic agents and admit for benzodiazepine sedation and monitoring in the intensive care unit overnight for stability",
+        "correct": false,
+        "rationale": "Dantrolene is used for NMS or malignant hyperthermia, not serotonin syndrome; the clinical picture here with inducible clonus and diaphoresis 6 hours after adding a serotonergic is serotonin syndrome.",
+        "source_refs": [
+          "Therapeutic Guidelines: Serotonin syndrome"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "IV bromocriptine 2.5 mg via nasogastric tube every 8 hours, cease tramadol only, continue sertraline and admit for observation with paracetamol for fever and IV rehydration overnight",
+        "correct": false,
+        "rationale": "Bromocriptine is for NMS, not serotonin syndrome; paracetamol does not treat centrally driven hyperthermia; sertraline must also be ceased as it is the primary serotonergic driver.",
+        "source_refs": [
+          "Therapeutic Guidelines: Serotonin syndrome"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "IV haloperidol 5 mg to control agitation, IV normal saline 2 L bolus, continue serotonergic agents to avoid rebound depression and admit for cardiac monitoring and observation overnight",
+        "correct": false,
+        "rationale": "Haloperidol is an antidopaminergic that can precipitate or worsen NMS and dystonia and should be avoided; continuing serotonergic agents in serotonin syndrome is inappropriate.",
+        "source_refs": [
+          "Therapeutic Guidelines: Serotonin syndrome"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "IV midazolam 5 mg then intubation with propofol and rocuronium, admit for 48 hours of therapeutic hypothermia to 33 C on the intensive care unit for neuroprotection during recovery",
+        "correct": false,
+        "rationale": "Therapeutic hypothermia to 33 C is used post cardiac arrest, not for serotonin syndrome; simple external cooling to below 38.5 C is sufficient unless the case is refractory.",
+        "source_refs": [
+          "Therapeutic Guidelines: Serotonin syndrome"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Serotonin syndrome presents within hours of a serotonergic combination with the triad of neuromuscular hyperactivity (lower limb hyperreflexia, clonus, tremor), autonomic instability (hyperthermia, tachycardia, mydriasis, diaphoresis, diarrhoea) and altered mental status. It is distinguished from NMS by rapid onset, lower limb dominance, clonus and lower CK. Management is cease serotonergic agents, benzodiazepines, active cooling and cyproheptadine if refractory.",
+      "key_points": [
+        "Serotonin syndrome: clonus, lower limb dominant, autonomic instability, rapid onset",
+        "NMS: rigidity, upper motor tone increase, days-long onset, very high CK",
+        "Treat serotonin syndrome with benzodiazepines, cooling, cyproheptadine",
+        "Avoid haloperidol; it worsens NMS if misdiagnosed"
+      ],
+      "pearls": "Tramadol, linezolid, MAOIs and MDMA are potent serotonergic agents commonly overlooked; a careful drug and supplement history including St John's wort is essential when serotonin syndrome is suspected."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Serotonin syndrome",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "Toxbase: Serotonin syndrome",
+        "url": "https://www.toxbase.org/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals",
+      "ck"
+    ]
+  },
+  {
+    "id": "sch829-022",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use",
+    "subtopic_detail": "Alcohol withdrawal seizure prevention with thiamine dosing",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "substance",
+      "withdrawal"
+    ],
+    "stem": "A 48-year-old man is admitted to your surgical ward pre-operatively for elective cholecystectomy tomorrow. He reports drinking 15 standard drinks daily for 20 years. His last drink was 12 hours ago. He is now tremulous, mildly anxious and diaphoretic. He has a CIWA-Ar score of 14. He has no history of seizures. His full blood count and electrolytes are normal but he has a mildly elevated GGT.",
+    "data_table": {
+      "Vital signs": "HR 102, BP 152/95, RR 18, SpO2 98 percent, temp 37.1 C",
+      "Examination": "Alert, mildly anxious, tremulous, sweaty, no focal neurology, no ataxia or ophthalmoplegia",
+      "Investigations": "CIWA-Ar 14, glucose 5.4, U&E normal, LFTs GGT 180 (5 to 55), MCV 102"
+    },
+    "lead_in": "What is the most appropriate initial regimen?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Oral thiamine 100 mg daily plus oral diazepam 5 mg every 6 hours PRN for CIWA-Ar score above 8, and reassess him in the morning ward round before the operating list starts",
+        "correct": false,
+        "rationale": "Oral thiamine 100 mg is inadequate for a high-risk drinker facing surgery; parenteral thiamine at 300 mg IV is preferred to prevent Wernicke encephalopathy in this scenario.",
+        "source_refs": [
+          "Therapeutic Guidelines: Alcohol withdrawal"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "IV thiamine 300 mg three times daily for at least 3 days before any glucose, oral diazepam symptom-triggered per CIWA-Ar (10 to 20 mg if score above 10), and admit for close monitoring",
+        "correct": true,
+        "rationale": "AU eTG advises IV thiamine 300 mg three times daily for at least 3 to 5 days in high-risk drinkers to prevent Wernicke encephalopathy, plus symptom-triggered oral diazepam guided by CIWA-Ar.",
+        "source_refs": [
+          "Therapeutic Guidelines: Alcohol withdrawal"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "IV glucose 10 percent at 100 mL per hour, oral diazepam 10 mg every 6 hours fixed dose regimen, IM thiamine 100 mg once daily for 3 days total and observation overnight",
+        "correct": false,
+        "rationale": "Giving glucose before parenteral thiamine can precipitate Wernicke encephalopathy in a chronic heavy drinker; parenteral thiamine must be given first before any glucose infusion.",
+        "source_refs": [
+          "Therapeutic Guidelines: Alcohol withdrawal"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Oral chlordiazepoxide 25 mg every 6 hours as fixed-dose reducing regimen without thiamine, and standard nil by mouth from midnight for the elective operation planned tomorrow morning",
+        "correct": false,
+        "rationale": "Withholding thiamine entirely in a chronic heavy drinker risks Wernicke encephalopathy and proceeding to elective surgery risks unmanaged withdrawal intra- and postoperatively; defer surgery.",
+        "source_refs": [
+          "Therapeutic Guidelines: Alcohol withdrawal"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "IM haloperidol 5 mg for agitation, oral thiamine 100 mg daily, and reduce diazepam to 2 mg every 8 hours PRN in view of the anaesthetic and surgery scheduled for tomorrow morning",
+        "correct": false,
+        "rationale": "Haloperidol lowers seizure threshold and is contraindicated in alcohol withdrawal; benzodiazepines are the definitive treatment for prevention of alcohol withdrawal seizures.",
+        "source_refs": [
+          "Therapeutic Guidelines: Alcohol withdrawal"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "High-risk alcohol withdrawal (heavy chronic intake, GGT elevated, MCV raised) is managed with parenteral thiamine 300 mg IV three times daily for at least 3 to 5 days to prevent Wernicke encephalopathy, plus symptom-triggered benzodiazepines (oral diazepam) guided by CIWA-Ar. Glucose must not precede thiamine in a chronic heavy drinker. Antipsychotics are contraindicated as they lower seizure threshold, and elective surgery should be deferred until withdrawal is managed.",
+      "key_points": [
+        "IV thiamine 300 mg TDS for at least 3 to 5 days in high-risk drinkers",
+        "Thiamine must precede glucose in chronic heavy drinkers",
+        "Symptom-triggered diazepam by CIWA-Ar is preferred to fixed-dose",
+        "Avoid antipsychotics (lower seizure threshold) and defer elective surgery"
+      ],
+      "pearls": "Wernicke encephalopathy is under-recognised: only 10 percent have the classical triad of ataxia, ophthalmoplegia and confusion at presentation; treat empirically in any at-risk patient with any one of these features."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Alcohol withdrawal",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "NHMRC Australian alcohol treatment guidelines 2021",
+        "url": "https://www.nhmrc.gov.au/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals",
+      "fbc",
+      "lfts"
+    ]
+  },
+  {
+    "id": "sch829-023",
+    "topic": "Psychiatry",
+    "subtopic": "Geriatric psychiatry",
+    "subtopic_detail": "Delirium versus dementia in acute presentation",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "delirium",
+      "geriatric"
+    ],
+    "stem": "An 82-year-old woman with mild dementia is brought to your emergency department by her daughter with 2 days of increased confusion, agitation and visual hallucinations of small animals. She has a background of hypertension and a urinary tract infection was treated 3 weeks ago. Cognitive scores have been stable at MMSE 22 for 12 months. On examination her attention is inconsistent, she is disorientated, and she is intermittently drowsy. Physical examination is otherwise unremarkable.",
+    "data_table": {
+      "Vital signs": "HR 92, BP 138/84, RR 20, SpO2 96 percent, temp 37.4 C",
+      "Examination": "Fluctuating attention (positive months-backwards error), disorientation, drowsy at times, no focal neurology, no meningism",
+      "Investigations": "Urinalysis: leucocytes and nitrites positive; U&E, glucose, calcium normal; CXR clear"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Prescribe oral risperidone 2 mg twice daily as a maintenance antipsychotic to control the hallucinations and agitation for at least 4 weeks with a review appointment planned",
+        "correct": false,
+        "rationale": "Antipsychotics for delirium should be short-term, low-dose (risperidone 0.25 to 0.5 mg), reserved for severe distress or safety risk, and reviewed daily; 2 mg twice daily for 4 weeks is inappropriate.",
+        "source_refs": [
+          "ACSQHC Delirium clinical care standard"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Refer her for CT head and lumbar puncture to exclude an intracranial cause and CNS infection before starting any treatment for the acute confusional presentation observed today",
+        "correct": false,
+        "rationale": "CT head is warranted if there is focal neurology, recent trauma or anticoagulation, or if no clear precipitant is found; LP if CNS infection is suspected. Neither is a routine first step with a clear UTI.",
+        "source_refs": [
+          "ACSQHC Delirium clinical care standard"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Admit for a delirium care package: identify and treat the infection, empirical oral antibiotics, ensure hydration, avoid physical restraints, use environmental de-escalation and family presence",
+        "correct": true,
+        "rationale": "Delirium superimposed on dementia is managed by identifying and treating the precipitant (here likely UTI), maintaining hydration, avoiding restraints, providing quiet single-room care and involving family.",
+        "source_refs": [
+          "ACSQHC Delirium clinical care standard"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Cease all her regular antihypertensive medications plus her cholinesterase inhibitor and start IV dexamethasone 8 mg for the acute confusional presentation with agitation observed today",
+        "correct": false,
+        "rationale": "Steroids can worsen delirium and are not indicated. Cholinesterase inhibitors may help dementia symptoms and should not be stopped abruptly during an acute confusional episode.",
+        "source_refs": [
+          "ACSQHC Delirium clinical care standard"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Discharge her home with her daughter with education about sundowning and follow up with her general practitioner in one week to reassess her cognitive status and current medications",
+        "correct": false,
+        "rationale": "Discharge home with acute delirium and safety concerns without treating the precipitant is unsafe; admission for management of the delirium and its cause is warranted here today.",
+        "source_refs": [
+          "ACSQHC Delirium clinical care standard"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Delirium superimposed on dementia is diagnosed by acute onset, fluctuating attention, altered arousal and disorientation. The precipitant here (likely urinary sepsis) is identified and treated. Non-pharmacological measures are first line: hydration, quiet environment, family involvement, orientation cues, and avoiding restraints. Antipsychotics are last resort at low doses (risperidone 0.25 to 0.5 mg) for severe distress or safety risk.",
+      "key_points": [
+        "Identify and treat the precipitant of delirium (infection, medication, metabolic)",
+        "Non-pharmacological measures first line",
+        "If antipsychotic needed, low dose (risperidone 0.25 to 0.5 mg), short-term, daily review",
+        "CT and LP only if focal signs, trauma, anticoagulation or no clear cause"
+      ],
+      "pearls": "Cholinesterase inhibitors used for dementia do not treat delirium and should not be started acutely for confusion; there is evidence they may worsen delirium duration and outcomes."
+    },
+    "sources": [
+      {
+        "label": "ACSQHC Delirium clinical care standard",
+        "url": "https://www.safetyandquality.gov.au/"
+      },
+      {
+        "label": "eTG complete: Delirium",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals"
+    ]
+  },
+  {
+    "id": "sch829-024",
+    "topic": "Medicine",
+    "subtopic": "Cardiology",
+    "subtopic_detail": "STEMI reperfusion PCI versus fibrinolysis",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "cardiology",
+      "emergency"
+    ],
+    "stem": "A 55-year-old man presents to your regional emergency department with 90 minutes of central crushing chest pain. His ECG shows 3 mm ST elevation in the anterior leads with reciprocal changes. The nearest PCI-capable hospital is 3 hours away by road transport. Air retrieval is not available for at least 2 hours. Troponin has been sent. He has no contraindications to thrombolysis. He weighs 82 kg.",
+    "data_table": {
+      "Vital signs": "HR 88, BP 132/82, RR 18, SpO2 98 percent, temp 36.7 C",
+      "Examination": "Alert, in pain, no basal crackles, JVP not elevated, no pulmonary oedema, no new murmurs",
+      "Investigations": "ECG: 3 mm ST elevation V1 to V4, reciprocal depression II, III, aVF; troponin pending; potassium 4.1; creatinine 90; INR 1.0"
+    },
+    "lead_in": "What is the most appropriate reperfusion strategy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Immediate transfer to the PCI centre for primary PCI, targeting a door-to-balloon time of 90 minutes from arrival at the receiving centre for optimal reperfusion outcomes",
+        "correct": false,
+        "rationale": "Transfer for primary PCI is only preferred when total delay to PCI is under 120 minutes from first medical contact; 3 hours by road plus door-to-balloon exceeds this window, so lytics are preferred.",
+        "source_refs": [
+          "NHFA STEMI guideline 2022"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Wait for the troponin result then start dual antiplatelet therapy and heparin, and admit for medical management without acute reperfusion until further test results are available",
+        "correct": false,
+        "rationale": "STEMI diagnosis is ECG-based; waiting for troponin delays reperfusion. Not offering reperfusion at all is inappropriate for STEMI within 12 hours of symptom onset in a patient without contraindications.",
+        "source_refs": [
+          "NHFA STEMI guideline 2022"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Intravenous streptokinase 1.5 million units over 60 minutes plus oral aspirin, then defer transfer until pain resolves and further reperfusion needs are reassessed by the retrieval team",
+        "correct": false,
+        "rationale": "Streptokinase is rarely used in Australia due to inferior patency rates and allergy risk; tenecteplase is the preferred fibrinolytic. Transfer should also occur to allow rescue PCI if reperfusion fails.",
+        "source_refs": [
+          "NHFA STEMI guideline 2022"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Weight-adjusted IV tenecteplase (about 40 mg) plus enoxaparin and clopidogrel now, then transfer for rescue PCI if reperfusion fails or routine early angiography 3 to 24 hours",
+        "correct": true,
+        "rationale": "When primary PCI cannot be delivered within 120 minutes of first medical contact, prehospital or in-hospital fibrinolysis with weight-adjusted tenecteplase is preferred, followed by early transfer for pharmacoinvasive PCI.",
+        "source_refs": [
+          "NHFA STEMI guideline 2022"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "IV nitroglycerin infusion titrated to pain relief, oral aspirin and metoprolol, and admit locally for medical management until pain resolves and the troponin trajectory becomes clearer over time",
+        "correct": false,
+        "rationale": "Nitrates and beta-blockers do not reperfuse the coronary artery; reperfusion is the priority in STEMI within 12 hours of symptom onset in a patient without contraindications to thrombolysis.",
+        "source_refs": [
+          "NHFA STEMI guideline 2022"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "In STEMI, primary PCI is preferred when it can be delivered within 120 minutes of first medical contact. Beyond this window, weight-adjusted bolus tenecteplase (with enoxaparin and clopidogrel or ticagrelor as per local protocol) is given without delay, followed by early transfer to a PCI centre for rescue PCI if reperfusion fails or routine coronary angiography at 3 to 24 hours (pharmacoinvasive strategy). Waiting for troponin or omitting reperfusion is inappropriate.",
+      "key_points": [
+        "Primary PCI preferred if within 120 min of first medical contact",
+        "Otherwise fibrinolysis with tenecteplase then transfer",
+        "Rescue PCI if failed reperfusion; routine angiography 3 to 24 hours",
+        "STEMI diagnosis is ECG-based; do not wait for troponin"
+      ],
+      "pearls": "Failed reperfusion after fibrinolysis is defined as under 50 percent ST resolution at 60 to 90 minutes, ongoing chest pain, or haemodynamic instability; these mandate immediate rescue PCI, not repeat lytics."
+    },
+    "sources": [
+      {
+        "label": "NHFA STEMI guideline 2022",
+        "url": "https://www.heartfoundation.org.au/"
+      },
+      {
+        "label": "ESC STEMI guideline",
+        "url": "https://www.escardio.org/Guidelines"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals",
+      "troponin"
+    ]
+  },
+  {
+    "id": "sch829-025",
+    "topic": "Medicine",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Community-acquired pneumonia moderate severity",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "infection",
+      "respiratory"
+    ],
+    "stem": "A 65-year-old man presents to your emergency department with 3 days of productive cough, right-sided pleuritic chest pain and fever. He has a background of well-controlled type 2 diabetes. On examination he has right lower zone crackles and bronchial breathing. Chest x-ray shows a dense right lower lobe consolidation. Confusion Assessment Method is negative. His CURB-65 score is 1 (age 65 or over, plus one additional point).",
+    "data_table": {
+      "Vital signs": "HR 102, BP 128/78, RR 26, SpO2 91 percent room air, temp 38.6 C",
+      "Examination": "Alert, orientated, right lower zone crackles and bronchial breathing, no signs of shock",
+      "Investigations": "Urea 6.2 mmol/L, WCC 18, CRP 240, sodium 138, creatinine 90; CXR right lower lobe consolidation"
+    },
+    "lead_in": "What is the most appropriate initial antibiotic strategy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Oral amoxicillin 1 g three times daily plus oral doxycycline 100 mg twice daily for 5 days, home management with a general practitioner review at 48 hours to reassess",
+        "correct": false,
+        "rationale": "Home management may be acceptable for very low severity (CURB-65 0 to 1 with no adverse features) but hypoxia at SpO2 91 percent and RR 26 are adverse features so hospital IV therapy is preferred.",
+        "source_refs": [
+          "Therapeutic Guidelines: Community-acquired pneumonia"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "IV piperacillin-tazobactam 4.5 g every 8 hours plus IV azithromycin 500 mg once daily for 7 days total, targeting broad spectrum cover for the community-acquired pneumonia observed today",
+        "correct": false,
+        "rationale": "Broad spectrum cover with anti-pseudomonal beta-lactam is reserved for severe pneumonia or specific risk factors (structural lung disease, healthcare exposure) and is not first line for moderate CAP.",
+        "source_refs": [
+          "Therapeutic Guidelines: Community-acquired pneumonia"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "IV ceftriaxone 2 g once daily plus IV vancomycin 15 mg/kg twice daily for 10 days, providing empirical MRSA cover for the community-acquired pneumonia observed today at admission",
+        "correct": false,
+        "rationale": "Vancomycin is added only when there is necrotising pneumonia, cavitation or specific MRSA risk factors; empirical addition for community-acquired pneumonia is inappropriate as first-line therapy.",
+        "source_refs": [
+          "Therapeutic Guidelines: Community-acquired pneumonia"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Oral moxifloxacin 400 mg once daily for 5 days plus oseltamivir 75 mg twice daily for 5 days, then discharge home to community with a general practitioner follow-up appointment in 2 days",
+        "correct": false,
+        "rationale": "Moxifloxacin monotherapy for CAP has QT and mycobacterial concerns; oseltamivir requires evidence of influenza; home management with hypoxia at SpO2 91 percent is not safe management.",
+        "source_refs": [
+          "Therapeutic Guidelines: Community-acquired pneumonia"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "IV benzylpenicillin 1.2 g every 6 hours plus oral doxycycline 100 mg twice daily for 7 days total, then switch to oral therapy once he is clinically stable and improving",
+        "correct": true,
+        "rationale": "AU eTG for moderate-severity community-acquired pneumonia requiring hospitalisation is IV benzylpenicillin plus oral doxycycline, switching to oral therapy once clinically stable, tolerating oral, and improving inflammatory markers.",
+        "source_refs": [
+          "Therapeutic Guidelines: Community-acquired pneumonia"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Moderate-severity community-acquired pneumonia requiring hospital admission is treated in Australia with IV benzylpenicillin 1.2 g every 6 hours plus oral doxycycline 100 mg twice daily to cover atypicals. Once the patient is clinically stable (afebrile 24 hours, tolerating oral, improving inflammatory markers, no hypoxia), switch to oral amoxicillin 1 g TDS plus doxycycline for a total 7 day course. Broad-spectrum agents are reserved for severe disease or specific risk factors.",
+      "key_points": [
+        "Moderate CAP: IV benzylpenicillin plus oral doxycycline",
+        "Switch to oral when clinically stable; total 7 days",
+        "CURB-65 useful for severity but adverse features (hypoxia, RR) also decide admission",
+        "Broad-spectrum only for severe disease or specific risk factors"
+      ],
+      "pearls": "IV to oral switch is safe when the patient has stable vitals for 24 hours, is tolerating oral, is haemodynamically stable, has improving CRP and WCC, and there is no pleural infection; do not wait for the CXR to clear."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Community-acquired pneumonia",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "Thoracic Society ANZ CAP guideline",
+        "url": "https://www.thoracic.org.au/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals",
+      "fbc",
+      "crp"
+    ]
+  },
+  {
+    "id": "sch829-026",
+    "topic": "Medicine",
+    "subtopic": "Haematology",
+    "subtopic_detail": "Warfarin peri-procedural bridging for elective surgery",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "haem",
+      "perioperative"
+    ],
+    "stem": "A 68-year-old woman with atrial fibrillation (CHA2DS2-VASc score 4) is on warfarin with INR 2.5. She is scheduled for an elective knee arthroplasty in 7 days. She has no history of prior stroke or systemic embolism, no mechanical heart valve, and no recent (under 3 months) venous thromboembolism. She has moderate renal impairment with eGFR 45. There has been no recent bleeding.",
+    "data_table": {
+      "Vital signs": "HR 78, BP 132/80, RR 16, temp 36.7 C",
+      "Examination": "Alert, well, ECG atrial fibrillation, no signs of embolism or bleeding",
+      "Investigations": "INR 2.5, Hb 128, platelets 260, creatinine 105, eGFR 45"
+    },
+    "lead_in": "What is the most appropriate peri-procedural anticoagulation plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Stop warfarin 5 days before surgery, no bridging heparin required, then restart warfarin 12 to 24 hours after surgery when adequate haemostasis has been achieved by the surgical team",
+        "correct": true,
+        "rationale": "For atrial fibrillation without mechanical valve, prior stroke or recent VTE, BRIDGE trial evidence shows no bridging is preferred; bridging LMWH increases bleeding without reducing stroke.",
+        "source_refs": [
+          "THANZ perioperative anticoagulation guidance"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Continue warfarin at usual dose throughout the perioperative period since the bleeding risk of primary knee arthroplasty is generally acceptably low in most patients undergoing the procedure",
+        "correct": false,
+        "rationale": "Elective knee arthroplasty is a high bleeding risk procedure; warfarin must be held perioperatively to avoid intra- and postoperative bleeding requiring transfusion and reoperation.",
+        "source_refs": [
+          "THANZ perioperative anticoagulation guidance"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Stop warfarin 5 days before surgery and bridge with therapeutic-dose enoxaparin 1 mg/kg twice daily starting 3 days before the operation and continuing until the day of surgery this year",
+        "correct": false,
+        "rationale": "Full-dose bridging is reserved for very high thromboembolic risk (mechanical mitral valve, recent stroke or VTE under 3 months, CHA2DS2-VASc 7 or more); this patient does not meet those criteria.",
+        "source_refs": [
+          "THANZ perioperative anticoagulation guidance"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Stop warfarin 3 days before surgery and give oral vitamin K 5 mg to accelerate INR normalisation before the procedure and cross-match blood for the operation planned to occur this week",
+        "correct": false,
+        "rationale": "Routine oral vitamin K creates warfarin resistance postoperatively, delaying re-anticoagulation; 5 days off warfarin without vitamin K reliably normalises the INR in most patients.",
+        "source_refs": [
+          "THANZ perioperative anticoagulation guidance"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Switch warfarin to apixaban 5 mg twice daily starting 5 days before surgery, then hold apixaban 24 hours before the surgery scheduled for later next week and restart afterwards on advice",
+        "correct": false,
+        "rationale": "Switching between anticoagulants perioperatively adds complexity and cost without benefit, introducing a gap or overlap; simple hold of warfarin is the standard perioperative strategy.",
+        "source_refs": [
+          "THANZ perioperative anticoagulation guidance"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "For atrial fibrillation on warfarin without mechanical valve, recent stroke, recent VTE, or CHA2DS2-VASc of 7 or more, the BRIDGE trial showed no benefit to LMWH bridging and increased bleeding risk. Stop warfarin 5 days before surgery, do not bridge, and restart warfarin 12 to 24 hours after surgery when haemostasis is achieved. Vitamin K acceleration causes postoperative warfarin resistance and should be avoided routinely.",
+      "key_points": [
+        "No bridging for AF unless mechanical valve, recent stroke, recent VTE or CHA2DS2-VASc 7+",
+        "Stop warfarin 5 days pre-op",
+        "Restart warfarin 12 to 24 hours post-op when haemostasis achieved",
+        "Routine oral vitamin K causes postoperative warfarin resistance"
+      ],
+      "pearls": "Full-dose bridging LMWH is contraindicated within 24 hours of major surgery and is generally started 3 days before and stopped 24 hours before; prophylactic-dose LMWH can be used postoperatively for surgical VTE prophylaxis."
+    },
+    "sources": [
+      {
+        "label": "THANZ perioperative anticoagulation guidance",
+        "url": "https://www.thanz.org.au/"
+      },
+      {
+        "label": "ACC 2017 Peri-procedural anticoagulation guideline",
+        "url": "https://www.acc.org/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals",
+      "inr"
+    ]
+  },
+  {
+    "id": "sch829-027",
+    "topic": "Medicine",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Hyponatraemia SIADH versus hypovolaemic differentiation",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "endocrine",
+      "electrolytes"
+    ],
+    "stem": "A 74-year-old woman with newly diagnosed small cell lung cancer presents to your medical assessment unit with 5 days of nausea, unsteadiness and mild headache. She is on no diuretics. Her serum sodium is 118 mmol/L (baseline 138 two weeks ago), plasma osmolality 254 mOsm/kg, urine osmolality 480 mOsm/kg, urine sodium 55 mmol/L. She is euvolaemic clinically. TSH and cortisol are normal. She is alert with no focal neurology.",
+    "data_table": {
+      "Vital signs": "HR 78, BP 128/78 lying, 124/76 standing, RR 16, SpO2 97 percent, temp 36.7 C",
+      "Examination": "Alert, orientated, no ataxia, no focal neurology, mucous membranes moist, JVP visible at 4 cm, no oedema",
+      "Investigations": "Na 118, K 4.0, urea 3.4, creatinine 60, plasma osm 254, urine osm 480, urine Na 55, TSH 1.8, cortisol 480"
+    },
+    "lead_in": "What is the most appropriate initial management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Infuse 1 litre of 0.9 percent normal saline over 4 hours and reassess her sodium level after each litre until the serum sodium level reaches 130 mmol/L or above",
+        "correct": false,
+        "rationale": "Isotonic saline in SIADH can paradoxically worsen hyponatraemia because urine osmolality (480) exceeds infused osmolality; water is retained while sodium is excreted in the urine.",
+        "source_refs": [
+          "European Society of Endocrinology hyponatraemia guideline"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Restrict fluids to 800 mL/day with sodium and neurological monitoring twice daily, aiming to raise serum sodium by no more than 8 mmol/L per 24 hours to avoid osmotic demyelination",
+        "correct": true,
+        "rationale": "Euvolaemic hyponatraemia with concentrated urine and euvolaemia meets SIADH criteria; first-line management is fluid restriction (800 to 1000 mL/day) with monitoring and limiting correction to under 8 mmol/L per 24 hours.",
+        "source_refs": [
+          "European Society of Endocrinology hyponatraemia guideline"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Give 3 percent hypertonic saline 150 mL bolus over 20 minutes to rapidly correct the serum sodium above 125 mmol/L within the next 4 hours, aiming to abolish symptoms quickly today",
+        "correct": false,
+        "rationale": "Hypertonic saline is reserved for severe symptomatic hyponatraemia (seizures, coma, severe drowsiness); this patient has only mild symptoms and can be managed with fluid restriction first.",
+        "source_refs": [
+          "European Society of Endocrinology hyponatraemia guideline"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Prescribe oral demeclocycline 300 mg four times daily and continue an unrestricted oral fluid intake for maintenance, with monitoring of the serum sodium level daily on the ward round",
+        "correct": false,
+        "rationale": "Demeclocycline is now rarely used due to nephrotoxicity and slow onset; tolvaptan is preferred if pharmacotherapy is needed after fluid restriction has failed to produce an adequate response.",
+        "source_refs": [
+          "European Society of Endocrinology hyponatraemia guideline"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Give IV furosemide 40 mg with oral salt tablets, then correct the serum sodium with a 2 percent saline infusion titrated overnight to rise no more than 8 mmol/L in the first 24 hours",
+        "correct": false,
+        "rationale": "Furosemide plus salt tablets is a niche second-line strategy in SIADH; not first line and carries a risk of overcorrection and electrolyte disturbance without benefit over fluid restriction.",
+        "source_refs": [
+          "European Society of Endocrinology hyponatraemia guideline"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "SIADH diagnostic criteria are met with euvolaemic hypotonic hyponatraemia (plasma osm below 275), inappropriately concentrated urine (urine osm above 100), and urine sodium above 30 mmol/L, with normal thyroid and adrenal function, no diuretic use and no volume depletion. First-line management is fluid restriction 800 to 1000 mL/day; hypertonic saline is reserved for severe symptomatic disease. Correction is limited to under 8 mmol/L per 24 hours to prevent osmotic demyelination.",
+      "key_points": [
+        "SIADH: euvolaemic, plasma osm low, urine osm > 100, urine Na > 30, normal TFTs and cortisol",
+        "First line: fluid restrict 800 to 1000 mL/day",
+        "Isotonic saline can paradoxically worsen SIADH",
+        "Correct no more than 8 mmol/L in 24 hours; hypertonic saline only for severe symptoms"
+      ],
+      "pearls": "If overcorrection occurs (sodium rises more than 8 mmol/L in 24 hours), stop all sodium sources, administer 5 percent dextrose IV, and consider desmopressin 2 microgram IV to prevent osmotic demyelination."
+    },
+    "sources": [
+      {
+        "label": "European Society of Endocrinology hyponatraemia guideline",
+        "url": "https://www.ese-hormones.org/"
+      },
+      {
+        "label": "eTG complete: Hyponatraemia",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals",
+      "uec"
+    ]
+  },
+  {
+    "id": "sch829-028",
+    "topic": "Medicine",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "HHS versus DKA insulin infusion approach",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "endocrine",
+      "fluids"
+    ],
+    "stem": "A 76-year-old man with type 2 diabetes on metformin and gliclazide presents to your emergency department after 5 days of polyuria and progressive drowsiness following a chest infection. His glucose is 42 mmol/L, sodium 152, potassium 4.0, urea 18, creatinine 130. Venous gas pH 7.34, bicarbonate 20, blood ketones 0.4 mmol/L. Calculated effective osmolality is 336 mOsm/kg. He is drowsy but rousable, significantly dehydrated with dry mucous membranes and reduced skin turgor.",
+    "data_table": {
+      "Vital signs": "HR 118, BP 100/60, RR 22, SpO2 96 percent, temp 37.6 C, weight 80 kg",
+      "Examination": "Drowsy, GCS 13, dry mucous membranes, reduced skin turgor, capillary refill 3 seconds, no focal neurology, chest crepitations right base",
+      "Investigations": "Glucose 42, Na 152, K 4.0, urea 18, creatinine 130, VBG pH 7.34, HCO3 20, ketones 0.4, effective osm 336"
+    },
+    "lead_in": "What is the most appropriate initial fluid and insulin approach?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "IV 0.9 percent saline 1 litre over 1 hour, then continue at 250 mL/hour and commence IV insulin infusion at 0.05 units/kg/hour immediately once serum potassium is above 3.5 mmol/L",
+        "correct": false,
+        "rationale": "HHS: give fluid first (1 L over 1 hour, reassess), start insulin low-dose 0.05 units/kg/hour and only after several hours when glucose ceases falling with fluids; rapid insulin causes cerebral oedema.",
+        "source_refs": [
+          "JBDS-IP: Management of hyperosmolar hyperglycaemic state"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "IV 0.9 percent saline 2 litres over 1 hour, commence IV insulin infusion at 0.1 units/kg/hour immediately upon admission and aim for a glucose fall of 10 mmol/L per hour with observation",
+        "correct": false,
+        "rationale": "0.1 units/kg/hour is the DKA regimen; in HHS this rate causes too-rapid osmotic shifts leading to cerebral oedema and cardiovascular collapse. Target glucose fall in HHS is 5 mmol/L per hour.",
+        "source_refs": [
+          "JBDS-IP: Management of hyperosmolar hyperglycaemic state"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "IV 0.9 percent saline 1 litre over 1 hour, reassess volume status, then only add low-dose insulin at 0.05 units/kg/hour if glucose fails to fall by 5 mmol/L per hour with fluids alone",
+        "correct": true,
+        "rationale": "AU HHS management: aggressive but careful isotonic fluid is primary; insulin is low-dose (0.05 units/kg/hour) and delayed, only added when glucose stops falling with fluids alone, targeting 5 mmol/L fall per hour.",
+        "source_refs": [
+          "JBDS-IP: Management of hyperosmolar hyperglycaemic state"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "IV 5 percent dextrose 1 litre over 2 hours, then an IV insulin bolus of 10 units followed by a 0.1 units/kg/hour infusion, targeting a glucose of 8 mmol/L within the next 4 hours today",
+        "correct": false,
+        "rationale": "5 percent dextrose worsens hyperglycaemia; insulin bolus is not recommended in DKA or HHS; targeting 8 mmol/L within 4 hours is far too rapid an osmolar correction for HHS management.",
+        "source_refs": [
+          "JBDS-IP: Management of hyperosmolar hyperglycaemic state"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "IV Hartmann's 500 mL over 1 hour, commence subcutaneous insulin glargine 20 units at bedtime, treat chest infection and reassess him again in the morning on the ward round after handover",
+        "correct": false,
+        "rationale": "Subcutaneous long-acting insulin has slow onset and cannot be titrated in an acutely unwell patient; IV insulin infusion (once fluid-resuscitated and if needed) is required for HHS.",
+        "source_refs": [
+          "JBDS-IP: Management of hyperosmolar hyperglycaemic state"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "HHS differs from DKA in that acidosis and significant ketosis are absent, and effective osmolality is markedly raised (over 320 mOsm/kg). Management prioritises IV fluid resuscitation with 0.9 percent saline (1 L in the first hour then reassess), which alone usually reduces glucose by 5 mmol/L per hour. Insulin is started at low dose (0.05 units/kg/hour) and delayed until glucose ceases falling with fluids. Target correction is 5 mmol/L per hour fall.",
+      "key_points": [
+        "HHS: acidosis absent, ketones minimal, effective osmolality > 320",
+        "Fluid resuscitation is primary; insulin low-dose and delayed",
+        "Target glucose fall 5 mmol/L per hour, not 10",
+        "Rapid osmolar correction causes cerebral oedema and haemodynamic collapse"
+      ],
+      "pearls": "HHS has a mortality of 15 to 20 percent compared with 1 to 5 percent for DKA; identifying and treating the precipitant (commonly infection, myocardial infarction, medication non-adherence) is crucial."
+    },
+    "sources": [
+      {
+        "label": "JBDS-IP: Management of hyperosmolar hyperglycaemic state",
+        "url": "https://www.diabetes.org.uk/professionals/resources/shared-practice/inpatient-care"
+      },
+      {
+        "label": "eTG complete: HHS",
+        "url": "https://tgldcdp.tg.org.au/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals",
+      "uec",
+      "vbg",
+      "glucose"
+    ]
+  },
+  {
+    "id": "sch829-029",
+    "topic": "Medicine",
+    "subtopic": "Nephrology",
+    "subtopic_detail": "Contrast-induced nephropathy prevention",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "renal",
+      "perioperative"
+    ],
+    "stem": "A 72-year-old man with type 2 diabetes and stage 3B chronic kidney disease (eGFR 38) is booked for a CT coronary angiogram tomorrow. His usual medications are metformin, ramipril, spironolactone, atorvastatin and gliclazide. He has recently increased his frusemide because of ankle swelling. His serum creatinine has been stable and his blood pressure is well controlled. He has no history of allergy to contrast media.",
+    "data_table": {
+      "Vital signs": "HR 74, BP 132/80, RR 16, weight 84 kg",
+      "Examination": "Alert, mild pitting ankle oedema, chest clear, JVP not raised",
+      "Investigations": "Creatinine 155, eGFR 38, K 4.4, Hb 128, HbA1c 7.2 percent, BNP 240"
+    },
+    "lead_in": "What is the most appropriate contrast nephropathy prevention plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Give IV N-acetylcysteine 1200 mg twice daily for 24 hours pre-procedure and 24 hours post-procedure, and continue all of his usual medications through the procedure without dose changes",
+        "correct": false,
+        "rationale": "Recent evidence (PRESERVE trial) shows no benefit of N-acetylcysteine over placebo for contrast-induced nephropathy prevention; it is no longer recommended in contemporary practice guidelines.",
+        "source_refs": [
+          "KHA-CARI: Contrast-induced nephropathy prevention"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "Continue metformin and diuretics but withhold ramipril for 48 hours before the procedure, and no IV hydration is required for a patient with an eGFR greater than 30 mL/min/1.73m2 undergoing contrast",
+        "correct": false,
+        "rationale": "Metformin should be temporarily held from the day of contrast when eGFR is under 60 until renal function is confirmed stable 48 hours later, due to lactic acidosis risk; ACEi and diuretics are also usually held.",
+        "source_refs": [
+          "KHA-CARI: Contrast-induced nephropathy prevention"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Prescribe oral sodium bicarbonate 3 g twice daily for 3 days before and 3 days after the procedure without other measures for prevention of contrast-induced nephropathy in this high-risk patient today",
+        "correct": false,
+        "rationale": "Sodium bicarbonate is non-superior to isotonic saline for CIN prevention (PRESERVE); IV isotonic saline hydration is the standard first-line prophylaxis in patients with additional risk factors like diabetes.",
+        "source_refs": [
+          "KHA-CARI: Contrast-induced nephropathy prevention"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Withhold metformin, spironolactone, ramipril and frusemide from the day of procedure, IV 0.9 percent saline at 1 mL/kg/hour for 12 hours before and 12 hours after, use lowest effective iso-osmolar contrast",
+        "correct": true,
+        "rationale": "AU KHA-CARI approach for eGFR 30 to 45 with additional risk factors (diabetes, HF, ACEi, diuretics): withhold nephrotoxic and metformin drugs, provide 12-hour peri-procedural isotonic saline hydration, minimise contrast volume with iso-osmolar agent.",
+        "source_refs": [
+          "KHA-CARI: Contrast-induced nephropathy prevention"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Cancel the CT coronary angiogram and proceed to invasive coronary angiography with a stress cardiac MRI to avoid all contrast exposure for the patient in view of his renal impairment and comorbidities",
+        "correct": false,
+        "rationale": "Invasive coronary angiography uses more contrast than CT; MRI does not replace anatomical coronary imaging. Preventive strategies allow the CT to proceed safely in most patients at risk.",
+        "source_refs": [
+          "KHA-CARI: Contrast-induced nephropathy prevention"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "Contrast-induced nephropathy prevention in high-risk patients (eGFR under 45, diabetes, heart failure, ACEi/ARB/diuretics/NSAIDs) requires withholding nephrotoxic medications and temporary cessation of metformin because of lactic acidosis risk. IV isotonic saline at 1 mL/kg/hour is given for 12 hours before and 12 hours after the procedure. The lowest effective iso-osmolar or low-osmolar contrast volume should be used. N-acetylcysteine and sodium bicarbonate are not superior to saline hydration (PRESERVE trial 2018) and are no longer recommended.",
+      "key_points": [
+        "Withhold metformin (day of contrast); recheck creatinine at 48 hours before resuming",
+        "Withhold ACEi/ARB/diuretics peri-procedure in high-risk patients",
+        "IV isotonic saline 1 mL/kg/hour 12 hours pre and post",
+        "Use lowest effective iso-osmolar contrast volume"
+      ],
+      "pearls": "Post-contrast acute kidney injury is now considered rarer than previously for IV studies, but the highest-risk group remains diabetics with eGFR under 30 or acute kidney injury; radiologist and cardiologist should be informed to minimise volume."
+    },
+    "sources": [
+      {
+        "label": "KHA-CARI: Contrast-induced nephropathy prevention",
+        "url": "https://www.cariguidelines.org/"
+      },
+      {
+        "label": "NICE NG148: Acute kidney injury",
+        "url": "https://www.nice.org.uk/guidance/ng148"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals",
+      "uec"
+    ]
+  },
+  {
+    "id": "sch829-030",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Empirical antibiotics in urosepsis with recent ESBL history",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": [
+      "infection",
+      "renal"
+    ],
+    "stem": "A 78-year-old woman is transferred from her nursing home to your emergency department with 24 hours of confusion, fever and hypotension. She is known to have recurrent urinary tract infections and has had two admissions for ESBL Escherichia coli urosepsis in the past 6 months. On examination she is drowsy, hypotensive despite 2 litres of IV fluids, and has suprapubic tenderness. Bloods show creatinine 220 (baseline 90), lactate 3.6 and CRP 320. She is not pregnant.",
+    "data_table": {
+      "Vital signs": "HR 118, BP 88/54 (post 2 L fluids), RR 26, SpO2 96 percent, temp 39.1 C",
+      "Examination": "Drowsy, GCS 13, warm peripheries, capillary refill 3 seconds, suprapubic tenderness, no flank pain",
+      "Investigations": "Creatinine 220 (baseline 90), urea 14, lactate 3.6, WCC 22, CRP 320, urinalysis leucocytes and nitrites positive"
+    },
+    "lead_in": "What is the most appropriate empirical antibiotic and dosing decision?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "IV amoxicillin 2 g every 6 hours plus IV gentamicin 5 mg/kg once daily until cultures return with sensitivities, with standard renal dose adjustment being applied for gentamicin in her acute kidney injury",
+        "correct": false,
+        "rationale": "Amoxicillin plus gentamicin does not reliably cover ESBL organisms; empirical cover for a patient with recent ESBL infection and septic shock must include a carbapenem for adequate empirical activity.",
+        "source_refs": [
+          "Therapeutic Guidelines: Urinary tract infections"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "IV ceftriaxone 2 g once daily as empirical monotherapy, then add ampicillin only if enterococcal cover is judged required by microbiology, and continue ward-based care with hourly BP monitoring overnight",
+        "correct": false,
+        "rationale": "Ceftriaxone will not cover ESBL organisms which produce enzymes that hydrolyse third-generation cephalosporins; ward-based care is inappropriate for septic shock unresponsive to initial 2 L fluids.",
+        "source_refs": [
+          "Therapeutic Guidelines: Urinary tract infections"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "IV piperacillin-tazobactam 4.5 g every 8 hours dose-reduced for the acute kidney injury, and continue ward-based care with hourly blood pressure monitoring and delayed reassessment in the morning ward round",
+        "correct": false,
+        "rationale": "Piperacillin-tazobactam has poor reliability in ESBL bacteraemia (MERINO trial showed higher mortality vs meropenem); ICU-level care is required for shock unresponsive to fluid resuscitation.",
+        "source_refs": [
+          "Therapeutic Guidelines: Urinary tract infections"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "IV vancomycin 25 mg/kg loading then 15 mg/kg every 12 hours, plus IV metronidazole 500 mg every 8 hours for anaerobic cover, and admit her under general medicine for ongoing care and daily specialist review",
+        "correct": false,
+        "rationale": "Vancomycin plus metronidazole covers gram-positive and anaerobic infection but does not cover ESBL gram-negative pathogens driving her urosepsis, and misses the causative organism entirely today.",
+        "source_refs": [
+          "Therapeutic Guidelines: Urinary tract infections"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "IV meropenem 1 g every 8 hours dose-adjusted for creatinine clearance, obtain blood and urine cultures before the first dose, and escalate to ICU for haemodynamic support and vasopressors",
+        "correct": true,
+        "rationale": "For septic shock with recent history of ESBL urosepsis, empirical carbapenem cover (meropenem) is appropriate and dose-adjusted; cultures should be taken before antibiotics if this does not delay administration beyond 45 minutes.",
+        "source_refs": [
+          "Therapeutic Guidelines: Urinary tract infections"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "In septic shock with a history of ESBL infection in the past 6 months, empirical antibiotic cover should include a carbapenem (meropenem 1 g every 8 hours, dose-adjusted for creatinine clearance). Piperacillin-tazobactam is inferior to meropenem for ESBL bacteraemia (MERINO trial 2018). Blood and urine cultures should be obtained before antibiotics only if this does not delay administration beyond 45 minutes. Septic shock unresponsive to 2 L of fluid warrants ICU-level care and vasopressor consideration.",
+      "key_points": [
+        "ESBL history in the past 6 months: cover empirically with a carbapenem",
+        "Piperacillin-tazobactam inferior to meropenem for ESBL bacteraemia (MERINO)",
+        "Cultures before antibiotics only if no delay beyond 45 minutes",
+        "Septic shock unresponsive to 2 L fluid: escalate to ICU and vasopressors"
+      ],
+      "pearls": "For a patient with ESBL history but who is haemodynamically stable and not septic, oral fosfomycin 3 g single dose or oral pivmecillinam are options for uncomplicated ESBL cystitis, sparing carbapenems."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Urinary tract infections",
+        "url": "https://tgldcdp.tg.org.au/"
+      },
+      {
+        "label": "MERINO trial: piperacillin-tazobactam vs meropenem for ESBL",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/30208454/"
+      }
+    ],
+    "created": "2026-08-29",
+    "reference_ranges": [
+      "adult_vitals",
+      "uec",
+      "lactate"
+    ]
+  }
+]
