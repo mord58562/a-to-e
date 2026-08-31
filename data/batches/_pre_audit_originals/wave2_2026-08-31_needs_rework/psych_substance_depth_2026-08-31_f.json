@@ -1,0 +1,1145 @@
+[
+  {
+    "id": "psych-substancedepth-001-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - alcohol withdrawal",
+    "subtopic_detail": "CIWA-Ar severity banding and treatment escalation",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["alcohol withdrawal", "CIWA-Ar"],
+    "stem": "A 47-year-old man is admitted to a Melbourne inner-city hospital ward 20 hours after his last drink. He drinks approximately 220 g of alcohol daily and has had no prior withdrawal seizures or delirium. Nursing staff have completed serial CIWA-Ar scores using the revised 10-item scale: 4 hours ago the score was 6, at the last review 2 hours ago it was 12, and this most recent set is 19 with visual misperceptions of the curtains but no formed hallucinations.\n\nHe remains oriented to person, place, and month. Liver function tests, urea and electrolytes, and coagulation profile are within normal limits.",
+    "data_table": {
+      "Vital signs": "HR 118, BP 158/96, RR 20, SpO2 97% room air, temp 37.6",
+      "Examination": "Coarse hand tremor, diaphoretic, mildly anxious, alert and oriented",
+      "Investigations": "LFTs and INR within normal limits; glucose 5.4 mmol/L; magnesium 0.82 mmol/L (0.70-1.10)"
+    },
+    "lead_in": "What is the single most appropriate next pharmacological action?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Continue current oxazepam 30 mg PO regimen and reassess at the next scheduled 4-hourly CIWA-Ar",
+        "correct": false,
+        "rationale": "A rising CIWA-Ar crossing the moderate-severe threshold requires escalation now, not the next scheduled interval; delay is a common cause of preventable progression to delirium tremens (Source: NSW Health Drug and Alcohol Withdrawal Clinical Practice Guidelines).",
+        "source_refs": ["NSW Health Drug and Alcohol Withdrawal Clinical Practice Guidelines"]
+      },
+      {
+        "letter": "B",
+        "text": "Give diazepam 20 mg PO now and repeat 1-2 hourly, guided by CIWA-Ar, targeting a score below 10",
+        "correct": true,
+        "rationale": "A CIWA-Ar score of 15 or more denotes severe withdrawal on the NSW Health and eTG bands; the trajectory (6 to 12 to 19 over 6 hours) mandates active loading. Diazepam 20 mg PO with 1-2 hourly reassessment until CIWA-Ar is below 10 is the recommended symptom-triggered loading strategy in patients with preserved hepatic function (Source: NSW Health Drug and Alcohol Withdrawal Clinical Practice Guidelines; eTG Addiction).",
+        "source_refs": ["NSW Health Drug and Alcohol Withdrawal Clinical Practice Guidelines", "eTG Addiction"]
+      },
+      {
+        "letter": "C",
+        "text": "Add oral haloperidol 2.5 mg for the visual misperceptions and continue current benzodiazepine schedule",
+        "correct": false,
+        "rationale": "Antipsychotics lower the seizure threshold and do not correct the GABAergic deficit driving withdrawal; the visual misperceptions here reflect under-treatment and should resolve with adequate benzodiazepine loading rather than antipsychotic add-on (Source: eTG Addiction).",
+        "source_refs": ["eTG Addiction"]
+      },
+      {
+        "letter": "D",
+        "text": "Switch to a fixed dose oxazepam 30 mg PO every 6 hours regardless of CIWA-Ar trajectory",
+        "correct": false,
+        "rationale": "Fixed low-dose oxazepam without symptom-triggered escalation risks under-treatment during rising trajectory and is reserved for hepatic dysfunction where LOT (lorazepam, oxazepam, temazepam) agents are preferred; this patient has normal LFTs (Source: NSW Health Drug and Alcohol Withdrawal Clinical Practice Guidelines).",
+        "source_refs": ["NSW Health Drug and Alcohol Withdrawal Clinical Practice Guidelines"]
+      },
+      {
+        "letter": "E",
+        "text": "Commence a clonidine 150 microgram PO 6-hourly regimen for autonomic symptoms and reduce benzodiazepine dose",
+        "correct": false,
+        "rationale": "Clonidine dampens autonomic symptoms but masks CIWA-Ar scoring items and does not prevent withdrawal seizures or delirium; benzodiazepine substitution remains the primary intervention (Source: eTG Addiction).",
+        "source_refs": ["eTG Addiction"]
+      }
+    ],
+    "explanation": {
+      "summary": "The revised CIWA-Ar has bands of 0-9 mild, 10-14 moderate, 15 and above severe. A rising trajectory across bands, or a score above 15, mandates active loading rather than watchful waiting. Diazepam 20 mg PO 1-2 hourly (or equivalent) is titrated to CIWA-Ar below 10 in patients with preserved hepatic function. Symptom-triggered dosing has been shown to reduce total benzodiazepine exposure and length of stay compared with fixed schedules, provided nurses have adequate training and the trajectory is truly tracked. Under-treatment is a leading contributor to progression to delirium tremens.",
+      "key_points": [
+        "CIWA-Ar >=15 denotes severe withdrawal; trajectory matters as much as absolute score",
+        "Diazepam 20 mg PO 1-2 hourly targets CIWA-Ar <10 in preserved hepatic function",
+        "Antipsychotics lower seizure threshold and do not treat the GABAergic deficit",
+        "Clonidine masks CIWA-Ar autonomic items and does not prevent seizures or delirium",
+        "Fixed low-dose oxazepam is reserved for significant hepatic dysfunction"
+      ],
+      "pearls": "The revised CIWA-Ar has 10 items scored 0-7 (except orientation, 0-4), maximum 67. Bands: 0-9 mild, 10-14 moderate, 15+ severe; a rising trajectory across a band is itself a trigger to escalate."
+    },
+    "sources": [
+      {"label": "NSW Health Drug and Alcohol Withdrawal Clinical Practice Guidelines", "url": "https://www.health.nsw.gov.au/aod/professionals/Pages/withdrawal-management.aspx"},
+      {"label": "eTG Addiction", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["lfts", "uec"],
+    "created": "2026-08-31"
+  },
+  {
+    "id": "psych-substancedepth-002-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - Wernicke's encephalopathy",
+    "subtopic_detail": "IV thiamine dosing for suspected Wernicke's",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["thiamine", "alcohol withdrawal"],
+    "stem": "A 54-year-old man is brought to the emergency department by his sister, who says he has been drinking about a litre of vodka daily for the past decade and has eaten almost nothing for two weeks. He is drowsy but rousable and his sister reports he has been unsteady when walking to the bathroom for the past three days.\n\nOn examination he has horizontal nystagmus on lateral gaze bilaterally and a broad-based ataxic gait. Cognitive assessment shows disorientation to time and impaired short-term recall. Random glucose is 4.6 mmol/L. He is not currently withdrawing (CIWA-Ar 3) and has had no seizures. Bedside urine ketones are negative.",
+    "data_table": {
+      "Vital signs": "HR 92, BP 118/72, RR 16, SpO2 97% room air, temp 36.5",
+      "Examination": "Cachectic, horizontal nystagmus bilaterally, broad-based ataxic gait, drowsy but rousable, disoriented to time",
+      "Investigations": "Glucose 4.6 mmol/L; urine ketones negative; magnesium 0.62 mmol/L (0.70-1.10); LFTs mildly deranged"
+    },
+    "lead_in": "What is the single most appropriate immediate intervention?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Thiamine 100 mg IV once daily for 3 days, then oral thiamine 100 mg daily",
+        "correct": false,
+        "rationale": "This dose is the prophylactic regimen for at-risk drinkers without confirmed Wernicke's; established Wernicke's requires 500 mg IV thiamine three times daily for 2-3 days to saturate cerebral uptake (Source: RACP AChAM position; NHMRC Australian guidelines for the treatment of alcohol problems).",
+        "source_refs": ["RACP AChAM position", "NHMRC Australian guidelines for the treatment of alcohol problems"]
+      },
+      {
+        "letter": "B",
+        "text": "Oral thiamine 300 mg daily plus an IV dextrose 5% infusion for hypoglycaemia prevention",
+        "correct": false,
+        "rationale": "Oral absorption in this cachectic patient is unreliable and delivers inadequate cerebral thiamine; IV dextrose given before parenteral thiamine can precipitate or worsen Wernicke's by driving thiamine-dependent glycolysis in a depleted state (Source: eTG Addiction).",
+        "source_refs": ["eTG Addiction"]
+      },
+      {
+        "letter": "C",
+        "text": "Thiamine 500 mg IV three times daily for 2-3 days, then reassess for step-down to 300 mg IV daily",
+        "correct": true,
+        "rationale": "The classical triad (ophthalmoplegia, ataxia, encephalopathy) is present, so treat as established Wernicke's. Australian guidance (RACP AChAM, NHMRC Alcohol Guidelines 2021) recommends thiamine 500 mg IV three times daily for 2-3 days followed by 300 mg IV daily until improvement plateaus, then oral maintenance. Concomitant magnesium replacement is required for thiamine to become metabolically active (Source: RACP AChAM position; NHMRC Australian guidelines for the treatment of alcohol problems).",
+        "source_refs": ["RACP AChAM position", "NHMRC Australian guidelines for the treatment of alcohol problems"]
+      },
+      {
+        "letter": "D",
+        "text": "IM Pabrinex two pairs once daily for 5 days, no additional parenteral thiamine",
+        "correct": false,
+        "rationale": "Pabrinex is not marketed in Australia; the RACP AChAM position specifies parenteral thiamine as a single agent, and IM absorption is slower and less predictable than IV in an unwell patient. Two pairs IM daily also delivers only 500 mg total daily thiamine, below the 1500 mg per day recommended for treatment (Source: RACP AChAM position).",
+        "source_refs": ["RACP AChAM position"]
+      },
+      {
+        "letter": "E",
+        "text": "IV magnesium sulfate 10 mmol over 20 minutes and defer thiamine until magnesium is corrected",
+        "correct": false,
+        "rationale": "Magnesium replacement is important because thiamine-dependent enzymes require magnesium as a cofactor, but it is given concurrently with thiamine, not before it; delaying thiamine risks irreversible Korsakoff amnestic syndrome (Source: RACP AChAM position).",
+        "source_refs": ["RACP AChAM position"]
+      }
+    ],
+    "explanation": {
+      "summary": "Established Wernicke's encephalopathy requires high-dose IV thiamine, not the lower prophylactic dose. Australian recommendations converge on 500 mg IV three times daily for 2-3 days, then 300 mg IV daily until symptoms plateau, then oral maintenance for months. Any parenteral glucose or IV dextrose must be given after the first thiamine dose to avoid precipitating deterioration. Magnesium must be corrected concurrently because it is a cofactor for thiamine pyrophosphate-dependent enzymes; without it the parenteral thiamine dose can be metabolically ineffective. Only two of the classical triad need be present to justify treatment; missed Wernicke's leads to Korsakoff psychosis in a large proportion of survivors.",
+      "key_points": [
+        "Treat suspected Wernicke's with thiamine 500 mg IV tds for 2-3 days",
+        "Prophylactic dosing (100 mg IV daily) is not enough for established Wernicke's",
+        "Give thiamine before or with any IV dextrose to avoid precipitating deterioration",
+        "Correct magnesium concurrently (cofactor for thiamine pyrophosphate-dependent enzymes)",
+        "Untreated Wernicke's progresses to Korsakoff amnestic syndrome"
+      ],
+      "pearls": "Only two of the classical triad (ophthalmoplegia, ataxia, encephalopathy) need be present to treat empirically for Wernicke's - the complete triad is present in fewer than 20% of confirmed cases at initial presentation."
+    },
+    "sources": [
+      {"label": "RACP AChAM position", "url": "https://www.racp.edu.au/"},
+      {"label": "NHMRC Australian guidelines for the treatment of alcohol problems", "url": "https://alcoholtreatmentguidelines.com.au/"},
+      {"label": "eTG Addiction", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["glucose_hba1c"],
+    "created": "2026-08-31"
+  },
+  {
+    "id": "psych-substancedepth-003-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - delirium tremens",
+    "subtopic_detail": "Withdrawal seizure vs delirium tremens timing",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["delirium tremens", "alcohol withdrawal"],
+    "stem": "A 61-year-old man was admitted 68 hours ago for community-acquired pneumonia. His last drink was approximately 72 hours before this admission. He drinks about a litre of red wine daily. He received prophylactic thiamine 300 mg IV daily and low-dose oxazepam PRN, with only one 30 mg dose used in the first 48 hours.\n\nThis morning ward staff report he has become increasingly restless overnight. He now describes seeing spiders on the wall and does not recognise the physiotherapist he saw yesterday. He is picking at his gown. His speech is disorganised and he is disoriented to place and time. He has had no seizures during this admission.",
+    "data_table": {
+      "Vital signs": "HR 132, BP 176/104, RR 24, SpO2 96% on 2 L NP, temp 38.1",
+      "Examination": "Coarse tremor, gross diaphoresis, visual hallucinations of spiders, disoriented, picking behaviour",
+      "Investigations": "Sodium 138 mmol/L, potassium 3.5 mmol/L, magnesium 0.68 mmol/L (0.70-1.10), glucose 6.1 mmol/L, LFTs mildly deranged; CT brain unremarkable"
+    },
+    "lead_in": "What is the single most appropriate next action?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Give diazepam 20 mg PO now, repeat every 1-2 hours titrated to sedation, transfer to a monitored bed, and correct magnesium",
+        "correct": true,
+        "rationale": "The temporal profile (onset 48-72 hours after last drink), disorientation, visual hallucinations, coarse tremor, and autonomic hyperactivity define delirium tremens rather than a simple withdrawal seizure (typically 6-48 hours, generalised tonic-clonic, brief) or Wernicke's (ophthalmoplegia, ataxia, encephalopathy without hallucinations). Treatment is aggressive diazepam loading with monitoring and electrolyte correction (Source: NSW Health Drug and Alcohol Withdrawal Clinical Practice Guidelines; eTG Addiction).",
+        "source_refs": ["NSW Health Drug and Alcohol Withdrawal Clinical Practice Guidelines", "eTG Addiction"]
+      },
+      {
+        "letter": "B",
+        "text": "Give IV levetiracetam 1 g and defer benzodiazepine escalation until an EEG has been arranged",
+        "correct": false,
+        "rationale": "Anticonvulsant monotherapy does not treat delirium tremens; the syndrome is a GABAergic deficit state requiring benzodiazepine substitution, and levetiracetam has not been shown to prevent alcohol withdrawal seizures (Source: eTG Addiction).",
+        "source_refs": ["eTG Addiction"]
+      },
+      {
+        "letter": "C",
+        "text": "Give IM olanzapine 10 mg for the hallucinations and reduce oxazepam PRN dose",
+        "correct": false,
+        "rationale": "Antipsychotics lower seizure threshold and do not address the GABAergic deficit; monotherapy for delirium tremens is contraindicated and reducing benzodiazepine dose in this trajectory would worsen the syndrome (Source: eTG Addiction).",
+        "source_refs": ["eTG Addiction"]
+      },
+      {
+        "letter": "D",
+        "text": "Give thiamine 500 mg IV three times daily and continue current oxazepam PRN regimen",
+        "correct": false,
+        "rationale": "Empirical thiamine escalation is reasonable given underlying risk, but this alone will not treat delirium tremens; a change in benzodiazepine strategy from PRN to loaded titration is required (Source: RACP AChAM position).",
+        "source_refs": ["RACP AChAM position"]
+      },
+      {
+        "letter": "E",
+        "text": "Arrange urgent lumbar puncture to exclude bacterial meningitis before further pharmacotherapy",
+        "correct": false,
+        "rationale": "Meningitis is a reasonable differential to consider but the temporal profile from last drink, the coarse tremor with autonomic hyperactivity, and the visual hallucinations point strongly to delirium tremens; treatment should not be delayed while awaiting an LP that is not clinically indicated (Source: eTG Addiction).",
+        "source_refs": ["eTG Addiction"]
+      }
+    ],
+    "explanation": {
+      "summary": "Alcohol withdrawal has a predictable time course. Autonomic symptoms and tremor peak at 6-24 hours; generalised tonic-clonic withdrawal seizures typically occur at 6-48 hours (single or clustered); alcoholic hallucinosis (usually visual, clear sensorium) at 12-48 hours; and delirium tremens at 48-96 hours with clouded consciousness, disorientation, hallucinations, coarse tremor, and marked autonomic hyperactivity. Delirium tremens carries mortality up to 5% even with modern care and requires aggressive benzodiazepine loading, monitored bed, electrolyte correction, and Wernicke prophylaxis. Under-treatment early in admission (as here with only one PRN dose) is a major risk factor for progression.",
+      "key_points": [
+        "Delirium tremens: 48-96 hours after last drink, clouded consciousness, coarse tremor, autonomic storm",
+        "Withdrawal seizures: 6-48 hours, brief generalised tonic-clonic, usually single",
+        "Alcoholic hallucinosis: 12-48 hours, clear sensorium (differs from DTs)",
+        "Treat DTs with aggressive diazepam loading, monitored bed, correct electrolytes",
+        "Antipsychotic monotherapy is contraindicated (lowers seizure threshold, does not treat GABA deficit)"
+      ],
+      "pearls": "DTs mortality is up to 5% with treatment; the greatest single risk factor for progression to DTs is inadequate benzodiazepine loading in the first 48 hours of admission."
+    },
+    "sources": [
+      {"label": "NSW Health Drug and Alcohol Withdrawal Clinical Practice Guidelines", "url": "https://www.health.nsw.gov.au/aod/professionals/Pages/withdrawal-management.aspx"},
+      {"label": "eTG Addiction", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "RACP AChAM position", "url": "https://www.racp.edu.au/"}
+    ],
+    "reference_ranges": ["uec"],
+    "created": "2026-08-31"
+  },
+  {
+    "id": "psych-substancedepth-004-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - opioid maintenance",
+    "subtopic_detail": "Precipitated withdrawal timing on standard buprenorphine induction",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["buprenorphine", "opioid use disorder"],
+    "stem": "A 34-year-old woman with heroin use disorder presents to a Sydney community opioid treatment clinic requesting transfer from illicit heroin to buprenorphine-naloxone. She last injected heroin 8 hours ago (her usual use is approximately 0.7 g intravenously three times per day). She reports she has also been using pharmaceutical fentanyl patches obtained illicitly for the past two months, cut and chewed. Her most recent patch was removed 14 hours ago.\n\nHer Clinical Opiate Withdrawal Scale (COWS) score is 14. She has mild rhinorrhoea, yawning, gooseflesh, mild anxiety, mild abdominal cramping, and a pulse of 96. Pregnancy test is negative and she has no significant hepatic dysfunction.",
+    "data_table": {
+      "Vital signs": "HR 96, BP 128/78, RR 16, SpO2 98% room air, temp 36.8",
+      "Examination": "Mild rhinorrhoea, yawning, gooseflesh, mild abdominal cramping, no pinpoint pupils, alert",
+      "Investigations": "Beta-hCG negative; LFTs normal; hepatitis C antibody positive with detectable viral load; recent urine drug screen positive for heroin metabolites and fentanyl"
+    },
+    "lead_in": "What is the single most appropriate next step regarding buprenorphine induction?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Give sublingual buprenorphine-naloxone 4 mg / 1 mg now and reassess at 2 hours",
+        "correct": false,
+        "rationale": "Illicit fentanyl accumulates in adipose tissue and can be detectable for days after last use; standard buprenorphine induction at this COWS score in a fentanyl-exposed patient carries a high risk of precipitated withdrawal because buprenorphine displaces residual fentanyl from mu-opioid receptors and partially antagonises them (Source: RACP AChAM National guidelines for medication-assisted treatment of opioid dependence).",
+        "source_refs": ["RACP AChAM National guidelines for medication-assisted treatment of opioid dependence"]
+      },
+      {
+        "letter": "B",
+        "text": "Wait until COWS is at least 12 with the last heroin dose more than 12 hours ago and then commence standard sublingual buprenorphine-naloxone 4 mg / 1 mg",
+        "correct": false,
+        "rationale": "The standard COWS threshold applies to short-acting opioid users without fentanyl exposure; recent fentanyl (including transdermal or chewed patches) requires either an extended wait of 48-72 hours after last fentanyl or a micro-induction (low-dose overlapping) protocol to avoid precipitated withdrawal (Source: RACP AChAM National guidelines for medication-assisted treatment of opioid dependence; NSW Health MATOD Clinical Guidelines).",
+        "source_refs": ["RACP AChAM National guidelines for medication-assisted treatment of opioid dependence", "NSW Health MATOD Clinical Guidelines"]
+      },
+      {
+        "letter": "C",
+        "text": "Commence a micro-induction protocol with buprenorphine-naloxone 0.5 mg / 0.125 mg on day 1, titrating up over 5-7 days while she continues heroin",
+        "correct": true,
+        "rationale": "In fentanyl-exposed patients, micro-induction (also called low-dose overlap or Bernese method) allows buprenorphine to gradually saturate mu-opioid receptors while the ongoing full agonist prevents precipitated withdrawal. Doses typically start at 0.5 mg buprenorphine daily, doubling every 1-2 days, with the full agonist stopped once a therapeutic buprenorphine dose (16-24 mg) is reached. This is the preferred approach for fentanyl users in Australian MATOD guidance (Source: NSW Health MATOD Clinical Guidelines; RACP AChAM National guidelines for medication-assisted treatment of opioid dependence).",
+        "source_refs": ["NSW Health MATOD Clinical Guidelines", "RACP AChAM National guidelines for medication-assisted treatment of opioid dependence"]
+      },
+      {
+        "letter": "D",
+        "text": "Commence methadone 40 mg PO once daily today and titrate by 10 mg every 3 days",
+        "correct": false,
+        "rationale": "40 mg is above the recommended safe induction dose of 20-30 mg (with divided starting doses of 5-10 mg in some protocols) and puts her at risk of methadone-related respiratory depression during the first two weeks of titration; methadone would be a legitimate alternative but the starting dose is wrong (Source: RACP AChAM National guidelines for medication-assisted treatment of opioid dependence).",
+        "source_refs": ["RACP AChAM National guidelines for medication-assisted treatment of opioid dependence"]
+      },
+      {
+        "letter": "E",
+        "text": "Give oral naltrexone 50 mg after 5 days of complete abstinence documented by urine drug screens",
+        "correct": false,
+        "rationale": "Oral naltrexone maintenance has high dropout rates in opioid use disorder and requires complete abstinence before initiation, which is rarely achievable in active users; agonist therapy (methadone or buprenorphine) is first-line for maintenance in Australia (Source: RACP AChAM National guidelines for medication-assisted treatment of opioid dependence).",
+        "source_refs": ["RACP AChAM National guidelines for medication-assisted treatment of opioid dependence"]
+      }
+    ],
+    "explanation": {
+      "summary": "Buprenorphine is a high-affinity partial mu-opioid agonist; when given to a patient with residual full agonist on the receptor it displaces the full agonist and produces less receptor activation, triggering precipitated withdrawal within 30-60 minutes. Fentanyl accumulates in adipose tissue and can produce precipitated withdrawal after standard washout periods and standard COWS thresholds because tissue depots continue to release fentanyl into circulation for days. Micro-induction (low-dose overlap) is now the preferred Australian approach for fentanyl users: start buprenorphine at 0.5 mg daily and double the dose every 1-2 days over 5-7 days while the full agonist continues, then cease the full agonist. Standard COWS-triggered induction remains appropriate for heroin-only users. Methadone remains an alternative when buprenorphine induction is difficult.",
+      "key_points": [
+        "Fentanyl-exposed patients need micro-induction or an extended 48-72 hour wait to avoid precipitated withdrawal",
+        "Standard COWS >=12 threshold applies to short-acting opioids without fentanyl exposure",
+        "Micro-induction: start buprenorphine 0.5 mg daily, double every 1-2 days, stop full agonist at 16-24 mg",
+        "Methadone induction dose is 20-30 mg maximum on day 1 (risk of respiratory depression)",
+        "Oral naltrexone is not first-line maintenance in Australia (poor retention)"
+      ],
+      "pearls": "Illicit fentanyl detectable in urine can persist 3-7 days after last use because of adipose redistribution; COWS-guided induction thresholds validated for heroin do not translate to fentanyl."
+    },
+    "sources": [
+      {"label": "RACP AChAM National guidelines for medication-assisted treatment of opioid dependence", "url": "https://www.health.gov.au/resources/publications/national-guidelines-for-medication-assisted-treatment-of-opioid-dependence"},
+      {"label": "NSW Health MATOD Clinical Guidelines", "url": "https://www.health.nsw.gov.au/aod/professionals/Pages/opioid-treatment.aspx"}
+    ],
+    "reference_ranges": ["lfts", "beta_hcg_pregnancy"],
+    "created": "2026-08-31"
+  },
+  {
+    "id": "psych-substancedepth-005-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - opioid maintenance",
+    "subtopic_detail": "Selection between methadone, buprenorphine, buprenorphine-naloxone",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["buprenorphine", "opioid use disorder"],
+    "stem": "A 42-year-old man with a 15-year history of prescribed opioid dependence following a work injury presents to a general practice registered as an opioid treatment prescriber. He has been using oxycodone modified release 80 mg twice daily plus escalating immediate-release doses for the past two years, with dose escalations and doctor shopping recently confirmed on the Real Time Prescription Monitoring dashboard.\n\nHe has severe emphysema (FEV1 32% predicted) with baseline SpO2 92% on room air, ongoing tobacco use, and drives a heavy vehicle for work. He wants to stabilise his opioid use, continue driving where possible, and avoid daily supervised dispensing because his work involves interstate trips. He has no history of injecting drug use and no methadone allergy.",
+    "data_table": {
+      "Vital signs": "HR 84, BP 138/86, RR 18, SpO2 92% room air, temp 36.7",
+      "Examination": "Barrel chest, prolonged expiratory phase, no cyanosis, no needle track marks",
+      "Investigations": "LFTs normal; ECG shows QTc 430 ms; recent urine drug screen positive for oxycodone only"
+    },
+    "lead_in": "Which opioid maintenance option is most appropriate?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Methadone 30 mg PO daily supervised at a community pharmacy",
+        "correct": false,
+        "rationale": "Methadone is a full mu-opioid agonist with dose-dependent respiratory depression, prolongs the QT interval, and requires daily supervised dispensing during the induction and stabilisation period; his emphysema, baseline SpO2 92%, and requirement to work interstate make it a poor fit (Source: RACP AChAM National guidelines for medication-assisted treatment of opioid dependence).",
+        "source_refs": ["RACP AChAM National guidelines for medication-assisted treatment of opioid dependence"]
+      },
+      {
+        "letter": "B",
+        "text": "Buprenorphine-naloxone sublingual daily, transitioning to weekly subcutaneous depot buprenorphine once stabilised",
+        "correct": true,
+        "rationale": "Buprenorphine is a partial mu-opioid agonist with a ceiling effect on respiratory depression, safer than methadone in severe respiratory disease. Depot subcutaneous buprenorphine (Buvidal weekly or monthly) removes the need for daily supervised dispensing and is PBS-listed for opioid dependence, making it well suited to a stable patient with work travel. Naloxone in the combination product reduces IV diversion risk (Source: RACP AChAM National guidelines for medication-assisted treatment of opioid dependence; PBS Buvidal listing; NSW Health MATOD Clinical Guidelines).",
+        "source_refs": ["RACP AChAM National guidelines for medication-assisted treatment of opioid dependence", "PBS Buvidal listing", "NSW Health MATOD Clinical Guidelines"]
+      },
+      {
+        "letter": "C",
+        "text": "Continue oxycodone modified release at a stable prescribed dose supervised weekly by the general practitioner",
+        "correct": false,
+        "rationale": "Continuing full-agonist immediate opioids does not treat opioid use disorder and is not permitted under Australian medication-assisted treatment frameworks; regulated opioid replacement (methadone or buprenorphine) is required (Source: RACP AChAM National guidelines for medication-assisted treatment of opioid dependence).",
+        "source_refs": ["RACP AChAM National guidelines for medication-assisted treatment of opioid dependence"]
+      },
+      {
+        "letter": "D",
+        "text": "Naltrexone 50 mg PO daily starting after a 7-day washout",
+        "correct": false,
+        "rationale": "Oral naltrexone requires complete opioid abstinence before initiation, has high dropout rates, and paradoxically increases overdose death risk after treatment cessation because of loss of tolerance; it is not first-line maintenance and is inappropriate for a heavy-vehicle driver seeking stable maintenance (Source: RACP AChAM National guidelines for medication-assisted treatment of opioid dependence).",
+        "source_refs": ["RACP AChAM National guidelines for medication-assisted treatment of opioid dependence"]
+      },
+      {
+        "letter": "E",
+        "text": "Tramadol 200 mg modified release twice daily as opioid substitution",
+        "correct": false,
+        "rationale": "Tramadol is a weak mu-opioid agonist with additional serotonergic and noradrenergic activity, is not approved for opioid maintenance in Australia, lowers the seizure threshold, and has abuse potential of its own (Source: AMH Tramadol).",
+        "source_refs": ["AMH Tramadol"]
+      }
+    ],
+    "explanation": {
+      "summary": "In Australia, medication-assisted treatment of opioid dependence (MATOD) has three PBS-listed choices: methadone, sublingual buprenorphine, and sublingual buprenorphine-naloxone; long-acting depot buprenorphine (Buvidal) is also PBS-listed and prescribed in weekly or monthly formulations. Selection is driven by respiratory and cardiac risk, dispensing logistics, diversion risk, and patient preference. Methadone: full agonist, dose-dependent respiratory depression, QT prolongation, daily supervised dispensing initially. Buprenorphine: partial agonist, ceiling on respiratory depression, safer in respiratory disease, less sedating for driving. Depot buprenorphine removes the need for daily dispensing and is well suited to travellers and rural patients. Buprenorphine-naloxone reduces IV diversion.",
+      "key_points": [
+        "Methadone: full agonist, respiratory depression risk, QT prolongation, daily supervised early",
+        "Buprenorphine: partial agonist with ceiling effect; safer in respiratory disease",
+        "Buprenorphine-naloxone reduces IV diversion (naloxone bioavailable only if injected)",
+        "Depot subcutaneous buprenorphine (Buvidal) is PBS-listed weekly or monthly",
+        "Naltrexone is not first-line maintenance; loss of tolerance raises overdose death risk"
+      ],
+      "pearls": "Buvidal (subcutaneous depot buprenorphine) is PBS-listed under the section 100 highly specialised drugs program for opioid dependence; it removes daily dispensing burden and reduces diversion."
+    },
+    "sources": [
+      {"label": "RACP AChAM National guidelines for medication-assisted treatment of opioid dependence", "url": "https://www.health.gov.au/resources/publications/national-guidelines-for-medication-assisted-treatment-of-opioid-dependence"},
+      {"label": "PBS Buvidal listing", "url": "https://www.pbs.gov.au/"},
+      {"label": "NSW Health MATOD Clinical Guidelines", "url": "https://www.health.nsw.gov.au/aod/professionals/Pages/opioid-treatment.aspx"},
+      {"label": "AMH Tramadol", "url": "https://amhonline.amh.net.au/"}
+    ],
+    "reference_ranges": ["lfts"],
+    "created": "2026-08-31"
+  },
+  {
+    "id": "psych-substancedepth-006-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - alcohol pharmacotherapy",
+    "subtopic_detail": "Acamprosate vs naltrexone vs disulfiram selection",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["acamprosate", "alcohol use disorder"],
+    "stem": "A 46-year-old woman with alcohol use disorder has completed an outpatient medically supervised withdrawal from alcohol 7 days ago and remains abstinent. She wants pharmacotherapy to help maintain abstinence. She has stage 3 chronic kidney disease (eGFR 42 mL/min/1.73 m^2), a background of stable major depressive disorder on sertraline, and no history of hepatic disease.\n\nShe is engaged with a community drug and alcohol counsellor and reports strong cravings when she walks past the local bottle shop on her way home from work. Her partner would supervise daily medication administration but she works night shifts three days per week and finds a rigid morning routine difficult. She is not planning pregnancy.",
+    "data_table": {
+      "Vital signs": "HR 76, BP 128/78, RR 14, SpO2 98% room air, temp 36.6",
+      "Examination": "Well, no jaundice or stigmata of chronic liver disease",
+      "Investigations": "eGFR 42 mL/min/1.73 m^2 (>=60), creatinine 128 micromol/L, LFTs normal, beta-hCG negative"
+    },
+    "lead_in": "Which relapse-prevention pharmacotherapy is most appropriate?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Naltrexone 50 mg PO once daily",
+        "correct": true,
+        "rationale": "Naltrexone is a mu-opioid antagonist that reduces the rewarding effect of alcohol and reduces heavy drinking days. It is renally excreted but does not require dose adjustment above eGFR 30, is compatible with sertraline, and works well for craving-driven relapse patterns; the once-daily oral schedule is more flexible than acamprosate's three-times-daily regimen for shift workers (Source: eTG Addiction; AMH Naltrexone; NHMRC Australian guidelines for the treatment of alcohol problems).",
+        "source_refs": ["eTG Addiction", "AMH Naltrexone", "NHMRC Australian guidelines for the treatment of alcohol problems"]
+      },
+      {
+        "letter": "B",
+        "text": "Acamprosate 666 mg PO three times daily",
+        "correct": false,
+        "rationale": "Acamprosate is contraindicated when eGFR is below 30 and requires dose reduction between 30 and 50 (333 mg tds recommended by AMH), making it less straightforward here; the three-times-daily schedule is also difficult for shift work. Naltrexone is the better craving-reduction agent when opioid analgesia is not required (Source: AMH Acamprosate).",
+        "source_refs": ["AMH Acamprosate"]
+      },
+      {
+        "letter": "C",
+        "text": "Disulfiram 200 mg PO once daily",
+        "correct": false,
+        "rationale": "Disulfiram acts through aversive reaction on alcohol exposure and requires supervised administration, high motivation, and no unpredictable relapse pattern; it is not first-line in most Australian settings and can precipitate hepatotoxicity and psychosis (Source: AMH Disulfiram; NHMRC Australian guidelines for the treatment of alcohol problems).",
+        "source_refs": ["AMH Disulfiram", "NHMRC Australian guidelines for the treatment of alcohol problems"]
+      },
+      {
+        "letter": "D",
+        "text": "Baclofen 30 mg PO three times daily",
+        "correct": false,
+        "rationale": "Baclofen has emerging evidence for alcohol use disorder but is second-line in Australia, and is reserved for patients with advanced liver disease where naltrexone and acamprosate are contraindicated; sedation and abuse potential are concerns (Source: NHMRC Australian guidelines for the treatment of alcohol problems).",
+        "source_refs": ["NHMRC Australian guidelines for the treatment of alcohol problems"]
+      },
+      {
+        "letter": "E",
+        "text": "Topiramate 25 mg PO twice daily titrated up over 6 weeks",
+        "correct": false,
+        "rationale": "Topiramate has some evidence in alcohol use disorder but is not TGA-approved for this indication and has significant cognitive, ophthalmological, and metabolic acidosis adverse effects, making it a third-line off-label choice (Source: NHMRC Australian guidelines for the treatment of alcohol problems).",
+        "source_refs": ["NHMRC Australian guidelines for the treatment of alcohol problems"]
+      }
+    ],
+    "explanation": {
+      "summary": "Australian first-line pharmacotherapy for alcohol relapse prevention is naltrexone or acamprosate, both PBS-listed. Naltrexone works via mu-opioid antagonism, reduces the reward from drinking, targets heavy drinking days, is dosed once daily, and is contraindicated when opioid analgesia is required or in acute hepatitis. Acamprosate acts on glutamate and GABA systems, targets protracted abstinence craving and post-acute withdrawal, is dosed 666 mg three times daily, and is contraindicated when eGFR is below 30 (requires dose adjustment at 30-50). Disulfiram is reserved for highly motivated patients with reliable supervision. Baclofen and topiramate are second- or third-line. All pharmacotherapies work best combined with psychosocial support.",
+      "key_points": [
+        "First-line AU: naltrexone or acamprosate, both PBS-listed",
+        "Naltrexone: once daily, targets reward/craving; caution in acute hepatitis, needs opioid-free window",
+        "Acamprosate: 666 mg tds, targets protracted craving; contraindicated eGFR <30, adjust 30-50",
+        "Disulfiram: reserved for supervised, highly motivated patients (aversive reaction risk)",
+        "Baclofen and topiramate are second- or third-line (baclofen when both first-line contraindicated)"
+      ],
+      "pearls": "Naltrexone must be stopped 7 days before elective surgery requiring opioid analgesia because it blocks the mu-opioid receptor and renders standard perioperative opioids ineffective."
+    },
+    "sources": [
+      {"label": "eTG Addiction", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "AMH Naltrexone", "url": "https://amhonline.amh.net.au/"},
+      {"label": "AMH Acamprosate", "url": "https://amhonline.amh.net.au/"},
+      {"label": "AMH Disulfiram", "url": "https://amhonline.amh.net.au/"},
+      {"label": "NHMRC Australian guidelines for the treatment of alcohol problems", "url": "https://alcoholtreatmentguidelines.com.au/"}
+    ],
+    "reference_ranges": ["uec", "lfts"],
+    "created": "2026-08-31"
+  },
+  {
+    "id": "psych-substancedepth-007-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - methamphetamine",
+    "subtopic_detail": "Acute intoxication de-escalation and IM sedation",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["methamphetamine", "acute behavioural disturbance"],
+    "stem": "A 28-year-old man is brought to a regional Queensland emergency department by police after being found agitated at a shopping centre. Bystanders reported he was shouting at people who were not there. On arrival he is pacing, threatening staff verbally, and refusing to sit for observations. He is known to security staff and has previously disclosed methamphetamine use.\n\nVerbal de-escalation over 15 minutes by a senior nurse has been unsuccessful; he is now attempting to leave the department and lash out at a nearby patient. He is a Torres Strait Islander man; his family have been contacted but are 2 hours away. He weighs approximately 85 kg. He is not known to have long QT syndrome, no ECG has been possible, and there is no known cardiac history.",
+    "data_table": {
+      "Vital signs": "HR 128 (estimated at distance), BP unable, RR estimated 22, SpO2 unable, temp unable",
+      "Examination": "Pacing, agitated, dilated pupils, diaphoretic, verbally threatening, no obvious injuries",
+      "Investigations": "Nil obtained; brief history from paramedics of stimulant use in last 6 hours"
+    },
+    "lead_in": "What is the single most appropriate pharmacological approach?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "IM droperidol 10 mg with reassessment at 15 minutes and repeat dose available if inadequate response",
+        "correct": true,
+        "rationale": "Australian acute behavioural disturbance guidance (NSW Health Management of Patients with Acute Severe Behavioural Disturbance in Emergency Departments) recommends IM droperidol 10 mg as first-line parenteral sedation for stimulant-related severe agitation when verbal de-escalation has failed, based on the DORM trials showing faster onset and fewer rescue doses than IM olanzapine or midazolam. Continuous cardiac monitoring is initiated once safe access is achieved (Source: NSW Health Management of Patients with Acute Severe Behavioural Disturbance in Emergency Departments; eTG Psychotropic).",
+        "source_refs": ["NSW Health Management of Patients with Acute Severe Behavioural Disturbance in Emergency Departments", "eTG Psychotropic"]
+      },
+      {
+        "letter": "B",
+        "text": "IM midazolam 5 mg with reassessment at 5 minutes and repeat dose available if inadequate response",
+        "correct": false,
+        "rationale": "IM midazolam has faster onset than droperidol but higher risk of respiratory depression, longer time to safe discharge, and higher rescue-dose requirement in stimulant intoxication compared with droperidol in the DORM series; not first-line in Australian ABD guidance (Source: NSW Health Management of Patients with Acute Severe Behavioural Disturbance in Emergency Departments).",
+        "source_refs": ["NSW Health Management of Patients with Acute Severe Behavioural Disturbance in Emergency Departments"]
+      },
+      {
+        "letter": "C",
+        "text": "IM olanzapine 10 mg with reassessment at 15 minutes and repeat dose available if inadequate response",
+        "correct": false,
+        "rationale": "IM olanzapine is a reasonable second-line option but has slower onset than droperidol in stimulant-driven ABD and cannot be combined with parenteral benzodiazepines within 60 minutes because of cardiorespiratory depression risk; droperidol remains first-line in the DORM-informed Australian pathway (Source: NSW Health Management of Patients with Acute Severe Behavioural Disturbance in Emergency Departments).",
+        "source_refs": ["NSW Health Management of Patients with Acute Severe Behavioural Disturbance in Emergency Departments"]
+      },
+      {
+        "letter": "D",
+        "text": "Oral diazepam 20 mg PO offered with reassessment at 30 minutes and additional oral doses",
+        "correct": false,
+        "rationale": "Oral pharmacotherapy requires patient cooperation and takes 30-60 minutes to reach effect; this patient is imminently unsafe with verbal de-escalation failed, mandating parenteral sedation to protect him and others (Source: NSW Health Management of Patients with Acute Severe Behavioural Disturbance in Emergency Departments).",
+        "source_refs": ["NSW Health Management of Patients with Acute Severe Behavioural Disturbance in Emergency Departments"]
+      },
+      {
+        "letter": "E",
+        "text": "IM haloperidol 5 mg combined with IM promethazine 25 mg with reassessment at 30 minutes",
+        "correct": false,
+        "rationale": "Haloperidol-promethazine combination is used in some overseas guidelines but is not first-line in the Australian DORM-informed pathway, has more extrapyramidal side effects than droperidol, and is not endorsed by NSW Health or eTG for stimulant ABD (Source: NSW Health Management of Patients with Acute Severe Behavioural Disturbance in Emergency Departments).",
+        "source_refs": ["NSW Health Management of Patients with Acute Severe Behavioural Disturbance in Emergency Departments"]
+      }
+    ],
+    "explanation": {
+      "summary": "Acute severe behavioural disturbance requires a graded response: safety of staff and patient first, verbal de-escalation, environmental modification, offered oral medication, then parenteral sedation if the patient remains an imminent risk. The DORM trials conducted in Australian emergency departments established IM droperidol 10 mg as first-line for adult ABD from any cause, including stimulant intoxication, with faster time to sedation, fewer rescue doses, and no significant excess in adverse events versus alternatives. Rescue options include a second dose of droperidol, or an alternative agent after 15 minutes, with careful attention to cumulative dose and monitoring. Continuous cardiorespiratory monitoring, ECG once safe, and blood glucose are essential after sedation is achieved. Restraint and sedation should always be time-limited and documented, with cultural considerations built in for Aboriginal and Torres Strait Islander patients where feasible.",
+      "key_points": [
+        "First-line parenteral sedation for adult ABD in AU EDs: IM droperidol 10 mg (DORM trials)",
+        "Reassess at 15 minutes; second dose or alternative agent if inadequate response",
+        "IM midazolam higher respiratory depression risk than droperidol",
+        "IM olanzapine second-line; do not combine with parenteral benzodiazepine within 60 min",
+        "Continuous cardiac monitoring and ECG once safe access is achieved"
+      ],
+      "pearls": "The DORM (droperidol vs midazolam) and DORM II trials, conducted in Australian EDs, showed IM droperidol 10 mg achieves adequate sedation faster than IM midazolam 5 mg with fewer airway interventions and comparable QT profile."
+    },
+    "sources": [
+      {"label": "NSW Health Management of Patients with Acute Severe Behavioural Disturbance in Emergency Departments", "url": "https://www.health.nsw.gov.au/"},
+      {"label": "eTG Psychotropic", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-08-31"
+  },
+  {
+    "id": "psych-substancedepth-008-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - methamphetamine",
+    "subtopic_detail": "Methamphetamine-induced psychosis vs primary schizophrenia",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["methamphetamine", "psychosis"],
+    "stem": "A 24-year-old man presents with a first episode of psychotic symptoms lasting 4 weeks. He describes hearing voices commenting on his actions, believes his neighbours are conducting surveillance on him through the smoke alarms, and has been sleeping only 2-3 hours per night. He has been using crystal methamphetamine (smoked) three times per week for the past 8 months but has abstained for the past 5 days while in a residential detoxification unit.\n\nCollateral from his mother reveals he began withdrawing socially and stopped attending university 6 months before starting methamphetamine, with declining self-care that pre-dated his drug use. Two paternal cousins have schizophrenia. Urine drug screen on admission was positive for methamphetamine and cannabis. He has no other medical history. He now has occasional paranoid thoughts about smoke alarms but the auditory hallucinations persist unchanged after 5 days of abstinence.",
+    "data_table": {
+      "Vital signs": "HR 76, BP 124/78, RR 14, SpO2 99% room air, temp 36.7",
+      "Examination": "Alert, oriented, coherent, mildly anxious, no tremor or diaphoresis; MSE reveals persecutory delusions and second-person auditory hallucinations",
+      "Investigations": "Urine drug screen on admission positive for methamphetamine and cannabis; TFTs normal; MRI brain unremarkable"
+    },
+    "lead_in": "What is the single most appropriate next step in management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Reassure him that symptoms will fully resolve within 7 days of abstinence and defer antipsychotic treatment",
+        "correct": false,
+        "rationale": "Methamphetamine-induced psychotic symptoms typically resolve within 5-7 days but persistence beyond this window with active delusions and hallucinations, plus a prodrome pre-dating drug use and a family history, points toward a primary psychotic disorder emerging; watchful waiting alone risks disengagement and treatment delay (Source: eTG Psychotropic; RANZCP guidelines).",
+        "source_refs": ["eTG Psychotropic", "RANZCP guidelines"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence a second-generation antipsychotic such as risperidone 1 mg PO daily, arrange early psychosis service follow-up, and continue drug and alcohol support",
+        "correct": true,
+        "rationale": "The pre-drug-use prodrome (social withdrawal, functional decline), family history in first-degree and second-degree relatives, and persistence of psychotic symptoms beyond the expected methamphetamine washout window (typically 5-7 days) all point toward a primary psychotic disorder rather than a substance-induced psychosis. Early antipsychotic treatment is indicated, in parallel with continued drug and alcohol engagement, with a low starting dose and coordinated early psychosis service involvement (Source: RANZCP Clinical practice guidelines for the management of schizophrenia; eTG Psychotropic).",
+        "source_refs": ["RANZCP Clinical practice guidelines for the management of schizophrenia", "eTG Psychotropic"]
+      },
+      {
+        "letter": "C",
+        "text": "Diagnose methamphetamine-induced psychotic disorder based on the positive urine drug screen and discharge with drug and alcohol follow-up only",
+        "correct": false,
+        "rationale": "A positive urine drug screen on admission does not resolve the differential; substance-induced psychotic disorder requires symptoms to resolve within a substance-appropriate washout window, and the pre-drug prodrome and family history here argue against a purely substance-induced picture (Source: RANZCP guidelines).",
+        "source_refs": ["RANZCP guidelines"]
+      },
+      {
+        "letter": "D",
+        "text": "Commence lithium 500 mg PO nocte for mood stabilisation and defer diagnosis until stable",
+        "correct": false,
+        "rationale": "Lithium is not first-line for a primary psychotic presentation without prominent mood features; the presentation is dominated by persecutory delusions and hallucinations rather than mania or depression (Source: RANZCP Clinical practice guidelines for mood disorders).",
+        "source_refs": ["RANZCP Clinical practice guidelines for mood disorders"]
+      },
+      {
+        "letter": "E",
+        "text": "Arrange a treatment order under the state Mental Health Act for involuntary community treatment before initiating any medication",
+        "correct": false,
+        "rationale": "Involuntary treatment orders are indicated when a person meets state Mental Health Act criteria (mental illness plus risk plus lack of capacity to consent to treatment); a cooperative inpatient in a voluntary detoxification unit does not meet criteria and initiating treatment does not require a treatment order (Source: NSW Mental Health Act 2007).",
+        "source_refs": ["NSW Mental Health Act 2007"]
+      }
+    ],
+    "explanation": {
+      "summary": "Substance-induced psychotic disorder and a primary psychotic disorder often present identically at first contact. Discriminating features favouring a primary psychotic disorder include: symptoms that persist beyond the expected washout window of the substance (typically 5-7 days for methamphetamine, longer for chronic cannabis), a prodromal decline in function pre-dating substance use, a first-degree or strong second-degree family history, and negative symptoms that pre-date use. When persistence beyond the washout window is documented under abstinence, an atypical antipsychotic (e.g. risperidone) commenced at low dose with early psychosis service involvement is indicated, in parallel with ongoing drug and alcohol engagement. Approximately 25-30% of individuals with methamphetamine-induced psychosis progress to a schizophrenia-spectrum diagnosis within 5 years; the corollary is that active treatment for a primary disorder must not be delayed.",
+      "key_points": [
+        "Methamphetamine-induced psychosis usually resolves within 5-7 days of abstinence",
+        "Persistence beyond washout + pre-drug prodrome + family history point to primary psychotic disorder",
+        "Treat primary psychotic disorder with low-dose second-generation antipsychotic + early psychosis service",
+        "Ongoing drug and alcohol engagement continues in parallel",
+        "About 25-30% of methamphetamine-induced psychosis cases progress to schizophrenia within 5 years"
+      ],
+      "pearls": "Second-person auditory hallucinations (voice speaking to the patient) are more typical of substance-induced or affective psychosis; third-person running commentary and thought echo are more typical Schneiderian features of schizophrenia."
+    },
+    "sources": [
+      {"label": "RANZCP Clinical practice guidelines for the management of schizophrenia", "url": "https://www.ranzcp.org/"},
+      {"label": "RANZCP guidelines", "url": "https://www.ranzcp.org/"},
+      {"label": "eTG Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "RANZCP Clinical practice guidelines for mood disorders", "url": "https://www.ranzcp.org/"},
+      {"label": "NSW Mental Health Act 2007", "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-008"}
+    ],
+    "reference_ranges": ["thyroid"],
+    "created": "2026-08-31"
+  },
+  {
+    "id": "psych-substancedepth-009-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - GHB toxicity",
+    "subtopic_detail": "GHB overdose respiratory monitoring rather than naloxone reversal",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["GHB", "overdose"],
+    "stem": "A 26-year-old man is brought to an inner-city Sydney emergency department by his friends at 3 am after collapsing at a dance-music event. His friends report he swallowed a small quantity of clear liquid from a dropper bottle about 45 minutes ago and became progressively drowsy over 15 minutes before losing consciousness. He normally drinks socially and there is no reported use of other substances tonight.\n\nOn arrival he is deeply unresponsive to voice but withdraws briskly from a trapezius squeeze. His airway is patent in the recovery position and he is protecting it, with regular deep respirations and normal chest rise. Blood glucose is 5.8 mmol/L. There are no needle track marks. His pupils are 4 mm and reactive.",
+    "data_table": {
+      "Vital signs": "HR 58, BP 108/64, RR 14, SpO2 96% room air, temp 36.4",
+      "Examination": "GCS E1 V2 M5 (=8), pupils 4 mm bilaterally reactive, no track marks, no head injury signs, airway patent",
+      "Investigations": "Blood glucose 5.8 mmol/L; paracetamol level pending; ethanol level pending; ECG sinus bradycardia at 58 with normal QTc"
+    },
+    "lead_in": "What is the single most appropriate initial management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Naloxone 400 microgram IV bolus with repeat dosing to reverse suspected opioid overdose",
+        "correct": false,
+        "rationale": "Naloxone does not reverse GHB, which acts primarily on GABA-B and its own receptor, not the mu-opioid receptor; empirical naloxone is reasonable in undifferentiated coma but the classical clinical pattern (deep sedation with preserved respiratory drive and rapid recovery timeline) argues strongly against opioid intoxication, and this alone will not manage the presentation (Source: eTG Toxicology; NSW Poisons Information Centre).",
+        "source_refs": ["eTG Toxicology", "NSW Poisons Information Centre"]
+      },
+      {
+        "letter": "B",
+        "text": "Flumazenil 200 microgram IV bolus to reverse suspected benzodiazepine overdose",
+        "correct": false,
+        "rationale": "Flumazenil does not reverse GHB and is generally avoided in undifferentiated coma because of the risk of precipitating seizures in unknown benzodiazepine-dependent patients or in mixed overdose with pro-convulsant agents (Source: eTG Toxicology).",
+        "source_refs": ["eTG Toxicology"]
+      },
+      {
+        "letter": "C",
+        "text": "Supportive care with lateral position, close respiratory monitoring, oxygen if SpO2 falls, and prepare for intubation if airway becomes compromised",
+        "correct": true,
+        "rationale": "GHB (and its precursors GBL and 1,4-butanediol) cause deep, dose-dependent CNS depression via GABA-B agonism, characteristically with preserved respiratory drive and airway reflexes and rapid recovery within 2-6 hours. No specific antidote exists; management is airway positioning, close respiratory monitoring, oxygen as needed, and readiness to intubate if airway or respiratory drive fails, particularly when co-ingested with alcohol or other CNS depressants (Source: NSW Poisons Information Centre; eTG Toxicology).",
+        "source_refs": ["NSW Poisons Information Centre", "eTG Toxicology"]
+      },
+      {
+        "letter": "D",
+        "text": "Activated charcoal 50 g PO via nasogastric tube",
+        "correct": false,
+        "rationale": "Activated charcoal binds GHB poorly and the ingestion was more than 1 hour ago; charcoal in a patient with reduced conscious level also carries aspiration risk without a secured airway (Source: eTG Toxicology).",
+        "source_refs": ["eTG Toxicology"]
+      },
+      {
+        "letter": "E",
+        "text": "Intravenous physostigmine 1 mg to reverse sedation",
+        "correct": false,
+        "rationale": "Physostigmine reverses central anticholinergic delirium, not GHB toxicity; using it in undifferentiated coma is dangerous because of cholinergic crisis risk (Source: eTG Toxicology).",
+        "source_refs": ["eTG Toxicology"]
+      }
+    ],
+    "explanation": {
+      "summary": "GHB (gamma-hydroxybutyrate) and its industrial precursors GBL (gamma-butyrolactone) and 1,4-butanediol are commonly encountered in Australian dance-music settings and are dispensed by dropper because the therapeutic window between recreational effect and coma is very narrow (typically 1-2 mL). The classical clinical pattern is deep sedation with preserved respiratory drive and airway reflexes, sinus bradycardia, and rapid recovery over 2-6 hours, distinguishing it from opioid overdose (miosis, apnoea) and benzodiazepine overdose (moderate sedation, longer duration). No antidote exists; management is supportive with airway positioning, close respiratory monitoring, oxygen as needed, and readiness to intubate if airway or respiratory drive fails. Co-ingestion with alcohol or other CNS depressants is the leading cause of GHB-related deaths.",
+      "key_points": [
+        "GHB acts on GABA-B and its own receptor; no antidote available",
+        "Classical pattern: deep sedation, preserved respiratory drive and airway reflexes, rapid recovery in 2-6 hours",
+        "Naloxone and flumazenil do not reverse GHB",
+        "Management is supportive: lateral position, close monitoring, oxygen, intubate if airway fails",
+        "Death is almost always from co-ingestion with alcohol or other CNS depressants"
+      ],
+      "pearls": "Pure GHB (and GBL) recovery is often abrupt: a patient can go from GCS 3 to fully alert and demanding discharge within 30 minutes, whereas benzodiazepine and opioid overdoses take much longer to clear."
+    },
+    "sources": [
+      {"label": "NSW Poisons Information Centre", "url": "https://www.poisonsinfo.nsw.gov.au/"},
+      {"label": "eTG Toxicology", "url": "https://tgldcdp.tg.org.au/"}
+    ],
+    "reference_ranges": ["glucose_hba1c", "gcs"],
+    "created": "2026-08-31"
+  },
+  {
+    "id": "psych-substancedepth-010-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - MDMA toxicity",
+    "subtopic_detail": "MDMA hyponatraemia versus serotonin syndrome differentiation",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["MDMA", "hyponatraemia"],
+    "stem": "A 22-year-old woman is brought to a Melbourne emergency department at 6 am after attending an all-night dance-music festival. She took what her friends describe as two doses of MDMA over 6 hours and has been drinking bottled water throughout the night. Over the past hour she has become progressively confused and had one witnessed generalised tonic-clonic seizure lasting 90 seconds.\n\nShe is now post-ictal but rousable, with confused speech. She is not currently on any medications and denies other substance use. There is no reported clonus, no ocular clonus, no significant hyperthermia, and reflexes are described by the examining registrar as within normal limits. Her venous blood gas returns while you are assessing her. She weighs approximately 55 kg.",
+    "data_table": {
+      "Vital signs": "HR 108, BP 132/78, RR 18, SpO2 98% room air, temp 37.4",
+      "Examination": "Rousable but confused, no clonus, no ocular clonus, reflexes within normal limits, no diaphoresis, no rigidity",
+      "Investigations": "VBG: sodium 118 mmol/L (135-145), potassium 3.6 mmol/L, glucose 5.2 mmol/L, lactate 2.4 mmol/L; urine osmolality 620 mOsm/kg; serum osmolality 248 mOsm/kg; CT brain unremarkable"
+    },
+    "lead_in": "What is the single most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Hypertonic saline 150 mL of 3% NaCl IV over 10 minutes, repeat up to twice as needed, targeting a sodium rise of 4-6 mmol/L in the first hour",
+        "correct": true,
+        "rationale": "Severe symptomatic hyponatraemia (sodium 118 with seizure and encephalopathy) requires urgent controlled correction with hypertonic saline (150 mL of 3% NaCl over 10 minutes, up to three times if symptoms persist) aiming for a 4-6 mmol/L rise in the first hour, then a maximum 8-10 mmol/L rise over 24 hours to prevent osmotic demyelination. The picture (MDMA-induced SIADH plus excess free-water intake) is distinct from serotonin syndrome, which requires triad of neuromuscular hyperactivity, autonomic instability, and mental status change - absent here (Source: eTG Endocrinology; NSW Poisons Information Centre).",
+        "source_refs": ["eTG Endocrinology", "NSW Poisons Information Centre"]
+      },
+      {
+        "letter": "B",
+        "text": "IV cyproheptadine 12 mg via nasogastric tube plus supportive cooling for serotonin syndrome",
+        "correct": false,
+        "rationale": "Serotonin syndrome requires the Hunter criteria (spontaneous clonus, inducible clonus with agitation or diaphoresis, ocular clonus, tremor with hyperreflexia, or hypertonia with temperature >38 and clonus); the reflexes and clonus assessment here is unremarkable, and the profound hyponatraemia with concentrated urine points to MDMA-induced SIADH plus free-water intake rather than serotonin syndrome (Source: eTG Toxicology).",
+        "source_refs": ["eTG Toxicology"]
+      },
+      {
+        "letter": "C",
+        "text": "IV 0.9% NaCl 1000 mL bolus over 30 minutes, then continue at 250 mL per hour",
+        "correct": false,
+        "rationale": "Isotonic saline is inadequate correction for severe symptomatic hyponatraemia at 118 with seizure and can transiently worsen the natraemia (desalination effect in SIADH physiology when free water is retained but sodium is excreted); hypertonic saline is required (Source: eTG Endocrinology).",
+        "source_refs": ["eTG Endocrinology"]
+      },
+      {
+        "letter": "D",
+        "text": "Fluid restriction to 800 mL per day and repeat sodium in 6 hours",
+        "correct": false,
+        "rationale": "Fluid restriction is appropriate for chronic asymptomatic SIADH but is dangerously slow in acute severe symptomatic hyponatraemia with seizure activity; hypertonic saline is required immediately (Source: eTG Endocrinology).",
+        "source_refs": ["eTG Endocrinology"]
+      },
+      {
+        "letter": "E",
+        "text": "IV levetiracetam 1 g loading dose and admit for seizure monitoring without electrolyte correction",
+        "correct": false,
+        "rationale": "The seizure is a direct consequence of hyponatraemia and will not resolve until the sodium is corrected; anti-seizure medication is not the primary treatment for hyponatraemia-induced seizure (Source: eTG Endocrinology).",
+        "source_refs": ["eTG Endocrinology"]
+      }
+    ],
+    "explanation": {
+      "summary": "MDMA causes an SIADH-like state through vasopressin release, compounded by heavy free-water intake from over-hydration during prolonged dancing. Young women are at particularly high risk because of lower baseline sodium and smaller total body water. The clinical syndrome ranges from mild confusion to seizure, coma, and cerebral oedema, and can be fatal if not corrected. Severe symptomatic hyponatraemia (typically sodium <125 with seizure, coma, or reduced GCS) is treated with 150 mL of 3% NaCl IV over 10 minutes, repeated up to three times, targeting a 4-6 mmol/L rise in the first hour and a maximum 8-10 mmol/L rise over 24 hours to prevent osmotic demyelination syndrome. Serotonin syndrome (Hunter criteria: clonus, hyperreflexia, autonomic instability, mental status change, often after SSRI exposure) is a distinct entity and is unlikely without neuromuscular features. Distinguishing the two is critical because management differs entirely.",
+      "key_points": [
+        "MDMA hyponatraemia is SIADH plus free-water intake; young women highest risk",
+        "Severe symptomatic hyponatraemia: 150 mL 3% NaCl IV over 10 min, up to 3 times, target +4-6 mmol/L in first hour",
+        "Maximum correction 8-10 mmol/L per 24 h to prevent osmotic demyelination",
+        "Serotonin syndrome requires Hunter criteria: clonus, hyperreflexia, autonomic instability",
+        "Isotonic saline can worsen hyponatraemia in SIADH physiology (desalination effect)"
+      ],
+      "pearls": "MDMA-related deaths in Australia are more commonly due to hyponatraemia and hyperthermia than to overdose per se; harm reduction advice at festivals now specifically warns against drinking large volumes of plain water."
+    },
+    "sources": [
+      {"label": "eTG Endocrinology", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "eTG Toxicology", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "NSW Poisons Information Centre", "url": "https://www.poisonsinfo.nsw.gov.au/"}
+    ],
+    "reference_ranges": ["uec", "vbg"],
+    "created": "2026-08-31"
+  },
+  {
+    "id": "psych-substancedepth-011-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - cannabis",
+    "subtopic_detail": "Cannabis use disorder first-line psychological therapy",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["cannabis", "motivational interviewing"],
+    "stem": "A 27-year-old man presents to his general practitioner requesting help to stop cannabis use. He has been smoking approximately 2 g of high-potency cannabis daily for the past 6 years, spending several hours each day using or recovering from use. He has tried to stop twice, most recently 3 months ago, but resumed use within a week due to irritability, poor sleep, and reduced appetite.\n\nHe describes ongoing use despite worsening short-term memory, missing work shifts, and pressure from his partner. He has no other significant medical or psychiatric history and does not use other substances. He is not currently in psychosis. He has no personal or family history of major mental illness.",
+    "data_table": {
+      "Vital signs": "Vital signs within normal limits",
+      "Examination": "Alert, oriented, no thought disorder, mildly conjunctivally injected eyes",
+      "Investigations": "TFTs normal; urine drug screen positive for cannabinoids only"
+    },
+    "lead_in": "What is the single most appropriate first-line treatment offer?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Referral for structured cognitive behavioural therapy combined with motivational interviewing delivered over 8-12 sessions",
+        "correct": true,
+        "rationale": "There is no PBS-listed pharmacotherapy for cannabis use disorder in Australia; combined CBT and motivational enhancement (or motivational interviewing) has the strongest evidence and is the recommended first-line treatment offer in Australian and international guidance, delivered typically over 8-12 sessions with contingency management adjuncts where feasible (Source: eTG Addiction; NCETA Cannabis Withdrawal and Dependence Treatment Guidelines).",
+        "source_refs": ["eTG Addiction", "NCETA Cannabis Withdrawal and Dependence Treatment Guidelines"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence nabiximols oromucosal spray 4 sprays four times daily for cannabis withdrawal cover",
+        "correct": false,
+        "rationale": "Nabiximols has emerging evidence for cannabis withdrawal management in specialist clinical trials but is not TGA-approved for cannabis use disorder and is not first-line; psychological therapy is the primary intervention in Australia (Source: eTG Addiction).",
+        "source_refs": ["eTG Addiction"]
+      },
+      {
+        "letter": "C",
+        "text": "Commence oral naltrexone 50 mg daily for craving reduction",
+        "correct": false,
+        "rationale": "Naltrexone has no evidence base for cannabis use disorder and is not approved for this indication in Australia; it is used for alcohol use disorder and opioid use disorder (Source: AMH Naltrexone).",
+        "source_refs": ["AMH Naltrexone"]
+      },
+      {
+        "letter": "D",
+        "text": "Commence oral acamprosate 666 mg three times daily for craving reduction",
+        "correct": false,
+        "rationale": "Acamprosate has no evidence base for cannabis use disorder and is approved only for alcohol use disorder relapse prevention (Source: AMH Acamprosate).",
+        "source_refs": ["AMH Acamprosate"]
+      },
+      {
+        "letter": "E",
+        "text": "Prescribe temazepam 10 mg nocte for 4 weeks to manage cannabis withdrawal insomnia",
+        "correct": false,
+        "rationale": "Routine benzodiazepine use for cannabis withdrawal is discouraged because it substitutes one dependence for another with no clear improvement in abstinence outcomes; psychological therapy plus short-term symptomatic non-benzodiazepine sleep support (e.g. sleep hygiene, brief melatonin) is preferred (Source: eTG Addiction).",
+        "source_refs": ["eTG Addiction"]
+      }
+    ],
+    "explanation": {
+      "summary": "Cannabis use disorder is common, and cannabis withdrawal (typically peaking at 2-6 days after cessation, with irritability, poor sleep, reduced appetite, and low mood) is a major driver of relapse. There is no PBS-listed pharmacotherapy for cannabis use disorder in Australia. First-line treatment is structured psychological therapy (CBT combined with motivational enhancement or motivational interviewing) delivered typically over 8-12 sessions, sometimes with contingency management. Nabiximols has emerging evidence in specialist trials but is not TGA-approved for this indication. Short-term symptomatic support (sleep hygiene, brief non-benzodiazepine sleep aids, symptomatic analgesia) may be appropriate as adjunct. Psychiatric comorbidity (depression, anxiety, psychotic disorders) must be actively screened for and treated in parallel.",
+      "key_points": [
+        "No PBS-listed pharmacotherapy for cannabis use disorder in Australia",
+        "First-line: structured CBT combined with motivational enhancement, 8-12 sessions",
+        "Cannabis withdrawal peaks at 2-6 days: irritability, poor sleep, reduced appetite, low mood",
+        "Nabiximols has emerging evidence but is not TGA-approved for cannabis use disorder",
+        "Screen for and treat psychiatric comorbidity in parallel"
+      ],
+      "pearls": "Cannabis withdrawal irritability and insomnia are strong drivers of early relapse; anticipatory psychoeducation about the 2-6 day symptom peak is a simple and effective retention intervention."
+    },
+    "sources": [
+      {"label": "eTG Addiction", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "NCETA Cannabis Withdrawal and Dependence Treatment Guidelines", "url": "https://nceta.flinders.edu.au/"},
+      {"label": "AMH Naltrexone", "url": "https://amhonline.amh.net.au/"},
+      {"label": "AMH Acamprosate", "url": "https://amhonline.amh.net.au/"}
+    ],
+    "reference_ranges": ["thyroid"],
+    "created": "2026-08-31"
+  },
+  {
+    "id": "psych-substancedepth-012-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - benzodiazepine deprescribing",
+    "subtopic_detail": "Diazepam substitution and staged taper in long-term benzodiazepine use",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["benzodiazepines", "deprescribing"],
+    "stem": "A 68-year-old woman has been taking oxazepam 30 mg three times daily and temazepam 20 mg nocte for the past 22 years, initially prescribed for anxiety after her husband's death. She has stable ischaemic heart disease, well-controlled hypertension, and no cognitive impairment on formal testing.\n\nShe has recently had two mechanical falls, one resulting in a Colles fracture, and her family are concerned about ongoing sedation and imbalance. She agrees to try to reduce her benzodiazepines and understands this will take many months. She is not depressed, is engaged with a psychologist for anxiety, and has no history of alcohol or other substance use. She has preserved hepatic and renal function.",
+    "data_table": {
+      "Vital signs": "Vital signs within normal limits",
+      "Examination": "Alert, oriented, MMSE 29/30, mildly unsteady tandem gait, healed Colles fracture",
+      "Investigations": "LFTs normal; eGFR 68 mL/min/1.73 m^2; TFTs normal"
+    },
+    "lead_in": "What is the single most appropriate approach to benzodiazepine deprescribing?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Cease all benzodiazepines abruptly and start pregabalin 75 mg twice daily to prevent rebound anxiety",
+        "correct": false,
+        "rationale": "Abrupt cessation of long-term high-dose benzodiazepines risks severe withdrawal including seizures and delirium, particularly in an older person; pregabalin substitution has weak evidence and does not prevent benzodiazepine withdrawal (Source: eTG Addiction; RACGP Prescribing drugs of dependence).",
+        "source_refs": ["eTG Addiction", "RACGP Prescribing drugs of dependence"]
+      },
+      {
+        "letter": "B",
+        "text": "Continue current regimen indefinitely because the risks of withdrawal outweigh the benefits of deprescribing in an older patient",
+        "correct": false,
+        "rationale": "Long-term benzodiazepine use in older adults is associated with falls, fractures, cognitive impairment, and increased mortality, and this patient has already had two falls with fracture; gradual deprescribing with adequate psychosocial support is indicated (Source: RACGP Prescribing drugs of dependence).",
+        "source_refs": ["RACGP Prescribing drugs of dependence"]
+      },
+      {
+        "letter": "C",
+        "text": "Substitute total daily benzodiazepine dose to equivalent diazepam, then reduce by 10-25% every 2-4 weeks over 6-12 months",
+        "correct": true,
+        "rationale": "Australian deprescribing guidance recommends substituting short- and intermediate-acting benzodiazepines to equivalent doses of long-acting diazepam (better tolerated tapering because of long half-life), then reducing by 10-25% every 2-4 weeks, extending over 6-12 months or longer for high-dose long-term users, with pauses at symptomatic points. Psychological therapy (CBT for insomnia and anxiety) runs in parallel (Source: RACGP Prescribing drugs of dependence; eTG Psychotropic).",
+        "source_refs": ["RACGP Prescribing drugs of dependence", "eTG Psychotropic"]
+      },
+      {
+        "letter": "D",
+        "text": "Reduce oxazepam by 50% each week over 4 weeks and stop temazepam abruptly",
+        "correct": false,
+        "rationale": "A 50% weekly reduction is far too rapid for a 22-year user on this cumulative dose and risks severe withdrawal; abrupt cessation of temazepam adds additional withdrawal load (Source: RACGP Prescribing drugs of dependence).",
+        "source_refs": ["RACGP Prescribing drugs of dependence"]
+      },
+      {
+        "letter": "E",
+        "text": "Add flumazenil 0.5 mg IV weekly for 8 weeks to accelerate benzodiazepine clearance",
+        "correct": false,
+        "rationale": "Flumazenil is used for acute benzodiazepine overdose reversal in specific contexts and is not indicated for outpatient deprescribing; it can precipitate seizures in benzodiazepine-dependent patients (Source: eTG Toxicology; AMH Flumazenil).",
+        "source_refs": ["eTG Toxicology", "AMH Flumazenil"]
+      }
+    ],
+    "explanation": {
+      "summary": "Long-term benzodiazepine use in older adults is a major driver of falls, fractures, cognitive impairment, and traffic accidents. Deprescribing is indicated whenever safely feasible, but must be gradual because abrupt cessation risks withdrawal seizures, delirium, and profound rebound anxiety. The standard Australian approach is to substitute the total daily benzodiazepine dose to equivalent diazepam (long half-life smooths the taper), then reduce by 10-25% every 2-4 weeks over 6-12 months (or longer for high-dose long-term users), with pauses at symptomatic points. Approximate equivalents: diazepam 5 mg = oxazepam 15 mg = temazepam 10 mg = alprazolam 0.5 mg = clonazepam 0.25 mg. Psychological therapy (CBT for insomnia and anxiety) runs in parallel. Written taper plan, clear expectations, and family involvement improve success.",
+      "key_points": [
+        "Long-term BZD use in older adults: falls, fractures, cognitive impairment, mortality",
+        "Substitute total daily dose to diazepam equivalent, reduce 10-25% every 2-4 weeks",
+        "Duration: 6-12 months, longer for high-dose long-term users",
+        "Approximate equivalents: diazepam 5 mg = oxazepam 15 mg = temazepam 10 mg",
+        "Run CBT for insomnia and anxiety in parallel"
+      ],
+      "pearls": "For elderly patients with baseline hepatic impairment, oxazepam substitution (rather than diazepam) may be preferred because oxazepam has no active metabolites and undergoes glucuronidation only (LOT mnemonic)."
+    },
+    "sources": [
+      {"label": "RACGP Prescribing drugs of dependence", "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/drugs-of-dependence"},
+      {"label": "eTG Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "eTG Addiction", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "eTG Toxicology", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "AMH Flumazenil", "url": "https://amhonline.amh.net.au/"}
+    ],
+    "reference_ranges": ["lfts", "uec"],
+    "created": "2026-08-31"
+  },
+  {
+    "id": "psych-substancedepth-013-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - gambling disorder",
+    "subtopic_detail": "Screening tools and stepped-care management",
+    "difficulty": 2,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["gambling disorder", "screening"],
+    "stem": "A 39-year-old man consults his general practitioner after his wife found unpaid credit card bills totalling $28,000. He works full-time as an electrician and describes spending 3-4 hours per day on online sports betting apps for the past 18 months. He becomes irritable when trying to reduce his betting, has lied repeatedly to his wife about the amount he has bet, and has borrowed money from his brother twice this year to cover losses.\n\nHe drinks 4 standard drinks on a typical Friday and Saturday and does not use other substances. Mood is low but he does not meet criteria for a major depressive episode. He is not suicidal. He has no personal or family history of significant mental illness.",
+    "data_table": {
+      "Vital signs": "Vital signs within normal limits",
+      "Examination": "Alert, oriented, low mood, no psychotic features, no suicidal ideation",
+      "Investigations": "TFTs normal; K10 score 18 (mild-moderate psychological distress)"
+    },
+    "lead_in": "What is the single most appropriate immediate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Administer a brief validated screen (Lie-Bet or PGSI), and refer to a Gambling Help Online service or specialist gambling therapist",
+        "correct": true,
+        "rationale": "The clinical picture strongly suggests gambling disorder. A brief validated screen (Lie-Bet: two questions - lying about gambling, needing to bet increasing amounts; or the PGSI 9-item Problem Gambling Severity Index) confirms severity and structures the conversation. First-line management is referral for CBT delivered through Gambling Help Online (nationally funded), state gambling services, or a trained therapist, with financial counselling in parallel (Source: RANZCP Position Statement on Gambling; Gambling Help Online; eTG Psychotropic).",
+        "source_refs": ["RANZCP Position Statement on Gambling", "Gambling Help Online", "eTG Psychotropic"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence naltrexone 50 mg PO daily immediately without further assessment",
+        "correct": false,
+        "rationale": "Naltrexone has emerging evidence in gambling disorder (particularly for craving-driven use) but is off-label, second-line, and used only after psychological therapy engagement or where craving is prominent and impedes therapy; it is not the first step at initial presentation (Source: RANZCP Position Statement on Gambling).",
+        "source_refs": ["RANZCP Position Statement on Gambling"]
+      },
+      {
+        "letter": "C",
+        "text": "Commence sertraline 50 mg PO daily for underlying depressive symptoms",
+        "correct": false,
+        "rationale": "He does not currently meet criteria for a major depressive episode, and antidepressants alone have limited evidence for gambling disorder outside of comorbid affective illness; screening and psychological referral come first (Source: RANZCP Position Statement on Gambling).",
+        "source_refs": ["RANZCP Position Statement on Gambling"]
+      },
+      {
+        "letter": "D",
+        "text": "Advise self-exclusion from all gambling venues via the state gambling commission and review in 6 months",
+        "correct": false,
+        "rationale": "Self-exclusion is a useful adjunct (particularly BetStop, the national self-exclusion register for online wagering) but a 6-month passive review under-treats the presentation; structured psychological therapy and financial counselling should start now (Source: BetStop National Self-Exclusion Register).",
+        "source_refs": ["BetStop National Self-Exclusion Register"]
+      },
+      {
+        "letter": "E",
+        "text": "Arrange inpatient admission to a private residential addiction unit for stabilisation",
+        "correct": false,
+        "rationale": "Inpatient admission is not indicated for gambling disorder in the absence of suicidality, comorbid substance withdrawal, or acute risk; community stepped-care (CBT, motivational interviewing, financial counselling, self-exclusion) is first-line (Source: RANZCP Position Statement on Gambling).",
+        "source_refs": ["RANZCP Position Statement on Gambling"]
+      }
+    ],
+    "explanation": {
+      "summary": "Gambling disorder is a DSM-5 behavioural addiction and a hidden but common cause of psychological distress, financial ruin, family breakdown, and completed suicide in Australia. Screening is often prompted by a partner or an unrelated presentation. Brief validated screens include the Lie-Bet (two questions: have you ever felt the need to bet increasing amounts of money, and have you ever had to lie to people important to you about how much you gambled) and the PGSI (Problem Gambling Severity Index, 9 items, categorises risk). First-line management is community stepped-care: CBT (either therapist-delivered or through Gambling Help Online, nationally funded), motivational interviewing, financial counselling, and self-exclusion (BetStop for online wagering, state venue registers for physical venues). Naltrexone has emerging evidence as second-line for craving-driven use. Assessment for and treatment of comorbid mood, anxiety, substance use, and suicidality is essential.",
+      "key_points": [
+        "Brief validated screens: Lie-Bet (2 questions) or PGSI (9 items)",
+        "First-line: CBT via Gambling Help Online (nationally funded) or specialist service",
+        "Financial counselling in parallel is essential",
+        "Self-exclusion via BetStop (national online) or state venue registers",
+        "Naltrexone is emerging second-line for craving-driven gambling"
+      ],
+      "pearls": "The Lie-Bet screen has strong sensitivity (>80%) for problem gambling with just two questions and is easily incorporated into a routine general-practice consultation."
+    },
+    "sources": [
+      {"label": "RANZCP Position Statement on Gambling", "url": "https://www.ranzcp.org/"},
+      {"label": "Gambling Help Online", "url": "https://www.gamblinghelponline.org.au/"},
+      {"label": "eTG Psychotropic", "url": "https://tgldcdp.tg.org.au/"},
+      {"label": "BetStop National Self-Exclusion Register", "url": "https://www.betstop.gov.au/"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-08-31"
+  },
+  {
+    "id": "psych-substancedepth-014-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - polysubstance use",
+    "subtopic_detail": "Sequencing detoxification and stabilisation across multiple substances",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["polysubstance", "detoxification"],
+    "stem": "A 36-year-old man presents to a hospital drug and alcohol consultation-liaison team requesting help. He drinks approximately 180 g of alcohol daily, injects heroin approximately three times per week (last use 2 days ago), takes prescribed alprazolam 2 mg three times daily (started by another prescriber for anxiety), and smokes methamphetamine on weekends. He is currently in acute alcohol withdrawal (CIWA-Ar 16) on the ward, and reports opioid craving.\n\nHe has hepatitis C antibody positivity with a detectable viral load and stable moderate depression. He has never had a withdrawal seizure. He has preserved renal function and his LFTs show ALT 90 with normal bilirubin and INR. He is engaged with the team and consents to a coordinated plan.",
+    "data_table": {
+      "Vital signs": "HR 108, BP 158/94, RR 18, SpO2 98% room air, temp 37.4",
+      "Examination": "Diaphoretic, tremor, needle track marks left cubital fossa, no jaundice or ascites",
+      "Investigations": "ALT 90, bilirubin normal, INR 1.0, eGFR 92 mL/min/1.73 m^2, hepatitis C RNA detectable, urine drug screen positive for opiates, benzodiazepines, methamphetamine"
+    },
+    "lead_in": "What is the single most appropriate sequencing plan for his management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Manage alcohol withdrawal now with symptom-triggered diazepam and continue his alprazolam; then commence opioid substitution once alcohol withdrawal is settled; alprazolam taper and methamphetamine plan follow",
+        "correct": true,
+        "rationale": "Acute alcohol withdrawal at CIWA-Ar 16 is life-threatening and takes priority; continuing his existing alprazolam avoids compounding benzodiazepine withdrawal on top of alcohol withdrawal; opioid substitution (methadone or buprenorphine, following washout considerations) is commenced once alcohol withdrawal is settling (usually 48-72 hours); then a supervised alprazolam-to-diazepam substitution and staged benzodiazepine taper follows over months, with methamphetamine addressed through relapse-prevention psychological therapy (Source: NSW Health Drug and Alcohol Withdrawal Clinical Practice Guidelines; RACP AChAM National guidelines for medication-assisted treatment of opioid dependence).",
+        "source_refs": ["NSW Health Drug and Alcohol Withdrawal Clinical Practice Guidelines", "RACP AChAM National guidelines for medication-assisted treatment of opioid dependence"]
+      },
+      {
+        "letter": "B",
+        "text": "Stop all substances simultaneously (alcohol, opioids, alprazolam, methamphetamine) and manage combined withdrawal with high-dose diazepam plus clonidine",
+        "correct": false,
+        "rationale": "Simultaneous abrupt cessation of alcohol, opioids, and benzodiazepines in a polysubstance-dependent patient is dangerous, extremely uncomfortable, and reduces retention; sequenced stabilisation is standard practice (Source: RACP AChAM National guidelines for medication-assisted treatment of opioid dependence).",
+        "source_refs": ["RACP AChAM National guidelines for medication-assisted treatment of opioid dependence"]
+      },
+      {
+        "letter": "C",
+        "text": "Commence buprenorphine-naloxone induction now during acute alcohol withdrawal, then treat alcohol withdrawal",
+        "correct": false,
+        "rationale": "Buprenorphine induction during an unstable alcohol withdrawal has poor tolerability and confounds symptom assessment; alcohol withdrawal takes priority for stabilisation first (Source: RACP AChAM National guidelines for medication-assisted treatment of opioid dependence).",
+        "source_refs": ["RACP AChAM National guidelines for medication-assisted treatment of opioid dependence"]
+      },
+      {
+        "letter": "D",
+        "text": "Stop the alprazolam today, continue drinking to prevent withdrawal seizures, and plan a slow alcohol taper over 6 weeks in the community",
+        "correct": false,
+        "rationale": "Abrupt alprazolam cessation risks severe benzodiazepine withdrawal including seizures; continued drinking as a substitute is not accepted management, and community alcohol taper is inappropriate given the current inpatient CIWA-Ar of 16 and polysubstance profile (Source: RACGP Prescribing drugs of dependence).",
+        "source_refs": ["RACGP Prescribing drugs of dependence"]
+      },
+      {
+        "letter": "E",
+        "text": "Refer to psychiatry for antidepressant optimisation and defer all substance-use interventions until his mood is stable",
+        "correct": false,
+        "rationale": "Deferring substance-use management until mood is stable inverts the required sequence; active substance use directly worsens depression and outcomes, and life-threatening alcohol withdrawal is the immediate priority regardless of mood status (Source: RANZCP guidelines).",
+        "source_refs": ["RANZCP guidelines"]
+      }
+    ],
+    "explanation": {
+      "summary": "Polysubstance use presentations require a clear sequencing plan because the interaction of withdrawals and treatments matters as much as the choice of treatments themselves. General principle: treat the most life-threatening withdrawal first (alcohol and benzodiazepines rank above opioids for withdrawal mortality), stabilise the patient, then layer in the next substance. For this patient: acute alcohol withdrawal now with symptom-triggered diazepam (continuing his current alprazolam to avoid compound benzodiazepine withdrawal), then commencing opioid maintenance (methadone or buprenorphine, following fentanyl-aware washout if applicable) at 48-72 hours once alcohol withdrawal is settling, then a supervised alprazolam-to-diazepam substitution and staged benzodiazepine taper over months, with methamphetamine addressed through relapse-prevention psychological therapy alongside. Comorbid depression, hepatitis C, and psychosocial needs are addressed in parallel through coordinated multidisciplinary care.",
+      "key_points": [
+        "Treat life-threatening withdrawal first: alcohol and benzodiazepines rank above opioids",
+        "Continue current benzodiazepine while treating alcohol withdrawal to avoid compound withdrawal",
+        "Commence opioid substitution once alcohol withdrawal settles (usually 48-72 hours)",
+        "Benzodiazepine taper over months following alprazolam-to-diazepam substitution",
+        "Methamphetamine and stimulant use are addressed through psychological relapse prevention"
+      ],
+      "pearls": "The polysubstance sequencing rule: alcohol and benzodiazepines take priority because withdrawal itself can kill (seizures, delirium); opioid withdrawal is severely unpleasant but rarely fatal in a healthy adult."
+    },
+    "sources": [
+      {"label": "NSW Health Drug and Alcohol Withdrawal Clinical Practice Guidelines", "url": "https://www.health.nsw.gov.au/aod/professionals/Pages/withdrawal-management.aspx"},
+      {"label": "RACP AChAM National guidelines for medication-assisted treatment of opioid dependence", "url": "https://www.health.gov.au/resources/publications/national-guidelines-for-medication-assisted-treatment-of-opioid-dependence"},
+      {"label": "RACGP Prescribing drugs of dependence", "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/drugs-of-dependence"},
+      {"label": "RANZCP guidelines", "url": "https://www.ranzcp.org/"}
+    ],
+    "reference_ranges": ["lfts", "uec"],
+    "created": "2026-08-31"
+  },
+  {
+    "id": "psych-substancedepth-015-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - pregnancy and opioids",
+    "subtopic_detail": "Opioid maintenance in pregnancy",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["pregnancy", "opioid use disorder"],
+    "stem": "A 29-year-old woman is 12 weeks pregnant by ultrasound dating (G2P1) and attends a shared-care antenatal clinic with the drug and alcohol team. She has been on methadone 60 mg daily for 3 years and remains stable on this dose with no illicit opioid use documented on serial urine drug screens over the past 18 months. She wants to know whether she should stop, reduce, or continue her methadone during pregnancy because a family member has said methadone will harm the baby.\n\nShe has no other substance use, no medical comorbidity, has stopped smoking, and has engaged with antenatal care from 8 weeks. Her previous pregnancy was uncomplicated. She is not depressed and has no suicidal ideation. Baseline observations are normal. Her partner is aware of and supportive of her methadone treatment.",
+    "data_table": {
+      "Vital signs": "Vital signs within normal limits",
+      "Examination": "Gravid uterus consistent with 12 weeks by dates, no other significant findings",
+      "Investigations": "Antenatal bloods normal; hepatitis B, hepatitis C, HIV, syphilis screens negative; ultrasound confirms singleton intrauterine pregnancy"
+    },
+    "lead_in": "What is the single most appropriate advice regarding her methadone?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Continue methadone at her current dose, monitor closely as pregnancy progresses, and expect dose adjustments (usually upward) in the third trimester due to increased metabolism and volume of distribution",
+        "correct": true,
+        "rationale": "Continuing opioid maintenance treatment (methadone or buprenorphine) throughout pregnancy is the standard of care because unmanaged withdrawal risks miscarriage, preterm labour, foetal distress, and relapse to illicit opioids with overdose and infection risk. Dose requirements typically increase in the third trimester (accelerated methadone metabolism, increased volume of distribution, plasma protein changes); split dosing may be needed. The neonate should be observed for neonatal abstinence syndrome after birth (Source: RACP AChAM National guidelines for medication-assisted treatment of opioid dependence; RANZCOG Substance Use in Pregnancy; NSW Health Substance Use During Pregnancy).",
+        "source_refs": ["RACP AChAM National guidelines for medication-assisted treatment of opioid dependence", "RANZCOG Substance Use in Pregnancy", "NSW Health Substance Use During Pregnancy"]
+      },
+      {
+        "letter": "B",
+        "text": "Rapidly taper methadone to zero over 4 weeks to eliminate neonatal abstinence syndrome risk",
+        "correct": false,
+        "rationale": "Rapid detoxification in pregnancy risks miscarriage, preterm labour, foetal distress, and relapse to illicit opioids with far worse outcomes than continued maintenance; opioid maintenance is the standard of care throughout pregnancy (Source: RACP AChAM National guidelines for medication-assisted treatment of opioid dependence).",
+        "source_refs": ["RACP AChAM National guidelines for medication-assisted treatment of opioid dependence"]
+      },
+      {
+        "letter": "C",
+        "text": "Switch to naltrexone 50 mg daily to avoid any neonatal opioid exposure",
+        "correct": false,
+        "rationale": "Naltrexone induction in an opioid-dependent pregnant woman requires complete opioid abstinence (would precipitate withdrawal), has poor retention data in pregnancy, and is not recommended by Australian pregnancy substance-use guidance (Source: RANZCOG Substance Use in Pregnancy).",
+        "source_refs": ["RANZCOG Substance Use in Pregnancy"]
+      },
+      {
+        "letter": "D",
+        "text": "Halve her methadone dose immediately to reduce neonatal abstinence syndrome severity",
+        "correct": false,
+        "rationale": "Abrupt dose reduction risks withdrawal and relapse; neonatal abstinence syndrome severity correlates only weakly with maternal methadone dose and is managed by neonatal team postnatally with observation and treatment protocols (Source: RANZCOG Substance Use in Pregnancy).",
+        "source_refs": ["RANZCOG Substance Use in Pregnancy"]
+      },
+      {
+        "letter": "E",
+        "text": "Stop methadone entirely and prescribe oxycodone modified release 20 mg twice daily instead",
+        "correct": false,
+        "rationale": "Short-acting full-agonist oral opioids provide unstable plasma levels, are not approved for opioid maintenance in pregnancy, and would represent a regression from an established maintenance program (Source: RACP AChAM National guidelines for medication-assisted treatment of opioid dependence).",
+        "source_refs": ["RACP AChAM National guidelines for medication-assisted treatment of opioid dependence"]
+      }
+    ],
+    "explanation": {
+      "summary": "Continuing opioid maintenance (methadone or buprenorphine) throughout pregnancy is the internationally accepted standard of care. Unmanaged withdrawal risks miscarriage, preterm labour, intrauterine growth restriction, foetal distress, and relapse to illicit opioids with attendant overdose, infection, and psychosocial harms. Methadone dose requirements often increase in the third trimester due to accelerated CYP-mediated metabolism, expanded volume of distribution, and plasma protein changes; split dosing may be needed. Buprenorphine is an acceptable alternative with slightly lower neonatal abstinence syndrome severity in some series but has no maternal-outcome disadvantage. Neonatal abstinence syndrome affects 55-95% of babies exposed to maternal opioid maintenance and is managed with observation (Finnegan score or similar) and treatment protocols (usually morphine, sometimes phenobarbital) in a NICU or special care nursery. Antenatal shared care with drug and alcohol team, midwifery, and obstetrics is standard.",
+      "key_points": [
+        "Continue opioid maintenance (methadone or buprenorphine) throughout pregnancy: standard of care",
+        "Rapid taper risks miscarriage, preterm labour, foetal distress, relapse",
+        "Methadone dose often increases in third trimester (accelerated metabolism, increased Vd)",
+        "Neonatal abstinence syndrome affects 55-95% of exposed neonates; managed postnatally",
+        "Naltrexone induction is inappropriate during pregnancy (precipitates withdrawal, poor retention)"
+      ],
+      "pearls": "Neonatal abstinence syndrome severity correlates only weakly with maternal methadone dose - do not reduce maternal dose late in pregnancy in an attempt to reduce NAS; the risks of maternal instability outweigh the marginal neonatal benefit."
+    },
+    "sources": [
+      {"label": "RACP AChAM National guidelines for medication-assisted treatment of opioid dependence", "url": "https://www.health.gov.au/resources/publications/national-guidelines-for-medication-assisted-treatment-of-opioid-dependence"},
+      {"label": "RANZCOG Substance Use in Pregnancy", "url": "https://ranzcog.edu.au/"},
+      {"label": "NSW Health Substance Use During Pregnancy", "url": "https://www.health.nsw.gov.au/aod/professionals/Pages/pregnancy-guidelines.aspx"}
+    ],
+    "reference_ranges": [],
+    "created": "2026-08-31"
+  },
+  {
+    "id": "psych-substancedepth-016-lD",
+    "topic": "Psychiatry",
+    "subtopic": "Substance use - pregnancy and benzodiazepines",
+    "subtopic_detail": "Benzodiazepine dependence and pregnancy taper decision",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["pregnancy", "benzodiazepines"],
+    "stem": "A 31-year-old woman presents at 8 weeks gestation (G1P0). For the past 4 years she has taken diazepam 20 mg PO twice daily, initially prescribed and then obtained through multiple prescribers and doctor shopping. She now takes it daily and describes not being able to leave the house without a dose. She has previously tried to stop over a weekend and had a rebound of extreme anxiety and one witnessed generalised tonic-clonic seizure that led to a hospital admission.\n\nShe has no other substance use, no alcohol use, is not depressed, and is engaged with a general practice registered as an opioid treatment prescriber (though she is not on opioid maintenance). She wants to do the right thing for the baby and has read online that benzodiazepines cause birth defects. She has no other medical comorbidity and antenatal bloods are unremarkable. She has no history of psychosis.",
+    "data_table": {
+      "Vital signs": "Vital signs within normal limits",
+      "Examination": "Anxious, mildly tremulous, no other findings",
+      "Investigations": "Antenatal bloods normal; ultrasound confirms singleton intrauterine pregnancy at 8 weeks; TFTs normal; urine drug screen positive for benzodiazepines only"
+    },
+    "lead_in": "What is the single most appropriate management plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Rapid discontinuation over 2 weeks under inpatient observation to minimise total foetal benzodiazepine exposure",
+        "correct": false,
+        "rationale": "Rapid discontinuation risks maternal seizure (she has already had one on abrupt cessation), which itself poses substantial risk to the foetus; a controlled slow taper is safer for both mother and baby (Source: RACGP Prescribing drugs of dependence; RANZCOG Substance Use in Pregnancy).",
+        "source_refs": ["RACGP Prescribing drugs of dependence", "RANZCOG Substance Use in Pregnancy"]
+      },
+      {
+        "letter": "B",
+        "text": "Continue current dose unchanged throughout pregnancy and plan a slow postnatal taper",
+        "correct": false,
+        "rationale": "Continuing 40 mg diazepam daily throughout pregnancy exposes the foetus to unnecessary sedation and increases the risk of neonatal withdrawal (floppy infant syndrome); a slow controlled taper during pregnancy reduces total exposure while avoiding maternal withdrawal (Source: RANZCOG Substance Use in Pregnancy).",
+        "source_refs": ["RANZCOG Substance Use in Pregnancy"]
+      },
+      {
+        "letter": "C",
+        "text": "Consolidate to a single prescriber, register on prescription monitoring, and commence a slow diazepam taper of approximately 10% every 2-4 weeks under specialist and antenatal shared care, aiming for the lowest effective dose (not necessarily zero) by term",
+        "correct": true,
+        "rationale": "The safest approach in benzodiazepine dependence with confirmed seizure risk during rapid cessation is a controlled slow taper (approximately 10% every 2-4 weeks) under a single prescriber with prescription-monitoring integration, aiming for the lowest effective dose by term, with the understanding that complete cessation is not always feasible or desirable during pregnancy. The neonate is observed postnatally for withdrawal (floppy infant syndrome, respiratory depression). First-trimester exposure to diazepam confers a small absolute risk of oral cleft (background 1 per 1000; benzodiazepine-exposed approximately 2-3 per 1000) which should be discussed but does not warrant abrupt cessation (Source: RANZCOG Substance Use in Pregnancy; RACGP Prescribing drugs of dependence; AMH Diazepam).",
+        "source_refs": ["RANZCOG Substance Use in Pregnancy", "RACGP Prescribing drugs of dependence", "AMH Diazepam"]
+      },
+      {
+        "letter": "D",
+        "text": "Switch to alprazolam 1 mg three times daily to reduce foetal exposure through a shorter half-life",
+        "correct": false,
+        "rationale": "Alprazolam has a shorter half-life but greater interdose withdrawal, higher dependence liability, and is harder to taper; the standard approach for benzodiazepine deprescribing (including in pregnancy) is substitution to long-acting diazepam, not the reverse (Source: RACGP Prescribing drugs of dependence).",
+        "source_refs": ["RACGP Prescribing drugs of dependence"]
+      },
+      {
+        "letter": "E",
+        "text": "Advise termination of pregnancy given the teratogenic risk of first-trimester benzodiazepine exposure",
+        "correct": false,
+        "rationale": "First-trimester benzodiazepine exposure carries only a small absolute increase in oral cleft risk (background 1 per 1000 to approximately 2-3 per 1000) and does not warrant a recommendation for termination; that risk is discussed as part of informed consent but the pregnancy proceeds with a slow taper plan (Source: MotherToBaby fact sheet: benzodiazepines; AMH Diazepam).",
+        "source_refs": ["MotherToBaby fact sheet: benzodiazepines", "AMH Diazepam"]
+      }
+    ],
+    "explanation": {
+      "summary": "Benzodiazepine dependence in pregnancy sits at the intersection of two competing risks: foetal exposure to benzodiazepines (small absolute increase in oral cleft in first-trimester exposure, neonatal floppy infant syndrome and withdrawal with third-trimester exposure, some neurodevelopmental concerns) and maternal withdrawal (seizure, autonomic instability, rebound anxiety, relapse to unregulated benzodiazepines). Rapid cessation is dangerous when there is a history of withdrawal seizure. The standard Australian approach is a single prescriber, prescription-monitoring registration, a slow diazepam taper of approximately 10% every 2-4 weeks, and aiming for the lowest effective dose by term (not necessarily zero). Neonatal team is alerted to observe for withdrawal and floppy infant syndrome after birth. Psychological therapy for anxiety (CBT) runs in parallel. Antenatal shared care with obstetrics, drug and alcohol team, and psychiatry is standard.",
+      "key_points": [
+        "Rapid benzodiazepine cessation in pregnancy risks maternal seizure (harmful to foetus)",
+        "Continuing high-dose exposure risks neonatal withdrawal and floppy infant syndrome",
+        "Slow diazepam taper approximately 10% every 2-4 weeks, aiming for lowest effective dose by term",
+        "Single prescriber and prescription-monitoring integration reduce diversion risk",
+        "First-trimester exposure: small absolute oral cleft risk (~2-3 per 1000); does not warrant termination"
+      ],
+      "pearls": "Neonatal floppy infant syndrome (hypotonia, hypothermia, poor feeding, respiratory depression) can occur with third-trimester benzodiazepine exposure and warrants alerting the neonatal team pre-delivery so the baby is observed in a special care nursery."
+    },
+    "sources": [
+      {"label": "RANZCOG Substance Use in Pregnancy", "url": "https://ranzcog.edu.au/"},
+      {"label": "RACGP Prescribing drugs of dependence", "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/drugs-of-dependence"},
+      {"label": "AMH Diazepam", "url": "https://amhonline.amh.net.au/"},
+      {"label": "MotherToBaby fact sheet: benzodiazepines", "url": "https://mothertobaby.org/fact-sheets/benzodiazepines-pregnancy/"}
+    ],
+    "reference_ranges": ["thyroid"],
+    "created": "2026-08-31"
+  }
+]
