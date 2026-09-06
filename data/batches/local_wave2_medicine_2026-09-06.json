@@ -1,0 +1,1437 @@
+[
+  {
+    "id": "local-wave2-medicine-001",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Acute HIV seroconversion diagnosis",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["HIV"],
+    "stem": "You are the emergency registrar. A 27 year old man presents with 6 days of fevers to 39, sore throat, generalised aching, and a diffuse blanching maculopapular rash on the trunk and upper arms. He is otherwise well.\n\nHe returned 4 weeks ago from a 3 month trip through South East Asia and reports several episodes of condomless receptive anal sex with new partners while away. He has no injecting drug use, no dental work, and takes no regular medications.\n\nOn examination he has small non-tender cervical and axillary lymph nodes, mild pharyngeal erythema without exudate, and a soft palate with several shallow non-vesicular ulcers. There is no meningism. Vital signs: pulse 96, blood pressure 118/74, respiratory rate 16, SpO2 99% in room air, temperature 38.6. Full blood count shows lymphocytes 1.4 x10^9/L (1.5-4.0) with atypical lymphocytes reported on film. Liver enzymes are mildly raised. A fourth generation HIV antigen/antibody combination immunoassay drawn 2 hours ago has just returned negative.",
+    "data_table": {
+      "Vital signs": "Pulse 96, BP 118/74, RR 16, SpO2 99% room air, temperature 38.6",
+      "Examination": "Non-tender cervical and axillary lymphadenopathy; pharyngeal erythema without exudate; shallow non-vesicular palatal ulcers; truncal maculopapular rash",
+      "Sexual history": "Multiple episodes of condomless receptive anal sex with new male partners during recent 3 month South East Asia trip; last exposure approximately 3 weeks ago",
+      "Investigations": "Lymphocytes 1.4 x10^9/L (1.5-4.0) with atypical lymphocytes; mildly raised transaminases; fourth generation HIV Ag/Ab immunoassay NEGATIVE",
+      "Other testing": "EBV IgM pending; syphilis serology pending"
+    },
+    "lead_in": "What is the most appropriate next investigation to confirm or exclude acute HIV infection?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Quantitative plasma HIV RNA viral load by polymerase chain reaction",
+        "correct": true,
+        "rationale": "In suspected acute HIV seroconversion within the window period a negative fourth generation antigen/antibody assay does not exclude infection; HIV RNA becomes detectable approximately 10 days after exposure, well before p24 antigen and antibody. ASHM recommends plasma HIV RNA as the confirmatory test when acute HIV is suspected and the combination immunoassay is negative or indeterminate (Source: ASHM HIV Management Guidelines).",
+        "source_refs": ["ASHM HIV Management Guidelines"]
+      },
+      {
+        "letter": "B",
+        "text": "HIV Western blot antibody assay on the current serum sample",
+        "correct": false,
+        "rationale": "Western blot has been superseded in Australian laboratories by fourth generation assays plus HIV RNA for confirmation; it also relies on antibody, so it will remain negative during the seroconversion window in which this patient sits (Source: ASHM HIV Management Guidelines).",
+        "source_refs": ["ASHM HIV Management Guidelines"]
+      },
+      {
+        "letter": "C",
+        "text": "Repeat fourth generation HIV antigen/antibody immunoassay in 4 weeks",
+        "correct": false,
+        "rationale": "Waiting 4 weeks to repeat serology delays diagnosis, treatment, and partner notification during the highest infectiousness phase; HIV RNA now settles the question within days and permits immediate antiretroviral commencement if positive (Source: ASHM HIV Management Guidelines).",
+        "source_refs": ["ASHM HIV Management Guidelines"]
+      },
+      {
+        "letter": "D",
+        "text": "Monospot heterophile antibody test for infectious mononucleosis",
+        "correct": false,
+        "rationale": "The combination of a South East Asia exposure history with condomless receptive anal sex, a mononucleosis-like illness, palatal ulcers, and a maculopapular rash makes acute HIV a mandatory exclusion regardless of EBV status; monospot does not address that risk (Source: ASHM HIV Management Guidelines).",
+        "source_refs": ["ASHM HIV Management Guidelines"]
+      },
+      {
+        "letter": "E",
+        "text": "CD4 T lymphocyte count with CD4 to CD8 ratio measurement",
+        "correct": false,
+        "rationale": "CD4 counts fall transiently during seroconversion but are not diagnostic of HIV; they are used for staging and opportunistic infection prophylaxis decisions after infection has been confirmed by antigen/antibody assay or HIV RNA (Source: ASHM HIV Management Guidelines).",
+        "source_refs": ["ASHM HIV Management Guidelines"]
+      }
+    ],
+    "explanation": {
+      "summary": "Acute HIV seroconversion illness classically presents 2 to 4 weeks after exposure with fever, pharyngitis, lymphadenopathy, maculopapular rash, and mucocutaneous ulceration. Fourth generation antigen/antibody assays close the diagnostic window to around 15 to 20 days after exposure, but HIV RNA becomes detectable earlier, from around day 10. When a fourth generation assay is negative and acute HIV remains clinically likely, HIV RNA is the confirmatory test, and a strongly positive viral load with a negative or indeterminate serology confirms acute infection. Rapid diagnosis matters both because early antiretroviral therapy limits reservoir seeding and because plasma viral load is highest in the acute phase, driving onward transmission risk.",
+      "key_points": [
+        "Fever, pharyngitis, rash, palatal ulcers, and lymphadenopathy 2 to 4 weeks after high risk sexual exposure should trigger HIV testing.",
+        "Fourth generation Ag/Ab immunoassay window is around 15 to 20 days; HIV RNA is detectable from around day 10.",
+        "If the fourth generation assay is negative but acute HIV is suspected, order HIV RNA rather than waiting to repeat serology."
+      ],
+      "pearls": "A very high HIV RNA (often greater than 100000 copies/mL) with a negative or indeterminate fourth generation immunoassay is the classic acute HIV signature - move to same-day sexual health service referral for antiretroviral initiation."
+    },
+    "sources": [
+      { "label": "ASHM HIV Management Guidelines", "url": "https://hiv.guidelines.org.au/" },
+      { "label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/" }
+    ],
+    "reference_ranges": ["fbc", "lfts"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-002",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Opportunistic infection prophylaxis by CD4 threshold",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["HIV"],
+    "stem": "You are the infectious diseases registrar reviewing a 39 year old man in the HIV clinic. He was diagnosed with HIV 3 weeks ago after presenting with weight loss and oral candidiasis, and antiretroviral therapy with bictegravir-tenofovir alafenamide-emtricitabine was commenced last week.\n\nHis baseline CD4 count was 42 cells/microL and HIV RNA 480000 copies/mL. He has no known drug allergies. Chest X-ray on presentation was clear and a QuantiFERON-Plus assay was negative. Cryptococcal serum antigen was negative. Toxoplasma IgG is positive.\n\nHe is asymptomatic today apart from mild fatigue. Vital signs are within normal limits. Oral thrush has resolved with fluconazole. Baseline bloods show haemoglobin 128 g/L (135-175), neutrophils 2.6 x10^9/L (2.0-7.5), estimated glomerular filtration rate greater than 90 mL/min/1.73m^2, and liver enzymes within normal limits. G6PD screening is normal.",
+    "data_table": {
+      "HIV status": "New diagnosis 3 weeks ago; baseline CD4 42 cells/microL; HIV RNA 480000 copies/mL; ART commenced 1 week ago (bictegravir-TAF-FTC)",
+      "Screening": "CXR clear; QuantiFERON-Plus negative; cryptococcal serum antigen negative; Toxoplasma IgG POSITIVE",
+      "Bloods": "Haemoglobin 128 g/L (135-175); neutrophils 2.6 x10^9/L (2.0-7.5); eGFR greater than 90; LFTs within normal limits; G6PD normal",
+      "Allergies": "Nil known"
+    },
+    "lead_in": "What is the most appropriate opportunistic infection prophylaxis regimen?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Trimethoprim-sulfamethoxazole single strength orally once daily as sole agent",
+        "correct": false,
+        "rationale": "Single strength cotrimoxazole daily provides Pneumocystis cover but at CD4 below 50 with positive Toxoplasma IgG additional Mycobacterium avium complex prophylaxis with azithromycin is required, and double strength dosing is preferred for combined Toxoplasma reactivation cover (Source: ASHM HIV Management Guidelines).",
+        "source_refs": ["ASHM HIV Management Guidelines"]
+      },
+      {
+        "letter": "B",
+        "text": "Cotrimoxazole double strength orally daily plus azithromycin 1.2 g weekly",
+        "correct": true,
+        "rationale": "With CD4 below 50 and positive Toxoplasma IgG, cotrimoxazole double strength daily provides combined Pneumocystis jirovecii and Toxoplasma reactivation prophylaxis. Below CD4 50, azithromycin 1.2 g weekly is added for disseminated Mycobacterium avium complex prophylaxis per ASHM guidelines (Source: ASHM HIV Management Guidelines).",
+        "source_refs": ["ASHM HIV Management Guidelines"]
+      },
+      {
+        "letter": "C",
+        "text": "Dapsone plus pyrimethamine plus folinic acid orally at standard weekly dosing",
+        "correct": false,
+        "rationale": "Dapsone-pyrimethamine-folinic acid is second line combined Pneumocystis and Toxoplasma prophylaxis reserved for cotrimoxazole intolerance or true sulfa allergy; this patient has no allergies and normal G6PD, so cotrimoxazole remains first line (Source: ASHM HIV Management Guidelines).",
+        "source_refs": ["ASHM HIV Management Guidelines"]
+      },
+      {
+        "letter": "D",
+        "text": "Nebulised pentamidine 300 mg once every 4 weeks by respiratory therapist",
+        "correct": false,
+        "rationale": "Nebulised pentamidine provides Pneumocystis cover only, does not protect against Toxoplasma reactivation despite positive IgG, and is inferior to oral cotrimoxazole; it is reserved for patients unable to tolerate systemic alternatives (Source: ASHM HIV Management Guidelines).",
+        "source_refs": ["ASHM HIV Management Guidelines"]
+      },
+      {
+        "letter": "E",
+        "text": "Fluconazole 200 mg orally daily as long term primary prophylaxis",
+        "correct": false,
+        "rationale": "Primary fluconazole prophylaxis against cryptococcosis is not recommended in Australia when serum cryptococcal antigen is negative; it also does not cover Pneumocystis or Toxoplasma, which are the immediate risks at this CD4 stratum (Source: ASHM HIV Management Guidelines).",
+        "source_refs": ["ASHM HIV Management Guidelines"]
+      }
+    ],
+    "explanation": {
+      "summary": "Opportunistic infection prophylaxis in HIV is driven by CD4 stratum and specific serology. Below CD4 200 start Pneumocystis jirovecii prophylaxis with cotrimoxazole daily. Below CD4 100 with positive Toxoplasma IgG cotrimoxazole double strength daily also covers Toxoplasma reactivation. Below CD4 50 add azithromycin weekly for disseminated Mycobacterium avium complex. Prophylaxis is discontinued when antiretroviral therapy achieves sustained CD4 recovery above the relevant threshold for at least 3 months with virological suppression.",
+      "key_points": [
+        "CD4 below 200: cotrimoxazole for Pneumocystis jirovecii.",
+        "CD4 below 100 and Toxoplasma IgG positive: cotrimoxazole double strength covers both.",
+        "CD4 below 50: add azithromycin weekly for MAC.",
+        "Stop prophylaxis when CD4 recovers above threshold for 3 months with virological suppression."
+      ],
+      "pearls": "In a newly diagnosed patient with high viral load and low CD4 who has just started ART, watch for immune reconstitution inflammatory syndrome (IRIS) - continue prophylaxis until CD4 rises above threshold for 3 months, not from the day ART is started."
+    },
+    "sources": [
+      { "label": "ASHM HIV Management Guidelines", "url": "https://hiv.guidelines.org.au/" },
+      { "label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/" }
+    ],
+    "reference_ranges": ["fbc", "uec", "lfts"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-003",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Latent tuberculosis infection diagnosis and treatment",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["tuberculosis"],
+    "stem": "You are the general medical registrar in a refugee health clinic. A 32 year old woman from Myanmar has been in Australia for 4 months and attends for a pre-employment health check for aged care work. She is asymptomatic with no cough, weight loss, night sweats, or fevers.\n\nShe received BCG as a child. She has no known previous tuberculosis contact but grew up in a village where several neighbours had chronic cough. She is not pregnant, does not drink alcohol, and takes no medications.\n\nExamination is unremarkable. Vital signs are within normal limits. A QuantiFERON-Plus interferon gamma release assay is positive. Chest X-ray shows no infiltrate, cavitation, or hilar lymphadenopathy. Sputum is not producible. HIV serology is negative and hepatitis B and C serology are negative. Full blood count and liver enzymes are within normal limits.",
+    "data_table": {
+      "Vital signs": "Within normal limits",
+      "Screening": "QuantiFERON-Plus POSITIVE; CXR clear (no infiltrate, cavitation, or lymphadenopathy); HIV, HBV, HCV negative",
+      "Bloods": "FBC and LFTs within normal limits",
+      "History": "Migrated from Myanmar 4 months ago; BCG as child; no known TB contact; no cough, weight loss, night sweats or fever; not pregnant; no alcohol"
+    },
+    "lead_in": "What is the most appropriate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Reassure that a positive QuantiFERON reflects BCG and no further action is required",
+        "correct": false,
+        "rationale": "QuantiFERON-Plus uses ESAT-6 and CFP-10 antigens absent from BCG and most non-tuberculous mycobacteria, so BCG does not cause a false positive; a positive result requires assessment for latent versus active TB rather than dismissal (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+        "source_refs": ["National Tuberculosis Advisory Committee (NTAC) guidelines"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence 4 drug therapy with rifampicin, isoniazid, pyrazinamide and ethambutol",
+        "correct": false,
+        "rationale": "RIPE is the initial intensive phase for ACTIVE tuberculosis; without symptoms and with a clear CXR she has latent infection, and 4 drug therapy would over-treat, expose her to unnecessary hepatotoxicity, and select for resistance (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+        "source_refs": ["National Tuberculosis Advisory Committee (NTAC) guidelines"]
+      },
+      {
+        "letter": "C",
+        "text": "Isoniazid 300 mg orally daily with pyridoxine 25 mg daily for 6 to 9 months",
+        "correct": true,
+        "rationale": "A positive interferon gamma release assay with a clear CXR, no symptoms and no prior TB treatment is latent tuberculosis infection. Australian first line treatment is isoniazid daily for 6 to 9 months (or rifampicin 4 months, or 3 months weekly isoniazid plus rifapentine where available), with pyridoxine to prevent isoniazid peripheral neuropathy (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+        "source_refs": ["National Tuberculosis Advisory Committee (NTAC) guidelines"]
+      },
+      {
+        "letter": "D",
+        "text": "Repeat the QuantiFERON-Plus assay in 3 months before deciding on treatment",
+        "correct": false,
+        "rationale": "IGRA does not require confirmation when technically valid; delay increases the risk of progression to active TB, which is approximately 5 to 10% lifetime and highest in the first 2 years after infection, and delays her clearance for aged care work (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+        "source_refs": ["National Tuberculosis Advisory Committee (NTAC) guidelines"]
+      },
+      {
+        "letter": "E",
+        "text": "Induced sputum for smear microscopy and mycobacterial culture x 3 samples",
+        "correct": false,
+        "rationale": "Induced sputum is indicated only when there is clinical or radiographic concern for active pulmonary TB; a clear CXR and absent symptoms make this a low yield step and delays treatment of latent infection (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+        "source_refs": ["National Tuberculosis Advisory Committee (NTAC) guidelines"]
+      }
+    ],
+    "explanation": {
+      "summary": "A positive interferon gamma release assay in an asymptomatic person with a clear CXR and no prior TB treatment is latent tuberculosis infection. Australian NTAC guidance recommends offering treatment because lifetime progression risk to active TB is 5 to 10%, higher in the first 2 years after infection and in the immunocompromised. First line is isoniazid daily for 6 to 9 months with pyridoxine, or rifampicin daily for 4 months, or 3HP (isoniazid plus rifapentine weekly for 12 weeks) where available. Baseline liver function is checked and repeated if symptoms develop; alcohol counselling and pregnancy planning are part of consent.",
+      "key_points": [
+        "IGRA distinguishes latent TB from BCG effect (BCG does not cause false positives).",
+        "Latent TB (positive IGRA, clear CXR, asymptomatic): offer preventive treatment.",
+        "Australian regimens: isoniazid 6-9 months, or rifampicin 4 months, or 3HP 12 weeks."
+      ],
+      "pearls": "Add pyridoxine 25 mg daily to isoniazid to prevent peripheral neuropathy; instruct the patient to stop and seek review if nausea, right upper quadrant pain, dark coloured urine, or jaundice develop during treatment."
+    },
+    "sources": [
+      { "label": "National Tuberculosis Advisory Committee (NTAC) guidelines", "url": "https://www.health.gov.au/committees-and-groups/national-tuberculosis-advisory-committee-ntac" },
+      { "label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/" }
+    ],
+    "reference_ranges": ["fbc", "lfts"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-004",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Hepatotoxicity monitoring during RIPE therapy",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["tuberculosis"],
+    "stem": "You are the medical registrar in a TB clinic. A 58 year old man with smear positive pulmonary tuberculosis is 5 weeks into intensive phase therapy with rifampicin, isoniazid, pyrazinamide, and ethambutol. He was previously well.\n\nHe attends for routine review. He describes 4 days of nausea and reduced appetite but no vomiting, no abdominal pain, no jaundice, and no dark urine. He remains adherent under directly observed therapy. He drinks 20 g of alcohol per week and takes no other regular medications.\n\nExamination shows mild right upper quadrant discomfort on deep palpation without hepatomegaly. There is no scleral icterus and no asterixis. Vital signs are within normal limits.\n\nBloods today: alanine aminotransferase 285 U/L (baseline 32; upper reference 40), aspartate aminotransferase 240 U/L (baseline 30; upper reference 40), alkaline phosphatase 130 U/L (30-110), bilirubin 22 micromol/L (less than 20), albumin 36 g/L (35-50), INR 1.1. Hepatitis A, B, and C serology repeated today are negative.",
+    "data_table": {
+      "Vital signs": "Within normal limits",
+      "Symptoms": "Nausea and reduced appetite for 4 days; no vomiting, abdominal pain, jaundice or dark urine",
+      "Examination": "Mild right upper quadrant discomfort on deep palpation; no hepatomegaly; no scleral icterus; no asterixis",
+      "LFTs today": "ALT 285 U/L (baseline 32; ref less than 40); AST 240 U/L (baseline 30; ref less than 40); ALP 130 U/L (30-110); bilirubin 22 micromol/L (less than 20); albumin 36 g/L (35-50); INR 1.1",
+      "Other": "Hepatitis A, B, C serology negative today; DOT adherent; 20 g alcohol/week"
+    },
+    "lead_in": "What is the most appropriate immediate management of his TB therapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Continue all four RIPE drugs at current doses and repeat LFTs in 2 weeks",
+        "correct": false,
+        "rationale": "ALT is now more than 5 times the baseline and the patient is symptomatic; continuing all agents risks acute liver failure. Australian and international TB guidance mandates stopping hepatotoxic agents when ALT exceeds 5 times upper limit of normal without symptoms OR 3 times upper limit with symptoms (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+        "source_refs": ["National Tuberculosis Advisory Committee (NTAC) guidelines"]
+      },
+      {
+        "letter": "B",
+        "text": "Stop pyrazinamide only and continue rifampicin, isoniazid, and ethambutol",
+        "correct": false,
+        "rationale": "Pyrazinamide is the most hepatotoxic of RIPE, but isoniazid and rifampicin also contribute; when ALT crosses the threshold for interruption, ALL potentially hepatotoxic agents should be stopped and rechallenged sequentially once ALT falls below 2 times upper limit of normal (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+        "source_refs": ["National Tuberculosis Advisory Committee (NTAC) guidelines"]
+      },
+      {
+        "letter": "C",
+        "text": "Stop hepatotoxic RIPE drugs; continue ethambutol plus moxifloxacin; sequential rechallenge",
+        "correct": true,
+        "rationale": "This is symptomatic drug induced liver injury with ALT more than 5 times baseline and more than 3 times upper reference. NTAC guidance is to stop all hepatotoxic first line agents, continue non-hepatotoxic cover (ethambutol plus moxifloxacin or aminoglycoside) to prevent resistance, then sequentially rechallenge rifampicin first (least hepatotoxic of the three), then isoniazid, then reconsider pyrazinamide once ALT returns below 2 times upper reference (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+        "source_refs": ["National Tuberculosis Advisory Committee (NTAC) guidelines"]
+      },
+      {
+        "letter": "D",
+        "text": "Halve doses of rifampicin, isoniazid and pyrazinamide and continue ethambutol at full dose",
+        "correct": false,
+        "rationale": "Dose reduction is not the Australian approach to drug induced liver injury from RIPE; it risks under-treatment and resistance selection while continuing hepatocellular injury. Standard practice is to interrupt hepatotoxic drugs and sequentially rechallenge (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+        "source_refs": ["National Tuberculosis Advisory Committee (NTAC) guidelines"]
+      },
+      {
+        "letter": "E",
+        "text": "Admit for N-acetylcysteine infusion and continue current TB therapy under monitoring",
+        "correct": false,
+        "rationale": "N-acetylcysteine is used for paracetamol induced hepatotoxicity; there is no established role in isolated TB drug induced liver injury, and continuing the causative agents would worsen the injury (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+        "source_refs": ["National Tuberculosis Advisory Committee (NTAC) guidelines"]
+      }
+    ],
+    "explanation": {
+      "summary": "Drug induced liver injury on RIPE is common and occurs mostly within the first 2 to 8 weeks of intensive phase. Interruption thresholds are ALT more than 5 times upper reference without symptoms, or ALT more than 3 times upper reference with symptoms, or any rise in bilirubin above baseline attributable to therapy. Management is to stop all hepatotoxic drugs (isoniazid, rifampicin, pyrazinamide), continue or start non-hepatotoxic cover to prevent resistance (ethambutol plus a fluoroquinolone or aminoglycoside), and sequentially rechallenge each drug at intervals once ALT falls below 2 times upper reference. Consultation with a state TB service is mandatory.",
+      "key_points": [
+        "Interrupt hepatotoxic RIPE drugs when ALT more than 5x upper reference (asymptomatic) or more than 3x upper reference (symptomatic).",
+        "Continue non-hepatotoxic cover (ethambutol plus moxifloxacin) to prevent resistance during interruption.",
+        "Rechallenge sequentially: rifampicin first, then isoniazid, then reconsider pyrazinamide.",
+        "Involve the state TB service for all significant hepatotoxicity events."
+      ],
+      "pearls": "Baseline LFTs and 2-weekly LFTs for the first 2 months of RIPE catch drug induced liver injury early; check LFTs immediately with any new nausea, right upper quadrant pain, dark coloured urine, or jaundice."
+    },
+    "sources": [
+      { "label": "National Tuberculosis Advisory Committee (NTAC) guidelines", "url": "https://www.health.gov.au/committees-and-groups/national-tuberculosis-advisory-committee-ntac" },
+      { "label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/" }
+    ],
+    "reference_ranges": ["lfts", "coags"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-005",
+    "topic": "Medicine",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "Early rheumatoid arthritis diagnosis and first line DMARD",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["rheumatoid arthritis"],
+    "stem": "You are the general medical registrar in an early arthritis clinic. A 44 year old woman presents with 10 weeks of symmetrical joint pain and swelling affecting both wrists, all metacarpophalangeal joints, and both proximal interphalangeal joints of the second and third fingers. She has 90 minutes of morning stiffness.\n\nShe has no rash, no oral ulcers, no Raynaud phenomenon, and no back pain. She has not travelled recently. There is no history of psoriasis in her or her family. She is otherwise well and takes no regular medications.\n\nExamination shows tender swollen wrists and MCPs bilaterally, boggy synovitis at the second and third PIPs, and no distal interphalangeal involvement, no dactylitis, and no nail changes. Vital signs are within normal limits. Investigations: rheumatoid factor 96 IU/mL (less than 20), anti-cyclic citrullinated peptide 180 U/mL (less than 20), erythrocyte sedimentation rate 48 mm/h (less than 20), C-reactive protein 24 mg/L (less than 5), full blood count normal, liver enzymes normal, hepatitis B, hepatitis C, and HIV serology negative. Hand X-rays show soft tissue swelling only without erosions.",
+    "data_table": {
+      "Vital signs": "Within normal limits",
+      "Examination": "Tender swollen bilateral wrists and all MCPs; synovitis at second and third PIPs bilaterally; no DIP involvement, no dactylitis, no nail changes, no rash",
+      "History": "10 weeks symmetrical polyarthritis with 90 minutes morning stiffness; no psoriasis personal or family",
+      "Serology": "RF 96 IU/mL (less than 20); anti-CCP 180 U/mL (less than 20); ESR 48 mm/h (less than 20); CRP 24 mg/L (less than 5)",
+      "Screening": "FBC and LFTs normal; HBV, HCV and HIV serology negative",
+      "Imaging": "Hand X-rays: soft tissue swelling; no erosions"
+    },
+    "lead_in": "What is the most appropriate first line disease modifying therapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Methotrexate 10 mg orally weekly uptitrated with folic acid on non-methotrexate day",
+        "correct": true,
+        "rationale": "She meets 2010 ACR/EULAR classification criteria for rheumatoid arthritis (small joint symmetrical polyarthritis, symptoms greater than 6 weeks, strongly positive RF and anti-CCP, raised inflammatory markers). Australian Rheumatology Association guidance is to start methotrexate as first line conventional synthetic DMARD, uptitrated to 20 to 25 mg weekly, with folic acid to reduce mucosal and haematological side effects (Source: Australian Rheumatology Association).",
+        "source_refs": ["Australian Rheumatology Association"]
+      },
+      {
+        "letter": "B",
+        "text": "Prednisolone 25 mg orally daily as long term monotherapy without DMARD",
+        "correct": false,
+        "rationale": "Glucocorticoids provide rapid symptom control but do not adequately modify disease progression; long term steroid monotherapy is associated with osteoporosis, weight gain, diabetes, and infection risk; steroids should bridge to a DMARD rather than replace one (Source: Australian Rheumatology Association).",
+        "source_refs": ["Australian Rheumatology Association"]
+      },
+      {
+        "letter": "C",
+        "text": "Adalimumab 40 mg subcutaneously every 2 weeks as first line biologic therapy",
+        "correct": false,
+        "rationale": "Biologic disease modifying agents are second line after failure of conventional synthetic DMARDs; they require TB screening, hepatitis B and C serology, and prior methotrexate trial per Pharmaceutical Benefits Scheme criteria before subsidised use (Source: Australian Rheumatology Association).",
+        "source_refs": ["Australian Rheumatology Association"]
+      },
+      {
+        "letter": "D",
+        "text": "Naproxen 500 mg orally twice daily with physiotherapy referral alone",
+        "correct": false,
+        "rationale": "NSAIDs and physiotherapy are useful adjuncts but do not modify erosive disease progression; the window for disease modification is early (less than 3 to 6 months from symptom onset), and delay leads to erosive damage DMARDs cannot reverse (Source: Australian Rheumatology Association).",
+        "source_refs": ["Australian Rheumatology Association"]
+      },
+      {
+        "letter": "E",
+        "text": "Hydroxychloroquine 400 mg orally daily as sole DMARD monotherapy",
+        "correct": false,
+        "rationale": "Hydroxychloroquine is a mild conventional synthetic DMARD, reasonable as part of combination therapy or in mild disease, but methotrexate is the preferred first line agent in seropositive erosion-risk RA with high inflammatory activity (Source: Australian Rheumatology Association).",
+        "source_refs": ["Australian Rheumatology Association"]
+      }
+    ],
+    "explanation": {
+      "summary": "Early rheumatoid arthritis is diagnosed using 2010 ACR/EULAR classification, scoring joint involvement, serology (RF and anti-CCP), acute phase reactants, and duration greater than 6 weeks. Early aggressive treatment within a 3 to 6 month window from symptom onset limits erosive damage. Methotrexate is the anchor conventional synthetic DMARD, uptitrated to 20 to 25 mg weekly with folic acid, with review at 3 months. Response is assessed by DAS28 or similar activity score, and step-up to combination csDMARDs or biologic therapy (TNF inhibitor, IL-6 inhibitor, JAK inhibitor) follows if treatment target is not met.",
+      "key_points": [
+        "2010 ACR/EULAR criteria classify RA using joint count, serology, acute phase reactants, and symptom duration.",
+        "Early DMARD start (within 3-6 months) limits erosive damage.",
+        "Methotrexate is first line; uptitrate to 20-25 mg weekly with folic acid; screen HBV, HCV, HIV, and check LFTs and FBC."
+      ],
+      "pearls": "Before starting methotrexate, always screen hepatitis B, hepatitis C and HIV and check baseline FBC and LFTs; counsel on alcohol limits and pregnancy avoidance (both partners) - washout 3 months for men and 6 months for women."
+    },
+    "sources": [
+      { "label": "Australian Rheumatology Association", "url": "https://rheumatology.org.au/" },
+      { "label": "Therapeutic Guidelines: Rheumatology", "url": "https://tgldcdp.tg.org.au/" }
+    ],
+    "reference_ranges": ["fbc", "lfts", "inflammatory_markers"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-006",
+    "topic": "Medicine",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "Pre-biologic screening for latent tuberculosis",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["rheumatoid arthritis", "tuberculosis"],
+    "stem": "You are the rheumatology registrar reviewing a 52 year old man with seropositive rheumatoid arthritis. He has failed a 6 month trial of methotrexate 25 mg weekly plus sulfasalazine plus hydroxychloroquine (triple therapy) with persistent 8 tender and 6 swollen joints and a DAS28-CRP of 5.4. Prednisolone 7.5 mg daily has been unable to be weaned.\n\nHe was born in Vietnam and migrated to Australia at age 30. He denies cough, night sweats, weight loss, or fevers, and has no history of TB treatment. He has not travelled overseas recently. He worked briefly in an aged care facility 8 years ago. He does not smoke and drinks 40 g of alcohol per week.\n\nExamination shows synovitis at both wrists, several MCPs, and both knees. Chest is clear to auscultation. Vital signs are within normal limits. Escalation to a tumour necrosis factor alpha inhibitor is being considered. Baseline bloods including LFTs are within normal limits. Hepatitis B, C and HIV serology are negative. A QuantiFERON-Plus assay is positive. Chest X-ray shows a small right upper lobe fibronodular scar without cavitation. There is no mediastinal lymphadenopathy.",
+    "data_table": {
+      "Vital signs": "Within normal limits",
+      "Examination": "Synovitis at wrists, MCPs, and knees; chest clear",
+      "History": "Vietnamese-born, migrated age 30; no TB symptoms; no prior TB treatment; brief aged care work 8 years ago",
+      "Rheumatology": "Seropositive RA, DAS28-CRP 5.4 after 6 months triple therapy; prednisolone 7.5 mg daily",
+      "Screening for biologic": "HBV, HCV, HIV negative; LFTs normal; QuantiFERON-Plus POSITIVE; CXR small right upper lobe fibronodular scar, no cavitation"
+    },
+    "lead_in": "What is the most appropriate next step before commencing the TNF alpha inhibitor?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Proceed with the TNF alpha inhibitor now and monitor with 6 monthly CXRs",
+        "correct": false,
+        "rationale": "TNF alpha inhibition can reactivate latent TB to disseminated or extrapulmonary disease within weeks; radiographic surveillance alone is inadequate. LTBI treatment must precede or overlap with the biologic (Source: Australian Rheumatology Association).",
+        "source_refs": ["Australian Rheumatology Association"]
+      },
+      {
+        "letter": "B",
+        "text": "Treat latent TB with isoniazid plus pyridoxine; start biologic after 4 weeks",
+        "correct": true,
+        "rationale": "A positive IGRA in an asymptomatic patient from a high burden country with fibronodular apical scarring is untreated latent tuberculosis infection with radiographic evidence of prior exposure. TNF alpha inhibition markedly increases risk of TB reactivation. Australian Rheumatology Association and NTAC guidance is to commence LTBI therapy at least 4 weeks before starting the biologic, and to complete the full course concurrently (Source: Australian Rheumatology Association; National Tuberculosis Advisory Committee (NTAC) guidelines).",
+        "source_refs": ["Australian Rheumatology Association", "National Tuberculosis Advisory Committee (NTAC) guidelines"]
+      },
+      {
+        "letter": "C",
+        "text": "Order 3 induced sputum samples and commence RIPE 4 drug therapy for active TB",
+        "correct": false,
+        "rationale": "Active TB requires clinical or radiographic evidence beyond an old fibronodular scar; without cavitation, infiltrate, or symptoms this represents latent infection with old healed exposure, not active disease. RIPE would over-treat and expose to hepatotoxicity risk (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+        "source_refs": ["National Tuberculosis Advisory Committee (NTAC) guidelines"]
+      },
+      {
+        "letter": "D",
+        "text": "Repeat the QuantiFERON-Plus assay and CT chest before deciding on TB treatment",
+        "correct": false,
+        "rationale": "Repeat IGRA is unnecessary when technically valid; CT chest could be considered if the CXR were equivocal for active disease, but a stable fibronodular apical scar without symptoms is characteristic of prior healed exposure and does not require CT before LTBI therapy (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+        "source_refs": ["National Tuberculosis Advisory Committee (NTAC) guidelines"]
+      },
+      {
+        "letter": "E",
+        "text": "Switch to a Janus kinase inhibitor and proceed without any TB directed therapy",
+        "correct": false,
+        "rationale": "JAK inhibitors also carry TB reactivation risk and require the same pre-treatment LTBI screening and treatment pathway as biologics; switching class does not avoid the need to treat latent infection first (Source: Australian Rheumatology Association).",
+        "source_refs": ["Australian Rheumatology Association"]
+      }
+    ],
+    "explanation": {
+      "summary": "Before initiating biologic or JAK inhibitor therapy in inflammatory arthritis, mandatory pre-treatment screening in Australia includes hepatitis B surface antigen and core antibody, hepatitis C antibody, HIV serology, and an interferon gamma release assay with CXR. A positive IGRA (or radiographic evidence of prior TB such as apical fibronodular scarring) requires latent TB treatment before or at least 4 weeks before the biologic starts, continued for the full course under specialist supervision. Active TB must be excluded first by history, examination, and CXR, with induced sputum or CT chest only if there are clinical or radiographic concerns.",
+      "key_points": [
+        "Pre-biologic screening: HBV (sAg and cAb), HCV, HIV, IGRA, CXR.",
+        "Positive IGRA or old radiographic TB signs = treat LTBI before or at least 4 weeks before biologic.",
+        "TNF and JAK inhibitors both carry reactivation risk; class switch does not avoid LTBI treatment."
+      ],
+      "pearls": "Hepatitis B core antibody positivity alone (with negative surface antigen) still requires antiviral prophylaxis with entecavir or tenofovir during and 12 months after biologic therapy to prevent reactivation."
+    },
+    "sources": [
+      { "label": "Australian Rheumatology Association", "url": "https://rheumatology.org.au/" },
+      { "label": "National Tuberculosis Advisory Committee (NTAC) guidelines", "url": "https://www.health.gov.au/committees-and-groups/national-tuberculosis-advisory-committee-ntac" }
+    ],
+    "reference_ranges": ["fbc", "lfts", "inflammatory_markers"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-007",
+    "topic": "Medicine",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "Granulomatosis with polyangiitis diagnosis and induction",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["vasculitis"],
+    "stem": "You are the general medical registrar. A 62 year old man is admitted with 6 weeks of worsening symptoms: persistent bloody nasal discharge with crusting, hearing loss with a middle ear effusion on the left, and 3 weeks of a productive cough with occasional blood-streaked sputum. Over the past week he has developed ankle oedema and reduced urine output.\n\nHe has no fevers or night sweats but has lost 5 kg. He has never smoked and takes no regular medications. He has no rash, no arthritis, and no eye redness.\n\nExamination shows a saddle nose deformity in evolution, boggy nasal mucosa with crusting, and reduced hearing on the left. Chest examination reveals inspiratory crackles at the right base. There is bilateral pitting ankle oedema. Vital signs: pulse 92, blood pressure 158/94, respiratory rate 20, SpO2 94% in room air, temperature 37.4.\n\nInvestigations: creatinine 245 micromol/L (60-110) up from 90 six months ago; urinalysis 3+ blood 2+ protein with dysmorphic red cells and red cell casts on microscopy; CRP 120 mg/L (less than 5); haemoglobin 96 g/L (135-175); platelets 480 x10^9/L (150-400); ANCA positive with cytoplasmic staining pattern (c-ANCA) and PR3 antibody titre 145 U/mL (less than 5); anti-glomerular basement membrane antibody negative. Chest CT shows two peripheral cavitating nodules in the right upper and lower lobes.",
+    "data_table": {
+      "Vital signs": "Pulse 92, BP 158/94, RR 20, SpO2 94% room air, temperature 37.4",
+      "Examination": "Evolving saddle nose deformity; boggy nasal mucosa with crusting; reduced hearing left; right basal crackles; bilateral pitting ankle oedema",
+      "Bloods": "Creatinine 245 micromol/L (60-110), rising from 90; CRP 120 mg/L (less than 5); Hb 96 g/L (135-175); platelets 480 x10^9/L (150-400)",
+      "Urine": "3+ blood, 2+ protein; dysmorphic RBCs and red cell casts",
+      "Immunology": "c-ANCA positive; PR3 145 U/mL (less than 5); anti-GBM negative",
+      "Imaging": "CT chest: two peripheral cavitating nodules right upper and lower lobes"
+    },
+    "lead_in": "What is the most appropriate induction regimen?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Methotrexate 25 mg subcutaneously weekly plus prednisolone 25 mg daily",
+        "correct": false,
+        "rationale": "Methotrexate is used only for non-organ-threatening ANCA-associated vasculitis; rapidly progressive glomerulonephritis with rising creatinine and pulmonary cavitation is organ-threatening and mandates cyclophosphamide or rituximab, not methotrexate (Source: KDIGO ANCA-associated vasculitis guideline).",
+        "source_refs": ["KDIGO ANCA-associated vasculitis guideline"]
+      },
+      {
+        "letter": "B",
+        "text": "High dose intravenous immunoglobulin 2 g/kg with oral prednisolone 60 mg daily",
+        "correct": false,
+        "rationale": "IVIG has a limited adjunctive role in refractory ANCA vasculitis or when standard immunosuppression is contraindicated (severe infection, pregnancy); it is not standard induction for organ-threatening disease (Source: KDIGO ANCA-associated vasculitis guideline).",
+        "source_refs": ["KDIGO ANCA-associated vasculitis guideline"]
+      },
+      {
+        "letter": "C",
+        "text": "Plasma exchange alone without immunosuppression pending renal biopsy result",
+        "correct": false,
+        "rationale": "The PEXIVAS trial showed plasma exchange does not reduce death or end-stage kidney disease in most ANCA vasculitis; it may be considered when creatinine exceeds 300 micromol/L or with pulmonary haemorrhage, but never without concurrent induction immunosuppression (Source: KDIGO ANCA-associated vasculitis guideline).",
+        "source_refs": ["KDIGO ANCA-associated vasculitis guideline"]
+      },
+      {
+        "letter": "D",
+        "text": "Oral prednisolone 60 mg daily as monotherapy tapered over 6 months",
+        "correct": false,
+        "rationale": "Glucocorticoid monotherapy is inadequate induction for organ-threatening AAV and is associated with unacceptable relapse rates; the standard is combination glucocorticoid plus rituximab or cyclophosphamide (Source: KDIGO ANCA-associated vasculitis guideline).",
+        "source_refs": ["KDIGO ANCA-associated vasculitis guideline"]
+      },
+      {
+        "letter": "E",
+        "text": "Rituximab weekly for 4 doses plus pulsed methylprednisolone then oral prednisolone taper",
+        "correct": true,
+        "rationale": "This is severe organ-threatening ANCA-associated vasculitis (GPA) with rapidly progressive glomerulonephritis and pulmonary cavitation. Australian and international (KDIGO 2021) guidance is induction with either rituximab (preferred for relapsing disease, younger patients, and fertility preservation) or intravenous cyclophosphamide, plus pulsed methylprednisolone followed by oral prednisolone taper. Rituximab is non-inferior to cyclophosphamide in remission induction (Source: KDIGO ANCA-associated vasculitis guideline).",
+        "source_refs": ["KDIGO ANCA-associated vasculitis guideline"]
+      }
+    ],
+    "explanation": {
+      "summary": "Granulomatosis with polyangiitis (GPA) is a small vessel ANCA-associated vasculitis characterised by necrotising granulomatous inflammation of the upper airways, lungs, and kidneys. c-ANCA with anti-PR3 has high specificity. Rapidly progressive glomerulonephritis and cavitating pulmonary nodules are organ-threatening manifestations. Induction is with either rituximab or intravenous cyclophosphamide plus glucocorticoids (pulsed methylprednisolone followed by oral prednisolone taper per the PEXIVAS reduced-dose schedule). Plasma exchange is considered in creatinine greater than 300 micromol/L or diffuse alveolar haemorrhage. Renal biopsy confirms pauci-immune crescentic glomerulonephritis but should not delay treatment.",
+      "key_points": [
+        "GPA classic triad: upper airway, lower airway, kidney; c-ANCA/PR3 positive.",
+        "Organ-threatening disease (RPGN, alveolar haemorrhage): induce with rituximab OR IV cyclophosphamide plus pulsed methylprednisolone.",
+        "Plasma exchange (PEXIVAS): consider only for creatinine greater than 300 micromol/L or alveolar haemorrhage.",
+        "Renal biopsy confirms pauci-immune crescentic glomerulonephritis but does not delay treatment."
+      ],
+      "pearls": "Rituximab is preferred over cyclophosphamide for induction in younger patients wanting to preserve fertility and in relapsing disease; give trimethoprim-sulfamethoxazole for Pneumocystis prophylaxis while on high dose glucocorticoids and induction therapy."
+    },
+    "sources": [
+      { "label": "KDIGO ANCA-associated vasculitis guideline", "url": "https://kdigo.org/guidelines/gd/" },
+      { "label": "Australian Rheumatology Association", "url": "https://rheumatology.org.au/" }
+    ],
+    "reference_ranges": ["fbc", "uec", "inflammatory_markers"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-008",
+    "topic": "Medicine",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "Eosinophilic granulomatosis with polyangiitis versus polyarteritis nodosa",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["vasculitis"],
+    "stem": "You are the general medical registrar. A 48 year old woman presents with 3 months of progressive numbness and weakness of the right foot and left hand, with associated burning pain. She has an 8 year history of late-onset asthma requiring inhaled fluticasone-salmeterol and 2 courses of oral prednisolone in the past year for exacerbations, and adult-onset nasal polyposis diagnosed 2 years ago.\n\nShe now has migratory patchy pulmonary infiltrates on chest imaging and a purpuric rash on the lower legs. She denies haemoptysis, oral ulcers, and gastrointestinal bleeding. She has not travelled to hepatitis B endemic regions and hepatitis B surface antigen is negative.\n\nExamination shows right foot drop, wrist drop on the left, patchy sensory loss in a mononeuritis multiplex pattern, and palpable purpura from mid shin down bilaterally. Vital signs: pulse 96, blood pressure 138/82, respiratory rate 18, SpO2 96% in room air, temperature 37.2.\n\nInvestigations: eosinophils 4.8 x10^9/L (less than 0.5), CRP 85 mg/L (less than 5), creatinine 78 micromol/L (60-110), urinalysis trace blood no protein no casts, ANCA positive with perinuclear staining pattern (p-ANCA), MPO antibody 45 U/mL (less than 5), hepatitis B surface antigen negative, hepatitis C antibody negative, HIV negative. Chest CT shows migratory ground glass infiltrates. Nerve conduction studies show axonal sensorimotor mononeuritis multiplex.",
+    "data_table": {
+      "Vital signs": "Pulse 96, BP 138/82, RR 18, SpO2 96% room air, temperature 37.2",
+      "Examination": "Right foot drop; left wrist drop; mononeuritis multiplex sensory loss; palpable purpura mid-shin bilaterally",
+      "History": "8 year late-onset asthma; adult nasal polyposis; 2 recent oral prednisolone courses",
+      "Bloods": "Eosinophils 4.8 x10^9/L (less than 0.5); CRP 85 mg/L (less than 5); creatinine 78 micromol/L (60-110)",
+      "Urine": "Trace blood, no protein, no casts",
+      "Immunology": "p-ANCA positive; MPO 45 U/mL (less than 5); HBsAg negative; HCV Ab negative; HIV negative",
+      "Imaging": "CT chest migratory ground glass infiltrates",
+      "Neurophysiology": "Axonal sensorimotor mononeuritis multiplex"
+    },
+    "lead_in": "What is the most likely underlying diagnosis?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Microscopic polyangiitis with pulmonary-renal syndrome",
+        "correct": false,
+        "rationale": "MPA is also small vessel MPO-ANCA positive but typically presents with rapidly progressive glomerulonephritis and alveolar haemorrhage, not late-onset asthma and eosinophilia; her renal function and urinalysis are largely spared (Source: 2022 ACR/EULAR classification criteria for vasculitis).",
+        "source_refs": ["2022 ACR/EULAR classification criteria for vasculitis"]
+      },
+      {
+        "letter": "B",
+        "text": "Granulomatosis with polyangiitis with lower airway involvement",
+        "correct": false,
+        "rationale": "GPA typically has cavitating nodules, saddle nose deformity, and rapidly progressive glomerulonephritis with c-ANCA and PR3 antibodies; she has p-ANCA/MPO and marked eosinophilia which are the EGPA signature (Source: 2022 ACR/EULAR classification criteria for vasculitis).",
+        "source_refs": ["2022 ACR/EULAR classification criteria for vasculitis"]
+      },
+      {
+        "letter": "C",
+        "text": "Eosinophilic granulomatosis with polyangiitis (Churg-Strauss syndrome)",
+        "correct": true,
+        "rationale": "The triad of adult-onset asthma with nasal polyposis, peripheral blood eosinophilia greater than 1.5 x10^9/L, and mononeuritis multiplex with palpable purpura and migratory pulmonary infiltrates in the presence of p-ANCA/MPO fulfils 2022 ACR/EULAR classification criteria for EGPA. Approximately 40% of EGPA patients are ANCA positive (usually p-ANCA/MPO), typically those with peripheral neuropathy and glomerular involvement (Source: 2022 ACR/EULAR classification criteria for vasculitis).",
+        "source_refs": ["2022 ACR/EULAR classification criteria for vasculitis"]
+      },
+      {
+        "letter": "D",
+        "text": "Polyarteritis nodosa associated with chronic hepatitis B infection",
+        "correct": false,
+        "rationale": "PAN is a medium vessel vasculitis, typically ANCA negative, often hepatitis B associated, presenting with visceral aneurysms, hypertension, and mesenteric or renal infarction rather than asthma with eosinophilia; her hepatitis B surface antigen is negative (Source: 2022 ACR/EULAR classification criteria for vasculitis).",
+        "source_refs": ["2022 ACR/EULAR classification criteria for vasculitis"]
+      },
+      {
+        "letter": "E",
+        "text": "Mixed cryoglobulinaemic vasculitis secondary to hepatitis C infection",
+        "correct": false,
+        "rationale": "Cryoglobulinaemic vasculitis typically presents with palpable purpura, arthralgia, and glomerulonephritis with positive cryoglobulins and hypocomplementaemia; hepatitis C serology is negative and the asthma-eosinophilia-mononeuritis triad is not the cryoglobulinaemic pattern (Source: 2022 ACR/EULAR classification criteria for vasculitis).",
+        "source_refs": ["2022 ACR/EULAR classification criteria for vasculitis"]
+      }
+    ],
+    "explanation": {
+      "summary": "Eosinophilic granulomatosis with polyangiitis (EGPA, formerly Churg-Strauss syndrome) is a small-to-medium vessel ANCA-associated vasculitis characterised by adult-onset asthma, nasal polyposis, peripheral blood eosinophilia, and multi-organ vasculitic manifestations including mononeuritis multiplex, purpura, migratory pulmonary infiltrates, and (less commonly) eosinophilic cardiomyopathy. Approximately 40% are ANCA positive, usually p-ANCA/MPO, and ANCA-positive patients more often have peripheral neuropathy and glomerular disease. Induction depends on organ involvement using the Five Factor Score - glucocorticoids alone for limited disease, and adding cyclophosphamide or rituximab for severe disease (cardiac, gastrointestinal, renal, or CNS involvement, or FFS greater than or equal to 1). Mepolizumab is now approved for relapsing or refractory disease.",
+      "key_points": [
+        "EGPA triad: adult-onset asthma + nasal polyposis + eosinophilia (greater than 1.5 x10^9/L or greater than 10%).",
+        "40% ANCA positive (p-ANCA/MPO); ANCA positive skews to peripheral neuropathy and glomerular disease.",
+        "Five Factor Score guides induction: glucocorticoids alone for FFS 0; add cyclophosphamide or rituximab for FFS greater than or equal to 1.",
+        "Mepolizumab (anti-IL-5) is approved for relapsing/refractory EGPA."
+      ],
+      "pearls": "Any adult-onset asthmatic with mononeuritis multiplex and palpable purpura needs a differential eosinophil count and ANCA/MPO - cardiac involvement (heart failure, arrhythmia) is the leading cause of death in EGPA and mandates cardiac MRI on diagnosis."
+    },
+    "sources": [
+      { "label": "2022 ACR/EULAR classification criteria for vasculitis", "url": "https://ard.bmj.com/content/81/3/309" },
+      { "label": "Australian Rheumatology Association", "url": "https://rheumatology.org.au/" }
+    ],
+    "reference_ranges": ["fbc", "uec", "inflammatory_markers"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-009",
+    "topic": "Medicine",
+    "subtopic": "Neurology",
+    "subtopic_detail": "McDonald 2017 criteria for multiple sclerosis after clinically isolated syndrome",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["multiple sclerosis"],
+    "stem": "You are the neurology registrar. A 29 year old woman is admitted with 5 days of progressive painful visual blurring in the right eye and worsening on eye movement. She has no headache, no other neurological symptoms, and has never had similar episodes.\n\nShe is otherwise well, does not smoke, and is not pregnant. She takes no regular medications. There is no family history of multiple sclerosis.\n\nExamination shows right visual acuity 6/24 (baseline 6/6), reduced red desaturation on the right, and a right relative afferent pupillary defect. Fundoscopy is normal (retrobulbar). Cranial nerves are otherwise intact. Motor, sensory, cerebellar, and gait examination are normal. Vital signs are within normal limits.\n\nInvestigations: MRI brain with gadolinium shows 6 T2/FLAIR hyperintense lesions - one in the corpus callosum (juxtacortical), one periventricular, two infratentorial, and two in the cervical spinal cord; two of the six lesions enhance with gadolinium and four do not. CSF shows a normal cell count, normal protein, negative culture, and oligoclonal bands present in CSF but not in matched serum. Aquaporin-4 IgG (NMO) is negative and MOG antibodies are negative.",
+    "data_table": {
+      "Vital signs": "Within normal limits",
+      "Examination": "Right visual acuity 6/24; red desaturation right; right RAPD; normal fundoscopy; remainder of neurological exam normal",
+      "MRI": "6 T2/FLAIR lesions: 1 juxtacortical corpus callosum, 1 periventricular, 2 infratentorial, 2 cervical cord; 2 enhance with gadolinium, 4 do not enhance",
+      "CSF": "Normal cells; normal protein; culture negative; oligoclonal bands present in CSF not in serum",
+      "Immunology": "AQP4-IgG negative; MOG-IgG negative"
+    },
+    "lead_in": "What is the most appropriate diagnosis at this presentation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Clinically isolated syndrome without dissemination in time or space",
+        "correct": false,
+        "rationale": "A CIS becomes MS only when dissemination in space AND time are established. Here dissemination in space is met (lesions in at least 2 of 4 typical locations) and dissemination in time is met by simultaneous enhancing and non-enhancing lesions plus CSF-specific oligoclonal bands (Source: McDonald 2017 diagnostic criteria for multiple sclerosis).",
+        "source_refs": ["McDonald 2017 diagnostic criteria for multiple sclerosis"]
+      },
+      {
+        "letter": "B",
+        "text": "Neuromyelitis optica spectrum disorder based on the optic neuritis",
+        "correct": false,
+        "rationale": "NMOSD requires aquaporin-4 IgG or specific clinical/imaging features (longitudinally extensive transverse myelitis, area postrema syndrome, or brainstem features); AQP4-IgG is negative here and the lesion distribution is characteristic of MS (Source: 2015 International Panel NMOSD criteria).",
+        "source_refs": ["2015 International Panel NMOSD criteria"]
+      },
+      {
+        "letter": "C",
+        "text": "MOG antibody-associated disease with predominant optic neuritis",
+        "correct": false,
+        "rationale": "MOG antibody disease requires positive serum MOG antibodies with a compatible clinical phenotype; MOG antibodies are negative and the MRI pattern of ovoid lesions and matched oligoclonal bands is characteristic of MS (Source: 2023 International MOGAD criteria).",
+        "source_refs": ["2023 International MOGAD criteria"]
+      },
+      {
+        "letter": "D",
+        "text": "Relapsing remitting multiple sclerosis meeting McDonald 2017 criteria at first event",
+        "correct": true,
+        "rationale": "The 2017 McDonald criteria allow MS to be diagnosed at first clinical event when dissemination in space is met by MRI (at least 1 T2 lesion in at least 2 of 4 typical CNS locations: periventricular, cortical/juxtacortical, infratentorial, spinal cord) AND dissemination in time is met by simultaneous presence of gadolinium-enhancing and non-enhancing lesions, OR by CSF-specific oligoclonal bands (which substitute for DIT in patients with typical CIS). This patient meets both (Source: McDonald 2017 diagnostic criteria for multiple sclerosis).",
+        "source_refs": ["McDonald 2017 diagnostic criteria for multiple sclerosis"]
+      },
+      {
+        "letter": "E",
+        "text": "Primary progressive multiple sclerosis presenting with optic neuritis",
+        "correct": false,
+        "rationale": "PPMS requires 1 year of disability progression independent of relapses (retrospectively or prospectively) plus 2 of: brain DIS criterion, spinal cord DIS, or CSF-specific oligoclonal bands; her acute-onset optic neuritis is a relapse, not progressive disease (Source: McDonald 2017 diagnostic criteria for multiple sclerosis).",
+        "source_refs": ["McDonald 2017 diagnostic criteria for multiple sclerosis"]
+      }
+    ],
+    "explanation": {
+      "summary": "The McDonald 2017 criteria diagnose relapsing remitting MS at first clinical event when dissemination in space and time are both demonstrated. Dissemination in space requires at least 1 T2 lesion in at least 2 of 4 typical CNS locations (periventricular, cortical/juxtacortical, infratentorial, spinal cord). Dissemination in time can be shown by simultaneous gadolinium-enhancing and non-enhancing lesions on a single MRI, a new lesion on follow-up MRI regardless of timing, OR CSF-specific oligoclonal bands. Early diagnosis matters because prompt disease-modifying therapy reduces relapse rate and slows disability accrual.",
+      "key_points": [
+        "MS DIS = at least 1 T2 lesion in at least 2 of 4 typical locations (periventricular, juxtacortical/cortical, infratentorial, spinal cord).",
+        "MS DIT = enhancing + non-enhancing lesions simultaneously, new lesion on follow-up MRI, OR CSF-specific oligoclonal bands.",
+        "CSF-specific oligoclonal bands can substitute for DIT in typical CIS (2017 addition).",
+        "Exclude NMOSD (AQP4-IgG) and MOGAD (MOG-IgG) before diagnosing MS - they change treatment."
+      ],
+      "pearls": "Always order AQP4-IgG and MOG-IgG before starting MS disease modifying therapy - interferon beta and natalizumab worsen NMOSD relapses; rituximab or eculizumab replace them if NMOSD is confirmed."
+    },
+    "sources": [
+      { "label": "McDonald 2017 diagnostic criteria for multiple sclerosis", "url": "https://www.thelancet.com/journals/laneur/article/PIIS1474-4422(17)30470-2/fulltext" },
+      { "label": "2015 International Panel NMOSD criteria", "url": "https://n.neurology.org/content/85/2/177" },
+      { "label": "2023 International MOGAD criteria", "url": "https://www.thelancet.com/journals/laneur/article/PIIS1474-4422(22)00431-8/fulltext" }
+    ],
+    "reference_ranges": ["csf"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-010",
+    "topic": "Medicine",
+    "subtopic": "Neurology",
+    "subtopic_detail": "JCV testing before natalizumab in multiple sclerosis",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["multiple sclerosis"],
+    "stem": "You are the neurology registrar in an MS clinic. A 34 year old woman with relapsing remitting MS diagnosed 3 years ago has had 2 clinical relapses in the past 12 months and 5 new T2 lesions on annual surveillance MRI despite 2 years of adherence to dimethyl fumarate. Her EDSS has risen from 1.5 to 2.5.\n\nShe was previously untreated with immunosuppressants. She has never had chickenpox to her knowledge and has no history of shingles or opportunistic infection. She is not pregnant and uses effective contraception.\n\nExamination: mild bilateral lower limb hyperreflexia, brisk knee jerks, and a slightly wide-based gait; cognition intact. Vital signs are within normal limits.\n\nHer neurologist is considering escalation to natalizumab. Investigations show JC virus antibody index 2.8 (positive; low positive less than 0.9, high positive greater than 1.5), hepatitis B and C serology negative, HIV negative, VZV IgG positive. Baseline MRI brain from 4 months ago is available for future comparison.",
+    "data_table": {
+      "Vital signs": "Within normal limits",
+      "Examination": "Mild bilateral lower limb hyperreflexia; brisk knee jerks; wide-based gait; cognition intact",
+      "MS status": "3 years RRMS; 2 clinical relapses in past 12 months; 5 new T2 lesions on annual MRI on dimethyl fumarate; EDSS 1.5 to 2.5",
+      "Screening": "JCV Ab index 2.8 (high positive greater than 1.5); HBV, HCV, HIV negative; VZV IgG positive",
+      "Baseline": "MRI brain 4 months ago available for future comparison"
+    },
+    "lead_in": "What is the most appropriate next step regarding disease modifying therapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence natalizumab at standard 4 weekly infusion and repeat MRI in 6 months",
+        "correct": false,
+        "rationale": "Her JCV antibody index of 2.8 is high positive, which combined with 2 years or more of natalizumab and any prior immunosuppression pushes progressive multifocal leukoencephalopathy risk above 1 in 100. Commencing natalizumab without accounting for this risk is not appropriate MS practice (Source: MSBase and PBS natalizumab prescribing information).",
+        "source_refs": ["MSBase and PBS natalizumab prescribing information"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence natalizumab with extended interval 6 weekly dosing from the first year",
+        "correct": false,
+        "rationale": "Extended interval dosing (every 6 weeks) reduces PML risk while maintaining efficacy in JCV positive patients, but is generally not first line at induction in a JCV high positive patient; the recommended approach is to switch to a different high-efficacy therapy (Source: MSBase and PBS natalizumab prescribing information).",
+        "source_refs": ["MSBase and PBS natalizumab prescribing information"]
+      },
+      {
+        "letter": "C",
+        "text": "Recommend natalizumab as JCV index below 5.0 confers acceptable risk regardless",
+        "correct": false,
+        "rationale": "PML risk on natalizumab depends on JCV serostatus AND JCV antibody index AND duration of treatment AND prior immunosuppression; even index below 1.5 carries increased risk beyond 2 years, and index above 1.5 with 2 years or more of therapy exceeds 1 in 100 (Source: MSBase and PBS natalizumab prescribing information).",
+        "source_refs": ["MSBase and PBS natalizumab prescribing information"]
+      },
+      {
+        "letter": "D",
+        "text": "Switch to ocrelizumab or ofatumumab given the high positive JCV antibody index",
+        "correct": true,
+        "rationale": "In a JCV high positive patient (index greater than 1.5) with active disease escalation, alternative high-efficacy anti-CD20 therapies (ocrelizumab, ofatumumab) or S1P modulators or cladribine avoid the PML risk profile of natalizumab while providing comparable efficacy. Australian MS specialist practice and PBS listings support this switch (Source: MSBase and PBS natalizumab prescribing information).",
+        "source_refs": ["MSBase and PBS natalizumab prescribing information"]
+      },
+      {
+        "letter": "E",
+        "text": "Continue dimethyl fumarate and add IV methylprednisolone for each relapse",
+        "correct": false,
+        "rationale": "Continuing an ineffective disease modifying therapy in the face of 2 relapses and 5 new lesions over 12 months does not meet the treatment target; steroids treat acute relapses but do not modify long term disability accrual and escalation is indicated (Source: MSBase and PBS natalizumab prescribing information).",
+        "source_refs": ["MSBase and PBS natalizumab prescribing information"]
+      }
+    ],
+    "explanation": {
+      "summary": "Natalizumab is a highly effective monoclonal antibody against alpha-4 integrin used in relapsing MS with breakthrough disease on first line therapy. Its principal risk is JC virus reactivation causing progressive multifocal leukoencephalopathy, an often fatal or severely disabling opportunistic CNS infection. PML risk is stratified by 3 factors: JCV serostatus and antibody index, duration of natalizumab therapy (rising sharply after 2 years), and prior immunosuppressant exposure. In JCV positive patients with high antibody index (greater than 1.5), risk exceeds 1 in 100 beyond 2 years of standard dosing; extended interval dosing (every 6 weeks) reduces risk. Alternative anti-CD20 therapies (ocrelizumab, ofatumumab), S1P modulators, and cladribine avoid the PML risk stratification issue.",
+      "key_points": [
+        "PML risk on natalizumab = JCV Ab index + duration greater than 2 years + prior immunosuppression.",
+        "JCV Ab index greater than 1.5 with 2+ years therapy: PML risk greater than 1 in 100 on standard dosing.",
+        "Extended interval dosing every 6 weeks reduces PML risk while preserving efficacy.",
+        "Alternatives avoiding PML risk: ocrelizumab, ofatumumab (anti-CD20); fingolimod, ozanimod (S1P); cladribine."
+      ],
+      "pearls": "Check JCV antibody index every 6 months on natalizumab because seroconversion occurs at around 2% per year - if a patient converts to JCV positive after starting therapy the treatment plan needs reassessment."
+    },
+    "sources": [
+      { "label": "MSBase and PBS natalizumab prescribing information", "url": "https://www.pbs.gov.au/" },
+      { "label": "MS Australia clinical management", "url": "https://www.msaustralia.org.au/" }
+    ],
+    "reference_ranges": ["fbc", "lfts"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-011",
+    "topic": "Medicine",
+    "subtopic": "Neurology",
+    "subtopic_detail": "Wearing off in Parkinson disease",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["Parkinson disease"],
+    "stem": "You are the general medical registrar. A 68 year old man with idiopathic Parkinson disease diagnosed 6 years ago attends for review with his wife. He has been on levodopa-carbidopa 100/25 mg four times daily for 4 years with initially good response.\n\nOver the past 6 months he describes reliable good motor function for about 2.5 hours after each dose, then a return of tremor, stiffness and slow movement about 30 minutes before his next scheduled dose. Symptoms improve within 30 minutes of the next dose. There are no involuntary movements at peak dose. He is fully continent, sleeps well, and has no visual hallucinations or cognitive decline.\n\nHis MMSE is 29/30. Postural blood pressure change is minimal. Vital signs are within normal limits. He is otherwise well with no other regular medications.",
+    "data_table": {
+      "Vital signs": "Within normal limits",
+      "Cognition": "MMSE 29/30; no hallucinations; no cognitive complaints",
+      "Motor pattern": "Predictable return of tremor, rigidity and bradykinesia 30 min before next dose; symptoms resolve within 30 min of dose; no peak dose dyskinesias",
+      "Medications": "Levodopa-carbidopa 100/25 mg four times daily for 4 years",
+      "Autonomic": "Minimal postural BP change; continent"
+    },
+    "lead_in": "What is the most appropriate first line adjustment to his therapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Add entacapone with each levodopa-carbidopa dose to prolong plasma levodopa",
+        "correct": true,
+        "rationale": "This is predictable end-of-dose wearing off, the classic first motor fluctuation in mid-to-advanced Parkinson disease. The Movement Disorder Society and Therapeutic Guidelines: Neurology recommend adding a catechol-O-methyl-transferase inhibitor (entacapone) to prolong plasma levodopa exposure, OR shortening the levodopa dose interval, OR adding a monoamine oxidase B inhibitor (rasagiline, safinamide) as first line strategies (Source: Therapeutic Guidelines: Neurology).",
+        "source_refs": ["Therapeutic Guidelines: Neurology"]
+      },
+      {
+        "letter": "B",
+        "text": "Refer for deep brain stimulation of the subthalamic nucleus urgently",
+        "correct": false,
+        "rationale": "DBS is highly effective for refractory motor fluctuations and dyskinesias but is a specialist referral reserved for patients whose fluctuations are not adequately controlled by oral pharmacological strategies and who meet criteria; it is not the first line step for early predictable wearing off (Source: Therapeutic Guidelines: Neurology).",
+        "source_refs": ["Therapeutic Guidelines: Neurology"]
+      },
+      {
+        "letter": "C",
+        "text": "Discontinue levodopa and switch to pramipexole or ropinirole monotherapy",
+        "correct": false,
+        "rationale": "Dopamine agonists are more useful in early disease or as adjuncts; discontinuing levodopa in a patient who has had good response for 4 years would worsen motor control and dopamine agonists carry higher rates of impulse control disorders and daytime sleepiness in older patients (Source: Therapeutic Guidelines: Neurology).",
+        "source_refs": ["Therapeutic Guidelines: Neurology"]
+      },
+      {
+        "letter": "D",
+        "text": "Add amantadine 100 mg twice daily for management of dyskinesia symptoms",
+        "correct": false,
+        "rationale": "Amantadine is indicated for troublesome peak dose dyskinesias; this patient has wearing off (end-of-dose worsening) without dyskinesias, so amantadine does not address the problem (Source: Therapeutic Guidelines: Neurology).",
+        "source_refs": ["Therapeutic Guidelines: Neurology"]
+      },
+      {
+        "letter": "E",
+        "text": "Add anticholinergic benztropine 1 mg orally twice daily for tremor control",
+        "correct": false,
+        "rationale": "Anticholinergics are second line for tremor-predominant Parkinson disease in younger patients without cognitive impairment; in a 68 year old they risk confusion, urinary retention, constipation and worsening cognition, and they do not address wearing off (Source: Therapeutic Guidelines: Neurology).",
+        "source_refs": ["Therapeutic Guidelines: Neurology"]
+      }
+    ],
+    "explanation": {
+      "summary": "Wearing off is the earliest and most predictable motor complication of long term levodopa in Parkinson disease, reflecting shrinking therapeutic window as dopaminergic neurons continue to degenerate. First line strategies are to prolong levodopa exposure by adding a COMT inhibitor (entacapone or opicapone) with each dose or a MAO-B inhibitor (rasagiline, safinamide) once daily, or to shorten the levodopa dose interval while keeping total daily dose. Peak dose dyskinesias, on-off phenomenon, and freezing require different strategies. DBS referral is considered when oral optimisation fails and the patient still has a robust levodopa response but disabling fluctuations.",
+      "key_points": [
+        "Wearing off = predictable end-of-dose return of parkinsonian symptoms.",
+        "First line: add COMT inhibitor (entacapone) OR MAO-B inhibitor (rasagiline) OR shorten dose interval.",
+        "Dyskinesias (different problem): add amantadine.",
+        "Refractory fluctuations with preserved cognition: consider DBS referral."
+      ],
+      "pearls": "Entacapone can cause harmless orange discolouration of urine and diarrhoea (up to 10%), and it must be given with each levodopa dose - warn the patient about both before starting."
+    },
+    "sources": [
+      { "label": "Therapeutic Guidelines: Neurology", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Movement Disorder Society clinical practice recommendations", "url": "https://www.movementdisorders.org/" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-012",
+    "topic": "Medicine",
+    "subtopic": "Neurology",
+    "subtopic_detail": "Dementia with Lewy bodies versus Alzheimer disease",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["dementia"],
+    "stem": "You are the general medical registrar in a memory clinic. A 74 year old man is brought by his wife with 18 months of progressive cognitive change. She reports pronounced fluctuations - some days he holds a full conversation and follows the football, other days he sits vacant and unresponsive for hours. On 3 occasions he has described seeing small children playing in the corner of the living room; he acknowledges these are not real when questioned but they are vivid and recurrent.\n\nHe has fallen twice in the past 3 months without loss of consciousness. His wife has recorded him kicking and shouting during sleep for the past 2 years. He has no early prominent memory loss for recent events.\n\nExamination shows a masked face, mild bilateral rest tremor of the hands, cogwheel rigidity at both wrists, and a mildly stooped shuffling gait; he takes 4 attempts to stand from the chair. MMSE 22/30 (impairment on attention, visuospatial construction, and clock drawing rather than recall). MoCA 18/30. Postural blood pressure drops from 135/78 lying to 108/70 after 3 minutes standing. There are no focal neurological signs.\n\nMRI brain shows mild generalised atrophy without prominent hippocampal atrophy or vascular lesions. B12 138 pmol/L (150-700), TSH 2.4 mIU/L (0.4-4.0), and syphilis serology negative.",
+    "data_table": {
+      "Vital signs": "Lying BP 135/78; standing at 3 min BP 108/70; pulse 76",
+      "History": "18 months progressive cognitive change with pronounced day-to-day fluctuations; recurrent well-formed visual hallucinations of small children; 2 unexplained falls; 2 years of REM sleep behaviour (kicking and shouting during sleep)",
+      "Examination": "Masked face; bilateral rest tremor; cogwheel rigidity at wrists; stooped shuffling gait; needs 4 attempts to stand",
+      "Cognition": "MMSE 22/30 (attention, visuospatial, clock drawing worst; recall relatively preserved); MoCA 18/30",
+      "Imaging": "MRI brain mild generalised atrophy; no prominent hippocampal atrophy or vascular lesions",
+      "Bloods": "B12 138 pmol/L (150-700); TSH 2.4 mIU/L (0.4-4.0); syphilis serology negative"
+    },
+    "lead_in": "What is the most likely diagnosis?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Alzheimer disease with atypical presenting cognitive features",
+        "correct": false,
+        "rationale": "AD typically presents with insidious short-term memory loss as the earliest and most prominent feature, with hippocampal atrophy on MRI; his relatively preserved recall, prominent visuospatial and attentional deficits, and early parkinsonism and hallucinations are not the AD pattern (Source: McKeith 2017 DLB diagnostic criteria).",
+        "source_refs": ["McKeith 2017 DLB diagnostic criteria"]
+      },
+      {
+        "letter": "B",
+        "text": "Dementia with Lewy bodies meeting probable diagnostic criteria",
+        "correct": true,
+        "rationale": "He meets probable DLB criteria: 3 of 4 core clinical features (fluctuating cognition with pronounced variation in attention and alertness, recurrent well-formed visual hallucinations, and spontaneous parkinsonism), plus REM sleep behaviour disorder as a supportive core feature. Attention and visuospatial deficits with relatively preserved recall are typical of DLB (Source: McKeith 2017 DLB diagnostic criteria; Therapeutic Guidelines: Neurology).",
+        "source_refs": ["McKeith 2017 DLB diagnostic criteria", "Therapeutic Guidelines: Neurology"]
+      },
+      {
+        "letter": "C",
+        "text": "Vascular dementia with subcortical small vessel disease progression",
+        "correct": false,
+        "rationale": "Vascular dementia usually shows a stepwise decline with focal neurological signs and MRI evidence of cortical or subcortical infarcts, small vessel disease, or strategic lacunes; MRI shows no vascular lesions here and the pattern is not stepwise (Source: NINDS-AIREN vascular dementia criteria).",
+        "source_refs": ["NINDS-AIREN vascular dementia criteria"]
+      },
+      {
+        "letter": "D",
+        "text": "Behavioural variant frontotemporal dementia with parkinsonian features",
+        "correct": false,
+        "rationale": "bvFTD presents with early progressive behavioural and personality change (disinhibition, apathy, loss of empathy, compulsive behaviour, hyperorality) and executive dysfunction; the picture is dominated by hallucinations, fluctuations, and parkinsonism rather than early behavioural change (Source: International bvFTD consensus criteria).",
+        "source_refs": ["International bvFTD consensus criteria"]
+      },
+      {
+        "letter": "E",
+        "text": "Parkinson disease dementia with cognitive decline after motor onset",
+        "correct": false,
+        "rationale": "PDD and DLB share pathology but the diagnostic distinction is temporal - if dementia develops within 1 year of parkinsonism onset it is DLB; if parkinsonism precedes dementia by more than 1 year it is PDD. His parkinsonism and cognitive change emerged together over 18 months, favouring DLB (Source: McKeith 2017 DLB diagnostic criteria).",
+        "source_refs": ["McKeith 2017 DLB diagnostic criteria"]
+      }
+    ],
+    "explanation": {
+      "summary": "Dementia with Lewy bodies is the second most common neurodegenerative dementia after Alzheimer disease. The McKeith 2017 criteria for probable DLB require dementia plus 2 of 4 core features (fluctuating cognition with variation in attention and alertness, recurrent well-formed visual hallucinations, REM sleep behaviour disorder, and one or more cardinal features of parkinsonism) or 1 core feature plus 1 indicative biomarker (reduced dopamine transporter uptake on DAT-SPECT, low uptake on 123I-MIBG cardiac scintigraphy, or polysomnographic REM sleep without atonia). The distinction from Parkinson disease dementia is temporal - DLB when dementia precedes or emerges within 1 year of parkinsonism, PDD when it emerges more than 1 year after. Rivastigmine is licensed for symptomatic treatment; antipsychotics can cause severe sensitivity reactions.",
+      "key_points": [
+        "DLB core features: fluctuating cognition, recurrent well-formed visual hallucinations, REM sleep behaviour disorder, spontaneous parkinsonism.",
+        "1 year rule: dementia within 1 year of parkinsonism = DLB; more than 1 year after = PDD.",
+        "AD: early episodic memory loss + hippocampal atrophy (different pattern).",
+        "Rivastigmine and donepezil have efficacy for cognition and hallucinations in DLB."
+      ],
+      "pearls": "Never prescribe typical antipsychotics (haloperidol) or high-potency atypicals in DLB - severe neuroleptic sensitivity can cause worsening parkinsonism, confusion, and neuroleptic malignant syndrome; low dose quetiapine is preferred if antipsychotic is unavoidable."
+    },
+    "sources": [
+      { "label": "McKeith 2017 DLB diagnostic criteria", "url": "https://n.neurology.org/content/89/1/88" },
+      { "label": "Therapeutic Guidelines: Neurology", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "NINDS-AIREN vascular dementia criteria", "url": "https://n.neurology.org/content/43/2/250" },
+      { "label": "International bvFTD consensus criteria", "url": "https://academic.oup.com/brain/article/134/9/2456/369810" }
+    ],
+    "reference_ranges": ["vitamins", "thyroid"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-013",
+    "topic": "Medicine",
+    "subtopic": "Neurology",
+    "subtopic_detail": "Fitness to drive in dementia (Austroads)",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["dementia"],
+    "stem": "You are the general practitioner reviewing a 76 year old man 6 months after a diagnosis of mild Alzheimer disease was confirmed by a geriatrician. He drives a private vehicle only (no commercial licence). He lives with his wife who normally sits in the front passenger seat when he drives.\n\nHis MMSE is 24/30 with impairment in orientation and recall. Functional review by his wife reveals he now needs prompting to take his morning medications and has become lost driving home from the local supermarket twice in the last 2 months. He denies any recent motor vehicle collisions. His visual acuity is 6/9 corrected and he has no significant visual field deficit. His car has manual transmission and he wears reading glasses.\n\nExamination shows no focal neurology. Vital signs are within normal limits. He asks you whether he can continue driving.",
+    "data_table": {
+      "Vital signs": "Within normal limits",
+      "Cognition": "MMSE 24/30; impairment in orientation and recall; needs prompting for medications; getting lost driving home twice in 2 months",
+      "Neurological examination": "No focal signs",
+      "Vision": "6/9 corrected; no significant visual field deficit",
+      "Licence": "Private class only; drives with wife in front passenger seat"
+    },
+    "lead_in": "What is the most appropriate advice regarding driving?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Recommend continued driving only when accompanied by his wife and only in daylight hours",
+        "correct": false,
+        "rationale": "A supervising passenger and daylight restriction have no basis in Austroads fitness to drive standards for dementia; conditional licences are decided by the licensing authority after formal assessment, not by informal restrictions negotiated in general practice (Source: Austroads Assessing Fitness to Drive).",
+        "source_refs": ["Austroads Assessing Fitness to Drive"]
+      },
+      {
+        "letter": "B",
+        "text": "Reassure that mild cognitive impairment is compatible with unrestricted driving above MMSE 20",
+        "correct": false,
+        "rationale": "MMSE thresholds alone are not a driving decision tool per Austroads; functional impairment affecting driving safety (getting lost on familiar routes) mandates assessment regardless of MMSE score, and there is no MMSE cut-off that gives blanket unrestricted licence eligibility (Source: Austroads Assessing Fitness to Drive).",
+        "source_refs": ["Austroads Assessing Fitness to Drive"]
+      },
+      {
+        "letter": "C",
+        "text": "Review him at the next annual dementia review before making any decision about driving",
+        "correct": false,
+        "rationale": "Waiting 12 months in a patient who has demonstrated navigational failure poses immediate risk to the patient and other road users; Austroads requires action at the time functional impairment is identified, not deferred review (Source: Austroads Assessing Fitness to Drive).",
+        "source_refs": ["Austroads Assessing Fitness to Drive"]
+      },
+      {
+        "letter": "D",
+        "text": "Discharge from your care and advise him to arrange his own transport in future",
+        "correct": false,
+        "rationale": "Discharge does not discharge the doctor's duty to advise the patient of the driving implications of his condition; documented advice, driver notification, and consideration of statutory reporting remain professional responsibilities (Source: Austroads Assessing Fitness to Drive).",
+        "source_refs": ["Austroads Assessing Fitness to Drive"]
+      },
+      {
+        "letter": "E",
+        "text": "Advise him to stop driving and arrange formal occupational therapy on-road assessment",
+        "correct": true,
+        "rationale": "Austroads Assessing Fitness to Drive states that a diagnosis of dementia with impairment of function affecting driving safety (getting lost on familiar routes is a specific example) makes a person not fit to hold an unconditional private licence and requires formal on-road driving assessment by an accredited occupational therapist. In NSW the treating doctor has a professional responsibility to advise the driver to stop and notify Transport for NSW; the driver has a legal obligation to notify (Source: Austroads Assessing Fitness to Drive; Transport for NSW medical fitness to drive).",
+        "source_refs": ["Austroads Assessing Fitness to Drive", "Transport for NSW medical fitness to drive"]
+      }
+    ],
+    "explanation": {
+      "summary": "Austroads Assessing Fitness to Drive is the national medical standards resource for driver licensing in Australia. For dementia, the standard requires the treating health professional to advise the patient of the impact on driving and to consider notifying the licensing authority when the patient continues to drive against medical advice. Formal on-road assessment by an accredited occupational therapist is the definitive test of driving safety. Notification requirements vary by state - NSW requires the driver to self-notify Transport for NSW, and the doctor may notify in the public interest under health legislation. Functional impairments that specifically flag driving risk include getting lost in familiar areas, medication non-adherence, and impaired judgement.",
+      "key_points": [
+        "Austroads Assessing Fitness to Drive is the national medical standard.",
+        "Dementia with functional impairment (e.g. getting lost) mandates on-road OT assessment.",
+        "Notification: driver must notify licensing authority in all states; doctor may notify in the public interest.",
+        "MMSE alone is not a driving decision tool - function is the metric."
+      ],
+      "pearls": "Document in the notes the specific functional impairment that triggered your advice (e.g. getting lost driving home twice in 2 months), the advice given, and the driver's response - this protects both patient and doctor if a subsequent adverse event occurs."
+    },
+    "sources": [
+      { "label": "Austroads Assessing Fitness to Drive", "url": "https://austroads.com.au/publications/assessing-fitness-to-drive" },
+      { "label": "Transport for NSW medical fitness to drive", "url": "https://www.transport.nsw.gov.au/roads/licence/medical-conditions" }
+    ],
+    "reference_ranges": [],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-014",
+    "topic": "Medicine",
+    "subtopic": "Neurology",
+    "subtopic_detail": "Guillain-Barre syndrome immunotherapy choice",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["Guillain-Barre syndrome"],
+    "stem": "You are the medical registrar. A 54 year old man is admitted with 5 days of progressive ascending weakness starting in the feet and now involving the thighs, with paraesthesia in the fingertips developing today. He had gastroenteritis with bloody diarrhoea 3 weeks ago that self-resolved.\n\nHe cannot walk without support today; yesterday he could walk with a stick. He denies bladder or bowel dysfunction and has no back pain. He has no facial weakness or double vision.\n\nExamination shows symmetrical lower limb weakness (MRC grade 3 hip flexion, grade 2 ankle dorsiflexion), absent knee and ankle reflexes, patchy sensory loss in a stocking distribution, and grade 4 grip strength bilaterally. Cranial nerves are intact. Forced vital capacity at the bedside is 32 mL/kg. Vital signs: pulse 84, blood pressure 128/76, respiratory rate 18, SpO2 98% in room air, temperature 36.8.\n\nInvestigations: CSF cell count 3 x10^6/L (less than 5), CSF protein 1.4 g/L (0.15-0.45), CSF glucose normal, culture negative. Nerve conduction studies show slowed motor conduction velocities and prolonged distal latencies with conduction block consistent with acute inflammatory demyelinating polyradiculoneuropathy. HIV serology negative, hepatitis B and C serology negative. He has no known drug allergies.",
+    "data_table": {
+      "Vital signs": "Pulse 84, BP 128/76, RR 18, SpO2 98% room air, temperature 36.8",
+      "Examination": "Symmetrical LL weakness (hip flexion MRC 3, ankle dorsiflexion MRC 2); absent knee and ankle reflexes; stocking sensory loss; grip MRC 4; cranial nerves intact",
+      "History": "5 days progressive ascending weakness; gastroenteritis with bloody diarrhoea 3 weeks ago",
+      "Bedside": "FVC 32 mL/kg; no bulbar or autonomic features",
+      "CSF": "3 x10^6/L (less than 5); protein 1.4 g/L (0.15-0.45); glucose normal; culture negative",
+      "NCS": "Slowed motor conduction, prolonged distal latencies, conduction block (acute inflammatory demyelinating polyradiculoneuropathy)",
+      "Serology": "HIV, HBV, HCV negative; no known drug allergies"
+    },
+    "lead_in": "What is the most appropriate immunotherapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "High dose oral prednisolone 1 mg/kg daily tapered over 8 weeks total",
+        "correct": false,
+        "rationale": "Multiple randomised trials and Cochrane reviews show that corticosteroids alone do NOT hasten recovery in Guillain-Barre syndrome and may worsen outcome; this contrasts with CIDP where steroids are first line. Not prescribing steroids in GBS is a specific exam point (Source: Therapeutic Guidelines: Neurology; Cochrane review corticosteroids in GBS).",
+        "source_refs": ["Therapeutic Guidelines: Neurology", "Cochrane review corticosteroids in GBS"]
+      },
+      {
+        "letter": "B",
+        "text": "High dose intravenous methylprednisolone 1 g daily for 3 consecutive days",
+        "correct": false,
+        "rationale": "Intravenous methylprednisolone is likewise not effective as monotherapy in GBS and does not improve outcome when combined with IVIG; this is a well-established negative trial finding (Source: Cochrane review corticosteroids in GBS).",
+        "source_refs": ["Cochrane review corticosteroids in GBS"]
+      },
+      {
+        "letter": "C",
+        "text": "Rituximab 375 mg per square metre intravenously weekly for 4 weeks",
+        "correct": false,
+        "rationale": "Rituximab has a role in some antibody-mediated autoimmune neurological diseases (MOG antibody disease, refractory myasthenia gravis, some IgG4-related conditions) but is not an established therapy for acute GBS; it lacks the evidence base of IVIG and plasma exchange (Source: Therapeutic Guidelines: Neurology).",
+        "source_refs": ["Therapeutic Guidelines: Neurology"]
+      },
+      {
+        "letter": "D",
+        "text": "Intravenous immunoglobulin 0.4 g/kg daily for 5 days OR plasma exchange over 10 days",
+        "correct": true,
+        "rationale": "IVIG (2 g/kg total over 5 days) and plasma exchange are equally effective and are the two proven treatments for GBS when a patient cannot walk unaided (the standard treatment threshold). Combining them provides no additional benefit. IVIG is usually preferred for availability and side effect profile; PLEX is preferred when there is a contraindication to IVIG (severe IgA deficiency, hypersensitivity, hypercoagulability) (Source: Therapeutic Guidelines: Neurology).",
+        "source_refs": ["Therapeutic Guidelines: Neurology", "Cochrane review IVIG and PLEX for GBS"]
+      },
+      {
+        "letter": "E",
+        "text": "Supportive care alone with physiotherapy and mechanical thromboprophylaxis",
+        "correct": false,
+        "rationale": "Immunotherapy is indicated when a GBS patient cannot walk 10 metres unaided (the standard treatment threshold), as it reduces disability and time on ventilation; withholding immunotherapy in a non-ambulant patient does not meet standard of care (Source: Therapeutic Guidelines: Neurology).",
+        "source_refs": ["Therapeutic Guidelines: Neurology"]
+      }
+    ],
+    "explanation": {
+      "summary": "Guillain-Barre syndrome is an acute immune-mediated polyradiculoneuropathy, most commonly the acute inflammatory demyelinating polyradiculoneuropathy (AIDP) subtype in Australia, often preceded by Campylobacter jejuni gastroenteritis (with bloody diarrhoea, as here) or viral illness. Diagnosis rests on progressive ascending symmetrical weakness with hypo/areflexia, cytoalbuminological dissociation in CSF (raised protein with normal cells), and characteristic nerve conduction findings. Immunotherapy - either IVIG 2 g/kg over 5 days OR plasma exchange - is indicated when the patient cannot walk unaided and reduces disability and duration of ventilation. Corticosteroids are ineffective and should not be used. Monitoring for respiratory failure and autonomic instability is central.",
+      "key_points": [
+        "GBS treatment: IVIG OR plasma exchange when patient cannot walk unaided.",
+        "Corticosteroids are INEFFECTIVE in GBS (contrast with CIDP where they are first line).",
+        "Monitor FVC, single breath count, and autonomic parameters serially.",
+        "Campylobacter jejuni (bloody diarrhoea) is the most common preceding infection."
+      ],
+      "pearls": "Do not combine IVIG and PLEX in GBS - no added benefit and increased cost/harm; if a patient deteriorates after one course, discuss with neurology about a second IVIG course rather than switching to PLEX after IVIG has been given."
+    },
+    "sources": [
+      { "label": "Therapeutic Guidelines: Neurology", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Cochrane review IVIG and PLEX for GBS", "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD002063.pub6/full" },
+      { "label": "Cochrane review corticosteroids in GBS", "url": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD001446.pub5/full" }
+    ],
+    "reference_ranges": ["csf"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-015",
+    "topic": "Medicine",
+    "subtopic": "Neurology",
+    "subtopic_detail": "Respiratory monitoring and ICU criteria in Guillain-Barre syndrome",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["Guillain-Barre syndrome"],
+    "stem": "You are the medical registrar covering the ward at 2 am. A 58 year old woman with Guillain-Barre syndrome (day 4 of admission, started IVIG yesterday) becomes anxious with increasing breathlessness and reports she cannot count higher than 15 on a single breath (was 30 yesterday).\n\nShe has no chest pain, no cough, and no fever. Nurses have called you because her forced vital capacity performed 30 minutes ago is 950 mL (weight 71 kg). She could walk with a frame yesterday afternoon; now she cannot lift her legs off the bed and her voice is quieter than earlier.\n\nExamination shows use of accessory muscles at rest, paradoxical abdominal movement with each breath, weak cough, difficulty swallowing sips of water without coughing, MRC grade 2 in all four limbs, and no ptosis. Cardiac auscultation is unremarkable. Vital signs: pulse 118 irregular, blood pressure 168/102 (was 130/80 4 hours ago), respiratory rate 32, SpO2 94% in room air, temperature 36.6.\n\nArterial blood gas on room air: pH 7.37, PaCO2 46 mmHg, PaO2 78 mmHg, HCO3 26 mmol/L, base excess +1. Chest X-ray is clear. She has no known drug allergies.",
+    "data_table": {
+      "Vital signs": "Pulse 118 irregular, BP 168/102 (was 130/80 4 hours ago), RR 32, SpO2 94% room air, temperature 36.6",
+      "Bedside respiratory": "FVC 950 mL (weight 71 kg, so approx 13 mL/kg); single breath count 15 (was 30 yesterday); accessory muscle use; paradoxical abdominal movement; weak cough; coughing with sips of water",
+      "Neurology": "Now MRC grade 2 all four limbs (was ambulating with frame yesterday); voice quieter; no ptosis",
+      "ABG (room air)": "pH 7.37; PaCO2 46 mmHg; PaO2 78 mmHg; HCO3 26 mmol/L; BE +1",
+      "Imaging": "CXR clear",
+      "Treatment": "Day 4 admission; IVIG started yesterday; no known allergies"
+    },
+    "lead_in": "What is the most appropriate immediate management?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Start high flow nasal oxygen at 60 L/min FiO2 0.5 and repeat FVC in 4 hours",
+        "correct": false,
+        "rationale": "High flow nasal oxygen treats hypoxaemia but does not support the failing bellows - she has neuromuscular respiratory failure with a rising PaCO2 relative to her tachypnoea (ABG shows relative hypoventilation with PaCO2 46 mmHg despite RR 32, indicating fatigue and impending decompensation). Delaying 4 hours risks respiratory arrest (Source: Therapeutic Guidelines: Neurology).",
+        "source_refs": ["Therapeutic Guidelines: Neurology"]
+      },
+      {
+        "letter": "B",
+        "text": "Continuous positive airway pressure at 8 cmH2O with FiO2 0.4 on the medical ward",
+        "correct": false,
+        "rationale": "Non-invasive ventilation is generally NOT recommended in Guillain-Barre syndrome because bulbar weakness increases aspiration risk (she is already coughing on sips), autonomic instability compromises tolerance, and progression to intubation is likely; ward-level NIV without ICU support is unsafe (Source: Therapeutic Guidelines: Neurology).",
+        "source_refs": ["Therapeutic Guidelines: Neurology"]
+      },
+      {
+        "letter": "C",
+        "text": "Give an additional IVIG loading dose 1 g/kg over 6 hours and observe with hourly obs",
+        "correct": false,
+        "rationale": "Additional IVIG may be considered after completion of the initial course if there is failure to improve, but it is not the immediate action for impending respiratory failure; airway and ventilation must be secured before further immunotherapy is escalated (Source: Therapeutic Guidelines: Neurology).",
+        "source_refs": ["Therapeutic Guidelines: Neurology"]
+      },
+      {
+        "letter": "D",
+        "text": "Give intravenous salbutamol 250 mcg over 5 minutes and monitor peak expiratory flow",
+        "correct": false,
+        "rationale": "This is neuromuscular respiratory failure, not bronchospasm; peak expiratory flow reflects effort and airway calibre, not neuromuscular reserve, and salbutamol will not restore inspiratory muscle strength while potentially worsening tachyarrhythmia from her autonomic instability (Source: Therapeutic Guidelines: Neurology).",
+        "source_refs": ["Therapeutic Guidelines: Neurology"]
+      },
+      {
+        "letter": "E",
+        "text": "Urgent ICU review for intubation given FVC below 20 mL/kg and bulbar weakness",
+        "correct": true,
+        "rationale": "Standard criteria for intubation in GBS include FVC less than 20 mL/kg (she is 13 mL/kg), MIP less negative than -30 cmH2O, MEP less than 40 cmH2O (the 20/30/40 rule), rapidly falling FVC, bulbar weakness with aspiration risk, and autonomic instability. She meets multiple criteria. Elective intubation is preferred over emergency intubation. Suxamethonium is contraindicated for induction due to risk of life-threatening hyperkalaemia in denervating neuromuscular disease (Source: Therapeutic Guidelines: Neurology; Australian and New Zealand Intensive Care Society statement).",
+        "source_refs": ["Therapeutic Guidelines: Neurology", "Australian and New Zealand Intensive Care Society statement"]
+      }
+    ],
+    "explanation": {
+      "summary": "Approximately 25 to 30% of Guillain-Barre syndrome patients require mechanical ventilation, and elective intubation in a controlled setting is far safer than emergent intubation for respiratory arrest. The 20/30/40 rule triggers intubation consideration: FVC less than 20 mL/kg, maximum inspiratory pressure less negative than -30 cmH2O, or maximum expiratory pressure less than 40 cmH2O. Bulbar weakness with aspiration risk and autonomic dysfunction (labile blood pressure, arrhythmia) are additional intubation indicators. Serial bedside FVC or single breath count trending downwards, weak cough, paradoxical abdominal movement, and speech becoming quieter or more nasal all portend imminent respiratory failure. Rising PaCO2 is a late finding - do not wait for it. Suxamethonium is contraindicated for induction because of hyperkalaemic response.",
+      "key_points": [
+        "20/30/40 rule for GBS intubation: FVC less than 20 mL/kg, MIP less negative than -30, MEP less than 40 cmH2O.",
+        "Additional intubation triggers: bulbar weakness with aspiration risk, autonomic instability, rapidly falling FVC.",
+        "Non-invasive ventilation is generally NOT recommended in GBS.",
+        "Suxamethonium is contraindicated - use rocuronium for rapid sequence intubation."
+      ],
+      "pearls": "Do serial bedside single breath counts (count to 20 in a single exhalation approximates FVC around 1.5 L) every 2 to 4 hours in GBS on the ward - a falling count is often the first bedside sign of impending respiratory failure before formal FVC drops below the 20 mL/kg threshold."
+    },
+    "sources": [
+      { "label": "Therapeutic Guidelines: Neurology", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Australian and New Zealand Intensive Care Society statement", "url": "https://www.anzics.com.au/" }
+    ],
+    "reference_ranges": ["abg"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-016",
+    "topic": "Medicine",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Osteoporosis first line pharmacotherapy after minimal trauma fracture",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["osteoporosis"],
+    "stem": "You are the general practitioner reviewing a 68 year old postmenopausal woman 6 weeks after she sustained a wrist fracture falling from standing height while carrying shopping. The fracture has been managed conservatively and is healing well.\n\nShe has never smoked, drinks 10 g of alcohol per day, and takes no regular medications. She has no history of malabsorption, coeliac disease, thyroid disease, or long term glucocorticoid use. Her mother sustained a hip fracture at age 78.\n\nExamination shows a well-healed distal radius fracture and no kyphosis. Vital signs are within normal limits.\n\nInvestigations: DXA T-score lumbar spine -2.6, femoral neck -2.4, total hip -2.2. 25-hydroxyvitamin D 68 nmol/L (greater than 50 sufficient), corrected calcium 2.32 mmol/L (2.15-2.60), phosphate 1.0 mmol/L (0.8-1.5), creatinine 68 micromol/L with estimated glomerular filtration rate greater than 90 mL/min/1.73m^2, thyroid stimulating hormone 2.1 mIU/L (0.4-4.0), and normal full blood count. Serum protein electrophoresis and coeliac serology are negative. Dental review 4 months ago was normal.",
+    "data_table": {
+      "Vital signs": "Within normal limits",
+      "Examination": "Well-healed distal radius fracture; no kyphosis",
+      "History": "Minimal trauma wrist fracture 6 weeks ago; postmenopausal 68 yo; maternal hip fracture at 78; no smoking; 10 g alcohol/day; no glucocorticoid or malabsorption history",
+      "DXA": "T-score lumbar spine -2.6; femoral neck -2.4; total hip -2.2",
+      "Bloods": "25-OH vitamin D 68 nmol/L (greater than 50 sufficient); corrected calcium 2.32 mmol/L (2.15-2.60); phosphate 1.0 mmol/L (0.8-1.5); creatinine 68 micromol/L with eGFR greater than 90; TSH 2.1 mIU/L (0.4-4.0); FBC normal",
+      "Secondary workup": "SPEP and coeliac serology negative; dental review normal 4 months ago"
+    },
+    "lead_in": "What is the most appropriate first line pharmacotherapy?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Calcium 1000 mg and colecalciferol 25 mcg orally daily as sole prevention therapy",
+        "correct": false,
+        "rationale": "Calcium and vitamin D alone are inadequate secondary prevention after minimal trauma fracture with T-score below -2.5; they support pharmacotherapy but do not substitute for antiresorptive therapy which reduces refracture risk by around 50% (Source: RACGP osteoporosis guideline).",
+        "source_refs": ["RACGP osteoporosis guideline"]
+      },
+      {
+        "letter": "B",
+        "text": "Alendronate 70 mg orally weekly with calcium and vitamin D supplementation",
+        "correct": true,
+        "rationale": "She has established osteoporosis by both a minimal trauma fracture at a major site AND a DXA T-score below -2.5. Australian Therapeutic Guidelines and the RACGP osteoporosis guideline recommend an oral bisphosphonate (alendronate 70 mg weekly or risedronate 35 mg weekly) as first line pharmacotherapy in postmenopausal women with normal renal function and no upper gastrointestinal contraindications (Source: Therapeutic Guidelines: Endocrinology; RACGP osteoporosis guideline).",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology", "RACGP osteoporosis guideline"]
+      },
+      {
+        "letter": "C",
+        "text": "Denosumab 60 mg subcutaneously every 6 months as first line antiresorptive therapy",
+        "correct": false,
+        "rationale": "Denosumab is effective and PBS-listed for osteoporosis but is not universally first line in Australia; it is preferred when oral bisphosphonates are contraindicated (upper gastrointestinal disease, oesophageal stricture) or when eGFR is less than 35 mL/min/1.73m^2. Its main issue is the rebound vertebral fracture risk if stopped abruptly (Source: Therapeutic Guidelines: Endocrinology).",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+      },
+      {
+        "letter": "D",
+        "text": "Teriparatide 20 mcg subcutaneously daily as first line anabolic osteoporosis therapy",
+        "correct": false,
+        "rationale": "Teriparatide is an anabolic agent reserved for severe osteoporosis (typically T-score below -3.0 with multiple minimal trauma fractures, or fracture on antiresorptive therapy) and is subsidised on the PBS for these specific indications; it is not first line for a first minimal trauma fracture (Source: Therapeutic Guidelines: Endocrinology).",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+      },
+      {
+        "letter": "E",
+        "text": "Menopausal hormone therapy with combined oestrogen and progestogen for fracture prevention",
+        "correct": false,
+        "rationale": "MHT reduces fracture risk but its risk profile (breast cancer, venous thromboembolism, stroke) makes it unsuitable as primary fracture prevention beyond age 60 in a woman with fracture already sustained; it is used for menopausal symptoms in appropriate candidates (Source: Therapeutic Guidelines: Endocrinology).",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+      }
+    ],
+    "explanation": {
+      "summary": "Osteoporosis is diagnosed either by DXA T-score at or below -2.5 at the lumbar spine, femoral neck, or total hip, OR by a minimal trauma (fragility) fracture at a major site (hip, vertebra, distal radius, proximal humerus) regardless of DXA. Secondary causes should be excluded with calcium, phosphate, 25-OH vitamin D, TSH, SPEP, coeliac serology, and (in men) testosterone. First line pharmacotherapy in Australia is an oral bisphosphonate (alendronate 70 mg weekly or risedronate 35 mg weekly), or IV zoledronic acid annually if oral therapy is not tolerated or adherence is poor. Denosumab is preferred when eGFR is less than 35 mL/min/1.73m^2 or oral bisphosphonates are contraindicated. Teriparatide is anabolic and reserved for severe or antiresorptive-failure disease. Adequate dietary calcium (1000-1300 mg/day) and vitamin D (25-OH-D greater than 50 nmol/L) support all antiresorptive therapy.",
+      "key_points": [
+        "Osteoporosis dx: T-score at or below -2.5 OR minimal trauma fracture at major site.",
+        "First line: oral bisphosphonate (alendronate 70 mg weekly, risedronate 35 mg weekly) OR IV zoledronic acid annually.",
+        "Denosumab if eGFR less than 35 or oral bisphosphonates contraindicated.",
+        "Exclude secondary causes: calcium, phosphate, 25-OH-D, TSH, SPEP, coeliac serology, (in men) testosterone."
+      ],
+      "pearls": "Counsel on bisphosphonate dosing: swallow with a full glass of tap water on an empty stomach and remain upright for at least 30 minutes; this reduces oesophagitis and improves absorption which is less than 1% at baseline."
+    },
+    "sources": [
+      { "label": "Therapeutic Guidelines: Endocrinology", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "RACGP osteoporosis guideline", "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/osteoporosis" }
+    ],
+    "reference_ranges": ["uec", "calcium_corrected", "thyroid", "vitamins"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-017",
+    "topic": "Medicine",
+    "subtopic": "Endocrinology",
+    "subtopic_detail": "Denosumab discontinuation and rebound vertebral fracture risk",
+    "difficulty": 5,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["osteoporosis"],
+    "stem": "You are the endocrinology registrar. A 73 year old woman has been on subcutaneous denosumab 60 mg every 6 months for 7 years for postmenopausal osteoporosis. Her most recent DXA showed T-score lumbar spine -1.8, femoral neck -2.0, and total hip -1.9, all improved from baseline.\n\nShe has developed a slowly increasing serum creatinine and her estimated glomerular filtration rate is now 28 mL/min/1.73m^2. She has no history of minimal trauma vertebral fracture. Dental review last month was normal. She takes no glucocorticoids.\n\nAt her recent GP visit she was told her bone density is now good and denosumab could be stopped. Her next dose is due in 3 weeks. She has been referred to your clinic to discuss this. She has no back pain and no height loss. She is otherwise well. Vital signs are within normal limits.\n\nInvestigations today: corrected calcium 2.30 mmol/L (2.15-2.60), phosphate 1.1 mmol/L (0.8-1.5), 25-hydroxyvitamin D 72 nmol/L (greater than 50), parathyroid hormone within reference range, and no evidence of vertebral fracture on lateral spine imaging.",
+    "data_table": {
+      "Vital signs": "Within normal limits",
+      "Denosumab history": "Subcutaneous 60 mg every 6 months for 7 years; last DXA T-scores L-spine -1.8, femoral neck -2.0, total hip -1.9 (all improved from baseline)",
+      "Renal": "eGFR 28 mL/min/1.73m^2 (slowly declining)",
+      "Bloods": "Corrected calcium 2.30 mmol/L (2.15-2.60); phosphate 1.1 mmol/L (0.8-1.5); 25-OH-D 72 nmol/L (greater than 50); PTH within reference range",
+      "Imaging": "Lateral spine imaging: no vertebral fracture",
+      "Other": "No back pain or height loss; no glucocorticoid use; dental review normal last month; next denosumab dose due in 3 weeks"
+    },
+    "lead_in": "What is the most appropriate management plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Stop denosumab now as T-scores have normalised and eGFR is less than 30",
+        "correct": false,
+        "rationale": "Discontinuing denosumab without follow-on antiresorptive therapy causes a rapid rebound in bone turnover with a rise in multiple vertebral fracture risk within 6 to 18 months, regardless of DXA improvement. eGFR less than 30 does not exempt her from rebound and mandates a plan (Source: Therapeutic Guidelines: Endocrinology).",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology", "Endocrine Society denosumab position statement"]
+      },
+      {
+        "letter": "B",
+        "text": "Continue denosumab indefinitely at the standard 6 monthly dose without any change",
+        "correct": false,
+        "rationale": "Denosumab is not renally cleared and can be continued in advanced kidney disease, but hypocalcaemia risk rises markedly as eGFR falls below 30 mL/min/1.73m^2 requiring more intensive calcium and vitamin D monitoring; indefinite continuation without addressing renal-adjusted monitoring is not best practice (Source: Therapeutic Guidelines: Endocrinology).",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+      },
+      {
+        "letter": "C",
+        "text": "Continue denosumab; intensify calcium and vitamin D monitoring; specialist review",
+        "correct": true,
+        "rationale": "In a woman on 7 years denosumab with declining renal function, the immediate priorities are avoiding a missed dose (which triggers rebound within 6 months) and mitigating hypocalcaemia risk. Denosumab is not renally cleared so it can be continued in advanced CKD but hypocalcaemia risk rises sharply below eGFR 30; corrected calcium is checked 2 to 4 weeks after each dose. Zoledronic acid is contraindicated at eGFR less than 35, so any transition off denosumab requires specialist input (Source: Therapeutic Guidelines: Endocrinology; Endocrine Society denosumab position statement).",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology", "Endocrine Society denosumab position statement"]
+      },
+      {
+        "letter": "D",
+        "text": "Stop denosumab and give intravenous zoledronic acid 5 mg as follow-on antiresorptive therapy",
+        "correct": false,
+        "rationale": "Zoledronic acid is contraindicated at eGFR less than 35 mL/min/1.73m^2 in Australia because of risk of acute kidney injury and hypocalcaemia; her eGFR of 28 excludes this option (Source: Therapeutic Guidelines: Endocrinology).",
+        "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+      },
+      {
+        "letter": "E",
+        "text": "Stop denosumab and switch to teriparatide 20 mcg subcutaneously daily as anabolic therapy",
+        "correct": false,
+        "rationale": "Teriparatide is actually contraindicated as sequential therapy after denosumab because it causes worsening cortical bone loss and does not protect against rebound vertebral fracture in this specific sequence; it is used after bisphosphonate, not after denosumab (Source: Endocrine Society denosumab position statement).",
+        "source_refs": ["Endocrine Society denosumab position statement"]
+      }
+    ],
+    "explanation": {
+      "summary": "Denosumab is a fully reversible RANKL inhibitor with rapid onset and rapid offset - within 6 to 12 months of a missed dose, bone turnover markers rebound above pre-treatment levels and multiple vertebral fracture risk rises sharply, particularly in patients who have been on denosumab for longer periods. Consequently, denosumab is either continued indefinitely (with attention to atypical femoral fracture and osteonecrosis of the jaw at the long end, and hypocalcaemia risk at low eGFR) or transitioned with careful antiresorptive follow-on. In advanced CKD (eGFR less than 35) IV zoledronic acid is contraindicated, oral bisphosphonates have limited data, and specialist-directed strategies (continued denosumab with intensified monitoring, or raloxifene bridging) are the norm. Teriparatide after denosumab worsens cortical bone loss and does not prevent rebound vertebral fracture on its own.",
+      "key_points": [
+        "Denosumab discontinuation causes rebound vertebral fracture within 6-18 months if no follow-on antiresorptive.",
+        "Missed doses (beyond 7 months) trigger rebound - never simply stop.",
+        "Zoledronic acid contraindicated at eGFR less than 35; oral bisphosphonate absorption poor in CKD.",
+        "Teriparatide after denosumab causes cortical bone loss - not a suitable follow-on."
+      ],
+      "pearls": "Corrected calcium should be checked 2 to 4 weeks after each denosumab dose in patients with eGFR less than 30 - severe symptomatic hypocalcaemia is the most immediate risk and requires prompt oral or IV replacement with active vitamin D."
+    },
+    "sources": [
+      { "label": "Therapeutic Guidelines: Endocrinology", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "Endocrine Society denosumab position statement", "url": "https://academic.oup.com/jcem/article/107/1/1/6413268" }
+    ],
+    "reference_ranges": ["uec", "calcium_corrected", "vitamins"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-018",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Uncomplicated adult female urinary tract infection",
+    "difficulty": 3,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["urinary tract infection"],
+    "stem": "You are the general practitioner. A 32 year old non-pregnant woman presents with 2 days of dysuria, urinary frequency, and suprapubic discomfort. She has no fever, no back pain, no vaginal discharge, and no nausea or vomiting.\n\nShe has had 2 uncomplicated urinary tract infections in the past 5 years, both successfully treated with a short antibiotic course. She has no history of pyelonephritis, no known urological anomaly, and no diabetes. She is sexually active with a regular male partner, uses condoms, and has no recent hospital admission or urinary catheterisation.\n\nExamination shows suprapubic tenderness only. There is no costovertebral angle tenderness. Vital signs are within normal limits.\n\nUrinalysis is positive for leukocytes and nitrites; midstream urine has been sent for culture. She has no known drug allergies.",
+    "data_table": {
+      "Vital signs": "Within normal limits",
+      "Examination": "Suprapubic tenderness only; no CVA tenderness; no vaginal discharge",
+      "History": "2 days dysuria, frequency, suprapubic discomfort; 2 previous uncomplicated UTIs in 5 years; not pregnant; no diabetes; no urological anomaly; no catheter or recent hospitalisation",
+      "Urinalysis": "Leukocytes and nitrites positive; MSU sent for culture",
+      "Allergies": "Nil known"
+    },
+    "lead_in": "What is the most appropriate empirical antibiotic?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Nitrofurantoin 100 mg orally 6 hourly for 5 days as first line agent",
+        "correct": true,
+        "rationale": "Nitrofurantoin 100 mg orally 6 hourly for 5 days is the current Therapeutic Guidelines: Antibiotic first line empirical treatment for uncomplicated cystitis in non-pregnant women in Australia. It concentrates in urine, has good E. coli activity, and preserves fluoroquinolone and cephalosporin activity for more serious infections. It is contraindicated in eGFR less than 45 mL/min/1.73m^2 (Source: Therapeutic Guidelines: Antibiotic).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "B",
+        "text": "Ciprofloxacin 500 mg orally 12 hourly for 3 days as empirical treatment",
+        "correct": false,
+        "rationale": "Fluoroquinolones are second or third line in Australia for uncomplicated cystitis; the TGA and Therapeutic Guidelines restrict fluoroquinolones because of adverse effects (tendinopathy, aortic aneurysm/dissection, dysglycaemia, QT prolongation) and to preserve activity for serious infections (Source: Therapeutic Guidelines: Antibiotic).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "C",
+        "text": "Cephalexin 500 mg orally 12 hourly for 5 days as first line antibiotic",
+        "correct": false,
+        "rationale": "Cephalexin is a reasonable alternative when nitrofurantoin and trimethoprim are contraindicated, but it has higher rates of vaginal candidiasis, poorer eradication than nitrofurantoin, and broader spectrum than needed for uncomplicated cystitis; it is not first line (Source: Therapeutic Guidelines: Antibiotic).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "D",
+        "text": "Amoxicillin-clavulanate 500/125 mg orally 8 hourly for 5 days empirically",
+        "correct": false,
+        "rationale": "Amoxicillin-clavulanate has poor coverage for E. coli in many Australian regions (resistance rates approaching 20%) and is not recommended empirically for cystitis; it may be used based on culture and susceptibility results (Source: Therapeutic Guidelines: Antibiotic).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "E",
+        "text": "Fosfomycin 3 g orally as a single dose without further follow-up antibiotic",
+        "correct": false,
+        "rationale": "Fosfomycin single dose is a reasonable alternative in some settings and internationally recommended, but in Australia Therapeutic Guidelines list it as second line where first line agents are contraindicated or where resistance patterns favour it; nitrofurantoin remains first line (Source: Therapeutic Guidelines: Antibiotic).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      }
+    ],
+    "explanation": {
+      "summary": "Uncomplicated urinary tract infection in a non-pregnant, non-diabetic, catheter-naive woman without upper tract features (fever, flank pain, nausea/vomiting) can be treated empirically without waiting for culture. Australian Therapeutic Guidelines: Antibiotic first line is nitrofurantoin 100 mg orally 6 hourly for 5 days OR trimethoprim 300 mg orally nocte for 3 days. Nitrofurantoin is preferred where trimethoprim resistance is high and eGFR is above 45 mL/min/1.73m^2. Send MSU only for recurrent, complicated, or treatment-failure UTI (women); routinely for all men, pregnant women, and children. Reserve fluoroquinolones for pyelonephritis or documented multi-resistant organisms.",
+      "key_points": [
+        "First line for uncomplicated cystitis in non-pregnant women: nitrofurantoin 100 mg 6 hourly x 5 days OR trimethoprim 300 mg nocte x 3 days.",
+        "Nitrofurantoin contraindicated at eGFR less than 45 mL/min/1.73m^2.",
+        "Reserve fluoroquinolones and cephalosporins for pyelonephritis, complicated UTI, or documented multi-resistance.",
+        "Send MSU for pregnancy, men, children, recurrent, or complicated UTI - routine culture not needed for isolated uncomplicated female cystitis."
+      ],
+      "pearls": "Counsel that nitrofurantoin can cause brown-orange discolouration of the urine (harmless), avoid taking with milk (reduces absorption), and to complete the full 5 day course even if symptoms resolve within 48 hours."
+    },
+    "sources": [
+      { "label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "AMH Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+    ],
+    "reference_ranges": ["uec"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-019",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Acute pyelonephritis empirical intravenous therapy",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["pyelonephritis"],
+    "stem": "You are the emergency registrar. A 42 year old woman presents with 24 hours of right flank pain, high fever, rigors, nausea and one episode of vomiting. She has had dysuria and urinary frequency for 3 days beforehand.\n\nShe is not pregnant, has no diabetes, has no urinary catheter, and has no history of recurrent UTI or urological surgery. She has not recently travelled overseas or had recent hospital or aged care admission. She takes no antibiotics regularly.\n\nExamination shows right costovertebral angle tenderness, dry mucous membranes, and mild suprapubic tenderness. Vital signs: pulse 118, blood pressure 96/58, respiratory rate 22, SpO2 98% in room air, temperature 39.4.\n\nInvestigations: haemoglobin 128 g/L (120-160), white cells 18.2 x10^9/L (4.0-11.0), platelets 320 x10^9/L (150-400), creatinine 96 micromol/L (60-110), lactate 3.2 mmol/L (less than 2.0), urinalysis 3+ leukocytes 3+ nitrites 1+ blood no ketones. Urine and blood cultures have been drawn but no results yet. Bedside renal ultrasound shows no hydronephrosis or renal calculi. She has no known drug allergies.",
+    "data_table": {
+      "Vital signs": "Pulse 118, BP 96/58, RR 22, SpO2 98% room air, temperature 39.4",
+      "Examination": "Right costovertebral angle tenderness; dry mucous membranes; mild suprapubic tenderness",
+      "History": "24 h right flank pain, high fever, rigors, nausea, one vomit; 3 days preceding dysuria and frequency; not pregnant; no diabetes; no catheter; no recent hospitalisation or overseas travel",
+      "Bloods": "Hb 128 g/L (120-160); WCC 18.2 x10^9/L (4.0-11.0); platelets 320 x10^9/L (150-400); creatinine 96 micromol/L (60-110); lactate 3.2 mmol/L (less than 2.0)",
+      "Urine": "3+ leukocytes, 3+ nitrites, 1+ blood, no ketones; cultures pending",
+      "Imaging": "Bedside renal US: no hydronephrosis or calculi",
+      "Allergies": "Nil known"
+    },
+    "lead_in": "What is the most appropriate empirical antibiotic regimen?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Oral ciprofloxacin 500 mg 12 hourly for 7 days with GP review the next day",
+        "correct": false,
+        "rationale": "Oral therapy is inappropriate in a hypotensive tachycardic patient with lactate 3.2 mmol/L and vomiting; she meets sepsis criteria and needs IV antibiotics after cultures, IV fluids, and admission per CEC SEPSIS KILLS pathway (Source: Therapeutic Guidelines: Antibiotic; CEC SEPSIS KILLS NSW).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic", "CEC SEPSIS KILLS NSW"]
+      },
+      {
+        "letter": "B",
+        "text": "Intravenous piperacillin-tazobactam 4.5 g 6 hourly as empirical monotherapy",
+        "correct": false,
+        "rationale": "Piperacillin-tazobactam is reserved for hospital-acquired urinary sepsis, patients with prior ESBL colonisation, or complicated UTI with sepsis unresponsive to first line; empirical use in community-acquired pyelonephritis is excessive spectrum and drives antimicrobial resistance (Source: Therapeutic Guidelines: Antibiotic).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "C",
+        "text": "Intravenous vancomycin plus metronidazole as empirical cover for pyelonephritis",
+        "correct": false,
+        "rationale": "Vancomycin covers gram positives (including MRSA) and metronidazole covers anaerobes; neither reliably covers the gram negative enteric organisms (E. coli, Klebsiella, Proteus) that dominate community-acquired pyelonephritis, so this regimen misses the target pathogens (Source: Therapeutic Guidelines: Antibiotic).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "D",
+        "text": "Intravenous meropenem 1 g 8 hourly as empirical monotherapy for pyelonephritis",
+        "correct": false,
+        "rationale": "Meropenem is reserved for suspected or confirmed extended-spectrum beta-lactamase infection, severe sepsis with recent broad-spectrum antibiotic exposure, or previous ESBL colonisation; empirical use in community-acquired pyelonephritis drives carbapenem resistance and is not first line (Source: Therapeutic Guidelines: Antibiotic).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "E",
+        "text": "IV amoxicillin 2 g 6 hourly plus single dose gentamicin per AMH weight-adjusted schedule",
+        "correct": true,
+        "rationale": "Therapeutic Guidelines: Antibiotic empirical regimen for adult community-acquired pyelonephritis in a septic patient is amoxicillin (or ampicillin) 2 g IV 6 hourly PLUS gentamicin at a weight-adjusted dose given as a single initial dose. Amoxicillin covers enterococci and the gentamicin covers gram negative enteric organisms including most community E. coli. Gentamicin is reviewed at 24 to 48 hours based on culture and creatinine; oral step-down at 48 to 72 hours if improving, for total 10 to 14 days (Source: Therapeutic Guidelines: Antibiotic; CEC SEPSIS KILLS NSW).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic", "CEC SEPSIS KILLS NSW"]
+      }
+    ],
+    "explanation": {
+      "summary": "Acute pyelonephritis with sepsis physiology (hypotension, tachycardia, raised lactate) requires admission, IV fluid resuscitation per the hour-1 sepsis bundle, cultures, and empirical IV antibiotics. Australian first line for community-acquired pyelonephritis in a systemically unwell adult without recent healthcare contact or ESBL risk is amoxicillin or ampicillin plus gentamicin, targeting enterococci and gram negative enteric organisms. Gentamicin is single dose initially and reviewed at 24 to 48 hours; extended aminoglycoside courses require close monitoring for nephrotoxicity and ototoxicity. Oral step-down to a culture-guided oral agent (trimethoprim, amoxicillin-clavulanate, or ciprofloxacin) at 48 to 72 hours if clinical improvement, for total 10 to 14 days. Imaging with CT urogram is indicated if obstructing calculus, abscess, or ongoing sepsis despite 48 to 72 hours of appropriate antibiotics.",
+      "key_points": [
+        "Septic pyelonephritis: admit, IV fluids, cultures, empirical IV antibiotics per Therapeutic Guidelines.",
+        "Empirical: amoxicillin (or ampicillin) 2 g IV 6 hourly PLUS single dose gentamicin.",
+        "Review gentamicin at 24-48 h; oral step-down at 48-72 h if improving; total 10-14 days.",
+        "Escalate to piperacillin-tazobactam or meropenem for suspected ESBL or hospital-acquired sepsis."
+      ],
+      "pearls": "In pyelonephritis with sepsis, obtain a bedside renal ultrasound early in the emergency department to exclude obstruction - an obstructed infected kidney is a urological emergency requiring urgent decompression by percutaneous nephrostomy or ureteric stent regardless of antibiotic choice."
+    },
+    "sources": [
+      { "label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/" },
+      { "label": "CEC SEPSIS KILLS NSW", "url": "https://www.cec.health.nsw.gov.au/keep-patients-safe/deteriorating-patient-program/sepsis" },
+      { "label": "AMH Australian Medicines Handbook", "url": "https://amhonline.amh.net.au/" }
+    ],
+    "reference_ranges": ["fbc", "uec"],
+    "created": "2026-09-06"
+  },
+  {
+    "id": "local-wave2-medicine-020",
+    "topic": "Medicine",
+    "subtopic": "Infectious diseases",
+    "subtopic_detail": "Sepsis hour-1 bundle and vasopressor initiation",
+    "difficulty": 4,
+    "model": "Claude Opus 4.7 (1M context)",
+    "tags": ["sepsis"],
+    "stem": "You are the medical registrar in the emergency department. A 66 year old man presents with 12 hours of productive cough, fever, and progressive breathlessness. He was diagnosed with type 2 diabetes 10 years ago and takes metformin only.\n\nOn arrival he is drowsy but rousable, oriented to person only. He has crackles and bronchial breathing at the right base. He has no chest pain, no calf pain, and no urinary symptoms. He has no known drug allergies.\n\nVital signs: pulse 128, blood pressure 78/44, respiratory rate 30, SpO2 91% on 6 L/min via Hudson mask, temperature 39.1. Peripheries are cool and capillary refill is 4 seconds. His qSOFA is 3.\n\nInvestigations drawn at arrival 20 minutes ago: haemoglobin 132 g/L (135-175), white cells 22.4 x10^9/L (4.0-11.0), platelets 118 x10^9/L (150-400), creatinine 168 micromol/L (60-110) (baseline 82), lactate 4.6 mmol/L (less than 2.0), venous blood gas pH 7.28, glucose 14.2 mmol/L, blood and sputum cultures drawn. Chest X-ray shows right lower lobe consolidation. IV access is established with 2 large bore cannulae. The first 30 mL/kg (approximately 2.1 L) crystalloid bolus has just completed over 45 minutes; his blood pressure is now 88/52 with pulse 122. Empirical intravenous ceftriaxone 2 g plus azithromycin has been given. A central venous line is being placed.",
+    "data_table": {
+      "Vital signs at arrival": "Pulse 128, BP 78/44, RR 30, SpO2 91% on 6 L/min Hudson mask, temperature 39.1",
+      "After fluid bolus": "BP 88/52, pulse 122 following 30 mL/kg crystalloid over 45 min",
+      "Examination": "Drowsy oriented to person only; right basal crackles and bronchial breathing; cool peripheries; capillary refill 4 sec",
+      "Bloods": "Hb 132 g/L (135-175); WCC 22.4 x10^9/L (4.0-11.0); platelets 118 x10^9/L (150-400); creatinine 168 micromol/L (60-110, baseline 82); lactate 4.6 mmol/L (less than 2.0); VBG pH 7.28; glucose 14.2 mmol/L",
+      "Cultures": "Blood and sputum cultures drawn at arrival",
+      "Imaging": "CXR right lower lobe consolidation",
+      "Given": "IV ceftriaxone 2 g + azithromycin; 30 mL/kg crystalloid; central line being placed"
+    },
+    "lead_in": "What is the most appropriate next step in resuscitation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Give further 2 L crystalloid bolus over 30 minutes before considering any vasopressor",
+        "correct": false,
+        "rationale": "He has already received 30 mL/kg with inadequate mean arterial pressure response (MAP 64 remains below 65 target); further large-volume crystalloid without vasopressor support risks worsening pulmonary oedema in septic cardiomyopathy and is not the SEPSIS KILLS pathway when hypotension persists post-bolus (Source: CEC SEPSIS KILLS NSW; Surviving Sepsis Campaign 2021).",
+        "source_refs": ["CEC SEPSIS KILLS NSW", "Surviving Sepsis Campaign 2021"]
+      },
+      {
+        "letter": "B",
+        "text": "Commence intravenous dopamine 10 microgram/kg/minute peripherally as first line vasopressor",
+        "correct": false,
+        "rationale": "Dopamine is no longer recommended as first line vasopressor in septic shock (Surviving Sepsis Campaign) because of higher arrhythmia rates and higher mortality in randomised comparison with noradrenaline; noradrenaline is preferred (Source: Surviving Sepsis Campaign 2021).",
+        "source_refs": ["Surviving Sepsis Campaign 2021"]
+      },
+      {
+        "letter": "C",
+        "text": "Give intravenous hydrocortisone 200 mg 6 hourly and hold vasopressor pending response",
+        "correct": false,
+        "rationale": "Intravenous hydrocortisone 200 mg/day (in divided doses or infusion) is added when catecholamine-refractory shock persists despite adequate vasopressor and fluid; it is not the immediate next step and does not replace vasopressor initiation (Source: Surviving Sepsis Campaign 2021).",
+        "source_refs": ["Surviving Sepsis Campaign 2021"]
+      },
+      {
+        "letter": "D",
+        "text": "Commence intravenous noradrenaline titrated to MAP at least 65 mmHg; involve ICU; repeat lactate",
+        "correct": true,
+        "rationale": "This is fluid-refractory septic shock (lactate greater than 4, persistent MAP less than 65 after 30 mL/kg crystalloid). The CEC SEPSIS KILLS NSW pathway and Surviving Sepsis Campaign both recommend noradrenaline as first line vasopressor titrated to MAP at least 65 mmHg, escalated oxygen support, ICU involvement, source control review, and lactate reassessment in 2 to 4 hours. Noradrenaline can be started peripherally through a large bore cannula while central access is placed (Source: CEC SEPSIS KILLS NSW; Surviving Sepsis Campaign 2021).",
+        "source_refs": ["CEC SEPSIS KILLS NSW", "Surviving Sepsis Campaign 2021"]
+      },
+      {
+        "letter": "E",
+        "text": "Broaden antibiotic cover to meropenem plus vancomycin and defer further haemodynamic resuscitation",
+        "correct": false,
+        "rationale": "His antibiotic cover is appropriate for community-acquired pneumonia with sepsis and does not require empirical broadening in the first hour without a specific risk (recent hospitalisation, immunosuppression, ESBL colonisation); haemodynamic resuscitation cannot be deferred while considering antibiotic changes (Source: Therapeutic Guidelines: Antibiotic; Surviving Sepsis Campaign 2021).",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic", "Surviving Sepsis Campaign 2021"]
+      }
+    ],
+    "explanation": {
+      "summary": "The CEC SEPSIS KILLS NSW hour-1 bundle for septic shock is: measure lactate, take blood and other cultures before antibiotics if this does not delay them, give empirical broad-spectrum IV antibiotics within 1 hour, give 30 mL/kg IV crystalloid for hypotension or lactate greater than 4 mmol/L, and start vasopressors if hypotension persists after fluid to maintain MAP at least 65 mmHg. Noradrenaline is first line vasopressor; vasopressin can be added when catecholamine dose is escalating. Adrenaline is second line. IV hydrocortisone 200 mg/day is added for catecholamine-refractory shock. Reassess lactate at 2 to 4 hours; if not clearing, review source control (drainage of abscess, removal of infected line, urinary obstruction relief). Corticosteroids do not replace vasopressor.",
+      "key_points": [
+        "CEC SEPSIS KILLS hour-1: lactate, cultures, antibiotics, 30 mL/kg fluid, vasopressor if persistent hypotension.",
+        "First line vasopressor: noradrenaline (not dopamine) titrated to MAP at least 65 mmHg.",
+        "Hydrocortisone 200 mg/day for catecholamine-refractory shock.",
+        "Reassess lactate 2-4 hourly and review source control if not clearing."
+      ],
+      "pearls": "Noradrenaline can safely be started through a large bore peripheral cannula in a proximal vein (antecubital or larger) for up to a few hours while central access is being obtained - do not delay vasopressor start waiting for the central line."
+    },
+    "sources": [
+      { "label": "CEC SEPSIS KILLS NSW", "url": "https://www.cec.health.nsw.gov.au/keep-patients-safe/deteriorating-patient-program/sepsis" },
+      { "label": "Surviving Sepsis Campaign 2021", "url": "https://www.sccm.org/Clinical-Resources/Guidelines/Guidelines/Surviving-Sepsis-Campaign-Guidelines-2021" },
+      { "label": "Therapeutic Guidelines: Antibiotic", "url": "https://tgldcdp.tg.org.au/" }
+    ],
+    "reference_ranges": ["fbc", "uec", "vbg", "glucose_hba1c"],
+    "created": "2026-09-06"
+  }
+]
