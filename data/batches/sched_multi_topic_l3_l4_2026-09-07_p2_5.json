@@ -1,0 +1,693 @@
+[
+ {
+  "id": "sched-2026-09-07-p2-041",
+  "topic": "Medicine",
+  "subtopic": "Infectious diseases",
+  "subtopic_detail": "Antiviral indications in seasonal influenza",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
+  "tags": ["influenza", "COPD", "antivirals"],
+  "stem": "You are the medical registrar in the emergency department assessing a 72 year old woman with 36 hours of fever, dry cough, myalgia and headache during the winter respiratory season.\n\nShe has chronic obstructive pulmonary disease with two exacerbations in the past year and takes inhaled tiotropium and a combination inhaler. She received this year's influenza vaccine six weeks ago. Her chest radiograph shows hyperinflation without consolidation, and a respiratory panel nucleic acid test is positive for influenza A and negative for all other targets. Her creatinine is 92 micromol/L with an estimated glomerular filtration rate of 58 mL/min/1.73m2.",
+  "data_table": {
+   "Vital signs": "Pulse 96, BP 128/76, RR 22, SpO2 94% room air, temperature 38.6",
+   "Examination": "Prolonged expiratory phase, scattered wheeze, no focal crackles, no confusion",
+   "Investigations": "Influenza A nucleic acid test positive; chest radiograph shows hyperinflation without consolidation; creatinine 92 micromol/L (45-90); white cell count 8.4 x10^9/L (4.0-11.0)"
+  },
+  "lead_in": "What is the most appropriate antiviral management?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Withhold antiviral therapy because she was vaccinated within the past three months",
+    "correct": false,
+    "rationale": "Vaccination reduces but does not eliminate the risk of infection, and a positive test in a symptomatic patient means the vaccine has not prevented disease on this occasion (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "B",
+    "text": "Withhold antiviral therapy because more than 24 hours have elapsed since onset",
+    "correct": false,
+    "rationale": "The treatment window is 48 hours from symptom onset for most patients, and she is inside it at 36 hours, so this reasoning applies the wrong threshold (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "C",
+    "text": "Commence oral amoxicillin with clavulanate and withhold antiviral therapy entirely",
+    "correct": false,
+    "rationale": "There is no consolidation and no evidence of bacterial superinfection, and an antibiotic does not treat the influenza that has been confirmed (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "D",
+    "text": "Commence inhaled zanamivir twice daily and continue her usual inhaled therapy",
+    "correct": false,
+    "rationale": "Inhaled zanamivir can provoke bronchospasm and is avoided in chronic obstructive pulmonary disease and asthma (Source: Australian Medicines Handbook).",
+    "source_refs": ["Australian Medicines Handbook"]
+   },
+   {
+    "letter": "E",
+    "text": "Commence oral oseltamivir at a dose adjusted for her renal function for five days",
+    "correct": true,
+    "rationale": "Chronic lung disease and age over 65 both place her in the group for whom antiviral treatment is recommended, she is within the 48 hour window, and the dose requires adjustment once the estimated glomerular filtration rate falls below 60 mL/min/1.73m2 (Source: Therapeutic Guidelines: Antibiotic; Australian Medicines Handbook).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic", "Australian Medicines Handbook"]
+   }
+  ],
+  "explanation": {
+   "summary": "Antiviral treatment for influenza is targeted rather than universal, and is recommended for patients hospitalised with influenza, for those with severe or progressive illness, and for those at higher risk of complications. The higher risk groups include age 65 and over, chronic lung, cardiac, renal, hepatic or neurological disease, diabetes, immunosuppression, pregnancy, obesity, and Aboriginal and Torres Strait Islander people. Benefit is greatest within 48 hours of onset, but treatment is still given beyond that window to hospitalised or deteriorating patients because viral replication continues. Oseltamivir is the standard oral agent and needs dose reduction in renal impairment, while zanamivir is inhaled and avoided in obstructive airways disease.",
+   "key_points": [
+    "Treatment is targeted to hospitalised, severe, progressive or higher risk cases",
+    "The 48 hour window maximises benefit but does not bar treatment of deteriorating patients",
+    "Oseltamivir requires dose reduction below an estimated glomerular filtration rate of 60",
+    "Inhaled zanamivir can provoke bronchospasm in obstructive airways disease"
+   ],
+   "pearls": "Recent vaccination never excludes influenza, since vaccine effectiveness in a typical season runs between about 30 and 60 per cent, and a positive nucleic acid test in a vaccinated patient is a treatment indication rather than a reason to doubt the result."
+  },
+  "sources": [
+   {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://www.tg.org.au"},
+   {"label": "Australian Medicines Handbook", "url": "https://amhonline.amh.net.au"}
+  ],
+  "reference_ranges": ["uec", "fbc"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-042",
+  "topic": "Medicine",
+  "subtopic": "Endocrinology",
+  "subtopic_detail": "Initial screening for endogenous cortisol excess",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
+  "tags": ["Cushing syndrome", "screening", "hypertension"],
+  "stem": "You are the medical registrar seeing a 38 year old woman referred with 18 months of progressive central weight gain, easy bruising and proximal weakness that makes standing from a chair difficult.\n\nShe has developed hypertension requiring two agents and new hyperglycaemia. There are wide purple abdominal striae. She takes no exogenous corticosteroid in any form, including inhaled, topical and joint injections, and no oestrogen containing preparation. She drinks no alcohol and works regular daytime hours with a stable sleep pattern.",
+  "data_table": {
+   "Vital signs": "Pulse 82, BP 158/98, RR 14, SpO2 98% room air, temperature 36.6",
+   "Examination": "Central adiposity, interscapular fat pad, purple abdominal striae wider than 1 cm, proximal myopathy",
+   "Investigations": "Fasting glucose 8.1 mmol/L (3.0-5.4); potassium 3.4 mmol/L (3.5-5.2); HbA1c 51 mmol/mol (less than 42)"
+  },
+  "lead_in": "Which investigation is the most appropriate first line screening test?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Random serum cortisol taken during this afternoon clinic appointment",
+    "correct": false,
+    "rationale": "A single random cortisol is uninterpretable because secretion is pulsatile and follows a diurnal rhythm, so it neither confirms nor excludes the diagnosis (Source: Endocrine Society Cushing Syndrome guideline).",
+    "source_refs": ["Endocrine Society Cushing Syndrome guideline"]
+   },
+   {
+    "letter": "B",
+    "text": "Overnight 1 mg dexamethasone suppression test with a morning cortisol measured after",
+    "correct": true,
+    "rationale": "This is one of the three accepted first line screening tests, it is simple to perform in the outpatient setting, and nothing in her history interferes with its interpretation (Source: Endocrine Society Cushing Syndrome guideline; Therapeutic Guidelines: Endocrinology).",
+    "source_refs": ["Endocrine Society Cushing Syndrome guideline", "Therapeutic Guidelines: Endocrinology"]
+   },
+   {
+    "letter": "C",
+    "text": "Plasma adrenocorticotropic hormone measured on a morning sample before other tests",
+    "correct": false,
+    "rationale": "Adrenocorticotropic hormone is used to determine the source once cortisol excess is proven, so measuring it first inverts the diagnostic sequence (Source: Endocrine Society Cushing Syndrome guideline).",
+    "source_refs": ["Endocrine Society Cushing Syndrome guideline"]
+   },
+   {
+    "letter": "D",
+    "text": "Computed tomography of the adrenal glands with contrast to identify an adenoma",
+    "correct": false,
+    "rationale": "Imaging precedes biochemistry only at the cost of finding incidentalomas in several per cent of the population and pursuing them irrelevantly (Source: Endocrine Society Cushing Syndrome guideline).",
+    "source_refs": ["Endocrine Society Cushing Syndrome guideline"]
+   },
+   {
+    "letter": "E",
+    "text": "High dose 8 mg dexamethasone suppression test performed over two consecutive days",
+    "correct": false,
+    "rationale": "The high dose test distinguishes pituitary from ectopic sources after the diagnosis is established and has no role as an initial screen (Source: Endocrine Society Cushing Syndrome guideline).",
+    "source_refs": ["Endocrine Society Cushing Syndrome guideline"]
+   }
+  ],
+  "explanation": {
+   "summary": "Diagnosis of endogenous cortisol excess proceeds in three fixed stages: exclude exogenous steroid, demonstrate cortisol excess biochemically, then determine its source. Three tests are accepted for the second stage, namely the overnight 1 mg dexamethasone suppression test, 24 hour urinary free cortisol, and late night salivary cortisol, and at least two abnormal results are generally required before proceeding. Each has its own interference profile: oestrogen containing preparations raise cortisol binding globulin and cause false positive suppression tests, shift work disrupts the diurnal rhythm that salivary testing depends on, and heavy alcohol use or severe depression produce a pseudo Cushing state. Only after cortisol excess is established does adrenocorticotropic hormone separate pituitary and ectopic causes from adrenal ones, and only then is imaging directed at the relevant organ.",
+   "key_points": [
+    "Exclude exogenous corticosteroid, including inhaled, topical and injected, before testing",
+    "Three first line tests exist and at least two abnormal results are usually required",
+    "Adrenocorticotropic hormone determines the source only after excess is proven",
+    "Imaging before biochemistry generates incidentaloma findings that mislead"
+   ],
+   "pearls": "Oestrogen containing oral contraceptives raise cortisol binding globulin and cause false positive dexamethasone suppression results, so either stop them for six weeks before testing or use late night salivary cortisol, which measures the free fraction."
+  },
+  "sources": [
+   {"label": "Endocrine Society Cushing Syndrome guideline", "url": "https://www.endocrine.org"},
+   {"label": "Therapeutic Guidelines: Endocrinology", "url": "https://www.tg.org.au"}
+  ],
+  "reference_ranges": ["uec", "glucose_hba1c"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-043",
+  "topic": "Medicine",
+  "subtopic": "Infectious diseases",
+  "subtopic_detail": "Extended spectrum beta lactamase producing organism in pyelonephritis",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
+  "tags": ["pyelonephritis", "antibiotics", "resistance"],
+  "stem": "You are the medical registrar caring for a 67 year old woman admitted 48 hours ago with fever, right loin pain and vomiting, treated empirically with intravenous gentamicin and amoxicillin.\n\nShe remains febrile with persistent loin pain and her C reactive protein has risen further. Her ultrasound shows no hydronephrosis and no calculus. Her urine and blood cultures have both grown an Escherichia coli producing an extended spectrum beta lactamase. The isolate is reported as resistant to gentamicin, ceftriaxone and ciprofloxacin, and susceptible to meropenem, nitrofurantoin and fosfomycin. Her creatinine is 104 micromol/L with an estimated glomerular filtration rate of 48 mL/min/1.73m2.",
+  "data_table": {
+   "Vital signs": "Pulse 104, BP 112/68, RR 20, SpO2 97% room air, temperature 38.6",
+   "Examination": "Right renal angle tenderness persisting, abdomen otherwise soft, no rash",
+   "Investigations": "Blood and urine cultures grow extended spectrum beta lactamase producing Escherichia coli; resistant to gentamicin, ceftriaxone and ciprofloxacin; susceptible to meropenem, nitrofurantoin and fosfomycin; C reactive protein risen from 148 to 210 mg/L (less than 5)"
+  },
+  "lead_in": "Which antibiotic should she be changed to?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Oral nitrofurantoin, since the isolate is reported as susceptible to that agent",
+    "correct": false,
+    "rationale": "Nitrofurantoin achieves therapeutic concentrations only in urine and does not treat renal parenchymal or bloodstream infection, so susceptibility on the report is clinically misleading here (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "B",
+    "text": "Oral fosfomycin as a single dose, since the isolate is susceptible to that agent",
+    "correct": false,
+    "rationale": "Single dose fosfomycin is a treatment for uncomplicated cystitis and does not achieve adequate tissue or serum concentrations for pyelonephritis with bacteraemia (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "C",
+    "text": "Intravenous ceftriaxone at a higher dose, since resistance can be overcome by dosing",
+    "correct": false,
+    "rationale": "Extended spectrum beta lactamases hydrolyse third generation cephalosporins, so higher dosing does not restore activity and is associated with treatment failure (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "D",
+    "text": "Intravenous meropenem, reviewed with the infectious diseases team for a total duration",
+    "correct": true,
+    "rationale": "A carbapenem is the treatment of choice for bacteraemic pyelonephritis caused by an extended spectrum beta lactamase producer, and it is the only susceptible agent that reaches therapeutic parenchymal and serum concentrations (Source: Therapeutic Guidelines: Antibiotic; Australasian Society for Infectious Diseases guidance).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic", "Australasian Society for Infectious Diseases guidance"]
+   },
+   {
+    "letter": "E",
+    "text": "Intravenous vancomycin, given the failure of the initial empirical antibiotic regimen",
+    "correct": false,
+    "rationale": "Vancomycin has no gram negative activity at all, so it cannot treat an Escherichia coli infection regardless of how the empirical regimen performed (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   }
+  ],
+  "explanation": {
+   "summary": "Extended spectrum beta lactamases hydrolyse penicillins and third generation cephalosporins, and the organisms carrying them frequently co-harbour resistance to aminoglycosides and fluoroquinolones on the same plasmid, which is exactly the pattern here. Carbapenems remain the reference treatment for serious infection, and piperacillin with tazobactam has performed less well than meropenem in randomised comparison for bloodstream infection. The trap in this scenario is reading a susceptibility report without regard to where each agent distributes, since nitrofurantoin and fosfomycin appear on the report as susceptible but are urinary agents only. Risk factors for these organisms include recent travel to south and southeast Asia, previous broad spectrum antibiotic exposure, healthcare contact and residential aged care, and knowing them allows earlier empirical cover in a patient who is not responding.",
+   "key_points": [
+    "Co-resistance to aminoglycosides and quinolones commonly travels on the same plasmid",
+    "Carbapenems are the reference treatment for serious extended spectrum beta lactamase infection",
+    "Nitrofurantoin and fosfomycin reach urinary but not parenchymal or serum concentrations",
+    "Higher cephalosporin dosing does not overcome enzymatic hydrolysis"
+   ],
+   "pearls": "A susceptibility report is a statement about the organism, not about the site, so check that a susceptible agent actually reaches the compartment being treated before switching to it."
+  },
+  "sources": [
+   {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://www.tg.org.au"},
+   {"label": "Australasian Society for Infectious Diseases guidance", "url": "https://www.asid.net.au"}
+  ],
+  "reference_ranges": ["uec", "inflammatory_markers"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-044",
+  "topic": "Medicine",
+  "subtopic": "Infectious diseases",
+  "subtopic_detail": "Surgical timing in infective endocarditis",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
+  "tags": ["endocarditis", "heart failure", "surgery"],
+  "stem": "You are the medical registrar caring for a 61 year old man on day four of intravenous antibiotics for aortic valve endocarditis caused by a viridans group streptococcus that is fully susceptible to benzylpenicillin.\n\nHis fevers have settled and his blood cultures taken at 48 hours are sterile. Overnight he has become breathless at rest and cannot lie flat, and he now has bibasal crackles and a raised jugular venous pressure. Repeat echocardiography shows severe aortic regurgitation with premature closure of the mitral valve, a 12 mm vegetation and no aortic root abscess. He has had no embolic event and his neurological examination is normal.",
+  "data_table": {
+   "Vital signs": "Pulse 112, BP 104/44, RR 28, SpO2 91% room air, temperature 36.9",
+   "Examination": "Orthopnoea, bibasal crackles, jugular venous pressure 6 cm above sternal angle, wide pulse pressure",
+   "Investigations": "Repeat blood cultures sterile at 48 hours; echocardiogram shows severe aortic regurgitation with premature mitral valve closure and a 12 mm vegetation; creatinine 118 micromol/L (60-110)"
+  },
+  "lead_in": "What is the most appropriate next step in management?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Refer urgently for valve surgery while continuing the current antibiotic therapy",
+    "correct": true,
+    "rationale": "Heart failure from severe valvular regurgitation is the strongest and most urgent indication for surgery in endocarditis, and operating early improves survival rather than being deferred until antibiotics are completed (Source: Cardiac Society of Australia and New Zealand position statement; Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Cardiac Society of Australia and New Zealand position statement", "Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "B",
+    "text": "Complete six weeks of antibiotics and reassess the valve at the end of therapy",
+    "correct": false,
+    "rationale": "Waiting to complete antibiotics in a patient with acute regurgitant heart failure carries a very high mortality, and sterilising the valve does not repair the incompetent leaflets (Source: Cardiac Society of Australia and New Zealand position statement).",
+    "source_refs": ["Cardiac Society of Australia and New Zealand position statement"]
+   },
+   {
+    "letter": "C",
+    "text": "Add gentamicin for synergy and reassess his fluid status again in 24 hours",
+    "correct": false,
+    "rationale": "Synergistic gentamicin shortens therapy in susceptible streptococcal disease but does nothing for a mechanical valve problem and adds nephrotoxicity to a rising creatinine (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "D",
+    "text": "Commence intravenous frusemide and defer surgery until the vegetation has shrunk",
+    "correct": false,
+    "rationale": "Diuresis is a useful holding measure but vegetation size is not a criterion for delay, and postponement in decompensated regurgitation worsens outcome (Source: Cardiac Society of Australia and New Zealand position statement).",
+    "source_refs": ["Cardiac Society of Australia and New Zealand position statement"]
+   },
+   {
+    "letter": "E",
+    "text": "Commence an angiotensin converting enzyme inhibitor and repeat the echocardiogram weekly",
+    "correct": false,
+    "rationale": "Afterload reduction has a limited role in acute severe aortic regurgitation and weekly imaging is far too slow a response to an evolving haemodynamic emergency (Source: Cardiac Society of Australia and New Zealand position statement).",
+    "source_refs": ["Cardiac Society of Australia and New Zealand position statement"]
+   }
+  ],
+  "explanation": {
+   "summary": "Roughly half of patients with infective endocarditis require surgery, and the three broad indications are heart failure from valvular dysfunction, uncontrolled infection such as abscess or persistent bacteraemia on appropriate therapy, and prevention of embolism from a large mobile vegetation. Heart failure is both the commonest indication and the most urgent, and the historical instinct to complete a full antibiotic course before operating has been reversed by evidence that early surgery reduces mortality. Premature closure of the mitral valve on echocardiography signals that left ventricular end diastolic pressure has risen to equal aortic diastolic pressure, which marks severe acute regurgitation that the ventricle has had no time to accommodate. A recent embolic stroke complicates timing, since surgery within days of a haemorrhagic infarct risks extension, but that consideration does not apply to a patient with a normal neurological examination.",
+   "key_points": [
+    "Heart failure from valvular dysfunction is the commonest and most urgent surgical indication",
+    "Early surgery improves survival and is not deferred to complete antibiotic therapy",
+    "Premature mitral valve closure indicates severe acute aortic regurgitation",
+    "Uncontrolled infection and large mobile vegetations are the other two indications"
+   ],
+   "pearls": "Acute severe aortic regurgitation produces a short soft diastolic murmur rather than a loud one, because the rapid equalisation of aortic and ventricular pressures shortens the period of turbulent flow, so murmur intensity badly underestimates severity."
+  },
+  "sources": [
+   {"label": "Cardiac Society of Australia and New Zealand position statement", "url": "https://www.csanz.edu.au"},
+   {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://www.tg.org.au"}
+  ],
+  "reference_ranges": ["uec", "fbc"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-045",
+  "topic": "Medicine",
+  "subtopic": "Infectious diseases",
+  "subtopic_detail": "Acute human immunodeficiency virus seroconversion illness",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
+  "tags": ["HIV", "diagnosis", "fever"],
+  "stem": "You are the medical registrar assessing a 27 year old man with 10 days of fever, sore throat, myalgia and a widespread non itchy maculopapular rash involving his trunk, palms and soles.\n\nHe has tender cervical and axillary lymphadenopathy and two shallow painful ulcers on the buccal mucosa. He reports a new male sexual partner and condomless receptive anal intercourse about four weeks ago, and has taken no pre exposure prophylaxis. His Epstein Barr virus and cytomegalovirus serology show past infection with no acute markers, his monospot is negative and his syphilis serology is non reactive. A fourth generation human immunodeficiency virus antigen and antibody test is negative and his lymphocyte count is 0.9 x10^9/L.",
+  "data_table": {
+   "Vital signs": "Pulse 98, BP 122/74, RR 16, SpO2 98% room air, temperature 38.5",
+   "Examination": "Maculopapular rash on trunk, palms and soles; tender cervical and axillary lymphadenopathy; two shallow buccal ulcers",
+   "Investigations": "Fourth generation antigen and antibody test negative; lymphocytes 0.9 x10^9/L (1.0-4.0); platelets 128 x10^9/L (150-400); alanine aminotransferase 78 U/L (less than 40); syphilis serology non reactive"
+  },
+  "lead_in": "What is the most appropriate next investigation?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Repeat the fourth generation antigen and antibody test again in three months",
+    "correct": false,
+    "rationale": "A three month interval is the window period rule for asymptomatic exposure screening, and applying it to a patient with an active illness delays diagnosis during the phase of highest transmissibility (Source: ASHM HIV Testing Policy).",
+    "source_refs": ["ASHM HIV Testing Policy"]
+   },
+   {
+    "letter": "B",
+    "text": "Send a throat swab for bacterial culture and treat empirically for streptococcal pharyngitis",
+    "correct": false,
+    "rationale": "Streptococcal pharyngitis does not produce a palmar and plantar rash, generalised lymphadenopathy, lymphopenia and transaminitis together (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "C",
+    "text": "Request a human immunodeficiency virus ribonucleic acid quantitative viral load now",
+    "correct": true,
+    "rationale": "Viral ribonucleic acid becomes detectable roughly a week before p24 antigen and two to three weeks before antibody, so a nucleic acid test is the investigation that diagnoses acute infection when the combined antigen and antibody assay is still negative (Source: ASHM HIV Testing Policy; ASHM Antiretroviral Guidelines).",
+    "source_refs": ["ASHM HIV Testing Policy", "ASHM Antiretroviral Guidelines"]
+   },
+   {
+    "letter": "D",
+    "text": "Request a lymph node biopsy to exclude a lymphoproliferative disorder as the cause",
+    "correct": false,
+    "rationale": "Biopsy is invasive and premature when a recent high risk exposure and a syndrome typical of seroconversion have a simple non invasive test available (Source: ASHM HIV Testing Policy).",
+    "source_refs": ["ASHM HIV Testing Policy"]
+   },
+   {
+    "letter": "E",
+    "text": "Request a CD4 count to assess the degree of his immune suppression before testing further",
+    "correct": false,
+    "rationale": "The CD4 count falls transiently in acute infection but is not diagnostic and does not establish whether the virus is present (Source: ASHM Antiretroviral Guidelines).",
+    "source_refs": ["ASHM Antiretroviral Guidelines"]
+   }
+  ],
+  "explanation": {
+   "summary": "Acute seroconversion illness occurs in roughly half to four fifths of newly infected people, usually two to four weeks after exposure, and it is most often mistaken for glandular fever or a non specific viral illness. The combination of fever, pharyngitis, a maculopapular rash involving palms and soles, generalised lymphadenopathy and mucocutaneous ulceration is far more suggestive than any single feature, and lymphopenia, thrombocytopenia and mild transaminitis are common supporting findings. Diagnostic markers appear in a fixed sequence, with viral ribonucleic acid detectable at about 10 days, p24 antigen at about 14 to 18 days, and antibody from around three to four weeks, so a negative fourth generation test does not exclude very recent infection. Recognition matters because viral loads in this phase are extremely high and onward transmission risk is at its peak, and immediate antiretroviral therapy is now recommended.",
+   "key_points": [
+    "Seroconversion illness typically appears two to four weeks after exposure",
+    "Viral ribonucleic acid is detectable about a week before p24 antigen",
+    "A negative fourth generation test does not exclude very recent infection",
+    "Viral load and transmissibility are at their highest during this phase"
+   ],
+   "pearls": "A maculopapular rash involving the palms and soles narrows the differential sharply to secondary syphilis, acute human immunodeficiency virus infection and a drug reaction, so non reactive syphilis serology in this context makes nucleic acid testing the immediate next step."
+  },
+  "sources": [
+   {"label": "ASHM HIV Testing Policy", "url": "https://testingportal.ashm.org.au"},
+   {"label": "ASHM Antiretroviral Guidelines", "url": "https://arv.ashm.org.au"},
+   {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://www.tg.org.au"}
+  ],
+  "reference_ranges": ["fbc", "lfts"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-046",
+  "topic": "Obstetrics & Gynaecology",
+  "subtopic": "Intrapartum care",
+  "subtopic_detail": "Group B streptococcus prophylaxis with severe penicillin allergy",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
+  "tags": ["group B streptococcus", "labour", "antibiotics"],
+  "stem": "You are the obstetric registrar caring for a 29 year old woman at 39 weeks in her first pregnancy who is in established labour with ruptured membranes two hours ago.\n\nHer routine vaginal and rectal swab at 36 weeks grew group B streptococcus. Her allergy record documents an episode of facial swelling, urticaria and wheeze within 20 minutes of a dose of amoxicillin as a teenager, requiring adrenaline in an emergency department. The laboratory has reported the isolate as resistant to clindamycin and susceptible to vancomycin. Her observations and the cardiotocograph are reassuring.",
+  "data_table": {
+   "Vital signs": "Pulse 88, BP 118/72, RR 16, SpO2 99% room air, temperature 36.8, foetal heart rate 140",
+   "Examination": "Cervix 5 cm dilated, membranes ruptured, clear liquor, vertex presentation",
+   "Investigations": "Vaginal and rectal swab at 36 weeks grew group B streptococcus; isolate resistant to clindamycin, susceptible to vancomycin"
+  },
+  "lead_in": "Which intrapartum antibiotic prophylaxis is the most appropriate?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Intravenous benzylpenicillin given four hourly until the baby is delivered",
+    "correct": false,
+    "rationale": "Her documented reaction has the features of immediate hypersensitivity with respiratory involvement, so a penicillin is contraindicated (Source: RANZCOG Maternal Group B Streptococcus statement).",
+    "source_refs": ["RANZCOG Maternal Group B Streptococcus statement"]
+   },
+   {
+    "letter": "B",
+    "text": "Intravenous cefazolin given eight hourly until the baby is delivered",
+    "correct": false,
+    "rationale": "Cephalosporins are acceptable for non immediate penicillin allergy but are avoided when the history describes anaphylaxis, as it does here (Source: RANZCOG Maternal Group B Streptococcus statement).",
+    "source_refs": ["RANZCOG Maternal Group B Streptococcus statement"]
+   },
+   {
+    "letter": "C",
+    "text": "Intravenous clindamycin given eight hourly until the baby is delivered",
+    "correct": false,
+    "rationale": "Clindamycin is the usual choice in severe penicillin allergy but this isolate is specifically reported as resistant, so it would provide no protection (Source: RANZCOG Maternal Group B Streptococcus statement).",
+    "source_refs": ["RANZCOG Maternal Group B Streptococcus statement"]
+   },
+   {
+    "letter": "D",
+    "text": "Oral azithromycin given as a single dose at the onset of established labour",
+    "correct": false,
+    "rationale": "Oral administration cannot achieve the reliable foetal tissue concentrations that prophylaxis depends on, and azithromycin is not a recommended agent for this indication (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "E",
+    "text": "Intravenous vancomycin given twelve hourly until the baby is delivered",
+    "correct": true,
+    "rationale": "Vancomycin is the agent used when there is immediate hypersensitivity to penicillin and the isolate is clindamycin resistant, and susceptibility has been confirmed on this isolate (Source: RANZCOG Maternal Group B Streptococcus statement; Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["RANZCOG Maternal Group B Streptococcus statement", "Therapeutic Guidelines: Antibiotic"]
+   }
+  ],
+  "explanation": {
+   "summary": "Intrapartum antibiotic prophylaxis prevents early onset neonatal group B streptococcal sepsis, and Australian units use either universal screening at 35 to 37 weeks or a risk factor based approach depending on local policy. Benzylpenicillin is the agent of choice, with cefazolin used for non immediate penicillin allergy such as an isolated rash. Where the history describes anaphylaxis, angioedema or respiratory compromise, cephalosporins are avoided and the choice depends on the isolate, with clindamycin used when the organism is susceptible and vancomycin when it is not. This is precisely why laboratories report clindamycin susceptibility on group B streptococcal isolates from pregnant women, and resistance is common enough that the result must be checked rather than assumed.",
+   "key_points": [
+    "Benzylpenicillin is first line and cefazolin covers non immediate penicillin allergy",
+    "Anaphylaxis history excludes cephalosporins as well as penicillins",
+    "Clindamycin susceptibility is specifically reported because resistance is common",
+    "Vancomycin is used when the isolate is clindamycin resistant and allergy is severe"
+   ],
+   "pearls": "Prophylaxis is considered adequate only when the first dose is given at least four hours before delivery, so the dose is started as soon as labour is established rather than being timed against expected progress."
+  },
+  "sources": [
+   {"label": "RANZCOG Maternal Group B Streptococcus statement", "url": "https://ranzcog.edu.au"},
+   {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://www.tg.org.au"}
+  ],
+  "reference_ranges": ["obs_pregnancy_vitals", "ctg_baseline"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-047",
+  "topic": "Obstetrics & Gynaecology",
+  "subtopic": "Hypertensive disorders of pregnancy",
+  "subtopic_detail": "Deterioration despite controlled blood pressure",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
+  "tags": ["pre-eclampsia", "HELLP", "delivery"],
+  "stem": "You are the obstetric registrar caring for a 33 year old woman at 34 weeks and 2 days in her second pregnancy, admitted three days ago with pre-eclampsia.\n\nHer blood pressure was 168/112 on admission and is now 132/84 on oral labetalol. She completed a course of betamethasone 36 hours ago and has received magnesium sulfate since admission. She reports new right upper quadrant pain that woke her overnight and has vomited twice. Her cardiotocograph is normal with good variability and no decelerations, and umbilical artery Doppler studies show normal end diastolic flow. Her blood results from this morning are compared with those on admission below.",
+  "data_table": {
+   "Vital signs": "Pulse 92, BP 132/84, RR 18, SpO2 98% room air, temperature 36.7, foetal heart rate 142",
+   "Examination": "Right upper quadrant tenderness, brisk reflexes without clonus, no peripheral oedema progression",
+   "Investigations": "Platelets fallen from 186 to 74 x10^9/L (150-400); alanine aminotransferase risen from 32 to 218 U/L (less than 40); lactate dehydrogenase 780 U/L (120-250); creatinine 96 micromol/L (45-90); urine protein creatinine ratio 92 mg/mmol"
+  },
+  "lead_in": "What is the most appropriate management?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Continue expectant management to 37 weeks with daily bloods and cardiotocography",
+    "correct": false,
+    "rationale": "Expectant management is appropriate only while maternal and foetal condition remain stable, and a platelet count halving alongside a sevenfold transaminase rise is the definition of instability (Source: SOMANZ Guideline for the Management of Hypertensive Disorders of Pregnancy).",
+    "source_refs": ["SOMANZ Guideline for the Management of Hypertensive Disorders of Pregnancy"]
+   },
+   {
+    "letter": "B",
+    "text": "Arrange delivery now, continuing magnesium sulfate and antihypertensive therapy",
+    "correct": true,
+    "rationale": "Deteriorating haemolysis, transaminitis and thrombocytopenia with right upper quadrant pain constitute maternal end organ deterioration, and delivery is the only definitive treatment irrespective of how well the blood pressure is controlled (Source: SOMANZ Guideline for the Management of Hypertensive Disorders of Pregnancy; RANZCOG guidance).",
+    "source_refs": ["SOMANZ Guideline for the Management of Hypertensive Disorders of Pregnancy", "RANZCOG guidance"]
+   },
+   {
+    "letter": "C",
+    "text": "Increase the labetalol dose and repeat her blood tests again in 24 hours",
+    "correct": false,
+    "rationale": "Her blood pressure is already at target, so further antihypertensive therapy addresses a parameter that is not the problem and buys 24 hours she cannot afford (Source: SOMANZ Guideline for the Management of Hypertensive Disorders of Pregnancy).",
+    "source_refs": ["SOMANZ Guideline for the Management of Hypertensive Disorders of Pregnancy"]
+   },
+   {
+    "letter": "D",
+    "text": "Give a second course of betamethasone and plan delivery in a further 48 hours",
+    "correct": false,
+    "rationale": "Steroids were completed 36 hours ago so the pulmonary benefit is already achieved, and a further 48 hour delay exposes her to hepatic haematoma, rupture and eclampsia (Source: RANZCOG guidance).",
+    "source_refs": ["RANZCOG guidance"]
+   },
+   {
+    "letter": "E",
+    "text": "Transfuse platelets and continue expectant management with six hourly blood tests",
+    "correct": false,
+    "rationale": "Platelet transfusion is reserved for active bleeding or for cover before an operative procedure, and transfusing without delivering leaves the placental driver of the process in place (Source: SOMANZ Guideline for the Management of Hypertensive Disorders of Pregnancy).",
+    "source_refs": ["SOMANZ Guideline for the Management of Hypertensive Disorders of Pregnancy"]
+   }
+  ],
+  "explanation": {
+   "summary": "Pre-eclampsia is a placental disease in which antihypertensive therapy treats the stroke risk of severe hypertension but does nothing to modify the underlying process, so blood pressure control is never itself evidence of stability. The decision to deliver rests on gestation weighed against maternal and foetal deterioration, and between 34 and 37 weeks a stable woman may be managed expectantly while any end organ deterioration mandates delivery. Right upper quadrant or epigastric pain in this setting reflects hepatic capsular distension and is an ominous symptom that precedes hepatic haematoma and rupture. The triad of haemolysis, elevated liver enzymes and low platelets can also occur with only mildly raised blood pressure, which is why the biochemistry drives the decision rather than the observation chart.",
+   "key_points": [
+    "Controlled blood pressure does not indicate a controlled disease process",
+    "Delivery is the only definitive treatment for pre-eclampsia",
+    "Right upper quadrant pain reflects hepatic capsular distension and precedes rupture",
+    "Between 34 and 37 weeks, end organ deterioration converts expectant management into delivery"
+   ],
+   "pearls": "Magnesium sulfate is continued for at least 24 hours after delivery, because roughly a third of eclamptic seizures occur postpartum and the risk does not fall away with the placenta."
+  },
+  "sources": [
+   {"label": "SOMANZ Guideline for the Management of Hypertensive Disorders of Pregnancy", "url": "https://www.somanz.org"},
+   {"label": "RANZCOG guidance", "url": "https://ranzcog.edu.au"}
+  ],
+  "reference_ranges": ["pre_eclampsia_bloods", "obs_pregnancy_vitals", "lfts"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-048",
+  "topic": "Paediatrics",
+  "subtopic": "Respiratory",
+  "subtopic_detail": "Oxygen and feeding thresholds in bronchiolitis",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
+  "tags": ["bronchiolitis", "oxygen", "feeding"],
+  "stem": "You are the paediatric registrar reviewing a 4 month old boy admitted overnight on day three of a coryzal illness. He was born at term and has no cardiac or respiratory background.\n\nHis mother says he is taking about half his usual bottle volume and had four wet nappies in the past 24 hours instead of his usual seven. He is alert between feeds and settles when held. On examination he has moderate subcostal recession, a respiratory rate of 58 and widespread fine crackles with expiratory wheeze. He has had no apnoeic episodes witnessed by nursing staff or by his mother, and his oxygen saturation has been recorded between 91 and 93 per cent over the past four hours.",
+  "data_table": {
+   "Vital signs": "Pulse 152, BP 84/52, RR 58, SpO2 92% room air, temperature 37.4",
+   "Examination": "Moderate subcostal recession, no tracheal tug, widespread fine crackles and expiratory wheeze, capillary refill 2 seconds, moist mucous membranes",
+   "Investigations": "Nasopharyngeal aspirate positive for respiratory syncytial virus; no chest radiograph performed"
+  },
+  "lead_in": "What is the most appropriate next step in management?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Commence high flow nasal cannula oxygen at 2 L/kg/min and continue oral feeding",
+    "correct": false,
+    "rationale": "High flow therapy is reserved for infants who fail low flow oxygen, and low flow itself is not indicated while saturations remain at or above the accepted threshold (Source: RCH Clinical Practice Guideline: Bronchiolitis).",
+    "source_refs": ["RCH Clinical Practice Guideline: Bronchiolitis"]
+   },
+   {
+    "letter": "B",
+    "text": "Commence low flow nasal prong oxygen at 1 L/min and continue oral feeding as tolerated",
+    "correct": false,
+    "rationale": "Oxygen is started when saturations fall persistently below the accepted threshold, and treating a saturation of 92 per cent adds no benefit while making feeding and handling harder (Source: RCH Clinical Practice Guideline: Bronchiolitis).",
+    "source_refs": ["RCH Clinical Practice Guideline: Bronchiolitis"]
+   },
+   {
+    "letter": "C",
+    "text": "Commence a trial of nebulised salbutamol and reassess his work of breathing afterwards",
+    "correct": false,
+    "rationale": "Bronchodilators do not alter the course of bronchiolitis or reduce admission duration, and wheeze in this age group reflects small airway obstruction rather than reversible bronchospasm (Source: RCH Clinical Practice Guideline: Bronchiolitis).",
+    "source_refs": ["RCH Clinical Practice Guideline: Bronchiolitis"]
+   },
+   {
+    "letter": "D",
+    "text": "Commence nasogastric feeding at a reduced volume and continue observation on room air",
+    "correct": true,
+    "rationale": "His problem is inadequate intake rather than hypoxia, and nasogastric hydration is the first line support for an infant feeding under about half normal volumes whose saturations remain at the accepted threshold (Source: RCH Clinical Practice Guideline: Bronchiolitis).",
+    "source_refs": ["RCH Clinical Practice Guideline: Bronchiolitis"]
+   },
+   {
+    "letter": "E",
+    "text": "Commence intravenous maintenance fluid at full rate and withhold all oral intake",
+    "correct": false,
+    "rationale": "Intravenous fluid is reserved for severe dehydration, shock or failed nasogastric feeding, and it carries a greater risk of hyponatraemia from inappropriate antidiuresis than enteral hydration (Source: RCH Clinical Practice Guideline: Bronchiolitis).",
+    "source_refs": ["RCH Clinical Practice Guideline: Bronchiolitis"]
+   }
+  ],
+  "explanation": {
+   "summary": "Bronchiolitis is managed with hydration and oxygen alone, and almost every other intervention that seems intuitively helpful has been shown not to work. Australian practice accepts an oxygen saturation threshold of 90 per cent rather than the 92 to 94 per cent used in other conditions, because treating higher figures prolongs admission without improving outcome. Feeding difficulty is the commonest reason for admission and is managed enterally first, with nasogastric feeding preferred over intravenous fluid because it is physiological, avoids cannulation and carries less risk of dilutional hyponatraemia. Bronchodilators, corticosteroids, antibiotics, nebulised hypertonic saline and chest physiotherapy all lack evidence of benefit, and a chest radiograph is not routinely indicated because it changes management rarely while frequently prompting unnecessary antibiotics.",
+   "key_points": [
+    "The Australian oxygen saturation threshold in bronchiolitis is 90 per cent",
+    "Low flow nasal prong oxygen is first line when oxygen is needed, with high flow for its failure",
+    "Nasogastric feeding is preferred over intravenous fluid for inadequate intake",
+    "Bronchodilators, steroids, antibiotics and physiotherapy have no established benefit"
+   ],
+   "pearls": "Apnoea rather than hypoxia is the feature that changes disposition in infants under two months or those born preterm, so a witnessed apnoeic episode warrants closer monitoring even when saturations and feeding look acceptable."
+  },
+  "sources": [
+   {"label": "RCH Clinical Practice Guideline: Bronchiolitis", "url": "https://www.rch.org.au/clinicalguide"},
+   {"label": "Paediatric Research in Emergency Departments International Collaborative bronchiolitis guideline", "url": "https://www.predict.org.au"}
+  ],
+  "reference_ranges": ["paeds_vitals_infant"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-049",
+  "topic": "Medicine",
+  "subtopic": "Infectious diseases",
+  "subtopic_detail": "Blood culture negative endocarditis",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
+  "tags": ["endocarditis", "serology", "fever"],
+  "stem": "You are the medical registrar caring for a 55 year old man with three months of fever, weight loss and lethargy. Transoesophageal echocardiography shows a 10 mm vegetation on a bioprosthetic aortic valve inserted four years ago.\n\nHe works on a sheep and cattle property in western Queensland and assists with lambing each season. Six sets of blood cultures taken over four days, before any antibiotic was given, have shown no growth at 10 days of incubation. His serum has been held by the laboratory. He has no dental disease, no indwelling lines and no injecting drug use, and his renal function is within normal limits.",
+  "data_table": {
+   "Vital signs": "Pulse 94, BP 124/76, RR 16, SpO2 97% room air, temperature 38.2",
+   "Examination": "Soft early diastolic murmur, splenomegaly 3 cm below the costal margin, no peripheral stigmata",
+   "Investigations": "Six sets of blood cultures negative at 10 days; C reactive protein 96 mg/L (less than 5); haemoglobin 102 g/L (130-180); transoesophageal echocardiogram shows a 10 mm prosthetic aortic valve vegetation"
+  },
+  "lead_in": "What is the most appropriate next investigation?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Send serology for Coxiella burnetii and Bartonella species on the stored serum",
+    "correct": true,
+    "rationale": "Coxiella burnetii is the leading cause of culture negative endocarditis in rural Australia and is strongly associated with sheep and cattle contact, and it will never grow in routine blood cultures because it is an obligate intracellular organism (Source: Australasian Society for Infectious Diseases guidance; Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Australasian Society for Infectious Diseases guidance", "Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "B",
+    "text": "Repeat a further six sets of blood cultures with extended incubation for four weeks",
+    "correct": false,
+    "rationale": "Prolonged incubation was historically used for fastidious organisms, but modern automated systems detect these within five days and the leading culture negative causes here will not grow at all (Source: Australasian Society for Infectious Diseases guidance).",
+    "source_refs": ["Australasian Society for Infectious Diseases guidance"]
+   },
+   {
+    "letter": "C",
+    "text": "Request computed tomography of the chest, abdomen and pelvis to search for malignancy",
+    "correct": false,
+    "rationale": "An occult malignancy would not explain a valvular vegetation, and imaging for embolic complications is useful but does not identify the organism (Source: Australasian Society for Infectious Diseases guidance).",
+    "source_refs": ["Australasian Society for Infectious Diseases guidance"]
+   },
+   {
+    "letter": "D",
+    "text": "Request an antinuclear antibody and antiphospholipid antibody panel on stored serum",
+    "correct": false,
+    "rationale": "Non bacterial thrombotic endocarditis is worth considering but is far less likely than infection in a patient with three months of fever, anaemia and a raised C reactive protein (Source: Australasian Society for Infectious Diseases guidance).",
+    "source_refs": ["Australasian Society for Infectious Diseases guidance"]
+   },
+   {
+    "letter": "E",
+    "text": "Proceed directly to valve replacement and send the explanted valve for culture only",
+    "correct": false,
+    "rationale": "Valve tissue polymerase chain reaction and histology are valuable, but committing to surgery before non invasive serology has been sent forfeits a diagnosis that changes the antibiotic regimen and its duration (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   }
+  ],
+  "explanation": {
+   "summary": "Around 5 to 10 per cent of infective endocarditis is blood culture negative, and by far the commonest reason worldwide is prior antibiotic administration, which is explicitly excluded here. Once that is ruled out, the differential is dominated by organisms that will not grow in routine culture, principally Coxiella burnetii and Bartonella species, both of which are diagnosed serologically rather than by culture. Q fever is endemic in Australian livestock and abattoir workers, and it causes an indolent illness with a long latency between exposure and endocarditis, often years, so the occupational history must be sought actively. Diagnosis matters because Q fever endocarditis requires doxycycline with hydroxychloroquine for at least 18 months, which is unlike any other endocarditis regimen.",
+   "key_points": [
+    "Prior antibiotic therapy is the commonest cause of culture negative endocarditis",
+    "Coxiella burnetii and Bartonella are diagnosed serologically, never by routine culture",
+    "Australian livestock and abattoir exposure is the key occupational history for Q fever",
+    "Q fever endocarditis needs doxycycline with hydroxychloroquine for 18 months or longer"
+   ],
+   "pearls": "A single positive Coxiella burnetii phase I immunoglobulin G titre of 1 in 800 or above is itself a major criterion for infective endocarditis, so serology can establish the diagnosis without any organism ever being isolated."
+  },
+  "sources": [
+   {"label": "Australasian Society for Infectious Diseases guidance", "url": "https://www.asid.net.au"},
+   {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://www.tg.org.au"}
+  ],
+  "reference_ranges": ["fbc", "inflammatory_markers"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-050",
+  "topic": "Medicine",
+  "subtopic": "Respiratory",
+  "subtopic_detail": "Corticosteroid indication in acute respiratory viral infection",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
+  "tags": ["COVID-19", "corticosteroids", "oxygen"],
+  "stem": "You are the medical registrar assessing a 58 year old man on day five of a confirmed severe acute respiratory syndrome coronavirus 2 infection. He has type 2 diabetes and hypertension and is not immunosuppressed.\n\nHe reports fever, dry cough and fatigue but says he can walk to the bathroom without stopping. He has had three doses of vaccine, the most recent 14 months ago. His chest radiograph shows patchy bilateral peripheral opacities. His oxygen saturation is 96 per cent on room air at rest and falls to 95 per cent after walking 40 metres on the ward, and his respiratory rate does not rise above 20 during that walk.",
+  "data_table": {
+   "Vital signs": "Pulse 88, BP 136/82, RR 18, SpO2 96% room air, temperature 37.9",
+   "Examination": "Chest clear to auscultation, no accessory muscle use, saturation 95 per cent after a 40 metre walk",
+   "Investigations": "C reactive protein 62 mg/L (less than 5); lymphocytes 1.1 x10^9/L (1.0-4.0); creatinine 88 micromol/L (60-110); chest radiograph shows patchy bilateral peripheral opacities"
+  },
+  "lead_in": "What is the most appropriate management of his corticosteroid therapy?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Commence dexamethasone 6 mg daily for 10 days because of his radiographic changes",
+    "correct": false,
+    "rationale": "Radiographic infiltrates are common in patients who never require oxygen, and imaging findings are not the trigger for corticosteroid therapy (Source: Australian National COVID-19 Clinical Evidence Taskforce guideline).",
+    "source_refs": ["Australian National COVID-19 Clinical Evidence Taskforce guideline"]
+   },
+   {
+    "letter": "B",
+    "text": "Commence dexamethasone 6 mg daily for 10 days because of his diabetes and hypertension",
+    "correct": false,
+    "rationale": "Comorbidities identify who is at risk of progressing and who should be considered for antiviral therapy, but they do not by themselves indicate corticosteroids (Source: Australian National COVID-19 Clinical Evidence Taskforce guideline).",
+    "source_refs": ["Australian National COVID-19 Clinical Evidence Taskforce guideline"]
+   },
+   {
+    "letter": "C",
+    "text": "Withhold corticosteroids and reassess if he develops a requirement for oxygen",
+    "correct": true,
+    "rationale": "Corticosteroid benefit is confined to patients requiring supplemental oxygen or ventilatory support, and in those who do not need oxygen the randomised evidence showed a trend towards harm rather than benefit (Source: Australian National COVID-19 Clinical Evidence Taskforce guideline).",
+    "source_refs": ["Australian National COVID-19 Clinical Evidence Taskforce guideline"]
+   },
+   {
+    "letter": "D",
+    "text": "Withhold corticosteroids and commence inhaled budesonide twice daily for 14 days",
+    "correct": false,
+    "rationale": "Inhaled corticosteroid has been studied in community managed early disease and is not a substitute indication in a hospitalised patient who does not need oxygen (Source: Australian National COVID-19 Clinical Evidence Taskforce guideline).",
+    "source_refs": ["Australian National COVID-19 Clinical Evidence Taskforce guideline"]
+   },
+   {
+    "letter": "E",
+    "text": "Commence dexamethasone 6 mg daily and add tocilizumab if his markers rise further",
+    "correct": false,
+    "rationale": "Tocilizumab is added to corticosteroids in patients with rapidly escalating oxygen requirements or systemic inflammation, so proposing it in a patient not on oxygen compounds the initial error (Source: Australian National COVID-19 Clinical Evidence Taskforce guideline).",
+    "source_refs": ["Australian National COVID-19 Clinical Evidence Taskforce guideline"]
+   }
+  ],
+  "explanation": {
+   "summary": "The mortality benefit of dexamethasone in coronavirus disease was confined to patients receiving supplemental oxygen or ventilatory support, with the largest absolute reduction in those who were ventilated, while patients not requiring oxygen showed no benefit and a trend towards harm. That subgroup distinction is one of the clearest examples in modern practice of an intervention whose benefit reverses across a single clinical threshold. Corticosteroids in this setting also raise blood glucose substantially in patients with diabetes and increase the risk of secondary infection, so the cost of prescribing outside the indication is real rather than theoretical. Antiviral therapy is the intervention that targets this patient's risk profile, and it works in the opposite direction, being most effective early and in patients who have not yet deteriorated.",
+   "key_points": [
+    "Corticosteroid benefit requires a supplemental oxygen or ventilatory support requirement",
+    "Patients not requiring oxygen showed a trend towards harm in randomised data",
+    "Radiographic infiltrates and comorbidity are not corticosteroid indications",
+    "Antiviral therapy targets early disease before deterioration, the opposite of steroid timing"
+   ],
+   "pearls": "Exertional desaturation is worth measuring because a fall to below 94 per cent on ambulation identifies patients who need oxygen and therefore corticosteroids, but a drop of one percentage point with no rise in respiratory rate does not meet that threshold."
+  },
+  "sources": [
+   {"label": "Australian National COVID-19 Clinical Evidence Taskforce guideline", "url": "https://clinicalevidence.net.au"},
+   {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://www.tg.org.au"}
+  ],
+  "reference_ranges": ["fbc", "inflammatory_markers", "uec"],
+  "created": "2026-09-07"
+ }
+]
