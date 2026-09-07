@@ -1,0 +1,693 @@
+[
+ {
+  "id": "sched-2026-09-07-p2-031",
+  "topic": "Medicine",
+  "subtopic": "Infectious diseases",
+  "subtopic_detail": "Latent tuberculosis before biologic therapy",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
+  "tags": ["tuberculosis", "screening", "rheumatoid arthritis"],
+  "stem": "You are the medical registrar in a rheumatology clinic. A 47 year old woman with seropositive rheumatoid arthritis has failed methotrexate and leflunomide, and a tumour necrosis factor inhibitor is planned.\n\nShe was born in Vietnam and moved to Australia at age 24. She has no cough, no fevers, no night sweats and no weight loss, and she has never been treated for tuberculosis. Her interferon gamma release assay is positive. Her chest radiograph shows no parenchymal opacity, no cavitation and no calcified nodes, and three sputum specimens sent for acid fast bacilli are negative on smear and culture. Her liver function and human immunodeficiency virus serology are within normal limits.",
+  "data_table": {
+   "Vital signs": "Vital signs within normal limits",
+   "Examination": "No lymphadenopathy, chest clear on auscultation, active synovitis in both wrists",
+   "Investigations": "Interferon gamma release assay positive; chest radiograph clear; sputum smear and culture negative; liver function within normal limits"
+  },
+  "lead_in": "What is the most appropriate management before starting the biologic agent?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Start the tumour necrosis factor inhibitor now and monitor her symptoms monthly",
+    "correct": false,
+    "rationale": "Tumour necrosis factor is central to granuloma maintenance, so blocking it without treating latent infection carries a substantially increased risk of reactivation, often with disseminated disease (Source: Therapeutic Guidelines: Antibiotic; National Tuberculosis Advisory Committee guidance).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic", "National Tuberculosis Advisory Committee guidance"]
+   },
+   {
+    "letter": "B",
+    "text": "Start a four drug antituberculous regimen and continue it for a total of six months",
+    "correct": false,
+    "rationale": "Four drug therapy treats active disease, which is excluded here by the absence of symptoms, a clear radiograph and three negative sputum cultures (Source: National Tuberculosis Advisory Committee guidance).",
+    "source_refs": ["National Tuberculosis Advisory Committee guidance"]
+   },
+   {
+    "letter": "C",
+    "text": "Repeat the interferon gamma release assay in three months to confirm the result",
+    "correct": false,
+    "rationale": "Repeating the test neither changes the interpretation nor adds information, and it delays both the latent treatment and the arthritis therapy she needs (Source: National Tuberculosis Advisory Committee guidance).",
+    "source_refs": ["National Tuberculosis Advisory Committee guidance"]
+   },
+   {
+    "letter": "D",
+    "text": "Treat for latent infection and start the biologic once therapy is well established",
+    "correct": true,
+    "rationale": "A positive interferon gamma release assay with no clinical or radiological evidence of active disease defines latent infection, which is treated before or early in the course of tumour necrosis factor blockade to prevent reactivation (Source: National Tuberculosis Advisory Committee guidance; Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["National Tuberculosis Advisory Committee guidance", "Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "E",
+    "text": "Perform a tuberculin skin test and treat only if the induration exceeds 15 mm",
+    "correct": false,
+    "rationale": "The interferon gamma release assay is unaffected by prior bacille Calmette Guerin vaccination and has already answered the question, so a skin test adds nothing but delay (Source: National Tuberculosis Advisory Committee guidance).",
+    "source_refs": ["National Tuberculosis Advisory Committee guidance"]
+   }
+  ],
+  "explanation": {
+   "summary": "Latent tuberculosis screening is mandatory before starting a tumour necrosis factor inhibitor, because these agents disrupt the granulomas that contain dormant organisms and reactivation is often extrapulmonary or disseminated. An interferon gamma release assay is preferred over the tuberculin skin test in anyone vaccinated with bacille Calmette Guerin, since prior vaccination does not cause a false positive result. Active disease must be excluded before latent treatment, because single or dual agent therapy in undiagnosed active disease selects for resistance. Standard Australian regimens are isoniazid for six to nine months, or rifampicin with isoniazid for three months, with pyridoxine given alongside isoniazid to prevent peripheral neuropathy.",
+   "key_points": [
+    "Tumour necrosis factor inhibitors disrupt granulomas and precipitate reactivation",
+    "Interferon gamma release assays are unaffected by prior bacille Calmette Guerin vaccination",
+    "Active disease must be excluded before treating latent infection to avoid selecting resistance",
+    "Isoniazid for six to nine months or rifampicin with isoniazid for three months are standard"
+   ],
+   "pearls": "Give pyridoxine 25 mg daily with isoniazid in anyone with diabetes, renal impairment, alcohol dependence, malnutrition, pregnancy or human immunodeficiency virus, since isoniazid induced peripheral neuropathy is preventable and often permanent once established."
+  },
+  "sources": [
+   {"label": "National Tuberculosis Advisory Committee guidance", "url": "https://www.health.gov.au"},
+   {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://www.tg.org.au"}
+  ],
+  "reference_ranges": ["lfts", "fbc"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-032",
+  "topic": "Medicine",
+  "subtopic": "Sepsis",
+  "subtopic_detail": "Sequencing the first hour of sepsis management",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
+  "tags": ["sepsis", "antibiotics", "lactate"],
+  "stem": "You are the medical registrar called to the ward for a 68 year old man who is confused and febrile on day two of an admission for a diabetic foot ulcer. He was fully orientated at the morning round.\n\nHis ulcer now has surrounding erythema tracking to the mid calf with foul smelling discharge. He has received no antibiotics so far this admission. He weighs 80 kg, has no known allergies and his creatinine was 82 micromol/L this morning. His venous lactate taken five minutes ago is 4.2 mmol/L and his capillary blood glucose is 14.6 mmol/L.",
+  "data_table": {
+   "Vital signs": "Pulse 122, BP 88/52, RR 28, SpO2 94% room air, temperature 38.8",
+   "Examination": "Confused and disorientated to place, warm peripheries, foot ulcer with spreading erythema and purulent discharge",
+   "Investigations": "Venous lactate 4.2 mmol/L (less than 2.0); capillary blood glucose 14.6 mmol/L (3.0-7.7); white cell count 21.4 x10^9/L (4.0-11.0)"
+  },
+  "lead_in": "What is the most appropriate immediate sequence of actions?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Take blood cultures, then give intravenous antibiotics and a fluid bolus within the hour",
+    "correct": true,
+    "rationale": "Cultures are drawn first because yield falls once antibiotics are given, but they must not delay treatment, and antibiotics with fluid resuscitation for a lactate above 2 mmol/L and hypotension are both delivered inside the first hour (Source: Australian Commission on Safety and Quality in Health Care sepsis standard; Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Australian Commission on Safety and Quality in Health Care sepsis standard", "Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "B",
+    "text": "Give a fluid bolus first, then take blood cultures once his blood pressure has improved",
+    "correct": false,
+    "rationale": "Fluid is given concurrently rather than sequentially, and deferring cultures to a later time point serves no purpose because they take under two minutes to draw (Source: Australian Commission on Safety and Quality in Health Care sepsis standard).",
+    "source_refs": ["Australian Commission on Safety and Quality in Health Care sepsis standard"]
+   },
+   {
+    "letter": "C",
+    "text": "Arrange urgent imaging of the foot, then give antibiotics once the extent is defined",
+    "correct": false,
+    "rationale": "Imaging informs the need for surgical debridement but must not delay antibiotics in a hypotensive patient with a raised lactate (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "D",
+    "text": "Start a noradrenaline infusion first, then give antibiotics once his pressure is restored",
+    "correct": false,
+    "rationale": "Vasopressors are indicated for hypotension persisting after adequate fluid resuscitation, so starting them before any fluid or antibiotic inverts the correct order (Source: Australian Commission on Safety and Quality in Health Care sepsis standard).",
+    "source_refs": ["Australian Commission on Safety and Quality in Health Care sepsis standard"]
+   },
+   {
+    "letter": "E",
+    "text": "Give intravenous insulin first, then reassess his conscious state and lactate in an hour",
+    "correct": false,
+    "rationale": "The glucose of 14.6 mmol/L reflects the stress response rather than a primary hyperglycaemic emergency, and treating it does nothing about the infection that is driving the deterioration (Source: Therapeutic Guidelines: Endocrinology).",
+    "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+   }
+  ],
+  "explanation": {
+   "summary": "The Australian sepsis standard organises the first hour around recognition, cultures, antibiotics, fluid, lactate measurement and senior review, and the ordering principle is that nothing may delay antibiotics beyond an hour of recognition. Blood cultures come first only because they take moments and their yield collapses after the first dose. A lactate above 2 mmol/L identifies tissue hypoperfusion even when blood pressure is preserved, and above 4 mmol/L it marks a group with substantially higher mortality who need repeat measurement to gauge response. New confusion in an admitted patient is one of the most commonly missed sepsis signs on the ward, since it is readily attributed to delirium of another cause.",
+   "key_points": [
+    "Blood cultures precede antibiotics only because they take moments to draw",
+    "Antibiotics are given within one hour of recognising sepsis",
+    "Lactate above 2 mmol/L indicates hypoperfusion even with a preserved blood pressure",
+    "Vasopressors follow adequate fluid resuscitation rather than preceding it"
+   ],
+   "pearls": "Repeat the lactate within two to four hours of starting resuscitation, because failure of an initially raised lactate to clear by at least 10 to 20 per cent identifies patients who need escalation regardless of how their blood pressure looks."
+  },
+  "sources": [
+   {"label": "Australian Commission on Safety and Quality in Health Care sepsis standard", "url": "https://www.safetyandquality.gov.au"},
+   {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://www.tg.org.au"},
+   {"label": "Therapeutic Guidelines: Endocrinology", "url": "https://www.tg.org.au"}
+  ],
+  "reference_ranges": ["fbc", "uec", "glucose_hba1c"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-033",
+  "topic": "Medicine",
+  "subtopic": "Infectious diseases",
+  "subtopic_detail": "Opportunistic infection prophylaxis thresholds in human immunodeficiency virus",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
+  "tags": ["HIV", "prophylaxis", "immunosuppression"],
+  "stem": "You are the medical registrar in an infectious diseases clinic seeing a 41 year old man newly diagnosed with human immunodeficiency virus infection after presenting with oral candidiasis.\n\nHe is otherwise well, with no cough, no breathlessness, no headache and no visual symptoms. Antiretroviral therapy is being arranged and will start this week. His toxoplasma immunoglobulin G serology is negative and his chest radiograph is clear. He has no allergy to sulfonamides and his renal function and full blood count are within normal limits.",
+  "data_table": {
+   "Vital signs": "Vital signs within normal limits",
+   "Examination": "Oral pseudomembranous candidiasis, chest clear on auscultation, no focal neurological signs, fundi normal",
+   "Investigations": "CD4 count 180 cells/microlitre; human immunodeficiency virus ribonucleic acid 84000 copies/mL; toxoplasma immunoglobulin G negative; chest radiograph clear"
+  },
+  "lead_in": "Which additional prophylaxis is indicated at this point?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Azithromycin weekly for disseminated mycobacterium avium complex prophylaxis",
+    "correct": false,
+    "rationale": "Prophylaxis against disseminated mycobacterium avium complex is considered below a CD4 count of 50 cells per microlitre, well below his current count (Source: ASHM Antiretroviral Guidelines).",
+    "source_refs": ["ASHM Antiretroviral Guidelines"]
+   },
+   {
+    "letter": "B",
+    "text": "Valganciclovir daily for cytomegalovirus retinitis prophylaxis with monthly review",
+    "correct": false,
+    "rationale": "Cytomegalovirus end organ disease occurs below a CD4 count of 50 cells per microlitre and routine primary prophylaxis is not recommended at any count (Source: ASHM Antiretroviral Guidelines).",
+    "source_refs": ["ASHM Antiretroviral Guidelines"]
+   },
+   {
+    "letter": "C",
+    "text": "Co-trimoxazole daily for pneumocystis jirovecii pneumonia prophylaxis",
+    "correct": true,
+    "rationale": "Prophylaxis is indicated at a CD4 count below 200 cells per microlitre or in the presence of oral candidiasis, and both criteria are met, with co-trimoxazole the agent of choice in the absence of sulfonamide allergy (Source: ASHM Antiretroviral Guidelines; Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["ASHM Antiretroviral Guidelines", "Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "D",
+    "text": "Fluconazole daily for cryptococcal disease prophylaxis until his count recovers",
+    "correct": false,
+    "rationale": "Primary antifungal prophylaxis against cryptococcal disease is not routinely recommended in Australia because of low local incidence and the risk of azole resistance (Source: ASHM Antiretroviral Guidelines).",
+    "source_refs": ["ASHM Antiretroviral Guidelines"]
+   },
+   {
+    "letter": "E",
+    "text": "No additional prophylaxis, since antiretroviral therapy is starting within the week",
+    "correct": false,
+    "rationale": "CD4 recovery takes months and the risk of pneumocystis pneumonia is highest in that interval, so prophylaxis is started alongside rather than instead of antiretroviral therapy (Source: ASHM Antiretroviral Guidelines).",
+    "source_refs": ["ASHM Antiretroviral Guidelines"]
+   }
+  ],
+  "explanation": {
+   "summary": "Opportunistic infection prophylaxis in human immunodeficiency virus is organised around CD4 thresholds that are worth memorising as a descending sequence. Pneumocystis jirovecii prophylaxis starts below 200 cells per microlitre or with oral candidiasis or an unexplained fever, toxoplasma prophylaxis below 100 in someone with positive serology, and mycobacterium avium complex below 50 where it is used at all. Co-trimoxazole is the preferred agent because it covers both pneumocystis and toxoplasma, and its alternatives in sulfonamide allergy are dapsone, atovaquone or nebulised pentamidine. Prophylaxis is withdrawn once antiretroviral therapy has held the CD4 count above the relevant threshold for at least three months.",
+   "key_points": [
+    "Pneumocystis prophylaxis below CD4 200, or with oral candidiasis or unexplained fever",
+    "Toxoplasma prophylaxis below CD4 100 with positive immunoglobulin G serology",
+    "Mycobacterium avium complex prophylaxis below CD4 50 where used",
+    "Prophylaxis is stopped after the count is sustained above threshold for three months on therapy"
+   ],
+   "pearls": "Co-trimoxazole at the pneumocystis prophylactic dose also covers toxoplasma, so a patient with positive toxoplasma serology whose count later falls below 100 needs no additional agent, only continuation of what they are already taking."
+  },
+  "sources": [
+   {"label": "ASHM Antiretroviral Guidelines", "url": "https://arv.ashm.org.au"},
+   {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://www.tg.org.au"}
+  ],
+  "reference_ranges": ["fbc", "uec"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-034",
+  "topic": "Medicine",
+  "subtopic": "Endocrinology",
+  "subtopic_detail": "Preparing for aldosterone to renin ratio testing",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
+  "tags": ["hypertension", "hypokalaemia", "aldosterone"],
+  "stem": "You are the medical registrar reviewing a 44 year old man in a hypertension clinic. His blood pressure has remained above target despite perindopril, amlodipine and hydrochlorothiazide at maximum tolerated doses, and adherence has been confirmed by dispensing records.\n\nHis general practitioner added spironolactone 25 mg daily 10 weeks ago, which improved his readings. His potassium was 3.1 mmol/L before the spironolactone was started and is 4.2 mmol/L today. He has no history of snoring or daytime somnolence, no episodic headache or sweating, and his renal artery imaging is unremarkable. Screening for primary aldosteronism is planned.",
+  "data_table": {
+   "Vital signs": "Pulse 74, BP 158/96, RR 14, SpO2 98% room air, temperature 36.6",
+   "Medications": "Perindopril, amlodipine, hydrochlorothiazide, spironolactone 25 mg daily",
+   "Investigations": "Potassium 4.2 mmol/L (3.5-5.2); sodium 141 mmol/L (135-145); creatinine 84 micromol/L (60-110)"
+  },
+  "lead_in": "What is the most appropriate next step before the screening test is performed?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Measure the aldosterone to renin ratio now while he remains on all current agents",
+    "correct": false,
+    "rationale": "Spironolactone raises renin markedly and is the drug most likely to produce a falsely negative ratio, so testing on it risks missing the diagnosis entirely (Source: Endocrine Society Primary Aldosteronism guideline; Therapeutic Guidelines: Endocrinology).",
+    "source_refs": ["Endocrine Society Primary Aldosteronism guideline", "Therapeutic Guidelines: Endocrinology"]
+   },
+   {
+    "letter": "B",
+    "text": "Cease perindopril for two weeks and measure the ratio while other agents continue",
+    "correct": false,
+    "rationale": "Angiotensin converting enzyme inhibitors do raise renin and can cause false negatives, but spironolactone has a far greater effect and is the agent that must go first (Source: Endocrine Society Primary Aldosteronism guideline).",
+    "source_refs": ["Endocrine Society Primary Aldosteronism guideline"]
+   },
+   {
+    "letter": "C",
+    "text": "Cease spironolactone for at least four weeks and substitute verapamil or prazosin",
+    "correct": true,
+    "rationale": "Mineralocorticoid receptor antagonists must be withheld for at least four to six weeks before the ratio is measured, and slow release verapamil, prazosin, moxonidine and hydralazine are the agents that least interfere with the result (Source: Endocrine Society Primary Aldosteronism guideline; Therapeutic Guidelines: Endocrinology).",
+    "source_refs": ["Endocrine Society Primary Aldosteronism guideline", "Therapeutic Guidelines: Endocrinology"]
+   },
+   {
+    "letter": "D",
+    "text": "Proceed directly to adrenal vein sampling without any preceding biochemical screen",
+    "correct": false,
+    "rationale": "Adrenal vein sampling is a subtyping investigation performed after biochemical confirmation, not a screening test, and it is technically demanding and invasive (Source: Endocrine Society Primary Aldosteronism guideline).",
+    "source_refs": ["Endocrine Society Primary Aldosteronism guideline"]
+   },
+   {
+    "letter": "E",
+    "text": "Arrange computed tomography of the adrenal glands and test according to the findings",
+    "correct": false,
+    "rationale": "Imaging cannot distinguish a functioning adenoma from a non functioning incidentaloma and misleads in both directions, so it follows rather than precedes biochemical diagnosis (Source: Endocrine Society Primary Aldosteronism guideline).",
+    "source_refs": ["Endocrine Society Primary Aldosteronism guideline"]
+   }
+  ],
+  "explanation": {
+   "summary": "Primary aldosteronism accounts for around 5 to 10 per cent of hypertension and a higher proportion of resistant hypertension, and it is substantially under diagnosed despite carrying more cardiovascular and renal risk than blood pressure matched essential hypertension. The aldosterone to renin ratio is the screening test, and its main pitfall is drug interference: mineralocorticoid receptor antagonists and potassium sparing diuretics cause false negatives and must be withheld for four to six weeks, while beta blockers suppress renin and cause false positives. Verapamil, prazosin, moxonidine and hydralazine have minimal effect and are used to hold blood pressure during the washout. Hypokalaemia also suppresses aldosterone secretion and should be corrected before testing, and a positive ratio is followed by a confirmatory suppression test before any imaging or subtyping.",
+   "key_points": [
+    "Mineralocorticoid receptor antagonists cause false negative ratios and need four to six weeks washout",
+    "Beta blockers suppress renin and cause false positive ratios",
+    "Verapamil, prazosin, moxonidine and hydralazine interfere least during the washout",
+    "Imaging and adrenal vein sampling follow biochemical confirmation, never precede it"
+   ],
+   "pearls": "Correct hypokalaemia before measuring the ratio, because low potassium directly suppresses aldosterone release and can normalise the ratio in a patient who genuinely has primary aldosteronism."
+  },
+  "sources": [
+   {"label": "Endocrine Society Primary Aldosteronism guideline", "url": "https://www.endocrine.org"},
+   {"label": "Therapeutic Guidelines: Endocrinology", "url": "https://www.tg.org.au"}
+  ],
+  "reference_ranges": ["uec"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-035",
+  "topic": "Medicine",
+  "subtopic": "Endocrinology",
+  "subtopic_detail": "Preoperative blockade in phaeochromocytoma",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
+  "tags": ["phaeochromocytoma", "hypertension", "perioperative"],
+  "stem": "You are the medical registrar asked to review a 39 year old woman before adrenalectomy. She had episodes of pounding headache, drenching sweats and palpitations lasting 20 minutes, and a 4 cm right adrenal mass was found on imaging.\n\nHer plasma free metanephrines are six times the upper reference limit and the diagnosis is established. Surgery is planned for three weeks time. Her resting pulse is 92 and her blood pressure is 172/104 mmHg, with a postural drop of 8 mmHg. She takes no regular medication and has no asthma, and her echocardiogram shows normal left ventricular function.",
+  "data_table": {
+   "Vital signs": "Pulse 92, BP 172/104, RR 14, SpO2 98% room air, temperature 36.7",
+   "Examination": "No goitre, no neurofibromas, no retinal angiomas, postural drop 8 mmHg",
+   "Investigations": "Plasma free metanephrines six times upper reference limit; 4 cm right adrenal mass on computed tomography; echocardiogram normal"
+  },
+  "lead_in": "What is the most appropriate initial pharmacological preparation?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Commence metoprolol now and add an alpha blocking agent one week before surgery",
+    "correct": false,
+    "rationale": "Beta blockade before alpha blockade leaves alpha mediated vasoconstriction unopposed and can precipitate a hypertensive crisis, pulmonary oedema or cardiovascular collapse (Source: Therapeutic Guidelines: Endocrinology; Endocrine Society Phaeochromocytoma guideline).",
+    "source_refs": ["Therapeutic Guidelines: Endocrinology", "Endocrine Society Phaeochromocytoma guideline"]
+   },
+   {
+    "letter": "B",
+    "text": "Commence phenoxybenzamine now and add a beta blocking agent once it is established",
+    "correct": true,
+    "rationale": "Non selective alpha blockade is started first and titrated over two to three weeks, with a beta blocker added only afterwards to control the reflex tachycardia that alpha blockade produces (Source: Therapeutic Guidelines: Endocrinology; Endocrine Society Phaeochromocytoma guideline).",
+    "source_refs": ["Therapeutic Guidelines: Endocrinology", "Endocrine Society Phaeochromocytoma guideline"]
+   },
+   {
+    "letter": "C",
+    "text": "Commence perindopril now and titrate the dose against her home blood pressure diary",
+    "correct": false,
+    "rationale": "Angiotensin converting enzyme inhibitors do not block the catecholamine surge that occurs on tumour handling and are inadequate preparation for surgery (Source: Endocrine Society Phaeochromocytoma guideline).",
+    "source_refs": ["Endocrine Society Phaeochromocytoma guideline"]
+   },
+   {
+    "letter": "D",
+    "text": "Commence frusemide now and restrict her dietary sodium intake until the operation",
+    "correct": false,
+    "rationale": "Patients are chronically volume depleted from sustained vasoconstriction, so diuresis and salt restriction worsen the profound hypotension that follows tumour removal (Source: Endocrine Society Phaeochromocytoma guideline).",
+    "source_refs": ["Endocrine Society Phaeochromocytoma guideline"]
+   },
+   {
+    "letter": "E",
+    "text": "Proceed to surgery without blockade given that her cardiac function is fully preserved",
+    "correct": false,
+    "rationale": "Unblocked resection carries a high perioperative mortality from catecholamine release during tumour manipulation, irrespective of baseline ventricular function (Source: Endocrine Society Phaeochromocytoma guideline).",
+    "source_refs": ["Endocrine Society Phaeochromocytoma guideline"]
+   }
+  ],
+  "explanation": {
+   "summary": "Preoperative alpha blockade is the intervention that transformed phaeochromocytoma surgery from a procedure with double digit mortality into a routine operation. Phenoxybenzamine is a non competitive non selective alpha blocker whose irreversible binding is an advantage when a catecholamine surge occurs intraoperatively, and it is titrated over two to three weeks against blood pressure and the appearance of postural hypotension. Deliberate liberal salt and fluid intake is encouraged during titration to re expand the contracted plasma volume and reduce the severity of post resection hypotension. Beta blockade is added only after alpha blockade is established, and never before, because unopposed alpha stimulation is the mechanism behind the classic catastrophic response.",
+   "key_points": [
+    "Alpha blockade always precedes beta blockade in phaeochromocytoma",
+    "Phenoxybenzamine is titrated over two to three weeks with target postural hypotension",
+    "Liberal salt and fluid intake re expands a contracted plasma volume before surgery",
+    "Beta blockade is added afterwards for reflex tachycardia only"
+   ],
+   "pearls": "Anticipate profound hypotension in the minutes after the tumour vein is clamped, since circulating catecholamines fall away while the alpha blockade persists, and manage it with volume and vasopressors rather than with reversal agents."
+  },
+  "sources": [
+   {"label": "Therapeutic Guidelines: Endocrinology", "url": "https://www.tg.org.au"},
+   {"label": "Endocrine Society Phaeochromocytoma guideline", "url": "https://www.endocrine.org"}
+  ],
+  "reference_ranges": ["uec"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-036",
+  "topic": "Medicine",
+  "subtopic": "Infectious diseases",
+  "subtopic_detail": "Empirical therapy for acute pyelonephritis requiring admission",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
+  "tags": ["pyelonephritis", "antibiotics", "gentamicin"],
+  "stem": "You are the medical registrar admitting a 32 year old woman with two days of right loin pain, rigors and vomiting. She has been unable to keep down oral fluids since yesterday.\n\nShe is not pregnant, has no urinary tract abnormality, no indwelling catheter and no antibiotic exposure in the past six months. She has not travelled overseas and has not been hospitalised previously. She has no allergies. Her urine dipstick shows nitrites and leucocytes, urine has been sent for culture, and her creatinine is 88 micromol/L with an estimated glomerular filtration rate above 90 mL/min/1.73m2. Ultrasound shows no hydronephrosis and no calculus.",
+  "data_table": {
+   "Vital signs": "Pulse 108, BP 116/70, RR 20, SpO2 98% room air, temperature 38.7",
+   "Examination": "Right renal angle tenderness, abdomen otherwise soft, no suprapubic mass",
+   "Investigations": "Urine dipstick nitrites and leucocytes positive; creatinine 88 micromol/L (45-90); white cell count 16.8 x10^9/L (4.0-11.0); ultrasound shows no obstruction"
+  },
+  "lead_in": "Which empirical antibiotic regimen is the most appropriate?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Oral trimethoprim 300 mg daily for 14 days with outpatient review in 48 hours",
+    "correct": false,
+    "rationale": "She cannot tolerate oral intake and trimethoprim resistance among urinary Escherichia coli is too common for it to be used empirically in pyelonephritis (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "B",
+    "text": "Intravenous gentamicin with intravenous amoxicillin, reviewed once cultures return",
+    "correct": true,
+    "rationale": "This is the Australian first line empirical regimen for pyelonephritis requiring intravenous therapy, giving reliable gram negative cover from gentamicin plus enterococcal cover from amoxicillin in a patient with normal renal function (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "C",
+    "text": "Intravenous meropenem, narrowed to an oral agent once she can tolerate fluids",
+    "correct": false,
+    "rationale": "A carbapenem is reserved for known or strongly suspected multiresistant organisms, and using it here drives resistance without any clinical advantage (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "D",
+    "text": "Intravenous vancomycin, narrowed to an oral agent once the urine culture is available",
+    "correct": false,
+    "rationale": "Vancomycin covers gram positive organisms and has no useful activity against the gram negative bacilli that cause the overwhelming majority of pyelonephritis (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "E",
+    "text": "Oral nitrofurantoin 100 mg twice daily for 10 days with outpatient review in 48 hours",
+    "correct": false,
+    "rationale": "Nitrofurantoin concentrates in urine but does not reach therapeutic concentrations in renal parenchyma or blood, so it is unsuitable for pyelonephritis (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   }
+  ],
+  "explanation": {
+   "summary": "Acute pyelonephritis is distinguished from cystitis by systemic features such as fever, rigors and loin pain, and it requires an agent that achieves therapeutic tissue and blood concentrations rather than merely urinary ones. Australian empirical therapy for patients needing intravenous treatment pairs gentamicin with amoxicillin, with ceftriaxone as the alternative when an aminoglycoside is contraindicated by renal impairment or when the patient is over 65. Urine culture before the first dose is essential because it allows narrowing and because resistance rates make empirical guesses unreliable. Imaging is indicated for failure to improve at 48 to 72 hours, for known stones, or for a single functioning kidney, since obstruction converts a treatable infection into a surgical emergency.",
+   "key_points": [
+    "Systemic features separate pyelonephritis from cystitis and change the antibiotic choice",
+    "Gentamicin with amoxicillin is the Australian first line intravenous regimen",
+    "Nitrofurantoin reaches urinary but not parenchymal or blood concentrations",
+    "Imaging is for non response at 48 to 72 hours, known stones, or a single kidney"
+   ],
+   "pearls": "Escalate to imaging if fever persists beyond 72 hours of appropriate antibiotics, because an obstructed infected system requires drainage and no antibiotic regimen will sterilise it."
+  },
+  "sources": [
+   {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://www.tg.org.au"},
+   {"label": "Australian Commission on Safety and Quality in Health Care sepsis standard", "url": "https://www.safetyandquality.gov.au"}
+  ],
+  "reference_ranges": ["fbc", "uec"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-037",
+  "topic": "Medicine",
+  "subtopic": "Infectious diseases",
+  "subtopic_detail": "Necrotising soft tissue infection with a reassuring score",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
+  "tags": ["cellulitis", "surgery", "sepsis"],
+  "stem": "You are the emergency registrar reviewing a 54 year old man with type 2 diabetes who has 14 hours of pain and swelling in the left thigh after a minor scratch while gardening.\n\nHe rates his pain 9 out of 10 and it is not relieved by 10 mg of intravenous morphine. The overlying skin is erythematous with a poorly defined edge and there is no crepitus, no bullae and no skin necrosis. Light palpation over the mid thigh reproduces severe pain extending well beyond the area of visible erythema, and the tissues feel woody rather than fluctuant. He looks unwell and his observations have deteriorated over the two hours since arrival. His laboratory risk indicator score for necrotising fasciitis is 4.",
+  "data_table": {
+   "Vital signs": "Pulse 126, BP 96/58, RR 26, SpO2 96% room air, temperature 38.5",
+   "Examination": "Ill defined erythema, woody induration, pain far beyond erythematous margin, no crepitus or bullae",
+   "Investigations": "White cell count 14.1 x10^9/L (4.0-11.0); C reactive protein 132 mg/L (less than 5); sodium 136 mmol/L (135-145); creatinine 96 micromol/L (60-110); haemoglobin 142 g/L (130-180); glucose 11.2 mmol/L (3.0-7.7)"
+  },
+  "lead_in": "What is the most appropriate next step in management?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Refer immediately for surgical exploration alongside resuscitation and antibiotics",
+    "correct": true,
+    "rationale": "Pain grossly out of proportion to visible findings with woody induration and rapid systemic deterioration is a clinical diagnosis of necrotising infection, and a low score never overrides that because the score was designed to raise suspicion rather than to exclude the diagnosis (Source: Therapeutic Guidelines: Antibiotic; Royal Australasian College of Surgeons guidance).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic", "Royal Australasian College of Surgeons guidance"]
+   },
+   {
+    "letter": "B",
+    "text": "Start intravenous flucloxacillin and mark the erythema for review in six hours",
+    "correct": false,
+    "rationale": "This treats the condition as simple cellulitis and builds in a six hour delay, during which necrotising infection can progress by several centimetres an hour (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "C",
+    "text": "Arrange magnetic resonance imaging of the thigh before any surgical referral is made",
+    "correct": false,
+    "rationale": "Imaging is reasonably sensitive but takes time that this patient does not have, and a negative study does not exclude the diagnosis in the face of these clinical findings (Source: Royal Australasian College of Surgeons guidance).",
+    "source_refs": ["Royal Australasian College of Surgeons guidance"]
+   },
+   {
+    "letter": "D",
+    "text": "Repeat the laboratory risk indicator score in six hours and refer if it exceeds 6",
+    "correct": false,
+    "rationale": "Serial scoring substitutes a screening tool for clinical judgement and delays the only intervention that reduces mortality, which is early debridement (Source: Royal Australasian College of Surgeons guidance).",
+    "source_refs": ["Royal Australasian College of Surgeons guidance"]
+   },
+   {
+    "letter": "E",
+    "text": "Aspirate the affected area and send the fluid for urgent gram stain and culture",
+    "correct": false,
+    "rationale": "Needle aspiration of woody non fluctuant tissue has a poor yield and returns a result long after the decision to operate should already have been made (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   }
+  ],
+  "explanation": {
+   "summary": "Necrotising soft tissue infection is a surgical diagnosis and the single determinant of survival is time to debridement, with mortality rising steeply for every hour of delay beyond the first 12. The laboratory risk indicator score was derived to prompt consideration of the diagnosis in patients who look like they have cellulitis, and it has repeatedly been shown to have inadequate sensitivity to exclude it, with a substantial minority of surgically proven cases scoring below the threshold. The features that matter clinically are pain out of proportion to appearance, pain extending beyond the visible erythema, woody or wooden hard induration, and systemic toxicity that outruns the skin findings. Crepitus, bullae and skin necrosis are specific but late, and waiting for them to appear is waiting too long.",
+   "key_points": [
+    "Time to surgical debridement is the main determinant of survival",
+    "The laboratory risk score lacks sensitivity and cannot exclude the diagnosis",
+    "Pain beyond the erythematous margin and woody induration are early clinical markers",
+    "Crepitus, bullae and necrosis are specific but late findings"
+   ],
+   "pearls": "Antibiotic cover includes clindamycin specifically for its ribosomal suppression of streptococcal exotoxin production, an effect that persists at high bacterial loads where penicillins lose efficacy, but neither agent substitutes for debridement."
+  },
+  "sources": [
+   {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://www.tg.org.au"},
+   {"label": "Royal Australasian College of Surgeons guidance", "url": "https://www.surgeons.org"}
+  ],
+  "reference_ranges": ["fbc", "uec", "inflammatory_markers", "glucose_hba1c"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-038",
+  "topic": "Medicine",
+  "subtopic": "Infectious diseases",
+  "subtopic_detail": "Immune reconstitution inflammatory syndrome after starting antiretroviral therapy",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
+  "tags": ["HIV", "tuberculosis", "corticosteroids"],
+  "stem": "You are the medical registrar reviewing a 36 year old man five weeks after starting antiretroviral therapy. He was diagnosed with human immunodeficiency virus infection and concurrent pulmonary tuberculosis, and antituberculous therapy was started three weeks before the antiretrovirals.\n\nHe improved initially, with resolution of his fevers and a weight gain of 3 kg. Over the past six days he has developed recurrent high fevers, worsening cough and tender enlarging cervical lymph nodes. His sputum cultures taken this week are negative and his antituberculous drug levels are adequate, with adherence confirmed by directly observed therapy. His CD4 count has risen from 42 to 190 cells per microlitre and his viral load has fallen from 620000 to 900 copies per millilitre.",
+  "data_table": {
+   "Vital signs": "Pulse 104, BP 118/72, RR 22, SpO2 94% room air, temperature 39.1",
+   "Examination": "Tender enlarging cervical lymphadenopathy, crackles at the right upper zone, no meningism",
+   "Investigations": "CD4 count risen from 42 to 190 cells/microlitre; viral load fallen from 620000 to 900 copies/mL; sputum culture negative; chest radiograph shows increased right upper zone infiltrate and new mediastinal nodes"
+  },
+  "lead_in": "What is the most appropriate management?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Stop the antiretroviral therapy and continue the antituberculous treatment alone",
+    "correct": false,
+    "rationale": "Interrupting antiretroviral therapy risks viral rebound and resistance, and it is reserved for life threatening presentations such as neurological involvement rather than for this picture (Source: ASHM Antiretroviral Guidelines).",
+    "source_refs": ["ASHM Antiretroviral Guidelines"]
+   },
+   {
+    "letter": "B",
+    "text": "Stop the antituberculous therapy and investigate for a drug hypersensitivity reaction",
+    "correct": false,
+    "rationale": "Drug fever does not produce enlarging lymph nodes and a worsening pulmonary infiltrate, and stopping effective treatment for tuberculosis risks relapse and resistance (Source: National Tuberculosis Advisory Committee guidance).",
+    "source_refs": ["National Tuberculosis Advisory Committee guidance"]
+   },
+   {
+    "letter": "C",
+    "text": "Continue both treatments unchanged and add a corticosteroid for symptom control",
+    "correct": true,
+    "rationale": "Paradoxical worsening with a rising CD4 count, a falling viral load and negative cultures is immune reconstitution inflammatory syndrome, managed by continuing both therapies and adding prednisolone for moderate to severe symptoms (Source: ASHM Antiretroviral Guidelines; National Tuberculosis Advisory Committee guidance).",
+    "source_refs": ["ASHM Antiretroviral Guidelines", "National Tuberculosis Advisory Committee guidance"]
+   },
+   {
+    "letter": "D",
+    "text": "Change to a second line antituberculous regimen for presumed multidrug resistance",
+    "correct": false,
+    "rationale": "Resistance would show persistently positive cultures and inadequate drug levels, whereas his cultures are negative and levels are adequate on directly observed therapy (Source: National Tuberculosis Advisory Committee guidance).",
+    "source_refs": ["National Tuberculosis Advisory Committee guidance"]
+   },
+   {
+    "letter": "E",
+    "text": "Continue both treatments unchanged and observe him without any additional therapy",
+    "correct": false,
+    "rationale": "Watchful waiting suits mild cases, but high fevers, hypoxia and an enlarging infiltrate constitute moderate to severe disease for which corticosteroids shorten the illness (Source: ASHM Antiretroviral Guidelines).",
+    "source_refs": ["ASHM Antiretroviral Guidelines"]
+   }
+  ],
+  "explanation": {
+   "summary": "Immune reconstitution inflammatory syndrome occurs when a recovering immune system mounts an inflammatory response against a pathogen it previously could not recognise, and it is most common when the starting CD4 count is very low and the viral load falls rapidly. Tuberculosis is the commonest associated organism in Australia, and the paradoxical form, in which a treated infection appears to worsen, typically appears within two to eight weeks of starting antiretroviral therapy. The diagnosis rests on temporal association, a rising CD4 count with a falling viral load, and exclusion of treatment failure, resistance and a new infection. Delaying antiretroviral therapy in tuberculosis co-infection reduces the incidence but increases mortality when the CD4 count is very low, which is why treatment is generally started within two weeks in that group and the syndrome is treated rather than avoided.",
+   "key_points": [
+    "Typically appears two to eight weeks after starting antiretroviral therapy",
+    "A rising CD4 count with a falling viral load supports the diagnosis",
+    "Treatment failure, resistance and new infection must be excluded first",
+    "Both therapies are continued and corticosteroids are added for moderate to severe disease"
+   ],
+   "pearls": "Cryptococcal meningitis is the exception to early antiretroviral initiation, since starting within the first two weeks increases mortality through raised intracranial pressure, and therapy is deferred by four to six weeks in that setting."
+  },
+  "sources": [
+   {"label": "ASHM Antiretroviral Guidelines", "url": "https://arv.ashm.org.au"},
+   {"label": "National Tuberculosis Advisory Committee guidance", "url": "https://www.health.gov.au"}
+  ],
+  "reference_ranges": ["fbc", "inflammatory_markers"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-039",
+  "topic": "Medicine",
+  "subtopic": "Neurology",
+  "subtopic_detail": "Suspected herpes simplex encephalitis with early normal imaging",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
+  "tags": ["encephalitis", "aciclovir", "CSF"],
+  "stem": "You are the medical registrar caring for a 61 year old woman admitted 24 hours ago with fever, confusion and two generalised seizures. Aciclovir and ceftriaxone were started in the emergency department.\n\nHer symptoms began three days ago with a change in personality and word finding difficulty noticed by her husband. Cerebrospinal fluid showed 62 lymphocytes per microlitre, protein 0.72 g/L and normal glucose, with negative gram stain and bacterial culture. Magnetic resonance imaging of the brain performed this morning is reported as normal. The herpes simplex virus polymerase chain reaction on the initial cerebrospinal fluid has just returned negative. She remains febrile and disorientated.",
+  "data_table": {
+   "Vital signs": "Pulse 96, BP 134/80, RR 18, SpO2 97% room air, temperature 38.4",
+   "Examination": "Disorientated to time and place, dysphasic, no focal limb weakness, no neck stiffness",
+   "Investigations": "Cerebrospinal fluid lymphocytes 62 per microlitre; protein 0.72 g/L (0.15-0.45); glucose normal; bacterial culture negative; herpes simplex virus polymerase chain reaction negative; magnetic resonance imaging reported normal"
+  },
+  "lead_in": "What is the most appropriate next step in management?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Cease aciclovir and treat her as having an aseptic meningitis of viral origin",
+    "correct": false,
+    "rationale": "Personality change, dysphasia and seizures indicate encephalitis rather than meningitis, and stopping aciclovir on a single early negative result carries a high mortality risk (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "B",
+    "text": "Cease aciclovir and commence high dose corticosteroids for autoimmune encephalitis",
+    "correct": false,
+    "rationale": "Autoimmune encephalitis is worth investigating in parallel, but committing to immunosuppression while herpes simplex remains inadequately excluded risks fulminant deterioration (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "C",
+    "text": "Cease aciclovir and arrange an electroencephalogram before making any further change",
+    "correct": false,
+    "rationale": "An electroencephalogram may show temporal lobe discharges but is not specific enough to justify withdrawing treatment in the interim (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "D",
+    "text": "Continue aciclovir and repeat the imaging in two weeks if she has not improved",
+    "correct": false,
+    "rationale": "Continuing treatment is right but a two week interval is far too long, since the diagnosis must be resolved within days to decide the total duration of therapy (Source: Therapeutic Guidelines: Antibiotic).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+   },
+   {
+    "letter": "E",
+    "text": "Continue aciclovir and repeat the lumbar puncture with polymerase chain reaction testing",
+    "correct": true,
+    "rationale": "Polymerase chain reaction sampled within the first 72 hours of symptoms has a false negative rate of around 10 per cent, so treatment continues and the test is repeated at 72 hours to 7 days when viral load in cerebrospinal fluid peaks (Source: Therapeutic Guidelines: Antibiotic; Australasian Society for Infectious Diseases guidance).",
+    "source_refs": ["Therapeutic Guidelines: Antibiotic", "Australasian Society for Infectious Diseases guidance"]
+   }
+  ],
+  "explanation": {
+   "summary": "Herpes simplex encephalitis carries around 70 per cent mortality untreated and is the one encephalitis for which empirical treatment before confirmation is standard practice. Cerebrospinal fluid polymerase chain reaction is highly sensitive overall but falsely negative in roughly 10 per cent of cases when sampled in the first 72 hours of symptoms, before viral replication in the central nervous system has peaked. Magnetic resonance imaging is similarly insensitive early, and the characteristic asymmetric medial temporal and inferior frontal signal change often appears only after several days, so a normal early scan does not exclude the diagnosis. The safe course is to continue aciclovir and resample, and autoimmune encephalitis antibodies are sent in parallel because the two conditions overlap clinically and can occur sequentially in the same patient.",
+   "key_points": [
+    "Polymerase chain reaction is falsely negative in about 10 per cent when sampled within 72 hours",
+    "Early magnetic resonance imaging is frequently normal in confirmed cases",
+    "Aciclovir is continued while the diagnosis is being resolved rather than stopped on one result",
+    "Autoimmune encephalitis antibodies are sent in parallel because the syndromes overlap"
+   ],
+   "pearls": "Herpes simplex encephalitis can be followed within weeks by an antibody mediated encephalitis against the N methyl D aspartate receptor, so new choreoathetosis or psychiatric symptoms after apparent recovery warrant retesting rather than assuming relapse of the viral infection."
+  },
+  "sources": [
+   {"label": "Therapeutic Guidelines: Antibiotic", "url": "https://www.tg.org.au"},
+   {"label": "Australasian Society for Infectious Diseases guidance", "url": "https://www.asid.net.au"}
+  ],
+  "reference_ranges": ["csf", "fbc"],
+  "created": "2026-09-07"
+ },
+ {
+  "id": "sched-2026-09-07-p2-040",
+  "topic": "Medicine",
+  "subtopic": "Endocrinology",
+  "subtopic_detail": "Immune checkpoint inhibitor hypophysitis",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
+  "tags": ["immunotherapy", "adrenal insufficiency", "hyponatraemia"],
+  "stem": "You are the medical registrar reviewing a 63 year old man who has received four cycles of an immune checkpoint inhibitor for metastatic melanoma.\n\nOver three weeks he has become profoundly fatigued, has lost his appetite and has had daily frontal headaches. He is normotensive lying and standing and his skin shows no increase in pigmentation. His sodium is 126 mmol/L with a normal potassium, and paired morning bloods show a cortisol of 42 nmol/L with an adrenocorticotropic hormone of 4 ng/L. His free thyroxine is low at 8 pmol/L with a thyroid stimulating hormone of 0.9 mIU/L, and magnetic resonance imaging shows a diffusely enlarged pituitary gland.",
+  "data_table": {
+   "Vital signs": "Pulse 88, BP 118/74 with no postural drop, RR 16, SpO2 97% room air, temperature 36.4",
+   "Examination": "No hyperpigmentation, no goitre, visual fields full to confrontation",
+   "Investigations": "Sodium 126 mmol/L (135-145); potassium 4.1 mmol/L (3.5-5.2); morning cortisol 42 nmol/L (200-650); adrenocorticotropic hormone 4 ng/L (10-50); free thyroxine 8 pmol/L (10-20); thyroid stimulating hormone 0.9 mIU/L (0.4-4.0)"
+  },
+  "lead_in": "What is the most appropriate immediate management?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Commence levothyroxine now and add hydrocortisone if he fails to improve in a week",
+    "correct": false,
+    "rationale": "Thyroid hormone increases metabolic demand and cortisol clearance, and giving it first in untreated adrenal insufficiency can precipitate an adrenal crisis (Source: eviQ Cancer Treatments Online; Therapeutic Guidelines: Endocrinology).",
+    "source_refs": ["eviQ Cancer Treatments Online", "Therapeutic Guidelines: Endocrinology"]
+   },
+   {
+    "letter": "B",
+    "text": "Commence hydrocortisone replacement now and start levothyroxine several days later",
+    "correct": true,
+    "rationale": "A low cortisol with an inappropriately low adrenocorticotropic hormone and a low free thyroxine with a non elevated thyroid stimulating hormone indicate combined central deficiencies, and glucocorticoid replacement always precedes thyroid hormone (Source: eviQ Cancer Treatments Online; Therapeutic Guidelines: Endocrinology).",
+    "source_refs": ["eviQ Cancer Treatments Online", "Therapeutic Guidelines: Endocrinology"]
+   },
+   {
+    "letter": "C",
+    "text": "Commence fludrocortisone with a liberal salt intake and repeat the sodium tomorrow",
+    "correct": false,
+    "rationale": "Mineralocorticoid replacement is not required in secondary adrenal insufficiency because the renin angiotensin aldosterone axis is intact, which is why the potassium is normal and there is no postural drop (Source: Therapeutic Guidelines: Endocrinology).",
+    "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+   },
+   {
+    "letter": "D",
+    "text": "Restrict his fluid intake to 1 litre daily for presumed inappropriate antidiuresis",
+    "correct": false,
+    "rationale": "Glucocorticoid deficiency itself causes hyponatraemia through impaired free water excretion, and fluid restriction treats a mimic while leaving the underlying deficiency untreated (Source: Therapeutic Guidelines: Endocrinology).",
+    "source_refs": ["Therapeutic Guidelines: Endocrinology"]
+   },
+   {
+    "letter": "E",
+    "text": "Refer for urgent transsphenoidal decompression of the enlarged pituitary gland",
+    "correct": false,
+    "rationale": "Pituitary enlargement in this syndrome is inflammatory and resolves with medical treatment, and his visual fields are intact so there is no compressive indication (Source: eviQ Cancer Treatments Online).",
+    "source_refs": ["eviQ Cancer Treatments Online"]
+   }
+  ],
+  "explanation": {
+   "summary": "Hypophysitis is a characteristic immune related adverse event of checkpoint inhibitors, occurring most often with agents targeting cytotoxic T lymphocyte associated protein 4 and typically within the first three months of treatment. It is separated from primary adrenal insufficiency by the pattern of hormones: adrenocorticotropic hormone is low or inappropriately normal rather than high, mineralocorticoid function is preserved so potassium and postural blood pressure are normal, and there is no hyperpigmentation. Headache and fatigue are the commonest presenting symptoms and are easily attributed to the malignancy or to treatment in general, which is why routine endocrine monitoring is built into checkpoint inhibitor protocols. Corticotroph deficiency is usually permanent even though the thyroid and gonadal axes often recover, so lifelong glucocorticoid replacement and a steroid alert card are needed.",
+   "key_points": [
+    "Low cortisol with low or normal adrenocorticotropic hormone indicates a central cause",
+    "Preserved mineralocorticoid function means normal potassium and no postural drop",
+    "Glucocorticoid replacement always precedes levothyroxine in combined deficiency",
+    "Corticotroph deficiency is usually permanent while other axes often recover"
+   ],
+   "pearls": "Starting levothyroxine before hydrocortisone in central hypothyroidism can precipitate adrenal crisis within days by accelerating cortisol metabolism, which is why the glucocorticoid goes first whenever both axes are deficient."
+  },
+  "sources": [
+   {"label": "eviQ Cancer Treatments Online", "url": "https://www.eviq.org.au"},
+   {"label": "Therapeutic Guidelines: Endocrinology", "url": "https://www.tg.org.au"}
+  ],
+  "reference_ranges": ["uec", "thyroid"],
+  "created": "2026-09-07"
+ }
+]
