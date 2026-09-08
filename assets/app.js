@@ -3233,7 +3233,8 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
       const jumpBtn = li.querySelector(".report-jump");
       if (jumpBtn && q) jumpBtn.onclick = (e) => {
         e.stopPropagation();
-        document.getElementById("reportsAdminModal").hidden = true;
+        const rm = document.getElementById("reportsAdminModal");
+        if (rm) rm.hidden = true;
         jumpToQuestionStandalone(q);
       };
       list.appendChild(li);
