@@ -1,0 +1,383 @@
+[
+  {
+    "id": "sched-0908p6-med-021",
+    "topic": "Medicine",
+    "subtopic": "Palliative and Supportive Care",
+    "subtopic_detail": "Matching antiemetic choice to the underlying emetic mechanism",
+    "difficulty": 3,
+    "model": "Claude Opus 5",
+    "tags": ["medication", "opioid", "palliative care"],
+    "stem": "You are the medical registrar reviewing a 58 year old woman on the ward with metastatic ovarian cancer who has vomited five times since yesterday. Her oral morphine was increased two days ago for worsening pelvic pain and the nausea began the following morning.\n\nShe describes constant queasiness that is worse when she moves her head and improves when she lies still. She is opening her bowels daily on regular macrogol and has no abdominal distension. The abdomen is soft with normal bowel sounds and no succussion splash. She has had no chemotherapy for six weeks and no headache or visual change.",
+    "data_table": {
+      "Vital signs": "Vital signs within normal limits",
+      "Investigations": "Corrected calcium 2.38 mmol/L (2.15-2.60), sodium 138 mmol/L (135-145), urea 5.1 mmol/L (3.0-8.0), creatinine 71 micromol/L (45-90); abdominal radiograph shows no dilated bowel loops and no faecal loading"
+    },
+    "lead_in": "Which antiemetic is most appropriate for her?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Hyoscine butylbromide, targeting muscarinic receptors in the gastrointestinal tract",
+        "correct": false,
+        "rationale": "This antispasmodic is used for colic and secretions in bowel obstruction, and the soft abdomen with normal bowel sounds and no distension excludes that mechanism. It would be appropriate for the vomiting of malignant obstruction with colicky pain. (Source: Therapeutic Guidelines: Palliative Care)",
+        "source_refs": ["Therapeutic Guidelines: Palliative Care"]
+      },
+      {
+        "letter": "B",
+        "text": "Haloperidol, targeting dopamine receptors in the chemoreceptor trigger zone",
+        "correct": true,
+        "rationale": "Nausea beginning after an opioid dose increase, worse with movement and without features of obstruction or gastric stasis, is driven by stimulation of the chemoreceptor trigger zone, where dopamine blockade is the mechanistically matched treatment. Low dose haloperidol is the preferred agent for opioid induced nausea. (Source: Therapeutic Guidelines: Palliative Care)",
+        "source_refs": ["Therapeutic Guidelines: Palliative Care", "Australian Medicines Handbook"]
+      },
+      {
+        "letter": "C",
+        "text": "Metoclopramide, targeting dopamine receptors and promoting gastric emptying",
+        "correct": false,
+        "rationale": "Prokinetic therapy suits gastric stasis with early satiety, large volume vomits and a succussion splash, none of which she has. The near-pair distinction from haloperidol is that its prokinetic action is the reason to choose it, and there is no stasis here to treat. (Source: Therapeutic Guidelines: Palliative Care)",
+        "source_refs": ["Therapeutic Guidelines: Palliative Care"]
+      },
+      {
+        "letter": "D",
+        "text": "Ondansetron, targeting serotonin receptors in the gut and the chemoreceptor trigger zone",
+        "correct": false,
+        "rationale": "Serotonin antagonists are most effective for chemotherapy and radiotherapy induced nausea, and her last chemotherapy was six weeks ago, so the driving mechanism is different. They also worsen the constipation that opioids already cause. (Source: Australian Medicines Handbook)",
+        "source_refs": ["Australian Medicines Handbook"]
+      },
+      {
+        "letter": "E",
+        "text": "Dexamethasone, targeting peritumoural oedema and raised intracranial pressure",
+        "correct": false,
+        "rationale": "Corticosteroids address nausea from raised intracranial pressure or bowel obstruction, and she has no headache, visual change or obstructive features to justify this. Dexamethasone is often added as an adjuvant when a single agent fails rather than chosen first. (Source: Therapeutic Guidelines: Palliative Care)",
+        "source_refs": ["Therapeutic Guidelines: Palliative Care"]
+      }
+    ],
+    "explanation": {
+      "summary": "Rational antiemetic prescribing works backwards from the likely emetic pathway rather than reaching for a familiar drug, because each pathway is dominated by different receptors. Chemical causes such as opioids, hypercalcaemia and uraemia act on the chemoreceptor trigger zone, which is rich in dopamine receptors and is best treated with haloperidol. Gastric stasis and partial outlet obstruction produce large volume vomits with early satiety and respond to a prokinetic such as metoclopramide. Vestibular causes respond to antihistamines or anticholinergics, chemotherapy and radiotherapy act largely through serotonin release, and raised intracranial pressure or bowel obstruction responds to corticosteroids. Opioid induced nausea usually settles within five to seven days as tolerance develops, so the antiemetic can often be withdrawn rather than continued indefinitely.",
+      "key_points": [
+        "Identify the emetic pathway first, then select the antiemetic that blocks its dominant receptor",
+        "Opioids, hypercalcaemia and uraemia act chemically and respond to dopamine blockade",
+        "Large volume vomits with early satiety indicate gastric stasis and call for a prokinetic",
+        "Serotonin antagonists are most useful for chemotherapy and radiotherapy induced nausea",
+        "Consider hypercalcaemia in any patient with malignancy and new nausea"
+      ],
+      "pearls": "Opioid induced nausea is usually self limiting through tolerance within five to seven days, so review the antiemetic at one week and stop it rather than continuing a drug that adds anticholinergic or extrapyramidal burden."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Palliative Care",
+        "url": "https://tgldcdp.tg.org.au"
+      },
+      {
+        "label": "Australian Medicines Handbook",
+        "url": "https://amhonline.amh.net.au"
+      }
+    ],
+    "reference_ranges": ["uec", "calcium_corrected"],
+    "created": "2026-09-08"
+  },
+  {
+    "id": "sched-0908p6-med-022",
+    "topic": "Medicine",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "Dry eyes and dry mouth with bilateral parotid swelling",
+    "difficulty": 3,
+    "model": "Claude Opus 5",
+    "tags": ["autoimmune", "diagnosis", "monitoring"],
+    "stem": "A 52 year old woman presents to your clinic with 18 months of gritty, burning eyes and a persistently dry mouth that makes eating dry biscuits difficult without sipping water. She has needed three dental fillings in two years after a lifetime without caries.\n\nShe also reports fatigue and aching in her hands without swelling. On examination both parotid glands are mildly enlarged and non-tender, the oral mucosa appears dry with a lobulated tongue, and there is no lymphadenopathy. There is no rash, no Raynaud phenomenon and no sclerodactyly. Her only medicine is occasional ibuprofen, and she takes no anticholinergic or antihistamine preparations.",
+    "data_table": {
+      "Vital signs": "Vital signs within normal limits",
+      "Investigations": "Antinuclear antibody positive at 1:640 speckled, rheumatoid factor positive, erythrocyte sedimentation rate 46 mm/h (less than 20), C-reactive protein within normal limits, full blood count within normal limits, immunoglobulin G 21 g/L (7.0-16.0)"
+    },
+    "lead_in": "Which investigation will best confirm the underlying diagnosis?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Anti-double stranded DNA antibody with complement C3 and C4 levels",
+        "correct": false,
+        "rationale": "This combination assesses systemic lupus erythematosus, which characteristically presents with rash, serositis, cytopenias or nephritis rather than isolated glandular dryness. It would be pursued if she had photosensitivity, proteinuria or unexplained cytopenias. (Source: Australian Rheumatology Association: Sjogren Syndrome)",
+        "source_refs": ["Australian Rheumatology Association: Sjogren Syndrome"]
+      },
+      {
+        "letter": "B",
+        "text": "Anti-cyclic citrullinated peptide antibody with radiographs of both hands",
+        "correct": false,
+        "rationale": "A positive rheumatoid factor here is a common accompaniment of glandular autoimmunity rather than evidence of rheumatoid arthritis, and she has arthralgia without synovitis. This testing is indicated when persistent joint swelling is present on examination. (Source: Australian Rheumatology Association: Sjogren Syndrome)",
+        "source_refs": ["Australian Rheumatology Association: Sjogren Syndrome"]
+      },
+      {
+        "letter": "C",
+        "text": "Serum angiotensin converting enzyme with a chest radiograph for hilar adenopathy",
+        "correct": false,
+        "rationale": "Sarcoidosis can cause parotid enlargement and a dry mouth, but it usually produces respiratory symptoms and hilar lymphadenopathy, and the enzyme level lacks both sensitivity and specificity. It becomes a consideration when there is cough, breathlessness or erythema nodosum. (Source: BMJ Best Practice: Sjogren Syndrome)",
+        "source_refs": ["BMJ Best Practice: Sjogren Syndrome"]
+      },
+      {
+        "letter": "D",
+        "text": "Anti-Ro and anti-La antibody testing with objective measurement of tear production",
+        "correct": true,
+        "rationale": "The combination of sicca symptoms, parotid enlargement, a raised polyclonal immunoglobulin G and a speckled antinuclear antibody points to autoimmune exocrinopathy, in which these specific antibodies together with an objective dryness measure form the diagnostic criteria. Objective testing is essential because subjective dryness alone is far too common to be diagnostic. (Source: Australian Rheumatology Association: Sjogren Syndrome)",
+        "source_refs": ["Australian Rheumatology Association: Sjogren Syndrome", "BMJ Best Practice: Sjogren Syndrome"]
+      },
+      {
+        "letter": "E",
+        "text": "Fine needle aspiration of the enlarged parotid gland for cytological assessment",
+        "correct": false,
+        "rationale": "Aspiration is used to investigate a discrete or asymmetrical parotid mass raising concern for lymphoma, whereas bilateral diffuse enlargement in this context does not require it initially. It becomes important if one gland enlarges persistently or asymmetrically. (Source: BMJ Best Practice: Sjogren Syndrome)",
+        "source_refs": ["BMJ Best Practice: Sjogren Syndrome"]
+      }
+    ],
+    "explanation": {
+      "summary": "Autoimmune exocrinopathy causes lymphocytic infiltration and destruction of the lacrimal and salivary glands, producing dry eyes and dry mouth together with fatigue and arthralgia, and it is far more common in women in their fifth and sixth decades. Because subjective dryness is extremely common and often drug induced, diagnosis requires objective evidence of reduced tear or saliva production alongside serology, with labial gland biopsy reserved for seronegative cases. Anti-Ro and anti-La antibodies are the characteristic specificities, and a polyclonal rise in immunoglobulin G with a raised erythrocyte sedimentation rate but normal C-reactive protein is a typical pattern. Beyond the glandular disease, patients face accelerated dental caries, corneal damage, interstitial lung and renal involvement, and a markedly increased lifetime risk of non-Hodgkin lymphoma. Anti-Ro antibodies also carry obstetric significance because of the risk of congenital heart block in a future pregnancy.",
+      "key_points": [
+        "Objective testing of tear or saliva production is required because subjective dryness is non-specific",
+        "Anti-Ro and anti-La are the characteristic antibodies; biopsy is for seronegative cases",
+        "A polyclonal immunoglobulin G rise with a raised sedimentation rate and normal C-reactive protein is typical",
+        "Rheumatoid factor is often positive without rheumatoid arthritis being present",
+        "Persistent asymmetrical parotid enlargement raises concern for lymphoma"
+      ],
+      "pearls": "Anti-Ro antibodies cross the placenta and carry roughly a two per cent risk of congenital complete heart block, so a woman of reproductive age with these antibodies needs serial foetal cardiac monitoring from around 16 weeks in any future pregnancy."
+    },
+    "sources": [
+      {
+        "label": "Australian Rheumatology Association: Sjogren Syndrome",
+        "url": "https://rheumatology.org.au"
+      },
+      {
+        "label": "BMJ Best Practice: Sjogren Syndrome",
+        "url": "https://bestpractice.bmj.com"
+      }
+    ],
+    "reference_ranges": ["inflammatory_markers", "fbc"],
+    "created": "2026-09-08"
+  },
+  {
+    "id": "sched-0908p6-med-023",
+    "topic": "Medicine",
+    "subtopic": "Respiratory",
+    "subtopic_detail": "Progressive exertional breathlessness with normal lung fields and spirometry",
+    "difficulty": 4,
+    "model": "Claude Opus 5",
+    "tags": ["dyspnoea", "echocardiography", "diagnosis"],
+    "stem": "You review a 47 year old woman in clinic with 14 months of progressive breathlessness, now limiting her to one flight of stairs. She has twice felt faint while climbing hills. Two courses of inhaled corticosteroid with a long acting bronchodilator produced no benefit.\n\nShe has never smoked. Her chest is clear on auscultation, and there is no wheeze and no crackles. Jugular venous pressure is elevated 5 cm with a prominent v wave, there is a left parasternal heave, and the pulmonary component of the second heart sound is loud. There is pitting oedema to both mid-calves. Chest radiograph shows clear lung fields with enlarged central pulmonary arteries, and full blood count and thyroid function are within normal limits.",
+    "data_table": {
+      "Vital signs": "Pulse 96/min, BP 106/70 mmHg, respiratory rate 20/min, SpO2 93% on room air, temperature 36.5 degrees C",
+      "Investigations": "Spirometry: forced expiratory volume in one second 88 per cent predicted, forced vital capacity 91 per cent predicted, ratio 0.79; diffusing capacity 48 per cent predicted; ECG shows right axis deviation with dominant R wave in V1"
+    },
+    "lead_in": "What is the most appropriate next investigation?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Transthoracic echocardiography to estimate right ventricular systolic pressure",
+        "correct": true,
+        "rationale": "Breathlessness with a loud pulmonary second sound, parasternal heave, raised jugular venous pressure and an isolated fall in diffusing capacity with clear lungs points to pulmonary vascular disease, and echocardiography is the recommended screening test. It also identifies the left heart and valvular causes that are far commoner than primary pulmonary vascular disease. (Source: Cardiac Society of Australia and New Zealand: Pulmonary Hypertension)",
+        "source_refs": [
+          "Cardiac Society of Australia and New Zealand: Pulmonary Hypertension",
+          "Thoracic Society of Australia and New Zealand: Pulmonary Hypertension"
+        ]
+      },
+      {
+        "letter": "B",
+        "text": "High resolution CT of the chest to identify an occult interstitial lung process",
+        "correct": false,
+        "rationale": "Interstitial disease reduces the diffusing capacity but almost always restricts the forced vital capacity and produces crackles, and her volumes and examination are normal. This imaging becomes the priority when restriction accompanies the reduced diffusing capacity. (Source: Thoracic Society of Australia and New Zealand: Pulmonary Hypertension)",
+        "source_refs": ["Thoracic Society of Australia and New Zealand: Pulmonary Hypertension"]
+      },
+      {
+        "letter": "C",
+        "text": "Cardiopulmonary exercise testing to distinguish cardiac from ventilatory limitation",
+        "correct": false,
+        "rationale": "Exercise testing quantifies functional limitation but does not identify the anatomical cause, and it is used to refine assessment once the structural diagnosis is known. It is most valuable when the resting workup is normal and the cause of breathlessness remains unexplained. (Source: Thoracic Society of Australia and New Zealand: Pulmonary Hypertension)",
+        "source_refs": ["Thoracic Society of Australia and New Zealand: Pulmonary Hypertension"]
+      },
+      {
+        "letter": "D",
+        "text": "Right heart catheterisation to measure pulmonary artery and wedge pressures directly",
+        "correct": false,
+        "rationale": "Catheterisation is the diagnostic reference standard but is invasive and is performed at a specialist centre after non-invasive screening has raised the probability. Ordering it first would invert the recognised diagnostic sequence. (Source: Cardiac Society of Australia and New Zealand: Pulmonary Hypertension)",
+        "source_refs": ["Cardiac Society of Australia and New Zealand: Pulmonary Hypertension"]
+      },
+      {
+        "letter": "E",
+        "text": "Bronchial provocation testing to confirm variable airflow obstruction from asthma",
+        "correct": false,
+        "rationale": "Asthma does not reduce the diffusing capacity or raise the jugular venous pressure, and two adequate inhaled treatment trials have already failed. Provocation testing is reserved for suspected asthma with normal spirometry and no cardiovascular signs. (Source: Thoracic Society of Australia and New Zealand: Pulmonary Hypertension)",
+        "source_refs": ["Thoracic Society of Australia and New Zealand: Pulmonary Hypertension"]
+      }
+    ],
+    "explanation": {
+      "summary": "Pulmonary hypertension is characteristically diagnosed late because the early symptom is isolated exertional breathlessness with a normal chest radiograph and normal spirometry, and patients are frequently treated for asthma or deconditioning for months to years first. The physiological fingerprint is a disproportionate reduction in diffusing capacity with preserved lung volumes and no airflow obstruction, and the physical signs of right ventricular pressure overload appear as the disease advances. Exertional syncope is an ominous feature indicating that cardiac output cannot rise with demand. Echocardiography is the screening investigation of choice, and it also excludes the left heart disease that accounts for the majority of cases, while right heart catheterisation remains the diagnostic reference standard performed in a specialist centre. Ventilation perfusion scanning is mandatory in the work up because chronic thromboembolic disease is the one form that is potentially curable by surgical endarterectomy.",
+      "key_points": [
+        "A reduced diffusing capacity with normal volumes and no obstruction suggests pulmonary vascular disease",
+        "Failure to respond to adequate inhaled therapy should prompt reconsideration of the diagnosis",
+        "Loud pulmonary second sound, parasternal heave and raised jugular venous pressure are late signs",
+        "Exertional syncope indicates a fixed cardiac output and carries a poor prognosis",
+        "Echocardiography screens; right heart catheterisation confirms at a specialist centre"
+      ],
+      "pearls": "A ventilation perfusion scan is mandatory in every pulmonary hypertension work up because chronic thromboembolic disease is the only potentially curable form, and CT pulmonary angiography can miss the chronic organised thrombus that the scan detects."
+    },
+    "sources": [
+      {
+        "label": "Cardiac Society of Australia and New Zealand: Pulmonary Hypertension",
+        "url": "https://www.csanz.edu.au"
+      },
+      {
+        "label": "Thoracic Society of Australia and New Zealand: Pulmonary Hypertension",
+        "url": "https://www.thoracic.org.au"
+      }
+    ],
+    "reference_ranges": ["fbc", "thyroid"],
+    "created": "2026-09-08"
+  },
+  {
+    "id": "sched-0908p6-med-024",
+    "topic": "Medicine",
+    "subtopic": "Cardiology",
+    "subtopic_detail": "Deciding whether antibiotic prophylaxis is required before a dental procedure",
+    "difficulty": 4,
+    "model": "Claude Opus 5",
+    "tags": ["endocarditis", "antibiotics"],
+    "stem": "A 58 year old man asks your advice before a dental extraction scheduled next week. He had mitral valve repair with an annuloplasty ring eight years ago for degenerative mitral regurgitation, and a recent echocardiogram showed trivial residual regurgitation with normal ventricular function.\n\nHe has no fever, no night sweats and no weight loss. He recalls being given antibiotics before dental visits in the years immediately after surgery and stopped when a previous doctor told him it was no longer needed. He has no penicillin allergy and takes only atorvastatin. Examination reveals a soft systolic murmur at the apex, no splinter haemorrhages and no clubbing.",
+    "data_table": {
+      "Vital signs": "Vital signs within normal limits",
+      "Investigations": "Echocardiography: mitral annuloplasty ring in situ, trivial mitral regurgitation, left ventricular ejection fraction 58 per cent, no vegetations"
+    },
+    "lead_in": "What advice should you give regarding antibiotic prophylaxis?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Prophylaxis is not required because the repair used his own valve rather than a prosthesis",
+        "correct": false,
+        "rationale": "Prosthetic material used in a valve repair, including an annuloplasty ring, places a patient in the highest risk category regardless of whether the native leaflets were preserved. The distinction between a repaired and a replaced valve does not determine prophylaxis when foreign material is present. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "B",
+        "text": "Prophylaxis is required, with a single oral amoxicillin dose before the procedure",
+        "correct": true,
+        "rationale": "Prosthetic material used in valve repair places him in the group at highest risk of adverse outcomes from endocarditis, and a dental extraction involves manipulation of the gingival tissue, so a single dose shortly before the procedure is indicated. Amoxicillin is the recommended agent in the absence of penicillin allergy. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": [
+          "Therapeutic Guidelines: Antibiotic",
+          "Cardiac Society of Australia and New Zealand: Infective Endocarditis Prophylaxis"
+        ]
+      },
+      {
+        "letter": "C",
+        "text": "Prophylaxis is not required because the residual regurgitation is trivial on imaging",
+        "correct": false,
+        "rationale": "Risk categorisation depends on the underlying cardiac condition rather than the current severity of the lesion, so a good haemodynamic result does not remove the indication. Severity would matter for surveillance and surgical planning, not for prophylaxis. (Source: Cardiac Society of Australia and New Zealand: Infective Endocarditis Prophylaxis)",
+        "source_refs": ["Cardiac Society of Australia and New Zealand: Infective Endocarditis Prophylaxis"]
+      },
+      {
+        "letter": "D",
+        "text": "Prophylaxis is required, with a five day oral amoxicillin course after the procedure",
+        "correct": false,
+        "rationale": "Prophylaxis is a single dose given before the procedure to cover the transient bacteraemia, and a post-procedural course adds toxicity and resistance without benefit. Extended therapy is treatment for established infection, not prevention. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "E",
+        "text": "Prophylaxis is not required because routine daily activities cause more bacteraemia overall",
+        "correct": false,
+        "rationale": "This reasoning underpins the narrowing of prophylaxis to high risk patients only, but it does not apply to someone in the highest risk category undergoing a gingival procedure. It correctly explains why patients with mitral valve prolapse or bicuspid valves no longer receive prophylaxis. (Source: Cardiac Society of Australia and New Zealand: Infective Endocarditis Prophylaxis)",
+        "source_refs": ["Cardiac Society of Australia and New Zealand: Infective Endocarditis Prophylaxis"]
+      }
+    ],
+    "explanation": {
+      "summary": "Antibiotic prophylaxis before dental procedures was progressively restricted after evidence showed that cumulative bacteraemia from chewing and toothbrushing vastly exceeds that from a single dental visit, and that prophylaxis prevents very few cases. Current Australian recommendations confine prophylaxis to patients at highest risk of a poor outcome should endocarditis occur: those with a prosthetic valve or prosthetic material used in valve repair, previous infective endocarditis, specified congenital heart disease, cardiac transplant recipients with valvulopathy, and Aboriginal and Torres Strait Islander patients with rheumatic heart disease. The procedures that warrant cover are those involving manipulation of gingival tissue, the periapical region of a tooth, or perforation of the oral mucosa. A single oral dose given shortly before the procedure is the standard regimen, with clindamycin used for immediate penicillin hypersensitivity. Meticulous oral hygiene and regular dental review reduce endocarditis risk far more than episodic prophylaxis.",
+      "key_points": [
+        "Prosthetic material in a valve repair, including an annuloplasty ring, confers highest risk status",
+        "Risk category depends on the cardiac condition, not on current lesion severity",
+        "Only procedures involving gingival or periapical manipulation or mucosal perforation require cover",
+        "A single pre-procedural oral dose is the regimen; no post-procedural course is given",
+        "Mitral valve prolapse and bicuspid aortic valve no longer warrant prophylaxis"
+      ],
+      "pearls": "Give the single oral amoxicillin dose in the 60 minutes before the procedure, and substitute clindamycin only for immediate hypersensitivity, since a delayed rash to penicillin does not preclude amoxicillin use."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://tgldcdp.tg.org.au"
+      },
+      {
+        "label": "Cardiac Society of Australia and New Zealand: Infective Endocarditis Prophylaxis",
+        "url": "https://www.csanz.edu.au"
+      }
+    ],
+    "reference_ranges": [],
+    "created": "2026-09-08"
+  },
+  {
+    "id": "sched-0908p6-med-025",
+    "topic": "Medicine",
+    "subtopic": "Rheumatology",
+    "subtopic_detail": "Separating primary from secondary Raynaud phenomenon at first presentation",
+    "difficulty": 4,
+    "model": "Claude Opus 5",
+    "tags": ["diagnosis", "monitoring"],
+    "stem": "A 44 year old woman attends your clinic because her fingers turn white then blue in the cold, with pain on rewarming. This began 10 months ago and affects the index, middle and ring fingers of both hands, sparing the thumbs.\n\nShe has noticed the skin over her fingers feels tight and that she can no longer remove her wedding ring. There is a small pitted scar at the tip of the right index finger. She has heartburn most nights that has worsened over the same period. Nailfold capillaroscopy shows dilated and dropped out capillary loops. She takes no beta blockers or ergot preparations and does not use vibrating tools.",
+    "data_table": {
+      "Vital signs": "Vital signs within normal limits",
+      "Investigations": "Antinuclear antibody positive at 1:1280 nucleolar pattern, erythrocyte sedimentation rate 32 mm/h (less than 20), full blood count within normal limits, creatinine 74 micromol/L (45-90), urinalysis shows no protein or blood"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Reassure her that this is a benign vasospastic disorder and advise cold avoidance measures",
+        "correct": false,
+        "rationale": "Primary vasospasm requires normal capillaroscopy, negative serology, no digital ulceration and no skin change, and each of those conditions is violated here. Reassurance alone would miss an evolving connective tissue disease with organ risk. (Source: Australian Rheumatology Association: Systemic Sclerosis)",
+        "source_refs": ["Australian Rheumatology Association: Systemic Sclerosis"]
+      },
+      {
+        "letter": "B",
+        "text": "Prescribe a calcium channel blocker and review her symptom diary in three months",
+        "correct": false,
+        "rationale": "Nifedipine is appropriate symptomatic therapy but treating the vasospasm alone leaves the underlying systemic disease unassessed and unmonitored. It should accompany, not replace, evaluation for internal organ involvement. (Source: Australian Rheumatology Association: Systemic Sclerosis)",
+        "source_refs": ["Australian Rheumatology Association: Systemic Sclerosis"]
+      },
+      {
+        "letter": "C",
+        "text": "Arrange arterial duplex ultrasound of both upper limbs to exclude proximal arterial disease",
+        "correct": false,
+        "rationale": "Large vessel disease produces asymmetrical symptoms, absent pulses or a subclavian bruit, and does not explain skin thickening or abnormal capillaroscopy. Duplex imaging is indicated for unilateral digital ischaemia or a suspected thoracic outlet lesion. (Source: BMJ Best Practice: Raynaud Phenomenon)",
+        "source_refs": ["BMJ Best Practice: Raynaud Phenomenon"]
+      },
+      {
+        "letter": "D",
+        "text": "Request extractable nuclear antigen testing with pulmonary function tests and echocardiography",
+        "correct": true,
+        "rationale": "Late onset vasospasm with skin tightening, a digital pit, reflux and abnormal capillaroscopy on a strongly positive nucleolar antinuclear antibody indicates secondary disease, where specific antibody subtypes stratify risk and baseline screening detects the interstitial lung disease and pulmonary hypertension that drive mortality. Identifying organ involvement early is what alters outcome. (Source: Australian Rheumatology Association: Systemic Sclerosis)",
+        "source_refs": ["Australian Rheumatology Association: Systemic Sclerosis", "BMJ Best Practice: Raynaud Phenomenon"]
+      },
+      {
+        "letter": "E",
+        "text": "Commence a proton pump inhibitor and review the digital symptoms again in six months",
+        "correct": false,
+        "rationale": "Acid suppression treats one manifestation but a six month delay allows undetected lung or renal involvement to progress unmonitored. Symptomatic treatment of reflux is part of management rather than a substitute for systemic assessment. (Source: Australian Rheumatology Association: Systemic Sclerosis)",
+        "source_refs": ["Australian Rheumatology Association: Systemic Sclerosis"]
+      }
+    ],
+    "explanation": {
+      "summary": "Raynaud phenomenon is common and usually primary, but a set of clinical features reliably separates the benign form from vasospasm secondary to connective tissue disease. Primary disease typically begins in the teens or twenties, is symmetrical, spares the thumbs in a variable pattern, and shows normal nailfold capillaries with negative serology and no tissue damage. Features that mandate investigation include onset after the age of 30, asymmetry, digital ulcers or pitting scars, abnormal capillaroscopy, and a positive antinuclear antibody, especially with a nucleolar or centromere pattern. In systemic sclerosis, vasospasm commonly precedes other manifestations by years, so it represents an opportunity for early diagnosis before organ damage occurs. Baseline assessment of lung function with diffusing capacity, echocardiography and blood pressure monitoring is essential, because interstitial lung disease and pulmonary hypertension are now the leading causes of death, and renal crisis remains a treatable emergency.",
+      "key_points": [
+        "Onset after age 30 with digital pitting and skin tightening indicates secondary disease",
+        "Abnormal nailfold capillaroscopy is one of the strongest predictors of connective tissue disease",
+        "A nucleolar antinuclear antibody pattern is characteristic of systemic sclerosis",
+        "Vasospasm often precedes other features by years, offering a window for early diagnosis",
+        "Interstitial lung disease and pulmonary hypertension are the leading causes of death"
+      ],
+      "pearls": "Scleroderma renal crisis presents with accelerated hypertension and a rapid creatinine rise, and is treated with an angiotensin converting enzyme inhibitor even as renal function deteriorates, which is the reverse of usual practice in acute kidney injury."
+    },
+    "sources": [
+      {
+        "label": "Australian Rheumatology Association: Systemic Sclerosis",
+        "url": "https://rheumatology.org.au"
+      },
+      {
+        "label": "BMJ Best Practice: Raynaud Phenomenon",
+        "url": "https://bestpractice.bmj.com"
+      }
+    ],
+    "reference_ranges": ["fbc", "uec", "inflammatory_markers"],
+    "created": "2026-09-08"
+  }
+]
