@@ -1,4 +1,4 @@
-# Full codebase review — checkpoint (2026-08-26)
+# Full codebase review - checkpoint (2026-08-26)
 
 ## In-flight agents
 
@@ -10,7 +10,7 @@
 ## Current state at start of this iteration
 
 - HEAD: `116887e` (What's-new 2.1.1 stripped of data mentions)
-- Live: https://mord58562.github.io/a-to-e/ — Pages status `built`
+- Live: https://mord58562.github.io/a-to-e/ - Pages status `built`
 - Corpus: 3837 unique served ids across 4 topic files + 374 batch files
 - All prior audit fixes already shipped in `94e6bd9`, `7c86845`, `cd2e12d`, `116887e`
 
