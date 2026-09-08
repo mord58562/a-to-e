@@ -5,7 +5,7 @@ Resume trigger phrase Rob may use in a future session: "resume the A to E omnibu
 ## Mission (Rob's request, verbatim distilled)
 
 1. Redesign A to E UI/UX against the 75-item AI-design-tells ban list.
-2. Analyse 181 emedici paeds + obgyn screenshots at `/Users/robrussell/Desktop/questions` for craft patterns. Derive UNIVERSAL audit + generation rules (must apply to ANY topic), plus explanation-craft tips, plus a deep mine of reusable clinical facts.
+2. Analyse 181 emedici paeds + obgyn screenshots at `~/Desktop/questions` for craft patterns. Derive UNIVERSAL audit + generation rules (must apply to ANY topic), plus explanation-craft tips, plus a deep mine of reusable clinical facts.
 3. Audit the full live bank against those new rules.
 4. Targeted fixes:
    - Admin left-panel buttons do nothing - wire them up properly OR delete dead controls.

@@ -54,7 +54,7 @@ Source-of-truth: RCH Melbourne Clinical Practice Guidelines (https://www.rch.org
 
 ## File outputs
 
-- `/Users/robrussell/y4-mcq/data/_audit/session_2026-06-01/rch_paeds_audit.json` - structured flags
-- `/Users/robrussell/y4-mcq/data/_audit/session_2026-06-01/rch_paeds_audit.md` - this summary
-- `/Users/robrussell/y4-mcq/data/_audit/session_2026-06-01/_paeds_by_topic.json` - working index
-- `/Users/robrussell/y4-mcq/data/_audit/session_2026-06-01/_uti_full.json`, `_bronch_full.json` - working dumps
+- `~/y4-mcq/data/_audit/session_2026-06-01/rch_paeds_audit.json` - structured flags
+- `~/y4-mcq/data/_audit/session_2026-06-01/rch_paeds_audit.md` - this summary
+- `~/y4-mcq/data/_audit/session_2026-06-01/_paeds_by_topic.json` - working index
+- `~/y4-mcq/data/_audit/session_2026-06-01/_uti_full.json`, `_bronch_full.json` - working dumps

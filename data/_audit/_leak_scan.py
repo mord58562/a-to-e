@@ -3,7 +3,11 @@
 
 Strict version: word-boundary matching, narrow trigger list, dedup by label.
 """
-import json, glob, re, sys
+import json, glob, os, re, sys
+
+# Repo root, derived from this file's location (data/_audit/_leak_scan.py)
+# so the scanner runs from any checkout without hardcoded paths.
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # (label, trigger_regex_list) - all regex are case-insensitive, anchored with word boundaries
 # Use raw strings; \b at both ends.
@@ -230,7 +234,7 @@ def stem_blob(q):
 
 def scan():
     results = []
-    files = sorted(glob.glob("/Users/robrussell/y4-mcq/data/batches/*.json"))
+    files = sorted(glob.glob(os.path.join(REPO_ROOT, "data", "batches", "*.json")))
     for f in files:
         with open(f) as fh:
             try:
@@ -277,7 +281,7 @@ def scan():
             if leaked:
                 results.append({
                     "id": q.get("id"),
-                    "file": f.replace("/Users/robrussell/y4-mcq/", ""),
+                    "file": os.path.relpath(f, REPO_ROOT),
                     "lead_in": lead_in,
                     "stem": q.get("stem") or "",
                     "hidden_diagnoses": list(hidden_labels.keys()),

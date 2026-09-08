@@ -56,7 +56,7 @@ see a new commit on main updating `data/reports.json`.
   per-topic files (paeds/obgyn/psych/medicine, bucketed by `topic`),
   removes the batch from `data/inbox_manifest.json` and zeroes the
   inbox file, appends to `data/audit_log.md`. Called by the in-app
-  Audit Dashboard after Rob pastes Claude.ai's audit response.
+  Audit Dashboard after an admin pastes Claude.ai's audit response.
 - `POST /apply-live-audit`    - body `{ file_path, audit: { summary, kept[], dropped[] }, profile }` -
   re-audits an existing batch file or main questions file in place.
   Overwrites the file with the kept[] array, appends summary +
@@ -65,7 +65,7 @@ see a new commit on main updating `data/reports.json`.
 - `POST /apply-report`  - body `{ resolutions: [ { report_id, question_id, action, resolution, fixed_question? } ] }` -
   updates `data/reports.json` status/resolution, and for fix/drop
   actions also edits the question in its containing live file.
-  Called by the in-app Audit Dashboard after Rob pastes Claude.ai's
+  Called by the in-app Audit Dashboard after an admin pastes Claude.ai's
   report-audit response.
 
 CORS is locked to `https://mord58562.github.io` by default. Change

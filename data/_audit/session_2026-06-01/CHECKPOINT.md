@@ -6,7 +6,7 @@ Resume trigger phrase: "resume the A to E omnibus session" - then read this file
 
 ## What this session did
 
-Rob fired an enormous omnibus brief (`/Users/robrussell/Desktop/a to e prompt/`). It contains ~35 discrete items spanning question content, UI redesign, design-tells round 2, AU-context research, a third difficulty overhaul, and infrastructure (admin panel, timer, House quote every-50).
+Rob fired an enormous omnibus brief (`~/Desktop/a to e prompt/`). It contains ~35 discrete items spanning question content, UI redesign, design-tells round 2, AU-context research, a third difficulty overhaul, and infrastructure (admin panel, timer, House quote every-50).
 
 Rate limit fired mid-execution. Future-Claude: pick up from "REMAINING" below.
 

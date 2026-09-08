@@ -1,6 +1,6 @@
 # Batch 2 - emedici MCQ craft analysis (files 46-90)
 
-Source: 45 screenshots from `/Users/robrussell/Desktop/questions/` sorted ascending by filename time-stamp. Adjacent screenshots almost always represent the top-half and bottom-half (sometimes a third panel) of one question item, so the effective sample is approximately 20 distinct items. Domains observed: obstetrics, gynaecology, reproductive endocrinology, paediatric infectious disease, paediatric oncology dx, peri-natal pharmacology. Difficulty band tracks Australian Y4-finals.
+Source: 45 screenshots from `~/Desktop/questions/` sorted ascending by filename time-stamp. Adjacent screenshots almost always represent the top-half and bottom-half (sometimes a third panel) of one question item, so the effective sample is approximately 20 distinct items. Domains observed: obstetrics, gynaecology, reproductive endocrinology, paediatric infectious disease, paediatric oncology dx, peri-natal pharmacology. Difficulty band tracks Australian Y4-finals.
 
 ## Files covered
 

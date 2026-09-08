@@ -1,7 +1,7 @@
 /* ────────────────────────────────────────────────────────────────────
  * Y4 MCQ Bank
  *
- * Restored aesthetic per Rob's "best looking" reference: dark navy
+ * Restored aesthetic per the "best looking" reference: dark navy
  * canvas, cyan/teal accent, card-based question container, pill tags,
  * outlined teal action buttons, sans-serif throughout. SaaS-clinical
  * cleanliness without the cream-paper or scarlet-and-serif detours.
@@ -518,7 +518,7 @@ body.has-paeds .masthead .brand-glucose { display: inline; }
   background: color-mix(in srgb, currentColor 14%, transparent);
 }
 
-/* Per-profile colour. Rob's chip is gold - a warm metallic look with
+/* Per-profile colour. The admin chip is gold - a warm metallic look with
    a subtle gradient + inner highlight so it reads as polished metal,
    not just a yellow rectangle. Tuned separately for dark and light
    themes (gold needs different chroma on each background to feel
@@ -640,7 +640,7 @@ body[data-screen="quiz"] main { padding-top: 16px; }
 .greeting[hidden] { display: none; }
 /* Generic .subhead retained for non-home use (e.g. #scoreLine on the
  * summary screen). The home-screen JMP / good-luck subheading was
- * deleted 2026-06-01 at Rob's request - removal is in index.html.
+ * deleted 2026-06-01 by request - removal is in index.html.
  * If a new home-screen subhead is added later, restyle without the
  * Plex Serif italic that read as AI-default. */
 .subhead {
@@ -664,7 +664,7 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   flex-wrap: wrap;
 }
 
-/* ── Quiz card (the one Rob called "best looking") ───────────────── */
+/* ── Quiz card (the "best looking" one) ──────────────────────────── */
 .quiz-topbar {
   background: var(--surface);
   border: 1px solid var(--line);
@@ -816,7 +816,7 @@ body[data-screen="quiz"] main { padding-top: 16px; }
  * mode without the test-mode meta row - the reading card is the sole
  * container and must round all four corners. Without this the top of
  * the reading card reads square while the bottom reads rounded,
- * which Rob flagged as the "pick one" inconsistency. The :has()
+ * which was flagged as the "pick one" inconsistency. The :has()
  * selector lets us key off topbar visibility from the body level. */
 body:has(.quiz-topbar[hidden]) .reading,
 body:has(#quizTopbar[hidden]) .reading {
@@ -847,8 +847,8 @@ body:has(#quizTopbar[hidden]) .reading {
 }
 
 .stem {
-  /* Was --serif (Plex Serif then Source Serif 4) - Rob flagged the
-   * serif body as Wix-template / AI default. Move to sans body so
+  /* Was --serif (Plex Serif then Source Serif 4), which read as
+   * Wix-template / AI default. Move to sans body so
    * the entire clinical prose surface is one institutional family.
    * white-space: pre-line preserves the \n\n paragraph breaks added
    * by the 2026-06-01 paragraphing pass without needing multiple
@@ -1686,7 +1686,7 @@ body[data-screen="summary"] main { max-width: 760px; }
   line-height: 1.5;
 }
 
-/* ── Reports admin (Rob only) ───────────────────────────────────── */
+/* ── Reports admin (admin only) ─────────────────────────────────── */
 .admin-only.has-pending { color: var(--accent); }
 
 /* Defence-in-depth: nothing class="admin-only" ever paints unless the body

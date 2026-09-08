@@ -1,6 +1,6 @@
 # Batch 4 analysis - emedici platform MCQs, final quarter
 
-Source: `/Users/robrussell/Desktop/questions/` files 136-181 (46 files, 24 questions).
+Source: `~/Desktop/questions/` files 136-181 (46 files, 24 questions).
 Mix is heavily Obstetrics + Gynaecology with a few Psychiatry, Paediatrics and Endocrine entries.
 
 ## Files covered

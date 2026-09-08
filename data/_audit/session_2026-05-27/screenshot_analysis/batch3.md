@@ -1,6 +1,6 @@
 # Batch 3 screenshot analysis (files 91-135)
 
-Source: `/Users/robrussell/Desktop/questions/` (sorted ascending), files indexed 91-135.
+Source: `~/Desktop/questions/` (sorted ascending), files indexed 91-135.
 Platform: emedici Question Bank. Mix of Paediatrics and Obstetrics-and-Gynaecology (O&G) finals questions, plus one Cardiology / one Adolescent gynae item.
 
 ## Files covered
