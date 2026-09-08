@@ -210,7 +210,7 @@
     }
   }
 
-  // Combined admin check: legacy Rob profile OR signed-in cloud admin.
+  // Combined admin check: legacy local admin profile OR signed-in cloud admin.
   function isCurrentUserAdmin() {
     if (currentProfile && currentProfile.id === "rob") return true;
     if (cloudUser && cloudUser.is_admin) return true;
@@ -245,7 +245,7 @@
   const PROFILES = [
     {
       id:   "rob",
-      name: "Rob",
+      name: "Admin",
       hash: "84313ef39b0a979f0608491608870b3f2065f447d73e4373ba75ae2330aa82b5",
     },
   ];
@@ -908,7 +908,6 @@
     root.innerHTML = `
       <h3>Signed in</h3>
       <p>${esc(cloudUser.display_name || cloudUser.email)} · <span class="dim">${esc(cloudUser.email)}</span>${cloudUser.is_admin ? ' · <span class="dim">admin</span>' : ''}</p>
-      ${claimBlock}
       <div class="account-self-delete">
         <strong>Delete this account.</strong>
         <p class="dim small" style="margin:4px 0">All your answers, flags and progress will be permanently removed. This cannot be undone.</p>
@@ -1050,7 +1049,7 @@
     }
 
     const topicOrder = ["Paediatrics","Obstetrics & Gynaecology","Psychiatry","Medicine"];
-    const diffOrder = ["2","3","4","5"];
+    const diffOrder = ["1","2","3","4","5"];
     const lastStr = lastAt ? new Date(lastAt).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }) : "-";
 
     body.innerHTML = `
@@ -1469,7 +1468,7 @@
     }
     state.sessionStart = Date.now();
     // Tag body with mode so CSS can hide the test-only countdown row in
-    // study mode (Rob's "either fix or hide" call - per-question timer
+    // study mode (per the "either fix or hide" call - a per-question timer
     // is meaningful only in test mode).
     document.body.dataset.mode = s.mode;
     setScreen("quiz");
@@ -2176,7 +2175,7 @@
       sep.hidden = false;
     } else if (state.quiz.mode === "test") {
       // Test mode without countdown: show stopwatch-style elapsed time
-      // for the current question. Per Rob's call we do NOT show a Q
+      // for the current question. By design we do NOT show a Q
       // timer in study mode - the per-question stopwatch added noise
       // without value.
       qEl.textContent = "Q " + fmtClock(Date.now() - state.questionStart);
@@ -2409,8 +2408,10 @@
 
   // ── How-to modal ────────────────────────────────────────────────────────
   function wireHowToModal() {
-    document.getElementById("howToClose").onclick = closeHowTo;
-    document.getElementById("howToModal").addEventListener("click", e => {
+    const howToCloseBtn = document.getElementById("howToClose");
+    if (howToCloseBtn) howToCloseBtn.onclick = closeHowTo;
+    const howToEl = document.getElementById("howToModal");
+    if (howToEl) howToEl.addEventListener("click", e => {
       if (e.target.id === "howToModal") closeHowTo();
     });
     document.addEventListener("keydown", e => {
@@ -2483,16 +2484,29 @@
     };
 
     // Paste-questions flow.
-    document.getElementById("pasteAddBtn").onclick = pasteAdd;
-    document.getElementById("pasteDownloadBtn").onclick = pasteDownload;
-    document.getElementById("localBankClear").onclick = clearLocalBank;
-    document.getElementById("localBankExport").onclick = exportLocalBank;
+    const pasteAddBtn = document.getElementById("pasteAddBtn");
+    if (pasteAddBtn) pasteAddBtn.onclick = pasteAdd;
+    const pasteDlBtn = document.getElementById("pasteDownloadBtn");
+    if (pasteDlBtn) pasteDlBtn.onclick = pasteDownload;
+    const localClearBtn = document.getElementById("localBankClear");
+    if (localClearBtn) localClearBtn.onclick = clearLocalBank;
+    const localExportBtn = document.getElementById("localBankExport");
+    if (localExportBtn) localExportBtn.onclick = exportLocalBank;
     refreshLocalBankSummary();
   }
 
   // ── Report modal (per-question issue submission) ───────────────────────
   let _reportingQId = null;
   let _reportingModel = null;
+  // Who a report is filed under. Reports land in a public file, so this is
+  // an opaque id (never an email) and mirrors the ns() precedence so a
+  // report can be traced back to the same namespace that raised it.
+  function reporterId() {
+    if (cloudUser) return "cloud-" + cloudUser.id;
+    if (currentProfile) return currentProfile.id;
+    if (guestUser) return "guest-" + guestUser.id;
+    return "guest";
+  }
   function wireReportModal() {
     const m = document.getElementById("reportModal"); if (!m) return;
     document.getElementById("reportCancel").onclick = closeReportModal;
@@ -2548,7 +2562,7 @@
     const res = await postBackend("report", {
       question_id: _reportingQId,
       issue: text,
-      profile: currentProfile ? currentProfile.id : "guest",
+      profile: reporterId(),
       model: _reportingModel,
     });
     btn.disabled = false;
@@ -2558,7 +2572,7 @@
       // Optimistically include in local in-memory list so the badge updates.
       state.reports.push({
         id: res.id, question_id: _reportingQId, issue: text,
-        profile: currentProfile ? currentProfile.id : "guest",
+        profile: reporterId(),
         model: _reportingModel, created: new Date().toISOString(),
         status: "open", resolution: null,
       });
@@ -2567,12 +2581,12 @@
       if (repBtn) repBtn.classList.add("has-report");
       setTimeout(closeReportModal, 1200);
     } else {
-      status.textContent = "Couldn't reach the backend. Try again, or screenshot + email Rob.";
+      status.textContent = "Couldn't reach the backend. Try again, or screenshot it and open an issue at github.com/mord58562/a-to-e/issues.";
       status.classList.add("bad");
     }
   }
 
-  // ── Audit dashboard (Rob only) ─────────────────────────────────────────
+  // ── Audit dashboard (admin only) ───────────────────────────────────────
   // Two tabs: Inbox (pending batches) and Reports (user-submitted issues).
   // Each row offers a copy-prompt → paste-response → apply workflow that
   // works on any LLM's free tier (no API key, no Claude Code needed).
@@ -3243,7 +3257,7 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     refreshLocalBankSummary();
     openAdmin("add");
   }
-  function closeHowTo() { document.getElementById("howToModal").hidden = true; }
+  function closeHowTo() { const m = document.getElementById("howToModal"); if (m) m.hidden = true; }
 
   // ── Paste questions ─────────────────────────────────────────────────────
   async function pasteAdd() {
@@ -3480,7 +3494,7 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     { q: "Boring people live longer. Or it just seems longer to them.", who: "House" },
   ];
   function maybeShowHouseQuote() {
-    // Rob's spec: fire reliably on every 50th UNIQUE answered question
+    // Spec: fire reliably on every 50th UNIQUE answered question
     // in this study session - Q50, Q100, Q150, etc. The trigger counts
     // unique questions answered in the current in-memory pool, not raw
     // answer-events (re-answers don't tick the counter). Falls back to
