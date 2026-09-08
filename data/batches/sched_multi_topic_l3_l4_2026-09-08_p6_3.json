@@ -1,0 +1,386 @@
+[
+  {
+    "id": "sched-0908p6-med-011",
+    "topic": "Medicine",
+    "subtopic": "Oncology and Haematology",
+    "subtopic_detail": "Distinguishing acute transfusion reactions during a red cell transfusion",
+    "difficulty": 3,
+    "model": "Claude Opus 5",
+    "tags": ["transfusion", "anaemia", "critical care"],
+    "stem": "You are the hospital medical officer called urgently to a 74 year old woman receiving her first unit of packed red cells for iron deficiency anaemia. Fifteen minutes into the transfusion, roughly 40 mL in, she becomes restless and complains of severe lower back pain and a burning sensation at the cannula site.\n\nThe nurse has stopped the transfusion and is running normal saline through a new giving set. The patient has no urticaria, no facial swelling, no wheeze and no stridor. Her chest is clear on auscultation and her jugular venous pressure is not elevated. Her urine in the catheter bag has turned dark red over the past few minutes.",
+    "data_table": {
+      "Vital signs": "Pulse 126/min, BP 84/50 mmHg, respiratory rate 24/min, SpO2 96% on room air, temperature 38.9 degrees C",
+      "Investigations": "Pre-transfusion haemoglobin 71 g/L (115-165); the unit and the patient wristband are being checked against the compatibility label"
+    },
+    "lead_in": "Which complication is most likely to be occurring?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Transfusion associated circulatory overload from a rapid intravascular volume increase",
+        "correct": false,
+        "rationale": "Circulatory overload produces hypertension with raised jugular venous pressure and pulmonary crepitations, whereas she is hypotensive with a clear chest, and only 40 mL has been given. It typically appears after a larger volume in a patient with cardiac or renal impairment. (Source: National Blood Authority: Patient Blood Management Guidelines)",
+        "source_refs": ["National Blood Authority: Patient Blood Management Guidelines"]
+      },
+      {
+        "letter": "B",
+        "text": "Anaphylactic reaction to a plasma protein contained within the transfused component",
+        "correct": false,
+        "rationale": "Anaphylaxis would produce urticaria, angioedema or bronchospasm alongside hypotension, and all three are explicitly absent here. It is the leading consideration when hypotension accompanies mucocutaneous or airway features. (Source: Australian and New Zealand Society of Blood Transfusion: Guidelines for Transfusion)",
+        "source_refs": ["Australian and New Zealand Society of Blood Transfusion: Guidelines for Transfusion"]
+      },
+      {
+        "letter": "C",
+        "text": "Acute haemolytic reaction from an ABO incompatible unit reacting with recipient antibodies",
+        "correct": true,
+        "rationale": "Fever with hypotension, loin pain, cannula site pain and red urine within minutes of starting a small volume is the classic presentation of complement mediated intravascular haemolysis, most often caused by a clerical identification error. The haemoglobinuria is the finding that separates it from the other reaction types. (Source: Australian and New Zealand Society of Blood Transfusion: Guidelines for Transfusion)",
+        "source_refs": [
+          "Australian and New Zealand Society of Blood Transfusion: Guidelines for Transfusion",
+          "National Blood Authority: Patient Blood Management Guidelines"
+        ]
+      },
+      {
+        "letter": "D",
+        "text": "Febrile non-haemolytic reaction caused by recipient antibodies against donor leucocytes",
+        "correct": false,
+        "rationale": "This is a diagnosis of exclusion presenting with fever and rigors but preserved blood pressure and no haemoglobinuria, and it is the near-pair that must be separated from haemolysis by the urine and the haemodynamics. It is far more common but far less dangerous. (Source: Australian and New Zealand Society of Blood Transfusion: Guidelines for Transfusion)",
+        "source_refs": ["Australian and New Zealand Society of Blood Transfusion: Guidelines for Transfusion"]
+      },
+      {
+        "letter": "E",
+        "text": "Transfusion related acute lung injury from donor antibodies directed against recipient neutrophils",
+        "correct": false,
+        "rationale": "This causes hypoxaemia with bilateral pulmonary infiltrates within six hours, and her oxygen saturation of 96 per cent with a clear chest does not fit. It is suspected when respiratory failure dominates the picture rather than haemoglobinuria. (Source: National Blood Authority: Patient Blood Management Guidelines)",
+        "source_refs": ["National Blood Authority: Patient Blood Management Guidelines"]
+      }
+    ],
+    "explanation": {
+      "summary": "Acute transfusion reactions are separated at the bedside by the combination of the time of onset, the blood pressure direction and the presence or absence of respiratory and mucocutaneous features. Acute haemolytic reactions almost always result from a failure of patient identification at the bedside rather than a laboratory error, which is why the two person identity check immediately before the unit is connected is the single most effective safety step. Management is to stop the transfusion, keep the line open with saline through a fresh giving set, resuscitate aggressively to maintain renal perfusion, and return the unit and fresh samples to the blood bank for repeat grouping and a direct antiglobulin test. Complications include acute kidney injury from free haemoglobin and disseminated intravascular coagulation. Every event is reportable to the hospital transfusion committee and to the national haemovigilance system.",
+      "key_points": [
+        "Onset within minutes after a small volume points strongly to ABO incompatibility",
+        "Hypotension with loin pain and red urine distinguishes haemolysis from a febrile non-haemolytic reaction",
+        "Circulatory overload raises the blood pressure and the jugular venous pressure rather than lowering them",
+        "Most acute haemolytic reactions originate in a bedside identification error, not the laboratory",
+        "Stop the transfusion, maintain renal perfusion and return the unit with fresh samples to the laboratory"
+      ],
+      "pearls": "Red or brown urine appearing within minutes of starting a unit is haemoglobinuria until proven otherwise: send fresh samples for a direct antiglobulin test and repeat grouping, and target a urine output above 1 mL/kg/hour to protect the kidneys."
+    },
+    "sources": [
+      {
+        "label": "Australian and New Zealand Society of Blood Transfusion: Guidelines for Transfusion",
+        "url": "https://anzsbt.org.au"
+      },
+      {
+        "label": "National Blood Authority: Patient Blood Management Guidelines",
+        "url": "https://www.blood.gov.au"
+      }
+    ],
+    "reference_ranges": ["fbc"],
+    "created": "2026-09-08"
+  },
+  {
+    "id": "sched-0908p6-med-012",
+    "topic": "Medicine",
+    "subtopic": "Oncology and Haematology",
+    "subtopic_detail": "Incidental paraprotein and the threshold for haematology referral",
+    "difficulty": 4,
+    "model": "Claude Opus 5",
+    "tags": ["myeloma", "screening", "monitoring"],
+    "stem": "A 69 year old man is referred to you after protein electrophoresis, requested during a work up for fatigue, showed an IgG kappa paraprotein of 11 g/L. He has osteoarthritis of both knees and takes no regular medicines other than occasional paracetamol.\n\nHe reports no bone pain, no weight loss, no night sweats and no recurrent infections. Examination reveals no lymphadenopathy, no hepatosplenomegaly and no bony tenderness over the spine, ribs or pelvis. A whole body low dose CT reports degenerative change only, with no lytic lesions. Serum free light chain ratio is mildly abnormal at 2.1 and a bone marrow aspirate shows 6 per cent clonal plasma cells.",
+    "data_table": {
+      "Vital signs": "Vital signs within normal limits",
+      "Investigations": "Haemoglobin 132 g/L (130-175), corrected calcium 2.34 mmol/L (2.15-2.60), creatinine 79 micromol/L (60-110), albumin 39 g/L (35-50), beta-2 microglobulin within normal limits"
+    },
+    "lead_in": "What is the most appropriate management plan?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence bortezomib based induction chemotherapy with an autologous transplant plan",
+        "correct": false,
+        "rationale": "Treatment requires either end organ damage or a biomarker of malignancy, and he has neither, so chemotherapy would expose him to toxicity without benefit. This regimen becomes appropriate once symptomatic myeloma is established. (Source: Medical Scientific Advisory Group: Multiple Myeloma Guidelines)",
+        "source_refs": ["Medical Scientific Advisory Group: Multiple Myeloma Guidelines"]
+      },
+      {
+        "letter": "B",
+        "text": "Discharge him from follow up because the investigations show no evidence of malignancy",
+        "correct": false,
+        "rationale": "The paraprotein carries an ongoing annual risk of progression that persists indefinitely, so discharge forfeits the chance to detect transformation early. Discharge would only be reasonable if the paraprotein were shown to be transient and disappeared on repeat testing. (Source: Medical Scientific Advisory Group: Multiple Myeloma Guidelines)",
+        "source_refs": ["Medical Scientific Advisory Group: Multiple Myeloma Guidelines"]
+      },
+      {
+        "letter": "C",
+        "text": "Arrange urgent renal biopsy to identify occult light chain deposition within the kidney",
+        "correct": false,
+        "rationale": "His creatinine is normal and there is no proteinuria to investigate, so biopsy has no target and carries unnecessary risk. It becomes relevant when renal impairment or nephrotic range proteinuria accompanies a paraprotein. (Source: BMJ Best Practice: Monoclonal Gammopathy of Undetermined Significance)",
+        "source_refs": ["BMJ Best Practice: Monoclonal Gammopathy of Undetermined Significance"]
+      },
+      {
+        "letter": "D",
+        "text": "Commence zoledronic acid infusions to reduce the risk of future skeletal events",
+        "correct": false,
+        "rationale": "Bone protective therapy is indicated in myeloma with bone disease, not in a premalignant paraproteinaemia with a normal skeletal survey. It would be started once lytic lesions or myeloma related osteoporosis were demonstrated. (Source: Medical Scientific Advisory Group: Multiple Myeloma Guidelines)",
+        "source_refs": ["Medical Scientific Advisory Group: Multiple Myeloma Guidelines"]
+      },
+      {
+        "letter": "E",
+        "text": "Arrange periodic clinical and laboratory surveillance without commencing any therapy",
+        "correct": true,
+        "rationale": "With a paraprotein below 30 g/L, clonal plasma cells below 10 per cent and no anaemia, hypercalcaemia, renal impairment or lytic lesions, this is a premalignant state managed by observation. Monitoring detects the small annual proportion who progress at a stage when treatment is most effective. (Source: Medical Scientific Advisory Group: Multiple Myeloma Guidelines)",
+        "source_refs": [
+          "Medical Scientific Advisory Group: Multiple Myeloma Guidelines",
+          "BMJ Best Practice: Monoclonal Gammopathy of Undetermined Significance"
+        ]
+      }
+    ],
+    "explanation": {
+      "summary": "A monoclonal paraprotein without end organ damage sits on a spectrum that runs from an undetermined significance state, through smouldering myeloma, to symptomatic disease requiring treatment. The defining features of the premalignant state are a serum paraprotein under 30 g/L, clonal bone marrow plasma cells under 10 per cent, and absence of the myeloma defining events summarised as hypercalcaemia, renal impairment, anaemia and bone lesions. Modern criteria added three biomarkers that mandate treatment even without organ damage: clonal plasma cells of 60 per cent or more, a serum free light chain ratio of 100 or more, and more than one focal lesion on MRI. Progression to myeloma occurs at approximately one per cent per year and does not plateau, so lifelong surveillance is required with risk stratified intervals. Recognising this entity matters because it is common in older adults and overtreatment causes real harm.",
+      "key_points": [
+        "The premalignant state requires a paraprotein under 30 g/L and clonal plasma cells under 10 per cent",
+        "Myeloma defining events are hypercalcaemia, renal impairment, anaemia and lytic bone lesions",
+        "Three biomarkers now mandate treatment even without organ damage, including a light chain ratio of 100 or more",
+        "Risk of progression is around one per cent per year and does not diminish with time",
+        "Management is surveillance; chemotherapy and bone protective agents are not indicated"
+      ],
+      "pearls": "The three high risk features that predict progression are a non-IgG paraprotein, a paraprotein of 15 g/L or more, and an abnormal free light chain ratio; a patient with none of them has a risk of progression at 20 years of only around five per cent."
+    },
+    "sources": [
+      {
+        "label": "Medical Scientific Advisory Group: Multiple Myeloma Guidelines",
+        "url": "https://myeloma.org.au"
+      },
+      {
+        "label": "BMJ Best Practice: Monoclonal Gammopathy of Undetermined Significance",
+        "url": "https://bestpractice.bmj.com"
+      }
+    ],
+    "reference_ranges": ["fbc", "uec", "calcium_corrected"],
+    "created": "2026-09-08"
+  },
+  {
+    "id": "sched-0908p6-med-013",
+    "topic": "Medicine",
+    "subtopic": "Infectious Diseases",
+    "subtopic_detail": "Fever in a traveller returned from a malaria endemic region",
+    "difficulty": 3,
+    "model": "Claude Opus 5",
+    "tags": ["fever", "diagnosis", "infection"],
+    "stem": "You are the emergency registrar assessing a 29 year old man with four days of fever to 39 degrees C, shaking chills, headache and generalised aching. He returned eight days ago from three weeks visiting family in Papua New Guinea, where he stayed in a village without bed nets.\n\nHe was prescribed doxycycline prophylaxis but admits he took it irregularly and stopped once he arrived home. He has no cough, no diarrhoea, no dysuria, no rash and no neck stiffness. On examination he has mild scleral icterus and a spleen tip palpable below the left costal margin. Chest is clear and there is no focal neurological deficit.",
+    "data_table": {
+      "Vital signs": "Pulse 112/min, BP 108/66 mmHg, respiratory rate 20/min, SpO2 97% on room air, temperature 39.2 degrees C",
+      "Investigations": "Haemoglobin 118 g/L (130-175), platelets 84 x10^9/L (150-400), white cell count 6.2 x10^9/L (4.0-11.0), bilirubin 38 micromol/L (less than 20), creatinine 96 micromol/L (60-110), lactate 1.8 mmol/L (0.5-2.0)"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Commence empirical intravenous ceftriaxone and admit for presumed bacterial sepsis",
+        "correct": false,
+        "rationale": "Antibacterial cover may be added if the picture is unclear, but starting it without excluding the diagnosis that his exposure and thrombocytopenia point to would leave a rapidly fatal parasitaemia untreated. Empirical antibacterials are appropriate once malaria has been excluded or alongside treatment in a shocked patient. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "B",
+        "text": "Arrange dengue and arboviral serology and manage supportively with oral fluids",
+        "correct": false,
+        "rationale": "Dengue is a genuine differential from the same region and also causes thrombocytopenia, but serology takes days and supportive care alone would miss the one cause that kills within 24 hours. The near-pair distinction matters, and both are tested for, but the parasite must be excluded first. (Source: Communicable Diseases Network Australia: Malaria)",
+        "source_refs": ["Communicable Diseases Network Australia: Malaria"]
+      },
+      {
+        "letter": "C",
+        "text": "Request urgent thick and thin blood films with a rapid antigen detection test",
+        "correct": true,
+        "rationale": "Fever with thrombocytopenia and mild haemolytic jaundice within three months of return from an endemic area is malaria until proven otherwise, and microscopy with a rapid antigen test is the diagnostic pathway that must be completed the same day. A single negative set does not exclude it, so films are repeated over 48 hours. (Source: Communicable Diseases Network Australia: Malaria)",
+        "source_refs": ["Communicable Diseases Network Australia: Malaria", "Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "D",
+        "text": "Review again in 48 hours, since his prophylaxis makes this diagnosis unlikely",
+        "correct": false,
+        "rationale": "Chemoprophylaxis reduces but does not eliminate risk, and his adherence was poor, so it provides no reassurance at all. Falciparum infection can progress from mild symptoms to cerebral involvement and death within a day, making any delay dangerous. (Source: Communicable Diseases Network Australia: Malaria)",
+        "source_refs": ["Communicable Diseases Network Australia: Malaria"]
+      },
+      {
+        "letter": "E",
+        "text": "Arrange CT brain and lumbar puncture before any antimicrobial therapy is given",
+        "correct": false,
+        "rationale": "He has no headache with meningism, no confusion and no focal signs, so central nervous system imaging and cerebrospinal fluid sampling are not the priority and would delay diagnosis. These become essential if conscious state deteriorates, since cerebral involvement is a recognised complication. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      }
+    ],
+    "explanation": {
+      "summary": "Malaria is the single most important diagnosis to exclude in any febrile patient returning from an endemic region, because Plasmodium falciparum can progress from mild symptoms to organ failure and death within 24 hours. Papua New Guinea, the Solomon Islands and parts of Southeast Asia and sub-Saharan Africa are the regions most relevant to Australian practice, and people visiting friends and relatives are at particularly high risk because they often travel for longer, stay in rural settings and use prophylaxis inconsistently. The classic periodic fever pattern is frequently absent, and the most useful laboratory clue is thrombocytopenia, often with mild anaemia and a raised bilirubin from haemolysis. Diagnosis rests on thick and thin films for parasite detection and speciation together with a rapid antigen test, and because parasitaemia fluctuates, a negative set must be repeated at 12 to 24 hour intervals over 48 hours before the diagnosis is discarded. Falciparum malaria is treated as a medical emergency with artemisinin based therapy, and malaria is a notifiable disease in all Australian jurisdictions.",
+      "key_points": [
+        "Any fever within three months of return from an endemic area is malaria until excluded",
+        "Thrombocytopenia with mild anaemia and raised bilirubin is the most useful laboratory clue",
+        "Chemoprophylaxis reduces risk but never excludes the diagnosis, particularly with poor adherence",
+        "One negative film set is insufficient; repeat over 48 hours before excluding malaria",
+        "Falciparum infection can progress to organ failure and death within 24 hours"
+      ],
+      "pearls": "Repeat thick and thin films at 12 to 24 hour intervals for a total of three sets before excluding malaria, because parasitaemia is cyclical and the first set is negative in a meaningful proportion of genuine cases."
+    },
+    "sources": [
+      {
+        "label": "Communicable Diseases Network Australia: Malaria",
+        "url": "https://www.health.gov.au/cdna"
+      },
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://tgldcdp.tg.org.au"
+      }
+    ],
+    "reference_ranges": ["fbc", "uec", "lfts"],
+    "created": "2026-09-08"
+  },
+  {
+    "id": "sched-0908p6-med-014",
+    "topic": "Medicine",
+    "subtopic": "Oncology and Haematology",
+    "subtopic_detail": "Distinguishing primary from secondary causes of a raised haematocrit",
+    "difficulty": 4,
+    "model": "Claude Opus 5",
+    "tags": ["diagnosis", "monitoring"],
+    "stem": "You review a 58 year old man in clinic after a raised haemoglobin was found on bloods taken for tiredness. He mentions intense itching after hot showers that has troubled him for a year, and describes burning discomfort in his fingers and toes.\n\nHe has never smoked, has no cough or breathlessness, and does not snore or wake unrefreshed. His partner has never noticed him stopping breathing overnight. He drinks four standard drinks weekly and takes no testosterone or diuretics. On examination the spleen is palpable 3 cm below the costal margin and there is facial plethora. Oxygen saturation is 98 per cent on room air.",
+    "data_table": {
+      "Vital signs": "Pulse 76/min, BP 148/88 mmHg, respiratory rate 14/min, SpO2 98% on room air, temperature 36.6 degrees C",
+      "Investigations": "Haemoglobin 194 g/L (130-175), haematocrit 0.58 (0.40-0.52), white cell count 13.2 x10^9/L (4.0-11.0), platelets 512 x10^9/L (150-400), serum erythropoietin 2.1 IU/L (3.7-29.5), ferritin 18 micrograms/L (30-300)"
+    },
+    "lead_in": "Which investigation will most likely confirm the diagnosis?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Overnight polysomnography to identify obstructive sleep apnoea driving the erythrocytosis",
+        "correct": false,
+        "rationale": "Sleep disordered breathing causes a secondary erythrocytosis mediated by hypoxaemia, which would raise rather than suppress erythropoietin, and he has no snoring, witnessed apnoeas or daytime sleepiness. Polysomnography would be the right test if the erythropoietin were elevated with suggestive symptoms. (Source: Haematology Society of Australia and New Zealand: Myeloproliferative Neoplasms)",
+        "source_refs": ["Haematology Society of Australia and New Zealand: Myeloproliferative Neoplasms"]
+      },
+      {
+        "letter": "B",
+        "text": "Arterial blood gas analysis to detect chronic hypoxaemia from unrecognised lung disease",
+        "correct": false,
+        "rationale": "His oxygen saturation of 98 per cent on room air already makes significant hypoxaemia unlikely, and hypoxic drive again produces a high rather than suppressed erythropoietin. Blood gas testing is useful when saturations are borderline or carbon monoxide exposure is suspected. (Source: Haematology Society of Australia and New Zealand: Myeloproliferative Neoplasms)",
+        "source_refs": ["Haematology Society of Australia and New Zealand: Myeloproliferative Neoplasms"]
+      },
+      {
+        "letter": "C",
+        "text": "Computed tomography of the abdomen to seek an erythropoietin secreting renal tumour",
+        "correct": false,
+        "rationale": "A tumour secreting erythropoietin autonomously would produce a high circulating level, which is the opposite of his suppressed result, so the pre-test probability is very low. Cross sectional imaging is warranted when erythropoietin is inappropriately elevated. (Source: BMJ Best Practice: Polycythaemia)",
+        "source_refs": ["BMJ Best Practice: Polycythaemia"]
+      },
+      {
+        "letter": "D",
+        "text": "JAK2 V617F mutation testing on a peripheral blood sample from the same venepuncture",
+        "correct": true,
+        "rationale": "Suppressed erythropoietin with a raised haematocrit, splenomegaly, aquagenic pruritus, erythromelalgia and a rise in the other two cell lines points to an autonomous clonal process, and the driver mutation is present in over 95 per cent of cases. Iron deficiency without bleeding here reflects consumption by expanded erythropoiesis rather than a separate diagnosis. (Source: Haematology Society of Australia and New Zealand: Myeloproliferative Neoplasms)",
+        "source_refs": [
+          "Haematology Society of Australia and New Zealand: Myeloproliferative Neoplasms",
+          "BMJ Best Practice: Polycythaemia"
+        ]
+      },
+      {
+        "letter": "E",
+        "text": "Repeat full blood count after two weeks of increased oral fluid intake and rest",
+        "correct": false,
+        "rationale": "A relative erythrocytosis from plasma contraction does not cause splenomegaly, a raised white cell and platelet count, or suppressed erythropoietin, so rehydration will not resolve this picture. That approach suits an isolated borderline haematocrit in a dehydrated or diuretic treated patient. (Source: BMJ Best Practice: Polycythaemia)",
+        "source_refs": ["BMJ Best Practice: Polycythaemia"]
+      }
+    ],
+    "explanation": {
+      "summary": "A persistently raised haematocrit must be separated into relative erythrocytosis from plasma volume contraction, secondary erythrocytosis driven by erythropoietin, and a primary clonal myeloproliferative process. The serum erythropoietin level is the pivotal discriminator, because autonomous clonal erythropoiesis suppresses it through negative feedback while every secondary cause raises or preserves it. Clinical clues to the clonal disorder include itch provoked by hot water, burning pain in the digits, splenomegaly and involvement of the white cell and platelet lines. Untreated, the dominant risk is arterial and venous thrombosis, and management centres on venesection to a haematocrit target below 0.45 together with low dose aspirin, with cytoreduction added for higher risk patients. Iron deficiency is expected and should not be corrected, since replacing iron simply fuels further red cell production.",
+      "key_points": [
+        "Serum erythropoietin separates primary clonal disease, which suppresses it, from all secondary causes",
+        "Aquagenic pruritus, erythromelalgia and splenomegaly point to a myeloproliferative neoplasm",
+        "Involvement of the white cell and platelet lines argues against a purely secondary process",
+        "The JAK2 V617F mutation is present in over 95 per cent of cases",
+        "Thrombosis is the principal cause of morbidity and drives the treatment targets"
+      ],
+      "pearls": "Venesect to a haematocrit below 0.45 and add low dose aspirin, and do not replace the accompanying iron deficiency, because iron repletion accelerates red cell production and defeats the venesection programme."
+    },
+    "sources": [
+      {
+        "label": "Haematology Society of Australia and New Zealand: Myeloproliferative Neoplasms",
+        "url": "https://www.hsanz.org.au"
+      },
+      {
+        "label": "BMJ Best Practice: Polycythaemia",
+        "url": "https://bestpractice.bmj.com"
+      }
+    ],
+    "reference_ranges": ["fbc", "iron_studies"],
+    "created": "2026-09-08"
+  },
+  {
+    "id": "sched-0908p6-med-015",
+    "topic": "Medicine",
+    "subtopic": "Infectious Diseases",
+    "subtopic_detail": "Back pain with fever after a recent bacteraemia",
+    "difficulty": 3,
+    "model": "Claude Opus 5",
+    "tags": ["antibiotics", "imaging", "back pain"],
+    "stem": "You are the medical registrar reviewing a 66 year old man with four weeks of worsening mid-thoracic back pain that now wakes him every night. He was treated six weeks ago for a Staphylococcus aureus bacteraemia arising from an infected forearm wound and completed two weeks of intravenous antibiotics.\n\nHe has type 2 diabetes. The pain is not relieved by rest and he has lost 4 kg. On examination there is focal tenderness on percussion over the T8 and T9 spinous processes. Lower limb power, tone, reflexes and sensation are normal, and anal tone is preserved. Plain thoracic spine radiographs are reported as showing degenerative change only.",
+    "data_table": {
+      "Vital signs": "Pulse 96/min, BP 132/78 mmHg, respiratory rate 16/min, SpO2 97% on room air, temperature 37.9 degrees C",
+      "Investigations": "White cell count 12.8 x10^9/L (4.0-11.0), C-reactive protein 96 mg/L (less than 5), erythrocyte sedimentation rate 78 mm/h (less than 20), HbA1c 8.9 per cent (less than 6.0)"
+    },
+    "lead_in": "What is the most appropriate next step?",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Start empirical intravenous flucloxacillin and review the response after 48 hours",
+        "correct": false,
+        "rationale": "Starting antibiotics before tissue or blood sampling reduces the yield of culture, and prolonged targeted therapy depends on knowing the organism and its susceptibilities. Empirical therapy before sampling is justified only in sepsis or evolving neurological deficit. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic"]
+      },
+      {
+        "letter": "B",
+        "text": "Refer for physiotherapy and prescribe regular analgesia with review in four weeks",
+        "correct": false,
+        "rationale": "Night pain, weight loss, fever and a raised C-reactive protein after a recent bacteraemia are red flags that exclude a mechanical explanation. Conservative management applies to back pain without red flags and normal inflammatory markers. (Source: BMJ Best Practice: Vertebral Osteomyelitis)",
+        "source_refs": ["BMJ Best Practice: Vertebral Osteomyelitis"]
+      },
+      {
+        "letter": "C",
+        "text": "Arrange MRI of the whole spine and take blood cultures before antibiotics are given",
+        "correct": true,
+        "rationale": "MRI is far more sensitive than plain radiography, which stays normal for two to three weeks, and it also identifies an epidural collection that would need surgical drainage. Blood cultures taken before antibiotics identify the organism in around half of cases and can spare a biopsy. (Source: Therapeutic Guidelines: Antibiotic)",
+        "source_refs": ["Therapeutic Guidelines: Antibiotic", "BMJ Best Practice: Vertebral Osteomyelitis"]
+      },
+      {
+        "letter": "D",
+        "text": "Arrange a bone scan to localise increased skeletal uptake before further imaging",
+        "correct": false,
+        "rationale": "Radionuclide imaging is sensitive but non-specific and cannot show an epidural collection or the extent of soft tissue involvement, so it does not answer the question that changes management. It has a role when MRI is contraindicated by a device or foreign body. (Source: BMJ Best Practice: Vertebral Osteomyelitis)",
+        "source_refs": ["BMJ Best Practice: Vertebral Osteomyelitis"]
+      },
+      {
+        "letter": "E",
+        "text": "Arrange CT of the chest and abdomen to look for a primary malignancy with metastases",
+        "correct": false,
+        "rationale": "Metastatic disease is a genuine differential for night pain and weight loss, but the preceding Staphylococcus aureus bacteraemia and the raised inflammatory markers make infection far more probable and the spinal imaging is needed first. Staging CT would follow if MRI showed a destructive lesion with a tumour pattern. (Source: BMJ Best Practice: Vertebral Osteomyelitis)",
+        "source_refs": ["BMJ Best Practice: Vertebral Osteomyelitis"]
+      }
+    ],
+    "explanation": {
+      "summary": "Vertebral osteomyelitis with discitis usually arises from haematogenous seeding, and Staphylococcus aureus is the causative organism in around half of cases, making any recent bacteraemia a critical piece of history in a patient with new back pain. The presentation is insidious, with only about half of patients being febrile, so normal observations do not exclude it and the inflammatory markers carry more diagnostic weight. Plain radiographs remain normal for the first two to three weeks, which makes MRI with contrast the imaging of choice both for diagnosis and for detecting an epidural abscess that requires urgent surgical decompression. Microbiological confirmation through blood cultures or image guided biopsy should precede antibiotics whenever the patient is stable, because therapy typically runs for six weeks or longer and must be organism directed. Delayed diagnosis risks vertebral collapse, deformity and permanent neurological injury.",
+      "key_points": [
+        "Recent Staphylococcus aureus bacteraemia with new back pain is the classic sequence",
+        "Around half of patients are afebrile, so inflammatory markers carry the diagnostic weight",
+        "Plain radiographs stay normal for two to three weeks and cannot exclude the diagnosis",
+        "MRI detects epidural abscess, which mandates urgent surgical decompression",
+        "Obtain cultures before antibiotics unless the patient is septic or neurologically deteriorating"
+      ],
+      "pearls": "In a stable patient, hold antibiotics until blood cultures or an image guided biopsy have been taken: identifying the organism dictates a six week or longer targeted course, and empirical therapy started early can render every subsequent sample sterile."
+    },
+    "sources": [
+      {
+        "label": "Therapeutic Guidelines: Antibiotic",
+        "url": "https://tgldcdp.tg.org.au"
+      },
+      {
+        "label": "BMJ Best Practice: Vertebral Osteomyelitis",
+        "url": "https://bestpractice.bmj.com"
+      }
+    ],
+    "reference_ranges": ["fbc", "inflammatory_markers", "glucose_hba1c"],
+    "created": "2026-09-08"
+  }
+]
