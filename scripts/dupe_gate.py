@@ -70,6 +70,25 @@ SYNONYMS = [
 
 TOPICS = ["Paediatrics", "Obstetrics & Gynaecology", "Psychiatry", "Medicine"]
 
+# Two questions can share almost every word and still be different questions
+# when the dose differs: the 150 microgram and 300 microgram adrenaline bands
+# are separate exam points. String similarity washes that out, so doses are
+# compared as their own signal. Time spans ("over 2 to 5 minutes") are not
+# doses and are deliberately excluded - they vary as wording, not as answer.
+UNIT_BASE = {
+    "mg": "mg", "milligram": "mg", "milligrams": "mg",
+    "g": "g", "gram": "g", "grams": "g",
+    "mcg": "mcg", "microgram": "mcg", "micrograms": "mcg", "microg": "mcg",
+    "ml": "ml", "millilitre": "ml", "millilitres": "ml",
+    "l": "l", "litre": "l", "litres": "l",
+    "unit": "unit", "units": "unit", "iu": "unit",
+    "mmol": "mmol", "mol": "mol", "kg": "kg",
+}
+DOSE_RE = re.compile(r"\b(\d+)\s+(" + "|".join(sorted(UNIT_BASE, key=len, reverse=True)) + r")\b")
+# A pair whose doses disagree is only a duplicate if it is otherwise nearly
+# character-identical.
+DOSE_MISMATCH_OVERRIDE = 0.93
+
 # A pair at or above HARD is the same question twice.
 HARD = 0.80
 # A pair at or above SOFT is worth a human look but is often ordinary
@@ -128,9 +147,27 @@ def load(paths):
                 "file": fp,
                 "det": det,
                 "ans": ans,
+                "doses": doses(ans),
                 "key": det + " || " + ans,
             })
     return records
+
+
+def doses(text):
+    """The set of (amount, base unit) quantities named in the answer."""
+    return {(amount, UNIT_BASE[unit]) for amount, unit in DOSE_RE.findall(text)}
+
+
+def doses_agree(a, b):
+    """Whether two answers name the same quantities.
+
+    A subset counts as agreement: "magnesium 50 mg/kg to a maximum of 2 g" and
+    "magnesium 50 mg/kg" are the same answer stated at different length, and a
+    range written with a hyphen ("12-15 L/min") leaves both endpoints behind.
+    Disjoint or conflicting quantities mean different questions: the 150 and
+    300 microgram adrenaline bands are separate exam points.
+    """
+    return a <= b or b <= a
 
 
 # Pairs below this on the combined key cannot reach any flagging rule, so the
@@ -156,7 +193,9 @@ def score(a, b):
     return combined, det, ans
 
 
-def is_duplicate(combined, det, ans):
+def is_duplicate(combined, det, ans, a, b):
+    if not doses_agree(a["doses"], b["doses"]) and combined < DOSE_MISMATCH_OVERRIDE:
+        return False
     return combined >= HARD or (ans >= ANSWER_HARD and det >= ANSWER_DETAIL_FLOOR)
 
 
@@ -178,7 +217,7 @@ def compare(new_records, old_records, report_soft):
             if a["id"] and a["id"] == b["id"]:
                 continue
             combined, det, ans = score(a, b)
-            if is_duplicate(combined, det, ans):
+            if is_duplicate(combined, det, ans, a, b):
                 duplicates.append((combined, det, ans, a, b))
             elif report_soft and combined >= SOFT:
                 reviews.append((combined, det, ans, a, b))
@@ -196,7 +235,7 @@ def self_compare(records):
         for i in range(len(items)):
             for j in range(i + 1, len(items)):
                 combined, det, ans = score(items[i], items[j])
-                if is_duplicate(combined, det, ans):
+                if is_duplicate(combined, det, ans, items[i], items[j]):
                     duplicates.append((combined, det, ans, items[i], items[j]))
                 if combined >= 0.90:
                     bands["0.90+"] += 1
