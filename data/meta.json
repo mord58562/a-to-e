@@ -1,13 +1,13 @@
 {
-  "version": "1.5.82",
+  "version": "1.5.83",
   "updated": "2026-09-14",
   "last_added": "2026-09-14",
-  "total_questions": 5744,
+  "total_questions": 5794,
   "by_topic": {
-    "Paediatrics": 1436,
-    "Obstetrics & Gynaecology": 1436,
-    "Psychiatry": 1436,
-    "Medicine": 1436
+    "Paediatrics": 1449,
+    "Obstetrics & Gynaecology": 1449,
+    "Psychiatry": 1448,
+    "Medicine": 1448
   },
-  "audit": "2026-09-14 local session: four new 25-question batches, one per module. Paediatrics on the febrile infant and paediatric sepsis, Psychiatry on mental health care for under-served populations, Obstetrics and Gynaecology on maternal venous thromboembolism and postnatal sepsis, and Medicine on geriatric assessment, falls, deprescribing and palliative symptom management. Each cluster was confirmed as a genuine gap by keyword probe against the live bank rather than by subtopic label. All four modules are level at 1436. Every batch was generated to a mandated 1/14/7/1/2 spread across L1 to L5 to begin correcting an L4 excess identified the same day: the bank sits at L4 31.6 per cent against a 15 to 20 per cent target, and a blinded re-rating of 150 questions by four independent raters found the excess confined to questions generated after the 2026-06-01 overhaul, where the L3 and L4 labels no longer separate reasoning load. See data/_audit/difficulty_calibration_2026-09-14.md. No question has been re-labelled. All four batches passed scripts/dupe_gate.py --new with zero duplicates on the first run and cleared schema, option length parity, source attribution, banned token and Australian spelling checks."
+  "audit": "2026-09-14 scheduled remote agent: one 50-question batch spanning all four modules and all three active difficulty tiers, with each question's cell chosen against the live per-topic per-difficulty deficit (20 L3, 20 L4, 10 L5; Paediatrics 13, Obstetrics and Gynaecology 13, Psychiatry 12, Medicine 12). Clusters were selected by keyword probe of subtopic_detail against the live bank rather than by label: Paediatrics on musculoskeletal, ear, eye and skin presentations plus growth and coeliac serology; Obstetrics and Gynaecology on gynaecological oncology, adnexal masses, abnormal uterine bleeding and anaemia in pregnancy; Psychiatry on neurodevelopmental and neuropsychiatric presentations across the lifespan; Medicine on severe cutaneous adverse drug reactions, axial spondyloarthritis, pituitary disease and anticoagulant reversal. No L2 generated. scripts/dupe_gate.py passed with zero duplicates on the first run. Correct-answer letters are even at 10 per letter. Note for the maintainer: raw argmax over the 12 cells never selects an L5 cell, because the frozen legacy L2 stock (27% of the bank) leaves every L3 and L4 cell with a structurally unclosable 12 to 15 point deficit against L5's 0.4 to 0.7. This batch followed the stated per-batch L5 aim and Section 2's directive to keep generating L5 (4.42% of bank against a 5% target); the selection rule needs an explicit L5 floor or an L2-excluded denominator to be self-consistent."
 }
