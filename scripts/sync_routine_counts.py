@@ -45,6 +45,72 @@ def live_totals():
         'Medicine': totals['Medicine'],
     }
 
+def live_difficulty():
+    """Count live questions per difficulty tier, deduped by id exactly as
+    live_totals() does. The routine decides whether to generate L5 from these
+    numbers, so they have to be refreshed with the module counts rather than
+    left to go stale."""
+    seen = set()
+    tiers = collections.Counter()
+    paths = [os.path.join(REPO, f'data/questions_{m}.json')
+             for m in ('paeds', 'obgyn', 'psych', 'medicine')]
+    mani = json.load(open(os.path.join(REPO, 'data/batches_manifest.json')))
+    paths += [os.path.join(REPO, 'data', b) for b in mani.get('batches', [])]
+    for p in paths:
+        try:
+            data = json.load(open(p))
+        except (FileNotFoundError, json.JSONDecodeError):
+            continue
+        if not isinstance(data, list):
+            continue
+        for q in data:
+            if not isinstance(q, dict):
+                continue
+            qid = q.get('id')
+            if not qid or qid in seen:
+                continue
+            seen.add(qid)
+            tiers[q.get('difficulty')] += 1
+    return tiers
+
+
+def update_difficulty(tiers):
+    """Rewrite Section 2's difficulty snapshot.
+
+    Every share is a share of the WHOLE BANK. A previous run read L5 as a
+    share of the L3-L5 tiers instead, got 6.03% against a 4.36% true share,
+    and skipped L5 generation on the strength of it.
+    """
+    total = sum(tiers.values())
+    if not total:
+        return False
+    lines = ['Live distribution snapshot (autosynced by '
+             'scripts/sync_routine_counts.py). Every percentage below is a '
+             'share of the WHOLE BANK of ' + str(total) + ' questions, not of '
+             'any subset of tiers:']
+    for d in (1, 2, 3, 4, 5):
+        n = tiers.get(d, 0)
+        line = f'- L{d}: {n} ({100 * n / total:.2f}% of bank)'
+        if d == 5:
+            target = int(round(0.05 * total))
+            if n < target:
+                line += f' <- below the ~5% target ({target} Qs); keep generating L5'
+            else:
+                line += ' <- at or above the ~5% target'
+        if d == 4:
+            line += ' (target 15-20% of bank)'
+        lines.append(line)
+    block = '\n'.join(lines) + '\n'
+    text = open(CTX).read()
+    pattern = r'Live distribution snapshot \(.*?\n(?:- L\d: [^\n]*\n){5}'
+    if not re.search(pattern, text, flags=re.DOTALL):
+        print('WARNING: difficulty snapshot block not found in .routine-context.md')
+        return False
+    new = re.sub(pattern, block, text, count=1, flags=re.DOTALL)
+    open(CTX, 'w').write(new)
+    return new != text
+
+
 def update_meta(totals):
     """Write total_questions + by_topic into data/meta.json so the
     portfolio fetch can show a live question count."""
@@ -196,8 +262,12 @@ def push_remote(prompt):
 def main():
     totals = live_totals()
     print(f'Live totals: Paeds={totals["Paediatrics"]} Obgyn={totals["Obstetrics & Gynaecology"]} Psych={totals["Psychiatry"]} Medicine={totals["Medicine"]} Total={sum(totals.values())}')
+    tiers = live_difficulty()
+    print('Live difficulty: ' + ' '.join(
+        f'L{d}={tiers.get(d, 0)}' for d in (1, 2, 3, 4, 5)))
     update_meta(totals)
     changed = update_context(totals)
+    changed = update_difficulty(tiers) or changed
     print(f'.routine-context.md updated: {changed}')
     prompt = build_prompt(totals)
     out_path = os.path.join(REPO, '.routine_prompt_latest.txt')
