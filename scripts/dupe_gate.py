@@ -84,7 +84,7 @@ UNIT_BASE = {
     "unit": "unit", "units": "unit", "iu": "unit",
     "mmol": "mmol", "mol": "mol", "kg": "kg",
 }
-DOSE_RE = re.compile(r"\b(\d+)\s+(" + "|".join(sorted(UNIT_BASE, key=len, reverse=True)) + r")\b")
+DOSE_RE = re.compile(r"(\d+(?:\.\d+)?)\s*(" + "|".join(sorted(UNIT_BASE, key=len, reverse=True)) + r")\b")
 # A pair whose doses disagree is only a duplicate if it is otherwise nearly
 # character-identical.
 DOSE_MISMATCH_OVERRIDE = 0.93
@@ -139,23 +139,30 @@ def load(paths):
         for q in data:
             if not isinstance(q, dict):
                 continue
+            raw_ans = correct_option(q)
             det = normalise(q.get("subtopic_detail"))
-            ans = normalise(correct_option(q))
+            ans = normalise(raw_ans)
             records.append({
                 "id": q.get("id"),
                 "topic": q.get("topic"),
                 "file": fp,
                 "det": det,
                 "ans": ans,
-                "doses": doses(ans),
+                "doses": doses(raw_ans),
                 "key": det + " || " + ans,
             })
     return records
 
 
 def doses(text):
-    """The set of (amount, base unit) quantities named in the answer."""
-    return {(amount, UNIT_BASE[unit]) for amount, unit in DOSE_RE.findall(text)}
+    """The set of (amount, base unit) quantities named in the answer.
+
+    Read from the raw option text, not the normalised form: normalising strips
+    the decimal point, which would make 0.5 mg and 5 mg indistinguishable.
+    """
+    lowered = re.sub(r"[^a-z0-9. ]+", " ", str(text or "").lower())
+    return {(amount.rstrip("."), UNIT_BASE[unit])
+            for amount, unit in DOSE_RE.findall(lowered)}
 
 
 def doses_agree(a, b):
@@ -269,6 +276,32 @@ def as_json(rows):
     } for c, d, n, a, b in sorted(rows, key=lambda r: -r[0])]
 
 
+# Cases that have actually been got wrong. A regression here silently retires
+# good questions, so they are cheap insurance.
+DOSE_CASES = [
+    ("adrenaline 150 micrograms IM", "adrenaline 300 micrograms IM", False),
+    ("varenicline 0.5 mg twice daily", "varenicline 5 mg twice daily", False),
+    ("mannitol 0.5 g/kg over 15 minutes", "mannitol 1 g/kg over 20 minutes", False),
+    ("ursodeoxycholic acid 500 mg twice daily", "ursodeoxycholic acid 250 mg twice daily", False),
+    ("magnesium 50 mg/kg (maximum 2 g)", "magnesium 50 mg per kg", True),
+    ("high flow oxygen 12-15 L/min", "high flow oxygen 15 L/min", True),
+    ("calcium gluconate 10% 10 mL over 2 to 3 minutes",
+     "calcium gluconate 10% 10 mL over 2 to 5 minutes", True),
+]
+
+
+def selftest():
+    failures = 0
+    for a, b, expected in DOSE_CASES:
+        got = doses_agree(doses(a), doses(b))
+        if got != expected:
+            failures += 1
+            print(f"FAIL expected agree={expected} got={got}\n  {a}\n  {b}\n"
+                  f"  {sorted(doses(a))} vs {sorted(doses(b))}")
+    print(f"{len(DOSE_CASES) - failures}/{len(DOSE_CASES)} dose cases pass")
+    return 1 if failures else 0
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -279,10 +312,16 @@ def main():
     ap.add_argument("--json", metavar="PATH", help="write findings as JSON")
     ap.add_argument("--show-review", action="store_true",
                     help="also list pairs in the 0.62 to 0.80 review band")
+    ap.add_argument("--selftest", action="store_true",
+                    help="check the dose comparison against known cases")
     args = ap.parse_args()
 
+    if args.selftest:
+        return selftest()
+
     if not args.new and not args.all:
-        ap.error("pass --new <files> to gate a batch, or --all to audit the bank")
+        ap.error("pass --new <files> to gate a batch, --all to audit the bank, "
+                 "or --selftest to check the dose comparison")
 
     if args.new:
         new_paths = []
