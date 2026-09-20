@@ -1,0 +1,365 @@
+[
+ {
+  "id": "sched-0920a-med-006",
+  "topic": "Medicine",
+  "subtopic": "Palliative care",
+  "subtopic_detail": "Opioid rotation when morphine metabolites accumulate as renal function declines",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
+  "tags": [
+   "palliative",
+   "prescribing",
+   "renal"
+  ],
+  "stem": "You are the registrar on the palliative care ward looking after a 71 year old man with metastatic prostate cancer and painful bone disease. He has been comfortable for six weeks on sustained release oral morphine with occasional immediate release doses.\n\nOver the past three days his family have noticed he is drowsy through the day, and twice they have seen sudden brief jerks of his arms while he dozes. Overnight he became restless and was briefly confused about where he was. His pain is no worse than before. His creatinine has risen progressively over the past fortnight and his urine output has fallen. His calcium is within normal limits, he is not hypoxic and his blood glucose is normal.",
+  "data_table": {
+   "Vital signs": "Pulse rate 82/min, blood pressure 108/64 mmHg, respiratory rate 12/min, SpO2 96% on room air, temperature 36.7 °C",
+   "Examination": "Drowsy but rousable, intermittent multifocal myoclonic jerks, pupils 2 mm bilaterally, no focal neurological deficit",
+   "Biochemistry": "Creatinine 268 micromol/L (60-110), estimated glomerular filtration rate 18 mL/min/1.73m2, corrected calcium and glucose within normal limits",
+   "Medication": "Sustained release oral morphine with immediate release breakthrough doses, unchanged for six weeks"
+  },
+  "lead_in": "What is the most appropriate change to his analgesia?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Increase the morphine dose to control the increasing agitation",
+    "correct": false,
+    "rationale": "The agitation and myoclonus are features of metabolite toxicity rather than uncontrolled pain, which his family confirm is no worse. Increasing the dose would deepen the neurotoxicity and could precipitate respiratory depression. (Source: Therapeutic Guidelines: Palliative Care)",
+    "source_refs": [
+     "Therapeutic Guidelines: Palliative Care"
+    ]
+   },
+   {
+    "letter": "B",
+    "text": "Add midazolam and continue the morphine at the current dose",
+    "correct": false,
+    "rationale": "Sedation would mask the myoclonus and confusion while the accumulating metabolites continue to build, and it adds to his drowsiness. Benzodiazepines may be used symptomatically alongside rotation but not instead of it. (Source: Therapeutic Guidelines: Palliative Care)",
+    "source_refs": [
+     "Therapeutic Guidelines: Palliative Care"
+    ]
+   },
+   {
+    "letter": "C",
+    "text": "Add haloperidol for the agitation and continue the morphine unchanged",
+    "correct": false,
+    "rationale": "Haloperidol treats delirium from other causes but does not remove the accumulating metabolite that is driving this picture. Treating the symptom while leaving the cause in place will not resolve the neurotoxicity. (Source: Therapeutic Guidelines: Palliative Care)",
+    "source_refs": [
+     "Therapeutic Guidelines: Palliative Care"
+    ]
+   },
+   {
+    "letter": "D",
+    "text": "Stop the morphine and rotate to fentanyl or hydromorphone",
+    "correct": true,
+    "rationale": "Morphine-6-glucuronide and morphine-3-glucuronide are renally cleared, and as the filtration rate falls they accumulate to produce exactly this triad of sedation, myoclonus and delirium with preserved analgesia. Fentanyl has no active renally cleared metabolites and hydromorphone is substantially safer in renal impairment, so rotation removes the cause. (Source: Therapeutic Guidelines: Palliative Care)",
+    "source_refs": [
+     "Therapeutic Guidelines: Palliative Care"
+    ]
+   },
+   {
+    "letter": "E",
+    "text": "Continue morphine but give it by subcutaneous infusion instead",
+    "correct": false,
+    "rationale": "Changing the route does not change the metabolism, so the same metabolites continue to accumulate in renal impairment. A route change is useful when swallowing fails rather than when toxicity has developed. (Source: Therapeutic Guidelines: Palliative Care)",
+    "source_refs": [
+     "Therapeutic Guidelines: Palliative Care"
+    ]
+   }
+  ],
+  "explanation": {
+   "summary": "Morphine is metabolised in the liver to morphine-3-glucuronide and morphine-6-glucuronide, both of which are cleared by the kidney, so declining renal function allows them to accumulate even when the prescribed dose has not changed. Morphine-6-glucuronide is a potent opioid agonist producing sedation and respiratory depression, while morphine-3-glucuronide is neuroexcitatory and causes myoclonus, hyperalgesia and delirium. The clinical signature is a patient whose pain control is unchanged but who becomes drowsy, twitchy and confused as the creatinine climbs, and recognising the pattern prevents the reflex dose increase that makes it worse. Fentanyl is the safest opioid in significant renal impairment because its metabolites are inactive, with hydromorphone a reasonable alternative, and equianalgesic conversion should be done with a dose reduction of around a quarter to a third because of incomplete cross tolerance.",
+   "key_points": [
+    "Morphine metabolites are renally cleared and accumulate as filtration falls",
+    "Sedation, myoclonus and delirium with unchanged pain is the signature",
+    "Fentanyl has no active renally cleared metabolites",
+    "Exclude hypercalcaemia, hypoxia and other delirium causes at the same time",
+    "Reduce the calculated equianalgesic dose for incomplete cross tolerance"
+   ],
+   "pearls": "Multifocal myoclonus in a patient on morphine whose pain is well controlled should prompt a creatinine check rather than a dose increase, because it is usually the first sign of metabolite accumulation."
+  },
+  "sources": [
+   {
+    "label": "Therapeutic Guidelines: Palliative Care"
+   },
+   {
+    "label": "Australian Medicines Handbook"
+   }
+  ],
+  "reference_ranges": [
+   "uec",
+   "calcium_corrected"
+  ],
+  "created": "2026-09-20"
+ },
+ {
+  "id": "sched-0920a-med-007",
+  "topic": "Medicine",
+  "subtopic": "Respiratory",
+  "subtopic_detail": "Classifying a pleural effusion when the absolute protein and the protein ratio disagree",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
+  "tags": [
+   "respiratory",
+   "diagnosis"
+  ],
+  "stem": "You are the medical registrar reviewing a 55 year old man who has had three weeks of breathlessness on exertion and a dull ache in the right chest. He has smoked twenty cigarettes daily for thirty years and has lost 5 kg.\n\nHe has no orthopnoea or ankle swelling, his jugular venous pressure is not elevated and his echocardiogram shows normal ventricular function. He takes no diuretics and has never taken any. His liver function and albumin are within normal limits and there is no ascites. A diagnostic pleural tap has been performed and the fluid and paired serum results are now available. The resident tells you the fluid must be a transudate because the protein is under 30 g/L.",
+  "data_table": {
+   "Vital signs": "Pulse rate 92/min, blood pressure 128/78 mmHg, respiratory rate 20/min, SpO2 95% on room air, temperature 36.8 °C",
+   "Examination": "Stony dull percussion note and reduced breath sounds at the right base, no peripheral oedema, jugular venous pressure not elevated",
+   "Pleural fluid": "Protein 28 g/L, lactate dehydrogenase 210 U/L, straw coloured, cytology pending",
+   "Paired serum": "Protein 46 g/L, lactate dehydrogenase 295 U/L with a laboratory upper reference limit of 250 U/L, albumin within normal limits"
+  },
+  "lead_in": "How should the fluid be classified and why?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "An exudate, because the protein and lactate dehydrogenase ratios are raised",
+    "correct": true,
+    "rationale": "The fluid to serum protein ratio is 0.61 and the lactate dehydrogenase ratio is 0.71, each exceeding the thresholds of 0.5 and 0.6 respectively, so the criteria classify this as an exudate on two counts. Meeting any one of the three criteria is sufficient, and the absolute protein value is not one of them. (Source: Thoracic Society of Australia and New Zealand: Pleural disease)",
+    "source_refs": [
+     "Thoracic Society of Australia and New Zealand: Pleural disease"
+    ]
+   },
+   {
+    "letter": "B",
+    "text": "A transudate, because the pleural fluid protein is below 30 g/L",
+    "correct": false,
+    "rationale": "The absolute protein cut off is an older rule that misclassifies a substantial minority of effusions, which is precisely why the ratio based criteria replaced it. A serum protein at the lower end of normal drags the absolute pleural value down while the ratio stays exudative. (Source: Thoracic Society of Australia and New Zealand: Pleural disease)",
+    "source_refs": [
+     "Thoracic Society of Australia and New Zealand: Pleural disease"
+    ]
+   },
+   {
+    "letter": "C",
+    "text": "A transudate, so he should be treated with diuretics and observation",
+    "correct": false,
+    "rationale": "This compounds a misclassification with a treatment that would delay diagnosis in a smoker with weight loss and a unilateral effusion. There is also no clinical or echocardiographic evidence of a transudative cause. (Source: Thoracic Society of Australia and New Zealand: Pleural disease)",
+    "source_refs": [
+     "Thoracic Society of Australia and New Zealand: Pleural disease"
+    ]
+   },
+   {
+    "letter": "D",
+    "text": "Indeterminate, so the tap should be repeated in one week to classify it",
+    "correct": false,
+    "rationale": "The available paired results already allow definitive classification, so repeating the procedure adds risk and delay without new information. Repeat sampling is for inadequate volume or to pursue cytology, not to reclassify. (Source: Thoracic Society of Australia and New Zealand: Pleural disease)",
+    "source_refs": [
+     "Thoracic Society of Australia and New Zealand: Pleural disease"
+    ]
+   },
+   {
+    "letter": "E",
+    "text": "Indeterminate, so the fluid glucose and pH should be used to classify it",
+    "correct": false,
+    "rationale": "Glucose and pH help characterise an effusion once it is known to be exudative, particularly in suspected empyema where a low pH drives drainage. They do not perform the transudate and exudate separation. (Source: Thoracic Society of Australia and New Zealand: Pleural disease)",
+    "source_refs": [
+     "Thoracic Society of Australia and New Zealand: Pleural disease"
+    ]
+   }
+  ],
+  "explanation": {
+   "summary": "The first branch point in assessing any pleural effusion is whether it is a transudate, produced by altered hydrostatic or oncotic pressures across an intact pleura, or an exudate, produced by increased capillary permeability or impaired lymphatic drainage from pleural disease itself. Light criteria classify an effusion as exudative if any one of three conditions is met: a pleural to serum protein ratio above 0.5, a pleural to serum lactate dehydrogenase ratio above 0.6, or a pleural lactate dehydrogenase greater than two thirds of the upper limit of the serum reference range. Because only one criterion need be satisfied, the rule is deliberately sensitive and will occasionally label a transudate as an exudate, most often in heart failure treated with diuretics, where a serum to pleural albumin gradient above 12 g/L correctly reclassifies it. The absolute protein concentration is not part of the criteria and misleads whenever the serum protein is itself abnormal, and an exudative unilateral effusion in a smoker with weight loss demands cytology and further imaging.",
+   "key_points": [
+    "Any one of the three Light criteria is sufficient to define an exudate",
+    "The criteria use ratios rather than the absolute pleural protein",
+    "Paired serum samples must be taken at the same time as the tap",
+    "Diuretic treated heart failure can be misclassified as an exudate",
+    "A serum to pleural albumin gradient above 12 g/L reclassifies such cases"
+   ],
+   "pearls": "When Light criteria label an effusion exudative but the clinical picture is clearly heart failure on diuretics, calculate the serum minus pleural albumin gradient, because a value above 12 g/L identifies the transudate the criteria misclassified."
+  },
+  "sources": [
+   {
+    "label": "Thoracic Society of Australia and New Zealand: Pleural disease"
+   },
+   {
+    "label": "Therapeutic Guidelines: Respiratory"
+   }
+  ],
+  "reference_ranges": [
+   "lfts"
+  ],
+  "created": "2026-09-20"
+ },
+ {
+  "id": "sched-0920a-med-008",
+  "topic": "Medicine",
+  "subtopic": "Rheumatology",
+  "subtopic_detail": "Sequencing joint aspiration and antibiotics in a monoarthritis in an immunosuppressed patient",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
+  "tags": [
+   "rheumatology",
+   "antibiotics",
+   "diagnosis"
+  ],
+  "stem": "You are the medical registrar in the emergency department assessing a 62 year old woman with a two day history of a hot, swollen and exquisitely painful right knee that she cannot bear weight on.\n\nShe has seropositive rheumatoid arthritis and takes weekly methotrexate and low dose prednisolone. Her other joints are at their usual baseline and none is acutely inflamed. She is febrile and her inflammatory markers are markedly raised. She is haemodynamically stable with no hypotension or features of shock. The resident has drawn up intravenous flucloxacillin and is about to administer it while the orthopaedic registrar is being contacted about aspiration.",
+  "data_table": {
+   "Vital signs": "Pulse rate 104/min, blood pressure 132/78 mmHg, respiratory rate 18/min, SpO2 98% on room air, temperature 38.5 °C",
+   "Examination": "Right knee hot, swollen and tense with a large effusion, all movement severely restricted by pain, other joints at baseline",
+   "Investigations": "White cell count 17.4 x10^9/L (4.0-11.0), C reactive protein 268 mg/L (less than 5), urate within normal limits, blood cultures taken",
+   "Medication": "Weekly methotrexate and low dose prednisolone"
+  },
+  "lead_in": "What is the most appropriate immediate action?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Give the intravenous flucloxacillin now and aspirate the knee tomorrow",
+    "correct": false,
+    "rationale": "Antibiotics given before sampling substantially reduce the yield of synovial fluid culture, which is what identifies the organism and directs definitive therapy. Antibiotics do take precedence when the patient is septic and shocked, which she is not. (Source: Therapeutic Guidelines: Antibiotic)",
+    "source_refs": [
+     "Therapeutic Guidelines: Antibiotic"
+    ]
+   },
+   {
+    "letter": "B",
+    "text": "Start oral prednisolone for a presumed inflammatory arthritis flare",
+    "correct": false,
+    "rationale": "Attributing an acute hot joint to a flare of her known rheumatoid disease is a classic and dangerous error, because immunosuppression both raises the risk of septic arthritis and blunts its presentation. A single acutely inflamed joint against a quiescent background should be treated as infection until proven otherwise. (Source: Therapeutic Guidelines: Antibiotic)",
+    "source_refs": [
+     "Therapeutic Guidelines: Antibiotic"
+    ]
+   },
+   {
+    "letter": "C",
+    "text": "Arrange magnetic resonance imaging of the knee before any aspiration",
+    "correct": false,
+    "rationale": "Imaging cannot distinguish septic from inflammatory effusion and delays the only test that can, while cartilage is being destroyed within days. It is useful for suspected osteomyelitis or a periarticular collection after the joint has been sampled. (Source: Therapeutic Guidelines: Antibiotic)",
+    "source_refs": [
+     "Therapeutic Guidelines: Antibiotic"
+    ]
+   },
+   {
+    "letter": "D",
+    "text": "Start colchicine for a presumed crystal arthropathy and review later",
+    "correct": false,
+    "rationale": "Crystal arthritis is a genuine differential and can produce an identical picture with fever and high inflammatory markers, but a normal urate does not exclude infection and crystals can coexist with sepsis. Only synovial fluid examination distinguishes them. (Source: Therapeutic Guidelines: Antibiotic)",
+    "source_refs": [
+     "Therapeutic Guidelines: Antibiotic"
+    ]
+   },
+   {
+    "letter": "E",
+    "text": "Aspirate the joint for urgent culture before antibiotics are given",
+    "correct": true,
+    "rationale": "Synovial fluid for urgent Gram stain, culture and crystal examination should be obtained before antibiotics whenever the patient is stable, because prior antibiotics markedly reduce culture yield and leave subsequent therapy unguided. Treatment then starts immediately after the sample is taken rather than waiting for the result. (Source: Therapeutic Guidelines: Antibiotic)",
+    "source_refs": [
+     "Therapeutic Guidelines: Antibiotic"
+    ]
+   }
+  ],
+  "explanation": {
+   "summary": "Septic arthritis destroys articular cartilage within days and carries appreciable mortality, so an acutely hot single joint is an emergency regardless of what else the patient has. The diagnostic pathway is synovial fluid aspiration for urgent Gram stain, culture and polarised light microscopy, together with blood cultures, obtained before antibiotics whenever the patient is haemodynamically stable, since prior antibiotic exposure is the commonest reason cultures return negative and therapy remains empirical. Patients on immunosuppression and those with pre existing joint disease are at the highest risk and the most likely to have the diagnosis missed, because the presentation is attributed to a flare of the underlying condition. Staphylococcus aureus is the commonest organism, empirical therapy in Australia is usually intravenous flucloxacillin adjusted for local resistance patterns, and definitive management requires joint washout or repeated aspiration alongside antibiotics.",
+   "key_points": [
+    "Aspirate before antibiotics unless the patient is septic and unstable",
+    "Send fluid for Gram stain, culture and polarised light microscopy together",
+    "Crystals in the fluid do not exclude coexisting infection",
+    "Immunosuppression raises risk and masks the usual clinical signs",
+    "Joint washout or repeated aspiration accompanies antibiotic therapy"
+   ],
+   "pearls": "A normal serum urate during an acute attack neither confirms nor excludes gout, because urate commonly falls during the acute inflammatory episode, so it can never be used to avoid aspirating a hot joint."
+  },
+  "sources": [
+   {
+    "label": "Therapeutic Guidelines: Antibiotic"
+   },
+   {
+    "label": "Australian Rheumatology Association: Septic arthritis"
+   }
+  ],
+  "reference_ranges": [
+   "fbc",
+   "inflammatory_markers"
+  ],
+  "created": "2026-09-20"
+ },
+ {
+  "id": "sched-0920a-med-010",
+  "topic": "Medicine",
+  "subtopic": "Cardiology",
+  "subtopic_detail": "Order of agents when controlling blood pressure in acute aortic dissection",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
+  "tags": [
+   "aortic dissection",
+   "hypertension",
+   "emergency"
+  ],
+  "stem": "You are the medical registrar called urgently to the emergency department to see a 58 year old man who developed severe tearing pain between his shoulder blades while getting out of his car two hours ago. The pain was maximal at onset.\n\nHe has long standing hypertension and has not taken his medication for several weeks. He is alert and in obvious distress. Peripheral pulses are present and symmetrical and there is no aortic regurgitant murmur or neurological deficit. His computed tomography aortogram has just been reported. On arriving you find that a glyceryl trinitrate infusion was started ten minutes ago and is being titrated upwards, and his heart rate has risen since it began.",
+  "data_table": {
+   "Vital signs": "Pulse rate 116/min, blood pressure 194/108 mmHg, respiratory rate 22/min, SpO2 97% on room air, temperature 36.7 °C",
+   "Examination": "Symmetrical peripheral pulses, no diastolic murmur, no focal neurological deficit, chest clear",
+   "Imaging": "Computed tomography aortogram shows an intimal flap arising distal to the left subclavian artery extending to the level of the diaphragm, with no branch vessel compromise",
+   "Current treatment": "Glyceryl trinitrate infusion commenced ten minutes ago and being titrated upwards, morphine given"
+  },
+  "lead_in": "What is the most appropriate immediate change to his management?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Continue the nitrate infusion alone and titrate it to the blood pressure",
+    "correct": false,
+    "rationale": "A vasodilator given without rate control causes a reflex tachycardia and a rise in the rate of pressure change against the aortic wall, which propagates the dissection even as the recorded pressure falls. His rising heart rate since the infusion started is that reflex occurring. (Source: Therapeutic Guidelines: Cardiovascular)",
+    "source_refs": [
+     "Therapeutic Guidelines: Cardiovascular"
+    ]
+   },
+   {
+    "letter": "B",
+    "text": "Start intravenous beta blockade before continuing the vasodilator",
+    "correct": true,
+    "rationale": "The aim is to reduce the shearing force on the aortic wall, which depends on the rate of rise of pressure as well as its absolute value, so heart rate must be brought to about 60 per minute with an intravenous beta blocker first. A vasodilator is then added to reach a target systolic pressure of roughly 100 to 120 mmHg once the reflex tachycardia has been prevented. (Source: Therapeutic Guidelines: Cardiovascular)",
+    "source_refs": [
+     "Therapeutic Guidelines: Cardiovascular"
+    ]
+   },
+   {
+    "letter": "C",
+    "text": "Start a dihydropyridine calcium channel blocker as the single agent",
+    "correct": false,
+    "rationale": "Dihydropyridines are vasodilators without rate limiting effect, so used alone they reproduce the same reflex tachycardia problem as the nitrate. A rate limiting calcium channel blocker is an alternative only when beta blockade is contraindicated. (Source: Therapeutic Guidelines: Cardiovascular)",
+    "source_refs": [
+     "Therapeutic Guidelines: Cardiovascular"
+    ]
+   },
+   {
+    "letter": "D",
+    "text": "Give intravenous hydralazine boluses to bring the pressure down fast",
+    "correct": false,
+    "rationale": "Hydralazine is a direct arterial dilator that causes marked reflex tachycardia and produces unpredictable stepwise falls that are difficult to titrate. It is specifically avoided in dissection for these reasons. (Source: Therapeutic Guidelines: Cardiovascular)",
+    "source_refs": [
+     "Therapeutic Guidelines: Cardiovascular"
+    ]
+   },
+   {
+    "letter": "E",
+    "text": "Withhold all antihypertensives until surgical review has been completed",
+    "correct": false,
+    "rationale": "Medical control of heart rate and blood pressure is the primary treatment for an uncomplicated dissection distal to the left subclavian artery and is started immediately rather than after review. Delay allows extension of the flap. (Source: Therapeutic Guidelines: Cardiovascular)",
+    "source_refs": [
+     "Therapeutic Guidelines: Cardiovascular"
+    ]
+   }
+  ],
+  "explanation": {
+   "summary": "Acute aortic dissection presents with severe pain that is maximal at onset, classically tearing and interscapular, and is classified by whether the ascending aorta is involved. A Stanford type A dissection involving the ascending aorta is a surgical emergency, whereas a type B dissection beginning distal to the left subclavian artery without malperfusion, rupture or refractory pain is managed medically in the first instance. The therapeutic target is not simply the blood pressure but the shearing stress on the aortic wall, which is determined by the rate of rise of arterial pressure as well as its peak, and that rate of rise is driven by ventricular contractility and heart rate. Rate control with an intravenous beta blocker therefore always precedes vasodilatation, aiming for a heart rate near 60 per minute and a systolic pressure of about 100 to 120 mmHg, with adequate analgesia because pain itself drives catecholamine release.",
+   "key_points": [
+    "Pain maximal at onset distinguishes dissection from evolving ischaemic pain",
+    "Type A involves the ascending aorta and requires urgent surgery",
+    "Uncomplicated type B dissection is managed medically at first",
+    "Shearing stress depends on rate of pressure rise, not just peak pressure",
+    "Beta blockade precedes vasodilators to prevent reflex tachycardia"
+   ],
+   "pearls": "Target a heart rate of about 60 per minute before adding any vasodilator, because a vasodilator given first produces reflex tachycardia that raises the rate of pressure rise and can extend the dissection while the recorded blood pressure looks better."
+  },
+  "sources": [
+   {
+    "label": "Therapeutic Guidelines: Cardiovascular"
+   },
+   {
+    "label": "Australian Medicines Handbook"
+   }
+  ],
+  "reference_ranges": [],
+  "created": "2026-09-20"
+ }
+]
