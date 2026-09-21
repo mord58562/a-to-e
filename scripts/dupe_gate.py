@@ -10,8 +10,15 @@ what it wants you to do (the correct option).
 Two modes:
 
   gate   python3 scripts/dupe_gate.py --new data/batches/new_*.json
-         Scores each new question against the existing bank. Exit 1 if any
-         question duplicates one already published. Run before publishing.
+         Scores each new question against the existing bank AND against the
+         other questions being gated in the same invocation. Exit 1 if any
+         question duplicates one already published or one of its siblings.
+         Run before publishing.
+
+         The sibling pass matters because a single scheduled fire writes many
+         batch files at once (sixteen, on 2026-09-20). Scoring each of them
+         only against the published bank let the same question be published
+         twice in one push and still pass.
 
   audit  python3 scripts/dupe_gate.py --all [--json report.json]
          Scores the whole bank against itself and reports the bands.
@@ -126,6 +133,21 @@ def correct_option(q):
     return ""
 
 
+def to_record(q, fp):
+    raw_ans = correct_option(q)
+    det = normalise(q.get("subtopic_detail"))
+    ans = normalise(raw_ans)
+    return {
+        "id": q.get("id"),
+        "topic": q.get("topic"),
+        "file": fp,
+        "det": det,
+        "ans": ans,
+        "doses": doses(raw_ans),
+        "key": det + " || " + ans,
+    }
+
+
 def load(paths):
     records = []
     for fp in paths:
@@ -139,18 +161,7 @@ def load(paths):
         for q in data:
             if not isinstance(q, dict):
                 continue
-            raw_ans = correct_option(q)
-            det = normalise(q.get("subtopic_detail"))
-            ans = normalise(raw_ans)
-            records.append({
-                "id": q.get("id"),
-                "topic": q.get("topic"),
-                "file": fp,
-                "det": det,
-                "ans": ans,
-                "doses": doses(raw_ans),
-                "key": det + " || " + ans,
-            })
+            records.append(to_record(q, fp))
     return records
 
 
@@ -231,12 +242,20 @@ def compare(new_records, old_records, report_soft):
     return duplicates, reviews
 
 
-def self_compare(records):
+def self_compare(records, report_soft=False):
+    """Every record against every other record in the set, within topic.
+
+    Serves two callers. --all audits the whole published bank with it. --new
+    runs it over the batch of files being gated, which is the only thing that
+    catches a question duplicated across two files of the same push: compare()
+    excludes those files from the bank side, so without this pass they are
+    never scored against each other.
+    """
     by_topic = defaultdict(list)
     for r in records:
         by_topic[r["topic"]].append(r)
 
-    duplicates = []
+    duplicates, reviews = [], []
     bands = defaultdict(int)
     for items in by_topic.values():
         for i in range(len(items)):
@@ -244,6 +263,8 @@ def self_compare(records):
                 combined, det, ans = score(items[i], items[j])
                 if is_duplicate(combined, det, ans, items[i], items[j]):
                     duplicates.append((combined, det, ans, items[i], items[j]))
+                elif report_soft and combined >= SOFT:
+                    reviews.append((combined, det, ans, items[i], items[j]))
                 if combined >= 0.90:
                     bands["0.90+"] += 1
                 elif combined >= 0.80:
@@ -252,7 +273,7 @@ def self_compare(records):
                     bands["0.70-0.80"] += 1
                 elif combined >= SOFT:
                     bands["0.62-0.70"] += 1
-    return duplicates, bands
+    return duplicates, bands, reviews
 
 
 def render(rows, label):
@@ -267,13 +288,56 @@ def render(rows, label):
         print(f"      ans: {b['ans'][:110]}")
 
 
-def as_json(rows):
-    return [{
-        "combined": round(c, 3), "detail": round(d, 3), "answer": round(n, 3),
-        "topic": a["topic"],
-        "a": {k: a[k] for k in ("id", "file", "det", "ans")},
-        "b": {k: b[k] for k in ("id", "file", "det", "ans")},
-    } for c, d, n, a, b in sorted(rows, key=lambda r: -r[0])]
+def as_json(rows, kind=None):
+    out = []
+    for c, d, n, a, b in sorted(rows, key=lambda r: -r[0]):
+        row = {
+            "combined": round(c, 3), "detail": round(d, 3), "answer": round(n, 3),
+            "topic": a["topic"],
+            "a": {k: a[k] for k in ("id", "file", "det", "ans")},
+            "b": {k: b[k] for k in ("id", "file", "det", "ans")},
+        }
+        if kind:
+            row["class"] = kind
+        out.append(row)
+    return out
+
+
+def run_gate(new_records, old_records, show_review=False, json_path=None):
+    """Gate a set of new questions. 0 clear, 1 duplicates found.
+
+    Two classes, reported separately because they are fixed differently: a
+    hit against the bank means the new question is redundant, a hit within
+    the new files means the push is publishing the same question twice.
+    """
+    print(f"gating {len(new_records)} new questions against "
+          f"{len(old_records)} existing, and against each other")
+    bank_dupes, bank_reviews = compare(new_records, old_records, show_review)
+    new_dupes, _bands, new_reviews = self_compare(new_records, show_review)
+
+    render(bank_dupes, "DUPLICATES vs the published bank (must be replaced)")
+    render(new_dupes, "DUPLICATES within the files being gated (must be replaced)")
+    if show_review:
+        render(bank_reviews, "review band vs the published bank")
+        render(new_reviews, "review band within the files being gated")
+    if json_path:
+        json.dump(as_json(bank_dupes, "vs_bank") + as_json(new_dupes, "within_new"),
+                  open(json_path, "w"), indent=1)
+
+    if bank_dupes or new_dupes:
+        print()
+        if bank_dupes:
+            ids = sorted({str(r[3]["id"]) for r in bank_dupes})
+            print(f"FAIL: {len(ids)} of {len(new_records)} duplicate an existing "
+                  f"question: {', '.join(ids)}")
+        if new_dupes:
+            pairs = sorted({(str(r[3]["id"]), str(r[4]["id"])) for r in new_dupes})
+            print(f"FAIL: {len(pairs)} pair(s) duplicate each other within this "
+                  f"push: {', '.join(x + ' / ' + y for x, y in pairs)}")
+        return 1
+
+    print(f"\nPASS: all {len(new_records)} clear of the bank and of each other.")
+    return 0
 
 
 # Cases that have actually been got wrong. A regression here silently retires
@@ -290,6 +354,49 @@ DOSE_CASES = [
 ]
 
 
+# The same question written into two different files of one push. This is the
+# case the gate used to miss entirely: compare() excludes the files being
+# gated from the bank side, so nothing ever scored these two against each
+# other and the push published the question twice. The assertion below is
+# deliberately two-sided - the bank pass must stay silent on it and the
+# new-vs-new pass must catch it - so deleting the new pass cannot be papered
+# over by loosening the other one.
+NEW_VS_NEW_CASE = [
+    {"id": "selftest-file-a-01", "topic": "Paediatrics",
+     "subtopic_detail": "Peanut anaphylaxis in a 6 year old, immediate management",
+     "options": [{"text": "Intramuscular adrenaline 300 micrograms to the lateral thigh",
+                  "correct": True}]},
+    {"id": "selftest-file-b-07", "topic": "Paediatrics",
+     "subtopic_detail": "Peanut anaphylaxis in a 6 year old, immediate management",
+     "options": [{"text": "Adrenaline 300 micrograms intramuscular to the lateral thigh",
+                  "correct": True}]},
+]
+
+
+def selftest_new_vs_new():
+    """Gating two files that duplicate each other must fail."""
+    a = to_record(NEW_VS_NEW_CASE[0], "data/batches/selftest_push_a.json")
+    b = to_record(NEW_VS_NEW_CASE[1], "data/batches/selftest_push_b.json")
+
+    print("\n-- the gate run below is the case under test; it is expected to "
+          "report one within-push duplicate --")
+    failures = 0
+    bank_only, _ = compare([a, b], [], False)
+    if bank_only:
+        failures += 1
+        print("FAIL: the bank pass flagged the selftest pair; the case no "
+              "longer isolates the new-vs-new gap")
+
+    code = run_gate([a, b], [], show_review=False)
+    if code != 1:
+        failures += 1
+        print("FAIL: gating two new files that duplicate each other returned "
+              f"{code}, expected 1. New-vs-new comparison is not wired in.")
+
+    print(f"{'0' if failures else '1'}/1 new-vs-new cases pass")
+    return failures
+
+
 def selftest():
     failures = 0
     for a, b, expected in DOSE_CASES:
@@ -299,6 +406,7 @@ def selftest():
             print(f"FAIL expected agree={expected} got={got}\n  {a}\n  {b}\n"
                   f"  {sorted(doses(a))} vs {sorted(doses(b))}")
     print(f"{len(DOSE_CASES) - failures}/{len(DOSE_CASES)} dose cases pass")
+    failures += selftest_new_vs_new()
     return 1 if failures else 0
 
 
@@ -324,29 +432,24 @@ def main():
                  "or --selftest to check the dose comparison")
 
     if args.new:
-        new_paths = []
+        # Deduplicate the path list: overlapping globs would otherwise load the
+        # same file twice and the new-vs-new pass would flag every question in
+        # it as a duplicate of itself.
+        new_paths, seen_paths = [], set()
         for pattern in args.new:
-            new_paths.extend(sorted(glob.glob(pattern)) or [pattern])
+            for path in (sorted(glob.glob(pattern)) or [pattern]):
+                key = os.path.normpath(path)
+                if key in seen_paths:
+                    continue
+                seen_paths.add(key)
+                new_paths.append(path)
         new_records = load(new_paths)
         old_records = load(bank_paths(exclude=new_paths))
-        print(f"gating {len(new_records)} new questions against {len(old_records)} existing")
-        duplicates, reviews = compare(new_records, old_records, args.show_review)
-        render(duplicates, "DUPLICATES (must be replaced)")
-        if args.show_review:
-            render(reviews, "review band")
-        if args.json:
-            json.dump(as_json(duplicates), open(args.json, "w"), indent=1)
-        if duplicates:
-            ids = sorted({r[3]["id"] for r in duplicates})
-            print(f"\nFAIL: {len(ids)} of {len(new_records)} duplicate an existing "
-                  f"question: {', '.join(str(i) for i in ids)}")
-            return 1
-        print(f"\nPASS: all {len(new_records)} clear.")
-        return 0
+        return run_gate(new_records, old_records, args.show_review, args.json)
 
     records = load(bank_paths())
     print(f"auditing {len(records)} questions")
-    duplicates, bands = self_compare(records)
+    duplicates, bands, _reviews = self_compare(records)
     for band in ("0.90+", "0.80-0.90", "0.70-0.80", "0.62-0.70"):
         print(f"  {band}: {bands[band]} pairs")
     render(duplicates, "DUPLICATE PAIRS")
