@@ -652,20 +652,44 @@ body[data-screen="quiz"] main { padding-top: 16px; }
 
 /* ── Quiz card (the "best looking" one) ──────────────────────────── */
 .quiz-topbar {
+  position: relative;
   background: var(--surface);
   border: 1px solid var(--line);
   border-bottom: none;
   /* Top corners match the bottom of the reading card via --r-soft, so
    * topbar + reading read as one continuous canvas with a flush seam. */
   border-radius: var(--r-soft) var(--r-soft) 0 0;
-  display: flex;
+  /* Three fixed columns, not space-between. The counter is the middle
+   * cell, so it sits dead centre whatever the Previous / Next labels
+   * do - and, critically, the panel below is positioned out of flow
+   * instead of being a fourth flex item that shoved the counter
+   * sideways every time it opened. */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  padding: 11px 18px;
+  padding: 11px 18px 13px;
   margin-top: 18px;
 }
+.quiz-topbar > #qtPrev { justify-self: start; }
+.quiz-topbar > #qtNext { justify-self: end; }
 .quiz-topbar[hidden], .colophon[hidden] { display: none !important; }
-.qt-inner { display: contents; }
+
+/* Hairline progress bar along the bottom seam of the topbar. */
+.qt-progress {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: var(--line);
+  overflow: hidden;
+  border-radius: 0;
+}
+.qt-progress span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  transition: width var(--dur-medium) var(--ease);
+}
 .qt-step, .qt-counter {
   background: transparent;
   border: none;
@@ -688,108 +712,227 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   font-family: var(--sans);
 }
 .qt-caret { font-size: 9px; color: var(--ink-mute); }
-/* Chip-grid sidebar (2026-06-01) - replaces the row dropdown.
- * Anatomy: a progress ring + summary text at the top (sticky), then a
- * dense grid of fixed-diameter circular chips, one per question.
- * Four states only: unanswered / answered (test mode mid-flight) /
- * correct / incorrect. Current question gets a perimeter ring, not a
- * fill change. Per reference_sidebar_spec.md. */
+/* ── Question navigator (rebuilt 2026-09-22) ──────────────────────
+ *
+ * Previously this lived behind a click on the counter, which hid the
+ * most useful thing on the screen and, because the panel was a sibling
+ * flex item, shunted the counter sideways whenever you opened it.
+ *
+ * It is now a persistent right rail from 1200px up, where there is room
+ * beside the reading column. Below that the same markup is reused as
+ * the panel behind the counter, positioned absolutely so it changes
+ * nothing about the row above it.
+ *
+ * The chip grid is a window, not the whole pool. A session can be the
+ * entire bank and 7,000 buttons is neither drawable nor navigable, so
+ * it shows a block around the current question with paging and a
+ * jump-to-number box. Under the window size, the window is everything
+ * and the controls are not rendered at all.
+ */
+.nav-rail {
+  position: fixed;
+  top: 84px;
+  right: 18px;
+  width: 244px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-soft);
+  padding: 14px 14px 12px;
+  z-index: 20;
+  display: none;
+}
+body[data-screen="quiz"] .nav-rail { display: block; }
+.nav-rail[hidden] { display: none !important; }
+
 .qt-list {
+  /* Same navigator, narrow-screen presentation. Out of flow, so the
+   * Previous / counter / Next row above never moves. */
+  position: absolute;
+  top: calc(100% - 1px);
+  left: 0;
+  right: 0;
+  z-index: 30;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 0 0 var(--r-soft) var(--r-soft);
-  margin: 0 18px;
-  max-height: 360px;
+  padding: 14px 16px 12px;
+  max-height: 62vh;
   overflow-y: auto;
-  padding: 14px 18px 16px;
+  overscroll-behavior: contain;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
 }
-.qt-summary {
-  display: grid;
-  grid-template-columns: 56px 1fr;
-  align-items: center;
-  gap: 14px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 12px;
-  position: sticky;
-  top: 0;
-  background: var(--surface);
-  z-index: 2;
-}
-.qt-ring-wrap { position: relative; width: 56px; height: 56px; }
-.qt-ring { display: block; }
-.qt-ring-label {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  font-size: 13.5px;
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-  pointer-events: none;
-}
-.qt-summary-text {
-  font-size: 13px;
-  color: var(--ink);
-  font-weight: 600;
-  line-height: 1.3;
-}
-.qt-summary-sub {
-  font-size: 10.5px;
-  font-weight: 400;
-  color: var(--ink-mute);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.qt-chips {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(34px, 1fr));
+.qt-list[hidden] { display: none !important; }
+
+.nav-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
   gap: 8px;
+  margin-bottom: 10px;
 }
-.qt-chip {
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  border: 1.5px solid transparent;
-  background: var(--surface-2);
-  color: var(--ink-2);
-  font-size: 12.5px;
+.nav-title {
+  margin: 0;
+  font-size: 11px;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+}
+.nav-count {
+  font-size: 12px;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.nav-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--ink-mute);
+}
+.nav-stat b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.nav-stat.good b { color: var(--good); }
+.nav-stat.bad b { color: var(--bad); }
+
+.nav-window {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.nav-range { font-size: 11.5px; color: var(--ink-mute); font-variant-numeric: tabular-nums; }
+.nav-page {
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: var(--r-tight);
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 13px;
+  line-height: 1;
+  padding: 4px 9px;
+  cursor: pointer;
+}
+.nav-page:hover:not(:disabled) { border-color: var(--line-strong); color: var(--ink); }
+.nav-page:disabled { color: var(--ink-faint); cursor: not-allowed; }
+
+.nav-chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
+  gap: 4px;
+}
+.nav-chip {
+  position: relative;
+  aspect-ratio: 1;
+  min-height: 30px;
   display: grid;
   place-items: center;
+  /* Square with a small radius, not a circle. A circle of digits reads
+   * as decoration; a square reads as a cell in a grid you can scan. */
+  border-radius: var(--r-tight);
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  color: var(--ink-mute);
+  font: inherit;
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
   cursor: pointer;
-  padding: 0;
-  font-family: inherit;
-  transition: filter var(--dur-fast) var(--ease),
-              border-color var(--dur-fast) var(--ease);
+  transition: border-color var(--dur-fast) var(--ease);
 }
-.qt-chip:hover { filter: brightness(0.96); }
-.qt-chip.answered { background: var(--accent-bg); color: var(--ink); }
-.qt-chip.correct {
-  background: var(--good);
-  color: #ffffff;
+.nav-chip:hover { border-color: var(--line-strong); color: var(--ink); }
+.nav-chip.answered { background: var(--accent-bg); border-color: var(--accent-bd); color: var(--ink); }
+.nav-chip.correct { background: var(--good-bg); border-color: var(--good-bd); color: var(--good); }
+.nav-chip.incorrect { background: var(--bad-bg); border-color: var(--bad-bd); color: var(--bad); }
+/* Current is a ring plus a weight change, so it survives colour
+ * blindness and does not compete with correct / incorrect. */
+.nav-chip.current {
+  box-shadow: 0 0 0 2px var(--accent);
   font-weight: 700;
+  color: var(--ink);
 }
-.qt-chip.incorrect {
-  background: var(--bad);
-  color: #ffffff;
-  font-weight: 700;
-}
-.qt-chip.current { border-color: var(--accent); }
-.qt-chip.current.correct { border-color: var(--good-bd); }
-.qt-chip.current.incorrect { border-color: var(--bad-bd); }
-.qt-chip.flagged::after {
+.nav-chip.flagged::after {
   content: "";
   position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
+  top: 2px; right: 2px;
+  width: 4px; height: 4px;
+  border-radius: 50%;
   background: var(--warn);
 }
-.qt-chip.flagged { position: relative; }
+.nav-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.nav-jump {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 11.5px;
+  color: var(--ink-mute);
+}
+.nav-jump input {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-tight);
+  color: var(--ink);
+  font: inherit;
+  font-size: 12px;
+  padding: 4px 6px;
+  font-variant-numeric: tabular-nums;
+}
+.nav-jump button {
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: var(--r-tight);
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 12px;
+  padding: 4px 9px;
+  cursor: pointer;
+}
+.nav-jump button:hover { border-color: var(--line-strong); color: var(--ink); }
+
+.nav-keys {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-size: 11.5px;
+}
+.nav-keys summary {
+  cursor: pointer;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 10.5px;
+  font-weight: 600;
+}
+.nav-keys dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 3px 10px;
+  margin: 8px 0 0;
+}
+.nav-keys dt { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.nav-keys dd { margin: 0; color: var(--ink-mute); }
+
+@media (min-width: 1200px) {
+  /* Shift the reading column left by half the rail so the pair reads
+   * as one centred composition rather than a column with something
+   * bolted to the side. */
+  body[data-screen="quiz"] main { transform: translateX(-134px); }
+  body[data-screen="quiz"] .qt-counter { cursor: default; }
+  body[data-screen="quiz"] .qt-caret { display: none; }
+}
+@media (max-width: 1199px) {
+  .nav-rail { display: none !important; }
+}
 
 .reading {
   background: var(--surface);
@@ -1673,9 +1816,9 @@ body[data-screen="summary"] main { max-width: 760px; }
   #qtNumber { font-size: 13px; }
 
   /* Question-list dropdown: single column, taller rows. */
-  .qt-list { margin: 0 10px; max-height: 60vh; }
-  .qt-list ol { grid-template-columns: 1fr; padding: 6px 10px 10px; }
-  .qt-list li { padding: 9px 6px; font-size: 13.5px; }
+  .qt-list { max-height: 58vh; padding: 12px 12px 10px; }
+  .nav-chips { grid-template-columns: repeat(auto-fill, minmax(36px, 1fr)); gap: 5px; }
+  .nav-chip { min-height: 36px; font-size: 12.5px; }
 
   /* Setup: keep options easily tappable, prevent crowding. */
   .setup-options { gap: 7px; }
@@ -2021,7 +2164,6 @@ body:not(.is-admin) .admin-only { display: none !important; }
   .ghost-x:hover { background: transparent; color: var(--ink-mute); }
   .ghost-link:hover { color: var(--ink-mute); }
   .action-link:hover { border-color: var(--line); color: var(--ink-2); }
-  .qt-list li:hover { background: transparent; }
   .review-list li:hover { background: transparent; }
 }
 

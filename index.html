@@ -125,16 +125,23 @@
 </header>
 
 <div id="quizTopbar" class="quiz-topbar" hidden>
-  <div class="qt-inner">
-    <button id="qtPrev" class="qt-step" title="Previous (←)">‹ Previous</button>
-    <button id="qtCounter" class="qt-counter" title="Open question list">
-      <span id="qtNumber">Question 1 of 50</span>
-      <span class="qt-caret">▾</span>
-    </button>
-    <button id="qtNext" class="qt-step" title="Next (→)">Next ›</button>
-  </div>
+  <button id="qtPrev" class="qt-step" title="Previous (left arrow)">‹ Previous</button>
+  <button id="qtCounter" class="qt-counter" aria-expanded="false" aria-controls="qtList"
+          title="Open the question list">
+    <span id="qtNumber">Question 1 of 50</span>
+    <span class="qt-caret" aria-hidden="true">▾</span>
+  </button>
+  <button id="qtNext" class="qt-step" title="Next (right arrow)">Next ›</button>
+  <div id="qtProgress" class="qt-progress" aria-hidden="true"><span></span></div>
   <div id="qtList" class="qt-list" hidden></div>
 </div>
+
+<!-- Persistent question navigator. Shown as a right rail from 1200px up,
+     where there is room for it beside the reading column; below that the
+     same markup is reused as the panel behind the counter button. -->
+<aside id="navRail" class="nav-rail" hidden aria-label="Question navigator">
+  <div id="navRailBody" class="nav-rail-body"></div>
+</aside>
 
 <main id="app"></main>
 

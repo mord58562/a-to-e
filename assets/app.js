@@ -1248,13 +1248,21 @@
   function wireQuizTopbar() {
     document.getElementById("qtPrev").onclick = () => navOffset(-1);
     document.getElementById("qtNext").onclick = () => navOffset(+1);
-    document.getElementById("qtCounter").onclick = toggleQtList;
+    document.getElementById("qtCounter").onclick = e => { e.stopPropagation(); toggleQtList(); };
+    document.addEventListener("click", e => {
+      const list = document.getElementById("qtList");
+      if (!list || list.hidden) return;
+      if (!list.contains(e.target) && !e.target.closest("#qtCounter")) closeQtList();
+    });
   }
 
   function setScreen(name) {
     document.body.setAttribute("data-screen", name);
     document.getElementById("colophon").hidden = name !== "quiz";
     document.getElementById("quizTopbar").hidden = name !== "quiz";
+    const rail = document.getElementById("navRail");
+    if (rail) rail.hidden = name !== "quiz";
+    if (name !== "quiz") closeQtList();
   }
 
 
@@ -1549,99 +1557,218 @@
     document.body.scrollTop = 0;
   }
 
-  // Compact book-style position indicator (Previous / counter / Next).
+  // Position indicator. The counter is the middle cell of a fixed
+  // three-column grid, so it stays dead centre no matter how wide the
+  // Previous / Next labels get - the panel used to be a fourth flex
+  // item in a space-between row, which shoved the counter sideways
+  // every time it opened.
   function renderTopbar() {
-    document.getElementById("qtNumber").textContent =
-      `${state.quiz.idx + 1} / ${state.quiz.pool.length}`;
-    document.getElementById("qtPrev").disabled = state.quiz.idx === 0;
-    document.getElementById("qtNext").disabled = state.quiz.idx >= state.quiz.pool.length - 1;
+    const total = state.quiz.pool.length;
+    const idx = state.quiz.idx;
+    document.getElementById("qtNumber").textContent = `Question ${idx + 1} of ${total}`;
+    document.getElementById("qtPrev").disabled = idx === 0;
+    document.getElementById("qtNext").disabled = idx >= total - 1;
+    const bar = document.querySelector("#qtProgress span");
+    if (bar) bar.style.width = total ? `${((idx + 1) / total) * 100}%` : "0%";
+    renderNavigator();
+  }
+
+  // How many chips to draw at once. A session can be the whole bank,
+  // and 7,000 buttons is neither drawable nor navigable, so the grid is
+  // a window onto the pool with the current question inside it. Below
+  // this size the window is the whole pool and the controls disappear.
+  const NAV_WINDOW = 120;
+  let navWindowStart = 0;
+  // Set when the current question changes, cleared once the window has
+  // been repositioned. Paging leaves it false so the view stays put.
+  let navFollowCurrent = true;
+
+  // Memoised per question: did the letter the user picked turn out to
+  // be the correct one. Keyed by question id, filled lazily.
+  const _correctCache = Object.create(null);
+  function answerWasCorrect(q, letter) {
+    const key = q.id + ":" + letter;
+    if (key in _correctCache) return _correctCache[key];
+    const ok = !!_shuffledOptions(q).find(o => o.letter === letter)?.correct;
+    _correctCache[key] = ok;
+    return ok;
+  }
+
+  function navigatorHtml() {
+    const pool = state.quiz.pool;
+    const total = pool.length;
+    const midTest = state.quiz.mode === "test" && !state.quiz.finished;
+
+    // Counts walk the answered set, not the pool. A pool can be the
+    // whole 7,122-question bank while the answered set is a handful,
+    // and this runs on every navigation.
+    const byId = state.quiz.byId || (state.quiz.byId =
+      pool.reduce((m, q) => (m[q.id] = q, m), Object.create(null)));
+    let correct = 0, incorrect = 0, answered = 0;
+    for (const qid in state.quiz.answers) {
+      const q = byId[qid];
+      if (!q) continue;
+      answered += 1;
+      if (midTest) continue;
+      if (answerWasCorrect(q, state.quiz.answers[qid])) correct += 1; else incorrect += 1;
+    }
+    let flagged = 0;
+    for (const qid in state.flags) if (state.flags[qid] && byId[qid]) flagged += 1;
+
+    // Recentre only when the question itself moved out of the window.
+    // Recentring on every render would snap the view straight back the
+    // moment you paged away to look somewhere else.
+    if (total <= NAV_WINDOW) navWindowStart = 0;
+    else if (navFollowCurrent &&
+             (state.quiz.idx < navWindowStart ||
+              state.quiz.idx >= navWindowStart + NAV_WINDOW)) {
+      navWindowStart = Math.max(0, Math.min(
+        total - NAV_WINDOW, state.quiz.idx - Math.floor(NAV_WINDOW / 2)));
+    }
+    navFollowCurrent = false;
+    const from = total <= NAV_WINDOW ? 0 : navWindowStart;
+    const to = Math.min(total, from + NAV_WINDOW);
+
+    // Chip state is computed for the visible window only.
+    const states = pool.slice(from, to).map((q, n) => {
+      const i = from + n;
+      const ans = state.quiz.answers[q.id];
+      let st = "unanswered";
+      if (ans) st = midTest ? "answered" : (answerWasCorrect(q, ans) ? "correct" : "incorrect");
+      return { st, flagged: !!state.flags[q.id], i };
+    });
+
+    const chips = states.map(x => {
+      const cls = ["nav-chip", x.st];
+      if (x.i === state.quiz.idx) cls.push("current");
+      if (x.flagged) cls.push("flagged");
+      const label = `Question ${x.i + 1}, ${x.st === "unanswered" ? "unanswered" : x.st}` +
+                    (x.i === state.quiz.idx ? ", current" : "") + (x.flagged ? ", flagged" : "");
+      return `<button type="button" class="${cls.join(" ")}" data-nav-i="${x.i}" ` +
+             `aria-label="${label}"${x.i === state.quiz.idx ? ' aria-current="true"' : ""}>${x.i + 1}</button>`;
+    }).join("");
+
+    const windowed = total > NAV_WINDOW;
+    const pct = total ? Math.round((answered / total) * 100) : 0;
+    const scoreLine = midTest
+      ? `<span class="nav-stat"><b>${answered}</b> answered</span>`
+      : `<span class="nav-stat good"><b>${correct}</b> correct</span>` +
+        `<span class="nav-stat bad"><b>${incorrect}</b> incorrect</span>`;
+
+    return `
+      <div class="nav-head">
+        <h2 class="nav-title">Navigator</h2>
+        <span class="nav-count">${state.quiz.idx + 1} / ${total}</span>
+      </div>
+      <div class="nav-stats">
+        <span class="nav-stat"><b>${answered}</b> of ${total} answered${pct ? ` (${pct}%)` : ""}</span>
+        ${scoreLine}
+        ${flagged ? `<span class="nav-stat"><b>${flagged}</b> flagged</span>` : ""}
+      </div>
+      ${windowed ? `
+        <div class="nav-window">
+          <button type="button" class="nav-page" data-nav-page="-1" ${from === 0 ? "disabled" : ""}>‹</button>
+          <span class="nav-range">${from + 1} to ${to}</span>
+          <button type="button" class="nav-page" data-nav-page="1" ${to >= total ? "disabled" : ""}>›</button>
+        </div>` : ""}
+      <div class="nav-chips">${chips}</div>
+      ${windowed ? `
+        <form class="nav-jump">
+          <label for="navJumpInput">Go to</label>
+          <input id="navJumpInput" type="number" min="1" max="${total}" inputmode="numeric"
+                 placeholder="${state.quiz.idx + 1}" />
+          <button type="submit">Go</button>
+        </form>` : ""}
+      <details class="nav-keys">
+        <summary>Keyboard</summary>
+        <dl>
+          <dt>1 to 5</dt><dd>choose an option</dd>
+          <dt>shift + 1 to 5</dt><dd>rule one out</dd>
+          <dt>Enter</dt><dd>submit, then next</dd>
+          <dt>Left / Right</dt><dd>previous / next</dd>
+          <dt>F</dt><dd>flag</dd>
+          <dt>L</dt><dd>reference values</dd>
+        </dl>
+      </details>`;
+  }
+
+  function renderNavigator() {
+    const html = navigatorHtml();
+    const rail = document.getElementById("navRail");
+    const railBody = document.getElementById("navRailBody");
+    if (railBody) railBody.innerHTML = html;
+    if (rail) rail.hidden = false;
     const list = document.getElementById("qtList");
-    if (list) list.hidden = true;
+    // The panel behind the counter is the same navigator, for widths
+    // with no room for the rail. Only rebuild it while it is open.
+    if (list && !list.hidden) list.innerHTML = html;
+    wireNavigator(rail);
+    if (list && !list.hidden) wireNavigator(list);
+    scrollCurrentChipIntoView(rail);
+  }
+
+  function wireNavigator(root) {
+    if (!root || root.dataset.navWired) return;
+    root.dataset.navWired = "1";
+    root.addEventListener("click", e => {
+      const chip = e.target.closest("[data-nav-i]");
+      if (chip) {
+        jumpTo(parseInt(chip.dataset.navI, 10));
+        const list = document.getElementById("qtList");
+        if (root === list) closeQtList();
+        return;
+      }
+      const page = e.target.closest("[data-nav-page]");
+      if (page) {
+        const dir = parseInt(page.dataset.navPage, 10);
+        navWindowStart = Math.max(0, Math.min(
+          state.quiz.pool.length - NAV_WINDOW, navWindowStart + dir * NAV_WINDOW));
+        navFollowCurrent = false;
+        renderNavigator();
+      }
+    });
+    root.addEventListener("submit", e => {
+      const form = e.target.closest(".nav-jump");
+      if (!form) return;
+      e.preventDefault();
+      const n = parseInt(form.querySelector("input").value, 10);
+      if (n >= 1 && n <= state.quiz.pool.length) jumpTo(n - 1);
+    });
+  }
+
+  function scrollCurrentChipIntoView(root) {
+    if (!root) return;
+    const cur = root.querySelector(".nav-chip.current");
+    // block: "nearest" is a no-op when the chip is already visible, so
+    // this never yanks the rail while the reader is browsing it.
+    if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: "nearest" });
   }
 
   function toggleQtList() {
     const list = document.getElementById("qtList");
-    if (!list.children.length) renderQtList();
-    list.hidden = !list.hidden;
+    if (!list) return;
+    if (list.hidden) {
+      list.innerHTML = navigatorHtml();
+      list.hidden = false;
+      wireNavigator(list);
+      scrollCurrentChipIntoView(list);
+    } else {
+      list.hidden = true;
+    }
+    const btn = document.getElementById("qtCounter");
+    if (btn) btn.setAttribute("aria-expanded", list.hidden ? "false" : "true");
   }
-  function renderQtList() {
-    // Chip-grid sidebar redesign (2026-06-01) - replaces the row-list.
-    // See data/_audit/session_2026-06-01/reference_sidebar_spec.md.
-    // Two regions: a progress ring at the top + a chip grid (one chip
-    // per question, 4 states: unanswered / correct / incorrect / current).
+  function closeQtList() {
     const list = document.getElementById("qtList");
-    list.innerHTML = "";
-
-    // Stats for the ring.
-    const total = state.quiz.pool.length;
-    const inTestModeMidFlight = state.quiz.mode === "test" && !state.quiz.finished;
-    let correct = 0, incorrect = 0, answered = 0;
-    state.quiz.pool.forEach((q, i) => {
-      const ans = state.quiz.answers[q.id];
-      if (!ans) return;
-      answered += 1;
-      if (!inTestModeMidFlight) {
-        const isC = !!_shuffledOptions(q).find(o => o.letter === ans)?.correct;
-        if (isC) correct += 1; else incorrect += 1;
-      }
-    });
-    const pct = total ? Math.round((answered / total) * 100) : 0;
-    // Donut ring as inline SVG. r=22 -> circumference ~138.
-    const r = 22, C = 2 * Math.PI * r;
-    const filled = (pct / 100) * C;
-    const remaining = C - filled;
-    const header = document.createElement("div");
-    header.className = "qt-summary";
-    header.innerHTML = `
-      <div class="qt-ring-wrap">
-        <svg class="qt-ring" viewBox="0 0 56 56" width="56" height="56" aria-hidden="true">
-          <circle cx="28" cy="28" r="${r}" fill="none" stroke="var(--surface-2)" stroke-width="6"/>
-          <circle cx="28" cy="28" r="${r}" fill="none" stroke="var(--accent)" stroke-width="6"
-                  stroke-dasharray="${filled} ${remaining}" stroke-dashoffset="${C / 4}"
-                  transform="rotate(-90 28 28)" stroke-linecap="butt"/>
-        </svg>
-        <div class="qt-ring-label" aria-hidden="true">${pct}%</div>
-      </div>
-      <div class="qt-summary-text">${answered} of ${total}<br><span class="qt-summary-sub">${inTestModeMidFlight ? "answered" : (correct + " correct, " + incorrect + " incorrect")}</span></div>
-    `;
-    list.appendChild(header);
-
-    // Chip grid.
-    const grid = document.createElement("div");
-    grid.className = "qt-chips";
-    state.quiz.pool.forEach((q, i) => {
-      const chip = document.createElement("button");
-      chip.type = "button";
-      chip.className = "qt-chip";
-      const ans = state.quiz.answers[q.id];
-      const flagged = !!state.flags[q.id];
-      let stateClass = "unanswered";
-      if (ans) {
-        if (inTestModeMidFlight) stateClass = "answered";
-        else {
-          const isC = !!_shuffledOptions(q).find(o => o.letter === ans)?.correct;
-          stateClass = isC ? "correct" : "incorrect";
-        }
-      }
-      if (i === state.quiz.idx) stateClass += " current";
-      if (flagged) stateClass += " flagged";
-      chip.className = "qt-chip " + stateClass;
-      chip.textContent = String(i + 1);
-      chip.setAttribute("aria-label",
-        "Question " + (i + 1) +
-        (ans ? (inTestModeMidFlight ? " (answered)" : (stateClass.includes("correct") ? " (correct)" : " (incorrect)")) : " (unanswered)") +
-        (i === state.quiz.idx ? ", current" : "") +
-        (flagged ? ", flagged" : "")
-      );
-      chip.onclick = () => { jumpTo(i); document.getElementById("qtList").hidden = true; };
-      grid.appendChild(chip);
-    });
-    list.appendChild(grid);
+    if (list) list.hidden = true;
+    const btn = document.getElementById("qtCounter");
+    if (btn) btn.setAttribute("aria-expanded", "false");
   }
 
   function jumpTo(i) {
     if (i === state.quiz.idx) return;
     state.quiz.idx = i;
+    navFollowCurrent = true;
     renderQuiz();
   }
   function navOffset(d) {
