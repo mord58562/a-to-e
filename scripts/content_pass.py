@@ -222,8 +222,11 @@ def cmd_validate(args):
             if not no.get("source_refs"):
                 problems.append((qid, f"option {i+1} lost its source_refs"))
                 break
-            if set(no.get("source_refs") or []) - set(oo.get("source_refs") or []):
-                problems.append((qid, f"option {i+1} invented a source_ref"))
+            added = set(no.get("source_refs") or []) - set(oo.get("source_refs") or [])
+            if added and not args.allow_resource:
+                problems.append((qid, f"option {i+1} invented a source_ref: "
+                                      f"{sorted(added)[0][:60]!r}. Pass --allow-resource "
+                                      f"if this pass is deliberately re-sourcing."))
                 break
         d = q.get("difficulty")
         if d not in (1, 2, 3, 4, 5):
@@ -278,6 +281,8 @@ def cmd_validate(args):
 
 def cmd_apply(args):
     """Merge a validated file back into whichever served file holds each id."""
+    if not hasattr(args, "allow_resource"):
+        args.allow_resource = False
     if cmd_validate(args) != 0:
         print("\nrefusing to apply a file that does not validate")
         return 1
@@ -308,6 +313,10 @@ def main():
     for name in ("validate", "apply"):
         p = sub.add_parser(name)
         p.add_argument("file")
+        p.add_argument("--allow-resource", action="store_true",
+                       help="permit changed source_refs. Only for a pass that is "
+                            "deliberately re-sourcing; it disables the check that "
+                            "stops a rewrite fabricating citations.")
     args = ap.parse_args()
     return {"report": cmd_report, "plan": cmd_plan,
             "validate": cmd_validate, "apply": cmd_apply}[args.cmd](args) or 0
