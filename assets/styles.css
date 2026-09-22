@@ -43,21 +43,49 @@
   --warn:        #e8b34a;
   --warn-bg:     rgba(232, 179, 74, 0.10);
 
-  /* Type stack (overhaul 2026-06-01). Public Sans for everything
-   * (USWDS-built institutional sans, single-family with weight doing
-   * the work - the corrective for the Plex Serif AI tell). Source
-   * Serif 4 for the rare editorial moment (the opening/closing quote
-   * glyphs in the House toast). JetBrains Mono ONLY for literal code
-   * (the paste-box <code> element). Tabular numerals are enabled
-   * site-wide via font-feature-settings on html below - the body sans
-   * carries them, so we no longer reach for mono to align digits. */
-  --sans:        "Public Sans", -apple-system, BlinkMacSystemFont,
+  /* Type stack (rebuilt 2026-09-22).
+   *
+   * The previous stack set --sans and --display to the same value, so
+   * one neutral grotesque did every job with weight as the only
+   * hierarchy. That, not the particular family, is what reads as
+   * machine-made: a page where nobody chose anything. Public Sans made
+   * it worse by design - its own brief asks it to "be strong and
+   * neutral" and "have as few quirks as possible", and it is metrically
+   * matched to SF Pro Text and Roboto. It is also unmaintained.
+   *
+   * Three slots doing three jobs:
+   *
+   * --sans    IBM Plex Sans, for interface text. Chosen for its
+   *           numerals: it is the one open humanist sans on the
+   *           shortlist that disambiguates BOTH l (which gets a tail)
+   *           and I (which gets crossbars). The ACSQHC guidance on
+   *           on-screen display of medicines information asks for
+   *           exactly that, because in a dosing context l and I
+   *           colliding is a safety problem, not a nicety. Its digits
+   *           are tabular by default at the same advance as Plex Mono,
+   *           so a lab value occupies the same width in prose, in a
+   *           table and in a code span.
+   * --serif   Literata, for the clinical vignette. A serif for the
+   *           stem and a sans for the interface is mode separation,
+   *           not a legibility claim - the reading-speed evidence for
+   *           serif over sans on screen is null and it would be
+   *           dishonest to pretend otherwise. It marks the stem as the
+   *           thing to read rather than the thing to operate.
+   * --mono    IBM Plex Mono, same family, for literal code only.
+   *
+   * Via Google Fonts, which strips the `zero` feature from everything
+   * it serves, so there is no slashed zero here. Plex's l and I
+   * shapes are default glyphs rather than features, so the part that
+   * actually matters survives. Self-hosting would buy the slashed zero
+   * for about 14 KB more.
+   */
+  --sans:        "IBM Plex Sans", -apple-system, BlinkMacSystemFont,
                  "Segoe UI", Helvetica, Arial, sans-serif;
-  --display:     "Public Sans", -apple-system, BlinkMacSystemFont,
+  --display:     "IBM Plex Sans", -apple-system, BlinkMacSystemFont,
                  "Segoe UI", Helvetica, Arial, sans-serif;
-  --serif:       "Source Serif 4", "Source Serif Pro", Georgia,
+  --serif:       "Literata", Charter, "Iowan Old Style", Georgia,
                  "Times New Roman", serif;
-  --mono:        "JetBrains Mono", ui-monospace, "SF Mono", Menlo,
+  --mono:        "IBM Plex Mono", ui-monospace, "SF Mono", Menlo,
                  Consolas, monospace;
 
   /* Three-radius system. Pills/badges -> chip, controls/options -> tight,
@@ -135,10 +163,12 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /* Tabular + lining numerals site-wide so the body sans aligns
-   * digits in tables, counters, timers, IDs - removing the need to
-   * reach for monospace for non-code content. */
-  font-feature-settings: "tnum" 1, "lnum" 1;
+  /* Lining figures site-wide. Tabular figures are NOT set here: tnum
+   * suppresses kerning in every run it touches, and a fixed-advance
+   * digit in running prose is a small ugliness repeated everywhere.
+   * Data surfaces opt in with font-variant-numeric: tabular-nums,
+   * which is where alignment actually matters. */
+  font-feature-settings: "lnum" 1;
 }
 body {
   -webkit-tap-highlight-color: rgba(15, 202, 212, 0.18);
@@ -454,7 +484,7 @@ body.has-paeds .masthead .brand-glucose { display: inline; }
 .brand-words { display: flex; flex-direction: column; line-height: 1; }
 .brand-title {
   font-family: var(--display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 18px;
   letter-spacing: -0.015em;
   color: var(--ink);
@@ -607,7 +637,7 @@ body[data-screen="quiz"] main { padding-top: 16px; }
 .prose { padding: 0 4px; }
 .display {
   font-family: var(--display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 36px;
   letter-spacing: -0.015em;
   margin: 0 0 28px;
@@ -854,7 +884,7 @@ body[data-screen="quiz"] .nav-rail { display: block; }
  * blindness and does not compete with correct / incorrect. */
 .nav-chip.current {
   box-shadow: 0 0 0 2px var(--accent);
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ink);
 }
 .nav-chip.flagged::after {
@@ -976,15 +1006,17 @@ body:has(#quizTopbar[hidden]) .reading {
 }
 
 .stem {
-  /* Was --serif (Plex Serif then Source Serif 4), which read as
-   * Wix-template / AI default. Move to sans body so
-   * the entire clinical prose surface is one institutional family.
+  /* The vignette is the thing to READ; everything around it is the
+   * thing to operate. Setting it in the serif marks that difference,
+   * which one family at three weights cannot. This is a mode signal,
+   * not a legibility claim - the evidence for serif beating sans on
+   * screen is null.
    * white-space: pre-line preserves the \n\n paragraph breaks added
    * by the 2026-06-01 paragraphing pass without needing multiple
    * <p> elements. */
-  font-family: var(--sans);
-  font-size: 16.5px;
-  line-height: 1.65;
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.62;
   color: var(--ink);
   margin: 4px 0 16px;
   white-space: pre-line;
@@ -1239,6 +1271,11 @@ body:has(#quizTopbar[hidden]) .reading {
   color: var(--ink-mute);
   margin-top: 4px;
 }
+
+/* Only 400/500/600 are loaded. A <b> or <strong> with no 600 face
+ * available gets a synthesised bold, which on Plex is noticeably
+ * coarser than the real semibold, so map them explicitly. */
+b, strong { font-weight: 600; }
 
 .visually-hidden {
   position: absolute;
@@ -1584,7 +1621,7 @@ body[data-screen="summary"] main { max-width: 760px; }
   gap: 12px;
 }
 .review-list li:hover { background: var(--surface-2); }
-.review-list .rv-status { font-family: var(--sans); font-weight: 700; }
+.review-list .rv-status { font-family: var(--sans); font-weight: 600; }
 .review-list li.incorrect .rv-status { color: var(--bad); }
 .review-list li.correct   .rv-status { color: var(--good); }
 .review-list li.unanswered .rv-status { color: var(--ink-mute); }
@@ -1618,7 +1655,7 @@ body[data-screen="summary"] main { max-width: 760px; }
   margin: 0;
   font-family: var(--display);
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .modal-body { padding: 18px 22px; font-size: 14.5px; line-height: 1.6; }
 .modal-body code {
@@ -2191,7 +2228,7 @@ body:not(.is-admin) .admin-only { display: none !important; }
 .term-popup[hidden] { display: none !important; }
 .term-popup-head {
   font-family: var(--display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 13px;
   color: var(--accent);
   margin-bottom: 4px;
@@ -2598,7 +2635,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   border-radius: 50%;
   background: var(--accent);
   color: var(--bg);
-  font-weight: 700; font-size: 12px;
+  font-weight: 600; font-size: 12px;
   display: grid; place-items: center;
 }
 .howto-step-note { font-size: 12.5px; color: var(--ink-mute); margin: 0 0 10px; line-height: 1.55; }
