@@ -2046,22 +2046,20 @@
     }).join("");
 
     const windowed = total > NAV_WINDOW;
-    const pct = total ? Math.round((answered / total) * 100) : 0;
-    const scoreLine = midTest
-      ? `<span class="nav-stat"><b>${answered}</b> answered</span>`
-      : `<span class="nav-stat good"><b>${correct}</b> correct</span>` +
-        `<span class="nav-stat bad"><b>${incorrect}</b> incorrect</span>`;
+    // One line, read as a sentence. A stack of "N correct / N
+    // incorrect / N flagged" is the generic stat-panel shape, and at
+    // this size the numbers are small enough to sit inline.
+    const score = midTest
+      ? ""
+      : `, <b class="good">${correct}</b> right and <b class="bad">${incorrect}</b> wrong`;
+    const flag = flagged ? `, <b>${flagged}</b> flagged` : "";
 
     return `
       <div class="nav-head">
         <h2 class="nav-title">Navigator</h2>
         <span class="nav-count">${state.quiz.idx + 1} / ${total}</span>
       </div>
-      <div class="nav-stats">
-        <span class="nav-stat"><b>${answered}</b> of ${total} answered${pct ? ` (${pct}%)` : ""}</span>
-        ${scoreLine}
-        ${flagged ? `<span class="nav-stat"><b>${flagged}</b> flagged</span>` : ""}
-      </div>
+      <p class="nav-stats"><b>${answered}</b> of ${total} answered${score}${flag}.</p>
       ${windowed ? `
         <div class="nav-window">
           <button type="button" class="nav-page" data-nav-page="-1" ${from === 0 ? "disabled" : ""}>‹</button>
