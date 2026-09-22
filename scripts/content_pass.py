@@ -75,6 +75,38 @@ def measure(q):
     }
 
 
+# A number carrying a unit, a percentage, a blood pressure, or an age.
+# Matching the unit alongside the number is what makes "1" in "1 g" a
+# clinical fact and "1" in "one of three siblings" not, which a
+# digit-length filter cannot tell apart.
+UNIT_WORDS = (r"mg|mcg|microgram|nanogram|g|kg|mL|L|mmol/L|micromol/L|nmol/L|pmol/L|"
+              r"mmHg|cmH2O|kPa|units?|IU|x10\^9/L|x10\^6/L|g/L|U/L|mm/h|"
+              r"degrees? C|degC|weeks?|days?|hours?|hourly|minutes?|months?|years?|"
+              r"month-old|year-old|week-old|day-old|/min|bpm|%|per cent")
+CLINICAL_NUM_RE = re.compile(
+    r"(?<![\w.])(\d+(?:\.\d+)?)\s*(?:-\s*\d+(?:\.\d+)?\s*)?(?:" + UNIT_WORDS + r")\b"
+    r"|(?<![\w.])(\d+/\d+)(?![\w.])"                    # 110/68, 20/20
+    r"|(?<![\w.])(\d+\.\d+)(?![\w.])",                  # any decimal
+    re.I)
+
+
+def clinical_numbers(q):
+    """Every number-with-a-unit a candidate reads before answering.
+
+    The real risk in a concision pass is not verbosity, it is an agent
+    quietly dropping a dose or a lab value while trimming. Numbers are
+    cheap to compare and they are what the question turns on.
+    """
+    parts = [q.get("stem") or "", q.get("lead_in") or ""]
+    parts += [v for v in (q.get("data_table") or {}).values() if isinstance(v, str)]
+    parts += [o.get("text") or "" for o in q.get("options", [])]
+    text = " ".join(parts)
+    found = []
+    for m in CLINICAL_NUM_RE.finditer(text):
+        found.append(m.group(0).strip().lower())
+    return Counter(found)
+
+
 def option_parity(q):
     """Longest-to-shortest option character ratio. The rule is 1.35."""
     lens = [len(o.get("text") or "") for o in q.get("options", [])]
@@ -157,6 +189,7 @@ def cmd_validate(args):
         return 1
 
     problems = []
+    lost_numbers = []
     improved = shrunk = 0
     for q in new:
         qid = q.get("id")
@@ -209,8 +242,10 @@ def cmd_validate(args):
         if m_new["pre_answer"] <= TARGET_PRE_ANSWER_WORDS:
             improved += 1
 
-        # The subtopic is withheld pre-answer, so an option must not
-        # name a diagnosis the stem does not.
+        gone = set(clinical_numbers(old) - clinical_numbers(q))
+        if gone:
+            lost_numbers.append((qid, gone))
+
         blob = json.dumps(q, ensure_ascii=False)
         for rx, why in (("—", "em-dash"), (r"\*\*", "markdown emphasis")):
             if re.search(rx, blob):
@@ -219,6 +254,15 @@ def cmd_validate(args):
     print(f"{len(new)} question(s) in {args.file}")
     print(f"  shorter than before: {shrunk}")
     print(f"  at or under the {TARGET_PRE_ANSWER_WORDS}-word target: {improved}")
+    if lost_numbers:
+        # Not a failure. Trimming a respiratory rate that changes no
+        # answer is exactly the job. But a dropped dose is not, and
+        # this is the only thing that would catch it.
+        print(f"\n  {len(lost_numbers)} question(s) dropped a number. Check these by eye:")
+        for qid, gone in lost_numbers[:25]:
+            print(f"    {qid:28} dropped {', '.join(sorted(gone)[:8])}")
+        if len(lost_numbers) > 25:
+            print(f"    ... and {len(lost_numbers) - 25} more")
     if problems:
         print(f"\n{len(problems)} problem(s):")
         for qid, why in problems[:60]:
