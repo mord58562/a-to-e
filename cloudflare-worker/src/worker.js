@@ -58,7 +58,7 @@ export default {
       }
     }
     try {
-      // Account + stats API: GET allowed for /api/me, /api/stats/:qid.
+      // Account API: GET allowed for /api/me.
       if (url.pathname === "/api/register" && request.method === "POST") return await handleRegister(request, env, cors);
       if (url.pathname === "/api/login"    && request.method === "POST") return await handleLogin(request, env, cors);
       if (url.pathname === "/api/logout"   && request.method === "POST") return await handleLogout(request, env, cors);
@@ -83,9 +83,6 @@ export default {
         return await handleAdminPromote(request, env, cors, id, false);
       }
       if (url.pathname === "/api/admin/quality" && request.method === "GET") return await handleAdminQuality(request, env, cors);
-      if (url.pathname.startsWith("/api/stats/") && request.method === "GET") {
-        return await handleStats(request, env, cors, url.pathname.slice("/api/stats/".length));
-      }
       // Existing GitHub-write endpoints (POST only).
       if (request.method !== "POST") {
         return json({ ok: false, error: "POST only" }, 405, cors);
@@ -617,11 +614,6 @@ async function handleAnswer(request, env, cors) {
   // attempt counter + advance updated_at. INSERT-OR-IGNORE froze every
   // (user, question) at its first attempt and broke cross-device sync
   // when the user re-answered on another device.
-  //
-  // Aggregate stats (handleStats) still count every distinct user's
-  // latest answer once - that's how the existing public bars are
-  // documented to behave, and it stays correct because we never write
-  // more than one row per (user, question).
   await env.DB.prepare(
     `INSERT INTO answers (user_id, question_id, source_letter, correct, ts, updated_at, attempt_count)
      VALUES (?, ?, ?, ?, ?, ?, 1)
@@ -633,8 +625,7 @@ async function handleAnswer(request, env, cors) {
        attempt_count = attempt_count + 1`
   ).bind(user.id, qid, srcLetter, correct, now, now).run();
 
-  const stats = await getStats(env, qid);
-  return json({ ok: true, stats }, 200, cors);
+  return json({ ok: true }, 200, cors);
 }
 
 /* /api/history: returns the signed-in user's answered question_ids so
@@ -744,24 +735,6 @@ async function handleSettings(request, env, cors) {
        updated_at = excluded.updated_at`
   ).bind(user.id, serialized, now).run();
   return json({ ok: true }, 200, cors);
-}
-
-async function handleStats(request, env, cors, qid) {
-  if (!qid || !/^[A-Za-z0-9_\-]+$/.test(qid)) return json({ ok: false, error: "bad question id" }, 400, cors);
-  return json({ ok: true, stats: await getStats(env, qid) }, 200, cors);
-}
-
-async function getStats(env, qid) {
-  if (!env.DB) return { total: 0, A: 0, B: 0, C: 0, D: 0, E: 0 };
-  const rows = await env.DB.prepare(
-    "SELECT source_letter, COUNT(*) AS n FROM answers WHERE question_id = ? GROUP BY source_letter"
-  ).bind(qid).all();
-  const out = { total: 0, A: 0, B: 0, C: 0, D: 0, E: 0 };
-  for (const r of (rows.results || [])) {
-    out[r.source_letter] = r.n;
-    out.total += r.n;
-  }
-  return out;
 }
 
 function json(obj, status, extraHeaders) {

@@ -301,34 +301,6 @@ html.pre-authed body.locked > *:not(#gate):not(script) { display: revert !import
 .gate-card[data-mode="signin"] .gate-foot-link[data-gate-back],
 .gate-card[data-mode="signup"] .gate-foot-link[data-gate-back] { display: none; }
 
-.comm-stats { padding-top: 4px; }
-.stats-bars { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
-.stats-row {
-  display: grid;
-  grid-template-columns: 18px 1fr 44px 36px;
-  gap: 10px;
-  align-items: center;
-  font-size: 13px;
-}
-.stats-letter { font-weight: 700; color: var(--ink-mute); font-variant: small-caps; }
-.stats-row.correct .stats-letter { color: var(--good, #2a8f4c); }
-.stats-bar {
-  position: relative;
-  height: 8px;
-  background: var(--surface-2);
-  border-radius: 4px;
-  overflow: hidden;
-}
-.stats-bar-fill {
-  position: absolute; left: 0; top: 0; bottom: 0;
-  background: var(--accent);
-  border-radius: 4px;
-  transition: width 0.4s ease;
-}
-.stats-row.correct .stats-bar-fill { background: var(--good, #2a8f4c); }
-.stats-pct { text-align: right; font-variant-numeric: tabular-nums; }
-.stats-n { text-align: right; }
-
 /* Per-user stats modal */
 .stats-modal-card { max-width: 640px; }
 .stats-head {

@@ -3,7 +3,7 @@
 The worker carries two surface areas now:
 
 1. **GitHub-write endpoints** (`/paste`, `/report`, `/apply-audit`, `/apply-live-audit`, `/apply-report`) - committed in 2026-Q1 to back the paste-box and audit dashboard.
-2. **Account + social-stats API** (`/api/register`, `/api/login`, `/api/me`, `/api/answer`, `/api/stats/:qid`) - committed 2026-05-20 to let other people sign up and see option-choice aggregates.
+2. **Account API** (`/api/register`, `/api/login`, `/api/me`, `/api/answer`) - lets a signed-in user's answer history, flags and settings follow them across devices.
 
 The new account API needs **Cloudflare D1** (the worker's edge SQLite). Setup once, then deploys are normal.
 
@@ -46,7 +46,7 @@ const WORKER_URL = "";
 
 with the URL printed by `wrangler deploy`. Commit and push. GitHub Pages picks up the change within ~30 s.
 
-The site degrades gracefully if `WORKER_URL` is empty (gate falls back to legacy local-profile only and no stats appear).
+The site degrades gracefully if `WORKER_URL` is empty: the bank still runs, but nothing syncs and progress stays in this browser.
 
 ## Make yourself admin
 

@@ -182,8 +182,8 @@
     // intentionally don't join the per-user server history.
     if (!sourceLetter || !"ABCDE".includes(sourceLetter)) return null;
     try {
-      const { stats } = await apiFetch("/api/answer", { method: "POST", body: JSON.stringify({ question_id: qid, source_letter: sourceLetter, correct }) });
-      return stats;
+      await apiFetch("/api/answer", { method: "POST", body: JSON.stringify({ question_id: qid, source_letter: sourceLetter, correct }) });
+      return true;
     } catch (e) {
       console.warn("[sync] cloudPostAnswer failed:", e && e.message || e);
       return null;
@@ -1851,16 +1851,11 @@
     };
     save(ns(HISTORY_KEY), state.history);
     maybeShowHouseQuote();
-    // Log to cloud (fire-and-forget) so this answer joins the aggregate
-    // stats. Stats response is stashed on the question so revealAnswer can
-    // paint the bars. Test mode also logs (but reveal happens at session end).
+    // Sync this answer to the server (fire-and-forget) so history, attempt
+    // counts and the Unseen / Previously-incorrect filters survive a device
+    // change. Test mode also logs; reveal happens at session end.
     if (cloudUser && chosen && chosen.sourceLetter) {
-      cloudPostAnswer(q.id, chosen.sourceLetter, isC).then(stats => {
-        if (stats) {
-          q._stats = stats;
-          if (state.quiz.revealed[q.id]) renderStatsPanel(q);
-        }
-      });
+      cloudPostAnswer(q.id, chosen.sourceLetter, isC);
     }
     if (state.quiz.mode === "test") { onNext(); return; }
     state.quiz.revealed[q.id] = true;
@@ -1868,33 +1863,6 @@
     renderTopbar();
   }
 
-  function renderStatsPanel(q) {
-    const panel = document.getElementById("explainStats");
-    if (!panel) return;
-    const stats = q._stats;
-    if (!stats || !stats.total) { panel.hidden = true; return; }
-    // Map source letters back to the shuffled letters the user saw, and
-    // also surface which option text each row refers to.
-    const shuffled = _shuffledOptions(q);
-    const bars = document.getElementById("explainStatsBars");
-    bars.innerHTML = "";
-    shuffled.forEach(opt => {
-      const n = stats[opt.sourceLetter] || 0;
-      const pct = stats.total ? Math.round((n / stats.total) * 100) : 0;
-      const row = document.createElement("div");
-      row.className = "stats-row" + (opt.correct ? " correct" : "");
-      row.innerHTML = `
-        <span class="stats-letter">${opt.letter}</span>
-        <span class="stats-bar"><span class="stats-bar-fill" style="width:${pct}%"></span></span>
-        <span class="stats-pct">${pct}%</span>
-        <span class="stats-n dim small">${n}</span>
-      `;
-      bars.appendChild(row);
-    });
-    document.getElementById("explainStatsMeta").textContent =
-      `${stats.total} ${stats.total === 1 ? "person" : "people"} answered.`;
-    panel.hidden = false;
-  }
 
   function revealAnswer(q) {
     document.querySelectorAll("#qOptions li").forEach(li => {
@@ -1929,8 +1897,6 @@
     // post-reveal). The blocks stay hidden via their `hidden` attribute
     // in HTML. "In context" (explainSummary) is the differentiating
     // explanation - condition background, key points, pearls.
-
-    renderStatsPanel(q);
 
     const sum = q.explanation || {};
     const sumWrap = document.getElementById("explainSummary");
