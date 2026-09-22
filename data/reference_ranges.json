@@ -2,7 +2,7 @@
   "_meta": {
     "description": "Australian-units reference library for the A to E MCQ bank. Each category carries a population tag so a paediatric panel is never shown under an adult question.",
     "units_policy": "SI units throughout (mmol/L, micromol/L, g/L, x10^9/L, pmol/L, nmol/L). pCO2/pO2 in both kPa and mmHg where relevant. The unit lives in `units`, never repeated inside `value`.",
-    "version": "2.0",
+    "version": "2.1",
     "last_updated": "2026-09-22"
   },
   "categories": {
@@ -1337,6 +1337,935 @@
           "units": "mg/mmol"
         }
       ]
+    },
+    "paeds_vitals_child": {
+      "label": "Paediatric observations by age (RCH)",
+      "population": "paediatric",
+      "ranges": [
+        {
+          "test": "HR - term neonate",
+          "value": "120 - 170",
+          "units": "/min"
+        },
+        {
+          "test": "HR - infant under 1 year",
+          "value": "105 - 170",
+          "units": "/min",
+          "note": "3 to 12 months"
+        },
+        {
+          "test": "HR - toddler 1 to 4 years",
+          "value": "80 - 150",
+          "units": "/min"
+        },
+        {
+          "test": "HR - school age 5 to 11 years",
+          "value": "60 - 140",
+          "units": "/min"
+        },
+        {
+          "test": "HR - adolescent 12 years plus",
+          "value": "60 - 120",
+          "units": "/min"
+        },
+        {
+          "test": "RR - term neonate",
+          "value": "25 - 60",
+          "units": "/min"
+        },
+        {
+          "test": "RR - infant under 1 year",
+          "value": "20 - 60",
+          "units": "/min"
+        },
+        {
+          "test": "RR - toddler 1 to 4 years",
+          "value": "17 - 45",
+          "units": "/min"
+        },
+        {
+          "test": "RR - school age 5 to 11 years",
+          "value": "15 - 30",
+          "units": "/min"
+        },
+        {
+          "test": "RR - adolescent 12 years plus",
+          "value": "14 - 25",
+          "units": "/min"
+        },
+        {
+          "test": "Systolic BP - term neonate",
+          "value": "60 - 95",
+          "units": "mmHg"
+        },
+        {
+          "test": "Systolic BP - infant under 1 yr",
+          "value": "60 - 105",
+          "units": "mmHg"
+        },
+        {
+          "test": "Systolic BP - 1 to 4 years",
+          "value": "70 - 110",
+          "units": "mmHg"
+        },
+        {
+          "test": "Systolic BP - 5 to 11 years",
+          "value": "80 - 120",
+          "units": "mmHg"
+        },
+        {
+          "test": "Systolic BP - 12 years plus",
+          "value": "90 - 135",
+          "units": "mmHg"
+        },
+        {
+          "test": "Weight - term newborn",
+          "value": "3.5",
+          "units": "kg",
+          "note": "RCH median for age"
+        },
+        {
+          "test": "Weight - 1 year",
+          "value": "10",
+          "units": "kg"
+        },
+        {
+          "test": "Weight - 4 years",
+          "value": "15",
+          "units": "kg"
+        },
+        {
+          "test": "Weight - 8 years",
+          "value": "25",
+          "units": "kg"
+        },
+        {
+          "test": "Weight - 12 years",
+          "value": "40",
+          "units": "kg"
+        }
+      ]
+    },
+    "obs_pregnancy_vitals": {
+      "label": "Maternal observations in pregnancy",
+      "population": "obstetric",
+      "ranges": [
+        {
+          "test": "Systolic BP - 12 weeks",
+          "value": "114 (95 - 138)",
+          "units": "mmHg",
+          "note": "median with 3rd to 97th centile"
+        },
+        {
+          "test": "Systolic BP - 19 weeks",
+          "value": "113 (95 - 136)",
+          "units": "mmHg"
+        },
+        {
+          "test": "Systolic BP - 40 weeks",
+          "value": "121 (102 - 144)",
+          "units": "mmHg"
+        },
+        {
+          "test": "Diastolic BP - 12 weeks",
+          "value": "70 (56 - 87)",
+          "units": "mmHg"
+        },
+        {
+          "test": "Diastolic BP - 19 weeks",
+          "value": "69 (55 - 86)",
+          "units": "mmHg"
+        },
+        {
+          "test": "Diastolic BP - 40 weeks",
+          "value": "78 (62 - 95)",
+          "units": "mmHg"
+        },
+        {
+          "test": "Heart rate - 12 weeks",
+          "value": "82 (63 - 105)",
+          "units": "bpm"
+        },
+        {
+          "test": "Heart rate - 34 weeks",
+          "value": "91 (68 - 115)",
+          "units": "bpm"
+        },
+        {
+          "test": "Temperature - 12 weeks",
+          "value": "36.7 (35.6 - 37.5)",
+          "units": "degrees C"
+        },
+        {
+          "test": "Temperature - 34 weeks",
+          "value": "36.6 (35.4 - 37.5)",
+          "units": "degrees C"
+        },
+        {
+          "test": "NSW chart - heart rate",
+          "value": "50 - 119",
+          "units": "bpm",
+          "note": "white zone on the NSW maternity chart"
+        },
+        {
+          "test": "NSW chart - blood pressure",
+          "value": "90 - 139 systolic, 50 - 89 diastolic",
+          "units": "mmHg"
+        },
+        {
+          "test": "NSW chart - temperature",
+          "value": "36.0 - 37.4",
+          "units": "degrees C"
+        },
+        {
+          "test": "NSW chart - respiratory rate",
+          "value": "10 - 25",
+          "units": "/min"
+        },
+        {
+          "test": "NSW chart - oxygen saturation",
+          "value": "95 or above",
+          "units": "%"
+        },
+        {
+          "test": "Qld chart - heart rate",
+          "value": "50 - 99",
+          "units": "bpm",
+          "note": "state charts disagree; no national range"
+        },
+        {
+          "test": "Qld chart - respiratory rate",
+          "value": "13 - 20",
+          "units": "/min"
+        },
+        {
+          "test": "Plasma volume in pregnancy",
+          "value": "Increased by up to 50%",
+          "units": "",
+          "note": "dilutional anaemia; shock signs appear late"
+        },
+        {
+          "test": "Heart rate change",
+          "value": "Increased by 15 - 20",
+          "units": "bpm",
+          "note": "compared with non-pregnant"
+        },
+        {
+          "test": "Cardiac output change",
+          "value": "Increased by 30 to 50%",
+          "units": ""
+        },
+        {
+          "test": "Arterial BP change",
+          "value": "Decreased by 10 - 15",
+          "units": "mmHg"
+        },
+        {
+          "test": "Systemic vascular resistance",
+          "value": "Decreased",
+          "units": ""
+        },
+        {
+          "test": "Oxygen consumption",
+          "value": "Increased by 20 to 33%",
+          "units": "",
+          "note": "hypoxia develops faster"
+        },
+        {
+          "test": "Functional residual capacity",
+          "value": "Decreased by 25%",
+          "units": ""
+        },
+        {
+          "test": "Arterial pCO2",
+          "value": "Decreased",
+          "units": "",
+          "note": "compensated respiratory alkalosis"
+        },
+        {
+          "test": "Respiratory rate change",
+          "value": "Not increased by pregnancy itself",
+          "units": "",
+          "note": "SOMANZ; a raised rate is a red flag, not physiology"
+        },
+        {
+          "test": "Hypertension in pregnancy",
+          "value": "sBP 140 or above and/or dBP 90 or above",
+          "units": "mmHg",
+          "note": "on 2 occasions at least 4 hours apart"
+        },
+        {
+          "test": "Severe hypertension",
+          "value": "sBP 160 or above and/or dBP 110 or above",
+          "units": "mmHg"
+        },
+        {
+          "test": "Hypertensive emergency",
+          "value": "sBP 170 or above",
+          "units": "mmHg",
+          "note": "urgent treatment required"
+        },
+        {
+          "test": "Treatment BP target",
+          "value": "Diastolic 80 - 90",
+          "units": "mmHg"
+        },
+        {
+          "test": "Hypotension in sepsis",
+          "value": "Systolic below 90, or MAP below 60 to 65",
+          "units": "mmHg"
+        }
+      ]
+    },
+    "paeds_vitals_infant": {
+      "label": "Infant observations, term to 12 months (RCH)",
+      "population": "paediatric",
+      "ranges": [
+        {
+          "test": "HR - term newborn",
+          "value": "120 - 170",
+          "units": "/min"
+        },
+        {
+          "test": "HR - 3 months",
+          "value": "115 - 170",
+          "units": "/min"
+        },
+        {
+          "test": "HR - 6 months",
+          "value": "110 - 170",
+          "units": "/min"
+        },
+        {
+          "test": "HR - 1 year",
+          "value": "105 - 150",
+          "units": "/min"
+        },
+        {
+          "test": "RR - term newborn",
+          "value": "25 - 60",
+          "units": "/min"
+        },
+        {
+          "test": "RR - 3 months",
+          "value": "25 - 60",
+          "units": "/min"
+        },
+        {
+          "test": "RR - 6 months",
+          "value": "20 - 55",
+          "units": "/min"
+        },
+        {
+          "test": "RR - 1 year",
+          "value": "20 - 45",
+          "units": "/min"
+        },
+        {
+          "test": "Systolic BP - term newborn",
+          "value": "60 - 95",
+          "units": "mmHg"
+        },
+        {
+          "test": "Systolic BP - 3 months",
+          "value": "60 - 105",
+          "units": "mmHg"
+        },
+        {
+          "test": "Systolic BP - 6 months",
+          "value": "75 - 105",
+          "units": "mmHg"
+        },
+        {
+          "test": "Systolic BP - 1 year",
+          "value": "70 - 105",
+          "units": "mmHg"
+        },
+        {
+          "test": "Weight - term newborn",
+          "value": "3.5",
+          "units": "kg"
+        },
+        {
+          "test": "Weight - 3 months",
+          "value": "6",
+          "units": "kg"
+        },
+        {
+          "test": "Weight - 6 months",
+          "value": "8",
+          "units": "kg"
+        },
+        {
+          "test": "Weight - 1 year",
+          "value": "10",
+          "units": "kg"
+        }
+      ]
+    },
+    "ctg_baseline": {
+      "label": "CTG interpretation (RANZCOG / QCG intrapartum)",
+      "population": "obstetric",
+      "ranges": [
+        {
+          "test": "Normal baseline FHR",
+          "value": "110 - 160",
+          "units": "bpm",
+          "note": "mean FHR over 5 to 10 minutes"
+        },
+        {
+          "test": "Baseline tachycardia",
+          "value": "Above 160",
+          "units": "bpm"
+        },
+        {
+          "test": "Baseline bradycardia",
+          "value": "Below 110",
+          "units": "bpm"
+        },
+        {
+          "test": "Normal variability",
+          "value": "6 - 25",
+          "units": "bpm"
+        },
+        {
+          "test": "Reduced variability",
+          "value": "3 - 5",
+          "units": "bpm",
+          "note": "normal for up to 40 minutes in fetal sleep"
+        },
+        {
+          "test": "Absent variability",
+          "value": "Under 3",
+          "units": "bpm"
+        },
+        {
+          "test": "Increased variability",
+          "value": "Above 25",
+          "units": "bpm"
+        },
+        {
+          "test": "Acceleration",
+          "value": "Rise of 15 or more above baseline for 15 seconds",
+          "units": "bpm"
+        },
+        {
+          "test": "Deceleration",
+          "value": "Fall below baseline lasting 15 seconds or more",
+          "units": ""
+        },
+        {
+          "test": "Early deceleration",
+          "value": "Uniform, slow onset early in contraction, back to baseline by its end",
+          "units": ""
+        },
+        {
+          "test": "Variable deceleration",
+          "value": "Rapid onset and recovery, usually with contractions",
+          "units": ""
+        },
+        {
+          "test": "Complicated variable",
+          "value": "Variable plus rising baseline, falling variability, slow return, or drop of 60 or to 60",
+          "units": "bpm",
+          "note": "or lasting over 60 seconds, or post-deceleration overshoot"
+        },
+        {
+          "test": "Late deceleration",
+          "value": "Uniform, onset mid to late contraction, nadir over 20 seconds after peak, ends after contraction",
+          "units": ""
+        },
+        {
+          "test": "Prolonged deceleration",
+          "value": "Below baseline for longer than 90 seconds and up to 5 minutes",
+          "units": ""
+        },
+        {
+          "test": "Bradycardia (deceleration)",
+          "value": "Below baseline for longer than 5 minutes",
+          "units": ""
+        },
+        {
+          "test": "Sinusoidal pattern",
+          "value": "Smooth sine wave, 2 - 5 cycles per minute, amplitude 5 - 15 bpm, absent variability",
+          "units": ""
+        },
+        {
+          "test": "GREEN - normal CTG",
+          "value": "Baseline 110 - 160, variability 6 - 25, no decelerations, accelerations present",
+          "units": "",
+          "note": "low probability of fetal compromise; no action"
+        },
+        {
+          "test": "BLUE - abnormal, low concern",
+          "value": "Baseline 100 - 109, or variability 3 - 5 for up to 40 min, or early or variable decelerations, or absent accelerations",
+          "units": "",
+          "note": "continue CTG, obstetric review, correct reversible causes"
+        },
+        {
+          "test": "YELLOW - abnormal, act",
+          "value": "Baseline above 160 or rising, or variability 3 - 5 for 40 min or more, or complicated variable, late or prolonged decelerations",
+          "units": "",
+          "note": "review birth timing, consider FSS or FBS"
+        },
+        {
+          "test": "YELLOW escalation rule",
+          "value": "Two or more YELLOW features, or persistent YELLOW, equals RED",
+          "units": ""
+        },
+        {
+          "test": "RED - abnormal, urgent",
+          "value": "Bradycardia over 5 min, absent or increased variability, sinusoidal, or complicated variable or late decelerations with reduced or absent variability",
+          "units": "",
+          "note": "urgent review, expedite birth"
+        },
+        {
+          "test": "Fetal blood sample - normal",
+          "value": "pH 7.25 or more, lactate 4.0 or less",
+          "units": ""
+        },
+        {
+          "test": "Fetal blood sample - abnormal",
+          "value": "pH 7.20 or less, lactate 4.8 or more",
+          "units": "",
+          "note": "expedite birth"
+        }
+      ]
+    },
+    "gcs": {
+      "label": "Glasgow Coma Scale (adult and paediatric)",
+      "population": "any",
+      "ranges": [
+        {
+          "test": "Eye - spontaneously",
+          "value": "4",
+          "units": ""
+        },
+        {
+          "test": "Eye - to verbal stimuli",
+          "value": "3",
+          "units": ""
+        },
+        {
+          "test": "Eye - to painful stimuli",
+          "value": "2",
+          "units": ""
+        },
+        {
+          "test": "Eye - no response to pain",
+          "value": "1",
+          "units": ""
+        },
+        {
+          "test": "Verbal - orientated, converses",
+          "value": "5",
+          "units": ""
+        },
+        {
+          "test": "Verbal - confused, converses",
+          "value": "4",
+          "units": ""
+        },
+        {
+          "test": "Verbal - inappropriate words",
+          "value": "3",
+          "units": ""
+        },
+        {
+          "test": "Verbal - incomprehensible sounds",
+          "value": "2",
+          "units": ""
+        },
+        {
+          "test": "Verbal - no response to pain",
+          "value": "1",
+          "units": ""
+        },
+        {
+          "test": "Motor - obeys verbal commands",
+          "value": "6",
+          "units": ""
+        },
+        {
+          "test": "Motor - localises to stimuli",
+          "value": "5",
+          "units": ""
+        },
+        {
+          "test": "Motor - withdraws to stimuli",
+          "value": "4",
+          "units": ""
+        },
+        {
+          "test": "Motor - abnormal flexion",
+          "value": "3",
+          "units": "",
+          "note": "decorticate"
+        },
+        {
+          "test": "Motor - abnormal extension",
+          "value": "2",
+          "units": "",
+          "note": "decerebrate"
+        },
+        {
+          "test": "Motor - no response to pain",
+          "value": "1",
+          "units": ""
+        },
+        {
+          "test": "Total score",
+          "value": "3 - 15",
+          "units": "",
+          "note": "minimum 3, never 0"
+        },
+        {
+          "test": "Paeds verbal (under 4 yr) - 5",
+          "value": "Alert; babbles, coos words to usual ability",
+          "units": ""
+        },
+        {
+          "test": "Paeds verbal (under 4 yr) - 4",
+          "value": "Fewer than usual words, spontaneous irritable cry",
+          "units": ""
+        },
+        {
+          "test": "Paeds verbal (under 4 yr) - 3",
+          "value": "Cries only to pain",
+          "units": ""
+        },
+        {
+          "test": "Paeds verbal (under 4 yr) - 2",
+          "value": "Moans to pain",
+          "units": ""
+        },
+        {
+          "test": "Paeds verbal (under 4 yr) - 1",
+          "value": "No response to pain",
+          "units": ""
+        },
+        {
+          "test": "Paeds motor (under 4 yr) - 6",
+          "value": "Spontaneous or obeys verbal commands",
+          "units": ""
+        },
+        {
+          "test": "Paeds motor (under 4 yr) - 5",
+          "value": "Localises to pain or withdraws to touch",
+          "units": ""
+        },
+        {
+          "test": "Paeds motor (under 4 yr) - 4",
+          "value": "Withdraws from pain",
+          "units": ""
+        },
+        {
+          "test": "Paeds eye (under 4 yr)",
+          "value": "Unchanged from the adult scale",
+          "units": ""
+        }
+      ]
+    },
+    "pre_eclampsia_bloods": {
+      "label": "Pre-eclampsia - diagnostic and severe-disease thresholds",
+      "population": "obstetric",
+      "ranges": [
+        {
+          "test": "Platelets - diagnostic",
+          "value": "Under 150",
+          "units": "x10^9/L",
+          "note": "thrombocytopenia as an organ feature"
+        },
+        {
+          "test": "Platelets - severe disease",
+          "value": "Under 100",
+          "units": "x10^9/L",
+          "note": "HELLP indicator"
+        },
+        {
+          "test": "Creatinine",
+          "value": "At or above 90",
+          "units": "micromol/L"
+        },
+        {
+          "test": "Oliguria",
+          "value": "Under 80 per 4 hours or under 500 per 24 hours",
+          "units": "mL"
+        },
+        {
+          "test": "Transaminases - diagnostic",
+          "value": "New onset above 40",
+          "units": "IU/L",
+          "note": "with or without epigastric or RUQ pain"
+        },
+        {
+          "test": "Transaminases - severe disease",
+          "value": "Above twice the normal range",
+          "units": "",
+          "note": "HELLP indicator"
+        },
+        {
+          "test": "Spot protein:creatinine ratio",
+          "value": "At or above 30",
+          "units": "mg/mmol",
+          "note": "uncontaminated specimen; diagnostic of proteinuria"
+        },
+        {
+          "test": "Dipstick triggering quantitation",
+          "value": "2+ or more, or persistent 1+",
+          "units": ""
+        },
+        {
+          "test": "24 hour urine protein",
+          "value": "Not required for routine diagnosis",
+          "units": "",
+          "note": "spot ratio has replaced it"
+        },
+        {
+          "test": "Haemolysis",
+          "value": "Schistocytes on film, raised bilirubin, raised LDH, low haptoglobin",
+          "units": "",
+          "note": "no single numeric cut-off given"
+        },
+        {
+          "test": "LDH",
+          "value": "Measured at baseline; raised value supports haemolysis",
+          "units": ""
+        },
+        {
+          "test": "Urate",
+          "value": "Measured at baseline; no diagnostic cut-off",
+          "units": ""
+        },
+        {
+          "test": "Proteinuria",
+          "value": "Common but not mandatory for the diagnosis",
+          "units": ""
+        },
+        {
+          "test": "Hypertension for diagnosis",
+          "value": "sBP at or above 140 and/or dBP at or above 90 after 20 weeks",
+          "units": "mmHg",
+          "note": "confirmed on 2 or more occasions"
+        }
+      ]
+    },
+    "adult_vitals": {
+      "label": "Adult observations (normal ranges)",
+      "population": "adult",
+      "ranges": [
+        {
+          "test": "Heart rate",
+          "value": "60 - 115",
+          "units": "/min",
+          "note": "RCH 17 years and over row"
+        },
+        {
+          "test": "Respiratory rate",
+          "value": "14 - 25",
+          "units": "/min",
+          "note": "RCH 17 years and over row"
+        },
+        {
+          "test": "Systolic blood pressure",
+          "value": "90 - 135",
+          "units": "mmHg",
+          "note": "RCH 17 years and over row"
+        },
+        {
+          "test": "Temperature",
+          "value": "36.5 - 37.5",
+          "units": "degrees C",
+          "note": "SOMANZ; regulated set point"
+        },
+        {
+          "test": "Hypotension / shock",
+          "value": "Systolic below 90, or MAP below 60 to 65",
+          "units": "mmHg"
+        },
+        {
+          "test": "Conscious state",
+          "value": "GCS 15; any fall is a deterioration",
+          "units": ""
+        },
+        {
+          "test": "Reference weight",
+          "value": "65",
+          "units": "kg",
+          "note": "RCH 17 years and over row"
+        }
+      ]
+    },
+    "paeds_jaundice": {
+      "label": "Neonatal jaundice - thresholds and rules (RCH)",
+      "population": "paediatric",
+      "ranges": [
+        {
+          "test": "Jaundice in first 24 hours",
+          "value": "Always pathological - fractionated SBR, FBE and DAT",
+          "units": ""
+        },
+        {
+          "test": "Physiological jaundice - onset",
+          "value": "24 hours to 14 days",
+          "units": "",
+          "note": "peaks day 3 to 5, lasts 1 to 2 weeks"
+        },
+        {
+          "test": "Prolonged jaundice",
+          "value": "Visible jaundice persisting beyond 2 weeks",
+          "units": ""
+        },
+        {
+          "test": "Prolonged jaundice workup",
+          "value": "Fractionated SBR, FBE, film, retics, TFTs, blood group, DAT",
+          "units": ""
+        },
+        {
+          "test": "Conjugated hyperbilirubinaemia",
+          "value": "Conjugated fraction above 20 or above 20% of total",
+          "units": "micromol/L",
+          "note": "always pathological; gastroenterology referral"
+        },
+        {
+          "test": "LFTs in prolonged jaundice",
+          "value": "Add if conjugated fraction above 10% of total",
+          "units": ""
+        },
+        {
+          "test": "Confirm TcB with serum SBR",
+          "value": "Within 50 of the treatment threshold",
+          "units": "micromol/L"
+        },
+        {
+          "test": "Confirm TcB with serum SBR",
+          "value": "At or above 250",
+          "units": "micromol/L",
+          "note": "or if rising rapidly"
+        },
+        {
+          "test": "Phototherapy threshold",
+          "value": "Read from the gestation and age specific nomogram",
+          "units": "",
+          "note": "no single number applies"
+        },
+        {
+          "test": "Exchange transfusion threshold",
+          "value": "Read from the gestation and age specific nomogram",
+          "units": ""
+        }
+      ]
+    },
+    "bishop_score": {
+      "label": "Modified Bishop score",
+      "population": "obstetric",
+      "ranges": [
+        {
+          "test": "Dilation - score 0 / 1 / 2 / 3",
+          "value": "under 1 / 1 - 2 / 3 - 4 / over 4",
+          "units": "cm"
+        },
+        {
+          "test": "Cervical length - 0 / 1 / 2 / 3",
+          "value": "3 or more / 2 / 1 / under 1",
+          "units": "cm"
+        },
+        {
+          "test": "Station - score 0 / 1 / 2 / 3",
+          "value": "-3 / -2 / -1 or 0 / +1 or +2",
+          "units": "",
+          "note": "relative to ischial spines"
+        },
+        {
+          "test": "Consistency - score 0 / 1 / 2",
+          "value": "firm / medium / soft",
+          "units": "",
+          "note": "no score of 3"
+        },
+        {
+          "test": "Position - score 0 / 1 / 2",
+          "value": "posterior / mid / anterior",
+          "units": "",
+          "note": "no score of 3"
+        },
+        {
+          "test": "Total score range",
+          "value": "0 - 13",
+          "units": "",
+          "note": "sum of the five cervical features"
+        },
+        {
+          "test": "Unfavourable cervix",
+          "value": "6 or less",
+          "units": "",
+          "note": "cervical ripening recommended"
+        },
+        {
+          "test": "Favourable cervix",
+          "value": "7 or more",
+          "units": "",
+          "note": "ripening not required; proceed to ARM and oxytocin"
+        }
+      ]
+    },
+    "apgar": {
+      "label": "Apgar score - timing and thresholds",
+      "population": "paediatric",
+      "ranges": [
+        {
+          "test": "When scored",
+          "value": "At 1 and 5 minutes after birth",
+          "units": ""
+        },
+        {
+          "test": "Repeat scoring",
+          "value": "Every 5 minutes until heart rate and breathing are normal",
+          "units": ""
+        },
+        {
+          "test": "What it measures",
+          "value": "Summarises the newborn response over the first minutes of life",
+          "units": ""
+        },
+        {
+          "test": "Resuscitation rule",
+          "value": "Do not delay resuscitation of a depressed newborn to score",
+          "units": ""
+        },
+        {
+          "test": "Cord gas indication",
+          "value": "Under 4 at 1 minute",
+          "units": ""
+        },
+        {
+          "test": "Cord gas indication",
+          "value": "Under 7 at 5 minutes",
+          "units": ""
+        },
+        {
+          "test": "Modified active management",
+          "value": "Under 7 at 5 minutes",
+          "units": "",
+          "note": "QCG normal birth trigger"
+        },
+        {
+          "test": "Therapeutic hypothermia",
+          "value": "5 or less at 10 minutes",
+          "units": "",
+          "note": "one of the acidosis or depression criteria"
+        },
+        {
+          "test": "Encephalopathy screening",
+          "value": "5 or less at 5 and 10 minutes",
+          "units": ""
+        },
+        {
+          "test": "Poor outcome marker in HIE",
+          "value": "0 - 3 at 10 minutes",
+          "units": "",
+          "note": "each extra point lowers risk of death or disability"
+        }
+      ]
     }
   },
   "sources": [
@@ -1395,6 +2324,46 @@
     {
       "label": "RANZCR / RACP Australian Diabetes Society HbA1c diagnostic position",
       "url": "https://www.diabetessociety.com.au/"
+    },
+    {
+      "label": "RCH Clinical Practice Guidelines - Acceptable ranges for physiological variables",
+      "url": "https://www.rch.org.au/clinicalguide/guideline_index/Normal_Ranges_for_Physiological_Variables/"
+    },
+    {
+      "label": "Queensland Clinical Guideline - Hypertension and pregnancy (MN21.13-V9-R26, Feb 2021)",
+      "url": "https://www.health.qld.gov.au/__data/assets/pdf_file/0034/139948/g-hdp.pdf"
+    },
+    {
+      "label": "Queensland Clinical Guideline - Intrapartum fetal surveillance (aligned with RANZCOG C-Obs 1)",
+      "url": "https://www.health.qld.gov.au/__data/assets/pdf_file/0012/140043/g-ifs.pdf"
+    },
+    {
+      "label": "Queensland Clinical Guideline - Induction of labour (Table 18, Modified Bishop score)",
+      "url": "https://www.health.qld.gov.au/__data/assets/pdf_file/0020/641423/g-iol.pdf"
+    },
+    {
+      "label": "RCH Clinical Practice Guidelines - Head injury (GCS, both age versions)",
+      "url": "https://www.rch.org.au/clinicalguide/guideline_index/Head_injury/"
+    },
+    {
+      "label": "SOMANZ Sepsis in Pregnancy guideline 2023 (Tables 2.1 and 2.2, normal maternal observations)",
+      "url": "https://somanz.org/content/uploads/2024/11/2023-SOMANZ_Sepsis_in_Pregnancy_PS_Final.pdf"
+    },
+    {
+      "label": "Queensland Clinical Guideline - Trauma in pregnancy (Table 5, physiological changes)",
+      "url": "https://www.health.qld.gov.au/__data/assets/pdf_file/0013/140611/g-trauma.pdf"
+    },
+    {
+      "label": "ANZCOR Guideline 13.9 - After the resuscitation of a newborn (Apgar timing)",
+      "url": "https://www.anzcor.org/home/neonatal-resuscitation/guideline-13-9-after-the-resuscitation-of-a-newborn"
+    },
+    {
+      "label": "Queensland Clinical Guideline - Neonatal resuscitation (Apgar recording and cord gas indications)",
+      "url": "https://www.health.qld.gov.au/__data/assets/pdf_file/0011/140600/g-resus.pdf"
+    },
+    {
+      "label": "Queensland Clinical Guideline - Hypoxic ischaemic encephalopathy (Apgar thresholds)",
+      "url": "https://www.health.qld.gov.au/__data/assets/pdf_file/0014/140162/g-hie.pdf"
     }
   ]
 }
