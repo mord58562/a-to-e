@@ -92,10 +92,20 @@
     if (!r.ok || data.ok === false) {
       const serverMsg = data.error || "";
       let friendly = serverMsg;
-      if (r.status === 401) friendly = "Wrong email or password.";
-      else if (r.status === 429) friendly = "Too many attempts. Try again in a few minutes.";
-      else if (r.status === 413) friendly = "That's too much data for one request.";
-      else if (r.status >= 500) friendly = serverMsg || "Server error. Try again in a moment.";
+      // 401 only means "wrong password" on the sign-in path. Everywhere
+      // else it means the session died, and telling an admin mid-delete
+      // that their password is wrong sends them looking for the wrong bug.
+      if (r.status === 401) {
+        friendly = path === "/api/login"
+          ? "Wrong email or password."
+          : "Your session expired. Sign in again.";
+      } else if (r.status === 429) {
+        friendly = serverMsg || "Too many attempts. Try again in a few minutes.";
+      } else if (r.status === 413) {
+        friendly = "That's too much data for one request.";
+      } else if (r.status >= 500) {
+        friendly = "Server error. Try again in a moment." + (data.ref ? ` (ref ${data.ref})` : "");
+      }
       const e = new Error(friendly || `HTTP ${r.status}`);
       e.status = r.status;
       e.serverError = serverMsg;
@@ -125,8 +135,8 @@
     localStorage.setItem(AUTH_TOKEN_KEY, token);
     return user;
   }
-  async function cloudSignUp(email, password, displayName, legacyAdminSecret) {
-    const payload = { email, password, display_name: displayName };
+  async function cloudSignUp(email, password, displayName, inviteCode) {
+    const payload = { email, password, display_name: displayName, invite_code: inviteCode };
     const { token, user } = await apiFetch("/api/register", { method: "POST", body: JSON.stringify(payload) });
     authToken = token; cloudUser = user;
     localStorage.setItem(AUTH_TOKEN_KEY, token);
@@ -210,11 +220,10 @@
     }
   }
 
-  // Combined admin check: legacy local admin profile OR signed-in cloud admin.
+  // Admin is a server-side fact (users.is_admin), re-checked by the worker
+  // on every admin endpoint. The client class below only controls chrome.
   function isCurrentUserAdmin() {
-    if (currentProfile && currentProfile.id === "rob") return true;
-    if (cloudUser && cloudUser.is_admin) return true;
-    return false;
+    return !!(cloudUser && cloudUser.is_admin);
   }
   // Apply the is-admin class to <body> so the CSS rule
   // `body:not(.is-admin) .admin-only { display: none }` kicks in.
@@ -235,21 +244,14 @@
     return idx * 30;
   }
 
-  // Profile registry. Each entry has a stable `id` (used as the
-  // localStorage namespace), a human `name` (shown in the UI), and the
-  // SHA-256 hash of the password. The plaintext password is never in
-  // source. To add a new profile (e.g. Tom):
-  //   1. Compute the hash:  printf '%s' 'tompassword' | shasum -a 256
-  //   2. Append:  { id: "tom", name: "Tom", hash: "<hex>" }
-  // Profile ids should be short, lowercase, and never reused.
-  const PROFILES = [
-    {
-      id:   "rob",
-      name: "Admin",
-      hash: "REDACTED",
-    },
-  ];
-
+  // The legacy local-profile path is gone (2026-09-22). It shipped an
+  // unsalted SHA-256 of a three-character password in public client
+  // source, and restored itself from localStorage with no password check
+  // at all, so it was never a gate. It granted no server authority
+  // either - every worker endpoint re-checks users.is_admin. Admin is
+  // now the cloud account flag and nothing else. `currentProfile` stays
+  // declared because ns() and the sign-out path still read it; it is
+  // permanently null.
   let currentProfile = null;
   // Namespace a storage key by the current profile so each user has
   // their own history / flags / settings / reminders / pasted questions.
@@ -403,14 +405,17 @@
   }
 
   // When a cloud user signs in for the first time on a browser that
-  // previously stored progress under the legacy "rob" profile (or any
-  // other legacy profile), fold that history into the cloud namespace
-  // so the user sees their existing progress under the new account.
+  // previously stored progress under the retired local profile, fold
+  // that history into the cloud namespace so their existing progress
+  // follows them. The profile path itself is gone; only the orphaned
+  // localStorage it left behind is read here.
+  const LEGACY_PROFILE_IDS = ["rob"];
   function importLegacyHistoryIntoCloud() {
     if (!cloudUser) return;
     const importedFlag = "y4mcq.cloud.imported." + cloudUser.id;
     if (localStorage.getItem(importedFlag)) return;
-    for (const profile of PROFILES) {
+    for (const profileId of LEGACY_PROFILE_IDS) {
+      const profile = { id: profileId };
       const legHist = load(`${HISTORY_KEY}.${profile.id}`, null);
       if (!legHist) continue;
       const cloudKey = `${HISTORY_KEY}.cloud-${cloudUser.id}`;
@@ -431,16 +436,11 @@
     localStorage.setItem(importedFlag, "1");
   }
 
-  // Client-side gate. Plaintext passwords are never in source - we ship
-  // only the SHA-256 of each profile's password. A static-site gate is
-  // theatre (anyone can fetch /data/*.json directly) but it filters
-  // casual access and provides the profile-routing hook.
-
-  async function sha256Hex(s) {
-    const buf = new TextEncoder().encode(s);
-    const hash = await crypto.subtle.digest("SHA-256", buf);
-    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
-  }
+  // The gate. Note it is not a security boundary and never was: the
+  // question JSON is public static files that anyone can fetch directly.
+  // What it does is route a visitor to an account, a guest session, or
+  // an invite. Everything that actually matters is enforced by the
+  // worker against the bearer token.
 
   async function passGate() {
     return new Promise(async resolve => {
@@ -457,7 +457,7 @@
       const switchPane = (mode) => {
         if (card) card.dataset.mode = mode;
         document.querySelectorAll(".gate-pane").forEach(p => p.hidden = true);
-        const map = { signin: "cloudSignInForm", signup: "cloudSignUpForm", legacy: "gateForm" };
+        const map = { signin: "cloudSignInForm", signup: "cloudSignUpForm" };
         const el = document.getElementById(map[mode] || "cloudSignInForm");
         if (el) { el.hidden = false; const f = el.querySelector("input"); if (f) setTimeout(() => f.focus(), 50); }
       };
@@ -480,13 +480,9 @@
         return unlock();
       }
 
-      // 2. Legacy profile fallback (only when no cloud user is active).
-      const savedId = localStorage.getItem(PROFILE_CURRENT_KEY);
-      if (savedId) {
-        const p = PROFILES.find(p => p.id === savedId);
-        if (p) { currentProfile = p; return unlock(); }
-        localStorage.removeItem(PROFILE_CURRENT_KEY);
-      }
+      // 2. Clear any stored legacy profile id. It used to unlock the
+      // admin chrome on its own, with no password check.
+      localStorage.removeItem(PROFILE_CURRENT_KEY);
 
       // 3. Already in guest mode? Skip the gate (UNLESS the guest asked
       // to sign up, in which case we keep them at the gate so they can
@@ -541,6 +537,7 @@
             document.getElementById("cloudSignUpEmail").value.trim(),
             pw,
             document.getElementById("cloudSignUpName").value.trim(),
+            (document.getElementById("cloudSignUpInvite") || {}).value || "",
           );
           // Capture any pre-existing guest id BEFORE we clear it so we
           // can fold guest progress into the new cloud account.
@@ -558,25 +555,6 @@
         } catch (err) {
           signUpErr.textContent = (err && err.message) || "Sign up failed.";
           signUpErr.hidden = false;
-        }
-      });
-
-      // 5. Legacy local-profile form.
-      const form  = document.getElementById("gateForm");
-      const input = document.getElementById("gateInput");
-      const err   = document.getElementById("gateErr");
-      form.addEventListener("submit", async e => {
-        e.preventDefault();
-        const h = await sha256Hex((input.value || "").trim());
-        const p = PROFILES.find(p => p.hash === h);
-        if (p) {
-          currentProfile = p;
-          localStorage.setItem(PROFILE_CURRENT_KEY, p.id);
-          unlock();
-        } else {
-          err.hidden = false;
-          input.value = "";
-          input.focus();
         }
       });
 

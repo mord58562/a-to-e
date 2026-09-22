@@ -11,11 +11,16 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <!-- Content Security Policy: same-origin for scripts and images, plus the
-     Worker for API calls and Google Fonts for typography. Report-only style
-     unset here (we don't have a report endpoint); the policy is defensive
-     against XSS-injected external resource loads if a stem ever slips
-     through the sanitiser. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://a-to-e-inbox.mord58562.workers.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+     Worker for API calls and Google Fonts for typography.
+     script-src carries no 'unsafe-inline': the session token lives in
+     localStorage, so an injected script is a full account takeover and
+     the CSP is the thing standing in its way. The one script that has to
+     run before first paint lives in assets/preauth.js for that reason.
+     frame-ancestors is deliberately absent - the spec requires it to
+     arrive as an HTTP response header, which GitHub Pages cannot set, so
+     listing it in a meta tag would look like clickjacking protection
+     while doing nothing. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://a-to-e-inbox.mord58562.workers.dev; base-uri 'self'; form-action 'self'">
 <title>A to E - Australian clinical-years MCQ bank</title>
 <meta name="description" content="A to E - practice MCQs for Australian medical students in their clinical years." />
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -25,21 +30,7 @@
 <link rel="dns-prefetch" href="https://a-to-e-inbox.mord58562.workers.dev">
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css?v=20260922" />
-<script>
-  // Pre-paint auth probe. If a cloud auth token is in localStorage we
-  // assume the gate will pass and pre-hide it before first paint -
-  // otherwise the gate flashes for one frame on every saved-login
-  // refresh. If the token is later rejected by /api/me the JS path
-  // un-hides the gate again. Same hint for legacy-profile + guest tokens.
-  (function () {
-    try {
-      var pre = !!(localStorage.getItem("y4mcq.auth.token") ||
-                   localStorage.getItem("y4mcq.profile.current") ||
-                   localStorage.getItem("y4mcq.guest.v1"));
-      if (pre) document.documentElement.classList.add("pre-authed");
-    } catch (_) {}
-  })();
-</script>
+<script src="assets/preauth.js?v=20260922"></script>
 </head>
 <body data-screen="home" class="locked">
 
@@ -73,6 +64,12 @@
 
     <form id="cloudSignUpForm" class="gate-pane" autocomplete="on" hidden>
       <label class="gate-field">
+        <span>Invite code</span>
+        <input id="cloudSignUpInvite" type="text" required autocomplete="off"
+               autocapitalize="characters" autocorrect="off" spellcheck="false"
+               placeholder="XXXX-XXXX-XXXX" />
+      </label>
+      <label class="gate-field">
         <span>First name</span>
         <input id="cloudSignUpName" type="text" required autocomplete="given-name" />
       </label>
@@ -92,21 +89,10 @@
       <p id="cloudSignUpErr" class="gate-err" hidden></p>
     </form>
 
-    <form id="gateForm" class="gate-pane" autocomplete="off" hidden>
-      <label class="gate-field">
-        <span>Admin password</span>
-        <input id="gateInput" type="password" autocomplete="off"
-               autocorrect="off" autocapitalize="off" spellcheck="false" />
-      </label>
-      <button id="gateSubmit" class="primary gate-primary" type="submit">Unlock admin</button>
-      <p id="gateErr" class="gate-err" hidden>Incorrect password.</p>
-    </form>
-
     <footer class="gate-foot" data-hide-in-legacy>
       <button type="button" id="gateGuestBtn" class="gate-foot-link gate-foot-primary">Skip - try without saving</button>
       <span class="gate-foot-sep">·</span>
-      <button type="button" class="gate-foot-link" data-gate-switch="legacy">Admin login</button>
-      <button type="button" class="gate-foot-link" data-gate-switch="signin" data-gate-back hidden>Back to sign in</button>
+      <span class="gate-foot-note">Accounts are invite only.</span>
     </footer>
   </div>
 </div>

@@ -83,6 +83,11 @@ export default {
         return await handleAdminPromote(request, env, cors, id, false);
       }
       if (url.pathname === "/api/admin/quality" && request.method === "GET") return await handleAdminQuality(request, env, cors);
+      if (url.pathname === "/api/password" && request.method === "POST") return await handlePasswordChange(request, env, cors);
+      if (url.pathname === "/api/account/sessions/revoke" && request.method === "POST") return await handleRevokeSessions(request, env, cors);
+      if (url.pathname === "/api/admin/invites" && request.method === "GET") return await handleAdminListInvites(request, env, cors);
+      if (url.pathname === "/api/admin/invites" && request.method === "POST") return await handleAdminCreateInvite(request, env, cors);
+      if (url.pathname === "/api/admin/invites/revoke" && request.method === "POST") return await handleAdminRevokeInvite(request, env, cors);
       // Existing GitHub-write endpoints (POST only).
       if (request.method !== "POST") {
         return json({ ok: false, error: "POST only" }, 405, cors);
@@ -95,8 +100,30 @@ export default {
       if (url.pathname === "/commit-batch")          return await handleCommitBatch(request, env, cors);
       return json({ ok: false, error: "not found" }, 404, cors);
     } catch (e) {
-      return json({ ok: false, error: String(e && e.message || e) }, 500, cors);
+      // Never hand the caller the raw message: requireEncryptionEnv names
+      // exactly which secrets are missing, and D1 throws raw SQL. The
+      // reference goes in the log and in the response so a report can be
+      // matched to a line in `wrangler tail`.
+      const ref = randomHex(4);
+      console.error("[" + ref + "]", e && e.stack || e);
+      return json({ ok: false, error: "server error", ref }, 500, cors);
     }
+  },
+
+  /* Cron sweeper. Nothing ever deleted expired sessions or the
+   * rate-limit ledger, so both tables grew without bound. Scheduled in
+   * wrangler.toml; safe to run as often as you like.
+   */
+  async scheduled(event, env, ctx) {
+    if (!env.DB) return;
+    const now = Math.floor(Date.now() / 1000);
+    ctx.waitUntil(env.DB.batch([
+      env.DB.prepare("DELETE FROM sessions WHERE expires_at < ?").bind(now),
+      env.DB.prepare("DELETE FROM sessions WHERE created_at + ? < ?").bind(SESSION_MAX_AGE_SEC, now),
+      // Keep a day of rate-limit history; the longest window is one hour.
+      env.DB.prepare("DELETE FROM login_attempts WHERE ts < ?").bind(now - 86400),
+      env.DB.prepare("DELETE FROM invite_codes WHERE used_by IS NULL AND revoked_at IS NULL AND expires_at IS NOT NULL AND expires_at < ?").bind(now - 86400 * 30),
+    ]));
   },
 };
 
@@ -124,7 +151,9 @@ async function handleCommitBatch(request, env, cors) {
   if (!expected) return json({ ok: false, error: "ROUTINE_TOKEN not set on worker" }, 500, cors);
   const auth = request.headers.get("Authorization") || "";
   const m = auth.match(/^Bearer\s+(.+)$/);
-  if (!m || m[1] !== expected) return json({ ok: false, error: "unauthorised" }, 401, cors);
+  if (!m || m[1].length !== expected.length || !constantTimeEq(m[1], expected)) {
+    return json({ ok: false, error: "unauthorised" }, 401, cors);
+  }
 
   const body = await request.json().catch(() => null);
   const name = body && body.batch_name;
@@ -178,7 +207,12 @@ async function ghGetFileJson(env, path) {
 
 /* ── Account + stats API ────────────────────────────────────────────── */
 
-const SESSION_TTL_SEC = 60 * 60 * 24 * 365;  // 1 year; auto-refreshed on every /api/me
+// Sessions slide by SESSION_TTL_SEC on every /api/me, but are never
+// refreshed past SESSION_MAX_AGE_SEC from the moment they were issued.
+// Without the cap a token copied off a shared laptop worked forever,
+// because the client calls /api/me on every page load.
+const SESSION_TTL_SEC = 60 * 60 * 24 * 30;   // 30 days, sliding
+const SESSION_MAX_AGE_SEC = 60 * 60 * 24 * 90;  // 90 days, absolute
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Argon2id parameters. RFC 9106 "SECOND RECOMMENDED" profile (m=19456 KB,
@@ -198,6 +232,16 @@ const LEGACY_PBKDF2_ITER = 100000;
 const ATTEMPT_WINDOW_SEC = 15 * 60;
 const FAIL_THRESHOLD = 8;
 const LOCKOUT_SEC = 15 * 60;
+
+// Per-IP budgets, checked BEFORE any Argon2id work. The email-keyed
+// lockout above does not stop an attacker rotating fake addresses, and
+// every register call and every failed login runs a full m=19456 KB
+// hash, so an unlimited endpoint is a CPU amplifier as much as it is a
+// spam hole.
+const REG_IP_WINDOW_SEC = 60 * 60;
+const REG_IP_MAX = 5;
+const LOGIN_IP_WINDOW_SEC = 15 * 60;
+const LOGIN_IP_MAX = 30;
 
 function bytesToHex(bytes) {
   return Array.from(new Uint8Array(bytes)).map(b => b.toString(16).padStart(2, "0")).join("");
@@ -370,6 +414,48 @@ async function isLockedOut(env, emailLookupHash) {
   return unlockAt > now ? unlockAt - now : 0;
 }
 
+// Generic sliding-window counter over login_attempts, keyed by an
+// arbitrary synthetic string. Returns true when the caller is over
+// budget. Call this before doing expensive work, not after.
+async function overBudget(env, key, windowSec, max) {
+  if (!env.DB) return false;
+  const now = Math.floor(Date.now() / 1000);
+  const row = await env.DB.prepare(
+    "SELECT COUNT(*) AS n FROM login_attempts WHERE email_lookup = ? AND ts > ?"
+  ).bind(key, now - windowSec).first();
+  return !!row && row.n >= max;
+}
+
+async function noteAttempt(env, key) {
+  if (!env.DB) return;
+  const now = Math.floor(Date.now() / 1000);
+  await env.DB.prepare(
+    "INSERT INTO login_attempts (email_lookup, ts, ok, ip_hash) VALUES (?, ?, 0, '')"
+  ).bind(key, now).run();
+}
+
+// ── invite codes ───────────────────────────────────────────────────────
+// Registration is invite-only. Codes are stored hashed with the session
+// pepper, so a database dump does not yield working codes.
+async function hashInviteCode(env, code) {
+  const data = new TextEncoder().encode(code.trim().toUpperCase() + ":invite:" + env.SESSION_PEPPER);
+  return bytesToHex(await crypto.subtle.digest("SHA-256", data));
+}
+
+// Crockford-ish alphabet: no I, L, O, U, so a code read aloud or copied
+// off a screen cannot be mistyped into a different valid code.
+const INVITE_ALPHABET = "ABCDEFGHJKMNPQRSTVWXYZ23456789";
+function generateInviteCode() {
+  const b = new Uint8Array(12);
+  crypto.getRandomValues(b);
+  let out = "";
+  for (let i = 0; i < 12; i++) {
+    if (i === 4 || i === 8) out += "-";
+    out += INVITE_ALPHABET[b[i] % INVITE_ALPHABET.length];
+  }
+  return out;  // XXXX-XXXX-XXXX, ~59 bits
+}
+
 async function handleRegister(request, env, cors) {
   if (!env.DB) return json({ ok: false, error: "DB not bound" }, 500, cors);
   requireEncryptionEnv(env);
@@ -377,9 +463,31 @@ async function handleRegister(request, env, cors) {
   const email = (body && body.email || "").trim().toLowerCase();
   const password = body && body.password || "";
   const displayName = (body && body.display_name || "").trim().slice(0, 60) || email.split("@")[0];
+  const inviteRaw = (body && body.invite_code || "").trim().toUpperCase();
+
+  // Per-IP budget first, before the email lookup and long before Argon2id.
+  const regIpKey = "reg:" + await ipHash(request, env);
+  if (await overBudget(env, regIpKey, REG_IP_WINDOW_SEC, REG_IP_MAX)) {
+    return json({ ok: false, error: "too many sign-up attempts, try again later" }, 429, cors);
+  }
+  await noteAttempt(env, regIpKey);
+
   if (!EMAIL_RE.test(email)) return json({ ok: false, error: "invalid email" }, 400, cors);
   if (password.length < 8) return json({ ok: false, error: "password must be 8+ characters" }, 400, cors);
   if (password.length > 1024) return json({ ok: false, error: "password too long" }, 400, cors);
+  if (!inviteRaw) return json({ ok: false, error: "an invite code is required" }, 400, cors);
+
+  // Redeem the invite before touching the users table. One generic error
+  // for every failure mode, so a stranger cannot probe which codes exist.
+  const inviteHash = await hashInviteCode(env, inviteRaw);
+  const nowTs = Math.floor(Date.now() / 1000);
+  const invite = await env.DB.prepare(
+    "SELECT code_hash, expires_at, used_by, revoked_at FROM invite_codes WHERE code_hash = ?"
+  ).bind(inviteHash).first();
+  if (!invite || invite.used_by || invite.revoked_at ||
+      (invite.expires_at && invite.expires_at < nowTs)) {
+    return json({ ok: false, error: "that invite code is not valid" }, 403, cors);
+  }
 
   let isAdmin = 0;
 
@@ -402,8 +510,18 @@ async function handleRegister(request, env, cors) {
   // without storing plaintext. Once schema_003 drops the column this
   // line can be removed.
   await env.DB.prepare(
-    "INSERT INTO users (id, email, email_lookup, email_enc, password_hash, password_salt, pw_algo, display_name, is_admin, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-  ).bind(id, "enc:" + lookup.slice(0, 32), lookup, emailEnc, hash, saltHex, ARGON2_ALGO_LABEL, displayName, isAdmin, now).run();
+    "INSERT INTO users (id, email, email_lookup, email_enc, password_hash, password_salt, pw_algo, display_name, is_admin, created_at, invited_via, last_seen_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+  ).bind(id, "enc:" + lookup.slice(0, 32), lookup, emailEnc, hash, saltHex, ARGON2_ALGO_LABEL, displayName, isAdmin, now, invite.code_hash, now).run();
+
+  // Burn the code. Guarded on used_by IS NULL so two simultaneous
+  // registrations cannot both redeem it.
+  const burn = await env.DB.prepare(
+    "UPDATE invite_codes SET used_by = ?, used_at = ? WHERE code_hash = ? AND used_by IS NULL"
+  ).bind(id, now, invite.code_hash).run();
+  if (!burn.meta || burn.meta.changes !== 1) {
+    await env.DB.prepare("DELETE FROM users WHERE id = ?").bind(id).run();
+    return json({ ok: false, error: "that invite code is not valid" }, 403, cors);
+  }
 
   const tokenHex = randomHex(32);
   const tokenH = await hashSessionToken(env, tokenHex);
@@ -423,6 +541,16 @@ async function handleLogin(request, env, cors) {
   const password = body && body.password || "";
   if (!email || !password) return json({ ok: false, error: "email + password required" }, 400, cors);
   if (password.length > 1024) return json({ ok: false, error: "password too long" }, 400, cors);
+
+  // Per-IP budget before the email lookup. The per-email lockout below
+  // is bypassed entirely by rotating addresses, and the miss path runs
+  // a full Argon2id pass on purpose, so this guard is what stops a
+  // script pinning the isolate.
+  const loginIpKey = "ip:" + await ipHash(request, env);
+  if (await overBudget(env, loginIpKey, LOGIN_IP_WINDOW_SEC, LOGIN_IP_MAX)) {
+    return json({ ok: false, error: "too many attempts, try again later" }, 429, cors);
+  }
+  await noteAttempt(env, loginIpKey);
 
   const lookup = await emailLookup(env, email);
   const lockSecondsLeft = await isLockedOut(env, lookup);
@@ -505,8 +633,13 @@ async function handleMe(request, env, cors) {
   if (m) {
     const tokenH = await hashSessionToken(env, m[1]);
     const now = Math.floor(Date.now() / 1000);
-    await env.DB.prepare("UPDATE sessions SET expires_at = ? WHERE token_hash = ?")
-      .bind(now + SESSION_TTL_SEC, tokenH).run();
+    // Slide the expiry, but never past created_at + SESSION_MAX_AGE_SEC.
+    // min() is what makes the 90-day cap absolute rather than advisory.
+    await env.DB.prepare(
+      "UPDATE sessions SET expires_at = MIN(?, created_at + ?) WHERE token_hash = ?"
+    ).bind(now + SESSION_TTL_SEC, SESSION_MAX_AGE_SEC, tokenH).run();
+    await env.DB.prepare("UPDATE users SET last_seen_at = ? WHERE id = ?")
+      .bind(now, user.id).run();
   }
   return json({ ok: true, user: publicUser(user) }, 200, cors);
 }
@@ -531,11 +664,15 @@ async function handleAccountDelete(request, env, cors) {
   // Delete in order: sessions, answers, flags, user_settings, user.
   // D1 ignores SQLite ON DELETE CASCADE unless PRAGMA foreign_keys is
   // explicitly set, so each per-user table is cleared by hand.
-  await env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(user.id).run();
-  await env.DB.prepare("DELETE FROM answers WHERE user_id = ?").bind(user.id).run();
-  await env.DB.prepare("DELETE FROM flags WHERE user_id = ?").bind(user.id).run();
-  await env.DB.prepare("DELETE FROM user_settings WHERE user_id = ?").bind(user.id).run();
-  await env.DB.prepare("DELETE FROM users WHERE id = ?").bind(user.id).run();
+  // One batch, so a mid-sequence failure cannot leave orphaned answers
+  // behind a deleted account.
+  await env.DB.batch([
+    env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(user.id),
+    env.DB.prepare("DELETE FROM answers WHERE user_id = ?").bind(user.id),
+    env.DB.prepare("DELETE FROM flags WHERE user_id = ?").bind(user.id),
+    env.DB.prepare("DELETE FROM user_settings WHERE user_id = ?").bind(user.id),
+    env.DB.prepare("DELETE FROM users WHERE id = ?").bind(user.id),
+  ]);
   return json({ ok: true }, 200, cors);
 }
 
@@ -564,11 +701,20 @@ async function handleAdminDeleteUser(request, env, cors, targetId) {
   if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
   if (!targetId || typeof targetId !== "string") return json({ ok: false, error: "missing user id" }, 400, cors);
   if (targetId === user.id) return json({ ok: false, error: "use /api/account/delete to remove your own account" }, 400, cors);
-  await env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(targetId).run();
-  await env.DB.prepare("DELETE FROM answers WHERE user_id = ?").bind(targetId).run();
-  await env.DB.prepare("DELETE FROM flags WHERE user_id = ?").bind(targetId).run();
-  await env.DB.prepare("DELETE FROM user_settings WHERE user_id = ?").bind(targetId).run();
-  await env.DB.prepare("DELETE FROM users WHERE id = ?").bind(targetId).run();
+  // Refuse to remove the last remaining admin, so the instance cannot be
+  // left with nobody who can administer it.
+  const target = await env.DB.prepare("SELECT is_admin FROM users WHERE id = ?").bind(targetId).first();
+  if (!target) return json({ ok: false, error: "no such user" }, 404, cors);
+  if (target.is_admin && !(await hasAnotherAdmin(env, targetId))) {
+    return json({ ok: false, error: "that is the last admin account" }, 409, cors);
+  }
+  await env.DB.batch([
+    env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(targetId),
+    env.DB.prepare("DELETE FROM answers WHERE user_id = ?").bind(targetId),
+    env.DB.prepare("DELETE FROM flags WHERE user_id = ?").bind(targetId),
+    env.DB.prepare("DELETE FROM user_settings WHERE user_id = ?").bind(targetId),
+    env.DB.prepare("DELETE FROM users WHERE id = ?").bind(targetId),
+  ]);
   return json({ ok: true }, 200, cors);
 }
 
@@ -577,7 +723,121 @@ async function handleAdminPromote(request, env, cors, targetId, makeAdmin) {
   if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
   if (!targetId) return json({ ok: false, error: "missing user id" }, 400, cors);
   if (targetId === user.id && !makeAdmin) return json({ ok: false, error: "cannot demote yourself" }, 400, cors);
-  await env.DB.prepare("UPDATE users SET is_admin = ? WHERE id = ?").bind(makeAdmin ? 1 : 0, targetId).run();
+  if (!makeAdmin && !(await hasAnotherAdmin(env, targetId))) {
+    return json({ ok: false, error: "that is the last admin account" }, 409, cors);
+  }
+  const res = await env.DB.prepare("UPDATE users SET is_admin = ? WHERE id = ?")
+    .bind(makeAdmin ? 1 : 0, targetId).run();
+  if (!res.meta || res.meta.changes !== 1) return json({ ok: false, error: "no such user" }, 404, cors);
+  return json({ ok: true }, 200, cors);
+}
+
+// True when at least one admin exists other than `exceptId`. Every
+// demote and every admin delete goes through this, so the instance can
+// never be left with zero administrators.
+async function hasAnotherAdmin(env, exceptId) {
+  const row = await env.DB.prepare(
+    "SELECT COUNT(*) AS n FROM users WHERE is_admin = 1 AND id != ?"
+  ).bind(exceptId).first();
+  return !!row && row.n > 0;
+}
+
+/* POST /api/password - change your own password.
+ *
+ * Requires the current password, not just a bearer token: a stolen token
+ * should not be enough to lock the real owner out. Every other session
+ * is revoked on success, which is what makes this useful after a leak.
+ */
+async function handlePasswordChange(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  const body = await request.json().catch(() => null);
+  const current = body && body.current_password || "";
+  const next = body && body.new_password || "";
+  if (next.length < 8) return json({ ok: false, error: "new password must be 8+ characters" }, 400, cors);
+  if (next.length > 1024 || current.length > 1024) return json({ ok: false, error: "password too long" }, 400, cors);
+
+  const row = await env.DB.prepare(
+    "SELECT password_hash, password_salt, pw_algo FROM users WHERE id = ?"
+  ).bind(user.id).first();
+  if (!row || !(await verifyPassword(current, row))) {
+    return json({ ok: false, error: "current password is wrong" }, 403, cors);
+  }
+
+  const saltBytes = randomBytes(16);
+  const hash = await hashPasswordArgon2(next, saltBytes);
+  const now = Math.floor(Date.now() / 1000);
+  const tokenHex = randomHex(32);
+  const tokenH = await hashSessionToken(env, tokenHex);
+  await env.DB.batch([
+    env.DB.prepare("UPDATE users SET password_hash = ?, password_salt = ?, pw_algo = ? WHERE id = ?")
+      .bind(hash, bytesToHex(saltBytes), ARGON2_ALGO_LABEL, user.id),
+    env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(user.id),
+    env.DB.prepare("INSERT INTO sessions (token, token_hash, user_id, created_at, expires_at) VALUES (?, ?, ?, ?, ?)")
+      .bind("h:" + tokenH.slice(0, 24), tokenH, user.id, now, now + SESSION_TTL_SEC),
+  ]);
+  // The caller's old token died with the rest; hand back a fresh one so
+  // they are not signed out of the tab they just changed it in.
+  return json({ ok: true, token: tokenHex }, 200, cors);
+}
+
+/* POST /api/account/sessions/revoke - sign out everywhere.
+ * Keeps the calling session alive so the admin is not locked out of the
+ * page they clicked it on.
+ */
+async function handleRevokeSessions(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  const m = (request.headers.get("Authorization") || "").match(/^Bearer\s+([a-f0-9]{32,})$/i);
+  const keep = m ? await hashSessionToken(env, m[1]) : "";
+  const res = await env.DB.prepare(
+    "DELETE FROM sessions WHERE user_id = ? AND token_hash != ?"
+  ).bind(user.id, keep).run();
+  return json({ ok: true, revoked: (res.meta && res.meta.changes) || 0 }, 200, cors);
+}
+
+/* Invite codes. Registration is invite-only, so these are the admin's
+ * only way to let a new person in.
+ */
+async function handleAdminListInvites(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
+  const rows = await env.DB.prepare(
+    `SELECT i.code_hash, i.code_hint, i.label, i.created_at, i.expires_at,
+            i.used_at, i.revoked_at, u.display_name AS used_by_name
+     FROM invite_codes i LEFT JOIN users u ON u.id = i.used_by
+     ORDER BY i.created_at DESC LIMIT 200`
+  ).all();
+  return json({ ok: true, invites: rows.results || [] }, 200, cors);
+}
+
+async function handleAdminCreateInvite(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
+  requireEncryptionEnv(env);
+  const body = await request.json().catch(() => null);
+  const label = ((body && body.label) || "").trim().slice(0, 80);
+  const days = Math.min(365, Math.max(1, parseInt((body && body.expires_days) || 30, 10) || 30));
+  const code = generateInviteCode();
+  const now = Math.floor(Date.now() / 1000);
+  await env.DB.prepare(
+    "INSERT INTO invite_codes (code_hash, code_hint, label, created_by, created_at, expires_at) VALUES (?, ?, ?, ?, ?, ?)"
+  ).bind(await hashInviteCode(env, code), code.slice(0, 4), label, user.id, now, now + days * 86400).run();
+  // The plaintext code is returned exactly once. Only its hash is stored,
+  // so if the admin loses it they revoke and issue another.
+  return json({ ok: true, code, expires_at: now + days * 86400 }, 200, cors);
+}
+
+async function handleAdminRevokeInvite(request, env, cors) {
+  const user = await authUser(request, env);
+  if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
+  const body = await request.json().catch(() => null);
+  const codeHash = (body && body.code_hash) || "";
+  if (!/^[a-f0-9]{64}$/.test(codeHash)) return json({ ok: false, error: "bad code" }, 400, cors);
+  const res = await env.DB.prepare(
+    "UPDATE invite_codes SET revoked_at = ? WHERE code_hash = ? AND used_by IS NULL AND revoked_at IS NULL"
+  ).bind(Math.floor(Date.now() / 1000), codeHash).run();
+  if (!res.meta || res.meta.changes !== 1) return json({ ok: false, error: "already used or revoked" }, 409, cors);
   return json({ ok: true }, 200, cors);
 }
 
