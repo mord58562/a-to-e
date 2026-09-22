@@ -645,7 +645,8 @@
     const btn = document.getElementById("accountBtn");
     if (btn) btn.onclick = () => openAdmin("account");
     const adminBtn = document.getElementById("adminMastheadBtn");
-    if (adminBtn) adminBtn.onclick = () => openAdmin("overview");
+    // No tab argument, so it lands on Users, the one used daily.
+    if (adminBtn) adminBtn.onclick = () => openAdmin();
     // Admins don't need a separate Account button - the unified modal
     // already contains the account tab. Hide the duplicate.
     if (adminBtn) refreshAdminAccountVisibility();
