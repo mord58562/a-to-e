@@ -366,8 +366,17 @@ html, body {
 main { overflow-x: hidden; }
 .stem, .lead-in, .comm-block p, .comm-block ul,
 .sources li, .opt-rationale {
+  /* overflow-wrap: anywhere reduces an element's min-content width to a
+   * single character. That is what we want for a long unbroken URL in a
+   * source line; it is ruinous inside a grid or flex row, where it lets
+   * the browser squeeze a label column down to "Sodiu / m". The range
+   * tables below opt out explicitly. */
   overflow-wrap: anywhere;
   word-break: break-word;
+}
+.comm-block .rrs, .comm-block .rr, .comm-block .rr * {
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 ::selection { background: var(--accent-bg); color: var(--ink); }
@@ -411,10 +420,8 @@ a:hover { text-decoration: underline; }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; line-height: 1; padding: 4px 6px; border-radius: 6px; transition: background 0.12s ease; }
 .brand:hover { background: var(--surface); text-decoration: none; }
 .brand:hover .brand-title, .brand:hover .brand-sub, .brand:hover .brand-glucose { text-decoration: none; }
-/* "(+ glucose)" only makes sense when the current session includes
- * Paediatrics. Hidden by default; revealed when body carries the
- * .has-paeds class (set by app.js when state.quiz.topics includes
- * Paediatrics). */
+/* "(+ glucose)" is revealed only when Paediatrics is the sole selected
+ * module. app.js sets .has-paeds off state.settings.disciplines. */
 .masthead .brand-glucose { display: none; }
 body.has-paeds .masthead .brand-glucose { display: inline; }
 .brand-mark {
@@ -1237,19 +1244,6 @@ body.refs-open {
   margin: 0;
   line-height: 1.5;
 }
-.range-cat { margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
-.range-cat:last-child { border-bottom: none; }
-.range-cat h3 {
-  font-size: 13px; font-weight: 600; letter-spacing: 0;
-  color: var(--ink); margin: 0 0 8px;
-  font-family: var(--display);
-}
-.range-cat table { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
-.range-cat td { padding: 4px 0; border-bottom: 1px dotted var(--line); vertical-align: top; }
-.range-cat td.test { color: var(--ink-mute); width: 50%; padding-right: 10px; }
-.range-cat td.value { color: var(--ink); font-family: var(--sans); font-size: 12px; }
-.range-cat .range-note { font-size: 11.5px; color: var(--ink-mute); margin: 8px 0 0; line-height: 1.5; }
-.range-cat.hidden { display: none; }
 
 /* ── Colophon ─────────────────────────────────────────────────────── */
 .colophon {
@@ -2132,26 +2126,44 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 .account-quality-table .qid { font-family: var(--sans); font-size: 11px; }
 
 /* ── Inline reference ranges (post-reveal) ───────────────────────── */
-.inline-ranges {
-  list-style: none;
-  padding: 0;
-  margin: 12px 0 0;
+/* Reference rows, shared by the post-answer block and the side panel.
+ * Two explicit tracks: the label gets a minimum it cannot be squeezed
+ * below, the value is right-aligned with tabular figures so a column of
+ * numbers lines up on the decimal. */
+.rrs { display: grid; grid-template-columns: minmax(11ch, 1fr) auto; }
+.rr {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 4px 16px;
-  font-size: 12px;
-  border-top: 1px solid var(--line);
-  padding-top: 10px;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  gap: 4px 18px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 12.5px;
+  line-height: 1.45;
+  align-items: baseline;
 }
-.inline-ranges .ir-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 2px 0;
+.rr:last-child { border-bottom: none; }
+.rr-test { color: var(--ink-mute); hyphens: none; }
+.rr-value {
+  color: var(--ink);
+  text-align: right;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
-.inline-ranges .ir-key { color: var(--ink-mute); }
-.inline-ranges .ir-val { color: var(--ink); }
+.rr-unit { color: var(--ink-mute); font-size: 0.92em; margin-left: 0.25em; }
+.rr-note {
+  display: block;
+  color: var(--ink-faint);
+  font-size: 11px;
+  white-space: normal;
+  margin-top: 1px;
+}
+/* No subgrid: fall back to a fixed label track rather than letting the
+ * value column collapse. */
+@supports not (grid-template-columns: subgrid) {
+  .rrs { display: block; }
+  .rr { grid-template-columns: minmax(11ch, 1fr) auto; }
+}
 
 /* ── Rebuilt reference panel (search-first, scrollable, dense) ───── */
 .ref-search { position: relative; }
@@ -2204,20 +2216,8 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   font-family: var(--display);
   z-index: 1;
 }
-.range-cat .rrs { display: flex; flex-direction: column; }
-.range-cat .rr {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 12px;
-  padding: 4px 0;
-  border-bottom: 1px dotted var(--line);
-  font-size: 12.5px;
-  align-items: baseline;
-}
-.range-cat .rr:last-child { border-bottom: none; }
-.range-cat .rr .test { color: var(--ink-mute); }
-.range-cat .rr .value { color: var(--ink); font-family: var(--sans); font-size: 12px; font-variant-numeric: tabular-nums; }
 .range-cat .rr.rr-hidden { display: none; }
+.range-cat .range-note { font-size: 11.5px; color: var(--ink-mute); margin: 8px 0 0; line-height: 1.5; }
 .range-cat.hidden { display: none; }
 
 /* ── Unified Admin modal ─────────────────────────────────────────── */
@@ -2410,7 +2410,13 @@ body.is-admin #accountBtn { display: none !important; }
   color: var(--ink-mute);
   margin-bottom: 6px;
 }
-.ir-cat .inline-ranges { border-top: none; padding-top: 0; margin-top: 0; }
+.ir-cat .rrs { border-top: 1px solid var(--line); padding-top: 2px; }
+.ir-more {
+  background: none; border: none; padding: 6px 0 0;
+  font: inherit; font-size: 11.5px; color: var(--ink-mute);
+  cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
+}
+.ir-more:hover { color: var(--accent); }
 
 /* Keyboard focus indicator on option rows (role=button + tabindex=0) */
 #qOptions li:focus-visible {

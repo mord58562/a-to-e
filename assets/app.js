@@ -1381,6 +1381,9 @@
     document.querySelectorAll('[data-show-for="test"]').forEach(r => {
       r.hidden = state.settings.mode !== "test";
     });
+    // Track the discipline picker live, not just at session start, so
+    // the wordmark matches what is selected on the home screen.
+    refreshGlucoseSuffix();
     updatePool();
   }
 
@@ -1453,18 +1456,19 @@
     document.getElementById("sessionMeta").textContent =
       (s.mode === "study" ? "Study session" : "Test session") +
       " · " + new Date().toLocaleDateString(undefined, { day: "numeric", month: "short" });
-    // "(+ glucose)" in the wordmark is only meaningful when paediatrics
-    // is in the session. Toggle the body class so the CSS rule reveals
-    // the suffix without app.js touching the masthead DOM directly.
     refreshGlucoseSuffix();
     renderQuiz();
     startSessionTimer();
   }
 
+  // "(+ glucose)" is a paediatrics in-joke, so it only makes sense when
+  // the session IS paediatrics. It used to fire whenever any single
+  // question in the pool was paeds, which meant it showed on nearly
+  // every mixed session. Now: Paediatrics selected, and nothing else.
   function refreshGlucoseSuffix() {
-    const inPaeds = !!(state.quiz && state.quiz.pool &&
-      state.quiz.pool.some(q => q.topic === "Paediatrics"));
-    document.body.classList.toggle("has-paeds", inPaeds);
+    const d = (state.settings && state.settings.disciplines) || [];
+    document.body.classList.toggle(
+      "has-paeds", d.length === 1 && d[0] === "Paediatrics");
   }
 
   function renderQuiz() {
@@ -1896,7 +1900,16 @@
       // Render relevant ranges inline so the user sees them without
       // an extra click. The full Reference values panel remains
       // available from the masthead button.
-      rl.innerHTML = renderInlineRanges(q.reference_ranges);
+      // q.topic gates which panels may appear: a paediatric panel never
+      // renders under an adult question even if the question asks for it.
+      rl.innerHTML = renderInlineRanges(q.reference_ranges, q.topic);
+      if (!rl.dataset.wired) {
+        rl.addEventListener("click", e => {
+          const b = e.target.closest(".ir-more");
+          if (b) openRefs([b.dataset.refKey]);
+        });
+        rl.dataset.wired = "1";
+      }
     }
 
     document.getElementById("submitBtn").hidden = true;
@@ -1984,15 +1997,15 @@
   const REF_JUMP_PILLS = [
     { label: "FBC",    key: "fbc" },
     { label: "U&E",    key: "uec" },
-    { label: "LFT",    key: "lft" },
+    { label: "LFT",    key: "lfts" },
     { label: "ABG",    key: "abg" },
     { label: "VBG",    key: "vbg" },
     { label: "Urine",  key: "urine_dipstick" },
-    { label: "Paeds",  key: "paeds_fbc_age_bands" },
-    { label: "Glucose", key: "glucose_ogtt_hba1c" },
-    { label: "Thyroid", key: "tft" },
+    { label: "Paeds",  key: "paeds_fbc" },
+    { label: "Glucose", key: "glucose_hba1c" },
+    { label: "Thyroid", key: "thyroid" },
     { label: "Coag",   key: "coags" },
-    { label: "CSF",    key: "csf_adult" },
+    { label: "CSF",    key: "csf" },
     { label: "Iron",   key: "iron_studies" },
   ];
 
@@ -2033,11 +2046,7 @@
       const div = document.createElement("section");
       div.className = "range-cat";
       div.dataset.key = k;
-      const rows = (cat.ranges || []).map(r => {
-        const v = r.value != null ? r.value : (r.range != null ? r.range : "");
-        const t = r.test || r.label || r.name || "";
-        return `<div class="rr"><div class="test">${esc(t)}</div><div class="value">${esc(String(v))}</div></div>`;
-      }).join("");
+      const rows = (cat.ranges || []).map(refRowHtml).join("");
       div.innerHTML = `<h3>${esc(cat.label || k)}</h3><div class="rrs">${rows}</div>` +
         (cat.notes ? `<p class="range-note">${esc(cat.notes)}</p>` : "");
       body.appendChild(div);
@@ -3494,38 +3503,77 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
   //   (b) a single test key inside a category - render just that row
   //   (c) a guess with common aliases - we map a few historical names
   //   (d) unknown - skip silently rather than show "(not in reference set)"
-  const REF_KEY_ALIASES = {
-    paeds_vitals_infant: "paeds_vitals",
-    paeds_vitals: "paeds_fbc_age_bands",
-    paeds_fbc: "paeds_fbc_age_bands",
-    paeds_uec: "paeds_uec_age_bands",
-    inflammatory_markers: "inflammation",
+  // Which reference categories may appear under which question. The
+  // reported bug was an adult psychiatry stem showing "Paediatric blood
+  // glucose & hypoglycaemia", because the authoring pass tagged it
+  // bsl_paeds and nothing downstream ever objected. The data has been
+  // corrected, and this is the guard that stops it recurring: a
+  // paediatric panel never renders under a non-paediatric question, no
+  // matter what the question claims.
+  const TOPIC_POPULATION = {
+    "Paediatrics": "paediatric",
+    "Obstetrics & Gynaecology": "obstetric",
+    "Psychiatry": "adult",
+    "Medicine": "adult",
   };
-  function renderInlineRanges(keys) {
+  function categoryFitsTopic(cat, topic) {
+    const pop = (cat && cat.population) || "any";
+    if (pop === "any") return true;
+    const want = TOPIC_POPULATION[topic];
+    if (!want) return true;
+    // Obstetric questions legitimately need adult panels alongside the
+    // pregnancy-specific ones; the reverse is not true.
+    if (want === "obstetric") return pop === "obstetric" || pop === "adult";
+    return pop === want;
+  }
+
+  // Single source of truth for a reference row, shared by the side panel
+  // and the post-answer block. The unit lives in `units` and is never
+  // repeated inside `value`, so it is appended here exactly once - the
+  // old inline renderer appended it to values that already ended with it,
+  // which is where "135 - 145 mmol/L mmol/L" came from.
+  function refRowHtml(r) {
+    const t = r.test || r.label || r.name || "";
+    const v = r.value != null ? r.value : (r.range != null ? r.range : (r.normal || ""));
+    const u = (r.units || r.unit || "").trim();
+    const note = (r.note || "").trim();
+    return `<div class="rr">` +
+           `<div class="rr-test">${esc(t)}</div>` +
+           `<div class="rr-value">${esc(String(v))}${u ? ` <span class="rr-unit">${esc(u)}</span>` : ""}` +
+           `${note ? `<span class="rr-note">${esc(note)}</span>` : ""}</div>` +
+           `</div>`;
+  }
+
+  function renderInlineRanges(keys, topic) {
     const cats = (state.ranges && state.ranges.categories) || {};
     const blocks = [];
-    keys.forEach(rawKey => {
-      const k = REF_KEY_ALIASES[rawKey] || rawKey;
-      const cat = cats[k];
-      if (cat && Array.isArray(cat.ranges) && cat.ranges.length) {
-        const rows = cat.ranges.slice(0, 8).map(r => {
-          const t = r.test || r.label || r.name || "";
-          const v = r.value || r.range || r.normal || "";
-          const u = r.units ? ` ${esc(r.units)}` : (r.unit ? ` ${esc(r.unit)}` : "");
-          return `<li class="ir-row"><span class="ir-key">${esc(t)}</span><span class="ir-val">${esc(v)}${u}</span></li>`;
-        }).join("");
-        blocks.push(`<div class="ir-cat"><div class="ir-cat-head">${esc(cat.label || k)}</div><ul class="inline-ranges">${rows}</ul></div>`);
+    const seen = new Set();
+    (keys || []).forEach(rawKey => {
+      // A handful of questions carry an inline {analyte, range} object
+      // instead of a library key. These used to throw a TypeError out of
+      // the loop and take the whole block down with them.
+      if (rawKey && typeof rawKey === "object") {
+        blocks.push(`<div class="ir-cat"><div class="rrs">${refRowHtml({
+          test: rawKey.analyte || rawKey.test, value: rawKey.range || rawKey.value, units: rawKey.units,
+        })}</div></div>`);
         return;
       }
-      // Try as a single test row inside any category
-      const items = Object.values(cats).flatMap(c => (c.ranges || []).map(r => ({ ...r, _cat: c.label })));
-      const hit = items.find(it => (it.test || it.label || it.name || "").toLowerCase().replace(/[^a-z0-9]+/g, "_") === rawKey.toLowerCase());
-      if (hit) {
-        const v = hit.value || hit.range || hit.normal || "";
-        const u = hit.units ? ` ${esc(hit.units)}` : "";
-        blocks.push(`<ul class="inline-ranges"><li class="ir-row"><span class="ir-key">${esc(hit.test || hit.label || rawKey)}</span><span class="ir-val">${esc(v)}${u}</span></li></ul>`);
-      }
-      // Unknown key: skip silently (don't print "(not in reference set)" - clutter without value).
+      if (typeof rawKey !== "string") return;
+      const cat = cats[rawKey];
+      if (!cat || !Array.isArray(cat.ranges) || !cat.ranges.length) return;
+      if (!categoryFitsTopic(cat, topic)) return;
+      if (seen.has(rawKey)) return;
+      seen.add(rawKey);
+      const MAX = 10;
+      const shown = cat.ranges.slice(0, MAX);
+      const more = cat.ranges.length - shown.length;
+      blocks.push(
+        `<div class="ir-cat">` +
+        `<div class="ir-cat-head">${esc(cat.label || rawKey)}</div>` +
+        `<div class="rrs">${shown.map(refRowHtml).join("")}</div>` +
+        (more > 0 ? `<button type="button" class="ir-more" data-ref-key="${esc(rawKey)}">${more} more, open the full panel</button>` : "") +
+        `</div>`
+      );
     });
     return blocks.join("");
   }
