@@ -4652,79 +4652,77 @@
  {
   "id": "psych-forensicmha-001",
   "topic": "Psychiatry",
-  "subtopic": "Mental Health Act - assessment vs treatment order",
-  "subtopic_detail": "Threshold and duration for initial assessment authority",
+  "subtopic": "Mental Health Act - certificate vs involuntary patient order",
+  "subtopic_detail": "Which NSW instrument authorises initial detention for examination",
   "difficulty": 2,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
    "mental health act",
    "involuntary"
   ],
-  "stem": "A 34-year-old man is brought to the emergency department by police after neighbours called about him shouting at his upstairs windows and refusing to come out. On arrival he tells you strangers are pumping gas into his flat and that he has not slept for four nights. He declines admission, says nothing is wrong, and asks to leave.\n\nHe has no known previous psychiatric contact and no collateral is available beyond the police narrative. You are the ED registrar and consider that he meets criteria for detention under the state Mental Health Act but you have not yet been able to establish a diagnosis or a full treatment plan.",
+  "stem": "A 34-year-old man is brought to a NSW emergency department by police after neighbours reported him shouting from his windows. He says strangers are pumping gas into his flat and that he has not slept for four nights. He declines admission and asks to leave. There is no previous psychiatric contact and no collateral. You cannot yet establish a diagnosis or a treatment plan.",
   "data_table": {
-   "Vital signs": "Pulse 108, BP 148/92, RR 20, SpO2 99% on air, temperature 37.0.",
-   "Examination": "Vigilant, pressured speech, persecutory content, no fluctuating attention, no focal neurology.",
-   "Investigations": "VBG, UEC, LFTs, urine drug screen sent and pending."
+   "Vital signs": "Pulse 108, BP 148/92, RR 20, SpO2 99%, temperature 37.0 degrees C",
+   "Examination": "Vigilant, pressured speech, persecutory content"
   },
-  "lead_in": "Which authorisation under the state Mental Health Act is most appropriate at this point?",
+  "lead_in": "Which step under the NSW Mental Health Act is most appropriate?",
   "options": [
    {
     "letter": "A",
-    "text": "An assessment order to authorise detention for further psychiatric examination and initial observation",
+    "text": "Complete a mental health certificate authorising detention and further examination",
     "correct": true,
-    "rationale": "Australian state Mental Health Acts share a two-stage model: an assessment order (or equivalent) is the initial short-duration authority used when a person appears to have a mental illness or disorder, requires assessment, and is refusing voluntary engagement. It permits detention and examination but not compulsory treatment beyond what is immediately necessary. The duration is time-limited (typically hours to days depending on jurisdiction) and must be reviewed before conversion. (Source: NSW Mental Health Act 2007; Victorian Mental Health and Wellbeing Act 2022; RANZCP Code of Ethics).",
+    "rationale": "A medical practitioner or accredited person who has examined the person may complete a mental health certificate, the Schedule 1, if satisfied the person is mentally ill or mentally disordered and that no other appropriate means of dealing with them is reasonably available. It authorises detention in a declared mental health facility for examination, where an authorised medical officer must examine him as soon as practicable and within 12 hours. (Source: NSW Mental Health Rights Manual: initial detention and transport)",
     "source_refs": [
-     "NSW Mental Health Act 2007",
-     "Victorian Mental Health and Wellbeing Act 2022"
+     "NSW Mental Health Rights Manual: initial detention and transport",
+     "NSW Mental Health Act 2007"
     ]
    },
    {
     "letter": "B",
-    "text": "A treatment order to authorise commencement of antipsychotic medication in the ED without full assessment",
+    "text": "Make an involuntary patient order to start antipsychotic medication tonight",
     "correct": false,
-    "rationale": "Treatment orders across state Acts require prior assessment establishing a mental illness meeting statutory criteria and a considered treatment plan by an authorised psychiatrist. A treatment order cannot be the initial instrument when assessment is incomplete. Would premature and outside statutory pathway. (Source: NSW Mental Health Act 2007).",
+    "rationale": "An involuntary patient order is made by the Mental Health Review Tribunal at a mental health inquiry, after detention and examination, and cannot be the emergency department's first instrument. (Source: NSW Mental Health Review Tribunal: involuntary patient orders)",
     "source_refs": [
      "NSW Mental Health Act 2007"
     ]
    },
    {
     "letter": "C",
-    "text": "A community treatment order to require outpatient follow-up and depot medication after discharge home",
+    "text": "Make a community treatment order requiring depot medication after discharge",
     "correct": false,
-    "rationale": "A CTO applies to a person already assessed and typically transitioning from inpatient care; it cannot be used to authorise initial ED detention or replace acute assessment authority. Would misapply the instrument. (Source: Victorian Mental Health and Wellbeing Act 2022).",
+    "rationale": "A community treatment order is made by the Tribunal or a Magistrate for a person whose treatment plan is already settled. It cannot authorise detention in the emergency department. (Source: NSW Mental Health Review Tribunal: community treatment orders)",
     "source_refs": [
-     "Victorian Mental Health and Wellbeing Act 2022"
+     "NSW Mental Health Review Tribunal: community treatment orders"
     ]
    },
    {
     "letter": "D",
-    "text": "Reliance on the common-law doctrine of emergency necessity to hold him without any statutory order at all",
+    "text": "Rely on common law necessity to hold him without any statutory certificate",
     "correct": false,
-    "rationale": "Common-law necessity may cover brief acute steps but every Australian state provides a specific statutory pathway that must be used once a mental health emergency is recognised. Would be legally weaker than the available Act. (Source: RANZCP Code of Ethics 2018).",
+    "rationale": "Necessity may cover the minutes before a certificate is written, but NSW provides a specific statutory pathway that must be used once a mental health emergency is recognised. (Source: RANZCP Code of Ethics 2018)",
     "source_refs": [
      "RANZCP Code of Ethics 2018"
     ]
    },
    {
     "letter": "E",
-    "text": "Discharge home with a documented request that police return him if his behaviour deteriorates further overnight",
+    "text": "Discharge him and ask police to return him if he deteriorates overnight",
     "correct": false,
-    "rationale": "The clinical picture meets the least-restrictive threshold for detention for assessment and discharging shifts risk to third parties without addressing an apparent mental illness with risk features. Would be unsafe and inconsistent with duty of care. (Source: RANZCP Code of Ethics).",
+    "rationale": "He appears mentally ill with persecutory beliefs, four nights without sleep and no collateral, so discharge shifts the risk to third parties and is inconsistent with the duty of care. (Source: RANZCP Code of Ethics 2018)",
     "source_refs": [
      "RANZCP Code of Ethics 2018"
     ]
    }
   ],
   "explanation": {
-   "summary": "State Mental Health Acts distinguish assessment orders (short, permit detention for examination) from treatment orders (longer, permit compulsory treatment after assessment). The correct instrument in the ED when a person appears mentally unwell but has not yet been fully assessed is the assessment order.",
+   "summary": "NSW does not use assessment orders or treatment orders. Detention begins with a mental health certificate, the Schedule 1, completed by a medical practitioner or accredited person who has examined or observed the person. The person is then detained in a declared mental health facility, where an authorised medical officer must examine them as soon as practicable and within 12 hours, followed by a second examination by another medical practitioner, at least one of the two being a psychiatrist. Compulsory detention beyond that is authorised by the Mental Health Review Tribunal at a mental health inquiry, which may make an involuntary patient order for up to 3 months.",
    "key_points": [
-    "Assessment order authorises detention for examination, not routine treatment",
-    "Treatment orders require prior authorised-psychiatrist assessment",
-    "CTOs are outpatient instruments after acute care",
-    "Common-law necessity is a stop-gap, not a substitute for statutory pathway",
-    "Duration is jurisdiction-specific but always time-limited with review"
+    "The Schedule 1 certificate authorises detention for examination, not a course of treatment.",
+    "First examination by an authorised medical officer: within 12 hours.",
+    "Two examinations are required and one examiner must be a psychiatrist.",
+    "Involuntary patient orders and community treatment orders come from the Tribunal."
    ],
-   "pearls": "The Act is designed to be used in sequence: assessment order first, then treatment order if the criteria and treatment plan are established."
+   "pearls": "The sequence is fixed: certificate, examinations, mental health inquiry, involuntary patient order. Naming a Victorian assessment order in a NSW emergency department is the commonest cross-border error in written exams."
   },
   "sources": [
    {
@@ -4732,8 +4730,16 @@
     "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-008"
    },
    {
-    "label": "Victorian Mental Health and Wellbeing Act 2022",
-    "url": "https://www.legislation.vic.gov.au/in-force/acts/mental-health-and-wellbeing-act-2022"
+    "label": "NSW Mental Health Rights Manual: initial detention and transport",
+    "url": "https://mhrm.mhcc.org.au/chapters/4-nsw-mental-health-law-and-processes/4b-initial-detention-and-transport/"
+   },
+   {
+    "label": "NSW Mental Health Review Tribunal: involuntary patient orders",
+    "url": "https://mhrt.nsw.gov.au/civil-patients/involuntary-patient-orders.html"
+   },
+   {
+    "label": "NSW Mental Health Review Tribunal: community treatment orders",
+    "url": "https://mhrt.nsw.gov.au/civil-patients/community-treatment-orders.html"
    },
    {
     "label": "RANZCP Code of Ethics 2018",
@@ -4747,34 +4753,34 @@
   "id": "psych-forensicmha-002",
   "topic": "Psychiatry",
   "subtopic": "Involuntary detention criteria",
-  "subtopic_detail": "Least-restrictive alternative",
+  "subtopic_detail": "Least restrictive care under the NSW Act",
   "difficulty": 3,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
    "mental health act",
    "least restrictive"
   ],
-  "stem": "A 27-year-old woman with a documented diagnosis of schizoaffective disorder presents to your community mental health clinic. She has stopped her aripiprazole depot 6 weeks ago. She reports thoughts that her upstairs neighbour is monitoring her but is not distressed and is not acting on the belief. She agrees to restart her depot today, accepts a home-visit tomorrow from her case manager, and her mother (with whom she lives) is present and offering support and observation.\n\nShe has no current suicidal ideation, no plans to harm the neighbour, and no history of acting on similar beliefs during previous episodes. You consider whether to complete a state Mental Health Act assessment order.",
+  "stem": "A 27-year-old woman with schizoaffective disorder stopped her aripiprazole depot 6 weeks ago. She believes her neighbour is monitoring her but is not distressed and not acting on it. She agrees to restart the depot today and to a case manager home visit tomorrow. Her mother, with whom she lives, is present and offering support. She has no suicidal ideation and no history of acting on such beliefs.",
   "data_table": {
-   "Examination": "Alert, engaged, mildly guarded, no thought disorder, no command hallucinations elicited.",
-   "Investigations": "UDS negative; recent bloods within normal limits."
+   "Examination": "Alert, engaged, mildly guarded, no thought disorder, no command hallucinations",
+   "Investigations": "Urine drug screen negative, recent bloods normal"
   },
   "lead_in": "What is the most appropriate course of action?",
   "options": [
    {
     "letter": "A",
-    "text": "Complete an assessment order under the state Act and arrange inpatient admission for stabilisation of her illness",
+    "text": "Complete a mental health certificate and admit her involuntarily today",
     "correct": false,
-    "rationale": "The least-restrictive-alternative principle prohibits involuntary admission when voluntary community treatment is genuinely available and adequate. Would breach a statutory criterion. (Source: NSW Mental Health Act 2007).",
+    "rationale": "Detention requires that no care of a less restrictive kind is appropriate and reasonably available. A workable voluntary plan is on the table, so the certificate would fail that limb. (Source: NSW Mental Health Rights Manual: initial detention and transport)",
     "source_refs": [
      "NSW Mental Health Act 2007"
     ]
    },
    {
     "letter": "B",
-    "text": "Restart the depot today, arrange the case-manager home visit, and continue voluntary community management",
+    "text": "Restart the depot, arrange the home visit, continue voluntary care",
     "correct": true,
-    "rationale": "State Mental Health Acts require that involuntary detention be used only when there is no less-restrictive alternative that would adequately address the risk. This patient meets the mental-illness limb but not the risk-plus-no-alternative limb: she is accepting treatment, has family observation, has no acute risk features, and a viable outpatient plan exists. Voluntary community management is legally and ethically indicated. (Source: NSW Mental Health Act 2007 s 12; RANZCP Code of Ethics).",
+    "rationale": "She meets the mental illness limb but not the risk plus no-alternative limbs: she is accepting treatment, has family observation, has no acute risk features and has a viable outpatient plan. The Act permits detention only where less restrictive care consistent with safe and effective care is not appropriate and reasonably available. (Source: NSW Mental Health Review Tribunal: involuntary patient orders; RANZCP Code of Ethics 2018)",
     "source_refs": [
      "NSW Mental Health Act 2007",
      "RANZCP Code of Ethics 2018"
@@ -4782,42 +4788,41 @@
    },
    {
     "letter": "C",
-    "text": "Complete a community treatment order to compel ongoing depot administration and outpatient case-management supervision",
+    "text": "Apply for a community treatment order compelling her depot medication",
     "correct": false,
-    "rationale": "A CTO also requires that no less-restrictive alternative exists. When the patient is presently accepting treatment voluntarily a CTO cannot be justified as necessary. Would not meet threshold. (Source: Victorian Mental Health and Wellbeing Act 2022).",
+    "rationale": "A community treatment order also has to be the least restrictive alternative consistent with safe and effective care. She is accepting treatment now, so that threshold is not reached. (Source: NSW Mental Health Review Tribunal: community treatment orders)",
     "source_refs": [
-     "Victorian Mental Health and Wellbeing Act 2022"
+     "NSW Mental Health Review Tribunal: community treatment orders"
     ]
    },
    {
     "letter": "D",
-    "text": "Defer the depot until psychiatrist review next week and manage supportively with family observation only",
+    "text": "Defer the depot until psychiatrist review, with family observation only",
     "correct": false,
-    "rationale": "Delaying resumption of maintenance treatment prolongs the relapse trajectory when the patient is willing and able to receive it today. Would be clinically inferior. (Source: RANZCP Code of Ethics 2018).",
+    "rationale": "Delaying maintenance treatment that she is willing to accept today prolongs the relapse trajectory and is clinically inferior, whatever the legal position. (Source: RANZCP Code of Ethics 2018)",
     "source_refs": [
      "RANZCP Code of Ethics 2018"
     ]
    },
    {
     "letter": "E",
-    "text": "Notify police of a potential threat to the neighbour and document a duty-to-warn discharge from clinic today",
+    "text": "Notify police of a threat to the neighbour and discharge her",
     "correct": false,
-    "rationale": "There is no articulated threat, no plan, and no history of acting on similar beliefs; duty-to-warn thresholds are not met and the disclosure would breach confidentiality. Would be a category error. (Source: RANZCP Code of Ethics).",
+    "rationale": "There is no articulated threat, no plan and no history of acting on similar beliefs, so the threshold for warning is not met and the disclosure would breach confidentiality. (Source: RANZCP Code of Ethics 2018)",
     "source_refs": [
      "RANZCP Code of Ethics 2018"
     ]
    }
   ],
   "explanation": {
-   "summary": "Involuntary detention under state Mental Health Acts requires all limbs to be satisfied: mental illness or disorder, risk of serious harm to self or others or serious deterioration, AND no less-restrictive alternative. Failing the third limb is the most common lawful reason to keep a patient voluntary despite ongoing illness.",
+   "summary": "Involuntary detention in NSW requires all limbs: the person must be a mentally ill or mentally disordered person, there must be a risk of serious harm to the person or to others, and no care of a less restrictive kind that is consistent with safe and effective care may be appropriate and reasonably available. Failing the third limb is the commonest lawful reason to keep an unwell patient voluntary. The same least restrictive test governs community treatment orders, so a patient who is presently accepting treatment cannot be compelled to it.",
    "key_points": [
-    "All limbs of the involuntary criteria must be satisfied",
-    "Presence of illness alone is insufficient",
-    "Willingness to accept treatment collapses the no-alternative limb",
-    "Family support is an alternative-forming factor",
-    "Deferring effective treatment is not a least-restrictive alternative"
+    "All limbs must be satisfied; illness alone is never enough.",
+    "Willingness to accept treatment collapses the no-alternative limb.",
+    "Family observation and a same-day depot are part of the less restrictive alternative.",
+    "The least restrictive test applies to community treatment orders as well."
    ],
-   "pearls": "The Act is a floor for civil liberties, not a ceiling for clinical concern. If a voluntary plan is genuinely workable, it is required."
+   "pearls": "The Act is a floor for civil liberties, not a ceiling for clinical concern. If a voluntary plan genuinely works, it is not merely preferable, it is required."
   },
   "sources": [
    {
@@ -4825,8 +4830,16 @@
     "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-008"
    },
    {
-    "label": "Victorian Mental Health and Wellbeing Act 2022",
-    "url": "https://www.legislation.vic.gov.au/in-force/acts/mental-health-and-wellbeing-act-2022"
+    "label": "NSW Mental Health Review Tribunal: involuntary patient orders",
+    "url": "https://mhrt.nsw.gov.au/civil-patients/involuntary-patient-orders.html"
+   },
+   {
+    "label": "NSW Mental Health Review Tribunal: community treatment orders",
+    "url": "https://mhrt.nsw.gov.au/civil-patients/community-treatment-orders.html"
+   },
+   {
+    "label": "NSW Mental Health Rights Manual: initial detention and transport",
+    "url": "https://mhrm.mhcc.org.au/chapters/4-nsw-mental-health-law-and-processes/4b-initial-detention-and-transport/"
    },
    {
     "label": "RANZCP Code of Ethics 2018",
@@ -5022,77 +5035,76 @@
   "id": "psych-forensicmha-005",
   "topic": "Psychiatry",
   "subtopic": "Community treatment order",
-  "subtopic_detail": "Indications and review",
+  "subtopic_detail": "Criteria for a NSW community treatment order",
   "difficulty": 4,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
    "community treatment order",
    "mental health act"
   ],
-  "stem": "A 32-year-old man with a 10-year history of paranoid schizophrenia has had three inpatient admissions in the last 18 months. Each admission has followed him stopping oral risperidone in the community, becoming acutely paranoid, and being brought in involuntarily by police. When well he is capable, works part-time, and consistently states while an inpatient that he does not believe he has an illness and will stop medication as soon as he is discharged.\n\nHe is now nearing discharge from the current admission, is settled on paliperidone depot, and the treating team is considering a community treatment order.",
+  "stem": "A 32-year-old man with a 10-year history of schizophrenia has had three admissions in 18 months, each after he stopped oral risperidone, became paranoid and was brought in by police. Each admission improved his symptoms. He works part-time when well, and says he does not believe he has an illness and will stop treatment on discharge. He is now settled on paliperidone depot and nearing discharge.",
   "data_table": {
-   "Examination": "Euthymic, no active psychotic symptoms, insight limited into illness.",
-   "Investigations": "Nil acute."
+   "Examination": "Euthymic, no active psychotic symptoms, insight into illness limited",
+   "Investigations": "Nil acute"
   },
-  "lead_in": "Which combination of features most strongly supports proceeding with a community treatment order?",
+  "lead_in": "Which features most strongly support a community treatment order?",
   "options": [
    {
     "letter": "A",
-    "text": "The treating team's shared concern that he will disengage from all community services soon after this discharge",
+    "text": "The team's shared concern that he will disengage from services after discharge",
     "correct": false,
-    "rationale": "Inpatient status does not automatically convert to a CTO; a separate assessment against CTO-specific criteria and review is required. Would conflate two orders. (Source: Victorian Mental Health and Wellbeing Act 2022).",
+    "rationale": "Clinician concern is not a statutory ground. The Tribunal needs evidence of the previous refusal and relapse pattern and of the absence of a less restrictive alternative. (Source: NSW Mental Health Review Tribunal: community treatment orders)",
     "source_refs": [
-     "Victorian Mental Health and Wellbeing Act 2022"
+     "NSW Mental Health Review Tribunal: community treatment orders"
     ]
    },
    {
     "letter": "B",
-    "text": "The family's request that his medication be legally enforced so that the household feels safe living with him again",
+    "text": "His family's request that his medication be legally enforced at home",
     "correct": false,
-    "rationale": "Clinician concern alone does not satisfy statutory criteria; the Act requires evidence of prior pattern and lack of less-restrictive alternative. Would be legally insufficient. (Source: NSW Mental Health Act 2007).",
+    "rationale": "Family preference is not a ground. A designated carer may apply for an order, but the Tribunal decides on the statutory criteria, not on the household's wishes. (Source: NSW Mental Health Review Tribunal: community treatment orders)",
     "source_refs": [
-     "NSW Mental Health Act 2007"
+     "NSW Mental Health Review Tribunal: community treatment orders"
     ]
    },
    {
     "letter": "C",
-    "text": "His limited insight into having a chronic mental illness while he is on the ward this admission and previously",
+    "text": "His limited insight into having a chronic illness during this admission",
     "correct": false,
-    "rationale": "Family preference is not a statutory ground; the Act protects the individual under specified criteria, not the wishes of relatives. Would misground the order. (Source: RANZCP Code of Ethics).",
+    "rationale": "Poor insight is common and is not a stand-alone criterion. It matters only as part of the demonstrated pattern of refusal followed by relapse. (Source: NSW Mental Health Review Tribunal: community treatment orders)",
     "source_refs": [
-     "RANZCP Code of Ethics 2018"
+     "NSW Mental Health Review Tribunal: community treatment orders"
     ]
    },
    {
     "letter": "D",
-    "text": "His current involuntary inpatient status justifying automatic continuation of the same order into the community setting",
+    "text": "His involuntary inpatient status carrying over automatically into the community",
     "correct": false,
-    "rationale": "Poor insight is common and is not a stand-alone criterion for a CTO; it must be tied to a demonstrated relapse-on-cessation pattern. Would be relevant context but not the basis. (Source: NSW Mental Health Act 2007).",
+    "rationale": "An inpatient order does not convert into a community order. A separate application to the Tribunal, with a treatment plan the facility can implement, is required. (Source: NSW Mental Health Review Tribunal: community treatment orders)",
     "source_refs": [
-     "NSW Mental Health Act 2007"
+     "NSW Mental Health Review Tribunal: community treatment orders"
     ]
    },
    {
     "letter": "E",
-    "text": "Documented relapse pattern on cessation, prior benefit from treatment, and no less-restrictive alternative to prevent deterioration",
+    "text": "Past refusal, relapse and deterioration, with hospital care producing improvement",
     "correct": true,
-    "rationale": "State Mental Health Acts require that a CTO be based on a demonstrated pattern showing the person is likely to stop treatment and deteriorate, that treatment has previously benefited them, and that no less-restrictive means (e.g. voluntary depot with case-management) would suffice. All three limbs must be present; this patient meets them. (Source: NSW Mental Health Act 2007 s 51; Victorian Mental Health and Wellbeing Act 2022).",
+    "rationale": "For a person already diagnosed with mental illness, NSW requires a previous history of refusing appropriate treatment: refusal, relapse into an active phase, deterioration justifying involuntary admission, and hospital care that did or could improve the symptoms. The Tribunal must also be satisfied the order is the least restrictive alternative consistent with safe and effective care and that the facility has a treatment plan it can implement. (Source: NSW Mental Health Review Tribunal: community treatment orders)",
     "source_refs": [
-     "NSW Mental Health Act 2007",
-     "Victorian Mental Health and Wellbeing Act 2022"
+     "NSW Mental Health Review Tribunal: community treatment orders",
+     "NSW Mental Health Act 2007"
     ]
    }
   ],
   "explanation": {
-   "summary": "CTOs are outpatient treatment orders authorised only where a demonstrated pattern of relapse on treatment cessation, previous treatment benefit, and lack of a less-restrictive alternative are all established. They are subject to periodic review by an independent tribunal.",
+   "summary": "A community treatment order is made by the Mental Health Review Tribunal, or by a Magistrate under the Mental Health and Cognitive Impairment Forensic Provisions Act 2020, for a period of up to 12 months. The Tribunal must be satisfied that the person would benefit from the order as the least restrictive alternative consistent with safe and effective care, that the mental health facility has an appropriate treatment plan and can implement it, and, where the person has previously been diagnosed with mental illness, that there is a previous history of refusing appropriate treatment. That history has four elements: refusal, relapse, deterioration justifying involuntary admission, and improvement with hospital care.",
    "key_points": [
-    "CTO requires all three limbs, not clinician concern alone",
-    "Poor insight is context, not a stand-alone ground",
-    "Family preference does not ground an order",
-    "Inpatient status does not auto-convert to a CTO",
-    "Independent tribunal review is a statutory safeguard"
+    "Made by the Tribunal or a Magistrate, for up to 12 months.",
+    "The previous-refusal history has four elements and all must be present.",
+    "The facility must have a treatment plan it is capable of implementing.",
+    "Breach allows the person to be taken to a facility and treated."
    ],
-   "pearls": "A CTO is a serious intrusion on liberty and must be reviewed; teams should reassess whether the least-restrictive threshold still holds at each renewal."
+   "pearls": "A community treatment order has no effect while the person is detained or a voluntary inpatient, so the hearing is timed for discharge rather than for admission."
   },
   "sources": [
    {
@@ -5100,8 +5112,8 @@
     "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-008"
    },
    {
-    "label": "Victorian Mental Health and Wellbeing Act 2022",
-    "url": "https://www.legislation.vic.gov.au/in-force/acts/mental-health-and-wellbeing-act-2022"
+    "label": "NSW Mental Health Review Tribunal: community treatment orders",
+    "url": "https://mhrt.nsw.gov.au/civil-patients/community-treatment-orders.html"
    },
    {
     "label": "RANZCP Code of Ethics 2018",
@@ -5845,86 +5857,89 @@
   "id": "psych-forensicmha-014",
   "topic": "Psychiatry",
   "subtopic": "Advance care planning in psychiatry",
-  "subtopic_detail": "Advance statements and Mental Health Act",
+  "subtopic_detail": "Advance care directives and compulsory treatment in NSW",
   "difficulty": 4,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
    "advance care planning",
    "mental health act"
   ],
-  "stem": "A 38-year-old woman with bipolar affective disorder and prior severe manic episodes has completed a psychiatric advance statement while well and had it witnessed appropriately. In it she specifies that during manic relapses she prefers oral quetiapine, refuses lithium (which she previously found intolerable), and requests that her sister be contacted as her nominated support person before any treatment decisions.\n\nShe now re-presents in the ED in an acute manic episode. She lacks capacity, is under a state Mental Health Act assessment order, and the treating psychiatrist is deciding on treatment. Both quetiapine and lithium are clinically reasonable options.",
+  "stem": "A 38-year-old woman with bipolar disorder wrote an advance care directive while well, recording that during manic relapse she prefers oral quetiapine and refuses lithium, which she found intolerable. She also nominated her sister as her designated carer. She now presents in an acute manic episode, lacks capacity, and is detained in a NSW declared mental health facility. Quetiapine and lithium are both clinically reasonable.",
   "data_table": {
-   "Examination": "Elevated mood, pressured speech, mildly disorganised.",
-   "Investigations": "Bloods sent, awaiting."
+   "Examination": "Elevated mood, pressured speech, mildly disorganised",
+   "Investigations": "Bloods sent, results pending"
   },
-  "lead_in": "How should her advance statement most appropriately be handled?",
+  "lead_in": "How should her recorded preferences most appropriately be handled?",
   "options": [
    {
     "letter": "A",
-    "text": "Disregard the advance statement now because she currently lacks capacity to reaffirm the preferences that were previously recorded",
+    "text": "Disregard the directive, because she now lacks capacity to reaffirm it",
     "correct": false,
-    "rationale": "Where both agents are clinically reasonable, guideline-first-line status does not justify overriding a valid advance statement; departures require justification specific to the case, not general practice. Would breach the statutory duty. (Source: Victorian Mental Health and Wellbeing Act 2022).",
+    "rationale": "Loss of capacity is the trigger for a directive, not a reason to set it aside. NSW law does not make it binding during treatment under the Act, but it must still be taken into account. (Source: NSW Mental Health Rights Manual: advance care directives)",
     "source_refs": [
-     "Victorian Mental Health and Wellbeing Act 2022"
+     "NSW Mental Health Rights Manual: advance care directives"
     ]
    },
    {
     "letter": "B",
-    "text": "Follow the advance statement only if her sister as nominated support person agrees in advance to every specific element in it",
+    "text": "Follow it only if her sister agrees with every element it records",
     "correct": false,
-    "rationale": "Advance statements are designed precisely for periods of incapacity; disregarding them because capacity is now lost defeats their purpose and is inconsistent with the current Acts. Would misunderstand the instrument. (Source: Victorian Mental Health and Wellbeing Act 2022).",
+    "rationale": "A designated carer receives information and may apply for her discharge, but cannot validate, veto or override what the patient herself recorded. (Source: NSW Health: designated carers and principal care providers)",
     "source_refs": [
-     "Victorian Mental Health and Wellbeing Act 2022"
+     "NSW Health: designated carers and principal care providers"
     ]
    },
    {
     "letter": "C",
-    "text": "Override the statement by preferring lithium because it is a standard first-line agent recommended in bipolar treatment guidelines",
+    "text": "Prefer lithium, because guidelines list it first line in bipolar disorder",
     "correct": false,
-    "rationale": "The nominated support person's role is to help communicate the person's will and preferences, not to veto the advance statement. Would misconceive the support role. (Source: RANZCP Position on Supported Decision Making).",
+    "rationale": "Guideline ranking does not settle the choice when both agents suit her and she has recorded a specific reason for avoiding one of them. (Source: RANZCP CPG Bipolar)",
     "source_refs": [
-     "RANZCP Position on Supported Decision Making"
+     "RANZCP CPG Bipolar"
     ]
    },
    {
     "letter": "D",
-    "text": "Prescribe quetiapine per her advance statement and contact her nominated support person, documenting reasons if any element cannot be followed",
+    "text": "Prescribe quetiapine, notify her designated carer, and document any departure",
     "correct": true,
-    "rationale": "Modern state Mental Health Acts (notably Victoria and Queensland) require the treating team to give effect to a person's advance statement wherever it is clinically reasonable to do so, and to consult the nominated support person. Departures must be justified and documented. Where both listed options (quetiapine and lithium) are clinically reasonable, the advance statement resolves the choice in favour of the patient's expressed preference. (Source: Victorian Mental Health and Wellbeing Act 2022; RANZCP Position on Supported Decision Making).",
+    "rationale": "NSW has no statutory advance statement and no nominated support person. A directive made with capacity cannot override treatment given under the Mental Health Act 2007, but the treating team should take it into account, and where two agents are equally reasonable her recorded preference decides. Her designated carer must be notified that she has been detained. (Source: NSW Mental Health Rights Manual: advance care directives; NSW Health: designated carers and principal care providers)",
     "source_refs": [
-     "Victorian Mental Health and Wellbeing Act 2022",
-     "RANZCP Position on Supported Decision Making"
+     "NSW Mental Health Rights Manual: advance care directives",
+     "NSW Health: designated carers and principal care providers"
     ]
    },
    {
     "letter": "E",
-    "text": "Defer any medication now until she regains capacity to reconsider her preferences and provide fresh contemporaneous informed consent",
+    "text": "Withhold medication until she regains capacity and can consent afresh",
     "correct": false,
-    "rationale": "Deferring effective treatment during acute mania causes ongoing harm and undermines the purpose of the advance statement; the statement guides current care. Would be inappropriate. (Source: RANZCP CPG Bipolar).",
+    "rationale": "Withholding treatment in acute mania prolongs the risk, and her directive asked to be treated with a particular agent rather than to be left untreated. (Source: RANZCP CPG Bipolar)",
     "source_refs": [
      "RANZCP CPG Bipolar"
     ]
    }
   ],
   "explanation": {
-   "summary": "Psychiatric advance statements are recognised in several Australian state Acts and are intended to be followed during periods of incapacity where clinically reasonable. Nominated support persons help communicate the person's preferences but do not veto them. Overrides require case-specific justification.",
+   "summary": "This is where NSW and Victoria genuinely part company. Victoria has a statutory advance statement of preferences and a nominated support person; NSW has neither, and has no legislation on advance care directives at all. A NSW directive is a common law instrument: valid if made with capacity, clear and applicable, and binding on ordinary medical treatment, but it cannot displace treatment given under the Mental Health Act 2007. What it does do is give the treating team the patient's own reasoning, which should decide the choice when the options are clinically equivalent. The NSW carer instruments are the designated carer, up to two, and the principal care provider.",
    "key_points": [
-    "Advance statements activate during incapacity",
-    "Clinically reasonable elements should be followed",
-    "Nominated support person is a communicator, not a veto-holder",
-    "Departures must be documented with case-specific reasons",
-    "Standard first-line status is not itself a reason to override"
+    "NSW has no statutory advance statement and no nominated support person.",
+    "A directive cannot override Mental Health Act treatment but must be considered.",
+    "A designated carer is informed and consulted, never a substitute decision maker.",
+    "Where two agents are equally reasonable, the recorded preference should decide."
    ],
-   "pearls": "Reviewing the advance statement with the patient while well after each admission strengthens its future usefulness."
+   "pearls": "Rewriting the directive with the patient after each admission is what keeps it usable: a NSW directive that is vague is unlikely to be given effect by anyone."
   },
   "sources": [
    {
-    "label": "Victorian Mental Health and Wellbeing Act 2022",
-    "url": "https://www.legislation.vic.gov.au/in-force/acts/mental-health-and-wellbeing-act-2022"
+    "label": "NSW Mental Health Act 2007",
+    "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-008"
    },
    {
-    "label": "RANZCP Position on Supported Decision Making",
-    "url": "https://www.ranzcp.org/"
+    "label": "NSW Mental Health Rights Manual: advance care directives",
+    "url": "https://mhrm.mhcc.org.au/chapters/5-substitute-decision-making-and-capacity/chapter-5-section-f-advance-care-directives/"
+   },
+   {
+    "label": "NSW Health: designated carers and principal care providers",
+    "url": "https://www.health.nsw.gov.au/mentalhealth/services/carers/Pages/default.aspx"
    },
    {
     "label": "RANZCP CPG Bipolar",

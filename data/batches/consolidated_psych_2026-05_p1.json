@@ -12599,85 +12599,89 @@
   "id": "ctb-p29-020",
   "topic": "Psychiatry",
   "subtopic": "Mental Health Act",
-  "subtopic_detail": "ECT capacity and consent in severe depression",
+  "subtopic_detail": "ECT authorisation for a detained patient who refuses",
   "difficulty": 3,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
    "ECT",
    "consent"
   ],
-  "stem": "You are the inpatient psychiatry registrar in Victoria seeing a 68-year-old woman with severe depression with psychotic features admitted under the Mental Health and Wellbeing Act. She has nihilistic delusions, food refusal, BMI 16 and a clear treatment plan. She believes she does not deserve treatment and refuses ECT. Her family supports treatment. She has been trialled on adequate doses of two antidepressants without benefit. She has previously responded well to ECT and is otherwise medically fit.",
+  "stem": "You are the psychiatry registrar in a NSW mental health facility. A 68-year-old woman detained with psychotic depression has nihilistic delusions, refuses food and fluids, and has a BMI of 16. Two adequate antidepressant trials have failed; she responded to ECT previously. She refuses ECT, saying she does not deserve treatment. Her family supports it.",
   "data_table": {
-   "Vital signs": "BP 108/68, HR 64, BMI 16, T 36.4 °C, SpO2 99% room air",
-   "Examination": "Psychomotor retardation, mute on some questions, oriented when responsive, dehydrated mucosae",
-   "Investigations": "FBC, U&E, LFT normal; ECG normal sinus rhythm; CT head no acute change"
+   "Vital signs": "BP 108/68, HR 64, BMI 16, T 36.4 degrees C, SpO2 99% room air",
+   "Examination": "Psychomotor retardation, dehydrated mucosae",
+   "Investigations": "FBC, U&E, LFT and ECG normal"
   },
-  "lead_in": "What is the most appropriate process to proceed with ECT?",
+  "lead_in": "What is the most appropriate way to proceed with ECT?",
   "options": [
    {
     "letter": "A",
-    "text": "Proceed with ECT under family verbal consent because she lacks insight into her own illness now",
+    "text": "Proceed on her family's verbal consent because her illness removes insight",
     "correct": false,
-    "rationale": "Substitute consent from family is not sufficient; mental health legislation requires formal capacity assessment and tribunal review before involuntary ECT in adults. (Source: Mental Health and Wellbeing Act Victoria)",
+    "rationale": "Under the NSW Mental Health Act 2007 no relative, designated carer or principal care provider can consent to ECT. Consent comes from the patient or, failing that, from the Mental Health Review Tribunal. (Source: NSW Mental Health Review Tribunal: electro convulsive therapy)",
     "source_refs": [
-     "Mental Health and Wellbeing Act Victoria"
+     "NSW Mental Health Review Tribunal: electro convulsive therapy"
     ]
    },
    {
     "letter": "B",
-    "text": "Defer ECT and continue antidepressant titration despite worsening starvation and clear nihilistic refusal",
+    "text": "Continue antidepressant titration and defer ECT despite her worsening refusal",
     "correct": false,
-    "rationale": "Continued pharmacotherapy in severe psychotic depression with starvation and previous ECT response delays effective treatment and risks death by inanition. (Source: Mental Health and Wellbeing Act Victoria)",
+    "rationale": "Two adequate trials have failed while she starves. Deferring definitive treatment in psychotic depression with food refusal and a prior ECT response risks death by inanition. (Source: RANZCP Position Statement on ECT)",
     "source_refs": [
-     "Mental Health and Wellbeing Act Victoria"
+     "RANZCP Position Statement on ECT"
     ]
    },
    {
     "letter": "C",
-    "text": "Assess capacity, document refusal, and apply to the Mental Health Tribunal for ECT authorisation",
+    "text": "Apply to the Mental Health Review Tribunal for an ECT administration inquiry",
     "correct": true,
-    "rationale": "Australian mental health acts require a formal capacity assessment and Tribunal hearing for involuntary ECT in adults; this preserves rights while allowing life-saving treatment. (Source: Mental Health and Wellbeing Act Victoria)",
+    "rationale": "For a detained or involuntary patient the authorised medical officer must apply to the Tribunal. The Tribunal first decides whether she can give informed consent and has given it; if she cannot consent, or can but refuses, it then decides whether ECT is reasonable and proper and necessary or desirable for her safety or welfare, on certificates from two medical practitioners, at least one a psychiatrist. (Source: NSW Mental Health Review Tribunal: electro convulsive therapy)",
     "source_refs": [
-     "Mental Health and Wellbeing Act Victoria"
+     "NSW Mental Health Review Tribunal: electro convulsive therapy"
     ]
    },
    {
     "letter": "D",
-    "text": "Refer to the public guardian for substitute decision making about ongoing antipsychotic treatment options",
+    "text": "Refer to the NCAT Guardianship Division for substitute consent to ECT",
     "correct": false,
-    "rationale": "Public Guardian decision making applies to general medical treatment in adults without capacity but ECT specifically requires Tribunal authorisation under mental health acts. (Source: Mental Health and Wellbeing Act Victoria)",
+    "rationale": "The Guardianship Division consents to other medical and dental treatment for an adult without capacity. ECT for a person detained under the Mental Health Act 2007 sits with the Mental Health Review Tribunal instead. (Source: NSW Mental Health Act 2007)",
     "source_refs": [
-     "Mental Health and Wellbeing Act Victoria"
+     "NSW Mental Health Act 2007"
     ]
    },
    {
     "letter": "E",
-    "text": "Administer ECT under the emergency duty of care provisions without any further legal or consent process",
+    "text": "Give ECT under emergency duty of care without any further legal process",
     "correct": false,
-    "rationale": "Emergency duty of care covers immediate medical emergencies; planned ECT requires formal legal process and Tribunal authorisation when the patient refuses. (Source: Mental Health and Wellbeing Act Victoria)",
+    "rationale": "Duty of care covers immediate physical emergencies. The Act provides no route to a planned course of ECT that bypasses the Tribunal, and unlawful administration of ECT carries civil and criminal penalties. (Source: NSW Mental Health Review Tribunal: electro convulsive therapy)",
     "source_refs": [
-     "Mental Health and Wellbeing Act Victoria"
+     "NSW Mental Health Review Tribunal: electro convulsive therapy"
     ]
    }
   ],
   "explanation": {
-   "summary": "Australian mental health legislation in all states requires formal assessment of capacity and tribunal authorisation for ECT in adult patients who refuse or cannot consent. Capacity has four elements: understanding, retaining, using and weighing, and communicating the decision. Severe psychotic depression with nihilistic delusions often impairs capacity for treatment decisions. A documented assessment, second psychiatric opinion, and tribunal hearing usually within several working days authorise treatment while protecting patient rights. Family input is sought but is not legally sufficient on its own.",
+   "summary": "In NSW, ECT for an involuntary or detained patient requires an ECT administration inquiry before the Mental Health Review Tribunal. The Tribunal determines capacity to give informed consent, and where the person cannot consent, refuses, or neither consents nor refuses, it determines whether ECT is a reasonable and proper treatment that is necessary or desirable for the person's safety or welfare. Two medical practitioners, at least one a psychiatrist, must certify that opinion. Family consent has no legal standing, although designated carers and the principal care provider must be notified of the application.",
    "key_points": [
-    "Capacity has four legal elements to assess and document.",
-    "Tribunal authorisation is required for involuntary ECT.",
-    "A second psychiatric opinion supports the application.",
-    "Family consent is not legally sufficient for adult ECT."
+    "Detained or involuntary patient plus proposed ECT equals an application to the Tribunal.",
+    "Two medical practitioners must certify, at least one a psychiatrist.",
+    "A determination lasts 6 months and ordinarily covers up to 12 treatments.",
+    "No relative or carer can consent to ECT for an adult in NSW."
    ],
-   "pearls": "Severe melancholic depression with food refusal has a 30-day mortality rate of around 15 percent untreated; document this clearly in the Tribunal application because the immediate physical risk often justifies a same-week hearing."
+   "pearls": "Severe melancholic depression with food refusal carries a high short-term mortality, so say so in the application: the Tribunal can list an urgent ECT inquiry outside its usual fortnightly sitting when the physical risk is documented."
   },
   "sources": [
    {
-    "label": "Mental Health and Wellbeing Act Victoria",
-    "url": "https://www.legislation.vic.gov.au"
+    "label": "NSW Mental Health Act 2007",
+    "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-008"
    },
    {
-    "label": "RANZCP ECT Guidelines",
-    "url": "https://www.ranzcp.org/clinical-guidelines-publications"
+    "label": "NSW Mental Health Review Tribunal: electro convulsive therapy",
+    "url": "https://mhrt.nsw.gov.au/civil-patients/electro-convulsive-therapy.html"
+   },
+   {
+    "label": "RANZCP Position Statement on ECT",
+    "url": "https://www.ranzcp.org/"
    }
   ],
   "reference_ranges": [],
@@ -19780,79 +19784,84 @@
   "id": "ctb-p40-022",
   "topic": "Psychiatry",
   "subtopic": "Legal/ethics",
-  "subtopic_detail": "Capacity and the Mental Health Act",
+  "subtopic_detail": "Capacity and the NSW Mental Health Act 2007",
   "difficulty": 3,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
    "capacity",
    "Mental Health Act"
   ],
-  "stem": "A 28-year-old woman with severe major depressive disorder and active suicidal ideation refuses oral fluids and food on the medical ward, where she was admitted after a paracetamol overdose. She states she wants to die. She understands the proposed plan of IV fluids and N-acetylcysteine but says it does not matter because nothing will work. There are no psychotic features. She is calm and engaging.",
+  "stem": "A 28-year-old woman is admitted to a NSW medical ward after a paracetamol overdose. She has severe major depressive disorder and says she wants to die. She refuses intravenous fluids and N-acetylcysteine, understands what is proposed, but says nothing will work. There are no psychotic features. She is calm and engaging.",
   "data_table": {
-   "Examination": "Affect flat, mood subjectively low, no psychotic features, suicidal ideation with intent, cognitively intact on MMSE",
-   "Investigations": "Paracetamol level above nomogram, ALT 240 U/L, INR 1.3, lactate 1.6 mmol/L"
+   "Examination": "Affect flat, suicidal ideation with intent, no psychotic features, cognition intact",
+   "Investigations": "Paracetamol above the nomogram line, ALT 240 U/L, INR 1.3, lactate 1.6 mmol/L"
   },
   "lead_in": "What is the single most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "Accept her refusal of treatment as competent and palliate symptoms",
+    "text": "Accept her refusal as competent and move to symptom-focused palliation",
     "correct": false,
-    "rationale": "Severe depression with active suicidality compromises capacity to refuse life-saving treatment because the underlying disorder distorts the appreciation and weighing components of capacity, even if the patient can recite facts. (Source: Mental Health Act NSW 2007 / Vic 2014 explanatory material)",
+    "rationale": "Severe depression with active suicidal intent distorts the appreciating and weighing limbs of capacity even when the patient can recite the facts, so this refusal is not a competent one. (Source: NSW Mental Health Act 2007)",
     "source_refs": [
-     "Mental Health Act 2014 (Victoria)"
+     "NSW Mental Health Act 2007"
     ]
    },
    {
     "letter": "B",
-    "text": "Obtain a Supreme Court order prior to commencing any form of treatment",
+    "text": "Seek a Supreme Court order before starting any treatment at all",
     "correct": false,
-    "rationale": "Supreme Court applications are reserved for complex enduring incapacity decisions or when the Mental Health Act does not apply; in acute mental-illness-driven refusal the Act is the correct legal mechanism. (Source: Mental Health Act 2014 (Victoria))",
+    "rationale": "The Supreme Court is for enduring or contested incapacity questions. Where mental illness is driving an acute refusal the Mental Health Act 2007 and the duty of care are the working mechanisms. (Source: NSW Mental Health Act 2007)",
     "source_refs": [
-     "Mental Health Act 2014 (Victoria)"
+     "NSW Mental Health Act 2007"
     ]
    },
    {
     "letter": "C",
-    "text": "Detain under the relevant state Mental Health Act and treat actively",
+    "text": "Complete a schedule under the NSW Mental Health Act and treat actively",
     "correct": true,
-    "rationale": "Severe depression with intent constitutes a mental illness for which involuntary detention is justified when refusal of treatment would lead to serious harm; this allows life-saving NAC and psychiatric stabilisation. (Source: Mental Health Act 2014 (Victoria))",
+    "rationale": "A medical practitioner who has examined her may complete a mental health certificate, Schedule 1, so she can be detained in a declared mental health facility: she is a mentally ill person under section 14, or at least mentally disordered under section 15, and no less restrictive care is appropriate and available. The Act carries the psychiatric care while the antidote is given without delay under the duty of care. (Source: NSW Mental Health Rights Manual: initial detention and transport)",
     "source_refs": [
-     "Mental Health Act 2014 (Victoria)"
+     "NSW Mental Health Rights Manual: initial detention and transport"
     ]
    },
    {
     "letter": "D",
-    "text": "Apply for tribunal guardianship before initiating any specific treatment",
+    "text": "Apply to the NCAT Guardianship Division before starting the antidote infusion",
     "correct": false,
-    "rationale": "Guardianship is appropriate for enduring incapacity decisions and personal/financial matters; it is too slow for life-threatening paracetamol toxicity and is not the right mechanism for acute mental-illness-related refusal. (Source: Mental Health Act 2014 (Victoria))",
+    "rationale": "Guardianship consent is for enduring incapacity and takes days to arrange. It is neither quick enough for paracetamol toxicity nor the right instrument for refusal driven by acute mental illness. (Source: NSW Mental Health Act 2007)",
     "source_refs": [
-     "Mental Health Act 2014 (Victoria)"
+     "NSW Mental Health Act 2007"
     ]
    },
    {
     "letter": "E",
-    "text": "Give her 48 hours to reconsider with capacity reassessed every shift",
+    "text": "Allow 48 hours of reflection with capacity reviewed at every shift",
     "correct": false,
-    "rationale": "Delaying NAC beyond 8 hours from ingestion sharply increases hepatic failure risk; capacity in acute suicidal depression rarely fluctuates back within hours, so delay is dangerous. (Source: Therapeutic Guidelines: Toxicology)",
+    "rationale": "Delaying N-acetylcysteine beyond 8 hours from ingestion sharply raises the risk of hepatic failure, and capacity impaired by acute suicidal depression rarely returns within hours. (Source: Therapeutic Guidelines: Toxicology)",
     "source_refs": [
      "Therapeutic Guidelines: Toxicology"
     ]
    }
   ],
   "explanation": {
-   "summary": "Capacity assessment requires the patient to understand, retain, weigh and communicate the decision. In severe depression with active suicidality, the depressive cognition (nihilism, hopelessness, distorted self-worth) typically impairs the weighing component, rendering treatment refusal non-competent. Australian state Mental Health Acts allow involuntary detention and treatment for mental illness when there is significant risk to the person or others. The Act covers psychiatric treatment; for related life-saving medical treatment, the Act, common law of necessity, or guardianship law may be needed depending on jurisdiction. Senior psychiatric and medical input is essential.",
+   "summary": "Capacity requires the person to understand, retain, weigh and communicate a decision. In severe depression with suicidal intent the weighing limb is typically the one that fails, so refusal of life-saving treatment is not competent. In NSW the pathway is a mental health certificate, Schedule 1, completed by a medical practitioner or accredited person who has examined the person, authorising detention in a declared mental health facility. An authorised medical officer must then examine her as soon as practicable and within 12 hours. The Act authorises her care and treatment for mental illness; the antidote itself is given under the duty of care and must not wait on legal process.",
    "key_points": [
-    "Severe depression often impairs the weighing component of capacity",
-    "State Mental Health Acts allow involuntary treatment when refusal causes serious harm",
-    "Paracetamol toxicity is time-critical: do not delay NAC waiting on legal process"
+    "Severe depression most often impairs the weighing limb of capacity.",
+    "NSW detention starts with a mental health certificate, not an assessment order.",
+    "Detention requires that no less restrictive care is appropriate and available.",
+    "Paracetamol toxicity is time-critical: do not delay N-acetylcysteine for paperwork."
    ],
-   "pearls": "Under the Victorian Mental Health and Wellbeing Act 2022 and equivalent state legislation, the criteria for compulsory treatment include the presence of mental illness AND risk of serious harm AND no less-restrictive alternative."
+   "pearls": "Scheduling and treating are separate decisions. The schedule secures her psychiatric care; the N-acetylcysteine goes up on the duty of care while the paperwork is still being written."
   },
   "sources": [
    {
-    "label": "Mental Health Act 2014 (Victoria)",
-    "url": "https://www.legislation.vic.gov.au/"
+    "label": "NSW Mental Health Act 2007",
+    "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-008"
+   },
+   {
+    "label": "NSW Mental Health Rights Manual: initial detention and transport",
+    "url": "https://mhrm.mhcc.org.au/chapters/4-nsw-mental-health-law-and-processes/4b-initial-detention-and-transport/"
    },
    {
     "label": "Therapeutic Guidelines: Toxicology",
@@ -22402,89 +22411,92 @@
   "id": "psych-bal28-022",
   "topic": "Psychiatry",
   "subtopic": "Physical treatments",
-  "subtopic_detail": "ECT consent in severe depression",
+  "subtopic_detail": "ECT consent in severe depression under NSW law",
   "difficulty": 4,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
    "ECT",
    "capacity"
   ],
-  "stem": "You are the consultation-liaison psychiatry registrar asked to assess a 68-year-old woman admitted to a Victorian inpatient unit with severe depression with psychotic features. She has lost 11 kg over 3 months, refuses food and fluids, has expressed delusional guilt about being responsible for a recent natural disaster, and has nihilistic delusions. Three antidepressant trials and augmentation have failed over 6 months.\n\nShe is now drowsy from dehydration and at imminent risk of physical deterioration. The treating consultant has recommended electroconvulsive therapy. She declines treatment, stating it will erase her family from her memory and she deserves to die. There is no advance care directive. Family supports treatment.",
+  "stem": "You are the consultation-liaison registrar. A 68-year-old woman detained in a NSW mental health facility has psychotic depression with nihilistic delusions, has lost 11 kg in 3 months and refuses food and fluids. Three antidepressant trials have failed over 6 months. She is drowsy from dehydration and declines ECT, saying it will erase her memories. Her family supports treatment.",
   "data_table": {
-   "Vital signs": "BP 96/58 mmHg, HR 102 bpm, Temp 36.6 degrees C, RR 18, SpO2 97% room air",
-   "Examination": "Marked psychomotor retardation, food refusal, mucous membranes dry, MMSE 22 of 30 limited by lack of engagement",
-   "Investigations": "Sodium 132 mmol/L, creatinine 102 micromol/L, urea 12 mmol/L, ECG sinus tachycardia, no QT prolongation"
+   "Vital signs": "BP 96/58 mmHg, HR 102 bpm, SpO2 97% room air",
+   "Investigations": "Sodium 132 mmol/L, urea 12 mmol/L, creatinine 102 micromol/L"
   },
-  "lead_in": "Under the Victorian Mental Health and Wellbeing Act, what is the most appropriate next step regarding ECT?",
+  "lead_in": "Under the NSW Mental Health Act 2007, what is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "Commence ECT today under emergency provisions without tribunal review given her immediate risk",
+    "text": "Start ECT today under emergency provisions without any Tribunal involvement",
     "correct": false,
-    "rationale": "Victorian law does not allow non-emergency ECT without tribunal authorisation for non-consenting patients. Emergency provisions are limited and specific. The clinical situation, while serious, allows time to apply to the tribunal. (Source: Victorian Mental Health and Wellbeing Act 2022)",
+    "rationale": "The Act sets no emergency route to a course of ECT for a detained patient. Her deterioration is serious but an urgent Tribunal inquiry can be listed within days. (Source: NSW Mental Health Review Tribunal: electro convulsive therapy)",
     "source_refs": [
-     "Victorian Mental Health and Wellbeing Act 2022"
+     "NSW Mental Health Review Tribunal: electro convulsive therapy"
     ]
    },
    {
     "letter": "B",
-    "text": "Respect her refusal and continue antidepressant escalation with intravenous hydration as supportive care",
+    "text": "Respect her refusal and continue antidepressant escalation with intravenous fluids",
     "correct": false,
-    "rationale": "Three antidepressant trials have failed and she is at imminent risk of death from food and fluid refusal. Continuing failed medication strategies without addressing her acute psychotic depression is not in keeping with least-restrictive treatment when ECT could rapidly resolve the depression. (Source: Victorian Mental Health and Wellbeing Act 2022)",
+    "rationale": "Three trials have failed and she is at imminent risk from food and fluid refusal. Repeating a failed strategy is not least restrictive care when ECT could remit the psychotic depression. (Source: RANZCP Position Statement on ECT)",
     "source_refs": [
-     "Victorian Mental Health and Wellbeing Act 2022"
+     "RANZCP Position Statement on ECT"
     ]
    },
    {
     "letter": "C",
-    "text": "Obtain consent from her next of kin and proceed with ECT under that family authorisation alone",
+    "text": "Obtain her next of kin's written consent and proceed with ECT now",
     "correct": false,
-    "rationale": "Family consent does not substitute for tribunal authorisation in Victoria. Next of kin can provide views but cannot consent to ECT for an adult patient who lacks capacity. (Source: Victorian Mental Health and Wellbeing Act 2022)",
+    "rationale": "Next of kin, designated carers and the principal care provider must be notified of an ECT application, but none of them can consent to ECT for an adult in NSW. (Source: NSW Health: designated carers and principal care providers)",
     "source_refs": [
-     "Victorian Mental Health and Wellbeing Act 2022"
+     "NSW Health: designated carers and principal care providers"
     ]
    },
    {
     "letter": "D",
-    "text": "Apply to the Mental Health Tribunal for an ECT order as she lacks capacity and treatment is the least restrictive option",
+    "text": "Apply to the Mental Health Review Tribunal for an ECT administration inquiry",
     "correct": true,
-    "rationale": "Under the Victorian Mental Health and Wellbeing Act 2022, ECT for a person who is unable to give informed consent and who is a compulsory or security patient requires an order from the Mental Health Tribunal. Her psychotic depression with nihilistic delusions, food refusal, and physical deterioration meets criteria for compulsory treatment and her refusal is driven by psychotic illness rather than informed weighing of risks. (Source: Victorian Mental Health and Wellbeing Act 2022)",
+    "rationale": "For any involuntary or detained patient the authorised medical officer applies to the Tribunal, which determines whether she can give informed consent and, if she cannot, whether ECT is a reasonable and proper treatment necessary or desirable for her safety or welfare. Nihilistic delusions driving her refusal, failed pharmacotherapy and physical deterioration are exactly the evidence that application needs. (Source: NSW Mental Health Review Tribunal: electro convulsive therapy)",
     "source_refs": [
-     "Victorian Mental Health and Wellbeing Act 2022"
+     "NSW Mental Health Review Tribunal: electro convulsive therapy"
     ]
    },
    {
     "letter": "E",
-    "text": "Transfer to the medical ward for nasogastric feeding and defer mental health treatment until capacity recovers",
+    "text": "Transfer for nasogastric feeding and defer ECT until her capacity returns",
     "correct": false,
-    "rationale": "Nasogastric feeding alone treats the dehydration but not the psychotic depression driving her food refusal. Definitive psychiatric treatment is required and ECT can be sought concurrently with tribunal authorisation. (Source: Victorian Mental Health and Wellbeing Act 2022)",
+    "rationale": "Feeding corrects the dehydration but not the psychotic depression driving the food refusal, and the ECT application can be prepared at the same time as the physical resuscitation. (Source: RANZCP Position Statement on ECT)",
     "source_refs": [
-     "Victorian Mental Health and Wellbeing Act 2022"
+     "RANZCP Position Statement on ECT"
     ]
    }
   ],
   "explanation": {
-   "summary": "Electroconvulsive therapy in Australia is governed by state mental health legislation. In Victoria the Mental Health and Wellbeing Act 2022 requires that ECT for a compulsory patient who cannot give informed consent be authorised by the Mental Health Tribunal. Capacity is decision-specific: psychotic depression with nihilistic delusions typically impairs the patient's ability to weigh information about ECT. ECT response rates in severe psychotic depression are approximately 80 to 90%, faster than any pharmacotherapy. Cognitive side effects (transient anterograde amnesia) are real but typically resolve within weeks.",
+   "summary": "ECT in Australia is governed by state legislation and the instruments differ. In NSW the authorised medical officer applies to the Mental Health Review Tribunal for an ECT administration inquiry whenever ECT is proposed for an involuntary patient, a detained person who has not yet had a mental health inquiry, or a person under 16. Capacity is decision-specific and psychotic depression with nihilistic delusions usually destroys the ability to weigh information about ECT. Remission rates in severe psychotic depression are roughly 80 to 90%, faster than any drug regimen, and most cognitive effects settle within weeks.",
    "key_points": [
-    "ECT in Victoria for a non-consenting compulsory patient requires Mental Health Tribunal order",
-    "Capacity is decision-specific and impaired by psychotic depression in many cases",
-    "ECT remission rates in severe psychotic depression: 80 to 90%",
-    "Most cognitive side effects resolve within 2 to 6 weeks; some persistent autobiographical gaps in a minority"
+    "NSW ECT for a detained patient goes to the Mental Health Review Tribunal.",
+    "A determination lasts 6 months and ordinarily allows up to 12 treatments.",
+    "Designated carers and the principal care provider must be notified of the application.",
+    "ECT remission in severe psychotic depression is around 80 to 90%."
    ],
-   "pearls": "Psychotic depression with food refusal and rapid physical decline has a higher response rate to ECT (80 to 90%) than to combination antidepressant and antipsychotic pharmacotherapy (around 60%), and ECT remits symptoms in around 2 to 4 weeks rather than 6 to 8."
+   "pearls": "Psychotic depression with food refusal responds to ECT in about 2 to 4 weeks, against 6 to 8 weeks for antidepressant and antipsychotic combinations, which is why the physical deterioration belongs in the Tribunal application rather than in the progress notes alone."
   },
   "sources": [
    {
-    "label": "Victorian Mental Health and Wellbeing Act 2022",
-    "url": "https://www.health.vic.gov.au/mental-health-and-wellbeing-act"
+    "label": "NSW Mental Health Act 2007",
+    "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-008"
    },
    {
-    "label": "RANZCP Clinical Memorandum - ECT",
+    "label": "NSW Mental Health Review Tribunal: electro convulsive therapy",
+    "url": "https://mhrt.nsw.gov.au/civil-patients/electro-convulsive-therapy.html"
+   },
+   {
+    "label": "NSW Health: designated carers and principal care providers",
+    "url": "https://www.health.nsw.gov.au/mentalhealth/services/carers/Pages/default.aspx"
+   },
+   {
+    "label": "RANZCP Position Statement on ECT",
     "url": "https://www.ranzcp.org/"
-   },
-   {
-    "label": "Therapeutic Guidelines: Psychotropic - ECT",
-    "url": "https://tgldcdp.tg.org.au/"
    }
   ],
   "reference_ranges": [
