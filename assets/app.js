@@ -810,6 +810,7 @@
     if (id === "content") {
       if (addaudit) addaudit.hidden = false;
       native.hidden = true;
+      loadPromptTemplate();
       if (typeof refreshLocalBankSummary === "function") refreshLocalBankSummary();
       if (typeof refreshAuditInboxList === "function") {
         refreshAuditInboxList().then(() => {
@@ -3020,10 +3021,11 @@
     // placeholders ({{FOCUS_DIRECTIVE}}, {{BANK_STATE}}) substituted
     // at copy time so the directive and the live bank counts are
     // always current.
-    const promptTpl = document.getElementById("addQuestionsPromptTemplate");
     const promptText = document.getElementById("promptText");
-    if (promptTpl && promptText) {
-      promptText.textContent = renderPrompt(promptTpl.textContent.trim());
+    if (promptText) {
+      loadPromptTemplate().then(t => {
+        promptText.textContent = t ? renderPrompt(t) : "Could not load the prompt template.";
+      });
     }
     const copyBtn = document.getElementById("copyPromptBtn");
     const copyStatus = document.getElementById("copyPromptStatus");
@@ -3177,6 +3179,27 @@
     mistral:  { label: "Le Chat",  url: "https://chat.mistral.ai" },
     copilot:  { label: "Copilot",  url: "https://copilot.microsoft.com" }
   };
+  /* The generation prompt used to be 332 lines of authoring rules in a
+   * <script type="text/template"> inside index.html, so every visitor
+   * downloaded it and it sat in view-source of the front page. It is
+   * admin-only content, it is 15 KB, and nothing outside the Content
+   * tab reads it. Fetched once, on demand, and cached.
+   */
+  let _promptTemplate = null;
+  async function loadPromptTemplate() {
+    if (_promptTemplate !== null) return _promptTemplate;
+    try {
+      const r = await fetch("assets/prompt-template.txt?v=" + encodeURIComponent(
+        (state.meta && state.meta.updated) || "1"));
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      _promptTemplate = (await r.text()).trim();
+    } catch (e) {
+      console.warn("[prompt] template fetch failed:", e && e.message || e);
+      _promptTemplate = "";
+    }
+    return _promptTemplate;
+  }
+
   const AUDIT_LLM_KEY = "y4mcq.audit.llm.v1";
   function auditLlmId() {
     const id = localStorage.getItem(AUDIT_LLM_KEY);
@@ -3404,8 +3427,13 @@
   // (how reach the site), and wraps with audit-specific intro + output
   // spec.
   function _qualityBarText() {
-    const tpl = document.getElementById("addQuestionsPromptTemplate");
-    let t = renderPrompt(tpl.textContent.trim());
+    if (!_promptTemplate) {
+      // Primed by loadPromptTemplate() when the Content tab mounts. If
+      // it is still empty the fetch failed, and an audit prompt with no
+      // quality bar in it would quietly grade against nothing.
+      throw new Error("The prompt template has not loaded. Reopen the Content tab and try again.");
+    }
+    let t = renderPrompt(_promptTemplate);
     // Strip the "INPUT FROM ME" trailing block (everything from
     // "============================\nINPUT FROM ME" onwards).
     t = t.split(/={5,}\s*\nINPUT FROM ME/i)[0].trim();
