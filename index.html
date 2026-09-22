@@ -383,10 +383,6 @@
 
 <!-- ── AUDIT DASHBOARD (admin only) ─────────────────────────────────── -->
 
-<!-- reportsAdminModal removed - content now lives permanently inside the
-     Admin modal's Add & Audit pane. -->
-<button id="reportsAdminClose" hidden></button>
-
 <!-- ── HOW-TO ───────────────────────────────────────────────────────── -->
 
 <div id="statsModal" class="modal" hidden>
@@ -399,6 +395,29 @@
   </div>
 </div>
 
+<!-- Destructive-action confirmation. A native <dialog> rather than
+     window.confirm, because confirm() cannot name what is about to be
+     destroyed or how much of it there is, and an unstyleable "are you
+     sure?" trains people to hit Enter without reading. Cancel comes
+     first in the DOM and holds initial focus; the confirm button is
+     labelled with the action, never "OK". -->
+<dialog id="confirmDialog" class="confirm-dialog" aria-labelledby="confirmTitle">
+  <form method="dialog" class="confirm-form">
+    <h2 id="confirmTitle">Are you sure?</h2>
+    <p id="confirmBody" class="confirm-body"></p>
+    <label id="confirmTypeWrap" class="confirm-type" hidden>
+      <span id="confirmTypeLabel"></span>
+      <input id="confirmTypeInput" type="text" autocomplete="off"
+             autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </label>
+    <p id="confirmErr" class="confirm-err" role="alert" hidden></p>
+    <div class="confirm-actions">
+      <button type="submit" value="cancel" class="secondary" id="confirmCancel">Cancel</button>
+      <button type="button" class="danger-btn" id="confirmGo">Confirm</button>
+    </div>
+  </form>
+</dialog>
+
 <!-- ── UNIFIED ADMIN INTERFACE ──────────────────────────────────────── -->
 <div id="adminModal" class="modal" hidden>
   <div class="modal-card modal-card-xwide admin-modal-card">
@@ -407,14 +426,20 @@
       <button id="adminClose" class="ghost-x" aria-label="Close">×</button>
     </div>
     <div class="admin-layout">
-      <nav class="admin-sidebar" id="adminSidebar"></nav>
+      <nav class="admin-nav" id="adminSidebar" aria-label="Admin sections"></nav>
       <div class="admin-main" id="adminMain">
+        <!-- One status region for the whole panel. Success is
+             role=status, errors are switched to role=alert in JS.
+             Never auto-dismisses: an admin who misses the message has
+             no other record that the action happened. -->
+        <div id="adminStatus" class="admin-status" role="status"
+             aria-live="polite" aria-atomic="true" hidden></div>
 
         <!-- Add & Audit pane: permanently mounted. Other tabs render
              into #adminNative; activating this tab shows this block. -->
         <div id="adminAddAuditPane" class="admin-pane" hidden>
           <header class="admin-pane-head">
-            <h2>Add &amp; audit</h2>
+            <h2>Content</h2>
           </header>
 
           <section class="admin-pane-section">
@@ -494,11 +519,6 @@
     </div>
   </div>
 </div>
-
-<!-- howToModal removed - paste flow now lives permanently inside the
-     Admin modal's Add & Audit pane. Stub elements retained so legacy
-     event-handler wiring still attaches cleanly. -->
-<button id="howToClose" hidden></button>
 
 <script type="text/template" id="addQuestionsPromptTemplate">
 You are generating high-quality single-best-answer MCQs for Australian

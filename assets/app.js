@@ -625,7 +625,6 @@
     for (const [name, fn] of wires) {
       try { fn(); } catch (e) { console.error("wire", name, "failed:", e); }
     }
-    try { updateReportsAdminBadge(); } catch (e) { console.error(e); }
     showHome();
   });
 
@@ -664,32 +663,117 @@
   // For tabs whose content lives in legacy modals (Add, Inbox, Reports,
   // Live), we re-parent the existing wired DOM into the active panel
   // on tab activation so the original event handlers keep working.
+  // Four sections, not five. Overview and Quality were both "how is the
+  // bank doing" and are now one Bank section; Add & audit keeps its own
+  // because it is a working surface rather than a reading one. Users is
+  // first because it is the one used daily.
   const ADMIN_TABS = [
-    // No icon glyphs - labels do the work; redundant icon+label rows are
-    // the macOS-template tell. The active-tab left stripe in --accent is
-    // the one place colour means selection inside the modal.
-    { id: "overview", label: "Overview",   admin: true,  icon: "" },
-    { id: "addaudit", label: "Add & audit", admin: true,  icon: "" },
-    { id: "quality",  label: "Quality",    admin: true,  icon: "" },
-    { id: "users",    label: "Users",      admin: true,  icon: "" },
-    { id: "account",  label: "Account",    admin: false, icon: "" },
+    { id: "users",    label: "Users",    admin: true },
+    { id: "bank",     label: "Bank",     admin: true },
+    { id: "content",  label: "Content",  admin: true },
+    { id: "account",  label: "Account",  admin: false },
   ];
+  // Old deep links, kept so existing call sites do not silently land on
+  // the wrong pane.
+  const ADMIN_TAB_ALIASES = { overview: "bank", quality: "bank", addaudit: "content",
+                              add: "content", inbox: "content" };
+
+  /* ── status region ──────────────────────────────────────────────────
+   * One element for the whole panel. Never auto-dismisses: an admin who
+   * misses a toast has no other record that the action happened, and
+   * auto-dismissal runs into WCAG 2.2.1. Success is role=status,
+   * problems switch the element to role=alert so they interrupt.
+   */
+  function adminSay(kind, message, undo) {
+    const el = document.getElementById("adminStatus");
+    if (!el) return;
+    el.setAttribute("role", kind === "error" ? "alert" : "status");
+    el.className = "admin-status " + (kind === "error" ? "is-error" : "is-ok");
+    el.innerHTML = `<span class="admin-status-head">${kind === "error" ? "Problem" : "Done"}</span>` +
+                   `<span class="admin-status-msg">${esc(message)}</span>`;
+    if (undo) {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "admin-status-undo"; b.textContent = "Undo";
+      b.onclick = () => { adminClear(); undo(); };
+      el.appendChild(b);
+    }
+    const x = document.createElement("button");
+    x.type = "button"; x.className = "admin-status-x";
+    x.setAttribute("aria-label", "Dismiss"); x.textContent = "\u00d7";
+    x.onclick = adminClear;
+    el.appendChild(x);
+    el.hidden = false;
+  }
+  function adminClear() {
+    const el = document.getElementById("adminStatus");
+    if (el) { el.hidden = true; el.innerHTML = ""; }
+  }
+
+  /* ── confirmation ───────────────────────────────────────────────────
+   * Friction proportional to the blast radius. A role change is
+   * instantly reversible, so it gets none. Deleting an account destroys
+   * data that cannot be recovered, so it gets a dialog that names the
+   * person, states how many answers go with them, and requires their
+   * email typed out. window.confirm can do none of that.
+   */
+  function adminConfirm({ title, body, confirmLabel, typeToMatch, typeLabel }) {
+    return new Promise(resolve => {
+      const dlg = document.getElementById("confirmDialog");
+      if (!dlg || !dlg.showModal) return resolve(window.confirm(body));
+      const go = document.getElementById("confirmGo");
+      const cancel = document.getElementById("confirmCancel");
+      const wrap = document.getElementById("confirmTypeWrap");
+      const input = document.getElementById("confirmTypeInput");
+      const err = document.getElementById("confirmErr");
+      document.getElementById("confirmTitle").textContent = title;
+      document.getElementById("confirmBody").textContent = body;
+      go.textContent = confirmLabel;
+      err.hidden = true;
+      if (typeToMatch) {
+        wrap.hidden = false;
+        document.getElementById("confirmTypeLabel").textContent =
+          typeLabel || `Type ${typeToMatch} to confirm`;
+        input.value = "";
+        go.disabled = true;
+        input.oninput = () => {
+          go.disabled = input.value.trim().toLowerCase() !== typeToMatch.toLowerCase();
+        };
+      } else {
+        wrap.hidden = true;
+        go.disabled = false;
+        input.oninput = null;
+      }
+      let settled = false;
+      const finish = v => {
+        if (settled) return;
+        settled = true;
+        go.onclick = null;
+        dlg.onclose = null;
+        if (dlg.open) dlg.close();
+        resolve(v);
+      };
+      go.onclick = () => finish(true);
+      dlg.onclose = () => finish(false);
+      dlg.showModal();
+      // Initial focus on the least destructive control.
+      cancel.focus();
+    });
+  }
 
   function wireAdminModal() {
     const modal = document.getElementById("adminModal");
     const close = document.getElementById("adminClose");
     if (!modal || !close) return;
-    close.onclick = () => { modal.hidden = true; };
-    modal.addEventListener("click", e => { if (e.target.id === "adminModal") modal.hidden = true; });
-    // Event-delegated sidebar tab click. Survives re-renders of the
-    // sidebar markup and clicks landing on the inner icon/label spans.
-    const sidebar = document.getElementById("adminSidebar");
-    if (sidebar) {
-      sidebar.addEventListener("click", e => {
+    const shut = () => { modal.hidden = true; adminClear(); };
+    close.onclick = shut;
+    modal.addEventListener("click", e => { if (e.target.id === "adminModal") shut(); });
+    const nav = document.getElementById("adminSidebar");
+    if (nav) {
+      nav.addEventListener("click", e => {
         const btn = e.target.closest(".admin-tab");
-        if (!btn || !sidebar.contains(btn)) return;
-        const id = btn.dataset.adminTab;
-        if (id) selectAdminTab(id);
+        if (!btn || !nav.contains(btn)) return;
+        e.preventDefault();
+        if (btn.dataset.adminTab) selectAdminTab(btn.dataset.adminTab);
       });
     }
   }
@@ -699,181 +783,423 @@
     if (!modal) return;
     const isAdmin = isCurrentUserAdmin();
     const tabs = ADMIN_TABS.filter(t => isAdmin || !t.admin);
-    const sidebar = document.getElementById("adminSidebar");
+    const nav = document.getElementById("adminSidebar");
     const title = document.getElementById("adminTitle");
     if (title) title.textContent = isAdmin ? "Admin" : "Account";
-    sidebar.innerHTML = tabs.map(t => `<button type="button" class="admin-tab" data-admin-tab="${t.id}"><span class="admin-tab-label">${esc(t.label)}</span></button>`).join("");
-    const want = initialTab && tabs.some(t => t.id === initialTab) ? initialTab : tabs[0].id;
-    selectAdminTab(want);
+    nav.innerHTML = tabs.map(t =>
+      `<a href="#admin-${t.id}" class="admin-tab" data-admin-tab="${t.id}">${esc(t.label)}</a>`
+    ).join("");
+    nav.hidden = tabs.length < 2;
+    const want = ADMIN_TAB_ALIASES[initialTab] || initialTab;
+    selectAdminTab(tabs.some(t => t.id === want) ? want : tabs[0].id);
     modal.hidden = false;
+    adminClear();
   }
 
   function selectAdminTab(id) {
     document.querySelectorAll(".admin-tab").forEach(b => {
-      b.classList.toggle("active", b.dataset.adminTab === id);
+      const on = b.dataset.adminTab === id;
+      b.classList.toggle("active", on);
+      if (on) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
     });
+    adminClear();
     const addaudit = document.getElementById("adminAddAuditPane");
     const native = document.getElementById("adminNative");
     if (!native) return;
     native.innerHTML = "";
-    const tab = ADMIN_TABS.find(t => t.id === id);
-    if (!tab) return;
-    if (id === "addaudit") {
+    if (id === "content") {
       if (addaudit) addaudit.hidden = false;
-      if (native) native.hidden = true;
-      // Populate all five sections on activation; they share a single
-      // scrollable pane, so refreshing one without the others gives a
-      // partial picture.
+      native.hidden = true;
       if (typeof refreshLocalBankSummary === "function") refreshLocalBankSummary();
       if (typeof refreshAuditInboxList === "function") {
         refreshAuditInboxList().then(() => {
           if (typeof renderAuditInbox === "function") renderAuditInbox();
         });
       }
-      if (typeof renderReportsAdminList === "function") renderReportsAdminList("open");
+      if (typeof renderReportsAdminList === "function") renderReportsAdminList(_reportFilter);
       if (typeof loadAndRenderAuditLive === "function") loadAndRenderAuditLive();
       return;
     }
     if (addaudit) addaudit.hidden = true;
     native.hidden = false;
-    if (id === "overview")  return renderAdminOverview(native);
-    if (id === "quality")   return renderAdminQualityTab(native);
-    if (id === "users")     return renderAdminUsersTab(native);
-    if (id === "account")   return renderAdminAccountTab(native);
+    if (id === "bank")    return renderAdminBankTab(native);
+    if (id === "users")   return renderAdminUsersTab(native);
+    if (id === "account") return renderAdminAccountTab(native);
   }
 
-  function renderAdminOverview(root) {
-    const counts = { L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 };
+  // Loading states. Nothing for the first second - a skeleton that
+  // flashes for 40ms is worse than no skeleton - then placeholder rows
+  // rather than a spinner, so the layout does not jump when data lands.
+  function adminLoading(root, rows) {
+    const t = setTimeout(() => {
+      root.innerHTML = `<div class="admin-skeleton">` +
+        Array.from({ length: rows || 3 }, () => `<div class="sk-row"></div>`).join("") +
+        `</div>`;
+    }, 1000);
+    return () => clearTimeout(t);
+  }
+  function adminLoadError(root, what, retry) {
+    root.innerHTML = `<p class="admin-empty" role="alert">Could not load ${esc(what)}. ` +
+      `<button type="button" class="link-btn" data-admin-retry>Try again</button></p>`;
+    const b = root.querySelector("[data-admin-retry]");
+    if (b) b.onclick = retry;
+  }
+
+  /* ── Bank ───────────────────────────────────────────────────────────
+   * Overview and Quality merged. No stat tiles and no charts: a bare
+   * number has no answer to "is that good?", and a bar chart of six
+   * integers is decoration. One table with Target and Gap answers the
+   * question the numbers exist to answer.
+   */
+  async function renderAdminBankTab(root) {
+    const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
     const byTopic = {};
-    const flagged = state.flags ? Object.keys(state.flags).filter(k => state.flags[k]).length : 0;
-    const answered = state.history ? Object.keys(state.history).length : 0;
+    const grid = {};
     (state.questions || []).forEach(q => {
       const d = q.difficulty;
-      if (d >= 1 && d <= 5) counts["L" + d]++;
+      if (d >= 1 && d <= 5) counts[d]++;
       byTopic[q.topic] = (byTopic[q.topic] || 0) + 1;
+      grid[q.topic] = grid[q.topic] || { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+      if (d >= 1 && d <= 5) grid[q.topic][d]++;
     });
-    const total = state.questions.length;
+    const total = (state.questions || []).length;
     const meta = state.meta || {};
-    const lastAdd = meta.last_added || meta.updated || "-";
     const reportsOpen = (state.reports || []).filter(r => (r.status || "open") === "open").length;
     const inboxCount = (state.inboxManifest && state.inboxManifest.inbox && state.inboxManifest.inbox.length) || 0;
-    const max = Math.max(1, ...Object.values(byTopic));
-    // One editorial sentence beats five v0 stat tiles. The numbers that
-    // demand attention (open reports, inbox pending) get a warm tint
-    // inline so the reader scans them without a stat-grid widget.
-    const warnClass = (n) => n ? ' class="warn"' : '';
+    // The 2026-06-01 overhaul's intended shape. Gap is what to act on.
+    const TARGET = { 1: 1, 2: 20, 3: 40, 4: 18, 5: 6 };
+    const TOPICS = ["Paediatrics", "Obstetrics & Gynaecology", "Psychiatry", "Medicine"];
+    const pc = n => total ? (100 * n / total) : 0;
+
+    const body = TOPICS.map(t => {
+      const g = grid[t] || { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+      return `<tr><th scope="row">${esc(t)}</th>` +
+        [1, 2, 3, 4, 5].map(d => `<td>${g[d]}</td>`).join("") +
+        `<td class="num-strong">${byTopic[t] || 0}</td></tr>`;
+    }).join("");
+    const totalsRow = `<tr class="tr-total"><th scope="row">All</th>` +
+      [1, 2, 3, 4, 5].map(d => `<td>${counts[d]}</td>`).join("") +
+      `<td class="num-strong">${total}</td></tr>`;
+    const shareRow = `<tr class="tr-quiet"><th scope="row">Share</th>` +
+      [1, 2, 3, 4, 5].map(d => `<td>${pc(counts[d]).toFixed(1)}%</td>`).join("") +
+      `<td></td></tr>`;
+    const targetRow = `<tr class="tr-quiet"><th scope="row">Target</th>` +
+      [1, 2, 3, 4, 5].map(d => `<td>${TARGET[d]}%</td>`).join("") + `<td></td></tr>`;
+    const gapRow = `<tr class="tr-quiet"><th scope="row">Gap</th>` +
+      [1, 2, 3, 4, 5].map(d => {
+        const g = pc(counts[d]) - TARGET[d];
+        const cls = Math.abs(g) >= 8 ? ' class="gap-wide"' : "";
+        return `<td${cls}>${g > 0 ? "+" : ""}${g.toFixed(1)}</td>`;
+      }).join("") + `<td></td></tr>`;
+
     root.innerHTML = `
       <div class="admin-pane">
-        <header class="admin-pane-head">
-          <h2>Bank</h2>
-        </header>
-        <p class="admin-overview-line">
-          <strong>${total}</strong> questions.
-          You've answered <strong>${answered}</strong>, flagged <strong>${flagged}</strong>.
-          <span${warnClass(reportsOpen)}><strong>${reportsOpen}</strong> open reports</span>,
-          <span${warnClass(inboxCount)}><strong>${inboxCount}</strong> in inbox</span>.
-          Last batch ${esc(String(lastAdd))}.
-        </p>
+        <header class="admin-pane-head"><h2>Bank</h2></header>
+        <p class="admin-fact">${total.toLocaleString()} questions.
+          Last added ${esc(String(meta.last_added || meta.updated || "unknown"))}.
+          ${reportsOpen ? `<b>${reportsOpen}</b> open report${reportsOpen === 1 ? "" : "s"}.` : "No open reports."}
+          ${inboxCount ? `<b>${inboxCount}</b> batch${inboxCount === 1 ? "" : "es"} in the inbox.` : ""}</p>
 
         <section class="admin-pane-section">
-          <h3>By discipline</h3>
-          <div class="admin-bar-rows">
-            ${["Paediatrics","Obstetrics & Gynaecology","Psychiatry","Medicine"].map(t => {
-              const n = byTopic[t] || 0;
-              const pct = total ? Math.round((n / total) * 100) : 0;
-              const widthPct = Math.round((n / max) * 100);
-              return `<div class="ab-row"><div class="ab-label">${esc(t)}</div><div class="ab-bar-wrap"><span style="width:${widthPct}%"></span></div><div class="ab-val">${n} <span class="dim">· ${pct}%</span></div></div>`;
-            }).join("")}
-          </div>
+          <h3>Difficulty by module</h3>
+          <table class="admin-table admin-table-num">
+            <thead><tr><th scope="col">Module</th>
+              <th scope="col">1</th><th scope="col">2</th><th scope="col">3</th>
+              <th scope="col">4</th><th scope="col">5</th>
+              <th scope="col">Total</th></tr></thead>
+            <tbody>${body}${totalsRow}${shareRow}${targetRow}${gapRow}</tbody>
+          </table>
+          <p class="admin-note">Gap is percentage points against the target
+            set by the 2026-06-01 overhaul. Anything beyond eight points is
+            marked.</p>
         </section>
 
-        <section class="admin-pane-section">
-          <h3>By difficulty</h3>
-          <div class="admin-bar-rows">
-            ${["L1","L2","L3","L4","L5"].map(k => {
-              const n = counts[k];
-              const pct = total ? Math.round((n / total) * 100) : 0;
-              const widthPct = Math.round((n / Math.max(1, ...Object.values(counts))) * 100);
-              return `<div class="ab-row"><div class="ab-label">${k}</div><div class="ab-bar-wrap"><span style="width:${widthPct}%"></span></div><div class="ab-val">${n} <span class="dim">· ${pct}%</span></div></div>`;
-            }).join("")}
-          </div>
+        <section class="admin-pane-section" id="bankQuality">
+          <h3>Answer quality</h3>
         </section>
-      </div>
-    `;
+      </div>`;
+
+    const qRoot = document.getElementById("bankQuality");
+    const stop = adminLoading(qRoot.appendChild(document.createElement("div")), 4);
+    let q = null;
+    try { q = await apiFetch("/api/admin/quality"); }
+    catch (e) {
+      stop();
+      const box = qRoot.querySelector(".admin-skeleton") || qRoot.appendChild(document.createElement("div"));
+      box.outerHTML = "";
+      return adminLoadError(qRoot, "answer quality", () => renderAdminBankTab(root));
+    }
+    stop();
+    const totals = (q && q.totals) || {};
+    const rows = arr => (arr || []).slice(0, 25).map(r => {
+      const pct = r.n ? Math.round((100 * (r.c || 0)) / r.n) : 0;
+      return `<tr><th scope="row" class="mono-id">${esc(r.question_id)}</th>` +
+             `<td>${r.n}</td><td>${pct}%</td></tr>`;
+    }).join("");
+    const worst = rows(q && q.worst);
+    const top = rows(q && q.top);
+    qRoot.innerHTML = `
+      <h3>Answer quality</h3>
+      <p class="admin-fact">${totals.users || 0} ${totals.users === 1 ? "person" : "people"},
+        ${(totals.answers || 0).toLocaleString()} answers across
+        ${(totals.qs || 0).toLocaleString()} questions.</p>
+      <h4>Lowest correct rate</h4>
+      ${worst ? `<table class="admin-table admin-table-num"><thead><tr>
+          <th scope="col">Question</th><th scope="col">Answers</th><th scope="col">Correct</th>
+        </tr></thead><tbody>${worst}</tbody></table>`
+        : `<p class="admin-empty">Nothing with five or more answers yet. This fills in as people use the bank.</p>`}
+      <h4>Most answered</h4>
+      ${top ? `<table class="admin-table admin-table-num"><thead><tr>
+          <th scope="col">Question</th><th scope="col">Answers</th><th scope="col">Correct</th>
+        </tr></thead><tbody>${top}</tbody></table>`
+        : `<p class="admin-empty">No answers recorded yet.</p>`}`;
   }
 
-  async function renderAdminQualityTab(root) {
-    root.innerHTML = `<p class="dim"></p>`;
-    let q = null;
-    try { q = await apiFetch("/api/admin/quality"); } catch (_) {}
-    const worst = (q && q.worst) || [];
-    const top = (q && q.top) || [];
-    const totals = (q && q.totals) || {};
-    const rowsWorst = worst.slice(0, 30).map(r => {
-      const pct = r.n ? Math.round((100 * (r.c || 0)) / r.n) : 0;
-      return `<div class="qr qid">${esc(r.question_id)}</div><div class="qr">${r.n}</div><div class="qr">${pct}%</div>`;
-    }).join("");
-    const rowsTop = top.slice(0, 20).map(r => {
-      const pct = r.n ? Math.round((100 * (r.c || 0)) / r.n) : 0;
-      return `<div class="qr qid">${esc(r.question_id)}</div><div class="qr">${r.n}</div><div class="qr">${pct}%</div>`;
-    }).join("");
-    root.innerHTML = `
-      <p class="admin-overview-line"><strong>${totals.users || 0}</strong> people, <strong>${totals.answers || 0}</strong> answers across <strong>${totals.qs || 0}</strong> questions.</p>
-      <h3>Lowest first-time correct</h3>
-      <div class="account-quality-table">
-        <div class="qh">Question id</div><div class="qh">N</div><div class="qh">Correct</div>
-        ${rowsWorst || '<div class="qr" style="grid-column:1/-1">Nothing with 5+ answers yet.</div>'}
-      </div>
-      <h3>Most answered</h3>
-      <div class="account-quality-table">
-        <div class="qh">Question id</div><div class="qh">N</div><div class="qh">Correct</div>
-        ${rowsTop || '<div class="qr" style="grid-column:1/-1">Nothing yet.</div>'}
-      </div>
-    `;
+  /* ── Users ──────────────────────────────────────────────────────────
+   * A real table: left-aligned text, right-aligned numbers in tabular
+   * figures, one hairline per row, no zebra, no avatars, no status
+   * pills, action buttons always visible with the person's name in a
+   * visually hidden span so a screen reader hears "Remove admin for
+   * Jane Smith" rather than "Remove admin".
+   */
+  function relTime(ts) {
+    if (!ts) return { text: "never", title: "" };
+    const then = ts * 1000;
+    const days = Math.floor((Date.now() - then) / 86400000);
+    const text = days <= 0 ? "today" : days === 1 ? "yesterday"
+      : days < 30 ? `${days} days ago`
+      : days < 365 ? `${Math.floor(days / 30)} months ago`
+      : `${Math.floor(days / 365)} years ago`;
+    return { text, title: new Date(then).toLocaleString("en-AU") };
   }
 
   async function renderAdminUsersTab(root) {
-    root.innerHTML = `<p class="dim"></p>`;
+    const stop = adminLoading(root, 4);
     let users = [];
     try {
       const r = await apiFetch("/api/admin/users");
       users = (r && r.users) || [];
-    } catch (_) {}
+    } catch (e) {
+      stop();
+      // The old code swallowed this and rendered "0 accounts", which is
+      // indistinguishable from a working empty instance.
+      return adminLoadError(root, "the user list", () => renderAdminUsersTab(root));
+    }
+    stop();
+
+    const meId = cloudUser && cloudUser.id;
+    const adminCount = users.filter(u => u.is_admin).length;
     const rows = users.map(u => {
-      const isSelf = u.id === (cloudUser && cloudUser.id);
-      return `
-        <div class="ar ${isSelf ? 'is-self' : ''}">${esc(u.display_name || u.email.split('@')[0])}</div>
-        <div class="ar">${esc(u.email)}</div>
-        <div class="ar">${u.answers || 0}</div>
-        <div class="ar">${u.is_admin ? '<span title="Admin">admin</span>' : 'user'}</div>
-        <div class="ar">${isSelf ? '' : (u.is_admin
-          ? `<button class="btn-mini" data-act="demote" data-id="${esc(u.id)}">demote</button>`
-          : `<button class="btn-mini promote" data-act="promote" data-id="${esc(u.id)}">promote</button>`)}</div>
-        <div class="ar">${isSelf ? '' : `<button class="btn-mini danger" data-act="delete" data-id="${esc(u.id)}" data-label="${esc(u.email)}">delete</button>`}</div>`;
+      const isSelf = u.id === meId;
+      const name = u.display_name || (u.email || "").split("@")[0] || "(no name)";
+      const seen = relTime(u.last_seen_at);
+      const joined = u.created_at
+        ? new Date(u.created_at * 1000).toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" })
+        : "-";
+      let actions;
+      if (isSelf) {
+        actions = `<span class="admin-noact">Use the Account tab</span>`;
+      } else if (u.is_admin && adminCount <= 1) {
+        actions = `<span class="admin-noact">Last admin</span>`;
+      } else {
+        const roleBtn = u.is_admin
+          ? `<button type="button" class="row-act" data-act="demote" data-id="${esc(u.id)}" data-name="${esc(name)}">Remove admin<span class="visually-hidden"> for ${esc(name)}</span></button>`
+          : `<button type="button" class="row-act" data-act="promote" data-id="${esc(u.id)}" data-name="${esc(name)}">Make admin<span class="visually-hidden"> for ${esc(name)}</span></button>`;
+        actions = roleBtn +
+          `<button type="button" class="row-act danger" data-act="delete" data-id="${esc(u.id)}" data-name="${esc(name)}" data-email="${esc(u.email || "")}" data-answers="${u.answers || 0}">Delete<span class="visually-hidden"> ${esc(name)}</span></button>`;
+      }
+      return `<tr${isSelf ? ' class="is-self"' : ""}>
+        <th scope="row">${esc(name)}${isSelf ? ' <span class="admin-you">you</span>' : ""}</th>
+        <td class="cell-email">${esc(u.email || "")}</td>
+        <td>${u.is_admin ? "Admin" : "Student"}</td>
+        <td>${esc(joined)}</td>
+        <td${seen.title ? ` title="${esc(seen.title)}"` : ""}>${esc(seen.text)}</td>
+        <td class="num">${u.answers || 0}</td>
+        <td class="cell-actions">${actions}</td>
+      </tr>`;
     }).join("");
+
     root.innerHTML = `
-      <p class="admin-overview-line"><strong>${users.length}</strong> account${users.length === 1 ? "" : "s"}. To delete or demote yourself, use the Account tab.</p>
-      <div class="account-users-table">
-        <div class="ah">Name</div><div class="ah">Email</div><div class="ah">Answers</div><div class="ah">Role</div><div class="ah"></div><div class="ah"></div>
-        ${rows}
-      </div>
-    `;
+      <div class="admin-pane">
+        <header class="admin-pane-head"><h2>Users</h2></header>
+        <p class="admin-fact">${users.length} account${users.length === 1 ? "" : "s"},
+          ${adminCount} admin${adminCount === 1 ? "" : "s"}.</p>
+        ${users.length ? `
+        <div class="admin-table-scroll">
+          <table class="admin-table admin-users">
+            <thead><tr>
+              <th scope="col">Name</th><th scope="col">Email</th><th scope="col">Role</th>
+              <th scope="col">Joined</th><th scope="col">Last seen</th>
+              <th scope="col" class="num">Questions</th>
+              <th scope="col"><span class="visually-hidden">Actions</span></th>
+            </tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+        <p class="admin-note">Questions counts distinct questions answered,
+          not attempts.</p>` :
+        `<p class="admin-empty">No accounts yet. Issue an invite code below and
+          the person appears here once they sign up.</p>`}
+
+        <section class="admin-pane-section" id="inviteSection">
+          <h3>Invite codes</h3>
+        </section>
+      </div>`;
+
     root.querySelectorAll("[data-act]").forEach(btn => {
-      btn.onclick = async () => {
-        const id = btn.dataset.id, act = btn.dataset.act, label = btn.dataset.label || id;
+      btn.onclick = () => onUserAction(btn, root);
+    });
+    renderInvites(document.getElementById("inviteSection"), root);
+  }
+
+  async function onUserAction(btn, root) {
+    const { act, id, name } = btn.dataset;
+    const email = btn.dataset.email || "";
+    const answers = parseInt(btn.dataset.answers || "0", 10);
+    const run = async (path, ok, undo) => {
+      btn.disabled = true;
+      const slow = setTimeout(() => { btn.textContent = "Working..."; }, 1000);
+      try {
+        await apiFetch(path, { method: "POST" });
+        clearTimeout(slow);
+        adminSay("ok", ok, undo);
+        await renderAdminUsersTab(root);
+      } catch (e) {
+        clearTimeout(slow);
+        btn.disabled = false;
+        // Nothing was optimistic, so the row is still correct as shown.
+        adminSay("error", e.message || String(e));
+      }
+    };
+
+    if (act === "promote" || act === "demote") {
+      // Instantly reversible, so no dialog. Undo is offered instead.
+      const to = act === "promote" ? "promote" : "demote";
+      const back = act === "promote" ? "demote" : "promote";
+      return run(`/api/admin/users/${encodeURIComponent(id)}/${to}`,
+        act === "promote" ? `${name} is now an admin.` : `${name} is no longer an admin.`,
+        () => apiFetch(`/api/admin/users/${encodeURIComponent(id)}/${back}`, { method: "POST" })
+          .then(() => { adminSay("ok", "Reverted."); renderAdminUsersTab(root); })
+          .catch(e => adminSay("error", e.message || String(e))));
+    }
+
+    if (act === "delete") {
+      const okd = await adminConfirm({
+        title: `Delete ${name}'s account?`,
+        body: `This permanently deletes ${email} and ${answers} saved ` +
+              `${answers === 1 ? "answer" : "answers"}. It cannot be undone.`,
+        confirmLabel: `Delete ${email} permanently`,
+        typeToMatch: email,
+        typeLabel: `Type ${email} to confirm`,
+      });
+      if (!okd) return;
+      // No undo offered, because there is none.
+      return run(`/api/admin/users/${encodeURIComponent(id)}/delete`,
+        `Deleted ${email} and ${answers} ${answers === 1 ? "answer" : "answers"}.`);
+    }
+  }
+
+  /* ── Invite codes ───────────────────────────────────────────────────
+   * Registration is invite-only, so this is the only way to let someone
+   * in. The plaintext code exists exactly once, in the response to the
+   * create call, so it is shown until dismissed rather than flashed.
+   */
+  async function renderInvites(root, usersRoot) {
+    if (!root) return;
+    const head = `<h3>Invite codes</h3>
+      <p class="admin-fact">Registration is invite only. A code works once.</p>
+      <form class="invite-new" id="inviteNew">
+        <label>For <input id="inviteLabel" type="text" maxlength="80" placeholder="name or note" /></label>
+        <label>Expires in
+          <select id="inviteDays">
+            <option value="7">7 days</option>
+            <option value="30" selected>30 days</option>
+            <option value="90">90 days</option>
+            <option value="365">a year</option>
+          </select></label>
+        <button type="submit" class="primary">Create code</button>
+      </form>
+      <div id="inviteFresh"></div>`;
+    root.innerHTML = head + `<div id="inviteList"></div>`;
+    const list = document.getElementById("inviteList");
+    const stop = adminLoading(list, 2);
+    let invites = [];
+    try {
+      const r = await apiFetch("/api/admin/invites");
+      invites = (r && r.invites) || [];
+    } catch (e) {
+      stop();
+      return adminLoadError(list, "invite codes", () => renderInvites(root, usersRoot));
+    }
+    stop();
+    const now = Math.floor(Date.now() / 1000);
+    const statusOf = i => i.used_at ? `Used by ${i.used_by_name || "someone"}`
+      : i.revoked_at ? "Revoked"
+      : (i.expires_at && i.expires_at < now) ? "Expired"
+      : "Unused";
+    const rows = invites.map(i => {
+      const st = statusOf(i);
+      return `<tr class="${st === "Unused" ? "" : "is-spent"}">
+        <th scope="row" class="mono-id">${esc(i.code_hint)}...</th>
+        <td>${esc(i.label || "")}</td>
+        <td>${esc(st)}</td>
+        <td>${i.expires_at ? esc(new Date(i.expires_at * 1000).toLocaleDateString("en-AU", { day: "numeric", month: "short" })) : "-"}</td>
+        <td class="cell-actions">${st === "Unused"
+          ? `<button type="button" class="row-act danger" data-revoke="${esc(i.code_hash)}">Revoke<span class="visually-hidden"> code ${esc(i.code_hint)}</span></button>`
+          : ""}</td></tr>`;
+    }).join("");
+    list.innerHTML = invites.length ? `
+      <div class="admin-table-scroll">
+        <table class="admin-table">
+          <thead><tr><th scope="col">Code</th><th scope="col">For</th>
+            <th scope="col">Status</th><th scope="col">Expires</th>
+            <th scope="col"><span class="visually-hidden">Actions</span></th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`
+      : `<p class="admin-empty">No codes yet. Create one to let someone sign up.</p>`;
+
+    document.getElementById("inviteNew").onsubmit = async e => {
+      e.preventDefault();
+      const btn = e.target.querySelector("button[type=submit]");
+      btn.disabled = true;
+      try {
+        const r = await apiFetch("/api/admin/invites", {
+          method: "POST",
+          body: JSON.stringify({
+            label: document.getElementById("inviteLabel").value,
+            expires_days: parseInt(document.getElementById("inviteDays").value, 10),
+          }),
+        });
+        // Shown once and only once: the server stores a hash.
+        document.getElementById("inviteFresh").innerHTML =
+          `<div class="invite-fresh"><p>Give this to one person. It is shown
+             once, so copy it now.</p>
+           <div class="invite-code-row"><code>${esc(r.code)}</code>
+             <button type="button" id="inviteCopy" class="secondary">Copy</button></div></div>`;
+        document.getElementById("inviteCopy").onclick = ev => {
+          navigator.clipboard.writeText(r.code).then(() => {
+            ev.target.textContent = "Copied";
+            setTimeout(() => { ev.target.textContent = "Copy"; }, 2000);
+          }).catch(() => adminSay("error", "Could not reach the clipboard. Select the code and copy it."));
+        };
+        document.getElementById("inviteLabel").value = "";
+        renderInvites(root, usersRoot);
+      } catch (err) {
+        adminSay("error", err.message || String(err));
+      } finally { btn.disabled = false; }
+    };
+
+    list.querySelectorAll("[data-revoke]").forEach(b => {
+      b.onclick = async () => {
+        b.disabled = true;
         try {
-          if (act === "delete") {
-            if (!confirm(`Permanently delete user ${label} and all their answers?`)) return;
-            await apiFetch(`/api/admin/users/${encodeURIComponent(id)}/delete`, { method: "POST" });
-          } else if (act === "promote") {
-            if (!confirm(`Grant admin to ${label}?`)) return;
-            await apiFetch(`/api/admin/users/${encodeURIComponent(id)}/promote`, { method: "POST" });
-          } else if (act === "demote") {
-            if (!confirm(`Revoke admin from ${label}?`)) return;
-            await apiFetch(`/api/admin/users/${encodeURIComponent(id)}/demote`, { method: "POST" });
-          }
-          renderAdminUsersTab(root);
-        } catch (e) { alert("Action failed: " + (e.message || e)); }
+          await apiFetch("/api/admin/invites/revoke", {
+            method: "POST", body: JSON.stringify({ code_hash: b.dataset.revoke }),
+          });
+          adminSay("ok", "Code revoked.");
+          renderInvites(root, usersRoot);
+        } catch (e) { b.disabled = false; adminSay("error", e.message || String(e)); }
       };
     });
   }
@@ -884,8 +1210,33 @@
       return;
     }
     root.innerHTML = `
-      <h3>Signed in</h3>
-      <p>${esc(cloudUser.display_name || cloudUser.email)} · <span class="dim">${esc(cloudUser.email)}</span>${cloudUser.is_admin ? ' · <span class="dim">admin</span>' : ''}</p>
+      <div class="admin-pane">
+      <header class="admin-pane-head"><h2>Account</h2></header>
+      <p class="admin-fact">${esc(cloudUser.display_name || cloudUser.email)} ·
+        ${esc(cloudUser.email)}${cloudUser.is_admin ? ' · admin' : ''}</p>
+
+      <section class="admin-pane-section">
+        <h3>Change password</h3>
+        <form id="pwForm" class="admin-form" autocomplete="on">
+          <label>Current password
+            <input id="pwCurrent" type="password" required autocomplete="current-password" /></label>
+          <label>New password
+            <input id="pwNew" type="password" required minlength="8" autocomplete="new-password" /></label>
+          <label>Confirm new password
+            <input id="pwNew2" type="password" required minlength="8" autocomplete="new-password" /></label>
+          <button type="submit" class="primary">Change password</button>
+        </form>
+        <p class="admin-note">Changing your password signs out every other
+          device. This tab stays signed in.</p>
+      </section>
+
+      <section class="admin-pane-section">
+        <h3>Sessions</h3>
+        <p class="admin-note">If you have signed in somewhere you no longer
+          control, end those sessions. Your current one is kept.</p>
+        <button type="button" class="secondary" id="revokeSessions">Sign out everywhere else</button>
+      </section>
+
       <div class="account-self-delete">
         <strong>Delete this account.</strong>
         <p class="dim small" style="margin:4px 0">All your answers, flags and progress will be permanently removed. This cannot be undone.</p>
@@ -901,7 +1252,51 @@
           </div>
           <p class="acct-delete-status dim small" id="acctDeleteStatus" aria-live="polite"></p>
         </div>
+      </div>
       </div>`;
+
+    document.getElementById("pwForm").onsubmit = async e => {
+      e.preventDefault();
+      const cur = document.getElementById("pwCurrent").value;
+      const a = document.getElementById("pwNew").value;
+      const b = document.getElementById("pwNew2").value;
+      if (a !== b) return adminSay("error", "The two new passwords do not match.");
+      if (a === cur) return adminSay("error", "The new password is the same as the current one.");
+      const btn = e.target.querySelector("button[type=submit]");
+      btn.disabled = true;
+      try {
+        const r = await apiFetch("/api/password", {
+          method: "POST",
+          body: JSON.stringify({ current_password: cur, new_password: a }),
+        });
+        // The server revoked every session including this one and issued
+        // a replacement, so swap the stored token or the next call 401s.
+        if (r && r.token) { authToken = r.token; localStorage.setItem(AUTH_TOKEN_KEY, r.token); }
+        e.target.reset();
+        adminSay("ok", "Password changed. Every other device has been signed out.");
+      } catch (err) {
+        adminSay("error", err.message || String(err));
+      } finally { btn.disabled = false; }
+    };
+
+    document.getElementById("revokeSessions").onclick = async ev => {
+      const okd = await adminConfirm({
+        title: "Sign out everywhere else?",
+        body: "Every other signed-in device will have to sign in again. " +
+              "This device stays signed in.",
+        confirmLabel: "Sign out other devices",
+      });
+      if (!okd) return;
+      ev.target.disabled = true;
+      try {
+        const r = await apiFetch("/api/account/sessions/revoke", { method: "POST" });
+        adminSay("ok", r && r.revoked
+          ? `Signed out ${r.revoked} other ${r.revoked === 1 ? "session" : "sessions"}.`
+          : "No other sessions were active.");
+      } catch (err) {
+        adminSay("error", err.message || String(err));
+      } finally { ev.target.disabled = false; }
+    };
     const openBtn = document.getElementById("acctSelfDeleteOpen");
     const confirmPane = document.getElementById("acctDeleteConfirm");
     const emailInput = document.getElementById("acctDeleteEmailInput");
@@ -1968,9 +2363,6 @@
 
     document.getElementById("submitBtn").onclick = onSubmit;
     document.getElementById("nextBtn").onclick = onNext;
-    // labsBtn removed (the masthead Reference values button covers this).
-    const lb0 = document.getElementById("labsBtn");
-    if (lb0) { lb0.onclick = () => toggleRefs(); lb0.classList.toggle("active", state.refsOpen); }
     // classList.toggle throws SyntaxError on a token containing whitespace,
     // so we must toggle each class separately. The CSS rule that paints the
     // active-flagged state is `.action-link.active.flag` - both classes
@@ -2204,8 +2596,6 @@
     panel.hidden = false;
     panel.setAttribute("aria-hidden", "false");
     document.body.classList.add("refs-open");
-    const lb = document.getElementById("labsBtn");
-    if (lb) lb.classList.add("active");
     document.getElementById("rangesSearch").value = "";
     // No focus theft - the user keeps interacting with the question.
   }
@@ -2215,8 +2605,6 @@
     panel.hidden = true;
     panel.setAttribute("aria-hidden", "true");
     document.body.classList.remove("refs-open");
-    const lb = document.getElementById("labsBtn");
-    if (lb) lb.classList.remove("active");
   }
   // Curated quick-jump pills. Each maps to a category key in
   // reference_ranges.json. The order is the user's expected reach
@@ -2599,26 +2987,27 @@
     startSessionTimer();
   }
 
-  // ── How-to modal ────────────────────────────────────────────────────────
+  // ── Content pane wiring ─────────────────────────────────────────────
+  // Named wireHowToModal for historical reasons; the how-to modal it
+  // was built around is long gone. It now wires the generation-prompt
+  // controls and owns the app's Escape handling.
   function wireHowToModal() {
-    const howToCloseBtn = document.getElementById("howToClose");
-    if (howToCloseBtn) howToCloseBtn.onclick = closeHowTo;
-    const howToEl = document.getElementById("howToModal");
-    if (howToEl) howToEl.addEventListener("click", e => {
-      if (e.target.id === "howToModal") closeHowTo();
-    });
     document.addEventListener("keydown", e => {
       if (e.key !== "Escape") return;
       // Close whichever overlay is topmost. Order matches z-stacking so a
-      // report opened from within the admin modal closes first.
+      // report opened from within the admin modal closes first. The
+      // confirm dialog is a native <dialog>, which handles its own
+      // Escape, so it is deliberately absent here.
       const reportM = document.getElementById("reportModal");
       const statsM  = document.getElementById("statsModal");
       const adminM  = document.getElementById("adminModal");
-      const howToM  = document.getElementById("howToModal");
+      const confirmD = document.getElementById("confirmDialog");
+      if (confirmD && confirmD.open)  { return; }
       if (reportM && !reportM.hidden) { closeReportModal(); return; }
-      if (howToM && !howToM.hidden)   { closeHowTo(); return; }
       if (statsM && !statsM.hidden)   { statsM.hidden = true; return; }
-      if (adminM && !adminM.hidden)   { adminM.hidden = true; return; }
+      if (adminM && !adminM.hidden)   { adminM.hidden = true; adminClear(); return; }
+      const qtList = document.getElementById("qtList");
+      if (qtList && !qtList.hidden)   { closeQtList(); return; }
       if (state.refsOpen)             { closeRefs(); return; }
     });
     const toggleBtn = document.getElementById("promptToggleBtn");
@@ -2627,9 +3016,6 @@
       promptPre.hidden = !promptPre.hidden;
       toggleBtn.textContent = promptPre.hidden ? "show prompt" : "hide prompt";
     };
-    const auditNav = document.getElementById("howToOpenAuditBtn");
-    if (auditNav) auditNav.onclick = () => openAdmin("inbox");
-
     // Populate the LLM prompt + copy button. The prompt text has
     // placeholders ({{FOCUS_DIRECTIVE}}, {{BANK_STATE}}) substituted
     // at copy time so the directive and the live bank counts are
@@ -2769,7 +3155,6 @@
         model: _reportingModel, created: new Date().toISOString(),
         status: "open", resolution: null,
       });
-      updateReportsAdminBadge();
       const repBtn = document.getElementById("reportBtn");
       if (repBtn) repBtn.classList.add("has-report");
       setTimeout(closeReportModal, 1200);
@@ -2813,66 +3198,56 @@
       a.textContent = `Open ${label}`;
     });
   }
+  // Remembered so re-entering the Content tab does not silently reset
+  // the filter the admin last chose.
+  let _reportFilter = "open";
+  let _liveFilter = "all";
+
   function wireReportsAdmin() {
-    const btn = document.getElementById("reportsAdminBtn");
-    const m = document.getElementById("reportsAdminModal");
-    if (!btn || !m) return;
-    // Route the top-bar "audit" button to the unified Admin modal's
-    // Inbox tab. The legacy reportsAdminModal stays as a DOM container
-    // for the tab content (re-parented at activation time by openAdmin).
-    btn.onclick = () => openAdmin("inbox");
-    const closeBtn = document.getElementById("reportsAdminClose");
-    if (closeBtn) closeBtn.onclick = () => m.hidden = true;
-    m.addEventListener("click", e => { if (e.target.id === "reportsAdminModal") m.hidden = true; });
+    // This used to open with a guard on #reportsAdminBtn and
+    // #reportsAdminModal, neither of which has existed for some time.
+    // The function therefore returned on its third line and nothing
+    // below it ever ran, which left fourteen visible controls inert:
+    // the five report filter pills, the seven live-audit filter pills,
+    // the bulk-audit button and the LLM picker. They all had hover
+    // states and did nothing, so clicking "Fixed" and seeing the same
+    // open reports read as the data being wrong rather than the button
+    // being broken.
     const llmSel = document.getElementById("auditLlmSelect");
     if (llmSel) {
       llmSel.value = auditLlmId();
       llmSel.onchange = () => setAuditLlm(llmSel.value);
     }
-    document.querySelectorAll('#reportsAdminModal [data-rep-filter]').forEach(b => {
+    document.querySelectorAll("[data-rep-filter]").forEach(b => {
+      b.setAttribute("aria-pressed", String(b.dataset.repFilter === _reportFilter));
+      b.classList.toggle("selected", b.dataset.repFilter === _reportFilter);
       b.onclick = () => {
-        document.querySelectorAll('#reportsAdminModal [data-rep-filter]').forEach(x => x.classList.remove("selected"));
-        b.classList.add("selected");
-        renderReportsAdminList(b.dataset.repFilter);
+        _reportFilter = b.dataset.repFilter;
+        document.querySelectorAll("[data-rep-filter]").forEach(x => {
+          const on = x === b;
+          x.classList.toggle("selected", on);
+          x.setAttribute("aria-pressed", String(on));
+        });
+        renderReportsAdminList(_reportFilter);
       };
-    });
-    document.querySelectorAll('#reportsAdminModal .audit-tab').forEach(b => {
-      b.onclick = () => switchAuditTab(b.dataset.tab);
     });
     const bulkBtn = document.getElementById("auditBulkReports");
     if (bulkBtn) bulkBtn.onclick = startBulkReportAudit;
-    // Filter pills (selector kept generic so wiring still works after
-    // the panel is re-parented into the unified Admin modal).
-    document.querySelectorAll('[data-live-filter]').forEach(b => {
+    document.querySelectorAll("[data-live-filter]").forEach(b => {
+      b.setAttribute("aria-pressed", String(b.dataset.liveFilter === _liveFilter));
+      b.classList.toggle("selected", b.dataset.liveFilter === _liveFilter);
       b.onclick = () => {
-        document.querySelectorAll('[data-live-filter]').forEach(x => x.classList.remove("selected"));
-        b.classList.add("selected");
-        renderAuditLive(b.dataset.liveFilter);
+        _liveFilter = b.dataset.liveFilter;
+        document.querySelectorAll("[data-live-filter]").forEach(x => {
+          const on = x === b;
+          x.classList.toggle("selected", on);
+          x.setAttribute("aria-pressed", String(on));
+        });
+        renderAuditLive(_liveFilter);
       };
     });
   }
-  function updateReportsAdminBadge() {
-    const btn = document.getElementById("reportsAdminBtn");
-    const badge = document.getElementById("reportsAdminCount");
-    if (!btn) return;
-    const isAdmin = isCurrentUserAdmin();
-    if (!isAdmin) { btn.hidden = true; return; }
-    const open = state.reports.filter(r => r.status === "open").length;
-    btn.hidden = false;
-    badge.textContent = open > 0 ? String(open) : "";
-    btn.classList.toggle("has-pending", open > 0);
-  }
-  function switchAuditTab(name) {
-    document.querySelectorAll('#reportsAdminModal .audit-tab').forEach(b => {
-      b.classList.toggle("selected", b.dataset.tab === name);
-    });
-    document.querySelectorAll('#reportsAdminModal .audit-tab-panel').forEach(p => {
-      p.hidden = p.dataset.tabPanel !== name;
-    });
-    if (name === "inbox") renderAuditInbox();
-    else if (name === "live") loadAndRenderAuditLive();
-    else renderReportsAdminList("open");
-  }
+
 
   // The list of pending inbox batches, hydrated from inbox_manifest.json
   // at modal-open time (the user may have just pasted, so this is the
@@ -3008,7 +3383,6 @@
           // Refresh in-memory state + re-render dashboard.
           await loadData();
           await refreshAuditInboxList();
-          updateReportsAdminBadge();
           if (opts.kind === "inbox") renderAuditInbox();
           else renderReportsAdminList("open");
         } else {
@@ -3426,8 +3800,9 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
       const jumpBtn = li.querySelector(".report-jump");
       if (jumpBtn && q) jumpBtn.onclick = (e) => {
         e.stopPropagation();
-        const rm = document.getElementById("reportsAdminModal");
-        if (rm) rm.hidden = true;
+        // Jumping to a question means leaving the admin panel.
+        const am = document.getElementById("adminModal");
+        if (am) am.hidden = true;
         jumpToQuestionStandalone(q);
       };
       list.appendChild(li);
@@ -3446,12 +3821,6 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     renderQuiz();
     startSessionTimer();
   }
-  function openHowTo()  {
-    if (!isCurrentUserAdmin()) return;
-    refreshLocalBankSummary();
-    openAdmin("add");
-  }
-  function closeHowTo() { const m = document.getElementById("howToModal"); if (m) m.hidden = true; }
 
   // ── Paste questions ─────────────────────────────────────────────────────
   async function pasteAdd() {

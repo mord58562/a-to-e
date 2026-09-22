@@ -1880,8 +1880,9 @@ body[data-screen="summary"] main { max-width: 760px; }
 
   /* Modal: full-bleed on phones, scrollable. */
   .modal { padding: 0; align-items: stretch; }
-  .modal-card, .modal-card-wide {
+  .modal-card, .modal-card-wide, .modal-card-xwide, .admin-modal-card {
     max-width: 100%;
+    width: 100%;
     max-height: 100dvh;
     border-radius: 0;
     border-left: none;
@@ -1890,8 +1891,12 @@ body[data-screen="summary"] main { max-width: 760px; }
     display: flex;
     flex-direction: column;
   }
+  /* The admin card is height-locked on desktop so tab switches do not
+     reflow the chrome. On a phone that lock is what kept it floating. */
+  .admin-modal-card { height: 100dvh; }
   .modal-card-wide .modal-body { flex: 1; }
-  .modal-head {
+  .modal-head,
+  .admin-modal-card .modal-head {
     padding: 14px 16px;
     padding-top: calc(14px + env(safe-area-inset-top));
   }
@@ -2317,33 +2322,6 @@ mark.stem-clue {
 body:not(.is-cloud) .cloud-only { display: none !important; }
 
 /* ── Account / admin tables (rendered into the unified Admin modal) ── */
-.account-users-table {
-  display: grid;
-  grid-template-columns: 1fr 1fr 70px 80px 70px 70px;
-  gap: 6px 12px;
-  font-size: 12px;
-  align-items: center;
-}
-.account-users-table .ah {
-  font-weight: 600;
-  color: var(--ink-mute);
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 6px;
-  font-size: 11px;
-}
-.account-users-table .ar { padding: 6px 0; border-bottom: 1px solid var(--line); }
-.account-users-table .ar.is-self { background: color-mix(in srgb, var(--accent) 7%, transparent); }
-.account-users-table .btn-mini {
-  font-size: 11px;
-  padding: 3px 8px;
-  border-radius: 4px;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--ink-mute);
-  cursor: pointer;
-}
-.account-users-table .btn-mini.danger:hover { border-color: #c0392b; color: #c0392b; }
-.account-users-table .btn-mini.promote:hover { border-color: var(--accent); color: var(--accent); }
 .account-self-delete {
   margin-top: 14px;
   padding: 12px 14px;
@@ -2409,16 +2387,6 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   margin: 0;
   min-height: 16px;
 }
-.account-quality-table {
-  display: grid;
-  grid-template-columns: 1fr 60px 70px;
-  gap: 4px 12px;
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-}
-.account-quality-table .qh { font-weight: 600; color: var(--ink-mute); font-size: 11px; border-bottom: 1px solid var(--line); padding-bottom: 4px; }
-.account-quality-table .qr { padding: 4px 0; border-bottom: 1px solid var(--line); }
-.account-quality-table .qid { font-family: var(--sans); font-size: 11px; }
 
 /* ── Inline reference ranges (post-reveal) ───────────────────────── */
 /* Reference rows, shared by the post-answer block and the side panel.
@@ -2528,165 +2496,317 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   padding: 0;
 }
 .admin-modal-card .modal-head { flex: 0 0 auto; padding: 18px 24px; border-bottom: 1px solid var(--line); }
+/* ── Admin panel (rebuilt 2026-09-22) ────────────────────────────
+ *
+ * Was a 184px sidebar for four items, blank <p> elements as loading
+ * states, window.confirm for irreversible deletes, alert() for errors,
+ * and fourteen controls that did nothing. Now: a row of section links,
+ * real tables, one status region, and a native dialog for the one
+ * action that cannot be undone.
+ *
+ * No stat tiles, no charts, no avatars, no status pills, no icons in
+ * the nav. Colour appears in exactly two places: the destructive
+ * action and the status region.
+ */
 .admin-layout {
-  display: grid;
-  grid-template-columns: 184px 1fr;
-  gap: 0;
+  display: flex;
+  flex-direction: column;
   min-height: 0;
   flex: 1 1 auto;
   background: var(--surface);
 }
-.admin-sidebar {
+.admin-nav {
   display: flex;
-  flex-direction: column;
-  padding: 14px 10px;
-  border-right: 1px solid var(--line);
-  background: var(--surface-2);
-  min-width: 0;
-  overflow-y: auto;
-  gap: 1px;
+  gap: 4px;
+  flex: 0 0 auto;
+  padding: 0 22px;
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.admin-nav::-webkit-scrollbar { display: none; }
+.admin-nav[hidden] { display: none; }
 .admin-tab {
-  appearance: none;
-  background: transparent;
+  flex: 0 0 auto;
+  background: none;
   border: none;
-  text-align: left;
-  font-family: inherit;
-  font-size: 13px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: 11px 12px;
+  font: inherit;
+  font-size: 13.5px;
   color: var(--ink-mute);
-  padding: 7px 10px;
-  border-radius: 6px;
+  text-decoration: none;
   cursor: pointer;
-  transition: background 0.12s ease, color 0.12s ease;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  white-space: nowrap;
 }
-.admin-tab-icon {
-  display: inline-grid;
-  place-items: center;
-  width: 18px;
-  height: 18px;
-  color: var(--ink-mute);
-  font-size: 12px;
-  opacity: 0.7;
-}
-.admin-tab-label { flex: 1; }
-.admin-tab:hover { background: var(--surface); color: var(--ink); }
+.admin-tab:hover { color: var(--ink); text-decoration: none; }
+/* Selected state is weight plus a rule, not colour alone. */
 .admin-tab.active {
-  background: var(--surface);
   color: var(--ink);
-  font-weight: 500;
-  box-shadow: inset 3px 0 0 var(--accent);
+  font-weight: 600;
+  border-bottom-color: var(--accent);
 }
-.admin-tab.active .admin-tab-icon { color: var(--accent); opacity: 1; }
+.admin-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
 .admin-main {
-  padding: 16px 22px 22px;
-  overflow-y: auto;
+  flex: 1 1 auto;
   min-height: 0;
+  overflow-y: auto;
+  padding: 20px 22px 26px;
 }
 .admin-main h3 {
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0;
-  color: var(--ink);
-  font-family: var(--display);
-  margin: 18px 0 10px;
-}
-.admin-main h3:first-child { margin-top: 0; }
-.ag-stat {
-  display: flex; flex-direction: column;
-  padding: 12px 14px;
-  background: var(--surface-2);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-}
-.ag-stat-val { font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.ag-stat-lbl { font-size: 11px; color: var(--ink-mute); margin-top: 2px; }
-
-/* Inside admin panels, suppress legacy modal padding/heads since the
-   admin frame already provides them. */
-.admin-main .audit-intro,
-.admin-main .audit-tabs,
-.admin-main .audit-tab-panel { padding: 0; }
-.admin-main .audit-tabs { display: none; }
-.admin-main .audit-tab-panel { display: block !important; }
-.admin-main .howto-steps { padding-left: 0; margin: 0; list-style: none; }
-
-@media (max-width: 720px) {
-  .admin-layout { grid-template-columns: 1fr; }
-  .admin-sidebar {
-    flex-direction: row;
-    overflow-x: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--line);
-    padding: 8px;
-  }
-  .admin-tab { flex: 0 0 auto; }
-}
-
-/* Step-style HowTo (preserved when re-parented under the Admin add tab) */
-.howto-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 20px; }
-.howto-step { padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
-.howto-step-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.howto-step-head h3 { margin: 0; font-size: 14px; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--ink); }
-.howto-num {
-  width: 24px; height: 24px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: var(--bg);
-  font-weight: 600; font-size: 12px;
-  display: grid; place-items: center;
-}
-.howto-step-note { font-size: 12.5px; color: var(--ink-mute); margin: 0 0 10px; line-height: 1.55; }
-
-/* ── Admin pane rebuild (round 2) ─────────────────────────────────── */
-.admin-pane { display: flex; flex-direction: column; gap: 18px; }
-.admin-pane-head { display: flex; flex-direction: column; gap: 2px; margin-bottom: 4px; }
-.admin-pane-head h2 { margin: 0; font-size: 18px; font-weight: 600; }
-.admin-pane-section { display: flex; flex-direction: column; gap: 8px; }
-.admin-pane-section h3 {
   margin: 0;
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 600;
-  letter-spacing: 0;
   color: var(--ink);
-  font-family: var(--display);
 }
-.admin-stat-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 8px;
-}
-.ag-stat-val.warn { color: var(--cta); }
-.admin-overview-line {
-  font-family: var(--serif);
-  font-size: 16px;
-  line-height: 1.6;
+.admin-main h4 {
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  font-weight: 600;
   color: var(--ink-2);
-  margin: 0 0 18px;
-  max-width: 64ch;
 }
-.admin-overview-line strong {
-  font-family: var(--sans);
-  font-weight: 500;
+
+.admin-pane { display: flex; flex-direction: column; }
+.admin-pane-head { margin-bottom: 2px; }
+.admin-pane-head h2 { margin: 0 0 2px; font-size: 17px; font-weight: 600; }
+.admin-pane-section {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.admin-pane-section:first-of-type { margin-top: 18px; }
+
+/* Status region. One per panel, directly under the section nav, never
+ * auto-dismissed. A toast an admin misses leaves no record that the
+ * action happened, and auto-dismissal runs into WCAG 2.2.1. */
+.admin-status {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 9px 12px;
+  border-left: 3px solid var(--good);
+  background: var(--good-bg);
+  font-size: 13px;
   color: var(--ink);
+}
+.admin-status.is-error { border-left-color: var(--bad); background: var(--bad-bg); }
+.admin-status[hidden] { display: none !important; }
+.admin-status-head { font-weight: 600; flex: 0 0 auto; }
+.admin-status.is-error .admin-status-head { color: var(--bad); }
+.admin-status-msg { flex: 1 1 auto; }
+.admin-status-undo, .admin-status-x {
+  flex: 0 0 auto;
+  background: none;
+  border: none;
+  font: inherit;
+  color: var(--ink-2);
+  cursor: pointer;
+  padding: 0 2px;
+}
+.admin-status-undo { text-decoration: underline; text-underline-offset: 2px; }
+.admin-status-undo:hover, .admin-status-x:hover { color: var(--ink); }
+.admin-status-x { font-size: 15px; line-height: 1; }
+
+.admin-fact {
+  margin: 0 0 14px;
+  font-size: 13.5px;
+  color: var(--ink-2);
   font-variant-numeric: tabular-nums;
 }
-.admin-overview-line .warn { color: var(--cta); }
-.admin-overview-line .warn strong { color: var(--cta); }
-.admin-bar-rows { display: flex; flex-direction: column; gap: 6px; }
-.ab-row {
-  display: grid;
-  grid-template-columns: 160px 1fr 90px;
-  gap: 14px;
-  align-items: center;
-  font-size: 12.5px;
+.admin-fact b { color: var(--ink); font-weight: 600; }
+.admin-note { margin: 6px 0 0; font-size: 12px; color: var(--ink-mute); line-height: 1.5; }
+.admin-empty {
+  margin: 8px 0 0;
+  padding: 14px 0;
+  font-size: 13px;
+  color: var(--ink-mute);
+  line-height: 1.55;
 }
-.ab-label { color: var(--ink); }
-.ab-bar-wrap { background: var(--surface-2); border-radius: 999px; overflow: hidden; height: 6px; }
-.ab-bar-wrap > span { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
-.ab-val { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Tables. Left-aligned text, right-aligned numbers in tabular figures,
+ * one hairline per row, no zebra, no vertical rules, no outer border. */
+.admin-table-scroll { overflow-x: auto; }
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.admin-table th, .admin-table td {
+  text-align: left;
+  padding: 10px 14px 10px 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: baseline;
+}
+.admin-table thead th {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-mute);
+  border-bottom: 2px solid var(--line-strong);
+  padding-bottom: 7px;
+  white-space: nowrap;
+}
+.admin-table tbody th { font-weight: 500; color: var(--ink); }
+.admin-table tbody tr:last-child th,
+.admin-table tbody tr:last-child td { border-bottom: none; }
+.admin-table tbody tr:hover { background: var(--surface-2); }
+.admin-table td, .admin-table .num { font-variant-numeric: tabular-nums; }
+.admin-table .num, .admin-table th.num { text-align: right; padding-right: 18px; }
+.admin-table-num td:not(:first-child),
+.admin-table-num thead th:not(:first-child) { text-align: right; padding-right: 18px; }
+.admin-table .num-strong { font-weight: 600; color: var(--ink); }
+.admin-table .tr-total th, .admin-table .tr-total td {
+  border-top: 1px solid var(--line-strong);
+  font-weight: 600;
+  color: var(--ink);
+}
+.admin-table .tr-quiet th, .admin-table .tr-quiet td {
+  color: var(--ink-mute);
+  border-bottom: none;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.admin-table .gap-wide { color: var(--cta); font-weight: 600; }
+.admin-table .mono-id { font-size: 11.5px; color: var(--ink-2); font-weight: 400; }
+.admin-table .cell-email { color: var(--ink-2); }
+.admin-table tr.is-spent { color: var(--ink-mute); }
+.admin-users tbody tr.is-self { background: var(--accent-bg); }
+.admin-you {
+  font-size: 10.5px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-left: 5px;
+}
+
+/* Row actions: always visible, text-labelled. Hover-reveal is
+ * invisible to touch and to the keyboard, and an icon-only round
+ * button says nothing about what it does. */
+.cell-actions { white-space: nowrap; text-align: right; padding-right: 0 !important; }
+.row-act {
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--ink-2);
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: var(--r-tight);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.row-act:hover { color: var(--ink); background: var(--surface); }
+.row-act.danger { color: var(--bad); }
+.row-act.danger:hover { color: var(--bad); background: var(--bad-bg); }
+.row-act:disabled { color: var(--ink-faint); cursor: progress; text-decoration: none; }
+/* A blocked action is plain text with the reason, not a disabled
+ * button: a tooltip on a disabled control is unreachable by keyboard. */
+.admin-noact { font-size: 12px; color: var(--ink-faint); }
+
+/* Loading. Nothing for the first second, then placeholder rows rather
+ * than a spinner, so the layout does not jump when data lands. */
+.admin-skeleton { display: flex; flex-direction: column; gap: 8px; padding: 6px 0; }
+.sk-row { height: 38px; border-radius: var(--r-tight); background: var(--surface-2); }
+
+.admin-form { display: flex; flex-direction: column; gap: 10px; max-width: 340px; }
+.admin-form label { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: var(--ink-mute); }
+.admin-form input {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-tight);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13.5px;
+  padding: 8px 10px;
+}
+.admin-form input:focus-visible { outline: 2px solid var(--accent); outline-offset: -1px; }
+.admin-form button { align-self: flex-start; margin-top: 2px; }
+
+/* Invite codes */
+.invite-new {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 10px 14px;
+  margin: 10px 0 14px;
+}
+.invite-new label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--ink-mute); }
+.invite-new input, .invite-new select {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-tight);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+  padding: 7px 9px;
+}
+.invite-fresh {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-bg);
+  font-size: 13px;
+}
+.invite-fresh p { margin: 0 0 8px; color: var(--ink-2); }
+.invite-code-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.invite-code-row code {
+  font-family: var(--mono);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-tight);
+  padding: 6px 10px;
+}
+
+/* Confirmation dialog. Native <dialog>, ~97% support. */
+.confirm-dialog {
+  border: 1px solid var(--line);
+  border-radius: var(--r-soft);
+  background: var(--surface);
+  color: var(--ink);
+  padding: 0;
+  width: min(440px, calc(100vw - 32px));
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.30);
+}
+.confirm-dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+.confirm-form { padding: 20px 22px 18px; display: flex; flex-direction: column; gap: 12px; }
+.confirm-form h2 { margin: 0; font-size: 16px; font-weight: 600; }
+.confirm-body { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--ink-2); }
+.confirm-type { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; color: var(--ink-mute); }
+.confirm-type[hidden] { display: none; }
+.confirm-type input {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-tight);
+  color: var(--ink);
+  font: inherit;
+  font-size: 13.5px;
+  padding: 8px 10px;
+}
+.confirm-err { margin: 0; font-size: 12.5px; color: var(--bad); }
+.confirm-err[hidden] { display: none; }
+.confirm-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 2px; flex-wrap: wrap; }
+.confirm-actions button { flex: 0 1 auto; }
+#confirmGo:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* Suppress legacy modal padding inside admin panes; the admin frame
+   already provides it. */
+.admin-main .audit-tab-panel { padding: 0; display: block !important; }
+
+@media (max-width: 760px) {
+  .admin-nav { padding: 0 14px; }
+  .admin-main { padding: 16px 14px 22px; }
+  /* The users table has seven columns; below this width it scrolls
+     horizontally inside its own container rather than crushing the
+     name and email columns to nothing. */
+  .admin-table { min-width: 620px; }
+  .invite-new { gap: 8px 10px; }
+  .admin-form { max-width: none; }
+}
 
 /* ── Legacy-admin migration affordances ──────────────────────────── */
 
