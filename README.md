@@ -2,35 +2,9 @@
 
 A free, open practice MCQ bank for Australian medical students in their clinical years. Single-best-answer clinical reasoning across paediatrics, obstetrics & gynaecology, psychiatry, and adult medicine, with Australian units and Australian guideline sources throughout.
 
-5,509 questions, the four disciplines held at parity: Paediatrics 1,398, Psychiatry 1,371, Obstetrics & Gynaecology 1,370, Medicine 1,370.
+7,122 questions, the four disciplines held at parity: Paediatrics 1,781, Obstetrics & Gynaecology 1,781, Psychiatry 1,780, Medicine 1,780.
 
 **Live: <https://mord58562.github.io/a-to-e/>** - guest mode, no signup required.
-
-## What's new in 2.1.2
-
-- Bug fixes and minor polish. Escape now closes whichever overlay is on top (report, how-to, stats, admin, reference panel). Ctrl or Cmd + Enter submits a bug report from inside the textarea. Sign-in errors give specific copy instead of a generic "failed" message. The empty-filter state now explains how to loosen your selection instead of just greying out the Begin button. Countdown announces to screen readers.
-- Under the hood: tighter Content Security Policy, one fewer font weight downloaded, faster subsequent-visit loads via data-cache-busting keyed to bank freshness rather than release tag.
-
-## What's new in 2.1.1
-
-- Bug fixes and minor polish. Question rows are now keyboard-focusable with a visible outline, motion respects `prefers-reduced-motion`, and the reference panel on phones stops short of full-bleed so the question column stays visible behind it.
-
-## What's new in 2.1.0
-
-- **Difficulty scale rebuilt as full 1-5/5.** Every question shifted down one level on 2026-06-01 to make room for a new top tier. 436 questions were then promoted from new-L3 to new-L4 to hit the 15-20% target. Common presentations earn the higher tiers when reasoning is non-trivial.
-- **RCH Melbourne CPG audit.** All paediatric questions across UTI, bronchiolitis, croup, asthma, anaphylaxis, fever-under-3-months, gastroenteritis, and paediatric sepsis audited against current RCH guidance. 61 divergences flagged; high-severity ones fixed (UTI imaging cascade no longer assumes DMSA; bronchiolitis switches to low-flow first with SpO2 target 90%; croup uses RCH banded dexamethasone and 3-hour post-adrenaline observation; anaphylaxis uses ASCIA banded adrenaline doses). Generation rule pack updated so future questions stay aligned.
-- **Cleaner visual language.** Dropped IBM Plex for Public Sans throughout - one institutional sans, weight does the work. Mono dropped from data-table keys, counters, and IDs (tabular numerals come from the body sans). Cream/sepia light theme replaced with a cool clinical near-white + teal-navy palette. Option list now reads as rows with hairline dividers, not nested cards.
-- **Cluster of content fixes.** RCH Melbourne CPG is now the source-of-truth for paediatrics; the UTI imaging question rewritten to align with it. The incomplete-miscarriage "offer all options and let her choose" non-question rewritten to "what would you first recommend". Twin-2 transverse and instrumental-delivery stems lose the give-away "consented antenatally to X" last sentence. Two garbled stems (urticaria, chronic-HTN superimposed pre-eclampsia) repaired. The bhCG threshold for required surgical management of tubal ectopic is now flagged as >=5000 IU/L per RANZCOG in the generation rule pack.
-- **Timer simplified.** Per-question stopwatch hidden in study mode (was noise without value). Test mode preserves the countdown and elapsed-time displays.
-- Bug fixes and minor polish.
-
-## What's new in 2.0.0
-
-- **Cloud accounts.** Email + password sign-in syncs progress across devices. Guest mode still keeps everything local. Admin accounts get the unified Admin dashboard (Overview, Add & Audit, Quality, Users, Account).
-- **Social stats panel.** Signed-in users see what proportion of other users picked each option after they submit.
-- **Difficulty toggles on the home screen.** Each level individually toggleable.
-- **Scheduled generation.** A cloud routine fires regularly producing fresh single-best-answer batches, each self-audited against the binding rule pack before commit.
-- **Unified Add & Audit pane** for admins: paste flow, inbox of pending submissions, user-submitted reports, and live-content audit all on one scrollable surface.
 
 ## What it is
 
@@ -40,11 +14,11 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
   | Level | Questions | Share |
   | --- | ---: | ---: |
-  | 1/5 | 58 | 1.1% |
-  | 2/5 | 1,512 | 27.5% |
-  | 3/5 | 1,948 | 35.4% |
-  | 4/5 | 1,748 | 31.7% |
-  | 5/5 | 243 | 4.4% |
+  | 1/5 | 62 | 0.9% |
+  | 2/5 | 1,562 | 21.9% |
+  | 3/5 | 2,719 | 38.2% |
+  | 4/5 | 2,425 | 34.0% |
+  | 5/5 | 354 | 5.0% |
 
   Difficulty tracks the amount of clinical reasoning a question demands, not the rarity of the topic. A common presentation reaches 5/5 when the answer turns on a disconfirming finding, a calculation under uncertainty, or a cut-off choice between competing guidelines.
 - Every option carries a per-option rationale, most of them carrying a source citation. The sources are published, citable Australian references, most of them accessible through a university subscription: RCH Melbourne CPG, Therapeutic Guidelines and eTG, Australian Medicines Handbook, RANZCOG, RANZCP clinical practice guidelines, DSM-5-TR, KEMH, SOMANZ, Queensland Clinical Guidelines, Australian Immunisation Handbook, Australian Asthma Handbook, ASCIA, ASHM, Cancer Council Australia, KHA-CARI, ANZICS, GESA, TSANZ, Family Planning Australia, Phoenix Australia, NSW Poisons Information Centre, NSW Mental Health Act 2007, RACGP, NHMRC, NHFA/CSANZ, COPE, Surviving Sepsis Campaign, NICE, BMJ Best Practice, StatPearls, and Cochrane.
@@ -53,13 +27,12 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 ## Features
 
-- **Question-list navigator.** Click the question counter for a progress ring and a numbered chip grid. Each chip shows unanswered, correct, incorrect, current, or flagged, and jumps straight to that question. In test mode, chips read only as answered until the session ends.
+- **Question navigator.** A persistent side rail on a wide screen, and a panel behind the question counter on a narrow one. Numbered chips show unanswered, correct, incorrect, current or flagged, and jump straight to that question. A session can be the whole bank, so the grid is a window with paging and a jump-to-number box. In test mode chips read only as answered until the session ends.
 - **Deterministic option re-lettering.** Source batches frequently place the correct answer at A. Each question's options are shuffled by a seeded Fisher-Yates keyed on the question id, so the order is stable for you across reloads and identical for every user. Each option keeps its `sourceLetter`, which is what the answer aggregates are recorded against, so cross-user statistics still compare like for like.
 - **Stem-clue highlighting.** After you reveal the answer, the discriminating phrases in the stem are marked, so you can see which words were doing the work.
 - **Hover glossary.** Around 40 clinical abbreviations in the revealed stem carry a hover definition (DKA, PPH, ACS, SSRI, HELLP, CTPA and the rest).
 - **Inline reference ranges.** When a question is keyed to a pathology panel, the relevant normal ranges render under the explanation without opening the full panel.
-- **Strike-out and flag.** Cross off options you have ruled out, and flag questions for review; flags persist and can be used as a session filter.
-- **Answer distribution.** After you submit, signed-in users see the proportion of all users who picked each option.
+- **Rule out and flag.** Rule out options you have discounted, with shift and the option number or the control on the row; the control becomes a restore arrow so a second press puts the option back. Flag questions for review; flags persist and can be used as a session filter.
 - **Pause and resume.** Timed sessions pause; the countdown, session clock and per-question clock all resume where they left off rather than running on in the background.
 - **Retry incorrect.** The summary screen rebuilds a fresh untimed session from everything you got wrong or never answered.
 - **Session report.** Score, unanswered count, a per-subtopic breakdown, and a reviewable list filterable to all, incorrect, or flagged, with each row jumping back into the question with the answer shown.
@@ -82,7 +55,8 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 - `↵` or `Space` submit, then next
 - `Esc` clear an unsubmitted selection; with an overlay open, close the topmost one
 - `F` flag for review
-- `X` strike out the selected option
+- `Shift` + `1`-`5` rule an option out, and press again to put it back
+- `X` rule out the selected option
 - `L` toggle reference values
 - `Cmd`/`Ctrl` + `↵` submit a bug report from inside the report box
 
@@ -90,7 +64,7 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 You can use A to E without an account. In **guest mode** the site is fully client-side: question history, flags, theme preference, and locally-pasted questions live only in your browser's `localStorage` and nothing is sent to any server.
 
-If you **create a cloud account** to sync progress across devices and see what proportion of other users picked each option after you submit, the following is stored in a Cloudflare D1 database behind a Cloudflare Worker at `a-to-e-inbox.mord58562.workers.dev`:
+If you **create a cloud account** to sync progress across devices across devices, the following is stored in a Cloudflare D1 database behind a Cloudflare Worker at `a-to-e-inbox.mord58562.workers.dev`:
 
 - Your email, encrypted at rest with AES-256-GCM. Lookups run against a separate HMAC-SHA256 column, so sign-in never needs to decrypt the address.
 - Your password, hashed with Argon2id (RFC 9106, m=19456 KiB, t=2, p=1). Accounts created before the 2026-05-25 migration are verified against their old PBKDF2 hash once and rehashed to Argon2id on that login.
@@ -98,9 +72,14 @@ If you **create a cloud account** to sync progress across devices and see what p
 - Per question: which source option-letter you chose, whether it was correct, how many times you have attempted it, and when it last changed.
 - Your flagged questions, and your session settings blob (mode, question count, timer, selected disciplines, difficulties, learning areas and seen-filter).
 
-Failed sign-ins are rate limited to 8 per 15 minutes per account, and the client IP is recorded only as a truncated salted hash.
+Registration is invite only. Sign-ins are rate limited to 8 failures per
+15 minutes per account and 30 attempts per 15 minutes per address, sign-ups
+to 5 per hour per address, and the client IP is recorded only as a truncated
+salted hash. Sessions last 30 days, slide on use, and expire absolutely at
+90 days. You can change your password or sign out every other device from
+the Account tab.
 
-Aggregate counts are returned to render the answer-distribution panel; no personally-identifying option-choice data is shown to other users, only totals. Per-question timing stays in your browser and is never sent.
+Nothing you do is shown to any other user. Per-question timing stays in your browser and is never sent.
 
 You can permanently delete your account and every associated row from the Account tab, or via `POST /api/account/delete`. Deletion removes the session, answer, flag, settings and user rows outright; there is no soft delete.
 
@@ -127,7 +106,6 @@ a-to-e/
 │   ├── framework_{paeds,obgyn,psych,medicine}_topics.md
 │   ├── batches/*.json
 │   ├── inbox/
-│   ├── _audit/
 │   ├── _audited_main/
 │   └── _archived_dupes/
 ├── cloudflare-worker/
@@ -141,14 +119,17 @@ a-to-e/
 │   ├── add-questions.sh
 │   ├── merge_batches.sh
 │   ├── merge_inbox.sh
+│   ├── check_tokens.py
+│   ├── dupe_gate.py
 │   └── sync_routine_counts.py
-├── .routine-context.md
-└── RESEARCH_mcq_design.md
+└── assets/prompt-template.txt
 ```
 
 `questions_psych.json` and `questions_medicine.json` are empty arrays: all Psychiatry and Medicine content is manifest-driven and lives in `data/batches/`. `questions_paeds.json` and `questions_obgyn.json` hold 24 and 21 questions respectively, with the rest of both disciplines also in batches.
 
-`data/framework_*_topics.md` are the per-discipline curriculum topic lists that generation draws against. `data/_audit/` holds the audit records behind past content passes, `data/_audited_main/` the promoted post-audit copies of the main files, and `data/_archived_dupes/` batches withdrawn from the manifest. `.routine-context.md` is the standing brief for the scheduled generation routine, kept in sync with the live counts by `scripts/sync_routine_counts.py`. `RESEARCH_mcq_design.md` is the design research the question craft rules are built on.
+`data/framework_*_topics.md` are the per-discipline curriculum topic lists that generation draws against. `data/_audited_main/` holds the promoted post-audit copies of the main files, and `data/_archived_dupes/` batches withdrawn from the manifest.
+
+`assets/prompt-template.txt` is the generation prompt, fetched only when the admin Content tab is open. `scripts/check_tokens.py` is the banned-token gate and the list of record for what the prompt bans; `scripts/dupe_gate.py` compares a new batch against the published bank and against itself. Internal working notes, audit records and the scheduled routine's brief are deliberately not in this repo: GitHub Pages serves the root, so anything committed here is publicly fetchable.
 
 ## Run locally
 
