@@ -30,8 +30,12 @@ ROOT = Path(__file__).resolve().parent.parent
 TARGET_PRE_ANSWER_WORDS = 110
 HARD_CAP_PRE_ANSWER_WORDS = 150
 TARGET_STEM_WORDS = 70
-# The difficulty distribution the 2026-06-01 overhaul was built around.
-TARGET_MIX = {1: 1.0, 2: 20.0, 3: 40.0, 4: 18.0, 5: 6.0}
+# The difficulty distribution the 2026-06-01 overhaul was built around:
+# L4 at 15 to 20%, L5 around 6%, L1 vanishingly rare. Written out so it
+# sums to 100, which the first version of this table did not - it came
+# to 85, so every "gap" it printed was wrong in the same direction.
+TARGET_MIX = {1: 1.0, 2: 28.0, 3: 46.0, 4: 19.0, 5: 6.0}
+assert abs(sum(TARGET_MIX.values()) - 100) < 0.01, "TARGET_MIX must sum to 100"
 
 
 def served_paths():
