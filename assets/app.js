@@ -1471,6 +1471,68 @@
       "has-paeds", d.length === 1 && d[0] === "Paediatrics");
   }
 
+  // Ruling out an option and un-ruling it are the same control, so the
+  // icon has to say which way it will go. Struck rows show a restore
+  // arrow, matching what every qbank does: the affordance names the
+  // NEXT action, not the current state.
+  const ICON_RULE_OUT = '<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg>';
+  const ICON_RESTORE  = '<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a5 5 0 1 1 1.6 3.7"/><path d="M2.4 4.6v3.2h3.2"/></svg>';
+
+  function selectOption(q, opt, li) {
+    if (state.quiz.revealed[q.id]) return;
+    // A ruled-out row is not selectable. Clicking it restores it first,
+    // which is less annoying than a dead click.
+    const struck = state.quiz.struck[q.id];
+    if (struck && struck.has(opt.letter)) { toggleStrike(q.id, opt.letter, li); return; }
+    document.querySelectorAll("#qOptions li").forEach(x => {
+      x.classList.remove("selected");
+      const c = x.querySelector(".opt-choice");
+      if (c) { c.setAttribute("aria-checked", "false"); c.tabIndex = -1; }
+    });
+    li.classList.add("selected");
+    const choice = li.querySelector(".opt-choice");
+    if (choice) { choice.setAttribute("aria-checked", "true"); choice.tabIndex = 0; choice.focus(); }
+    state.quiz.answers[q.id] = opt.letter;
+    document.getElementById("submitBtn").disabled = false;
+  }
+
+  // A clinical vignette hands you an observation set, not a sentence.
+  // The data came in as one comma-joined string per row ("Pulse
+  // 128/min, blood pressure 158/94 mmHg, respiratory rate 22/min,
+  // SpO2 98% on room air, temperature 37.6 degrees C"), and rendering
+  // that as running text is what made the block read as a generic
+  // key-value dump. Where a row is clearly a list of measurements we
+  // break it into discrete items so the numbers can be read off the
+  // way they would be off a chart.
+  const MEASUREMENT_ROWS = /^(vital signs|vitals|observations|obs|investigations|bloods|examination findings)$/i;
+  function renderClinicalValue(dd, label, value) {
+    const parts = value.split(/,\s+/).map(x => x.trim()).filter(Boolean);
+    const numeric = parts.filter(x => /\d/.test(x)).length;
+    // Only split when it genuinely is a list: at least three items, most
+    // of them carrying a number, and none of them a full clause. A
+    // narrative examination finding stays as prose.
+    const splittable = MEASUREMENT_ROWS.test(label)
+      && parts.length >= 3
+      && numeric >= parts.length - 1
+      && parts.every(x => x.length <= 46);
+    if (!splittable) { dd.textContent = value; return; }
+    dd.classList.add("obs-set");
+    for (const part of parts) {
+      // "blood pressure 158/94 mmHg" -> name "blood pressure",
+      // reading "158/94 mmHg". Split at the first number.
+      const m = part.match(/^(.*?[A-Za-z)])\s+([<>=]?\s*[\d.].*)$/);
+      const item = document.createElement("span");
+      item.className = "obs";
+      if (m) {
+        item.innerHTML = `<span class="obs-name">${esc(m[1])}</span>` +
+                         `<span class="obs-value">${esc(m[2])}</span>`;
+      } else {
+        item.innerHTML = `<span class="obs-name">${esc(part)}</span>`;
+      }
+      dd.appendChild(item);
+    }
+  }
+
   function renderQuiz() {
     const app = document.getElementById("app");
     app.innerHTML = "";
@@ -1708,7 +1770,7 @@
           }
           dd.appendChild(sub);
         } else {
-          dd.textContent = String(v);
+          renderClinicalValue(dd, labelise(k), String(v));
         }
         dl.appendChild(dt); dl.appendChild(dd);
       }
@@ -1721,43 +1783,59 @@
 
     const ol = document.getElementById("qOptions");
     ol.innerHTML = "";
-    shuffled.forEach(opt => {
+    ol.setAttribute("role", "radiogroup");
+    ol.setAttribute("aria-label", q.lead_in || "Answer options");
+    shuffled.forEach((opt, i) => {
       const li = document.createElement("li");
       li.dataset.letter = opt.letter;
-      li.setAttribute("role", "button");
-      li.setAttribute("tabindex", "0");
-      li.setAttribute("aria-label", `Option ${opt.letter}: ${opt.text}`);
       const cite = opt.source_refs && opt.source_refs.length
-        ? `<span class="cite">· ${esc(opt.source_refs.join(", "))}</span>` : "";
+        ? `<span class="cite">${esc(opt.source_refs.join(", "))}</span>` : "";
+      // The row itself carries the radio semantics. The eliminate control
+      // is a separate button inside it, so a screen reader hears one
+      // choice and one toggle rather than two competing controls.
       li.innerHTML = `
-        <span class="opt-letter">${opt.letter}</span>
-        <div>
-          <div class="opt-text">${esc(opt.text)}</div>
-          <div class="opt-rationale"><b>${opt.correct ? "Correct." : "Incorrect."}</b> ${esc(opt.rationale)}${cite}</div>
-        </div>
-        <button class="opt-strike" title="Cross out (X)" data-letter="${opt.letter}" aria-label="Strike out option ${opt.letter}">×</button>
+        <span class="opt-choice" role="radio" tabindex="${i === 0 ? 0 : -1}"
+              aria-checked="false" aria-label="${esc(opt.letter + ". " + opt.text)}">
+          <span class="opt-marker" aria-hidden="true"></span>
+          <span class="opt-letter" aria-hidden="true">${opt.letter}</span>
+          <span class="opt-body">
+            <span class="opt-text">${esc(opt.text)}</span>
+            <span class="opt-rationale"><b>${opt.correct ? "Correct." : "Incorrect."}</b> ${esc(opt.rationale)}${cite}</span>
+          </span>
+        </span>
+        <button type="button" class="opt-strike" data-letter="${opt.letter}"
+                aria-pressed="false" title="Rule out (shift+${i + 1})">
+          <span class="opt-strike-icon" aria-hidden="true">${ICON_RULE_OUT}</span>
+          <span class="visually-hidden">Rule out ${esc(opt.text)}</span>
+        </button>
+        <span class="opt-key" aria-hidden="true">${i + 1}</span>
       `;
-      li.onclick = e => {
-        if (e.target.classList.contains("opt-strike")) {
-          toggleStrike(q.id, opt.letter, li); return;
-        }
-        if (state.quiz.revealed[q.id]) return;
-        if (state.quiz.struck[q.id] && state.quiz.struck[q.id].has(opt.letter)) return;
-        document.querySelectorAll("#qOptions li").forEach(x => x.classList.remove("selected"));
-        li.classList.add("selected");
-        state.quiz.answers[q.id] = opt.letter;
-        document.getElementById("submitBtn").disabled = false;
-      };
+      li.querySelector(".opt-strike").addEventListener("click", e => {
+        e.stopPropagation();
+        toggleStrike(q.id, opt.letter, li);
+      });
+      li.addEventListener("click", () => selectOption(q, opt, li));
+      li.querySelector(".opt-choice").addEventListener("keydown", e => {
+        if (e.key === " " || e.key === "Enter") { e.preventDefault(); selectOption(q, opt, li); }
+      });
       ol.appendChild(li);
     });
+
     if (state.quiz.struck[q.id]) {
       state.quiz.struck[q.id].forEach(l => {
-        const x = ol.querySelector(`li[data-letter="${l}"]`); if (x) x.classList.add("struck");
+        const x = ol.querySelector(`li[data-letter="${l}"]`); if (x) paintStrike(x, true);
       });
     }
     if (state.quiz.answers[q.id]) {
       const sel = ol.querySelector(`li[data-letter="${state.quiz.answers[q.id]}"]`);
-      if (sel) sel.classList.add("selected");
+      if (sel) {
+        sel.classList.add("selected");
+        const c = sel.querySelector(".opt-choice");
+        if (c) { c.setAttribute("aria-checked", "true"); c.tabIndex = 0; }
+        ol.querySelectorAll(".opt-choice").forEach(c2 => {
+          if (c2 !== c) c2.tabIndex = -1;
+        });
+      }
       document.getElementById("submitBtn").disabled = false;
     }
 
@@ -1805,16 +1883,38 @@
   function toggleStrike(id, letter, li) {
     if (state.quiz.revealed[id]) return;
     state.quiz.struck[id] = state.quiz.struck[id] || new Set();
-    if (state.quiz.struck[id].has(letter)) {
-      state.quiz.struck[id].delete(letter); li.classList.remove("struck");
-    } else {
-      state.quiz.struck[id].add(letter); li.classList.add("struck");
+    const on = !state.quiz.struck[id].has(letter);
+    if (on) {
+      state.quiz.struck[id].add(letter);
       if (state.quiz.answers[id] === letter) {
         delete state.quiz.answers[id];
         li.classList.remove("selected");
+        const c = li.querySelector(".opt-choice");
+        if (c) c.setAttribute("aria-checked", "false");
         document.getElementById("submitBtn").disabled = true;
       }
+    } else {
+      state.quiz.struck[id].delete(letter);
     }
+    paintStrike(li, on);
+  }
+
+  // Keeps the row's classes, the button's pressed state and, crucially,
+  // its icon in step. A struck row's control shows a restore arrow, so
+  // it is obvious that clicking again undoes it.
+  function paintStrike(li, on) {
+    li.classList.toggle("struck", on);
+    const btn = li.querySelector(".opt-strike");
+    if (!btn) return;
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    const icon = btn.querySelector(".opt-strike-icon");
+    if (icon) icon.innerHTML = on ? ICON_RESTORE : ICON_RULE_OUT;
+    const n = li.querySelector(".opt-key");
+    const num = n ? n.textContent : "";
+    btn.title = on ? `Restore (shift+${num})` : `Rule out (shift+${num})`;
+    const sr = btn.querySelector(".visually-hidden");
+    const txt = (li.querySelector(".opt-text") || {}).textContent || "";
+    if (sr) sr.textContent = (on ? "Restore " : "Rule out ") + txt;
   }
 
   function onSubmit() {
@@ -2173,7 +2273,9 @@
   function bindQuizKeys() {
     document.onkeydown = e => {
       if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
-      // Modifier-key shortcuts belong to the browser / OS.
+      // Modifier-key shortcuts belong to the browser / OS. Shift is the
+      // exception: shift+number is the qbank convention for ruling an
+      // option out, handled below.
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       const q = state.quiz && state.quiz.pool[state.quiz.idx];
       if (!q) return;
@@ -2186,7 +2288,17 @@
       const canSubmit = !revealed && submitBtn && !submitBtn.disabled;
       const canNext   = revealed && nextBtn && !nextBtn.hidden;
 
-      if (["1","2","3","4","5"].includes(k)) {
+      if (e.shiftKey && ["!","@","#","$","%","1","2","3","4","5"].includes(e.key)) {
+        // shift+1..5 rules out the matching option, and rules it back in.
+        // Shift rewrites the digit on most layouts, so match both.
+        const idx = "!@#$%".indexOf(e.key) >= 0
+          ? "!@#$%".indexOf(e.key)
+          : parseInt(e.key, 10) - 1;
+        const letter = "ABCDE"[idx];
+        const li = document.querySelector(`#qOptions li[data-letter="${letter}"]`);
+        if (li && !revealed) toggleStrike(q.id, letter, li);
+        e.preventDefault();
+      } else if (["1","2","3","4","5"].includes(k)) {
         // Number keys SELECT the corresponding option (A-E). They do NOT
         // submit - the user still has to press Enter / Space / right /
         // d / Submit to commit.
@@ -2213,6 +2325,7 @@
       } else if (k === "f") {
         document.getElementById("flagBtn").click();
       } else if (k === "x") {
+        // x still rules out whatever is currently selected.
         if (selected) toggleStrike(q.id, selected.dataset.letter, selected);
       } else if (k === "l") {
         toggleRefs();

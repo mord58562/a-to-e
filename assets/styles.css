@@ -853,31 +853,69 @@ body:has(#quizTopbar[hidden]) .reading {
   color: var(--ink);
 }
 
+/* The clinical data block (rebuilt 2026-09-22).
+ *
+ * This is not narrative, it is the chart. Treating it as a plain
+ * dt/dd grid with the same weight as body text is what made it read
+ * as a generic key-value dump. It now reads as an extract from a
+ * record: set back from the prose behind a rule, labels small and
+ * quiet in a fixed column, values in tabular figures, and an
+ * observation set broken into discrete readings rather than a
+ * comma-joined sentence.
+ *
+ * Still no card: no border box, no fill, no radius. One rule does it.
+ */
 .patient-table {
-  /* No card chrome (overhaul 2026-06-01) - the dt/dd pair stands on
-   * its own with typographic differentiation. Avoids the multi-layer
-   * rounded-box AI tell where the table sits inside the reading card
-   * inside the quiz container. */
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  margin: 14px 0;
+  margin: 18px 0;
+  padding: 2px 0 2px 16px;
+  border-left: 2px solid var(--line-strong);
   display: grid;
-  grid-template-columns: max-content 1fr;
-  gap: 8px 22px;
+  grid-template-columns: minmax(84px, max-content) 1fr;
+  gap: 10px 20px;
   font-size: 14px;
   line-height: 1.55;
 }
 .patient-table dt {
   color: var(--ink-mute);
-  font-family: var(--sans);
-  font-size: 12.5px;
-  font-weight: 400;
-  letter-spacing: 0;
-  align-self: baseline;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  line-height: 1.5;
+  padding-top: 2px;
+  align-self: start;
+  hyphens: none;
+  overflow-wrap: normal;
 }
-.patient-table dd { margin: 0; color: var(--ink); font-variant-numeric: tabular-nums; }
+.patient-table dd {
+  margin: 0;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  min-width: 0;
+}
+
+/* An observation set: each reading is its own item, so a column of
+ * numbers can be read off rather than parsed out of a sentence. */
+.patient-table dd.obs-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+}
+.obs {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+.obs-name {
+  color: var(--ink-mute);
+  font-size: 12.5px;
+}
+.obs-value {
+  color: var(--ink);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
 
 .patient-subtable {
   display: grid;
@@ -889,104 +927,185 @@ body:has(#quizTopbar[hidden]) .reading {
 }
 .patient-subtable dt {
   color: var(--ink-mute);
-  font-family: var(--sans);
   font-size: 12px;
   font-weight: 400;
   align-self: baseline;
 }
 .patient-subtable dd { margin: 0; color: var(--ink); }
 
-/* options (overhaul 2026-06-01: rows not cards). The .reading card
- * is the only container; options are rows separated by a hairline.
- * Hover adds a 2px accent rule on the left and shifts text colour -
- * never a background change (that's the AI-tell pattern). Reveal
- * state IS allowed to use background because at that point the card-
- * ness has semantic weight (you finished the question). */
-.options { list-style: none; margin: 12px 0 0; padding: 0; }
+/* Options (rebuilt 2026-09-22).
+ *
+ * The previous pass stripped these to hairline-separated rows with a
+ * bare letter and a hover-only "x", on the theory that borders read as
+ * AI-template. It overcorrected: with no marker, no container and no
+ * rhythm, the list read as a wireframe, and the eliminate control was
+ * invisible until you happened to hover the right row.
+ *
+ * What actually distinguishes a serious question bank is that the
+ * option is a real target with a real radio marker, the eliminate
+ * control is always visible and says which way it will go, and the
+ * keyboard number is printed on the row instead of hidden in a legend.
+ * Structure does the work here, not decoration: one hairline, one
+ * marker, one accent rule on the selected row. No gradients, no
+ * shadows, no pill buttons, no perfect circles for the letter.
+ */
+.options {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
 .options li {
   position: relative;
   display: grid;
-  grid-template-columns: 36px 1fr 32px;
-  align-items: baseline;
-  gap: 14px;
-  background: transparent;
-  border: none;
-  border-top: 1px solid var(--line);
-  border-radius: 0;
-  padding: 14px 0 14px 16px;
-  margin: 0;
-  cursor: pointer;
-  font-size: 14.5px;
-  line-height: 1.5;
-  transition: color var(--dur-fast) var(--ease),
-              box-shadow var(--dur-fast) var(--ease),
-              background var(--dur-fast) var(--ease);
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 0 6px;
+  border-bottom: 1px solid var(--line);
+  transition: background var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease);
 }
-.options li:first-child { border-top: none; }
-.options li:hover:not(.revealed) {
-  color: var(--ink);
-  box-shadow: inset 2px 0 0 var(--accent);
+
+/* The choice is the whole left region, so the hit target is the row,
+ * not the 20px marker. */
+.options li .opt-choice {
+  display: grid;
+  grid-template-columns: 18px 20px 1fr;
+  align-items: baseline;
+  gap: 0 12px;
+  padding: 13px 4px 13px 14px;
+  cursor: pointer;
+  min-height: 48px;
+  align-content: center;
+}
+.options li .opt-marker {
+  width: 15px; height: 15px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 50%;
+  align-self: center;
+  transition: border-color var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease);
 }
 .options li .opt-letter {
-  font-family: var(--display);
   font-weight: 600;
   color: var(--ink-3);
-  font-size: 17px;
-  text-align: center;
+  font-size: 14px;
+  align-self: center;
   font-variant-numeric: tabular-nums;
 }
-.options li .opt-text { color: var(--ink); }
+.options li .opt-body { min-width: 0; }
+.options li .opt-text {
+  display: block;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+/* Rule-out control. Always visible - hover-only actions are invisible
+ * to touch and to the keyboard, and this one is used constantly. */
 .options li .opt-strike {
-  background: transparent;
-  border: 1px solid var(--line);
-  color: var(--ink-mute);
-  width: 24px;
-  height: 24px;
+  display: grid;
+  place-items: center;
+  width: 30px; height: 30px;
+  background: none;
+  border: 1px solid transparent;
   border-radius: var(--r-tight);
-  font-size: 13px;
-  font-family: inherit;
+  color: var(--ink-faint);
   cursor: pointer;
-  align-self: center;
-  opacity: 0;
-  transition: opacity 0.15s ease, background 0.12s ease;
+  transition: color var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease);
 }
-.options li:hover .opt-strike,
-.options li.struck .opt-strike,
-.options li .opt-strike:focus-visible { opacity: 1; }
-.options li .opt-strike:hover { background: var(--surface); color: var(--ink); }
-
-.options li.selected {
-  background: var(--accent-bg);
-  box-shadow: inset 2px 0 0 var(--accent);
+.options li .opt-strike:hover {
+  color: var(--ink);
+  border-color: var(--line-strong);
 }
-.options li.struck .opt-text { text-decoration: line-through; opacity: 0.4; }
+.options li .opt-strike[aria-pressed="true"] { color: var(--ink-2); }
 
-.options li.revealed { cursor: default; }
+/* Printed shortcut. Reads as a key legend, not as a badge: no fill,
+ * no border, just a small tabular digit in the margin. */
+.options li .opt-key {
+  width: 18px;
+  padding-right: 12px;
+  text-align: right;
+  font-size: 11px;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.options li:hover:not(.revealed) .opt-marker { border-color: var(--accent); }
+.options li .opt-choice:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  border-radius: var(--r-tight);
+}
+
+.options li.selected { background: var(--accent-bg); }
+.options li.selected .opt-marker {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 3.5px var(--accent);
+}
+.options li.selected .opt-letter { color: var(--accent); }
+
+/* Ruled out: struck through AND dimmed, so it reads at a glance and
+ * not only by colour. The marker hollows out so it cannot be mistaken
+ * for a selection. */
+.options li.struck .opt-text {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  color: var(--ink-faint);
+}
+.options li.struck .opt-letter { color: var(--ink-faint); }
+.options li.struck .opt-marker { border-color: var(--line); opacity: 0.5; }
+.options li.struck { background: transparent; }
+
+.options li.revealed .opt-choice { cursor: default; }
+.options li.revealed .opt-strike, .options li.revealed .opt-key { visibility: hidden; }
 .options li.revealed.correct {
   background: var(--good-bg);
-  box-shadow: inset 2px 0 0 var(--good);
+  box-shadow: inset 3px 0 0 var(--good);
 }
-.options li.revealed.correct .opt-letter { color: var(--good); }
+.options li.revealed.correct .opt-letter,
+.options li.revealed.correct .opt-marker { color: var(--good); border-color: var(--good); }
+.options li.revealed.correct .opt-marker { box-shadow: inset 0 0 0 3.5px var(--good); }
 .options li.revealed.wrong {
   background: var(--bad-bg);
-  box-shadow: inset 2px 0 0 var(--bad);
+  box-shadow: inset 3px 0 0 var(--bad);
 }
-.options li.revealed.wrong .opt-letter { color: var(--bad); }
+.options li.revealed.wrong .opt-letter,
+.options li.revealed.wrong .opt-marker { color: var(--bad); border-color: var(--bad); }
+.options li.revealed.wrong .opt-marker { box-shadow: inset 0 0 0 3.5px var(--bad); }
+/* An option the user ruled out, once the answer is shown: keep the
+ * strikethrough so they can see what they talked themselves out of. */
+.options li.revealed.struck .opt-text {
+  text-decoration: line-through;
+  color: var(--ink-2);
+}
+
 .options li .opt-rationale {
-  grid-column: 2 / 4;
+  display: none;
   font-size: 13px;
   line-height: 1.6;
   color: var(--ink-2);
-  margin-top: 8px;
-  display: none;
+  margin-top: 7px;
 }
 .options li.revealed .opt-rationale { display: block; }
 .options li.revealed .opt-rationale b { color: var(--ink); }
 .options li.revealed .opt-rationale .cite {
+  display: block;
   font-size: 11px;
   color: var(--ink-mute);
   margin-top: 4px;
-  display: block;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 .action-row {
@@ -1498,25 +1617,24 @@ body[data-screen="summary"] main { max-width: 760px; }
   .lead-in { font-size: 15px; }
   .patient-table {
     grid-template-columns: 1fr;
-    gap: 4px 0;
-    padding: 12px 14px;
-    font-size: 13.5px;
+    gap: 2px 0;
+    padding-left: 12px;
   }
-  .patient-table dt { margin-top: 6px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .patient-table dt { margin-top: 10px; }
   .patient-table dt:first-child { margin-top: 0; }
+  .patient-table dd.obs-set { gap: 2px 14px; }
 
-  /* Options: bigger tap targets, eliminator button hits 32x32 min. */
-  .options li {
-    grid-template-columns: 30px 1fr 36px;
-    gap: 10px;
-    padding: 13px 12px;
-    font-size: 14.5px;
+  /* Options on a phone: the printed shortcut goes (there is no
+   * keyboard), and the rule-out control grows to a 44x44 tap target
+   * per WCAG 2.5.5 while the glyph stays small. */
+  .options li .opt-key { display: none; }
+  .options li .opt-choice {
+    grid-template-columns: 18px 18px 1fr;
+    gap: 0 10px;
+    padding: 12px 2px 12px 10px;
   }
-  .options li .opt-letter { font-size: 15px; }
-  .options li .opt-strike {
-    /* 44x44 tap target on phones (WCAG 2.5.5); glyph stays small. */
-    width: 44px; height: 44px; font-size: 14px;
-  }
+  .options li .opt-text { font-size: 14.5px; }
+  .options li .opt-strike { width: 44px; height: 44px; }
 
   /* Buttons that act as primary tap targets need ~44pt height. */
   .primary, .secondary {
@@ -1895,9 +2013,7 @@ body:not(.is-admin) .admin-only { display: none !important; }
 /* ── Disable hover restyles on touch-only devices to prevent
      "stuck" hover states after a tap. ─────────────────────── */
 @media (hover: none) {
-  /* Touch UAs never get hover, so the eliminator button stays visible. */
-  .options li .opt-strike { opacity: 1; }
-  .options li:hover:not(.revealed) { border-color: var(--line); }
+  .options li:hover:not(.revealed) .opt-marker { border-color: var(--line-strong); }
   .opt:hover { border-color: var(--line); color: var(--ink-2); }
   .setup-options.multi .opt:not(.selected):hover { color: var(--ink-mute); }
   .link-btn:hover { background: transparent; color: var(--ink-2); }
