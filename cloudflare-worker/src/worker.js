@@ -137,7 +137,7 @@ export default {
       // used_at IS NULL: a redeemed code whose account was later deleted
       // has used_by nulled by the foreign key, and is a record, not junk.
       env.DB.prepare("DELETE FROM invite_codes WHERE used_by IS NULL AND used_at IS NULL AND revoked_at IS NULL AND expires_at IS NOT NULL AND expires_at < ?").bind(now - 86400 * 30),
-    ]));
+    ]).catch(err => console.error("scheduled sweep failed:", err && err.stack || err)));
   },
 };
 
@@ -219,7 +219,11 @@ async function handleCommitBatch(request, env, cors) {
 }
 
 async function ghPatchMeta(env, path, patch) {
-  const cur = await ghGetFileJson(env, path) || {};
+  // A null here used to mean "start from {}", so a rate-limited or
+  // truncated read replaced meta.json with just the patch, dropping the
+  // version and the counts the site renders.
+  const cur = await ghGetFileJson(env, path);
+  if (cur === null) throw new Error(`refusing to patch ${path}: could not read the current file`);
   Object.assign(cur, patch);
   const content = JSON.stringify(cur, null, 2) + "\n";
   await ghPutFile(env, path, content, `Bump meta.json (${Object.keys(patch).join(', ')})`);
@@ -235,9 +239,12 @@ async function ghGetFileJson(env, path) {
       "User-Agent": "a-to-e-worker",
     },
   });
+  // 404 is "no file yet", which is a legitimate empty start. Anything
+  // else is a failed read, and the caller must not treat it as empty.
+  if (r.status === 404) return {};
   if (!r.ok) return null;
   const j = await r.json();
-  try { return JSON.parse(atob(j.content.replace(/\n/g, ""))); } catch { return null; }
+  try { return ghInlineJson(j, path); } catch { return null; }
 }
 
 /* ── Account + stats API ────────────────────────────────────────────── */
@@ -494,14 +501,22 @@ function generateInviteCode() {
   return out;  // XXXX-XXXX-XXXX, ~59 bits
 }
 
+// Every field the auth endpoints read has to be a string before it is
+// trimmed or measured. A number threw a TypeError out of the handler as
+// a 500, and an object slipped past `password.length < 8` and registered
+// an account whose real secret was the string "[object Object]".
+function str(v) {
+  return typeof v === "string" ? v : "";
+}
+
 async function handleRegister(request, env, cors) {
   if (!env.DB) return json({ ok: false, error: "DB not bound" }, 500, cors);
   requireEncryptionEnv(env);
   const body = await request.json().catch(() => null);
-  const email = (body && body.email || "").trim().toLowerCase();
-  const password = body && body.password || "";
-  const displayName = (body && body.display_name || "").trim().slice(0, 60) || email.split("@")[0];
-  const inviteRaw = (body && body.invite_code || "").trim().toUpperCase();
+  const email = str(body && body.email).trim().toLowerCase();
+  const password = str(body && body.password);
+  const displayName = str(body && body.display_name).trim().slice(0, 60) || email.split("@")[0];
+  const inviteRaw = str(body && body.invite_code).trim().toUpperCase();
 
   // Per-IP budget first, before the email lookup and long before Argon2id.
   const regIpKey = "reg:" + await ipHash(request, env);
@@ -571,23 +586,36 @@ async function handleRegister(request, env, cors) {
     "AND (expires_at IS NULL OR expires_at >= ?)";
   const tokenHex = randomHex(32);
   const tokenH = await hashSessionToken(env, tokenHex);
-  const results = await env.DB.batch([
-    env.DB.prepare(
-      "INSERT INTO users (id, email, email_lookup, email_enc, password_hash, password_salt, pw_algo, display_name, is_admin, created_at, invited_via, last_seen_at) " +
-      "SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? WHERE EXISTS (SELECT 1 FROM invite_codes WHERE " + INVITE_REDEEMABLE + ")"
-    ).bind(id, "enc:" + lookup.slice(0, 32), lookup, emailEnc, hash, saltHex, ARGON2_ALGO_LABEL, displayName, isAdmin, now, invite.code_hash, now,
-           invite.code_hash, nowTs),
-    env.DB.prepare(
-      // code_enc goes with the redemption: a spent code has nothing left
-      // to show an admin, so it should not stay recoverable.
-      "UPDATE invite_codes SET used_by = ?, used_at = ?, code_enc = NULL WHERE " + INVITE_REDEEMABLE +
-      " AND EXISTS (SELECT 1 FROM users WHERE id = ?)"
-    ).bind(id, now, invite.code_hash, nowTs, id),
-    env.DB.prepare(
-      "INSERT INTO sessions (token, token_hash, user_id, created_at, expires_at) " +
-      "SELECT ?, ?, ?, ?, ? WHERE EXISTS (SELECT 1 FROM users WHERE id = ?)"
-    ).bind("h:" + tokenH.slice(0, 24), tokenH, id, now, now + SESSION_TTL_SEC, id),
-  ]);
+  // A UNIQUE violation on email_lookup means someone registered the same
+  // address in the window between the SELECT above and this write - a
+  // double-tapped sign-up button is enough, because Argon2id sits in the
+  // middle of it. That aborts the batch and used to surface as a 500 for
+  // an account that does in fact exist.
+  let results;
+  try {
+    results = await env.DB.batch([
+      env.DB.prepare(
+        "INSERT INTO users (id, email, email_lookup, email_enc, password_hash, password_salt, pw_algo, display_name, is_admin, created_at, invited_via, last_seen_at) " +
+        "SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? WHERE EXISTS (SELECT 1 FROM invite_codes WHERE " + INVITE_REDEEMABLE + ")"
+      ).bind(id, "enc:" + lookup.slice(0, 32), lookup, emailEnc, hash, saltHex, ARGON2_ALGO_LABEL, displayName, isAdmin, now, invite.code_hash, now,
+             invite.code_hash, nowTs),
+      env.DB.prepare(
+        // code_enc goes with the redemption: a spent code has nothing left
+        // to show an admin, so it should not stay recoverable.
+        "UPDATE invite_codes SET used_by = ?, used_at = ?, code_enc = NULL WHERE " + INVITE_REDEEMABLE +
+        " AND EXISTS (SELECT 1 FROM users WHERE id = ?)"
+      ).bind(id, now, invite.code_hash, nowTs, id),
+      env.DB.prepare(
+        "INSERT INTO sessions (token, token_hash, user_id, created_at, expires_at) " +
+        "SELECT ?, ?, ?, ?, ? WHERE EXISTS (SELECT 1 FROM users WHERE id = ?)"
+      ).bind("h:" + tokenH.slice(0, 24), tokenH, id, now, now + SESSION_TTL_SEC, id),
+    ]);
+  } catch (e) {
+    if (/UNIQUE|constraint/i.test(String(e && e.message))) {
+      return json({ ok: false, error: "that email is already registered" }, 409, cors);
+    }
+    throw e;
+  }
   const changed = (r) => (r && r.meta && r.meta.changes) || 0;
   if (changed(results[0]) !== 1 || changed(results[1]) !== 1 || changed(results[2]) !== 1) {
     return json({ ok: false, error: "that invite code is not valid" }, 403, cors);
@@ -601,8 +629,8 @@ async function handleLogin(request, env, cors) {
   if (!env.DB) return json({ ok: false, error: "DB not bound" }, 500, cors);
   requireEncryptionEnv(env);
   const body = await request.json().catch(() => null);
-  const email = (body && body.email || "").trim().toLowerCase();
-  const password = body && body.password || "";
+  const email = str(body && body.email).trim().toLowerCase();
+  const password = str(body && body.password);
   if (!email || !password) return json({ ok: false, error: "email + password required" }, 400, cors);
   if (password.length > 1024) return json({ ok: false, error: "password too long" }, 400, cors);
 
@@ -751,7 +779,9 @@ async function handleAdminListUsers(request, env, cors) {
   const user = await authUser(request, env);
   if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
   const { results } = await env.DB.prepare(
-    "SELECT u.id, u.email, u.email_enc, u.display_name, u.is_admin, u.created_at, COUNT(a.question_id) AS answers FROM users u LEFT JOIN answers a ON a.user_id = u.id GROUP BY u.id ORDER BY u.created_at DESC"
+    "SELECT u.id, u.email, u.email_enc, u.display_name, u.is_admin, u.created_at, " +
+    "u.last_seen_at, u.invited_via, COUNT(a.question_id) AS answers " +
+    "FROM users u LEFT JOIN answers a ON a.user_id = u.id GROUP BY u.id ORDER BY u.created_at DESC"
   ).all();
   // Decrypt every email_enc in flight. Rows that pre-date migration still
   // have their plaintext in the legacy `email` column; we use that
@@ -762,7 +792,12 @@ async function handleAdminListUsers(request, env, cors) {
     if (r.email_enc) {
       try { email = await fieldDecrypt(env, r.email_enc); } catch {}
     }
-    out.push({ id: r.id, email, display_name: r.display_name, is_admin: r.is_admin, created_at: r.created_at, answers: r.answers });
+    // last_seen_at is written on every /api/me but was never selected,
+    // so the panel showed "never" for an account that signed in a
+    // minute ago.
+    out.push({ id: r.id, email, display_name: r.display_name, is_admin: r.is_admin,
+               created_at: r.created_at, last_seen_at: r.last_seen_at,
+               invited_via: r.invited_via, answers: r.answers });
   }
   return json({ ok: true, users: out }, 200, cors);
 }
@@ -889,7 +924,8 @@ async function handleAdminListInvites(request, env, cors) {
     `SELECT i.code_hash, i.code_hint, i.code_enc, i.label, i.created_at, i.expires_at,
             i.used_at, i.revoked_at, u.display_name AS used_by_name
      FROM invite_codes i LEFT JOIN users u ON u.id = i.used_by
-     ORDER BY i.created_at DESC LIMIT 200`
+     ORDER BY (i.used_at IS NULL AND i.revoked_at IS NULL) DESC, i.created_at DESC
+     LIMIT 200`
   ).all();
   // A code the admin cannot read is a code they cannot send. It is held
   // encrypted rather than hashed for exactly this, and only a live code
@@ -913,7 +949,7 @@ async function handleAdminCreateInvite(request, env, cors) {
   if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
   requireEncryptionEnv(env);
   const body = await request.json().catch(() => null);
-  const label = ((body && body.label) || "").trim().slice(0, 80);
+  const label = str(body && body.label).trim().slice(0, 80);
   const days = Math.min(365, Math.max(1, parseInt((body && body.expires_days) || 30, 10) || 30));
   const code = generateInviteCode();
   const now = Math.floor(Date.now() / 1000);
@@ -937,7 +973,7 @@ async function handleAdminRevokeInvite(request, env, cors) {
   if (!/^[a-f0-9]{64}$/.test(codeHash)) return json({ ok: false, error: "bad code" }, 400, cors);
   const res = await env.DB.prepare(
     "UPDATE invite_codes SET revoked_at = ?, code_enc = NULL " +
-    "WHERE code_hash = ? AND used_by IS NULL AND revoked_at IS NULL"
+    "WHERE code_hash = ? AND used_by IS NULL AND used_at IS NULL AND revoked_at IS NULL"
   ).bind(Math.floor(Date.now() / 1000), codeHash).run();
   if (!res.meta || res.meta.changes !== 1) return json({ ok: false, error: "already used or revoked" }, 409, cors);
   return json({ ok: true }, 200, cors);
@@ -1085,7 +1121,7 @@ async function handleSettings(request, env, cors) {
   if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
   const body = await request.json().catch(() => null);
   const settings = body && body.settings;
-  if (!settings || typeof settings !== "object") {
+  if (!settings || typeof settings !== "object" || Array.isArray(settings)) {
     return json({ ok: false, error: "settings object required" }, 400, cors);
   }
   const serialized = JSON.stringify(settings);
@@ -1200,8 +1236,11 @@ async function handleReport(request, env, cors) {
     id:           `report-${utcStamp()}-${randomId(4)}`,
     question_id:  qid.slice(0, 200),
     issue:        issue.slice(0, 4000),
-    profile:      (body.profile || "guest").slice(0, 40),
-    model:        body.model || null,
+    profile:      (str(body.profile) || "guest").slice(0, 40),
+    // The only field here that was neither type-checked nor capped, in
+    // the one endpoint that takes an unauthenticated body and commits it
+    // to a file in the repo.
+    model:        str(body.model).slice(0, 80) || null,
     created:      new Date().toISOString(),
     status:       "open",
     resolution:   null,
@@ -1402,11 +1441,13 @@ async function handleApplyReport(request, env, cors) {
     for (const path of allMainFiles) {
       const r = await fetch(`https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}?ref=${env.GITHUB_BRANCH || "main"}`,
         { headers: ghHeaders(env) });
-      if (r.status !== 200) continue;
+      if (r.status === 404) continue;
+      if (r.status !== 200) {
+        throw new Error(`could not read ${path} (${r.status}); no resolutions were applied`);
+      }
       const meta = await r.json();
-      let arr;
-      try { arr = JSON.parse(base64ToUtf8(meta.content)); } catch { continue; }
-      if (!Array.isArray(arr)) continue;
+      const arr = ghInlineJson(meta, path);
+      if (!Array.isArray(arr)) throw new Error(`${path} is not a JSON array`);
       const idSet = new Set(arr.map(q => q.id));
       const here = lookups.filter(rr => idSet.has(rr.question_id));
       if (here.length) {
@@ -1416,18 +1457,23 @@ async function handleApplyReport(request, env, cors) {
   }
 
   // Now mutate each main file once.
-  const result = { fixed: 0, dropped: 0, dismissed: resolutions.filter(r => r.action === "dismiss").length };
+  const result = { fixed: 0, dropped: 0, missed: 0,
+                   dismissed: resolutions.filter(r => r.action === "dismiss").length };
   for (const [path, items] of Object.entries(byPath)) {
     await ghMutateJsonArray(env, path, (arr) => {
       const out = arr.slice();
       for (const r of items) {
         const idx = out.findIndex(q => q.id === r.question_id);
+        // A resolution for a question this file no longer holds is a
+        // miss, not a write: counting it told the admin the bank had
+        // been changed, and the fix branch went further and added a
+        // question that had never been in the file.
+        if (idx < 0) { result.missed++; continue; }
         if (r.action === "fix" && r.fixed_question) {
-          if (idx >= 0) out[idx] = r.fixed_question;
-          else out.push(r.fixed_question);
+          out[idx] = r.fixed_question;
           result.fixed++;
         } else if (r.action === "drop") {
-          if (idx >= 0) out.splice(idx, 1);
+          out.splice(idx, 1);
           result.dropped++;
         }
       }
@@ -1527,7 +1573,7 @@ async function ghAppendText(env, path, text, message) {
     if (r.status === 200) {
       const meta = await r.json();
       sha = meta.sha;
-      try { existing = base64ToUtf8(meta.content); } catch {}
+      existing = ghInlineText(meta, path);
     } else if (r.status !== 404) {
       throw new Error(`GET ${path} (${r.status})`);
     }
@@ -1573,6 +1619,32 @@ async function ghPutFile(env, path, content, message) {
   return await r.json();
 }
 
+// The Contents API answers 200 with `encoding: "none"` and an empty
+// body for a blob over 1 MB, and can hand back a truncated one on a bad
+// day. Every helper below reads a file, changes it, and PUTs it back
+// with the sha it just fetched, so a read that quietly yields nothing
+// does not fail: it replaces the file with a one-entry version of
+// itself. ghMutateJson already refuses that; these did not.
+function ghInlineText(meta, path) {
+  if (meta.encoding !== "base64" || !meta.content) {
+    throw new Error(`refusing to rewrite ${path}: GitHub did not inline the content (blob over 1 MB?)`);
+  }
+  try {
+    return base64ToUtf8(meta.content);
+  } catch (e) {
+    throw new Error(`refusing to rewrite ${path}: the content did not decode`);
+  }
+}
+
+function ghInlineJson(meta, path) {
+  try {
+    return JSON.parse(ghInlineText(meta, path));
+  } catch (e) {
+    if (/refusing to rewrite/.test(e.message)) throw e;
+    throw new Error(`refusing to rewrite ${path}: the existing content did not parse as JSON`);
+  }
+}
+
 async function ghAppendManifest(env, path, key, value) {
   // Read existing JSON (default to { [key]: [] }) and append value if
   // not already present, then PUT back. Retries once on race.
@@ -1585,7 +1657,7 @@ async function ghAppendManifest(env, path, key, value) {
     if (r.status === 200) {
       const meta = await r.json();
       sha = meta.sha;
-      try { obj = JSON.parse(base64ToUtf8(meta.content)); } catch {}
+      obj = ghInlineJson(meta, path);
       if (!Array.isArray(obj[key])) obj[key] = [];
     }
     if (!obj[key].includes(value)) obj[key].push(value);
@@ -1619,7 +1691,7 @@ async function ghAppendArray(env, path, key, entry, message) {
     if (r.status === 200) {
       const meta = await r.json();
       sha = meta.sha;
-      try { obj = JSON.parse(base64ToUtf8(meta.content)); } catch {}
+      obj = ghInlineJson(meta, path);
       if (!Array.isArray(obj[key])) obj[key] = [];
     }
     obj[key].push(entry);
