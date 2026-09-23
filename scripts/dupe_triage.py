@@ -35,6 +35,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import dupe_gate  # noqa: E402  (same directory, and the scoring must be identical)
+import manifest_hashes  # noqa: E402
 
 ARCHIVE = ROOT / "data/_archived_dupes"
 # A cluster this big is a topic the bank kept re-asking from one angle.
@@ -191,6 +192,8 @@ def cmd_retire(args):
         prior = json.loads(dest.read_text()) if dest.exists() else []
         dest.write_text(json.dumps(prior + removed, indent=1, ensure_ascii=False))
         path.write_text(json.dumps(kept, indent=1, ensure_ascii=False))
+    if args.apply:
+        manifest_hashes.refresh()  # rewritten files need new cache keys
     print(f"{total} question(s) {'retired' if args.apply else 'would be retired'}")
     if not args.apply:
         print("dry run; pass --apply to write")
@@ -332,6 +335,7 @@ def cmd_apply(args):
                 total += 1
         path.write_text(json.dumps(arr, indent=1, ensure_ascii=False))
         print(f"  {path.relative_to(ROOT)}: {len(updates)} replaced")
+    manifest_hashes.refresh()  # rewritten files need new cache keys
     print(f"{total} question(s) applied.")
     return 0
 

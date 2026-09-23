@@ -312,6 +312,25 @@ def run_gate(new_records, old_records, show_review=False, json_path=None):
     """
     print(f"gating {len(new_records)} new questions against "
           f"{len(old_records)} existing, and against each other")
+    # An id collision is a failure in its own right. The loader keeps the
+    # first copy of an id and silently hides the other, so a new question
+    # that reuses a published id (or appears twice in one push) never
+    # shows. compare() skips same-id pairs, so it has to be caught here.
+    old_ids = {r["id"] for r in old_records if r["id"]}
+    reused = sorted({str(r["id"]) for r in new_records if r["id"] in old_ids})
+    counts = defaultdict(int)
+    for r in new_records:
+        if r["id"]:
+            counts[r["id"]] += 1
+    twice = sorted(str(i) for i, n in counts.items() if n > 1)
+    missing = sum(1 for r in new_records if not r["id"])
+    id_fail = bool(reused or twice or missing)
+    if reused:
+        print(f"FAIL: {len(reused)} new id(s) already exist in the bank: {', '.join(reused)}")
+    if twice:
+        print(f"FAIL: {len(twice)} id(s) appear more than once in this push: {', '.join(twice)}")
+    if missing:
+        print(f"FAIL: {missing} new question(s) have no id")
     bank_dupes, bank_reviews = compare(new_records, old_records, show_review)
     new_dupes, _bands, new_reviews = self_compare(new_records, show_review)
 
@@ -324,7 +343,7 @@ def run_gate(new_records, old_records, show_review=False, json_path=None):
         json.dump(as_json(bank_dupes, "vs_bank") + as_json(new_dupes, "within_new"),
                   open(json_path, "w"), indent=1)
 
-    if bank_dupes or new_dupes:
+    if bank_dupes or new_dupes or id_fail:
         print()
         if bank_dupes:
             ids = sorted({str(r[3]["id"]) for r in bank_dupes})
@@ -397,6 +416,28 @@ def selftest_new_vs_new():
     return failures
 
 
+def selftest_id_collision():
+    """A new question reusing a bank id, or an id twice in one push, fails."""
+    base = {"topic": "Paediatrics", "subtopic_detail": "unrelated detail text",
+            "options": [{"text": "unrelated answer", "correct": True}]}
+    bank = [to_record(dict(base, id="selftest-bank-01"), "data/questions_paeds.json")]
+    reuse = [to_record(dict(base, id="selftest-bank-01",
+                            subtopic_detail="a different presentation entirely"),
+                       "data/batches/selftest_new.json")]
+    twice = [to_record(dict(base, id="selftest-new-02", subtopic_detail="first"), "a.json"),
+             to_record(dict(base, id="selftest-new-02", subtopic_detail="second one"), "b.json")]
+    print("\n-- the two gate runs below are expected to report id failures --")
+    failures = 0
+    if run_gate(reuse, bank) != 1:
+        failures += 1
+        print("FAIL: a new question reusing a bank id passed the gate")
+    if run_gate(twice, []) != 1:
+        failures += 1
+        print("FAIL: an id duplicated within one push passed the gate")
+    print(f"{2 - failures}/2 id-collision cases pass")
+    return failures
+
+
 def selftest():
     failures = 0
     for a, b, expected in DOSE_CASES:
@@ -407,6 +448,7 @@ def selftest():
                   f"  {sorted(doses(a))} vs {sorted(doses(b))}")
     print(f"{len(DOSE_CASES) - failures}/{len(DOSE_CASES)} dose cases pass")
     failures += selftest_new_vs_new()
+    failures += selftest_id_collision()
     return 1 if failures else 0
 
 

@@ -300,8 +300,17 @@ def cmd_apply(args):
                 total += 1
         path.write_text(json.dumps(arr, indent=1, ensure_ascii=False))
         print(f"  {path.relative_to(ROOT)}: {len(updates)} updated")
+    refresh_manifest_hashes()
     print(f"{total} question(s) applied. Bump data/meta.json `updated` before pushing.")
     return 0
+
+
+def refresh_manifest_hashes():
+    """A rewritten batch file needs a new cache key or browsers keep the
+    old copy under the old one (scripts/manifest_hashes.py)."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import manifest_hashes
+    manifest_hashes.refresh()
 
 
 def main():

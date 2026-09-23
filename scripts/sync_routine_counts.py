@@ -21,66 +21,72 @@ CTX = next((p for p in (os.path.join(PRIVATE, '.routine-context.md'),
                         os.path.join(REPO, '.routine-context.md'))
             if os.path.exists(p)), None)
 
-def live_totals():
-    """Count unique served question ids across the four main files and every
-    batch in the manifest. Dedupe by id so the number matches what the loader
-    actually shows."""
-    seen = set()
-    totals = collections.Counter()
-    for p in [os.path.join(REPO,'data/questions_paeds.json'),
-              os.path.join(REPO,'data/questions_obgyn.json'),
-              os.path.join(REPO,'data/questions_psych.json'),
-              os.path.join(REPO,'data/questions_medicine.json')]:
-        try:
-            for q in json.load(open(p)):
-                qid = q.get('id')
-                if not qid or qid in seen: continue
-                seen.add(qid)
-                totals[q.get('topic','?')] += 1
-        except FileNotFoundError: pass
-    mani = json.load(open(os.path.join(REPO,'data/batches_manifest.json')))
-    for b in mani.get('batches',[]):
-        try:
-            for q in json.load(open(os.path.join(REPO,'data',b))):
-                qid = q.get('id')
-                if not qid or qid in seen: continue
-                seen.add(qid)
-                totals[q.get('topic','?')] += 1
-        except FileNotFoundError: pass
-    return {
-        'Paediatrics': totals['Paediatrics'],
-        'Obstetrics & Gynaecology': totals['Obstetrics & Gynaecology'],
-        'Psychiatry': totals['Psychiatry'],
-        'Medicine': totals['Medicine'],
-    }
+SERVABLE_TOPICS = ('Paediatrics', 'Obstetrics & Gynaecology', 'Psychiatry', 'Medicine')
 
-def live_difficulty():
-    """Count live questions per difficulty tier, deduped by id exactly as
-    live_totals() does. The routine decides whether to generate L5 from these
-    numbers, so they have to be refreshed with the module counts rather than
-    left to go stale."""
-    seen = set()
-    tiers = collections.Counter()
+
+def is_servable(q):
+    """Mirror of isServable() in assets/app.js: what the site will show."""
+    if not isinstance(q, dict) or not q.get('id') or not isinstance(q.get('stem'), str):
+        return False
+    if q.get('topic') not in SERVABLE_TOPICS:
+        return False
+    d = q.get('difficulty')
+    if not isinstance(d, int) or isinstance(d, bool) or not 1 <= d <= 5:
+        return False
+    opts = q.get('options')
+    if not isinstance(opts, list) or len(opts) < 2 or not all(isinstance(o, dict) for o in opts):
+        return False
+    return sum(1 for o in opts if o.get('correct') is True) == 1
+
+
+def served_questions():
+    """The questions the site serves, loaded the way loadData() does: the
+    four main files, every batch in batches_manifest.json, every file in
+    inbox_manifest.json; unservable records dropped first, then deduped by
+    id with the first copy winning. A file that is missing or unparseable
+    contributes nothing, as on the site, and is reported.
+
+    live_totals() and live_difficulty() both read this, so the module
+    counts and the difficulty counts describe the same bank. They used to
+    load separately and disagree on a file that did not parse."""
     paths = [os.path.join(REPO, f'data/questions_{m}.json')
              for m in ('paeds', 'obgyn', 'psych', 'medicine')]
-    mani = json.load(open(os.path.join(REPO, 'data/batches_manifest.json')))
-    paths += [os.path.join(REPO, 'data', b) for b in mani.get('batches', [])]
+    for rel, key in (('data/batches_manifest.json', 'batches'),
+                     ('data/inbox_manifest.json', 'inbox')):
+        full = os.path.join(REPO, rel)
+        if not os.path.exists(full):
+            continue
+        mani = json.load(open(full))  # an unreadable manifest aborts: counts would be wrong
+        paths += [os.path.join(REPO, 'data', b) for b in mani.get(key, []) if isinstance(b, str)]
+    seen, out = set(), []
     for p in paths:
         try:
             data = json.load(open(p))
-        except (FileNotFoundError, json.JSONDecodeError):
+        except (FileNotFoundError, json.JSONDecodeError) as exc:
+            print(f'WARNING: {os.path.relpath(p, REPO)} contributes nothing: {exc}', file=sys.stderr)
             continue
         if not isinstance(data, list):
+            print(f'WARNING: {os.path.relpath(p, REPO)} is not a JSON array', file=sys.stderr)
             continue
         for q in data:
-            if not isinstance(q, dict):
+            if not is_servable(q) or q['id'] in seen:
                 continue
-            qid = q.get('id')
-            if not qid or qid in seen:
-                continue
-            seen.add(qid)
-            tiers[q.get('difficulty')] += 1
-    return tiers
+            seen.add(q['id'])
+            out.append(q)
+    return out
+
+
+def live_totals(questions=None):
+    """Unique served questions per module."""
+    totals = collections.Counter(q['topic'] for q in (questions or served_questions()))
+    return {t: totals[t] for t in SERVABLE_TOPICS}
+
+
+def live_difficulty(questions=None):
+    """Served questions per difficulty tier. The routine decides whether to
+    generate L5 from these numbers, so they have to be refreshed with the
+    module counts rather than left to go stale."""
+    return collections.Counter(q['difficulty'] for q in (questions or served_questions()))
 
 
 def update_difficulty(tiers):
@@ -127,10 +133,14 @@ def update_meta(totals):
     """Write total_questions + by_topic into data/meta.json so the
     portfolio fetch can show a live question count."""
     path = os.path.join(REPO, 'data/meta.json')
+    # An unreadable meta.json aborts. Defaulting to {} rewrote the file with
+    # only the counts and lost version, updated and last_added.
     try:
         meta = json.load(open(path))
-    except Exception:
-        meta = {}
+    except (OSError, json.JSONDecodeError) as exc:
+        raise SystemExit(f'ABORT: cannot read {path} ({exc}); meta.json left untouched')
+    if not isinstance(meta, dict):
+        raise SystemExit(f'ABORT: {path} is not a JSON object; meta.json left untouched')
     meta['total_questions'] = sum(totals.values())
     meta['by_topic'] = totals
     with open(path,'w') as f:
@@ -216,18 +226,18 @@ If the probe fails: EXIT. Do not try alternative push methods (gh CLI, MCP push_
 STEP 1 onwards - only if STEP 0 succeeded
 =================================================================
 
-1. Read `.routine-context.md` from the repo root, end-to-end. It is your full operating context.
-2. Read the prompt template in `index.html` lines 413-1012. Every rule there is binding.
+1. Read `.routine-context.md` end-to-end if it is available. It is no longer in the repo (the repo is public and Pages serves its root); if it is absent from the clone, proceed on this prompt plus the template below, and say so in your report.
+2. Read the prompt template at `assets/prompt-template.txt`. Every rule there is binding.
 3. Run the state-check script from `.routine-context.md` Section 3 Step 1 to see LIVE module totals (the numbers in the LIVE BANK STATE block above may be stale).
 4. **Module-selection algorithm (apply in order, against LIVE totals):**
    - If any module is below 250: pick that one (catch-up phase).
    - If all four are >=250 but not yet all >=500: pick the LOWEST-count module to keep totals approaching equal as they approach 500 each.
    - **Once all four modules are >=500 (i.e., total >=2000): continue generating but produce questions for each topic EQUALLY. Pick the LOWEST-count module each run so totals stay tight across all four indefinitely.** Do not stop at 500-each; keep going while quota remains.
 5. Pick an unstapled cluster from Section 7 of `.routine-context.md`. Check `data/batches/` and `data/batches_manifest.json` to confirm the cluster has not already been generated.
-6. Generate ONE batch of EXACTLY 30 MCQs. Use the full quality bar from `index.html` template + `.routine-context.md` Section 5 audit pass. Do NOT bundle multiple clusters into one batch.
+6. Generate ONE batch of EXACTLY 30 MCQs. Use the full quality bar from the `assets/prompt-template.txt` template + `.routine-context.md` Section 5 audit pass. Do NOT bundle multiple clusters into one batch.
 7. Write to `data/batches/<descriptive_name>.json` with a unique snake_case name.
-8. Run the self-audit (banned tokens, JSON validity, stem-floor compliance, source_refs all map to a label in sources, AU spellings).
-9. Append the path to `data/batches_manifest.json` `batches` array (in-place edit).
+8. Run the self-audit (banned tokens, JSON validity, source_refs all map to a label in sources, AU spellings).
+9. Append the path to `data/batches_manifest.json` `batches` array (in-place edit), then run `python3 scripts/manifest_hashes.py` so the new file gets its cache key.
 10. Bump `data/meta.json` `last_added` to today's UTC date.
 11. Commit and push:
 ```
@@ -276,9 +286,10 @@ def push_remote(prompt):
     print(prompt[:500] + '...\n[truncated; full length: %d chars]' % len(prompt))
 
 def main():
-    totals = live_totals()
+    served = served_questions()
+    totals = live_totals(served)
     print(f'Live totals: Paeds={totals["Paediatrics"]} Obgyn={totals["Obstetrics & Gynaecology"]} Psych={totals["Psychiatry"]} Medicine={totals["Medicine"]} Total={sum(totals.values())}')
-    tiers = live_difficulty()
+    tiers = live_difficulty(served)
     print('Live difficulty: ' + ' '.join(
         f'L{d}={tiers.get(d, 0)}' for d in (1, 2, 3, 4, 5)))
     update_meta(totals)

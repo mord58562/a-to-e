@@ -253,6 +253,11 @@ try:
     manifest_obj["updated"] = datetime.date.today().isoformat()
     with open(MANIFEST, "w", encoding="utf-8") as fh:
         json.dump(manifest_obj, fh, indent=2, ensure_ascii=False)
+        fh.write("\n")
+    # Per-file cache keys for the loader; drops the merged paths' hashes.
+    sys.path.insert(0, "scripts")
+    import manifest_hashes
+    manifest_hashes.refresh()
 
     if os.path.exists(META):
         meta = read_json(META, "meta.json")
