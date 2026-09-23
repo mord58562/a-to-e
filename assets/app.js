@@ -4682,10 +4682,14 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     if (pop === "any") return true;
     const want = TOPIC_POPULATION[topic];
     if (!want) return true;
-    // Obstetric questions legitimately need adult panels alongside the
-    // pregnancy-specific ones; the reverse is not true.
-    if (want === "obstetric") return pop === "obstetric" || pop === "adult";
-    return pop === want;
+    // Only one direction is actually dangerous: a paediatric question
+    // must never show adult values, because a child's normal is not an
+    // adult's. Everything else is the author's own tag - a psychiatry
+    // question about a pregnant patient asks for maternal observations
+    // on purpose, and an obstetric question needs the adult panels
+    // alongside the pregnancy-specific ones. Blocking those left the
+    // block empty on perinatal questions in three of the four modules.
+    return want !== "paediatric" || pop === "paediatric";
   }
 
   // Single source of truth for a reference row, shared by the side panel
@@ -4709,6 +4713,9 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     const cats = (state.ranges && state.ranges.categories) || {};
     const blocks = [];
     const seen = new Set();
+    // Panels the population guard held back, so a question that asked
+    // for nothing but adult panels does not just render an empty space.
+    const suppressed = [];
     (keys || []).forEach(rawKey => {
       // A handful of questions carry an inline {analyte, range} object
       // instead of a library key. These used to throw a TypeError out of
@@ -4722,7 +4729,7 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
       if (typeof rawKey !== "string") return;
       const cat = cats[rawKey];
       if (!cat || !Array.isArray(cat.ranges) || !cat.ranges.length) return;
-      if (!categoryFitsTopic(cat, topic)) return;
+      if (!categoryFitsTopic(cat, topic)) { suppressed.push(cat.label || rawKey); return; }
       if (seen.has(rawKey)) return;
       seen.add(rawKey);
       const MAX = 10;
@@ -4736,6 +4743,12 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
         `</div>`
       );
     });
+    if (!blocks.length && suppressed.length) {
+      blocks.push(`<p class="ir-none">` +
+        `The library has no ${topic === "Paediatrics" ? "paediatric" : "matching"} values for ` +
+        `${esc(suppressed.slice(0, 3).join(", "))}. ` +
+        `Adult ranges are in the full panel, under L.</p>`);
+    }
     return blocks.join("");
   }
 

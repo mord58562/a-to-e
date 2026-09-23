@@ -6,6 +6,11 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 **Live: <https://mord58562.github.io/a-to-e/>** - guest mode, no signup required.
 
+## What's new in 1.6.16
+
+- Reference values now appear on perinatal questions in psychiatry and medicine, and on paediatric questions that were pointing at the adult panel. Where the library genuinely has no paediatric values for a panel, the question says so instead of showing an empty space.
+- A failure while the gate is on screen no longer leaves the page stuck behind it.
+
 ## What's new in 1.6.12
 
 - Pressing the number of the option you already picked takes it back off, so the key that chose it undoes it.
