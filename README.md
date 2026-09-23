@@ -2,9 +2,16 @@
 
 A free, open practice MCQ bank for Australian medical students in their clinical years. Single-best-answer clinical reasoning across paediatrics, obstetrics & gynaecology, psychiatry, and adult medicine, with Australian units and Australian guideline sources throughout.
 
-7,122 questions, the four disciplines held at parity: Paediatrics 1,781, Obstetrics & Gynaecology 1,781, Psychiatry 1,780, Medicine 1,780.
+7,053 questions, the four disciplines held at parity: Paediatrics 1,765, Obstetrics & Gynaecology 1,766, Psychiatry 1,760, Medicine 1,762.
 
 **Live: <https://mord58562.github.io/a-to-e/>** - guest mode, no signup required.
+
+## What's new in 1.6.6
+
+- The admin panel's section tabs switch panes again. The Content pane was pinned open by a stylesheet rule that outranked the `hidden` attribute, so selecting another section rendered it underneath. Seven other elements carried the same latent bug.
+- The question navigator is anchored to the reading column instead of the window edge, so it no longer drifts into the margin as the window widens, and it starts level with the topbar.
+- The topbar is the width of the card it seams into, rather than the width of the window.
+- Readings in a data block sit on a grid and all split into name and value, including ones whose value is a word rather than a number.
 
 ## What it is
 
@@ -14,11 +21,11 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
   | Level | Questions | Share |
   | --- | ---: | ---: |
-  | 1/5 | 62 | 0.9% |
-  | 2/5 | 1,562 | 21.9% |
-  | 3/5 | 2,719 | 38.2% |
-  | 4/5 | 2,425 | 34.0% |
-  | 5/5 | 354 | 5.0% |
+  | 1/5 | 70 | 1.0% |
+  | 2/5 | 1,702 | 24.1% |
+  | 3/5 | 2,745 | 38.9% |
+  | 4/5 | 2,217 | 31.4% |
+  | 5/5 | 319 | 4.5% |
 
   Difficulty tracks the amount of clinical reasoning a question demands, not the rarity of the topic. A common presentation reaches 5/5 when the answer turns on a disconfirming finding, a calculation under uncertainty, or a cut-off choice between competing guidelines.
 - Every option carries a per-option rationale, most of them carrying a source citation. The sources are published, citable Australian references, most of them accessible through a university subscription: RCH Melbourne CPG, Therapeutic Guidelines and eTG, Australian Medicines Handbook, RANZCOG, RANZCP clinical practice guidelines, DSM-5-TR, KEMH, SOMANZ, Queensland Clinical Guidelines, Australian Immunisation Handbook, Australian Asthma Handbook, ASCIA, ASHM, Cancer Council Australia, KHA-CARI, ANZICS, GESA, TSANZ, Family Planning Australia, Phoenix Australia, NSW Poisons Information Centre, NSW Mental Health Act 2007, RACGP, NHMRC, NHFA/CSANZ, COPE, Surviving Sepsis Campaign, NICE, BMJ Best Practice, StatPearls, and Cochrane.
