@@ -1,9 +1,9 @@
 /* A to E - SPA driver.
  *
- * Layout: centred 720px reading column always.
- * Top progress strip + question dropdown (no AMBOSS-style sidebar).
- * Reference panel = fixed right-side overlay (does NOT shift content).
- * Subtopic NEVER revealed before answer (would spoil the diagnosis).
+ * Layout: one centred reading column (--col). The reference panel is a
+ * fixed right-side overlay and never shifts the column.
+ * Subtopic is never shown before the answer: it would give away the
+ * diagnosis.
  *
  * Study mode = continuous, instant explanation on submit.
  * Test mode  = no reveal until end, optional countdown timer.
@@ -12,20 +12,12 @@
 (function () {
   "use strict";
 
-  // Web Storage that cannot take the app down. These names shadow the
-  // globals for everything inside this IIFE.
-  //
-  // With site data blocked, merely reading `window.localStorage` throws
-  // SecurityError; with a full quota every setItem throws
-  // QuotaExceededError. The first killed the DOMContentLoaded handler on
-  // its first line and left the gate locked over a blank page, guest
-  // mode included. The second did the same at boot, and mid-session it
-  // threw out of onSubmit so the answer was never revealed. Now a write
-  // that fails is kept in memory for this tab (reads see it), the
-  // failure is logged once, and the app keeps working unpersisted.
-  // A guest whose answers cannot be stored is told once, after home is
-  // up (the gate would cover a notice shown earlier). Signed-in answers
-  // still reach the server, so they are not told.
+  // Web Storage that cannot take the app down; these names shadow the
+  // globals inside this IIFE. With site data blocked, reading
+  // `window.localStorage` throws SecurityError; with a full quota every
+  // setItem throws. A failed write is kept in memory for this tab and
+  // logged once. A guest is told once, after home is up (the gate would
+  // cover it); signed-in answers still reach the server.
   const storageNotice = { ready: false, pending: false, quota: false, shown: false };
   function showStorageNotice() {
     storageNotice.pending = false;
@@ -78,10 +70,8 @@
     };
   }
 
-  // Remote backend (Cloudflare Worker). Set this to the URL printed by
-  // `wrangler deploy` from cloudflare-worker/. While null/empty, the
-  // site falls back to the local Python backend (scripts/server.py) for
-  // dev or to localStorage as a last resort.
+  // The Cloudflare Worker, as printed by `wrangler deploy` in
+  // cloudflare-worker/.
   const WORKER_URL = "https://a-to-e-inbox.mord58562.workers.dev";
 
   const HISTORY_KEY  = "y4mcq.history.v1";
@@ -90,7 +80,6 @@
   const SETTINGS_KEY = "y4mcq.settings.v3";
   const REMINDER_DISMISS_KEY = "y4mcq.reminder.dismissed";
   const LOCAL_QUESTIONS_KEY  = "y4mcq.local_questions.v1";
-  const PROFILE_CURRENT_KEY  = "y4mcq.profile.current";
   const PROFILE_MIGRATED_KEY = "y4mcq.profile.migrated.v1";
   const AUTH_TOKEN_KEY       = "y4mcq.auth.token";
   // Last known masthead identity, so the name pill and the Admin button
@@ -232,30 +221,37 @@
     return text;
   }
 
+  // Every request is bounded. A half-open connection (captive portal, a
+  // phone changing networks) never settles on its own, and the caller
+  // needs a failure it can act on. `read` runs under the same timer, so
+  // a caller that passes one bounds the body as well as the headers. A
+  // timeout rejects with an AbortError.
+  async function timedFetch(url, init, ms, read = r => r) {
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), ms);
+    try {
+      return await read(await fetch(url, { ...init, signal: ctl.signal }));
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
   const API_TIMEOUT_MS = 20000;
   async function apiFetch(path, options) {
     if (!WORKER_URL) throw new Error("Cloud backend not configured");
     const headers = { "Content-Type": "application/json", ...(options && options.headers || {}) };
     if (authToken) headers["Authorization"] = `Bearer ${authToken}`;
     let r;
-    // A half-open connection (captive portal, a phone changing networks)
-    // never settles on its own; bound it so callers and the sync queue
-    // get a failure they can act on instead of waiting forever.
-    const ctl = (!options || !options.signal) && typeof AbortController === "function" ? new AbortController() : null;
-    const timer = ctl ? setTimeout(() => ctl.abort(), API_TIMEOUT_MS) : null;
     try {
-      r = await fetch(WORKER_URL.replace(/\/$/, "") + path,
-                      { ...(options || {}), headers, ...(ctl ? { signal: ctl.signal } : {}) });
+      r = await timedFetch(WORKER_URL.replace(/\/$/, "") + path, { ...options, headers }, API_TIMEOUT_MS);
     } catch (netErr) {
-      // Distinguish offline / DNS / TLS failures from a well-formed server
-      // 4xx/5xx. The signup + signin forms surface this straight to the user.
+      // Offline, DNS, TLS and timeout failures, as distinct from a server
+      // 4xx/5xx. The sign-up and sign-in forms show this to the user.
       console.warn("[api]", path, "network error:", netErr && (netErr.name + ": " + netErr.message));
       const e = new Error(SERVER_UNREACHABLE);
       e.status = 0;
       e.code = "unreachable";
       throw e;
-    } finally {
-      if (timer) clearTimeout(timer);
     }
     const data = await r.json().catch(() => ({}));
     if (!r.ok || data.ok === false) {
@@ -286,10 +282,9 @@
     return { id, email: u.email || "", display_name: u.display_name || c.name || "", is_admin: !!c.admin };
   }
 
-  // Only a 401 means the session is dead. Deleting the token on any
-  // failure signed a user out for good whenever the worker blipped or
-  // the network dropped at page load; if they then carried on as a
-  // guest, that session's answers landed outside their account. The
+  // Only a 401 means the session is dead. A worker blip or a dropped
+  // connection at page load keeps the token, so the student stays in
+  // their account instead of answering into a guest namespace. The
   // cached name and admin chrome go with the token, or a guest on this
   // browser would see them.
   function forgetDeadSession() {
@@ -308,8 +303,7 @@
             error => ({ error }));
     // A returning student with a known account goes straight in. The
     // bank, the local history and the outbox all work without the
-    // worker; waiting on /api/me held a blank page for up to 20 s on bad
-    // wifi, then showed a sign-in form that needs the same server.
+    // worker, and /api/me can take the full 20 s timeout on bad wifi.
     const cached = cachedCloudUser();
     if (cached) {
       cloudUser = cached;
@@ -364,9 +358,9 @@
     return user;
   }
   // Codes are issued as XXXX-XXXX-XXXX. One pasted without the dashes,
-  // or with spaces, hashed differently and was refused as invalid, and
-  // each refusal spent one of the five sign-up attempts per hour. The
-  // worker applies the same rule, so either side alone is enough.
+  // or with spaces, must hash the same: each refusal spends one of the
+  // five sign-up attempts per hour. The worker applies the same rule,
+  // so either side alone is enough.
   function normaliseInviteCode(raw) {
     const s = String(raw || "").trim().toUpperCase();
     const bare = s.replace(/[^A-Z0-9]/g, "");
@@ -380,15 +374,13 @@
     return user;
   }
   function cloudSignOut() {
-    // Best-effort server-side session revoke so the token can't be replayed
-    // even if it leaked between issue and sign-out. Fire-and-forget; the
-    // client-side clear below happens unconditionally so a network failure
-    // never traps a user in a signed-in state locally.
+    // Revoke the token on the server too. The local clear below happens
+    // regardless, so a network failure never leaves this browser signed in.
     const wasToken = authToken;
     if (wasToken) {
       // keepalive: signOut() reloads the page straight after this, and a
       // plain fetch is aborted by the navigation before it reaches the
-      // worker, which left the token live on the server.
+      // worker, leaving the token live on the server.
       apiFetch("/api/logout", { method: "POST", keepalive: true })
         .catch(e => console.warn("[auth] /api/logout failed:", e && e.status, e && e.message));
     }
@@ -397,13 +389,12 @@
   }
   // Pull the signed-in user's full state (answers + flags + settings)
   // from the worker so a fresh browser sees the same picture as the
-  // original device. Server is the source of truth; localStorage is a
-  // read-through cache that we OVERWRITE with this response.
+  // original device. The server copy wins; localStorage is a cache that
+  // mergeRemoteState() overwrites with this response.
   //
-  // Returns { history, flags, settings } or null on failure. We do NOT
-  // return empty shapes on failure - the caller needs to distinguish
-  // "fetched and empty" from "couldn't reach the server" so it doesn't
-  // wipe local state on a transient network blip.
+  // Returns { history, flags, settings }, or null on failure: the caller
+  // must tell "fetched and empty" from "couldn't reach the server", or a
+  // network blip would wipe local state.
   async function cloudFetchState() {
     if (!cloudUser || !WORKER_URL) return null;
     try {
@@ -418,19 +409,12 @@
       return null;
     }
   }
-  // Legacy single-endpoint hydrator, kept for callers that only need
-  // history. Wraps cloudFetchState; returns {} on failure (legacy shape).
-  async function cloudFetchHistory() {
-    const s = await cloudFetchState();
-    return (s && s.history) || {};
-  }
   // ── Sync outbox ─────────────────────────────────────────────────────
   // Every answer, flag and settings write for a signed-in user goes into
   // a small per-account outbox in localStorage BEFORE it is posted, and
-  // leaves it only when the worker has accepted it. Failed posts used to
-  // be logged and dropped, and the next boot let the older server row
-  // overwrite the newer local one, so an answer given on bad hospital
-  // wifi, or after the session died, was lost on every device.
+  // leaves it only when the worker has accepted it, so an answer given
+  // on bad hospital wifi, or after the session died, is never lost and
+  // never overwritten by an older server row.
   //
   // The outbox is also what the boot merge trusts: a question with a
   // pending answer keeps its local row, a pending flag or unflag beats
@@ -478,11 +462,8 @@
 
   function cloudPostAnswer(qid, sourceLetter, correct) {
     if (!cloudUser) return Promise.resolve(null);
-    // Skip the round-trip when we don't have a real source letter, and
-    // check for a single letter rather than a substring: "ABCDE".includes
-    // is true for "", "AB" and "BCD" too. Guest-import replay hits this
-    // path with sourceLetter=""; those answers are pre-account and
-    // intentionally don't join the per-user server history.
+    // A single letter, not a substring: "ABCDE".includes is true for ""
+    // and "AB" too. Guest answers carry no letter and stay local.
     if (typeof sourceLetter !== "string" || sourceLetter.length !== 1 ||
         !"ABCDE".includes(sourceLetter)) return Promise.resolve(null);
     const at = Date.now();
@@ -525,8 +506,8 @@
     if (_flushRetryTimer) return;
     _flushRetryTimer = setTimeout(() => { _flushRetryTimer = null; flushOutbox(); }, 60000);
   }
-  // Sequential on purpose: a guest who signs up with 100 flags used to
-  // fire 100 simultaneous POSTs; now they drain one at a time.
+  // One POST at a time: a guest signing up with 100 flags must not open
+  // 100 requests at once.
   function flushOutbox() {
     if (!cloudUser || !WORKER_URL || !authToken || _sessionExpired) return Promise.resolve(false);
     if (_flushing) { _flushAgain = true; return _flushing; }
@@ -547,8 +528,7 @@
     }
     for (const qid of Object.keys(o.answers)) {
       const e = o.answers[qid] || {};
-      // `at` and `n` let a redeployed worker keep the newer of two rows
-      // and count every attempt; the current worker ignores both fields.
+      // `at` lets the worker keep the newer of two rows for a question.
       const body = { question_id: qid, source_letter: e.l, correct: !!e.c, at: e.at, n: e.n || 1 };
       if (await syncSend("/api/answer", body) === "retry") return false;
       outboxUpdate(x => {
@@ -568,7 +548,7 @@
 
   // A 401 on a sync write means this device's session is gone: another
   // device used "Sign out everywhere else", the password changed, or the
-  // 90-day cap passed. It used to fail silently on every later write.
+  // 90-day cap passed.
   function onSessionExpired(path) {
     if (_sessionExpired) return;
     _sessionExpired = true;
@@ -580,8 +560,7 @@
   }
 
   // One notice line under the masthead, for problems that belong to the
-  // whole page rather than a dialog. Styled inline from the theme tokens
-  // so it needs no stylesheet change.
+  // whole page rather than a dialog.
   function showAppNotice(message, actionLabel, action) {
     let el = document.getElementById("appNotice");
     if (!el) {
@@ -610,10 +589,10 @@
     el.hidden = false;
   }
 
-  // Last-resort handler. A throw in a click handler or a render path used
-  // to leave a half-drawn screen with no message and nothing in the log
-  // but the browser's own line. Log the stack with the question on screen,
-  // and tell the user once per page what to do.
+  // Last-resort handler for a throw in a click handler or a render path,
+  // which would otherwise leave a half-drawn screen and no message. Log
+  // the stack with the question on screen, and tell the user once per
+  // page what to do.
   let _uncaughtShown = false;
   function reportUncaught(kind, err, where) {
     const msg = String((err && err.message) || err || "");
@@ -639,35 +618,20 @@
   function isCurrentUserAdmin() {
     return !!(cloudUser && cloudUser.is_admin);
   }
-  // Apply the is-admin class to <body> so the CSS rule
-  // `body:not(.is-admin) .admin-only { display: none }` kicks in.
-  // Same pattern for is-cloud so cloud-only chrome (Account modal,
-  // settings, etc.) is hidden for guests / legacy profiles.
+  // `is-admin` and `is-cloud` on <body> drive the CSS that hides
+  // admin-only and account-only chrome.
   function refreshAdminBodyClass() {
     document.body.classList.toggle("is-admin", isCurrentUserAdmin());
     document.body.classList.toggle("is-cloud", !!cloudUser);
     refreshAdminAccountVisibility();
   }
 
-  // The legacy local-profile path is gone (2026-09-22). It shipped an
-  // unsalted SHA-256 of a three-character password in public client
-  // source, and restored itself from localStorage with no password check
-  // at all, so it was never a gate. It granted no server authority
-  // either - every worker endpoint re-checks users.is_admin. Admin is
-  // now the cloud account flag and nothing else. `currentProfile` stays
-  // declared because ns() and the sign-out path still read it; it is
-  // permanently null.
-  let currentProfile = null;
-  // Namespace a storage key by the current profile so each user has
+  // Namespace a storage key by account or guest id so each user has
   // their own history / flags / settings / reminders / pasted questions.
-  // Falls back to the bare key if no profile is loaded yet (only happens
-  // pre-gate, where we never actually read state-bearing keys).
+  // The bare key is only reached pre-gate, where no state-bearing key is
+  // read.
   function ns(key) {
-    // Cloud user takes precedence so a signed-in account's progress
-    // always lives in its own cross-device namespace - never shadowed
-    // by a stale legacy profile token left from earlier builds.
     if (cloudUser) return `${key}.cloud-${cloudUser.id}`;
-    if (currentProfile) return `${key}.${currentProfile.id}`;
     if (guestUser) return `${key}.guest-${guestUser.id}`;
     return key;
   }
@@ -707,11 +671,8 @@
       "Each question should be built around a clinical-reasoning pattern - mechanism inversion, side-effect to drug class mapping, constraint-stacked decision, antibody or test-pattern to diagnosis, AU-specific cutoff discrimination, time-of-onset reasoning, multi-step ladder under organ dysfunction, confound elimination, pattern recognition with non-obvious cue, or dose-calculation traps. Vary the pattern across the batch.",
     ].join("\n");
   }
-  // Inject live bank counts into the prompt so other LLMs (Gemini /
-  // ChatGPT / Mistral / DeepSeek - the free-tier paste flow) know
-  // where the bank currently is and which discipline most needs new
-  // questions. The placeholder is optional; if the template doesn't
-  // include it, this is a no-op.
+  // Live bank counts for the prompt's {{BANK_STATE}}, so whichever LLM
+  // the admin pastes into knows which discipline most needs questions.
   function bankStateBlock() {
     const counts = { "Paediatrics": 0, "Obstetrics & Gynaecology": 0, "Psychiatry": 0, "Medicine": 0 };
     const diff = { L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 };
@@ -741,8 +702,8 @@
 
   // The local Python backend (scripts/server.py) only exists on a dev
   // machine. On GitHub Pages the same relative path answers every POST
-  // with 405, so trying it there sent a second copy of the body and the
-  // bearer token to the wrong host and replaced the worker's real reason.
+  // with 405, and trying it would send the body and the bearer token to
+  // the wrong host.
   const IS_LOCAL_DEV = /^(localhost|127\.0\.0\.1|\[::1\]|0\.0\.0\.0)$/.test(location.hostname || "") ||
                        location.protocol === "file:";
 
@@ -751,6 +712,11 @@
   // HTTP answer from the worker is final, because a 400 or 429 is the
   // reason the user needs to see and must not be retried elsewhere.
   // Returns the parsed response on success, or { ok:false, status, error }.
+  //
+  // Admin writes go through GitHub file by file, so they get longer than
+  // apiFetch. A timeout is not "unreachable": the write may have landed,
+  // so nothing is retried and the admin is told to check first.
+  const BACKEND_TIMEOUT_MS = 60000;
   async function postBackend(endpoint, body) {
     const path = endpoint.replace(/^\//, "");
     const targets = [];
@@ -758,19 +724,17 @@
     if (IS_LOCAL_DEV || !WORKER_URL) targets.push("api/" + path);
     const headers = { "Content-Type": "application/json" };
     if (authToken) headers["Authorization"] = `Bearer ${authToken}`;
-    // Returning a bare null for every failure told the user to check
-    // their connection when the server had in fact answered with
-    // something specific, and left a TLS or CORS failure with no trace.
     let last = null;
     for (const url of targets) {
       let r;
       try {
-        r = await fetch(url, {
-          method: "POST",
-          headers,
-          body: JSON.stringify(body),
-        });
+        r = await timedFetch(url, { method: "POST", headers, body: JSON.stringify(body) }, BACKEND_TIMEOUT_MS);
       } catch (e) {
+        if (e && e.name === "AbortError") {
+          console.warn("[backend] POST", url, `no answer after ${BACKEND_TIMEOUT_MS / 1000}s`);
+          return { ok: false, status: 0, code: "timeout",
+                   error: "The server didn't answer within a minute. It may still have gone through, so check before sending it again." };
+        }
         last = { ok: false, status: 0, code: "unreachable", error: SERVER_UNREACHABLE };
         console.warn("[backend] POST", url, "network error:", e && e.message);
         continue;
@@ -783,11 +747,10 @@
     return last || { ok: false, status: 0, code: "unreachable", error: SERVER_UNREACHABLE };
   }
 
-  // The stored value has to be the same kind of thing as the default.
-  // A key holding `{}` where an array belongs (or a string where an
-  // object belongs) used to come straight back: `{}` in the pasted-
-  // questions key made loadData throw "not iterable" and left the page
-  // blank, and a string in the history key threw on the first submit.
+  // The stored value has to be the same kind of thing as the default:
+  // `{}` in the pasted-questions key would make loadData throw "not
+  // iterable", and a string in the history key would throw on the first
+  // submit.
   function load(k, d) {
     try {
       const v = JSON.parse(localStorage.getItem(k));
@@ -799,25 +762,22 @@
   }
   // Settings are read back from storage AND from the server, and every
   // consumer calls .includes / .length on the list fields without a
-  // guard, so a wrong-typed field stopped the home screen rendering.
+  // guard, so a wrong-typed field would stop the home screen rendering.
   function normaliseSettings(s) {
     const out = Object.assign({}, DEFAULT_SETTINGS, (s && typeof s === "object" && !Array.isArray(s)) ? s : {});
     for (const f of ["disciplines", "difficulties"]) {
-      // An empty stored list would now mean "nothing matches", and a
-      // saved session should never open on an empty bank, so an empty
-      // one resets to everything.
+      // An empty list would mean "nothing matches", and a saved session
+      // should never open on an empty bank, so it resets to everything.
       if (!Array.isArray(out[f]) || !out[f].length) out[f] = DEFAULT_SETTINGS[f].slice();
     }
     if (out.subtopics !== null && !Array.isArray(out.subtopics)) out.subtopics = null;
     return out;
   }
   function save(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
-  // Settings sync is debounced so rapid setting flips (e.g. clicking
-  // through difficulty options) collapse into one POST per ~600ms idle
-  // window. Local save is immediate.
-  // The dirty mark is written at once, so a change made offline, or in
-  // the 600ms before the tab closes, is kept at the next boot and
-  // re-posted instead of being replaced by the server's older copy.
+  // Local save is immediate; the POST waits for 600 ms of quiet. The
+  // dirty mark is written at once, so a change made offline or just
+  // before the tab closes is re-posted at the next boot rather than
+  // replaced by the server's older copy.
   let _settingsSyncTimer = null;
   function saveSettings() {
     save(ns(SETTINGS_KEY), state.settings);
@@ -840,8 +800,8 @@
       .catch(e => console.warn("[sync] pagehide settings post failed:", e && e.status, e && e.message));
   });
 
-  // Hydrate per-profile state after the gate has set currentProfile.
-  // Pre-gate, state.history/flags/settings are empty defaults.
+  // Hydrate the account's or guest's state once the gate has set who it
+  // is. Pre-gate, state.history/flags/settings are empty defaults.
   function loadProfileState() {
     state.history  = load(ns(HISTORY_KEY), {});
     state.flags    = load(ns(FLAGS_KEY), {});
@@ -857,9 +817,8 @@
   //   definition. Rows the server has never seen (guest answers with no
   //   source letter, anything still queued) are kept. time_ms_total and
   //   first_correct are local-only fields and are carried across.
-  // Flags: the server's set is the truth, then pending flag/unflag ops
-  //   are applied on top. The old union could never remove a flag, so
-  //   an unflag on another device came back here on every load.
+  // Flags: the server's set, then pending flag/unflag ops applied on
+  //   top, so an unflag made on another device holds here too.
   // Settings: the server's copy, unless a local change is still dirty.
   const FLAGSYNC_KEY = "y4mcq.flagsync.v1";
   function mergeRemoteState(remote) {
@@ -867,9 +826,9 @@
     const prevHistory = state.history || {};
     const remoteHistory = remote.history || {};
     const flagMarker = ns(FLAGSYNC_KEY);
-    // First boot under this rule: local flags the server lacks are
-    // ambiguous (never synced, or removed elsewhere). The old code kept
-    // them, so queue them as pending rather than silently deleting them.
+    // Once per account on this browser: local flags the server lacks are
+    // ambiguous (never synced, or removed elsewhere), so they are queued
+    // as pending rather than silently deleted.
     if (!localStorage.getItem(flagMarker)) {
       const localOnly = Object.keys(state.flags || {})
         .filter(qid => state.flags[qid] && !(remote.flags || {})[qid]);
@@ -909,12 +868,11 @@
   }
 
   // One-time legacy migration. Older builds used unscoped keys (one
-  // profile per browser). If we detect leftover unscoped data the first
-  // time a profile signs in on this browser, move it into that
-  // profile's namespace so existing history/flags/settings/questions
-  // don't appear lost.
+  // profile per browser). Leftover unscoped data moves into the first
+  // account that signs in on this browser, so its history, flags,
+  // settings and questions don't appear lost.
   function migrateLegacyIfNeeded() {
-    if (!currentProfile && !cloudUser) return;
+    if (!cloudUser) return;
     if (localStorage.getItem(PROFILE_MIGRATED_KEY)) return;
     const legacy = [
       HISTORY_KEY, FLAGS_KEY, SETTINGS_KEY,
@@ -939,9 +897,9 @@
   // follows them. The profile path itself is gone; only the orphaned
   // localStorage it left behind is read here.
   const LEGACY_PROFILE_IDS = ["rob"];
-  // One import per browser, not per account: keyed per account, every
-  // account that ever signed in here (a test account, a classmate on
-  // the maintainer's machine) had the legacy history merged into its cache.
+  // One import per browser, not per account, or every account that ever
+  // signs in here (a test account, a classmate on the same machine)
+  // would get the legacy history merged into its cache.
   const LEGACY_IMPORTED_KEY = "y4mcq.legacy.imported";
   function importLegacyHistoryIntoCloud() {
     if (!cloudUser) return;
@@ -957,8 +915,7 @@
       }
     }
     for (const profileId of LEGACY_PROFILE_IDS) {
-      const profile = { id: profileId };
-      const legHist = load(`${HISTORY_KEY}.${profile.id}`, null);
+      const legHist = load(`${HISTORY_KEY}.${profileId}`, null);
       if (!legHist) continue;
       const cloudKey = `${HISTORY_KEY}.cloud-${cloudUser.id}`;
       const existing = load(cloudKey, {});
@@ -968,7 +925,7 @@
         }
       }
       save(cloudKey, existing);
-      const legFlags = load(`${FLAGS_KEY}.${profile.id}`, null);
+      const legFlags = load(`${FLAGS_KEY}.${profileId}`, null);
       if (legFlags) {
         const cloudFlagsKey = `${FLAGS_KEY}.cloud-${cloudUser.id}`;
         const ef = load(cloudFlagsKey, {});
@@ -979,19 +936,14 @@
     localStorage.setItem(LEGACY_IMPORTED_KEY, "1");
   }
 
-  // The gate. Note it is not a security boundary and never was: the
-  // question JSON is public static files that anyone can fetch directly.
-  // What it does is route a visitor to an account, a guest session, or
-  // an invite. Everything that actually matters is enforced by the
-  // worker against the bearer token.
-
+  // The gate is not a security boundary: the question JSON is public. It
+  // routes a visitor to an account, a guest session or an invite; the
+  // worker enforces everything else against the bearer token.
   async function passGate() {
     return new Promise(async resolve => {
-      // Everything below runs inside a promise executor, where a throw
-      // is not an error anyone sees: it is a promise that never settles,
-      // which presents as a page stuck behind the gate with no message
-      // and no way on. On a throw, unlock and carry on - the rest of
-      // boot copes with an unauthenticated session.
+      // A throw inside a promise executor is a promise that never
+      // settles: a page stuck behind the gate. On a throw, unlock and
+      // carry on; the rest of boot copes without an account.
       try {
       const gate = document.getElementById("gate");
       const card = gate ? gate.querySelector(".gate-card") : null;
@@ -1026,14 +978,12 @@
       // bookmark or a shared screenshot does not carry it.
       const invite = readInviteLink();
 
-      // 1. Already signed in via cloud? Skip the gate AND clear any stale
-      // legacy profile token so ns() never shadows the cloud namespace.
+      // 1. Already signed in? Skip the gate.
       // Every way into an account (restored session, sign-in, sign-up)
       // folds any guest progress on this browser into it and retires the
-      // guest id. A guest id left beside a valid token used to send a
-      // signed-in user into guest mode on the next network blip at boot,
-      // and signing in (rather than up) from guest dropped the guest's
-      // answers, which the next guest on the machine then inherited.
+      // guest id. A guest id left beside a valid token would send a
+      // signed-in user into guest mode on a network blip at boot, and
+      // guest answers left behind would pass to the next guest here.
       const enterAccount = (freshAccount) => {
         let prevGuestId = null;
         try {
@@ -1041,8 +991,6 @@
           if (g) prevGuestId = JSON.parse(g).id;
         } catch (_) {}
         if (prevGuestId) migrateGuestHistoryIntoCloud(prevGuestId, !!freshAccount);
-        localStorage.removeItem(PROFILE_CURRENT_KEY);
-        currentProfile = null;
         localStorage.removeItem(GUEST_KEY);
         guestUser = null;
         unlock();
@@ -1054,23 +1002,18 @@
         return;
       }
       // preauth.js hid the gate before first paint because a token or a
-      // guest id was stored. If the token has just failed (expired,
-      // revoked, or the server unreachable) nothing un-hid it, so the
-      // page sat blank with the gate display:none and nothing else
-      // rendered. The guest path below unlocks straight away, so
-      // dropping the class there costs nothing.
+      // guest id was stored. When the token has just failed (expired,
+      // revoked, or the server unreachable), the gate has to come back or
+      // the page stays blank. The guest path below unlocks straight away,
+      // so dropping the class there costs nothing.
       document.documentElement.classList.remove("pre-authed");
 
-      // 2. Clear any stored legacy profile id. It used to unlock the
-      // admin chrome on its own, with no password check.
-      localStorage.removeItem(PROFILE_CURRENT_KEY);
-
-      // 3. Already in guest mode? Skip the gate (UNLESS the guest asked
+      // 2. Already in guest mode? Skip the gate (UNLESS the guest asked
       // to sign up, in which case we keep them at the gate so they can
       // create a cloud account that inherits their guest progress).
       // Not when a stored session could not be checked: that user has an
-      // account, and dropping them into guest mode without a word sent
-      // their answers to the guest namespace. The gate says why instead.
+      // account, and guest mode would send their answers to the guest
+      // namespace without a word. The gate says why instead.
       const savedGuest = localStorage.getItem(GUEST_KEY);
       if (savedGuest && !signupIntent && !invite && !authCheckFailed) { activateGuest(); return unlock(); }
 
@@ -1081,7 +1024,7 @@
         unlock();
       });
 
-      // 3. Cloud sign-in form.
+      // 3. Sign-in form.
       const signInForm = document.getElementById("cloudSignInForm");
       const signInErr  = document.getElementById("cloudSignInErr");
       if (authCheckFailed && signInErr) {
@@ -1108,7 +1051,7 @@
         }
       });
 
-      // 4. Cloud sign-up form.
+      // 4. Sign-up form.
       const signUpForm = document.getElementById("cloudSignUpForm");
       const signUpErr  = document.getElementById("cloudSignUpErr");
       signUpForm.addEventListener("submit", async e => {
@@ -1166,7 +1109,6 @@
   }
 
   function signOut() {
-    localStorage.removeItem(PROFILE_CURRENT_KEY);
     localStorage.removeItem(GUEST_KEY);
     // The cached name goes with the session, or the gate would paint the
     // last user's pill on the next load.
@@ -1178,17 +1120,16 @@
   }
 
   // The masthead is sticky, and the navigator rail is fixed beneath it.
-  // The rail's top used to be a hand-tuned 84px, which sat a few pixels
-  // inside the topbar band and drifted with any change of font size or
-  // safe-area inset. Measure it instead and let CSS read the number.
+  // Its height changes with font size and safe-area inset, so it is
+  // measured and CSS reads the number.
   function trackMastheadHeight() {
     const masthead = document.querySelector(".masthead");
     if (!masthead) return;
     const set = () => {
       const h = Math.round(masthead.getBoundingClientRect().height);
       // Zero means it is not on screen yet: behind the gate the whole app
-      // shell is display:none, and writing 0px here overrode the
-      // stylesheet's fallback and dropped the rail under the topbar.
+      // shell is display:none, and 0px would override the stylesheet's
+      // fallback and drop the rail under the topbar.
       if (h > 0) document.documentElement.style.setProperty("--masthead-h", `${h}px`);
     };
     set();
@@ -1200,20 +1141,16 @@
     applyTheme(localStorage.getItem(THEME_KEY) || "light");
     paintCachedMastheadChrome();
     trackMastheadHeight();
-    // Kick off the data load in parallel with the gate. The bank JSON does
-    // not depend on which user is signed in, so we can overlap the ~54
-    // file fetches with the /api/me round-trip + any password entry. On a
-    // returning signed-in user this overlaps roughly 100-400ms of /api/me
-    // latency with the dominant data download.
+    // The bank does not depend on who signs in, so its download overlaps
+    // the gate: /api/me and any password entry.
     const dataPromise = loadData();
     let dataSettled = false;
     dataPromise.then(() => { dataSettled = true; }, () => { dataSettled = true; });
     await passGate();
-    // The bank is several MB; on a slow link the page under the masthead
-    // was blank until it arrived. A local load finishes in under 100 ms,
-    // so the line waits 300 ms before appearing rather than flashing, and
-    // on a slow link it counts files so a long wait visibly moves.
-    // showHome() replaces it.
+    // The bank is several MB. A local load finishes in under 100 ms, so
+    // the loading line waits 300 ms before appearing rather than
+    // flashing; on a slow link it counts files so a long wait visibly
+    // moves. showHome() replaces it.
     let loadingTick = null;
     const loadingDelay = dataSettled ? null : setTimeout(() => {
       const app = document.getElementById("app");
@@ -1222,8 +1159,6 @@
       p.id = "bankLoading";
       p.className = "dim";
       p.setAttribute("role", "status");
-      p.style.padding = "24px 16px";
-      p.style.textAlign = "center";
       const paint = () => {
         p.textContent = bankProgress.listed && bankProgress.total
           ? `Loading questions: ${fmtNum(bankProgress.done)} of ${fmtNum(bankProgress.total)} files`
@@ -1236,12 +1171,9 @@
     migrateLegacyIfNeeded();
     importLegacyHistoryIntoCloud();
     loadProfileState();
-    // Cloud user: pull the full per-user state (history + flags +
-    // settings) and merge it with the local cache, the outbox deciding
-    // who wins (see mergeRemoteState). Only when the fetch succeeded: a
-    // network failure must not wipe a returning user's local cache.
-    // Not awaited: it usually lands while the bank is still downloading,
-    // and if the worker is slower than that, home paints from the local
+    // Merge the account's server state into the local cache (see
+    // mergeRemoteState), only when the fetch succeeded. Not awaited: if
+    // the worker is slower than the bank, home paints from the local
     // cache and is refreshed in place when the merge arrives.
     let homeShown = false;
     if (cloudUser) {
@@ -1261,23 +1193,21 @@
     try {
       await dataPromise;
     } catch (err) {
-      // A failed bank load used to stop boot dead, before showHome().
-      // An empty bank with a working shell at least says what happened.
+      // A failed bank load must not stop boot before showHome(): an
+      // empty bank with a working shell at least says what happened.
       console.error("[boot] the question bank failed to load:", err && err.stack || err);
     }
     if (loadingDelay) clearTimeout(loadingDelay);
     if (loadingTick) clearInterval(loadingTick);
     mergeLocalQuestions();
-    // Wire each subsystem defensively so a single throw in any wiring
-    // function can't leave the home view unrendered (the symptom that
-    // looked like "blank screen until clicking the logo"). Each wire is
-    // independent; a failure in one shouldn't suppress showHome().
+    // Wire each subsystem on its own, so a throw in one cannot stop
+    // showHome() and leave a blank screen.
     const wires = [
       ["masthead",   wireMasthead],
       ["colophon",   wireColophon],
       ["refPanel",   wireRefPanel],
       ["quizTopbar", wireQuizTopbar],
-      ["howTo",      wireHowToModal],
+      ["escape",     wireEscapeAndContentPane],
       ["report",     wireReportModal],
       ["reportsAdmin", wireReportsAdmin],
       ["stats",      wireStatsModal],
@@ -1315,8 +1245,7 @@
   }
 
   function wireAccountModal() {
-    // The legacy account modal is superseded by the unified Admin
-    // interface; the Account / Admin buttons both route there.
+    // The Account and Admin buttons open the same modal.
     const btn = document.getElementById("accountBtn");
     if (btn) btn.onclick = () => openAdmin("account");
     const adminBtn = document.getElementById("adminMastheadBtn");
@@ -1333,33 +1262,26 @@
     if (adm) adm.hidden = !(cloudUser && cloudUser.is_admin);
   }
 
-  // ── Unified Admin interface ─────────────────────────────────────────
+  // ── Admin modal ─────────────────────────────────────────────────────
   // One modal, sidebar tabs. Non-admin cloud users see Account only;
-  // admins see the full set. Each tab lazy-renders into #adminMain.
-  // For tabs whose content lives in legacy modals (Add, Inbox, Reports,
-  // Live), we re-parent the existing wired DOM into the active panel
-  // on tab activation so the original event handlers keep working.
-  // Four sections, not five. Overview and Quality were both "how is the
-  // bank doing" and are now one Bank section; Add & audit keeps its own
-  // because it is a working surface rather than a reading one. Users is
-  // first because it is the one used daily.
+  // admins see the full set. Users, Bank and Account render into
+  // #adminNative when opened; Content is the static #adminAddAuditPane,
+  // wired once at boot and shown in its place.
+  // Bank is for reading how the bank is doing; Content is the working
+  // surface for adding and auditing. Users is first because it is the
+  // one used daily.
   const ADMIN_TABS = [
     { id: "users",    label: "Users",    admin: true },
     { id: "bank",     label: "Bank",     admin: true },
     { id: "content",  label: "Content",  admin: true },
     { id: "account",  label: "Account",  admin: false },
   ];
-  // Old deep links, kept so existing call sites do not silently land on
-  // the wrong pane.
-  const ADMIN_TAB_ALIASES = { overview: "bank", quality: "bank", addaudit: "content",
-                              add: "content", inbox: "content" };
 
-  /* ── status region ──────────────────────────────────────────────────
-   * One element for the whole panel. Never auto-dismisses: an admin who
-   * misses a toast has no other record that the action happened, and
-   * auto-dismissal runs into WCAG 2.2.1. Success is role=status,
-   * problems switch the element to role=alert so they interrupt.
-   */
+  // ── Status region ──────────────────────────────────────────────────
+  // One element for the whole panel. Never auto-dismisses: an admin who
+  // misses a toast has no other record that the action happened, and
+  // auto-dismissal runs into WCAG 2.2.1. Success is role=status,
+  // problems switch the element to role=alert so they interrupt.
   function adminSay(kind, message, undo) {
     const el = document.getElementById("adminStatus");
     if (!el) return;
@@ -1385,13 +1307,12 @@
     if (el) { el.hidden = true; el.innerHTML = ""; }
   }
 
-  /* ── confirmation ───────────────────────────────────────────────────
-   * Friction proportional to the blast radius. A role change is
-   * instantly reversible, so it gets none. Deleting an account destroys
-   * data that cannot be recovered, so it gets a dialog that names the
-   * person, states how many answers go with them, and requires their
-   * email typed out. window.confirm can do none of that.
-   */
+  // ── Confirmation ───────────────────────────────────────────────────
+  // Friction proportional to the blast radius. A role change is
+  // instantly reversible, so it gets none. Deleting an account destroys
+  // data that cannot be recovered, so it gets a dialog that names the
+  // person, states how many answers go with them, and requires their
+  // email typed out. window.confirm can do none of that.
   // tone "primary" is for a confirm that loses nothing (finishing a
   // test); everything else keeps the destructive style.
   function adminConfirm({ title, body, confirmLabel, typeToMatch, typeLabel, tone }) {
@@ -1418,8 +1339,8 @@
           go.disabled = input.value.trim().toLowerCase() !== typeToMatch.toLowerCase();
         };
         // Enter in the field would submit the dialog's form through its
-        // first submit button, which is Cancel: the user typed the email,
-        // pressed Enter, and the delete was silently cancelled.
+        // first submit button, which is Cancel: typing the email and
+        // pressing Enter would silently cancel the delete.
         input.onkeydown = e => {
           if (e.key !== "Enter") return;
           e.preventDefault();
@@ -1481,8 +1402,7 @@
       `data-label="${esc(t.label)}">${esc(t.label)}</a>`
     ).join("");
     nav.hidden = tabs.length < 2;
-    const want = ADMIN_TAB_ALIASES[initialTab] || initialTab;
-    selectAdminTab(tabs.some(t => t.id === want) ? want : tabs[0].id);
+    selectAdminTab(tabs.some(t => t.id === initialTab) ? initialTab : tabs[0].id);
     modal.hidden = false;
     adminClear();
   }
@@ -1511,14 +1431,10 @@
       if (addaudit) addaudit.hidden = false;
       native.hidden = true;
       fillPromptText();
-      if (typeof refreshLocalBankSummary === "function") refreshLocalBankSummary();
-      if (typeof refreshAuditInboxList === "function") {
-        refreshAuditInboxList().then(() => {
-          if (typeof renderAuditInbox === "function") renderAuditInbox();
-        });
-      }
-      if (typeof renderReportsAdminList === "function") renderReportsAdminList(_reportFilter);
-      if (typeof loadAndRenderAuditLive === "function") loadAndRenderAuditLive();
+      refreshLocalBankSummary();
+      refreshAuditInboxList().then(renderAuditInbox);
+      renderReportsAdminList(_reportFilter);
+      loadAndRenderAuditLive();
       return;
     }
     if (addaudit) addaudit.hidden = true;
@@ -1564,12 +1480,11 @@
     if (b) b.onclick = retry;
   }
 
-  /* ── Bank ───────────────────────────────────────────────────────────
-   * Overview and Quality merged. No stat tiles and no charts: a bare
-   * number has no answer to "is that good?", and a bar chart of six
-   * integers is decoration. One table with Target and Gap answers the
-   * question the numbers exist to answer.
-   */
+  // ── Bank ───────────────────────────────────────────────────────────
+  // No stat tiles and no charts: a bare number has no answer to "is
+  // that good?", and a bar chart of six integers is decoration. One
+  // table with Target and Gap answers the question the numbers exist
+  // to answer.
   async function renderAdminBankTab(root) {
     const token = _adminRenderSeq;
     const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
@@ -1687,13 +1602,10 @@
         : `<p class="admin-empty">No answers recorded yet.</p>`}`;
   }
 
-  /* ── Users ──────────────────────────────────────────────────────────
-   * A real table: left-aligned text, right-aligned numbers in tabular
-   * figures, one hairline per row, no zebra, no avatars, no status
-   * pills, action buttons always visible with the person's name in a
-   * visually hidden span so a screen reader hears "Remove admin for
-   * Jane Smith" rather than "Remove admin".
-   */
+  // ── Users ──────────────────────────────────────────────────────────
+  // Action buttons are always visible and carry the person's name in a
+  // visually hidden span, so a screen reader hears "Remove admin for
+  // Jane Smith" rather than "Remove admin".
   function relTime(ts) {
     if (!ts) return { text: "never", title: "" };
     const then = ts * 1000;
@@ -1716,8 +1628,6 @@
       stop();
       console.warn("[admin] /api/admin/users failed:", e && e.status, e && (e.serverError || e.message));
       if (adminRenderStale(token, root)) return;
-      // The old code swallowed this and rendered "0 accounts", which is
-      // indistinguishable from a working empty instance.
       return adminLoadError(root, "the user list", () => renderAdminUsersTab(root), e);
     }
     stop();
@@ -1837,16 +1747,14 @@
     }
   }
 
-  /* ── Invite codes ───────────────────────────────────────────────────
-   * Registration is invite-only, so this is the only way to let someone
-   * in. The plaintext code exists exactly once, in the response to the
-   * create call, so it is shown until dismissed rather than flashed.
-   */
+  // ── Invite codes ───────────────────────────────────────────────────
+  // Registration is invite-only, so this is the only way to let someone
+  // in. The plaintext code exists exactly once, in the response to the
+  // create call, so it is shown until dismissed rather than flashed.
+
   // A code the admin has just created. renderInvites() rebuilds the whole
-  // section, and it is called immediately after a create, which used to
-  // wipe the reveal within the same tick - the code was on screen for
-  // less time than it takes to read. Holding it here means the refresh
-  // repaints it instead of destroying it.
+  // section straight after a create, so the code is held here and
+  // repainted rather than wiped before anyone can read it.
   let freshInvite = null;
 
   function freshInviteHtml() {
@@ -2272,16 +2180,13 @@
   // total is only final once the manifests are in (`listed`).
   const bankProgress = { done: 0, total: 0, listed: false };
   async function loadData() {
-    // Data JSON files don't carry the CSS/JS cache-bust query string, so a
-    // browser-cached manifest can hide brand-new batches for hours after they
-    // land. Fetch meta first (small, always fresh via short TTL) then reuse
-    // its `updated` timestamp as the effective cache-bust key on everything
-    // downstream, so a new deploy or a scheduled routine push invalidates the
-    // JSON caches even without a code release.
+    // Data files don't carry the CSS/JS cache-bust string, so meta.json
+    // (fetched fresh) supplies the key for everything downstream: a
+    // routine push then reaches students without a code release.
     const metaPre = await fetchJson("data/meta.json?t=" + Date.now()).catch(() => ({}));
-    // `last_added` is part of the key because /commit-batch bumps only
-    // that field; keyed on `updated` alone, a routine push left the
-    // manifest cached under the same URL all day.
+    // `last_added` is part of the key because a routine push can bump only
+    // that field; keyed on `updated` alone, the manifest would stay
+    // cached under the same URL all day.
     const v = metaPre && metaPre.updated
       ? (String(metaPre.updated) + (metaPre.last_added ? "-" + String(metaPre.last_added) : "")).replace(/[^0-9-]/g, "")
       : String(Math.floor(Date.now()/3600000));
@@ -2289,15 +2194,10 @@
     // Every bank source is counted the same way. A fetch that fails, a body
     // that is not JSON, and a body that is valid JSON but not an array all
     // mean "this file contributed nothing", and all of them have to reach
-    // the count the home screen shows.
-    //
-    // Before this, only the batch files were counted. A 404 on a main
-    // question file, a manifest that failed to load (which hides EVERY
-    // batch), or a file that parsed as an object all shortened the bank
-    // silently, with no warning anywhere and `failed` still reading 0.
-    // Worse, an object in a main file made the spread below throw
-    // "paeds is not iterable", which rejected loadData, skipped showHome()
-    // and left the page blank with nothing logged.
+    // the count the home screen shows. A manifest that fails hides every
+    // batch it lists, so it counts too. Anything that is not an array
+    // becomes [], or the spread below would throw and leave the page
+    // blank.
     let srcTotal = 0, srcFailed = 0;
     bankProgress.done = 0; bankProgress.listed = false;
     const settled = () => { bankProgress.done++; bankProgress.total = srcTotal; };
@@ -2311,7 +2211,7 @@
     // Per-file content hashes from batches_manifest.json `hashes`
     // ({path: sha1 prefix}, written by scripts/manifest_hashes.py). A
     // batch with a hash is keyed on it, so a release that bumps `updated`
-    // no longer re-downloads every unchanged consolidated file. A batch
+    // does not re-download every unchanged file. A batch
     // with no hash (one the worker appended, say) falls back to `bust`.
     let batchHashes = {};
     const batchUrl = p => {
@@ -2354,11 +2254,10 @@
     bankProgress.listed = true;
     const extra = await Promise.all(extraReq);
     const extraQuestions = extra.flat();
-    // The Bank tab's inbox count read this and it was never set.
+    // Read by the Bank tab's inbox count.
     state.inboxManifest = { inbox: inboxPaths };
-    // Per-file view of the live bank for the admin Content tab, which
-    // used to download all ~40 files again (without the cache-bust, so a
-    // full miss) and hold a second copy. Same arrays, no copy.
+    // Per-file view of the live bank for the admin Content tab: the same
+    // arrays, not a second download or copy.
     state.bankFiles = [
       { path: "data/questions_paeds.json",    questions: paeds },
       { path: "data/questions_obgyn.json",    questions: obgyn },
@@ -2367,14 +2266,13 @@
       ...batchPaths.map((p, i) => ({ path: "data/" + p, questions: extra[i] })),
     ];
     state.batchLoadStats = { total: srcTotal, failed: srcFailed };
-    if (srcFailed > 0 && console && console.warn) {
+    if (srcFailed > 0) {
       console.warn(`[a-to-e] ${srcFailed} of ${srcTotal} bank files failed to load`);
     }
 
-    // A question the quiz cannot render or grade is dropped, and counted
-    // like a failed file. With no options array renderQuiz threw and left
-    // an empty quiz screen; with no option (or two) marked correct the
-    // question could never be answered right, and nothing said so.
+    // A question the quiz cannot render or grade is dropped and counted,
+    // so the admin sees the number rather than a student meeting an empty
+    // quiz screen or a question with no right answer.
     const raw = [...paeds, ...obgyn, ...psych, ...medicine, ...extraQuestions];
     const bad = raw.filter(q => q && q.id && !isServable(q));
     state.bankQuestions = raw.filter(q => !q || !q.id || isServable(q));
@@ -2401,26 +2299,22 @@
     // finishes before anyone is signed in. The boot path merges the local
     // questions again once the gate resolves; this call covers later
     // reloads, when the identity is already known.
-    if (cloudUser || currentProfile || guestUser) mergeLocalQuestions();
+    if (cloudUser || guestUser) mergeLocalQuestions();
     else state.questions = dedupeById(state.bankQuestions);
   }
 
   // Locally pasted questions live only in this browser's localStorage,
   // per user, and merge into the bank the same way as inbox files.
-  //
-  // This used to run inside loadData, which starts before the gate. So
-  // when the bank downloaded before sign-in finished (a slow /api/me, or
-  // anyone typing a password), ns() still returned the bare pre-gate key:
-  // the user's own pasted questions were missing for the whole session
-  // and whatever an older build had left under the bare key showed up
-  // instead.
+  // Boot calls this again after the gate: the bank can finish before
+  // sign-in does, and until then ns() returns the bare pre-gate key.
   function mergeLocalQuestions() {
     const local = load(ns(LOCAL_QUESTIONS_KEY), []).filter(isServable);
     state.questions = dedupeById([...(state.bankQuestions || []), ...local]);
   }
   // A question outside the four disciplines or the 1-5 scale loads but
   // no filter can ever reach it (getPool matches both exactly), so it is
-  // as unservable as one with no stem.
+  // as unservable as one with no stem. The worker (servableProblem) and
+  // scripts/bank.py apply the same rule to what they write and count.
   const SERVABLE_TOPICS = ["Paediatrics", "Obstetrics & Gynaecology", "Psychiatry", "Medicine"];
   function isServable(q) {
     return !!(q && q.id && typeof q.stem === "string" &&
@@ -2441,21 +2335,13 @@
       return true;
     });
   }
-  // Use the default browser HTTP cache. The HTML script/link tags carry a
-  // ?v=YYYYMMDDx cache-bust string on every release, and JSON data files
-  // are pulled relative to that page, so a fresh release picks up new data
-  // without needing to revalidate every fetch on every page load (which
-  // previously cost ~54 conditional GETs even when nothing changed).
-  //
-  // Bounded: one stalled request (captive portal, half-open connection)
-  // held boot before showHome() forever with a blank page. The timer
-  // covers the body as well as the headers; a timeout rejects, and the
-  // bank loader counts it as a failed file like any other.
+  // The browser's own HTTP cache, keyed by loadData's ?v= or ?h= on each
+  // URL. Boot waits on these before showHome(), so the timer covers the
+  // body as well as the headers; a timeout rejects, and the bank loader
+  // counts it as a failed file like any other.
   const FETCH_JSON_TIMEOUT_MS = 30000;
   function fetchJson(p) {
-    const ctl = typeof AbortController === "function" ? new AbortController() : null;
-    const timer = ctl ? setTimeout(() => ctl.abort(), FETCH_JSON_TIMEOUT_MS) : null;
-    return fetch(p, ctl ? { signal: ctl.signal } : undefined).then(r => {
+    return timedFetch(p, {}, FETCH_JSON_TIMEOUT_MS, r => {
       // A 404 from GitHub Pages serves an HTML page, so r.json() would
       // reject anyway, but a proxy or an error page can return valid JSON
       // of the wrong shape and that must not be mistaken for bank content.
@@ -2467,7 +2353,7 @@
         throw new Error(`timed out fetching ${p}`);
       }
       throw e;
-    }).finally(() => { if (timer) clearTimeout(timer); });
+    });
   }
 
   function applyTheme(t) {
@@ -2552,7 +2438,7 @@
     paintProfileChip();
     const signOutBtn = document.getElementById("signOutBtn");
     if (signOutBtn) {
-      const isGuest = guestUser && !currentProfile && !cloudUser;
+      const isGuest = guestUser && !cloudUser;
       if (isGuest) {
         signOutBtn.textContent = "create account";
         signOutBtn.title = "Your guest answers and flags move into the new account";
@@ -2698,12 +2584,6 @@
     app.appendChild(document.getElementById("tpl-home").content.cloneNode(true));
     document.getElementById("sessionMeta").textContent = "";
 
-    // No greeting line. The user's name already sits in the profile
-    // chip in the masthead; repeating it as "Hi, $name." reads as
-    // welcome-template copy. Keep the element in the DOM (hidden) so
-    // any callers that re-show it later still find it.
-    const greet = document.getElementById("homeGreeting");
-    if (greet) { greet.hidden = true; greet.textContent = ""; }
     offerSavedSession();
     applySettingsToOptions();
 
@@ -2741,8 +2621,8 @@
       readMulti(document.getElementById("subtopicChips"));
       onSettingsChange();
     };
-    // Begin used to overwrite a resumable session without a word, so one
-    // misclick beside the Resume strip ended a half-done test.
+    // A saved session is replaced only after the user confirms: Begin sits
+    // beside the Resume strip, and one misclick would end a half-done test.
     document.getElementById("startBtn").onclick = async () => {
       const saved = loadSavedSession();
       if (saved) {
@@ -2776,9 +2656,8 @@
     // Only show subtopic chips for currently-selected disciplines so the
     // list doesn't bloat to 70+ chips when filters are narrow.
     const visible = new Set(state.settings.disciplines);
-    // Chips are keyed by discipline plus area. Keyed on the area name
-    // alone, "Respiratory" in Paediatrics and in Medicine merged into one
-    // chip, and turning it off removed both.
+    // Chips are keyed by discipline plus area, so "Respiratory" in
+    // Paediatrics and in Medicine are two chips that turn off separately.
     const counts = {};
     const disciplinesByName = {};
     state.questions.forEach(q => {
@@ -2794,9 +2673,7 @@
     const selected = state.settings.subtopics;
     sorted.forEach(([k, e]) => {
       const c = document.createElement("button");
-      // A settings list saved before the keying holds bare area names;
-      // those still select every discipline's chip of that name.
-      const on = !selected || selected.includes(k) || selected.includes(e.name);
+      const on = !selected || subtopicSelected(selected, { topic: e.topic, subtopic: e.name });
       c.className = "opt" + (on ? " selected" : "");
       c.dataset.value = k;
       const shared = disciplinesByName[e.name].size > 1;
@@ -2850,9 +2727,9 @@
     document.querySelectorAll('[data-show-for="test"]').forEach(r => {
       r.hidden = state.settings.mode !== "test";
     });
-    // Every setup choice reports its own state. Selection was carried by
-    // the .selected class alone, which a screen reader cannot see. Every
-    // click on the home screen ends here, so this one pass covers them.
+    // aria-pressed mirrors .selected, which a screen reader cannot see.
+    // Every click on the home screen ends here, so this one pass covers
+    // them all.
     document.querySelectorAll(".setup-options .opt").forEach(o =>
       o.setAttribute("aria-pressed", o.classList.contains("selected") ? "true" : "false"));
     // Track the discipline picker live, not just at session start, so
@@ -2864,11 +2741,9 @@
   function getPool(s) {
     s = s || state.settings;
     return state.questions.filter(q => {
-      // An empty list is an empty selection, in all three facets. It used
-      // to mean "no filter" for disciplines and difficulties and "match
-      // nothing" for learning areas, so switching off every difficulty
-      // chip left the pool at the full bank and started a session with
-      // the levels the user had just turned off.
+      // An empty list is an empty selection, in all three facets: with
+      // every difficulty switched off the pool is empty, not the whole
+      // bank.
       if (!s.disciplines.includes(q.topic)) return false;
       if (!(s.difficulties || []).includes(q.difficulty)) return false;
       if (s.subtopics && !subtopicSelected(s.subtopics, q)) return false;
@@ -2879,9 +2754,9 @@
       return true;
     });
   }
-  // Name the setting that emptied the pool. The advice used to be "add a
-  // difficulty level" whatever the cause, including a Filter of Flagged
-  // with nothing flagged. Running out of Unseen is progress, not a miss.
+  // Name the setting that emptied the pool: a Filter of Flagged with
+  // nothing flagged is not fixed by adding a difficulty level. Running
+  // out of Unseen is progress, not a miss.
   function emptyPoolAdvice(s) {
     if (!s.disciplines.length) return "No discipline selected.";
     if (!(s.difficulties || []).length) return "No difficulty selected.";
@@ -2951,9 +2826,8 @@
       state.quiz.deadline = Date.now() + state.quiz.timerMins * 60000;
     }
     state.sessionStart = Date.now();
-    // Tag body with mode so CSS can hide the test-only countdown row in
-    // study mode (per the "either fix or hide" call - a per-question timer
-    // is meaningful only in test mode).
+    // Tag body with mode so CSS can hide the countdown row in study mode;
+    // a per-question timer only means something in a test.
     document.body.dataset.mode = s.mode;
     setScreen("quiz");
     document.getElementById("sessionMeta").textContent = s.mode === "study" ? "Study session" : "Test session";
@@ -2963,10 +2837,8 @@
     saveSession();
   }
 
-  // "(+ glucose)" is a paediatrics in-joke, so it only makes sense when
-  // the session IS paediatrics. It used to fire whenever any single
-  // question in the pool was paeds, which meant it showed on nearly
-  // every mixed session. Now: Paediatrics selected, and nothing else.
+  // "(+ glucose)" is a paediatrics in-joke, so it shows only when
+  // Paediatrics is the one discipline selected.
   function refreshGlucoseSuffix() {
     const d = (state.settings && state.settings.disciplines) || [];
     document.body.classList.toggle(
@@ -2998,9 +2870,8 @@
     document.getElementById("submitBtn").disabled = false;
   }
 
-  // Undo a not-yet-submitted selection. Escape had its own inline copy
-  // of this that forgot aria-checked, so the row stayed "selected" to a
-  // screen reader after it had visibly cleared.
+  // Undo a not-yet-submitted selection, aria-checked included, so a
+  // screen reader hears the row clear as well as seeing it.
   function deselectOption(q, li) {
     if (!li || state.quiz.revealed[q.id]) return;
     li.classList.remove("selected");
@@ -3020,9 +2891,7 @@
     const saved = loadSavedSession();
     if (!saved) { row.hidden = true; return; }
     const { raw, pool } = saved;
-    // A study pick that was never revealed is not an answer.
-    const answered = Object.keys(raw.answers || {}).filter(id =>
-      raw.mode === "test" || (raw.revealed || {})[id]).length;
+    const answered = answeredCount({ mode: raw.mode, answers: raw.answers || {}, revealed: raw.revealed || {} });
     const mode = raw.mode === "test" ? "Test" : "Study";
     const left = raw.deadline ? Math.max(0, Math.round((raw.deadline - Date.now()) / 60000)) : null;
     document.getElementById("resumeLine").textContent =
@@ -3057,14 +2926,14 @@
   // The pool's id list lives under its own key and is written only when
   // the pool itself changes. A study session's pool is the whole bank
   // (about 7,000 ids, ~150 KB), and rewriting it on every answer, strike
-  // and Prev/Next was a synchronous stringify plus setItem each time.
+  // and Prev/Next would be a synchronous stringify plus setItem each time.
   // The small per-mutation blob carries a tag that must match the id
   // list's tag, so a list left over from another session is never used.
   const SESSION_IDS_KEY = "y4mcq.session.ids.v1";
   let _savedPool = null, _savedPoolNs = null, _savedPoolTag = null;
   function clearSavedSession() {
-    try { localStorage.removeItem(ns(SESSION_KEY)); } catch (_) {}
-    try { localStorage.removeItem(ns(SESSION_IDS_KEY)); } catch (_) {}
+    localStorage.removeItem(ns(SESSION_KEY));
+    localStorage.removeItem(ns(SESSION_IDS_KEY));
     _savedPool = null; _savedPoolTag = null;
   }
 
@@ -3170,18 +3039,15 @@
   }
 
   // A clinical vignette hands you an observation set, not a sentence.
-  // The data came in as one comma-joined string per row ("Pulse
-  // 128/min, blood pressure 158/94 mmHg, respiratory rate 22/min,
-  // SpO2 98% on room air, temperature 37.6 degrees C"), and rendering
-  // that as running text is what made the block read as a generic
-  // key-value dump. Where a row is clearly a list of measurements we
-  // break it into discrete items so the numbers can be read off the
-  // way they would be off a chart.
+  // The data comes as one comma-joined string per row ("Pulse 128/min,
+  // blood pressure 158/94 mmHg, respiratory rate 22/min, SpO2 98% on
+  // room air, temperature 37.6 degrees C"). Where a row is clearly a
+  // list of measurements it is broken into discrete items so the
+  // numbers can be read off the way they would be off a chart.
   const MEASUREMENT_ROWS = /^(vital signs|vitals|observations?|obs|obs on arrival|investigations?|bloods?|blood tests|pathology|examination findings|urine|urinalysis|urine dipstick|dipstick|blood gas|arterial blood gas|venous blood gas|abg|vbg)$/i;
-  // Readings whose value is a word rather than a number. Without these
-  // "C3 normal" and "SpO2 99% on room air" fell through the numeric
-  // split and rendered as unemphasised grey text beside readings that
-  // had a bold value, so one block carried two different treatments.
+  // Readings whose value is a word rather than a number ("C3 normal").
+  // They get the same name and value treatment as the numeric readings
+  // beside them.
   const QUALITATIVE = /^(.*?)\s+(normal|nil|absent|present|positive|negative|clear|raised|reduced|elevated|low|high|trace|detected|not detected|pending|sinus rhythm|regular|irregular)\b(.*)$/i;
   // Batch authors capitalise the first reading of a row and not the
   // rest, so a column of names read "Pulse rate / blood pressure /
@@ -3191,16 +3057,14 @@
     // Any capital further along means the word is not ordinary prose:
     // SpO2, HbA1c, eGFR, C reactive protein all keep what they came with.
     // A first word of three letters or fewer is a symbol, not prose: Hb,
-    // Na, Cr, Mg, Cl, Ca, Plt and Hct were being lowered to "hb", "na"
-    // and "mg", and "mg 0.6" reads as milligrams.
+    // Na, Mg, Plt ("mg 0.6" would read as milligrams).
     const first = name.split(/\s/)[0];
     const prose = first.length > 3 && /^[A-Z][a-z]+$/.test(first) && !/[A-Z]/.test(name.slice(1));
     return prose ? name[0].toLowerCase() + name.slice(1) : name;
   }
 
-  // Split a row at ", " only outside brackets. A plain split broke
-  // "bilirubin 305 micromol/L (unconjugated 295, conjugated 10)" into two
-  // readings, "...(unconjugated 295" and "conjugated 10)".
+  // Split a row at ", " only outside brackets, so "bilirubin 305
+  // micromol/L (unconjugated 295, conjugated 10)" stays one reading.
   function splitTopLevel(value) {
     const parts = [];
     let depth = 0, start = 0;
@@ -3223,13 +3087,9 @@
     // Only split when it genuinely is a list: at least three items, most
     // of them carrying a number, and none of them a full clause. A
     // narrative examination finding stays as prose.
-    // The length ceiling used to be 46 characters, which is shorter than
-    // a single thyroid result ("thyroid stimulating hormone less than
-    // 0.01 mIU/L (0.4-4.0)" is 58), so a panel of labs fell back to
-    // prose and sat under a row of aligned vital signs looking like a
-    // different component. A reading is a phrase, not a clause: the test
-    // that keeps narrative out is the absence of a verb-length run, so
-    // the ceiling is generous and the shape rules do the work.
+    // The length ceiling is generous because one thyroid result ("thyroid
+    // stimulating hormone less than 0.01 mIU/L (0.4-4.0)") is 58
+    // characters; the shape rules are what keep narrative out.
     const splittable = MEASUREMENT_ROWS.test(label)
       && parts.length >= 3
       && numeric >= parts.length - 1
@@ -3284,9 +3144,9 @@
     state.questionStart = Date.now();
     state.quiz._timingId = state.quiz.pool[state.quiz.idx].id;
     bindQuizKeys();
-    // Replacing #app took the focused control with it, which drops focus
-    // to <body>: a keyboard or screen-reader user was not told a new
-    // question had loaded. Land on the stem instead, unless something
+    // Replacing #app takes the focused control with it and drops focus to
+    // <body>, so a keyboard or screen-reader user would not hear that a
+    // new question loaded. Land on the stem instead, unless something
     // outside #app (the topbar, a revealed question's Next) holds focus.
     const act = document.activeElement;
     const stem = document.getElementById("qStem");
@@ -3304,20 +3164,17 @@
 
   // Position indicator. The counter is the middle cell of a fixed
   // three-column grid, so it stays dead centre no matter how wide the
-  // Previous / Next labels get - the panel used to be a fourth flex
-  // item in a space-between row, which shoved the counter sideways
-  // every time it opened.
+  // Previous / Next labels get, and opening the list does not move it.
   function renderTopbar() {
     const total = state.quiz.pool.length;
     const idx = state.quiz.idx;
     const study = state.quiz.mode === "study";
-    // A study session is open-ended: "of 7,053" counted the whole bank as
-    // a debt. It gives the position only.
+    // A study session is open-ended, so it gives the position only: "of
+    // 7,053" would read as a debt.
     document.getElementById("qtNumber").textContent = study
       ? `Question ${fmtNum(idx + 1)}` : `Question ${fmtNum(idx + 1)} of ${fmtNum(total)}`;
     // From 1200px up the rail is the navigator and this is a label, not
-    // a control. The styling said so; the semantics still promised a
-    // collapsed list that Enter would open.
+    // a control, so it stops announcing a list that Enter would open.
     const counter = document.getElementById("qtCounter");
     const rail = document.getElementById("navRail");
     const railShowing = rail && !rail.hidden &&
@@ -3409,9 +3266,6 @@
     for (const qid in state.quiz.answers) {
       const q = byId[qid];
       if (!q) continue;
-      // A study pick is not an answer until it is revealed. Grading it
-      // here turned the chip green or red before submit, which gave the
-      // key away to anyone who flagged or paged off first.
       if (!isAnswerCounted(qid)) continue;
       answered += 1;
       if (midTest) continue;
@@ -3516,8 +3370,7 @@
     // The chip has to hold the highest number in the session. Four
     // digits do not fit the 30px square three digits were drawn in.
     const digits = String(navSpan()).length;
-    // 8px per digit, not 7: the narrow-screen panel draws these at
-    // 12.5px, where five digits overflowed a floor tuned for 11.5px.
+    // 8px per digit: the narrow-screen panel draws these at 12.5px.
     const chipMin = Math.max(30, 10 + 8 * digits) + "px";
     if (rail) rail.style.setProperty("--nav-chip-min", chipMin);
     if (list) list.style.setProperty("--nav-chip-min", chipMin);
@@ -3527,7 +3380,7 @@
     wireNavigator(rail);
     if (list && !list.hidden) wireNavigator(list);
     // Only the dropdown gets scrolled to the current chip. The rail has
-    // no scroll region of its own any more, so asking for the chip to be
+    // no scroll region of its own, so asking for the chip to be
     // brought into view would scroll the page instead, fighting the jump
     // to the top of the question that follows every navigation.
   }
@@ -3593,7 +3446,7 @@
   // What counts as answered. A test answer is whatever is selected when
   // the test is scored. A study pick counts only once it is revealed:
   // before that it can still be changed, and grading it anywhere (chips,
-  // tallies, the report, Retry) gave the key away.
+  // tallies, the report, Retry) would give the key away.
   function isAnswerCounted(qid, quiz) {
     quiz = quiz || state.quiz;
     if (!quiz || !quiz.answers[qid]) return false;
@@ -3605,11 +3458,11 @@
     return Object.keys(quiz.answers).filter(id => isAnswerCounted(id, quiz)).length;
   }
 
-  // Leaving and ending do different things, and the dialog used to
-  // describe End for both. Leave scores nothing and cannot be undone
-  // (the saved copy goes); End scores a test, and in a test anything
-  // unanswered counts against it. Study End has nothing to lose, so it
-  // skips the dialog altogether (see endSession).
+  // Leaving and ending do different things, so the dialog words them
+  // differently. Leave scores nothing and cannot be undone (the saved
+  // copy goes); End scores a test, and in a test anything unanswered
+  // counts against it. Study End has nothing to lose, so it skips the
+  // dialog altogether (see endSession).
   function confirmLeaveSession(kind) {
     const quiz = state.quiz;
     const total = quiz ? quiz.pool.length : 0;
@@ -3639,21 +3492,30 @@
   // dialog: there is nothing left to lose.
   async function leaveSession() {
     const quiz = state.quiz;
-    const live = !!quiz && !quiz.finished;
-    if (live && !(await confirmLeaveSession("leave"))) return;
-    // The clock can run out while the dialog is open; that session is
-    // scored and on the report now, so stay there.
-    if (live && (state.quiz !== quiz || quiz.finished)) return;
-    stopSessionTimer();
-    if (quiz) {
-      if (live) { chargeQuestionTime(); commitTestAnswers(quiz); }
-      // Only a session being left takes the saved copy with it. The
-      // brand on the home screen used to clear it too, so clicking the
-      // logo there silently threw away the session the Resume strip
-      // was offering.
-      clearSavedSession();
+    if (quiz && !quiz.finished) {
+      if (!(await closeLiveSession(quiz))) return;
+    } else {
+      stopSessionTimer();
+      // Only a session being left takes the saved copy with it; the brand
+      // on the home screen must not clear the session Resume is offering.
+      if (quiz) clearSavedSession();
     }
     showHome();
+  }
+
+  // Asks, then closes a session still in progress: time charged, a
+  // test's answers committed, the saved copy removed. False when the
+  // user stays, or when the clock ran out while the dialog was open
+  // (that session is scored and on the report now). A report review
+  // was never the saved session, so it leaves the saved copy alone.
+  async function closeLiveSession(quiz) {
+    if (!(await confirmLeaveSession("leave"))) return false;
+    if (state.quiz !== quiz || quiz.finished) return false;
+    stopSessionTimer();
+    chargeQuestionTime();
+    commitTestAnswers(quiz);
+    if (!quiz.ephemeral) clearSavedSession();
+    return true;
   }
 
   async function endSession() {
@@ -3696,8 +3558,8 @@
   }
 
   // A test is recorded once, with its final answers, when it is scored or
-  // left. Recording at each submit logged a question again every time the
-  // reader went back to check it and pressed Enter, and never logged an
+  // left. Recording at each submit would log a question again every time
+  // the reader went back to check it and pressed Enter, and never log an
   // answer left with Next, a chip or the clock running out.
   function commitTestAnswers(quiz) {
     if (!quiz || quiz.mode !== "test" || quiz.committed) return;
@@ -3716,9 +3578,9 @@
     if (cloudUser) (async () => { for (const p of posts) await cloudPostAnswer(...p); })();
   }
 
-  // Pause is global state. Nothing reset it, so pausing a test and then
-  // leaving started the next session paused: a frozen clock, and a
-  // countdown that could never run out.
+  // Pause is global state, so each new session resets it; otherwise
+  // pausing a test and leaving would start the next session paused, with
+  // a countdown that could never run out.
   function resetPause() {
     state.paused = false;
     if (state.quiz) state.quiz._pausedAt = null;
@@ -3759,7 +3621,7 @@
   }
 
   // Called when a session starts: the window and the follow flag are
-  // module state, and a new quiz that inherited "301 to 400" showed a
+  // module state, and a new quiz inheriting "301 to 400" would show a
   // page with no current chip in it.
   function resetNavigator() {
     navWindowStart = 0;
@@ -3775,7 +3637,7 @@
   }
   // Where Previous / Next go. In a review opened from the report they
   // step through the rows the report listed (the Incorrect filter, say),
-  // not through the whole pool, which was mostly questions already right.
+  // not through the whole pool, which is mostly questions already right.
   function navTarget(d) {
     const quiz = state.quiz;
     if (quiz.reviewing && Array.isArray(quiz.reviewList) && quiz.reviewList.length) {
@@ -3811,11 +3673,10 @@
     }
     return order;
   }
-  // Keyed off the question rather than written onto it. As an ordinary
-  // property the cache was enumerable, so a question serialised into an
-  // audit prompt carried a second, post-shuffle copy of its own options
-  // under an instruction to return every field - and if the model echoed
-  // it back, apply-report wrote it into the bank.
+  // Keyed off the question rather than written onto it: an enumerable
+  // property would ride along when a question is serialised into an
+  // audit prompt, and a model that echoed it back would have apply-report
+  // write the shuffled copy into the bank.
   const _shuffleCache = new WeakMap();
   function _shuffledOptions(q) {
     const hit = _shuffleCache.get(q);
@@ -3833,9 +3694,7 @@
   }
 
   // An explanation is an object with summary / pearls / why_not. Some
-  // batches wrote it as a plain string, and reading `.summary` off a
-  // string gives undefined, so the commentary block opened empty on a
-  // question that had a perfectly good explanation.
+  // batches write it as a plain string, which is taken as the summary.
   function explanationOf(q) {
     const e = q && q.explanation;
     if (typeof e === "string") return { summary: e };
@@ -3845,9 +3704,8 @@
   function renderReadingPane() {
     const q = state.quiz.pool[state.quiz.idx];
     const shuffled = _shuffledOptions(q);
-    // No folio line: the topbar carries the position, and the pre-answer
-    // view must not name the subtopic or the discipline, which is what
-    // the rest of that header was for.
+    // No folio line: the topbar carries the position, and before the
+    // answer the subtopic and discipline must stay hidden.
     renderStemWithClues(q);
 
     // Optional question image (e.g. from a referenced AU image bank).
@@ -3941,8 +3799,7 @@
     ol.setAttribute("role", "radiogroup");
     ol.setAttribute("aria-label", q.lead_in || "Answer options");
     // One citation per source. Rationales end in "(Source: X)" and the
-    // option also carries X in source_refs, which printed it twice under
-    // every option and a third time in Sources. The trailing bracket is
+    // option also carries X in source_refs, so the trailing bracket is
     // dropped in favour of the caption, and the caption itself is dropped
     // when every option cites the same thing, since Sources already says it.
     const refKey = o => (o.source_refs || []).join(", ");
@@ -3987,10 +3844,10 @@
       li.addEventListener("click", () => selectOption(q, opt, li));
       li.querySelector(".opt-choice").addEventListener("keydown", e => {
         if (e.key !== " " && e.key !== "Enter") return;
-        // Radio pattern: the first press selects and stops there. It used
-        // to bubble on to the quiz handler, which saw Submit enabled and
-        // committed the answer in the same keystroke. A second press on
-        // the selected row does go through, and submits.
+        // Radio pattern: the first press only selects. Stopped here, or
+        // the quiz handler would see Submit enabled and commit on the same
+        // keystroke. A second press on the selected row goes through, and
+        // submits.
         if (li.classList.contains("selected")) return;
         e.preventDefault();
         e.stopPropagation();
@@ -4030,16 +3887,11 @@
     // scrolled through it on a phone does not have to scroll back up.
     const nextEnd = document.getElementById("nextBtnEnd");
     if (nextEnd) nextEnd.onclick = onNext;
-    // classList.toggle throws SyntaxError on a token containing whitespace,
-    // so we must toggle each class separately. The CSS rule that paints the
-    // active-flagged state is `.action-link.active.flag` - both classes
-    // need to be on the button at once for the warn-colour styling.
     const flagBtn = document.getElementById("flagBtn");
     flagBtn.onclick = () => {
       const on = !state.flags[q.id];
-      // Optimistic local update so the star is instant. Cloud sync runs
-      // in the background; failures log to console (no UX impact - the
-      // next session-start hydration will reconcile from the server).
+      // Local first, so the button answers at once; the outbox carries
+      // the change to the server.
       if (on) state.flags[q.id] = true;
       else    delete state.flags[q.id];
       save(ns(FLAGS_KEY), state.flags);
@@ -4158,19 +4010,16 @@
       meta.hidden = !q.difficulty;
     }
 
-    // The Why-is-correct / Why-the-others-are-not commentary blocks are
-    // intentionally NOT populated here - their content used to duplicate
-    // the option-box rationales (which are now visible on every option
-    // post-reveal). The blocks stay hidden via their `hidden` attribute
-    // in HTML. "In context" (explainSummary) is the differentiating
-    // explanation - condition background, key points, pearls.
+    // The Why-is-correct block in the HTML stays hidden and empty: every
+    // option shows its own rationale after the reveal. "In context"
+    // (explainSummary) is what adds to them: condition background, key
+    // points, pearls.
 
     const sum = explanationOf(q);
     const sumWrap = document.getElementById("explainSummary");
     sumWrap.innerHTML = "";
-    // A summary can carry blank-line paragraph breaks (the "In context:"
-    // paragraph of the -d2 pass); each one becomes its own <p> rather than
-    // collapsing into one run-on block.
+    // A summary can carry blank-line paragraph breaks; each one becomes
+    // its own <p> rather than collapsing into one run-on block.
     const paras = t => String(t).split(/\n\s*\n/).map(x => x.trim()).filter(Boolean)
       .map(x => `<p>${esc(x)}</p>`).join("");
     if (sum.summary) sumWrap.innerHTML += paras(sum.summary);
@@ -4178,13 +4027,13 @@
       sumWrap.innerHTML += `<ul>${sum.key_points.map(p => `<li>${esc(p)}</li>`).join("")}</ul>`;
     }
     // Some Medicine questions carry a `context` paragraph in place of
-    // pearls; it was never rendered.
+    // pearls.
     if (sum.context) sumWrap.innerHTML += paras(sum.context);
     if (sum.pearls) sumWrap.innerHTML += `<div class="pearl"><b>Pearl.</b> ${esc(sum.pearls)}</div>`;
 
     // Only an absolute http(s) URL becomes a link. Anything else (a
-    // markdown-wrapped URL, an empty string) resolved against the Pages
-    // origin and 404ed, so it renders as the plain label instead.
+    // markdown-wrapped URL, an empty string) would resolve against the
+    // Pages origin and 404, so it renders as the plain label instead.
     document.getElementById("explainSources").innerHTML = (q.sources || []).map(s =>
       s && typeof s.url === "string" && /^https?:\/\//i.test(s.url)
         ? `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`
@@ -4215,7 +4064,7 @@
     // Frame the reveal on the correct answer: that row is what the reveal
     // is about, and a wrong pick is already marked red where it sits.
     // Instant, like every other question change; a smooth scroll of a
-    // phone-length rationale took over half a second. rAF defers until
+    // phone-length rationale takes over half a second. rAF defers until
     // the explainBlock has reflowed.
     requestAnimationFrame(() => {
       const anchorLi = document.querySelector("#qOptions li.revealed.correct");
@@ -4257,8 +4106,8 @@
       return;
     }
     if (quiz.idx + 1 >= quiz.pool.length) {
-      // Submitting the last question of a test used to score it on the
-      // spot, skipped and flagged questions included.
+      // The last question of a test asks before scoring while anything
+      // is unanswered or flagged.
       if (quiz.mode === "test" && !quiz.finished) {
         const open = quiz.pool.filter(q => !quiz.answers[q.id]).length;
         const flagged = quiz.pool.filter(q => state.flags[q.id]).length;
@@ -4282,8 +4131,8 @@
     quiz.idx += 1;
     navFollowCurrent = true;
     renderQuiz();
-    // Saved after the move, not before it: a reload used to resume on the
-    // question just answered, one behind.
+    // Saved after the move, so a reload resumes on the new question, not
+    // one behind.
     saveSession();
   }
 
@@ -4361,7 +4210,7 @@
           const btn = e.target.closest(".ref-pill");
           if (!btn) return;
           const target = body.querySelector(`.range-cat[data-key="${btn.dataset.key}"]`);
-          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+          if (target) target.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
         });
         jump.dataset.wired = "1";
       }
@@ -4421,7 +4270,7 @@
     stopSessionTimer();
     resetPause();
     // 1-second precision is enough for both the session clock and any
-    // countdown; halving from 500ms cuts tick work by 50% over long sessions.
+    // countdown.
     state.timerInterval = setInterval(tick, 1000);
     tick();
   }
@@ -4463,10 +4312,8 @@
         announce(level === 2 ? "1 minute left." : "5 minutes left.");
       }
     } else if (state.quiz.mode === "test") {
-      // Test mode without countdown: show stopwatch-style elapsed time
-      // for the current question. By design we do NOT show a Q
-      // timer in study mode - the per-question stopwatch added noise
-      // without value.
+      // Test mode without countdown: time on the current question. Study
+      // mode shows none; nothing there is being timed.
       qEl.textContent = "Q " + fmtClock(Date.now() - state.questionStart);
       sep.hidden = false;
     } else {
@@ -4485,8 +4332,8 @@
       state.sessionStart += off;
       state.questionStart += off;
       state.quiz._pausedAt = null;
-      // The shifted deadline lived in memory only, so a reload after an
-      // unpause charged the paused minutes to the clock.
+      // Saved, or a reload after an unpause would charge the paused
+      // minutes to the clock.
       saveSession();
     }
   }
@@ -4512,12 +4359,11 @@
       const t = e.target;
       if (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable) return;
       // Nothing here may act on the question behind an open dialog or
-      // modal. Enter on the confirm dialog's Cancel used to submit the
-      // answer underneath and leave the dialog open.
+      // modal.
       if (document.querySelector("dialog[open], .modal:not([hidden])")) return;
       // Enter and Space belong to whatever control has focus: a button,
       // a link in the commentary, the Keyboard <summary>. Taking them
-      // here cancelled the control and submitted or advanced instead.
+      // here would cancel the control and submit or advance instead.
       if ((e.key === "Enter" || e.key === " ") && t.closest &&
           t.closest("button, a[href], summary, [role=button]")) return;
       // Modifier-key shortcuts belong to the browser / OS. Shift is the
@@ -4528,7 +4374,7 @@
       if (!q) return;
       // Which option a number key means, read off the physical key. Shift
       // turns 1 into " or § on UK, German and French layouts, and AZERTY
-      // needs Shift for the digits at all, so e.key alone missed them.
+      // needs Shift for the digits at all, so e.key alone would miss them.
       const codeDigit = /^(?:Digit|Numpad)([1-5])$/.exec(e.code || "");
       const digitIdx = codeDigit ? parseInt(codeDigit[1], 10) - 1
         : "!@#$%".indexOf(e.key) >= 0 && e.key.length === 1 ? "!@#$%".indexOf(e.key)
@@ -4572,7 +4418,7 @@
       } else if (k === "f") {
         document.getElementById("flagBtn").click();
       } else if (k === "x") {
-        // x still rules out whatever is currently selected.
+        // x rules out whatever is currently selected.
         if (selected) toggleStrike(q.id, selected.dataset.letter, selected);
       } else if (k === "l") {
         toggleRefs();
@@ -4591,8 +4437,8 @@
         if (!items.length) { e.preventDefault(); return; }
         const n = items.length;
         const cur = items.findIndex(li => li.classList.contains("selected"));
-        // Step over ruled-out rows. Clicking one restores it, so arrowing
-        // past an eliminated option used to undo the elimination.
+        // Step over ruled-out rows: clicking one restores it, so landing
+        // on it would undo the elimination.
         const step = dir === "down" ? 1 : -1;
         let nextIdx = -1;
         for (let s = 1; s <= n; s++) {
@@ -4624,8 +4470,8 @@
     quiz.reviewList = null;
     if (!quiz.finished) {
       chargeQuestionTime();
-      // A study pick that was never revealed is not an answer: it never
-      // reached history, and scoring it here disagreed with Stats.
+      // Unrevealed study picks never reached history, so they are not
+      // scored either (see isAnswerCounted).
       if (quiz.mode === "study") {
         for (const id of Object.keys(quiz.answers)) if (!quiz.revealed[id]) delete quiz.answers[id];
       }
@@ -4688,7 +4534,7 @@
 
     // Back from a review, the list comes back as it was left: the same
     // filter, paged far enough to hold the row just read, and focus on
-    // that row. It used to reset to All at the top.
+    // that row.
     const filter = returning ? _reviewFilter : "all";
     let shown;
     if (returning) {
@@ -4708,9 +4554,7 @@
     });
     paintFilters(filter);
 
-    // Say how many, and do not offer the button when there are none:
-    // "Retry incorrect" on a clean sheet used to start a session of
-    // everything the reader had never reached.
+    // Say how many, and do not offer the button when there are none.
     const retryBtn = document.getElementById("retryBtn");
     const wrongCount = pool.filter(q => {
       const a = state.quiz.answers[q.id];
@@ -4826,18 +4670,15 @@
       ol.dataset.reviewWired = "1";
       const open = li => {
         state.quiz.idx = parseInt(li.dataset.reviewI, 10);
-        // The session has been scored, so review is read-only. Revealing
-        // only the clicked question left every other one answerable: in
-        // test mode the user could step to the next question, answer it
-        // after seeing the score, and have that land in history. And the
-        // countdown is over: leaving the deadline set meant the first
-        // timer tick after a timed test ran out went straight back to
-        // the summary, so no question from it could ever be reviewed.
+        // The session has been scored, so review is read-only: every
+        // question is revealed, or an answer given after seeing the score
+        // would land in history. The countdown is over too; a deadline
+        // left set would send the first tick straight back to the summary.
         for (const p of state.quiz.pool) state.quiz.revealed[p.id] = true;
         state.quiz.deadline = null;
-        // A review is its own state, not an unfinished session. Clearing
-        // `finished` instead made the scored session resumable again on
-        // the next save, and hid right / wrong on a test's navigator.
+        // A review is its own state, not an unfinished session: clearing
+        // `finished` would make the scored session resumable again and
+        // hide right / wrong on a test's navigator.
         state.quiz.reviewing = true;
         // Next and Previous walk the rows the report was showing.
         state.quiz.reviewList = reviewRows(_reviewFilter).map(r => r.i);
@@ -4867,9 +4708,8 @@
   }
 
   function retryIncorrect() {
-    // Answered and wrong. The old predicate counted "never answered" as
-    // incorrect, so ending a study session after twelve questions of the
-    // default 7,000-question pool offered to retry the other 7,041.
+    // Answered and wrong. A question never reached is not incorrect: a
+    // study pool is the whole bank.
     const wrong = state.quiz.pool.filter(q => {
       const ans = state.quiz.answers[q.id];
       return ans && !_shuffledOptions(q).find(o => o.letter === ans)?.correct;
@@ -4889,11 +4729,10 @@
     saveSession();
   }
 
-  // ── Content pane wiring ─────────────────────────────────────────────
-  // Named wireHowToModal for historical reasons; the how-to modal it
-  // was built around is long gone. It now wires the generation-prompt
-  // controls and owns the app's Escape handling.
-  function wireHowToModal() {
+  // ── Escape and the Content pane ─────────────────────────────────────
+  // The app's one Escape handler, and the generation-prompt and paste
+  // controls on the admin Content pane.
+  function wireEscapeAndContentPane() {
     document.addEventListener("keydown", e => {
       if (e.key !== "Escape") return;
       // Close whichever overlay is topmost. Order matches z-stacking so a
@@ -4912,10 +4751,9 @@
       if (qtList && !qtList.hidden)   { closeQtList(); return; }
       if (state.refsOpen)             { closeRefs(); return; }
       // Last resort, and only once nothing is open: clear a
-      // not-yet-submitted selection. This used to live in the quiz's own
-      // key handler, which ran as well as this one - so closing the
-      // reference panel with Escape also threw away the answer the
-      // reader had just been checking a value against.
+      // not-yet-submitted selection. It lives here, not in the quiz key
+      // handler, so the Escape that closes the reference panel keeps the
+      // answer the reader was checking a value against.
       const q = state.quiz && state.quiz.pool[state.quiz.idx];
       const sel = document.querySelector("#qOptions li.selected");
       if (q && sel && !state.quiz.revealed[q.id]) deselectOption(q, sel);
@@ -4926,11 +4764,8 @@
       promptPre.hidden = !promptPre.hidden;
       toggleBtn.textContent = promptPre.hidden ? "show prompt" : "hide prompt";
     };
-    // Populate the LLM prompt + copy button. The prompt text has
-    // placeholders ({{FOCUS_DIRECTIVE}}, {{BANK_STATE}}) substituted
-    // at copy time so the directive and the live bank counts are
-    // always current.
-    // Filled by fillPromptText() when the admin Content tab opens.
+    // The prompt is filled by fillPromptText() when the Content tab opens
+    // and rendered again at copy time, so the bank counts are current.
     const promptText = document.getElementById("promptText");
     const copyBtn = document.getElementById("copyPromptBtn");
     const copyStatus = document.getElementById("copyPromptStatus");
@@ -4989,7 +4824,6 @@
   // report can be traced back to the same namespace that raised it.
   function reporterId() {
     if (cloudUser) return "cloud-" + cloudUser.id;
-    if (currentProfile) return currentProfile.id;
     if (guestUser) return "guest-" + guestUser.id;
     return "guest";
   }
@@ -5045,7 +4879,7 @@
     const status = document.getElementById("reportStatus");
     const btn = document.getElementById("reportSubmit");
     // Ctrl/Cmd+Enter reaches here directly, not through the button, so
-    // the disabled button alone did not stop a second report being filed.
+    // the disabled button alone would not stop a second report being filed.
     if (btn.disabled) return;
     status.className = "dim small";
     if (text.length < 3) {
@@ -5084,8 +4918,8 @@
   }
 
   // ── Audit dashboard (admin only) ───────────────────────────────────────
-  // Two tabs: Inbox (pending batches) and Reports (user-submitted issues).
-  // Each row offers a copy-prompt → paste-response → apply workflow that
+  // Inbox (pending batches), Reports (user-submitted issues) and Live
+  // (published files). Each row offers a copy-prompt → paste-response → apply workflow that
   // works on any LLM's free tier (no API key, no Claude Code needed).
   const AUDIT_LLMS = {
     claude:   { label: "Claude",   url: "https://claude.ai" },
@@ -5096,15 +4930,11 @@
     mistral:  { label: "Le Chat",  url: "https://chat.mistral.ai" },
     copilot:  { label: "Copilot",  url: "https://copilot.microsoft.com" }
   };
-  /* The generation prompt used to be 332 lines of authoring rules in a
-   * <script type="text/template"> inside index.html, so every visitor
-   * downloaded it and it sat in view-source of the front page. It is
-   * admin-only content, it is 15 KB, and nothing outside the Content
-   * tab reads it. Fetched once, on demand, and cached.
-   */
-  // A failed fetch is not cached: caching "" meant one blip poisoned the
-  // tab until a full reload, while the error text said to reopen the
-  // Content tab. Concurrent callers share one request.
+  // The generation prompt is 15 KB of admin-only content that nothing
+  // outside the Content tab reads, so it is its own file, fetched once on
+  // demand and cached. A failed fetch is not cached, so reopening the
+  // Content tab (as the error says) tries again. Concurrent callers
+  // share one request.
   let _promptTemplate = null;
   let _promptTemplateReq = null;
   function loadPromptTemplate() {
@@ -5113,9 +4943,10 @@
     const url = "assets/prompt-template.txt?v=" + encodeURIComponent((state.meta && state.meta.updated) || "1");
     _promptTemplateReq = (async () => {
       try {
-        const r = await fetch(url);
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        _promptTemplate = (await r.text()).trim();
+        _promptTemplate = await timedFetch(url, {}, FETCH_JSON_TIMEOUT_MS, r => {
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          return r.text();
+        }).then(t => t.trim());
         return _promptTemplate;
       } catch (e) {
         console.warn("[prompt] template fetch failed:", url, e && e.message || e);
@@ -5163,15 +4994,6 @@
   let _liveFilter = "all";
 
   function wireReportsAdmin() {
-    // This used to open with a guard on #reportsAdminBtn and
-    // #reportsAdminModal, neither of which has existed for some time.
-    // The function therefore returned on its third line and nothing
-    // below it ever ran, which left fourteen visible controls inert:
-    // the five report filter pills, the seven live-audit filter pills,
-    // the bulk-audit button and the LLM picker. They all had hover
-    // states and did nothing, so clicking "Fixed" and seeing the same
-    // open reports read as the data being wrong rather than the button
-    // being broken.
     const llmSel = document.getElementById("auditLlmSelect");
     if (llmSel) {
       llmSel.value = auditLlmId();
@@ -5208,18 +5030,26 @@
   }
 
 
-  // The list of pending inbox batches, hydrated from inbox_manifest.json
-  // at modal-open time (the user may have just pasted, so this is the
-  // freshest source of truth).
-  let _inboxBatches = [];   // [{ path: "inbox/...json", questions: [...], _fetched: bool }]
+  // The list of pending inbox batches, read from inbox_manifest.json when
+  // the Content tab opens (the admin may have just pasted, so this is the
+  // freshest copy). A file that fails to load is named, not taken for an
+  // empty one.
+  let _inboxBatches = [];   // [{ path: "inbox/...json", questions: [...] }]
+  let _inboxFailed = [];    // paths, or the manifest, that did not load
   async function refreshAuditInboxList() {
-    const manifest = await fetchJson("data/inbox_manifest.json").catch(() => ({ inbox: [] }));
+    _inboxFailed = [];
+    const failed = (what, e) => {
+      console.warn("[audit] inbox:", what, "failed to load:", e && e.message || e);
+      _inboxFailed.push(what);
+    };
+    const manifest = await fetchJson("data/inbox_manifest.json").catch(e => { failed("inbox_manifest.json", e); return null; });
     const paths = (manifest && manifest.inbox) || [];
     _inboxBatches = await Promise.all(paths.map(async (p) => {
-      const qs = await fetchJson("data/" + p).catch(() => []);
-      return { path: p, questions: Array.isArray(qs) ? qs : [] };
+      let qs = await fetchJson("data/" + p).catch(e => { failed(p, e); return null; });
+      if (qs !== null && !Array.isArray(qs)) { failed(p, new Error("not a JSON array")); qs = null; }
+      return { path: p, questions: qs || [] };
     }));
-    // Filter out empty batches (already audited and cleared).
+    // An empty batch has already been audited and cleared.
     _inboxBatches = _inboxBatches.filter(b => b.questions.length > 0);
     const ic = document.getElementById("auditInboxCount");
     if (ic) ic.textContent = _inboxBatches.length ? String(_inboxBatches.length) : "";
@@ -5231,9 +5061,11 @@
   }
   function renderAuditInbox() {
     const list = document.getElementById("auditInboxList");
-    list.innerHTML = "";
+    list.innerHTML = _inboxFailed.length
+      ? `<li class="small audit-load-error">Couldn't load ${esc(_inboxFailed.join(", "))}, so batches may be missing below. Reopen the Content tab to try again.</li>`
+      : "";
     if (!_inboxBatches.length) {
-      list.innerHTML = `<li class="dim small">No inbox batches awaiting audit. Pasted content goes through this list before being promoted to the live per-topic files.</li>`;
+      if (!_inboxFailed.length) list.innerHTML = `<li class="dim small">No inbox batches awaiting audit. Pasted content goes through this list before being promoted to the live per-topic files.</li>`;
       return;
     }
     for (const b of _inboxBatches) {
@@ -5299,8 +5131,8 @@
     copyBtn.onclick = async () => {
       let text;
       try {
-        // Throws when the prompt template is missing. Outside a try this
-        // was an unhandled rejection: the click did nothing visible.
+        // Throws when the prompt template is missing; the status line
+        // says so.
         if (!_promptTemplate) await loadPromptTemplate();
         text = opts.buildPrompt();
       } catch (e) {
@@ -5372,11 +5204,10 @@
     };
   }
 
-  // Build the audit prompt for a single inbox batch. Reuses the
-  // generation prompt template's quality bar (sections 1-7), strips
-  // Section 0 (focus directive  -  partial applicability) and Section 8
-  // (how reach the site), and wraps with audit-specific intro + output
-  // spec.
+  // Build the audit prompt for a single inbox batch: the generation
+  // template's quality bar (sections 1-7), without the trailing input
+  // block or Section 8 (how questions reach the site), wrapped in an
+  // audit intro and output spec.
   function _qualityBarText() {
     if (!_promptTemplate) {
       // Primed by loadPromptTemplate() when the Content tab mounts. If
@@ -5388,9 +5219,8 @@
     // Strip the "INPUT FROM ME" trailing block (everything from
     // "============================\nINPUT FROM ME" onwards).
     t = t.split(/={5,}\s*\nINPUT FROM ME/i)[0].trim();
-    // Strip Section 8 (how questions reach the site) if present
-    // before INPUT FROM ME (it isn't, in the current template, but be
-    // defensive in case the template moves things).
+    // Section 8 sits after INPUT FROM ME today; cut it too if the
+    // template ever moves it ahead.
     t = t.split(/={5,}\s*\n8\.\s+HOW THESE QUESTIONS REACH THE SITE/i)[0].trim();
     return t;
   }
@@ -5471,13 +5301,19 @@ because the site replaces the live entry wholesale on apply.`;
 
   // ── Live content tab (audit any already-promoted file in place) ───────
   let _liveFiles = [];   // [{ path, questions }]
+  let _liveFailed = [];  // paths that did not load, named above the list
   async function loadAndRenderAuditLive() {
+    _liveFailed = [];
     if (Array.isArray(state.bankFiles) && state.bankFiles.length) {
       // Already in memory from loadData (refreshed after every apply).
       _liveFiles = state.bankFiles.map(f => ({ path: f.path, questions: Array.isArray(f.questions) ? f.questions : [] }));
     } else {
       const token = _adminRenderSeq;
-      const manifest = await fetchJson("data/batches_manifest.json").catch(() => ({ batches: [] }));
+      const failed = (what, e) => {
+        console.warn("[audit] live:", what, "failed to load:", e && e.message || e);
+        _liveFailed.push(what);
+      };
+      const manifest = await fetchJson("data/batches_manifest.json").catch(e => { failed("batches_manifest.json", e); return null; });
       const batchPaths = ((manifest && manifest.batches) || []).map(p => "data/" + p);
       const mainPaths = [
         "data/questions_paeds.json",
@@ -5487,8 +5323,9 @@ because the site replaces the live entry wholesale on apply.`;
       ];
       const all = mainPaths.concat(batchPaths);
       const files = await Promise.all(all.map(async (p) => {
-        const qs = await fetchJson(p).catch(() => []);
-        return { path: p, questions: Array.isArray(qs) ? qs : [] };
+        let qs = await fetchJson(p).catch(e => { failed(p, e); return null; });
+        if (qs !== null && !Array.isArray(qs)) { failed(p, new Error("not a JSON array")); qs = null; }
+        return { path: p, questions: qs || [] };
       }));
       // A quick tab flip started a second download; only the latest paints.
       if (token !== _adminRenderSeq) return;
@@ -5501,7 +5338,9 @@ because the site replaces the live entry wholesale on apply.`;
   }
   function renderAuditLive(filter) {
     const list = document.getElementById("auditLiveList");
-    list.innerHTML = "";
+    list.innerHTML = _liveFailed.length
+      ? `<li class="small audit-load-error">Couldn't load ${esc(_liveFailed.join(", "))}. Reopen the Content tab to try again.</li>`
+      : "";
     const visible = _liveFiles.filter(f => {
       if (filter === "all") return true;
       if (filter === "batches") return f.path.startsWith("data/batches/");
@@ -5513,7 +5352,7 @@ because the site replaces the live entry wholesale on apply.`;
       return true;
     });
     if (!visible.length) {
-      list.innerHTML = `<li class="dim small">No files match this filter.</li>`;
+      list.insertAdjacentHTML("beforeend", `<li class="dim small">No files match this filter.</li>`);
       return;
     }
     for (const f of visible) {
@@ -5607,7 +5446,6 @@ the file is replaced wholesale on apply.`;
     const res = await postBackend("apply-live-audit", {
       file_path: filePath,
       audit,
-      profile: currentProfile ? currentProfile.id : "rob",
     });
     if (!res) return { ok: false, error: "backend unreachable" };
     if (res.ok) {
@@ -5620,7 +5458,6 @@ the file is replaced wholesale on apply.`;
     const res = await postBackend("apply-audit", {
       batch_path: batchPath,
       audit,
-      profile: currentProfile ? currentProfile.id : "rob",
     });
     if (!res) return { ok: false, error: "backend unreachable" };
     if (res.ok) {
@@ -5640,8 +5477,8 @@ the file is replaced wholesale on apply.`;
   }
   function showReportAuditFlow(reports) {
     // Build an inline flow row at the top of the reports list. One at a
-    // time: clicking Audit twice used to stack a second identical pane
-    // on top of the first, each with its own half-finished state.
+    // time: a second Audit click replaces the pane rather than stacking
+    // another with its own half-finished state.
     const list = document.getElementById("reportsAdminList");
     list.querySelectorAll(".audit-row").forEach(r => r.remove());
     const wrap = document.createElement("li");
@@ -5821,19 +5658,10 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
   }
   // Returns false when the user chose to stay in their session.
   async function jumpToQuestionStandalone(q) {
-    // Admins are full users: this used to replace a running session with
-    // no warning, and the review's first save overwrote its resumable
-    // copy. Same dialog and the same exit steps as leaving by Exit.
+    // Admins are full users, so a session of their own in progress is
+    // left the same way as by Exit.
     const live = state.quiz && !state.quiz.finished && !state.quiz.ephemeral ? state.quiz : null;
-    if (live) {
-      if (!(await confirmLeaveSession("leave"))) return false;
-      if (state.quiz === live && !live.finished) {
-        stopSessionTimer();
-        if (typeof chargeQuestionTime === "function") chargeQuestionTime();
-        if (typeof commitTestAnswers === "function") commitTestAnswers(live);
-      }
-      clearSavedSession();
-    }
+    if (live && !(await closeLiveSession(live))) return false;
     // Start a tiny single-question study session for review. Ephemeral:
     // saveSession skips it, so it never becomes the resumable session.
     resetNavigator();
@@ -6050,14 +5878,14 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
       const correct = q.options.filter(o => o && o.correct === true);
       if (correct.length !== 1)
         return problems.push(`${tag}: exactly one option must have \`correct: true\` (found ${correct.length})`);
-      if (typeof q.difficulty !== "number") q.difficulty = 3;
       // Same rule the loader applies, so a paste cannot be accepted here
-      // and then dropped (or made unreachable) on the next reload.
+      // and then dropped (or made unreachable) on the next reload. A
+      // missing difficulty is refused, not guessed: the mix is managed.
       if (typeof q.stem !== "string" || !q.stem.trim()) return problems.push(`${tag}: missing \`stem\``);
       if (!SERVABLE_TOPICS.includes(q.topic))
         return problems.push(`${tag}: \`topic\` must be one of ${SERVABLE_TOPICS.join(", ")}`);
       if (!Number.isInteger(q.difficulty) || q.difficulty < 1 || q.difficulty > 5)
-        return problems.push(`${tag}: \`difficulty\` must be an integer 1-5`);
+        return problems.push(`${tag}: \`difficulty\` is missing or not an integer 1-5`);
       if (!isServable(q)) return problems.push(`${tag}: every option must be an object`);
     });
     if (problems.length) {
@@ -6107,11 +5935,9 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     { q: "Boring people live longer. Or it just seems longer to them.", who: "House" },
   ];
   function maybeShowHouseQuote() {
-    // Spec: fire reliably on every 50th UNIQUE answered question
-    // in this study session - Q50, Q100, Q150, etc. The trigger counts
-    // unique questions answered in the current in-memory pool, not raw
-    // answer-events (re-answers don't tick the counter). Falls back to
-    // the live tab session's sessionStorage so it survives navigation.
+    // Every 50th unique question answered in this study session (Q50,
+    // Q100, ...); re-answers don't tick the counter. Outside a session
+    // the count lives in this tab's sessionStorage.
     let count = 0;
     if (state && state.quiz && state.quiz.pool && state.quiz.answers) {
       const answered = new Set(Object.keys(state.quiz.answers));
@@ -6151,25 +5977,9 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     setTimeout(dismiss, 9000);
   }
 
-  // Render a small inline list of reference ranges relevant to the
-  // current question. Looks up each key in state.ranges and renders
-  // a compact name/range pair. Unknown keys render their bare key
-  // so authors can spot typos.
-  // Resolve a reference_ranges key against state.ranges.categories.
-  // Categories look like:
-  //   "paeds_fbc_age_bands": { "label": "...", "ranges": [{test, value, units}, ...] }
-  // A key can be:
-  //   (a) a category key - render the whole category's rows
-  //   (b) a single test key inside a category - render just that row
-  //   (c) a guess with common aliases - we map a few historical names
-  //   (d) unknown - skip silently rather than show "(not in reference set)"
-  // Which reference categories may appear under which question. The
-  // reported bug was an adult psychiatry stem showing "Paediatric blood
-  // glucose & hypoglycaemia", because the authoring pass tagged it
-  // bsl_paeds and nothing downstream ever objected. The data has been
-  // corrected, and this is the guard that stops it recurring: a
-  // paediatric panel never renders under a non-paediatric question, no
-  // matter what the question claims.
+  // Which reference categories may appear under which question. An
+  // authoring pass can tag an adult stem with a paediatric panel, so the
+  // population is checked here whatever the question's tags claim.
   const TOPIC_POPULATION = {
     "Paediatrics": "paediatric",
     "Obstetrics & Gynaecology": "obstetric",
@@ -6186,16 +5996,14 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     // adult's. Everything else is the author's own tag - a psychiatry
     // question about a pregnant patient asks for maternal observations
     // on purpose, and an obstetric question needs the adult panels
-    // alongside the pregnancy-specific ones. Blocking those left the
-    // block empty on perinatal questions in three of the four modules.
+    // alongside the pregnancy-specific ones. Blocking those would empty
+    // the block on perinatal questions in three of the four modules.
     return want !== "paediatric" || pop === "paediatric";
   }
 
-  // Single source of truth for a reference row, shared by the side panel
-  // and the post-answer block. The unit lives in `units` and is never
-  // repeated inside `value`, so it is appended here exactly once - the
-  // old inline renderer appended it to values that already ended with it,
-  // which is where "135 - 145 mmol/L mmol/L" came from.
+  // One definition of a reference row, shared by the side panel and the
+  // post-answer block. The unit lives in `units` and is never repeated
+  // inside `value`, so it is appended here exactly once.
   function refRowHtml(r) {
     const t = r.test || r.label || r.name || "";
     const v = r.value != null ? r.value : (r.range != null ? r.range : (r.normal || ""));
@@ -6209,8 +6017,8 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
   }
 
   // After the answer: the panels this question was tagged with, named in
-  // one line, each opening the reference panel at that panel. Printing
-  // the panels in full put several screens of often unrelated ranges
+  // one line, each opening the reference panel at that panel. Printed in
+  // full they would put several screens of often unrelated ranges
   // between the commentary and Next on a phone.
   function renderInlineRanges(keys, topic) {
     const cats = (state.ranges && state.ranges.categories) || {};
@@ -6250,11 +6058,8 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     return out.join("");
   }
 
-  // Render the stem, optionally highlighting authored clue phrases after
-  // the answer has been revealed. q.explanation.stem_clues (when present)
-  // is an array of substrings; matching spans are wrapped in <mark>. If
-  // no clues are authored, the stem renders as plain text - never
-  // synthetic guesses. Highlights only show after reveal.
+  // After the reveal, the authored clue phrases (explanation.stem_clues)
+  // are marked in the stem. With none authored nothing is guessed.
   function renderStemWithClues(q) {
     const el = document.getElementById("qStem");
     if (!el) return;
@@ -6470,10 +6275,7 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
   }, true);
   window.addEventListener("scroll", () => { if (_termOpenFor) hideTermPopup(); }, { passive: true });
 
-  // Fisher-Yates shuffle. Uses crypto.getRandomValues when available so
-  // the next-question stream is uniform across the eligible pool with
-  // no positional bias and no recency clustering. Math.random fallback
-  // for ancient browsers.
+  // Fisher-Yates, drawing from crypto.getRandomValues where it exists.
   function shuffle(arr) {
     const a = arr.slice();
     const n = a.length;

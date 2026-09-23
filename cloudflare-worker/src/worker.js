@@ -1006,12 +1006,10 @@ async function handleAnswer(request, env, cors) {
     : now;
   const nRaw = parseInt(body && body.n, 10);
   const n = Number.isFinite(nRaw) ? Math.max(1, Math.min(50, nRaw)) : 1;
-  // UPSERT: re-attempts MUST update the latest correctness + bump the
-  // attempt counter + advance updated_at. INSERT-OR-IGNORE froze every
-  // (user, question) at its first attempt and broke cross-device sync
-  // when the user re-answered on another device. A replayed answer older
-  // than the stored one adds its attempts but does not overwrite the
-  // newer correctness.
+  // UPSERT: a re-attempt updates the latest correctness, bumps the
+  // attempt counter and advances updated_at, so an answer given on
+  // another device syncs. A replayed answer older than the stored one
+  // adds its attempts but does not overwrite the newer correctness.
   await env.DB.prepare(
     `INSERT INTO answers (user_id, question_id, source_letter, correct, ts, updated_at, attempt_count)
      VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -1337,12 +1335,14 @@ const REPORT_GLOBAL_DAY_MAX = 100;
 class ReportsFull extends Error {}
 
 /* ── /apply-audit ────────────────────────────────────────────────────
- *  body: { batch_path, audit: { summary, kept[], dropped[] }, profile }
+ *  body: { batch_path, audit: { summary, kept[], dropped[] } }
  *  - Merges kept[] into the appropriate main file by topic.
  *  - Drops the batch from inbox_manifest.json (and physically removes
  *    the inbox file by overwriting it with an empty array - safer than
  *    contents-delete which requires SHA roundtrip).
- *  - Appends a one-line summary + per-Q decisions to audit_log.md.
+ *  - Appends a one-line summary + per-Q decisions to audit_log.md,
+ *    signed "admin": the log is public, so it names no account. The
+ *    worker log carries the admin's id.
  *
  *  Admin session required.
  */
@@ -1405,7 +1405,8 @@ async function handleApplyAudit(request, env, cors) {
 
   // Append summary to data/audit_log.md.
   const stamp = new Date().toISOString();
-  const summaryLine = `\n## ${stamp} - audit of ${batchPath || "(report batch)"} by ${body.profile || "rob"}\n\n` +
+  console.info("apply-audit:", batchPath || "(report batch)", "by user", user.id);
+  const summaryLine = `\n## ${stamp} - audit of ${batchPath || "(report batch)"} by admin\n\n` +
     `${audit.summary || "(no summary)"}\n\n` +
     `**Kept:** ${audit.kept.length} - ` +
     Object.entries(moved).filter(([_, n]) => n > 0).map(([t, n]) => `${t}=${n}`).join(", ") + "\n\n" +
@@ -1419,7 +1420,7 @@ async function handleApplyAudit(request, env, cors) {
 }
 
 /* ── /apply-live-audit ──────────────────────────────────────────
- *  body: { file_path, audit: { summary, kept[], dropped[] }, profile }
+ *  body: { file_path, audit: { summary, kept[], dropped[] } }
  *  - file_path must start with "data/batches/" or be one of the four
  *    main questions_*.json paths. Other paths are rejected.
  *  - Replaces the file at file_path with the kept[] array (the audit
@@ -1477,7 +1478,8 @@ async function handleApplyLiveAudit(request, env, cors) {
   await refreshManifestHashes(env, new Map([[filePath, text]]));
 
   const stamp = new Date().toISOString();
-  const summary = `\n## ${stamp} - live audit of ${filePath} by ${body.profile || "rob"}\n\n` +
+  console.info("apply-live-audit:", filePath, "by user", user.id);
+  const summary = `\n## ${stamp} - live audit of ${filePath} by admin\n\n` +
     `${audit.summary || "(no summary)"}\n\n` +
     `**Kept:** ${audit.kept.length}\n\n` +
     (audit.dropped.length

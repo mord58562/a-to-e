@@ -15,9 +15,14 @@ from __future__ import annotations
 
 import json
 import os
+import re
+import secrets
 import sys
 from datetime import datetime, timezone
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+
+import manifest_hashes
+from bank import is_servable, unservable_message
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 INBOX_DIR = os.path.join(ROOT, "data", "inbox")
@@ -61,6 +66,9 @@ class Handler(SimpleHTTPRequestHandler):
         questions = payload.get("questions")
         if not isinstance(questions, list) or not questions:
             return self._json(400, {"ok": False, "code": "bad_request", "error": "expected non-empty `questions` array"})
+        unservable = unservable_message(questions)
+        if unservable:
+            return self._json(400, {"ok": False, "code": "bad_request", "error": unservable})
         model = payload.get("model")
         if model:
             for q in questions:
@@ -104,7 +112,6 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json(400, {"ok": False, "code": "bad_request", "error": "missing question_id"})
         if not isinstance(issue, str) or len(issue.strip()) < 3:
             return self._json(400, {"ok": False, "code": "report_short", "error": "issue text too short"})
-        import secrets
         entry = {
             "id":           f"report-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}-{secrets.token_hex(2)}",
             "question_id":  qid[:200],
@@ -156,6 +163,9 @@ class Handler(SimpleHTTPRequestHandler):
         dropped = audit.get("dropped") or []
         if not isinstance(kept, list) or not isinstance(dropped, list):
             return self._json(400, {"ok": False, "code": "bad_request", "error": "audit.kept and audit.dropped must be arrays"})
+        unservable = unservable_message(kept)
+        if unservable:
+            return self._json(400, {"ok": False, "code": "bad_request", "error": unservable})
 
         moved = {"Paediatrics": 0, "Obstetrics & Gynaecology": 0, "Psychiatry": 0, "Medicine": 0, "_unknown": 0}
         buckets = {}
@@ -199,7 +209,7 @@ class Handler(SimpleHTTPRequestHandler):
         stamp = datetime.now(timezone.utc).isoformat()
         log_path = os.path.join(ROOT, "data", "audit_log.md")
         with open(log_path, "a", encoding="utf-8") as f:
-            f.write(f"\n## {stamp} - audit of {batch_path or '(report batch)'} by {payload.get('profile') or 'rob'}\n\n")
+            f.write(f"\n## {stamp} - audit of {batch_path or '(report batch)'} by admin\n\n")
             f.write((audit.get("summary") or "(no summary)") + "\n\n")
             f.write(f"**Kept:** {len(kept)} - " + ", ".join(f"{k}={v}" for k, v in moved.items() if v > 0) + "\n\n")
             if dropped:
@@ -228,6 +238,9 @@ class Handler(SimpleHTTPRequestHandler):
         dropped = audit.get("dropped") or []
         if not isinstance(kept, list) or not isinstance(dropped, list):
             return self._json(400, {"ok": False, "code": "bad_request", "error": "audit.kept and audit.dropped must be arrays"})
+        unservable = unservable_message(kept)
+        if unservable:
+            return self._json(400, {"ok": False, "code": "bad_request", "error": unservable})
         full = os.path.join(ROOT, file_path)
         # The audit replaces the whole file, so it must account for every
         # id in it (mirrors /apply-live-audit in the worker).
@@ -243,10 +256,10 @@ class Handler(SimpleHTTPRequestHandler):
         with open(full, "w", encoding="utf-8") as f:
             json.dump(kept, f, indent=2, ensure_ascii=False)
             f.write("\n")
-        self._refresh_manifest_hashes([full])
+        manifest_hashes.refresh(quiet=True)
         stamp = datetime.now(timezone.utc).isoformat()
         with open(os.path.join(ROOT, "data", "audit_log.md"), "a", encoding="utf-8") as f:
-            f.write(f"\n## {stamp} - live audit of {file_path} by {payload.get('profile') or 'rob'}\n\n")
+            f.write(f"\n## {stamp} - live audit of {file_path} by admin\n\n")
             f.write((audit.get("summary") or "(no summary)") + "\n\n")
             f.write(f"**Kept:** {len(kept)}\n\n")
             if dropped:
@@ -277,7 +290,7 @@ class Handler(SimpleHTTPRequestHandler):
                 o.update(outcome="invalid", reason="unknown action")
             elif o["action"] != "dismiss" and not o["question_id"]:
                 o.update(outcome="invalid", reason="missing question_id")
-            elif o["action"] == "fix" and not self._servable(r.get("fixed_question")):
+            elif o["action"] == "fix" and not is_servable(r.get("fixed_question")):
                 o.update(outcome="invalid", reason="fixed_question is not a complete question")
             elif o["action"] != "dismiss":
                 prev = first_edit.get(o["question_id"])
@@ -301,7 +314,8 @@ class Handler(SimpleHTTPRequestHandler):
         written = [p for p in bank if self._apply_edits(p, hinted.get(p), first_edit)]
         rest = {qid for qid, (o, r) in first_edit.items() if not o["files"]}
         written += [p for p in bank if self._apply_edits(p, rest, first_edit)]
-        self._refresh_manifest_hashes(written)
+        if written:
+            manifest_hashes.refresh(quiet=True)
 
         for o in outcomes:
             if o["outcome"]:
@@ -337,43 +351,6 @@ class Handler(SimpleHTTPRequestHandler):
         if changed:
             self._write_main(path, arr)
         return changed
-
-    def _refresh_manifest_hashes(self, paths):
-        """Update manifest `hashes` for rewritten files, as manifest_hashes.py
-        would: sha1 of the file bytes, first 12 hex, only for paths the
-        manifest lists, same json.dumps formatting. A hash that cannot be
-        computed is deleted so the loader falls back to ?v=."""
-        import hashlib
-        for manifest, key in ((os.path.join(ROOT, "data", "batches_manifest.json"), "batches"), (MANIFEST, "inbox")):
-            try:
-                with open(manifest, encoding="utf-8") as f:
-                    data = json.load(f)
-            except (FileNotFoundError, json.JSONDecodeError):
-                continue
-            hashes = data.get("hashes") if isinstance(data, dict) else None
-            if not isinstance(hashes, dict) or not isinstance(data.get(key), list):
-                continue
-            changed = False
-            for full in paths:
-                rel = os.path.relpath(full, os.path.join(ROOT, "data")).replace(os.sep, "/")
-                if rel not in data[key]:
-                    continue
-                try:
-                    with open(full, "rb") as f:
-                        h = hashlib.sha1(f.read()).hexdigest()[:12]
-                except OSError:
-                    h = None
-                if h and hashes.get(rel) != h:
-                    hashes[rel] = h
-                    changed = True
-                elif not h and rel in hashes:
-                    del hashes[rel]
-                    changed = True
-            if changed:
-                tmp = manifest + ".tmp"
-                with open(tmp, "w", encoding="utf-8") as f:
-                    f.write(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
-                os.replace(tmp, manifest)
 
     def _close_reports(self, resolutions, outcomes, s):
         """Close the reports whose edit landed (or were dismissed), then answer."""
@@ -414,16 +391,8 @@ class Handler(SimpleHTTPRequestHandler):
             "missed_ids": missed_ids, "unmatched_reports": unmatched, "outcomes": outcomes,
         })
 
-    @staticmethod
-    def _servable(q):
-        return (isinstance(q, dict) and isinstance(q.get("id"), str) and q["id"]
-                and isinstance(q.get("stem"), str) and isinstance(q.get("options"), list)
-                and len(q["options"]) >= 2 and all(isinstance(o, dict) for o in q["options"])
-                and sum(1 for o in q["options"] if o.get("correct") is True) == 1)
-
     def _bank_paths(self):
         """Every file loadData() in app.js serves the bank from, in load order."""
-        import re
         paths = list(self.TOPIC_TO_FILE.values())
         for manifest, key in ((os.path.join(ROOT, "data", "batches_manifest.json"), "batches"), (MANIFEST, "inbox")):
             try:

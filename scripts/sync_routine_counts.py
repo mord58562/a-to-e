@@ -9,34 +9,15 @@ Usage:
 """
 import json, os, re, sys, subprocess, collections
 
+from bank import SERVABLE_TOPICS, is_servable
+
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# The routine's context file left the repo on 2026-09-21: this repo is
-# public and Pages serves its root, so an internal file at a guessable
-# path was fetchable and returned 200. It sits beside the repo now. This
-# script kept reading the old location and had been dying on
-# FileNotFoundError at every call since, which is a silent failure: the
-# routine's snapshot simply stopped being updated.
+# The routine's context file lives beside the repo, not in it: the repo is
+# public and Pages serves its root, so any file here is fetchable.
 PRIVATE = os.path.join(os.path.dirname(REPO), 'private-notes')
 CTX = next((p for p in (os.path.join(PRIVATE, '.routine-context.md'),
                         os.path.join(REPO, '.routine-context.md'))
             if os.path.exists(p)), None)
-
-SERVABLE_TOPICS = ('Paediatrics', 'Obstetrics & Gynaecology', 'Psychiatry', 'Medicine')
-
-
-def is_servable(q):
-    """Mirror of isServable() in assets/app.js: what the site will show."""
-    if not isinstance(q, dict) or not q.get('id') or not isinstance(q.get('stem'), str):
-        return False
-    if q.get('topic') not in SERVABLE_TOPICS:
-        return False
-    d = q.get('difficulty')
-    if not isinstance(d, int) or isinstance(d, bool) or not 1 <= d <= 5:
-        return False
-    opts = q.get('options')
-    if not isinstance(opts, list) or len(opts) < 2 or not all(isinstance(o, dict) for o in opts):
-        return False
-    return sum(1 for o in opts if o.get('correct') is True) == 1
 
 
 def served_questions():
@@ -47,8 +28,7 @@ def served_questions():
     contributes nothing, as on the site, and is reported.
 
     live_totals() and live_difficulty() both read this, so the module
-    counts and the difficulty counts describe the same bank. They used to
-    load separately and disagree on a file that did not parse."""
+    counts and the difficulty counts describe the same bank."""
     paths = [os.path.join(REPO, f'data/questions_{m}.json')
              for m in ('paeds', 'obgyn', 'psych', 'medicine')]
     for rel, key in (('data/batches_manifest.json', 'batches'),

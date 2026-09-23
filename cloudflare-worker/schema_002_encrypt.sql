@@ -5,8 +5,8 @@
 -- This migration is additive and idempotent. Existing rows keep their old
 -- columns until next login; handleLogin re-hashes the password with Argon2id
 -- and populates email_lookup / email_enc lazily. Once every account has
--- logged in once, the legacy `email` plaintext column can be dropped (see
--- schema_003_drop_legacy_email.sql).
+-- logged in once, the legacy `email` plaintext column can be dropped. No
+-- migration drops it yet; the admin user list still falls back to it.
 
 -- ─── users: lazy migration columns ─────────────────────────────────────────
 -- email_lookup      HMAC-SHA256(email_lower, EMAIL_HMAC_KEY) as hex.

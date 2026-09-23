@@ -28,10 +28,10 @@ vc.on('error',(...a)=>errs.push('console.error: '+a.join(' ')));
 
 // A fake worker, so the admin surfaces run against real-shaped data.
 const API = {
-  '/api/me': { ok:true, user:{id:'u1',email:'rob@example.com',display_name:'the maintainer',is_admin:1} },
+  '/api/me': { ok:true, user:{id:'u1',email:'admin@example.com',display_name:'Admin',is_admin:1} },
   '/api/state': { ok:true, answers:[], flags:[], settings:null },
   '/api/admin/users': { ok:true, users:[
-    {id:'u1',email:'rob@example.com',display_name:'the maintainer',is_admin:1,answers:312,created_at:1747000000,last_seen_at:Math.floor(Date.now()/1000)},
+    {id:'u1',email:'admin@example.com',display_name:'Admin',is_admin:1,answers:312,created_at:1747000000,last_seen_at:Math.floor(Date.now()/1000)},
     {id:'u2',email:'carter@example.com',display_name:'Carter',is_admin:0,answers:20,created_at:1755000000,last_seen_at:1758000000},
     {id:'u3',email:'ming@example.com',display_name:'Ming',is_admin:0,answers:6,created_at:1757000000,last_seen_at:null},
   ]},

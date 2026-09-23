@@ -1791,7 +1791,6 @@ body[data-screen="summary"] main { max-width: 760px; }
   }
 
   .run-row { flex-wrap: wrap; gap: 12px; }
-  .run-row .primary { margin-left: auto; }
 
   .prompt-actions { flex-wrap: wrap; }
   .prompt-actions .primary { margin-left: auto; }
@@ -1970,6 +1969,8 @@ body:not(.is-admin) .admin-only { display: none !important; }
   border-bottom: 1px solid var(--warn);
 }
 #appNotice > span { flex: 1 1 auto; }
+/* Boot line while the bank downloads; showHome() replaces it. */
+#bankLoading { padding: 24px 16px; text-align: center; }
 .report-q { margin: 4px 0 6px; font-size: var(--fs-ui); }
 .report-issue {
   white-space: pre-wrap;
@@ -2057,7 +2058,7 @@ body:not(.is-admin) .admin-only { display: none !important; }
   font-size: var(--fs-meta);
 }
 .audit-copy-status.ok, .audit-apply-status.ok { color: var(--accent); }
-.audit-copy-status.bad, .audit-apply-status.bad { color: var(--bad); }
+.audit-copy-status.bad, .audit-apply-status.bad, .audit-load-error { color: var(--bad); }
 
 .audit-bulk { margin-left: auto; }
 .audit-live-filters {
@@ -2184,51 +2185,6 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   margin-top: 8px;
   font-size: var(--fs-meta);
   padding: 6px 12px;
-}
-.acct-delete-confirm {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px dashed var(--line);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.acct-delete-label {
-  font-size: var(--fs-meta);
-  color: var(--ink-mute);
-  line-height: 1.4;
-}
-.acct-delete-label code {
-  background: var(--surface-2);
-  padding: 1px 6px;
-  border-radius: var(--r-tight);
-  font-size: var(--fs-meta);
-  color: var(--ink);
-}
-.acct-delete-input {
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-control);
-  background: var(--bg-2);
-  color: var(--ink);
-  font-size: var(--fs-ui);
-  font-family: inherit;
-}
-.acct-delete-input:focus {
-  outline: none;
-  border-color: var(--bad);
-  box-shadow: 0 0 0 2px var(--bad-bg);
-}
-.acct-delete-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  justify-content: flex-end;
-}
-.acct-delete-status {
-  margin: 0;
-  min-height: 16px;
 }
 
 /* ── Reference ranges ─────────────────────────────────────────────── */
