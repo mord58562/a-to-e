@@ -1326,7 +1326,10 @@
     let invites = [];
     try {
       const r = await apiFetch("/api/admin/invites");
-      invites = (r && r.invites) || [];
+      // A revoked code is gone as far as this panel is concerned. The
+      // server stops sending them; this also covers a worker that has
+      // not been redeployed yet.
+      invites = ((r && r.invites) || []).filter(i => !i.revoked_at);
     } catch (e) {
       stop();
       return adminLoadError(list, "invite codes", () => renderInvites(root, usersRoot));
@@ -1335,7 +1338,6 @@
     if (adminRenderStale(token, list)) return;
     const now = Math.floor(Date.now() / 1000);
     const statusOf = i => i.used_at ? `Used by ${i.used_by_name || "someone"}`
-      : i.revoked_at ? "Revoked"
       : (i.expires_at && i.expires_at < now) ? "Expired"
       : "Unused";
     const rows = invites.map(i => {
@@ -1440,7 +1442,7 @@
           await apiFetch("/api/admin/invites/revoke", {
             method: "POST", body: JSON.stringify({ code_hash: b.dataset.revoke }),
           });
-          adminSay("ok", "Code revoked.");
+          adminSay("ok", "Code revoked. It will not let anyone sign up, and it is off this list.");
           renderInvites(root, usersRoot);
         } catch (e) { b.disabled = false; adminSay("error", e.message || String(e)); }
       };

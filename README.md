@@ -6,6 +6,10 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 **Live: <https://mord58562.github.io/a-to-e/>** - guest mode, no signup required.
 
+## What's new in 1.6.11
+
+- A revoked invite code disappears from the admin panel instead of sitting there as a row that cannot do anything.
+
 ## What's new in 1.6.10
 
 - The reference panel no longer drags the masthead sideways when it opens, and the reading column can no longer be pushed off the left edge of the window on a laptop. The navigator moves with the column instead of being left behind under the panel.

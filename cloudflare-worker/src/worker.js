@@ -924,7 +924,8 @@ async function handleAdminListInvites(request, env, cors) {
     `SELECT i.code_hash, i.code_hint, i.code_enc, i.label, i.created_at, i.expires_at,
             i.used_at, i.revoked_at, u.display_name AS used_by_name
      FROM invite_codes i LEFT JOIN users u ON u.id = i.used_by
-     ORDER BY (i.used_at IS NULL AND i.revoked_at IS NULL) DESC, i.created_at DESC
+     WHERE i.revoked_at IS NULL
+     ORDER BY (i.used_at IS NULL) DESC, i.created_at DESC
      LIMIT 200`
   ).all();
   // A code the admin cannot read is a code they cannot send. It is held
