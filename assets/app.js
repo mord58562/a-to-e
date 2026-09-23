@@ -12,6 +12,57 @@
 (function () {
   "use strict";
 
+  // Web Storage that cannot take the app down. These names shadow the
+  // globals for everything inside this IIFE.
+  //
+  // With site data blocked, merely reading `window.localStorage` throws
+  // SecurityError; with a full quota every setItem throws
+  // QuotaExceededError. The first killed the DOMContentLoaded handler on
+  // its first line and left the gate locked over a blank page, guest
+  // mode included. The second did the same at boot, and mid-session it
+  // threw out of onSubmit so the answer was never revealed. Now a write
+  // that fails is kept in memory for this tab (reads see it), the
+  // failure is logged once, and the app keeps working unpersisted.
+  const localStorage = _safeStorage("localStorage");
+  const sessionStorage = _safeStorage("sessionStorage");
+  function _safeStorage(name) {
+    let real = null;
+    try { real = window[name]; real.getItem("y4mcq.probe"); } catch (_) { real = null; }
+    const mem = new Map();
+    let warned = false;
+    const warnOnce = (e) => {
+      if (warned) return;
+      warned = true;
+      console.warn(`[a-to-e] ${name} unavailable (${e && e.name || e}); this tab's progress will not be saved`);
+    };
+    return {
+      getItem(k) {
+        k = String(k);
+        if (mem.has(k)) return mem.get(k);
+        try { return real ? real.getItem(k) : null; } catch (e) { warnOnce(e); return null; }
+      },
+      setItem(k, v) {
+        k = String(k); v = String(v);
+        try {
+          if (!real) throw new Error("no storage");
+          real.setItem(k, v);
+          mem.delete(k);
+        } catch (e) { warnOnce(e); mem.set(k, v); }
+      },
+      removeItem(k) {
+        k = String(k);
+        mem.delete(k);
+        try { if (real) real.removeItem(k); } catch (e) { warnOnce(e); }
+      },
+      key(i) {
+        try { return real ? real.key(i) : null; } catch (e) { return null; }
+      },
+      get length() {
+        try { return real ? real.length : 0; } catch (e) { return 0; }
+      },
+    };
+  }
+
   // Remote backend (Cloudflare Worker). Set this to the URL printed by
   // `wrangler deploy` from cloudflare-worker/. While null/empty, the
   // site falls back to the local Python backend (scripts/server.py) for
@@ -38,6 +89,9 @@
   // localStorage; never synced to the worker. Persisted across reloads
   // until the user signs in or explicitly clears.
   let guestUser = null;
+  // Set when a saved session could not be checked (network or server
+  // error, not a 401), so the gate can say why it is showing.
+  let authCheckFailed = false;
 
   function activateGuest() {
     let g = null;
@@ -123,9 +177,18 @@
       const { user } = await apiFetch("/api/me", { method: "GET" });
       cloudUser = user;
       return user;
-    } catch {
+    } catch (e) {
       authToken = null;
-      localStorage.removeItem(AUTH_TOKEN_KEY);
+      // Only a 401 means the session is dead. Deleting the token on any
+      // failure signed a user out for good whenever the worker blipped
+      // or the network dropped at page load; if they then carried on as
+      // a guest, that session's answers landed outside their account.
+      // Keep the token so the next load can restore the session.
+      if (e && e.status === 401) localStorage.removeItem(AUTH_TOKEN_KEY);
+      else {
+        authCheckFailed = true;
+        console.warn("[auth] could not verify the saved session:", e && e.message || e);
+      }
       return null;
     }
   }
@@ -185,12 +248,13 @@
   }
   async function cloudPostAnswer(qid, sourceLetter, correct) {
     if (!cloudUser) return null;
-    // Skip the round-trip when we don't have a real source letter -
-    // the worker rejects empty letters (400) and the catch below would
-    // hide that as a successful no-op. Guest-import replay hits this
+    // Skip the round-trip when we don't have a real source letter, and
+    // check for a single letter rather than a substring: "ABCDE".includes
+    // is true for "", "AB" and "BCD" too. Guest-import replay hits this
     // path with sourceLetter=""; those answers are pre-account and
     // intentionally don't join the per-user server history.
-    if (!sourceLetter || !"ABCDE".includes(sourceLetter)) return null;
+    if (typeof sourceLetter !== "string" || sourceLetter.length !== 1 ||
+        !"ABCDE".includes(sourceLetter)) return null;
     try {
       await apiFetch("/api/answer", { method: "POST", body: JSON.stringify({ question_id: qid, source_letter: sourceLetter, correct }) });
       return true;
@@ -355,7 +419,31 @@
     return null;
   }
 
-  function load(k, d) { try { return JSON.parse(localStorage.getItem(k)) || d; } catch { return d; } }
+  // The stored value has to be the same kind of thing as the default.
+  // A key holding `{}` where an array belongs (or a string where an
+  // object belongs) used to come straight back: `{}` in the pasted-
+  // questions key made loadData throw "not iterable" and left the page
+  // blank, and a string in the history key threw on the first submit.
+  function load(k, d) {
+    try {
+      const v = JSON.parse(localStorage.getItem(k));
+      if (v == null) return d;
+      if (Array.isArray(d)) return Array.isArray(v) ? v : d;
+      if (d && typeof d === "object") return (typeof v === "object" && !Array.isArray(v)) ? v : d;
+      return v || d;
+    } catch { return d; }
+  }
+  // Settings are read back from storage AND from the server, and every
+  // consumer calls .includes / .length on the list fields without a
+  // guard, so a wrong-typed field stopped the home screen rendering.
+  function normaliseSettings(s) {
+    const out = Object.assign({}, DEFAULT_SETTINGS, (s && typeof s === "object" && !Array.isArray(s)) ? s : {});
+    for (const f of ["disciplines", "difficulties"]) {
+      if (!Array.isArray(out[f])) out[f] = DEFAULT_SETTINGS[f].slice();
+    }
+    if (out.subtopics !== null && !Array.isArray(out.subtopics)) out.subtopics = null;
+    return out;
+  }
   function save(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
   // Settings sync is debounced so rapid setting flips (e.g. clicking
   // through difficulty options) collapse into one POST per ~600ms idle
@@ -376,7 +464,7 @@
   function loadProfileState() {
     state.history  = load(ns(HISTORY_KEY), {});
     state.flags    = load(ns(FLAGS_KEY), {});
-    state.settings = Object.assign({}, DEFAULT_SETTINGS, load(ns(SETTINGS_KEY), {}));
+    state.settings = normaliseSettings(load(ns(SETTINGS_KEY), {}));
   }
 
   // One-time legacy migration. Older builds used unscoped keys (one
@@ -479,6 +567,13 @@
         currentProfile = null;
         return unlock();
       }
+      // preauth.js hid the gate before first paint because a token or a
+      // guest id was stored. If the token has just failed (expired,
+      // revoked, or the server unreachable) nothing un-hid it, so the
+      // page sat blank with the gate display:none and nothing else
+      // rendered. The guest path below unlocks straight away, so
+      // dropping the class there costs nothing.
+      document.documentElement.classList.remove("pre-authed");
 
       // 2. Clear any stored legacy profile id. It used to unlock the
       // admin chrome on its own, with no password check.
@@ -500,6 +595,10 @@
       // 3. Cloud sign-in form.
       const signInForm = document.getElementById("cloudSignInForm");
       const signInErr  = document.getElementById("cloudSignInErr");
+      if (authCheckFailed && signInErr) {
+        signInErr.textContent = "Couldn't reach the server to restore your session. Reload to try again, or sign in.";
+        signInErr.hidden = false;
+      }
       signInForm.addEventListener("submit", async e => {
         e.preventDefault();
         signInErr.hidden = true;
@@ -595,10 +694,31 @@
     if (cloudUser) {
       const remote = await cloudFetchState();
       if (remote) {
+        // The server's answers table has no time column, so its history rows
+        // carry lastCorrect / count / last_at and nothing else. Replacing the
+        // local row wholesale therefore destroyed time_ms_total on every
+        // reload, and the stats panel flipped to "time not recorded" for a
+        // user who had been timed all along.
+        //
+        // These fields are LOCAL-ONLY: they are never posted anywhere, so
+        // the local copy is the only copy and there is no cross-device
+        // update to lose. Carrying them across keeps the server the source
+        // of truth for everything it actually knows about.
+        const LOCAL_ONLY = ["time_ms_total", "first_correct"];
+        const prevHistory = state.history || {};
         state.history = remote.history || {};
+        for (const qid in state.history) {
+          const prev = prevHistory[qid];
+          if (!prev) continue;
+          for (const f of LOCAL_ONLY) {
+            if (prev[f] !== undefined && state.history[qid][f] === undefined) {
+              state.history[qid][f] = prev[f];
+            }
+          }
+        }
         state.flags   = remote.flags   || {};
         if (remote.settings && typeof remote.settings === "object") {
-          state.settings = Object.assign({}, DEFAULT_SETTINGS, remote.settings);
+          state.settings = normaliseSettings(remote.settings);
         }
         save(ns(HISTORY_KEY), state.history);
         save(ns(FLAGS_KEY),   state.flags);
@@ -606,6 +726,7 @@
       }
     }
     await dataPromise;
+    mergeLocalQuestions();
     // Wire each subsystem defensively so a single throw in any wiring
     // function can't leave the home view unrendered (the symptom that
     // looked like "blank screen until clicking the logo"). Each wire is
@@ -1368,7 +1489,11 @@
     const ids = Object.keys(history);
     const bankById = {}; (state.questions || []).forEach(q => { bankById[q.id] = q; });
 
-    let answered = 0, firstCorrect = 0, totalMs = 0, timedCount = 0;
+    // `lastCorrect` is the only correctness the server round-trips, so this
+    // is genuinely last-attempt accuracy, not first-attempt. The headline
+    // used to be labelled "first-time correct", which overstated a user who
+    // retried a question until they got it right.
+    let answered = 0, lastAttemptCorrect = 0, totalMs = 0, timedCount = 0;
     const byTopic = {};
     const byDiff = {};
     let lastAt = 0;
@@ -1376,7 +1501,7 @@
       const h = history[id]; if (!h || !h.count) continue;
       const q = bankById[id]; if (!q) continue;
       answered++;
-      if (h.lastCorrect) firstCorrect++;
+      if (h.lastCorrect) lastAttemptCorrect++;
       // Only aggregate time for entries that actually recorded a duration.
       // Legacy entries (pre-stats-panel) carry no time_ms_total - excluding
       // them avoids skewing the average toward zero.
@@ -1393,7 +1518,7 @@
       byDiff[d].n++; if (h.lastCorrect) byDiff[d].correct++;
     }
     const total = (state.questions || []).length;
-    const acc = answered ? Math.round((firstCorrect / answered) * 100) : 0;
+    const acc = answered ? Math.round((lastAttemptCorrect / answered) * 100) : 0;
     const avg = timedCount ? Math.round(totalMs / timedCount / 1000) : 0;
 
     if (!answered) {
@@ -1404,7 +1529,7 @@
     const head = `
       <div class="stats-head">
         <div class="stats-num"><span class="stats-num-value">${answered}</span><span class="stats-num-label">questions answered (${Math.round(answered / total * 100) || 0}% of bank)</span></div>
-        <div class="stats-num"><span class="stats-num-value">${acc}%</span><span class="stats-num-label">first-time correct</span></div>
+        <div class="stats-num"><span class="stats-num-value">${acc}%</span><span class="stats-num-label">correct on last attempt</span></div>
         <div class="stats-num"><span class="stats-num-value">${timedCount ? formatDuration(totalMs) : '-'}</span><span class="stats-num-label">${timedCount ? `time studying · ${avg}s avg / q` : `time not recorded for ${answered} earlier ${answered === 1 ? 'answer' : 'answers'}`}</span></div>
       </div>`;
 
@@ -1453,59 +1578,125 @@
     const metaPre = await fetchJson("data/meta.json?t=" + Date.now()).catch(() => ({}));
     const v = metaPre && metaPre.updated ? String(metaPre.updated).replace(/[^0-9-]/g, "") : String(Math.floor(Date.now()/3600000));
     const bust = "?v=" + v;
-    const [paeds, obgyn, psych, medicine, ranges, meta, batchManifest, inboxManifest, reportsFile] = await Promise.all([
-      fetchJson("data/questions_paeds.json" + bust).catch(() => []),
-      fetchJson("data/questions_obgyn.json" + bust).catch(() => []),
-      fetchJson("data/questions_psych.json" + bust).catch(() => []),
-      fetchJson("data/questions_medicine.json" + bust).catch(() => []),
+    // Every bank source is counted the same way. A fetch that fails, a body
+    // that is not JSON, and a body that is valid JSON but not an array all
+    // mean "this file contributed nothing", and all of them have to reach
+    // the count the home screen shows.
+    //
+    // Before this, only the batch files were counted. A 404 on a main
+    // question file, a manifest that failed to load (which hides EVERY
+    // batch), or a file that parsed as an object all shortened the bank
+    // silently, with no warning anywhere and `failed` still reading 0.
+    // Worse, an object in a main file made the spread below throw
+    // "paeds is not iterable", which rejected loadData, skipped showHome()
+    // and left the page blank with nothing logged.
+    let srcTotal = 0, srcFailed = 0;
+    const pullArray = (p) => {
+      srcTotal++;
+      return fetchJson(p).then(
+        d => { if (Array.isArray(d)) return d; srcFailed++; return []; },
+        () => { srcFailed++; return []; }
+      );
+    };
+    const pullManifest = (p, key) => {
+      srcTotal++;
+      return fetchJson(p).then(
+        d => {
+          const list = d && d[key];
+          if (Array.isArray(list)) return list;
+          srcFailed++; return [];
+        },
+        () => { srcFailed++; return []; }
+      );
+    };
+    const [paeds, obgyn, psych, medicine, ranges, meta, batchPaths, inboxPaths, reportsFile] = await Promise.all([
+      pullArray("data/questions_paeds.json" + bust),
+      pullArray("data/questions_obgyn.json" + bust),
+      pullArray("data/questions_psych.json" + bust),
+      pullArray("data/questions_medicine.json" + bust),
       fetchJson("data/reference_ranges.json" + bust).catch(() => null),
       Promise.resolve(metaPre),
-      fetchJson("data/batches_manifest.json" + bust).catch(() => ({ batches: [] })),
-      fetchJson("data/inbox_manifest.json" + bust).catch(() => ({ inbox: [] })),
+      pullManifest("data/batches_manifest.json" + bust, "batches"),
+      pullManifest("data/inbox_manifest.json" + bust, "inbox"),
       fetchJson("data/reports.json" + bust).catch(() => ({ reports: [] })),
     ]);
     state.reports = (reportsFile && reportsFile.reports) || [];
 
     // Pull every staging batch listed in the manifests. Each is its own
     // JSON array of question objects matching the live schema.
-    // Failures are silent so the manifests can list files that don't
-    // yet exist (in-flight batches, expected inbox drops).
-    const batchPaths = (batchManifest && batchManifest.batches) || [];
-    const inboxPaths = (inboxManifest && inboxManifest.inbox) || [];
     const allPaths = [...batchPaths, ...inboxPaths];
-    let batchFailures = 0;
-    const extra = await Promise.all(
-      allPaths.map(p => fetchJson("data/" + p + bust).catch(() => { batchFailures++; return []; }))
-    );
+    const extra = await Promise.all(allPaths.map(p => pullArray("data/" + p + bust)));
     const extraQuestions = extra.flat();
-    state.batchLoadStats = { total: allPaths.length, failed: batchFailures };
-    if (batchFailures > 0 && console && console.warn) {
-      console.warn(`[a-to-e] ${batchFailures} of ${allPaths.length} batch files failed to load`);
+    state.batchLoadStats = { total: srcTotal, failed: srcFailed };
+    if (srcFailed > 0 && console && console.warn) {
+      console.warn(`[a-to-e] ${srcFailed} of ${srcTotal} bank files failed to load`);
     }
 
-    // Locally pasted questions live only in this browser's localStorage.
-    // They merge into the bank the same way as inbox files.
-    const localQuestions = load(ns(LOCAL_QUESTIONS_KEY), []);
+    // A question the quiz cannot render or grade is dropped, and counted
+    // like a failed file. With no options array renderQuiz threw and left
+    // an empty quiz screen; with no option (or two) marked correct the
+    // question could never be answered right, and nothing said so.
+    const raw = [...paeds, ...obgyn, ...psych, ...medicine, ...extraQuestions];
+    const bad = raw.filter(q => q && q.id && !isServable(q));
+    state.bankQuestions = raw.filter(q => !q || !q.id || isServable(q));
+    state.batchLoadStats.invalid = bad.length;
+    if (bad.length) {
+      console.warn(`[a-to-e] ${bad.length} malformed question(s) skipped: ${bad.slice(0, 20).map(q => q.id).join(", ")}`);
+    }
+    state.ranges = ranges;
+    state.meta = meta;
+    // The first loadData() runs in parallel with the gate, so it usually
+    // finishes before anyone is signed in. The boot path merges the local
+    // questions again once the gate resolves; this call covers later
+    // reloads, when the identity is already known.
+    if (cloudUser || currentProfile || guestUser) mergeLocalQuestions();
+    else state.questions = dedupeById(state.bankQuestions);
+  }
 
-    // Deduplicate by id - if a question is later merged into the main
-    // file, the main-file entry wins (it appears first in `all`).
+  // Locally pasted questions live only in this browser's localStorage,
+  // per user, and merge into the bank the same way as inbox files.
+  //
+  // This used to run inside loadData, which starts before the gate. So
+  // when the bank downloaded before sign-in finished (a slow /api/me, or
+  // anyone typing a password), ns() still returned the bare pre-gate key:
+  // the user's own pasted questions were missing for the whole session
+  // and whatever an older build had left under the bare key showed up
+  // instead.
+  function mergeLocalQuestions() {
+    const local = load(ns(LOCAL_QUESTIONS_KEY), []).filter(isServable);
+    state.questions = dedupeById([...(state.bankQuestions || []), ...local]);
+  }
+  function isServable(q) {
+    return !!(q && q.id && typeof q.stem === "string" &&
+      Array.isArray(q.options) && q.options.length >= 2 &&
+      q.options.every(o => o && typeof o === "object") &&
+      q.options.filter(o => o.correct === true).length === 1);
+  }
+  // Deduplicate by id - if a question is later merged into the main
+  // file, the main-file entry wins (it appears first).
+  function dedupeById(all) {
     const seen = new Set();
-    const all = [...paeds, ...obgyn, ...psych, ...medicine, ...extraQuestions, ...localQuestions];
-    state.questions = all.filter(q => {
+    return all.filter(q => {
       if (!q || !q.id) return false;
       if (seen.has(q.id)) return false;
       seen.add(q.id);
       return true;
     });
-    state.ranges = ranges;
-    state.meta = meta;
   }
   // Use the default browser HTTP cache. The HTML script/link tags carry a
   // ?v=YYYYMMDDx cache-bust string on every release, and JSON data files
   // are pulled relative to that page, so a fresh release picks up new data
   // without needing to revalidate every fetch on every page load (which
   // previously cost ~54 conditional GETs even when nothing changed).
-  function fetchJson(p) { return fetch(p).then(r => r.json()); }
+  function fetchJson(p) {
+    return fetch(p).then(r => {
+      // A 404 from GitHub Pages serves an HTML page, so r.json() would
+      // reject anyway, but a proxy or an error page can return valid JSON
+      // of the wrong shape and that must not be mistaken for bank content.
+      if (!r.ok) throw new Error(`${r.status} fetching ${p}`);
+      return r.json();
+    });
+  }
 
   function applyTheme(t) {
     document.documentElement.setAttribute("data-theme", t);
@@ -1820,11 +2011,14 @@
       const time = s.timer ? ` · ${s.timer} min` : " · untimed";
       el.textContent = `${take} of ${n} matching questions${time}.`;
     }
-    // If any batch file failed to load, surface it once so the user knows
+    // If any bank file failed to load, surface it once so the user knows
     // the bank they're seeing is a subset. Non-blocking (Begin still works).
     const bl = state.batchLoadStats;
     if (bl && bl.failed > 0) {
-      el.textContent += `  (${bl.failed} of ${bl.total} batch files unavailable this load; refresh to retry.)`;
+      el.textContent += `  (${bl.failed} of ${bl.total} bank files unavailable this load; refresh to retry.)`;
+    }
+    if (bl && bl.invalid > 0) {
+      el.textContent += `  (${bl.invalid} malformed question${bl.invalid === 1 ? "" : "s"} skipped.)`;
     }
     startBtn.disabled = n === 0;
   }
@@ -2959,7 +3153,15 @@
         `<span class="rv-stem">${esc(q.stem.slice(0, 110))}${q.stem.length > 110 ? "…" : ""}</span>`;
       li.onclick = () => {
         state.quiz.idx = i;
-        state.quiz.revealed[q.id] = true;
+        // The session has been scored, so review is read-only. Revealing
+        // only the clicked question left every other one answerable: in
+        // test mode the user could step to the next question, answer it
+        // after seeing the score, and have that land in history. And the
+        // countdown is over: leaving the deadline set meant the first
+        // timer tick after a timed test ran out went straight back to
+        // the summary, so no question from it could ever be reviewed.
+        for (const p of state.quiz.pool) state.quiz.revealed[p.id] = true;
+        state.quiz.deadline = null;
         state.quiz.finished = false;
         setScreen("quiz");
         renderQuiz();
