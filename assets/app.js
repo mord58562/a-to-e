@@ -444,12 +444,6 @@
       el = document.createElement("div");
       el.id = "appNotice";
       el.setAttribute("role", "alert");
-      Object.assign(el.style, {
-        display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px 12px",
-        padding: "10px 16px", margin: "0", fontSize: "0.9rem", lineHeight: "1.4",
-        background: "var(--warn-bg)", color: "var(--ink)",
-        borderBottom: "1px solid var(--warn)",
-      });
       const masthead = document.querySelector(".masthead");
       if (masthead && masthead.parentNode) masthead.parentNode.insertBefore(el, masthead.nextSibling);
       else document.body.insertBefore(el, document.body.firstChild);
@@ -457,7 +451,6 @@
     el.textContent = "";
     const msg = document.createElement("span");
     msg.textContent = message;
-    msg.style.flex = "1 1 auto";
     el.appendChild(msg);
     if (actionLabel && action) {
       const b = document.createElement("button");
