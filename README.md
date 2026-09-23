@@ -18,6 +18,7 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 - Readings with commas inside brackets stay on one line, Hb and Na keep their capitals, and a reference range in brackets is no longer shown as the value.
 - On a phone, reference values wrap instead of running off the panel, lab values keep a column wide enough to read, and the header buttons no longer sit on the title.
 - Screen readers hear whether a revealed answer was right, and no longer hear the clock every second.
+- An invite is now a link. Opening it goes straight to Create account with the code, and the email if one was given, already filled in. From the admin panel it can be copied, or sent from your own mail app.
 
 ## What's new in 1.7.0
 

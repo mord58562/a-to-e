@@ -886,6 +886,12 @@
       const signupIntent = sessionStorage.getItem("y4mcq.signupIntent");
       if (signupIntent) sessionStorage.removeItem("y4mcq.signupIntent");
 
+      // An invite link (#invite=CODE&email=...) opens the sign-up form
+      // filled in. It lives in the fragment so the code never reaches a
+      // server log, and it comes off the address bar straight away so a
+      // bookmark or a shared screenshot does not carry it.
+      const invite = readInviteLink();
+
       // 1. Already signed in via cloud? Skip the gate AND clear any stale
       // legacy profile token so ns() never shadows the cloud namespace.
       // Every way into an account (restored session, sign-in, sign-up)
@@ -908,7 +914,11 @@
         unlock();
       };
       const cloudCheck = await cloudCheckAuth();
-      if (cloudCheck) return enterAccount();
+      if (cloudCheck) {
+        enterAccount();
+        if (invite) showAppNotice("That invite link is for a new account. You're already signed in, so it wasn't used. Sign out first to create another account with it.");
+        return;
+      }
       // preauth.js hid the gate before first paint because a token or a
       // guest id was stored. If the token has just failed (expired,
       // revoked, or the server unreachable) nothing un-hid it, so the
@@ -928,7 +938,7 @@
       // account, and dropping them into guest mode without a word sent
       // their answers to the guest namespace. The gate says why instead.
       const savedGuest = localStorage.getItem(GUEST_KEY);
-      if (savedGuest && !signupIntent && !authCheckFailed) { activateGuest(); return unlock(); }
+      if (savedGuest && !signupIntent && !invite && !authCheckFailed) { activateGuest(); return unlock(); }
 
       // Guest button: continue without an account; data lives in localStorage.
       const guestBtn = document.getElementById("gateGuestBtn");
@@ -986,7 +996,13 @@
         }
       });
 
-      switchPane(signupIntent ? "signup" : "signin");
+      switchPane(signupIntent || invite ? "signup" : "signin");
+      if (invite) {
+        document.getElementById("cloudSignUpInvite").value = invite.code;
+        if (invite.email) document.getElementById("cloudSignUpEmail").value = invite.email;
+        // switchPane focuses the first field, which is now filled.
+        setTimeout(() => document.getElementById("cloudSignUpName").focus(), 60);
+      }
       } catch (err) {
         console.error("[gate] failed to initialise:", err && err.stack || err);
         document.body.classList.remove("locked");
@@ -995,6 +1011,20 @@
         resolve();
       }
     });
+  }
+
+  function readInviteLink() {
+    const params = new URLSearchParams(location.hash.replace(/^#/, ""));
+    const code = normaliseInviteCode(params.get("invite") || "");
+    if (!code) return null;
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (_) { /* file:// */ }
+    return { code, email: (params.get("email") || "").trim() };
+  }
+
+  function inviteLink(code, email) {
+    const params = new URLSearchParams({ invite: code });
+    if (email) params.set("email", email);
+    return `${location.origin}${location.pathname}#${params}`;
   }
 
   function signOut() {
@@ -1477,8 +1507,8 @@
     const days = Math.floor((Date.now() - then) / 86400000);
     const text = days <= 0 ? "today" : days === 1 ? "yesterday"
       : days < 30 ? `${days} days ago`
-      : days < 365 ? `${Math.floor(days / 30)} months ago`
-      : `${Math.floor(days / 365)} years ago`;
+      : days < 365 ? `${plural(Math.floor(days / 30), "month")} ago`
+      : `${plural(Math.floor(days / 365), "year")} ago`;
     return { text, title: new Date(then).toLocaleString("en-AU") };
   }
 
@@ -1625,13 +1655,34 @@
 
   function freshInviteHtml() {
     if (!freshInvite) return "";
+    const link = inviteLink(freshInvite.code, freshInvite.email);
+    const who = freshInvite.label || freshInvite.email;
     return `<div class="invite-fresh">
-      <p>New code for ${esc(freshInvite.label || "no one in particular")}. Send it to one person.</p>
+      <p>New invite${who ? ` for ${esc(who)}` : ""}. The link opens the sign-up form with the code filled in, and works once.</p>
       <div class="invite-code-row">
         <code>${esc(freshInvite.code)}</code>
-        <button type="button" class="secondary" data-copy-code="${esc(freshInvite.code)}">Copy</button>
+        <button type="button" class="secondary" data-copy="${esc(link)}">Copy link</button>
+        <a class="secondary invite-mail" href="${esc(inviteMailto(link, freshInvite))}">Email it</a>
+        <button type="button" class="link-btn" data-copy="${esc(freshInvite.code)}">Copy code</button>
         <button type="button" class="link-btn" id="inviteFreshDismiss">Dismiss</button>
       </div></div>`;
+  }
+
+  // Opens the admin's own mail app with the invite written, so it comes
+  // from an address the recipient knows rather than a no-reply sender.
+  function inviteMailto(link, inv) {
+    const days = inv.expiresDays;
+    const body = [
+      "Hi,",
+      "",
+      "Here's an invite to A to E, the practice MCQ bank. Open this link to set up your account:",
+      "",
+      link,
+      "",
+      `It works once${days ? ` and expires in ${plural(days, "day")}` : ""}.`,
+    ].join("\n");
+    return `mailto:${encodeURIComponent(inv.email || "").replace(/%40/g, "@")}` +
+      `?subject=${encodeURIComponent("Your A to E invite")}&body=${encodeURIComponent(body)}`;
   }
 
   async function renderInvites(root, usersRoot) {
@@ -1641,6 +1692,7 @@
       <p class="admin-fact">Registration is invite only. A code works once.</p>
       <form class="invite-new" id="inviteNew">
         <label>For <input id="inviteLabel" type="text" maxlength="80" placeholder="name or note" /></label>
+        <label>Email <input id="inviteEmail" type="email" maxlength="200" autocomplete="off" placeholder="optional" /></label>
         <label>Expires in
           <select id="inviteDays">
             <option value="7">7 days</option>
@@ -1648,7 +1700,7 @@
             <option value="90">90 days</option>
             <option value="365">a year</option>
           </select></label>
-        <button type="submit" class="primary">Create code</button>
+        <button type="submit" class="primary">Create invite</button>
       </form>
       <div id="inviteFresh">${freshInviteHtml()}</div>`;
     root.innerHTML = head + `<div id="inviteList"></div>`;
@@ -1679,7 +1731,7 @@
       // before codes were stored recoverably, has only its hint.
       const cell = i.code
         ? `<code>${esc(i.code)}</code>` +
-          `<button type="button" class="row-act" data-copy-code="${esc(i.code)}">Copy</button>`
+          `<button type="button" class="row-act" data-copy="${esc(inviteLink(i.code))}">Copy link</button>`
         : `${esc(i.code_hint)}...` + (st === "Unused"
             ? `<button type="button" class="row-act" data-reissue="${esc(i.code_hash)}"` +
               ` data-label="${esc(i.label || "")}">Reissue</button>` : "");
@@ -1717,17 +1769,23 @@
             expires_days: parseInt(document.getElementById("inviteDays").value, 10),
           }),
         });
-        freshInvite = { code: r.code, label: document.getElementById("inviteLabel").value };
+        freshInvite = {
+          code: r.code,
+          label: document.getElementById("inviteLabel").value.trim(),
+          email: document.getElementById("inviteEmail").value.trim(),
+          expiresDays: parseInt(document.getElementById("inviteDays").value, 10),
+        };
         document.getElementById("inviteLabel").value = "";
+        document.getElementById("inviteEmail").value = "";
         renderInvites(root, usersRoot);
       } catch (err) {
         adminSay("error", err.message || String(err));
       } finally { btn.disabled = false; }
     };
 
-    root.querySelectorAll("[data-copy-code]").forEach(b => {
+    root.querySelectorAll("[data-copy]").forEach(b => {
       b.onclick = () => {
-        const code = b.dataset.copyCode;
+        const code = b.dataset.copy;
         const done = () => {
           const was = b.textContent;
           b.textContent = "Copied";
@@ -1735,9 +1793,9 @@
         };
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(code).then(done).catch(() =>
-            adminSay("error", "Could not reach the clipboard. Select the code and copy it."));
+            adminSay("error", `Couldn't reach the clipboard. Copy it from here: ${code}`));
         } else {
-          adminSay("error", "Could not reach the clipboard. Select the code and copy it.");
+          adminSay("error", `Couldn't reach the clipboard. Copy it from here: ${code}`);
         }
       };
     });
@@ -1758,7 +1816,7 @@
             method: "POST",
             body: JSON.stringify({ label: b.dataset.label || "", expires_days: 30 }),
           });
-          freshInvite = { code: r.code, label: b.dataset.label || "" };
+          freshInvite = { code: r.code, label: b.dataset.label || "", expiresDays: 30 };
           adminSay("ok", "Old code revoked, new one issued.");
           renderInvites(root, usersRoot);
         } catch (err) {
@@ -6082,5 +6140,18 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     return String(s).replace(/[&<>"']/g, c => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
     })[c]);
+  }
+
+  // Counts and dates follow the Australian Government Style Manual:
+  // "7,053", "23 Sept 2026", whatever the browser's own locale is.
+  const NUM_AU = new Intl.NumberFormat("en-AU");
+  function fmtNum(n) { return NUM_AU.format(n); }
+  // plural(1, "question") -> "1 question"; plural(3, "match", "matches").
+  function plural(n, one, many) {
+    return `${fmtNum(n)} ${n === 1 ? one : (many || one + "s")}`;
+  }
+  function fmtDate(ms, withYear) {
+    return new Date(ms).toLocaleDateString("en-AU",
+      withYear ? { day: "numeric", month: "short", year: "numeric" } : { day: "numeric", month: "short" });
   }
 })();

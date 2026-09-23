@@ -9,8 +9,11 @@
 // thing standing between an injected stem and someone's account.
 (function () {
   try {
+    // An invite link has to land on the sign-up form, so a stored guest
+    // id does not hide the gate when one is being opened.
+    var invite = /(^#|&)invite=/.test(location.hash);
     var pre = !!(localStorage.getItem("y4mcq.auth.token") ||
-                 localStorage.getItem("y4mcq.guest.v1"));
+                 (!invite && localStorage.getItem("y4mcq.guest.v1")));
     if (pre) document.documentElement.classList.add("pre-authed");
   } catch (_) {}
 })();
