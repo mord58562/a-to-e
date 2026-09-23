@@ -644,97 +644,98 @@
   "created": "2026-08-28"
  },
  {
-  "id": "ropu828a-008",
+  "id": "ropu828a-008-d2",
   "topic": "Paediatrics",
   "subtopic": "Respiratory",
-  "subtopic_detail": "Severe asthma escalation IV",
-  "difficulty": 5,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Oxygen target in acute paediatric asthma",
+  "difficulty": 2,
+  "model": "Claude Opus 5",
   "tags": [
    "asthma",
-   "magnesium sulfate"
+   "oxygen"
   ],
-  "stem": "An 8-year-old girl with known asthma on daily fluticasone presents with acute severe wheeze at rest and inability to complete sentences. She has received back-to-back nebulised salbutamol 5 mg every 20 minutes for one hour, ipratropium 250 mcg on the first neb, and oral prednisolone 2 mg per kg 30 minutes ago. Her mother has given her a puff of salbutamol every hour since school pickup 4 hours ago.\n\nAfter one hour of nebulised therapy she is still speaking in single words with marked subcostal recession, silent chest is not present but air entry is reduced globally, and SpO2 is 90 percent on 10 L via non-rebreather mask. She has become tremulous.",
+  "stem": "A 10 year old girl with a severe asthma exacerbation is receiving back-to-back salbutamol and ipratropium by oxygen-driven nebuliser with oral prednisolone. She is alert and her work of breathing is settling.",
   "data_table": {
-   "Vital signs": "HR 168, BP 108/68, RR 44, SpO2 90 percent on non-rebreather, temp 37.1 C",
-   "Examination": "Speaking in single words; marked subcostal recession; global reduced air entry with widespread wheeze; tremor",
-   "Investigations": "VBG pH 7.32, pCO2 44 mmHg (32-42), HCO3 22 mmol/L, lactate 4.2 mmol/L; potassium 3.1 mmol/L (3.5-5.0); glucose 8.2 mmol/L",
-   "Weight": "26 kg"
+   "Vital signs": "HR 132, RR 28, SpO2 98 percent on 8 L/min, BP 106/66"
   },
-  "lead_in": "What is the most appropriate next step?",
+  "lead_in": "What is the most appropriate oxygen strategy?",
   "options": [
    {
     "letter": "A",
-    "text": "Aminophylline loading 10 mg per kg over 60 minutes then maintenance infusion",
-    "correct": false,
-    "rationale": "Aminophylline is a later step used only when both magnesium and IV salbutamol fail; narrow therapeutic index and risk of arrhythmia make it a last-resort agent in AU paediatric practice. Skipping magnesium to jump to aminophylline is not supported. (Source: RCH CPG: Asthma acute)",
+    "text": "Titrate nasal prong oxygen to oxygen saturations of 92 to 95 percent",
+    "correct": true,
+    "rationale": "The Australian Asthma Handbook advises titrating supplemental oxygen to saturations of 92 to 95 percent in children, since higher targets confer no benefit and may worsen carbon dioxide retention. (Source: Australian Asthma Handbook)",
     "source_refs": [
-     "RCH CPG: Asthma acute"
+     "Australian Asthma Handbook"
     ]
    },
    {
     "letter": "B",
-    "text": "IV salbutamol loading 15 mcg per kg over 10 minutes then infusion at 1 mcg per kg per minute",
+    "text": "Continue 8 L/min by mask to keep oxygen saturations at 100 percent",
     "correct": false,
-    "rationale": "IV salbutamol is used when magnesium fails or is contraindicated; RCH sequences magnesium first because it has a better safety profile and comparable efficacy in children. Her potassium 3.1 mmol/L and lactate 4.2 mmol/L reflect ongoing beta-agonist toxicity from continuous salbutamol - adding IV salbutamol now would worsen both. (Source: RCH CPG: Asthma acute)",
+    "rationale": "High flow face mask oxygen is appropriate in the first minutes of resuscitation of a critically hypoxaemic or peri-arrest child, then weaned to a target range once saturations recover. (Source: Australian Asthma Handbook)",
     "source_refs": [
-     "RCH CPG: Asthma acute"
+     "Australian Asthma Handbook"
     ]
    },
    {
     "letter": "C",
-    "text": "IV magnesium sulfate 50 mg per kg (max 2 g) over 20 minutes with cardiac monitoring",
-    "correct": true,
-    "rationale": "This child has severe asthma failing maximal inhaled therapy. RCH CPG for severe asthma escalates with IV magnesium sulfate 50 mg per kg (max 2 g) over 20 minutes as the first IV bronchodilator, before IV salbutamol or aminophylline. Rising pCO2 into the normal range in a tachypnoeic asthmatic signals impending respiratory failure. (Source: RCH CPG: Asthma acute)",
+    "text": "Titrate nasal prong oxygen to oxygen saturations of 88 to 92 percent",
+    "correct": false,
+    "rationale": "A permissive target in the high eighties belongs to acute bronchiolitis and to adults with chronic carbon dioxide retention, not to a school-aged child with asthma. (Source: Australian Asthma Handbook; RCH CPG: Bronchiolitis)",
     "source_refs": [
-     "RCH CPG: Asthma acute"
+     "Australian Asthma Handbook",
+     "RCH CPG: Bronchiolitis"
     ]
    },
    {
     "letter": "D",
-    "text": "Continue back-to-back nebulised salbutamol every 20 minutes and observe for 2 hours",
+    "text": "Change to high flow nasal cannula at 2 litres per kilogram each minute",
     "correct": false,
-    "rationale": "One hour of maximal inhaled therapy has failed - continuing without escalation risks respiratory failure. Her lactate and hypokalaemia already reflect beta-agonist toxicity; more inhaled salbutamol worsens both without further bronchodilation. (Source: RCH CPG: Asthma acute)",
+    "rationale": "High flow nasal cannula is an escalation for a child with worsening work of breathing despite maximal therapy, usually in a high dependency setting. This girl is improving. (Source: RCH CPG: Asthma acute)",
     "source_refs": [
      "RCH CPG: Asthma acute"
     ]
    },
    {
     "letter": "E",
-    "text": "Ketamine 1 mg per kg intravenously for bronchodilation before RSI intubation",
+    "text": "Withhold oxygen entirely and reassess the saturations in one hour",
     "correct": false,
-    "rationale": "Ketamine at induction dose is used only when intubation for respiratory failure is decided; premature intubation of severe asthma before magnesium and IV salbutamol have been trialled worsens outcome because ventilation of stiff, hyperinflated lungs is very hazardous. Magnesium is the correct next step. (Source: RCH CPG: Asthma acute)",
+    "rationale": "Stopping oxygen without titration is reasonable only once the child is comfortably above target in room air, and an hourly review is too infrequent during back-to-back bronchodilators. (Source: RCH CPG: Asthma acute)",
     "source_refs": [
      "RCH CPG: Asthma acute"
     ]
    }
   ],
   "explanation": {
-   "summary": "A child with severe asthma who has failed one hour of maximal inhaled bronchodilators and steroids, with rising pCO2 into the normal range, hypokalaemia, and lactic acidosis, needs IV escalation. RCH sequences IV magnesium sulfate first, IV salbutamol second, and aminophylline last. Repeating what has already failed or premature intubation both worsen outcome.",
+   "summary": "Oxygen in acute asthma is a drug with a target range. Australian guidance sets saturations of 92 to 95 percent in children and titrates the delivery device down as the child improves, because routinely driving saturations to 100 percent has no benefit and can blunt the hypoxic drive and mask deterioration. Oxygen-driven nebulisers deliver a high inspired fraction as a side effect, so saturations often sit well above target during a bronchodilator burst and should be reviewed between doses.\n\nIn context: saturation targets are condition specific in paediatrics. Bronchiolitis in infants is managed to a threshold of 90 percent, acute asthma to 92 to 95 percent, and resuscitation of a shocked or peri-arrest child uses high flow oxygen until stability returns. Carrying one number across all three is a common source of both over-treatment and under-treatment.",
    "key_points": [
-    "IV magnesium sulfate 50 mg per kg (max 2 g) is the first IV escalation in AU paediatric severe asthma",
-    "Rising pCO2 into normal range in tachypnoeic asthma signals fatigue and impending failure",
-    "Hypokalaemia and lactic acidosis reflect beta-agonist toxicity, not asthma severity per se",
-    "Intubation is a last resort in asthma because ventilation of hyperinflated lungs is very hazardous"
+    "Target saturations of 92 to 95 percent in children with acute asthma",
+    "Oxygen-driven nebulisers deliver high inspired oxygen incidentally",
+    "Wean the delivery device as work of breathing settles",
+    "Bronchiolitis and asthma have different saturation thresholds"
    ],
-   "pearls": "Salbutamol lactate is a real trap - the rising lactate in ongoing severe asthma is often the drug, not the sepsis, and stepping to magnesium off the beta-agonist ladder is the right move."
+   "pearls": "A saturation of 100 percent on oxygen is information you have thrown away; titrate into the target range so a fall is visible early."
   },
   "sources": [
+   {
+    "label": "Australian Asthma Handbook",
+    "url": "https://www.asthmahandbook.org.au/"
+   },
    {
     "label": "RCH CPG: Asthma acute",
     "url": "https://www.rch.org.au/clinicalguide/guideline_index/Asthma_acute/"
    },
    {
-    "label": "AMH Children's Dosing Companion: Magnesium sulfate",
-    "url": "https://amhonline.amh.net.au/"
+    "label": "RCH CPG: Bronchiolitis",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/"
    }
   ],
   "reference_ranges": [
-   "paeds_vitals_child",
-   "vbg",
-   "paeds_uec"
+   "paeds_vitals_child"
   ],
-  "created": "2026-08-28"
+  "created": "2026-09-23",
+  "revised_from": "ropu828a-008"
  },
  {
   "id": "ropu828b-001",

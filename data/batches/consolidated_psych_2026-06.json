@@ -185,95 +185,96 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rp48-018",
+  "id": "rp48-018-d2",
   "topic": "Psychiatry",
   "subtopic": "Substance use",
-  "subtopic_detail": "Smoking cessation pharmacotherapy",
+  "subtopic_detail": "Varenicline adverse effects during titration",
   "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "model": "Claude Opus 5",
   "tags": [
-   "smoking",
    "varenicline",
-   "addiction"
+   "adverse effects",
+   "smoking cessation"
   ],
-  "stem": "A 42-year-old man with a 25 pack-year history attends his GP wanting to stop smoking 25 cigarettes a day. He has tried nicotine patches twice in the past without success, lapsing back to smoking within 2 weeks each time. He has a quit date in 2 weeks. He has well-controlled hypertension on perindopril 5 mg daily, no significant mental health history, no current depressive symptoms (PHQ-9 score 3), and no history of seizures or eating disorder. He drinks 6 standard drinks per week. He has read about available options online and wants the most effective pharmacotherapy.\n\nHe is willing to combine pharmacotherapy with behavioural support through Quitline.",
+  "stem": "A 45-year-old man started varenicline twelve days ago and stopped smoking on day eight. He has nausea after each evening dose but no vomiting, is eating normally, and wants to keep going.",
   "data_table": {
-   "Vital signs": "Pulse rate 74/min, blood pressure 128/78 mmHg, respiratory rate 14/min, SpO2 98% on room air, temperature 36.6°C",
-   "Examination": "Well, no respiratory distress, mild peripheral cyanosis of fingers from staining; chest clear",
-   "Investigations": "Fasting glucose 5.4 mmol/L; HbA1c 5.6 percent; spirometry FEV1/FVC 0.78 predicted",
-   "Medications": "Perindopril 5 mg mane"
+   "Observations": "BP 126/78, HR 72, weight stable",
+   "Mental state": "Euthymic, sleeping well, no abnormal dreams"
   },
-  "lead_in": "What is the most appropriate first-line pharmacotherapy?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "Bupropion sustained release 150 mg daily for 3 days then twice daily, started 1 week before quit date.",
-    "correct": false,
-    "rationale": "Bupropion is second-line when varenicline is contraindicated, declined, or unavailable; varenicline has superior efficacy. (Source: Therapeutic Guidelines: smoking cessation)",
+    "text": "Reduce to 0.5 mg twice daily and take doses after food",
+    "correct": true,
+    "rationale": "Nausea is the commonest varenicline adverse effect, is dose-related and usually settles; halving the dose and taking it after food with a full glass of water keeps an abstinent patient on effective treatment. (Source: AMH: Varenicline)",
     "source_refs": [
-     "Therapeutic Guidelines: smoking cessation"
+     "AMH: Varenicline"
     ]
    },
    {
     "letter": "B",
-    "text": "Varenicline starting at 0.5 mg daily titrated to 1 mg twice daily, started 1 week before quit date.",
-    "correct": true,
-    "rationale": "Varenicline has the highest efficacy as smoking cessation monotherapy in Australia and is first-line for committed quitters without contraindications. (Source: Therapeutic Guidelines: smoking cessation)",
+    "text": "Stop varenicline and start a 21 mg nicotine patch tomorrow",
+    "correct": false,
+    "rationale": "Switching to replacement is right when varenicline causes intolerable effects despite dose reduction, or when mood or suicidal symptoms emerge. Abandoning effective treatment for mild nausea risks relapse. (Source: RACGP Supporting smoking cessation)",
     "source_refs": [
-     "Therapeutic Guidelines: smoking cessation"
+     "RACGP Supporting smoking cessation"
     ]
    },
    {
     "letter": "C",
-    "text": "Combination nicotine replacement therapy with a 21 mg patch plus 4 mg lozenges for breakthrough cravings.",
+    "text": "Continue the current dose and add metoclopramide 10 mg as required",
     "correct": false,
-    "rationale": "Combination NRT is reasonable but varenicline remains the most effective monotherapy in head-to-head trials. (Source: Therapeutic Guidelines: smoking cessation)",
+    "rationale": "An antiemetic is justified for nausea from a treatment that cannot be dose-reduced, such as chemotherapy. Here it adds extrapyramidal risk when a simple dose reduction solves the problem. (Source: AMH: Metoclopramide)",
     "source_refs": [
-     "Therapeutic Guidelines: smoking cessation"
+     "AMH: Metoclopramide"
     ]
    },
    {
     "letter": "D",
-    "text": "Nortriptyline 25 mg at night titrated up to 75 mg over a fortnight to suppress cigarette cravings.",
+    "text": "Stop varenicline and refer him to Quitline for behavioural support",
     "correct": false,
-    "rationale": "Nortriptyline is a fourth-line option used only if other pharmacotherapies fail or are contraindicated. (Source: Therapeutic Guidelines: smoking cessation)",
+    "rationale": "Behavioural support runs alongside pharmacotherapy rather than replacing it; it would be the sole treatment only if he declined or could not tolerate all medicines. (Source: RACGP Supporting smoking cessation)",
     "source_refs": [
-     "Therapeutic Guidelines: smoking cessation"
+     "RACGP Supporting smoking cessation"
     ]
    },
    {
     "letter": "E",
-    "text": "Nicotine inhaler used hourly during waking hours alongside Quitline behavioural counselling sessions.",
+    "text": "Halve the dose and stop varenicline at the end of week four",
     "correct": false,
-    "rationale": "Monotherapy with a single short-acting NRT is less effective than combination NRT or varenicline. (Source: Therapeutic Guidelines: smoking cessation)",
+    "rationale": "A shortened course would apply only if treatment had to be ceased for an adverse effect; the standard course runs 12 weeks, and stopping at four weeks markedly increases relapse. (Source: AMH: Varenicline)",
     "source_refs": [
-     "Therapeutic Guidelines: smoking cessation"
+     "AMH: Varenicline"
     ]
    }
   ],
   "explanation": {
-   "summary": "Australian Therapeutic Guidelines rank smoking cessation pharmacotherapy by efficacy: varenicline (now considered first-line again following resolution of historical safety concerns) is most effective, then combination nicotine replacement therapy (patch plus short-acting), then bupropion or single NRT, with nortriptyline as a fourth-line option. Varenicline 0.5 mg daily for 3 days, then 0.5 mg twice daily for 4 days, then 1 mg twice daily for 12 weeks, started 1 week before quit date, is the standard schedule. Combine pharmacotherapy with structured behavioural support through Quitline (13 78 48).",
+   "summary": "Nausea affects roughly a third of patients taking varenicline, is dose-related, usually mild and tends to settle with continued treatment. The management is to take each dose after food with a full glass of water and, if it persists, reduce to 0.5 mg twice daily rather than stop; other common effects are vivid or abnormal dreams and insomnia, managed by taking the evening dose earlier. Treatment is stopped for agitation, depressed mood, hostility or suicidal thoughts, or for a hypersensitivity or serious skin reaction. In context: varenicline is the most effective single cessation agent, and most treatment failures in practice are premature cessation of the drug rather than true non-response, so dose adjustment is the default response to tolerable adverse effects.",
    "key_points": [
-    "First-line: varenicline.",
-    "Second-line: combination NRT (long-acting patch plus short-acting gum or lozenge).",
-    "Combine pharmacotherapy with structured behavioural support such as Quitline."
+    "Nausea is dose-related and usually settles; take doses after food with water",
+    "Reduce to 0.5 mg twice daily before abandoning treatment",
+    "Vivid dreams and insomnia respond to taking the evening dose earlier",
+    "Stop for new agitation, depressed mood or suicidal thoughts, or severe skin reaction"
    ],
-   "pearls": "If the patient has active major depression or recent suicidal ideation, screen carefully before starting varenicline; current evidence does not show a population-level risk but individual histories warrant caution."
+   "pearls": "An abstinent patient at day twelve has already passed the highest-risk window for relapse; keeping them on treatment at a reduced dose is worth more than a clean adverse effect profile."
   },
   "sources": [
    {
-    "label": "Therapeutic Guidelines: smoking cessation",
-    "url": "https://www.tg.org.au/"
+    "label": "AMH: Varenicline",
+    "url": "https://amhonline.amh.net.au/"
    },
    {
-    "label": "RACGP supporting smoking cessation",
+    "label": "RACGP Supporting smoking cessation",
     "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/supporting-smoking-cessation"
+   },
+   {
+    "label": "AMH: Metoclopramide",
+    "url": "https://amhonline.amh.net.au/"
    }
   ],
-  "reference_ranges": [
-   "lipids"
-  ],
-  "created": "2026-06-01"
+  "reference_ranges": [],
+  "revised_from": "rp48-018"
  },
  {
   "id": "rp48-019",
@@ -367,95 +368,99 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rp48-020",
+  "id": "rp48-020-d2",
   "topic": "Psychiatry",
-  "subtopic": "Emergency",
-  "subtopic_detail": "Tricyclic antidepressant overdose",
-  "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic": "Toxicology",
+  "subtopic_detail": "Exploratory ingestion of an adult antidepressant by a toddler",
+  "difficulty": 3,
   "tags": [
-   "TCA",
-   "overdose",
-   "bicarbonate"
+   "TCA overdose",
+   "paediatric ingestion",
+   "triage"
   ],
-  "stem": "A 32-year-old woman is brought to the emergency department 90 minutes after ingesting an estimated 50 tablets of amitriptyline 25 mg (1250 mg total) with alcohol. She is drowsy but rousable. She has a known history of depression and previous overdose. On examination she is warm and dry with dilated pupils and absent bowel sounds. An ECG taken on arrival 10 minutes ago is on the trolley. She has been intubated for airway protection because of decreasing GCS and her arterial blood gas has returned.\n\nThe ED registrar is preparing the next intervention.",
+  "stem": "A mother telephones your general practice. Her 13 kg two-year-old was found with his grandmother's dosette box about 30 minutes ago and one 25 mg amitriptyline tablet is missing. He is alert, playing and has vomited once.",
   "data_table": {
-   "Vital signs": "Pulse rate 132/min, blood pressure 90/55 mmHg, respiratory rate ventilated at 16/min, SpO2 99% on FiO2 0.4, temperature 37.4°C",
-   "Examination": "Sedated, intubated; pupils dilated; warm and dry skin; absent bowel sounds; no focal neurology",
-   "Investigations": "ECG: sinus tachycardia, QRS 145 ms, terminal R in aVR 4 mm; ABG pH 7.28, PaCO2 38 mmHg, HCO3 18 mmol/L, lactate 3.2 mmol/L; potassium 3.6 mmol/L",
-   "Medications": "Amitriptyline (overdose); alcohol (recent)"
+   "History": "Well child, no regular medicines, immunisations up to date",
+   "Reported observations": "Alert and active, warm and well perfused"
   },
-  "lead_in": "What is the most appropriate next intervention?",
+  "lead_in": "What is the most appropriate advice?",
   "options": [
    {
-    "letter": "A",
-    "text": "Amiodarone 300 mg intravenous bolus over 10 minutes to terminate the tachyarrhythmia.",
-    "correct": false,
-    "rationale": "Class IA, IC, and III antiarrhythmics are contraindicated in TCA poisoning because they prolong QT and worsen sodium channel blockade. (Source: AU TCA poisoning guideline)",
-    "source_refs": [
-     "AU TCA poisoning guideline"
-    ]
-   },
-   {
-    "letter": "B",
-    "text": "Flumazenil 0.2 mg intravenously to reverse benzodiazepine-associated sedation contribution.",
-    "correct": false,
-    "rationale": "Flumazenil in mixed overdose risks precipitating seizures, particularly with TCA co-ingestion. (Source: AU TCA poisoning guideline)",
-    "source_refs": [
-     "AU TCA poisoning guideline"
-    ]
-   },
-   {
-    "letter": "C",
-    "text": "Activated charcoal 50 g via the nasogastric tube without prior bicarbonate therapy considered first.",
-    "correct": false,
-    "rationale": "Charcoal is only useful within 1 to 2 hours of ingestion and does not address sodium channel blockade cardiotoxicity. (Source: AU TCA poisoning guideline)",
-    "source_refs": [
-     "AU TCA poisoning guideline"
-    ]
-   },
-   {
-    "letter": "D",
-    "text": "Sodium bicarbonate 1 to 2 mmol/kg intravenously over 5 minutes targeting QRS narrowing and pH 7.45 to 7.55.",
+    "text": "Send him to an emergency department now for monitoring",
     "correct": true,
-    "rationale": "QRS above 100 ms or terminal R in aVR above 3 mm in TCA poisoning is an indication for sodium bicarbonate. (Source: AU TCA poisoning guideline)",
+    "rationale": "A single adult tricyclic tablet can reach a toxic dose in a toddler, and deterioration is delayed. Australian poisons advice is transfer for assessment with continuous cardiac monitoring and serial electrocardiograms for at least six hours after ingestion.",
     "source_refs": [
-     "AU TCA poisoning guideline"
-    ]
+     "NSW Poisons Information Centre",
+     "Therapeutic Guidelines: Toxicology and Toxinology"
+    ],
+    "letter": "A"
    },
    {
-    "letter": "E",
-    "text": "Intravenous lipid emulsion 1.5 mL/kg as first-line therapy ahead of any other intervention.",
-    "correct": false,
-    "rationale": "Lipid emulsion is a rescue therapy for refractory cardiovascular collapse, not first-line in TCA poisoning. (Source: AU TCA poisoning guideline)",
+    "text": "Observe at home and review if he becomes drowsy",
+    "rationale": "Home observation is appropriate for a genuinely non-toxic exposure, such as an oral contraceptive pill or a small amount of paracetamol elixir well below the threshold dose. Waiting for drowsiness in a tricyclic ingestion means waiting for cardiotoxicity.",
     "source_refs": [
-     "AU TCA poisoning guideline"
-    ]
+     "NSW Poisons Information Centre",
+     "Therapeutic Guidelines: Toxicology and Toxinology"
+    ],
+    "letter": "B",
+    "correct": false
+   },
+   {
+    "text": "Give activated charcoal at home before transfer",
+    "rationale": "Charcoal is considered in hospital for a recent potentially serious ingestion with a protected or cooperative airway. Administering it at home to an unmonitored toddler risks aspiration and delays transfer.",
+    "source_refs": [
+     "Therapeutic Guidelines: Toxicology and Toxinology",
+     "Toxicology Handbook (Murray, Little, Cadogan, Daly), Elsevier Australia"
+    ],
+    "letter": "C",
+    "correct": false
+   },
+   {
+    "text": "Arrange a review in the practice in two hours",
+    "rationale": "A practice review suits a low-risk exposure needing a second look. General practice cannot deliver the continuous cardiac monitoring and resuscitation capability this ingestion may require.",
+    "source_refs": [
+     "NSW Poisons Information Centre",
+     "RACGP: Handbook of Non-Drug Interventions and preventive activities"
+    ],
+    "letter": "D",
+    "correct": false
+   },
+   {
+    "text": "Arrange an electrocardiogram at a local clinic tomorrow",
+    "rationale": "A single delayed tracing would miss the window in which the QRS widens. Serial electrocardiography has a role, but during a monitored hospital observation period beginning now.",
+    "source_refs": [
+     "NSW Poisons Information Centre",
+     "Toxicology Handbook (Murray, Little, Cadogan, Daly), Elsevier Australia"
+    ],
+    "letter": "E",
+    "correct": false
    }
   ],
-  "explanation": {
-   "summary": "Tricyclic antidepressant cardiotoxicity is from fast sodium channel blockade in myocardial Purkinje fibres, causing QRS prolongation, hypotension, ventricular arrhythmias, and seizures. The 12-lead ECG features predicting arrhythmia are QRS at or above 100 ms and a terminal R wave in aVR at or above 3 mm. Treatment is sodium bicarbonate 1 to 2 mmol/kg IV boluses repeated to narrow QRS, target arterial pH 7.45 to 7.55, and reverse hypotension. Hyperventilation alkalinisation can be added. Lipid emulsion is rescue therapy for cardiovascular collapse despite bicarbonate.",
-   "key_points": [
-    "QRS at or above 100 ms or terminal R in aVR at or above 3 mm triggers sodium bicarbonate.",
-    "Avoid class IA, IC, and III antiarrhythmics in TCA poisoning.",
-    "Lipid emulsion is rescue for refractory hypotension despite bicarbonate."
-   ],
-   "pearls": "Maintain sodium bicarbonate boluses or infusion until QRS narrows below 100 ms and the patient is haemodynamically stable, not until pH returns to normal range."
-  },
+  "explanation": "Tricyclic antidepressants sit in the small group of agents where one adult tablet can be lethal to a small child, alongside agents such as sustained release calcium channel blockers, sulfonylureas and opioids. A 25 mg tablet in a 13 kg child is close to 2 mg/kg, and toxicity in children is reported from around 5 mg/kg, but the dose history in an exploratory ingestion is never reliable and the missing tablet may not be the only one. All of these children are referred for a monitored observation period with serial electrocardiograms, and a normal tracing with a normal conscious state at six hours identifies the child who can go home. In context: tricyclic poisoning causes sodium channel blockade, seizures and antimuscarinic delirium, and the Poisons Information Centre on 13 11 26 provides national advice around the clock.",
   "sources": [
    {
-    "label": "Therapeutic Guidelines: toxicology",
+    "label": "NSW Poisons Information Centre",
+    "url": "https://www.poisonsinfo.nsw.gov.au/"
+   },
+   {
+    "label": "Therapeutic Guidelines: Toxicology and Toxinology",
     "url": "https://www.tg.org.au/"
    },
    {
-    "label": "AU TCA poisoning guideline",
-    "url": "https://www.toxinz.com/"
+    "label": "Toxicology Handbook (Murray, Little, Cadogan, Daly), Elsevier Australia",
+    "url": "https://www.elsevier.com/"
+   },
+   {
+    "label": "RACGP: Handbook of Non-Drug Interventions and preventive activities",
+    "url": "https://www.racgp.org.au/"
    }
   ],
   "reference_ranges": [
-   "abg"
+   "paeds_vitals_child"
   ],
-  "created": "2026-06-01"
+  "model": "Claude Opus 5",
+  "created": "2026-09-23",
+  "revised_from": "rp48-020"
  },
  {
   "id": "rp48-021",
@@ -3356,96 +3361,98 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rabe52-021",
+  "id": "rabe52-021-d2",
   "topic": "Psychiatry",
   "subtopic": "Catatonia",
-  "subtopic_detail": "Catatonia diagnosis and lorazepam challenge in elderly inpatient",
-  "difficulty": 5,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Legal authority to treat a catatonic patient who cannot consent in NSW",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
   "tags": [
    "catatonia",
-   "lorazepam challenge"
+   "Mental Health Act",
+   "consent"
   ],
-  "stem": "A 76-year-old man with a 5-year history of severe recurrent major depression is admitted to the geriatric psychiatry unit after a 2-week deterioration. He has stopped eating and drinking, says nothing in response to questions, and remains motionless in bed. The nursing staff describe \"waxy flexibility\" when his arm is moved, and he has held an unusual posture for over 30 minutes during the morning. He has not been febrile but his urine output has dropped over the last 24 hours. His usual medications include sertraline 100 mg daily and zopiclone 7.5 mg nocte. He has no recent dose changes and no infection.\n\nThe geriatric psychiatry consultant has examined him and the on-call medical registrar has reviewed his blood results.",
+  "stem": "A 47 year old woman in Sydney with catatonia complicating bipolar disorder is mute and takes no food or fluid. She cannot take part in any discussion about treatment. Her sister asks you to treat her.",
   "data_table": {
-   "Vital signs": "Pulse 96, BP 102/68 mmHg, RR 14, SpO2 98% in room air, temperature 36.9 °C",
-   "Examination": "Mute, motionless, waxy flexibility on passive limb movement, prolonged posturing (>30 minutes), no rigidity beyond catalepsy, no tremor, no clonus, no fever",
-   "Investigations": "FBC within normal limits, UEC creatinine 132 micromol/L (60-110, baseline 88), CK 1240 U/L (<200), lactate 1.4, CRP 4 mg/L (<5), MRI brain unchanged from 6 months ago, EEG generalised slowing without status epilepticus",
-   "Medications": "Sertraline 100 mg daily, zopiclone 7.5 mg nocte"
+   "Examination": "Mental state: mute, immobile, negativism; unable to communicate a treatment decision"
   },
-  "lead_in": "What is the most appropriate next step?",
+  "lead_in": "What is the most appropriate step?",
   "options": [
    {
     "letter": "A",
-    "text": "Increase sertraline to 200 mg orally daily for depressive psychomotor retardation",
-    "correct": false,
-    "rationale": "Increasing SSRI dose does not treat catatonia and may delay the diagnostic test. Catatonia is a syndrome that requires its own treatment first, even when underlying depression is the cause. (Source: RANZCP Practice Guidelines)",
+    "text": "Detain and treat her under the NSW Mental Health Act 2007",
+    "correct": true,
+    "rationale": "A person with catatonia from a mental illness who needs care and cannot consent is detained and treated under the state mental health legislation (Source: Mental Health Act 2007 (NSW)).",
     "source_refs": [
-     "RANZCP Practice Guidelines"
+     "Mental Health Act 2007 (NSW)"
     ]
    },
    {
     "letter": "B",
-    "text": "Refer to neurology for autoimmune encephalitis workup before treatment",
+    "text": "Take consent from her sister as the person responsible",
     "correct": false,
-    "rationale": "Autoimmune encephalitis is a differential but the clinical features (catalepsy, waxy flexibility, mutism, in a known severe MDD patient) point first to catatonia; lorazepam challenge is both diagnostic and therapeutic and should not be delayed. Autoimmune workup proceeds in parallel. (Source: RANZCP Practice Guidelines)",
+    "rationale": "The person responsible consents to treatment of a physical condition for a patient who lacks capacity, not to treatment of the mental illness itself (Source: Guardianship Act 1987 (NSW)).",
     "source_refs": [
-     "RANZCP Practice Guidelines"
+     "Guardianship Act 1987 (NSW)"
     ]
    },
    {
     "letter": "C",
-    "text": "Administer intravenous lorazepam 2 mg as a diagnostic and therapeutic challenge",
-    "correct": true,
-    "rationale": "Catatonia is diagnosed using the Bush-Francis Catatonia Rating Scale (catalepsy, waxy flexibility, mutism, immobility, posturing, stereotypy, and others). A lorazepam challenge of 2 mg IV (or 4 mg) within 10 to 20 minutes is both diagnostic (response within 10 minutes) and the first-line treatment. If no response, ECT is the definitive treatment. CK elevation and rising creatinine here reflect immobility-related rhabdomyolysis and AKI - these add urgency. (Source: RANZCP Practice Guidelines)",
+    "text": "Apply to the NSW Civil and Administrative Tribunal first",
+    "correct": false,
+    "rationale": "A tribunal application is the answer when a guardian is needed for continuing decisions outside mental health treatment (Source: Guardianship Act 1987 (NSW)).",
     "source_refs": [
-     "RANZCP Practice Guidelines"
+     "Guardianship Act 1987 (NSW)"
     ]
    },
    {
     "letter": "D",
-    "text": "Commence olanzapine 10 mg orally daily for psychomotor agitation",
+    "text": "Await a return of capacity before beginning any active treatment",
     "correct": false,
-    "rationale": "Antipsychotics may precipitate neuroleptic malignant syndrome (NMS) in catatonia or worsen catatonic features; they are contraindicated in pure catatonia until catatonia has resolved with benzodiazepines or ECT. (Source: RANZCP Practice Guidelines)",
+    "rationale": "Waiting is defensible only when treatment can safely be delayed, which is not so for a patient taking no fluid (Source: Mental Health Act 2007 (NSW)).",
     "source_refs": [
-     "RANZCP Practice Guidelines"
+     "Mental Health Act 2007 (NSW)"
     ]
    },
    {
     "letter": "E",
-    "text": "Commence intravenous fluids, monitor input and output, and review in 24 hours",
+    "text": "Rely on common law necessity and document the discussion",
     "correct": false,
-    "rationale": "Supportive care addresses the AKI but does not treat the catatonia. Delaying lorazepam challenge by 24 hours risks worsening rhabdomyolysis and AKI. (Source: RANZCP Practice Guidelines)",
+    "rationale": "Necessity covers immediate life saving treatment when no statutory pathway applies; here a statutory pathway plainly does apply (Source: Mental Health Act 2007 (NSW)).",
     "source_refs": [
-     "RANZCP Practice Guidelines"
+     "Mental Health Act 2007 (NSW)"
     ]
    }
   ],
   "explanation": {
-   "summary": "Catatonia is recognised by mutism, immobility, catalepsy, waxy flexibility and posturing. Lorazepam 2 mg IV is both diagnostic (response within 10 to 20 minutes) and first-line treatment. ECT is the definitive treatment if no response or if life-threatening catatonia (malignant catatonia: fever, autonomic instability, rhabdomyolysis). Antipsychotics are contraindicated until catatonia resolves because of NMS risk.",
+   "summary": "A mute, immobile patient cannot give or refuse consent, so the legal basis for treatment has to be stated explicitly. In New South Wales, a person who has a mental illness and needs care, control or treatment for their own protection is detained under the Mental Health Act 2007, which then authorises treatment for that mental illness without consent, with review by the Mental Health Review Tribunal. Guardianship pathways cover decisions about other medical treatment, and electroconvulsive therapy for a patient who cannot consent needs a separate Tribunal determination.",
    "key_points": [
-    "Bush-Francis Catatonia Rating Scale: ≥2 features for diagnosis",
-    "Lorazepam 2 mg IV challenge is both diagnostic and therapeutic (response in 10-20 minutes)",
-    "Antipsychotics contraindicated until catatonia resolves because of NMS risk"
+    "Catatonia from mental illness is treated under the NSW Mental Health Act 2007",
+    "The person responsible under guardianship law covers other medical treatment",
+    "Electroconvulsive therapy without consent needs a Mental Health Review Tribunal determination",
+    "Record capacity, the legal pathway used and the reasons in the notes"
    ],
-   "pearls": "Malignant catatonia has hyperthermia, autonomic instability and rhabdomyolysis, mimicking NMS, and is a medical emergency treated with ECT. Always check CK, creatinine, and consider DVT prophylaxis given prolonged immobility."
+   "pearls": "Inability to communicate a choice is itself a failure of the capacity test, so a mute patient is not a patient who is refusing. In context: treating catatonia often means detaining a patient who cannot object, which makes documenting the legal basis and the clinical reasoning part of the treatment (Source: Mental Health Act 2007 (NSW))."
   },
   "sources": [
    {
-    "label": "RANZCP Practice Guidelines",
-    "url": "https://www.ranzcp.org/clinical-guidelines-publications"
+    "label": "Mental Health Act 2007 (NSW)",
+    "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-008"
+   },
+   {
+    "label": "Guardianship Act 1987 (NSW)",
+    "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-1987-257"
    },
    {
     "label": "Therapeutic Guidelines: Psychotropic",
-    "url": "https://www.tg.org.au/"
+    "url": "https://www.tg.org.au"
    }
   ],
   "reference_ranges": [
-   "uec",
-   "inflammatory_markers",
-   "fbc"
+   "adult_vitals"
   ],
-  "created": "2026-06-01"
+  "created": "2026-09-23",
+  "revised_from": "rabe52-021"
  },
  {
   "id": "rabe52-022",
@@ -3998,92 +4005,100 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rabe53-021",
+  "id": "rabe53-021-d2",
   "topic": "Psychiatry",
   "subtopic": "Psychotic disorders",
-  "subtopic_detail": "Schizoaffective vs bipolar I with psychosis",
-  "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Preventing manic relapse in schizoaffective disorder",
+  "difficulty": 3,
   "tags": [
-   "schizoaffective disorder",
-   "differential diagnosis"
+   "schizoaffective",
+   "mood stabiliser",
+   "maintenance"
   ],
-  "stem": "A 29-year-old man is reviewed at the community mental health clinic 8 weeks after discharge from his second psychiatric admission. He has a 6-year history of recurrent mood episodes with psychotic features. His first episode at age 23 was a manic episode with grandiose delusions that resolved completely with lithium and risperidone. His second admission a year later was a depressive episode with mood-congruent delusions.\n\nBetween episodes over the last 4 years he has had ongoing persecutory delusions and paranoid ideation (\"the government is monitoring me\"), present even when his mood is euthymic. He has had 8 weeks of stable euthymic mood since his last admission but persecutory beliefs persist.",
+  "stem": "A 35-year-old woman with schizoaffective disorder, bipolar type, has had two manic relapses in a year despite taking olanzapine at an adequate dose, with adherence confirmed by the community mental health team and by dispensing records. She is euthymic today and has no psychotic symptoms.",
   "data_table": {
-   "Vital signs": "Within normal limits",
-   "Examination": "Euthymic affect, no manic signs, no significant depressive symptoms, persecutory delusional beliefs about government surveillance, no hallucinations currently, insight partial, cognition grossly intact",
-   "Investigations": "Recent FBC, UEC, LFTs, TSH within normal limits; urine drug screen negative; recent lithium level 0.7 mmol/L",
-   "Medications": "Lithium carbonate 900 mg nocte, olanzapine 10 mg nocte"
+   "Medications": "Olanzapine daily for two years, no other psychotropics",
+   "Investigations": "eGFR above 90 mL/min/1.73m2, TSH 1.8 mIU/L, beta hCG negative"
   },
-  "lead_in": "Which diagnosis best fits this longitudinal presentation?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
-    "letter": "A",
-    "text": "Schizoaffective disorder, bipolar type, given inter-episode psychotic features",
+    "text": "Add lithium to the current olanzapine",
     "correct": true,
-    "rationale": "DSM-5 schizoaffective disorder requires (1) an uninterrupted period of illness during which a major mood episode is concurrent with criterion A for schizophrenia, (2) at least 2 weeks of delusions/hallucinations in the ABSENCE of a major mood episode during the lifetime course, and (3) mood symptoms present for the majority of the total duration of the active illness. This man has persistent persecutory delusions during 4 years of inter-episode euthymia - exactly the criterion-2 feature that distinguishes schizoaffective disorder from bipolar I with psychotic features. Bipolar-type is specified because manic episodes have occurred. (Source: RANZCP Practice Guidelines)",
+    "rationale": "Lithium has the strongest evidence for preventing manic relapse and for reducing suicide risk, and Australian guidance supports adding a mood stabiliser to an antipsychotic when mania recurs in schizoaffective disorder, bipolar type. Renal and thyroid function here are suitable.",
     "source_refs": [
-     "RANZCP Practice Guidelines"
-    ]
+     "RANZCP Clinical Practice Guidelines: Mood Disorders",
+     "Therapeutic Guidelines: Psychotropic"
+    ],
+    "letter": "A"
    },
    {
+    "text": "Add sodium valproate to the olanzapine",
+    "rationale": "Valproate is an effective antimanic agent, but it is avoided in women who could become pregnant because of its teratogenicity and neurodevelopmental effects, and is used only when other options have failed with pregnancy prevention in place.",
+    "source_refs": [
+     "Australian Medicines Handbook",
+     "RANZCP Clinical Practice Guidelines: Mood Disorders"
+    ],
     "letter": "B",
-    "text": "Bipolar I disorder with mood-congruent psychotic features only during episodes",
-    "correct": false,
-    "rationale": "Bipolar I with psychotic features requires psychotic symptoms to occur ONLY during mood episodes. This patient has 4 years of persistent inter-episode persecutory delusions, which excludes pure bipolar I. (Source: RANZCP Practice Guidelines)",
-    "source_refs": [
-     "RANZCP Practice Guidelines"
-    ]
+    "correct": false
    },
    {
+    "text": "Switch from olanzapine to quetiapine",
+    "rationale": "Switching antipsychotics is reasonable when the current agent is ineffective or poorly tolerated. Her psychosis is controlled and she is adherent, so removing a working drug is more likely to destabilise her than to prevent mania.",
+    "source_refs": [
+     "Therapeutic Guidelines: Psychotropic",
+     "RANZCP Clinical Practice Guidelines: Schizophrenia and Related Disorders"
+    ],
     "letter": "C",
-    "text": "Schizophrenia with secondary mood symptoms arising from the primary psychosis",
-    "correct": false,
-    "rationale": "Schizophrenia is the diagnosis if mood episodes are brief relative to total illness duration. Mood episodes here are prominent, recurrent and meet criteria for major depressive and manic episodes, with mood-congruent and mood-incongruent psychosis. Mood symptoms present for the majority of illness duration favours schizoaffective over schizophrenia. (Source: RANZCP Practice Guidelines)",
-    "source_refs": [
-     "RANZCP Practice Guidelines"
-    ]
+    "correct": false
    },
    {
+    "text": "Add a serotonin reuptake inhibitor",
+    "rationale": "Antidepressants are added for a depressive episode, and then with mood stabiliser cover. Adding one to a patient with recurrent mania risks precipitating a further manic episode.",
+    "source_refs": [
+     "RANZCP Clinical Practice Guidelines: Mood Disorders",
+     "Therapeutic Guidelines: Psychotropic"
+    ],
     "letter": "D",
-    "text": "Delusional disorder, persecutory subtype, with no major mood episode history",
-    "correct": false,
-    "rationale": "Delusional disorder requires non-bizarre delusions in the absence of prominent hallucinations or formal psychotic symptoms outside the delusion, with preserved overall function. This man has had hallucinations historically and clear mood episodes, which excludes delusional disorder. (Source: RANZCP Practice Guidelines)",
-    "source_refs": [
-     "RANZCP Practice Guidelines"
-    ]
+    "correct": false
    },
    {
-    "letter": "E",
-    "text": "Substance-induced psychotic disorder, with persistent post-cessation features",
-    "correct": false,
-    "rationale": "Substance-induced disorder requires a temporal link to substance use and resolution after sustained abstinence. Urine drug screen is negative and no substance history is given; chronic persistent delusions over 4 years are not consistent with substance-induced disorder. (Source: RANZCP Practice Guidelines)",
+    "text": "Add lamotrigine to the olanzapine",
+    "rationale": "Lamotrigine prevents depressive relapse in bipolar disorder and is the agent to consider when the recurrences are depressive. It has little effect on mania prevention.",
     "source_refs": [
-     "RANZCP Practice Guidelines"
-    ]
+     "RANZCP Clinical Practice Guidelines: Mood Disorders",
+     "Australian Medicines Handbook"
+    ],
+    "letter": "E",
+    "correct": false
    }
   ],
-  "explanation": {
-   "summary": "Schizoaffective disorder is diagnosed when criterion A schizophrenia symptoms occur concurrent with a major mood episode AND there have been at least 2 weeks of psychotic symptoms in the absence of a major mood episode during lifetime illness, with mood symptoms present for the majority of the total active illness. Bipolar-type or depressive-type specifier depending on whether manic episodes have occurred. Treatment combines mood stabiliser (lithium, valproate, lamotrigine for depressive type) with an antipsychotic.",
-   "key_points": [
-    "Key differentiator from bipolar I with psychosis: 2+ weeks of psychosis without mood episode",
-    "Key differentiator from schizophrenia: mood symptoms present for majority of illness",
-    "Subtypes: bipolar-type (mania present) vs depressive-type (only major depressive episodes)"
-   ],
-   "pearls": "Longitudinal data are essential - a single cross-sectional review cannot distinguish bipolar I with psychosis from schizoaffective disorder. Collateral history and review of past clinical records covering inter-episode periods are the diagnostic gold standard."
-  },
+  "explanation": "Maintenance treatment in schizoaffective disorder, bipolar type, targets both domains, so the usual combination is an antipsychotic for the psychotic symptoms plus a mood stabiliser for episode prevention. When the antipsychotic is controlling psychosis and adherence is documented, recurrent mania is a signal to add mood stabilisation rather than to swap antipsychotics. Lithium is first choice for manic relapse prevention and is the only agent with consistent evidence for reduced suicide mortality, provided renal and thyroid function, pregnancy status and the capacity for level monitoring are checked first, with levels and function retested regularly. In context: schizoaffective disorder sits between schizophrenia and bipolar disorder in course and outcome, needs long-term combined pharmacological and psychosocial care, and carries a suicide risk higher than that of schizophrenia alone, so relapse prevention is the central goal of treatment.",
   "sources": [
    {
-    "label": "RANZCP Practice Guidelines",
+    "label": "RANZCP Clinical Practice Guidelines: Mood Disorders",
     "url": "https://www.ranzcp.org/clinical-guidelines-publications"
    },
    {
     "label": "Therapeutic Guidelines: Psychotropic",
     "url": "https://www.tg.org.au/"
+   },
+   {
+    "label": "Australian Medicines Handbook",
+    "url": "https://amhonline.amh.net.au/"
+   },
+   {
+    "label": "RANZCP Clinical Practice Guidelines: Schizophrenia and Related Disorders",
+    "url": "https://www.ranzcp.org/clinical-guidelines-publications"
    }
   ],
-  "reference_ranges": [],
-  "created": "2026-06-01"
+  "reference_ranges": [
+   "uec",
+   "thyroid"
+  ],
+  "model": "Claude Opus 5",
+  "created": "2026-09-23",
+  "revised_from": "rabe53-021"
  },
  {
   "id": "rabe53-022",
@@ -5908,101 +5923,101 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rabe56-019",
+  "id": "rabe56-019-d2",
   "topic": "Psychiatry",
   "subtopic": "Toxicology",
-  "subtopic_detail": "Tricyclic antidepressant overdose",
-  "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Ventricular arrhythmia complicating sodium channel blockade",
+  "difficulty": 4,
   "tags": [
    "TCA overdose",
-   "sodium bicarbonate"
+   "ventricular tachycardia",
+   "antiarrhythmic"
   ],
-  "stem": "A 24-year-old woman is brought to your emergency department by ambulance 2 hours after a deliberate overdose of approximately 30 tablets of amitriptyline 25 mg. Her partner says 'she had been arguing with her family, then I found the empty bottle and she was already drowsy'. There is no co-ingestion of alcohol or other agents. She has previously been treated for major depressive disorder.\n\nOn examination she is drowsy but rousable, GCS 12. Pupils are 5 mm and equal. She has dry mucous membranes, flushed skin, and a soft non-distended abdomen. Cardiovascular auscultation is unremarkable. Bedside electrocardiogram shows sinus tachycardia at 124 bpm with a QRS duration of 130 ms and a prominent terminal R wave in aVR (over 3 mm). Venous blood gas shows pH 7.30, bicarbonate 18 mmol/L, lactate 2.4 mmol/L. Bedside paracetamol level is undetectable. A urinary pregnancy test is negative.",
+  "stem": "An intubated 38-year-old woman with a large nortriptyline overdose develops a sustained broad-complex tachycardia with a palpable pulse. Repeated sodium bicarbonate boluses have brought the arterial pH to 7.54 and the serum sodium to 152 mmol/L.",
   "data_table": {
-   "Vital signs": "Pulse 124 regular sinus tachycardia, BP 96/58 mmHg, RR 20, SpO2 98% on room air, temperature 37.0 °C",
-   "Examination": "GCS 12, dry mucous membranes, flushed skin, mid-dilated pupils, soft abdomen, normal heart sounds",
-   "Investigations": "ECG sinus tachycardia QRS 130 ms with terminal R wave aVR >3 mm; VBG pH 7.30 bicarbonate 18 mmol/L lactate 2.4; paracetamol undetectable",
-   "Medications": "Amitriptyline 25 mg (regular for depression); ingested approximately 30 tablets"
+   "Vital signs": "HR 168, BP 88/50",
+   "ECG": "Broad-complex tachycardia, QRS 170 ms",
+   "Investigations": "Potassium 3.8 mmol/L, magnesium 0.85 mmol/L"
   },
-  "lead_in": "What is the single best initial pharmacological step?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
-    "letter": "A",
-    "text": "Activated charcoal 1 g/kg orally for gastric decontamination as the single best intervention at this time",
-    "correct": false,
-    "rationale": "Charcoal is considered within 1-2 hours of ingestion in an awake cooperative patient; this patient is drowsy with airway risk and the QRS widening already mandates sodium bicarbonate. (Source: AusPoison Centre TCA Guideline)",
-    "source_refs": [
-     "AusPoison Centre TCA Guideline"
-    ]
-   },
-   {
-    "letter": "B",
-    "text": "Intravenous sodium bicarbonate 1-2 mmol/kg boluses targeting QRS narrowing and arterial pH 7.50-7.55",
+    "text": "Give an intravenous lignocaine bolus",
     "correct": true,
-    "rationale": "QRS duration over 100 ms with a terminal R wave in aVR over 3 mm indicates sodium channel blockade by amitriptyline and is the indication for hypertonic sodium bicarbonate 1-2 mmol/kg IV bolus, repeated to target QRS narrowing and pH 7.50-7.55. Sodium bicarbonate provides a sodium load and alkalosis that displace the drug from sodium channels. Avoid class 1a, 1c, or 3 antiarrhythmics. (Source: AusPoison Centre TCA Guideline; Toxicology Handbook Australia)",
+    "rationale": "Once alkalinisation and sodium loading are maximal, the recommended antiarrhythmic in Australian toxicology sources is lignocaine, a class Ib agent that dissociates rapidly from the sodium channel and does not add to the blockade.",
     "source_refs": [
-     "AusPoison Centre TCA Guideline",
-     "Toxicology Handbook Australia"
-    ]
+     "Toxicology Handbook (Murray, Little, Cadogan, Daly), Elsevier Australia",
+     "Therapeutic Guidelines: Toxicology and Toxinology"
+    ],
+    "letter": "A"
    },
    {
+    "text": "Give an intravenous amiodarone bolus",
+    "rationale": "Amiodarone is the standard agent for stable ventricular tachycardia in ischaemic heart disease. In sodium channel blocker poisoning it prolongs QRS and QT further and causes hypotension.",
+    "source_refs": [
+     "Toxicology Handbook (Murray, Little, Cadogan, Daly), Elsevier Australia",
+     "Australian Resuscitation Council guidelines"
+    ],
+    "letter": "B",
+    "correct": false
+   },
+   {
+    "text": "Give an intravenous flecainide bolus",
+    "rationale": "Flecainide is a class Ic agent used for supraventricular arrhythmia in a structurally normal heart. Here it would reproduce the exact toxicity being treated.",
+    "source_refs": [
+     "Toxicology Handbook (Murray, Little, Cadogan, Daly), Elsevier Australia",
+     "Australian Medicines Handbook"
+    ],
     "letter": "C",
-    "text": "Intravenous diazepam 5 mg as benzodiazepine for any seizure prophylaxis and supportive care alone otherwise",
-    "correct": false,
-    "rationale": "Benzodiazepines treat established seizures and agitation; they do not address sodium channel blockade and do not prevent the arrhythmic deterioration. (Source: AusPoison Centre TCA Guideline)",
-    "source_refs": [
-     "AusPoison Centre TCA Guideline"
-    ]
+    "correct": false
    },
    {
+    "text": "Give an intravenous procainamide bolus",
+    "rationale": "Procainamide is a class Ia agent with a role in pre-excited atrial fibrillation. Like the poison itself it blocks fast sodium channels and is contraindicated.",
+    "source_refs": [
+     "Toxicology Handbook (Murray, Little, Cadogan, Daly), Elsevier Australia",
+     "Australian Medicines Handbook"
+    ],
     "letter": "D",
-    "text": "Intravenous flumazenil 0.2 mg increments for reversal of the central nervous system depression from co-ingestion",
-    "correct": false,
-    "rationale": "Flumazenil is contraindicated in mixed overdose with proconvulsant agents (TCAs) because it lowers the seizure threshold; it also does not reverse TCA toxicity. (Source: AMH; AusPoison Centre)",
-    "source_refs": [
-     "AMH",
-     "AusPoison Centre TCA Guideline"
-    ]
+    "correct": false
    },
    {
-    "letter": "E",
-    "text": "Intravenous lipid emulsion 1.5 mL/kg as first-line lipid rescue for amitriptyline-induced cardiac toxicity",
-    "correct": false,
-    "rationale": "Lipid emulsion is a rescue therapy in TCA cardiotoxicity refractory to sodium bicarbonate and supportive measures; it is not the first-line initial step. (Source: AusPoison Centre TCA Guideline)",
+    "text": "Perform synchronised cardioversion now",
+    "rationale": "Synchronised cardioversion is indicated when a tachyarrhythmia causes shock, syncope, ischaemia or heart failure, and defibrillation when there is no pulse. This rhythm is perfusing, and cardioversion does not address the ongoing channel blockade.",
     "source_refs": [
-     "AusPoison Centre TCA Guideline"
-    ]
+     "Australian Resuscitation Council guidelines",
+     "Toxicology Handbook (Murray, Little, Cadogan, Daly), Elsevier Australia"
+    ],
+    "letter": "E",
+    "correct": false
    }
   ],
-  "explanation": {
-   "summary": "Tricyclic antidepressant overdose causes anticholinergic, sodium channel, and alpha-blocker effects: tachycardia, mydriasis, dry mucous membranes, urinary retention, drowsiness, seizures, and dysrhythmias. Sodium channel blockade widens the QRS, causes a terminal R wave in aVR over 3 mm, and predisposes to ventricular dysrhythmias. Treatment is supportive (airway, breathing, circulation) with hypertonic sodium bicarbonate boluses for QRS over 100 ms, hypotension, or dysrhythmia. Activated charcoal within 1-2 hours of ingestion if airway protected; consider lipid emulsion in refractory cardiotoxicity. Avoid class 1a, 1c, and 3 antiarrhythmics. Avoid flumazenil for mixed overdose.",
-   "key_points": [
-    "Sodium channel blockade: QRS over 100 ms, R wave in aVR over 3 mm",
-    "Treatment: hypertonic sodium bicarbonate 1-2 mmol/kg targeting QRS and pH",
-    "Avoid class 1a, 1c, 3 antiarrhythmics",
-    "Avoid flumazenil in mixed overdose with TCA"
-   ],
-   "pearls": "A terminal R wave in lead aVR over 3 mm at a sinus rate is highly predictive of seizure and ventricular dysrhythmia in TCA overdose and is itself an indication for sodium bicarbonate without waiting for QRS widening."
-  },
+  "explanation": "Broad-complex tachycardia in tricyclic poisoning is usually sodium channel blockade rather than a primary reentrant arrhythmia, so the first-line treatments are alkalinisation and sodium loading. When they are already maximal, with the pH at the top of the target band and a rising serum sodium, the next agent has to be one that does not add to the blockade. Lignocaine dissociates from the channel rapidly, which is why class Ib is the exception among sodium channel blocking antiarrhythmics, while class Ia and Ic agents and amiodarone are contraindicated. In context: tricyclic cardiotoxicity is graded by QRS duration, with seizures more likely above 100 ms and ventricular arrhythmias above 160 ms. Australian management is airway control, sodium bicarbonate, benzodiazepines for seizures, a vasopressor for refractory shock, and early advice from the Poisons Information Centre on 13 11 26.",
   "sources": [
    {
-    "label": "AusPoison Centre TCA Guideline",
-    "url": "https://www.poisonsinfo.nsw.gov.au/"
-   },
-   {
-    "label": "Toxicology Handbook Australia",
+    "label": "Toxicology Handbook (Murray, Little, Cadogan, Daly), Elsevier Australia",
     "url": "https://www.elsevier.com/"
    },
    {
-    "label": "AMH",
+    "label": "Therapeutic Guidelines: Toxicology and Toxinology",
+    "url": "https://www.tg.org.au/"
+   },
+   {
+    "label": "Australian Resuscitation Council guidelines",
+    "url": "https://www.resus.org.au/"
+   },
+   {
+    "label": "Australian Medicines Handbook",
     "url": "https://amhonline.amh.net.au/"
    }
   ],
   "reference_ranges": [
-   "vbg"
+   "abg",
+   "uec"
   ],
-  "created": "2026-06-01"
+  "model": "Claude Opus 5",
+  "created": "2026-09-23",
+  "revised_from": "rabe56-019"
  },
  {
   "id": "rabe56-020",
@@ -10076,98 +10091,97 @@
   "created": "2026-06-02"
  },
  {
-  "id": "psych-p62-005",
+  "id": "psych-p62-005-d2",
   "topic": "Psychiatry",
   "subtopic": "Substance use",
-  "subtopic_detail": "Smoking cessation pharmacotherapy in MDD remission",
-  "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Duration of therapy after a successful quit",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
   "tags": [
-   "smoking cessation",
    "varenicline",
-   "nicotine"
+   "relapse prevention",
+   "smoking cessation"
   ],
-  "stem": "A 42-year-old man attends his GP requesting help to quit smoking. He has smoked 25 cigarettes daily for 25 years (about 30 pack years). He has tried nicotine patches twice with relapse within 2 weeks. He has a history of major depressive disorder with one suicide attempt at age 28; he has been in stable remission for the past 7 years on sertraline 100 mg daily. There is no current depression.\n\nHis Heaviness of Smoking Index is 5 of 6 (smokes within 5 minutes of waking, over 30 cigarettes per day). Mood remains stable, with no recent psychosocial stressors. He has no history of seizures, alcohol dependence, or eating disorder. He has no cardiovascular disease and a recent ECG was normal. He is otherwise systemically well. His asthma is well controlled on a low-dose ICS-LABA. He has been screened with the PHQ-9 today which is 3 of 27 indicating no current depression.",
+  "stem": "A 50-year-old man finishes twelve weeks of varenicline today and has not smoked for eleven weeks. He describes daily cravings when he drinks coffee with colleagues and fears relapsing once the course ends.",
   "data_table": {
-   "Vital signs": "Pulse 76/min, BP 124/78 mmHg, RR 14/min, SpO2 97% room air, temperature 36.7 °C",
-   "Examination": "Mild bilateral wheeze on forced expiration; no clubbing; cardiovascular examination unremarkable; mental state examination euthymic, no suicidal ideation",
-   "Investigations": "FBC, electrolytes, LFTs within normal limits; ECG sinus rhythm normal axes and intervals; eGFR over 60 mL/min/1.73m2; PHQ-9 score 3 of 27"
+   "Course": "Varenicline 1 mg twice daily, twelve weeks completed",
+   "Now": "Abstinent 11 weeks; cravings most days; treatment well tolerated"
   },
-  "lead_in": "What is the most appropriate single best initial pharmacotherapy to recommend?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "Bupropion sustained-release 150 mg daily for 3 days then 150 mg twice daily for 7 to 12 weeks with set quit day 1 week into the titration and review at 4 weeks",
-    "correct": false,
-    "rationale": "Bupropion is a reasonable alternative but reduces seizure threshold and interacts with sertraline (CYP2D6 and serotonergic effects); in a stable depression patient on SSRI, varenicline is preferred. (Source: RACGP Supporting Smoking Cessation)",
+    "text": "Continue varenicline a further twelve weeks with behavioural support",
+    "correct": true,
+    "rationale": "A second 12-week course is offered to a patient who has quit on treatment, tolerates it and remains at high relapse risk; extended therapy reduces relapse in this group. (Source: AMH: Varenicline)",
     "source_refs": [
-     "RACGP Supporting Smoking Cessation"
+     "AMH: Varenicline",
+     "RACGP Supporting smoking cessation"
     ]
    },
    {
     "letter": "B",
-    "text": "Combination nicotine replacement therapy with 21 mg patch daily plus a 4 mg gum or lozenge as needed and review the patient again in 2 weeks for clinical follow up",
+    "text": "Stop varenicline today and supply nicotine lozenges for residual cravings",
     "correct": false,
-    "rationale": "Combination NRT is a reasonable alternative but he has already failed monotherapy NRT twice and his heaviness of smoking suggests pharmacotherapy with the highest efficacy is justified; varenicline outperforms combination NRT. (Source: RACGP Supporting Smoking Cessation)",
+    "rationale": "Short-acting replacement after the course suits a patient who cannot continue varenicline or declines it; it is less effective than extending the agent that has already worked for him. (Source: RACGP Supporting smoking cessation)",
     "source_refs": [
-     "RACGP Supporting Smoking Cessation"
+     "RACGP Supporting smoking cessation"
     ]
    },
    {
     "letter": "C",
-    "text": "Varenicline 0.5 mg daily for 3 days then 0.5 mg twice daily for 4 days then 1 mg twice daily for 12 weeks with set quit day 1 week into the titration",
-    "correct": true,
-    "rationale": "Varenicline is the most efficacious AU first-line pharmacotherapy for moderate-heavy dependence; the EAGLES trial showed it does NOT increase neuropsychiatric events in stable mood disorders. (Source: RACGP Supporting Smoking Cessation: A Guide for Health Professionals; AMH)",
+    "text": "Stop varenicline and taper the dose over the coming two weeks",
+    "correct": false,
+    "rationale": "Tapering is used at the end of treatment mainly to limit irritability in some patients; it does not address ongoing craving and varenicline does not require a withdrawal taper. (Source: AMH: Varenicline)",
     "source_refs": [
-     "RACGP Supporting Smoking Cessation",
-     "AMH"
+     "AMH: Varenicline"
     ]
    },
    {
     "letter": "D",
-    "text": "Nortriptyline titrated up to 75 to 100 mg nightly for 12 weeks with set quit day 1 week into the titration after careful baseline ECG and serum nortriptyline level taken",
+    "text": "Stop varenicline and start bupropion for a further twelve weeks",
     "correct": false,
-    "rationale": "Nortriptyline is a second-line agent for smoking cessation, has significant anticholinergic side effects, and combines with SSRI increases serotonergic risk; varenicline is safer and more effective. (Source: RACGP Supporting Smoking Cessation)",
+    "rationale": "Bupropion is chosen when varenicline is unsuitable from the outset. Swapping agents in a patient doing well on one has no evidence and adds seizure and interaction risk. (Source: AMH: Bupropion)",
     "source_refs": [
-     "RACGP Supporting Smoking Cessation"
+     "AMH: Bupropion"
     ]
    },
    {
     "letter": "E",
-    "text": "Behavioural counselling via Quitline alone without pharmacotherapy as initial approach given his prior history of major depressive disorder and concern about pharmacotherapy",
+    "text": "Stop varenicline and review him only if he starts smoking again",
     "correct": false,
-    "rationale": "Counselling alone has lower quit rates than counselling plus pharmacotherapy; with high dependence and prior NRT failures, behavioural treatment alone is inadequate. (Source: RACGP Supporting Smoking Cessation)",
+    "rationale": "Reactive review is reasonable for a confident ex-smoker with no craving. Scheduled follow-up in the first months after quitting is when most relapse is preventable. (Source: RACGP Supporting smoking cessation)",
     "source_refs": [
-     "RACGP Supporting Smoking Cessation"
+     "RACGP Supporting smoking cessation"
     ]
    }
   ],
   "explanation": {
-   "summary": "First-line pharmacotherapy options for smoking cessation in Australia are varenicline, combination NRT (patch plus oral), or bupropion SR. Varenicline is the most effective single agent with around 25% 1-year quit rates. The EAGLES trial demonstrated no increased neuropsychiatric events in stable psychiatric patients, including those with stable depression. Bupropion lowers seizure threshold, is contraindicated in eating disorders and recent alcohol withdrawal, and interacts with SSRIs. NRT combination (patch plus short-acting) is equivalent to varenicline in some studies and is the preferred choice in pregnancy. Counselling plus pharmacotherapy is the additive standard.",
+   "summary": "The standard varenicline course is twelve weeks. For a patient who has stopped smoking on treatment, tolerates it, and remains at high relapse risk, a further twelve weeks reduces relapse and is an accepted extension in Australian practice. Relapse risk is highest in the first three months and is driven by cued craving, alcohol, other smokers in the household and low mood, so behavioural support and scheduled review continue alongside the medicine rather than stopping with it. In context: nicotine dependence is chronic and relapsing, and abstinence at twelve weeks is a milestone rather than a cure, which is why the end of a course is a decision point rather than a discharge.",
    "key_points": [
-    "Varenicline is the most effective single AU first-line agent",
-    "EAGLES trial - varenicline is safe in stable mood disorders",
-    "Bupropion lowers seizure threshold and interacts with SSRIs",
-    "Combination NRT (patch plus oral) is equivalent to varenicline",
-    "Counselling plus pharmacotherapy beats either alone"
+    "Standard course is twelve weeks; a further twelve weeks is offered to those who have quit and remain at risk",
+    "Extended therapy reduces relapse in patients abstinent at the end of the first course",
+    "Behavioural support and scheduled review continue past the end of pharmacotherapy",
+    "Cued craving, alcohol and household smoking are the practical relapse triggers"
    ],
-   "pearls": "Varenicline 1 mg twice daily for 12 weeks following a 1-week titration produces around 25% 1-year quit rate in heavy smokers; EAGLES showed no neuropsychiatric signal in stable mood disorders despite older PBS warnings."
+   "pearls": "Abstinence at twelve weeks predicts long-term success but roughly half of quitters relapse within a year, so the end-of-course consultation is planned rather than incidental."
   },
   "sources": [
    {
-    "label": "RACGP Supporting Smoking Cessation",
+    "label": "AMH: Varenicline",
+    "url": "https://amhonline.amh.net.au/"
+   },
+   {
+    "label": "RACGP Supporting smoking cessation",
     "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/supporting-smoking-cessation"
    },
    {
-    "label": "AMH"
+    "label": "AMH: Bupropion",
+    "url": "https://amhonline.amh.net.au/"
    }
   ],
-  "reference_ranges": [
-   "fbc",
-   "uec",
-   "lfts"
-  ],
-  "created": "2026-06-02"
+  "reference_ranges": [],
+  "revised_from": "psych-p62-005"
  },
  {
   "id": "psych-p62-006",
@@ -12258,93 +12272,96 @@
   "created": "2026-06-02"
  },
  {
-  "id": "psych-p66-001",
+  "id": "psych-p66-001-d2",
   "topic": "Psychiatry",
   "subtopic": "Toxicology",
-  "subtopic_detail": "Tricyclic antidepressant overdose",
-  "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Screening for occult co-ingestants after deliberate self-poisoning",
+  "difficulty": 2,
   "tags": [
-   "overdose",
-   "TCA"
+   "deliberate self-poisoning",
+   "paracetamol",
+   "risk assessment"
   ],
-  "stem": "A 28-year-old woman is brought to the emergency department by ambulance two hours after a witnessed overdose. Her partner found an empty pack of dosulepin 75 mg tablets (originally 25 tablets) and a half empty bottle of red wine. She is drowsy with a Glasgow Coma Score of 11. She has had no seizures pre-hospital. There is no history of cardiac disease.\n\nOn arrival a 12-lead ECG shows sinus tachycardia at 128, a QRS duration of 132 milliseconds with a rightward terminal R wave in aVR of 4 millimetres, and a QTc of 480 milliseconds. Her pupils are dilated, mouth is dry, and bladder palpable. Auscultation is clear. Capillary glucose 5.2 mmol/L. There is no focal neurology. Vital signs are below.",
+  "stem": "A 22-year-old woman presents two hours after swallowing a handful of her mother's imipramine tablets during an argument. She says she took nothing else and no alcohol. She is alert and settled and her examination is normal.",
   "data_table": {
-   "Vital signs": "pulse rate 128, blood pressure 96/58, respiratory rate 14, SpO2 97 percent on room air, temperature 36.4 degrees",
-   "Investigations": "venous blood gas pH 7.34, lactate 2.4 mmol/L, potassium 3.6 mmol/L, sodium 137 mmol/L, urinary urine drug screen positive for tricyclics, paracetamol level pending"
+   "Vital signs": "HR 92, BP 118/70, afebrile",
+   "ECG": "Sinus rhythm, QRS 88 ms, normal axis"
   },
-  "lead_in": "What is the most appropriate next step?",
+  "lead_in": "Which investigation is most important?",
   "options": [
    {
-    "letter": "A",
-    "text": "Intravenous flumazenil 200 micrograms to reverse co-ingested benzodiazepine sedation and improve airway control",
-    "correct": false,
-    "rationale": "Flumazenil precipitates seizures in TCA overdose by removing the protective benzodiazepine effect on a pro-convulsant brain; it is specifically contraindicated. (Source: Therapeutic Guidelines: Toxicology and Wilderness)",
-    "source_refs": [
-     "Therapeutic Guidelines: Toxicology and Wilderness"
-    ]
-   },
-   {
-    "letter": "B",
-    "text": "Intravenous 8.4 percent sodium bicarbonate 1 to 2 mmol/kg bolus and repeat to target QRS under 100 ms and pH 7.50 to 7.55",
+    "text": "Serum paracetamol concentration at four hours",
     "correct": true,
-    "rationale": "QRS prolongation above 100 milliseconds and the R wave in aVR of 3 mm or more are markers of sodium channel blockade and predict seizures and ventricular arrhythmia. Sodium bicarbonate provides both a sodium load (overwhelms blockade) and alkalinisation (increases protein binding) and is the first line intervention. (Source: Therapeutic Guidelines: Toxicology and Wilderness)",
+    "rationale": "Every deliberate self-poisoning gets a timed paracetamol concentration, because paracetamol is the commonest co-ingestant, the early course is silent, and the antidote works only if given before hepatotoxicity develops.",
     "source_refs": [
-     "Therapeutic Guidelines: Toxicology and Wilderness"
-    ]
+     "Therapeutic Guidelines: Toxicology and Toxinology",
+     "NSW Poisons Information Centre"
+    ],
+    "letter": "A"
    },
    {
+    "text": "Serum tricyclic antidepressant concentration now",
+    "rationale": "Tricyclic concentrations are not available quickly enough to guide care and correlate poorly with severity. The QRS duration on serial electrocardiograms is the measure that drives management.",
+    "source_refs": [
+     "Toxicology Handbook (Murray, Little, Cadogan, Daly), Elsevier Australia",
+     "Therapeutic Guidelines: Toxicology and Toxinology"
+    ],
+    "letter": "B",
+    "correct": false
+   },
+   {
+    "text": "Urine drug screen for amphetamines and opioids",
+    "rationale": "A urine screen rarely changes acute management because it detects past use rather than current toxicity. It has a role in forensic work and in unexplained coma where no history is available.",
+    "source_refs": [
+     "Therapeutic Guidelines: Toxicology and Toxinology",
+     "Toxicology Handbook (Murray, Little, Cadogan, Daly), Elsevier Australia"
+    ],
     "letter": "C",
-    "text": "Intravenous amiodarone 300 mg over 20 minutes to treat the broad complex tachycardia and prevent ventricular arrhythmia",
-    "correct": false,
-    "rationale": "Class Ia, Ic, and III antiarrhythmics further block sodium channels or prolong QT in TCA overdose and may precipitate arrest. Sodium bicarbonate is the antiarrhythmic of choice here. (Source: Therapeutic Guidelines: Toxicology and Wilderness)",
-    "source_refs": [
-     "Therapeutic Guidelines: Toxicology and Wilderness"
-    ]
+    "correct": false
    },
    {
+    "text": "Serum ethanol concentration taken on arrival",
+    "rationale": "An ethanol concentration helps when the conscious state is depressed out of proportion to the history, or when a falling level fails to match improving conscious state. This patient is alert and denies alcohol.",
+    "source_refs": [
+     "Therapeutic Guidelines: Toxicology and Toxinology",
+     "Toxicology Handbook (Murray, Little, Cadogan, Daly), Elsevier Australia"
+    ],
     "letter": "D",
-    "text": "Activated charcoal 50 g via nasogastric tube now without prior airway protection given the rising drowsiness",
-    "correct": false,
-    "rationale": "Activated charcoal is contraindicated without a protected airway in a patient with a falling GCS; risk of aspiration outweighs benefit at two hours post-ingestion. (Source: Therapeutic Guidelines: Toxicology and Wilderness)",
-    "source_refs": [
-     "Therapeutic Guidelines: Toxicology and Wilderness"
-    ]
+    "correct": false
    },
    {
-    "letter": "E",
-    "text": "Intravenous magnesium sulfate 2 g over 20 minutes to address the prolonged QTc and prevent torsades de pointes",
-    "correct": false,
-    "rationale": "Magnesium addresses torsades de pointes but is not the priority while sodium channel blockade continues. Bicarbonate addresses both QRS and QTc by reversing the sodium channel block. (Source: Therapeutic Guidelines: Toxicology and Wilderness)",
+    "text": "Serum salicylate concentration at four hours",
+    "rationale": "Salicylate is measured when the history suggests aspirin, or when there is tinnitus, hyperventilation or a mixed acid-base picture. It is not part of the universal screen the way paracetamol is.",
     "source_refs": [
-     "Therapeutic Guidelines: Toxicology and Wilderness"
-    ]
+     "Therapeutic Guidelines: Toxicology and Toxinology",
+     "Toxicology Handbook (Murray, Little, Cadogan, Daly), Elsevier Australia"
+    ],
+    "letter": "E",
+    "correct": false
    }
   ],
-  "explanation": {
-   "summary": "Tricyclic antidepressant overdose causes sodium channel blockade (QRS widening, R wave in aVR over 3 mm, ventricular arrhythmia), anticholinergic syndrome, alpha-1 blockade (hypotension), and seizures. Treatment is sodium bicarbonate 1 to 2 mmol/kg IV bolus repeated to target QRS less than 100 ms and arterial pH 7.50 to 7.55, intubation if GCS falls below 9 or seizures occur, benzodiazepines (not phenytoin) for seizures, and noradrenaline for refractory hypotension. Intravenous lipid emulsion is considered for cardiac arrest unresponsive to standard measures. Flumazenil is contraindicated.",
-   "key_points": [
-    "QRS > 100 ms predicts seizures; QRS > 160 ms predicts ventricular arrhythmia",
-    "R wave in aVR > 3 mm is a sensitive marker of sodium channel blockade",
-    "Sodium bicarbonate 1 to 2 mmol/kg IV bolus, target QRS < 100 ms and pH 7.50 to 7.55",
-    "Benzodiazepines (not phenytoin) for TCA seizures",
-    "Flumazenil contraindicated; activated charcoal only if airway protected and within 1 to 2 hours"
-   ],
-   "pearls": "Intravenous lipid emulsion 20 percent at 1.5 mL/kg over 1 minute then 0.25 mL/kg/min may rescue refractory cardiac arrest in lipophilic TCA toxicity - sequester the drug in the lipid phase."
-  },
+  "explanation": "Risk assessment in deliberate self-poisoning follows a fixed sequence: resuscitation, risk assessment from the agent, dose and time, supportive care and monitoring, then investigations. Two investigations are done in everyone regardless of the stated history, an electrocardiogram and a timed paracetamol concentration, because patients under-report and because paracetamol toxicity is both common and completely silent in the first twenty-four hours while it remains fully treatable. Drug concentrations for the agent actually named usually add nothing. In context: this woman also needs serial electrocardiograms for tricyclic cardiotoxicity, a period of observation, and a mental state and risk assessment once she is medically clear, with the Poisons Information Centre on 13 11 26 available for advice on the observation period.",
   "sources": [
    {
-    "label": "Therapeutic Guidelines: Toxicology and Wilderness",
+    "label": "Therapeutic Guidelines: Toxicology and Toxinology",
     "url": "https://www.tg.org.au/"
    },
    {
-    "label": "Australian Poisons Information Centre"
+    "label": "NSW Poisons Information Centre",
+    "url": "https://www.poisonsinfo.nsw.gov.au/"
+   },
+   {
+    "label": "Toxicology Handbook (Murray, Little, Cadogan, Daly), Elsevier Australia",
+    "url": "https://www.elsevier.com/"
    }
   ],
   "reference_ranges": [
-   "vbg"
+   "vbg",
+   "lfts"
   ],
-  "created": "2026-06-02"
+  "model": "Claude Opus 5",
+  "created": "2026-09-23",
+  "revised_from": "psych-p66-001"
  },
  {
   "id": "psych-p66-002",
@@ -12520,90 +12537,100 @@
   "created": "2026-06-02"
  },
  {
-  "id": "psych-p66-005",
+  "id": "psych-p66-005-d2",
   "topic": "Psychiatry",
-  "subtopic": "Mood disorders",
-  "subtopic_detail": "Schizoaffective versus bipolar with psychotic features",
-  "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic": "Psychotic disorders",
+  "subtopic_detail": "Metabolic harm from an effective antipsychotic",
+  "difficulty": 3,
   "tags": [
-   "bipolar",
-   "schizoaffective"
+   "antipsychotic",
+   "metabolic monitoring",
+   "olanzapine"
   ],
-  "stem": "A 32-year-old woman is admitted to an acute psychiatric ward in her fourth presentation in five years. The current episode features one month of elevated mood, reduced need for sleep, grandiose delusions of being a celebrity, and pressure of speech, with persecutory voices saying she will be killed. The euphoria resolved with oral olanzapine 20 mg and lithium 1 g daily over 10 days but the persecutory voices persist three weeks after mood symptoms have settled.\n\nReview of her records shows two previous mood episodes (one manic, one major depressive) and one inter-episode period of four months when she had paranoid delusions and second person hallucinations in the absence of any mood symptoms. She is medication adherent. There is no substance misuse. Cognition is intact. She is currently euthymic on mental state examination and her current PANSS shows persistent positive symptoms.",
+  "stem": "A 29-year-old man with schizoaffective disorder has gained 9 kg in the 12 weeks since olanzapine was started. His psychosis and mood are well controlled and he takes it reliably. He walks daily, has stopped soft drink and is distressed by the weight.",
   "data_table": {
-   "Investigations": "blood lithium level 0.8 mmol/L, full blood count and thyroid function within normal limits, urinary drug screen negative, CT brain within normal limits"
+   "Observations": "BMI 31 kg/m2, waist 106 cm, BP 132/82",
+   "Investigations": "Fasting glucose 5.9 mmol/L, triglycerides 2.4 mmol/L, HbA1c 5.8 percent"
   },
-  "lead_in": "Which one of the following is the most likely diagnosis?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
-    "letter": "A",
-    "text": "Paranoid schizophrenia with secondary mood symptoms from psychotic decompensation",
-    "correct": false,
-    "rationale": "Schizophrenia is diagnosed when mood symptoms are present for a minority of the active and residual illness, which is not the case in someone with two prior major mood episodes plus the current manic episode. (Source: RANZCP Mood Disorders)",
-    "source_refs": [
-     "RANZCP Mood Disorders"
-    ]
-   },
-   {
-    "letter": "B",
-    "text": "Bipolar I disorder with mood congruent psychotic features during the manic episode",
-    "correct": false,
-    "rationale": "Bipolar I with psychotic features requires that psychotic symptoms occur only during mood episodes. The documented four month inter-episode psychotic period rules this out. (Source: RANZCP Mood Disorders)",
-    "source_refs": [
-     "RANZCP Mood Disorders"
-    ]
-   },
-   {
-    "letter": "C",
-    "text": "Schizoaffective disorder, bipolar type, with persistent inter-episode psychotic symptoms",
+    "text": "Switch olanzapine to aripiprazole",
     "correct": true,
-    "rationale": "The DSM-5 criterion for schizoaffective disorder requires a major mood episode concurrent with criterion A schizophrenia symptoms, plus at least two weeks of psychotic symptoms in the absence of mood symptoms during the lifetime course. The four month period of psychosis without mood symptoms satisfies this. (Source: RANZCP Schizoaffective Disorder)",
+    "rationale": "Where weight gain is substantial and lifestyle measures are already in place, Australian guidance is to change to an antipsychotic with a lower metabolic liability, and aripiprazole has efficacy in both psychotic and mood domains with the least weight gain.",
     "source_refs": [
-     "RANZCP Schizoaffective Disorder"
-    ]
+     "Therapeutic Guidelines: Psychotropic",
+     "RANZCP Clinical Practice Guidelines: Schizophrenia and Related Disorders"
+    ],
+    "letter": "A"
    },
    {
+    "text": "Add metformin to the olanzapine",
+    "rationale": "Metformin attenuates antipsychotic-associated weight gain and is the option when the current antipsychotic cannot be changed, for example when only clozapine has controlled the illness.",
+    "source_refs": [
+     "Therapeutic Guidelines: Psychotropic",
+     "Australian Medicines Handbook"
+    ],
+    "letter": "B",
+    "correct": false
+   },
+   {
+    "text": "Reduce the olanzapine dose by half",
+    "rationale": "Dose reduction is worth considering when the dose is above the effective range, but a halved dose risks relapse and weight gain is not reliably dose related.",
+    "source_refs": [
+     "Therapeutic Guidelines: Psychotropic",
+     "Australian Medicines Handbook"
+    ],
+    "letter": "C",
+    "correct": false
+   },
+   {
+    "text": "Refer to a dietitian and review later",
+    "rationale": "Dietary and exercise support belongs in the plan for everyone on an antipsychotic, and would be the whole answer if no lifestyle change had yet been made. He has already made them and continues to gain.",
+    "source_refs": [
+     "RACGP: Handbook of Non-Drug Interventions and preventive activities",
+     "RANZCP Clinical Practice Guidelines: Schizophrenia and Related Disorders"
+    ],
     "letter": "D",
-    "text": "Delusional disorder persecutory type with concurrent bipolar I and current manic episode",
-    "correct": false,
-    "rationale": "Delusional disorder requires non-bizarre delusions without prominent hallucinations and minimal functional impairment outside the delusion - inconsistent with the prominent hallucinations and functional decline here. Comorbidity with bipolar I is rarely diagnosed and would not capture the cross sectional picture. (Source: RANZCP Mood Disorders)",
-    "source_refs": [
-     "RANZCP Mood Disorders"
-    ]
+    "correct": false
    },
    {
-    "letter": "E",
-    "text": "Substance induced psychotic and mood disorder despite negative urinary drug screen",
-    "correct": false,
-    "rationale": "Negative urinary drug screen and absence of substance misuse history exclude a substance induced disorder. The longitudinal pattern across five years is incompatible with intoxication or withdrawal phenomena. (Source: RANZCP Mood Disorders)",
+    "text": "Continue olanzapine and recheck yearly",
+    "rationale": "Annual review suits a patient whose weight and metabolic profile are stable. This trajectory over 12 weeks predicts diabetes and needs action now.",
     "source_refs": [
-     "RANZCP Mood Disorders"
-    ]
+     "RANZCP Clinical Practice Guidelines: Schizophrenia and Related Disorders",
+     "RACGP: Handbook of Non-Drug Interventions and preventive activities"
+    ],
+    "letter": "E",
+    "correct": false
    }
   ],
-  "explanation": {
-   "summary": "Schizoaffective disorder requires (a) a major mood episode concurrent with schizophrenia criterion A symptoms, (b) at least two weeks of psychotic symptoms in the absence of mood symptoms at some time in the lifetime course, and (c) mood symptoms present for a majority of the active and residual illness. The 'bipolar type' subtype is given when manic episodes have occurred, the 'depressive type' when only major depressive episodes have occurred. Treatment combines mood stabiliser (lithium or sodium valproate) with an antipsychotic and structured psychosocial care; clozapine is considered for treatment resistance.",
-   "key_points": [
-    "Schizoaffective: major mood episode plus criterion A schizophrenia, plus 2 or more weeks of psychosis without mood",
-    "Bipolar with psychotic features: psychosis only during mood episodes",
-    "Schizophrenia: mood symptoms are a minority of active/residual illness",
-    "Treatment: mood stabiliser plus antipsychotic; clozapine for treatment resistance",
-    "Diagnosis can shift across the course; longitudinal history is essential"
-   ],
-   "pearls": "Two weeks of psychotic symptoms in the absence of any mood episode at any point in the lifetime course is the boundary criterion that distinguishes schizoaffective disorder from bipolar I with psychotic features - mine the chart for inter-episode periods to establish this."
-  },
+  "explanation": "People with severe mental illness die around fifteen to twenty years earlier than the general population, and most of that gap is cardiovascular rather than suicide, so metabolic effects are a treatment outcome rather than a side issue. Olanzapine and clozapine carry the highest risk of weight gain and dyslipidaemia, and gain in the first twelve weeks predicts the longer-term trajectory, which is why baseline and three-monthly weight, waist, blood pressure, lipids and glucose are recommended. When lifestyle measures have been tried and the gain continues, switching to a lower-risk agent comes before adding a second drug, with metformin reserved for the patient whose antipsychotic cannot be changed. In context: schizoaffective disorder requires long-term antipsychotic treatment, so the choice of agent has to balance control of psychosis and mood against decades of metabolic exposure, and cardiovascular risk needs active management in primary care alongside psychiatric follow-up.",
   "sources": [
    {
-    "label": "RANZCP Schizoaffective Disorder",
-    "url": "https://www.ranzcp.org/"
+    "label": "Therapeutic Guidelines: Psychotropic",
+    "url": "https://www.tg.org.au/"
    },
    {
-    "label": "RANZCP Mood Disorders"
+    "label": "RANZCP Clinical Practice Guidelines: Schizophrenia and Related Disorders",
+    "url": "https://www.ranzcp.org/clinical-guidelines-publications"
+   },
+   {
+    "label": "RACGP: Handbook of Non-Drug Interventions and preventive activities",
+    "url": "https://www.racgp.org.au/"
+   },
+   {
+    "label": "Australian Medicines Handbook",
+    "url": "https://amhonline.amh.net.au/"
    }
   ],
-  "reference_ranges": [],
-  "created": "2026-06-02"
+  "reference_ranges": [
+   "glucose_hba1c",
+   "lipids"
+  ],
+  "model": "Claude Opus 5",
+  "created": "2026-09-23",
+  "revised_from": "psych-p66-005"
  },
  {
   "id": "psych-p66-006",

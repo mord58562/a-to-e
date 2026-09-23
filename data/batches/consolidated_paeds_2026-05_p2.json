@@ -9828,83 +9828,81 @@
   "difficulty_prior_v3": 4
  },
  {
-  "id": "paeds-l4depth-003",
+  "id": "paeds-l4depth-003-d2",
   "topic": "Paediatrics",
   "subtopic": "Respiratory",
-  "subtopic_detail": "Acute severe asthma: IV escalation",
-  "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Hypokalaemia during continuous salbutamol in acute asthma",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
   "tags": [
    "asthma",
    "salbutamol",
-   "magnesium sulfate"
+   "potassium"
   ],
-  "stem": "A 6-year-old boy with known asthma presents to a metropolitan paediatric emergency department with progressive wheeze and respiratory distress following a viral URTI. He has had three back-to-back salbutamol 12-puff nebulised treatments via spacer, ipratropium 250 mcg nebulised, and IV hydrocortisone 4 mg/kg in the past 45 minutes. He weighs 22 kg. He remains in marked distress and cannot speak in sentences. There is no allergy history. The team has prepared IV access.",
+  "stem": "A 7 year old girl with acute severe asthma has had one hour of continuous nebulised salbutamol with ipratropium and oral prednisolone. Her work of breathing is improving. She is tremulous.",
   "data_table": {
-   "Vital signs": "HR 168, RR 50, SpO2 91% on 6 L/min facemask, temperature 37.4 degrees C",
-   "Examination": "Marked accessory muscle use, widespread wheeze with prolonged expiration, no silent chest",
-   "Investigations": "VBG: pH 7.30, pCO2 48 mmHg, HCO3 22, lactate 3.2 mmol/L"
+   "Vital signs": "HR 164, RR 32, SpO2 95 percent on 4 L/min oxygen",
+   "Investigations": "VBG pH 7.34, pCO2 36 mmHg, lactate 4.1 mmol/L, potassium 2.7 mmol/L"
   },
-  "lead_in": "What is the most appropriate next intervention?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "IV magnesium sulfate 50 mg/kg over 20 minutes with cardiac monitoring",
+    "text": "Add potassium to the intravenous fluid and continue salbutamol",
     "correct": true,
-    "rationale": "IV magnesium sulfate is the first-line IV bronchodilator after maximal inhaled therapy plus steroid in paediatric acute severe asthma; bolus is given over 20 minutes with monitoring. (Source: RCH CPG: Asthma acute; National Asthma Council Australia)",
+    "rationale": "Beta-2 agonists drive potassium intracellularly and generate lactate; both are expected pharmacological effects in a child responding clinically. The RCH acute asthma guideline advises monitoring and replacing potassium rather than withdrawing the bronchodilator that is working. (Source: RCH CPG: Asthma acute; AMH Children's Dosing Companion)",
     "source_refs": [
      "RCH CPG: Asthma acute",
-     "National Asthma Council Australia"
+     "AMH Children's Dosing Companion"
     ]
    },
    {
     "letter": "B",
-    "text": "IV salbutamol 15 mcg/kg loading dose over 10 minutes then infusion",
+    "text": "Stop the salbutamol and give intravenous magnesium sulfate instead",
     "correct": false,
-    "rationale": "IV salbutamol may be used if IV magnesium fails or is contraindicated; lactataemia from inhaled salbutamol is already evident and starting IV salbutamol first risks toxicity. (Source: RCH CPG: Asthma acute)",
+    "rationale": "Magnesium replaces nothing here. It would be right if the child were failing maximal inhaled therapy with persistent severe work of breathing, which is the RCH trigger for the first intravenous bronchodilator. (Source: RCH CPG: Asthma acute)",
     "source_refs": [
      "RCH CPG: Asthma acute"
     ]
    },
    {
     "letter": "C",
-    "text": "IV aminophylline 5 mg/kg loading dose over 60 minutes",
+    "text": "Give intravenous sodium bicarbonate and repeat the venous gas",
     "correct": false,
-    "rationale": "Aminophylline is reserved for failure of magnesium and IV salbutamol in PICU because of its narrow therapeutic index and toxicity; it is not the next step. (Source: RCH CPG: Asthma acute)",
+    "rationale": "Bicarbonate is reserved for severe metabolic acidosis with haemodynamic compromise, such as established shock or a toxic ingestion. Salbutamol lactataemia with a near normal pH does not warrant it. (Source: Therapeutic Guidelines: Respiratory)",
     "source_refs": [
-     "RCH CPG: Asthma acute"
+     "Therapeutic Guidelines: Respiratory"
     ]
    },
    {
     "letter": "D",
-    "text": "Intubate and ventilate using ketamine and rocuronium for rapid sequence",
+    "text": "Halve the salbutamol dose and start an insulin dextrose infusion",
     "correct": false,
-    "rationale": "Intubation is a last resort in paediatric asthma because of the risk of dynamic hyperinflation; he has hypercapnia of only 48 mmHg and is not in arrest, so IV therapy is the next step. (Source: RCH CPG: Asthma acute; ANZICS paediatric airway)",
+    "rationale": "Insulin and dextrose shift potassium into cells and would be right for dangerous hyperkalaemia with electrocardiographic change, the opposite disturbance to the one present. (Source: RCH CPG: Asthma acute; AMH Children's Dosing Companion)",
     "source_refs": [
      "RCH CPG: Asthma acute",
-     "ANZICS Paediatric Airway"
+     "AMH Children's Dosing Companion"
     ]
    },
    {
     "letter": "E",
-    "text": "Switch to continuous nebulised salbutamol 10 mg/hour without IV therapy",
+    "text": "Withhold further treatment and repeat the venous gas in four hours",
     "correct": false,
-    "rationale": "Continuous nebulised salbutamol may add a marginal amount over intermittent; without escalation to IV magnesium it does not address the trajectory of severe asthma. (Source: RCH CPG: Asthma acute)",
+    "rationale": "Watchful waiting suits a child with mild exacerbation and normal biochemistry. A potassium of 2.7 mmol/L with ongoing beta-2 agonist exposure risks arrhythmia and needs replacement now. (Source: Australian Asthma Handbook)",
     "source_refs": [
-     "RCH CPG: Asthma acute"
+     "Australian Asthma Handbook"
     ]
    }
   ],
   "explanation": {
-   "summary": "Acute severe paediatric asthma is treated stepwise: oxygen, inhaled salbutamol back-to-back (with ipratropium added for severe), oral or IV corticosteroid early, then IV magnesium sulfate, then IV salbutamol if failing, then aminophylline in PICU, then intubation as a last resort. Hypercapnia in paediatric asthma is a late sign and a falling pCO2 of less than 35 mmHg becoming normal at 40 mmHg is concerning. Lactataemia is expected from beta-2 agonist use and is not a reason to stop salbutamol.",
+   "summary": "Continuous or back-to-back beta-2 agonist therapy predictably causes hypokalaemia, lactataemia, tremor and tachycardia. These are drug effects, not markers of worsening asthma, and the correct response in a child who is clinically improving is to replace potassium and keep the bronchodilator going. Potassium is added to the intravenous fluid with cardiac monitoring and the level rechecked. Stopping the salbutamol in order to normalise the biochemistry trades a treatable electrolyte problem for a treatable airway problem.\n\nIn context: acute asthma in children is managed by severity. Inhaled salbutamol with a spacer or nebuliser, ipratropium for severe episodes, and systemic corticosteroid within the first hour are the core of treatment, with intravenous magnesium sulfate then intravenous salbutamol for children failing maximal inhaled therapy. Monitoring during this escalation covers work of breathing, oxygenation, potassium, glucose and lactate, and the commonest error at this point is to misread the pharmacology of the drug as deterioration of the disease.",
    "key_points": [
-    "IV magnesium sulfate 50 mg/kg over 20 minutes - first IV agent",
-    "IV salbutamol loading dose 15 mcg/kg if magnesium fails",
-    "Aminophylline only after both above in PICU",
-    "Intubation last resort - high risk of dynamic hyperinflation",
-    "Lactataemia is expected from salbutamol and is not a stop signal"
+    "Hypokalaemia, lactataemia and tremor are expected beta-2 agonist effects",
+    "Replace potassium and continue salbutamol in a child who is improving",
+    "Lactate rising on salbutamol is not evidence of sepsis",
+    "Recheck potassium and keep the child on cardiac monitoring"
    ],
-   "pearls": "In paediatric acute severe asthma, a normalising pCO2 (40 mmHg) after maximal therapy is a danger sign - it signals impending respiratory failure, not improvement."
+   "pearls": "The child who is getting better clinically but whose numbers are getting uglier is usually showing you the drug, not the disease."
   },
   "sources": [
    {
@@ -9912,19 +9910,25 @@
     "url": "https://www.rch.org.au/clinicalguide/guideline_index/Asthma_acute/"
    },
    {
-    "label": "National Asthma Council Australia",
-    "url": "https://www.nationalasthma.org.au/"
+    "label": "Australian Asthma Handbook",
+    "url": "https://www.asthmahandbook.org.au/"
    },
    {
-    "label": "ANZICS Paediatric Airway"
+    "label": "AMH Children's Dosing Companion",
+    "url": "https://amhonline.amh.net.au/"
+   },
+   {
+    "label": "Therapeutic Guidelines: Respiratory",
+    "url": "https://tgldcdp.tg.org.au/"
    }
   ],
   "reference_ranges": [
    "paeds_vitals_child",
-   "vbg"
+   "vbg",
+   "paeds_uec"
   ],
-  "created": "2026-05-21",
-  "difficulty_prior_v3": 4
+  "created": "2026-09-23",
+  "revised_from": "paeds-l4depth-003"
  },
  {
   "id": "paeds-l4depth-004",

@@ -4913,89 +4913,97 @@
   "difficulty_prior_v3": 4
  },
  {
-  "id": "med-fill-016",
+  "id": "med-fill-016-d2",
   "topic": "Medicine",
-  "subtopic": "Other",
-  "subtopic_detail": "Cluster headache",
+  "subtopic": "Neurology",
+  "subtopic_detail": "Preventive treatment during a cluster headache bout",
   "difficulty": 2,
-  "model": "Claude Opus 4.7 (1M context)",
-  "tags": [],
-  "stem": "A 36-year-old man presents to the emergency department at 2 am with excruciating unilateral right periorbital pain that began 45 minutes ago. He is pacing the room and cannot sit still. He reports similar attacks occurring nightly for the past 3 weeks, each lasting 60-90 minutes. He has no history of migraine.",
+  "model": "Claude Opus 5",
+  "tags": [
+   "cluster headache",
+   "verapamil",
+   "prophylaxis"
+  ],
+  "stem": "A 36-year-old man has had two right periorbital attacks daily for three weeks, each lasting an hour with a watering red eye. High-flow oxygen aborts them. He asks about prevention.",
   "data_table": {
-   "Vital signs": "HR 92/min, BP 148/88 mmHg, RR 18/min, T 36.9 C",
-   "Examination": "Agitated, pacing, right eye injected with ipsilateral lacrimation and nasal congestion, partial right ptosis, no meningism, neurological examination otherwise normal"
+   "Attacks": "Two daily for three weeks; 45 to 90 minutes each",
+   "Observations": "BP 128/80, HR 72; ECG sinus rhythm, PR 160 ms"
   },
-  "lead_in": "What is the most appropriate acute treatment for this attack?",
+  "lead_in": "What is the most appropriate preventive treatment?",
   "options": [
    {
     "letter": "A",
-    "text": "Oral sumatriptan 50 mg with oral paracetamol 1 g and rest",
-    "correct": false,
-    "rationale": "Oral sumatriptan has a too-slow onset (30-60 minutes) to be effective for cluster headache attacks which typically last 60-90 minutes. Subcutaneous sumatriptan (onset 10-15 minutes) is the appropriate triptan route. Additionally, paracetamol is ineffective for cluster headache. (Source: eTG: Neurology)",
+    "text": "Verapamil 80 mg three times daily with an ECG before each increase",
+    "correct": true,
+    "rationale": "Verapamil is first-line prevention for a cluster bout, started early and titrated upward; ECG before each increase detects PR prolongation and heart block. (Source: Therapeutic Guidelines: Neurology)",
     "source_refs": [
-     "eTG: Neurology"
+     "Therapeutic Guidelines: Neurology",
+     "AMH: Verapamil"
     ]
    },
    {
     "letter": "B",
-    "text": "IM morphine 10 mg for immediate severe pain management",
+    "text": "Propranolol 40 mg twice daily with blood pressure review at two weeks",
     "correct": false,
-    "rationale": "Opioids are not effective for cluster headache and should be avoided. They do not abort the attack mechanism and carry risks of dependence, particularly given the recurring nature of cluster headache. Evidence-based acute treatments include high-flow oxygen and subcutaneous triptans. (Source: eTG: Neurology)",
+    "rationale": "Propranolol prevents migraine and has no established role in cluster headache; it is the right choice for frequent disabling migraine without asthma. (Source: Therapeutic Guidelines: Neurology)",
     "source_refs": [
-     "eTG: Neurology"
+     "Therapeutic Guidelines: Neurology"
     ]
    },
    {
     "letter": "C",
-    "text": "IV dexamethasone 8 mg as a bridging transitional therapy",
+    "text": "Amitriptyline 10 mg nightly increased to 50 mg with ECG at four weeks",
     "correct": false,
-    "rationale": "Short-course corticosteroids such as prednisolone can be used as transitional therapy while commencing a preventive agent like verapamil, but they are not the optimal acute abortive treatment for an individual attack. High-flow oxygen and subcutaneous sumatriptan are faster and more effective acutely. (Source: eTG: Neurology)",
+    "rationale": "Amitriptyline is used for chronic tension-type headache and as a migraine preventer, particularly with comorbid insomnia. It does not prevent cluster attacks. (Source: Therapeutic Guidelines: Neurology)",
     "source_refs": [
-     "eTG: Neurology"
+     "Therapeutic Guidelines: Neurology"
     ]
    },
    {
     "letter": "D",
-    "text": "High-flow oxygen at 12-15 L/min via non-rebreather mask",
-    "correct": true,
-    "rationale": "High-flow oxygen at 12-15 L/min via a non-rebreather mask for 15-20 minutes is a first-line acute treatment for cluster headache attacks. It aborts attacks within 15 minutes in approximately 70-80% of patients. It can be combined with subcutaneous sumatriptan 6 mg for refractory attacks. (Source: eTG: Neurology)",
+    "text": "Carbamazepine 100 mg twice daily with sodium checked after two weeks",
+    "correct": false,
+    "rationale": "Carbamazepine is first-line for trigeminal neuralgia, where pain is brief, electric-shock-like and triggered by touch, not for hour-long attacks with autonomic features. (Source: Therapeutic Guidelines: Neurology)",
     "source_refs": [
-     "eTG: Neurology"
+     "Therapeutic Guidelines: Neurology"
     ]
    },
    {
     "letter": "E",
-    "text": "Intranasal lidocaine 4% applied to the ipsilateral nostril",
+    "text": "Topiramate 25 mg nightly increased weekly with weight review at six weeks",
     "correct": false,
-    "rationale": "Intranasal lidocaine is a third-line option for cluster headache with limited evidence and inconsistent efficacy. It is not considered first-line acute therapy. High-flow oxygen and subcutaneous sumatriptan are the evidence-based first-line treatments. (Source: BMJ Best Practice: Cluster Headache)",
+    "rationale": "Topiramate is an established migraine preventer and a later-line option in cluster headache when verapamil fails or is contraindicated. (Source: Therapeutic Guidelines: Neurology)",
     "source_refs": [
-     "BMJ Best Practice: Cluster Headache"
+     "Therapeutic Guidelines: Neurology"
     ]
    }
   ],
   "explanation": {
-   "summary": "Cluster headache is characterised by severe unilateral periorbital pain with ipsilateral autonomic features including conjunctival injection, lacrimation, nasal congestion, and ptosis. Attacks last 15-180 minutes and occur in clusters lasting weeks to months. First-line acute treatment is high-flow oxygen at 12-15 L/min via non-rebreather mask, which aborts most attacks within 15 minutes. Subcutaneous sumatriptan 6 mg is an equally effective alternative. Preventive therapy with verapamil should be commenced for the duration of the cluster period.",
+   "summary": "Preventive treatment is started as soon as a cluster bout is recognised and continued until the patient has been attack-free for about two weeks, then withdrawn. Verapamil is the first-line preventer, begun at 80 mg three times daily and titrated up in 80 mg steps against response, with an ECG before each increase because verapamil causes PR prolongation and heart block at the doses used in cluster headache, which are higher than cardiology doses. A short course of oral corticosteroid is commonly used as transitional cover while verapamil is titrated. In context: cluster headache runs in bouts of weeks to months with attacks of severe strictly unilateral periorbital pain and ipsilateral autonomic features, and management has three separate arms, abortive, transitional and preventive, which are chosen for different purposes and not interchangeable.",
    "key_points": [
-    "High-flow oxygen 12-15 L/min and subcutaneous sumatriptan 6 mg are first-line acute treatments",
-    "Oral triptans are too slow in onset for cluster headache given the typical attack duration",
-    "Opioids and paracetamol are not effective and should not be used",
-    "Verapamil is the first-line preventive agent for episodic and chronic cluster headache"
+    "Verapamil is first-line prevention, started early in the bout",
+    "ECG before each dose increase: PR prolongation and heart block are dose-related",
+    "Continue until attack-free for about two weeks, then withdraw",
+    "Migraine preventers such as propranolol and amitriptyline do not work in cluster headache"
    ],
-   "pearls": "High-flow oxygen at 12-15 L/min via non-rebreather mask aborts cluster headache attacks within 15 minutes in 78% of patients, and unlike sumatriptan has no dose limit, making it safe for patients with multiple daily attacks."
+   "pearls": "Cluster headache verapamil doses run well above usual cardiovascular doses, which is why the ECG requirement is per dose increase rather than once at baseline."
   },
   "sources": [
    {
-    "label": "eTG: Neurology",
+    "label": "Therapeutic Guidelines: Neurology",
     "url": "https://www.tg.org.au"
    },
    {
-    "label": "BMJ Best Practice: Cluster Headache",
-    "url": "https://bestpractice.bmj.com/topics/en-gb/41"
+    "label": "AMH: Verapamil",
+    "url": "https://amhonline.amh.net.au/"
+   },
+   {
+    "label": "Headache Australia",
+    "url": "https://headacheaustralia.org.au"
    }
   ],
   "reference_ranges": [],
-  "created": "2026-05-25",
-  "difficulty_prior_v3": 3
+  "revised_from": "med-fill-016"
  },
  {
   "id": "med-fill-017",
@@ -10294,93 +10302,100 @@
   "difficulty_prior_v3": 4
  },
  {
-  "id": "med-defmix-003",
+  "id": "med-defmix-003-d2",
   "topic": "Medicine",
   "subtopic": "Infectious diseases",
-  "subtopic_detail": "Latent tuberculosis treatment",
+  "subtopic_detail": "Advice about infectivity and work after a diagnosis of latent infection",
   "difficulty": 2,
-  "model": "Claude Opus 4.7 (1M context)",
   "tags": [
-   "antibiotics"
+   "tuberculosis",
+   "public health",
+   "counselling"
   ],
-  "stem": "A 42-year-old man originally from the Philippines has been living in Australia for 8 years. He is being investigated as a close contact of a colleague recently diagnosed with pulmonary tuberculosis. He is asymptomatic with no cough, fevers, night sweats, or weight loss. His chest X-ray is normal. An interferon-gamma release assay is positive. He has no history of prior TB treatment, no immunosuppressive medications, and is not HIV-positive. His renal and hepatic function are normal.",
+  "stem": "A 34 year old childcare worker has a positive interferon gamma release assay from routine screening. She is asymptomatic, active disease has been excluded, and she is about to start preventive treatment. She asks about work and her family.",
   "data_table": {
-   "Investigations": "IGRA (QuantiFERON-TB Gold Plus): positive. Chest X-ray: no active disease. HIV Ag/Ab: negative. ALT 28 U/L, AST 24 U/L, creatinine 76 micromol/L."
+   "Examination": "Well, afebrile, chest clear, no lymphadenopathy",
+   "Investigations": "Interferon gamma release assay positive; chest radiograph normal; HIV negative"
   },
-  "lead_in": "What is the most appropriate treatment for this patient?",
+  "lead_in": "What advice is most appropriate?",
   "options": [
    {
     "letter": "A",
-    "text": "Isoniazid 300 mg daily with pyridoxine 25 mg daily for 9 months",
+    "text": "She is not infectious and may continue working",
     "correct": true,
-    "rationale": "A positive IGRA with a normal chest X-ray and no symptoms confirms latent TB infection. The standard Australian treatment is isoniazid 300 mg daily for 9 months with pyridoxine supplementation to prevent peripheral neuropathy. This regimen reduces progression to active TB by approximately 90%. (Source: Therapeutic Guidelines: Antibiotic; NTAC Guidelines)",
+    "rationale": "Latent infection means contained, non-replicating bacilli with no pulmonary cavitation and no cough, so there are no organisms to transmit. No work exclusion, isolation or contact tracing is required. (Source: NSW Health: Tuberculosis)",
     "source_refs": [
-     "Therapeutic Guidelines: Antibiotic",
-     "NTAC Guidelines"
+     "NSW Health: Tuberculosis",
+     "National Tuberculosis Advisory Committee (NTAC) guidelines"
     ]
    },
    {
     "letter": "B",
-    "text": "Rifampicin plus isoniazid plus pyrazinamide plus ethambutol for 2 months",
+    "text": "She must stay off work until treatment finishes",
     "correct": false,
-    "rationale": "RIPE quadruple therapy is the intensive phase regimen for active tuberculosis, not latent TB. Using full active TB treatment for latent infection exposes the patient to unnecessary drug toxicity without additional benefit over isoniazid monotherapy. (Source: Therapeutic Guidelines: Antibiotic)",
+    "rationale": "Right for smear positive pulmonary disease, where exclusion continues until clinical improvement and adequate treatment are documented with the treating unit. (Source: NSW Health: Tuberculosis)",
     "source_refs": [
-     "Therapeutic Guidelines: Antibiotic"
+     "NSW Health: Tuberculosis",
+     "National Tuberculosis Advisory Committee (NTAC) guidelines"
     ]
    },
    {
     "letter": "C",
-    "text": "Rifampicin 600 mg daily as monotherapy for a total of 4 months only",
+    "text": "Her household contacts need screening for infection",
     "correct": false,
-    "rationale": "Four months of rifampicin monotherapy is an accepted alternative for latent TB, particularly when isoniazid is contraindicated or not tolerated. However, the standard first-line recommendation in Australian guidelines remains isoniazid for 9 months, not rifampicin monotherapy. (Source: NTAC Guidelines)",
+    "rationale": "Right when the index case has active pulmonary or laryngeal disease. Contact tracing follows the infectious case, not the person with latent infection. (Source: National Tuberculosis Advisory Committee (NTAC) guidelines)",
     "source_refs": [
-     "NTAC Guidelines"
+     "National Tuberculosis Advisory Committee (NTAC) guidelines",
+     "NSW Health: Tuberculosis"
     ]
    },
    {
     "letter": "D",
-    "text": "No treatment required as the patient is asymptomatic and CXR normal",
+    "text": "She requires a negative sputum culture before working",
     "correct": false,
-    "rationale": "A positive IGRA in a close contact of active TB confirms latent infection and carries a significant lifetime risk of progression to active disease (5-10%). Treatment of latent TB is strongly recommended in close contacts regardless of symptom status. Observation alone would miss a key prevention opportunity. (Source: NTAC Guidelines)",
+    "rationale": "Right when active disease is being treated and infectivity must be documented as resolved. Sputum testing has no role once active disease has been excluded. (Source: NSW Health: Tuberculosis)",
     "source_refs": [
-     "NTAC Guidelines"
+     "NSW Health: Tuberculosis",
+     "National Tuberculosis Advisory Committee (NTAC) guidelines"
     ]
    },
    {
     "letter": "E",
-    "text": "Repeat the IGRA in 8 weeks to confirm the result before treating",
+    "text": "She should wear a mask at work for two weeks",
     "correct": false,
-    "rationale": "Repeating the IGRA is unnecessary when the initial result is clearly positive in a known close contact. Delaying treatment increases the risk of progression to active disease, particularly in the first two years after exposure. Close contacts with positive IGRA should commence treatment promptly. (Source: CDNA TB Case Contact Guidelines)",
+    "rationale": "Right for a person with suspected or confirmed infectious pulmonary disease before airborne precautions can be arranged. It implies a transmission risk that does not exist here. (Source: NSW Health: Tuberculosis)",
     "source_refs": [
-     "NTAC Guidelines"
+     "NSW Health: Tuberculosis",
+     "National Tuberculosis Advisory Committee (NTAC) guidelines"
     ]
    }
   ],
   "explanation": {
-   "summary": "Latent TB infection is diagnosed when a person has immunological evidence of TB sensitisation without clinical, radiological, or microbiological evidence of active disease. Close contacts of active pulmonary TB cases with a positive IGRA should be offered preventive treatment. Isoniazid for 9 months remains the Australian standard, with rifampicin for 4 months as the main alternative. Baseline and monthly liver function monitoring is recommended during treatment.",
+   "summary": "Latent tuberculosis infection is not transmissible. The patient needs no isolation, no work exclusion and no contact tracing; she needs an explanation of why treatment is offered and which symptoms should bring her back.",
    "key_points": [
-    "IGRA-positive close contacts should be treated for latent TB regardless of symptoms",
-    "Isoniazid 300 mg daily for 9 months is first-line in Australia",
-    "Pyridoxine 25 mg daily prevents isoniazid-associated peripheral neuropathy",
-    "Monthly LFT monitoring is recommended during isoniazid therapy"
+    "Only active pulmonary or laryngeal disease is infectious.",
+    "Active tuberculosis is notifiable in NSW; latent infection is not.",
+    "Preventive treatment is offered to reduce a lifetime reactivation risk of roughly 5 to 10%."
    ],
-   "pearls": "The 3-month isoniazid plus rifapentine weekly regimen (3HP) used in some countries is not widely available in Australia; the standard remains 9 months of daily isoniazid or 4 months of daily rifampicin as alternatives."
+   "context": "The distinction between latent and active tuberculosis is the organising idea for the whole topic. A positive interferon gamma release assay or Mantoux test records an immune memory of exposure, nothing more: it cannot distinguish latent from active disease, does not indicate infectivity, and will stay positive after successful treatment, so it is never used to monitor response. Active disease is established by symptoms, imaging and microbiology. Once active disease is excluded, every downstream decision, from work restrictions to public health notification, follows from the fact that there are no transmissible organisms."
   },
+  "reference_ranges": [],
   "sources": [
    {
-    "label": "Therapeutic Guidelines: Antibiotic"
+    "label": "NSW Health: Tuberculosis",
+    "url": "https://www.health.nsw.gov.au/Infectious/tuberculosis/"
    },
    {
-    "label": "NTAC Guidelines",
-    "url": "https://www.health.gov.au/resources/publications/national-tuberculosis-advisory-committee-ntac-guidelines"
+    "label": "National Tuberculosis Advisory Committee (NTAC) guidelines",
+    "url": "https://www.health.gov.au/committees-and-groups/national-tuberculosis-advisory-committee-ntac"
+   },
+   {
+    "label": "Therapeutic Guidelines: Antibiotic",
+    "url": "https://www.tg.org.au/"
    }
   ],
-  "reference_ranges": [
-   "lfts",
-   "uec"
-  ],
-  "created": "2026-05-26",
-  "difficulty_prior_v3": 3
+  "model": "Claude Opus 5",
+  "revised_from": "med-defmix-003"
  },
  {
   "id": "med-defmix-004",
@@ -11407,94 +11422,97 @@
   "difficulty_prior_v3": 3
  },
  {
-  "id": "med-rebal-009-l4",
+  "id": "med-rebal-009-l4-d2",
   "topic": "Medicine",
   "subtopic": "Neurology",
-  "subtopic_detail": "Cluster headache - acute and prophylactic management",
-  "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Painful Horner syndrome after neck strain",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
   "tags": [
-   "imaging",
-   "ECG",
-   "corticosteroids"
+   "headache",
+   "Horner syndrome",
+   "arterial dissection"
   ],
-  "stem": "A 35-year-old man presents with a 2-week history of severe unilateral left periorbital headaches occurring 2 to 3 times daily, each lasting 60 to 90 minutes. The headaches wake him at night at approximately the same time. During attacks he paces the room and cannot sit still. He reports left-sided lacrimation, conjunctival injection, nasal congestion, and partial ptosis during the attacks. Between attacks he is completely well. An MRI brain is normal.",
+  "stem": "A 44-year-old man has three days of constant left periorbital and neck pain that began during a gym session. He has never had headaches before. There is no visual loss and he lies still with the pain.",
   "data_table": {
-   "Vital signs": "HR 76, BP 124/78 mmHg, Temp 36.8 (between attacks)",
-   "Examination": "Between attacks: normal neurological examination, no Horner syndrome"
+   "Examination": "Left ptosis and miosis, pupils reactive, no lacrimation; power and speech normal",
+   "Observations": "BP 132/84, HR 78, afebrile"
   },
-  "lead_in": "What is the most appropriate acute treatment for individual attacks?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "High-flow oxygen at 12-15 L/min via non-rebreather mask",
+    "text": "CT angiography of the head and neck arteries today",
     "correct": true,
-    "rationale": "High-flow oxygen (100% at 12-15 L/min via non-rebreather mask for 15-20 minutes) is the first-line acute treatment for cluster headache attacks. It aborts attacks in approximately 78% of patients within 15 minutes with no significant side effects. Subcutaneous sumatriptan 6 mg is the alternative first-line option. Both are superior to oral triptans, which are too slow in onset for cluster headache. (Source: Therapeutic Guidelines: Neurology)",
+    "rationale": "Constant unilateral head and neck pain with a partial Horner syndrome after exertion is internal carotid artery dissection until proven otherwise, and angiography is needed before stroke occurs. (Source: Stroke Foundation Living Guidelines)",
     "source_refs": [
-     "Therapeutic Guidelines: Neurology",
-     "NICE CG150: Headache"
+     "Stroke Foundation Living Guidelines",
+     "Therapeutic Guidelines: Neurology"
     ]
    },
    {
     "letter": "B",
-    "text": "Oral sumatriptan 100 mg taken at the onset of each headache",
+    "text": "High-flow oxygen by non-rebreather mask for the pain",
     "correct": false,
-    "rationale": "Oral sumatriptan is too slow in onset (30-45 minutes) to effectively treat cluster headache attacks, which peak rapidly and last 15-180 minutes. By the time oral sumatriptan reaches therapeutic levels, the attack may have already resolved spontaneously. Subcutaneous sumatriptan (6 mg) or intranasal sumatriptan (20 mg) have faster onset and are effective. (Source: Therapeutic Guidelines: Neurology)",
+    "rationale": "Oxygen aborts cluster headache, which gives discrete attacks of 15 to 180 minutes with lacrimation and restlessness, and no Horner syndrome between attacks. His pain is continuous. (Source: Therapeutic Guidelines: Neurology)",
     "source_refs": [
      "Therapeutic Guidelines: Neurology"
     ]
    },
    {
     "letter": "C",
-    "text": "Oral prednisolone 60 mg daily as a short-term bridging course",
+    "text": "Non-contrast CT brain and discharge if it is normal",
     "correct": false,
-    "rationale": "A short course of prednisolone (60-80 mg tapering over 2-3 weeks) is used as transitional (bridging) therapy while a preventive agent (verapamil) takes effect. It reduces attack frequency but is not used for aborting individual acute attacks. It bridges the gap between diagnosis and effective prophylaxis. (Source: NICE CG150: Headache)",
+    "rationale": "Non-contrast CT is the first test for suspected subarachnoid haemorrhage with thunderclap onset. It does not exclude dissection, so a normal scan would falsely reassure. (Source: Stroke Foundation Living Guidelines)",
     "source_refs": [
-     "NICE CG150: Headache"
+     "Stroke Foundation Living Guidelines"
     ]
    },
    {
     "letter": "D",
-    "text": "Oral paracetamol 1 g combined with ibuprofen 400 mg together",
+    "text": "Verapamil 80 mg three times daily and neurology review",
     "correct": false,
-    "rationale": "Simple and combination analgesics are ineffective for cluster headache. The severe intensity and short duration of attacks mean that oral analgesics cannot reach therapeutic levels in time, and the pain is not responsive to the mechanisms of paracetamol or NSAIDs. Patients often present having already failed these medications. (Source: Therapeutic Guidelines: Neurology)",
+    "rationale": "Verapamil prevents cluster headache once that diagnosis is established in a patient with a typical bout of short stereotyped attacks. Starting it here delays imaging. (Source: Therapeutic Guidelines: Neurology)",
     "source_refs": [
      "Therapeutic Guidelines: Neurology"
     ]
    },
    {
     "letter": "E",
-    "text": "Intranasal lidocaine 10% spray into the ipsilateral nostril",
+    "text": "Sumatriptan 6 mg subcutaneously and review in one week",
     "correct": false,
-    "rationale": "Intranasal lidocaine can provide some relief in cluster headache by anaesthetising the sphenopalatine ganglion and is sometimes used as a third-line option. However, evidence is limited and it is significantly less effective than high-flow oxygen or subcutaneous sumatriptan. It is not recommended as first-line acute treatment. (Source: NICE CG150: Headache)",
+    "rationale": "A triptan aborts migraine and cluster attacks. Giving a vasoconstrictor in possible dissection is unsafe, and a week of delay is where the stroke happens. (Source: AMH: Sumatriptan)",
     "source_refs": [
-     "NICE CG150: Headache"
+     "AMH: Sumatriptan"
     ]
    }
   ],
   "explanation": {
-   "summary": "Cluster headache is a trigeminal autonomic cephalalgia characterised by severe unilateral periorbital pain with ipsilateral autonomic features (lacrimation, conjunctival injection, nasal congestion, ptosis, miosis). Attacks last 15-180 minutes and occur in clusters lasting weeks to months. Acute treatment is high-flow oxygen or subcutaneous sumatriptan. Prophylaxis with verapamil (first-line) is commenced during a cluster bout, with short-course prednisolone as bridging therapy. Oral triptans and simple analgesics are ineffective.",
+   "summary": "Internal carotid artery dissection classically presents with constant unilateral head, face or neck pain and an ipsilateral partial Horner syndrome (ptosis and miosis with preserved facial sweating, since the sudomotor fibres travel with the external carotid), often after trivial neck strain, sport or manipulation. Cluster headache is the main mimic but gives discrete attacks of 15 to 180 minutes with prominent lacrimation, rhinorrhoea and agitated restlessness, and any Horner syndrome resolves between bouts. CT or MR angiography of the head and neck makes the diagnosis, and antithrombotic treatment is started to prevent embolic stroke, which is the reason for urgency. In context: a first severe headache with a new neurological sign is investigated rather than treated symptomatically, whatever the pain pattern looks like.",
    "key_points": [
-    "High-flow oxygen 12-15 L/min is first-line acute treatment for cluster headache",
-    "Subcutaneous sumatriptan 6 mg is the alternative first-line acute treatment",
-    "Oral triptans are too slow in onset to abort cluster headache attacks",
-    "Verapamil is the first-line prophylactic agent for cluster headache",
-    "Prednisolone is used as short-term bridging therapy while verapamil takes effect"
+    "Constant pain plus a new partial Horner syndrome means dissection until imaged",
+    "Cluster headache gives episodic attacks, marked autonomic tearing and restlessness",
+    "CT or MR angiography of head and neck is the diagnostic test; plain CT does not exclude it",
+    "The risk being prevented is embolic stroke in the following days"
    ],
-   "pearls": "Cluster headache patients characteristically pace the room and are agitated during attacks - this restless behaviour distinguishes them from migraine patients who prefer to lie still in a dark room, and is a useful bedside diagnostic clue."
+   "pearls": "The Horner syndrome of carotid dissection spares sweating because the sudomotor fibres to the face run with the external carotid artery, which distinguishes it from a preganglionic lesion."
   },
   "sources": [
    {
-    "label": "Therapeutic Guidelines: Neurology"
+    "label": "Stroke Foundation Living Guidelines",
+    "url": "https://informme.org.au/guidelines/living-clinical-guidelines-for-stroke-management"
    },
    {
-    "label": "NICE CG150: Headache",
-    "url": "https://www.nice.org.uk/guidance/cg150"
+    "label": "Therapeutic Guidelines: Neurology",
+    "url": "https://www.tg.org.au"
+   },
+   {
+    "label": "AMH: Sumatriptan",
+    "url": "https://amhonline.amh.net.au/"
    }
   ],
   "reference_ranges": [],
-  "created": "2026-05-26",
-  "difficulty_prior_v3": 4
+  "revised_from": "med-rebal-009-l4"
  },
  {
   "id": "med-rebal-010-l3",
@@ -12243,100 +12261,100 @@
   "difficulty_prior_v3": 4
  },
  {
-  "id": "med-hiv-001",
+  "id": "med-hiv-001-d2",
   "topic": "Medicine",
   "subtopic": "Infectious diseases",
-  "subtopic_detail": "Acute HIV seroconversion",
-  "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Offering an HIV test prompted by an indicator condition",
+  "difficulty": 2,
+  "model": "Claude Opus 5",
   "tags": [
    "HIV",
-   "seroconversion",
-   "diagnosis"
+   "herpes zoster",
+   "testing"
   ],
-  "stem": "A 28-year-old man presents with a 5-day history of fever, pharyngitis, diffuse maculopapular rash, myalgia, and cervical lymphadenopathy. He reports unprotected receptive anal intercourse with a new male partner 3 weeks ago. His rapid HIV antibody point-of-care test is negative.",
+  "stem": "A 32-year-old man attends for review of shingles across two adjacent left thoracic dermatomes, treated with valaciclovir a week ago. He takes no regular medicines, has no diabetes, and has had several new sexual partners this year.",
   "data_table": {
-   "Vital signs": "T 38.6, HR 92, BP 116/72 mmHg",
-   "Investigations": "Rapid HIV Ab test: negative. FBC: lymphocytes 0.8 x10^9/L (low). ALT 68 U/L.",
-   "Examination": "Diffuse maculopapular rash trunk and limbs, bilateral cervical lymphadenopathy, pharyngeal erythema, no exudate"
+   "Examination": "Crusting vesicular rash; no oral thrush, lymphadenopathy or weight loss",
+   "Investigations": "Full blood count and electrolytes normal; fasting glucose 4.9 mmol/L"
   },
-  "lead_in": "What is the most appropriate next investigation?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "Fourth-generation HIV Ag/Ab combination assay and HIV RNA viral load",
+    "text": "Offer HIV testing today after obtaining his consent",
     "correct": true,
-    "rationale": "This presentation is classic acute HIV seroconversion (mononucleosis-like illness 2-4 weeks after exposure). Rapid antibody tests miss acute infection as antibodies take 3-12 weeks to develop. Fourth-generation assays detect p24 antigen (positive from 2 weeks) alongside antibodies. HIV RNA PCR is positive earliest (from 10 days). Both should be sent when acute seroconversion is suspected. (Source: ASHM HIV Management Guidelines; Therapeutic Guidelines: Antibiotic)",
+    "rationale": "Herpes zoster in an adult under 50, particularly multidermatomal disease, is a recognised indicator condition and the National HIV Testing Policy directs that a test be offered whenever one is present. (Source: National HIV Testing Policy; RACGP Red Book)",
     "source_refs": [
-     "ASHM HIV Management Guidelines",
-     "Therapeutic Guidelines: Antibiotic"
+     "National HIV Testing Policy",
+     "RACGP Red Book"
     ]
    },
    {
     "letter": "B",
-    "text": "Repeat rapid HIV antibody test in 2 weeks to allow time for seroconversion",
+    "text": "Start amitriptyline now to prevent postherpetic neuralgia",
     "correct": false,
-    "rationale": "Waiting 2 weeks delays diagnosis of a highly infectious phase. During acute seroconversion viral load is extremely high (10^6-10^7 copies/mL) making the patient maximally infectious. Early diagnosis enables partner notification, PEP for contacts, and early ART which improves long-term outcomes. (Source: ASHM HIV Management Guidelines)",
+    "rationale": "Amitriptyline is for established postherpetic neuralgia that persists beyond rash healing, not prophylaxis at the crusting stage, and it addresses none of the reason this man developed zoster so young. (Source: Therapeutic Guidelines: Analgesic)",
     "source_refs": [
-     "ASHM HIV Management Guidelines"
+     "Therapeutic Guidelines: Analgesic"
     ]
    },
    {
     "letter": "C",
-    "text": "EBV and CMV serology as the presentation is consistent with infectious mononucleosis",
+    "text": "Measure serum immunoglobulins and lymphocyte subsets today",
     "correct": false,
-    "rationale": "While the presentation overlaps with EBV/CMV, the 3-week interval after high-risk sexual exposure makes acute HIV seroconversion the primary diagnosis to exclude. Sending EBV/CMV without HIV-specific testing risks missing a treatable and transmissible infection. HIV testing must be prioritised. (Source: ASHM HIV Management Guidelines; Therapeutic Guidelines: Antibiotic)",
+    "rationale": "Immunoglobulins and lymphocyte subsets belong in the work-up of recurrent bacterial sinopulmonary infection or suspected primary immunodeficiency, and they would follow rather than replace an HIV test here. (Source: National HIV Testing Policy)",
     "source_refs": [
-     "ASHM HIV Management Guidelines",
-     "Therapeutic Guidelines: Antibiotic"
+     "National HIV Testing Policy"
     ]
    },
    {
     "letter": "D",
-    "text": "HIV Western blot as the definitive confirmatory test for equivocal rapid results",
+    "text": "Arrange a computed tomography scan looking for malignancy",
     "correct": false,
-    "rationale": "Western blot is a confirmatory test for ESTABLISHED infection, not acute seroconversion. In acute infection, Western blot may be negative or indeterminate as individual antibody bands develop sequentially. The appropriate tests are p24 antigen and viral load, not Western blot. (Source: ASHM HIV Management Guidelines)",
+    "rationale": "Imaging for occult malignancy is reasonable when zoster occurs with weight loss, lymphadenopathy or abnormal blood counts, none of which are present, and it is a far lower yield first test than serology. (Source: RACGP Red Book)",
     "source_refs": [
-     "ASHM HIV Management Guidelines"
+     "RACGP Red Book"
     ]
    },
    {
     "letter": "E",
-    "text": "CD4 count and viral load to stage the infection before initiating treatment",
+    "text": "Give the recombinant zoster vaccine at this visit",
     "correct": false,
-    "rationale": "CD4 count and viral load are used for staging established infection, but the diagnosis must first be confirmed. A CD4 count alone cannot diagnose HIV. The fourth-generation Ag/Ab assay is the diagnostic test. Staging follows after confirmed diagnosis. (Source: ASHM HIV Management Guidelines)",
+    "rationale": "Recombinant zoster vaccine is given to prevent a first or recurrent episode, is deferred until the acute rash resolves, and is funded from age 65 or from 18 years in specified immunocompromising conditions. (Source: Australian Immunisation Handbook)",
     "source_refs": [
-     "ASHM HIV Management Guidelines"
+     "Australian Immunisation Handbook"
     ]
    }
   ],
   "explanation": {
-   "summary": "Acute HIV seroconversion presents as a mononucleosis-like illness 2-4 weeks after exposure. Rapid antibody tests are negative during the window period. Fourth-generation Ag/Ab combination assays detect p24 antigen from 2 weeks, closing much of the window period. HIV RNA PCR becomes positive earliest. During acute infection, viral load is extremely high making the patient maximally infectious.",
+   "summary": "Shingles in an adult under 50 who is not otherwise immunosuppressed is an HIV indicator condition. The National HIV Testing Policy lists conditions in which the undiagnosed HIV prevalence is high enough that a test should be offered routinely, and multidermatomal or severe zoster in a young adult is one of them. Testing needs consent and an explanation of how the result will be given, but no longer needs formal pre-test counselling in most settings. In context, late HIV diagnosis in Australia most often follows missed indicator conditions such as zoster, oral candidiasis, seborrhoeic dermatitis, unexplained weight loss and recurrent bacterial pneumonia; offering a test whenever one appears is what moves diagnosis earlier.",
    "key_points": [
-    "Rapid Ab tests miss acute seroconversion - use 4th-gen Ag/Ab + RNA",
-    "p24 antigen detectable from approximately 2 weeks post-exposure",
-    "HIV RNA detectable from approximately 10 days",
-    "Acute seroconversion viral load is 10^6-10^7 - maximally infectious",
-    "Early diagnosis enables partner notification and early ART"
+    "Zoster under 50 without another cause of immunosuppression is an HIV indicator condition.",
+    "Consent is required, formal pre-test counselling generally is not.",
+    "Other indicator conditions include oral candidiasis, unexplained weight loss and seborrhoeic dermatitis.",
+    "A negative test in a man with ongoing risk is also the opening for a pre-exposure prophylaxis discussion."
    ],
-   "pearls": "Fourth-generation HIV Ag/Ab combination assays reduce the window period to approximately 18 days (vs 3 months for antibody-only tests), but HIV RNA PCR closes it further to approximately 10 days - in suspected acute seroconversion, both should be ordered simultaneously."
+   "pearls": "Multidermatomal zoster, zoster that crosses the midline, and ophthalmic zoster in a young adult all warrant an HIV test even when the patient reports no risk exposure."
   },
   "sources": [
    {
-    "label": "ASHM HIV Management Guidelines",
-    "url": "https://www.ashm.org.au"
+    "label": "National HIV Testing Policy",
+    "url": "https://testingportal.ashm.org.au/national-hiv-testing-policy/"
    },
    {
-    "label": "Therapeutic Guidelines: Antibiotic",
-    "url": "https://www.tg.org.au"
+    "label": "RACGP Red Book",
+    "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/red-book"
+   },
+   {
+    "label": "Australian Immunisation Handbook",
+    "url": "https://immunisationhandbook.health.gov.au/"
    }
   ],
   "reference_ranges": [
    "fbc"
   ],
-  "created": "2026-05-25",
-  "difficulty_prior_v3": 4,
-  "l4_promoted_2026-06-01": true
+  "created": "2026-09-23",
+  "revised_from": "med-hiv-001"
  },
  {
   "id": "med-hiv-002",
@@ -13650,93 +13668,96 @@
   "difficulty_prior_v3": 3
  },
  {
-  "id": "med-rebal27b-006",
+  "id": "med-rebal27b-006-d2",
   "topic": "Medicine",
   "subtopic": "Neurology",
-  "subtopic_detail": "Cluster headache",
+  "subtopic_detail": "Transitional cover while a preventer is titrated",
   "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "model": "Claude Opus 5",
   "tags": [
-   "headache"
+   "cluster headache",
+   "corticosteroid",
+   "transitional therapy"
   ],
-  "stem": "A 38-year-old man presents to the emergency department at 2 am with excruciating pain around his right eye that began abruptly 30 minutes ago. He is pacing the room and unable to sit still. He reports he has had similar episodes nightly for the past 3 weeks, each lasting approximately 45 to 90 minutes. He has a watering right eye and his right nostril is blocked. The episodes resolve spontaneously but are severely disabling. He has no significant past medical history. Neurological examination is non-focal between attacks.",
+  "stem": "A 40-year-old man in a cluster bout has four attacks a day despite oxygen and subcutaneous sumatriptan. Verapamil was started yesterday and will take a fortnight to titrate. He is exhausted and has missed work.",
   "data_table": {
-   "Examination": "Right eye: Conjunctival injection, lacrimation; Right pupil: Miotic compared to left; Right nostril: Congested; Right forehead: Mild diaphoresis"
+   "Treatment": "Oxygen; sumatriptan 6 mg subcutaneously, twice today",
+   "Observations": "BP 126/78, HR 70; ECG normal"
   },
-  "lead_in": "Which of the following is the most appropriate acute treatment for this presentation?",
+  "lead_in": "What is the most appropriate additional treatment?",
   "options": [
    {
     "letter": "A",
-    "text": "High-flow oxygen 12 to 15 L/min via non-rebreather mask for 15 to 20 minutes",
+    "text": "Prednisolone 50 mg daily for five days, then tapering",
     "correct": true,
-    "rationale": "This patient presents with cluster headache - severe unilateral periorbital pain with ipsilateral autonomic features (conjunctival injection, lacrimation, nasal congestion, miosis, forehead diaphoresis) and restless agitation. High-flow oxygen at 12 to 15 L/min via non-rebreather mask is first-line acute treatment in the emergency department, providing relief within 15 minutes in approximately 70% of patients. It is safe and has no significant contraindications. (Source: Headache Australia)",
+    "rationale": "A short oral corticosteroid course is standard transitional therapy, suppressing attacks within a day or two while verapamil is titrated to an effective dose. (Source: Therapeutic Guidelines: Neurology)",
     "source_refs": [
-     "Headache Australia"
+     "Therapeutic Guidelines: Neurology"
     ]
    },
    {
     "letter": "B",
-    "text": "Oral sumatriptan 100 mg with an anti-emetic for suspected severe migraine",
+    "text": "A third dose of subcutaneous sumatriptan when attacks recur",
     "correct": false,
-    "rationale": "This is cluster headache, not migraine. Cluster headache is distinguished by strictly unilateral pain with prominent ipsilateral cranial autonomic features and restless agitation rather than the quiet retreat seen in migraine. Oral sumatriptan has too slow an onset for cluster headache attacks. If sumatriptan is used for cluster headache, the subcutaneous route at 6 mg is preferred. (Source: eTG Neurology)",
+    "rationale": "Two subcutaneous doses in 24 hours is the limit; exceeding it is not appropriate, and frequent attacks are a reason to add transitional and preventive cover. (Source: AMH: Sumatriptan)",
     "source_refs": [
-     "eTG Neurology"
+     "AMH: Sumatriptan"
     ]
    },
    {
     "letter": "C",
-    "text": "Carbamazepine 200 mg orally for suspected trigeminal neuralgia",
+    "text": "Lithium carbonate 250 mg twice daily started today",
     "correct": false,
-    "rationale": "Trigeminal neuralgia causes brief lancinating pain lasting seconds, typically triggered by light touch or eating, without autonomic features. This patient has prolonged attacks lasting 45 to 90 minutes with prominent autonomic features, which is characteristic of cluster headache rather than trigeminal neuralgia. Carbamazepine is the first-line treatment for trigeminal neuralgia. (Source: eTG Neurology)",
+    "rationale": "Lithium is a later-line preventer in chronic cluster headache when verapamil has failed or is not tolerated, under specialist supervision with level monitoring. (Source: Therapeutic Guidelines: Neurology)",
     "source_refs": [
-     "eTG Neurology"
+     "Therapeutic Guidelines: Neurology"
     ]
    },
    {
     "letter": "D",
-    "text": "Verapamil 80 mg orally three times daily as first-line treatment for this condition",
+    "text": "Amitriptyline 25 mg nightly increased over the fortnight",
     "correct": false,
-    "rationale": "Verapamil is the first-line preventive therapy for cluster headache, not an acute treatment. It takes days to weeks to become effective and requires ECG monitoring for PR prolongation and heart block at each dose titration. While it should be initiated in this patient for prevention, it will not address the current acute attack. (Source: Headache Australia)",
+    "rationale": "Amitriptyline helps chronic tension-type headache and migraine prevention, especially with disturbed sleep. It has no role in cluster headache. (Source: Therapeutic Guidelines: Neurology)",
     "source_refs": [
-     "Headache Australia"
+     "Therapeutic Guidelines: Neurology"
     ]
    },
    {
     "letter": "E",
-    "text": "Ibuprofen 400 mg orally with paracetamol 1 g for acute pain relief",
+    "text": "Morphine 5 mg intravenously for each severe attack",
     "correct": false,
-    "rationale": "Simple oral analgesics including NSAIDs and paracetamol are ineffective for cluster headache attacks. The rapid onset and severity of cluster headache pain requires fast-acting treatments such as high-flow oxygen or subcutaneous sumatriptan. Oral analgesics are too slow in onset to be useful given typical attack durations. (Source: Headache Australia)",
+    "rationale": "Parenteral opioid is for severe pain without a faster specific treatment. Attacks resolve before it works, and repeated use in a relapsing condition causes harm. (Source: Therapeutic Guidelines: Neurology)",
     "source_refs": [
-     "Headache Australia"
+     "Therapeutic Guidelines: Neurology"
     ]
    }
   ],
   "explanation": {
-   "summary": "Cluster headache is characterised by severe unilateral periorbital or temporal pain lasting 15 to 180 minutes, occurring in bouts (clusters) of weeks to months. Attacks are accompanied by ipsilateral cranial autonomic features including conjunctival injection, lacrimation, nasal congestion, rhinorrhoea, miosis, ptosis, and facial sweating. Patients are typically agitated and restless during attacks, unlike migraine sufferers who prefer to lie still. Acute treatment consists of high-flow oxygen at 12 to 15 L/min via non-rebreather mask and/or subcutaneous sumatriptan 6 mg. Preventive therapy with verapamil should be commenced early in a cluster bout.",
+   "summary": "Cluster headache management has three arms. Abortive treatment, oxygen or subcutaneous sumatriptan, works on the individual attack. Preventive treatment, verapamil first-line, takes one to two weeks to reach an effective dose. Transitional treatment bridges that gap: a short high-dose oral corticosteroid course, commonly prednisolone 50 mg daily for about five days followed by a taper, suppresses attacks within a day or two and is stopped once the preventer is working, since repeated or prolonged courses risk avascular necrosis and the other steroid harms. A greater occipital nerve block is the alternative bridge where available. In context: patients in a bout can have several attacks daily, and recognising that the fast abortive, the slow preventer and the bridge are three separate decisions is the exam point.",
    "key_points": [
-    "Cluster headache is distinguished by strictly unilateral pain with ipsilateral autonomic features and restless agitation",
-    "High-flow oxygen 12 to 15 L/min via non-rebreather and subcutaneous sumatriptan 6 mg are first-line acute treatments",
-    "Verapamil is the first-line preventive agent and requires ECG monitoring for heart block at each dose titration"
+    "Transitional therapy bridges the one to two weeks while verapamil is titrated",
+    "Prednisolone about 50 mg daily for five days then taper, not a prolonged course",
+    "Greater occipital nerve block is the alternative bridge",
+    "Subcutaneous sumatriptan is capped at two doses in 24 hours"
    ],
-   "pearls": "Subcutaneous sumatriptan 6 mg provides relief within 15 minutes in approximately 75% of cluster headache attacks. Verapamil is titrated from 80 mg three times daily up to 960 mg/day with ECG performed before each dose increase to monitor for PR prolongation exceeding 200 milliseconds."
+   "pearls": "If attacks return every time the steroid is withdrawn, the preventer dose is inadequate rather than the bridge being too short."
   },
   "sources": [
    {
-    "label": "Headache Australia",
-    "url": "https://headacheaustralia.org.au"
-   },
-   {
-    "label": "eTG Neurology",
+    "label": "Therapeutic Guidelines: Neurology",
     "url": "https://www.tg.org.au"
    },
    {
-    "label": "NICE Headache Guidelines",
-    "url": "https://www.nice.org.uk/guidance/cg150"
+    "label": "AMH: Sumatriptan",
+    "url": "https://amhonline.amh.net.au/"
+   },
+   {
+    "label": "Headache Australia",
+    "url": "https://headacheaustralia.org.au"
    }
   ],
   "reference_ranges": [],
-  "created": "2026-05-27",
-  "difficulty_prior_v3": 4
+  "revised_from": "med-rebal27b-006"
  },
  {
   "id": "med-rebal27b-007",

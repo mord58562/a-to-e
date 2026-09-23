@@ -1468,95 +1468,97 @@
   "created": "2026-09-06"
  },
  {
-  "id": "local-wave1-obgyn-017",
+  "id": "local-wave1-obgyn-017-d2",
   "topic": "Obstetrics & Gynaecology",
-  "subtopic": "Pre-eclampsia",
-  "subtopic_detail": "Severe features and MgSO4 seizure prophylaxis",
-  "difficulty": 4,
+  "subtopic": "Maternal medicine",
+  "subtopic_detail": "Postnatal follow-up and long-term cardiovascular risk after pre-eclampsia",
+  "difficulty": 2,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
    "pre-eclampsia",
-   "magnesium sulfate"
+   "postnatal care",
+   "cardiovascular risk"
   ],
-  "stem": "You are the birthing suite registrar. A 32 year old primigravida at 35+2 weeks presents with a 6 hour history of severe headache unresponsive to paracetamol and new epigastric pain. She reports blurred vision this morning.\n\nHer antenatal course was uncomplicated with normal 20 week anatomy scan and normal midtrimester blood pressure readings. She takes no medications.\n\nShe is alert and oriented. Reflexes are brisk with three beats of clonus. Abdomen shows mild epigastric tenderness. Vital signs: pulse 96, blood pressure 172/108, respiratory rate 18, SpO2 99% room air, temperature 36.8, fetal heart rate 145 reactive. Urine dipstick shows 3+ protein. Bloods: platelets 82 x10^9/L (150 to 400), ALT 145 U/L (under 35), creatinine 92 micromol/L (45 to 90), urate 0.42 mmol/L (0.15 to 0.35).",
+  "stem": "A 33-year-old woman is being discharged on day four after a birth at 36 weeks complicated by pre-eclampsia. Her blood pressure is controlled on oral labetalol and she is breastfeeding.",
   "data_table": {
-   "Vital signs": "Pulse 96, BP 172/108, RR 18, SpO2 99% room air, temp 36.8, FHR 145 reactive",
-   "Examination": "Alert; brisk reflexes with 3 beats clonus; mild epigastric tenderness",
-   "Investigations": "Urine dipstick 3+ protein; platelets 82 x10^9/L (150-400); ALT 145 U/L (<35); creatinine 92 micromol/L (45-90); urate 0.42 mmol/L (0.15-0.35)",
-   "Obstetric history": "Primigravida at 35+2; uncomplicated antenatal course; normal midtrimester BPs"
+   "Vital signs": "BP 132/84, pulse 76, afebrile",
+   "Investigations": "Platelets 214 x10^9/L, creatinine 72 micromol/L, ALT 28 U/L"
   },
-  "lead_in": "What is the single most important immediate intervention?",
+  "lead_in": "What is the most appropriate follow-up plan?",
   "options": [
    {
     "letter": "A",
-    "text": "Intravenous labetalol 20 mg bolus repeated every 10 minutes until blood pressure controlled",
-    "correct": false,
-    "rationale": "Blood pressure control with intravenous labetalol is important and should occur in parallel, but the single most important intervention to prevent immediate maternal death is seizure prophylaxis with magnesium sulfate (Source: SOMANZ Hypertension in pregnancy guideline).",
+    "text": "Blood pressure review this week and cardiovascular risk review yearly",
+    "correct": true,
+    "rationale": "Blood pressure peaks three to six days postpartum and needs review within the first week, and pre-eclampsia roughly doubles lifetime risk of hypertension, ischaemic heart disease and stroke, so annual cardiovascular risk assessment is recommended thereafter. (Source: SOMANZ Hypertensive Disorders of Pregnancy Guideline)",
     "source_refs": [
-     "SOMANZ Hypertension in pregnancy guideline"
+     "SOMANZ Hypertensive Disorders of Pregnancy Guideline",
+     "RANZCOG"
     ]
    },
    {
     "letter": "B",
-    "text": "Immediate category 1 caesarean section under general anaesthesia to remove the placenta as trigger",
+    "text": "Blood pressure review this week and no further follow-up required",
     "correct": false,
-    "rationale": "Delivery is the definitive treatment and will occur but not before magnesium and blood pressure control; category 1 caesarean under general anaesthesia in an unstable pre eclamptic risks intracerebral haemorrhage from the pressor response to intubation (Source: SOMANZ Hypertension in pregnancy guideline).",
+    "rationale": "Short-term review alone would be adequate if pre-eclampsia carried no long-term sequelae, but it is now treated as a sex-specific cardiovascular risk factor. (Source: SOMANZ Hypertensive Disorders of Pregnancy Guideline)",
     "source_refs": [
-     "SOMANZ Hypertension in pregnancy guideline"
+     "SOMANZ Hypertensive Disorders of Pregnancy Guideline"
     ]
    },
    {
     "letter": "C",
-    "text": "Intravenous magnesium sulfate 4 g loading dose over 20 minutes then 1 g per hour infusion",
-    "correct": true,
-    "rationale": "Severe pre eclampsia with neurological symptoms, clonus, HELLP features, and severe hypertension carries imminent risk of eclamptic seizure; magnesium sulfate 4 g load then 1 g per hour is the single most important intervention to prevent eclampsia and reduce maternal mortality (Source: SOMANZ Hypertension in pregnancy guideline).",
+    "text": "Repeat blood pressure only if she develops headache or visual symptoms",
+    "correct": false,
+    "rationale": "Symptom-triggered review would suit a woman with uncomplicated gestational hypertension that resolved before discharge. (Source: SOMANZ Hypertensive Disorders of Pregnancy Guideline)",
     "source_refs": [
-     "SOMANZ Hypertension in pregnancy guideline"
+     "SOMANZ Hypertensive Disorders of Pregnancy Guideline"
     ]
    },
    {
     "letter": "D",
-    "text": "Intravenous dexamethasone 10 mg every 12 hours to accelerate platelet recovery in HELLP syndrome",
+    "text": "Routine six-week postnatal visit with no interim blood pressure check",
     "correct": false,
-    "rationale": "Dexamethasone in HELLP has not shown maternal or perinatal benefit outside of fetal lung maturation and is not the immediate priority (Source: SOMANZ Hypertension in pregnancy guideline).",
+    "rationale": "A six-week review is the routine plan after an uncomplicated birth, and here it would miss the postnatal hypertensive peak entirely. (Source: RANZCOG)",
     "source_refs": [
-     "SOMANZ Hypertension in pregnancy guideline"
+     "RANZCOG",
+     "SOMANZ Hypertensive Disorders of Pregnancy Guideline"
     ]
    },
    {
     "letter": "E",
-    "text": "Platelet transfusion targeting a count above 100 before proceeding to any intervention or delivery",
+    "text": "Referral to a renal physician for annual glomerular filtration testing",
     "correct": false,
-    "rationale": "Platelet transfusion is not indicated at 82 in the absence of bleeding or planned neuraxial anaesthesia; the immediate priority is seizure prophylaxis (Source: SOMANZ Hypertension in pregnancy guideline).",
+    "rationale": "Nephrology referral is indicated when proteinuria or impaired renal function persists beyond three months postpartum. (Source: SOMANZ Hypertensive Disorders of Pregnancy Guideline)",
     "source_refs": [
-     "SOMANZ Hypertension in pregnancy guideline"
+     "SOMANZ Hypertensive Disorders of Pregnancy Guideline"
     ]
    }
   ],
   "explanation": {
-   "summary": "Severe pre eclampsia is defined by severe hypertension at or above 160/110, headache, visual disturbance, clonus, epigastric pain, thrombocytopenia under 100, or transaminase over twice normal. Management priorities are magnesium sulfate for seizure prophylaxis, blood pressure control with labetalol or hydralazine, and expedited delivery. Magnesium sulfate is the intervention that reduces maternal mortality and eclampsia rates in randomised trials (MAGPIE).",
+   "summary": "Discharge after pre-eclampsia carries two separate follow-up obligations. In the short term, blood pressure typically peaks three to six days after birth, often after the woman has gone home, so a check within the first week is required and antihypertensives are weaned gradually over the following weeks rather than stopped at discharge. Persistent hypertension or proteinuria at three months should prompt investigation for underlying renal or secondary hypertensive disease. In the long term, pre-eclampsia approximately doubles the lifetime risk of chronic hypertension, ischaemic heart disease, stroke and venous thromboembolism, and this now sits in Australian guidance as a sex-specific cardiovascular risk factor warranting annual review of blood pressure, lipids, glucose, weight and smoking. She should also be counselled that low-dose aspirin from early in a future pregnancy reduces recurrence. In context, pre-eclampsia is a placental disease of pregnancy that unmasks a lifelong vascular phenotype, which is why the obstetric discharge summary should name it explicitly for the general practitioner.",
    "key_points": [
-    "MgSO4 4 g load then 1 g per hour reduces eclampsia and maternal death.",
-    "Severe hypertension at or above 160/110 needs urgent IV antihypertensive.",
-    "Delivery is definitive but should be timed after stabilisation."
+    "Blood pressure peaks three to six days postpartum, often after discharge.",
+    "Antihypertensives are weaned gradually, not stopped on the day of discharge.",
+    "Pre-eclampsia roughly doubles lifetime cardiovascular risk.",
+    "Persistent proteinuria or hypertension at three months needs investigation."
    ],
-   "pearls": "In severe pre eclampsia magnesium goes up before delivery is planned; MAGPIE showed a halving of eclamptic seizures with the 4 g load and 1 g per hour infusion."
+   "pearls": "Name the diagnosis in the discharge summary: general practitioners cannot act on a cardiovascular risk factor that is recorded only as high blood pressure in pregnancy."
   },
   "sources": [
    {
-    "label": "SOMANZ Hypertension in pregnancy guideline",
+    "label": "SOMANZ Hypertensive Disorders of Pregnancy Guideline",
     "url": "https://www.somanz.org/"
    },
    {
-    "label": "MAGPIE Trial Collaborative Group Lancet 2002",
-    "url": "https://www.thelancet.com/"
+    "label": "RANZCOG",
+    "url": "https://ranzcog.edu.au/"
    }
   ],
   "reference_ranges": [
    "obs_pregnancy_vitals",
    "pre_eclampsia_bloods"
   ],
-  "created": "2026-09-06"
+  "revised_from": "local-wave1-obgyn-017"
  },
  {
   "id": "local-wave1-obgyn-018",
@@ -2840,92 +2842,96 @@
   "created": "2026-09-06"
  },
  {
-  "id": "local-wave2-obgyn-012",
+  "id": "local-wave2-obgyn-012-d2",
   "topic": "Obstetrics & Gynaecology",
-  "subtopic": "Intrapartum emergencies",
-  "subtopic_detail": "Shoulder dystocia manoeuvre sequence",
-  "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic": "Antenatal care",
+  "subtopic_detail": "Planning birth in the pregnancy after a shoulder dystocia",
+  "difficulty": 2,
+  "model": "Claude Opus 5",
   "tags": [
    "shoulder dystocia",
-   "HELPERR"
+   "mode of birth",
+   "antenatal counselling"
   ],
-  "stem": "You are the obstetric registrar at a vaginal delivery. Following delivery of the head there is turtle sign and gentle downward axial traction fails to deliver the anterior shoulder. The midwife has called for help and started the clock. The mother is a 30 year old G1 with a booking BMI of 33 kg/m2 and an estimated fetal weight of 4200 g on ultrasound at 39 weeks. She had gestational diabetes managed on insulin.\n\nAn epidural is in situ and providing effective analgesia. There is no episiotomy in place. The delivery bed is a standard labour bed with head end elevation currently at 30 degrees.\n\nOne minute has passed since delivery of the head. Vital signs of the mother remain within normal limits.",
+  "stem": "A 31 year old woman attends at 20 weeks in her second pregnancy. Her first birth was complicated by an impacted anterior shoulder and she asks how this one will be planned.",
   "data_table": {
-   "Delivery findings": "Turtle sign; anterior shoulder impacted",
-   "Maternal history": "G1; BMI 33 kg/m2; insulin treated gestational diabetes; EFW 4200 g",
-   "Analgesia": "Epidural in situ, effective",
-   "Time from head delivery": "One minute"
+   "First birth": "Birth weight 4.3 kg, arm weakness that resolved by four months",
+   "This pregnancy": "Singleton, no diabetes on screening so far, body mass index 27 kg/m2"
   },
-  "lead_in": "What is the most appropriate next manoeuvre?",
+  "lead_in": "What is the most appropriate advice about mode of birth?",
   "options": [
    {
     "letter": "A",
-    "text": "Fundal pressure applied firmly downward over the maternal abdomen by the assistant",
-    "correct": false,
-    "rationale": "Fundal pressure is contraindicated in shoulder dystocia because it worsens impaction and increases the risk of uterine rupture (Source: RANZCOG Shoulder dystocia).",
+    "text": "Discuss the recurrence risk and support either a vaginal birth or caesarean",
+    "correct": true,
+    "rationale": "Recurrence is around one in ten, and Australian guidance asks for an individualised discussion rather than a fixed recommendation. (Source: RANZCOG - Shoulder dystocia)",
     "source_refs": [
-     "RANZCOG Shoulder dystocia"
+     "RANZCOG - Shoulder dystocia",
+     "Queensland Clinical Guidelines - Shoulder dystocia"
     ]
    },
    {
     "letter": "B",
-    "text": "Symphysiotomy performed at the bedside by the attending registrar under local anaesthesia",
+    "text": "Recommend a planned caesarean section, since recurrence is close to certain",
     "correct": false,
-    "rationale": "Symphysiotomy is a last resort manoeuvre only when internal manoeuvres and Zavanelli have failed; it is not the first line intervention (Source: RANZCOG Shoulder dystocia).",
+    "rationale": "A firm recommendation for caesarean fits a woman with a severe previous injury who chooses it after discussion. (Source: RANZCOG - Shoulder dystocia)",
     "source_refs": [
-     "RANZCOG Shoulder dystocia"
+     "RANZCOG - Shoulder dystocia"
     ]
    },
    {
     "letter": "C",
-    "text": "McRoberts manoeuvre with hyperflexion of the maternal hips onto the abdomen",
-    "correct": true,
-    "rationale": "McRoberts is the first specific manoeuvre in the HELPERR sequence because it flattens the sacrum, rotates the pubic symphysis cephalad, and resolves shoulder dystocia in approximately 40 percent of cases when combined with suprapubic pressure (Source: RANZCOG Shoulder dystocia).",
+    "text": "Recommend induction at 38 weeks, which removes the risk of recurrence",
+    "correct": false,
+    "rationale": "Earlier birth is considered when macrosomia or diabetes is present, and it reduces rather than removes the risk. (Source: Queensland Clinical Guidelines - Shoulder dystocia)",
     "source_refs": [
-     "RANZCOG Shoulder dystocia"
+     "Queensland Clinical Guidelines - Shoulder dystocia"
     ]
    },
    {
     "letter": "D",
-    "text": "Zavanelli manoeuvre with cephalic replacement followed by emergency caesarean section",
+    "text": "Recommend a vaginal birth, since this does not happen twice to one woman",
     "correct": false,
-    "rationale": "Zavanelli replaces the head in the pelvis for caesarean delivery only after all other manoeuvres have failed; McRoberts and suprapubic pressure are attempted first (Source: RANZCOG Shoulder dystocia).",
+    "rationale": "Reassurance of that kind would suit a woman with no previous dystocia and no other risk factors. (Source: Queensland Clinical Guidelines - Shoulder dystocia)",
     "source_refs": [
-     "RANZCOG Shoulder dystocia"
+     "Queensland Clinical Guidelines - Shoulder dystocia"
     ]
    },
    {
     "letter": "E",
-    "text": "Continue axial traction with progressively increasing force to release the anterior shoulder",
+    "text": "Defer the discussion until a growth scan at 36 weeks gives an estimate",
     "correct": false,
-    "rationale": "Excessive or lateral traction is a leading cause of brachial plexus injury and does not resolve true shoulder dystocia; a defined manoeuvre sequence is required (Source: RANZCOG Shoulder dystocia).",
+    "rationale": "A late growth scan informs the plan but is a poor predictor and should not delay counselling. (Source: RANZCOG - Shoulder dystocia)",
     "source_refs": [
-     "RANZCOG Shoulder dystocia"
+     "RANZCOG - Shoulder dystocia"
     ]
    }
   ],
   "explanation": {
-   "summary": "Shoulder dystocia is a bony impaction of the anterior shoulder on the pubic symphysis and is an obstetric emergency. The HELPERR mnemonic is one structured approach: Help called, Evaluate for episiotomy, Legs (McRoberts), suprapubic Pressure, Enter (internal manoeuvres including Rubin II and Wood's screw), Remove posterior arm, Roll onto all fours. Fundal pressure is always contraindicated. Symphysiotomy and Zavanelli are last resort manoeuvres.",
+   "summary": "Previous shoulder dystocia is the strongest single predictor of another, with recurrence reported at roughly ten percent, but most women with a previous episode have an uncomplicated vaginal birth next time. Australian guidance therefore does not set a fixed recommendation: the woman is counselled about recurrence, about the severity and outcome of any injury last time, and about the risks of caesarean section, and either mode of birth is supported. Factors that shift the conversation include diabetes, a large estimated fetal weight, a significant permanent injury in the previous baby, and her own preference. Ultrasound estimation of fetal weight near term is imprecise and should not be the deciding factor on its own. In context, the modifiable antenatal factor that matters most is glycaemic control, so screening for and treating gestational diabetes is part of the plan for this pregnancy.",
    "key_points": [
-    "McRoberts plus suprapubic pressure resolves approximately 40 percent of cases.",
-    "Fundal pressure is contraindicated at all times.",
-    "Zavanelli and symphysiotomy are last resort measures."
+    "Recurrence after a previous shoulder dystocia is about ten percent.",
+    "Counselling is individualised and both modes of birth are supported.",
+    "Previous injury severity, diabetes and estimated fetal weight shift the discussion.",
+    "Late ultrasound weight estimation is imprecise and is not decisive alone."
    ],
-   "pearls": "McRoberts hyperflexion rotates the symphysis pubis about 6 cm cephalad and flattens the sacral curve - it is the first specific manoeuvre after calling for help."
+   "pearls": "Gestational diabetes is the modifiable risk factor with the largest effect on recurrence, so screening and glycaemic control matter more to this pregnancy than the choice of birth mode made at 20 weeks."
   },
   "sources": [
    {
-    "label": "RANZCOG Shoulder dystocia",
+    "label": "RANZCOG - Shoulder dystocia",
     "url": "https://ranzcog.edu.au/"
    },
    {
-    "label": "RCOG Green top 42 Shoulder dystocia",
-    "url": "https://www.rcog.org.uk/"
+    "label": "Queensland Clinical Guidelines - Shoulder dystocia",
+    "url": "https://www.health.qld.gov.au/qcg"
    }
   ],
-  "reference_ranges": [],
-  "created": "2026-09-06"
+  "reference_ranges": [
+   "obs_pregnancy_vitals"
+  ],
+  "created": "2026-09-06",
+  "revised_from": "local-wave2-obgyn-012"
  },
  {
   "id": "local-wave2-obgyn-013",

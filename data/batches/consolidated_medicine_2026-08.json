@@ -185,96 +185,94 @@
   "created": "2026-08-27"
  },
  {
-  "id": "med-la-003",
+  "id": "med-la-003-d2",
   "topic": "Medicine",
-  "subtopic": "Other",
-  "subtopic_detail": "Acute HIV seroconversion illness recognition",
-  "difficulty": 2,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic": "Infectious diseases",
+  "subtopic_detail": "First response to a detectable viral load after years of suppression",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
   "tags": [
    "HIV",
-   "seroconversion"
+   "adherence",
+   "drug interactions"
   ],
-  "stem": "A 24-year-old man presents to his general practitioner with a 10-day history of fevers, sore throat, myalgias and a diffuse maculopapular rash on his trunk. He reports condomless receptive anal intercourse with a new male partner four weeks ago. He has no known chronic illnesses and takes no regular medications.\n\nOn examination he is febrile at 38.4 degrees C with cervical, axillary and inguinal lymphadenopathy. His oropharynx is erythematous with small ulcerative lesions on the palate. He has a non-blanching-in-parts maculopapular rash across his trunk. Chest, cardiovascular and abdominal examinations are otherwise unremarkable. He is not taking any recent antibiotics.\n\nHis general practitioner suspects an acute viral illness and considers whether standard HIV serology alone will be sufficient. A monospot test is negative and Epstein-Barr virus IgM is pending.",
+  "stem": "A 41-year-old woman on antiretroviral therapy for four years, suppressed at every visit, attends for routine review and feels well. Two months ago she started shift work, and began esomeprazole and a calcium supplement bought over the counter.",
   "data_table": {
-   "Vital signs": "T 38.4 C, HR 96, BP 118/72, RR 16, SpO2 99 percent room air.",
-   "Examination": "Generalised lymphadenopathy, palatal ulcers, diffuse maculopapular truncal rash.",
-   "Investigations": "Monospot negative; EBV IgM pending. FBC, LFTs, UEC pending.",
-   "Medications": "Nil regular. No recent antibiotics."
+   "Results": "HIV RNA 3,400 copies per millilitre today; undetectable three and nine months ago",
+   "Examination": "Well; weight stable; no thrush, rash or lymphadenopathy"
   },
-  "lead_in": "What is the most appropriate initial HIV investigation?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "HIV Western blot as a standalone confirmatory test",
-    "correct": false,
-    "rationale": "Western blot is confirmatory only, insensitive in the seroconversion window, and has been replaced in the ASHM testing algorithm by combination antigen-antibody assays with supplemental testing. It is not used as an initial diagnostic test (Source: ASHM HIV Testing Policy).",
+    "text": "Ask about missed doses and interacting medicines before changing",
+    "correct": true,
+    "rationale": "Most rebound after long suppression is adherence or absorption, and polyvalent cations in supplements or antacids chelate integrase inhibitors; the history determines whether a repeat viral load and resistance genotype are next. (Source: ASHM HIV Management Guidelines; AMH)",
     "source_refs": [
-     "ASHM HIV Testing Policy"
+     "ASHM HIV Management Guidelines",
+     "AMH"
     ]
    },
    {
     "letter": "B",
-    "text": "Third-generation HIV antibody-only test with repeat in three months",
+    "text": "Switch her to a different antiretroviral combination at this visit",
     "correct": false,
-    "rationale": "Third-generation antibody-only assays detect IgG only and will typically miss the earliest phase of infection when only p24 antigen and RNA are present. Deferring diagnosis for three months delays antiretroviral therapy and secondary prevention counselling (Source: ASHM HIV Testing Policy).",
+    "rationale": "A regimen change is appropriate once virological failure is confirmed on a repeat sample with a resistance genotype, or for intolerance, and switching blindly risks burning a future option. (Source: ASHM HIV Management Guidelines)",
     "source_refs": [
-     "ASHM HIV Testing Policy"
+     "ASHM HIV Management Guidelines"
     ]
    },
    {
     "letter": "C",
-    "text": "Fourth-generation HIV antigen-antibody assay together with HIV RNA viral load",
-    "correct": true,
-    "rationale": "Acute HIV seroconversion classically presents with fever, pharyngitis, generalised lymphadenopathy, maculopapular rash and mucocutaneous ulceration inside the first six weeks of exposure. A fourth-generation antigen-antibody assay detects p24 antigen from around day 14 to 21 but antibody may still be negative; adding HIV RNA closes the window because viraemia peaks at very high levels during acute infection. ASHM recommends combined antigen-antibody testing plus HIV RNA whenever acute HIV is suspected (Source: ASHM HIV Testing Policy).",
+    "text": "Add a fourth antiretroviral agent to the current regimen today",
+    "correct": false,
+    "rationale": "Adding a single agent to a failing regimen is functional monotherapy and selects resistance; additional agents are chosen from a genotype in multidrug-resistant disease. (Source: ASHM HIV Management Guidelines)",
     "source_refs": [
-     "ASHM HIV Testing Policy",
      "ASHM HIV Management Guidelines"
     ]
    },
    {
     "letter": "D",
-    "text": "Rapid point-of-care HIV antibody-only test with no other assays",
+    "text": "Stop all treatment until a resistance genotype result is available",
     "correct": false,
-    "rationale": "Most point-of-care rapid tests detect antibody only and have a longer window period than laboratory fourth-generation assays. A negative rapid test in an acutely symptomatic patient with high pre-test probability cannot exclude acute HIV (Source: ASHM HIV Testing Policy).",
+    "rationale": "Treatment interruption is avoided because it allows viral rebound and immune decline, and genotyping needs viraemia on treatment to be informative. (Source: ASHM HIV Management Guidelines)",
     "source_refs": [
-     "ASHM HIV Testing Policy"
+     "ASHM HIV Management Guidelines"
     ]
    },
    {
     "letter": "E",
-    "text": "CD4 lymphocyte count as the sole initial diagnostic test",
+    "text": "Repeat the CD4 count alone and review her again in six months",
     "correct": false,
-    "rationale": "CD4 count is a staging and prognostic tool, not a diagnostic assay. It can be transiently depressed during acute infection but cannot distinguish HIV from other causes of lymphopenia (Source: ASHM HIV Management Guidelines).",
+    "rationale": "CD4 monitoring is for staging and prophylaxis decisions in advanced disease, and a six month wait allows resistance to accumulate on a partially active regimen. (Source: ASHM HIV Management Guidelines)",
     "source_refs": [
      "ASHM HIV Management Guidelines"
     ]
    }
   ],
   "explanation": {
-   "summary": "Acute HIV seroconversion illness presents as a mononucleosis-like syndrome with fever, pharyngitis, lymphadenopathy, rash and mucocutaneous ulcers. Diagnosis requires a fourth-generation HIV antigen-antibody assay plus HIV RNA to cover the antibody-window period (Source: ASHM HIV Testing Policy).",
+   "summary": "A detectable viral load after years of suppression is an adherence or absorption problem far more often than resistance. The first move is history: missed or late doses, a change in routine such as shift work, and any new medicine. Proton pump inhibitors, antacids, calcium, magnesium and iron chelate integrase inhibitors and markedly reduce absorption unless separation of dosing is observed. A repeat viral load confirms whether the result is real, and a resistance genotype is sent while the patient remains on therapy if viraemia persists above about 200 to 500 copies per millilitre. In context, low level blips happen and resolve, while sustained viraemia on a regimen the patient is actually taking is what defines virological failure and prompts a genotype-guided switch.",
    "key_points": [
-    "Seroconversion syndrome: fever, rash, pharyngitis, generalised lymphadenopathy, oral ulcers",
-    "Window period is closed earliest by combined p24 antigen-antibody plus HIV RNA",
-    "Rapid antibody-only tests can miss acute infection",
-    "Very high viral load during acute infection drives transmission risk"
+    "Adherence and absorption explain most rebound after long suppression.",
+    "Polyvalent cations and antacids reduce integrase inhibitor absorption.",
+    "Confirm with a repeat viral load before changing anything.",
+    "Send the genotype while the patient is still on therapy."
    ],
-   "pearls": "Consider syphilis, secondary EBV/CMV mononucleosis and acute hepatitis in the differential; test broadly."
+   "pearls": "Ask specifically about supplements and pharmacy purchases; patients often do not count calcium, iron or antacids as medicines when asked what they take."
   },
   "sources": [
    {
-    "label": "ASHM HIV Testing Policy",
-    "url": "https://testingportal.ashm.org.au/hiv"
+    "label": "ASHM HIV Management Guidelines",
+    "url": "https://hivmanagement.ashm.org.au/"
    },
    {
-    "label": "ASHM HIV Management Guidelines",
-    "url": "https://arv.ashm.org.au/"
+    "label": "AMH",
+    "url": "https://amhonline.amh.net.au/"
    }
   ],
-  "reference_ranges": [
-   "fbc"
-  ],
-  "created": "2026-08-27"
+  "reference_ranges": [],
+  "created": "2026-09-23",
+  "revised_from": "med-la-003"
  },
  {
   "id": "med-la-004",

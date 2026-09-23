@@ -2851,97 +2851,101 @@
   ]
  },
  {
-  "id": "sched-2026-08-30-004",
+  "id": "sched-2026-08-30-004-d2",
   "topic": "Obstetrics & Gynaecology",
-  "subtopic": "Antenatal & intrapartum care",
-  "subtopic_detail": "Group B streptococcus prophylaxis",
-  "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic": "Intrapartum",
+  "subtopic_detail": "Reaction developing during the first dose of intrapartum penicillin",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
   "tags": [
-   "GBS",
-   "intrapartum",
-   "antibiotics"
+   "anaphylaxis",
+   "group B streptococcus",
+   "intrapartum emergency"
   ],
-  "stem": "You are the obstetric registrar assessing a 29-year-old G2P1 at 39+4 weeks who presents in early labour. She had a normal vaginal delivery at term two years ago. Her antenatal course has been unremarkable. A vaginal-rectal swab at 36+2 weeks was positive for Group B streptococcus. She has no drug allergies. Cervical examination reveals 4 cm dilated, 90% effaced, membranes intact. Contractions are every 4 minutes lasting 45 seconds. Fetal heart rate baseline is 140 with normal variability and accelerations.",
+  "stem": "A 25 year old woman colonised with group B streptococcus is 4 cm dilated at 39 weeks. Ten minutes into her first intravenous dose she becomes flushed and breathless with widespread weals.",
   "data_table": {
-   "Vital signs": "pulse 82, blood pressure 118/74, respiratory rate 16, SpO2 99% on room air, temperature 36.8 degrees Celsius, fetal HR 140",
-   "Cervical exam": "4 cm dilated, 90% effaced, station -1, membranes intact",
-   "History": "GBS positive vaginal-rectal swab at 36+2 weeks, no penicillin allergy, no previous GBS-affected infant"
+   "Observations": "Pulse 128 /min, blood pressure 76/40 mmHg, respiratory rate 28 /min, SpO2 93%",
+   "Chest and fetus": "Audible wheeze, hoarse voice, cardiotocograph shows a prolonged deceleration"
   },
-  "lead_in": "What is the most appropriate management?",
+  "lead_in": "What is the most appropriate immediate action?",
   "options": [
    {
     "letter": "A",
-    "text": "Give oral amoxicillin 500 mg every 8 hours until delivery for group B streptococcus prophylaxis",
-    "correct": false,
-    "rationale": "Oral antibiotics do not achieve intrapartum tissue and cord blood concentrations sufficient to reduce early-onset GBS neonatal disease. Australian and CDC-based intrapartum protocols require IV therapy. (Source: RANZCOG GBS in pregnancy)",
+    "text": "Stop the infusion and give intramuscular adrenaline into the lateral thigh",
+    "correct": true,
+    "rationale": "Hypotension and bronchospasm with weals during an infusion is anaphylaxis, and intramuscular adrenaline is the first drug in every case. (Source: ASCIA Guidelines - Acute management of anaphylaxis)",
     "source_refs": [
-     "RANZCOG GBS"
+     "ASCIA Guidelines - Acute management of anaphylaxis",
+     "Australian Medicines Handbook - benzylpenicillin and vancomycin"
     ]
    },
    {
     "letter": "B",
-    "text": "Give a single dose of intramuscular ceftriaxone 1 g at the start of the active labour phase",
+    "text": "Stop the infusion and give intravenous hydrocortisone and an antihistamine",
     "correct": false,
-    "rationale": "Ceftriaxone is not the recommended IAP agent and single dosing does not maintain adequate cord blood concentrations across the intrapartum period. Serial IV doses of benzylpenicillin are used. (Source: RANZCOG GBS in pregnancy)",
+    "rationale": "These are adjuncts for symptom relief and are reasonable once adrenaline has been given, or for isolated urticaria. (Source: ASCIA Guidelines - Acute management of anaphylaxis)",
     "source_refs": [
-     "RANZCOG GBS"
+     "ASCIA Guidelines - Acute management of anaphylaxis"
     ]
    },
    {
     "letter": "C",
-    "text": "Give intravenous clindamycin 900 mg every 8 hours until delivery for group B streptococcus prophylaxis",
+    "text": "Stop the infusion and give a fluid bolus while calling the anaesthetist",
     "correct": false,
-    "rationale": "Clindamycin is reserved for women with severe penicillin allergy where the isolate has documented clindamycin susceptibility. In an unallergic woman, benzylpenicillin is first-line because of superior efficacy and narrower spectrum. (Source: Therapeutic Guidelines Antibiotic GBS IAP)",
+    "rationale": "Fluid and senior help follow immediately, but giving them before adrenaline delays the only treatment that reverses the reaction. (Source: ASCIA Guidelines - Acute management of anaphylaxis)",
     "source_refs": [
-     "eTG Antibiotic GBS IAP"
+     "ASCIA Guidelines - Acute management of anaphylaxis"
     ]
    },
    {
     "letter": "D",
-    "text": "Give intravenous benzylpenicillin 3 g loading dose then 1.8 g every 4 hours until delivery",
-    "correct": true,
-    "rationale": "Australian RANZCOG guidance and Therapeutic Guidelines Antibiotic recommend IV benzylpenicillin 3 g load then 1.8 g every 4 hours until delivery for GBS-positive women without penicillin allergy, aiming for at least 4 hours of exposure before delivery to reduce early-onset GBS disease. (Source: RANZCOG GBS in pregnancy)",
+    "text": "Stop the infusion and change the prophylaxis to intravenous vancomycin",
+    "correct": false,
+    "rationale": "Choosing the replacement antibiotic matters later, once she is stable and still needs cover in labour. (Source: Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis)",
     "source_refs": [
-     "RANZCOG GBS",
-     "eTG Antibiotic GBS IAP"
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis",
+     "Australian Medicines Handbook - benzylpenicillin and vancomycin"
     ]
    },
    {
     "letter": "E",
-    "text": "Withhold antibiotics and reassess if the maternal temperature rises above 37.8 degrees Celsius",
+    "text": "Stop the infusion and move to theatre for an immediate caesarean section",
     "correct": false,
-    "rationale": "GBS-positive status alone (not intrapartum fever) is the indication for IAP. Waiting for fever misses the window to reduce vertical transmission and early-onset neonatal disease. (Source: RANZCOG GBS in pregnancy)",
+    "rationale": "Birth is expedited if the fetal heart does not recover after the mother has been resuscitated. (Source: RANZCOG - Maternal group B streptococcus in pregnancy: screening and management)",
     "source_refs": [
-     "RANZCOG GBS"
+     "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management"
     ]
    }
   ],
   "explanation": {
-   "summary": "Universal antenatal screening at 35 to 37 weeks or a risk-based approach identifies women needing intrapartum antibiotic prophylaxis. In a penicillin-tolerant woman with a positive antenatal swab, IV benzylpenicillin loading 3 g followed by 1.8 g every 4 hours is the RANZCOG-endorsed regimen. Adequate prophylaxis requires at least 4 hours between the first dose and delivery.",
+   "summary": "Anaphylaxis is a clinical diagnosis made on acute onset of skin or mucosal change with either respiratory compromise or hypotension, and intramuscular adrenaline into the anterolateral thigh is the first treatment in every setting, given before antihistamines, corticosteroids or fluids. In labour the picture is complicated because maternal hypotension produces a prolonged fetal deceleration, and the temptation is to treat the cardiotocograph rather than the mother. Resuscitating the mother, with left lateral tilt or manual uterine displacement to relieve aortocaval compression, is what restores placental perfusion; birth is expedited only if the fetal heart fails to recover. Once she is stable, prophylaxis continues with a non beta-lactam agent, and the reaction is documented as a severe immediate penicillin allergy in her record. In context, penicillins are among the commonest triggers of drug anaphylaxis in Australian hospitals, and delay in giving adrenaline is the factor most consistently associated with poor outcome.",
    "key_points": [
-    "GBS positive swab at 35-37 weeks = IAP in labour or ROM at term",
-    "Benzylpenicillin 3 g IV load then 1.8 g every 4 hours until birth",
-    "Cefazolin 2 g load then 1 g every 8 hours if non-severe penicillin allergy",
-    "Clindamycin only if severe pen allergy AND documented isolate susceptibility"
+    "Anaphylaxis is skin or mucosal change plus respiratory compromise or hypotension.",
+    "Intramuscular adrenaline into the lateral thigh comes before all other drugs.",
+    "Maternal resuscitation with uterine displacement restores the fetal heart rate.",
+    "Document a severe immediate penicillin allergy and switch to a non beta-lactam."
    ],
-   "pearls": "Adequate IAP defined as at least one dose of benzylpenicillin 4 hours or more before delivery; shorter intervals still confer some but reduced benefit."
+   "pearls": "A prolonged fetal deceleration during a maternal collapse is usually a consequence of maternal hypotension; resuscitate the mother first and the trace commonly recovers without the need for immediate birth."
   },
   "sources": [
    {
-    "label": "RANZCOG GBS",
-    "url": "https://ranzcog.edu.au/wp-content/uploads/2022/05/Maternal-group-B-streptococcus-in-pregnancy.pdf"
+    "label": "ASCIA Guidelines - Acute management of anaphylaxis",
+    "url": "https://www.allergy.org.au/hp/anaphylaxis"
    },
    {
-    "label": "eTG Antibiotic GBS IAP",
-    "url": "https://tgldcdp.tg.org.au/topicTeaser?guidelinePage=Antibiotic&topicfile=intrapartum-antibiotic-prophylaxis-for-group-B-streptococcus"
+    "label": "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis",
+    "url": "https://tgldcdp.tg.org.au/"
+   },
+   {
+    "label": "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management",
+    "url": "https://ranzcog.edu.au/"
    }
   ],
   "reference_ranges": [
-   "obs_pregnancy_vitals",
-   "ctg_baseline"
+   "obs_pregnancy_vitals"
   ],
-  "created": "2026-08-30"
+  "created": "2026-08-30",
+  "revised_from": "sched-2026-08-30-004"
  },
  {
   "id": "sched-2026-08-30-005",

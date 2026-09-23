@@ -1936,79 +1936,86 @@
   "created": "2026-09-06"
  },
  {
-  "id": "local-wave2-medicine-003",
+  "id": "local-wave2-medicine-003-d2",
   "topic": "Medicine",
   "subtopic": "Infectious diseases",
-  "subtopic_detail": "Latent tuberculosis infection diagnosis and treatment",
+  "subtopic_detail": "Timing of preventive therapy for latent infection found in pregnancy",
   "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
   "tags": [
-   "tuberculosis"
+   "tuberculosis",
+   "pregnancy",
+   "timing"
   ],
-  "stem": "You are the general medical registrar in a refugee health clinic. A 32 year old woman from Myanmar has been in Australia for 4 months and attends for a pre-employment health check for aged care work. She is asymptomatic with no cough, weight loss, night sweats, or fevers.\n\nShe received BCG as a child. She has no known previous tuberculosis contact but grew up in a village where several neighbours had chronic cough. She is not pregnant, does not drink alcohol, and takes no medications.\n\nExamination is unremarkable. Vital signs are within normal limits. A QuantiFERON-Plus interferon gamma release assay is positive. Chest X-ray shows no infiltrate, cavitation, or hilar lymphadenopathy. Sputum is not producible. HIV serology is negative and hepatitis B and C serology are negative. Full blood count and liver enzymes are within normal limits.",
+  "stem": "A 27 year old woman at 14 weeks gestation has a positive interferon gamma release assay from antenatal screening. She is asymptomatic, HIV negative, and has had no known contact with anyone with tuberculosis.",
   "data_table": {
-   "Vital signs": "Within normal limits",
-   "Screening": "QuantiFERON-Plus POSITIVE; CXR clear (no infiltrate, cavitation, or lymphadenopathy); HIV, HBV, HCV negative",
-   "Bloods": "FBC and LFTs within normal limits",
-   "History": "Migrated from Myanmar 4 months ago; BCG as child; no known TB contact; no cough, weight loss, night sweats or fever; not pregnant; no alcohol"
+   "Examination": "Well, no cough, no night sweats, chest clear",
+   "Investigations": "Interferon gamma release assay positive; shielded chest radiograph normal; liver function tests normal"
   },
   "lead_in": "What is the most appropriate management?",
   "options": [
    {
     "letter": "A",
-    "text": "Reassure that a positive QuantiFERON reflects BCG and no further action is required",
-    "correct": false,
-    "rationale": "QuantiFERON-Plus uses ESAT-6 and CFP-10 antigens absent from BCG and most non-tuberculous mycobacteria, so BCG does not cause a false positive; a positive result requires assessment for latent versus active TB rather than dismissal (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+    "text": "Defer preventive therapy until after she has delivered",
+    "correct": true,
+    "rationale": "With no recent contact and no immunosuppression her short term reactivation risk is low, while hepatotoxicity risk is higher in pregnancy and the early postpartum period. Treatment is deferred and started after delivery, usually about three months on. (Source: National Tuberculosis Advisory Committee (NTAC) guidelines)",
     "source_refs": [
-     "National Tuberculosis Advisory Committee (NTAC) guidelines"
+     "National Tuberculosis Advisory Committee (NTAC) guidelines",
+     "Therapeutic Guidelines: Antibiotic"
     ]
    },
    {
     "letter": "B",
-    "text": "Commence 4 drug therapy with rifampicin, isoniazid, pyrazinamide and ethambutol",
+    "text": "Start isoniazid with pyridoxine now and continue postpartum",
     "correct": false,
-    "rationale": "RIPE is the initial intensive phase for ACTIVE tuberculosis; without symptoms and with a clear CXR she has latent infection, and 4 drug therapy would over-treat, expose her to unnecessary hepatotoxicity, and select for resistance (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+    "rationale": "Right when the reactivation risk is high and immediate, such as HIV coinfection or documented recent contact with an infectious case, where the balance tips towards treating during pregnancy. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
+     "Therapeutic Guidelines: Antibiotic",
      "National Tuberculosis Advisory Committee (NTAC) guidelines"
     ]
    },
    {
     "letter": "C",
-    "text": "Isoniazid 300 mg orally daily with pyridoxine 25 mg daily for 6 to 9 months",
-    "correct": true,
-    "rationale": "A positive interferon gamma release assay with a clear CXR, no symptoms and no prior TB treatment is latent tuberculosis infection. Australian first line treatment is isoniazid daily for 6 to 9 months (or rifampicin 4 months, or 3 months weekly isoniazid plus rifapentine where available), with pyridoxine to prevent isoniazid peripheral neuropathy (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+    "text": "Start rifampicin now and stop it before delivery",
+    "correct": false,
+    "rationale": "Right in neither respect: a rifampicin course runs for four months and stopping preventive therapy early leaves an incomplete regimen that offers little protection. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
+     "Therapeutic Guidelines: Antibiotic",
      "National Tuberculosis Advisory Committee (NTAC) guidelines"
     ]
    },
    {
     "letter": "D",
-    "text": "Repeat the QuantiFERON-Plus assay in 3 months before deciding on treatment",
+    "text": "Repeat the assay each trimester and treat if rising",
     "correct": false,
-    "rationale": "IGRA does not require confirmation when technically valid; delay increases the risk of progression to active TB, which is approximately 5 to 10% lifetime and highest in the first 2 years after infection, and delays her clearance for aged care work (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+    "rationale": "Right in no setting: interferon gamma release assay values are not used to track disease activity and stay positive after infection or treatment. (Source: National Tuberculosis Advisory Committee (NTAC) guidelines)",
     "source_refs": [
-     "National Tuberculosis Advisory Committee (NTAC) guidelines"
+     "National Tuberculosis Advisory Committee (NTAC) guidelines",
+     "NSW Health: Tuberculosis"
     ]
    },
    {
     "letter": "E",
-    "text": "Induced sputum for smear microscopy and mycobacterial culture x 3 samples",
+    "text": "Withhold treatment permanently and arrange yearly review",
     "correct": false,
-    "rationale": "Induced sputum is indicated only when there is clinical or radiographic concern for active pulmonary TB; a clear CXR and absent symptoms make this a low yield step and delays treatment of latent infection (Source: National Tuberculosis Advisory Committee (NTAC) guidelines).",
+    "rationale": "Right for a person in whom treatment is never going to be offered, such as an older adult with competing hepatic risk. A young woman retains decades of reactivation risk and should be treated later. (Source: National Tuberculosis Advisory Committee (NTAC) guidelines)",
     "source_refs": [
-     "National Tuberculosis Advisory Committee (NTAC) guidelines"
+     "National Tuberculosis Advisory Committee (NTAC) guidelines",
+     "Therapeutic Guidelines: Antibiotic"
     ]
    }
   ],
   "explanation": {
-   "summary": "A positive interferon gamma release assay in an asymptomatic person with a clear CXR and no prior TB treatment is latent tuberculosis infection. Australian NTAC guidance recommends offering treatment because lifetime progression risk to active TB is 5 to 10%, higher in the first 2 years after infection and in the immunocompromised. First line is isoniazid daily for 6 to 9 months with pyridoxine, or rifampicin daily for 4 months, or 3HP (isoniazid plus rifapentine weekly for 12 weeks) where available. Baseline liver function is checked and repeated if symptoms develop; alcohol counselling and pregnancy planning are part of consent.",
+   "summary": "Latent infection detected in a low risk pregnancy is treated after delivery. Active disease, by contrast, is always treated in pregnancy, and preventive therapy is brought forward where the reactivation risk is high.",
    "key_points": [
-    "IGRA distinguishes latent TB from BCG effect (BCG does not cause false positives).",
-    "Latent TB (positive IGRA, clear CXR, asymptomatic): offer preventive treatment.",
-    "Australian regimens: isoniazid 6-9 months, or rifampicin 4 months, or 3HP 12 weeks."
+    "Defer preventive therapy in low risk pregnancy; treat active disease immediately at any gestation.",
+    "Treat during pregnancy where there is HIV coinfection or recent documented contact.",
+    "Isoniazid is compatible with breastfeeding, and pyridoxine is given with it."
    ],
-   "pearls": "Add pyridoxine 25 mg daily to isoniazid to prevent peripheral neuropathy; instruct the patient to stop and seek review if nausea, right upper quadrant pain, dark coloured urine, or jaundice develop during treatment."
+   "context": "Pregnancy alters the arithmetic of preventive treatment without changing its principles. Drug induced liver injury is more frequent during pregnancy and in the first months postpartum, so the same regimen carries more risk for the same benefit, and the benefit itself is measured over decades rather than months. Untreated active tuberculosis in pregnancy is quite a different matter, carrying risks of prematurity, low birthweight and perinatal death, which is why the first step in any positive antenatal screening result is a careful exclusion of active disease, with abdominal shielding for the radiograph where one is needed."
   },
+  "reference_ranges": [
+   "lfts"
+  ],
   "sources": [
    {
     "label": "National Tuberculosis Advisory Committee (NTAC) guidelines",
@@ -2016,14 +2023,15 @@
    },
    {
     "label": "Therapeutic Guidelines: Antibiotic",
-    "url": "https://tgldcdp.tg.org.au/"
+    "url": "https://www.tg.org.au/"
+   },
+   {
+    "label": "NSW Health: Tuberculosis",
+    "url": "https://www.health.nsw.gov.au/Infectious/tuberculosis/"
    }
   ],
-  "reference_ranges": [
-   "fbc",
-   "lfts"
-  ],
-  "created": "2026-09-06"
+  "model": "Claude Opus 5",
+  "revised_from": "local-wave2-medicine-003"
  },
  {
   "id": "local-wave2-medicine-004",
@@ -3135,97 +3143,97 @@
   "created": "2026-09-06"
  },
  {
-  "id": "local-wave2-medicine-016",
+  "id": "local-wave2-medicine-016-d2",
   "topic": "Medicine",
   "subtopic": "Endocrinology",
-  "subtopic_detail": "Osteoporosis first line pharmacotherapy after minimal trauma fracture",
+  "subtopic_detail": "Managing a bone density in the osteopenic range with no fracture",
   "difficulty": 2,
-  "model": "Claude Opus 4.7 (1M context)",
+  "model": "Claude Opus 5",
   "tags": [
-   "osteoporosis"
+   "osteoporosis",
+   "osteopenia",
+   "prevention"
   ],
-  "stem": "A 68-year-old postmenopausal woman fractured her distal radius falling from standing height 6 weeks ago. She takes no regular medications and has no history of glucocorticoid use or malabsorption.",
+  "stem": "A 62-year-old woman has densitometry after her sister was treated for osteoporosis. She has never fractured, does not smoke, drinks rarely and walks daily. Menopause was at 52 and her only medicine is an antihistamine in spring.",
   "data_table": {
-   "DXA": "T-score lumbar spine -2.6, femoral neck -2.4",
-   "Bloods": "25-OH vitamin D 68 nmol/L, corrected calcium 2.32 mmol/L, eGFR greater than 90, TSH 2.1 mIU/L",
-   "Secondary workup": "Protein electrophoresis and coeliac serology negative"
+   "Bone density": "Femoral neck T-score -1.7; lumbar spine T-score -1.5",
+   "Investigations": "Corrected calcium 2.35 mmol/L; vitamin D 80 nmol/L; TSH 1.9 mIU/L"
   },
-  "lead_in": "What is the most appropriate first line pharmacotherapy?",
+  "lead_in": "What is the most appropriate management?",
   "options": [
    {
     "letter": "A",
-    "text": "Oral calcium and colecalciferol daily as the sole therapy",
-    "correct": false,
-    "rationale": "Calcium and vitamin D alone are inadequate secondary prevention after minimal trauma fracture with T-score below -2.5; they support pharmacotherapy but do not substitute for antiresorptive therapy which reduces refracture risk by around 50% (Source: RACGP osteoporosis guideline).",
+    "text": "Weight bearing exercise, dietary calcium and rescanning in two years",
+    "correct": true,
+    "rationale": "With no minimal trauma fracture and a T-score above -2.5, absolute fracture risk calculated with FRAX or Garvan stays below the treatment threshold, so lifestyle measures and interval rescanning are what is indicated. (Source: RACGP and Healthy Bones Australia osteoporosis guideline)",
     "source_refs": [
-     "RACGP osteoporosis guideline"
+     "RACGP and Healthy Bones Australia osteoporosis guideline"
     ]
    },
    {
     "letter": "B",
-    "text": "Oral alendronate weekly with calcium and vitamin D supplementation",
-    "correct": true,
-    "rationale": "She has established osteoporosis by both a minimal trauma fracture at a major site AND a DXA T-score below -2.5. Australian Therapeutic Guidelines and the RACGP osteoporosis guideline recommend an oral bisphosphonate (alendronate 70 mg weekly or risedronate 35 mg weekly) as first line pharmacotherapy in postmenopausal women with normal renal function and no upper gastrointestinal contraindications (Source: Therapeutic Guidelines: Endocrinology; RACGP osteoporosis guideline).",
+    "text": "Start weekly oral alendronate now to prevent progression to osteoporosis",
+    "correct": false,
+    "rationale": "A bisphosphonate is indicated for a T-score of -2.5 or lower, after any minimal trauma fracture, or when calculated absolute risk crosses the treatment threshold, none of which apply. (Source: RACGP and Healthy Bones Australia osteoporosis guideline)",
     "source_refs": [
-     "Therapeutic Guidelines: Endocrinology",
-     "RACGP osteoporosis guideline"
+     "RACGP and Healthy Bones Australia osteoporosis guideline"
     ]
    },
    {
     "letter": "C",
-    "text": "Subcutaneous denosumab six-monthly as first line antiresorptive therapy",
+    "text": "Begin menopausal hormone therapy for skeletal protection from now",
     "correct": false,
-    "rationale": "Denosumab is effective and PBS-listed for osteoporosis but is not universally first line in Australia; it is preferred when oral bisphosphonates are contraindicated (upper gastrointestinal disease, oesophageal stricture) or when eGFR is less than 35 mL/min/1.73m^2. Its main issue is the rebound vertebral fracture risk if stopped abruptly (Source: Therapeutic Guidelines: Endocrinology).",
+    "rationale": "Menopausal hormone therapy protects bone and is a reasonable choice for a woman with troublesome vasomotor symptoms or premature ovarian insufficiency, not as a bone intervention alone a decade after menopause. (Source: RACGP and Healthy Bones Australia osteoporosis guideline)",
     "source_refs": [
-     "Therapeutic Guidelines: Endocrinology"
+     "RACGP and Healthy Bones Australia osteoporosis guideline"
     ]
    },
    {
     "letter": "D",
-    "text": "Subcutaneous teriparatide daily as first line anabolic therapy",
+    "text": "Start six monthly subcutaneous denosumab and review in one year",
     "correct": false,
-    "rationale": "Teriparatide is an anabolic agent reserved for severe osteoporosis (typically T-score below -3.0 with multiple minimal trauma fractures, or fracture on antiresorptive therapy) and is subsidised on the PBS for these specific indications; it is not first line for a first minimal trauma fracture (Source: Therapeutic Guidelines: Endocrinology).",
+    "rationale": "Denosumab is used when a bisphosphonate is unsuitable, typically for renal impairment or upper gastrointestinal disease in someone who meets the treatment threshold, and it commits the patient to indefinite therapy. (Source: Therapeutic Guidelines: Endocrinology)",
     "source_refs": [
      "Therapeutic Guidelines: Endocrinology"
     ]
    },
    {
     "letter": "E",
-    "text": "Combined oestrogen and progestogen for fracture prevention",
+    "text": "Repeat the bone density scan in six months before deciding",
     "correct": false,
-    "rationale": "MHT reduces fracture risk but its risk profile (breast cancer, venous thromboembolism, stroke) makes it unsuitable as primary fracture prevention beyond age 60 in a woman with fracture already sustained; it is used for menopausal symptoms in appropriate candidates (Source: Therapeutic Guidelines: Endocrinology).",
+    "rationale": "A six month interval is shorter than the measurement error of densitometry; scans are repeated at about two years, and earlier only when a rapid bone loss state such as glucocorticoid therapy is present. (Source: RACGP and Healthy Bones Australia osteoporosis guideline)",
     "source_refs": [
-     "Therapeutic Guidelines: Endocrinology"
+     "RACGP and Healthy Bones Australia osteoporosis guideline"
     ]
    }
   ],
   "explanation": {
-   "summary": "Osteoporosis is diagnosed either by DXA T-score at or below -2.5 at the lumbar spine, femoral neck, or total hip, OR by a minimal trauma (fragility) fracture at a major site (hip, vertebra, distal radius, proximal humerus) regardless of DXA. Secondary causes should be excluded with calcium, phosphate, 25-OH vitamin D, TSH, SPEP, coeliac serology, and (in men) testosterone. First line pharmacotherapy in Australia is an oral bisphosphonate (alendronate 70 mg weekly or risedronate 35 mg weekly), or IV zoledronic acid annually if oral therapy is not tolerated or adherence is poor. Denosumab is preferred when eGFR is less than 35 mL/min/1.73m^2 or oral bisphosphonates are contraindicated. Teriparatide is anabolic and reserved for severe or antiresorptive-failure disease. Adequate dietary calcium (1000-1300 mg/day) and vitamin D (25-OH-D greater than 50 nmol/L) support all antiresorptive therapy.",
+   "summary": "A T-score between -1.0 and -2.5 without a minimal trauma fracture is osteopenia, which is a risk factor rather than a diagnosis that mandates drug treatment. Most fragility fractures in the community arise from this group simply because it is large, so the decision is made on absolute fracture risk using FRAX or the Garvan calculator, not on the T-score alone. Management is calcium of about 1300 mg daily preferred from diet, vitamin D sufficiency, weight bearing and balance exercise, smoking and alcohol advice, and repeat densitometry in about two years. In context, the threshold falls immediately if she sustains a minimal trauma fracture or starts a long course of glucocorticoid, either of which converts this into a treatment decision.",
    "key_points": [
-    "Osteoporosis dx: T-score at or below -2.5 OR minimal trauma fracture at major site.",
-    "First line: oral bisphosphonate (alendronate 70 mg weekly, risedronate 35 mg weekly) OR IV zoledronic acid annually.",
-    "Denosumab if eGFR less than 35 or oral bisphosphonates contraindicated.",
-    "Exclude secondary causes: calcium, phosphate, 25-OH-D, TSH, SPEP, coeliac serology, (in men) testosterone."
+    "Osteopenia alone is not an indication for pharmacotherapy.",
+    "Decide on absolute fracture risk with FRAX or Garvan, not the T-score alone.",
+    "Dietary calcium about 1300 mg daily, with vitamin D sufficiency and exercise.",
+    "Repeat densitometry at about two years, sooner only if the situation changes."
    ],
-   "pearls": "Counsel on bisphosphonate dosing: swallow with a full glass of tap water on an empty stomach and remain upright for at least 30 minutes; this reduces oesophagitis and improves absorption which is less than 1% at baseline."
+   "pearls": "Any minimal trauma fracture converts an osteopenic T-score into an indication for treatment, because the fracture itself predicts the next one better than the density does."
   },
   "sources": [
    {
-    "label": "Therapeutic Guidelines: Endocrinology",
-    "url": "https://tgldcdp.tg.org.au/"
+    "label": "RACGP and Healthy Bones Australia osteoporosis guideline",
+    "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/osteoporosis"
    },
    {
-    "label": "RACGP osteoporosis guideline",
-    "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/osteoporosis"
+    "label": "Therapeutic Guidelines: Endocrinology",
+    "url": "https://tgldcdp.tg.org.au/"
    }
   ],
   "reference_ranges": [
-   "uec",
    "calcium_corrected",
    "thyroid",
    "vitamins"
   ],
-  "created": "2026-09-06"
+  "created": "2026-09-23",
+  "revised_from": "local-wave2-medicine-016"
  },
  {
   "id": "local-wave2-medicine-017",
@@ -21596,104 +21604,102 @@
   "created": "2026-09-05"
  },
  {
-  "id": "sched-2026-09-05-p1-022",
+  "id": "sched-2026-09-05-p1-022-d2",
   "topic": "Medicine",
   "subtopic": "Endocrinology",
-  "subtopic_detail": "Osteoporosis first line pharmacotherapy",
+  "subtopic_detail": "Bone protection when long term glucocorticoid treatment begins",
   "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "model": "Claude Opus 5",
   "tags": [
    "osteoporosis",
-   "fragility-fracture"
+   "glucocorticoid",
+   "PBS"
   ],
-  "stem": "You are the general practice registrar reviewing a 72 year old postmenopausal woman 8 weeks after a wrist fracture sustained from a fall from standing height. She has no significant medical history, no current medications, and is a lifelong non smoker. Her mother had a hip fracture aged 75. DXA scan shows lumbar spine T score -2.1 and femoral neck T score -2.6.\n\nVitamin D was 62 nmol/L (above 50), corrected calcium 2.28 mmol/L (2.10 to 2.60), TSH within normal limits, and eGFR 74 mL/min/1.73m2. Coeliac serology is negative and full blood count and myeloma screen are unremarkable. She has good dentition and no recent dental work planned. She drinks 1 standard drink weekly and walks 30 minutes daily. She asks what medication is best to reduce her risk of another fracture.",
+  "stem": "A 70-year-old woman starts prednisolone 25 mg daily for giant cell arteritis and will need at least twelve months of treatment. She has never fractured. Densitometry arranged at diagnosis shows a femoral neck T-score of -1.8, and her dairy intake is about 800 mg of calcium daily.",
   "data_table": {
-   "Fracture history": "Left distal radius fracture 8 weeks ago from fall from standing height",
-   "DXA": "Lumbar spine T -2.1; femoral neck T -2.6",
-   "Bloods": "Vitamin D 62 nmol/L; corrected calcium 2.28 mmol/L; eGFR 74; TSH within normal limits",
-   "Secondary screen": "Coeliac serology negative; myeloma screen normal"
+   "Investigations": "Corrected calcium 2.31 mmol/L; vitamin D 78 nmol/L; eGFR 76 mL/min",
+   "Examination": "No kyphosis or spinal tenderness; normal temporal arteries after four days of treatment"
   },
-  "lead_in": "Which is the most appropriate first line pharmacotherapy to recommend now?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "Calcium 1000 mg with vitamin D 1000 IU daily as a single agent for 12 months and reassess DXA scan",
-    "correct": false,
-    "rationale": "Calcium plus vitamin D alone does not adequately reduce fracture risk in established osteoporosis with a minimal trauma fracture; specific antiresorptive therapy is required (Source: Osteoporosis Australia Consumer Medicine Reference Guide).",
+    "text": "Start weekly oral alendronate together with the prednisolone",
+    "correct": true,
+    "rationale": "Bone loss is fastest in the first months of glucocorticoid treatment, and the treatment threshold shifts to a T-score of -1.5 or lower for anyone on at least 7.5 mg of prednisolone daily for three months or more. (Source: Therapeutic Guidelines: Rheumatology; PBS)",
     "source_refs": [
-     "Osteoporosis Australia Consumer Medicine Reference Guide"
+     "Therapeutic Guidelines: Rheumatology",
+     "PBS"
     ]
    },
    {
     "letter": "B",
-    "text": "Subcutaneous romosozumab 210 mg monthly for 12 months as anabolic agent for very high risk profile",
+    "text": "Repeat densitometry in twelve months and treat only if worse",
     "correct": false,
-    "rationale": "Romosozumab is reserved for very high fracture risk profiles (multiple fractures, very low T score); first line here is oral bisphosphonate, and romosozumab carries cardiovascular caution (Source: Osteoporosis Australia Consumer Medicine Reference Guide).",
+    "rationale": "Waiting and rescanning suits a patient on inhaled or short course glucocorticoid, or on a dose below 7.5 mg daily, and here it allows the steepest phase of bone loss to happen untreated. (Source: Therapeutic Guidelines: Rheumatology)",
     "source_refs": [
-     "Osteoporosis Australia Consumer Medicine Reference Guide"
+     "Therapeutic Guidelines: Rheumatology"
     ]
    },
    {
     "letter": "C",
-    "text": "Subcutaneous teriparatide 20 micrograms daily for 24 months as an anabolic agent first line",
+    "text": "Give calcium and vitamin D supplements as the only bone measure",
     "correct": false,
-    "rationale": "Teriparatide is a second line PBS restricted anabolic for severe osteoporosis where bisphosphonate has failed or is contraindicated; it is not first line here (Source: PBS Teriparatide Listing).",
+    "rationale": "Supplements alone are appropriate for a low dose or short course when the T-score is above -1.5, and they are adjunctive rather than sufficient at this dose and duration. (Source: RACGP and Healthy Bones Australia osteoporosis guideline)",
     "source_refs": [
-     "PBS Teriparatide Listing"
+     "RACGP and Healthy Bones Australia osteoporosis guideline"
     ]
    },
    {
     "letter": "D",
-    "text": "Oestrogen with progestogen menopausal hormone therapy for prevention of further fragility fracture",
+    "text": "Defer any bone treatment until the prednisolone dose is below 7.5 mg",
     "correct": false,
-    "rationale": "Menopausal hormone therapy is reserved for symptomatic postmenopausal women in the first 10 years after menopause; it is not first line for osteoporosis in a 72 year old (Source: RACGP Menopausal Hormone Therapy Guidance).",
+    "rationale": "Tapering to below 7.5 mg daily is the point at which continuing antiresorptive therapy is reconsidered, not the point at which it starts. (Source: Therapeutic Guidelines: Rheumatology)",
     "source_refs": [
-     "RACGP Menopausal Hormone Therapy Guidance"
+     "Therapeutic Guidelines: Rheumatology"
     ]
    },
    {
     "letter": "E",
-    "text": "Oral alendronate 70 mg once weekly with calcium and vitamin D supplementation as first line therapy",
-    "correct": true,
-    "rationale": "Oral alendronate 70 mg weekly is first line for postmenopausal osteoporosis with a fragility fracture in an ambulant patient with normal renal function and good dentition; PBS covers it after a minimal trauma fracture (Source: PBS Alendronate Listing).",
+    "text": "Start subcutaneous teriparatide as the anabolic agent of choice",
+    "correct": false,
+    "rationale": "Teriparatide is reserved for very high risk glucocorticoid-treated patients, typically those who fracture despite an antiresorptive, and it is restricted accordingly on the Pharmaceutical Benefits Scheme. (Source: PBS)",
     "source_refs": [
-     "PBS Alendronate Listing"
+     "PBS"
     ]
    }
   ],
   "explanation": {
-   "summary": "A minimal trauma fracture in a postmenopausal woman with T score below -2.5 defines osteoporosis and mandates specific antiresorptive therapy in addition to calcium and vitamin D. Oral alendronate 70 mg once weekly (or risedronate 35 mg weekly) is first line where renal function is preserved (eGFR above 30 for oral, above 35 for zoledronic acid) and gastro-oesophageal reflux is not prohibitive. Zoledronic acid 5 mg intravenous annually is an alternative for adherence or reflux concerns. Denosumab 60 mg subcutaneous six monthly is second line and requires uninterrupted therapy (rebound fractures on cessation). Teriparatide and romosozumab are reserved for severe or very high risk cases via PBS restriction. Vitamin D above 50 nmol/L should be maintained and calcium intake at 1200 to 1300 mg daily supported by diet plus supplementation where needed.",
+   "summary": "Glucocorticoids cause rapid early bone loss and raise fracture risk at any given bone density, so the intervention threshold moves. In Australia, subsidised bisphosphonate treatment for glucocorticoid-induced osteoporosis applies to a patient on at least 7.5 mg of prednisolone or equivalent daily for at least three months with a T-score of -1.5 or lower, and treatment starts with the steroid rather than after a period of observation. Calcium intake is brought to about 1300 mg daily, preferably from diet, with vitamin D repletion, weight bearing exercise and the lowest effective steroid dose. In context, the same logic applies whenever a drug drives bone loss, including androgen deprivation therapy and aromatase inhibitors, where treatment is started earlier than the usual osteoporosis thresholds suggest.",
    "key_points": [
-    "Fragility fracture plus T below -2.5 defines pharmacotherapy indication",
-    "Oral alendronate weekly is first line with normal renal function",
-    "Denosumab must not be stopped without transition to bisphosphonate"
+    "The treatment threshold in glucocorticoid users is a T-score of -1.5, not -2.5.",
+    "Applies at 7.5 mg of prednisolone daily or more for at least three months.",
+    "Bone loss is fastest in the first three to six months, so start with the steroid.",
+    "Calcium about 1300 mg daily from diet, plus vitamin D repletion and exercise."
    ],
-   "pearls": "Vitamin D should be at or above 50 nmol/L before initiating a bisphosphonate; hypocalcaemia after zoledronic acid is common if vitamin D is deficient at baseline."
+   "pearls": "A prior minimal trauma fracture or age over 70 justifies starting bone protection with the glucocorticoid regardless of the densitometry result."
   },
   "sources": [
    {
-    "label": "Osteoporosis Australia Consumer Medicine Reference Guide",
-    "url": "https://healthybonesaustralia.org.au"
+    "label": "Therapeutic Guidelines: Rheumatology",
+    "url": "https://tgldcdp.tg.org.au/"
    },
    {
-    "label": "PBS Alendronate Listing",
-    "url": "https://www.pbs.gov.au"
+    "label": "PBS",
+    "url": "https://www.pbs.gov.au/"
    },
    {
-    "label": "PBS Teriparatide Listing",
-    "url": "https://www.pbs.gov.au"
-   },
-   {
-    "label": "RACGP Menopausal Hormone Therapy Guidance",
-    "url": "https://www.racgp.org.au"
+    "label": "RACGP and Healthy Bones Australia osteoporosis guideline",
+    "url": "https://www.racgp.org.au/clinical-resources/clinical-guidelines/key-racgp-guidelines/view-all-racgp-guidelines/osteoporosis"
    }
   ],
   "reference_ranges": [
    "calcium_corrected",
-   "vitamins",
-   "uec"
+   "uec",
+   "vitamins"
   ],
-  "created": "2026-09-05"
+  "created": "2026-09-23",
+  "revised_from": "sched-2026-09-05-p1-022"
  },
  {
   "id": "sched-2026-09-05-p1-026",

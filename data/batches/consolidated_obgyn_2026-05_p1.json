@@ -1141,97 +1141,100 @@
   "l4_promoted_2026-06-01": true
  },
  {
-  "id": "balanced-p11-009",
+  "id": "balanced-p11-009-d2",
   "topic": "Obstetrics & Gynaecology",
-  "subtopic": "Intrapartum care",
-  "subtopic_detail": "Group B Streptococcus intrapartum prophylaxis",
-  "difficulty": 2,
+  "subtopic": "Antenatal care",
+  "subtopic_detail": "Request for antenatal treatment of streptococcal colonisation",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
   "tags": [
-   "GBS",
-   "antibiotics",
-   "intrapartum"
+   "group B streptococcus",
+   "antenatal care",
+   "counselling"
   ],
-  "stem": "You are the obstetric registrar reviewing a 28-year-old G2P1 woman at 39 weeks who has presented in spontaneous early labour. Her routine 36-week vaginal-rectal swab was positive for group B Streptococcus. She has no penicillin allergy and her membranes are intact. She is contracting every 4 minutes with cervix 3 cm dilated. The CTG is normal. Her previous baby is well.",
+  "stem": "A 29 year old woman in her first pregnancy telephones about her routine swab result. She has no symptoms, no allergies and wants the organism dealt with before the birth.",
   "data_table": {
-   "Vital signs": "T 36.8, BP 118/72, HR 82, RR 14, SpO2 99% RA",
-   "Examination": "Cervix 3 cm, vertex presenting, station -2, membranes intact; contractions 1 in 4 minutes",
-   "Investigations": "GBS swab at 36 weeks positive; FBC and group and screen unremarkable",
-   "Medications": "Nil regular"
+   "Swab": "Vagino-rectal swab at 36 weeks grew group B streptococcus",
+   "Urine": "Midstream urine culture at 28 weeks showed no growth"
   },
-  "lead_in": "What is the most appropriate antibiotic prophylaxis?",
+  "lead_in": "What is the most appropriate advice?",
   "options": [
    {
     "letter": "A",
-    "text": "Oral amoxicillin 1 g 8-hourly while in labour until delivery; commence at confirmation of established labour",
-    "correct": false,
-    "rationale": "Oral antibiotics do not reach adequate amniotic fluid levels and are not used for intrapartum GBS prophylaxis; intravenous administration is required. (Source: RANZCOG: GBS in pregnancy)",
+    "text": "A course now will not clear it; intravenous cover is given in labour",
+    "correct": true,
+    "rationale": "Colonisation recurs within weeks of an oral course, so Australian practice defers treatment to the intrapartum period when it protects the newborn. (Source: RANZCOG - Maternal group B streptococcus in pregnancy: screening and management)",
     "source_refs": [
-     "RANZCOG: GBS in pregnancy"
+     "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management",
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis"
     ]
    },
    {
     "letter": "B",
-    "text": "Intravenous vancomycin 20 mg/kg every 8 hours throughout labour; first dose now over 60 minutes",
+    "text": "A course of oral amoxicillin now will clear it well before the birth",
     "correct": false,
-    "rationale": "Vancomycin is reserved for severe penicillin allergy with resistant or unknown sensitivity GBS; first-line for this patient without allergy is penicillin G. (Source: RANZCOG: GBS in pregnancy)",
+    "rationale": "Oral treatment is indicated when the organism causes disease, such as significant bacteriuria, rather than for asymptomatic vaginal carriage. (Source: Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis)",
     "source_refs": [
-     "RANZCOG: GBS in pregnancy"
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis"
     ]
    },
    {
     "letter": "C",
-    "text": "No antibiotics in labour; defer treatment to the neonate as a single dose of intramuscular benzathine penicillin",
+    "text": "Vaginal chlorhexidine washes in the last month will remove the organism",
     "correct": false,
-    "rationale": "Neonatal prophylaxis does not replace maternal intrapartum prophylaxis for GBS colonisation; intrapartum penicillin reduces early-onset neonatal sepsis by approximately 80 percent. (Source: RANZCOG: GBS in pregnancy)",
+    "rationale": "Vaginal disinfection is used in some settings for skin preparation before surgery, and has not replaced intravenous prophylaxis here. (Source: Queensland Clinical Guidelines - Early onset group B streptococcal disease)",
     "source_refs": [
-     "RANZCOG: GBS in pregnancy"
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    },
    {
     "letter": "D",
-    "text": "Intravenous benzylpenicillin 3 g loading dose then 1.8 g every 4 hours until delivery; commence now",
-    "correct": true,
-    "rationale": "Intravenous benzylpenicillin 3 g loading dose then 1.8 g every 4 hours until delivery is first-line intrapartum prophylaxis for GBS colonisation in a woman without penicillin allergy. (Source: RANZCOG: GBS in pregnancy)",
+    "text": "Her partner needs treating as well so that she is not colonised again",
+    "correct": false,
+    "rationale": "Partner treatment belongs to sexually transmitted infections such as chlamydia; this organism is normal bowel and vaginal flora. (Source: RANZCOG - Maternal group B streptococcus in pregnancy: screening and management)",
     "source_refs": [
-     "RANZCOG: GBS in pregnancy"
+     "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management"
     ]
    },
    {
     "letter": "E",
-    "text": "Intravenous clindamycin 600 mg every 8 hours until delivery; check GBS sensitivity to clindamycin if not already known",
+    "text": "Repeat the swab weekly and treat orally if it is still growing later",
     "correct": false,
-    "rationale": "Clindamycin is used in penicillin allergy when GBS is sensitive; for non-allergic patients, intravenous penicillin remains first-line. (Source: RANZCOG: GBS in pregnancy)",
+    "rationale": "Serial swabbing is reserved for situations where the first result is unreliable or predates the recommended window. (Source: Queensland Clinical Guidelines - Early onset group B streptococcal disease)",
     "source_refs": [
-     "RANZCOG: GBS in pregnancy"
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    }
   ],
   "explanation": {
-   "summary": "Australian guidance uses risk-based or universal screening for GBS at 35 to 37 weeks. GBS-positive women receive intrapartum antibiotic prophylaxis to reduce early-onset neonatal GBS sepsis. First-line is IV benzylpenicillin 3 g loading then 1.8 g every 4 hours until delivery. Cefazolin 2 g loading then 1 g every 8 hours is used for non-anaphylactic penicillin allergy. Clindamycin is used for anaphylactic penicillin allergy with confirmed clindamycin sensitivity; vancomycin is the fall-back when resistance or unknown sensitivity.",
+   "summary": "About one in five Australian women carries group B streptococcus in the vagina or rectum, and carriage is intermittent. An oral antibiotic course in pregnancy reduces the count briefly but recolonisation from the bowel reservoir is usual well before labour, so antenatal eradication does not lower rates of early onset neonatal disease. The intervention that works is an intravenous beta-lactam given during labour, which achieves bactericidal concentrations in the amniotic fluid and cord blood. The exception is significant bacteriuria with this organism, which is treated when found because it signals heavy colonisation and carries its own maternal risk. In context, screening exists to plan the intrapartum antibiotic, not to trigger antenatal treatment, and women are counselled about that distinction at the time the swab is taken.",
    "key_points": [
-    "Benzylpenicillin 3 g then 1.8 g every 4 hours intrapartum is first line",
-    "Cefazolin used in non-anaphylactic penicillin allergy",
-    "Clindamycin used in anaphylaxis when sensitivity confirmed",
-    "Vancomycin for resistant or unknown sensitivity"
+    "Carriage recurs quickly after oral treatment, so antenatal eradication is not offered.",
+    "Intravenous prophylaxis in labour is what reduces early onset neonatal disease.",
+    "Significant bacteriuria is the exception and is treated when identified.",
+    "Carriage is normal flora, not a sexually transmitted infection."
    ],
-   "pearls": "Adequate intrapartum prophylaxis requires the first dose at least 4 hours before delivery to reach therapeutic amniotic fluid levels."
+   "pearls": "Roughly one in five pregnant women is colonised at any time, and about half of their babies become colonised at birth, yet early onset disease affects well under one percent of those babies."
   },
   "sources": [
    {
-    "label": "RANZCOG: GBS in pregnancy",
-    "url": "https://ranzcog.edu.au/statements-guidelines/"
+    "label": "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management",
+    "url": "https://ranzcog.edu.au/"
    },
    {
-    "label": "Therapeutic Guidelines: Antibiotic",
+    "label": "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis",
     "url": "https://tgldcdp.tg.org.au/"
+   },
+   {
+    "label": "Queensland Clinical Guidelines - Early onset group B streptococcal disease",
+    "url": "https://www.health.qld.gov.au/qcg"
    }
   ],
   "reference_ranges": [
    "obs_pregnancy_vitals"
   ],
-  "model": "Claude Opus 4.7 (1M context)",
-  "created": "2026-05-29",
-  "difficulty_prior_v3": 3
+  "created": "2026-05-28",
+  "revised_from": "balanced-p11-009"
  },
  {
   "id": "balanced-p11-010",
@@ -3703,100 +3706,100 @@
   "difficulty_prior_v3": 3
  },
  {
-  "id": "balanced-p14-028",
+  "id": "balanced-p14-028-d2",
   "topic": "Obstetrics & Gynaecology",
-  "subtopic": "Group B Streptococcus",
-  "subtopic_detail": "Intrapartum antibiotic prophylaxis for GBS-positive woman",
+  "subtopic": "Intrapartum",
+  "subtopic_detail": "Timing of prophylaxis during cervical ripening in a colonised woman",
   "difficulty": 3,
+  "model": "Claude Opus 5",
   "tags": [
-   "GBS prophylaxis",
-   "intrapartum",
-   "benzylpenicillin"
+   "group B streptococcus",
+   "induction of labour",
+   "timing"
   ],
-  "stem": "A 28-year-old G2P1 woman at 38 weeks gestation presents to the labour ward in established labour with regular painful contractions every 3 minutes and ruptured membranes 4 hours ago at home. Her previous pregnancy was uneventful. She had GBS screening at 36+0 weeks and the result is positive (vaginal-rectal swab). She has no allergies. She wants water immersion during early labour.",
+  "stem": "You admit a 31 year old woman at 41 weeks for induction of labour for prolonged pregnancy. A cervical ripening balloon has just been placed and she is comfortable.",
   "data_table": {
-   "Vital signs": "T 37.0, BP 124/74, HR 84, RR 16",
-   "Examination": "Cervix 5 cm dilated, fully effaced, plus 1 station; fetal heart 140 bpm reassuring CTG; clear liquor; no maternal fever",
-   "Investigations": "GBS swab at 36+0 weeks positive; FBC normal; ABO group O Rh positive"
+   "Swab": "Vagino-rectal swab at 36 weeks grew group B streptococcus",
+   "Findings": "No contractions, membranes intact, temperature 36.6 degC"
   },
-  "lead_in": "What is the most appropriate intrapartum antibiotic prophylaxis?",
+  "lead_in": "What is the most appropriate plan for her intravenous antibiotic?",
   "options": [
    {
     "letter": "A",
-    "text": "Intravenous gentamicin 5 mg/kg as a single dose at the time of cervix reaching 4 cm dilatation",
-    "correct": false,
-    "rationale": "Gentamicin alone does not cover Group B Streptococcus and is not the recommended agent. (Source: RANZCOG GBS Statement; eTG)",
+    "text": "Start it when contractions establish or the membranes rupture",
+    "correct": true,
+    "rationale": "Prophylaxis is timed to the start of true labour or rupture so that adequate concentrations are present during the exposure window. (Source: Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis)",
     "source_refs": [
-     "RANZCOG GBS Statement",
-     "Therapeutic Guidelines: Antibiotic"
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis",
+     "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management"
     ]
    },
    {
     "letter": "B",
-    "text": "Oral cefuroxime 500 mg every 12 hours throughout labour with no IV antibiotic needed at all",
+    "text": "Start it now, at the time the ripening balloon has been inserted",
     "correct": false,
-    "rationale": "Oral antibiotics are not used for intrapartum GBS prophylaxis; IV is needed for placental transfer to neonate. (Source: RANZCOG)",
+    "rationale": "Starting with the balloon would be right only if she were already contracting or her membranes had broken. (Source: RANZCOG - Maternal group B streptococcus in pregnancy: screening and management)",
     "source_refs": [
-     "RANZCOG GBS Statement"
+     "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management"
     ]
    },
    {
     "letter": "C",
-    "text": "Intravenous benzylpenicillin 3 g loading dose then 1.8 g every 4 hours until delivery",
-    "correct": true,
-    "rationale": "RANZCOG and Australian Government Department of Health: IV benzylpenicillin 3 g loading dose then 1.8 g every 4 hours during labour is first-line for GBS-positive women without penicillin allergy. Cefazolin if non-severe penicillin allergy, vancomycin if severe penicillin allergy. (Source: RANZCOG; eTG)",
+    "text": "Start it when the balloon comes out, whatever the cervix is doing",
+    "correct": false,
+    "rationale": "Balloon removal is a procedural landmark, not a physiological one; the trigger is labour or ruptured membranes. (Source: Queensland Clinical Guidelines - Early onset group B streptococcal disease)",
     "source_refs": [
-     "RANZCOG GBS Statement",
-     "Therapeutic Guidelines: Antibiotic"
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    },
    {
     "letter": "D",
-    "text": "Intravenous vancomycin 1 g every 12 hours throughout labour regardless of penicillin allergy status",
+    "text": "Start it only if she develops a fever at some point during labour",
     "correct": false,
-    "rationale": "Vancomycin is reserved for severe (immediate hypersensitivity) penicillin allergy; first-line is penicillin. (Source: RANZCOG)",
+    "rationale": "Fever in labour prompts broad-spectrum cover for suspected intrauterine infection, which is a different indication. (Source: Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis)",
     "source_refs": [
-     "RANZCOG GBS Statement"
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis"
     ]
    },
    {
     "letter": "E",
-    "text": "Intravenous metronidazole 500 mg every 8 hours throughout labour as the first-line agent",
+    "text": "Start it in the second stage, once she has begun pushing the baby out",
     "correct": false,
-    "rationale": "Metronidazole is for anaerobic coverage, not GBS. (Source: AMH)",
+    "rationale": "Giving the first dose at full dilatation leaves too little time for transfer across the placenta before birth. (Source: Queensland Clinical Guidelines - Early onset group B streptococcal disease)",
     "source_refs": [
-     "Australian Medicines Handbook (AMH)"
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    }
   ],
   "explanation": {
-   "summary": "Group B Streptococcus is the leading cause of early-onset neonatal sepsis in Australia. Universal antenatal screening at 35-37 weeks via vaginal-rectal swab. Indications for intrapartum antibiotic prophylaxis: GBS-positive at this pregnancy, GBS bacteriuria this pregnancy, previous baby with invasive GBS disease, unknown GBS at term with intrapartum risk factors (under 37 weeks gestation, ROM over 18 hours, maternal fever 38 or higher). First-line: IV benzylpenicillin 3 g loading then 1.8 g 4-hourly. Cefazolin for non-severe penicillin allergy, vancomycin for severe. Adequate IAP defined as first dose 4 or more hours before delivery.",
+   "summary": "Intrapartum prophylaxis works by achieving bactericidal amniotic fluid and fetal concentrations during the period the newborn is exposed, which begins with established labour or rupture of the membranes. Induction complicates the timing because ripening can take many hours during which the woman is neither in labour nor ruptured, and giving antibiotics through that whole period adds exposure without benefit. The practical rule is to prescribe the antibiotic on admission but to administer it when contractions establish or the membranes break, and then to continue at the stated interval until birth. Starting too late is the commoner error: a first dose given within an hour of birth is not counted as adequate. In context, induction of labour is now offered to a large proportion of Australian women, so knowing when the clock starts for prophylaxis is an everyday decision on the birth suite.",
    "key_points": [
-    "Universal antenatal GBS screening at 35-37 weeks (vaginal-rectal swab)",
-    "IAP indication: GBS positive this pregnancy or risk factors with unknown status",
-    "IV benzylpenicillin 3 g loading plus 1.8 g 4-hourly first-line",
-    "Adequate prophylaxis = first dose 4 or more hours before delivery"
+    "Prophylaxis is triggered by established labour or ruptured membranes, not by admission.",
+    "Ripening with a balloon alone is not an indication to start the infusion.",
+    "Adequate prophylaxis means the first dose at least four hours before birth.",
+    "Fever in labour is a separate indication and calls for broad-spectrum cover."
    ],
-   "pearls": "Cefazolin is the preferred IAP for non-severe penicillin allergy; resistance of GBS to clindamycin and erythromycin is 30-40 percent in Australia, so vancomycin is required for severe penicillin allergy and antibiotic sensitivity testing should be requested on the antenatal swab if vancomycin will be needed."
+   "pearls": "Prescribe the antibiotic on admission for induction but set the administration trigger explicitly in the notes, so the dose is not given at balloon insertion or forgotten when labour establishes overnight."
   },
   "sources": [
    {
-    "label": "RANZCOG GBS Statement",
-    "url": "https://ranzcog.edu.au/"
-   },
-   {
-    "label": "Therapeutic Guidelines: Antibiotic",
+    "label": "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis",
     "url": "https://tgldcdp.tg.org.au/"
    },
    {
-    "label": "Australian Medicines Handbook (AMH)",
-    "url": "https://amhonline.amh.net.au/"
+    "label": "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management",
+    "url": "https://ranzcog.edu.au/"
+   },
+   {
+    "label": "Queensland Clinical Guidelines - Early onset group B streptococcal disease",
+    "url": "https://www.health.qld.gov.au/qcg"
    }
   ],
-  "reference_ranges": [],
-  "model": "Claude Opus 4.7 (1M context)",
-  "created": "2026-05-29",
-  "difficulty_prior_v3": 4
+  "reference_ranges": [
+   "obs_pregnancy_vitals"
+  ],
+  "created": "2026-05-28",
+  "revised_from": "balanced-p14-028"
  },
  {
   "id": "balanced-p14-029",
@@ -8657,99 +8660,97 @@
   "difficulty_prior_v3": 3
  },
  {
-  "id": "ctb-p22a-006",
+  "id": "ctb-p22a-006-d2",
   "topic": "Obstetrics & Gynaecology",
   "subtopic": "Maternal medicine",
-  "subtopic_detail": "Severe pre-eclampsia magnesium sulfate seizure prophylaxis",
-  "difficulty": 4,
+  "subtopic_detail": "Monitoring a woman receiving a magnesium sulfate infusion for seizure prophylaxis",
+  "difficulty": 3,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
    "pre-eclampsia",
    "magnesium sulfate",
-   "pregnancy"
+   "monitoring"
   ],
-  "stem": "A 27-year-old G1 at 35+4 weeks gestation presents to the birth suite with severe right upper quadrant pain and a headache that began this morning. Her blood pressure on arrival is 168/112 despite oral labetalol 200 mg given two hours ago. She has new visual scintillations and brisk reflexes with two beats of clonus. Her urinalysis shows protein 3+ and her bloods reveal an LDH and transaminase pattern consistent with disease progression. The neonatal team is alerted and the on-call obstetric consultant is notified.",
+  "stem": "A 29-year-old woman at 34 weeks with severe pre-eclampsia started an intravenous magnesium sulfate infusion two hours ago. Her blood pressure is now controlled and she is comfortable in the birth suite.",
   "data_table": {
-   "Vital signs": "BP 168/112, HR 96, RR 22, SpO2 98%, Temp 36.8",
-   "Examination": "Tender right upper quadrant; hyperreflexia with 2 beats clonus; visual scintillations; fetal heart 140 reassuring",
-   "Investigations": "Platelets 92 x10^9/L, ALT 142 U/L, AST 138 U/L, LDH 480 U/L, Cr 78 micromol/L, urate 0.42 mmol/L, urine PCR 320 mg/mmol"
+   "Vital signs": "BP 142/88, pulse 88, respiratory rate 16, SpO2 98% room air",
+   "Investigations": "Creatinine 68 micromol/L; urine output 45 mL in the past hour"
   },
-  "lead_in": "What is the most appropriate immediate intervention?",
+  "lead_in": "What is the most appropriate monitoring while the infusion continues?",
   "options": [
    {
     "letter": "A",
-    "text": "Intravenous magnesium sulfate 4 g loading dose over 20 minutes followed by 1 g per hour maintenance infusion",
+    "text": "Hourly patellar reflexes, respiratory rate and urine output",
     "correct": true,
-    "rationale": "Severe pre-eclampsia with headache, visual symptoms, hyperreflexia, clonus, and biochemical progression requires magnesium sulfate for eclampsia prophylaxis at 4 g IV over 20 minutes then 1 g/h, alongside antihypertensive escalation. (Source: SOMANZ Hypertension in Pregnancy Guideline)",
+    "rationale": "Magnesium toxicity is detected clinically and in a predictable order: reflexes are lost before respiratory depression, and renal clearance is tracked by urine output, so hourly bedside observation replaces routine serum levels in a woman with normal renal function. (Source: SOMANZ Hypertensive Disorders of Pregnancy Guideline)",
     "source_refs": [
-     "SOMANZ Hypertension in Pregnancy Guideline"
+     "SOMANZ Hypertensive Disorders of Pregnancy Guideline",
+     "RANZCOG"
     ]
    },
    {
     "letter": "B",
-    "text": "Intravenous diazepam 10 mg slow bolus with intramuscular promethazine 25 mg for sedation and seizure prophylaxis",
+    "text": "Six-hourly serum magnesium levels with hourly blood pressure",
     "correct": false,
-    "rationale": "Benzodiazepines are second-line for established eclamptic seizures only after magnesium has failed; magnesium sulfate has the lowest maternal mortality and neonatal sedation profile for prophylaxis. (Source: SOMANZ Hypertension in Pregnancy Guideline)",
+    "rationale": "Serum levels are indicated when renal impairment, oliguria or clinical signs of toxicity make the clinical assessment unreliable. (Source: SOMANZ Hypertensive Disorders of Pregnancy Guideline)",
     "source_refs": [
-     "SOMANZ Hypertension in Pregnancy Guideline"
+     "SOMANZ Hypertensive Disorders of Pregnancy Guideline"
     ]
    },
    {
     "letter": "C",
-    "text": "Intravenous phenytoin 18 mg/kg loading infusion over 30 minutes followed by 100 mg every 8 hours by mouth",
+    "text": "Continuous cardiotocography with four-hourly maternal observations",
     "correct": false,
-    "rationale": "Phenytoin is less effective than magnesium sulfate at preventing eclamptic seizures and carries proarrhythmic risk during loading; the MAGPIE trial and SOMANZ favour magnesium. (Source: SOMANZ Hypertension in Pregnancy Guideline)",
+    "rationale": "Continuous fetal monitoring is warranted for fetal compromise or once labour is established, but four-hourly maternal observation is far too infrequent on this infusion. (Source: RANZCOG)",
     "source_refs": [
-     "SOMANZ Hypertension in Pregnancy Guideline"
+     "RANZCOG",
+     "SOMANZ Hypertensive Disorders of Pregnancy Guideline"
     ]
    },
    {
     "letter": "D",
-    "text": "Intravenous dexamethasone 12 mg with delivery delayed for a full 24 hour interval to allow neonatal lung maturity",
+    "text": "Hourly serum magnesium levels until the infusion is ceased",
     "correct": false,
-    "rationale": "Corticosteroids beyond 34 weeks are not routinely indicated and delivery in severe pre-eclampsia with end-organ progression should not be delayed to complete a corticosteroid course at 35 weeks. (Source: SOMANZ Hypertension in Pregnancy Guideline)",
+    "rationale": "Hourly assays would be used in a research protocol; they lag behind the clinical signs and expose the woman to repeated venepuncture for no benefit. (Source: SOMANZ Hypertensive Disorders of Pregnancy Guideline)",
     "source_refs": [
-     "SOMANZ Hypertension in Pregnancy Guideline"
+     "SOMANZ Hypertensive Disorders of Pregnancy Guideline"
     ]
    },
    {
     "letter": "E",
-    "text": "Intravenous mannitol 0.25 g/kg over 30 minutes to reduce cerebral oedema and prevent neurological deterioration",
+    "text": "Twelve-hourly platelet count with four-hourly respiratory rate",
     "correct": false,
-    "rationale": "Mannitol has no role in pre-eclampsia and adds fluid loading risk in a syndrome characterised by reduced intravascular volume; magnesium sulfate is the seizure prophylaxis of choice. (Source: SOMANZ Hypertension in Pregnancy Guideline)",
+    "rationale": "Serial platelet counts track disease progression and guide regional anaesthesia, but they say nothing about magnesium safety. (Source: SOMANZ Hypertensive Disorders of Pregnancy Guideline)",
     "source_refs": [
-     "SOMANZ Hypertension in Pregnancy Guideline"
+     "SOMANZ Hypertensive Disorders of Pregnancy Guideline"
     ]
    }
   ],
   "explanation": {
-   "summary": "Severe pre-eclampsia with cerebral or hepatic features mandates magnesium sulfate for eclampsia prophylaxis with the Zuspan regimen of 4 g IV over 20 minutes then 1 g per hour, alongside antihypertensive escalation to keep systolic under 160 and diastolic under 110. Delivery follows once maternal stabilisation is achieved. Mode of delivery balances maternal and fetal status; at 35 weeks with end-organ disease, delivery is indicated.",
+   "summary": "Magnesium sulfate for seizure prophylaxis is monitored clinically rather than biochemically. Toxicity appears in a reliable sequence as the level rises: loss of the patellar reflex first, then respiratory depression, then cardiac conduction failure, so hourly patellar reflexes and respiratory rate detect the problem while it is still reversible. Magnesium is cleared entirely by the kidney, which makes hourly urine output the third essential observation, and the infusion is reduced or stopped if output falls below about 100 mL over four hours. Serum magnesium levels are reserved for women with renal impairment, persistent oliguria or clinical signs of toxicity, where the clinical picture is unreliable. If toxicity is suspected the infusion stops and intravenous calcium gluconate is given. In context, pre-eclampsia is a multisystem placental disease whose definitive treatment is birth, and magnesium buys the time needed to give corticosteroids, control blood pressure and deliver the woman safely.",
    "key_points": [
-    "Magnesium sulfate 4 g loading then 1 g/h is the Australian seizure prophylaxis",
-    "Antihypertensive target BP under 160/110",
-    "Magnesium is superior to phenytoin and diazepam (MAGPIE trial)",
-    "Delivery is the definitive treatment once stabilised"
+    "Hourly patellar reflexes, respiratory rate and urine output while the infusion runs.",
+    "Reflexes disappear before respiratory depression develops.",
+    "Magnesium is renally cleared, so oliguria means reduce or stop the infusion.",
+    "Serum levels are for renal impairment, oliguria or suspected toxicity."
    ],
-   "pearls": "SOMANZ severe pre-eclampsia: magnesium sulfate 4 g IV loading over 20 minutes then 1 g/h infusion; this gives lowest maternal mortality and neonatal sedation per the MAGPIE trial."
+   "pearls": "Document the reflexes each hour by name rather than as a tick: an absent patellar reflex is the single observation that should stop the infusion before anyone reaches for a level."
   },
   "sources": [
    {
-    "label": "RANZCOG: Pre-eclampsia",
-    "url": "https://ranzcog.edu.au/statements-guidelines/"
+    "label": "SOMANZ Hypertensive Disorders of Pregnancy Guideline",
+    "url": "https://www.somanz.org/"
    },
    {
-    "label": "SOMANZ Hypertension in Pregnancy Guideline",
-    "url": "https://somanz.org/content/uploads/2020/07/HTPregnancyGuideline2014.pdf"
+    "label": "RANZCOG",
+    "url": "https://ranzcog.edu.au/"
    }
   ],
   "reference_ranges": [
    "obs_pregnancy_vitals",
-   "pre_eclampsia_bloods",
-   "lfts"
+   "pre_eclampsia_bloods"
   ],
-  "created": "2026-05-30",
-  "difficulty_prior_v3": 4,
-  "l4_promoted_2026-06-01": true
+  "revised_from": "ctb-p22a-006"
  },
  {
   "id": "ctb-p22b-004",
@@ -11814,100 +11815,97 @@
   "difficulty_prior_v3": 3
  },
  {
-  "id": "ctb-p25-007",
+  "id": "ctb-p25-007-d2",
   "topic": "Obstetrics & Gynaecology",
-  "subtopic": "Intrapartum care",
-  "subtopic_detail": "Shoulder dystocia - first internal manoeuvre",
-  "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic": "Intrapartum emergencies",
+  "subtopic_detail": "Maternal priorities immediately after a shoulder dystocia is relieved",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
   "tags": [
-   "labour",
    "shoulder dystocia",
-   "obstetric emergency"
+   "postpartum haemorrhage",
+   "perineal trauma"
   ],
-  "stem": "A 32-year-old G2P1 woman is being managed in the second stage of labour at 40+2 weeks. Her previous baby was 4.1 kg without complications. After delivery of the head, the head retracts tightly against the perineum, the chin does not turn freely and the anterior shoulder fails to deliver with routine axial traction. The bedside midwife immediately calls for help and the obstetric registrar is in the room. The clock is started.",
+  "stem": "A baby is born after an impacted anterior shoulder was freed by an internal rotational manoeuvre. The baby is vigorous and with the mother, and oxytocin has been given for the third stage.",
   "data_table": {
-   "Vital signs": "Maternal BP 124/80, HR 96, fetal HR last recorded 130 bpm 30 seconds ago",
-   "Examination": "Turtle sign present, fetal head retracted against perineum, chin not rotating",
-   "Investigations": "Estimated fetal weight at 39 weeks 4.4 kg, gestational diabetes diet-controlled",
-   "Medications": "Oxytocin infusion running"
+   "Birth": "Birth weight 4.4 kg, head to body interval four minutes",
+   "Mother": "Pulse 104 /min, blood pressure 112/68 mmHg, placenta not yet delivered"
   },
-  "lead_in": "After calling for help and stopping maternal pushing, what is the next most appropriate manoeuvre?",
+  "lead_in": "What is the most appropriate next step for the mother?",
   "options": [
    {
     "letter": "A",
-    "text": "Apply firm fundal pressure with downward traction on the fetal head to disimpact the anterior shoulder beneath the symphysis pubis",
-    "correct": false,
-    "rationale": "Fundal pressure worsens shoulder impaction against the symphysis and increases brachial plexus injury risk. (Source: RANZCOG Shoulder Dystocia)",
+    "text": "Examine the perineum and anus, and watch closely for heavy bleeding",
+    "correct": true,
+    "rationale": "Shoulder dystocia raises the risk of both obstetric anal sphincter injury and postpartum haemorrhage, so both are actively sought. (Source: RANZCOG - Shoulder dystocia)",
     "source_refs": [
-     "RANZCOG Shoulder Dystocia"
+     "RANZCOG - Shoulder dystocia",
+     "Queensland Clinical Guidelines - Shoulder dystocia"
     ]
    },
    {
     "letter": "B",
-    "text": "Perform McRoberts manoeuvre with hyperflexion of the maternal hips against the abdomen plus suprapubic pressure from above the symphysis",
-    "correct": true,
-    "rationale": "McRoberts hyperflexion plus suprapubic pressure increases the functional pelvic outlet and resolves about 60-70 percent of shoulder dystocia cases as the first manoeuvre. (Source: RANZCOG Shoulder Dystocia)",
+    "text": "Move her to theatre for examination under regional anaesthesia straight away",
+    "correct": false,
+    "rationale": "Theatre is needed when a sphincter injury is found or bleeding cannot be controlled in the birth room. (Source: Queensland Clinical Guidelines - Shoulder dystocia)",
     "source_refs": [
-     "RANZCOG Shoulder Dystocia"
+     "Queensland Clinical Guidelines - Shoulder dystocia"
     ]
    },
    {
     "letter": "C",
-    "text": "Proceed directly to symphysiotomy with local anaesthesia to widen the pelvic outlet and free the anterior shoulder for immediate delivery",
+    "text": "Arrange a pelvic x-ray to exclude separation of the pubic symphysis",
     "correct": false,
-    "rationale": "Symphysiotomy is a last-resort manoeuvre after multiple internal manoeuvres have failed and carries significant maternal morbidity. (Source: RANZCOG Shoulder Dystocia)",
+    "rationale": "Imaging is reserved for a woman with severe pubic pain and difficulty weight bearing afterwards. (Source: Queensland Clinical Guidelines - Shoulder dystocia)",
     "source_refs": [
-     "RANZCOG Shoulder Dystocia"
+     "Queensland Clinical Guidelines - Shoulder dystocia"
     ]
    },
    {
     "letter": "D",
-    "text": "Perform Zavanelli manoeuvre with cephalic replacement and immediate transfer to theatre for emergency category 1 caesarean delivery",
+    "text": "Give tranexamic acid and cross match four units of red cells now",
     "correct": false,
-    "rationale": "Zavanelli is reserved for failed all-out manoeuvres and carries very high fetal mortality; it is not the first manoeuvre. (Source: RANZCOG Shoulder Dystocia)",
+    "rationale": "Tranexamic acid and cross matching belong to the management of an established postpartum haemorrhage. (Source: Queensland Clinical Guidelines - Shoulder dystocia)",
     "source_refs": [
-     "RANZCOG Shoulder Dystocia"
+     "Queensland Clinical Guidelines - Shoulder dystocia"
     ]
    },
    {
     "letter": "E",
-    "text": "Deliberately fracture the fetal clavicle with thumb pressure to reduce shoulder diameter and facilitate immediate vaginal delivery",
+    "text": "Repair any tear only after a bladder scan in six hours from now",
     "correct": false,
-    "rationale": "Deliberate clavicular fracture is a salvage procedure after internal rotational manoeuvres and is rarely the first intervention. (Source: RANZCOG Shoulder Dystocia)",
+    "rationale": "Delaying repair is appropriate only when a woman is too unstable, and a bladder scan is a separate issue. (Source: RANZCOG - Shoulder dystocia)",
     "source_refs": [
-     "RANZCOG Shoulder Dystocia"
+     "RANZCOG - Shoulder dystocia"
     ]
    }
   ],
   "explanation": {
-   "summary": "Shoulder dystocia is an obstetric emergency where additional manoeuvres beyond gentle axial traction are required to deliver the shoulders. The HELPERR mnemonic structures the response: help, evaluate for episiotomy, legs in McRoberts, pressure suprapubically, enter for internal rotation, remove posterior arm, and roll onto all fours. McRoberts plus suprapubic pressure resolves the majority within 30 seconds; fundal pressure is contraindicated. If unsuccessful, escalate to internal rotational manoeuvres such as Rubin and Woods screw, then delivery of the posterior arm, then all-fours position. Document time intervals, manoeuvres used and cord gases.",
+   "summary": "The manoeuvres that relieve shoulder dystocia also make maternal injury more likely, and the two complications to look for immediately are postpartum haemorrhage, which follows in roughly one in nine of these births, and obstetric anal sphincter injury, which follows in roughly one in twenty five. Both are found by deliberate examination and observation rather than by waiting for them to announce themselves: a systematic inspection of the perineum with a rectal examination to assess the sphincter, and close attention to blood loss and uterine tone through the third stage and the hour afterwards. Documentation of the manoeuvres used, the head to body interval, which shoulder was anterior and who was present is completed at the same time, and the baby is examined for arm movement and clavicular injury. In context, a structured debrief with the parents afterwards is part of the standard, since these births are frightening to witness.",
    "key_points": [
-    "Call for help and start the clock immediately.",
-    "McRoberts plus suprapubic pressure first - resolves most cases.",
-    "Avoid fundal pressure - worsens impaction.",
-    "Escalate through internal rotation and posterior arm delivery.",
-    "Document time, manoeuvres, cord gases and brachial plexus assessment."
+    "Postpartum haemorrhage complicates about eleven percent of shoulder dystocia births.",
+    "Obstetric anal sphincter injury complicates about four percent.",
+    "Examine the perineum and sphincter deliberately rather than waiting for symptoms.",
+    "Document manoeuvres, head to body interval, anterior shoulder and personnel."
    ],
-   "pearls": "Pre-delivery risk factors for shoulder dystocia (prior dystocia, fetal weight above 4.5 kg in non-diabetic or above 4 kg in diabetic) should be discussed antenatally; planned caesarean is offered when estimated fetal weight exceeds 4.5 kg in pregnancies complicated by diabetes."
+   "pearls": "Examine the newborn for arm movement and clavicular crepitus before the parents leave the birth room, and record the findings, because brachial plexus injury noticed later is hard to date."
   },
   "sources": [
    {
-    "label": "RANZCOG Shoulder Dystocia",
-    "url": "https://ranzcog.edu.au"
+    "label": "RANZCOG - Shoulder dystocia",
+    "url": "https://ranzcog.edu.au/"
    },
    {
-    "label": "RCOG Green-top Guideline 42 Shoulder Dystocia",
-    "url": "https://www.rcog.org.uk"
+    "label": "Queensland Clinical Guidelines - Shoulder dystocia",
+    "url": "https://www.health.qld.gov.au/qcg"
    }
   ],
   "reference_ranges": [
    "obs_pregnancy_vitals",
    "apgar"
   ],
-  "created": "2026-05-30",
-  "difficulty_prior_v3": 4,
-  "l4_promoted_2026-06-01": true
+  "created": "2026-05-28",
+  "revised_from": "ctb-p25-007"
  },
  {
   "id": "ctb-p25-011",
@@ -15754,99 +15752,101 @@
   "difficulty_prior_v3": 5
  },
  {
-  "id": "obgyn-bal28-009",
+  "id": "obgyn-bal28-009-d2",
   "topic": "Obstetrics & Gynaecology",
   "subtopic": "Intrapartum",
-  "subtopic_detail": "Group B streptococcus prophylaxis",
+  "subtopic_detail": "Carriage of group B streptococcus before a planned caesarean section",
   "difficulty": 2,
-  "model": "Claude Opus 4.7 (1M context)",
+  "model": "Claude Opus 5",
   "tags": [
-   "GBS",
-   "intrapartum antibiotics"
+   "group B streptococcus",
+   "caesarean section",
+   "antibiotic prophylaxis"
   ],
-  "stem": "You are the obstetrics registrar reviewing a woman at 38+5 weeks of her second pregnancy in early labour with regular contractions every 4 minutes. Membranes ruptured 90 minutes ago with clear liquor. Her routine 36-week vagino-rectal swab was positive for group B streptococcus. She has no penicillin allergy. Her temperature is normal and the cardiotocograph is reassuring. Her first child was healthy with no neonatal GBS disease. The cervix is 5 cm dilated. The midwife asks for your antibiotic prescription.",
+  "stem": "A 34 year old woman attends the birth suite for her planned repeat caesarean section at 39 weeks. She is well and has had no pain or fluid loss.",
   "data_table": {
-   "Vital signs": "HR 88 bpm, BP 122/76 mmHg, Temp 36.8 degrees C, RR 16",
-   "Examination": "Cervix 5 cm, station -1, vertex, clear liquor, CTG reactive baseline 130 bpm",
-   "Investigations": "36-week vagino-rectal swab: GBS positive; FBC normal"
+   "Swab": "Vagino-rectal swab at 36 weeks grew group B streptococcus",
+   "Examination": "No contractions, membranes intact, temperature 36.7 degC"
   },
-  "lead_in": "What is the most appropriate antibiotic regimen?",
+  "lead_in": "What is the most appropriate antibiotic plan?",
   "options": [
    {
     "letter": "A",
-    "text": "Ampicillin 2 g intravenously now then 1 g every 4 hours until birth without further dosing",
-    "correct": false,
-    "rationale": "Although ampicillin is acceptable when benzylpenicillin is unavailable, it is broader-spectrum and increases neonatal resistant Gram-negative colonisation risk. Benzylpenicillin remains first-line in Australia. (Source: Therapeutic Guidelines: Antibiotic - Group B Streptococcus)",
+    "text": "Give the usual single dose of surgical prophylaxis and nothing further",
+    "correct": true,
+    "rationale": "Before labour and with intact membranes the newborn is not exposed to the birth canal, so the routine pre-incision surgical dose is all that is required. (Source: RANZCOG - Maternal group B streptococcus in pregnancy: screening and management)",
     "source_refs": [
-     "Therapeutic Guidelines: Antibiotic - Group B Streptococcus"
+     "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management",
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis"
     ]
    },
    {
     "letter": "B",
-    "text": "Benzylpenicillin 3 g intravenously now then 1.8 g every 4 hours until birth",
-    "correct": true,
-    "rationale": "Benzylpenicillin 3 g loading then 1.8 g 4-hourly is the recommended Australian intrapartum GBS prophylaxis regimen for women without penicillin allergy. Adequate prophylaxis requires at least 4 hours before delivery to achieve neonatal protection. (Source: Therapeutic Guidelines: Antibiotic - Group B Streptococcus)",
+    "text": "Give intravenous benzylpenicillin four hourly from admission until birth",
+    "correct": false,
+    "rationale": "This is the right plan once she labours or her membranes rupture before the operation, because exposure then becomes possible. (Source: Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis)",
     "source_refs": [
-     "Therapeutic Guidelines: Antibiotic - Group B Streptococcus"
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis"
     ]
    },
    {
     "letter": "C",
-    "text": "Cefazolin 2 g intravenously now then 1 g every 8 hours until birth as a beta-lactam alternative",
+    "text": "Give intravenous vancomycin instead of the usual surgical prophylaxis",
     "correct": false,
-    "rationale": "Cefazolin is reserved for women with a non-severe penicillin allergy. In a woman with no allergy, benzylpenicillin is preferred for its narrower spectrum. (Source: Therapeutic Guidelines: Antibiotic - Group B Streptococcus)",
+    "rationale": "Vancomycin belongs to a woman with a severe immediate penicillin allergy who needs cover, not to a routine caesarean. (Source: Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis)",
     "source_refs": [
-     "Therapeutic Guidelines: Antibiotic - Group B Streptococcus"
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis",
+     "Australian Medicines Handbook - benzylpenicillin and vancomycin"
     ]
    },
    {
     "letter": "D",
-    "text": "Clindamycin 600 mg intravenously now then 6-hourly until birth as an alternative regimen",
+    "text": "Give oral amoxicillin for five days beforehand to clear the carriage",
     "correct": false,
-    "rationale": "Clindamycin is used only when there is severe penicillin allergy and confirmed clindamycin susceptibility on the antenatal swab. It is not first-line and rates of resistance approach 20%. (Source: Therapeutic Guidelines: Antibiotic - Group B Streptococcus)",
+    "rationale": "Oral courses before birth are used for symptomatic infection such as bacteriuria, not to eradicate vaginal carriage. (Source: RANZCOG - Maternal group B streptococcus in pregnancy: screening and management)",
     "source_refs": [
-     "Therapeutic Guidelines: Antibiotic - Group B Streptococcus"
+     "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management"
     ]
    },
    {
     "letter": "E",
-    "text": "Amoxicillin 1 g orally now and continue every 8 hours until birth as an oral prophylactic option",
+    "text": "Repeat the swab today and decide on antibiotics once it has grown",
     "correct": false,
-    "rationale": "Oral antibiotics do not provide reliable intrapartum prophylaxis because of variable absorption and slower achievement of bactericidal cord blood levels. Intravenous beta-lactam is the only acceptable route. (Source: Therapeutic Guidelines: Antibiotic - Group B Streptococcus)",
+    "rationale": "Repeat swabbing helps when the original result is old or unreliable and labour is expected, not before a planned operation. (Source: Queensland Clinical Guidelines - Early onset group B streptococcal disease)",
     "source_refs": [
-     "Therapeutic Guidelines: Antibiotic - Group B Streptococcus"
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    }
   ],
   "explanation": {
-   "summary": "Australian intrapartum GBS prophylaxis screens women with a routine vagino-rectal swab at 35 to 37 weeks, with risk-based prophylaxis applied if screening has not occurred. Benzylpenicillin 3 g IV loading then 1.8 g 4-hourly is first-line. Cefazolin is used for non-severe penicillin allergy; clindamycin or lincomycin with confirmed susceptibility for severe allergy; vancomycin if susceptibility unknown. Adequate prophylaxis is defined as at least one dose given at least 4 hours before delivery, and neonatal management is informed by this timing.",
+   "summary": "Universal vagino-rectal screening at 35 to 37 weeks identifies women whose newborn is at risk of early onset disease, and the risk arises from passage through a colonised birth canal or from ascending infection after the membranes rupture. A planned caesarean performed before labour with intact membranes removes both routes, so carriage alone does not add an antibiotic: the woman still receives the single pre-incision dose every caesarean gets for wound and endometritis prevention. If she labours or ruptures her membranes before theatre, the usual intrapartum regimen applies. In context, early onset group B streptococcal disease is the leading cause of neonatal sepsis in the first week of life in Australia, and the whole prophylaxis programme is built around interrupting exposure during birth rather than eradicating carriage.",
    "key_points": [
-    "Benzylpenicillin 3 g then 1.8 g 4-hourly is first-line intrapartum prophylaxis in Australia",
-    "Cefazolin for non-severe penicillin allergy; clindamycin requires confirmed susceptibility",
-    "Adequate prophylaxis is defined as at least 4 hours before delivery",
-    "Risk-based prophylaxis used when screening unknown (preterm labour, prolonged ROM, fever, prior affected infant)"
+    "A planned caesarean before labour with intact membranes needs no carriage-specific antibiotic.",
+    "The routine pre-incision surgical dose is still given.",
+    "Labour or ruptured membranes before theatre reinstates the usual intrapartum regimen.",
+    "Carriage is not an indication for antenatal eradication."
    ],
-   "pearls": "Adequate GBS prophylaxis is defined as the first dose given at least 4 hours before delivery: babies whose mothers received only 1 to 3 hours of antibiotics still need clinical observation for 24 to 48 hours."
+   "pearls": "Surgical prophylaxis for caesarean is given before the skin incision rather than after cord clamping, which lowers maternal infection without harming the newborn."
   },
   "sources": [
    {
-    "label": "Therapeutic Guidelines: Antibiotic - Group B Streptococcus",
-    "url": "https://tgldcdp.tg.org.au/"
-   },
-   {
-    "label": "RANZCOG - Screening and Treatment for Group B Streptococcus",
+    "label": "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management",
     "url": "https://ranzcog.edu.au/"
    },
    {
-    "label": "CDC - Prevention of Group B Streptococcal Disease",
-    "url": "https://www.cdc.gov/groupbstrep/"
+    "label": "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis",
+    "url": "https://tgldcdp.tg.org.au/"
+   },
+   {
+    "label": "Queensland Clinical Guidelines - Early onset group B streptococcal disease",
+    "url": "https://www.health.qld.gov.au/qcg"
    }
   ],
   "reference_ranges": [
    "obs_pregnancy_vitals"
   ],
   "created": "2026-05-28",
-  "difficulty_prior_v3": 3
+  "revised_from": "obgyn-bal28-009"
  },
  {
   "id": "obgyn-bal28-010",
@@ -24375,93 +24375,100 @@
   "difficulty_prior_v3": 5
  },
  {
-  "id": "ctb-p40-009",
+  "id": "ctb-p40-009-d2",
   "topic": "Obstetrics & Gynaecology",
-  "subtopic": "Intrapartum",
-  "subtopic_detail": "GBS intrapartum antibiotic prophylaxis",
+  "subtopic": "Antenatal care",
+  "subtopic_detail": "Whether to swab at 36 weeks after streptococcal bacteriuria",
   "difficulty": 2,
-  "model": "Claude Opus 4.7 (1M context)",
+  "model": "Claude Opus 5",
   "tags": [
-   "GBS",
-   "intrapartum"
+   "group B streptococcus",
+   "bacteriuria",
+   "screening"
   ],
-  "stem": "A 28-year-old G2P1 at 39+4 weeks is admitted in spontaneous labour with contractions every 4 minutes. Her vaginal-rectal GBS swab at 36 weeks was positive. She has no allergies. Her previous baby was healthy and discharged at 48 hours with no neonatal sepsis screen. Membranes are intact and the cervix is 4 cm dilated.",
+  "stem": "A 26 year old woman in her first pregnancy attends her 36 week visit. A urine sample sent earlier in the pregnancy for frequency was treated with an oral antibiotic.",
   "data_table": {
-   "Vital signs": "Temp 36.7 degrees Celsius, HR 88, BP 118/72 mmHg, contractions every 4 minutes",
-   "Examination": "Cervix 4 cm dilated, vertex at station 0, membranes intact, fetal heart rate 140 with normal variability"
+   "Urine at 19 weeks": "Group B streptococcus, pure growth above the significant threshold",
+   "Today": "Well, no symptoms, no allergies, cervix long and closed"
   },
-  "lead_in": "What is the single most appropriate antibiotic prophylaxis?",
+  "lead_in": "What is the most appropriate plan?",
   "options": [
    {
     "letter": "A",
-    "text": "Intravenous benzylpenicillin 3 g load then 1.8 g every 4 hours until birth",
+    "text": "Omit the swab; she already qualifies for antibiotics once labour starts",
     "correct": true,
-    "rationale": "Australian RANZCOG and Therapeutic Guidelines recommend intravenous benzylpenicillin 3 g loading dose then 1.8 g every 4 hours during labour for GBS-positive women without penicillin allergy. (Source: RANZCOG GBS)",
+    "rationale": "Significant bacteriuria with this organism at any point in the pregnancy indicates heavy colonisation and commits her to intrapartum prophylaxis. (Source: RANZCOG - Maternal group B streptococcus in pregnancy: screening and management)",
     "source_refs": [
-     "RANZCOG GBS"
+     "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management",
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    },
    {
     "letter": "B",
-    "text": "Oral amoxicillin 1 g three times daily commencing now and continuing until birth",
+    "text": "Swab her now and give antibiotics in labour only if it grows again",
     "correct": false,
-    "rationale": "Oral antibiotics achieve inadequate intrapartum tissue concentrations to prevent vertical GBS transmission; intravenous administration is required. (Source: RANZCOG GBS)",
+    "rationale": "A swab decides the matter for a woman with no other indication, which is not this woman. (Source: Queensland Clinical Guidelines - Early onset group B streptococcal disease)",
     "source_refs": [
-     "RANZCOG GBS"
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    },
    {
     "letter": "C",
-    "text": "Intravenous clindamycin 600 mg every 8 hours until birth in absence of allergy",
+    "text": "Swab her now and repeat the urine culture before making any plan",
     "correct": false,
-    "rationale": "Clindamycin is reserved for severe penicillin allergy with documented isolate susceptibility; this patient has no allergy so penicillin is first-line. (Source: RANZCOG GBS)",
+    "rationale": "Repeat urine culture is worthwhile for persisting symptoms or a treatment failure, not to revisit a settled indication. (Source: Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis)",
     "source_refs": [
-     "RANZCOG GBS"
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis"
     ]
    },
    {
     "letter": "D",
-    "text": "Intravenous vancomycin 20 mg/kg every 12 hours intrapartum until birth occurs",
+    "text": "Treat her again with an oral antibiotic now to reduce carriage at birth",
     "correct": false,
-    "rationale": "Vancomycin is reserved for severe penicillin allergy with clindamycin-resistant GBS; it is not first-line in a non-allergic woman. (Source: RANZCOG GBS)",
+    "rationale": "Retreatment is appropriate if she has symptoms or a fresh significant growth, but it does not replace cover in labour. (Source: Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis)",
     "source_refs": [
-     "RANZCOG GBS"
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis"
     ]
    },
    {
     "letter": "E",
-    "text": "Intravenous cefazolin 2 g load then 1 g every 8 hours intrapartum until birth",
+    "text": "No swab and no antibiotics, since the bacteriuria was treated at the time",
     "correct": false,
-    "rationale": "Cefazolin is an alternative for non-severe penicillin allergy; in a non-allergic woman benzylpenicillin remains the standard agent because of its narrower spectrum. (Source: RANZCOG GBS)",
+    "rationale": "Treating the bacteriuria protects the mother from pyelonephritis; it does not remove the newborn indication. (Source: RANZCOG - Maternal group B streptococcus in pregnancy: screening and management)",
     "source_refs": [
-     "RANZCOG GBS"
+     "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management"
     ]
    }
   ],
   "explanation": {
-   "summary": "Intrapartum antibiotic prophylaxis prevents early-onset neonatal GBS disease. The Australian RANZCOG recommendation is benzylpenicillin 3 g IV at labour onset then 1.8 g IV every 4 hours until delivery, given for at least 4 hours before birth for optimal effect. Alternatives by allergy severity are cefazolin (non-severe), clindamycin with susceptibility (severe), or vancomycin (severe with clindamycin resistance). Indications include GBS-positive swab, GBS bacteriuria in this pregnancy, previous GBS-affected infant, or risk-based criteria where universal screening is not used.",
+   "summary": "Significant bacteriuria with group B streptococcus is a marker of dense genital tract colonisation, and Australian guidance treats it as an indication for intrapartum prophylaxis in its own right, regardless of any later swab. Such a woman therefore does not need the 35 to 37 week vagino-rectal swab, because a negative result would not change the plan and might wrongly reassure the team looking after her in labour. The bacteriuria itself is treated when found, since it carries a maternal risk of pyelonephritis and an association with preterm birth, but that treatment is separate from the newborn indication. In context, the two other standing indications that override the swab are a previous infant with invasive group B streptococcal disease and, on a risk basis, preterm labour or prolonged rupture when carriage status is not known.",
    "key_points": [
-    "Benzylpenicillin 3 g IV load then 1.8 g IV every 4 hours is first-line in non-allergic women",
-    "Allergy ladder: cefazolin (non-severe) -> clindamycin if susceptible (severe) -> vancomycin",
-    "Aim for at least 4 hours of antibiotic before birth for maximal prevention"
+    "Significant bacteriuria this pregnancy is a standing indication for prophylaxis in labour.",
+    "No 35 to 37 week swab is needed once that indication exists.",
+    "Treating the bacteriuria does not cancel the intrapartum indication.",
+    "A previous infant with invasive disease is the other standing indication."
    ],
-   "pearls": "At least 4 hours of intrapartum penicillin before birth reduces vertical GBS transmission from approximately 50% in unprotected labour to less than 5%."
+   "pearls": "Record standing indications on the front of the antenatal record rather than only in a result, because the team in labour reads the plan and not the microbiology history."
   },
   "sources": [
    {
-    "label": "RANZCOG GBS",
+    "label": "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management",
     "url": "https://ranzcog.edu.au/"
    },
    {
-    "label": "Therapeutic Guidelines: Antibiotic",
+    "label": "Queensland Clinical Guidelines - Early onset group B streptococcal disease",
+    "url": "https://www.health.qld.gov.au/qcg"
+   },
+   {
+    "label": "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis",
     "url": "https://tgldcdp.tg.org.au/"
    }
   ],
   "reference_ranges": [
    "obs_pregnancy_vitals"
   ],
-  "created": "2026-05-31",
-  "difficulty_prior_v3": 3
+  "created": "2026-05-28",
+  "revised_from": "ctb-p40-009"
  },
  {
   "id": "ctb-p40-010",
@@ -29118,93 +29125,101 @@
   "difficulty_prior_v3": 3
  },
  {
-  "id": "ctb-p45-021",
+  "id": "ctb-p45-021-d2",
   "topic": "Obstetrics & Gynaecology",
   "subtopic": "Intrapartum",
-  "subtopic_detail": "Group B Streptococcus positive labour: intrapartum prophylaxis",
-  "difficulty": 2,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Carriage in an earlier pregnancy with a negative swab in this one",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
   "tags": [
-   "GBS",
-   "antibiotics"
+   "group B streptococcus",
+   "labour",
+   "screening"
   ],
-  "stem": "A 30-year-old woman in her first pregnancy presents at 39 weeks gestation in spontaneous labour with intact membranes. Her routine vaginal-rectal swab at 36 weeks returned positive for Group B Streptococcus. She has no penicillin allergy. She is now 5 cm dilated with regular contractions and a reassuring cardiotocograph. Her vital signs are normal.",
+  "stem": "A 33 year old woman in her second pregnancy arrives in established labour at 39 weeks. Her first baby was born vaginally at term and remained well throughout the newborn period.",
   "data_table": {
-   "Vital signs": "BP 120/76, HR 84, T 36.9",
-   "Examination": "Cervix 5 cm dilated, intact membranes, cephalic presentation, normal CTG",
-   "Investigations": "GBS swab at 36 weeks positive; FBC normal"
+   "Swabs": "Positive at 36 weeks in the first pregnancy, negative at 36 weeks in this one",
+   "Labour": "Cervix 5 cm, membranes ruptured 40 minutes ago, clear liquor, afebrile"
   },
-  "lead_in": "What is the most appropriate intrapartum management?",
+  "lead_in": "What is the most appropriate management?",
   "options": [
    {
     "letter": "A",
-    "text": "Intravenous clindamycin 600 mg eight hourly as standard prophylaxis option without susceptibility data",
-    "correct": false,
-    "rationale": "Clindamycin is reserved for severe penicillin allergy with susceptible GBS isolates given resistance rates. (Source: RANZCOG: Maternal GBS in pregnancy)",
+    "text": "Routine labour care without an intravenous antibiotic for carriage",
+    "correct": true,
+    "rationale": "Colonisation is intermittent and is assessed afresh each pregnancy, so a negative current swab with no other indication means no prophylaxis. (Source: RANZCOG - Maternal group B streptococcus in pregnancy: screening and management)",
     "source_refs": [
-     "RANZCOG: Maternal GBS in pregnancy"
+     "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management",
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    },
    {
     "letter": "B",
-    "text": "Oral amoxicillin 500 mg three times daily until delivery as appropriate prophylaxis cover",
+    "text": "Intravenous benzylpenicillin now, because carriage carries over in time",
     "correct": false,
-    "rationale": "Oral prophylaxis does not achieve adequate intrapartum tissue and fetal levels for GBS disease prevention. (Source: RANZCOG: Maternal GBS in pregnancy)",
+    "rationale": "This is the plan when the current swab is positive, or when an earlier baby had invasive disease. (Source: Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis)",
     "source_refs": [
-     "RANZCOG: Maternal GBS in pregnancy"
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis"
     ]
    },
    {
     "letter": "C",
-    "text": "Intravenous vancomycin 20 mg/kg six hourly without renal monitoring throughout the labour period",
+    "text": "Intravenous cefazolin now, as a narrower option than penicillin in labour",
     "correct": false,
-    "rationale": "Vancomycin is reserved for severe penicillin allergy or known macrolide resistance and is not first-line. (Source: RANZCOG: Maternal GBS in pregnancy)",
+    "rationale": "Cefazolin is the substitute for an indicated woman whose penicillin reaction was not severe, not a first-line agent. (Source: Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis)",
     "source_refs": [
-     "RANZCOG: Maternal GBS in pregnancy"
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis",
+     "Australian Medicines Handbook - benzylpenicillin and vancomycin"
     ]
    },
    {
     "letter": "D",
-    "text": "No antibiotics now as routine intrapartum prophylaxis is not recommended for routine GBS positive",
+    "text": "Send a further swab now and start an antibiotic while awaiting the result",
     "correct": false,
-    "rationale": "Routine intrapartum prophylaxis for GBS positive women is the AU standard of care for prevention of early-onset GBS sepsis. (Source: RANZCOG: Maternal GBS in pregnancy)",
+    "rationale": "Swabbing in labour is worthwhile only when no result exists and risk factors are being weighed. (Source: Queensland Clinical Guidelines - Early onset group B streptococcal disease)",
     "source_refs": [
-     "RANZCOG: Maternal GBS in pregnancy"
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    },
    {
     "letter": "E",
-    "text": "Intravenous benzylpenicillin 3 g loading then 1.8 g four hourly until delivery occurs",
-    "correct": true,
-    "rationale": "AU intrapartum GBS prophylaxis is intravenous benzylpenicillin from the onset of labour until delivery to prevent early-onset GBS disease in the newborn. (Source: RANZCOG: Maternal GBS in pregnancy)",
+    "text": "Withhold the antibiotic but arrange a blood culture on the baby after birth",
+    "correct": false,
+    "rationale": "A newborn blood culture belongs to a baby with clinical signs or a genuinely high risk exposure. (Source: Queensland Clinical Guidelines - Early onset group B streptococcal disease)",
     "source_refs": [
-     "RANZCOG: Maternal GBS in pregnancy"
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    }
   ],
   "explanation": {
-   "summary": "Maternal Group B Streptococcus colonisation affects approximately 15 to 25% of pregnant women. AU practice screens with combined vaginal-rectal swab at 35 to 37 weeks gestation. Intrapartum antibiotic prophylaxis is given to women who are GBS positive at screening, those with GBS bacteriuria in the current pregnancy, those with a previous infant with invasive GBS disease, or those with unknown status and risk factors at labour. First-line is intravenous benzylpenicillin 3 g loading then 1.8 g four hourly. Cefazolin is used for non-severe penicillin allergy; clindamycin or vancomycin for severe allergy depending on susceptibility.",
+   "summary": "Carriage of group B streptococcus is intermittent, and a result from a previous pregnancy has poor predictive value for the current one, so screening is repeated in every pregnancy and the current result governs the plan. A negative vagino-rectal swab taken within the 35 to 37 week window, in a woman with no bacteriuria this pregnancy and no previous infant with invasive disease, means no intrapartum prophylaxis even though she was positive last time. The important distinction is between previous maternal carriage, which does not carry forward, and a previous infant with invasive disease, which does and obliges prophylaxis in every subsequent labour. In context, over-treating on a historical swab is common and exposes women to unnecessary antibiotics, cannulation and restricted mobility in labour for no reduction in neonatal risk.",
    "key_points": [
-    "GBS positive screening at 35 to 37 weeks indicates intrapartum benzylpenicillin",
-    "Cefazolin replaces benzylpenicillin in non-severe penicillin allergy",
-    "Vancomycin or susceptibility-guided clindamycin applies to severe penicillin allergy"
+    "Carriage is intermittent and is reassessed each pregnancy.",
+    "A negative current swab within the window means no prophylaxis when no other indication exists.",
+    "A previous infant with invasive disease does carry forward and always indicates prophylaxis.",
+    "Swab results older than five weeks or outside the window are treated as unknown."
    ],
-   "pearls": "Adequate intrapartum prophylaxis requires the first dose at least 4 hours before delivery; shorter intervals reduce protection against early-onset neonatal GBS sepsis."
+   "pearls": "The swab window matters: a result from before 35 weeks or more than five weeks old is treated as unknown status, and risk factors then decide."
   },
   "sources": [
    {
-    "label": "RANZCOG: Maternal GBS in pregnancy",
-    "url": "https://ranzcog.edu.au"
+    "label": "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management",
+    "url": "https://ranzcog.edu.au/"
    },
    {
-    "label": "eTG Antibiotic: GBS in pregnancy"
+    "label": "Queensland Clinical Guidelines - Early onset group B streptococcal disease",
+    "url": "https://www.health.qld.gov.au/qcg"
+   },
+   {
+    "label": "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis",
+    "url": "https://tgldcdp.tg.org.au/"
    }
   ],
   "reference_ranges": [
    "obs_pregnancy_vitals"
   ],
-  "created": "2026-05-31",
-  "difficulty_prior_v3": 3
+  "created": "2026-05-28",
+  "revised_from": "ctb-p45-021"
  },
  {
   "id": "ctb-p45-022",
@@ -30837,100 +30852,100 @@
   "difficulty_prior_v3": 3
  },
  {
-  "id": "ctb-p47-002",
+  "id": "ctb-p47-002-d2",
   "topic": "Obstetrics & Gynaecology",
-  "subtopic": "Intrapartum care",
-  "subtopic_detail": "Group B Streptococcus intrapartum antibiotic prophylaxis",
-  "difficulty": 2,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic": "Preterm labour",
+  "subtopic_detail": "Continuing prophylaxis when threatened preterm labour settles",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
   "tags": [
-   "pregnancy",
-   "GBS",
-   "antibiotics"
+   "group B streptococcus",
+   "preterm labour",
+   "antibiotic stewardship"
   ],
-  "stem": "A 28-year-old G1P0 woman is admitted in established labour at 39+1 weeks. Her vaginal-rectal swab at 36 weeks isolated Group B Streptococcus and she has no known antibiotic allergies. She is fully informed about the screening result and consents to recommended treatment. Membranes ruptured 1 hour ago with clear liquor; cervix is 5 cm dilated and contracting 4 in 10 minutes.",
+  "stem": "A 28 year old woman admitted at 31 weeks with contractions was started overnight by the night team on nifedipine and an intravenous antibiotic. She now has no contractions and feels well.",
   "data_table": {
-   "Vital signs": "Maternal BP 124/76, HR 88, T 36.9°C; CTG baseline 140, accelerations present, no decelerations",
-   "Examination": "Vertex at -1 station, intact perineum, no chorioamnionitis features",
-   "Investigations": "36-week swab: GBS positive (no isolate sensitivities reported)"
+   "Cervix": "Closed on speculum, unchanged from admission, membranes intact",
+   "Screening": "No vagino-rectal swab taken this pregnancy, temperature 36.8 degC"
   },
-  "lead_in": "What is the most appropriate intrapartum antibiotic regimen?",
+  "lead_in": "What is the most appropriate management of the antibiotic?",
   "options": [
    {
     "letter": "A",
-    "text": "Amoxicillin 2 g orally as a single loading dose then 1 g every 6 hours",
-    "correct": false,
-    "rationale": "Oral amoxicillin does not achieve reliable amniotic-fluid concentrations during active labour; AU guidance requires intravenous therapy. (Source: eTG)",
+    "text": "Stop the infusion now and give no further doses",
+    "correct": true,
+    "rationale": "The risk-based indication is established preterm labour or ruptured membranes, neither of which is now present, so continuing adds exposure without benefit. (Source: Queensland Clinical Guidelines - Preterm labour and birth)",
     "source_refs": [
-     "Therapeutic Guidelines: Antibiotic"
+     "Queensland Clinical Guidelines - Preterm labour and birth",
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis"
     ]
    },
    {
     "letter": "B",
-    "text": "Benzylpenicillin 3 g intravenously then 1.8 g every 4 hours until delivery",
-    "correct": true,
-    "rationale": "AU intrapartum prophylaxis for GBS-positive women without penicillin allergy is benzylpenicillin 3 g IV loading then 1.8 g every 4 hours, aiming for at least one dose at least 4 hours before delivery. (Source: RANZCOG GBS in pregnancy 2024; eTG)",
+    "text": "Continue it four hourly until she is discharged home",
+    "correct": false,
+    "rationale": "Four hourly dosing is continued to birth once she is genuinely labouring preterm with unknown status. (Source: Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis)",
     "source_refs": [
-     "RANZCOG GBS in pregnancy 2024",
-     "Therapeutic Guidelines: Antibiotic"
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis"
     ]
    },
    {
     "letter": "C",
-    "text": "Clindamycin 600 mg intravenously every 8 hours until delivery is complete",
+    "text": "Continue it until a vagino-rectal swab result returns",
     "correct": false,
-    "rationale": "Clindamycin is the alternative only for severe (anaphylactic) penicillin allergy with documented isolate susceptibility; this patient has no allergy. (Source: RANZCOG GBS 2024)",
+    "rationale": "Swabbing and waiting is reasonable when birth is not imminent, but it does not justify an infusion in the meantime. (Source: Queensland Clinical Guidelines - Early onset group B streptococcal disease)",
     "source_refs": [
-     "RANZCOG GBS in pregnancy 2024"
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    },
    {
     "letter": "D",
-    "text": "Cefazolin 2 g intravenously then 1 g every 8 hours throughout active labour",
+    "text": "Change it to a ten day oral course of erythromycin",
     "correct": false,
-    "rationale": "Cefazolin is appropriate for non-severe penicillin allergy; with no allergy benzylpenicillin remains preferred for narrower spectrum. (Source: eTG)",
+    "rationale": "The ten day erythromycin course belongs to preterm prelabour rupture of the membranes, which she does not have. (Source: Queensland Clinical Guidelines - Preterm labour and birth)",
     "source_refs": [
-     "Therapeutic Guidelines: Antibiotic"
+     "Queensland Clinical Guidelines - Preterm labour and birth"
     ]
    },
    {
     "letter": "E",
-    "text": "Vancomycin 20 mg/kg intravenously over 2 hours then redose at 12 hours",
+    "text": "Give one further dose, then swab her and stop it",
     "correct": false,
-    "rationale": "Vancomycin is reserved for severe penicillin allergy with clindamycin-resistant isolate; it is not first-line in an unallergic patient. (Source: RANZCOG GBS 2024)",
+    "rationale": "A single extra dose has no role; either the indication stands and dosing continues to birth, or it does not. (Source: Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis)",
     "source_refs": [
-     "RANZCOG GBS in pregnancy 2024"
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis"
     ]
    }
   ],
   "explanation": {
-   "summary": "Australian intrapartum GBS prophylaxis uses universal antenatal swabbing at 35 to 37 weeks (RANZCOG 2024) followed by IV antibiotics in labour for swab-positive women, GBS bacteriuria in this pregnancy, a previous GBS-affected infant, or unknown status with risk factors (preterm, ROM >= 18 hours, intrapartum fever). Benzylpenicillin 3 g loading then 1.8 g every 4 hours is first-line; at least one dose 4 hours pre-delivery is the adequate-prophylaxis benchmark. Alternatives are stratified by allergy severity and isolate susceptibility.",
+   "summary": "Risk-based prophylaxis in preterm labour covers the woman whose carriage status is unknown and who is actually labouring before 37 weeks, because that baby is both more likely to be exposed and less able to withstand invasive disease. Threatened preterm labour that settles, with a closed unchanged cervix and intact membranes, no longer meets the indication, and the infusion is stopped rather than run on until discharge. The reasoning has two steps: first recognise that the original prescription was appropriate at the time, and second recognise that the indication is a state rather than an event, so it is reviewed when the state changes. Taking a vagino-rectal swab before discharge is sensible so that the result is available if she returns. In context, most women admitted with threatened preterm labour do not deliver within a week, which is exactly why these prescriptions need reviewing rather than continuing by default.",
    "key_points": [
-    "Universal swab at 35 to 37 weeks (AU 2024 RANZCOG change from risk-based).",
-    "First-line: benzylpenicillin 3 g IV load, then 1.8 g every 4 hours.",
-    "Non-severe penicillin allergy: cefazolin 2 g IV load, then 1 g every 8 hours.",
-    "Severe (anaphylaxis) penicillin allergy: clindamycin 600 mg IV every 8 hours if isolate susceptible; otherwise vancomycin.",
-    "Adequate prophylaxis = at least one dose at least 4 hours before delivery."
+    "Risk-based prophylaxis requires established preterm labour or ruptured membranes.",
+    "Settled contractions with a closed cervix and intact membranes means the indication has lapsed.",
+    "Swab before discharge so a result exists if she represents.",
+    "The ten day erythromycin course is specific to preterm prelabour rupture of membranes."
    ],
-   "pearls": "Inadequate intrapartum prophylaxis (less than 4 hours before delivery) does not change neonatal observation: well infants of GBS-positive mothers still need 24 hours of structured observation per NeoRes guidance."
+   "pearls": "Fewer than half of women admitted with threatened preterm labour give birth before 37 weeks, so every antibiotic and tocolytic started on admission deserves an explicit review point."
   },
   "sources": [
    {
-    "label": "RANZCOG GBS in pregnancy 2024",
-    "url": "https://ranzcog.edu.au/"
+    "label": "Queensland Clinical Guidelines - Preterm labour and birth",
+    "url": "https://www.health.qld.gov.au/qcg"
    },
    {
-    "label": "Therapeutic Guidelines: Antibiotic"
+    "label": "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis",
+    "url": "https://tgldcdp.tg.org.au/"
    },
    {
-    "label": "Queensland Clinical Guideline: Early-onset GBS disease 2024"
+    "label": "Queensland Clinical Guidelines - Early onset group B streptococcal disease",
+    "url": "https://www.health.qld.gov.au/qcg"
    }
   ],
   "reference_ranges": [
    "obs_pregnancy_vitals"
   ],
-  "created": "2026-05-31",
-  "difficulty_prior_v3": 3
+  "created": "2026-05-28",
+  "revised_from": "ctb-p47-002"
  },
  {
   "id": "ctb-p47-003",
@@ -32707,89 +32722,89 @@
   "difficulty_prior_v3": 4
  },
  {
-  "id": "balanced-p7-013",
+  "id": "balanced-p7-013-d2",
   "topic": "Obstetrics & Gynaecology",
-  "subtopic": "Intrapartum",
-  "subtopic_detail": "Shoulder dystocia manoeuvre sequence",
-  "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic": "Intrapartum emergencies",
+  "subtopic_detail": "Role of episiotomy when the anterior shoulder is impacted",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
   "tags": [
    "shoulder dystocia",
-   "labour",
-   "emergency"
+   "episiotomy",
+   "labour"
   ],
-  "stem": "You are the obstetrics registrar called to a multiparous woman whose head has just delivered but the anterior shoulder has not advanced with the next contraction. The turtle sign is observed. The estimated fetal weight at growth scan three weeks ago was 4.1 kg. The midwife has summoned the consultant, the second registrar, and the neonatal team. You are at the bedside.",
+  "stem": "You are called to a birth where the head has delivered and the shoulders have not followed with the next contraction. Help has arrived and the first line manoeuvres have already failed.",
   "data_table": {
-   "Vital signs": "Maternal BP 124/76, HR 102; fetal heart rate previously normal",
-   "Examination": "Head delivered with turtle sign; anterior shoulder not yet visible at introitus",
-   "Investigations": "Not applicable to immediate manoeuvre",
-   "Medications": "Epidural in situ; oxytocin augmentation"
+   "Perineum": "Intact, no episiotomy, epidural in situ and working well",
+   "Timing": "Ninety seconds since the head delivered, no bleeding"
   },
-  "lead_in": "Which manoeuvre is the most appropriate first step after calling for help?",
+  "lead_in": "What is the most appropriate approach to the perineum?",
   "options": [
    {
     "letter": "A",
-    "text": "Fundal pressure with continuous downward traction on the fetal head to disimpact the anterior shoulder from the maternal symphysis pubis",
-    "correct": false,
-    "rationale": "Fundal pressure worsens impaction and increases brachial plexus and uterine rupture risk; it is contraindicated. (Source: RANZCOG Shoulder Dystocia Statement)",
+    "text": "Cut one only if the perineum blocks a hand entering the vagina",
+    "correct": true,
+    "rationale": "The obstruction is bony, so an episiotomy adds nothing on its own and is used to create room for internal manoeuvres. (Source: RANZCOG - Shoulder dystocia)",
     "source_refs": [
-     "RANZCOG Shoulder Dystocia Statement"
+     "RANZCOG - Shoulder dystocia",
+     "Queensland Clinical Guidelines - Shoulder dystocia"
     ]
    },
    {
     "letter": "B",
-    "text": "Perform McRoberts manoeuvre with hyperflexion of the maternal hips against the abdomen combined with suprapubic pressure",
-    "correct": true,
-    "rationale": "McRoberts plus suprapubic pressure resolves around 50% of shoulder dystocias and is the recommended first-line manoeuvre. (Source: RANZCOG Shoulder Dystocia Statement)",
+    "text": "Cut a generous mediolateral episiotomy now to release the shoulder",
+    "correct": false,
+    "rationale": "Cutting to release the shoulder would make sense if soft tissue were the obstruction, which it is not here. (Source: RANZCOG - Shoulder dystocia)",
     "source_refs": [
-     "RANZCOG Shoulder Dystocia Statement"
+     "RANZCOG - Shoulder dystocia"
     ]
    },
    {
     "letter": "C",
-    "text": "Immediate Zavanelli manoeuvre with replacement of the fetal head and progression to category one caesarean section without intermediate manoeuvres",
+    "text": "Cut a midline episiotomy now, as it gives more room than mediolateral",
     "correct": false,
-    "rationale": "Zavanelli is a last-resort manoeuvre after all standard manoeuvres fail; it is not first-line. (Source: RANZCOG Shoulder Dystocia Statement)",
+    "rationale": "Midline incisions are avoided in Australian practice because of the risk of extension into the anal sphincter. (Source: Queensland Clinical Guidelines - Shoulder dystocia)",
     "source_refs": [
-     "RANZCOG Shoulder Dystocia Statement"
+     "Queensland Clinical Guidelines - Shoulder dystocia"
     ]
    },
    {
     "letter": "D",
-    "text": "Symphysiotomy with sterile preparation and local anaesthetic infiltration to widen the pelvic outlet for immediate delivery in this critical obstetric emergency",
+    "text": "Cut one now and then apply firmer downward traction on the head",
     "correct": false,
-    "rationale": "Symphysiotomy is essentially never used in high-resource settings; standard manoeuvres are first. (Source: RANZCOG Shoulder Dystocia Statement)",
+    "rationale": "Increasing traction is the main cause of brachial plexus injury and is never the answer to a failed manoeuvre. (Source: RANZCOG - Shoulder dystocia)",
     "source_refs": [
-     "RANZCOG Shoulder Dystocia Statement"
+     "RANZCOG - Shoulder dystocia"
     ]
    },
    {
     "letter": "E",
-    "text": "Administer intravenous glyceryl trinitrate and abandon any further manoeuvre attempt for two minutes while waiting for the consultant arrival",
+    "text": "Never cut one, as the perineum plays no part in this emergency",
     "correct": false,
-    "rationale": "Glyceryl trinitrate can be used for uterine relaxation in some scenarios but is not first-line for shoulder dystocia. (Source: RANZCOG Shoulder Dystocia Statement)",
+    "rationale": "That is right for the impaction itself, but ignores the access an episiotomy can give for internal manoeuvres. (Source: Queensland Clinical Guidelines - Shoulder dystocia)",
     "source_refs": [
-     "RANZCOG Shoulder Dystocia Statement"
+     "Queensland Clinical Guidelines - Shoulder dystocia"
     ]
    }
   ],
   "explanation": {
-   "summary": "Shoulder dystocia is an obstetric emergency requiring a structured response. The HELPERR mnemonic guides the sequence: Help, Evaluate for episiotomy, Legs (McRoberts), Pressure (suprapubic), Enter pelvis (internal rotation), Remove posterior arm, Roll patient to all fours. McRoberts and suprapubic pressure resolve most cases. Fundal pressure is contraindicated. Document the manoeuvre sequence, head-to-body interval, and side of impaction.",
+   "summary": "Shoulder dystocia is an impaction of the anterior shoulder behind the pubic symphysis, a bony obstruction, so cutting the perineum does not of itself relieve it and episiotomy is not a routine step in the sequence. Its place is functional: when the operator needs to get a hand into the sacral hollow for internal rotation or to deliver the posterior arm, a tight perineum can prevent that, and an episiotomy is then performed to create access. Where one is cut, a mediolateral incision is used in Australia because midline incisions extend into the anal sphincter. The manoeuvre sequence itself proceeds without delay, and increasing traction on the head is never an answer. In context, shoulder dystocia complicates roughly one in 200 vaginal births, is largely unpredictable, and outcomes depend on a rehearsed drill rather than on any single manoeuvre.",
    "key_points": [
-    "McRoberts plus suprapubic pressure first; resolves about half of cases",
-    "Fundal pressure is contraindicated due to plexus injury and uterine rupture risks",
-    "Document head-to-body interval and which shoulder was anterior"
+    "The obstruction is bony, so episiotomy does not relieve it.",
+    "Episiotomy is used to gain access for internal manoeuvres when the perineum is tight.",
+    "Mediolateral rather than midline is used in Australian practice.",
+    "Increased traction on the head causes brachial plexus injury and is never indicated."
    ],
-   "pearls": "RANZCOG recommends head-to-body interval over 5 minutes increases hypoxic-ischaemic encephalopathy risk substantially; structured timing during the manoeuvres improves documentation and outcomes."
+   "pearls": "Routine episiotomy does not prevent or relieve shoulder dystocia; the decision to cut is about whether your hand can reach the sacral hollow, not about the shoulder itself."
   },
   "sources": [
    {
-    "label": "RANZCOG Shoulder Dystocia Statement",
-    "url": "https://ranzcog.edu.au"
+    "label": "RANZCOG - Shoulder dystocia",
+    "url": "https://ranzcog.edu.au/"
    },
    {
-    "label": "RCOG Shoulder Dystocia Green-top Guideline 42",
-    "url": "https://www.rcog.org.uk"
+    "label": "Queensland Clinical Guidelines - Shoulder dystocia",
+    "url": "https://www.health.qld.gov.au/qcg"
    }
   ],
   "reference_ranges": [
@@ -32797,8 +32812,7 @@
    "apgar"
   ],
   "created": "2026-05-28",
-  "difficulty_prior_v3": 4,
-  "l4_promoted_2026-06-01": true
+  "revised_from": "balanced-p7-013"
  },
  {
   "id": "balanced-p7-014",

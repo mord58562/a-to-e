@@ -175,93 +175,96 @@
   "created": "2026-07-26"
  },
  {
-  "id": "paeds-p68-003",
+  "id": "paeds-p68-003-d2",
   "topic": "Paediatrics",
   "subtopic": "Gastroenterology",
-  "subtopic_detail": "Gastroenteritis rehydration pathway after failed oral trial",
+  "subtopic_detail": "Antimicrobial decision in bloody diarrhoea",
   "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "model": "Claude Opus 5",
   "tags": [
    "gastroenteritis",
-   "dehydration"
+   "antibiotics"
   ],
-  "stem": "A 20-month-old girl weighing 12 kg is brought to a regional emergency department with 36 hours of watery diarrhoea and vomiting after a family gastroenteritis outbreak. In the department she has been given a single dose of oral ondansetron 2 mg and offered oral rehydration solution 5 mL every 5 minutes over the past 60 minutes, but has vomited three times and refuses further sips.\n\nOn examination she is fractious but consolable. Mucous membranes are dry, capillary refill at the sternum is 3 seconds, and skin turgor is mildly reduced. She has passed a small volume of concentrated urine 4 hours ago. Weight from a well child check 3 weeks ago was 12.5 kg. There is no bilious vomiting, no blood in the stool and no abdominal distension.",
+  "stem": "A 3 year old girl has had 4 days of crampy abdominal pain and diarrhoea that has become visibly bloody. The family ate undercooked mince at a barbecue a week ago. She is alert, drinking well and passing urine.",
   "data_table": {
-   "Vital signs": "pulse rate 148, blood pressure 92/58, respiratory rate 32, SpO2 99 percent on room air, temperature 37.6 degrees",
-   "Bedside investigations": "capillary blood glucose 4.4 mmol/L (3.5-5.5), venous gas pH 7.34 with bicarbonate 20 mmol/L (22-28)"
+   "Vital signs": "HR 118, BP 96/60, RR 24, temperature 37.8",
+   "Examination": "Soft abdomen, mild generalised tenderness, moist mucous membranes",
+   "Investigations": "Stool culture and polymerase chain reaction sent"
   },
-  "lead_in": "What is the most appropriate next step in rehydration?",
+  "lead_in": "What is the most appropriate management?",
   "options": [
    {
     "letter": "A",
-    "text": "Insert an intravenous cannula and commence 0.9 percent sodium chloride at 20 mL/kg over 20 minutes as a resuscitation bolus",
-    "correct": false,
-    "rationale": "A fluid bolus at this rate is reserved for shock, not moderate dehydration. Her perfusion parameters do not meet shock criteria and IV rehydration is second-line to NG in AU paeds practice. (Source: RCH CPG: Gastroenteritis)",
+    "text": "Oral rehydration and baseline bloods without antimicrobial cover",
+    "correct": true,
+    "rationale": "Where Shiga toxin producing Escherichia coli is plausible, Therapeutic Guidelines advises supportive care without antibiotics, with a full blood count, film and electrolytes to watch for haemolytic uraemic syndrome. (Source: Therapeutic Guidelines: Antibiotic; RCH CPG: Gastroenteritis)",
     "source_refs": [
+     "Therapeutic Guidelines: Antibiotic",
      "RCH CPG: Gastroenteritis"
     ]
    },
    {
     "letter": "B",
-    "text": "Administer a second oral ondansetron 4 mg dose and continue small-volume oral rehydration solution attempts",
+    "text": "Oral azithromycin 10 mg/kg daily for 3 days with oral rehydration",
     "correct": false,
-    "rationale": "The RCH single ondansetron dose for a child of this weight is 2 mg (8 to 15 kg band). A repeat dose is not recommended and 4 mg exceeds the correct band. (Source: RCH CPG: Gastroenteritis)",
+    "rationale": "Azithromycin is the Australian choice for confirmed shigellosis, severe campylobacteriosis, or travellers with dysentery, and is reserved until the organism is known in this setting. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "RCH CPG: Gastroenteritis"
+     "Therapeutic Guidelines: Antibiotic"
     ]
    },
    {
     "letter": "C",
-    "text": "Insert a nasogastric tube and commence continuous rehydration with oral rehydration solution at 25 mL/kg/hour for the next 4 hours",
-    "correct": true,
-    "rationale": "In children with mild to moderate dehydration and failure of the oral trial, the RCH pathway is nasogastric rehydration before intravenous fluids. Continuous NG rehydration at approximately 25 mL/kg/hour over 4 hours corrects the deficit. (Source: RCH CPG: Gastroenteritis)",
+    "text": "Oral trimethoprim sulfamethoxazole twice daily with oral rehydration",
+    "correct": false,
+    "rationale": "This agent is used for susceptible Shigella or for enteric infection in an immunocompromised child; in Shiga toxin producing infection it increases toxin release. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "RCH CPG: Gastroenteritis"
+     "Therapeutic Guidelines: Antibiotic"
     ]
    },
    {
     "letter": "D",
-    "text": "Admit for observation on maintenance intravenous 0.9 percent sodium chloride with 5 percent dextrose at 44 mL per hour",
+    "text": "Oral loperamide 0.2 mg/kg with a low residue diet and oral rehydration",
     "correct": false,
-    "rationale": "Maintenance-only IV fluids do not correct the estimated 4 percent deficit efficiently and skip the preferred NG rehydration step. (Source: RCH CPG: Gastroenteritis)",
+    "rationale": "Antimotility agents are not used in children with acute diarrhoea at all, and in invasive infection they prolong exposure to the pathogen and risk ileus. (Source: RCH CPG: Gastroenteritis)",
     "source_refs": [
      "RCH CPG: Gastroenteritis"
     ]
    },
    {
     "letter": "E",
-    "text": "Discharge home with instructions to continue small volume oral rehydration solution and represent if there is no improvement in 12 hours",
+    "text": "Intravenous ceftriaxone 50 mg/kg daily until stool results return",
     "correct": false,
-    "rationale": "Discharge after a failed oral trial with ongoing signs of moderate dehydration is inappropriate. Formal rehydration in the department is required. (Source: RCH CPG: Gastroenteritis)",
+    "rationale": "Parenteral cover is for a child with suspected invasive bacterial disease, sepsis, or who is immunocompromised or under 3 months, none of which applies to a well perfused, alert toddler. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "RCH CPG: Gastroenteritis"
+     "Therapeutic Guidelines: Antibiotic"
     ]
    }
   ],
   "explanation": {
-   "summary": "This 20-month-old has clinically moderate dehydration and has failed a supervised oral rehydration trial after ondansetron. The RCH pathway then favours nasogastric rehydration before escalating to intravenous therapy, which is reserved for severe dehydration, shock, or NGT failure.",
+   "summary": "Bloody diarrhoea after a plausible exposure to undercooked beef raises Shiga toxin producing Escherichia coli, and antibiotics in that setting increase the risk of haemolytic uraemic syndrome by promoting toxin release. Australian practice is therefore supportive: maintain hydration, send stool for culture and molecular testing, avoid antimotility agents, and take a baseline full blood count, blood film and electrolytes so that falling haemoglobin and platelets or rising creatinine are detected. Antibiotics are reserved for organisms and clinical situations where they are known to help.\n\nIn context: most acute diarrhoea in Australian children is viral and needs no microbiology at all. Stool testing earns its place when the stool is bloody, the illness is prolonged, the child is immunocompromised, there has been relevant travel, or an outbreak is suspected. Clinicians should also notify enteric pathogens where the state public health requirements apply.",
    "key_points": [
-    "NG rehydration is first-line after failed oral trial in mild to moderate dehydration",
-    "Ondansetron single dose 2 mg for 8 to 15 kg (0.15 mg/kg banded)",
-    "IV fluids reserved for shock or failure of NG rehydration"
+    "Avoid antibiotics where Shiga toxin producing infection is plausible",
+    "Send stool for culture and molecular testing in bloody diarrhoea",
+    "Monitor full blood count, film and electrolytes for haemolytic uraemic syndrome",
+    "Antimotility agents are not used in children"
    ],
-   "pearls": "The commonest ED anti-pattern is skipping NG rehydration and going straight to IV. The NG route corrects the deficit efficiently and avoids cannulation."
+   "pearls": "The reflex to cover bloody diarrhoea with an antibiotic is the exact move that raises the risk of renal failure when the organism is a Shiga toxin producer."
   },
   "sources": [
    {
-    "label": "RCH CPG: Gastroenteritis",
-    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Gastroenteritis/"
+    "label": "Therapeutic Guidelines: Antibiotic",
+    "url": "https://tgldcdp.tg.org.au/"
    },
    {
-    "label": "Therapeutic Guidelines: Paediatric gastroenteritis",
-    "url": "https://tgldcdp.tg.org.au/"
+    "label": "RCH CPG: Gastroenteritis",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Gastroenteritis/"
    }
   ],
   "reference_ranges": [
-   "paeds_vitals_child",
-   "vbg"
+   "paeds_vitals_child"
   ],
-  "created": "2026-07-26"
+  "created": "2026-09-23",
+  "revised_from": "paeds-p68-003"
  },
  {
   "id": "paeds-p68-004",
@@ -795,79 +798,78 @@
   "created": "2026-07-26"
  },
  {
-  "id": "paeds-p69-003",
+  "id": "paeds-p69-003-d2",
   "topic": "Paediatrics",
   "subtopic": "Gastroenterology",
-  "subtopic_detail": "Gastroenteritis rehydration route",
-  "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Prolonged diarrhoea after acute gastroenteritis",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
   "tags": [
    "gastroenteritis",
-   "rehydration"
+   "diarrhoea"
   ],
-  "stem": "An 18-month-old girl weighing 12 kg presents with two days of profuse watery diarrhoea and vomiting. On arrival she has dry mucous membranes, reduced skin turgor and a capillary refill of 3 seconds centrally. Her mother has been offering water and diluted juice but she has vomited all attempts in the last three hours.\n\nHer weight two weeks ago at a GP visit was 12.7 kg. She has been alert throughout the assessment and stopped vomiting after receiving oral ondansetron thirty minutes ago in triage. Blood glucose on finger prick is 4.1 mmol/L.",
+  "stem": "A 13 month old boy had gastroenteritis 3 weeks ago. His vomiting settled, but he passes frequent explosive watery stools each time he drinks his usual cow milk formula. He is thriving and playful.",
   "data_table": {
-   "Vital signs": "Pulse 148/min, blood pressure 92/58 mmHg, respiratory rate 30/min, SpO2 99 percent on room air, temperature 37.6 degrees C",
-   "Examination": "Alert, dry lips, delayed skin turgor, sunken eyes; abdomen soft, no guarding; capillary refill 3 seconds centrally",
-   "Investigations": "Weight loss 5.5 percent from baseline; blood glucose 4.1 mmol/L; urea and electrolytes not yet available"
+   "Examination": "Perianal excoriation, soft abdomen, weight stable on the 50th centile",
+   "Investigations": "Stool pH 5.0 with positive reducing substances"
   },
-  "lead_in": "What is the most appropriate rehydration approach now?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "Continue small volume oral rehydration solution sips over the next four hours",
-    "correct": false,
-    "rationale": "Oral trial has already failed with vomiting; further oral-only attempts risk under-resuscitation despite the ondansetron effect. (Source: RCH CPG: Gastroenteritis)",
+    "text": "Change to a lactose free formula and review in two weeks",
+    "correct": true,
+    "rationale": "Acidic stool with reducing substances after gastroenteritis indicates transient lactase deficiency from brush border injury; a short course of lactose free formula with review is the RCH approach while the mucosa recovers. (Source: RCH CPG: Gastroenteritis)",
     "source_refs": [
      "RCH CPG: Gastroenteritis"
     ]
    },
    {
     "letter": "B",
-    "text": "Intravenous 0.9 percent sodium chloride 20 mL/kg bolus over 15 minutes then reassess",
+    "text": "Change to an extensively hydrolysed formula and review in two weeks",
     "correct": false,
-    "rationale": "IV boluses are reserved for shock or severe dehydration; central capillary refill 3 seconds with preserved BP and alertness is moderate, not severe. (Source: RCH CPG: Gastroenteritis)",
+    "rationale": "Extensively hydrolysed formula is for cow milk protein allergy, suggested by blood or mucus in the stool, eczema, poor growth or vomiting on exposure rather than by acidic osmotic stools. (Source: Therapeutic Guidelines: Gastrointestinal)",
     "source_refs": [
-     "RCH CPG: Gastroenteritis"
+     "Therapeutic Guidelines: Gastrointestinal"
     ]
    },
    {
     "letter": "C",
-    "text": "Intravenous 0.9 percent sodium chloride with 5 percent glucose infusion over 24 hours",
+    "text": "Start oral metronidazole and review the stools in two weeks",
     "correct": false,
-    "rationale": "Slow IV replacement bypasses the NGT step that RCH mandates when oral rehydration fails and dehydration is mild to moderate. (Source: RCH CPG: Gastroenteritis)",
+    "rationale": "Metronidazole treats confirmed giardiasis, which typically causes prolonged foul diarrhoea with bloating and weight loss rather than a strictly formula related pattern. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "RCH CPG: Gastroenteritis"
+     "Therapeutic Guidelines: Antibiotic"
     ]
    },
    {
     "letter": "D",
-    "text": "Nasogastric rapid rehydration with oral rehydration solution over four hours",
-    "correct": true,
-    "rationale": "For mild to moderate dehydration where oral has failed, RCH makes nasogastric rapid rehydration first-line over IV; equally effective and avoids cannulation. (Source: RCH CPG: Gastroenteritis)",
+    "text": "Start a soy based formula and refer for allergy testing",
+    "correct": false,
+    "rationale": "Soy formula and allergy assessment suit an infant with an immune mediated reaction to cow milk protein, and soy is generally avoided under 6 months. (Source: Therapeutic Guidelines: Gastrointestinal)",
     "source_refs": [
-     "RCH CPG: Gastroenteritis"
+     "Therapeutic Guidelines: Gastrointestinal"
     ]
    },
    {
     "letter": "E",
-    "text": "Admit for observation and re-attempt oral rehydration solution in six hours",
+    "text": "Continue the usual formula and refer for a coeliac screen",
     "correct": false,
-    "rationale": "Delaying active rehydration with ongoing losses risks progression to severe dehydration and worsening electrolyte disturbance. (Source: RCH CPG: Gastroenteritis)",
+    "rationale": "Coeliac serology is indicated for a child with chronic diarrhoea, faltering growth or anaemia after gluten exposure, and this boy is growing normally with a clear temporal trigger. (Source: Therapeutic Guidelines: Gastrointestinal)",
     "source_refs": [
-     "RCH CPG: Gastroenteritis"
+     "Therapeutic Guidelines: Gastrointestinal"
     ]
    }
   ],
   "explanation": {
-   "summary": "RCH gastroenteritis pathway places nasogastric rapid rehydration ahead of intravenous fluids when oral rehydration has failed in a child with mild to moderate dehydration. NGT rehydration matches IV for rate of correction with fewer complications and no cannulation. IV bolus is reserved for shock or severe dehydration (weight loss more than 9 percent, altered conscious level, poor peripheral perfusion). Ondansetron 0.15 mg/kg once (2 mg for 8 to 15 kg) improves oral tolerance and reduces IV need.",
+   "summary": "Viral gastroenteritis damages the small bowel brush border, where lactase sits most superficially, so lactose passes undigested into the colon and is fermented. The result is explosive, acidic, watery stool with perianal excoriation that recurs with every lactose containing feed and stool that is acidic with reducing substances. It is transient, and a few weeks of lactose free formula followed by reintroduction is enough. Persisting symptoms after that, or faltering growth, blood in the stool or systemic features, move the problem into a different diagnostic category.\n\nIn context: most post-gastroenteritis diarrhoea resolves without intervention within a fortnight. The discriminators worth carrying are growth, the presence of blood or mucus, and whether symptoms track a specific feed. A thriving child whose symptoms follow the bottle has an osmotic, enzymatic problem; a child losing weight or passing blood does not.",
    "key_points": [
-    "NGT rehydration is first-line for mild to moderate dehydration failing oral.",
-    "IV bolus is reserved for shock or severe dehydration.",
-    "Ondansetron 2 mg (8 to 15 kg) supports oral tolerance.",
-    "Weight loss is the most reliable dehydration marker."
+    "Transient lactase deficiency follows mucosal injury from gastroenteritis",
+    "Acidic stool with reducing substances supports the diagnosis",
+    "Treat with lactose free formula for a few weeks, then reintroduce",
+    "Faltering growth or blood in stool points elsewhere"
    ],
-   "pearls": "For a 12 kg toddler with 5 to 6 percent weight loss and failed oral trial, NGT ORS at 25 mL/kg/hour for four hours is RCH first-line; do not skip to IV."
+   "pearls": "Diarrhoea that reappears with every bottle in a thriving toddler is an enzyme problem; diarrhoea that continues regardless of what goes in is not."
   },
   "sources": [
    {
@@ -875,14 +877,19 @@
     "url": "https://www.rch.org.au/clinicalguide/guideline_index/Gastroenteritis/"
    },
    {
-    "label": "Therapeutic Guidelines: Gastrointestinal"
+    "label": "Therapeutic Guidelines: Gastrointestinal",
+    "url": "https://tgldcdp.tg.org.au/"
+   },
+   {
+    "label": "Therapeutic Guidelines: Antibiotic",
+    "url": "https://tgldcdp.tg.org.au/"
    }
   ],
   "reference_ranges": [
-   "paeds_vitals_child",
-   "bsl_paeds"
+   "paeds_vitals_child"
   ],
-  "created": "2026-07-26"
+  "created": "2026-09-23",
+  "revised_from": "paeds-p69-003"
  },
  {
   "id": "paeds-p69-004",
@@ -974,95 +981,102 @@
   "created": "2026-07-26"
  },
  {
-  "id": "paeds-p69-005",
+  "id": "paeds-p69-005-d2",
   "topic": "Paediatrics",
   "subtopic": "Infectious diseases",
-  "subtopic_detail": "Fever under 3 months septic workup",
+  "subtopic_detail": "Extent of the sepsis evaluation in a febrile infant under three months with clinical bronchiolitis",
   "difficulty": 4,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
-   "neonatal sepsis",
-   "meningitis"
+   "febrile infant",
+   "bronchiolitis",
+   "urinary tract infection"
   ],
-  "stem": "A 5-week-old male infant is brought to ED by his parents with a two-hour history of poor feeding and one axillary temperature of 38.4 degrees C at home. He is a former term infant of an uneventful pregnancy and was well until this evening.\n\nOn arrival he is alert, moves symmetrically and takes 20 mL of formula in front of you. His anterior fontanelle is flat, no rash is present and his mother reports he is different from his usual self.",
+  "stem": "A 7-week-old boy born at term has had coryza and a cough for two days and now a fever. He is taking about three-quarters of his usual feeds and has had four wet nappies today.",
   "data_table": {
-   "Vital signs": "Pulse 168/min, blood pressure 82/48 mmHg, respiratory rate 48/min, SpO2 99 percent on room air, temperature 38.2 degrees C rectally",
-   "Examination": "Alert, moves symmetrically, tone appropriate; no rash; anterior fontanelle soft and flat; chest and abdomen unremarkable",
-   "Investigations": "Urine dip: leucocytes negative, nitrites negative; CRP 12 mg/L (less than 5); WCC 14.5 x10^9/L; blood cultures pending"
+   "Vital signs": "Temp 38.4, HR 152, RR 52, SpO2 95% room air",
+   "Examination": "Alert and well perfused; widespread wheeze and fine crackles; fontanelle soft; no rash",
+   "Investigations": "Nasopharyngeal swab positive for respiratory syncytial virus"
   },
-  "lead_in": "What is the most appropriate next investigation and management step?",
+  "lead_in": "What is the most appropriate management?",
   "options": [
    {
     "letter": "A",
-    "text": "Observe overnight with hourly paediatric early warning scores and repeat inflammatory markers in six hours",
-    "correct": false,
-    "rationale": "RCH mandates full septic workup and empirical IV antibiotics for any fever in an infant under 3 months, not observation alone. (Source: RCH CPG: Febrile child)",
+    "text": "Send a catheter urine specimen and observe him without antibiotics",
+    "correct": true,
+    "rationale": "A well-perfused infant older than one month with clinical bronchiolitis and a confirmed viral cause has a very low risk of bacteraemia or meningitis, but the risk of concurrent urinary tract infection persists, so a catheter specimen is sent and he is observed for feeding and respiratory work. (Source: RCH Clinical Practice Guideline: Bronchiolitis)",
     "source_refs": [
-     "RCH CPG: Febrile child"
+     "RCH Clinical Practice Guideline: Bronchiolitis",
+     "RCH Clinical Practice Guideline: Febrile child"
     ]
    },
    {
     "letter": "B",
-    "text": "Empirical oral amoxicillin at 30 mg/kg discharge home with paediatric review at 24 hours",
+    "text": "Perform a full septic screen with lumbar puncture and start antibiotics",
     "correct": false,
-    "rationale": "Oral antibiotics and discharge are unsafe for an infant under 3 months with a documented fever regardless of appearance. (Source: RCH CPG: Febrile child)",
+    "rationale": "The full evaluation is mandatory under one month of age, and above that for any infant who is unwell, poorly perfused or has no identified focus for the fever. (Source: RCH Clinical Practice Guideline: Febrile child)",
     "source_refs": [
-     "RCH CPG: Febrile child"
+     "RCH Clinical Practice Guideline: Febrile child",
+     "Therapeutic Guidelines: Antibiotic"
     ]
    },
    {
     "letter": "C",
-    "text": "Perform blood culture only then start empirical intravenous ceftriaxone and admit for observation",
+    "text": "Take a blood culture and start intravenous antibiotics without a screen",
     "correct": false,
-    "rationale": "Blood culture without lumbar puncture in an infant under 3 months misses meningitis, which changes duration and choice of antibiotics. (Source: RCH CPG: Febrile child)",
+    "rationale": "Starting antibiotics before cerebrospinal fluid is obtained is justified when the infant is shocked or the lumbar puncture must be deferred, neither of which applies here. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "RCH CPG: Febrile child"
+     "Therapeutic Guidelines: Antibiotic",
+     "RCH Clinical Practice Guideline: Febrile child"
     ]
    },
    {
     "letter": "D",
-    "text": "Chest x-ray then empirical oral cefalexin with paediatric outpatient review at 24 hours",
+    "text": "Start oral amoxicillin and review him in the community tomorrow morning",
     "correct": false,
-    "rationale": "Imaging first without a full septic screen and IV antibiotics is not the RCH pathway for infants under 3 months. (Source: RCH CPG: Febrile child)",
+    "rationale": "Oral antibiotics would follow a focal bacterial infection such as lobar pneumonia with focal signs and a consistent chest radiograph. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "RCH CPG: Febrile child"
+     "Therapeutic Guidelines: Antibiotic"
     ]
    },
    {
     "letter": "E",
-    "text": "Full septic workup with lumbar puncture and empirical intravenous cefotaxime plus benzylpenicillin",
-    "correct": true,
-    "rationale": "RCH requires full septic screen (blood culture, urine catheter or SPA, CSF) and empirical IV cefotaxime plus benzylpenicillin for any infant under 3 months with fever. (Source: RCH CPG: Febrile child)",
+    "text": "Discharge him with feeding advice and no further investigation today",
+    "correct": false,
+    "rationale": "Discharge without a urine specimen would be reasonable in an older infant beyond three months with bronchiolitis who is feeding normally. (Source: RCH Clinical Practice Guideline: Bronchiolitis)",
     "source_refs": [
-     "RCH CPG: Febrile child"
+     "RCH Clinical Practice Guideline: Bronchiolitis"
     ]
    }
   ],
   "explanation": {
-   "summary": "Any infant under 3 months with a documented fever mandates a full septic workup because clinical assessment is unreliable and meningitis can present without focal signs. RCH requires blood culture, catheter or SPA urine, and lumbar puncture before empirical intravenous cefotaxime plus benzylpenicillin for GBS and Listeria cover. Reassuring appearance and normal CRP do not remove the LP requirement. Wait until CSF is obtained before giving the first dose only if it will not delay antibiotics beyond one hour.",
+   "summary": "Fever in an infant under three months usually triggers a full evaluation with blood, urine and cerebrospinal fluid cultures and immediate empirical intravenous antibiotics, because clinical assessment alone cannot exclude invasive bacterial infection at that age. A clearly identified viral focus modifies that rule above one month: infants aged one to three months with clinical bronchiolitis, particularly with a confirmed respiratory virus, have a rate of bacteraemia and meningitis close to zero, so a lumbar puncture and empirical antibiotics are not routinely required. The one infection that is not excluded is urinary tract infection, which runs at several per cent in this group, so a catheter or suprapubic specimen is still collected. Infants under one month, and any infant who looks unwell, has apnoeas or is poorly perfused, get the full evaluation regardless of the virus result. In context, bronchiolitis is the commonest reason for admission of Australian infants in winter, and its management is supportive: oxygen and feeding support, with no role for bronchodilators, corticosteroids or antibiotics.",
    "key_points": [
-    "Any fever in infant under 3 months triggers full septic workup.",
-    "LP is included unless clinically contraindicated.",
-    "Empirical IV cefotaxime plus benzylpenicillin covers Listeria and GBS.",
-    "Do not delay antibiotics beyond one hour for procedures."
+    "Under one month of age, fever means the full evaluation whatever the virus result.",
+    "One to three months with clinical bronchiolitis: bacteraemia and meningitis risk is very low.",
+    "Concurrent urinary tract infection is not excluded and needs a catheter specimen.",
+    "Any infant who is unwell or apnoeic gets the full evaluation regardless."
    ],
-   "pearls": "Fever in an infant under 3 months means blood, urine and CSF cultures then IV cefotaxime plus benzylpenicillin within 60 minutes; do not observe."
+   "pearls": "A positive respiratory virus swab lowers the probability of invasive bacterial infection but never of urinary tract infection, which is why the urine specimen survives every version of this pathway."
   },
   "sources": [
    {
-    "label": "RCH CPG: Febrile child",
+    "label": "RCH Clinical Practice Guideline: Bronchiolitis",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/"
+   },
+   {
+    "label": "RCH Clinical Practice Guideline: Febrile child",
     "url": "https://www.rch.org.au/clinicalguide/guideline_index/Febrile_child/"
    },
    {
-    "label": "Therapeutic Guidelines: Antibiotic"
+    "label": "Therapeutic Guidelines: Antibiotic",
+    "url": "https://www.tg.org.au"
    }
   ],
   "reference_ranges": [
-   "paeds_vitals_infant",
-   "inflammatory_markers",
-   "paeds_fbc"
+   "paeds_vitals_infant"
   ],
-  "created": "2026-07-26"
+  "revised_from": "paeds-p69-005"
  },
  {
   "id": "paeds-p69-006",
@@ -2417,93 +2431,99 @@
   "created": "2026-07-26"
  },
  {
-  "id": "paeds-p72-001",
+  "id": "paeds-p72-001-d2",
   "topic": "Paediatrics",
   "subtopic": "Respiratory",
-  "subtopic_detail": "Bronchiolitis oxygen escalation threshold",
+  "subtopic_detail": "Intravenous fluid choice in bronchiolitis",
   "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "model": "Claude Opus 5",
   "tags": [
    "bronchiolitis",
-   "oxygen therapy"
+   "fluids"
   ],
-  "stem": "A 4-month-old boy presents to the paediatric emergency department with 3 days of coryza, cough and increasing work of breathing. He is bottle-feeding at about 50 percent of normal intake and has had wet nappies overnight. He was born at 39 weeks by normal vaginal delivery with no neonatal issues and is fully immunised for age.\n\nOn arrival he has audible wheeze with mild subcostal recession. He accepts a small feed on your assessment and settles when held. His SpO2 on room air is 89 percent and stays at 89 to 90 percent when he is calm and awake.",
+  "stem": "A 4 month old girl with bronchiolitis is too tachypnoeic to feed safely and has vomited her nasogastric feeds twice. She weighs 6 kg.",
   "data_table": {
-   "Vital signs": "Pulse 148/min, blood pressure not routinely measured, respiratory rate 52/min, SpO2 89 percent on room air, temperature 37.4 degrees C",
-   "Examination": "Alert, pink centrally; mild subcostal recession; widespread expiratory wheeze and fine crackles; capillary refill under 2 seconds; anterior fontanelle flat",
-   "Investigations": "No routine bloods or chest X-ray required"
+   "Vital signs": "HR 168, RR 68, SpO2 92 percent on 1 L/min nasal prongs",
+   "Examination": "Moderate recession, moist mucous membranes, capillary refill 2 seconds"
   },
-  "lead_in": "What is the most appropriate initial oxygen strategy?",
+  "lead_in": "What is the most appropriate intravenous fluid prescription?",
   "options": [
    {
     "letter": "A",
-    "text": "Give low-flow nasal prong oxygen at 1 to 2 L/min targeting SpO2 at or above 90 percent",
+    "text": "Sodium chloride 0.9 percent with glucose at two thirds maintenance",
     "correct": true,
-    "rationale": "RCH CPG uses low-flow nasal prong oxygen as first-line when SpO2 drops below 90 percent when awake, with 90 percent as the maintenance target. (Source: RCH CPG Bronchiolitis)",
+    "rationale": "Australian paediatric practice uses isotonic fluid with glucose, restricted to about two thirds of maintenance in bronchiolitis because of the risk of hyponatraemia from raised antidiuretic hormone. (Source: RCH CPG: Intravenous fluids; PREDICT Australasian Bronchiolitis Guideline)",
     "source_refs": [
-     "RCH CPG Bronchiolitis"
+     "RCH CPG: Intravenous fluids",
+     "PREDICT Australasian Bronchiolitis Guideline"
     ]
    },
    {
     "letter": "B",
-    "text": "Withhold oxygen and observe overnight because he remains alert and feeding",
+    "text": "Sodium chloride 0.45 percent with glucose at the full maintenance rate",
     "correct": false,
-    "rationale": "Sustained awake SpO2 below 90 percent meets the RCH threshold for oxygen therapy irrespective of feeding. (Source: RCH CPG Bronchiolitis)",
+    "rationale": "Hypotonic maintenance fluid is no longer used in children because it causes hospital acquired hyponatraemia; it has a narrow role in specific states such as hypernatraemic dehydration. (Source: RCH CPG: Intravenous fluids)",
     "source_refs": [
-     "RCH CPG Bronchiolitis"
+     "RCH CPG: Intravenous fluids"
     ]
    },
    {
     "letter": "C",
-    "text": "Trial nebulised salbutamol 2.5 mg once before considering any oxygen therapy",
+    "text": "Sodium chloride 0.9 percent with glucose at full maintenance rate",
     "correct": false,
-    "rationale": "Bronchodilators are not recommended for infants under 12 months with typical bronchiolitis in the RCH pathway. (Source: RCH CPG Bronchiolitis)",
+    "rationale": "Full maintenance isotonic fluid is right for a child who is unable to feed without a syndrome of inappropriate antidiuresis, for example after elective surgery with normal respiratory effort. (Source: RCH CPG: Intravenous fluids)",
     "source_refs": [
-     "RCH CPG Bronchiolitis"
+     "RCH CPG: Intravenous fluids"
     ]
    },
    {
     "letter": "D",
-    "text": "Start CPAP via a paediatric interface at 6 cm H2O and admit to ICU immediately",
+    "text": "Glucose 5 percent alone at two thirds of the maintenance rate",
     "correct": false,
-    "rationale": "CPAP or intubation follows escalation through low-flow then HFNC when respiratory failure develops; it is not first-line here. (Source: RCH CPG Bronchiolitis)",
+    "rationale": "Glucose without sodium is effectively free water and is not used as a maintenance fluid in children; it is a vehicle for drugs or for correcting hypernatraemia under close monitoring. (Source: RCH CPG: Intravenous fluids)",
     "source_refs": [
-     "RCH CPG Bronchiolitis"
+     "RCH CPG: Intravenous fluids"
     ]
    },
    {
     "letter": "E",
-    "text": "Start high-flow nasal cannula at 2 L/kg/min heated humidified oxygen now",
+    "text": "Sodium chloride 0.9 percent as a 20 mL/kg bolus then maintenance",
     "correct": false,
-    "rationale": "HFNC is reserved for failure of low-flow oxygen after a trial of at least 1 to 2 hours; it is not the first oxygen escalation. (Source: RCH CPG Bronchiolitis)",
+    "rationale": "A bolus is for a shocked or significantly dehydrated infant, and this girl has moist membranes with a capillary refill of 2 seconds, so extra volume risks pulmonary congestion. (Source: RCH CPG: Intravenous fluids)",
     "source_refs": [
-     "RCH CPG Bronchiolitis"
+     "RCH CPG: Intravenous fluids"
     ]
    }
   ],
   "explanation": {
-   "summary": "The RCH bronchiolitis pathway uses SpO2 of 90 percent as the maintenance target for infants over 6 weeks with typical bronchiolitis, and starts oxygen with low-flow nasal prongs at 1 to 2 L/min when SpO2 falls below 90 percent awake. HFNC is reserved for infants who fail low-flow after a 1 to 2 hour trial. Bronchodilators, steroids, adrenaline and antibiotics are not recommended in typical bronchiolitis. The pathway is one of supportive feeding, oxygenation and minimal handling.",
+   "summary": "An infant with bronchiolitis who cannot feed safely is hydrated by nasogastric feeds first, and intravenously only when the enteral route fails or is unsafe. The prescription is isotonic: sodium chloride 0.9 percent with glucose, at around two thirds of calculated maintenance, because bronchiolitis raises antidiuretic hormone and both hypotonic fluid and generous volumes cause hyponatraemia. Sodium is checked at the start and monitored, and the child is moved back to enteral feeds as soon as the work of breathing allows.\n\nIn context: intravenous fluid in children is prescribed with the same care as a drug, with a defined tonicity, rate and monitoring plan. Isotonic fluid is the default for both resuscitation and maintenance, hypotonic solutions have been withdrawn from routine use after avoidable deaths from hyponatraemic encephalopathy, and fluid is restricted in conditions associated with inappropriate antidiuresis such as bronchiolitis, pneumonia and meningitis.",
    "key_points": [
-    "SpO2 target on the RCH pathway is 90 percent, not 92 to 94 percent.",
-    "Low-flow nasal prongs 1 to 2 L/min are first-line oxygen.",
-    "HFNC follows failure of low-flow after 1 to 2 hours.",
-    "Bronchodilators and steroids are not recommended in bronchiolitis under 12 months."
+    "Nasogastric feeding is tried before intravenous fluid in bronchiolitis",
+    "Use isotonic fluid with glucose, not hypotonic maintenance solutions",
+    "Restrict to around two thirds maintenance because of antidiuretic hormone effect",
+    "Check sodium at the start and monitor it during therapy"
    ],
-   "pearls": "On the RCH CPG start nasal prong oxygen at 1 to 2 L/min once SpO2 sits below 90 percent when the infant is calm and awake; only escalate to HFNC after 1 to 2 hours of failed low-flow."
+   "pearls": "The infant with bronchiolitis is at risk from the fluid as well as from the virus; isotonic and restricted is the safe default."
   },
   "sources": [
    {
-    "label": "RCH CPG Bronchiolitis",
-    "url": "https://www.rch.org.au/clinicalguide/guideline_index/bronchiolitis/"
+    "label": "RCH CPG: Intravenous fluids",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Intravenous_fluids/"
    },
    {
-    "label": "Australian eTG: Paediatrics - Bronchiolitis"
+    "label": "PREDICT Australasian Bronchiolitis Guideline",
+    "url": "https://www.predict.org.au/bronchiolitis-guideline/"
+   },
+   {
+    "label": "RCH CPG: Bronchiolitis",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/"
    }
   ],
   "reference_ranges": [
    "paeds_vitals_infant"
   ],
-  "created": "2026-07-26"
+  "created": "2026-09-23",
+  "revised_from": "paeds-p72-001"
  },
  {
   "id": "paeds-p72-002",
@@ -2684,94 +2704,100 @@
   "created": "2026-07-26"
  },
  {
-  "id": "paeds-p72-004",
+  "id": "paeds-p72-004-d2",
   "topic": "Paediatrics",
   "subtopic": "Infectious diseases",
-  "subtopic_detail": "Febrile infant under 3 months workup",
-  "difficulty": 4,
+  "subtopic_detail": "Fluid bolus volume in a shocked febrile infant under three months",
+  "difficulty": 3,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
-   "febrile infant",
-   "sepsis"
+   "sepsis",
+   "neonate",
+   "fluid resuscitation"
   ],
-  "stem": "A 5-week-old boy is brought to the emergency department by his parents with a rectal temperature of 38.4 degrees C recorded at home and confirmed on arrival. He was born at 39 weeks by normal vaginal delivery with an uneventful pregnancy and postnatal course. He has been feeding poorly for 12 hours and has had reduced wet nappies today, with two brief episodes of pallor described by his mother.\n\nOn examination he is alert but has a weak cry and is difficult to rouse for feeds. His anterior fontanelle is flat, capillary refill is 3 seconds centrally, and the abdomen is soft. There is no rash, no bulging fontanelle and no localising focus. He has not received any recent vaccinations.",
+  "stem": "A 3-week-old girl is brought in with poor feeding and lethargy. She is mottled with a capillary refill of four seconds. You have intravenous access and blood cultures have been taken.",
   "data_table": {
-   "Vital signs": "Pulse 178/min, blood pressure 74/48 mmHg, respiratory rate 62/min, SpO2 96 percent on room air, temperature 38.4 degrees C",
-   "Examination": "Weak cry; capillary refill 3 seconds central; anterior fontanelle flat; chest clear; abdomen soft; no rash; no focal source",
-   "Investigations": "Point of care glucose 4.2 mmol/L (2.6-6.0)"
+   "Vital signs": "Temp 38.6, HR 192, RR 62, BP 58/32, SpO2 96% room air",
+   "Investigations": "Blood glucose 4.2 mmol/L, venous lactate 4.1 mmol/L"
   },
-  "lead_in": "What is the most appropriate next set of investigations and treatment?",
+  "lead_in": "What is the most appropriate initial fluid?",
   "options": [
    {
     "letter": "A",
-    "text": "Blood tests and urine dipstick only and start oral amoxicillin after clean-catch urine",
-    "correct": false,
-    "rationale": "Oral therapy and dipstick-only sampling are inadequate for a sick febrile infant under 3 months; parenteral empirical antibiotics are needed. (Source: RCH CPG Febrile child)",
+    "text": "Intravenous 0.9% sodium chloride 10 mL/kg, then reassess",
+    "correct": true,
+    "rationale": "Neonates and young infants are given isotonic crystalloid in 10 mL/kg aliquots with reassessment after each, because the immature myocardium tolerates volume loading poorly and larger boluses precipitate hepatomegaly and pulmonary oedema. (Source: RCH Clinical Practice Guideline: Sepsis - assessment and management)",
     "source_refs": [
-     "RCH CPG Febrile child"
+     "RCH Clinical Practice Guideline: Sepsis - assessment and management",
+     "NSW Clinical Excellence Commission Sepsis Pathways"
     ]
    },
    {
     "letter": "B",
-    "text": "Observation for 6 hours with paracetamol and only investigate if temperature rises further",
+    "text": "Intravenous 0.9% sodium chloride 20 mL/kg, then reassess",
     "correct": false,
-    "rationale": "Watchful waiting is unsafe in an unwell-appearing infant under 3 months with fever; empirical antibiotics must not be delayed. (Source: RCH CPG Febrile child)",
+    "rationale": "The 20 mL/kg aliquot is the standard for older infants and children in septic shock, outside the neonatal period. (Source: RCH Clinical Practice Guideline: Sepsis - assessment and management)",
     "source_refs": [
-     "RCH CPG Febrile child"
+     "RCH Clinical Practice Guideline: Sepsis - assessment and management"
     ]
    },
    {
     "letter": "C",
-    "text": "Chest X-ray, viral swab, blood cultures and inhaled bronchodilator without lumbar puncture",
+    "text": "Intravenous 0.9% sodium chloride 40 mL/kg, then reassess",
     "correct": false,
-    "rationale": "The presentation is not respiratory-focused and LP is mandatory in an unwell infant under 3 months with fever unless immediately contraindicated. (Source: RCH CPG Febrile child)",
+    "rationale": "Forty millilitres per kilogram is a cumulative volume reached over several aliquots, and giving it as a single bolus removes the reassessment that guides escalation to inotropes. (Source: NSW Clinical Excellence Commission Sepsis Pathways)",
     "source_refs": [
-     "RCH CPG Febrile child"
+     "NSW Clinical Excellence Commission Sepsis Pathways"
     ]
    },
    {
     "letter": "D",
-    "text": "Full septic workup including lumbar puncture followed by IV cefotaxime and benzylpenicillin now",
-    "correct": true,
-    "rationale": "Any unwell-appearing infant under 3 months with fever needs a full septic workup including LP and empirical IV cefotaxime plus benzylpenicillin per RCH sepsis pathway. (Source: RCH CPG Febrile child)",
+    "text": "Intravenous 4% albumin 20 mL/kg, then reassess perfusion",
+    "correct": false,
+    "rationale": "Colloid is considered in selected fluid-refractory shock, particularly with capillary leak, rather than as the first fluid given. (Source: RCH Clinical Practice Guideline: Sepsis - assessment and management)",
     "source_refs": [
-     "RCH CPG Febrile child"
+     "RCH Clinical Practice Guideline: Sepsis - assessment and management"
     ]
    },
    {
     "letter": "E",
-    "text": "Blood cultures, urine microscopy and IV ceftriaxone with observation only for 4 hours",
+    "text": "Intravenous 10% glucose 5 mL/kg, then reassess perfusion",
     "correct": false,
-    "rationale": "Ceftriaxone is not preferred in the first weeks due to bilirubin displacement; LP cannot be deferred in an unwell-appearing infant under 3 months. (Source: RCH CPG Febrile child)",
+    "rationale": "A glucose bolus is the treatment for documented hypoglycaemia, which is common in the septic neonate but has been excluded here. (Source: RCH Clinical Practice Guideline: Sepsis - assessment and management)",
     "source_refs": [
-     "RCH CPG Febrile child"
+     "RCH Clinical Practice Guideline: Sepsis - assessment and management"
     ]
    }
   ],
   "explanation": {
-   "summary": "RCH guidance for the febrile infant under 3 months mandates a full septic workup including blood culture, urine microscopy and culture, chest X-ray if respiratory symptoms are present, and lumbar puncture in any unwell-appearing infant or under 28 days old. Empirical parenteral antibiotics are IV cefotaxime plus benzylpenicillin (or ampicillin) to cover Listeria in the first weeks of life; ceftriaxone is avoided in neonates because of bilirubin displacement. Delay in antibiotics is a major cause of preventable death. Well-appearing infants aged 1 to 3 months follow a stepwise pathway but still receive full culture set and empirical antibiotics if criteria are unmet.",
+   "summary": "Shock in a febrile neonate is managed with isotonic crystalloid, empirical intravenous antibiotics within the hour and early escalation to inotropes, but the bolus size differs from older children. Neonates and small infants receive 10 mL/kg aliquots with a full reassessment of heart rate, perfusion, liver edge and respiratory work after each, because the neonatal myocardium has limited contractile reserve and responds to over-filling with hepatomegaly, crackles and worsening shock. Older infants and children take 10 to 20 mL/kg aliquots. If perfusion has not improved after roughly 40 to 60 mL/kg in total, the answer is a peripheral adrenaline infusion and retrieval rather than more fluid. Glucose and ionised calcium are checked early, since both fall quickly in the septic neonate. In context, the differential for a shocked neonate includes duct-dependent congenital heart disease and inborn errors of metabolism as well as sepsis, so an absent femoral pulse or a grossly abnormal gas changes the plan entirely.",
    "key_points": [
-    "Unwell infants under 3 months need full septic workup including LP.",
-    "Empirical antibiotics are cefotaxime plus benzylpenicillin in the first weeks.",
-    "Ceftriaxone is avoided in neonates due to bilirubin displacement.",
-    "Delay in antibiotics is a preventable cause of paediatric sepsis death."
+    "Neonates receive 10 mL/kg crystalloid aliquots with reassessment after each.",
+    "Older infants and children take 10 to 20 mL/kg aliquots.",
+    "Hepatomegaly and new crackles mean stop the fluid and start inotropes.",
+    "Check glucose and ionised calcium early in the shocked neonate."
    ],
-   "pearls": "For a 5 week old with fever and any red flag (weak cry, poor feeding, cap refill above 2 seconds) do the full septic workup with LP and give IV cefotaxime plus benzylpenicillin without waiting for cultures."
+   "pearls": "Feel for the liver edge between boluses: a liver that has descended two centimetres is the earliest bedside sign that the next bolus will do harm."
   },
   "sources": [
    {
-    "label": "RCH CPG Febrile child",
-    "url": "https://www.rch.org.au/clinicalguide/guideline_index/febrile_child/"
+    "label": "RCH Clinical Practice Guideline: Sepsis - assessment and management",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Sepsis_assessment_and_management/"
    },
    {
-    "label": "Australian eTG: Paediatrics - Sepsis"
+    "label": "NSW Clinical Excellence Commission Sepsis Pathways",
+    "url": "https://www.cec.health.nsw.gov.au/keep-patients-safe/sepsis"
+   },
+   {
+    "label": "Therapeutic Guidelines: Antibiotic",
+    "url": "https://www.tg.org.au"
    }
   ],
   "reference_ranges": [
    "paeds_vitals_infant",
    "bsl_paeds"
   ],
-  "created": "2026-07-26"
+  "revised_from": "paeds-p72-004"
  },
  {
   "id": "paeds-p72-005",

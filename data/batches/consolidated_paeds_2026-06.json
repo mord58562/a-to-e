@@ -549,96 +549,99 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rp48-008",
+  "id": "rp48-008-d2",
   "topic": "Paediatrics",
-  "subtopic": "Cardiology",
-  "subtopic_detail": "Incomplete Kawasaki disease",
-  "difficulty": 5,
+  "subtopic": "Rheumatology",
+  "subtopic_detail": "Fever of three days with only two clinical criteria and no diagnostic threshold reached",
+  "difficulty": 3,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
-   "Kawasaki",
-   "IVIG",
-   "coronary"
+   "kawasaki disease",
+   "fever",
+   "diagnostic criteria"
   ],
-  "stem": "A 4-year-old previously well boy is on day 6 of a fluctuating fever that peaks at 39.8°C and is poorly responsive to paracetamol. His parents describe his eyes as red without any discharge for three days, a strawberry tongue from day 4, a polymorphous truncal rash since day 4, and recently noted redness and swelling of his hands. He has a single 1.8 cm tender anterior cervical lymph node on the right. There are no oral vesicles. He has had no contact with anyone known to have COVID-19; nasopharyngeal SARS-CoV-2 PCR returned negative this morning.\n\nA blood panel and echocardiogram have just been completed by the cardiology fellow.",
+  "stem": "A previously well 2-year-old boy is brought to the emergency department with three days of fever. He is alert, playing in the cubicle and drinking normally.",
   "data_table": {
-   "Vital signs": "Pulse rate 140/min, blood pressure 96/58 mmHg, respiratory rate 30/min, SpO2 98% on room air, temperature 39.2°C",
-   "Examination": "Bilateral non-purulent conjunctivitis, strawberry tongue, polymorphous truncal rash, swollen erythematous hands, single 1.8 cm right cervical node; no oral vesicles",
-   "Investigations": "WCC 18.5 x10^9/L; CRP 165 mg/L; ESR 78 mm/hr; platelets 480 x10^9/L; Hb 95 g/L (110-140); ALT 90 U/L; albumin 28 g/L (35-50); sodium 131 mmol/L; urine 30 leukocytes per HPF, no organisms; echocardiogram shows LMCA z-score +2.1, RCA z-score +2.4, small pericardial effusion",
-   "Medications": "Paracetamol regularly"
+   "Vital signs": "Temp 38.9, HR 138, RR 28, BP 94/56, SpO2 99% room air",
+   "Examination": "Bilateral non-purulent conjunctivitis; polymorphous trunk rash; no mucosal, limb or node changes",
+   "Investigations": "CRP 42 mg/L, platelets 310 x10^9/L, albumin 36 g/L"
   },
-  "lead_in": "What is the most appropriate initial treatment?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "Methylprednisolone 30 mg/kg IV daily for three days, withholding IVIG until day 10 of fever.",
-    "correct": false,
-    "rationale": "Steroid monotherapy is not first-line in Australian practice and IVIG should not be delayed when criteria are met. (Source: AHA Kawasaki disease statement)",
+    "text": "Arrange clinical review in 48 hours with repeat inflammatory markers",
+    "correct": true,
+    "rationale": "Two clinical features on day three of fever meets neither the complete nor the incomplete criteria, and treating before day five would commit a child to immunoglobulin for what is usually a viral exanthem; serial review captures the features as they evolve. (Source: RCH Clinical Practice Guideline: Kawasaki disease)",
     "source_refs": [
-     "AHA Kawasaki disease statement"
+     "RCH Clinical Practice Guideline: Kawasaki disease",
+     "RCH Clinical Practice Guideline: Febrile child"
     ]
    },
    {
     "letter": "B",
-    "text": "IV ceftriaxone 50 mg/kg plus IV vancomycin 15 mg/kg pending blood culture results overnight.",
+    "text": "Admit now for intravenous immunoglobulin and high-dose aspirin",
     "correct": false,
-    "rationale": "Empirical sepsis treatment alone misses the IVIG window and does not address coronary inflammation. (Source: RCH CPG: Kawasaki disease)",
+    "rationale": "Immediate treatment is right once five days of fever plus four features, or a shorter illness with coronary changes on imaging, has been documented. (Source: RCH Clinical Practice Guideline: Kawasaki disease)",
     "source_refs": [
-     "RCH CPG: Kawasaki disease"
+     "RCH Clinical Practice Guideline: Kawasaki disease"
     ]
    },
    {
     "letter": "C",
-    "text": "Anakinra 2 mg/kg/day given subcutaneously as monotherapy because the criteria are only partial.",
+    "text": "Start oral amoxicillin and review him in the community in a week",
     "correct": false,
-    "rationale": "Anakinra is reserved for IVIG-resistant Kawasaki disease, not initial therapy. (Source: AHA Kawasaki disease statement)",
+    "rationale": "Oral antibiotics would follow a bacterial focus such as otitis media or a positive throat swab in scarlet fever, neither of which is present. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "AHA Kawasaki disease statement"
+     "Therapeutic Guidelines: Antibiotic",
+     "RCH Clinical Practice Guideline: Febrile child"
     ]
    },
    {
     "letter": "D",
-    "text": "Oral prednisolone 1 mg/kg daily plus aspirin 5 mg/kg daily as antiplatelet cover.",
+    "text": "Arrange urgent echocardiography today and admit him under the cardiology team",
     "correct": false,
-    "rationale": "Low-dose aspirin with prednisolone alone fails to address acute coronary inflammation and is insufficient initial therapy. (Source: AHA Kawasaki disease statement)",
+    "rationale": "Urgent imaging is reserved for prolonged unexplained fever where incomplete disease is genuinely suspected, which needs at least five days of fever plus supportive laboratory features. (Source: RCH Clinical Practice Guideline: Kawasaki disease)",
     "source_refs": [
-     "AHA Kawasaki disease statement"
+     "RCH Clinical Practice Guideline: Kawasaki disease"
     ]
    },
    {
     "letter": "E",
-    "text": "IV immunoglobulin 2 g/kg infused over 12 hours plus oral aspirin 30 mg/kg/day in four divided doses.",
-    "correct": true,
-    "rationale": "Incomplete Kawasaki criteria are met with persistent fever, three principal features, supportive labs, and coronary z-scores at or above 2.0, mandating IVIG plus high-dose aspirin. (Source: AHA Kawasaki disease statement)",
+    "text": "Discharge with antipyretic advice and no planned medical review",
+    "correct": false,
+    "rationale": "Discharge without review would suit a child with a clear viral focus and a short expected course, not one whose feature count could still cross the diagnostic threshold. (Source: RCH Clinical Practice Guideline: Febrile child)",
     "source_refs": [
-     "AHA Kawasaki disease statement"
+     "RCH Clinical Practice Guideline: Febrile child"
     ]
    }
   ],
   "explanation": {
-   "summary": "This child meets incomplete Kawasaki criteria: fever for at least 5 days with three of five principal clinical features and supplementary laboratory findings (anaemia for age, albumin below 30 g/L, ALT elevation, platelets above 450, WCC above 15, sterile pyuria, sodium below 135) plus coronary z-scores at or above 2.0 to 2.5. A negative SARS-CoV-2 PCR with classic Kawasaki phenotype argues against multisystem inflammatory syndrome in children. Treatment is IVIG 2 g/kg with high-dose aspirin 30 to 50 mg/kg/day divided four-hourly until afebrile 48 hours, then 3 to 5 mg/kg daily for at least 6 weeks.",
+   "summary": "The diagnosis of complete Kawasaki disease requires five days of fever plus four of the five principal features, and the incomplete pathway requires five days of fever with two or three features plus supportive laboratory criteria or abnormal imaging. A child on day three with two features meets neither, and conjunctivitis with a rash is far more often viral at this point. The right move is planned serial review rather than either treatment or discharge, because the feature count evolves and features already resolved can be counted on later review. Treatment delivered within ten days of fever onset still gives nearly all of the coronary protection, so a 48-hour review does not cost the child anything. In context, Kawasaki disease is a clinical diagnosis with no confirmatory test, which makes deliberate re-examination over days the investigation that actually makes the diagnosis.",
    "key_points": [
-    "Coronary z-score at or above 2.0 with three principal features supports incomplete KD.",
-    "IVIG 2 g/kg plus high-dose aspirin remains first-line in Australian practice.",
-    "IVIG resistance defined by persistent fever 36 hours post-infusion triggers a second IVIG dose or anakinra."
+    "Complete disease needs five days of fever plus four of five principal features.",
+    "Incomplete disease still needs five days of fever plus supportive laboratory criteria.",
+    "Features that have already resolved count towards the total on later review.",
+    "Immunoglobulin before day ten preserves nearly all of the coronary benefit."
    ],
-   "pearls": "Hyponatraemia and a sterile pyuria are easily missed supplementary criteria that tilt a fever-of-unknown-origin towards incomplete Kawasaki when the principal features are partial."
+   "pearls": "Resist treating on day three: the cost of a planned 48-hour review is nil, while treating every febrile child with conjunctivitis and a rash would commit most of them to a blood product they never needed."
   },
   "sources": [
    {
-    "label": "RCH CPG: Kawasaki disease",
-    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Kawasaki_disease/"
+    "label": "RCH Clinical Practice Guideline: Kawasaki disease",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Kawasaki_Disease/"
    },
    {
-    "label": "AHA Kawasaki disease statement",
-    "url": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000000484"
+    "label": "RCH Clinical Practice Guideline: Febrile child",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Febrile_child/"
    }
   ],
   "reference_ranges": [
-   "paeds_fbc",
-   "inflammatory_markers"
+   "paeds_vitals_child",
+   "inflammatory_markers",
+   "paeds_fbc"
   ],
-  "created": "2026-06-01"
+  "revised_from": "rp48-008"
  },
  {
   "id": "rabe49-001",
@@ -823,95 +826,98 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rabe49-003",
+  "id": "rabe49-003-d2",
   "topic": "Paediatrics",
   "subtopic": "Acute respiratory",
-  "subtopic_detail": "Severe asthma IV magnesium threshold",
-  "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Corticosteroid route in acute asthma after vomiting",
+  "difficulty": 2,
+  "model": "Claude Opus 5",
   "tags": [
    "asthma",
-   "magnesium"
+   "corticosteroid"
   ],
-  "stem": "An eight-year-old known asthmatic presents with worsening dyspnoea over six hours. He has had three back-to-back salbutamol nebulisers with ipratropium and oral prednisolone 2 mg/kg in ED. Forty minutes after the third nebuliser he still has marked subcostal recession, a silent left lower zone, and is speaking in single words. Pulse rate 140, blood pressure 102/68 mmHg, respiratory rate 36, SpO2 91% on 6 L/min via Hudson mask, temperature 36.9°C. Peak flow cannot be obtained. Venous gas: pH 7.32, pCO2 46 mmHg, HCO3 23 mmol/L, lactate 3.8 mmol/L.",
+  "stem": "A 5 year old girl with a moderate asthma exacerbation vomits her oral prednisolone twice, each time within 10 minutes of the dose. She has had salbutamol 6 puffs by spacer three times and remains wheezy. She weighs 18 kg.",
   "data_table": {
-   "Vital signs": "Pulse 140, BP 102/68 mmHg, RR 36, SpO2 91% on 6 L Hudson, temperature 36.9°C",
-   "Examination": "Speaks single words, marked recession, silent LLZ",
-   "Investigations": "VBG pH 7.32, pCO2 46 mmHg, HCO3 23 mmol/L, lactate 3.8 mmol/L",
-   "Medications": "Salbutamol 5 mg nebs x3 with ipratropium 250 mcg x3; prednisolone 2 mg/kg PO"
+   "Vital signs": "HR 140, RR 32, SpO2 94 percent in room air",
+   "Examination": "Speaking in short phrases, subcostal recession, widespread wheeze"
   },
-  "lead_in": "What is the most appropriate next step?",
+  "lead_in": "What is the most appropriate corticosteroid now?",
   "options": [
    {
     "letter": "A",
-    "text": "Continuous salbutamol nebulisation at 0.5 mg/kg/hour for 60 minutes",
-    "correct": false,
-    "rationale": "He has had maximal intermittent nebulisation without response and tachycardia plus lactate above 3 mmol/L indicate beta-agonist toxicity. Further salbutamol without IV magnesium is unlikely to help. (Source: RCH CPG: Asthma)",
+    "text": "Intravenous methylprednisolone 1 milligram per kilogram",
+    "correct": true,
+    "rationale": "When a child cannot retain oral corticosteroid, the RCH acute asthma guideline uses intravenous methylprednisolone 1 milligram per kilogram six-hourly until oral therapy is tolerated. (Source: RCH CPG: Asthma acute)",
     "source_refs": [
-     "RCH CPG: Asthma"
+     "RCH CPG: Asthma acute"
     ]
    },
    {
     "letter": "B",
-    "text": "IV aminophylline 5 mg/kg loading over 20 minutes then infusion",
+    "text": "Repeat oral prednisolone 1 milligram per kilogram",
     "correct": false,
-    "rationale": "Aminophylline is third-line after IV magnesium has failed and carries arrhythmia and seizure risk. (Source: RCH CPG: Asthma)",
+    "rationale": "A single repeat is reasonable after one vomit soon after a dose. Two vomits establish that the oral route is not working, so a third attempt only delays the steroid. (Source: Australian Asthma Handbook)",
     "source_refs": [
-     "RCH CPG: Asthma"
+     "Australian Asthma Handbook"
     ]
    },
    {
     "letter": "C",
-    "text": "IV magnesium sulfate 50 mg/kg over 20 minutes with cardiac monitoring",
-    "correct": true,
-    "rationale": "Failure to respond to maximal first-line bronchodilator and steroid in severe asthma is the trigger for IV magnesium. RCH dose is 50 mg/kg (max 2 g) over 20 minutes with cardiac monitoring. (Source: RCH CPG: Asthma)",
+    "text": "Nebulised budesonide 1 milligram with the next salbutamol",
+    "correct": false,
+    "rationale": "Inhaled corticosteroid is a preventer for interval control and has no established role as systemic cover in an acute exacerbation in Australian guidance. (Source: Australian Asthma Handbook)",
     "source_refs": [
-     "RCH CPG: Asthma"
+     "Australian Asthma Handbook"
     ]
    },
    {
     "letter": "D",
-    "text": "IV hydrocortisone 4 mg/kg as he has had only oral steroid",
+    "text": "Intramuscular dexamethasone 0.6 milligrams per kilogram",
     "correct": false,
-    "rationale": "Oral prednisolone is equivalent to IV hydrocortisone for asthma; switching does not bridge ongoing bronchospasm. (Source: RCH CPG: Asthma)",
+    "rationale": "The intramuscular route is used when neither oral nor intravenous access is achievable, for example in a distressed child in a remote setting without a cannula. (Source: Therapeutic Guidelines: Respiratory)",
     "source_refs": [
-     "RCH CPG: Asthma"
+     "Therapeutic Guidelines: Respiratory"
     ]
    },
    {
     "letter": "E",
-    "text": "Intubate and ventilate with ketamine induction in resus bay",
+    "text": "Oral dexamethasone 0.6 milligrams per kilogram wafer",
     "correct": false,
-    "rationale": "Intubation in severe asthma is high-risk and reserved for arrest, exhaustion, or persistent hypoxia despite second-line therapy. IV magnesium precedes it. (Source: RCH CPG: Asthma)",
+    "rationale": "Oral dexamethasone is an accepted alternative to prednisolone in a child who can keep it down, which is exactly what has already failed twice here. (Source: RCH CPG: Asthma acute)",
     "source_refs": [
-     "RCH CPG: Asthma"
+     "RCH CPG: Asthma acute"
     ]
    }
   ],
   "explanation": {
-   "summary": "Failure to respond to three back-to-back salbutamol-ipratropium nebulisers plus systemic steroid in a child with severe asthma triggers IV magnesium sulfate. RCH dose is 50 mg/kg (max 2 g) over 20 minutes with cardiac monitoring. Aminophylline is third-line. Intubation is reserved for exhaustion, arrest, or persistent hypoxia despite second-line therapy.",
+   "summary": "Systemic corticosteroid within the first hour shortens an asthma exacerbation and reduces relapse, and the oral route is preferred because it works as quickly as intravenous therapy. The decision point is what to do when the child cannot keep the oral dose down. After a second vomit the oral route has failed and the RCH guideline moves to intravenous methylprednisolone 1 milligram per kilogram six-hourly, switching back to oral prednisolone once tolerated so that the total course runs for three days.\n\nIn context: acute asthma treatment has two arms that run together. Bronchodilators relieve the bronchospasm now and are titrated to work of breathing, while corticosteroid treats the airway inflammation that sustains the exacerbation over the following days. Delay in the steroid arm is invisible in the first hour and shows up as relapse, so route failure is a problem to solve immediately rather than to keep retrying.",
    "key_points": [
-    "IV magnesium 50 mg/kg over 20 minutes is RCH second-line in severe asthma",
-    "Steroid route does not matter for asthma; PO equals IV",
-    "Lactate above 3 mmol/L in salbutamol-treated asthma usually reflects beta-agonist effect, not sepsis"
+    "Systemic corticosteroid is given within the first hour of an exacerbation",
+    "Oral prednisolone is as effective as intravenous therapy when tolerated",
+    "Two vomited doses mean the oral route has failed",
+    "Intravenous methylprednisolone 1 milligram per kilogram six-hourly is the substitute"
    ],
-   "pearls": "If the child is still working hard 30 to 60 minutes after the third bronchodilator burst, give IV magnesium - do not keep nebulising in hope."
+   "pearls": "One vomit soon after a dose earns one repeat; a second vomit is the signal to change route rather than to keep dosing."
   },
   "sources": [
    {
-    "label": "RCH CPG: Asthma",
+    "label": "RCH CPG: Asthma acute",
     "url": "https://www.rch.org.au/clinicalguide/guideline_index/Asthma_acute/"
    },
    {
-    "label": "Australian Asthma Handbook v2.2",
+    "label": "Australian Asthma Handbook",
     "url": "https://www.asthmahandbook.org.au/"
+   },
+   {
+    "label": "Therapeutic Guidelines: Respiratory",
+    "url": "https://tgldcdp.tg.org.au/"
    }
   ],
   "reference_ranges": [
-   "paeds_vitals_child",
-   "vbg"
+   "paeds_vitals_child"
   ],
-  "created": "2026-06-01"
+  "created": "2026-09-23",
+  "revised_from": "rabe49-003"
  },
  {
   "id": "rabe49-004",
@@ -5894,97 +5900,94 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rabe56-005",
+  "id": "rabe56-005-d2",
   "topic": "Paediatrics",
-  "subtopic": "Infectious disease",
-  "subtopic_detail": "Incomplete Kawasaki disease",
-  "difficulty": 4,
+  "subtopic": "Rheumatology",
+  "subtopic_detail": "Timing of live attenuated vaccines after high-dose intravenous immunoglobulin",
+  "difficulty": 2,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
-   "Kawasaki disease",
-   "IVIG"
+   "kawasaki disease",
+   "immunisation",
+   "immunoglobulin"
   ],
-  "stem": "A 14-month-old girl is admitted to your general paediatric ward with 6 days of persistent fever to 39.4 °C. Her father says 'she's been miserable, her eyes look really pink and she's chewing her lip because it's all cracked'. There has been no diarrhoea, no cough, and no contact with anyone unwell. She was previously well; immunisations are up to date.\n\nOn examination she has bilateral non-purulent bulbar conjunctival injection, dry fissured lips, and an erythematous oropharynx without exudate. There is a 1.8 cm right anterior cervical lymph node and a fading non-vesicular trunk rash. Her hands and feet are slightly swollen and tender; she has not desquamated. The remaining examination is unremarkable. Bloods show platelets 612 x10^9/L (200-450), CRP 142 mg/L (under 5), albumin 28 g/L (35-50), ALT 92 U/L (under 35), and a urine dipstick showing leukocyte 2+ with negative culture and no nitrites.",
+  "stem": "A 13-month-old boy who received intravenous immunoglobulin 2 g/kg for Kawasaki disease four weeks ago attends your clinic with his mother for his overdue 12-month immunisations.",
   "data_table": {
-   "Vital signs": "Pulse 158, BP 102/64 mmHg, RR 30, SpO2 98% on room air, temperature 39.4 °C",
-   "Examination": "Bilateral non-purulent conjunctival injection, dry fissured lips, erythematous oropharynx, 1.8 cm right anterior cervical node, fading trunk rash, oedematous tender hands and feet",
-   "Investigations": "Platelets 612 x10^9/L (200-450), CRP 142 mg/L (under 5), albumin 28 g/L (35-50), ALT 92 U/L (under 35), urine leukocyte 2+ culture negative",
-   "Medications": "Paracetamol as needed"
+   "Examination": "Afebrile, thriving, cardiovascular examination normal",
+   "Immunisations": "Due measles-mumps-rubella and meningococcal C conjugate vaccines"
   },
-  "lead_in": "What is the most appropriate next step?",
+  "lead_in": "What is the most appropriate advice about today's vaccines?",
   "options": [
    {
     "letter": "A",
-    "text": "Commence intravenous immunoglobulin 2 g/kg over 10-12 hours plus high-dose aspirin and arrange echocardiography",
+    "text": "Give the inactivated vaccine now and defer the live vaccine 11 months",
     "correct": true,
-    "rationale": "Incomplete Kawasaki disease is diagnosed when fever has lasted at least 5 days with 2-3 of the 5 principal features and supportive laboratory abnormalities (CRP over 30, platelets over 450, albumin under 30, ALT raised, sterile pyuria). IVIG 2 g/kg with aspirin started before day 10 reduces coronary artery aneurysm risk. (Source: AHA Kawasaki Disease Scientific Statement; RCH CPG: Kawasaki disease)",
+    "rationale": "High-dose immunoglobulin at 2 g/kg blunts the response to live attenuated viral vaccines for about 11 months, so measles-mumps-rubella is deferred that long while inactivated and conjugate vaccines proceed on schedule. (Source: Australian Immunisation Handbook)",
     "source_refs": [
-     "AHA Kawasaki Disease Scientific Statement",
-     "RCH CPG: Kawasaki disease"
+     "Australian Immunisation Handbook",
+     "RCH Clinical Practice Guideline: Kawasaki disease"
     ]
    },
    {
     "letter": "B",
-    "text": "Initiate empirical intravenous flucloxacillin and ceftriaxone for suspected bacterial cervical lymphadenitis",
+    "text": "Give every one of the scheduled vaccines today because he has recovered well",
     "correct": false,
-    "rationale": "Cervical adenopathy in Kawasaki is part of the syndrome and not a bacterial node; isolated antibiotic therapy delays IVIG and does not prevent aneurysm. (Source: RCH CPG: Kawasaki disease)",
+    "rationale": "Giving both today would be right after ordinary intramuscular immunoglobulin or a blood product at low dose, where the deferral interval is much shorter or nil. (Source: Australian Immunisation Handbook)",
     "source_refs": [
-     "RCH CPG: Kawasaki disease"
+     "Australian Immunisation Handbook"
     ]
    },
    {
     "letter": "C",
-    "text": "Wait until the 10-day mark of fever to commence intravenous immunoglobulin in the routine treatment window",
+    "text": "Defer every scheduled vaccine until 11 months after the infusion",
     "correct": false,
-    "rationale": "IVIG given as soon as the diagnosis is established (and ideally before day 10) reduces aneurysm risk; waiting until day 10 worsens cardiac outcome. (Source: AHA Kawasaki Disease Scientific Statement)",
+    "rationale": "Blanket deferral would apply if he were receiving ongoing immunosuppression; passive antibody interferes with live viral vaccines only, not with inactivated or conjugate vaccines. (Source: Australian Immunisation Handbook)",
     "source_refs": [
-     "AHA Kawasaki Disease Scientific Statement"
+     "Australian Immunisation Handbook"
     ]
    },
    {
     "letter": "D",
-    "text": "Treat with oral prednisolone alone for suspected systemic juvenile idiopathic arthritis with quotidian fever",
+    "text": "Give the live vaccine now and check measles serology in six weeks",
     "correct": false,
-    "rationale": "Systemic JIA typically has a quotidian fever with an evanescent rash and arthritis; conjunctivitis, lip changes, and acute-phase reactant pattern point toward Kawasaki disease. (Source: RCH CPG: Kawasaki disease)",
+    "rationale": "Serological confirmation after vaccination is used in specific occupational and outbreak settings, not as a workaround for a known interference interval. (Source: Australian Immunisation Handbook)",
     "source_refs": [
-     "RCH CPG: Kawasaki disease"
+     "Australian Immunisation Handbook",
+     "NSW Health Measles Control Guideline"
     ]
    },
    {
     "letter": "E",
-    "text": "Continue supportive care with paracetamol and recheck inflammatory markers in 48 hours before deciding",
+    "text": "Defer the live vaccine for three months and give the rest today",
     "correct": false,
-    "rationale": "Each day of untreated Kawasaki disease past day 5 of fever raises coronary aneurysm risk; supportive care alone is unacceptable. (Source: RCH CPG: Kawasaki disease)",
+    "rationale": "Three months is the interval after small-volume products such as anti-D or a washed red cell transfusion; 2 g/kg of immunoglobulin sits at the far end of the table. (Source: Australian Immunisation Handbook)",
     "source_refs": [
-     "RCH CPG: Kawasaki disease"
+     "Australian Immunisation Handbook"
     ]
    }
   ],
   "explanation": {
-   "summary": "Kawasaki disease is a paediatric vasculitis with five principal features: bilateral non-exudative conjunctivitis, polymorphous rash, oral mucosal changes (red cracked lips, strawberry tongue), peripheral changes (oedema, erythema, desquamation), and unilateral cervical adenopathy (over 1.5 cm). Complete disease requires fever at least 5 days plus four of five features; incomplete requires fever plus 2-3 features supported by laboratory abnormalities. The treatment is IVIG 2 g/kg plus aspirin within the first 10 days to prevent coronary artery aneurysms. Baseline echocardiography is performed.",
+   "summary": "Passive antibody neutralises live attenuated viral vaccine virus before it can replicate, so measles-mumps-rubella and varicella vaccines must be separated from immunoglobulin by an interval that scales with the dose given. The Australian Immunisation Handbook sets that interval at about 11 months after intravenous immunoglobulin 2 g/kg, the dose used in Kawasaki disease, compared with three months after anti-D and shorter intervals after small transfusions. Inactivated, conjugate and toxoid vaccines are unaffected and should be given on time so the child does not fall further behind. If a live vaccine is given inside the interval it does not harm the child but should be repeated after the interval has elapsed. In context, Kawasaki disease is treated with a single very large dose of pooled human immunoglobulin, so every child treated for it carries a documented immunisation deferral that the treating team must hand over to the general practitioner.",
    "key_points": [
-    "Complete: fever >=5 days plus 4 of 5 features",
-    "Incomplete: fever plus 2-3 features plus supportive labs",
-    "IVIG before day 10 reduces aneurysm risk",
-    "Baseline echocardiography to detect early coronary changes"
+    "Immunoglobulin 2 g/kg defers measles-mumps-rubella and varicella vaccines for about 11 months.",
+    "Inactivated, conjugate and toxoid vaccines are given on schedule.",
+    "A live vaccine given inside the interval is repeated later, not counted.",
+    "The deferral must be written into the discharge summary and the immunisation record."
    ],
-   "pearls": "Incomplete Kawasaki disease in infants under 12 months is the highest aneurysm risk group; treat empirically when the supportive lab pattern fits even if features are incomplete."
+   "pearls": "The interval scales with the immunoglobulin dose, so look the product up rather than applying one remembered number to every blood product."
   },
   "sources": [
    {
-    "label": "RCH CPG: Kawasaki disease",
-    "url": "https://www.rch.org.au/clinicalguide/"
+    "label": "Australian Immunisation Handbook",
+    "url": "https://immunisationhandbook.health.gov.au/"
    },
    {
-    "label": "AHA Kawasaki Disease Scientific Statement",
-    "url": "https://www.ahajournals.org/"
+    "label": "RCH Clinical Practice Guideline: Kawasaki disease",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Kawasaki_Disease/"
    }
   ],
-  "reference_ranges": [
-   "paeds_fbc",
-   "inflammatory_markers"
-  ],
-  "created": "2026-06-01"
+  "reference_ranges": [],
+  "revised_from": "rabe56-005"
  },
  {
   "id": "rabe56-006",
@@ -6719,91 +6722,96 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rabe57-006",
+  "id": "rabe57-006-d2",
   "topic": "Paediatrics",
   "subtopic": "Gastroenterology",
-  "subtopic_detail": "Gastroenteritis NGT rehydration",
-  "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Decompensated dehydration in gastroenteritis",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
   "tags": [
    "gastroenteritis",
-   "rehydration"
+   "shock"
   ],
-  "stem": "A 2-year-old girl is brought to your paediatric ED with 36 hours of vomiting and watery diarrhoea. Her father says 'she keeps throwing up everything she sips, and her wee is dark like apple juice'. There is no blood in the stool. Her older sibling has had similar symptoms. She has had one wet nappy in the last 8 hours.\n\nOn examination she is alert but tired, with dry mucous membranes, a sunken anterior fontanelle (still partially open), and reduced skin turgor. Capillary refill is 2.5 seconds. She has no abdominal tenderness or peritonism. Her weight today is 11 kg, down from a documented baseline of 12 kg 3 weeks ago. A trial of small frequent oral rehydration solution (10 mL every 5 minutes by syringe) was given for 60 minutes; she has vomited each time and continues to refuse fluids. Bedside finger-prick glucose is 4.6 mmol/L. A single oral ondansetron wafer 2 mg was given 30 minutes ago without effect on the vomiting.",
+  "stem": "A 14 month old boy with 3 days of profuse diarrhoea and vomiting is brought in by ambulance. He is drowsy. His weight is 9 kg, down from 10.5 kg a fortnight ago.",
   "data_table": {
-   "Vital signs": "Pulse 144, BP 96/58 mmHg, RR 26, SpO2 99% on room air, temperature 37.8 °C",
-   "Examination": "Alert tired, dry mucous membranes, partially sunken fontanelle, reduced skin turgor, capillary refill 2.5 seconds, soft non-tender abdomen",
-   "Investigations": "Bedside finger-prick glucose 4.6 mmol/L; weight 11 kg down from 12 kg (estimated 8% dehydration)",
-   "Medications": "Single oral ondansetron 2 mg given 30 minutes ago without effect"
+   "Vital signs": "HR 186, BP 68/40, RR 44, temperature 37.2",
+   "Examination": "Mottled, capillary refill 5 seconds, cool peripheries",
+   "Investigations": "Blood glucose 4.8 mmol/L"
   },
-  "lead_in": "What is the most appropriate next step?",
+  "lead_in": "What is the most appropriate immediate management?",
   "options": [
    {
     "letter": "A",
-    "text": "Insert a nasogastric tube and start continuous rehydration with oral rehydration solution at 25 mL/kg/hour for 4 hours",
+    "text": "Intravenous sodium chloride 0.9 percent 20 mL/kg over 15 minutes",
     "correct": true,
-    "rationale": "RCH guidance for moderate dehydration that has failed oral rehydration uses nasogastric tube rehydration as first-line ahead of intravenous fluids, with oral rehydration solution at 25 mL/kg/hour over 4 hours. NGT is preferred over IV because of reduced complications, lower cost, and equivalent outcomes. IV is reserved for severe dehydration, shock, ileus, or NGT failure. (Source: RCH CPG: Gastroenteritis)",
+    "rationale": "Shock with drowsiness, prolonged capillary refill and hypotension is the RCH indication for immediate isotonic fluid resuscitation, given as 20 mL/kg boluses with reassessment after each. (Source: RCH CPG: Gastroenteritis; RCH CPG: Intravenous fluids)",
     "source_refs": [
-     "RCH CPG: Gastroenteritis"
+     "RCH CPG: Gastroenteritis",
+     "RCH CPG: Intravenous fluids"
     ]
    },
    {
     "letter": "B",
-    "text": "Commence intravenous 0.9% sodium chloride bolus 20 mL/kg followed by a maintenance infusion immediately",
+    "text": "Nasogastric rehydration solution at 25 mL/kg each hour for 4 hours",
     "correct": false,
-    "rationale": "Intravenous fluid is reserved for severe dehydration, shock, persistent vomiting after NGT trial, ileus, or electrolyte derangement requiring controlled correction; NGT rehydration is the AU first-line for moderate dehydration that fails oral. (Source: RCH CPG: Gastroenteritis)",
+    "rationale": "Nasogastric rapid rehydration is the preferred route for mild to moderate dehydration after a failed oral trial in an alert, perfused child. It is too slow for shock. (Source: RCH CPG: Gastroenteritis)",
     "source_refs": [
      "RCH CPG: Gastroenteritis"
     ]
    },
    {
     "letter": "C",
-    "text": "Continue trial of oral rehydration solution at 5 mL every 5 minutes for a further 2 hours of observation",
+    "text": "Intravenous sodium chloride 0.9 percent with glucose at maintenance",
     "correct": false,
-    "rationale": "She has already failed an adequate trial of oral rehydration and is continuing to vomit; persisting risks further deterioration without correcting the deficit. (Source: RCH CPG: Gastroenteritis)",
+    "rationale": "Maintenance fluid with added glucose is what follows once perfusion is restored and the deficit is being replaced, or where intake is simply inadequate without circulatory compromise. (Source: RCH CPG: Intravenous fluids)",
     "source_refs": [
-     "RCH CPG: Gastroenteritis"
+     "RCH CPG: Intravenous fluids"
     ]
    },
    {
     "letter": "D",
-    "text": "Administer a repeat dose of oral ondansetron wafer 4 mg and continue the oral fluid trial only",
+    "text": "Oral rehydration solution 5 mL by syringe every 5 minutes for an hour",
     "correct": false,
-    "rationale": "Repeat ondansetron does not address the existing fluid deficit; a single dose is the recommended ceiling per encounter and dose escalation is not the AU pathway. (Source: RCH CPG: Gastroenteritis)",
+    "rationale": "Small frequent oral volumes are first-line for mild dehydration in a child who is alert and willing to drink. A drowsy child risks aspiration and cannot keep pace with the deficit. (Source: RCH CPG: Gastroenteritis)",
     "source_refs": [
      "RCH CPG: Gastroenteritis"
     ]
    },
    {
     "letter": "E",
-    "text": "Send stool sample for culture and viral testing and discharge home with oral rehydration sachets for parents",
+    "text": "Oral ondansetron 2 mg then a further supervised oral fluid trial",
     "correct": false,
-    "rationale": "Discharge with established 8% dehydration is unsafe; rehydration must be completed in hospital before any consideration of discharge. (Source: RCH CPG: Gastroenteritis)",
+    "rationale": "A single weight-banded ondansetron dose helps a vomiting child with mild to moderate dehydration tolerate oral rehydration, and does nothing for a circulation that has already failed. (Source: RCH CPG: Gastroenteritis)",
     "source_refs": [
      "RCH CPG: Gastroenteritis"
     ]
    }
   ],
   "explanation": {
-   "summary": "Paediatric gastroenteritis dehydration is graded mild (under 4%), moderate (4-6%), or severe (over 7%) by clinical signs. The Australian (RCH) pathway uses oral rehydration first; failed oral rehydration moves to nasogastric tube rehydration at 25 mL/kg/hour for 4 hours, not intravenous fluids. Intravenous rehydration is reserved for severe dehydration with shock, persistent ileus, NGT failure, or electrolyte derangement requiring controlled correction. Ondansetron 0.15 mg/kg as a single dose (weight-banded: 2 mg if under 15 kg, 4 mg if 15-30 kg) reduces vomiting and admission rates.",
+   "summary": "Rehydration route in gastroenteritis follows severity. Mild dehydration is treated orally, mild to moderate dehydration that fails an oral trial is treated by nasogastric rapid rehydration, and shock is treated intravenously with isotonic fluid boluses of 20 mL/kg repeated and reassessed. The features that move this child into the shocked group are the altered conscious state, mottling, capillary refill of 5 seconds and hypotension, which in a child is a late and ominous sign. Glucose is checked early because hypoglycaemia is common and easily missed.\n\nIn context: acute gastroenteritis is usually viral and self-limiting, and almost all of the morbidity comes from dehydration rather than the pathogen. Assessment is therefore about quantifying deficit, using recent weight where available, and matching the route of replacement to how sick the child is. Antimotility agents are avoided and antibiotics are not part of routine care.",
    "key_points": [
-    "Mild under 4%; moderate 4-6%; severe over 7%",
-    "NGT rehydration at 25 mL/kg/hour for 4 hours is first after oral failure",
-    "IV reserved for severe dehydration, shock, ileus, NGT failure",
-    "Single dose ondansetron 0.15 mg/kg (banded by weight)"
+    "Shock in gastroenteritis is treated with 20 mL/kg isotonic boluses and reassessment",
+    "Hypotension is a late sign of shock in a child",
+    "Nasogastric rapid rehydration is for mild to moderate dehydration, not shock",
+    "Check blood glucose early in any drowsy dehydrated child"
    ],
-   "pearls": "NGT rehydration in moderate paediatric dehydration has equivalent outcomes to intravenous rehydration with fewer complications and reduced length of stay; RCH explicitly prefers it."
+   "pearls": "Recent weight is the most useful number in a dehydrated child, and a drop of more than a tenth with altered conscious state means the circulation, not the gut, is the problem to solve first."
   },
   "sources": [
    {
     "label": "RCH CPG: Gastroenteritis",
-    "url": "https://www.rch.org.au/clinicalguide/"
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Gastroenteritis/"
+   },
+   {
+    "label": "RCH CPG: Intravenous fluids",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Intravenous_fluids/"
    }
   ],
   "reference_ranges": [
    "paeds_vitals_child"
   ],
-  "created": "2026-06-01"
+  "created": "2026-09-23",
+  "revised_from": "rabe57-006"
  },
  {
   "id": "rabe57-007",
@@ -7275,98 +7283,91 @@
   "created": "2026-06-02"
  },
  {
-  "id": "paeds-p58-002",
+  "id": "paeds-p58-002-d2",
   "topic": "Paediatrics",
-  "subtopic": "Cardiology",
-  "subtopic_detail": "Incomplete Kawasaki disease",
-  "difficulty": 4,
+  "subtopic": "Rheumatology",
+  "subtopic_detail": "Follow-up echocardiography schedule after treated Kawasaki disease with normal initial imaging",
+  "difficulty": 3,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
-   "Kawasaki",
-   "fever",
-   "IVIG"
+   "kawasaki disease",
+   "echocardiography",
+   "follow-up"
   ],
-  "stem": "A 14-month-old previously well boy is reviewed on day 7 of fever above 38.5 °C that has not abated despite oral amoxicillin started by a general practitioner on day 4. He is irritable and feeding poorly. His mother reports red eyes for the last four days and a maculopapular trunk rash that came and went on day 5.\n\nOn examination he has bilateral non purulent conjunctival injection, fissured red lips with a strawberry tongue, and erythema of the palms with periungual desquamation just starting on the right second finger. There is no cervical lymphadenopathy and no peripheral oedema. Throat swab and urine culture sent on day 4 are negative; a chest radiograph was clear. Echocardiography this morning shows coronary arteries within normal limits for body surface area.",
+  "stem": "A 4-year-old girl received intravenous immunoglobulin and aspirin for Kawasaki disease two days ago and has defervesced. Her parents ask you what heart monitoring she will need from here.",
   "data_table": {
-   "Vital signs": "Pulse 168/min, BP 90/55 mmHg, RR 32/min, SpO2 98% room air, temperature 39.1 °C",
-   "Investigations": "Haemoglobin 95 g/L (105-135); platelets 612 x10^9/L (150-400); WCC 18.2 x10^9/L (5-15); CRP 142 mg/L (<5); ALT 78 U/L (<40); albumin 28 g/L (35-50); sodium 131 mmol/L (135-145); urinalysis sterile pyuria"
+   "Vital signs": "Temp 36.8, HR 98, BP 96/60",
+   "Examination": "Well; no murmur; peeling of the fingertips",
+   "Investigations": "Echocardiography at diagnosis showed normal coronary arteries"
   },
-  "lead_in": "What is the most appropriate next step?",
+  "lead_in": "What is the most appropriate cardiac follow-up plan?",
   "options": [
    {
     "letter": "A",
-    "text": "Withhold immunoglobulin and observe for 48 hours pending fever resolution",
-    "correct": false,
-    "rationale": "Treatment cannot be deferred because coronary aneurysm risk rises sharply if IVIG is given after day 10 of fever; the laboratory picture already meets incomplete criteria. (Source: RCH CPG: Kawasaki Disease)",
+    "text": "Repeat echocardiography at two weeks and again at six to eight weeks",
+    "correct": true,
+    "rationale": "Coronary dilatation can appear after the acute phase even when the first study is normal, so imaging is repeated at one to two weeks and again at six to eight weeks before a child is considered low risk. (Source: RCH Clinical Practice Guideline: Kawasaki disease)",
     "source_refs": [
-     "RCH CPG: Kawasaki Disease"
+     "RCH Clinical Practice Guideline: Kawasaki disease"
     ]
    },
    {
     "letter": "B",
-    "text": "Repeat echocardiography in 7 days before deciding on immunoglobulin treatment",
+    "text": "Repeat echocardiography at six months and then every two years",
     "correct": false,
-    "rationale": "A normal initial echocardiogram does NOT rule out Kawasaki; coronary changes often emerge after day 10, by which time IVIG benefit on aneurysm prevention has been lost. (Source: AHA Scientific Statement)",
+    "rationale": "Long-interval surveillance of this kind belongs to children left with persisting coronary abnormalities, who need lifelong cardiology follow-up rather than a single clearance study. (Source: RCH Clinical Practice Guideline: Kawasaki disease)",
     "source_refs": [
-     "AHA Scientific Statement Kawasaki Disease"
+     "RCH Clinical Practice Guideline: Kawasaki disease"
     ]
    },
    {
     "letter": "C",
-    "text": "Switch antibiotic therapy to intravenous ceftriaxone for occult bacterial infection",
+    "text": "Repeat echocardiography only if cardiac symptoms develop in the years ahead",
     "correct": false,
-    "rationale": "Cultures are negative and the syndrome fits Kawasaki; antibiotic escalation delays the time critical IVIG window and treats a phantom diagnosis. (Source: RCH CPG: Kawasaki Disease)",
+    "rationale": "Symptom-triggered imaging would apply to a child already cleared at six to eight weeks; aneurysms forming in the subacute phase are silent, so waiting for symptoms misses them. (Source: RCH Clinical Practice Guideline: Kawasaki disease)",
     "source_refs": [
-     "RCH CPG: Kawasaki Disease"
+     "RCH Clinical Practice Guideline: Kawasaki disease"
     ]
    },
    {
     "letter": "D",
-    "text": "Administer high dose oral prednisolone 2 mg/kg daily as primary monotherapy",
+    "text": "Repeat echocardiography tomorrow and then again at three months",
     "correct": false,
-    "rationale": "Corticosteroid monotherapy is not standard initial therapy in Australia; steroids are added to IVIG only for high risk or refractory disease, not as substitute first line. (Source: RCH CPG: Kawasaki Disease)",
+    "rationale": "Imaging the day after treatment adds nothing, because coronary change evolves over one to three weeks; a three-month gap then delays the clearance study. (Source: RCH Clinical Practice Guideline: Kawasaki disease)",
     "source_refs": [
-     "RCH CPG: Kawasaki Disease"
+     "RCH Clinical Practice Guideline: Kawasaki disease"
     ]
    },
    {
     "letter": "E",
-    "text": "Commence intravenous immunoglobulin 2 g/kg over 10 hours plus oral aspirin",
-    "correct": true,
-    "rationale": "He meets incomplete Kawasaki criteria with supportive laboratory findings (CRP, thrombocytosis, anaemia, hypoalbuminaemia, transaminitis, sterile pyuria); IVIG must be given within 10 days regardless of normal echocardiography. (Source: RCH CPG: Kawasaki Disease; AHA Statement)",
+    "text": "No repeat echocardiography is needed as the first study was normal",
+    "correct": false,
+    "rationale": "A normal study at diagnosis excludes nothing, since most coronary dilatation appears after the first week of illness. (Source: RCH Clinical Practice Guideline: Kawasaki disease)",
     "source_refs": [
-     "RCH CPG: Kawasaki Disease",
-     "AHA Scientific Statement Kawasaki Disease"
+     "RCH Clinical Practice Guideline: Kawasaki disease"
     ]
    }
   ],
   "explanation": {
-   "summary": "Incomplete Kawasaki is diagnosed when prolonged fever is accompanied by two or three principal features and supportive laboratory findings, even without the full five-criterion picture. Treatment is identical to complete Kawasaki: IVIG 2 g/kg as a single infusion plus aspirin, ideally between day 5 and day 10. Aneurysm rates fall from approximately 25% untreated to 4% with timely IVIG. A normal initial echocardiogram does not exclude diagnosis or remove the treatment indication, because coronary changes may emerge in the convalescent phase. Cardiology follow up at 2 and 6 weeks is mandatory.",
+   "summary": "Echocardiography in Kawasaki disease is a serial investigation, not a single test. The study at diagnosis gives a baseline and occasionally shows early dilatation, but coronary aneurysms typically develop between the first and third weeks of illness, so imaging is repeated at one to two weeks and again at six to eight weeks. A child whose six to eight week study is normal has a very low long-term coronary risk and can stop aspirin and be discharged from cardiology. A child with persisting dilatation or aneurysms moves onto a risk-stratified pathway with lifelong follow-up, continued antiplatelet therapy and, for giant aneurysms, anticoagulation. In context, Kawasaki disease is a self-limiting vasculitis whose only important sequela is coronary, so the follow-up schedule exists purely to catch the aneurysms that immunoglobulin did not prevent.",
    "key_points": [
-    "Incomplete Kawasaki: fever ≥5 days plus 2 to 3 features plus supportive labs",
-    "Lab support: CRP, ESR, thrombocytosis, anaemia, transaminitis, hypoalbuminaemia, sterile pyuria",
-    "IVIG 2 g/kg single infusion plus aspirin within day 10",
-    "Steroids added only in high risk or IVIG resistant cases"
+    "Echocardiography at diagnosis, at one to two weeks, and at six to eight weeks.",
+    "A normal study at diagnosis does not exclude later coronary change.",
+    "A normal six to eight week study allows aspirin to stop and discharge from cardiology.",
+    "Persisting aneurysms mean lifelong cardiology follow-up and antiplatelet therapy."
    ],
-   "pearls": "IVIG given after day 10 of fever loses most of its aneurysm-preventive benefit; do not wait for a complete five-criterion picture if labs and clinical features already support incomplete Kawasaki."
+   "pearls": "The six to eight week echocardiogram is the decision point for both stopping aspirin and discharging the child, so it should be booked before the family leaves the ward."
   },
   "sources": [
    {
-    "label": "RCH CPG: Kawasaki Disease",
-    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Kawasaki_disease/"
-   },
-   {
-    "label": "AHA Scientific Statement Kawasaki Disease",
-    "url": "https://www.ahajournals.org/"
+    "label": "RCH Clinical Practice Guideline: Kawasaki disease",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Kawasaki_Disease/"
    }
   ],
   "reference_ranges": [
-   "paeds_vitals_child",
-   "paeds_fbc",
-   "inflammatory_markers",
-   "lfts"
+   "paeds_vitals_child"
   ],
-  "created": "2026-06-02"
+  "revised_from": "paeds-p58-002"
  },
  {
   "id": "paeds-p58-003",
@@ -9117,80 +9118,79 @@
   "created": "2026-06-02"
  },
  {
-  "id": "paeds-p60-006",
+  "id": "paeds-p60-006-d2",
   "topic": "Paediatrics",
   "subtopic": "Respiratory",
-  "subtopic_detail": "Severe acute asthma IV magnesium threshold",
-  "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Sudden deterioration during treatment of acute asthma",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
   "tags": [
    "asthma",
-   "magnesium",
-   "salbutamol"
+   "pneumothorax"
   ],
-  "stem": "You are the paediatric registrar in a tertiary ED. A 9-year-old boy, known asthmatic on low-dose budesonide, presents in severe respiratory distress. He has received 1 hour of back-to-back nebulised salbutamol 5 mg combined with ipratropium 250 mcg, IV hydrocortisone 4 mg/kg, and supplemental oxygen. There has been minimal clinical improvement.\n\nHe remains in severe distress with marked accessory muscle use, tracheal tug, and a soft chest with quiet wheeze in lower zones. He is too breathless to complete a sentence. He has not previously needed PICU admission. His mother reports he has been increasingly symptomatic over the past 3 days with multiple salbutamol doses at home and no infective prodrome.",
+  "stem": "A 12 year old boy being treated for acute severe asthma suddenly deteriorates during his third salbutamol nebuliser. He becomes agitated and his oxygen saturations fall despite a non-rebreather mask.",
   "data_table": {
-   "Vital signs": "Pulse 168/min, BP 108/64 mmHg, RR 40/min, SpO2 91% on 6 L/min nasal prong, temperature 36.9 °C",
-   "Examination": "Sitting forwards, distressed; tracheal tug, marked subcostal recession; quiet wheeze in lower zones bilaterally; speaking in single words",
-   "Investigations": "Capillary blood gas pH 7.30, pCO2 48 mmHg (35-45), HCO3 22 mmol/L (22-26); lactate 3.6 mmol/L (0.5-2.2); CXR hyperinflation, no pneumothorax"
+   "Vital signs": "HR 170, RR 44, SpO2 84 percent, BP 82/50",
+   "Examination": "Trachea deviated left, absent breath sounds and hyperresonance on the right"
   },
-  "lead_in": "What is the single most appropriate next intravenous therapy?",
+  "lead_in": "What is the most appropriate immediate action?",
   "options": [
    {
     "letter": "A",
-    "text": "Intravenous magnesium sulfate 50 mg/kg over 20 minutes to a maximum of 2 g",
+    "text": "Needle decompression of the right chest followed by a drain",
     "correct": true,
-    "rationale": "Severe asthma failing maximal nebulised therapy is escalated with IV magnesium sulfate as the first intravenous bronchodilator in Australian paediatric guidelines; it precedes IV salbutamol or aminophylline in the RCH escalation. (Source: RCH CPG: Asthma acute)",
+    "rationale": "Tracheal deviation with unilateral absent breath sounds and hypotension is a clinical diagnosis treated immediately by needle decompression and then an intercostal catheter, without waiting for imaging. (Source: RCH CPG: Asthma acute; Therapeutic Guidelines: Respiratory)",
     "source_refs": [
-     "RCH CPG: Asthma acute"
+     "RCH CPG: Asthma acute",
+     "Therapeutic Guidelines: Respiratory"
     ]
    },
    {
     "letter": "B",
-    "text": "Intravenous salbutamol loading dose of 15 mcg/kg over 10 minutes",
+    "text": "Urgent portable chest radiograph before any further intervention",
     "correct": false,
-    "rationale": "IV salbutamol is reserved for failure of magnesium and carries higher lactate and tachyarrhythmia risk; the RCH algorithm places magnesium ahead of IV salbutamol. (Source: RCH CPG: Asthma acute)",
+    "rationale": "Imaging first is appropriate for a stable child with asymmetric findings and normal perfusion. With hypotension and rapidly falling saturations, radiography only delays decompression. (Source: Therapeutic Guidelines: Respiratory)",
     "source_refs": [
-     "RCH CPG: Asthma acute"
+     "Therapeutic Guidelines: Respiratory"
     ]
    },
    {
     "letter": "C",
-    "text": "Intravenous aminophylline loading dose 5 mg/kg over 60 minutes",
+    "text": "Intravenous magnesium sulfate and continuous nebulised salbutamol",
     "correct": false,
-    "rationale": "Aminophylline is a later-line agent in the RCH algorithm with a narrow therapeutic window; it is not the next escalation when IV magnesium has not yet been trialled. (Source: RCH CPG: Asthma acute)",
+    "rationale": "This is the right escalation for a child whose severe asthma is failing maximal inhaled therapy with symmetrical findings, which is not what the chest examination shows. (Source: RCH CPG: Asthma acute)",
     "source_refs": [
      "RCH CPG: Asthma acute"
     ]
    },
    {
     "letter": "D",
-    "text": "Immediate intubation and mechanical ventilation in the resuscitation bay",
+    "text": "Rapid sequence intubation with ketamine and positive pressure",
     "correct": false,
-    "rationale": "He is hypoxic but not in respiratory failure (pCO2 still normal-range, GCS preserved); intubation is reserved for failure of escalation or impending arrest. (Source: RCH CPG: Asthma acute)",
+    "rationale": "Intubation is reserved for exhaustion or arrest, and positive pressure applied before decompression will worsen an untreated tension pneumothorax. (Source: RCH CPG: Asthma acute)",
     "source_refs": [
      "RCH CPG: Asthma acute"
     ]
    },
    {
     "letter": "E",
-    "text": "Heliox 70:30 mixture via tight-fitting face mask while awaiting PICU",
+    "text": "Intravenous adrenaline infusion and a fluid bolus of 20 mL/kg",
     "correct": false,
-    "rationale": "Heliox is not first-line in the RCH algorithm and trial data are equivocal; IV magnesium is the evidence-based next step in severe paediatric asthma. (Source: RCH CPG: Asthma acute)",
+    "rationale": "Vasoactive support and fluid are for distributive or septic shock. Here the circulation fails because of obstructed venous return, which is relieved mechanically. (Source: Therapeutic Guidelines: Respiratory)",
     "source_refs": [
-     "RCH CPG: Asthma acute"
+     "Therapeutic Guidelines: Respiratory"
     ]
    }
   ],
   "explanation": {
-   "summary": "When a paediatric severe asthma exacerbation fails maximal nebulised salbutamol and ipratropium plus oral or IV steroid, the next step in the RCH algorithm is IV magnesium sulfate. IV salbutamol and aminophylline are reserved for failure of magnesium. A normal-range pCO2 with severe work of breathing is a danger signal heralding fatigue but not yet requiring intubation if escalation succeeds.",
+   "summary": "Abrupt deterioration during treatment of acute asthma should prompt a search for a mechanical cause rather than another rung of the drug ladder. Tracheal deviation away from a silent, hyperresonant hemithorax with hypotension is a tension pneumothorax, diagnosed clinically and decompressed with a needle immediately, then secured with an intercostal catheter. Waiting for a radiograph, adding bronchodilators, or applying positive pressure all make the physiology worse.\n\nIn context: severe asthma predisposes to air leak because gas trapping raises alveolar pressure, and the risk rises further with positive pressure ventilation. Asymmetry on examination is the discriminator: asthma is a diffuse, bilateral process, so unilateral findings in a deteriorating asthmatic child are the complication until proven otherwise.",
    "key_points": [
-    "RCH escalation order: maximal nebulised therapy plus systemic steroid → IV magnesium → IV salbutamol → IV aminophylline → intubation.",
-    "Magnesium sulfate dose 50 mg/kg over 20 minutes, maximum 2 g.",
-    "Normal or rising pCO2 in severe asthma is a danger signal, not reassurance.",
-    "Avoid IV salbutamol before magnesium due to lactic acidosis and arrhythmia."
+    "Asymmetric chest findings in asthma suggest a complication, not worse asthma",
+    "Tension pneumothorax is a clinical diagnosis treated before imaging",
+    "Needle decompression first, then an intercostal catheter",
+    "Positive pressure before decompression worsens the obstruction"
    ],
-   "pearls": "A child working hard with severe asthma, a normalising pCO2, and a quiet chest is heading for arrest; magnesium first, salbutamol IV later."
+   "pearls": "Sudden deterioration with a one-sided chest in an asthmatic child is a mechanical problem, and no dose of anything fixes it."
   },
   "sources": [
    {
@@ -9198,15 +9198,15 @@
     "url": "https://www.rch.org.au/clinicalguide/guideline_index/Asthma_acute/"
    },
    {
-    "label": "Australian Asthma Handbook (NAC)",
-    "url": "https://www.asthmahandbook.org.au/"
+    "label": "Therapeutic Guidelines: Respiratory",
+    "url": "https://tgldcdp.tg.org.au/"
    }
   ],
   "reference_ranges": [
-   "paeds_vitals_child",
-   "vbg"
+   "paeds_vitals_child"
   ],
-  "created": "2026-06-02"
+  "created": "2026-09-23",
+  "revised_from": "paeds-p60-006"
  },
  {
   "id": "paeds-p60-007",
@@ -11907,95 +11907,103 @@
   "created": "2026-06-02"
  },
  {
-  "id": "paeds-p63-003",
+  "id": "paeds-p63-003-d2",
   "topic": "Paediatrics",
   "subtopic": "Respiratory",
-  "subtopic_detail": "Bronchiolitis low-flow oxygen first-line per RCH",
-  "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Investigation and antibiotic use in bronchiolitis",
+  "difficulty": 2,
+  "model": "Claude Opus 5",
   "tags": [
    "bronchiolitis",
-   "oxygen"
+   "antibiotics"
   ],
-  "stem": "A 4-month-old infant is admitted with three days of coryza followed by worsening wheeze and feeding difficulty. He has taken approximately 40 percent of his usual milk volume over the preceding 24 hours.\n\nOn arrival to the ward he has pulse 160, blood pressure 86 by 50 mmHg, respiratory rate 56, SpO2 88 percent in room air, temperature 37.6 degrees Celsius. He has moderate subcostal recession and audible widespread wheeze with bilateral inspiratory crackles. He is alert and consolable in his mother's arms. There has been no apnoea reported by parents or nursing staff, immunisations are up to date, and there is no relevant past medical history.",
+  "stem": "A 6 month old boy admitted with respiratory syncytial virus bronchiolitis is on day 3 of illness. He is febrile, is feeding two thirds of normal and is maintaining his saturations in room air.",
   "data_table": {
-   "Vital signs": "HR 160, BP 86/50, RR 56, SpO2 88% room air, temperature 37.6 degrees Celsius",
-   "Examination": "moderate subcostal recession, widespread wheeze with bilateral crackles, alert, well perfused",
-   "Investigations": "clinical diagnosis of bronchiolitis, no chest X-ray performed"
+   "Vital signs": "HR 150, RR 52, SpO2 93 percent in room air, temperature 38.6",
+   "Examination": "Mild subcostal recession, widespread crackles and wheeze, alert"
   },
-  "lead_in": "What is the most appropriate initial respiratory support?",
+  "lead_in": "What is the most appropriate management?",
   "options": [
    {
     "letter": "A",
-    "text": "Heated humidified high-flow nasal cannula at 2 L/kg/min from the outset",
-    "correct": false,
-    "rationale": "PREDICT and RCH reserve HFNC for failure of low-flow oxygen after a defined trial (usually 1 to 2 hours). Initial escalation to HFNC has not been shown to reduce ICU transfer compared with starting low-flow. (Source: PREDICT Australasian Bronchiolitis Guideline; RCH CPG: Bronchiolitis)",
+    "text": "Continue supportive care without radiography or antibiotic therapy",
+    "correct": true,
+    "rationale": "Fever is expected in bronchiolitis, and the PREDICT guideline advises against routine chest radiography or antibiotics because radiographic changes of bronchiolitis are readily misread as consolidation. (Source: PREDICT Australasian Bronchiolitis Guideline; RCH CPG: Bronchiolitis)",
     "source_refs": [
-     "PREDICT Australasian Bronchiolitis Guideline 2024",
+     "PREDICT Australasian Bronchiolitis Guideline",
      "RCH CPG: Bronchiolitis"
     ]
    },
    {
     "letter": "B",
-    "text": "Nebulised salbutamol 6 puffs via spacer plus oral prednisolone 1 mg/kg",
+    "text": "Arrange a chest radiograph and start intravenous benzylpenicillin",
     "correct": false,
-    "rationale": "Bronchiolitis in under-12-month-olds does not respond to beta-2 agonists or systemic corticosteroids; both are explicitly discouraged by the PREDICT guideline. (Source: PREDICT Australasian Bronchiolitis Guideline)",
+    "rationale": "This is the regimen for a child with lobar pneumonia, meaning focal signs with high fever and toxicity, rather than the diffuse crackles and wheeze of a bronchiolitic illness. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "PREDICT Australasian Bronchiolitis Guideline 2024"
+     "Therapeutic Guidelines: Antibiotic"
     ]
    },
    {
     "letter": "C",
-    "text": "Low-flow nasal prong oxygen at 1 to 2 L/min titrated to SpO2 at least 90 percent",
-    "correct": true,
-    "rationale": "RCH and PREDICT both start with low-flow nasal prong oxygen at 1 to 2 L/min targeting SpO2 of at least 90 percent. HFNC is reserved for failure of this approach after 1 to 2 hours. (Source: RCH CPG: Bronchiolitis; PREDICT Australasian Bronchiolitis Guideline)",
+    "text": "Arrange a chest radiograph and start oral amoxicillin for 5 days",
+    "correct": false,
+    "rationale": "Oral amoxicillin is first-line for community acquired pneumonia in a well enough child, which requires focal clinical or radiographic findings, not a viral bronchiolitic pattern. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "RCH CPG: Bronchiolitis",
-     "PREDICT Australasian Bronchiolitis Guideline 2024"
+     "Therapeutic Guidelines: Antibiotic"
     ]
    },
    {
     "letter": "D",
-    "text": "Nebulised hypertonic saline 3 percent with oxygen via face mask",
+    "text": "Send blood cultures and start intravenous ceftriaxone empirically",
     "correct": false,
-    "rationale": "Nebulised hypertonic saline does not reduce admission length or ICU transfer in Australian trials and is not part of standard RCH or PREDICT first-line therapy. (Source: PREDICT Australasian Bronchiolitis Guideline)",
+    "rationale": "Empirical broad cover and cultures are for suspected serious bacterial infection, in practice an infant under 3 months with fever or any child who looks septic. (Source: RCH CPG: Febrile child)",
     "source_refs": [
-     "PREDICT Australasian Bronchiolitis Guideline 2024"
+     "RCH CPG: Febrile child"
     ]
    },
    {
     "letter": "E",
-    "text": "Continuous positive airway pressure via face mask in a monitored bed",
+    "text": "Start oral azithromycin and arrange a chest radiograph in the morning",
     "correct": false,
-    "rationale": "Mask CPAP is escalation therapy after low-flow and HFNC failure. Skipping to it bypasses the stepped pathway and is not appropriate first-line in an alert, consolable infant. (Source: RCH CPG: Bronchiolitis)",
+    "rationale": "A macrolide is reserved for suspected pertussis or atypical pneumonia, suggested by paroxysmal cough with whoop or apnoea in a young infant rather than by wheeze and crackles. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "RCH CPG: Bronchiolitis"
+     "Therapeutic Guidelines: Antibiotic"
     ]
    }
   ],
   "explanation": {
-   "summary": "Australian bronchiolitis care (PREDICT 2024 + RCH) is supportive: fluids and oxygen, with a deliberately stepped approach to respiratory support. Low-flow nasal prong oxygen at 1 to 2 L/min targeting SpO2 of at least 90 percent is first line; HFNC is reserved for failure of low-flow after 1 to 2 hours. Bronchodilators, corticosteroids, nebulised saline, and antibiotics have no role unless an alternative diagnosis emerges.",
+   "summary": "Bronchiolitis is a clinical diagnosis and needs no investigations in a typical case. Fever, often to 38.5 degrees or higher, is part of the illness and does not on its own indicate bacterial co-infection, which is uncommon outside the first few weeks of life. Chest radiography is discouraged because atelectasis and peribronchial thickening are routinely misinterpreted as consolidation, which drives antibiotic prescribing without benefit. Management remains oxygen if required, feeding support and minimal handling, with reassessment if the trajectory changes.\n\nIn context: bronchiolitis is the commonest reason an Australian infant is admitted to hospital, and the PREDICT guideline was written largely to reduce interventions that do not help. Bronchodilators, corticosteroids, adrenaline, hypertonic saline, antibiotics, chest radiography and routine blood tests are all outside standard care, and the discipline of not ordering them is itself the exam point.",
    "key_points": [
-    "Bronchiolitis SpO2 target is at least 90 percent (not 92 to 94)",
-    "Start low-flow nasal prong oxygen before HFNC",
-    "Salbutamol, steroids, and hypertonic saline are not first-line",
-    "HFNC is rescue therapy when low-flow fails after a 1 to 2 hour trial"
+    "Fever is expected in bronchiolitis and does not mandate antibiotics",
+    "Chest radiography is discouraged because it drives false positive readings",
+    "Bronchodilators, steroids and hypertonic saline are not recommended",
+    "Care is oxygen as needed, feeding support and minimal handling"
    ],
-   "pearls": "Start low-flow nasal prong oxygen at 1 to 2 L/min targeting SpO2 90 percent; escalate to HFNC only after 1 to 2 hours of inadequate response."
+   "pearls": "The radiograph you order in typical bronchiolitis is the reason the antibiotic gets prescribed."
   },
   "sources": [
    {
     "label": "RCH CPG: Bronchiolitis",
-    "url": "https://www.rch.org.au/clinicalguide/guideline_index/bronchiolitis/"
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Bronchiolitis/"
    },
    {
-    "label": "PREDICT Australasian Bronchiolitis Guideline 2024"
+    "label": "PREDICT Australasian Bronchiolitis Guideline",
+    "url": "https://www.predict.org.au/bronchiolitis-guideline/"
+   },
+   {
+    "label": "Therapeutic Guidelines: Antibiotic",
+    "url": "https://tgldcdp.tg.org.au/"
+   },
+   {
+    "label": "RCH CPG: Febrile child",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Febrile_child/"
    }
   ],
   "reference_ranges": [
    "paeds_vitals_infant"
   ],
-  "created": "2026-06-02"
+  "created": "2026-09-23",
+  "revised_from": "paeds-p63-003"
  },
  {
   "id": "paeds-p63-004",
@@ -12556,84 +12564,84 @@
   "created": "2026-06-02"
  },
  {
-  "id": "paeds-p64-003",
+  "id": "paeds-p64-003-d2",
   "topic": "Paediatrics",
   "subtopic": "Gastroenterology",
-  "subtopic_detail": "Gastroenteritis rehydration route choice",
-  "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Feeding during acute gastroenteritis",
+  "difficulty": 2,
+  "model": "Claude Opus 5",
   "tags": [
    "gastroenteritis",
-   "dehydration"
+   "feeding"
   ],
-  "stem": "A 2-year-old girl has had two days of profuse non-bloody diarrhoea and intermittent vomiting after her older brother had a similar illness. She has had small sips of water from a bottle but has refused her usual oral rehydration sachets, vomiting them back within minutes. Her parents brought her to the emergency department this afternoon because her nappies have been dry for 8 hours.\n\nShe is alert and miserable but consolable. Mucous membranes are dry. Skin turgor is reduced but capillary refill remains 2 seconds. She is estimated at 7% dehydrated. Weight is 12 kg.",
+  "stem": "A 9 month old breastfed girl has had 2 days of watery diarrhoea and occasional vomiting. She is alert, playful and has had 5 wet nappies today. Her mother asks what she should be feeding her.",
   "data_table": {
-   "Vital signs": "pulse 142 /min, blood pressure 92/58 mmHg, respiratory rate 30 /min, SpO2 99% on room air, temperature 37.6 degrees Celsius",
-   "Examination": "dry mucous membranes, reduced skin turgor, capillary refill 2 seconds, sunken eyes, no peritonism, no rash",
-   "Investigations": "stool PCR pending; UEC not yet drawn"
+   "Vital signs": "HR 124, RR 28, temperature 37.3",
+   "Examination": "Moist mucous membranes, capillary refill 2 seconds, weight unchanged"
   },
-  "lead_in": "After a single dose of oral ondansetron 2 mg, she vomits her next ORS attempt. What is the most appropriate next rehydration strategy?",
+  "lead_in": "What is the most appropriate feeding advice?",
   "options": [
    {
     "letter": "A",
-    "text": "Continued oral ORS in 5 mL aliquots every 5 minutes for a further 4 hours",
-    "correct": false,
-    "rationale": "Two failed oral trials with ondansetron cover indicate that oral rehydration is not succeeding. Persisting risks ongoing losses outpacing intake; RCH directs a route change at this point. (Source: RCH CPG: Gastroenteritis)",
+    "text": "Continue breastfeeding as normal and offer her usual solid foods",
+    "correct": true,
+    "rationale": "RCH and Therapeutic Guidelines both advise continuing breastfeeding through gastroenteritis and resuming an age-appropriate diet early, which shortens illness and preserves the mucosa. (Source: RCH CPG: Gastroenteritis; Therapeutic Guidelines: Gastrointestinal)",
     "source_refs": [
-     "RCH CPG: Gastroenteritis"
+     "RCH CPG: Gastroenteritis",
+     "Therapeutic Guidelines: Gastrointestinal"
     ]
    },
    {
     "letter": "B",
-    "text": "IV 0.9% sodium chloride at 100 mL/kg over 4 hours plus maintenance fluids",
+    "text": "Stop breastfeeding for 24 hours and give rehydration solution only",
     "correct": false,
-    "rationale": "IV is reserved by RCH for severe dehydration, shock, persistent vomiting despite NGT, or electrolyte derangement that needs correction. Jumping to IV bypasses the safer first-line route. (Source: RCH CPG: Gastroenteritis)",
+    "rationale": "A clear fluid only period is sometimes needed for a few hours in a child vomiting everything, but breast milk is never withheld; it is well tolerated and provides both fluid and energy. (Source: RCH CPG: Gastroenteritis)",
     "source_refs": [
      "RCH CPG: Gastroenteritis"
     ]
    },
    {
     "letter": "C",
-    "text": "Nasogastric rehydration with oral rehydration solution at 25 mL/kg per hour for 4 hours",
-    "correct": true,
-    "rationale": "RCH lists NGT rehydration as first-line for mild to moderate dehydration that fails oral trials. Rapid NGT rehydration (typically 25 mL/kg per hour for 4 hours) avoids IV cannulation, preserves gut integrity, and has lower complication rates than IV in head-to-head studies. (Source: RCH CPG: Gastroenteritis)",
+    "text": "Continue breastfeeding but withhold all solid food for 48 hours",
+    "correct": false,
+    "rationale": "Prolonged food withholding was historical practice and is now avoided; a period without solids is reasonable only while a child is actively vomiting. (Source: Therapeutic Guidelines: Gastrointestinal)",
     "source_refs": [
-     "RCH CPG: Gastroenteritis"
+     "Therapeutic Guidelines: Gastrointestinal"
     ]
    },
    {
     "letter": "D",
-    "text": "Single 20 mL/kg saline bolus and admission for repeat dose oral ondansetron only",
+    "text": "Change to a lactose free formula and reintroduce solids in 3 days",
     "correct": false,
-    "rationale": "A bolus alone does not address ongoing rehydration needs over 4 hours and ondansetron is a single-dose adjunct in RCH, not a repeated antiemetic. The plan misses the actual rehydration step. (Source: RCH CPG: Gastroenteritis)",
+    "rationale": "A lactose free formula is considered for a formula fed infant with prolonged watery diarrhoea and perianal excoriation after the acute illness, not routinely at presentation and not for a breastfed infant. (Source: RCH CPG: Gastroenteritis)",
     "source_refs": [
      "RCH CPG: Gastroenteritis"
     ]
    },
    {
     "letter": "E",
-    "text": "Subcutaneous hyaluronidase-assisted rehydration with normal saline over 6 hours",
+    "text": "Offer diluted apple juice and dry toast until the diarrhoea settles",
     "correct": false,
-    "rationale": "Hypodermoclysis is occasionally used in palliative and aged care settings; it is not a paediatric gastroenteritis option in the RCH cascade. (Source: RCH CPG: Gastroenteritis)",
+    "rationale": "Juice is hyperosmolar and low in sodium, so it worsens osmotic diarrhoea. Diluted juice has a limited role only where rehydration solution is refused and dehydration is minimal. (Source: RCH CPG: Gastroenteritis)",
     "source_refs": [
      "RCH CPG: Gastroenteritis"
     ]
    }
   ],
   "explanation": {
-   "summary": "The RCH gastroenteritis pathway places NGT rehydration above IV for mild to moderate dehydration that fails oral trials. NGT delivers ORS at 25 mL/kg per hour for 4 hours, with electrolyte and weight checks, and is associated with lower rates of phlebitis and shorter inpatient stays than IV. IV is for severe dehydration, shock, or NGT failure. A single dose of oral ondansetron (banded by weight) is the only RCH-supported antiemetic.",
+   "summary": "In a child with gastroenteritis and no more than minimal dehydration, feeding advice is simple and is one of the few interventions that changes the course of the illness. Breastfeeding continues unchanged, formula is given at usual strength without dilution, and an age-appropriate solid diet is resumed early rather than after a starvation period. Extra fluid is offered to replace ongoing losses, using oral rehydration solution rather than juice or soft drink because of their sugar load and low sodium content.\n\nIn context: acute gastroenteritis in Australian children is predominantly viral, with rotavirus much reduced since the introduction of routine immunisation and norovirus now prominent. Management is entirely supportive: maintain hydration, keep feeding, avoid antimotility agents and antibiotics, and give parents clear advice about the signs of dehydration that should bring the child back.",
    "key_points": [
-    "NGT rehydration is RCH first-line for mild to moderate dehydration after failed oral trials",
-    "Typical NGT rate: 25 mL/kg per hour for 4 hours of ORS",
-    "IV is for severe dehydration, shock, or NGT failure",
-    "Ondansetron is single-dose by weight band: 2 mg for under 15 kg, 4 mg for 15 to 30 kg"
+    "Continue breastfeeding and give formula at normal strength",
+    "Resume an age-appropriate diet early rather than withholding food",
+    "Use oral rehydration solution for extra losses, not juice or soft drink",
+    "Antimotility agents are not used in children"
    ],
-   "pearls": "RCH gastroenteritis: NGT rehydration first-line for failed oral, ORS at 25 mL/kg per hour for 4 hours. Single dose ondansetron 2 mg for under 15 kg, 4 mg for 15 to 30 kg. IV only for severe dehydration, shock, or NGT failure."
+   "pearls": "The old advice to rest the gut costs weight and prolongs the diarrhoea; feeding through the illness is the treatment, not a concession to it."
   },
   "sources": [
    {
     "label": "RCH CPG: Gastroenteritis",
-    "url": "https://www.rch.org.au/clinicalguide/guideline_index/gastroenteritis/"
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Gastroenteritis/"
    },
    {
     "label": "Therapeutic Guidelines: Gastrointestinal",
@@ -12641,10 +12649,10 @@
    }
   ],
   "reference_ranges": [
-   "paeds_vitals_child",
-   "paeds_uec"
+   "paeds_vitals_child"
   ],
-  "created": "2026-06-02"
+  "created": "2026-09-23",
+  "revised_from": "paeds-p64-003"
  },
  {
   "id": "paeds-p64-004",
@@ -14867,94 +14875,96 @@
   "created": "2026-06-02"
  },
  {
-  "id": "paeds-p66-001",
+  "id": "paeds-p66-001-d2",
   "topic": "Paediatrics",
   "subtopic": "Rheumatology",
-  "subtopic_detail": "Kawasaki disease",
+  "subtopic_detail": "Stopping antiplatelet therapy after Kawasaki disease when follow-up echocardiography is normal",
   "difficulty": 3,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
-   "Kawasaki",
-   "IVIG"
+   "kawasaki disease",
+   "aspirin",
+   "discharge planning"
   ],
-  "stem": "A 14-month-old boy is brought to the paediatric emergency department on day 6 of a fever that has reached 39.4 degrees twice daily and has not responded to regular paracetamol. The parents report a blotchy red rash that came up on his trunk on day 3 and his hands now look puffy. He has been miserable, off feeds, and clingy.\n\nOn examination he is well perfused but irritable. There is bilateral non-exudative conjunctival injection sparing the limbus, a strawberry-coloured tongue with cracked lips, a polymorphous trunk rash, and a single 1.8 cm right cervical lymph node. The throat is mildly erythematous without exudate or palatal petechiae. Capillary return is brisk. There is no recent overseas travel.",
+  "stem": "A 5-year-old girl attends the cardiology clinic seven weeks after treatment for Kawasaki disease. She has taken aspirin 4 mg/kg once daily since discharge and has been entirely well.",
   "data_table": {
-   "Vital signs": "pulse rate 158, blood pressure 92/54, respiratory rate 32, SpO2 99 percent on room air, temperature 39.2 degrees",
-   "Investigations": "haemoglobin 102 g/L (105-135), platelets 612 x10^9/L (150-450), white cells 18.4 x10^9/L (5-15), CRP 142 mg/L (<5), ESR 78 mm/hr, albumin 28 g/L (35-50), ALT 92 U/L (<40), sodium 132 mmol/L (135-145), urinalysis sterile pyuria, throat swab pending, rapid strep antigen negative"
+   "Examination": "Well grown; normal cardiovascular examination",
+   "Investigations": "Echocardiography today shows normal coronary arteries; ESR 8 mm/h, platelets 290 x10^9/L"
   },
-  "lead_in": "What is the most appropriate next step?",
+  "lead_in": "What is the most appropriate ongoing management?",
   "options": [
    {
     "letter": "A",
-    "text": "Administer intravenous immunoglobulin 2 g/kg over 10 to 12 hours with oral aspirin 30 mg/kg per day in four divided doses",
+    "text": "Cease aspirin and arrange general practitioner review as needed",
     "correct": true,
-    "rationale": "Five clinical criteria are met (fever five or more days, bilateral non-exudative conjunctivitis, oropharyngeal changes, polymorphous rash, hand swelling, cervical node greater than 1.5 cm) supported by classical adjunctive laboratory findings (CRP > 30, platelets > 450, albumin < 30, sterile pyuria, transaminitis, normocytic anaemia). IVIG within 10 days of fever onset reduces coronary aneurysm risk from around 25 percent to under 5 percent. (Source: RCH CPG: Kawasaki Disease)",
+    "rationale": "Normal coronary arteries at six to eight weeks with settled inflammatory markers defines the lowest risk group, who stop aspirin and need no cardiology surveillance or activity restriction. (Source: RCH Clinical Practice Guideline: Kawasaki disease)",
     "source_refs": [
-     "RCH CPG: Kawasaki Disease"
+     "RCH Clinical Practice Guideline: Kawasaki disease"
     ]
    },
    {
     "letter": "B",
-    "text": "Commence oral cefalexin 25 mg/kg twice daily for ten days under a working diagnosis of streptococcal scarlet fever",
+    "text": "Continue aspirin 4 mg/kg daily indefinitely and review each year",
     "correct": false,
-    "rationale": "Bacterial scarlet fever is excluded by the absent exudative pharyngitis, negative rapid strep antigen, and the constellation of mucocutaneous features. Oral cefalexin delays IVIG and exposes the child to ongoing coronary artery inflammation. (Source: RCH CPG: Kawasaki Disease)",
+    "rationale": "Indefinite antiplatelet therapy with annual review is the plan for a child left with persisting coronary dilatation or aneurysms. (Source: RCH Clinical Practice Guideline: Kawasaki disease)",
     "source_refs": [
-     "RCH CPG: Kawasaki Disease"
+     "RCH Clinical Practice Guideline: Kawasaki disease"
     ]
    },
    {
     "letter": "C",
-    "text": "Arrange outpatient transthoracic echocardiography in two weeks and continue regular paracetamol with parental safety netting",
+    "text": "Continue aspirin and restrict her from competitive sport for a year",
     "correct": false,
-    "rationale": "Outpatient deferral allows coronary artery inflammation to evolve unchecked. Echocardiography is part of the diagnostic workup but does not replace prompt IVIG when clinical criteria are met. (Source: RCH CPG: Kawasaki Disease)",
+    "rationale": "Activity restriction and stress testing apply to children with large or giant aneurysms, in whom myocardial ischaemia is a real risk. (Source: RCH Clinical Practice Guideline: Kawasaki disease)",
     "source_refs": [
-     "RCH CPG: Kawasaki Disease"
+     "RCH Clinical Practice Guideline: Kawasaki disease"
     ]
    },
    {
     "letter": "D",
-    "text": "Commence intravenous methylprednisolone 30 mg/kg daily for three days as monotherapy without concurrent immunoglobulin",
+    "text": "Cease aspirin and start clopidogrel 1 mg/kg once daily instead",
     "correct": false,
-    "rationale": "High dose corticosteroids are reserved for IVIG resistance or for primary therapy intensification in high risk cases (Kobayashi-style scoring is not validated outside Japanese populations). Steroid monotherapy without IVIG is not standard primary therapy in Australia. (Source: RCH CPG: Kawasaki Disease)",
+    "rationale": "Swapping antiplatelet agents is considered for salicylate intolerance or for dual therapy in moderate aneurysms, not for a child being discharged from surveillance. (Source: AMH Children's Dosing Companion)",
     "source_refs": [
-     "RCH CPG: Kawasaki Disease"
+     "AMH Children's Dosing Companion",
+     "RCH Clinical Practice Guideline: Kawasaki disease"
     ]
    },
    {
     "letter": "E",
-    "text": "Send blood cultures and start intravenous flucloxacillin 50 mg/kg every six hours for presumed staphylococcal toxin illness",
+    "text": "Continue aspirin until a repeat echocardiogram at twelve months",
     "correct": false,
-    "rationale": "Staphylococcal scalded skin or toxic shock would show bullae or hypotension and the rash pattern here is the polymorphous exanthem of Kawasaki. Flucloxacillin treats neither Kawasaki nor the small chance of group A streptococcal disease. (Source: RCH CPG: Kawasaki Disease)",
+    "rationale": "A twelve-month study would be scheduled if the six to eight week imaging had shown dilatation that needed tracking to resolution. (Source: RCH Clinical Practice Guideline: Kawasaki disease)",
     "source_refs": [
-     "RCH CPG: Kawasaki Disease"
+     "RCH Clinical Practice Guideline: Kawasaki disease"
     ]
    }
   ],
   "explanation": {
-   "summary": "Kawasaki disease is a medium-vessel vasculitis of young children whose most feared complication is coronary artery aneurysm. The classical criteria are fever five or more days plus four of: bilateral non-exudative conjunctivitis, polymorphous rash, oropharyngeal changes, extremity changes, and cervical node greater than 1.5 cm. Incomplete Kawasaki (two or three features plus supportive labs) is treated identically. IVIG 2 g/kg plus high dose aspirin within ten days of fever onset is the Australian standard.",
+   "summary": "Risk stratification after Kawasaki disease turns on the six to eight week echocardiogram. A child whose coronary arteries have never been abnormal and whose inflammatory markers have normalised sits in the lowest risk group: aspirin stops, no activity restriction applies, and no ongoing cardiology follow-up is required beyond routine care. Children with transient dilatation that has resolved are usually imaged once more before discharge, and children with persisting aneurysms move onto lifelong follow-up with antiplatelet therapy, periodic imaging and, for giant aneurysms, anticoagulation and exercise restriction. Counselling about long-term cardiovascular risk factors remains sensible for all of them. In context, Kawasaki disease is an acute self-limiting vasculitis, so most children are genuinely cured, and over-medicalising the low risk group with indefinite aspirin and open-ended surveillance is its own harm.",
    "key_points": [
-    "Fever five or more days plus four classical features (or two or three plus supportive labs) triggers IVIG",
-    "Aspirin 30 to 50 mg/kg per day in four divided doses until fever resolves, then 3 to 5 mg/kg per day for six to eight weeks",
-    "Coronary aneurysm risk falls from around 25 percent to under 5 percent with timely IVIG",
-    "Baseline and six to eight week echocardiography is mandatory",
-    "Sterile pyuria, transaminitis, low albumin, and high platelets support the diagnosis"
+    "Normal coronary arteries at six to eight weeks defines the lowest risk group.",
+    "Low risk children stop aspirin with no activity restriction.",
+    "Persisting aneurysms mean lifelong antiplatelet therapy and cardiology follow-up.",
+    "Exercise restriction and stress testing belong to large and giant aneurysms only."
    ],
-   "pearls": "If IVIG is given within 10 days of fever onset the absolute risk of coronary artery aneurysm at six to eight week echo drops from roughly 25 percent (untreated) to under 5 percent."
+   "pearls": "The clearance decision needs both a normal echocardiogram and normalised inflammatory markers; a persistently raised ESR at six weeks should prompt a closer look before aspirin is stopped."
   },
   "sources": [
    {
-    "label": "RCH CPG: Kawasaki Disease",
-    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Kawasaki_disease/"
+    "label": "RCH Clinical Practice Guideline: Kawasaki disease",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Kawasaki_Disease/"
    },
    {
-    "label": "Therapeutic Guidelines: Cardiovascular"
+    "label": "AMH Children's Dosing Companion",
+    "url": "https://childrens.amh.net.au/"
    }
   ],
   "reference_ranges": [
-   "paeds_fbc",
-   "inflammatory_markers"
+   "inflammatory_markers",
+   "paeds_fbc"
   ],
-  "created": "2026-06-02"
+  "revised_from": "paeds-p66-001"
  },
  {
   "id": "paeds-p66-002",
@@ -15849,94 +15859,103 @@
   "created": "2026-06-03"
  },
  {
-  "id": "paeds-p67-004",
+  "id": "paeds-p67-004-d2",
   "topic": "Paediatrics",
-  "subtopic": "Rheumatology",
-  "subtopic_detail": "Incomplete Kawasaki disease recognition",
+  "subtopic": "Infectious diseases",
+  "subtopic_detail": "Distinguishing measles from Kawasaki disease in a child with prolonged fever, conjunctivitis and rash",
   "difficulty": 4,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
-   "Kawasaki",
-   "IVIG"
+   "measles",
+   "kawasaki disease",
+   "public health"
   ],
-  "stem": "A 9-month-old boy is referred from a regional emergency department on day 7 of fever for second opinion. The fever has stayed between 38.6 and 39.4 degrees despite a five day course of oral cefalexin started in primary care. The parents report he is miserable, off feeds, and has a rash on his trunk and limbs that comes and goes.\n\nOn examination he is irritable but consolable. There is patchy non-blanching erythema on the trunk, mildly red cracked lips, and bilateral conjunctival injection sparing the limbus. Hands and feet are not swollen. There is a 1.2 cm right cervical lymph node. Throat is clean. There is no joint swelling, no organomegaly, and no peripheral peeling. He has no overseas travel and no known sick contacts.",
+  "stem": "An unimmunised 3-year-old girl returned from Indonesia nine days ago. She has had five days of fever with cough and coryza, and a rash that began on her face and has spread downwards.",
   "data_table": {
-   "Vital signs": "pulse rate 162, blood pressure 88/52, respiratory rate 34, SpO2 99 percent on room air, temperature 39.1 degrees",
-   "Investigations": "haemoglobin 96 g/L (105-135), platelets 642 x10^9/L (150-450), white cells 21.8 x10^9/L (5-15), CRP 168 mg/L (<5), ESR 84 mm/hr, albumin 26 g/L (35-50), ALT 102 U/L (<40), sodium 131 mmol/L (135-145), urinalysis pyuria with sterile culture, blood culture sterile at 48 hours"
+   "Vital signs": "Temp 39.3, HR 140, RR 34, SpO2 97% room air",
+   "Examination": "Bilateral non-purulent conjunctivitis; white spots on the buccal mucosa; confluent maculopapular rash",
+   "Investigations": "CRP 38 mg/L, platelets 190 x10^9/L, white cells 3.8 x10^9/L"
   },
-  "lead_in": "What is the most appropriate next step?",
+  "lead_in": "What is the most appropriate immediate action?",
   "options": [
    {
     "letter": "A",
-    "text": "Continue intravenous flucloxacillin 50 mg/kg every six hours pending repeat blood cultures and review at 48 hours",
-    "correct": false,
-    "rationale": "Sterile blood cultures at 48 hours plus the constellation of fever, conjunctivitis, oral changes, rash, and supportive laboratory findings argue against occult bacterial sepsis. Flucloxacillin would delay definitive treatment. (Source: RCH CPG: Kawasaki Disease)",
+    "text": "Isolate her, swab the nasopharynx for viral PCR and notify public health",
+    "correct": true,
+    "rationale": "Cough, coryza, conjunctivitis, buccal enanthem and a descending rash in an unimmunised returned traveller is measles, an urgently notifiable disease in New South Wales requiring airborne isolation, PCR on a nasopharyngeal swab and immediate telephone notification so contacts can be traced. (Source: NSW Health Measles Control Guideline)",
     "source_refs": [
-     "RCH CPG: Kawasaki Disease"
+     "NSW Health Measles Control Guideline",
+     "Australian Immunisation Handbook"
     ]
    },
    {
     "letter": "B",
-    "text": "Administer intravenous immunoglobulin 2 g/kg over ten hours with oral aspirin 30 mg/kg per day in four divided doses",
-    "correct": true,
-    "rationale": "Two or three classical features (here three: conjunctivitis, oral changes, rash) plus supportive laboratory findings (CRP greater than 30, platelets greater than 450, anaemia, albumin less than 30, transaminitis, sterile pyuria) meets the American Heart Association incomplete Kawasaki criteria, particularly important under one year where coronary risk is highest. (Source: RCH CPG: Kawasaki Disease)",
+    "text": "Admit her now for intravenous immunoglobulin with high-dose oral aspirin therapy",
+    "correct": false,
+    "rationale": "Immunoglobulin and aspirin would be right for Kawasaki disease, which shares the fever, conjunctivitis and rash but has no cough or coryza, no enanthem of this kind and a raised rather than low white cell count. (Source: RCH Clinical Practice Guideline: Kawasaki disease)",
     "source_refs": [
-     "RCH CPG: Kawasaki Disease"
+     "RCH Clinical Practice Guideline: Kawasaki disease"
     ]
    },
    {
     "letter": "C",
-    "text": "Arrange same day outpatient echocardiography to look for coronary artery dilatation before deciding on intravenous immunoglobulin",
+    "text": "Arrange urgent echocardiography and admit her under paediatric cardiology",
     "correct": false,
-    "rationale": "Treatment for incomplete Kawasaki should not be delayed pending an echo result. Baseline echo is part of workup but treatment proceeds immediately when criteria are met. (Source: RCH CPG: Kawasaki Disease)",
+    "rationale": "Urgent coronary imaging belongs to suspected complete or incomplete Kawasaki disease after five days of otherwise unexplained fever. (Source: RCH Clinical Practice Guideline: Kawasaki disease)",
     "source_refs": [
-     "RCH CPG: Kawasaki Disease"
+     "RCH Clinical Practice Guideline: Kawasaki disease"
     ]
    },
    {
     "letter": "D",
-    "text": "Commence intravenous methylprednisolone 30 mg/kg daily for three days as primary monotherapy ahead of immunoglobulin",
+    "text": "Start intravenous ceftriaxone and arrange a lumbar puncture on the ward",
     "correct": false,
-    "rationale": "Pulse methylprednisolone alone is not standard primary therapy for Kawasaki in Australia. Steroids are adjunctive in high risk cases or used for immunoglobulin resistance. (Source: RCH CPG: Kawasaki Disease)",
+    "rationale": "Empirical antibiotics and cerebrospinal fluid sampling are indicated for suspected invasive bacterial infection, suggested by toxicity, a non-blanching rash or altered conscious state. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "RCH CPG: Kawasaki Disease"
+     "Therapeutic Guidelines: Antibiotic",
+     "RCH Clinical Practice Guideline: Febrile child"
     ]
    },
    {
     "letter": "E",
-    "text": "Continue supportive care with regular paracetamol and discharge home with paediatric clinic review in one week",
+    "text": "Discharge her with antipyretic advice and review by her family doctor",
     "correct": false,
-    "rationale": "Discharging without immunoglobulin in an infant under one year with incomplete Kawasaki criteria allows coronary artery inflammation to evolve unchecked; risk of aneurysm is highest in this age group. (Source: RCH CPG: Kawasaki Disease)",
+    "rationale": "Community review without isolation would be appropriate for an ordinary self-limiting viral exanthem in an immunised child with no travel history. (Source: RCH Clinical Practice Guideline: Febrile child)",
     "source_refs": [
-     "RCH CPG: Kawasaki Disease"
+     "RCH Clinical Practice Guideline: Febrile child"
     ]
    }
   ],
   "explanation": {
-   "summary": "Incomplete Kawasaki disease is fever for five or more days with two or three classical features plus supportive laboratory findings. The diagnosis is particularly important under one year where coronary aneurysm risk is highest and classical features are most often incomplete. Australian practice mirrors the American Heart Association criteria with intravenous immunoglobulin 2 g/kg plus high dose aspirin within ten days of fever onset.",
+   "summary": "Measles and Kawasaki disease overlap on fever beyond five days, non-purulent conjunctivitis and a widespread rash, and both occur in the preschool years. The discriminators are the prodrome and the blood count: measles brings cough and coryza, a buccal enanthem, a rash that starts on the face and spreads downwards, and leucopenia, while Kawasaki disease brings mucosal and peripheral changes, marked neutrophilia and rising platelets. Travel to a country with ongoing transmission and the absence of immunisation shift the odds further. Management is therefore public health rather than pharmacological: airborne isolation on arrival, nasopharyngeal swab and urine for PCR with paired serology, immediate telephone notification to the local public health unit, and vitamin A for the child. In context, measles remains eliminated in Australia only through imported case containment, so recognising it in the department and isolating before the diagnosis is confirmed is the decision that prevents an outbreak.",
    "key_points": [
-    "Incomplete Kawasaki: fever 5 or more days plus 2-3 features plus supportive labs",
-    "Supportive labs: CRP > 30, platelets > 450, anaemia, albumin < 30, ALT raised, sterile pyuria",
-    "Highest aneurysm risk: infants under 1 year and over 8 years",
-    "Treatment: IVIG 2 g/kg plus aspirin 30-50 mg/kg per day during acute phase",
-    "Do not delay IVIG pending echocardiogram"
+    "Cough, coryza and an enanthem separate measles from Kawasaki disease.",
+    "Leucopenia points to measles; neutrophilia and thrombocytosis to Kawasaki disease.",
+    "Measles is urgently notifiable by telephone in New South Wales.",
+    "Airborne isolation starts on clinical suspicion, not on the PCR result."
    ],
-   "pearls": "A febrile infant under one year with at least two classical features and CRP above 30 plus albumin below 30 meets American Heart Association incomplete Kawasaki criteria and receives intravenous immunoglobulin immediately."
+   "pearls": "Ask about the rash sequence: a rash that began on the face behind the ears and moved down the trunk is measles until proven otherwise, and the child has already been infectious for four days."
   },
   "sources": [
    {
-    "label": "RCH CPG: Kawasaki Disease",
-    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Kawasaki_disease/"
+    "label": "NSW Health Measles Control Guideline",
+    "url": "https://www.health.nsw.gov.au/Infectious/controlguideline/Pages/measles.aspx"
    },
    {
-    "label": "American Heart Association Kawasaki Disease Scientific Statement 2017"
+    "label": "RCH Clinical Practice Guideline: Kawasaki disease",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Kawasaki_Disease/"
+   },
+   {
+    "label": "Australian Immunisation Handbook",
+    "url": "https://immunisationhandbook.health.gov.au/"
    }
   ],
   "reference_ranges": [
+   "paeds_vitals_child",
    "paeds_fbc",
    "inflammatory_markers"
   ],
-  "created": "2026-06-03"
+  "revised_from": "paeds-p67-004"
  },
  {
   "id": "paeds-p67-005",

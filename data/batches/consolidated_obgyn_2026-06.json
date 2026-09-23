@@ -92,96 +92,100 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rp48-011",
+  "id": "rp48-011-d2",
   "topic": "Obstetrics & Gynaecology",
   "subtopic": "Intrapartum",
-  "subtopic_detail": "GBS prophylaxis",
-  "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Counselling on what intrapartum prophylaxis does and does not prevent",
+  "difficulty": 2,
+  "model": "Claude Opus 5",
   "tags": [
-   "GBS",
-   "antibiotic",
-   "intrapartum"
+   "group B streptococcus",
+   "counselling",
+   "newborn"
   ],
-  "stem": "A 30-year-old G2P1 woman at 39+3 weeks gestation has been admitted in established labour, cervix 5 cm dilated with intact membranes. Her vaginal-rectal swab at 36+0 weeks grew group B Streptococcus. She has no documented penicillin allergy and tolerated amoxicillin for a UTI earlier in this pregnancy. Her previous baby was born vaginally at term and did not develop neonatal sepsis. The intrapartum CTG is reactive with normal variability and accelerations.\n\nThe midwife is asking for prescription of intrapartum antibiotic prophylaxis.",
+  "stem": "A 30 year old woman colonised with group B streptococcus is in early labour at 40 weeks and has had her first intravenous dose. She asks what the antibiotic will do for her baby.",
   "data_table": {
-   "Vital signs": "Pulse rate 82/min, blood pressure 118/70 mmHg, respiratory rate 16/min, SpO2 99% on room air, temperature 36.8°C, fetal heart 140/min reactive",
-   "Examination": "Cervix 5 cm dilated, membranes intact, vertex presentation; abdomen soft non-tender",
-   "Investigations": "36 week vaginal-rectal swab: GBS positive; current bloods unremarkable; CTG reactive",
-   "Medications": "Folate; pregnancy multivitamin"
+   "Labour": "Cervix 4 cm, membranes intact, temperature 36.6 degC",
+   "Antibiotic": "First dose given 20 minutes ago with no reaction"
   },
-  "lead_in": "What is the most appropriate intrapartum antibiotic regimen?",
+  "lead_in": "What is the most appropriate explanation?",
   "options": [
    {
     "letter": "A",
-    "text": "Oral amoxicillin 500 mg three times daily commenced now and continued for 48 hours postpartum.",
-    "correct": false,
-    "rationale": "Oral antibiotics do not achieve the rapid amniotic fluid levels required for neonatal GBS prophylaxis; IV therapy is essential. (Source: RANZCOG GBS statement)",
+    "text": "It lowers infection in the first week but not illness appearing later",
+    "correct": true,
+    "rationale": "Prophylaxis reduces early onset disease by interrupting exposure at birth and has no effect on the later onset form. (Source: RANZCOG - Maternal group B streptococcus in pregnancy: screening and management)",
     "source_refs": [
-     "RANZCOG GBS statement"
+     "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management",
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    },
    {
     "letter": "B",
-    "text": "IV vancomycin 20 mg/kg over 1 hour given every 8 hours throughout labour until delivery.",
+    "text": "It removes any risk of infection from this organism in the first month",
     "correct": false,
-    "rationale": "Vancomycin is reserved for severe penicillin allergy with confirmed clindamycin resistance, not routine first-line prophylaxis. (Source: RANZCOG GBS statement)",
+    "rationale": "Complete protection would be a fair account of an effective vaccine, which is still in development for this organism. (Source: RANZCOG - Maternal group B streptococcus in pregnancy: screening and management)",
     "source_refs": [
-     "RANZCOG GBS statement"
+     "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management"
     ]
    },
    {
     "letter": "C",
-    "text": "IV cefazolin 2 g loading dose then 1 g every 8 hours until delivery as first-line therapy.",
+    "text": "It works by clearing the organism from her birth canal within the hour",
     "correct": false,
-    "rationale": "Cefazolin is the appropriate choice for non-severe penicillin allergy without anaphylaxis history, not first-line over benzylpenicillin. (Source: RANZCOG GBS statement)",
+    "rationale": "Clearance of carriage is what an antenatal oral course attempts, and it is not how this treatment protects. (Source: Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis)",
     "source_refs": [
-     "RANZCOG GBS statement"
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis"
     ]
    },
    {
     "letter": "D",
-    "text": "Benzylpenicillin 3 g intravenously as a loading dose then 1.8 g every 4 hours until delivery.",
-    "correct": true,
-    "rationale": "RANZCOG and AMH recommend intrapartum IV benzylpenicillin 3 g load then 1.8 g every 4 hours as first-line for GBS-positive women without penicillin allergy. (Source: RANZCOG GBS statement)",
+    "text": "It protects mainly against infection appearing after the first week",
+    "correct": false,
+    "rationale": "Later onset disease is often acquired after birth from other sources and is unaffected by labour antibiotics. (Source: Queensland Clinical Guidelines - Early onset group B streptococcal disease)",
     "source_refs": [
-     "RANZCOG GBS statement"
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    },
    {
     "letter": "E",
-    "text": "Defer antibiotics until rupture of membranes occurs because she is currently low risk for transmission.",
+    "text": "It is given for her own risk of infection rather than for the baby",
     "correct": false,
-    "rationale": "Antibiotics should be commenced once labour is established to achieve adequate amniotic fluid penetration before delivery. (Source: RANZCOG GBS statement)",
+    "rationale": "Maternal cover is the purpose when intrauterine infection is suspected, which is a different clinical situation. (Source: Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis)",
     "source_refs": [
-     "RANZCOG GBS statement"
+     "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis"
     ]
    }
   ],
   "explanation": {
-   "summary": "Intrapartum antibiotic prophylaxis for a known GBS-positive woman in established labour is IV benzylpenicillin 3 g loading dose followed by 1.8 g every 4 hours until delivery. The aim is to achieve at least one full dose at least 4 hours before delivery to reduce neonatal early-onset GBS disease. For mild penicillin allergy (rash, no anaphylaxis), cefazolin 2 g IV load then 1 g 8-hourly is the alternative; for severe allergy, clindamycin 600 mg 8-hourly if susceptibility confirmed, else vancomycin.",
+   "summary": "Early onset group B streptococcal disease presents in the first six days of life, usually within 24 hours, and follows exposure to the organism during labour and birth. Intrapartum intravenous prophylaxis reduces that form substantially, which is the whole basis of the screening programme. Late onset disease presents from seven days to three months, commonly as meningitis, and is frequently acquired from maternal or environmental sources after birth, so labour antibiotics do not prevent it. Women are counselled on both points: the antibiotic lowers but does not abolish risk in the first week, and it offers nothing later, so the warning signs remain relevant for months. In context, a maternal vaccine is in trials and would be the intervention that addressed both forms; until then, screening plus intrapartum antibiotics plus parental safety netting is the whole of the Australian approach.",
    "key_points": [
-    "First-line: benzylpenicillin 3 g IV load then 1.8 g every 4 hours.",
-    "Aim for at least one dose at least 4 hours before delivery.",
-    "Cefazolin for mild penicillin allergy; clindamycin or vancomycin for severe."
+    "Prophylaxis reduces early onset disease in the first week of life.",
+    "Late onset disease from seven days to three months is not prevented.",
+    "Risk is reduced rather than abolished, so safety netting still applies.",
+    "The mechanism is interrupting exposure at birth, not clearing carriage."
    ],
-   "pearls": "Start antibiotics as soon as labour is established (cervix at least 4 cm and regular contractions, or rupture of membranes), not when membranes rupture, to maximise the chance of a 4-hour cover before birth."
+   "pearls": "Late onset disease commonly presents as meningitis rather than respiratory distress, so a febrile or irritable infant in the first three months warrants a low threshold for full assessment whatever happened in labour."
   },
   "sources": [
    {
-    "label": "RANZCOG GBS statement",
+    "label": "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management",
     "url": "https://ranzcog.edu.au/"
    },
    {
-    "label": "AMH antibiotic chapter",
-    "url": "https://amhonline.amh.net.au/"
+    "label": "Queensland Clinical Guidelines - Early onset group B streptococcal disease",
+    "url": "https://www.health.qld.gov.au/qcg"
+   },
+   {
+    "label": "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis",
+    "url": "https://tgldcdp.tg.org.au/"
    }
   ],
   "reference_ranges": [
-   "obs_pregnancy_vitals",
-   "ctg_baseline"
+   "obs_pregnancy_vitals"
   ],
-  "created": "2026-06-01"
+  "created": "2026-06-10",
+  "revised_from": "rp48-011"
  },
  {
   "id": "rp48-012",
@@ -3543,97 +3547,101 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rabe54-011",
+  "id": "rabe54-011-d2",
   "topic": "Obstetrics & Gynaecology",
-  "subtopic": "Intrapartum care",
-  "subtopic_detail": "Group B streptococcus intrapartum prophylaxis",
+  "subtopic": "Postnatal",
+  "subtopic_detail": "Newborn care when intrapartum prophylaxis was incomplete",
   "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "model": "Claude Opus 5",
   "tags": [
-   "GBS",
-   "intrapartum antibiotics"
+   "group B streptococcus",
+   "newborn",
+   "observation"
   ],
-  "stem": "A 28-year-old woman in her second pregnancy presents to the birth suite at 39 weeks and 2 days with regular painful contractions every 4 minutes and ruptured membranes 30 minutes ago. Her booking visit was uncomplicated and her 36-week vaginal-rectal swab grew Streptococcus agalactiae. Her first child was born at term with no neonatal infection.\n\nOn examination her cervix is 5 cm dilated and the cephalic presenting part is engaged. Fetal heart rate is 138 with normal variability. She has no penicillin allergy.",
+  "stem": "You review a term baby on the postnatal ward an hour after a rapid spontaneous vaginal birth. The mother is colonised with group B streptococcus and remained afebrile throughout.",
   "data_table": {
-   "Vital signs": "Pulse 88, BP 122/76 mmHg, RR 16, SpO2 99% on room air, temperature 36.9 °C, fetal heart rate 138",
-   "Examination": "Cervix 5 cm dilated, fully effaced, vertex at -1 station, clear liquor draining",
-   "Investigations": "Antenatal 36-week vaginal-rectal GBS swab positive; FBC and group-and-hold within normal limits",
-   "Medications": "Folic acid, iodine"
+   "Antibiotic": "One intravenous benzylpenicillin dose, given 90 minutes before the birth",
+   "Baby": "Feeding, pink, temperature 36.9 degC, respiratory rate 48 /min, no recession"
   },
-  "lead_in": "What is the most appropriate next step in management?",
+  "lead_in": "What is the most appropriate management of the baby?",
   "options": [
    {
     "letter": "A",
-    "text": "Give a single dose of oral amoxicillin 1 g now and arrange home discharge until contractions intensify",
-    "correct": false,
-    "rationale": "Oral antibiotics do not achieve fetal-protective intrapartum levels reliably; intravenous benzylpenicillin is the standard. Home discharge with ruptured membranes in active labour is unsafe. (Source: RANZCOG GBS)",
+    "text": "Clinical observations on the postnatal ward for at least 24 hours",
+    "correct": true,
+    "rationale": "Prophylaxis counts as adequate only from four hours before birth, so this well baby is observed rather than investigated or treated. (Source: Queensland Clinical Guidelines - Early onset group B streptococcal disease)",
     "source_refs": [
-     "RANZCOG GBS"
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease",
+     "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management"
     ]
    },
    {
     "letter": "B",
-    "text": "Withhold antibiotics and observe for clinical chorioamnionitis before treating as the proposed approach",
+    "text": "Blood culture and intravenous antibiotics started now for 48 hours",
     "correct": false,
-    "rationale": "Intrapartum antibiotic prophylaxis is offered based on the antenatal screen, not on clinical infection criteria; waiting for chorioamnionitis means accepting preventable early-onset neonatal GBS disease. (Source: RANZCOG GBS)",
+    "rationale": "Empirical treatment is for a baby with clinical signs of sepsis or a mother with suspected intrauterine infection. (Source: Queensland Clinical Guidelines - Early onset group B streptococcal disease)",
     "source_refs": [
-     "RANZCOG GBS"
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    },
    {
     "letter": "C",
-    "text": "Give intravenous clindamycin 900 mg 8-hourly until birth with the proposed clinical action",
+    "text": "Full blood count and C-reactive protein now and again at 24 hours",
     "correct": false,
-    "rationale": "Clindamycin is an alternative agent for women with severe penicillin allergy and confirmed clindamycin susceptibility; in a non-allergic woman benzylpenicillin is first-line and provides better in-utero penetration. (Source: RANZCOG GBS)",
+    "rationale": "Blood tests are taken when there is a clinical reason to suspect infection; they perform poorly as a screen in a well baby. (Source: Queensland Clinical Guidelines - Early onset group B streptococcal disease)",
     "source_refs": [
-     "RANZCOG GBS"
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    },
    {
     "letter": "D",
-    "text": "Commence intravenous benzylpenicillin 3 g loading dose now, then 1.8 g every 4 hours until birth",
-    "correct": true,
-    "rationale": "RANZCOG and Therapeutic Guidelines recommend intrapartum benzylpenicillin 3 g IV loading then 1.8 g every 4 hours until delivery for any woman with a positive antenatal GBS screen presenting in labour or with rupture of membranes. The first dose is the most important; effective prophylaxis ideally requires at least 4 hours before delivery but should not be delayed. (Source: RANZCOG GBS)",
+    "text": "Surface swabs and a lumbar puncture before deciding about treatment",
+    "correct": false,
+    "rationale": "Lumbar puncture belongs to a baby being treated for proven or strongly suspected invasive disease. (Source: Queensland Clinical Guidelines - Early onset group B streptococcal disease)",
     "source_refs": [
-     "RANZCOG GBS",
-     "Therapeutic Guidelines Antibiotic"
+     "Queensland Clinical Guidelines - Early onset group B streptococcal disease"
     ]
    },
    {
     "letter": "E",
-    "text": "Defer antibiotic prophylaxis as her previous child was unaffected and prior unaffected pregnancy reduces neonatal risk",
+    "text": "Routine postnatal care, with discharge at six hours if feeding well",
     "correct": false,
-    "rationale": "Prior unaffected pregnancy does not reduce GBS colonisation risk in the current pregnancy and does not waive the indication for prophylaxis with a current positive screen. (Source: RANZCOG GBS)",
+    "rationale": "Early discharge is appropriate when prophylaxis was adequate or the mother had no indication at all. (Source: RANZCOG - Maternal group B streptococcus in pregnancy: screening and management)",
     "source_refs": [
-     "RANZCOG GBS"
+     "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management"
     ]
    }
   ],
   "explanation": {
-   "summary": "AU intrapartum GBS prophylaxis uses benzylpenicillin 3 g IV loading then 1.8 g every 4 hours until delivery for women with positive antenatal screen, prior infant with GBS disease, GBS bacteriuria in this pregnancy, or unknown status with risk factors. Clindamycin is reserved for confirmed severe penicillin allergy with susceptibility. Oral antibiotics are insufficient. The first dose is the most important; do not delay.",
+   "summary": "Adequate intrapartum prophylaxis means the first dose of an appropriate intravenous antibiotic given at least four hours before birth, which is the interval needed for bactericidal concentrations in the fetal circulation and amniotic fluid. When that interval is not achieved, as happens with precipitate labour, the baby has not had the benefit and is managed as at risk: kept with the mother, fed normally, and observed for temperature instability, respiratory distress, poor feeding or lethargy at defined intervals for at least 24 hours. Investigation and antibiotics are reserved for a baby who develops signs or whose mother had features of intrauterine infection. In context, most early onset group B streptococcal disease presents within 24 hours of birth with respiratory distress, so structured observation over that window is the intervention that actually catches it, and parents are given the same warning signs before discharge.",
    "key_points": [
-    "RANZCOG: IV benzylpenicillin 3 g load then 1.8 g 4-hourly until birth",
-    "Indications: positive screen, prior GBS infant, GBS bacteriuria, unknown + risk",
-    "Clindamycin only if severe penicillin allergy + susceptibility",
-    "First dose timing matters most; ideal ≥4 hours before delivery"
+    "Adequate prophylaxis is the first dose at least four hours before birth.",
+    "A well term baby with inadequate prophylaxis is observed for at least 24 hours.",
+    "Bloods and antibiotics follow clinical signs, not the timing alone.",
+    "Most early onset disease presents within the first 24 hours."
    ],
-   "pearls": "Cefazolin replaces benzylpenicillin only for non-anaphylactic penicillin allergy; severe (anaphylaxis) allergy with confirmed clindamycin susceptibility uses clindamycin instead."
+   "pearls": "Parents leaving hospital after inadequate prophylaxis should be told the specific signs to return for: poor feeding, floppiness, grunting, fast breathing, and temperature instability in either direction."
   },
   "sources": [
    {
-    "label": "RANZCOG GBS",
+    "label": "Queensland Clinical Guidelines - Early onset group B streptococcal disease",
+    "url": "https://www.health.qld.gov.au/qcg"
+   },
+   {
+    "label": "RANZCOG - Maternal group B streptococcus in pregnancy: screening and management",
     "url": "https://ranzcog.edu.au/"
    },
    {
-    "label": "Therapeutic Guidelines Antibiotic",
+    "label": "Therapeutic Guidelines: Antibiotic - group B streptococcal prophylaxis",
     "url": "https://tgldcdp.tg.org.au/"
    }
   ],
   "reference_ranges": [
    "obs_pregnancy_vitals",
-   "ctg_baseline"
+   "apgar"
   ],
-  "created": "2026-06-01"
+  "created": "2026-06-10",
+  "revised_from": "rabe54-011"
  },
  {
   "id": "rabe54-012",
@@ -9842,95 +9850,98 @@
   "created": "2026-06-02"
  },
  {
-  "id": "obgyn-p64-012",
+  "id": "obgyn-p64-012-d2",
   "topic": "Obstetrics & Gynaecology",
-  "subtopic": "Maternal-Fetal Medicine",
-  "subtopic_detail": "Severe pre-eclampsia seizure prophylaxis",
+  "subtopic": "Maternal medicine",
+  "subtopic_detail": "Pulmonary oedema after fluid administration in severe pre-eclampsia",
   "difficulty": 4,
   "model": "Claude Opus 4.7 (1M context)",
   "tags": [
    "pre-eclampsia",
-   "magnesium"
+   "pulmonary oedema",
+   "fluid balance"
   ],
-  "stem": "A 28-year-old G1P0 woman at 34+2 weeks is referred from her shared-care GP to the birthing unit with a 24-hour history of headache and visual flashing lights. Her booking blood pressure was 110/70 mmHg. On arrival now her readings are repeatedly elevated and she has hyperreflexia with three beats of ankle clonus.\n\nFetal CTG shows a normal baseline with reassuring variability and accelerations. Her urine dipstick is 3+ for protein and the spot urine protein-creatinine ratio is 84 mg/mmol (less than 30). She is for admission with senior obstetric and anaesthetic input. She has had no seizures and is GCS 15. The midwife asks what to commence first.",
+  "stem": "A 31-year-old woman with severe pre-eclampsia gave birth six hours ago. She has received three litres of crystalloid since admission and remains on a magnesium sulfate infusion. She is now breathless sitting upright.",
   "data_table": {
-   "Vital signs": "pulse 92 /min, blood pressure 168/112 mmHg, respiratory rate 18 /min, SpO2 98% on room air, temperature 36.8 degrees Celsius",
-   "Examination": "hyperreflexia, three beats of clonus, headache with visual sparkles, no focal deficit",
-   "Investigations": "platelets 142 x10^9/L (150 to 400); ALT 78 U/L (5 to 35); creatinine 88 micromol/L (45 to 90); urate 0.42 mmol/L; spot UPCR 84 mg/mmol; CTG reassuring"
+   "Vital signs": "BP 148/92, pulse 112, respiratory rate 28, SpO2 89% room air",
+   "Examination": "Fine inspiratory crackles to the mid-zones; patellar reflexes present and brisk",
+   "Investigations": "Urine output 20 mL per hour; creatinine 88 micromol/L"
   },
-  "lead_in": "What is the single best initial intervention?",
+  "lead_in": "What is the most appropriate immediate management?",
   "options": [
    {
     "letter": "A",
-    "text": "Withhold magnesium given the borderline creatinine and observe closely",
-    "correct": false,
-    "rationale": "Renal impairment is not a contraindication to magnesium; it is a reason to adjust the maintenance infusion and monitor magnesium levels and reflexes more closely. Withholding seizure prophylaxis in this setting is not safe. (Source: SOMANZ Hypertension in Pregnancy Guidelines)",
+    "text": "Oxygen, stop intravenous fluids and give furosemide 40 mg intravenously",
+    "correct": true,
+    "rationale": "Breathlessness with hypoxia and bibasal crackles after a positive fluid balance in pre-eclampsia is pulmonary oedema driven by low oncotic pressure and capillary leak; oxygen, stopping fluids and intravenous furosemide reverse it, and oliguria in this setting must not be treated with more fluid. (Source: SOMANZ Hypertensive Disorders of Pregnancy Guideline)",
     "source_refs": [
-     "SOMANZ Hypertension in Pregnancy Guidelines"
+     "SOMANZ Hypertensive Disorders of Pregnancy Guideline",
+     "RANZCOG"
     ]
    },
    {
     "letter": "B",
-    "text": "IV labetalol 20 mg bolus and proceed to delivery within 30 minutes",
+    "text": "Oxygen, give a 250 mL crystalloid fluid challenge and reassess her output",
     "correct": false,
-    "rationale": "BP control with labetalol or hydralazine is essential but is concurrent with magnesium, and immediate delivery is not always required at 34+2 weeks with reassuring CTG. Steroid cover for fetal lung maturity and stabilisation precede delivery in this window. (Source: SOMANZ Hypertension in Pregnancy Guidelines)",
+    "rationale": "A fluid challenge is appropriate for oliguria from hypovolaemia, such as after major obstetric haemorrhage, where the lung fields are clear. (Source: SOMANZ Hypertensive Disorders of Pregnancy Guideline)",
     "source_refs": [
-     "SOMANZ Hypertension in Pregnancy Guidelines"
+     "SOMANZ Hypertensive Disorders of Pregnancy Guideline"
     ]
    },
    {
     "letter": "C",
-    "text": "IV phenytoin 15 mg/kg loading dose over 30 minutes for seizure prophylaxis",
+    "text": "Oxygen, stop the magnesium and give calcium gluconate 10% 10 mL",
     "correct": false,
-    "rationale": "The Magpie trial established magnesium as superior to phenytoin and diazepam for eclampsia prevention. Phenytoin is no longer recommended for this indication. (Source: SOMANZ Hypertension in Pregnancy Guidelines)",
+    "rationale": "This is the response to magnesium toxicity, which presents with loss of reflexes and a falling respiratory rate rather than tachypnoea with crackles. (Source: SOMANZ Hypertensive Disorders of Pregnancy Guideline)",
     "source_refs": [
-     "SOMANZ Hypertension in Pregnancy Guidelines"
+     "SOMANZ Hypertensive Disorders of Pregnancy Guideline"
     ]
    },
    {
     "letter": "D",
-    "text": "Oral nifedipine 20 mg immediate release stat and review in one hour",
+    "text": "Oxygen, give intravenous hydralazine 5 mg and repeat after 20 minutes",
     "correct": false,
-    "rationale": "Nifedipine is a valid BP-lowering option but does not prevent seizures and is not the single best initial intervention with this constellation of cerebral irritation features. (Source: SOMANZ Hypertension in Pregnancy Guidelines)",
+    "rationale": "Parenteral vasodilators are for severe range blood pressure at or above 160/110, and hydralazine is usually preceded by a fluid preload that would worsen this picture. (Source: SOMANZ Hypertensive Disorders of Pregnancy Guideline)",
     "source_refs": [
-     "SOMANZ Hypertension in Pregnancy Guidelines"
+     "SOMANZ Hypertensive Disorders of Pregnancy Guideline"
     ]
    },
    {
     "letter": "E",
-    "text": "IV magnesium sulfate 4 g loading dose over 20 minutes, then 1 g per hour infusion",
-    "correct": true,
-    "rationale": "Severe pre-eclampsia with cerebral features (headache, visual disturbance, hyperreflexia, clonus) carries imminent eclampsia risk. The RANZCOG and SOMANZ standard is magnesium sulfate IV 4 g over 20 minutes then 1 g per hour for 24 hours, with reflex and respiratory rate monitoring. BP control with labetalol or hydralazine follows but seizure prophylaxis is the immediate priority. (Source: SOMANZ Hypertension in Pregnancy Guidelines)",
+    "text": "Oxygen, start therapeutic enoxaparin 1 mg/kg and arrange a CT scan",
+    "correct": false,
+    "rationale": "Anticoagulation and imaging would follow pleuritic pain with a clear chest and unilateral leg swelling, the picture of pulmonary embolism. (Source: RANZCOG)",
     "source_refs": [
-     "SOMANZ Hypertension in Pregnancy Guidelines"
+     "RANZCOG",
+     "SOMANZ Hypertensive Disorders of Pregnancy Guideline"
     ]
    }
   ],
   "explanation": {
-   "summary": "Severe pre-eclampsia is defined by SOMANZ as systolic BP at least 160 mmHg or diastolic at least 110 mmHg, or BP elevation plus end-organ involvement (cerebral features, pulmonary oedema, oliguria, raised transaminases, thrombocytopenia, raised creatinine, fetal compromise). Magnesium sulfate IV is the standard seizure prophylaxis (Magpie trial) and is given as a loading dose of 4 g over 20 minutes followed by 1 g per hour for at least 24 hours, with reflex, respiratory rate, and urine output monitoring. Antihypertensive therapy (IV labetalol or hydralazine, or oral immediate-release nifedipine) is concurrent. Delivery is the definitive treatment but stabilisation, magnesium, and antenatal corticosteroid cover (if under 35 weeks) precede it where possible.",
+   "summary": "Pulmonary oedema complicates around three per cent of severe pre-eclampsia and is now a leading cause of maternal death in the condition, most often postpartum and most often iatrogenic. Hypoalbuminaemia lowers oncotic pressure, endothelial injury raises capillary permeability, and the fluid given for oliguria during labour is mobilised back into the circulation after birth. Management is oxygen, stopping intravenous fluids, sitting the woman up and giving intravenous furosemide, with escalation to non-invasive ventilation and critical care if hypoxia persists. The trap is the oliguria: urine output commonly falls to 20 to 30 mL per hour in severe pre-eclampsia without renal injury, and responding to it with boluses is what fills the lungs. Total fluid input is therefore restricted to about 80 mL per hour. In context, pre-eclampsia is a systemic endothelial disease, so the same leaky capillaries that produce the proteinuria and the oedema are what make these women intolerant of fluid loading.",
    "key_points": [
-    "Magnesium IV 4 g over 20 min then 1 g per hour for 24 hours is seizure prophylaxis",
-    "Magpie trial: magnesium is superior to phenytoin and diazepam for eclampsia prevention",
-    "Renal impairment requires dose adjustment and closer monitoring, not omission",
-    "BP control and delivery planning are concurrent priorities, not substitutes for magnesium"
+    "Restrict total fluid to about 80 mL per hour in severe pre-eclampsia.",
+    "Oliguria alone is expected and is not an indication for a fluid bolus.",
+    "Pulmonary oedema is commonest in the first 24 hours after birth.",
+    "Treat with oxygen, fluid restriction and intravenous furosemide."
    ],
-   "pearls": "Severe pre-eclampsia with cerebral features: IV magnesium sulfate 4 g over 20 minutes then 1 g per hour for 24 hours. Concurrent BP control with labetalol or hydralazine; antenatal corticosteroids if under 35 weeks."
+   "pearls": "The postnatal period is the danger window: fluid given during labour is reabsorbed once the placenta has gone, so the woman who looked dry on the delivery suite drowns on the postnatal ward."
   },
   "sources": [
    {
-    "label": "RANZCOG Hypertensive Disorders of Pregnancy",
-    "url": "https://ranzcog.edu.au/"
+    "label": "SOMANZ Hypertensive Disorders of Pregnancy Guideline",
+    "url": "https://www.somanz.org/"
    },
    {
-    "label": "SOMANZ Hypertension in Pregnancy Guidelines",
-    "url": "https://www.somanz.org/"
+    "label": "RANZCOG",
+    "url": "https://ranzcog.edu.au/"
    }
   ],
   "reference_ranges": [
-   "pre_eclampsia_bloods",
-   "obs_pregnancy_vitals"
+   "obs_pregnancy_vitals",
+   "pre_eclampsia_bloods"
   ],
-  "created": "2026-06-02"
+  "revised_from": "obgyn-p64-012"
  },
  {
   "id": "obgyn-p64-014",

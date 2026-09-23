@@ -10063,98 +10063,102 @@
   "difficulty_prior_v3": 4
  },
  {
-  "id": "psych-cata-001",
+  "id": "psych-cata-001-d2",
   "topic": "Psychiatry",
-  "subtopic": "Psychotic disorders",
-  "subtopic_detail": "Catatonia recognition",
-  "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic": "Catatonia",
+  "subtopic_detail": "Distinguishing catatonia from hypoactive delirium on the ward",
+  "difficulty": 2,
+  "model": "Claude Opus 5",
   "tags": [
    "catatonia",
-   "lorazepam"
+   "delirium",
+   "diagnosis"
   ],
-  "stem": "A 29-year-old woman with bipolar I disorder is found at home immobile and mute by her housemate after not eating for 48 hours. On examination she lies motionless with eyes open, does not respond to commands, and her passively raised arm remains in position for over 30 seconds. She exhibits stereotyped lip-smacking and turns her head away when approached. She self-ceased lithium 2 weeks ago.",
+  "stem": "A 26 year old man admitted with a severe depressive episode has barely spoken for three days. Staff report that he resists being moved and will not eat. He is afebrile.",
   "data_table": {
-   "Vital signs": "HR 98 bpm, BP 108/72 mmHg, RR 14 bpm, temperature 37.3 degrees C",
-   "Examination": "Immobile, mute, waxy flexibility, stereotypy (lip-smacking), negativism (turns away), no rigidity, no tremor"
+   "Examination": "Mute and immobile; resists passive limb movement; holds an arm where it is placed for two minutes"
   },
-  "lead_in": "What is the most appropriate immediate management?",
+  "lead_in": "What is the most likely diagnosis?",
   "options": [
    {
     "letter": "A",
-    "text": "Commence olanzapine 10 mg daily for presumed psychotic episode with catatonic features",
-    "correct": false,
-    "rationale": "Antipsychotics can worsen catatonia and may precipitate malignant catatonia or NMS. They should not be first-line. The correct initial intervention is a benzodiazepine challenge. (Source: RANZCP; Therapeutic Guidelines: Psychotropic)",
+    "text": "Catatonia arising during the current depressive episode",
+    "correct": true,
+    "rationale": "Mutism, immobility, negativism and catalepsy with a clear conscious state define catatonia, which complicates mood disorders more often than schizophrenia (Source: Therapeutic Guidelines: Psychotropic).",
     "source_refs": [
-     "RANZCP Clinical Practice Guidelines for Schizophrenia",
      "Therapeutic Guidelines: Psychotropic"
     ]
    },
    {
     "letter": "B",
-    "text": "Administer lorazepam 2 mg IV as a diagnostic and therapeutic challenge",
-    "correct": true,
-    "rationale": "The lorazepam challenge is both diagnostic and therapeutic. Lorazepam 1-2 mg IV is given and response observed over 5-30 minutes. Improvement confirms catatonia and guides ongoing benzodiazepine treatment. Response rate approximately 60-80%. (Source: RANZCP; Therapeutic Guidelines: Psychotropic; BMJ Best Practice)",
+    "text": "Hypoactive delirium from an undetected medical cause",
+    "correct": false,
+    "rationale": "This would be the answer if attention fluctuated through the day and the conscious state were clouded, usually with an identified medical precipitant (Source: ACSQHC Delirium Clinical Care Standard).",
     "source_refs": [
-     "RANZCP Clinical Practice Guidelines for Schizophrenia",
-     "Therapeutic Guidelines: Psychotropic",
-     "BMJ Best Practice: Catatonia"
+     "ACSQHC Delirium Clinical Care Standard"
     ]
    },
    {
     "letter": "C",
-    "text": "Urgent ECT referral as first-line treatment for acute catatonic presentation",
+    "text": "Drug induced parkinsonism from a recent antipsychotic",
     "correct": false,
-    "rationale": "ECT is highly effective (>80%) but second-line after benzodiazepine trial. ECT is indicated when benzodiazepines fail or malignant catatonia develops. Lorazepam should be tried first. (Source: RANZCP Clinical Practice Guidelines for Schizophrenia)",
+    "rationale": "Correct when a dopamine blocking drug has produced cogwheel rigidity, bradykinesia and tremor; that picture does not include catalepsy or negativism (Source: Australian Medicines Handbook).",
     "source_refs": [
-     "RANZCP Clinical Practice Guidelines for Schizophrenia"
+     "Australian Medicines Handbook"
     ]
    },
    {
     "letter": "D",
-    "text": "Restart lithium 900 mg daily as catatonia likely resulted from lithium cessation",
+    "text": "Dissociative stupor following an undisclosed stressor",
     "correct": false,
-    "rationale": "Lithium cessation may have precipitated a mood episode with catatonic features, but restarting lithium does not treat acute catatonia. The immediate priority is lorazepam for catatonia. (Source: Therapeutic Guidelines: Psychotropic)",
+    "rationale": "Considered when motor signs vary with observation and follow an identifiable psychological trigger, without catalepsy or resistance to passive movement (Source: Therapeutic Guidelines: Psychotropic).",
     "source_refs": [
      "Therapeutic Guidelines: Psychotropic"
     ]
    },
    {
     "letter": "E",
-    "text": "IV fluids and nasogastric feeding only while awaiting spontaneous resolution over days",
+    "text": "Psychomotor retardation without any catatonic features",
     "correct": false,
-    "rationale": "Expecting spontaneous resolution is inappropriate. Untreated catatonia carries significant morbidity from immobility (DVT, aspiration, pressure injuries). Active treatment with lorazepam is indicated. (Source: BMJ Best Practice: Catatonia)",
+    "rationale": "Retardation slows speech and movement but the patient still responds, does not hold imposed postures and does not resist passive movement (Source: RANZCP Clinical Practice Guidelines for Mood Disorders).",
     "source_refs": [
-     "BMJ Best Practice: Catatonia"
+     "RANZCP Clinical Practice Guidelines for Mood Disorders"
     ]
    }
   ],
   "explanation": {
-   "summary": "Catatonia is characterised by motor and behavioural abnormalities including immobility, mutism, waxy flexibility, negativism, and stereotypy. The lorazepam challenge is first-line diagnostic and therapeutic with 60-80% response rate. Antipsychotics should be avoided as they can worsen catatonia. ECT is reserved for benzodiazepine-refractory cases. Medical supportive care runs concurrently.",
+   "summary": "Catatonia is a syndrome of motor dysregulation recognised by mutism, immobility, negativism, posturing, catalepsy and waxy flexibility. It is most often seen in mood disorders, then in schizophrenia, and then in general medical and neurological disease. The conscious state is clear, which is the single most useful separator from hypoactive delirium; the catatonic patient is awake and attentive but cannot mobilise behaviour. Recognition matters because untreated catatonia produces dehydration, pressure injury, venous thromboembolism and rhabdomyolysis, and because it responds well to treatment when it is named.",
    "key_points": [
-    "Diagnose clinically: immobility, mutism, waxy flexibility, negativism, stereotypy",
-    "Lorazepam 1-2 mg IV is both diagnostic and therapeutic",
-    "Antipsychotics can worsen catatonia - avoid as first-line",
-    "ECT second-line or first-line if life-threatening/benzodiazepine-refractory",
-    "Catatonia occurs across diagnoses - mood, psychotic, medical, autism"
+    "Catatonia complicates mood disorders more often than schizophrenia",
+    "Clear conscious state separates catatonia from hypoactive delirium",
+    "Catalepsy, negativism and posturing are the discriminating motor signs",
+    "Mislabelling catatonia as uncooperative behaviour delays effective treatment"
    ],
-   "pearls": "A positive lorazepam challenge (>=50% reduction in Bush-Francis Catatonia Rating Scale within 10 minutes of IV lorazepam) has positive predictive value of approximately 95% for diagnosing catatonia."
+   "pearls": "The Bush-Francis Catatonia Rating Scale screening items take about five minutes at the bedside and give a reproducible score to follow. In context: catatonia is a syndrome, not a diagnosis, so naming it is the first step and the search for the underlying mood, psychotic or medical illness follows immediately (Source: Therapeutic Guidelines: Psychotropic)."
   },
   "sources": [
    {
-    "label": "RANZCP Clinical Practice Guidelines for Schizophrenia",
-    "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library"
+    "label": "Therapeutic Guidelines: Psychotropic",
+    "url": "https://www.tg.org.au"
    },
    {
-    "label": "Therapeutic Guidelines: Psychotropic"
+    "label": "RANZCP Clinical Practice Guidelines for Mood Disorders",
+    "url": "https://www.ranzcp.org/clinical-guidelines-publications"
    },
    {
-    "label": "BMJ Best Practice: Catatonia"
+    "label": "ACSQHC Delirium Clinical Care Standard",
+    "url": "https://www.safetyandquality.gov.au/standards/clinical-care-standards"
+   },
+   {
+    "label": "Australian Medicines Handbook",
+    "url": "https://amhonline.amh.net.au"
    }
   ],
-  "reference_ranges": [],
-  "created": "2026-05-24",
-  "difficulty_prior_v3": 4
+  "reference_ranges": [
+   "adult_vitals"
+  ],
+  "created": "2026-09-23",
+  "revised_from": "psych-cata-001"
  },
  {
   "id": "psych-cata-002",

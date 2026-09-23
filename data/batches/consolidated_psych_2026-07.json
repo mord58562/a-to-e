@@ -2592,93 +2592,101 @@
   "created": "2026-07-26"
  },
  {
-  "id": "psych-p73-020",
+  "id": "psych-p73-020-d2",
   "topic": "Psychiatry",
   "subtopic": "Toxicology",
-  "subtopic_detail": "Tricyclic antidepressant overdose cardiovascular management",
+  "subtopic_detail": "Treating a refusing patient after life-threatening self-poisoning",
   "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
   "tags": [
-   "TCA overdose",
-   "sodium bicarbonate"
+   "capacity",
+   "consent",
+   "NSW legislation"
   ],
-  "stem": "You are the emergency registrar. A 38-year-old woman is brought in by ambulance 90 minutes after ingesting an unknown quantity of amitriptyline. Her partner found her drowsy at home with an empty 100-tablet 25 mg blister pack of amitriptyline that was previously two-thirds full. Paramedics report she had a brief self-terminating seizure en route. She takes no other medications.\n\nOn arrival she is drowsy with a GCS of 12 (E3 V4 M5). Pupils are mid-dilated and sluggish. Skin is warm and dry. Bladder is palpable. Her ECG on arrival shows sinus tachycardia at 132/min, QRS 140 ms, terminal R wave in aVR, QTc 480 ms. Venous blood gas shows pH 7.26, pCO2 44 mmHg, HCO3 19 mmol/L, lactate 3.2 mmol/L (0.5-2.2). She is peripherally cool with a delayed capillary refill.",
+  "stem": "A 45-year-old man in a Sydney emergency department took amitriptyline two hours ago. He is drowsy, pulls at his cannula and says he wants to be left to die. He is not a detained patient and his blood pressure is falling.",
   "data_table": {
-   "Vital signs": "Pulse 132/min, blood pressure 92/58 mmHg, respiratory rate 22/min, SpO2 97 percent on room air, temperature 37.2 degrees C",
-   "Examination": "GCS 12 (E3 V4 M5), mid-dilated sluggish pupils, warm dry skin, palpable bladder, cool peripheries",
-   "Investigations": "ECG sinus tachycardia 132/min, QRS 140 ms, terminal R wave in aVR, QTc 480 ms; VBG pH 7.26, pCO2 44, HCO3 19, lactate 3.2 mmol/L (0.5-2.2)"
+   "Vital signs": "HR 126, BP 92/54",
+   "ECG": "Sinus tachycardia, QRS 122 ms and widening",
+   "Examination": "GCS 12, dry skin, dilated pupils, no focal deficit"
   },
-  "lead_in": "What is the single most appropriate initial pharmacological intervention?",
+  "lead_in": "What is the most appropriate course of action?",
   "options": [
    {
-    "letter": "A",
-    "text": "Administer intravenous flumazenil 200 microgram to reverse suspected benzodiazepine co-ingestion contributing to sedation",
-    "correct": false,
-    "rationale": "Flumazenil is contraindicated in mixed overdose because it lowers the seizure threshold; the picture here is TCA toxicity. (Source: Australian Poisons Information Centre TCA Overdose)",
-    "source_refs": [
-     "Australian Poisons Information Centre TCA Overdose"
-    ]
-   },
-   {
-    "letter": "B",
-    "text": "Give amiodarone 300 mg intravenously over 20 minutes for QRS widening with tachyarrhythmia and impending arrest",
-    "correct": false,
-    "rationale": "Class III antiarrhythmics prolong QT and worsen sodium channel blockade; they are contraindicated in TCA toxicity. (Source: Australian Poisons Information Centre TCA Overdose)",
-    "source_refs": [
-     "Australian Poisons Information Centre TCA Overdose"
-    ]
-   },
-   {
-    "letter": "C",
-    "text": "Commence noradrenaline infusion at 0.05 microgram per kilogram per minute for hypotension without alkalinising therapy",
-    "correct": false,
-    "rationale": "Vasopressor may be needed adjunctively but the primary intervention for QRS widening and hypotension in TCA overdose is sodium bicarbonate. (Source: Australian Poisons Information Centre TCA Overdose)",
-    "source_refs": [
-     "Australian Poisons Information Centre TCA Overdose"
-    ]
-   },
-   {
-    "letter": "D",
-    "text": "Give oral activated charcoal 50 g via nasogastric tube now for gastrointestinal decontamination as first priority",
-    "correct": false,
-    "rationale": "Charcoal is of low value beyond 1-2 hours after ingestion and risks aspiration in a drowsy patient; sodium bicarbonate takes priority. (Source: Australian Poisons Information Centre TCA Overdose)",
-    "source_refs": [
-     "Australian Poisons Information Centre TCA Overdose"
-    ]
-   },
-   {
-    "letter": "E",
-    "text": "Administer intravenous sodium bicarbonate 1-2 mmol per kilogram bolus targeting pH 7.5 and QRS narrowing",
+    "text": "Provide urgent treatment without consent as an emergency",
     "correct": true,
-    "rationale": "QRS above 100 ms with terminal R in aVR indicates significant sodium channel blockade; sodium bicarbonate bolus reverses toxicity via alkalinisation and sodium loading. (Source: Australian Poisons Information Centre TCA Overdose)",
+    "rationale": "He lacks capacity for this decision, being drowsy and unable to weigh the information. Under the Guardianship Act 1987 (NSW) and the common law, urgent treatment necessary to save life or prevent serious damage to health may be given to a person without capacity without consent.",
     "source_refs": [
-     "Australian Poisons Information Centre TCA Overdose"
-    ]
+     "Guardianship Act 1987 (NSW)",
+     "Mental Health Act 2007 (NSW)"
+    ],
+    "letter": "A"
+   },
+   {
+    "text": "Detain and treat him under the NSW Mental Health Act 2007",
+    "rationale": "A mental health certificate authorises detention and psychiatric care in a declared mental health facility, which matters once he is medically stable. It does not authorise emergency medical treatment of the physical effects of the poisoning.",
+    "source_refs": [
+     "Mental Health Act 2007 (NSW)",
+     "Guardianship Act 1987 (NSW)"
+    ],
+    "letter": "B",
+    "correct": false
+   },
+   {
+    "text": "Await a psychiatry opinion before any further treatment",
+    "rationale": "Psychiatric assessment is essential, but after resuscitation. Deferring antidote and supportive care while the QRS widens converts a treatable poisoning into an arrest.",
+    "source_refs": [
+     "Therapeutic Guidelines: Toxicology and Toxinology",
+     "Mental Health Act 2007 (NSW)"
+    ],
+    "letter": "C",
+    "correct": false
+   },
+   {
+    "text": "Accept his stated refusal and give comfort measures",
+    "rationale": "A refusal is binding when it is a capacitous contemporaneous decision, or a valid advance care directive that covers the situation. Neither applies to a drowsy, acutely poisoned patient.",
+    "source_refs": [
+     "Guardianship Act 1987 (NSW)",
+     "Mental Health Act 2007 (NSW)"
+    ],
+    "letter": "D",
+    "correct": false
+   },
+   {
+    "text": "Obtain written consent from his nearest relative first",
+    "rationale": "A person responsible can consent to non-urgent treatment for someone without capacity. Consent is not required at all where treatment is urgently necessary, and seeking it would waste time.",
+    "source_refs": [
+     "Guardianship Act 1987 (NSW)",
+     "RACGP: Handbook of Non-Drug Interventions and preventive activities"
+    ],
+    "letter": "E",
+    "correct": false
    }
   ],
-  "explanation": {
-   "summary": "Tricyclic antidepressant overdose causes anticholinergic delirium, sodium channel blockade (widened QRS, terminal R in aVR, ventricular arrhythmia), potassium channel blockade (prolonged QTc), alpha blockade (hypotension) and seizures. Sodium bicarbonate 1-2 mmol/kg intravenous bolus is the mainstay for cardiovascular toxicity: it alkalinises to reduce free drug binding to sodium channels and provides a sodium load to overcome channel blockade, targeting arterial pH 7.45-7.55 and QRS narrowing. Seizures are treated with benzodiazepines; noradrenaline is preferred for refractory hypotension despite alkalinisation, and Class Ia, Ic and III antiarrhythmics are contraindicated. Charcoal is only of value within around 1 hour of ingestion in an alert patient with a protected airway.",
-   "key_points": [
-    "QRS above 100 ms plus terminal R in aVR indicates significant TCA sodium channel blockade.",
-    "Sodium bicarbonate 1-2 mmol/kg bolus is first-line for cardiovascular toxicity.",
-    "Target arterial pH 7.45-7.55 and QRS narrowing.",
-    "Class Ia, Ic and III antiarrhythmics are contraindicated."
-   ],
-   "pearls": "In TCA overdose with QRS above 100 ms or terminal R in aVR, give sodium bicarbonate 1-2 mmol/kg intravenous bolus targeting arterial pH 7.5 and QRS narrowing."
-  },
+  "explanation": "Two separate legal frameworks operate side by side in New South Wales and are often confused. The Mental Health Act 2007 (NSW) governs detention and treatment of mental illness in a declared mental health facility. Medical treatment of a person who lacks capacity is governed by the Guardianship Act 1987 (NSW), which allows urgent treatment without consent where it is necessary to save life or prevent serious damage to health, a position the common law doctrine of necessity reaches as well. A patient made drowsy by a poison cannot retain and weigh information, so a stated refusal at that moment is not a capacitous refusal, and delay to obtain substitute consent is neither required nor safe. In context: after resuscitation this man needs a mental state and risk assessment, and a mental health certificate may then be the right instrument for ongoing psychiatric care.",
   "sources": [
    {
-    "label": "Australian Poisons Information Centre TCA Overdose",
-    "url": "https://www.poisonsinfo.nsw.gov.au/"
+    "label": "Guardianship Act 1987 (NSW)",
+    "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-1987-257"
    },
    {
-    "label": "Australian eTG: Toxicology - Tricyclic antidepressants"
+    "label": "Mental Health Act 2007 (NSW)",
+    "url": "https://legislation.nsw.gov.au/view/html/inforce/current/act-2007-008"
+   },
+   {
+    "label": "Therapeutic Guidelines: Toxicology and Toxinology",
+    "url": "https://www.tg.org.au/"
+   },
+   {
+    "label": "RACGP: Handbook of Non-Drug Interventions and preventive activities",
+    "url": "https://www.racgp.org.au/"
    }
   ],
   "reference_ranges": [
-   "vbg"
+   "gcs",
+   "adult_vitals"
   ],
-  "created": "2026-07-26"
+  "model": "Claude Opus 5",
+  "created": "2026-09-23",
+  "revised_from": "psych-p73-020"
  },
  {
   "id": "psych-p73-021",
@@ -2855,91 +2863,99 @@
   "created": "2026-07-26"
  },
  {
-  "id": "psych-p73-023",
+  "id": "psych-p73-023-d2",
   "topic": "Psychiatry",
   "subtopic": "Catatonia",
-  "subtopic_detail": "Catatonia recognition and lorazepam challenge",
-  "difficulty": 5,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Reintroducing antipsychotic treatment after catatonia has resolved",
+  "difficulty": 4,
+  "model": "Claude Opus 5",
   "tags": [
    "catatonia",
-   "lorazepam"
+   "schizophrenia",
+   "antipsychotic"
   ],
-  "stem": "You are the consultation-liaison psychiatry registrar called to the medical ward to review a 45-year-old woman with schizoaffective disorder admitted 5 days ago with reduced oral intake and mutism. Her long-term outpatient team titrated up her olanzapine from 10 to 20 mg over the last month for worsening psychosis. Since admission she has become progressively less responsive; today she has not eaten, spoken or moved.\n\nOn examination she is alert with eyes tracking, mute, and lies rigid on the bed with waxy flexibility of the arms and echolalia when addressed loudly. Bush-Francis Catatonia Rating Scale is 16 (over 3 features present). Her temperature is 37.1 degrees C. Creatine kinase is 380 U/L (30-200), white cell count 8.4 x10^9/L, no autonomic instability, and no lead-pipe rigidity. She has no history of NMS. Her mother had major depressive disorder with a similar presentation years ago that responded to ECT.",
+  "stem": "A 24 year old man with schizophrenia developed catatonia while taking haloperidol. It resolved over a week on lorazepam, but his persecutory delusions and thought disorder have returned.",
   "data_table": {
-   "Vital signs": "Pulse 92/min, blood pressure 128/78 mmHg, respiratory rate 16/min, SpO2 98 percent on room air, temperature 37.1 degrees C",
-   "Examination": "Mute, waxy flexibility both arms, echolalia when addressed, no lead-pipe rigidity, no clonus, no autonomic instability",
-   "Investigations": "Bush-Francis Catatonia Rating Scale 16; creatine kinase 380 U/L (30-200); WCC 8.4 x10^9/L; urea and electrolytes within normal limits; CT head within normal limits"
+   "Examination": "Mental state: guarded, persecutory delusions, formal thought disorder, no catatonic signs"
   },
-  "lead_in": "What is the most appropriate diagnostic and therapeutic step now?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "Cease olanzapine and commence bromocriptine 2.5 mg twice daily for suspected neuroleptic malignant syndrome",
-    "correct": false,
-    "rationale": "NMS features are absent: no hyperthermia, no lead-pipe rigidity, no autonomic instability and only mildly elevated CK; the picture is catatonia. (Source: RANZCP Catatonia Practice Guidance)",
+    "text": "Introduce low dose olanzapine while continuing the lorazepam",
+    "correct": true,
+    "rationale": "The psychosis still needs treatment, and a lower potency dopamine antagonist introduced slowly under benzodiazepine cover carries the least risk of recurrence (Source: RANZCP Clinical Practice Guidelines for the Management of Schizophrenia and Related Disorders).",
     "source_refs": [
-     "RANZCP Catatonia Practice Guidance"
+     "RANZCP Clinical Practice Guidelines for the Management of Schizophrenia and Related Disorders",
+     "Therapeutic Guidelines: Psychotropic"
     ]
    },
    {
     "letter": "B",
-    "text": "Continue olanzapine, add haloperidol 5 mg intramuscular for behavioural containment and monitor response",
+    "text": "Restart haloperidol at half his previous dose with lorazepam",
     "correct": false,
-    "rationale": "High-potency antipsychotics can precipitate malignant catatonia and NMS in this setting and are contraindicated. (Source: RANZCP Catatonia Practice Guidance)",
+    "rationale": "Rechallenge with the implicated high potency agent is the answer only when no alternative exists, since it carries the greatest recurrence risk (Source: Therapeutic Guidelines: Psychotropic).",
     "source_refs": [
-     "RANZCP Catatonia Practice Guidance"
+     "Therapeutic Guidelines: Psychotropic"
     ]
    },
    {
     "letter": "C",
-    "text": "Administer intravenous lorazepam 2 mg as a diagnostic-therapeutic challenge, watching for improvement in 15-30 min",
-    "correct": true,
-    "rationale": "The lorazepam challenge (1-2 mg IV) is both diagnostic and therapeutic for catatonia; typical improvement within 15-30 minutes confirms the diagnosis and starts treatment. (Source: RANZCP Catatonia Practice Guidance)",
+    "text": "Continue lorazepam alone and defer any antipsychotic for now",
+    "correct": false,
+    "rationale": "Benzodiazepine alone is reasonable while psychotic symptoms are absent, but it does not treat the delusions and thought disorder described (Source: RANZCP Clinical Practice Guidelines for the Management of Schizophrenia and Related Disorders).",
     "source_refs": [
-     "RANZCP Catatonia Practice Guidance"
+     "RANZCP Clinical Practice Guidelines for the Management of Schizophrenia and Related Disorders"
     ]
    },
    {
     "letter": "D",
-    "text": "Refer directly for electroconvulsive therapy within the next 24 hours without any pharmacological challenge trial",
+    "text": "Refer for electroconvulsive therapy rather than an antipsychotic",
     "correct": false,
-    "rationale": "ECT is highly effective but is typically reserved for lorazepam-refractory catatonia or malignant catatonia; a lorazepam challenge is the first step. (Source: RANZCP Catatonia Practice Guidance)",
+    "rationale": "Electroconvulsive therapy is the answer when psychosis and catatonia both fail adequate pharmacological treatment (Source: RANZCP Clinical Practice Guidelines for the Management of Schizophrenia and Related Disorders).",
     "source_refs": [
-     "RANZCP Catatonia Practice Guidance"
+     "RANZCP Clinical Practice Guidelines for the Management of Schizophrenia and Related Disorders"
     ]
    },
    {
     "letter": "E",
-    "text": "Trial oral fluoxetine 20 mg for underlying depressive stupor and observe for 7 days before further intervention",
+    "text": "Commence a long acting injectable antipsychotic at this review",
     "correct": false,
-    "rationale": "SSRIs are ineffective for catatonic stupor; benzodiazepine or ECT is the standard approach. (Source: RANZCP Catatonia Practice Guidance)",
+    "rationale": "A depot is the answer once an oral agent has been tolerated and adherence is the remaining obstacle (Source: Australian Medicines Handbook).",
     "source_refs": [
-     "RANZCP Catatonia Practice Guidance"
+     "Australian Medicines Handbook"
     ]
    }
   ],
   "explanation": {
-   "summary": "Catatonia is diagnosed when at least 3 of 12 features are present on the DSM-5-TR or Bush-Francis Catatonia Rating Scale: stupor, catalepsy, waxy flexibility, mutism, negativism, posturing, mannerism, stereotypy, agitation, grimacing, echolalia, echopraxia. Causes include primary psychiatric disorders (schizophrenia, mood disorders), medical or neurological conditions and medications. A 1-2 mg intravenous lorazepam challenge is both diagnostic and therapeutic: rapid partial response confirms the diagnosis. Treatment is scheduled oral or intravenous lorazepam titrated to response, with ECT reserved for lorazepam-refractory cases or malignant catatonia (autonomic instability, hyperthermia). Antipsychotics can worsen or precipitate malignant catatonia and NMS.",
+   "summary": "Antipsychotic associated catatonia leaves a genuine dilemma: the drug class that may have caused the syndrome is also the treatment for the psychosis that persists. The accepted compromise is to avoid the implicated high potency agent, introduce a lower potency second generation antipsychotic slowly at a low starting dose, keep benzodiazepine cover running during the introduction, and monitor temperature, pulse, blood pressure and creatine kinase for early recurrence. Clozapine is an option when catatonia recurs with every other agent.",
    "key_points": [
-    "3+ features on DSM-5-TR or Bush-Francis criteria establishes catatonia.",
-    "Lorazepam 1-2 mg IV is both diagnostic and therapeutic.",
-    "ECT is used for lorazepam-refractory or malignant catatonia.",
-    "Avoid high-potency antipsychotics which can worsen the picture."
+    "Persisting psychosis still needs antipsychotic treatment after catatonia resolves",
+    "Avoid the implicated high potency agent and start low and slow",
+    "Maintain benzodiazepine cover through the reintroduction",
+    "Monitor observations and creatine kinase for early recurrence"
    ],
-   "pearls": "In catatonia, give intravenous lorazepam 1-2 mg as a diagnostic-therapeutic challenge and expect partial response in 15-30 minutes; avoid high-potency antipsychotics which risk precipitating malignant catatonia."
+   "pearls": "Clozapine is comparatively catatonia sparing and is the usual choice when catatonia recurs on successive antipsychotics, although abrupt clozapine withdrawal can itself precipitate catatonia. In context: after antipsychotic associated catatonia every later prescribing decision balances relapse of psychosis against recurrence of the motor syndrome (Source: RANZCP Clinical Practice Guidelines for the Management of Schizophrenia and Related Disorders)."
   },
   "sources": [
    {
-    "label": "RANZCP Catatonia Practice Guidance",
+    "label": "RANZCP Clinical Practice Guidelines for the Management of Schizophrenia and Related Disorders",
     "url": "https://www.ranzcp.org/clinical-guidelines-publications"
    },
    {
-    "label": "DSM-5-TR"
+    "label": "Therapeutic Guidelines: Psychotropic",
+    "url": "https://www.tg.org.au"
+   },
+   {
+    "label": "Australian Medicines Handbook",
+    "url": "https://amhonline.amh.net.au"
    }
   ],
-  "reference_ranges": [],
-  "created": "2026-07-26"
+  "reference_ranges": [
+   "adult_vitals"
+  ],
+  "created": "2026-09-23",
+  "revised_from": "psych-p73-023"
  },
  {
   "id": "psych-p74-001",
@@ -3034,95 +3050,96 @@
   "created": "2026-07-27"
  },
  {
-  "id": "psych-p74-002",
+  "id": "psych-p74-002-d2",
   "topic": "Psychiatry",
-  "subtopic": "Toxicology",
-  "subtopic_detail": "Tricyclic antidepressant overdose",
+  "subtopic": "Mood disorders",
+  "subtopic_detail": "Choosing an antidepressant after an overdose of one",
   "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
   "tags": [
-   "TCA overdose",
-   "sodium bicarbonate"
+   "depression",
+   "antidepressant choice",
+   "toxicity in overdose"
   ],
-  "stem": "A 22-year-old woman is brought to your emergency department by ambulance 90 minutes after an intentional ingestion of approximately 60 amitriptyline 25 mg tablets, taken with vodka. Her partner found her drowsy at home. She has a history of borderline personality disorder and prior self-harm by cutting. Her only medication is amitriptyline 50 mg at night for chronic tension headache.\n\nOn assessment she is drowsy and responsive only to voice, with dry mucous membranes and warm dry skin. Pupils are 6 mm and sluggishly reactive. There is no focal neurology. Bedside ECG shows sinus tachycardia at 130/min with a QRS duration of 140 ms and a terminal R wave in aVR of 4 mm. Venous blood gas shows pH 7.28, pCO2 30 mmHg, bicarbonate 16 mmol/L (22-30) and lactate 3.2 mmol/L (0.5-2.2). Point-of-care glucose is 6.4 mmol/L (3.5-6.0). She weighs 65 kg.",
+  "stem": "A 27-year-old woman has recovered fully after an amitriptyline overdose taken during a depressive episode. She has no cardiac history, wants to continue antidepressant treatment, and is being discharged to her general practitioner and the community mental health team.",
   "data_table": {
-   "Vital signs": "Pulse 130/min, blood pressure 96/56 mmHg, respiratory rate 22/min, SpO2 97 percent on room air, temperature 37.6 degrees C",
-   "Examination": "Drowsy but responds to voice, dry mucous membranes, warm dry skin, dilated sluggish pupils, no focal neurology",
-   "Investigations": "ECG QRS 140 ms with 4 mm terminal R in aVR, sinus tachycardia; venous gas pH 7.28, HCO3 16 mmol/L (22-30), lactate 3.2 mmol/L (0.5-2.2); glucose 6.4 mmol/L (3.5-6.0)"
+   "Examination": "Alert, GCS 15, no delirium",
+   "ECG": "Sinus rhythm, QRS 86 ms, QTc 410 ms",
+   "Mental state": "Mood improving, regrets the act, no current intent"
   },
-  "lead_in": "What is the single most appropriate initial pharmacological intervention?",
+  "lead_in": "Which antidepressant is most appropriate?",
   "options": [
    {
-    "letter": "A",
-    "text": "Intravenous flumazenil 0.2 mg titrated to 1 mg total to reverse the sedation and improve airway protection",
-    "correct": false,
-    "rationale": "Flumazenil is contraindicated in mixed overdose with pro-convulsant tricyclics; it may precipitate seizures and unmask cardiovascular toxicity. (Source: Australian eTG: Toxicology - Tricyclic Antidepressant Overdose)",
-    "source_refs": [
-     "Australian eTG: Toxicology - Tricyclic Antidepressant Overdose"
-    ]
-   },
-   {
-    "letter": "B",
-    "text": "Intravenous 8.4 percent sodium bicarbonate 2 mmol per kilogram bolus, aiming for QRS narrowing and arterial pH 7.50 to 7.55",
+    "text": "Sertraline with early community review",
     "correct": true,
-    "rationale": "QRS above 100 ms and terminal R in aVR above 3 mm meet AU criteria for hypertonic bicarbonate; 1 to 2 mmol/kg boluses with target pH 7.50 to 7.55 improve conduction. (Source: Australian eTG: Toxicology - Tricyclic Antidepressant Overdose)",
+    "rationale": "A selective serotonin reuptake inhibitor is the recommended first-line antidepressant in Australian practice and is comparatively safe in overdose, which matters directly for someone who has just taken one.",
     "source_refs": [
-     "Australian eTG: Toxicology - Tricyclic Antidepressant Overdose"
-    ]
+     "Therapeutic Guidelines: Psychotropic",
+     "Australian Medicines Handbook"
+    ],
+    "letter": "A"
    },
    {
+    "text": "Amitriptyline with early community review",
+    "rationale": "Tricyclics retain a place in neuropathic pain and in depression resistant to safer agents, prescribed in limited quantities. Restarting the drug she used to poison herself hands back a lethal means.",
+    "source_refs": [
+     "Australian Medicines Handbook",
+     "Therapeutic Guidelines: Psychotropic"
+    ],
+    "letter": "B",
+    "correct": false
+   },
+   {
+    "text": "Nortriptyline with early community review",
+    "rationale": "Nortriptyline is the better tolerated tricyclic for orthostatic and antimuscarinic effects, which is why it is preferred in older patients when a tricyclic is genuinely needed. Its toxicity in overdose is the same class problem.",
+    "source_refs": [
+     "Australian Medicines Handbook",
+     "Therapeutic Guidelines: Psychotropic"
+    ],
     "letter": "C",
-    "text": "Intravenous diazepam 5 mg titrated to sedation for the anticholinergic delirium and expected withdrawal",
-    "correct": false,
-    "rationale": "Diazepam does not address the sodium channel blockade driving the wide complex tachycardia and hypotension; hypertonic bicarbonate is the priority. (Source: Australian eTG: Toxicology - Tricyclic Antidepressant Overdose)",
-    "source_refs": [
-     "Australian eTG: Toxicology - Tricyclic Antidepressant Overdose"
-    ]
+    "correct": false
    },
    {
+    "text": "Venlafaxine with early community review",
+    "rationale": "Venlafaxine is a reasonable second-line choice after an inadequate response to a selective serotonin reuptake inhibitor. It causes seizures and cardiotoxicity in overdose and raises blood pressure at higher doses.",
+    "source_refs": [
+     "Australian Medicines Handbook",
+     "Therapeutic Guidelines: Psychotropic"
+    ],
     "letter": "D",
-    "text": "Intravenous physostigmine 1 mg over 5 minutes to reverse the anticholinergic component of the overdose picture",
-    "correct": false,
-    "rationale": "Physostigmine is contraindicated in tricyclic overdose because it can precipitate seizures and asystole; bicarbonate is the antidote for cardiotoxicity. (Source: Australian eTG: Toxicology - Tricyclic Antidepressant Overdose)",
-    "source_refs": [
-     "Australian eTG: Toxicology - Tricyclic Antidepressant Overdose"
-    ]
+    "correct": false
    },
    {
-    "letter": "E",
-    "text": "Intravenous 20 percent intralipid emulsion 1.5 mL per kilogram bolus as first-line antidote before bicarbonate",
-    "correct": false,
-    "rationale": "Intralipid is reserved for cardiovascular collapse refractory to bicarbonate; first-line antidote is hypertonic bicarbonate for the wide QRS. (Source: Australian eTG: Toxicology - Tricyclic Antidepressant Overdose)",
+    "text": "Phenelzine with early community review",
+    "rationale": "Irreversible monoamine oxidase inhibitors are reserved for treatment-resistant or atypical depression under specialist care, with tyramine dietary restriction and serious interaction risk.",
     "source_refs": [
-     "Australian eTG: Toxicology - Tricyclic Antidepressant Overdose"
-    ]
+     "Australian Medicines Handbook",
+     "Therapeutic Guidelines: Psychotropic"
+    ],
+    "letter": "E",
+    "correct": false
    }
   ],
-  "explanation": {
-   "summary": "Tricyclic antidepressant overdose produces anticholinergic, sodium channel blocking, potassium channel blocking and alpha-adrenergic effects, with cardiovascular toxicity as the main driver of death (wide QRS, terminal R wave in aVR above 3 mm, hypotension and ventricular arrhythmia). QRS above 100 ms predicts seizure and above 160 ms predicts ventricular arrhythmia. The AU antidote is hypertonic sodium bicarbonate (8.4 percent) 1 to 2 mmol/kg bolus, repeated to target arterial pH 7.50 to 7.55 or QRS narrowing below 100 ms, followed by infusion; intubation and hyperventilation to a pCO2 of 30 mmHg supports alkalinisation. Seizures are treated with benzodiazepines and intralipid is reserved for refractory cardiovascular collapse. Physostigmine and flumazenil are contraindicated because they precipitate seizure and dysrhythmia.",
-   "key_points": [
-    "QRS above 100 ms and terminal R in aVR above 3 mm mark cardiotoxicity.",
-    "Hypertonic sodium bicarbonate 1 to 2 mmol/kg is first-line antidote.",
-    "Target arterial pH 7.50 to 7.55 or QRS below 100 ms.",
-    "Avoid physostigmine and flumazenil in TCA overdose."
-   ],
-   "pearls": "For TCA overdose with QRS above 100 ms and terminal R in aVR above 3 mm, give hypertonic sodium bicarbonate 1 to 2 mmol/kg bolus and target pH 7.50 to 7.55 with QRS narrowing."
-  },
+  "explanation": "Choosing an antidepressant after a deliberate overdose adds toxicity in overdose to the usual considerations of efficacy, tolerability, interactions and previous response. Tricyclics and, to a lesser degree, venlafaxine are the antidepressants most likely to kill when taken in excess, so neither is a sensible restart for a patient with a recent overdose. A selective serotonin reuptake inhibitor is first line in Australian practice anyway, and the safety margin settles the choice. Quantity supplied, dispensing intervals and who holds the medicines are part of the same decision, alongside a written safety plan. In context: depression with a recent suicide attempt carries a substantially raised short-term risk, so the discharge plan needs early and assertive follow-up, removal of means, involvement of a support person with the patient's agreement, and clear instructions on what to do if the risk rises again.",
   "sources": [
    {
-    "label": "Australian eTG: Toxicology - Tricyclic Antidepressant Overdose",
-    "url": "https://tgldcdp.tg.org.au/"
+    "label": "Therapeutic Guidelines: Psychotropic",
+    "url": "https://www.tg.org.au/"
    },
    {
-    "label": "NSW Poisons Information Centre TCA Overdose"
+    "label": "Australian Medicines Handbook",
+    "url": "https://amhonline.amh.net.au/"
+   },
+   {
+    "label": "RANZCP Clinical Practice Guidelines: Mood Disorders",
+    "url": "https://www.ranzcp.org/clinical-guidelines-publications"
    }
   ],
   "reference_ranges": [
-   "vbg",
-   "uec",
-   "glucose_hba1c"
+   "adult_vitals"
   ],
-  "created": "2026-07-27"
+  "model": "Claude Opus 5",
+  "created": "2026-09-23",
+  "revised_from": "psych-p74-002"
  },
  {
   "id": "psych-p74-003",

@@ -643,183 +643,199 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rabe49-024",
+  "id": "rabe49-024-d2",
   "topic": "Medicine",
   "subtopic": "Infectious diseases",
-  "subtopic_detail": "Acute HIV seroconversion testing",
+  "subtopic_detail": "Adjunctive corticosteroid in Pneumocystis pneumonia with hypoxaemia",
   "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
+  "model": "Claude Opus 5",
   "tags": [
    "HIV",
-   "serology"
+   "pneumocystis",
+   "corticosteroid"
   ],
-  "stem": "A 28-year-old man presents with 10 days of fever, sore throat, generalised rash, and tender cervical and inguinal lymphadenopathy. He had condomless receptive anal sex with a new partner three weeks ago. He has not taken HIV pre-exposure prophylaxis. His Monospot test is negative. Throat swab is negative for group A streptococcus. Bloods show mild lymphopenia, normal LFTs, and CRP 38 mg/L. He is asking specifically about HIV testing.",
+  "stem": "A 34-year-old man with a new HIV diagnosis has three weeks of exertional breathlessness and a dry cough. He has taken no treatment yet. Chest radiograph shows bilateral perihilar interstitial infiltrates.",
   "data_table": {
-   "Vital signs": "Pulse 96, BP 118/72 mmHg, RR 16, SpO2 99%, temperature 38.4°C",
-   "Examination": "Diffuse maculopapular rash on trunk and proximal limbs, tender cervical and inguinal lymphadenopathy, pharyngeal injection",
-   "Investigations": "WCC 4.2 x10^9/L (lymphocytes 0.9), CRP 38 mg/L, Monospot negative, throat swab GAS negative"
+   "Vital signs": "T 37.9, HR 104, RR 26, BP 112/70, SpO2 89 percent room air",
+   "Arterial blood gas": "PaO2 58 mmHg on room air",
+   "Investigations": "CD4 60 cells per microlitre; LDH 480 U/L"
   },
-  "lead_in": "What is the most appropriate next investigation?",
+  "lead_in": "What is the most appropriate treatment?",
   "options": [
    {
     "letter": "A",
-    "text": "Defer testing for 6 weeks given symptoms and repeat fourth-generation assay then",
-    "correct": false,
-    "rationale": "Deferring testing during a clinically suggestive seroconversion illness misses the opportunity for early diagnosis and rapid ART initiation. (Source: ASHM HIV testing policy 2023)",
+    "text": "High dose trimethoprim-sulfamethoxazole with oral prednisolone",
+    "correct": true,
+    "rationale": "Trimethoprim-sulfamethoxazole is first line, and adjunctive corticosteroid is added when the PaO2 on room air is below 70 mmHg because it reduces the deterioration that follows organism lysis and lowers mortality. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "ASHM HIV testing policy 2023"
+     "Therapeutic Guidelines: Antibiotic"
     ]
    },
    {
     "letter": "B",
-    "text": "Third-generation HIV antibody assay alone with repeat at 12 weeks if negative",
+    "text": "High dose trimethoprim-sulfamethoxazole without a corticosteroid",
     "correct": false,
-    "rationale": "Third-generation antibody assays have a longer window period; fourth-generation combination plus RNA gives best detection during seroconversion. (Source: ASHM HIV testing policy 2023)",
+    "rationale": "Antimicrobial therapy alone is correct for mild disease, where the room air PaO2 is 70 mmHg or above and oxygen saturation is preserved; this man sits below that threshold. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "ASHM HIV testing policy 2023"
+     "Therapeutic Guidelines: Antibiotic"
     ]
    },
    {
     "letter": "C",
-    "text": "Western blot confirmation as the initial diagnostic test for clarity of result",
+    "text": "Intravenous ceftriaxone with azithromycin for community pneumonia",
     "correct": false,
-    "rationale": "Western blot is a confirmatory not a screening test; current AU laboratories use immunoblot or HIV-1/2 differentiation assay as confirmation after reactive screen. (Source: ASHM HIV testing policy 2023)",
+    "rationale": "This is the regimen for moderate to severe community-acquired pneumonia with a lobar or focal infiltrate, and it has no useful activity against Pneumocystis jirovecii. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "ASHM HIV testing policy 2023"
+     "Therapeutic Guidelines: Antibiotic"
     ]
    },
    {
     "letter": "D",
-    "text": "Fourth-generation HIV antigen/antibody combination assay plus HIV RNA viral load",
-    "correct": true,
-    "rationale": "Acute seroconversion within 2-4 weeks of exposure is best detected by combined fourth-generation antigen/antibody screen plus HIV RNA PCR; either alone may miss the window. ASHM and CDNA recommend the combination during the window period. (Source: ASHM HIV testing policy 2023)",
+    "text": "Antiretroviral therapy started today with supportive oxygen alone",
+    "correct": false,
+    "rationale": "Antiretroviral therapy is started within about two weeks of beginning treatment for most opportunistic infections, but it does not treat the pneumonia and starting it alone leaves the infection untreated. (Source: ASHM HIV Management Guidelines)",
     "source_refs": [
-     "ASHM HIV testing policy 2023"
+     "ASHM HIV Management Guidelines"
     ]
    },
    {
     "letter": "E",
-    "text": "CD4 count and lymphocyte subset analysis before any other test is requested",
+    "text": "Intravenous pentamidine with oral prednisolone as first choice",
     "correct": false,
-    "rationale": "CD4 counts are used after diagnosis for staging; they are not a diagnostic test for acute infection. (Source: ASHM HIV testing policy 2023)",
+    "rationale": "Pentamidine is a second line agent reserved for severe sulfonamide hypersensitivity or treatment failure, and it carries hypoglycaemia, nephrotoxicity and pancreatitis risks. (Source: Therapeutic Guidelines: Antibiotic; AMH)",
     "source_refs": [
-     "ASHM HIV testing policy 2023"
+     "Therapeutic Guidelines: Antibiotic",
+     "AMH"
     ]
    }
   ],
   "explanation": {
-   "summary": "Acute HIV seroconversion presents as a glandular-fever-like illness with rash and pharyngitis 2-4 weeks after exposure. The diagnostic strategy during the window period combines a fourth-generation antigen/antibody assay (detects p24 antigen at about 15 days post-exposure) with HIV RNA PCR (detects RNA from about 10 days). A reactive screen is confirmed with immunoblot or HIV-1/2 differentiation. Early diagnosis allows immediate ART, partner notification, and PrEP counselling for contacts.",
+   "summary": "Subacute breathlessness with a dry cough, marked exertional desaturation, diffuse interstitial infiltrates and a raised LDH in advanced HIV is Pneumocystis jirovecii pneumonia until proven otherwise. Treatment is high dose trimethoprim-sulfamethoxazole for 21 days. The decision that separates candidates is the adjunctive corticosteroid: in moderate to severe disease, defined by a room air PaO2 below 70 mmHg or a large alveolar-arterial gradient, prednisolone started with or just before the antimicrobial reduces respiratory deterioration and mortality. Antiretroviral therapy follows within about two weeks. In context, an opportunistic infection at a CD4 count below 200 is often the first presentation of HIV in Australia, and every such diagnosis also requires prophylaxis planning, notification and partner notification.",
    "key_points": [
-    "Window period detection: fourth-generation Ag/Ab combination plus HIV RNA PCR",
-    "Acute seroconversion: rash plus pharyngitis plus generalised lymphadenopathy",
-    "Confirmatory test is immunoblot or HIV-1/2 differentiation assay"
+    "Trimethoprim-sulfamethoxazole for 21 days is first line treatment.",
+    "Add corticosteroid when the room air PaO2 is below 70 mmHg.",
+    "Start the corticosteroid with or before the first antimicrobial dose.",
+    "Begin antiretroviral therapy within about two weeks, watching for immune reconstitution."
    ],
-   "pearls": "Immediate ART initiation in acute seroconversion reduces viral reservoir size and transmissibility - same-day start where possible."
+   "pearls": "A normal resting saturation does not exclude Pneumocystis pneumonia; walk the patient and repeat the saturation, and take an arterial blood gas before deciding about corticosteroid."
   },
   "sources": [
    {
-    "label": "ASHM HIV testing policy 2023",
-    "url": "https://testingportal.ashm.org.au/"
+    "label": "Therapeutic Guidelines: Antibiotic",
+    "url": "https://tgldcdp.tg.org.au/"
    },
    {
-    "label": "Australian Commentary on US DHHS HIV",
-    "url": "https://hiv.guidelines.org.au/"
+    "label": "ASHM HIV Management Guidelines",
+    "url": "https://hivmanagement.ashm.org.au/"
+   },
+   {
+    "label": "AMH",
+    "url": "https://amhonline.amh.net.au/"
    }
   ],
   "reference_ranges": [
-   "fbc",
-   "inflammatory_markers"
+   "abg"
   ],
-  "created": "2026-06-01"
+  "created": "2026-09-23",
+  "revised_from": "rabe49-024"
  },
  {
-  "id": "rabe49-025",
+  "id": "rabe49-025-d2",
   "topic": "Medicine",
   "subtopic": "Infectious diseases",
-  "subtopic_detail": "Latent TB QFT-Plus and treatment",
+  "subtopic_detail": "Weighing preventive therapy against hepatotoxicity risk in an older adult",
   "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
   "tags": [
    "tuberculosis",
-   "QFT"
+   "risk assessment",
+   "hepatotoxicity"
   ],
-  "stem": "A 32-year-old healthcare worker has migrated to Australia from a high-TB-incidence country two years ago. Pre-employment screening QuantiFERON-TB Gold Plus is positive (TB1 1.5 IU/mL, TB2 1.8 IU/mL, nil 0.1 IU/mL). She has no fever, weight loss, night sweats, or cough. Chest X-ray is normal. She has not had a previous TB diagnosis, is not pregnant, is on no immunosuppression, and her LFTs are normal. She is asking what treatment she needs and why.",
+  "stem": "A 74 year old man born in Vietnam has a positive interferon gamma release assay found during screening for volunteer work. He is asymptomatic. He drinks four standard drinks daily and takes no immunosuppressive medicines.",
   "data_table": {
-   "Vital signs": "Pulse 72, BP 118/74 mmHg, RR 14, SpO2 99%, temperature 36.7°C",
-   "Examination": "No lymphadenopathy, no cough, clear chest, no hepatomegaly",
-   "Investigations": "QFT-Plus positive (TB1 1.5, TB2 1.8, nil 0.1 IU/mL); chest X-ray clear; LFTs normal; HIV negative"
+   "Examination": "Well, no weight loss, no cough, chest clear",
+   "Investigations": "Interferon gamma release assay positive; chest radiograph normal; liver function tests normal"
   },
   "lead_in": "What is the most appropriate management?",
   "options": [
    {
     "letter": "A",
-    "text": "Annual chest X-ray surveillance without antimicrobial therapy",
-    "correct": false,
-    "rationale": "Surveillance does not prevent the 5-10% lifetime reactivation risk; preventive treatment does. (Source: National Tuberculosis Advisory Committee 2023)",
+    "text": "Symptom education without preventive antimicrobial therapy",
+    "correct": true,
+    "rationale": "Preventive therapy is targeted at those with a meaningful reactivation risk, such as recent contacts, HIV, dialysis, transplantation or planned tumour necrosis factor inhibitors. At 74 with daily alcohol use, remote exposure and no risk factor, drug induced hepatitis risk outweighs the benefit. (Source: National Tuberculosis Advisory Committee (NTAC) guidelines)",
     "source_refs": [
-     "National Tuberculosis Advisory Committee 2023"
+     "National Tuberculosis Advisory Committee (NTAC) guidelines",
+     "Therapeutic Guidelines: Antibiotic"
     ]
    },
    {
     "letter": "B",
-    "text": "No treatment is needed because the chest X-ray excludes active disease",
+    "text": "Isoniazid with pyridoxine for six to nine months",
     "correct": false,
-    "rationale": "A normal chest X-ray excludes active disease but does not negate the latent TB diagnosis or the lifetime reactivation risk of 5-10%. (Source: National Tuberculosis Advisory Committee 2023)",
+    "rationale": "Right for a person with latent infection who does have a reactivation risk factor and an acceptable hepatic risk, typically younger and without hazardous alcohol use. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "National Tuberculosis Advisory Committee 2023"
+     "Therapeutic Guidelines: Antibiotic",
+     "National Tuberculosis Advisory Committee (NTAC) guidelines"
     ]
    },
    {
     "letter": "C",
-    "text": "Four drug intensive therapy RIPE for two months followed by RH for four",
+    "text": "Rifampicin daily for four months with liver test monitoring",
     "correct": false,
-    "rationale": "RIPE is the regimen for active TB, not latent infection. (Source: National Tuberculosis Advisory Committee 2023)",
+    "rationale": "Right where preventive therapy is indicated but isoniazid is unsuitable, such as isoniazid resistant source cases or intolerance, and where the many rifampicin drug interactions can be managed. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "National Tuberculosis Advisory Committee 2023"
+     "Therapeutic Guidelines: Antibiotic",
+     "National Tuberculosis Advisory Committee (NTAC) guidelines"
     ]
    },
    {
     "letter": "D",
-    "text": "BCG vaccination repeat dose to prevent reactivation in adulthood",
+    "text": "Annual chest radiography for the next five years",
     "correct": false,
-    "rationale": "BCG does not prevent reactivation of established latent TB; treatment is the answer. (Source: National Tuberculosis Advisory Committee 2023)",
+    "rationale": "Right as part of follow up for a person with fibrotic changes of untreated old disease who declines or cannot take preventive therapy. Serial imaging of a normal film detects nothing. (Source: National Tuberculosis Advisory Committee (NTAC) guidelines)",
     "source_refs": [
-     "National Tuberculosis Advisory Committee 2023"
+     "National Tuberculosis Advisory Committee (NTAC) guidelines",
+     "NSW Health: Tuberculosis"
     ]
    },
    {
     "letter": "E",
-    "text": "Isoniazid 300 mg daily plus pyridoxine 25 mg daily for 6-9 months total",
-    "correct": true,
-    "rationale": "Isoniazid plus pyridoxine for 6-9 months is the established Australian first-line latent TB regimen with the most extensive safety data. Three months of weekly rifapentine plus isoniazid (3HP) is an accepted alternative when supervised therapy is available. (Source: National Tuberculosis Advisory Committee 2023)",
+    "text": "Sputum culture now and again in three months time",
+    "correct": false,
+    "rationale": "Right where symptoms, an abnormal radiograph or immunosuppression raise a real suspicion of active disease. Culture on an asymptomatic patient with a normal film is unwarranted. (Source: NSW Health: Tuberculosis)",
     "source_refs": [
-     "National Tuberculosis Advisory Committee 2023"
+     "NSW Health: Tuberculosis",
+     "National Tuberculosis Advisory Committee (NTAC) guidelines"
     ]
    }
   ],
   "explanation": {
-   "summary": "Latent TB infection in an Australian healthcare worker from a high-incidence country with positive QFT-Plus and a clear chest X-ray warrants preventive treatment. Isoniazid 300 mg daily plus pyridoxine 25 mg daily for 6-9 months is the established first-line regimen; three months of weekly rifapentine plus isoniazid (3HP) is an accepted alternative with shorter duration. Baseline LFTs and monitoring are required. RIPE is reserved for active disease.",
+   "summary": "A positive interferon gamma release assay is not by itself an indication to treat. Preventive therapy is offered when the estimated benefit from reducing reactivation exceeds the risk of hepatotoxicity, which rises steeply with age and alcohol use.",
    "key_points": [
-    "Latent TB treatment: isoniazid plus pyridoxine 6-9 months",
-    "3HP (rifapentine plus isoniazid weekly for 3 months) is alternative",
-    "Lifetime reactivation risk of latent TB is 5-10%"
+    "Prioritise recent contacts, HIV, dialysis, transplantation, silicosis and planned biologic therapy.",
+    "Isoniazid hepatitis risk rises markedly after the age of 35 and with hazardous alcohol use.",
+    "When therapy is not offered, give clear symptom education and a route back to care."
    ],
-   "pearls": "Pyridoxine is added with isoniazid to prevent peripheral neuropathy, particularly in those with diabetes, alcohol use, malnutrition, or pregnancy."
+   "context": "Most people with latent tuberculosis never reactivate, and the roughly 5 to 10% lifetime risk is concentrated in the first two years after infection and in those who become immunosuppressed. That is what makes latent tuberculosis a risk stratification problem rather than an infection to be eradicated wherever it is found. The same arithmetic explains why screening is offered selectively: testing a population in whom treatment would not follow generates harm without benefit. Where treatment is declined or not indicated, the safety net is knowing which symptoms, chiefly cough of more than two or three weeks, fever, night sweats and weight loss, should prompt urgent review."
   },
+  "reference_ranges": [
+   "lfts"
+  ],
   "sources": [
    {
-    "label": "National Tuberculosis Advisory Committee 2023",
+    "label": "National Tuberculosis Advisory Committee (NTAC) guidelines",
     "url": "https://www.health.gov.au/committees-and-groups/national-tuberculosis-advisory-committee-ntac"
    },
    {
     "label": "Therapeutic Guidelines: Antibiotic",
     "url": "https://www.tg.org.au/"
+   },
+   {
+    "label": "NSW Health: Tuberculosis",
+    "url": "https://www.health.nsw.gov.au/Infectious/tuberculosis/"
    }
   ],
-  "reference_ranges": [
-   "lfts"
-  ],
-  "created": "2026-06-01"
+  "model": "Claude Opus 5",
+  "revised_from": "rabe49-025"
  },
  {
   "id": "rabe49-026",
@@ -2182,96 +2198,102 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rabe51-027",
+  "id": "rabe51-027-d2",
   "topic": "Medicine",
   "subtopic": "Infectious diseases",
-  "subtopic_detail": "Latent tuberculosis regimen",
+  "subtopic_detail": "Threshold for stopping isoniazid when transaminases rise during preventive therapy",
   "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
   "tags": [
    "tuberculosis",
-   "isoniazid"
+   "isoniazid",
+   "hepatotoxicity"
   ],
-  "stem": "A 34-year-old healthcare worker presents for review after a routine occupational health screen. She was born in Australia, but worked in a high-prevalence overseas region for 18 months and returned 6 months ago. Her QuantiFERON-TB Gold Plus is positive and her chest X-ray is normal. She has no cough, no fever, no weight loss, and no night sweats.\n\nShe is otherwise well, with no liver disease, no alcohol overuse, no pregnancy or contraception requirements, and no other medications. Her HIV test is negative. Her baseline LFTs and renal function are within normal limits.",
+  "stem": "A 41 year old woman is six weeks into isoniazid with pyridoxine for latent tuberculosis. She feels well, with no nausea, abdominal pain or jaundice, and takes no other medicines. Her scheduled liver function tests are reported below.",
   "data_table": {
-   "Vital signs": "Pulse 76, BP 118/72 mmHg, RR 14, SpO2 99%, temperature 36.7 °C",
-   "Examination": "No lymphadenopathy, chest clear, abdomen soft, no organomegaly, no skin lesions",
-   "Investigations": "QFT-Plus positive, chest X-ray normal, FBC and UEC within normal limits, ALT 18 U/L (5-30), bilirubin within normal limits, HIV negative",
-   "Medications": "Nil regular"
+   "Examination": "Well, no jaundice, no right upper quadrant tenderness",
+   "Investigations": "ALT 340 U/L (baseline 28), ALP 110 U/L, bilirubin 12 micromol/L, INR 1.0"
   },
-  "lead_in": "What is the most appropriate latent TB treatment regimen?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "Isoniazid plus ethambutol daily for 12 months with monthly visual acuity monitoring",
-    "correct": false,
-    "rationale": "Ethambutol is not used for LTBI; it is part of active TB therapy and adds optic neuropathy risk without benefit in latent infection. (Source: National Tuberculosis Advisory Committee LTBI Guideline 2017)",
+    "text": "Cease isoniazid now and repeat the liver tests",
+    "correct": true,
+    "rationale": "Preventive therapy is stopped when transaminases exceed five times the upper limit without symptoms, or three times with symptoms or a rising bilirubin. The risk of continuing outweighs the benefit of preventing a disease she does not yet have. (Source: National Tuberculosis Advisory Committee (NTAC) guidelines)",
     "source_refs": [
-     "National Tuberculosis Advisory Committee LTBI Guideline 2017"
+     "National Tuberculosis Advisory Committee (NTAC) guidelines",
+     "Australian Medicines Handbook"
     ]
    },
    {
     "letter": "B",
-    "text": "Isoniazid, rifampicin, pyrazinamide, and ethambutol daily for 6 months full RIPE course",
+    "text": "Continue isoniazid and repeat the liver tests weekly",
     "correct": false,
-    "rationale": "RIPE quadruple therapy is for ACTIVE TB; LTBI treatment is single or dual agent because the burden of disease is much lower and toxicity must be minimised. (Source: National Tuberculosis Advisory Committee LTBI Guideline 2017)",
+    "rationale": "Right for a modest asymptomatic rise below three times the upper limit, which is common early and often settles with closer monitoring. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "National Tuberculosis Advisory Committee LTBI Guideline 2017"
+     "Therapeutic Guidelines: Antibiotic",
+     "National Tuberculosis Advisory Committee (NTAC) guidelines"
     ]
    },
    {
     "letter": "C",
-    "text": "Rifampicin 600 mg daily monotherapy for 6 months as the single-agent shorter regimen",
+    "text": "Halve the isoniazid dose and repeat the liver tests",
     "correct": false,
-    "rationale": "The AU rifampicin LTBI regimen is 4 months not 6 months; 6 months prolongs hepatotoxicity exposure without added efficacy. (Source: National Tuberculosis Advisory Committee LTBI Guideline 2017)",
+    "rationale": "Right in no setting: isoniazid hepatotoxicity is idiosyncratic rather than dose dependent at therapeutic doses, and a halved dose is both unsafe and inadequate. (Source: Australian Medicines Handbook)",
     "source_refs": [
-     "National Tuberculosis Advisory Committee LTBI Guideline 2017"
+     "Australian Medicines Handbook",
+     "National Tuberculosis Advisory Committee (NTAC) guidelines"
     ]
    },
    {
     "letter": "D",
-    "text": "Isoniazid 300 mg daily plus pyridoxine 25 mg daily for 6 months total duration",
-    "correct": true,
-    "rationale": "Australian guidance lists 6 months of daily isoniazid with pyridoxine as a first-line LTBI regimen; alternative is 3 months of weekly isoniazid plus rifapentine, or 4 months of daily rifampicin. (Source: National Tuberculosis Advisory Committee LTBI Guideline 2017)",
+    "text": "Continue isoniazid and add ursodeoxycholic acid daily",
+    "correct": false,
+    "rationale": "Right for cholestatic conditions such as primary biliary cholangitis, indicated by a raised alkaline phosphatase. This is a hepatocellular pattern and no agent protects against it. (Source: Australian Medicines Handbook)",
     "source_refs": [
-     "National Tuberculosis Advisory Committee LTBI Guideline 2017"
+     "Australian Medicines Handbook",
+     "Therapeutic Guidelines: Antibiotic"
     ]
    },
    {
     "letter": "E",
-    "text": "No drug treatment; surveillance with annual chest X-ray and symptom review for 2 years",
+    "text": "Switch to rifampicin today and repeat tests in a month",
     "correct": false,
-    "rationale": "Active surveillance alone is not adequate when QFT-Plus is positive and risk factors (healthcare work, recent return from high-prevalence area) are present; treatment reduces progression to active disease by 60-90%. (Source: National Tuberculosis Advisory Committee LTBI Guideline 2017)",
+    "rationale": "Right as a later step once transaminases have normalised and preventive therapy is still wanted, under specialist advice. Switching immediately risks compounding injury with another hepatotoxic drug. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "National Tuberculosis Advisory Committee LTBI Guideline 2017"
+     "Therapeutic Guidelines: Antibiotic",
+     "National Tuberculosis Advisory Committee (NTAC) guidelines"
     ]
    }
   ],
   "explanation": {
-   "summary": "Latent tuberculosis is diagnosed by a positive interferon-gamma release assay (QFT-Plus) or tuberculin skin test in an asymptomatic patient with a normal chest X-ray and no clinical features of active TB. Australian first-line regimens are isoniazid 6 months (with pyridoxine), rifampicin 4 months, or isoniazid plus rifapentine weekly for 12 weeks. Choice is informed by drug interactions, hepatotoxicity risk, pregnancy, and patient preference. Baseline LFTs and renal function are checked and monitored. Treatment reduces progression to active disease by 60-90 percent and is offered to all eligible adults with LTBI plus risk factors.",
+   "summary": "Isoniazid is ceased when the alanine aminotransferase exceeds five times the upper limit of normal without symptoms, or three times with symptoms or jaundice. Preventive therapy treats a probability, so the tolerance for harm is low.",
    "key_points": [
-    "AU first-line LTBI regimens: isoniazid 6 m, rifampicin 4 m, or isoniazid + rifapentine 12 weekly doses.",
-    "Pyridoxine 25 mg daily with isoniazid prevents peripheral neuropathy.",
-    "Baseline and 4-weekly LFT monitoring during isoniazid.",
-    "Treatment cuts active TB progression by 60-90%."
+    "Check liver function at baseline and at intervals, and instruct the patient to report nausea, anorexia or dark urine.",
+    "Hepatitis risk rises with age, hazardous alcohol use, chronic viral hepatitis and pregnancy.",
+    "After recovery, a rifampicin based regimen may be considered with specialist input."
    ],
-   "pearls": "AU LTBI: 6 m isoniazid + pyridoxine, OR 4 m rifampicin, OR 12-week weekly isoniazid + rifapentine."
+   "context": "The threshold for stopping a drug depends on what the drug is buying. In active tuberculosis, where the disease is lethal and the regimen is curative, hepatotoxicity is managed by staged withdrawal and sequential reintroduction so that treatment can continue. In latent infection the patient is well, the benefit is a modest reduction in a lifetime probability, and the same laboratory result warrants simply stopping. Monthly clinical review, asking directly about anorexia, nausea and dark urine, catches more injury than testing alone, since symptoms often precede the most dangerous rises."
   },
+  "reference_ranges": [
+   "lfts"
+  ],
   "sources": [
    {
-    "label": "National Tuberculosis Advisory Committee LTBI Guideline 2017",
-    "url": "https://www.health.gov.au/"
+    "label": "National Tuberculosis Advisory Committee (NTAC) guidelines",
+    "url": "https://www.health.gov.au/committees-and-groups/national-tuberculosis-advisory-committee-ntac"
    },
    {
     "label": "Therapeutic Guidelines: Antibiotic",
     "url": "https://www.tg.org.au/"
+   },
+   {
+    "label": "Australian Medicines Handbook",
+    "url": "https://amhonline.amh.net.au/"
    }
   ],
-  "reference_ranges": [
-   "lfts",
-   "uec"
-  ],
-  "created": "2026-06-01"
+  "model": "Claude Opus 5",
+  "revised_from": "rabe51-027"
  },
  {
   "id": "rabe51-028",
@@ -2827,95 +2849,102 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rabe52-027",
+  "id": "rabe52-027-d2",
   "topic": "Medicine",
   "subtopic": "Renal",
-  "subtopic_detail": "Hyperkalaemia with ECG changes - sequence of management",
-  "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Antibiotic selection for cystitis when the potassium is already at risk",
+  "difficulty": 3,
   "tags": [
    "hyperkalaemia",
-   "calcium gluconate"
+   "trimethoprim",
+   "cystitis"
   ],
-  "stem": "A 72-year-old man on hospital ward day 2 of admission for community-acquired pneumonia has a routine 8 am UEC return abnormal. He has chronic kidney disease (eGFR 32) and is on perindopril 10 mg daily and spironolactone 25 mg daily for heart failure with preserved ejection fraction. He feels generally unwell with mild lethargy.\n\nThe medical registrar is at the bedside reviewing the ECG.",
+  "stem": "A 72 year old woman has two days of dysuria and frequency. She has stage 3 chronic kidney disease and takes perindopril and spironolactone for heart failure. She has no loin pain, no vomiting and no rigors.",
   "data_table": {
-   "Vital signs": "Pulse 58, BP 132/78 mmHg, RR 16, SpO2 96% in room air, temperature 37.0 °C",
-   "Examination": "Mild lethargy, no proximal weakness, no chest pain",
-   "Investigations": "K 6.8 mmol/L (3.5-5.0), creatinine 188 micromol/L (60-110, baseline 156), Na 138 mmol/L, HCO3 18 mmol/L, urea 18 mmol/L; ECG: PR 220 ms, peaked T waves in V2-V5, no QRS widening, no LBBB",
-   "Medications": "Perindopril 10 mg daily, spironolactone 25 mg daily; ceftriaxone for pneumonia"
+   "Vital signs": "Pulse 80 /min, blood pressure 124/76 mmHg, temperature 36.9 degC",
+   "Investigations": "Urine dipstick nitrite and leucocyte positive; potassium 5.2 mmol/L last week; eGFR 52 mL/min"
   },
-  "lead_in": "What is the most appropriate next step?",
+  "lead_in": "Which oral antibiotic is most appropriate?",
   "options": [
    {
     "letter": "A",
-    "text": "Give 50 mL of 50% dextrose intravenously without insulin cover",
-    "correct": false,
-    "rationale": "Dextrose without insulin does not effectively shift potassium intracellularly. Insulin is the active agent (10 units short-acting IV with 50 mL of 50% dextrose to avoid hypoglycaemia). (Source: Therapeutic Guidelines: Cardiovascular)",
+    "text": "Nitrofurantoin orally for five days",
+    "correct": true,
+    "rationale": "Nitrofurantoin is a recommended first-line agent for uncomplicated cystitis and is acceptable at this level of renal function. It avoids the potassium sparing effect that makes the usual alternative hazardous in this combination. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "Therapeutic Guidelines: Cardiovascular"
+     "Therapeutic Guidelines: Antibiotic",
+     "Australian Medicines Handbook"
     ]
    },
    {
     "letter": "B",
-    "text": "Refer for urgent haemodialysis without further pharmacological measures",
+    "text": "Trimethoprim orally for three days",
     "correct": false,
-    "rationale": "Haemodialysis is the definitive treatment for refractory hyperkalaemia but takes time to organise; immediate calcium gluconate plus insulin/dextrose buys that time. Skipping membrane stabilisation risks fatal arrhythmia during set-up. (Source: Therapeutic Guidelines: Cardiovascular)",
+    "rationale": "Right for uncomplicated cystitis in a woman without renal impairment or potassium raising drugs. It blocks the epithelial sodium channel like amiloride and, with an angiotensin converting enzyme inhibitor and a mineralocorticoid antagonist, is a well described cause of severe hyperkalaemia. (Source: Australian Medicines Handbook)",
     "source_refs": [
-     "Therapeutic Guidelines: Cardiovascular"
+     "Australian Medicines Handbook",
+     "Therapeutic Guidelines: Antibiotic"
     ]
    },
    {
     "letter": "C",
-    "text": "Give 10 mL of 10% calcium gluconate intravenously over 5 minutes",
-    "correct": true,
-    "rationale": "Hyperkalaemia with ECG changes (peaked T waves, prolonged PR) is an emergency. The sequence is: stabilise membrane (calcium gluconate 10 mL 10% IV over 5-10 minutes), shift potassium into cells (insulin/dextrose, salbutamol nebs), then remove potassium (resonium, dialysis if refractory). Calcium gluconate is first because the time-critical risk is arrhythmia and cardiac arrest. (Source: Therapeutic Guidelines: Cardiovascular)",
+    "text": "Amoxicillin with clavulanate for five days",
+    "correct": false,
+    "rationale": "Right for cystitis where the isolate is known to be susceptible and first-line options are unsuitable; empirical resistance rates make it a poor initial choice. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "Therapeutic Guidelines: Cardiovascular"
+     "Therapeutic Guidelines: Antibiotic",
+     "Australian Medicines Handbook"
     ]
    },
    {
     "letter": "D",
-    "text": "Stop perindopril and spironolactone and recheck potassium in 6 hours",
+    "text": "Ciprofloxacin orally for three days",
     "correct": false,
-    "rationale": "Stopping the precipitants is part of management but does not address the immediate ECG-changing hyperkalaemia. Both should be held but acute treatment (calcium then insulin) is the priority. (Source: Therapeutic Guidelines: Cardiovascular)",
+    "rationale": "Right for pyelonephritis or proven multiresistant infection. Quinolones are reserved in Australia because of resistance and tendon and neurological harms. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "Therapeutic Guidelines: Cardiovascular"
+     "Therapeutic Guidelines: Antibiotic",
+     "Australian Medicines Handbook"
     ]
    },
    {
     "letter": "E",
-    "text": "Commence resonium 15 g orally four times daily for potassium removal",
+    "text": "Doxycycline orally for seven days",
     "correct": false,
-    "rationale": "Sodium polystyrene sulfonate (resonium) is for chronic management or as a last-step potassium-remover; it does not address the immediate cardiac membrane risk and has a slow onset. Calcium gluconate must come first. (Source: Therapeutic Guidelines: Cardiovascular)",
+    "rationale": "Right for atypical genital tract infection, not for cystitis, since urinary concentrations are inadequate against the usual uropathogens. (Source: Therapeutic Guidelines: Antibiotic)",
     "source_refs": [
-     "Therapeutic Guidelines: Cardiovascular"
+     "Therapeutic Guidelines: Antibiotic",
+     "Australian Medicines Handbook"
     ]
    }
   ],
   "explanation": {
-   "summary": "Hyperkalaemia with ECG changes is an emergency. Sequence: stabilise the cardiac membrane (calcium gluconate 10 mL 10% IV over 5 to 10 minutes; lasts 30 to 60 minutes); shift K into cells (10 units actrapid in 50 mL 50% dextrose, salbutamol nebs); remove K (resonium, dialysis if refractory). Stop precipitants (ACE-I, MRA, NSAIDs, K-sparing diuretics).",
+   "summary": "Trimethoprim blocks distal tubular potassium secretion and is a common precipitant of severe hyperkalaemia when added to renin-angiotensin blockade and a mineralocorticoid antagonist in chronic kidney disease. Nitrofurantoin is the safer first-line choice here.",
    "key_points": [
-    "Calcium gluconate stabilises the cardiac membrane but does not lower potassium - bridge to definitive measures",
-    "Insulin (10 units short-acting) plus 50 mL 50% dextrose shifts potassium into cells within 15-30 minutes",
-    "Dialysis is the definitive treatment for refractory hyperkalaemia (>6.5 with ECG changes despite medical therapy)"
+    "Trimethoprim acts on the epithelial sodium channel in the same way as amiloride.",
+    "Nitrofurantoin is avoided when the eGFR falls below about 45 mL/min.",
+    "The safest prescription is the one that prevents the electrolyte emergency rather than treating it."
    ],
-   "pearls": "Calcium chloride is preferred over calcium gluconate via central access (more elemental calcium per volume). Salbutamol nebulisers (10 to 20 mg) add a second shifting mechanism. Bicarbonate is reserved for acidotic patients. Always recheck potassium 1-2 hours after intervention."
+   "context": "Most hospital presentations of severe hyperkalaemia are iatrogenic and predictable, arising from a combination of drugs acting on the same aldosterone-dependent secretory pathway in the collecting duct in a patient whose nephron reserve is already reduced. Angiotensin converting enzyme inhibitors and angiotensin receptor blockers lower aldosterone, spironolactone blocks its receptor, and trimethoprim closes the sodium channel that generates the electrical gradient for potassium secretion. Each step is tolerable alone. The prescribing decision that matters is usually the last one added to the list, and a short course antibiotic is exactly the sort of addition that is made without a second thought."
   },
+  "reference_ranges": [
+   "uec"
+  ],
   "sources": [
    {
-    "label": "Therapeutic Guidelines: Cardiovascular",
+    "label": "Therapeutic Guidelines: Antibiotic",
     "url": "https://www.tg.org.au/"
    },
    {
     "label": "Australian Medicines Handbook",
     "url": "https://amhonline.amh.net.au/"
+   },
+   {
+    "label": "Kidney Health Australia CARI - Hyperkalaemia management",
+    "url": "https://www.cariguidelines.org/"
    }
   ],
-  "reference_ranges": [
-   "uec",
-   "abg"
-  ],
-  "created": "2026-06-01"
+  "model": "Claude Opus 5",
+  "revised_from": "rabe52-027"
  },
  {
   "id": "rabe52-028",
@@ -3375,94 +3404,107 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rabe53-026",
+  "id": "rabe53-026-d2",
   "topic": "Medicine",
   "subtopic": "Renal/electrolytes",
-  "subtopic_detail": "Severe hyperkalaemia with ECG changes",
+  "subtopic_detail": "Adjunctive therapy when hyperkalaemia accompanies a severe metabolic acidosis",
   "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
   "tags": [
    "hyperkalaemia",
-   "calcium gluconate"
+   "acidosis",
+   "bicarbonate"
   ],
-  "stem": "A 68-year-old man with chronic kidney disease stage 4 (baseline creatinine 280 micromol/L, eGFR 22) presents to the emergency department after his nephrology nurse rang him about an out-of-range potassium on a routine blood test. His usual medications include perindopril, spironolactone, furosemide, atorvastatin and a recently started course of trimethoprim 300 mg daily for 5 days (now day 4) for an uncomplicated UTI prescribed by his GP. He feels mildly weak but has no palpitations.\n\nOn arrival the triage nurse has placed him on a monitored bed. The medical registrar is at the bedside and the ECG is in front of you.",
+  "stem": "A 60 year old man with oliguric acute kidney injury has had intravenous calcium followed by insulin with dextrose for hyperkalaemia. The renal team is preparing him for dialysis, which is at least two hours away.",
   "data_table": {
-   "Vital signs": "Pulse 56, BP 148/82 mmHg, RR 16, SpO2 98% in room air, temperature 36.7 °C",
-   "Examination": "Alert, mild proximal limb weakness, no fasciculations, no flapping tremor, ECG monitor showing tall peaked T waves and widened QRS",
-   "Investigations": "Potassium 7.4 mmol/L (3.5-5.0), creatinine 380 micromol/L (45-90, baseline 280), sodium 134 mmol/L, bicarbonate 18 mmol/L, calcium 2.32 mmol/L; ECG sinus bradycardia, tall peaked T waves in V2-V5, QRS 142 ms (broadened from baseline 110 ms), no P waves dropping",
-   "Medications": "Perindopril 5 mg daily, spironolactone 25 mg daily, furosemide 40 mg daily, atorvastatin 40 mg nocte, trimethoprim 300 mg daily (day 4)"
+   "Vital signs": "Pulse 92 /min, blood pressure 118/72 mmHg, respiratory rate 24 /min",
+   "Investigations": "Potassium 6.9 mmol/L; pH 7.12; bicarbonate 9 mmol/L; creatinine 420 micromol/L"
   },
-  "lead_in": "What is the most appropriate first step?",
+  "lead_in": "Which additional treatment is most appropriate?",
   "options": [
    {
     "letter": "A",
-    "text": "Administer 10 units of intravenous short-acting insulin plus 50 mL of 50% dextrose IV",
-    "correct": false,
-    "rationale": "Insulin-dextrose drives potassium intracellularly and is effective but slower-onset than calcium for myocardial stabilisation. With ECG changes (broadened QRS, peaked T) the FIRST step is calcium for cardiac membrane stabilisation; insulin-dextrose comes immediately after. (Source: BMJ Best Practice)",
+    "text": "Intravenous sodium bicarbonate alongside the current therapy",
+    "correct": true,
+    "rationale": "Bicarbonate is an adjunct reserved for hyperkalaemia with a significant metabolic acidosis, where correcting the pH shifts potassium intracellularly and buys time until dialysis. It is not used as sole or first-line therapy. (Source: Kidney Health Australia CARI - Hyperkalaemia management)",
     "source_refs": [
-     "BMJ Best Practice"
+     "Kidney Health Australia CARI - Hyperkalaemia management",
+     "Therapeutic Guidelines: Renal Dysfunction"
     ]
    },
    {
     "letter": "B",
-    "text": "Administer sodium bicarbonate 50 mmol intravenously over 5 minutes as first agent",
+    "text": "High dose intravenous furosemide alongside the current therapy",
     "correct": false,
-    "rationale": "Bicarbonate is most useful in hyperkalaemia with metabolic acidosis but is slow-onset and less effective than insulin-dextrose at lowering potassium. It is not the first step when ECG changes are present. (Source: BMJ Best Practice)",
+    "rationale": "Right where the patient still makes urine and is not volume deplete, so kaliuresis can be driven. It is futile in established oliguria. (Source: Therapeutic Guidelines: Renal Dysfunction)",
     "source_refs": [
-     "BMJ Best Practice"
+     "Therapeutic Guidelines: Renal Dysfunction",
+     "Australian Medicines Handbook"
     ]
    },
    {
     "letter": "C",
-    "text": "Administer 10 mL of 10% calcium gluconate intravenously over 5 to 10 minutes now",
-    "correct": true,
-    "rationale": "When hyperkalaemia produces ECG changes (peaked T waves, broadened QRS, loss of P waves, sine-wave pattern), the FIRST step is intravenous calcium gluconate (10 mL of 10% solution, or 30 mL diluted over 5 to 10 minutes) to stabilise the cardiac membrane. It works within 1 to 3 minutes and lasts 30 to 60 minutes. It does NOT lower potassium; insulin-dextrose, salbutamol nebuliser, and definitive removal by dialysis or sodium-binding resin (sodium zirconium cyclosilicate) follow. The trimethoprim is acting as a potassium-sparing agent (functional epithelial sodium channel inhibition like amiloride) on top of ACE inhibitor and spironolactone - withhold these. (Source: BMJ Best Practice)",
+    "text": "Nebulised salbutamol repeated every twenty minutes",
+    "correct": false,
+    "rationale": "Right as an additional shifting agent, especially where intravenous access is difficult, but it adds little once insulin with dextrose is already running and leaves the acidosis untouched. (Source: Australian Medicines Handbook)",
     "source_refs": [
-     "BMJ Best Practice"
+     "Australian Medicines Handbook",
+     "Therapeutic Guidelines: Renal Dysfunction"
     ]
    },
    {
     "letter": "D",
-    "text": "Administer nebulised salbutamol 10 mg over 10 minutes as the first medication step",
+    "text": "Oral sodium polystyrene sulfonate every six hours",
     "correct": false,
-    "rationale": "Salbutamol nebuliser drives potassium intracellularly and is a useful adjunct, but is not the FIRST step when ECG changes are present. Calcium first to stabilise the myocardium. (Source: BMJ Best Practice)",
+    "rationale": "Right for slow removal of total body potassium over hours to days in a patient who is not critically unwell, not as the bridge in a decompensated patient awaiting dialysis. (Source: Australian Medicines Handbook)",
     "source_refs": [
-     "BMJ Best Practice"
+     "Australian Medicines Handbook",
+     "Kidney Health Australia CARI - Hyperkalaemia management"
     ]
    },
    {
     "letter": "E",
-    "text": "Arrange urgent haemodialysis via the on-call nephrology registrar before other measures",
+    "text": "A second dose of intravenous calcium gluconate now",
     "correct": false,
-    "rationale": "Haemodialysis is the definitive removal of potassium and is required here given CKD 4 with new AKI and severe hyperkalaemia. However, dialysis takes time to set up; calcium gluconate is the immediate first step to stabilise the myocardium while dialysis is arranged. (Source: BMJ Best Practice)",
+    "rationale": "Right when electrocardiogram changes persist or recur after the first dose, since calcium lasts under an hour. It is repeated for the rhythm, not for the acidosis. (Source: ANZCOR adult advanced life support)",
     "source_refs": [
-     "BMJ Best Practice"
+     "ANZCOR adult advanced life support",
+     "Kidney Health Australia CARI - Hyperkalaemia management"
     ]
    }
   ],
   "explanation": {
-   "summary": "Severe hyperkalaemia with ECG changes is a medical emergency. The order is: 1) IV calcium (gluconate or chloride) for cardiac membrane stabilisation, 2) insulin-dextrose and salbutamol nebuliser to shift potassium intracellularly, 3) definitive removal by dialysis (if AKI/severe CKD) or sodium zirconium cyclosilicate orally. Identify and stop precipitating drugs (ACE/ARB, MRA, trimethoprim, NSAIDs, potassium supplements). Trimethoprim functionally inhibits the epithelial sodium channel like amiloride and is a recognised cause of hyperkalaemia, especially with concomitant RAAS blockade.",
+   "summary": "Sodium bicarbonate has a narrow place in hyperkalaemia: as an adjunct when a significant metabolic acidosis is present. It is slower and weaker than insulin with dextrose, and is never the sole treatment.",
    "key_points": [
-    "Order: Calcium for cardiac stabilisation -> insulin-dextrose + salbutamol -> dialysis or binder",
-    "Trimethoprim acts like amiloride at the ENaC; hyperkalaemia risk multiplied with ACE/ARB/MRA",
-    "Calcium does NOT lower potassium - it buys time for definitive measures"
+    "Bicarbonate is reserved for hyperkalaemia with significant metabolic acidosis.",
+    "Diuretics only help where urine output is preserved.",
+    "Dialysis is the definitive answer in oliguric acute kidney injury; everything else is a bridge."
    ],
-   "pearls": "If using calcium chloride instead of gluconate, give via central line because peripheral extravasation causes severe tissue necrosis; calcium gluconate is safer peripherally and provides equivalent membrane stabilisation at three times the volume."
+   "context": "Acidosis and hyperkalaemia travel together for two reasons. Inorganic acidosis drives potassium out of cells as hydrogen ions move in and are buffered intracellularly, and the same failing kidney that cannot excrete acid cannot excrete potassium. Correcting the pH reverses part of that exchange, which is why the benefit of bicarbonate is confined to patients who are actually acidotic and is modest even then. The wider lesson is the four-part structure of hyperkalaemia management: protect the myocardium, shift potassium into cells, remove it from the body, and stop whatever caused it."
   },
+  "reference_ranges": [
+   "uec",
+   "abg"
+  ],
   "sources": [
    {
-    "label": "Therapeutic Guidelines: Cardiovascular",
+    "label": "Kidney Health Australia CARI - Hyperkalaemia management",
+    "url": "https://www.cariguidelines.org/"
+   },
+   {
+    "label": "Therapeutic Guidelines: Renal Dysfunction",
     "url": "https://www.tg.org.au/"
    },
    {
-    "label": "BMJ Best Practice",
-    "url": "https://bestpractice.bmj.com/"
+    "label": "Australian Medicines Handbook",
+    "url": "https://amhonline.amh.net.au/"
+   },
+   {
+    "label": "ANZCOR adult advanced life support",
+    "url": "https://www.anzcor.org"
    }
   ],
-  "reference_ranges": [
-   "uec"
-  ],
-  "created": "2026-06-01"
+  "model": "Claude Opus 5",
+  "revised_from": "rabe53-026"
  },
  {
   "id": "rabe53-027",
@@ -6288,102 +6330,106 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rabe57-028",
+  "id": "rabe57-028-d2",
   "topic": "Medicine",
   "subtopic": "Electrolyte emergency",
-  "subtopic_detail": "Severe hyperkalaemia with ECG changes",
-  "difficulty": 5,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Potassium based salt substitute as the cause of a rising potassium",
+  "difficulty": 3,
   "tags": [
    "hyperkalaemia",
-   "calcium gluconate"
+   "salt substitute",
+   "diet"
   ],
-  "stem": "A 72-year-old man with stage 4 chronic kidney disease (eGFR 22 mL/min/1.73 m2 baseline) on perindopril, spironolactone, and metformin is brought to your emergency department with 1 day of lethargy and palpitations. His daughter says 'he just looks awful, all grey and tired'. He had a vomiting illness 3 days ago and has not been eating or drinking well.\n\nOn examination he is alert but drowsy. ECG shows peaked T waves in V2-V5, a PR interval of 240 ms (under 200), and a QRS of 130 ms (under 110), with sinus rhythm at 56 bpm. There is no ventricular tachycardia or fibrillation. He is normotensive at 142/86 mmHg. He has bilateral basal crepitations and pitting oedema to the knees. Bloods show potassium 7.2 mmol/L (3.5-5.0), sodium 132 mmol/L (135-145), creatinine 320 micromol/L (60-110, baseline 240), urea 28 mmol/L (2.5-7.5), bicarbonate 15 mmol/L (22-26), glucose 6.2 mmol/L (4-7.8), and venous pH 7.28 (7.35-7.45). His urine output is 20 mL in the last hour. The renal team is on the way to assess for dialysis.",
+  "stem": "A 69 year old man with stage 3 chronic kidney disease takes perindopril and feels well. Since a heart failure admission he has been cutting his sodium intake and uses a supermarket salt substitute on every meal.",
   "data_table": {
-   "Vital signs": "Pulse 56, BP 142/86 mmHg, RR 22, SpO2 96% on room air, temperature 36.6 °C",
-   "Examination": "Alert drowsy, basal crepitations, pitting oedema to knees, ECG peaked T waves V2-V5, PR 240 ms, QRS 130 ms, sinus rhythm",
-   "Investigations": "Potassium 7.2 mmol/L (3.5-5.0), sodium 132 mmol/L, creatinine 320 micromol/L (baseline 240), urea 28 mmol/L (2.5-7.5), bicarbonate 15 mmol/L (22-26), pH 7.28 (7.35-7.45), glucose 6.2 mmol/L, urine output 20 mL/hour",
-   "Medications": "Perindopril 5 mg daily, spironolactone 25 mg daily, metformin 1 g BD"
+   "Vital signs": "Pulse 70 /min, blood pressure 130/78 mmHg, weight stable",
+   "Investigations": "Potassium 6.0 mmol/L (was 4.6); creatinine 140 micromol/L, unchanged; ECG normal"
   },
-  "lead_in": "What is the immediate first pharmacological step?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "Insulin 10 units intravenously with 50 mL of 50% dextrose followed by oral resonium 30 g",
-    "correct": false,
-    "rationale": "Insulin-dextrose shifts potassium intracellularly but does not stabilise myocardium; calcium is the immediate cardioprotective step in any hyperkalaemia with ECG changes. (Source: KHA-CARI Hyperkalaemia Guideline)",
+    "text": "Stop the salt substitute and recheck the potassium",
+    "correct": true,
+    "rationale": "Salt substitutes replace sodium chloride with potassium chloride and deliver a large daily potassium load. With renin-angiotensin blockade and reduced excretory reserve, removing the load corrects the problem without sacrificing a drug that improves his survival. (Source: Kidney Health Australia CARI - Hyperkalaemia management)",
     "source_refs": [
-     "KHA-CARI Hyperkalaemia Guideline"
+     "Kidney Health Australia CARI - Hyperkalaemia management",
+     "Therapeutic Guidelines: Renal Dysfunction"
     ]
    },
    {
     "letter": "B",
-    "text": "Salbutamol 10-20 mg via nebuliser as the first-line agent to shift potassium intracellularly",
+    "text": "Halve the perindopril dose and recheck the potassium",
     "correct": false,
-    "rationale": "Salbutamol is a useful adjunct but is not the immediate cardioprotective step; calcium gluconate first in any hyperkalaemia with ECG changes. (Source: KHA-CARI Hyperkalaemia Guideline)",
+    "rationale": "Right where no reversible dietary or drug load can be found and the potassium stays high, since dose reduction is preferred to outright cessation in heart failure. (Source: Therapeutic Guidelines: Renal Dysfunction)",
     "source_refs": [
-     "KHA-CARI Hyperkalaemia Guideline"
+     "Therapeutic Guidelines: Renal Dysfunction",
+     "Australian Medicines Handbook"
     ]
    },
    {
     "letter": "C",
-    "text": "Sodium bicarbonate 100 mmol intravenously over 30 minutes targeting acidosis correction before potassium control",
+    "text": "Start oral sodium polystyrene sulfonate and recheck later",
     "correct": false,
-    "rationale": "Bicarbonate has limited acute effect on potassium and is reserved for severe acidosis cases; calcium first for cardioprotection. (Source: KHA-CARI Hyperkalaemia Guideline)",
+    "rationale": "Right when potassium remains raised after reversible contributors are removed and the treatment that is raising it must continue. (Source: Australian Medicines Handbook)",
     "source_refs": [
-     "KHA-CARI Hyperkalaemia Guideline"
+     "Australian Medicines Handbook",
+     "Kidney Health Australia CARI - Hyperkalaemia management"
     ]
    },
    {
     "letter": "D",
-    "text": "Cease perindopril and spironolactone and arrange urgent haemodialysis without immediate pharmacological intervention",
+    "text": "Refer him urgently to the emergency department today",
     "correct": false,
-    "rationale": "Ceasing offending drugs and arranging dialysis are correct steps but dialysis takes time; immediate calcium gluconate stabilises the myocardium during the wait. (Source: KHA-CARI Hyperkalaemia Guideline)",
+    "rationale": "Right for potassium above about 6.5 mmol/L, or any level with electrocardiogram change, symptoms or rapidly worsening renal function. (Source: ANZCOR adult advanced life support)",
     "source_refs": [
-     "KHA-CARI Hyperkalaemia Guideline"
+     "ANZCOR adult advanced life support",
+     "Kidney Health Australia CARI - Hyperkalaemia management"
     ]
    },
    {
     "letter": "E",
-    "text": "Calcium gluconate 10% 10 mL intravenously over 2-3 minutes as immediate myocardial membrane stabilisation",
-    "correct": true,
-    "rationale": "Severe hyperkalaemia (potassium 6.5 mmol/L or higher) with ECG changes (peaked T waves, prolonged PR, widened QRS) requires immediate myocardial membrane stabilisation with intravenous calcium. Calcium gluconate 10% 10 mL over 2-3 minutes is the AU first-line (calcium chloride if peripheral access is the only option is more concentrated but risks tissue necrosis if extravasated). Onset is within minutes; duration is 30-60 minutes; the dose can be repeated. Subsequent shifts (insulin-dextrose, salbutamol, sodium bicarbonate if acidotic) follow. Definitive removal is by haemodialysis when dialysis indications are present. Resonium or patiromer assist later but do not act acutely. (Source: KHA-CARI Hyperkalaemia Guideline; AMH; Therapeutic Guidelines: Renal Dysfunction)",
+    "text": "Continue current treatment and recheck in three months",
+    "correct": false,
+    "rationale": "Right for a stable potassium in the upper reference range on established therapy with no new exposure. A rise from 4.6 to 6.0 mmol/L needs action now. (Source: Therapeutic Guidelines: Renal Dysfunction)",
     "source_refs": [
-     "KHA-CARI Hyperkalaemia Guideline",
-     "AMH",
-     "Therapeutic Guidelines: Renal Dysfunction"
+     "Therapeutic Guidelines: Renal Dysfunction",
+     "Kidney Health Australia CARI - Hyperkalaemia management"
     ]
    }
   ],
   "explanation": {
-   "summary": "Severe hyperkalaemia (potassium 6.5 mmol/L or higher) or any hyperkalaemia with ECG changes requires immediate intravenous calcium for myocardial membrane stabilisation. Calcium gluconate 10% 10 mL over 2-3 minutes is AU first-line (calcium chloride is more concentrated but risks tissue necrosis on extravasation). Effect onset is minutes; duration is 30-60 minutes; repeat dosing is acceptable. Subsequent shifts: insulin-dextrose (10 units IV insulin with 50 mL 50% dextrose), salbutamol 10-20 mg nebulised, sodium bicarbonate if acidotic. Definitive removal: haemodialysis (urgent if life-threatening), oral or rectal resonium (sodium polystyrene sulfonate), or patiromer (slow but ongoing). Identify and stop the precipitant: ACEi, ARB, ARNI, spironolactone, eplerenone, trimethoprim, heparin, NSAIDs.",
+   "summary": "Potassium based salt substitutes are a common and easily missed cause of hyperkalaemia in patients on renin-angiotensin blockade with chronic kidney disease. Removing the exposure is preferable to stopping a prognostically valuable drug.",
    "key_points": [
-    "Calcium first in any hyperkalaemia with ECG changes",
-    "Insulin-dextrose, salbutamol, bicarbonate are shifts not stabilisers",
-    "Dialysis for life-threatening or refractory disease",
-    "Stop offending drugs (ACEi, ARB, spironolactone)"
+    "Ask specifically about salt substitutes, potassium supplements and complementary medicines.",
+    "Other potassium rich exposures include coconut water, dried fruit and vegetable juices.",
+    "Dose reduction of the culprit drug is preferred to cessation where the load can be removed instead."
    ],
-   "pearls": "ECG progression in hyperkalaemia: peaked T waves (5.5-6.5), PR prolongation and P-wave loss (6.5-7.5), QRS widening (over 7.5), sine wave then VF (over 8.5); the rate of rise matters more than the absolute number."
+   "context": "The kidney excretes about 90% of a dietary potassium load, and it does so through aldosterone-driven secretion in the principal cells of the collecting duct. Chronic kidney disease reduces the number of functioning nephrons available to do that, and angiotensin converting enzyme inhibitors, mineralocorticoid antagonists, trimethoprim and calcineurin inhibitors each interrupt the same final pathway. A patient with any one of those usually copes; stack a large potassium load on top and the reserve is gone. This is why a medication and dietary history, taken specifically, is more useful in a stable hyperkalaemic outpatient than any further blood test."
   },
+  "reference_ranges": [
+   "uec"
+  ],
   "sources": [
    {
-    "label": "KHA-CARI Hyperkalaemia Guideline",
-    "url": "https://kha-cari.org.au/"
-   },
-   {
-    "label": "AMH",
-    "url": "https://amhonline.amh.net.au/"
+    "label": "Kidney Health Australia CARI - Hyperkalaemia management",
+    "url": "https://www.cariguidelines.org/"
    },
    {
     "label": "Therapeutic Guidelines: Renal Dysfunction",
     "url": "https://www.tg.org.au/"
+   },
+   {
+    "label": "Australian Medicines Handbook",
+    "url": "https://amhonline.amh.net.au/"
+   },
+   {
+    "label": "ANZCOR adult advanced life support",
+    "url": "https://www.anzcor.org"
    }
   ],
-  "reference_ranges": [
-   "uec",
-   "vbg"
-  ],
-  "created": "2026-06-01"
+  "model": "Claude Opus 5",
+  "revised_from": "rabe57-028"
  },
  {
   "id": "rabe57-029",
@@ -7047,94 +7093,94 @@
   "created": "2026-06-02"
  },
  {
-  "id": "med-p58-006",
+  "id": "med-p58-006-d2",
   "topic": "Medicine",
   "subtopic": "Infectious diseases",
-  "subtopic_detail": "HIV seroconversion 4th gen testing",
+  "subtopic_detail": "Sexual transmission advice when the viral load has stayed undetectable",
   "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "model": "Claude Opus 5",
   "tags": [
    "HIV",
-   "seroconversion",
-   "ASHM"
+   "counselling",
+   "transmission"
   ],
-  "stem": "You are the GP registrar at a sexual health clinic seeing a 28-year-old man who reports a flu-like illness with fever, sore throat, generalised lymphadenopathy and a transient truncal maculopapular rash that began 14 days ago and lasted 7 days. He has now fully recovered. He is a man who has sex with men and reports a single condomless receptive anal intercourse encounter with a new partner 35 days ago. He did not start HIV pre-exposure prophylaxis. He last tested HIV-negative 6 months ago.\n\nOn examination he is well, with normal observations and no rash today. Mild residual cervical lymphadenopathy is present. He has had no recent travel and no other risk exposures. His past medical history is unremarkable and he takes no medications. He has had a recent gonorrhoea/chlamydia panel (negative one month ago) and the practice has 4th generation HIV antigen/antibody immunoassay (HIV Ag/Ab combo) available, as well as HIV viral load and rapid antibody testing.",
+  "stem": "A 36-year-old man has taken a single tablet antiretroviral regimen for three years, with an undetectable viral load at every six monthly check. His female partner is HIV negative. They want to conceive and ask whether they need condoms or any medication.",
   "data_table": {
-   "Vital signs": "Pulse 72/min, BP 118/72 mmHg, RR 14/min, SpO2 99% room air, temperature 36.8 °C",
-   "Examination": "Well; mild residual cervical lymphadenopathy; no rash today",
-   "History": "MSM, condomless receptive anal intercourse 35 days ago; flu-like illness 14 days ago lasting 7 days; HIV negative 6 months prior; no PrEP"
+   "Results": "CD4 620 cells per microlitre; renal and liver function normal",
+   "Partner": "HIV negative on testing last month; no other sexual partners"
   },
-  "lead_in": "What is the most appropriate diagnostic test today?",
+  "lead_in": "What is the most appropriate advice?",
   "options": [
    {
     "letter": "A",
-    "text": "HIV-1 RNA viral load assay alone as the sole diagnostic test without any immunoassay today",
-    "correct": false,
-    "rationale": "Viral load testing detects HIV earlier than immunoassays (window approximately 10 days) and is reserved for suspected acute infection when 4th-gen is negative or for confirming acute primary HIV in selected cases. (Source: ASHM Acute HIV)",
+    "text": "He will not transmit HIV sexually while the viral load stays undetectable",
+    "correct": true,
+    "rationale": "Sustained viral suppression for at least six months with ongoing adherence and monitoring means there is effectively no risk of sexual transmission, so they can conceive by timed intercourse without antiretroviral prophylaxis. (Source: ASHM HIV Management Guidelines)",
     "source_refs": [
-     "ASHM Acute HIV"
+     "ASHM HIV Management Guidelines"
     ]
    },
    {
     "letter": "B",
-    "text": "Fourth-generation HIV antigen/antibody combination immunoassay (HIV Ag/Ab combo)",
-    "correct": true,
-    "rationale": "At 35 days post-exposure with prior clinical seroconversion features, the 4th generation HIV Ag/Ab assay has a window period of approximately 18-45 days and reliably detects p24 antigen plus IgM/IgG antibodies; ASHM recommends 4th-gen as first-line and a reactive result triggers confirmatory testing. (Source: ASHM HIV Testing Policy; ASHM Acute HIV)",
+    "text": "Condoms are still necessary because the transmission risk is reduced but not removed",
+    "correct": false,
+    "rationale": "Condoms remain the advice while suppression is not yet established, when doses are being missed, or for preventing other sexually transmissible infections and unplanned pregnancy, none of which apply to a couple seeking conception. (Source: ASHM HIV Management Guidelines)",
     "source_refs": [
-     "ASHM HIV Testing Policy",
-     "ASHM Acute HIV"
+     "ASHM HIV Management Guidelines"
     ]
    },
    {
     "letter": "C",
-    "text": "Rapid point-of-care HIV antibody test only (third generation rapid antibody assay)",
+    "text": "She should take daily pre-exposure prophylaxis until she conceives",
     "correct": false,
-    "rationale": "Third generation rapid antibody tests have a longer window period (approximately 23-90 days) and miss acute primary HIV with high antigen load but low antibody titre; 4th generation is preferred. (Source: ASHM HIV Testing Policy)",
+    "rationale": "Pre-exposure prophylaxis is for a partner whose viral load is not reliably suppressed, who has other partners, or where adherence is uncertain, and it adds nothing once suppression is durable. (Source: ASHM PrEP Guidelines)",
     "source_refs": [
-     "ASHM HIV Testing Policy"
+     "ASHM PrEP Guidelines"
     ]
    },
    {
     "letter": "D",
-    "text": "Repeat HIV testing in three months without performing any laboratory tests on her samples today",
+    "text": "Sperm washing with assisted reproduction is needed for conception",
     "correct": false,
-    "rationale": "Three-month deferral misses the diagnostic window where antiretroviral initiation reduces transmission and disease progression; testing now identifies acute infection. (Source: ASHM HIV Testing Policy)",
+    "rationale": "Sperm washing was standard before effective therapy and is now reserved for couples with a detectable viral load or a separate fertility problem. (Source: ASHM HIV Management Guidelines)",
     "source_refs": [
-     "ASHM HIV Testing Policy"
+     "ASHM HIV Management Guidelines"
     ]
    },
    {
     "letter": "E",
-    "text": "Lymph node biopsy of the cervical lymphadenopathy to characterise the underlying pathology",
+    "text": "He should add a fourth antiretroviral agent while they are trying",
     "correct": false,
-    "rationale": "Reactive lymphadenopathy in this context does not require biopsy; serological and virological HIV diagnosis is non-invasive and definitive. (Source: ASHM HIV Testing Policy)",
+    "rationale": "Intensifying a regimen is considered for virological failure with documented resistance, not for a suppressed patient, and extra agents add toxicity without benefit. (Source: ASHM HIV Management Guidelines; AMH)",
     "source_refs": [
-     "ASHM HIV Testing Policy"
+     "ASHM HIV Management Guidelines",
+     "AMH"
     ]
    }
   ],
   "explanation": {
-   "summary": "Fourth generation HIV assays detect both p24 antigen and HIV-1/2 IgM/IgG antibodies, with a window period of approximately 18-45 days from infection. This is the Australian first-line HIV test per ASHM. HIV-1 RNA viral load can detect infection earlier (approximately 10 days post-exposure) and is reserved for high index of suspicion when 4th-gen is negative, suspected acute primary HIV, or seroconversion illness. Confirmatory testing of any reactive screening assay uses HIV-1/2 antibody differentiation and Western blot. Early diagnosis enables prompt antiretroviral initiation which reduces transmission (treatment-as-prevention) and disease progression. Notification to the public health unit is mandatory.",
+   "summary": "Durable virological suppression prevents sexual transmission of HIV. The Australian position, consistent with the international consensus, is that a person on antiretroviral therapy with an undetectable viral load sustained for at least six months and confirmed on regular testing does not pass HIV on to sexual partners. The practical requirements are adherence, six monthly viral load monitoring and prompt review if a result becomes detectable. Conception by timed condomless intercourse is appropriate, with the usual preconception care for both partners. In context, this changes what serodiscordant couples are told: pre-exposure prophylaxis, sperm washing and mandatory condom use belong to the era before reliable suppression, and offering them now implies a risk that no longer exists.",
    "key_points": [
-    "4th gen HIV Ag/Ab combo: window approximately 18-45 days, first-line",
-    "HIV RNA viral load: window approximately 10 days, for suspected acute primary HIV",
-    "Rapid 3rd-gen tests miss acute infection",
-    "Notify to public health unit on confirmed diagnosis"
+    "Undetectable sustained for six months means HIV is not transmitted sexually.",
+    "Adherence and six monthly viral load monitoring underpin the advice.",
+    "Condoms still have a role for other infections and contraception.",
+    "Pre-exposure prophylaxis is for partners of people who are not reliably suppressed."
    ],
-   "pearls": "Suspected HIV seroconversion illness presenting at day 35 post-exposure: 4th generation Ag/Ab combo is first line and HIV-1 RNA is added when the immunoassay is negative or equivocal but suspicion remains high."
+   "pearls": "The advice rests on a sustained record of undetectable results, not on a single result; a newly suppressed patient still needs the six month track record before the counselling changes."
   },
   "sources": [
    {
-    "label": "ASHM HIV Testing Policy",
-    "url": "https://ashm.org.au/"
+    "label": "ASHM HIV Management Guidelines",
+    "url": "https://hivmanagement.ashm.org.au/"
    },
    {
-    "label": "ASHM Acute HIV",
-    "url": "https://ashm.org.au/"
+    "label": "ASHM PrEP Guidelines",
+    "url": "https://prepguidelines.com.au/"
    }
   ],
   "reference_ranges": [],
-  "created": "2026-06-02"
+  "created": "2026-09-23",
+  "revised_from": "med-p58-006"
  },
  {
   "id": "med-p58-007",
@@ -7994,95 +8040,102 @@
   "created": "2026-06-02"
  },
  {
-  "id": "medicine-p60-002",
+  "id": "medicine-p60-002-d2",
   "topic": "Medicine",
   "subtopic": "Electrolytes",
-  "subtopic_detail": "Hyperkalaemia with ECG changes acute management",
+  "subtopic_detail": "Resuming heart failure drugs after an admission with hyperkalaemia",
   "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
   "tags": [
    "hyperkalaemia",
-   "ECG",
-   "renal"
+   "heart failure",
+   "prescribing"
   ],
-  "stem": "You are the medical registrar in a tertiary ED reviewing a 72-year-old woman with heart failure on lisinopril 10 mg daily and spironolactone 25 mg daily who has presented with generalised weakness and palpitations. She has been less active over the past week with reduced oral intake. Her baseline eGFR was 45 mL/min and her last potassium 2 weeks ago was 5.0 mmol/L. She has no diabetes and is on no insulin.\n\nOn arrival she is alert but feels weak. The ECG shows tall peaked T waves in the precordial leads, a PR interval of 220 ms, and a QRS duration of 110 ms. She has no chest pain and no focal neurology. Her potassium has just returned at 7.3 mmol/L. The renal registrar has been informed and a HDU bed is being arranged.",
+  "stem": "A 66 year old man with heart failure with reduced ejection fraction was admitted a week ago with hyperkalaemia during an episode of gastroenteritis. Perindopril and spironolactone were both stopped. He is euvolaemic and well in clinic today.",
   "data_table": {
-   "Vital signs": "Pulse 56/min, BP 122/78 mmHg, RR 16/min, SpO2 98% room air, temperature 36.6 °C",
-   "Examination": "Alert; mild proximal weakness lower limbs; abdomen soft non-tender; no peripheral oedema",
-   "Investigations": "K 7.3 mmol/L (3.5-5.0); creatinine 215 micromol/L (45-90), eGFR 28 mL/min; HCO3 18 mmol/L (22-26); ECG peaked T waves, PR 220 ms, QRS 110 ms; venous gas pH 7.30"
+   "Vital signs": "Pulse 72 /min, blood pressure 122/74 mmHg, no oedema",
+   "Investigations": "Potassium 4.4 mmol/L; creatinine 118 micromol/L, back to baseline; eGFR 55 mL/min"
   },
-  "lead_in": "What is the single most appropriate first intervention?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "Intravenous insulin 10 units plus 50 mL of 50% dextrose over 15 minutes",
-    "correct": false,
-    "rationale": "Insulin-dextrose shifts potassium but does not protect the myocardium; calcium for membrane stabilisation must come first when ECG changes are present. (Source: Therapeutic Guidelines: Endocrinology)",
+    "text": "Restart perindopril at a reduced dose with early review",
+    "correct": true,
+    "rationale": "The precipitant was transient and both potassium and creatinine have returned to baseline. Angiotensin converting enzyme inhibition carries the larger mortality benefit and the smaller hyperkalaemia risk, so it is reintroduced first at a lower dose with a potassium check in one to two weeks. (Source: Therapeutic Guidelines: Renal Dysfunction)",
     "source_refs": [
-     "Therapeutic Guidelines: Endocrinology"
+     "Therapeutic Guidelines: Renal Dysfunction",
+     "Australian Medicines Handbook"
     ]
    },
    {
     "letter": "B",
-    "text": "Nebulised salbutamol 10 mg by mask as first-line treatment of hyperkalaemia",
+    "text": "Restart both agents at their previous doses today",
     "correct": false,
-    "rationale": "Salbutamol shifts potassium intracellularly but does not stabilise the myocardium; calcium gluconate is given first when ECG changes are present. (Source: Therapeutic Guidelines: Endocrinology)",
+    "rationale": "Right where the hyperkalaemia was clearly explained by a single removable exposure and renal function never changed. Reintroducing two potassium raising drugs at full dose at once removes any way of telling which one causes a recurrence. (Source: Australian Medicines Handbook)",
     "source_refs": [
-     "Therapeutic Guidelines: Endocrinology"
+     "Australian Medicines Handbook",
+     "Therapeutic Guidelines: Renal Dysfunction"
     ]
    },
    {
     "letter": "C",
-    "text": "Intravenous sodium bicarbonate 100 mmol bolus to correct acidosis and shift potassium",
+    "text": "Leave both agents ceased and increase the furosemide",
     "correct": false,
-    "rationale": "Bicarbonate is reserved for severe metabolic acidosis as adjunct; its effect on potassium is modest and slower than calcium. (Source: Therapeutic Guidelines: Endocrinology)",
+    "rationale": "Right for congestion, which he does not have. Abandoning disease modifying therapy after a single reversible episode costs survival benefit and is a common error after discharge. (Source: Therapeutic Guidelines: Renal Dysfunction)",
     "source_refs": [
-     "Therapeutic Guidelines: Endocrinology"
+     "Therapeutic Guidelines: Renal Dysfunction",
+     "Australian Medicines Handbook"
     ]
    },
    {
     "letter": "D",
-    "text": "Oral resonium 30 g (sodium polystyrene sulfonate) with sorbitol as binder",
+    "text": "Leave both agents ceased and add a beta blocker today",
     "correct": false,
-    "rationale": "Resin binders act over hours, are slow, and do not address acute cardiac membrane risk; they are an adjunct after stabilisation and shifting. (Source: Therapeutic Guidelines: Endocrinology)",
+    "rationale": "Right as part of the four pillar regimen, but a beta blocker complements rather than substitutes for renin-angiotensin blockade and does not address the omission. (Source: Australian Medicines Handbook)",
     "source_refs": [
-     "Therapeutic Guidelines: Endocrinology"
+     "Australian Medicines Handbook",
+     "Therapeutic Guidelines: Renal Dysfunction"
     ]
    },
    {
     "letter": "E",
-    "text": "IV calcium gluconate 10% 10 mL over 5 min for cardiac membrane stabilisation",
-    "correct": true,
-    "rationale": "When hyperkalaemia produces ECG changes (peaked T waves, PR prolongation, QRS widening), calcium gluconate is the first intervention to stabilise the cardiac membrane, followed by potassium-shifting (insulin-dextrose, salbutamol) and removal (resin, dialysis). (Source: Therapeutic Guidelines: Endocrinology)",
+    "text": "Restart spironolactone alone at a reduced dose with review",
+    "correct": false,
+    "rationale": "Right where an angiotensin converting enzyme inhibitor is not tolerated for another reason. Of the two, the mineralocorticoid antagonist carries the greater hyperkalaemia risk, so it is not the one reintroduced first. (Source: Therapeutic Guidelines: Renal Dysfunction)",
     "source_refs": [
-     "Therapeutic Guidelines: Endocrinology"
+     "Therapeutic Guidelines: Renal Dysfunction",
+     "Australian Medicines Handbook"
     ]
    }
   ],
   "explanation": {
-   "summary": "Hyperkalaemia with ECG changes is managed in three sequential steps: stabilise (calcium gluconate or chloride), shift (insulin-dextrose, salbutamol), and remove (resin binder or dialysis). The first step prevents arrhythmic death; the second buys time; the third corrects the total body potassium. ACE inhibitor plus aldosterone antagonist plus declining renal function is a common precipitant.",
+   "summary": "Hyperkalaemia during an intercurrent illness is usually transient. Once the precipitant has resolved and renal function has recovered, renin-angiotensin blockade is reintroduced cautiously rather than abandoned, one drug at a time with a potassium check.",
    "key_points": [
-    "Stabilise: IV calcium gluconate 10% 10 mL over 5 min (or calcium chloride 10% 10 mL via central line).",
-    "Shift: IV insulin 10 units + 50% dextrose 50 mL; nebulised salbutamol 10 mg.",
-    "Remove: cation exchange resin or dialysis depending on burden.",
-    "Cease the precipitating ACE inhibitor, ARB, or potassium-sparing diuretic."
+    "Reintroduce one agent at a time at a reduced dose, with potassium and creatinine at one to two weeks.",
+    "The angiotensin converting enzyme inhibitor is reinstated before the mineralocorticoid antagonist.",
+    "Give sick day advice to withhold both during vomiting, diarrhoea or dehydration."
    ],
-   "pearls": "Peaked T waves with a potassium above 6 mmol/L on an ACE inhibitor plus spironolactone gets calcium gluconate first; insulin-dextrose alone does not protect the heart in the next 5 minutes."
+   "context": "Permanent discontinuation after a single episode of hyperkalaemia is one of the more consequential prescribing errors in heart failure, because the drugs that raise potassium are the same ones that reduce mortality. The rational response is to distinguish a transient prerenal insult, which resolves, from a fixed ceiling on excretory capacity, which does not. Sick day rules, dose reduction, dietary review and, where necessary, a potassium binder all exist to keep the patient on therapy. The same logic applies to metformin and to sodium-glucose cotransporter 2 inhibitors: withhold during acute illness, then deliberately resume."
   },
-  "sources": [
-   {
-    "label": "Therapeutic Guidelines: Endocrinology",
-    "url": "https://tgldcdp.tg.org.au/endocrinologyGuidelines"
-   },
-   {
-    "label": "KDIGO Clinical Practice Guidelines",
-    "url": "https://kdigo.org/guidelines/"
-   }
-  ],
   "reference_ranges": [
    "uec"
   ],
-  "created": "2026-06-02"
+  "sources": [
+   {
+    "label": "Therapeutic Guidelines: Renal Dysfunction",
+    "url": "https://www.tg.org.au/"
+   },
+   {
+    "label": "Australian Medicines Handbook",
+    "url": "https://amhonline.amh.net.au/"
+   },
+   {
+    "label": "Kidney Health Australia CARI - Hyperkalaemia management",
+    "url": "https://www.cariguidelines.org/"
+   }
+  ],
+  "model": "Claude Opus 5",
+  "revised_from": "medicine-p60-002"
  },
  {
   "id": "medicine-p60-003",
@@ -10671,96 +10724,102 @@
   "created": "2026-06-02"
  },
  {
-  "id": "med-p64-026",
+  "id": "med-p64-026-d2",
   "topic": "Medicine",
   "subtopic": "Renal/Electrolyte",
-  "subtopic_detail": "Acute hyperkalaemia management sequence",
-  "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Monitoring for hypoglycaemia after insulin and dextrose are given",
+  "difficulty": 2,
   "tags": [
-   "hyperkalaemia"
+   "hyperkalaemia",
+   "insulin",
+   "hypoglycaemia"
   ],
-  "stem": "A 72-year-old man with chronic kidney disease stage 4 is brought to the emergency department feeling weak and lethargic. His usual medications include perindopril, spironolactone, and atorvastatin. He had gastroenteritis with diarrhoea for three days and has been off food and water but kept taking his usual medications. He is alert and oriented but mildly confused.\n\nHis ECG shows peaked T waves in the precordial leads, a PR interval of 240 ms, and a QRS duration of 116 ms. He has no chest pain. He has not yet been catheterised.",
+  "stem": "A 71 year old woman with chronic kidney disease was treated thirty minutes ago for hyperkalaemia with intravenous calcium, then insulin with dextrose. She is alert and her rhythm has normalised.",
   "data_table": {
-   "Vital signs": "pulse 56 /min, blood pressure 132/78 mmHg, respiratory rate 16 /min, SpO2 98% on room air, temperature 36.7 degrees Celsius",
-   "Examination": "mildly dehydrated, no peripheral oedema, no focal neurology",
-   "Investigations": "potassium 7.2 mmol/L (3.5 to 5.0); sodium 138 mmol/L; bicarbonate 14 mmol/L; creatinine 380 micromol/L (baseline 220); pH 7.28; ECG: peaked T waves, PR 240 ms, QRS 116 ms"
+   "Vital signs": "Pulse 82 /min, blood pressure 134/78 mmHg, SpO2 97% room air",
+   "Investigations": "Potassium 5.8 mmol/L; capillary glucose 7.4 mmol/L; creatinine 210 micromol/L"
   },
-  "lead_in": "What is the most appropriate immediate intervention?",
+  "lead_in": "What monitoring is most appropriate now?",
   "options": [
    {
     "letter": "A",
-    "text": "Urgent haemodialysis booking without further pharmacological intervention",
-    "correct": false,
-    "rationale": "Dialysis is the definitive treatment for refractory hyperkalaemia in CKD but takes time to set up. Pharmacological bridging with calcium gluconate then insulin-dextrose and salbutamol is started while dialysis is being arranged. (Source: KHA Hyperkalaemia)",
+    "text": "Hourly capillary glucose for the next six hours",
+    "correct": true,
+    "rationale": "Hypoglycaemia follows insulin given for hyperkalaemia in up to one in six patients, often after the dextrose bolus has been cleared and most often in renal impairment, where insulin clearance is reduced. Hourly testing for about six hours detects it. (Source: Australian Medicines Handbook)",
     "source_refs": [
-     "KHA Hyperkalaemia"
+     "Australian Medicines Handbook",
+     "Therapeutic Guidelines: Renal Dysfunction"
     ]
    },
    {
     "letter": "B",
-    "text": "IV actrapid insulin 10 units in 50 mL of 50% dextrose over 15 minutes",
+    "text": "Capillary glucose once before the evening meal today",
     "correct": false,
-    "rationale": "Insulin-dextrose lowers serum potassium by intracellular shift over 30 to 60 minutes but does not stabilise the myocardium acutely. With ECG changes, calcium gluconate comes first to protect against arrhythmia while waiting for shift therapy. (Source: Therapeutic Guidelines: Endocrinology; KHA)",
+    "rationale": "Right for routine inpatient glucose surveillance in a patient with diabetes who has not received a potassium shifting dose of insulin. It is far too infrequent to catch the post-insulin nadir. (Source: Therapeutic Guidelines: Renal Dysfunction)",
     "source_refs": [
-     "Therapeutic Guidelines: Endocrinology",
-     "KHA Hyperkalaemia"
+     "Therapeutic Guidelines: Renal Dysfunction",
+     "Australian Medicines Handbook"
     ]
    },
    {
     "letter": "C",
-    "text": "Oral sodium polystyrene sulfonate (resonium) 30 g now and repeat in 4 hours",
+    "text": "Venous glucose with the morning blood tests tomorrow",
     "correct": false,
-    "rationale": "Cation-exchange resins act over hours and do not address acute arrhythmia risk. They are adjunctive for ongoing potassium load, not immediate. (Source: KHA Hyperkalaemia)",
+    "rationale": "Right for tracking glycaemic control over days. Hypoglycaemia after a shifting dose happens within hours and will have come and gone by then. (Source: Australian Medicines Handbook)",
     "source_refs": [
-     "KHA Hyperkalaemia"
+     "Australian Medicines Handbook",
+     "Therapeutic Guidelines: Renal Dysfunction"
     ]
    },
    {
     "letter": "D",
-    "text": "IV furosemide 80 mg as a bolus to drive renal potassium loss",
+    "text": "Hourly blood pressure alone while she remains alert",
     "correct": false,
-    "rationale": "Loop diuretics increase renal potassium excretion but require adequate renal function and time. With CKD stage 4, AKI on top, and dehydration, the response is limited and slow. Cardiac protection is the priority. (Source: KHA Hyperkalaemia)",
+    "rationale": "Right as part of routine observations, but haemodynamic monitoring does not detect the specific complication that this treatment causes. (Source: Therapeutic Guidelines: Renal Dysfunction)",
     "source_refs": [
-     "KHA Hyperkalaemia"
+     "Therapeutic Guidelines: Renal Dysfunction",
+     "Kidney Health Australia CARI - Hyperkalaemia management"
     ]
    },
    {
     "letter": "E",
-    "text": "IV calcium gluconate 10% 10 mL over 10 minutes for cardiac membrane stabilisation",
-    "correct": true,
-    "rationale": "ECG changes (peaked T waves, prolonged PR, widened QRS) in the setting of hyperkalaemia mandate immediate cardiac membrane stabilisation with IV calcium gluconate 10% 10 mL over 10 minutes. Calcium does not lower potassium but reduces myocardial excitability and arrhythmia risk within minutes. Insulin-dextrose and salbutamol then drive potassium intracellularly; definitive removal (diuretics, dialysis) follows. (Source: Therapeutic Guidelines: Endocrinology; KHA Hyperkalaemia)",
+    "text": "No further glucose testing as dextrose was given",
+    "correct": false,
+    "rationale": "Right only where no insulin has been given. The dextrose is cleared well before the insulin effect ends, which is precisely when the glucose falls. (Source: Australian Medicines Handbook)",
     "source_refs": [
-     "Therapeutic Guidelines: Endocrinology",
-     "KHA Hyperkalaemia"
+     "Australian Medicines Handbook",
+     "Kidney Health Australia CARI - Hyperkalaemia management"
     ]
    }
   ],
   "explanation": {
-   "summary": "Acute hyperkalaemia with ECG changes is a medical emergency. The Kidney Health Australia stepwise approach is: immediate IV calcium gluconate 10% 10 mL over 10 minutes for membrane stabilisation, then intracellular shift therapy (IV insulin 10 units with dextrose 25 g; nebulised salbutamol 10 to 20 mg; sodium bicarbonate if acidotic), then definitive removal (diuretics if responsive, cation-exchange resins, or haemodialysis). The offending medications (ACE inhibitor, spironolactone) are held. Recheck potassium and ECG at 30 minutes; calcium gluconate can be repeated.",
+   "summary": "Insulin with dextrose is the workhorse shifting therapy in hyperkalaemia, and hypoglycaemia is its predictable complication. Capillary glucose is checked hourly for at least six hours, and a dextrose infusion is considered in renal impairment.",
    "key_points": [
-    "Calcium gluconate 10% 10 mL over 10 minutes for cardiac membrane stabilisation",
-    "Insulin-dextrose, salbutamol nebs, bicarbonate (if acidotic) drive intracellular shift",
-    "Diuretics, resins, or dialysis for definitive removal",
-    "Hold ACE inhibitors, ARBs, and potassium-sparing diuretics"
+    "Hypoglycaemia occurs in up to 15% of patients given insulin for hyperkalaemia.",
+    "Renal impairment prolongs insulin action and raises the risk further.",
+    "The nadir typically falls after the dextrose bolus has been metabolised, one to six hours later."
    ],
-   "pearls": "Hyperkalaemia with ECG changes: IV calcium gluconate 10% 10 mL over 10 minutes for membrane stabilisation FIRST, then insulin-dextrose plus nebulised salbutamol for shift, then diuretics/resin/dialysis for removal. Hold ACEi, ARBs, spironolactone."
+   "context": "Insulin drives potassium into cells by activating the sodium-potassium ATPase in skeletal muscle, an effect that is independent of its glucose lowering action but inseparable from it in practice. A 10 unit dose lowers serum potassium by roughly 0.6 to 1.0 mmol/L within an hour and the effect lasts several hours, whereas 25 g of dextrose is cleared much sooner. Insulin is renally cleared, so the patients who most often need it for hyperkalaemia are exactly the ones in whom it lingers. Anticipating that mismatch, rather than reacting to a collapse, is what the monitoring plan is for."
   },
+  "reference_ranges": [
+   "uec"
+  ],
   "sources": [
    {
-    "label": "Therapeutic Guidelines: Endocrinology",
-    "url": "https://tgldcdp.tg.org.au/"
+    "label": "Australian Medicines Handbook",
+    "url": "https://amhonline.amh.net.au/"
    },
    {
-    "label": "KHA Hyperkalaemia",
-    "url": "https://kidney.org.au/"
+    "label": "Therapeutic Guidelines: Renal Dysfunction",
+    "url": "https://www.tg.org.au/"
+   },
+   {
+    "label": "Kidney Health Australia CARI - Hyperkalaemia management",
+    "url": "https://www.cariguidelines.org/"
    }
   ],
-  "reference_ranges": [
-   "uec",
-   "abg"
-  ],
-  "created": "2026-06-02"
+  "model": "Claude Opus 5",
+  "revised_from": "med-p64-026"
  },
  {
   "id": "med-p64-027",

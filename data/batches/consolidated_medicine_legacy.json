@@ -5914,96 +5914,106 @@
   "difficulty_prior_v3": 3
  },
  {
-  "id": "med-endoe-010",
+  "id": "med-endoe-010-d2",
   "topic": "Medicine",
   "subtopic": "Electrolyte emergencies",
-  "subtopic_detail": "Severe hyperkalaemia - management priority",
+  "subtopic_detail": "Haemolysed specimen as a cause of a spuriously raised potassium",
   "difficulty": 2,
-  "model": "Claude Opus 4.7 (1M context)",
   "tags": [
-   "hyperkalaemia"
+   "hyperkalaemia",
+   "pseudohyperkalaemia",
+   "sampling"
   ],
-  "stem": "A 68-year-old man with chronic kidney disease stage 4 (estimated glomerular filtration rate 22), heart failure on perindopril and spironolactone, presents to a Central Coast LHD emergency department with weakness. Heart rate 48, blood pressure 142/82. Electrocardiogram shows peaked T waves throughout the precordial leads and PR prolongation to 220 ms. Potassium 7.4 mmol/L (from venous blood gas, confirmed on formal serum 7.2), sodium 132, urea 28, creatinine 384 micromol/L, ionised calcium 1.18 mmol/L.",
+  "stem": "A 58 year old woman attends for routine review of stage 3 chronic kidney disease. She feels well and takes perindopril. The laboratory has flagged this morning's specimen and telephoned the result.",
   "data_table": {
-   "Vital signs": "HR 48 sinus, BP 142/82.",
-   "ECG": "Peaked T waves precordial leads, PR 220 ms.",
-   "Bloods": "K 7.4 (VBG), K 7.2 (serum), Na 132, urea 28, creatinine 384, ionised Ca 1.18.",
-   "Background": "CKD stage 4 (eGFR 22), HF, on perindopril + spironolactone."
+   "Vital signs": "Pulse 74 /min, blood pressure 128/76 mmHg, SpO2 98% room air",
+   "Investigations": "Potassium 6.6 mmol/L, haemolysis index high; creatinine 132 micromol/L; ECG normal"
   },
-  "lead_in": "What is the most appropriate single first intervention?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "Calcium gluconate 10% 10 mL intravenously over 5 minutes",
+    "text": "Repeat the potassium on a fresh free flowing sample",
     "correct": true,
-    "rationale": "ECG changes (peaked T waves, PR prolongation) with K >6.5 mmol/L mandate immediate cardiac membrane stabilisation with intravenous calcium. Calcium gluconate 10% 10 mL or calcium chloride 10% 5 mL over 5 minutes antagonises the depolarising effect of potassium on cardiac membranes within 1-3 minutes. Effect lasts ~30-60 minutes; repeat if ECG changes persist.",
+    "rationale": "A haemolysed specimen releases intracellular potassium and overstates the true value, and this patient is asymptomatic with a normal ECG, so the result is confirmed before anyone is treated for it. (Source: Kidney Health Australia CARI - Hyperkalaemia management)",
     "source_refs": [
-     "Therapeutic Guidelines: Endocrinology - Hyperkalaemia",
-     "Kidney Health Australia CARI - Hyperkalaemia management"
+     "Kidney Health Australia CARI - Hyperkalaemia management",
+     "Therapeutic Guidelines: Renal Dysfunction"
     ]
    },
    {
     "letter": "B",
-    "text": "Insulin 10 units intravenously with 50 mL of 50% glucose",
+    "text": "Give intravenous calcium gluconate and attach cardiac monitoring",
     "correct": false,
-    "rationale": "Insulin-glucose drives potassium intracellularly over 15-30 minutes but does not protect the myocardium during the lag. Calcium first when ECG changes are present, then insulin-glucose (eTG).",
+    "rationale": "Right when a reliable potassium is high and the ECG shows peaked T waves, a broad QRS or loss of P waves. Here the ECG is normal and the specimen is unreliable. (Source: ANZCOR adult advanced life support)",
     "source_refs": [
-     "Therapeutic Guidelines: Endocrinology - Hyperkalaemia"
+     "ANZCOR adult advanced life support",
+     "Kidney Health Australia CARI - Hyperkalaemia management"
     ]
    },
    {
     "letter": "C",
-    "text": "Salbutamol 10 mg nebulised",
+    "text": "Start insulin with dextrose and recheck in one hour",
     "correct": false,
-    "rationale": "Nebulised salbutamol shifts potassium intracellularly via beta-2 stimulation, with onset ~30 minutes. Useful as an adjunct but does not protect the myocardium. Calcium first (eTG).",
+    "rationale": "Right for confirmed potassium above about 6.5 mmol/L, or lower with ECG change, once membrane stabilisation has been considered. Shifting therapy carries a real hypoglycaemia risk and is not given on an unconfirmed number. (Source: Therapeutic Guidelines: Renal Dysfunction)",
     "source_refs": [
-     "Therapeutic Guidelines: Endocrinology - Hyperkalaemia"
+     "Therapeutic Guidelines: Renal Dysfunction",
+     "Australian Medicines Handbook"
     ]
    },
    {
     "letter": "D",
-    "text": "Sodium polystyrene sulfonate (Resonium) 30 g orally",
+    "text": "Prescribe oral sodium polystyrene sulfonate and review tomorrow",
     "correct": false,
-    "rationale": "Cation exchange resins work over hours through gut excretion and do not address the acute cardiac risk. Adverse events include intestinal necrosis; use limited (eTG).",
+    "rationale": "Right when a confirmed potassium is persistently raised and total body potassium needs lowering over hours to days rather than urgently. (Source: Australian Medicines Handbook)",
     "source_refs": [
-     "Therapeutic Guidelines: Endocrinology - Hyperkalaemia"
+     "Australian Medicines Handbook",
+     "Kidney Health Australia CARI - Hyperkalaemia management"
     ]
    },
    {
     "letter": "E",
-    "text": "Sodium bicarbonate 8.4% 50 mL intravenously",
+    "text": "Cease perindopril today and arrange review in one week",
     "correct": false,
-    "rationale": "Bicarbonate has limited utility in non-acidotic hyperkalaemia. Risks include sodium loading, hypocalcaemia and pulmonary oedema in CKD. Not first-line in cardiac emergency (eTG).",
+    "rationale": "Right when a confirmed potassium is rising on renin-angiotensin blockade, particularly with falling renal function. Stopping a prognostically useful drug on a haemolysed sample is premature. (Source: Therapeutic Guidelines: Renal Dysfunction)",
     "source_refs": [
-     "Therapeutic Guidelines: Endocrinology - Hyperkalaemia"
+     "Therapeutic Guidelines: Renal Dysfunction",
+     "Australian Medicines Handbook"
     ]
    }
   ],
   "explanation": {
-   "summary": "Severe hyperkalaemia management follows a stabilise-shift-eliminate sequence: calcium gluconate or chloride for membrane stabilisation (immediate, 30-60 min duration), insulin-glucose and/or salbutamol for intracellular shift (15-30 min onset, hours duration), then elimination via dialysis or cation exchange resin. Definitive treatment is removal of cause and renal/extracorporeal clearance.",
+   "summary": "A haemolysed specimen is the commonest reason for an unexpectedly high potassium in a well patient with a normal ECG. Confirm with a fresh, free flowing sample (or a blood gas potassium for speed) before committing to emergency treatment.",
    "key_points": [
-    "Calcium first when ECG changes or K >6.5: stabilises myocardium",
-    "Insulin 10 units + 50 mL 50% glucose: shifts K intracellularly",
-    "Salbutamol 10-20 mg nebulised: adjunct shift",
-    "Stop offending drugs: ACEi, ARB, MRA, NSAIDs, K-sparing diuretics, trimethoprim"
+    "Haemolysis, fist clenching, a tight tourniquet and delayed processing all raise the measured potassium.",
+    "A normal ECG in a well patient argues against a true severe hyperkalaemia.",
+    "Treating an unconfirmed result exposes the patient to hypoglycaemia and unnecessary drug cessation."
    ],
-   "context": "Cardiac toxicity in hyperkalaemia progresses through peaked T waves, PR prolongation, P wave loss, QRS widening into a sinusoidal pattern, and finally ventricular fibrillation or asystole. Calcium does not lower potassium but raises the threshold potential of cardiomyocytes, restoring the difference between resting and threshold potentials that hyperkalaemia narrows. Calcium chloride contains 3x the calcium per millilitre of calcium gluconate but is more sclerosing and requires central access; gluconate is the peripheral default."
+   "context": "Potassium sits mostly inside cells at roughly 140 mmol/L against a serum value near 4 mmol/L, so even modest cell lysis in the tube moves the reported number a long way. That gradient is also why true hyperkalaemia matters: it narrows the resting membrane potential gap, slows phase 0 depolarisation and produces the familiar ECG sequence from peaked T waves through PR prolongation and QRS widening to a sine wave. The clinical skill is deciding which of those two stories the number in front of you belongs to, using the patient, the ECG and the specimen quality rather than the number alone."
   },
-  "sources": [
-   {
-    "label": "Therapeutic Guidelines: Endocrinology - Hyperkalaemia",
-    "url": "https://tgldcdp.tg.org.au/"
-   },
-   {
-    "label": "Kidney Health Australia CARI - Hyperkalaemia management",
-    "url": "https://www.cariguidelines.org/"
-   }
-  ],
   "reference_ranges": [
    "uec"
   ],
-  "created": "2026-05-25",
-  "difficulty_prior_v3": 3
+  "sources": [
+   {
+    "label": "Kidney Health Australia CARI - Hyperkalaemia management",
+    "url": "https://www.cariguidelines.org/"
+   },
+   {
+    "label": "Therapeutic Guidelines: Renal Dysfunction",
+    "url": "https://www.tg.org.au/"
+   },
+   {
+    "label": "Australian Medicines Handbook",
+    "url": "https://amhonline.amh.net.au/"
+   },
+   {
+    "label": "ANZCOR adult advanced life support",
+    "url": "https://www.anzcor.org"
+   }
+  ],
+  "model": "Claude Opus 5",
+  "revised_from": "med-endoe-010"
  },
  {
   "id": "med-endoe-011",
@@ -6382,95 +6392,100 @@
   "difficulty_prior_v3": 5
  },
  {
-  "id": "med-endoe-015",
+  "id": "med-endoe-015-d2",
   "topic": "Medicine",
   "subtopic": "Adrenal emergencies",
-  "subtopic_detail": "Phaeochromocytoma crisis - perioperative management",
+  "subtopic_detail": "Interfering medicine behind a modestly raised plasma metanephrine result",
   "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
   "tags": [
-   "phaeochromocytoma"
+   "phaeochromocytoma",
+   "metanephrines",
+   "interference"
   ],
-  "stem": "A 52-year-old man with a 4 cm right adrenal mass discovered incidentally on CT for renal colic is referred to endocrinology. Plasma metanephrines: metanephrine 1280 pg/mL (reference <88), normetanephrine 2640 pg/mL (reference <196). MIBG scan shows tracer concentration in the right adrenal mass. He has episodic headaches, sweating and palpitations. Blood pressure 168/102 today; previously 145/95 on amlodipine. He is scheduled for laparoscopic adrenalectomy. The surgical team asks about pre-operative preparation.",
+  "stem": "A 48 year old woman with hypertension has plasma metanephrines measured after several months of episodic headache and sweating. She takes amitriptyline at night for neuropathic pain. No adrenal imaging has been arranged.",
   "data_table": {
-   "Imaging": "4 cm right adrenal mass on CT; MIBG-avid.",
-   "Biochemistry": "Plasma metanephrine 1280 pg/mL (<88), normetanephrine 2640 pg/mL (<196).",
-   "Symptoms": "Episodic headache, sweating, palpitations.",
-   "BP": "168/102 today; was 145/95 on amlodipine.",
-   "Procedure": "Laparoscopic adrenalectomy scheduled."
+   "Vital signs": "Pulse 84 /min, blood pressure 148/92 mmHg seated",
+   "Investigations": "Plasma normetanephrine 1.7 times the upper reference limit; metanephrine within range"
   },
-  "lead_in": "Which is the most appropriate pre-operative pharmacological preparation?",
+  "lead_in": "What is the most appropriate next step?",
   "options": [
    {
     "letter": "A",
-    "text": "Commence phenoxybenzamine 10 mg twice daily, uptitrate over 10-14 days, add beta-blocker only after adequate alpha-blockade",
+    "text": "Withhold amitriptyline and repeat the plasma metanephrines",
     "correct": true,
-    "rationale": "Phaeochromocytoma surgery requires alpha-adrenergic blockade for 10-14 days pre-operatively to prevent intraoperative hypertensive crisis from catecholamine release. Phenoxybenzamine (non-selective irreversible alpha-blocker) is first-line; uptitrate to symptom control (postural hypotension on standing indicates adequate blockade). Beta-blocker is added ONLY after alpha-blockade established; giving beta-blocker first allows unopposed alpha vasoconstriction and can precipitate hypertensive crisis or pulmonary oedema.",
+    "rationale": "Tricyclic antidepressants block noradrenaline reuptake and are the commonest cause of a falsely raised normetanephrine. A modest isolated elevation is confirmed off the interfering drug, with correct sampling conditions, before imaging is requested. (Source: Endocrine Society of Australia phaeochromocytoma guidance)",
     "source_refs": [
      "Endocrine Society of Australia phaeochromocytoma guidance",
-     "Therapeutic Guidelines: Endocrinology - Phaeochromocytoma"
+     "Australian Medicines Handbook"
     ]
    },
    {
     "letter": "B",
-    "text": "Commence metoprolol 50 mg twice daily for rate control",
+    "text": "Arrange adrenal computed tomography before any repeat testing",
     "correct": false,
-    "rationale": "Beta-blockade before alpha-blockade is dangerous: blocks beta-2 mediated vasodilatation, leaving unopposed alpha-mediated vasoconstriction and risk of hypertensive crisis and cardiogenic shock. Always alpha first (Endocrine Society of Australia).",
+    "rationale": "Right once biochemistry is convincingly positive, typically more than three times the upper limit or confirmed on repeat, since imaging an unconfirmed result finds incidentalomas rather than answers. (Source: Therapeutic Guidelines: Endocrinology)",
     "source_refs": [
+     "Therapeutic Guidelines: Endocrinology",
      "Endocrine Society of Australia phaeochromocytoma guidance"
     ]
    },
    {
     "letter": "C",
-    "text": "Continue amlodipine and add lisinopril for blood pressure control",
+    "text": "Start phenoxybenzamine while further investigation proceeds",
     "correct": false,
-    "rationale": "ACE inhibitors and calcium-channel blockers do not address the perioperative catecholamine surge risk. Alpha-blockade is the specific pre-operative requirement (Endocrine Society of Australia).",
+    "rationale": "Right once a catecholamine secreting tumour is confirmed and surgery is planned, or where a crisis is occurring. Blocking on an unconfirmed result causes postural hypotension for no benefit. (Source: Australian Medicines Handbook)",
     "source_refs": [
+     "Australian Medicines Handbook",
      "Endocrine Society of Australia phaeochromocytoma guidance"
     ]
    },
    {
     "letter": "D",
-    "text": "Proceed directly to surgery with intraoperative magnesium and sodium nitroprusside ready",
+    "text": "Accept the result as normal and stop further investigation",
     "correct": false,
-    "rationale": "Skipping alpha-blockade exposes the patient to intraoperative hypertensive crisis with stroke and myocardial infarction risk during tumour manipulation. Pre-operative preparation reduces mortality from ~50% historically to <2% modern (Endocrine Society of Australia).",
+    "rationale": "Right where metanephrines are unequivocally within range in a patient with a low pretest probability. A result above the reference limit with suggestive symptoms needs resolution. (Source: Endocrine Society of Australia phaeochromocytoma guidance)",
     "source_refs": [
-     "Endocrine Society of Australia phaeochromocytoma guidance"
+     "Endocrine Society of Australia phaeochromocytoma guidance",
+     "Therapeutic Guidelines: Endocrinology"
     ]
    },
    {
     "letter": "E",
-    "text": "Octreotide infusion for 48 hours pre-operatively",
+    "text": "Arrange a meta-iodobenzylguanidine scan of the adrenal glands",
     "correct": false,
-    "rationale": "Octreotide is used for somatostatin-receptor-positive neuroendocrine tumours (carcinoid, gastrinoma, glucagonoma) but has no role in phaeochromocytoma where alpha-blockade is required (Endocrine Society of Australia).",
+    "rationale": "Right for localising metastatic or extra-adrenal disease after a tumour is confirmed, not as a way of resolving an ambiguous screening result. (Source: Therapeutic Guidelines: Endocrinology)",
     "source_refs": [
+     "Therapeutic Guidelines: Endocrinology",
      "Endocrine Society of Australia phaeochromocytoma guidance"
     ]
    }
   ],
   "explanation": {
-   "summary": "Phaeochromocytoma pre-operative preparation: 10-14 days of alpha-blockade (phenoxybenzamine or doxazosin) titrated to symptom control and mild postural hypotension; high-sodium diet and fluid loading; beta-blocker added only after alpha-blockade for tachycardia; surgery in experienced centre with intraoperative monitoring of haemodynamics. Untreated tumour manipulation can release catecholamine surges of 100-1000x normal.",
+   "summary": "Plasma metanephrines are highly sensitive but generate false positives, most often from drugs that block noradrenaline reuptake. A modest isolated elevation is repeated after withdrawing the interfering agent and under correct sampling conditions before imaging is pursued.",
    "key_points": [
-    "Phenoxybenzamine 10 mg bd uptitrated over 10-14 days (or doxazosin)",
-    "Beta-blocker AFTER alpha-blockade established (never before)",
-    "Volume expansion: liberal fluid intake and salt 5-10 days before surgery",
-    "Post-op risks: hypotension from alpha-blockade rebound, hypoglycaemia"
+    "Tricyclic antidepressants, serotonin and noradrenaline reuptake inhibitors, levodopa and sympathomimetics all interfere.",
+    "Sample supine after 30 minutes of rest; an upright sample raises normetanephrine.",
+    "Elevations above three times the upper limit are rarely false and warrant imaging directly."
    ],
-   "context": "The 'alpha-before-beta' rule reflects vascular receptor physiology. Beta-2 receptors mediate vasodilatation in skeletal muscle vasculature; blocking them while alpha-mediated vasoconstriction continues unopposed shifts the balance toward severe vasoconstriction. Add the catecholamine output of an unblocked phaeochromocytoma and a hypertensive crisis follows. Phenoxybenzamine's irreversible non-selective alpha-blockade gives a more durable effect than competitive alpha-1 selective blockers; the duration outlasts catecholamine release peaks during tumour manipulation. The post-operative hypotension that follows tumour removal reflects sudden withdrawal of catecholamine drive against still-active alpha-blockade and prepared low vascular tone."
+   "context": "Screening for a catecholamine secreting tumour is deliberately built for sensitivity, because the consequence of missing one is a perioperative or spontaneous hypertensive crisis. The cost of that design is a low positive predictive value in an unselected hypertensive population, where the prevalence is well under 1%. Metanephrines are measured rather than catecholamines because tumours metabolise catecholamines continuously within the tumour cell, so the metabolites are elevated between the paroxysms that the catecholamines themselves only mark. Interpreting a mildly positive result therefore means attending to the interferences and the sampling before committing to imaging."
   },
+  "reference_ranges": [],
   "sources": [
    {
     "label": "Endocrine Society of Australia phaeochromocytoma guidance",
-    "url": "https://endocrinesociety.org.au/"
+    "url": "https://www.endocrinesociety.org.au/"
    },
    {
-    "label": "Therapeutic Guidelines: Endocrinology - Phaeochromocytoma",
+    "label": "Therapeutic Guidelines: Endocrinology",
     "url": "https://tgldcdp.tg.org.au/"
+   },
+   {
+    "label": "Australian Medicines Handbook",
+    "url": "https://amhonline.amh.net.au/"
    }
   ],
-  "reference_ranges": [],
-  "created": "2026-05-25",
-  "difficulty_prior_v3": 5
+  "model": "Claude Opus 5",
+  "revised_from": "med-endoe-015"
  },
  {
   "id": "med-endoe-016",
