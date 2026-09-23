@@ -212,14 +212,19 @@ body {
 /* Until the password is entered, the body is `.locked` and everything
  * except the gate is hidden. Pre-JS render therefore shows only the
  * gate, never the app behind it. */
-body.locked > *:not(#gate):not(script) { display: none !important; }
-/* Pre-paint auth hint: if a saved auth token is detected by the inline
- * head script, skip the gate flash entirely and reveal the app shell
- * immediately. The JS unlock path still runs in parallel; if /api/me
- * rejects the token, the gate is re-shown by app.js. */
+/* Pre-paint auth hint: if a saved auth token is detected by preauth.js,
+ * skip the gate flash entirely and reveal the app shell immediately. The
+ * JS unlock path still runs in parallel; if /api/me rejects the token,
+ * the gate is re-shown by app.js.
+ *
+ * The reveal is written as "do not hide" rather than as a second rule
+ * forcing `display: revert !important` back over the first. That rule
+ * carried an id's worth of specificity through :not(#gate), so it beat
+ * every hidden-state rule in this file and forced a display value onto
+ * elements that were meant to stay hidden - which is why the admin
+ * overlay painted for a frame on every load for a signed-in user. */
+html:not(.pre-authed) body.locked > *:not(#gate):not(script) { display: none !important; }
 html.pre-authed #gate { display: none !important; }
-html.pre-authed body.locked { /* unlock for first paint */ }
-html.pre-authed body.locked > *:not(#gate):not(script) { display: revert !important; }
 .gate {
   position: fixed; inset: 0;
   background: var(--bg);
@@ -797,7 +802,10 @@ body[data-screen="quiz"] main { padding-top: 16px; }
  * and the controls are not rendered at all.
  */
 .nav-rail {
-  position: fixed;
+  /* Absolute, not fixed: the rail belongs to the page and scrolls with
+   * it. Fixed left it hanging in the same spot while the question moved
+   * underneath, which read as a separate surface pinned over the page. */
+  position: absolute;
   /* Top edge flush with the top of the topbar card, so the rail and
    * the column start on the same horizontal. */
   top: calc(var(--masthead-h) + 18px);
@@ -807,9 +815,6 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   left: calc(50% + (var(--col) - 2 * var(--col-pad)) / 2
              - var(--pair-shift) + var(--rail-gap));
   width: var(--rail-w);
-  max-height: calc(100vh - var(--masthead-h) - 42px);
-  overflow-y: auto;
-  overscroll-behavior: contain;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--r-soft);
@@ -1115,20 +1120,22 @@ body:has(#quizTopbar[hidden]) .reading {
 
 /* An observation set: each reading is its own item, so a column of
  * numbers can be read off rather than parsed out of a sentence. */
+/* Readings are a two-column chart, not a run of inline pairs. Pairs
+ * flowed inline broke inside themselves ("Pulse rate" on one line, the
+ * reading on the next) and left the gaps between them uneven, because
+ * every reading is a different width. In a column the names align, the
+ * values align, and a long reading wraps inside its own cell. */
 .patient-table dd.obs-set {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
-  gap: 4px 20px;
-}
-.obs {
-  display: flex;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 3px 18px;
   align-items: baseline;
-  gap: 6px;
-  min-width: 0;
 }
-/* A reading too long for its cell wraps inside the cell rather than
- * widening it, so the column edges hold. */
-.obs-value { overflow-wrap: anywhere; }
+/* The pair is only a grouping for the markup; the two halves are the
+ * grid items, which is what lets them line up across rows. */
+.obs { display: contents; }
+.obs-name { align-self: baseline; }
+.obs-value { min-width: 0; overflow-wrap: anywhere; }
 .obs-name {
   color: var(--ink-mute);
   font-size: 12.5px;
@@ -1858,10 +1865,7 @@ body[data-screen="summary"] main { max-width: 760px; }
   }
   .patient-table dt { margin-top: 10px; }
   .patient-table dt:first-child { margin-top: 0; }
-  .patient-table dd.obs-set {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 2px 14px;
-  }
+  .patient-table dd.obs-set { gap: 2px 12px; }
 
   /* Options on a phone: the printed shortcut goes (there is no
    * keyboard), and the rule-out control grows to a 44x44 tap target

@@ -6,6 +6,12 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 **Live: <https://mord58562.github.io/a-to-e/>** - guest mode, no signup required.
 
+## What's new in 1.6.8
+
+- The admin overlay no longer flashes for a frame when the page loads. The rule that revealed the app for a signed-in user forced a display value onto every top-level element, including the ones meant to stay hidden.
+- The navigator scrolls with the page instead of hanging in the same spot, and pages a round hundred at a time.
+- Readings in a data block are laid out as a two-column chart, so names line up, values line up, and a long reading wraps inside its own cell instead of breaking a pair in half. A panel of laboratory results renders the same way as a set of vital signs rather than falling back to a paragraph.
+
 ## What's new in 1.6.7
 
 - The question navigator draws as many chips as fit the rail, so it no longer has a scrollbar of its own. The page has one scroll.

@@ -674,17 +674,6 @@
   // The rail's top used to be a hand-tuned 84px, which sat a few pixels
   // inside the topbar band and drifted with any change of font size or
   // safe-area inset. Measure it instead and let CSS read the number.
-  // A resize changes how many chips fit, and the rail is the only thing
-  // that depends on it. Debounced so a drag does not redraw per frame.
-  function trackViewportForNavigator() {
-    let t = null;
-    window.addEventListener("resize", () => {
-      if (document.body.dataset.screen !== "quiz") return;
-      clearTimeout(t);
-      t = setTimeout(() => { if (state.quiz) renderNavigator(); }, 120);
-    });
-  }
-
   function trackMastheadHeight() {
     const masthead = document.querySelector(".masthead");
     if (!masthead) return;
@@ -698,7 +687,6 @@
   document.addEventListener("DOMContentLoaded", async () => {
     applyTheme(localStorage.getItem(THEME_KEY) || "light");
     trackMastheadHeight();
-    trackViewportForNavigator();
     // Kick off the data load in parallel with the gate. The bank JSON does
     // not depend on which user is signed in, so we can overlap the ~54
     // file fetches with the /api/me round-trip + any password entry. On a
@@ -2197,16 +2185,34 @@
   // split and rendered as unemphasised grey text beside readings that
   // had a bold value, so one block carried two different treatments.
   const QUALITATIVE = /^(.*?)\s+(normal|nil|absent|present|positive|negative|clear|raised|reduced|elevated|low|high|trace|detected|not detected|pending|sinus rhythm|regular|irregular)\b(.*)$/i;
+  // Batch authors capitalise the first reading of a row and not the
+  // rest, so a column of names read "Pulse rate / blood pressure /
+  // respiratory rate". Lower the first letter only where the word is
+  // ordinary prose; an acronym (SpO2, CRP, INR) keeps its shape.
+  function obsName(name) {
+    // Any capital further along means the word is not ordinary prose:
+    // SpO2, HbA1c, eGFR, C reactive protein all keep what they came with.
+    const prose = /^[A-Z][a-z]/.test(name) && !/[A-Z]/.test(name.slice(1));
+    return prose ? name[0].toLowerCase() + name.slice(1) : name;
+  }
+
   function renderClinicalValue(dd, label, value) {
     const parts = value.split(/,\s+/).map(x => x.trim()).filter(Boolean);
     const numeric = parts.filter(x => /\d/.test(x) || QUALITATIVE.test(x)).length;
     // Only split when it genuinely is a list: at least three items, most
     // of them carrying a number, and none of them a full clause. A
     // narrative examination finding stays as prose.
+    // The length ceiling used to be 46 characters, which is shorter than
+    // a single thyroid result ("thyroid stimulating hormone less than
+    // 0.01 mIU/L (0.4-4.0)" is 58), so a panel of labs fell back to
+    // prose and sat under a row of aligned vital signs looking like a
+    // different component. A reading is a phrase, not a clause: the test
+    // that keeps narrative out is the absence of a verb-length run, so
+    // the ceiling is generous and the shape rules do the work.
     const splittable = MEASUREMENT_ROWS.test(label)
       && parts.length >= 3
       && numeric >= parts.length - 1
-      && parts.every(x => x.length <= 46);
+      && parts.every(x => x.length <= 72);
     if (!splittable) { dd.textContent = value; return; }
     dd.classList.add("obs-set");
     for (const part of parts) {
@@ -2215,7 +2221,10 @@
       // token that opens with a digit or a comparator, which is what
       // lets "SpO2 99% on room air" split at the 99 rather than at the
       // 2 in SpO2. Failing that, split at a qualitative value word.
-      let m = part.match(/^(.*?)\s+([<>=]?\s*[\d.].*)$/);
+      // "less than 0.01" and "greater than 30" are readings, not part of
+      // the analyte's name, so the split goes in front of them.
+      let m = part.match(/^(.*?)\s+((?:less than|greater than|under|over|up to)\s+[\d.].*)$/i)
+           || part.match(/^(.*?)\s+([<>=]?\s*[\d.].*)$/);
       if (!m) {
         const q = part.match(QUALITATIVE);
         if (q && q[1]) m = [part, q[1], (q[2] + q[3]).trim()];
@@ -2223,7 +2232,7 @@
       const item = document.createElement("span");
       item.className = "obs";
       if (m) {
-        item.innerHTML = `<span class="obs-name">${esc(m[1])}</span>` +
+        item.innerHTML = `<span class="obs-name">${esc(obsName(m[1]))}</span>` +
                          `<span class="obs-value">${esc(m[2])}</span>`;
       } else {
         item.innerHTML = `<span class="obs-name">${esc(part)}</span>`;
@@ -2264,18 +2273,12 @@
     renderNavigator();
   }
 
-  // How many chips to draw at once. A session can be the whole bank,
-  // and 7,000 buttons is neither drawable nor navigable, so the grid is
-  // a window onto the pool with the current question inside it. Below
-  // this size the window is the whole pool and the controls disappear.
-  // The window is sized to the rail, not fixed at a round number. A
-  // rail with its own scrollbar puts a second scrolling region on a
-  // page that already has one, and the two move independently, which
-  // is the thing that reads as bolted on. Drawing only as many chips
-  // as fit means the rail never scrolls and the page has one scroll.
-  const NAV_WINDOW_MIN = 24;
-  const NAV_WINDOW_FALLBACK = 120;
-  let navWindow = NAV_WINDOW_FALLBACK;
+  // How many chips to draw at once. A session can be the whole bank, and
+  // 7,000 buttons is neither drawable nor navigable, so the grid is a
+  // window onto the pool with the current question inside it, paged a
+  // round hundred at a time. Below that the window is the whole pool and
+  // the paging controls are not rendered at all.
+  const navWindow = 100;
   let navWindowStart = 0;
   // Set when the current question changes, cleared once the window has
   // been repositioned. Paging leaves it false so the view stays put.
@@ -2401,39 +2404,10 @@
     if (list && !list.hidden) list.innerHTML = html;
     wireNavigator(rail);
     if (list && !list.hidden) wireNavigator(list);
-    if (fitNavWindow(rail)) return renderNavigator();
-    scrollCurrentChipIntoView(rail);
-  }
-
-  // Measure the rail and return true when the window size changed, so
-  // the caller redraws once at the new size. Everything is read off the
-  // rendered rail rather than hard-coded, so a theme or type change
-  // cannot put the numbers out of step with the stylesheet.
-  let navFitting = false;
-  function fitNavWindow(rail) {
-    if (navFitting || !rail || rail.hidden || !state.quiz) return false;
-    const chips = rail.querySelector(".nav-chips");
-    const chip = chips && chips.firstElementChild;
-    if (!chip) return false;
-    const cs = getComputedStyle(chips);
-    const cols = cs.gridTemplateColumns.split(" ").filter(Boolean).length;
-    const rowGap = parseFloat(cs.rowGap) || 0;
-    const chipH = chip.getBoundingClientRect().height;
-    if (!cols || !chipH) return false;
-    // Everything in the rail that is not the chip grid: the heading,
-    // the one-line stats, the pager and the jump form.
-    const chrome = rail.scrollHeight - chips.getBoundingClientRect().height;
-    const room = window.innerHeight - rail.getBoundingClientRect().top - 24 - chrome;
-    const rows = Math.floor((room + rowGap) / (chipH + rowGap));
-    const size = Math.max(NAV_WINDOW_MIN, Math.min(state.quiz.pool.length, rows * cols));
-    if (size === navWindow) return false;
-    navWindow = size;
-    // Held for this tick only: the redraw the caller is about to do
-    // measures the same rail again, and without the guard a rail that
-    // sits a pixel either side of a row boundary would redraw forever.
-    navFitting = true;
-    setTimeout(() => { navFitting = false; }, 0);
-    return true;
+    // Only the dropdown gets scrolled to the current chip. The rail has
+    // no scroll region of its own any more, so asking for the chip to be
+    // brought into view would scroll the page instead, fighting the jump
+    // to the top of the question that follows every navigation.
   }
 
   function wireNavigator(root) {
