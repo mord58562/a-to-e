@@ -27,7 +27,11 @@
   --ink:         #e8f1ff;
   --ink-2:       #c4d2e7;
   --ink-mute:    #8497b3;
-  --ink-faint:   #5a6c89;
+  /* Measured, not eyeballed: the old value read 2.5 to 3.3 against the
+   * three surfaces it sits on, and it paints the rule-out control and
+   * the whole text of a ruled-out option - the two things a reader
+   * working by elimination looks at most. 4.6 to 6.1 now. */
+  --ink-faint:   #8598b8;
 
   --accent:      #0fcad4;
   --accent-2:    #5dd5df;
@@ -117,6 +121,9 @@
    * much so column + gap + rail is centred as one composition. */
   --pair-shift:  calc((var(--rail-w) + var(--rail-gap)) / 2);
   --masthead-h:  61px;
+  /* The reference panel's width, read by the panel itself and by the
+   * inset that keeps the reading column clear of it. */
+  --panel-w:     min(420px, 92vw);
 
   /* Two-tier secondary ink between body and faint, so headings, body,
    * label-secondary, and faint each occupy a deliberate level. */
@@ -149,7 +156,7 @@
   --ink:         #0e1a26;
   --ink-2:       #2b3947;
   --ink-mute:    #5b6a7b;
-  --ink-faint:   #8a96a4;
+  --ink-faint:   #666f7c;   /* 4.65 to 5.09; was 2.75 to 3.01 */
 
   --accent:      #1a6e8e;
   --accent-2:    #135872;
@@ -1013,11 +1020,15 @@ body[data-screen="quiz"] .nav-rail { display: block; }
    * touched rather than clicked, so the chips get a touch-sized box.
    * This rule used to live in the 480px block, which left every tablet
    * width tapping 30px targets. */
-  .nav-chips { gap: 5px; }
+  .nav-chips {
+    grid-template-columns: repeat(auto-fill, minmax(max(36px, var(--nav-chip-min, 36px)), 1fr));
+    gap: 5px;
+  }
   .nav-chip { --nav-chip-h: 36px; font-size: 12.5px; }
 }
-/* Narrower than that, the panel lands on top of the rail rather than
- * beside it, so the rail stands down while the panel is open. */
+/* Where the shift cannot clear the panel, the rail would sit underneath
+ * it, so it stands down while the panel is open. Above this the pair
+ * moves far enough left that both stay visible. */
 @media (max-width: 1519px) {
   body.refs-open .nav-rail { display: none !important; }
 }
@@ -1127,6 +1138,7 @@ body:has(#quizTopbar[hidden]) .reading {
 .obs { display: contents; }
 .obs-name { align-self: baseline; }
 .obs-value { min-width: 0; overflow-wrap: anywhere; }
+.obs-solo { grid-column: 1 / -1; color: var(--ink); min-width: 0; }
 .obs-name {
   color: var(--ink-mute);
   font-size: 12.5px;
@@ -1268,7 +1280,8 @@ body:has(#quizTopbar[hidden]) .reading {
  * the hover cue on the marker instead of inventing a third appearance. */
 .options li .opt-choice:focus-visible { outline: none; }
 .options li:has(.opt-choice:focus-visible):not(.selected) .opt-marker {
-  border-color: var(--line-strong);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
 }
 /* Windows high contrast paints no background, so the ring comes back
  * there rather than leaving focus invisible. */
@@ -1538,8 +1551,7 @@ b, strong { font-weight: 600; }
   top: var(--masthead-h); right: 0;
   height: calc(100vh - var(--masthead-h));
   height: calc(100dvh - var(--masthead-h));
-  width: 420px;
-  max-width: 92vw;
+  width: var(--panel-w);
   background: var(--bg-2);
   border-left: 1px solid var(--line);
   z-index: 110;
@@ -1574,8 +1586,33 @@ b, strong { font-weight: 600; }
  * a token the column and the rail both read, and only at widths that can
  * give up the space. */
 body.refs-open { --refs-shift: 0px; }
-@media (min-width: 1520px) {
-  body.refs-open { --refs-shift: calc(min(420px, 92vw) / 2); }
+/* Above 920px the panel sits beside the content rather than taking over
+ * the screen, so the content has to be re-centred in what is left: half
+ * the panel's width, which is the shift that centres a column of any
+ * width in `100vw - panel`. The column also has to fit there, so it is
+ * capped at the remaining width - otherwise the panel simply lands on
+ * top of the text, which is what it did between 921 and 1519px. */
+@media (min-width: 921px) {
+  body.refs-open { --refs-shift: calc(var(--panel-w) / 2); }
+  body.refs-open[data-screen="quiz"] main,
+  body.refs-open[data-screen="summary"] main {
+    max-width: min(var(--col), calc(100vw - var(--panel-w) - 32px + 2 * var(--col-pad)));
+  }
+  body.refs-open .quiz-topbar {
+    width: min(
+      100% - 2 * var(--col-pad),
+      var(--col) - 2 * var(--col-pad),
+      calc(100vw - var(--panel-w) - 32px)
+    );
+  }
+}
+/* No rail to make room for while it is standing down, so the pair shift
+ * that reserves its space would only push the column off the left. */
+@media (min-width: 1200px) and (max-width: 1519px) {
+  body.refs-open[data-screen="quiz"] main,
+  body.refs-open[data-screen="quiz"] .quiz-topbar {
+    left: calc(-1 * var(--refs-shift));
+  }
 }
 @media (max-width: 920px) {
   body.refs-open { overflow: hidden; }
@@ -1714,6 +1751,23 @@ body[data-screen="summary"] main { max-width: 760px; }
   line-height: 1.55;
 }
 
+/* Resume strip. Sits above the setup block because a session in
+ * progress is the only thing on this screen that is time-sensitive. */
+.resume-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 0 0 22px;
+  padding: 14px 16px;
+  border: 1px solid var(--accent-bd);
+  border-radius: var(--r-soft);
+  background: var(--accent-bg);
+}
+.resume-line { margin: 0; font-size: 14px; color: var(--ink); }
+.resume-acts { display: flex; align-items: center; gap: 12px; }
+
 .review-list .rv-empty {
   grid-column: 1 / -1;
   padding: 14px 0;
@@ -1755,7 +1809,7 @@ body[data-screen="summary"] main { max-width: 760px; }
   font-size: 12.5px; padding: 1px 4px;
   background: var(--surface-2);
   border: 1px solid var(--line);
-  border-radius: var(--r-chip);
+  border-radius: var(--r-tight);
 }
 .modal-body ol { padding-left: 20px; }
 .modal-body li { margin-bottom: 8px; }
@@ -2338,7 +2392,7 @@ mark.stem-clue {
   background: color-mix(in srgb, var(--accent) 18%, transparent);
   color: inherit;
   padding: 0 2px;
-  border-radius: var(--r-chip);
+  border-radius: var(--r-tight);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
@@ -2726,7 +2780,6 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   margin: 0 0 14px;
   /* First line of the pane now that the heading has gone. */
   font-size: 14px;
-  font-size: 13.5px;
   color: var(--ink-2);
   font-variant-numeric: tabular-nums;
 }

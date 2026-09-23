@@ -84,6 +84,11 @@
   // surface is gated on the server, and the real answer overwrites this
   // as soon as /api/me lands.
   const CHROME_KEY           = "y4mcq.chrome.v1";
+  const SESSION_KEY          = "y4mcq.session.v1";
+  // A resumable session goes stale rather than lingering forever: coming
+  // back to a half-finished test two weeks later is not resuming, it is
+  // being ambushed by one.
+  const SESSION_MAX_AGE_MS   = 24 * 60 * 60 * 1000;
   const GUEST_KEY            = "y4mcq.guest.v1";
 
   // Cloud account state. Populated by checkAuth() on startup if a token
@@ -1904,6 +1909,7 @@
       if (state.quiz && !state.quiz.finished && !(await confirmLeaveSession(
             "Leave this session?", "Back to the home screen"))) return;
       stopSessionTimer();
+      clearSavedSession();
       showHome();
     };
     const brand = document.querySelector(".masthead .brand");
@@ -2014,6 +2020,7 @@
       if (!state.quiz) return;
       if (await confirmLeaveSession("Leave this session?", "Leave the session")) {
         stopSessionTimer();
+        clearSavedSession();
         showHome();
       }
     };
@@ -2032,10 +2039,13 @@
     document.getElementById("qtNext").onclick = () => navOffset(+1);
     document.getElementById("qtCounter").onclick = e => {
       e.stopPropagation();
-      // The rail is the navigator from 1200px up, and the styling at
-      // that width already says the counter is not a control. Only the
-      // handler disagreed.
-      if (window.matchMedia && window.matchMedia("(min-width: 1200px)").matches) return;
+      // Whether the rail is actually on screen, not whether the window
+      // is wide: with the reference panel open the rail stands down at
+      // some widths, and the counter is the only navigator left.
+      const rail = document.getElementById("navRail");
+      const railShowing = rail && !rail.hidden &&
+        (!window.getComputedStyle || getComputedStyle(rail).display !== "none");
+      if (railShowing) return;
       toggleQtList();
     };
     document.addEventListener("click", e => {
@@ -2072,6 +2082,7 @@
     // any callers that re-show it later still find it.
     const greet = document.getElementById("homeGreeting");
     if (greet) { greet.hidden = true; greet.textContent = ""; }
+    offerSavedSession();
     applySettingsToOptions();
 
     document.querySelectorAll('.setup-options:not(.multi)').forEach(row => {
@@ -2265,6 +2276,7 @@
     refreshGlucoseSuffix();
     renderQuiz();
     startSessionTimer();
+    saveSession();
   }
 
   // "(+ glucose)" is a paediatrics in-joke, so it only makes sense when
@@ -2313,6 +2325,105 @@
     delete state.quiz.answers[q.id];
     const submitBtn = document.getElementById("submitBtn");
     if (submitBtn) submitBtn.disabled = true;
+  }
+
+  // A session survives a reload, so the home screen has to say so. It
+  // reads from the saved copy rather than from state, because showHome
+  // has just cleared state.quiz.
+  function offerSavedSession() {
+    const row = document.getElementById("resumeRow");
+    if (!row) return;
+    const saved = loadSavedSession();
+    if (!saved) { row.hidden = true; return; }
+    const { raw, pool } = saved;
+    const answered = Object.keys(raw.answers || {}).length;
+    const mode = raw.mode === "test" ? "Test" : "Study";
+    const left = raw.deadline ? Math.max(0, Math.round((raw.deadline - Date.now()) / 60000)) : null;
+    document.getElementById("resumeLine").textContent =
+      `${mode} session in progress: question ${Math.min((raw.idx || 0) + 1, pool.length)} of ` +
+      `${pool.length}, ${answered} answered` +
+      (left !== null ? `, ${left} minute${left === 1 ? "" : "s"} left on the clock` : "") + ".";
+    row.hidden = false;
+    document.getElementById("resumeBtn").onclick = () => resumeSession(saved);
+    document.getElementById("resumeDiscardBtn").onclick = () => {
+      try { localStorage.removeItem(ns(SESSION_KEY)); } catch (_) {}
+      row.hidden = true;
+    };
+  }
+
+  // Written on every mutation that would be painful to lose, read once at
+  // boot. Only ids are stored, not questions: the bank is fetched fresh
+  // and a question that has since been retired simply drops out.
+  function clearSavedSession() {
+    try { localStorage.removeItem(ns(SESSION_KEY)); } catch (_) {}
+  }
+
+  function saveSession() {
+    const q = state.quiz;
+    if (!q || q.finished) { clearSavedSession(); return; }
+    save(ns(SESSION_KEY), {
+      ids: q.pool.map(x => x.id),
+      idx: q.idx,
+      mode: q.mode,
+      timerMins: q.timerMins,
+      deadline: q.deadline,
+      answers: q.answers,
+      revealed: q.revealed,
+      struck: Object.fromEntries(Object.entries(q.struck || {}).map(([k, v]) => [k, [...v]])),
+      sessionStart: state.sessionStart,
+      savedAt: Date.now(),
+    });
+  }
+
+  function loadSavedSession() {
+    const raw = load(ns(SESSION_KEY), {});
+    if (!raw || !Array.isArray(raw.ids) || !raw.ids.length) return null;
+    if (!raw.savedAt || Date.now() - raw.savedAt > SESSION_MAX_AGE_MS) {
+      try { localStorage.removeItem(ns(SESSION_KEY)); } catch (_) {}
+      return null;
+    }
+    const byId = Object.create(null);
+    for (const q of state.questions) byId[q.id] = q;
+    const pool = raw.ids.map(id => byId[id]).filter(Boolean);
+    if (!pool.length) return null;
+    return { raw, pool };
+  }
+
+  function resumeSession(saved) {
+    const { raw, pool } = saved;
+    resetNavigator();
+    state.quiz = {
+      pool,
+      idx: Math.min(raw.idx || 0, pool.length - 1),
+      mode: raw.mode === "test" ? "test" : "study",
+      timerMins: raw.timerMins || 0,
+      deadline: raw.deadline || null,
+      answers: raw.answers || {},
+      revealed: raw.revealed || {},
+      struck: Object.fromEntries(Object.entries(raw.struck || {})
+        .map(([k, v]) => [k, new Set(Array.isArray(v) ? v : [])])),
+      finished: false,
+    };
+    state.sessionStart = raw.sessionStart || Date.now();
+    document.body.dataset.mode = state.quiz.mode;
+    setScreen("quiz");
+    document.getElementById("sessionMeta").textContent =
+      (state.quiz.mode === "study" ? "Study session" : "Test session") + " · resumed";
+    refreshGlucoseSuffix();
+    renderQuiz();
+    startSessionTimer();
+  }
+
+  // The label said "Flag" in both states, so whether this question was
+  // already flagged came down to a colour shift on the glyph. The word
+  // changes with it now, and the button reports its own state.
+  function setFlagBtn(btn, on) {
+    if (!btn) return;
+    btn.classList.toggle("active", on);
+    btn.classList.toggle("flag", on);
+    btn.textContent = on ? "⚑ Flagged" : "⚐ Flag";
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.title = on ? "Remove the flag (F)" : "Flag for review (F)";
   }
 
   // A clinical vignette hands you an observation set, not a sentence.
@@ -2379,7 +2490,11 @@
         item.innerHTML = `<span class="obs-name">${esc(obsName(m[1]))}</span>` +
                          `<span class="obs-value">${esc(m[2])}</span>`;
       } else {
-        item.innerHTML = `<span class="obs-name">${esc(part)}</span>`;
+        // No name/value split: this reading spans both columns rather
+        // than taking the name cell and pushing everything after it one
+        // slot along. `.obs` is display:contents, so a single child is a
+        // single cell.
+        item.innerHTML = `<span class="obs-solo">${esc(part)}</span>`;
       }
       dd.appendChild(item);
     }
@@ -2410,6 +2525,26 @@
     const total = state.quiz.pool.length;
     const idx = state.quiz.idx;
     document.getElementById("qtNumber").textContent = `Question ${idx + 1} of ${total}`;
+    // From 1200px up the rail is the navigator and this is a label, not
+    // a control. The styling said so; the semantics still promised a
+    // collapsed list that Enter would open.
+    const counter = document.getElementById("qtCounter");
+    const rail = document.getElementById("navRail");
+    const railShowing = rail && !rail.hidden &&
+      (!window.getComputedStyle || getComputedStyle(rail).display !== "none");
+    if (counter) {
+      if (railShowing) {
+        counter.removeAttribute("aria-expanded");
+        counter.removeAttribute("aria-controls");
+        counter.setAttribute("aria-disabled", "true");
+        counter.removeAttribute("title");
+      } else {
+        counter.setAttribute("aria-controls", "qtList");
+        counter.removeAttribute("aria-disabled");
+        counter.title = "Open the question list";
+        if (!counter.hasAttribute("aria-expanded")) counter.setAttribute("aria-expanded", "false");
+      }
+    }
     document.getElementById("qtPrev").disabled = idx === 0;
     document.getElementById("qtNext").disabled = idx >= total - 1;
     const bar = document.querySelector("#qtProgress span");
@@ -2644,6 +2779,7 @@
     state.quiz.idx = i;
     navFollowCurrent = true;
     renderQuiz();
+    saveSession();
   }
   function navOffset(d) {
     const i = state.quiz.idx + d;
@@ -2865,14 +3001,11 @@
       if (on) state.flags[q.id] = true;
       else    delete state.flags[q.id];
       save(ns(FLAGS_KEY), state.flags);
-      flagBtn.classList.toggle("active", on);
-      flagBtn.classList.toggle("flag", on);
+      setFlagBtn(flagBtn, on);
       renderTopbar();
       if (cloudUser) cloudPostFlag(q.id, on);
     };
-    const flagOn = !!state.flags[q.id];
-    flagBtn.classList.toggle("active", flagOn);
-    flagBtn.classList.toggle("flag", flagOn);
+    setFlagBtn(flagBtn, !!state.flags[q.id]);
 
     // The click handler is delegated globally (see wireReportModal).
     // Here we just update the button's visual state for the current Q.
@@ -2905,6 +3038,7 @@
       state.quiz.struck[id].delete(letter);
     }
     paintStrike(li, on);
+    saveSession();
   }
 
   // Keeps the row's classes, the button's pressed state and, crucially,
@@ -2940,6 +3074,7 @@
       first_correct: prev.first_correct ?? (prev.count ? prev.first_correct : isC),
     };
     save(ns(HISTORY_KEY), state.history);
+    saveSession();
     maybeShowHouseQuote();
     // Sync this answer to the server (fire-and-forget) so history, attempt
     // counts and the Unseen / Previously-incorrect filters survive a device
@@ -3322,14 +3457,6 @@
         if (canNext) nextBtn.click();
         else if (canSubmit) submitBtn.click();
         e.preventDefault();
-      } else if (k === "escape") {
-        // Escape clears a not-yet-submitted selection (so the user can
-        // back out of a tentative choice without striking it). Post-
-        // reveal, Escape is owned by the ref-panel / modal handlers.
-        if (!revealed && selected) {
-          deselectOption(q, selected);
-          e.preventDefault();
-        }
       } else if (k === "f") {
         document.getElementById("flagBtn").click();
       } else if (k === "x") {
@@ -3376,6 +3503,7 @@
   // ── Summary ─────────────────────────────────────────────────────────────
   function showSummary(timeUp) {
     state.quiz.finished = true;
+    clearSavedSession();
     document.onkeydown = null;
     setScreen("summary");
     const app = document.getElementById("app");
@@ -3390,7 +3518,7 @@
       const ans = state.quiz.answers[q.id];
       const isC = ans && _shuffledOptions(q).find(o => o.letter === ans)?.correct;
       if (isC) correct++;
-      const t = q.subtopic || q.topic;
+      const t = q.topic;
       byTopic[t] = byTopic[t] || { c: 0, n: 0, attempted: 0 };
       byTopic[t].n++;
       if (ans) byTopic[t].attempted++;
@@ -3430,28 +3558,81 @@
     });
     document.querySelector('#reviewFilters .opt[data-review="all"]').classList.add("selected");
 
-    document.getElementById("retryBtn").onclick = retryIncorrect;
+    // Say how many, and do not offer the button when there are none:
+    // "Retry incorrect" on a clean sheet used to start a session of
+    // everything the reader had never reached.
+    const retryBtn = document.getElementById("retryBtn");
+    const wrongCount = pool.filter(q => {
+      const a = state.quiz.answers[q.id];
+      return a && !_shuffledOptions(q).find(o => o.letter === a)?.correct;
+    }).length;
+    retryBtn.textContent = `Retry ${wrongCount} incorrect`;
+    retryBtn.hidden = wrongCount === 0;
+    retryBtn.onclick = retryIncorrect;
     document.getElementById("newQuizBtn").onclick = showHome;
   }
 
-  function renderReviewList(filter) {
-    const ol = document.getElementById("reviewList");
-    ol.innerHTML = "";
+  // The review list is built as one string and delegated, not 7,000
+  // elements with 7,000 closures. A study session's pool is whatever
+  // matched the filters - the whole bank, by default - and only the
+  // questions actually seen are worth listing, so the rest are behind a
+  // "show the rest" control rather than rendered up front.
+  const REVIEW_PAGE = 100;
+  let _reviewFilter = "all";
+  let _reviewShown = REVIEW_PAGE;
+
+  function reviewRows(filter) {
+    const rows = [];
     state.quiz.pool.forEach((q, i) => {
       const ans = state.quiz.answers[q.id];
       const isC = ans && _shuffledOptions(q).find(o => o.letter === ans)?.correct;
       const flagged = !!state.flags[q.id];
       if (filter === "incorrect" && (isC || !ans)) return;
       if (filter === "flagged" && !flagged) return;
-      const li = document.createElement("li");
-      li.className = (!ans ? "unanswered" : (isC ? "correct" : "incorrect")) + (flagged ? " flagged" : "");
+      // "All" means everything that happened, not every question that
+      // could have. An untouched question in a 7,000-question study pool
+      // is not a review row.
+      if (filter === "all" && !ans && !flagged) return;
+      rows.push({ q, i, ans, isC, flagged });
+    });
+    return rows;
+  }
+
+  function renderReviewList(filter, shown) {
+    const ol = document.getElementById("reviewList");
+    _reviewFilter = filter;
+    _reviewShown = shown || REVIEW_PAGE;
+    const rows = reviewRows(filter);
+    const page = rows.slice(0, _reviewShown);
+    const html = page.map(({ q, i, ans, isC, flagged }) => {
+      const cls = (!ans ? "unanswered" : (isC ? "correct" : "incorrect")) + (flagged ? " flagged" : "");
       const glyph = !ans ? "·" : (isC ? "✓" : "✗");
-      li.innerHTML =
+      return `<li class="${cls}" data-review-i="${i}">` +
         `<span class="rv-status">${glyph}</span>` +
         `<span class="rv-id">${esc(q.id)}</span>` +
-        `<span class="rv-stem">${esc(q.stem.slice(0, 110))}${q.stem.length > 110 ? "…" : ""}</span>`;
-      li.onclick = () => {
-        state.quiz.idx = i;
+        `<span class="rv-stem">${esc(q.stem.slice(0, 110))}${q.stem.length > 110 ? "…" : ""}</span></li>`;
+    }).join("");
+    const rest = rows.length - page.length;
+    if (rows.length) {
+      ol.innerHTML = html + (rest > 0
+        ? `<li class="rv-empty"><button type="button" class="link-btn" id="reviewMore">` +
+          `Show ${rest} more</button></li>`
+        : "");
+    } else {
+      const EMPTY = {
+        incorrect: "Nothing wrong in this session. Switch to All to read back over the ones you got right.",
+        flagged: "You did not flag anything. Press F on a question to flag it for later.",
+      };
+      ol.innerHTML = `<li class="rv-empty">${EMPTY[filter] || "Nothing was answered or flagged in this session."}</li>`;
+    }
+    const more = document.getElementById("reviewMore");
+    if (more) more.onclick = () => renderReviewList(_reviewFilter, _reviewShown + REVIEW_PAGE);
+    if (!ol.dataset.reviewWired) {
+      ol.dataset.reviewWired = "1";
+      ol.addEventListener("click", e => {
+        const li = e.target.closest("li[data-review-i]");
+        if (!li) return;
+        state.quiz.idx = parseInt(li.dataset.reviewI, 10);
         // The session has been scored, so review is read-only. Revealing
         // only the clicked question left every other one answerable: in
         // test mode the user could step to the next question, answer it
@@ -3465,24 +3646,17 @@
         setScreen("quiz");
         renderQuiz();
         startSessionTimer();
-      };
-      ol.appendChild(li);
-    });
-    if (!ol.children.length) {
-      // One string for three different situations said nothing about any
-      // of them. Each filter empties for its own reason.
-      const EMPTY = {
-        incorrect: "Nothing wrong in this session. Switch to All to read back over the ones you got right.",
-        flagged: "You did not flag anything. Press F on a question to flag it for later.",
-      };
-      ol.innerHTML = `<li class="rv-empty">${EMPTY[filter] || "This session had no questions."}</li>`;
+      });
     }
   }
 
   function retryIncorrect() {
+    // Answered and wrong. The old predicate counted "never answered" as
+    // incorrect, so ending a study session after twelve questions of the
+    // default 7,000-question pool offered to retry the other 7,041.
     const wrong = state.quiz.pool.filter(q => {
       const ans = state.quiz.answers[q.id];
-      return !ans || !_shuffledOptions(q).find(o => o.letter === ans)?.correct;
+      return ans && !_shuffledOptions(q).find(o => o.letter === ans)?.correct;
     });
     if (!wrong.length) { showHome(); return; }
     resetNavigator();
@@ -3519,6 +3693,14 @@
       const qtList = document.getElementById("qtList");
       if (qtList && !qtList.hidden)   { closeQtList(); return; }
       if (state.refsOpen)             { closeRefs(); return; }
+      // Last resort, and only once nothing is open: clear a
+      // not-yet-submitted selection. This used to live in the quiz's own
+      // key handler, which ran as well as this one - so closing the
+      // reference panel with Escape also threw away the answer the
+      // reader had just been checking a value against.
+      const q = state.quiz && state.quiz.pool[state.quiz.idx];
+      const sel = document.querySelector("#qOptions li.selected");
+      if (q && sel && !state.quiz.revealed[q.id]) deselectOption(q, sel);
     });
     const toggleBtn = document.getElementById("promptToggleBtn");
     const promptPre = document.getElementById("promptText");

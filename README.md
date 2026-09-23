@@ -6,6 +6,17 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 **Live: <https://mord58562.github.io/a-to-e/>** - guest mode, no signup required.
 
+## What's new in 1.7.0
+
+- **A session survives a reload.** Close the tab forty minutes into a test, or let a phone evict it, and the home screen offers to resume: same questions in the same order, same position, same rule-outs, same clock. Sessions older than a day are dropped.
+- "Retry incorrect" retries the ones you got wrong, not everything you never reached, and says how many.
+- The session report loads instantly instead of building a row for every question in the bank, and the score strip is four disciplines rather than 700-odd subtopics.
+- Escape while the reference panel is open closes the panel and leaves your answer alone. It used to do both at once.
+- The flag button says "Flagged" when the question is flagged.
+- The rule-out control and ruled-out option text were too faint to read against their backgrounds; both now clear the contrast bar in either theme.
+- The reference panel no longer covers the question it was opened from at laptop widths.
+- Readings in a data block stay in their columns when one of them cannot be split into a name and a value.
+
 ## What's new in 1.6.16
 
 - Reference values now appear on perinatal questions in psychiatry and medicine, and on paediatric questions that were pointing at the adult panel. Where the library genuinely has no paediatric values for a panel, the question says so instead of showing an empty space.
