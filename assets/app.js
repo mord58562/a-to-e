@@ -23,6 +23,18 @@
   // threw out of onSubmit so the answer was never revealed. Now a write
   // that fails is kept in memory for this tab (reads see it), the
   // failure is logged once, and the app keeps working unpersisted.
+  // A guest whose answers cannot be stored is told once, after home is
+  // up (the gate would cover a notice shown earlier). Signed-in answers
+  // still reach the server, so they are not told.
+  const storageNotice = { ready: false, pending: false, quota: false, shown: false };
+  function showStorageNotice() {
+    storageNotice.pending = false;
+    if (storageNotice.shown || cloudUser) return;
+    storageNotice.shown = true;
+    showAppNotice(storageNotice.quota
+      ? "Sorry, this browser's storage for this site is full, so answers from this tab won't be kept after it closes. Free some browser storage to keep them."
+      : "Sorry, this browser is blocking storage for this site, so answers from this tab will be lost when it closes. Allow site data for this site to keep them.");
+  }
   const localStorage = _safeStorage("localStorage");
   const sessionStorage = _safeStorage("sessionStorage");
   function _safeStorage(name) {
@@ -34,6 +46,9 @@
       if (warned) return;
       warned = true;
       console.warn(`[a-to-e] ${name} unavailable (${e && e.name || e}); this tab's progress will not be saved`);
+      if (name !== "localStorage") return;
+      storageNotice.quota = !!(e && e.name === "QuotaExceededError");
+      if (storageNotice.ready) showStorageNotice(); else storageNotice.pending = true;
     };
     return {
       getItem(k) {
@@ -141,6 +156,82 @@
     guestUser = g;
   }
 
+  // Every server failure a person reads is worded here. The worker sends
+  // a stable `code` with each error; its `error` text is for logs, curl
+  // and clients older than the codes. An unknown code falls back to that
+  // text, and a response with neither gets a line chosen by status.
+  const SERVER_UNREACHABLE = "Can't reach the server. Check your connection and try again.";
+  const SERVER_ERROR_TEXT = {
+    payload_too_large:   "That's too much to send in one go.",
+    server_error:        "The server hit an error. Try again in a moment.",
+    server_unconfigured: "The server isn't set up to take this yet.",
+    signup_rate:         "Too many sign-up attempts from this network. Try again in an hour.",
+    email_format:        "Enter an email address like name@example.com.",
+    password_short:      "Use at least 8 characters for the password.",
+    password_long:       "That password is too long.",
+    invite_required:     "Enter your invite code.",
+    invite_invalid:      "That invite code isn't recognised. Check it against the message you were sent; a code works once, and they expire.",
+    email_taken:         "An account already uses that email. Sign in instead.",
+    credentials_missing: "Enter your email and password.",
+    login_rate:          "Too many sign-in attempts from this network. Try again in 15 minutes.",
+    login_locked:        d => {
+      const mins = Math.max(1, Math.ceil((Number(d && d.retry_after) || 0) / 60));
+      return `Too many failed attempts for this email. Try again in ${plural(mins, "minute")}.`;
+    },
+    credentials_wrong:   "Wrong email or password.",
+    session_expired:     "Your session has ended. Sign in again.",
+    not_admin:           "This account doesn't have admin access.",
+    last_admin:          "You're the last admin. Make someone else an admin first.",
+    user_not_found:      "That account no longer exists.",
+    self_target:         "You can't do that to your own account here. Your own account is under Account.",
+    password_rate:       "Too many password attempts. Try again in 15 minutes.",
+    password_wrong:      "The current password is wrong.",
+    invite_spent:        "That code has already been used or revoked.",
+    settings_too_large:  "Your settings are too large to save.",
+    report_short:        "Add a few words about what's wrong.",
+    report_long:         "Keep the report under 4,000 characters.",
+    report_rate:         "You've sent a lot of reports this hour. Try again later.",
+    report_daily:        "The report box is full for today. Try again tomorrow.",
+    report_queue_full:   "The report box is full until the open reports are reviewed.",
+    batch_too_large:     "Too many at once. Apply them in smaller groups.",
+    audit_mismatch:      "The file has changed since this audit was built. Copy the prompt again and redo the audit.",
+    github_read_failed:  "Couldn't read the bank from GitHub. Nothing was changed.",
+    reports_not_closed:  "The question edits were saved, but the reports weren't closed.",
+    bad_request:         "The server couldn't use that request.",
+  };
+  // For these the worker's own text names the failing field or the ids
+  // that no longer match, which the admin needs to act on.
+  const SERVER_ERROR_DETAIL = new Set(["audit_mismatch", "bad_request"]);
+  // `path` only matters for a code-less 401, which means a wrong password
+  // on sign-in and a dead session everywhere else.
+  function serverErrorText(data, status, path) {
+    data = data || {};
+    let text = SERVER_ERROR_TEXT[data.code];
+    if (typeof text === "function") text = text(data);
+    if (!text) {
+      const said = String(data.error || "").trim();
+      if (status === 401) {
+        text = path === "/api/login" ? SERVER_ERROR_TEXT.credentials_wrong : SERVER_ERROR_TEXT.session_expired;
+      } else if (status >= 500) {
+        text = SERVER_ERROR_TEXT.server_error;
+      } else if (said) {
+        text = said.charAt(0).toUpperCase() + said.slice(1) + (/[.!?]$/.test(said) ? "" : ".");
+      } else if (status === 429) {
+        text = "Too many attempts. Try again in a few minutes.";
+      } else if (status === 413) {
+        text = SERVER_ERROR_TEXT.payload_too_large;
+      } else {
+        text = "The server turned that down. Try again, and reload if it keeps happening.";
+      }
+    }
+    const detail = String(data.error || "").trim();
+    if (SERVER_ERROR_DETAIL.has(data.code) && detail) text += ` Detail: ${detail}`;
+    // The reference matches a line in the worker log; worth quoting in a
+    // bug report, so it goes last where it can be read off.
+    if (data.ref) text += ` Reference ${data.ref}.`;
+    return text;
+  }
+
   const API_TIMEOUT_MS = 20000;
   async function apiFetch(path, options) {
     if (!WORKER_URL) throw new Error("Cloud backend not configured");
@@ -159,34 +250,52 @@
       // Distinguish offline / DNS / TLS failures from a well-formed server
       // 4xx/5xx. The signup + signin forms surface this straight to the user.
       console.warn("[api]", path, "network error:", netErr && (netErr.name + ": " + netErr.message));
-      throw new Error("Can't reach the server. Check your connection.");
+      const e = new Error(SERVER_UNREACHABLE);
+      e.status = 0;
+      e.code = "unreachable";
+      throw e;
     } finally {
       if (timer) clearTimeout(timer);
     }
     const data = await r.json().catch(() => ({}));
     if (!r.ok || data.ok === false) {
-      const serverMsg = data.error || "";
-      let friendly = serverMsg;
-      // 401 only means "wrong password" on the sign-in path. Everywhere
-      // else it means the session died, and telling an admin mid-delete
-      // that their password is wrong sends them looking for the wrong bug.
-      if (r.status === 401) {
-        friendly = path === "/api/login"
-          ? "Wrong email or password."
-          : "Your session expired. Sign in again.";
-      } else if (r.status === 429) {
-        friendly = serverMsg || "Too many attempts. Try again in a few minutes.";
-      } else if (r.status === 413) {
-        friendly = "That's too much data for one request.";
-      } else if (r.status >= 500) {
-        friendly = "Server error. Try again in a moment." + (data.ref ? ` (ref ${data.ref})` : "");
-      }
-      const e = new Error(friendly || `HTTP ${r.status}`);
+      const e = new Error(serverErrorText(data, r.status, path));
       e.status = r.status;
-      e.serverError = serverMsg;
+      e.code = data.code || "";
+      e.serverError = data.error || "";
       throw e;
     }
     return data;
+  }
+
+  // Set when boot entered the account from the cached identity instead of
+  // waiting for /api/me. Resolves to { user } or { error }; boot reads it
+  // in settleSessionCheck() once the home screen is up.
+  let authVerify = null;
+
+  // The account last confirmed on this browser, kept with the masthead
+  // chrome. Caches written before `user` was stored carry the id only in
+  // the chip's "cloud-<id>".
+  function cachedCloudUser() {
+    let c = null;
+    try { c = JSON.parse(localStorage.getItem(CHROME_KEY) || "null"); } catch (_) { return null; }
+    if (!c || !c.cloud) return null;
+    const u = (c.user && typeof c.user === "object") ? c.user : {};
+    const id = u.id || (/^cloud-(.+)$/.exec(c.profileId || "") || [])[1];
+    if (!id) return null;
+    return { id, email: u.email || "", display_name: u.display_name || c.name || "", is_admin: !!c.admin };
+  }
+
+  // Only a 401 means the session is dead. Deleting the token on any
+  // failure signed a user out for good whenever the worker blipped or
+  // the network dropped at page load; if they then carried on as a
+  // guest, that session's answers landed outside their account. The
+  // cached name and admin chrome go with the token, or a guest on this
+  // browser would see them.
+  function forgetDeadSession() {
+    authToken = null;
+    localStorage.removeItem(AUTH_TOKEN_KEY);
+    localStorage.removeItem(CHROME_KEY);
   }
 
   async function cloudCheckAuth() {
@@ -194,28 +303,59 @@
     const t = localStorage.getItem(AUTH_TOKEN_KEY);
     if (!t) return null;
     authToken = t;
-    try {
-      const { user } = await apiFetch("/api/me", { method: "GET" });
-      cloudUser = user;
-      return user;
-    } catch (e) {
-      authToken = null;
-      // Only a 401 means the session is dead. Deleting the token on any
-      // failure signed a user out for good whenever the worker blipped
-      // or the network dropped at page load; if they then carried on as
-      // a guest, that session's answers landed outside their account.
-      // Keep the token so the next load can restore the session.
-      if (e && e.status === 401) {
-        localStorage.removeItem(AUTH_TOKEN_KEY);
-        // The cached name and admin chrome belong to the dead session; a
-        // guest on this browser would otherwise see them until boot ends.
-        localStorage.removeItem(CHROME_KEY);
-      } else {
-        authCheckFailed = true;
-        console.warn("[auth] could not verify the saved session:", e && e.message || e);
-      }
-      return null;
+    const check = apiFetch("/api/me", { method: "GET" })
+      .then(r => (r && r.user && r.user.id) ? { user: r.user } : { error: new Error("no user in /api/me") },
+            error => ({ error }));
+    // A returning student with a known account goes straight in. The
+    // bank, the local history and the outbox all work without the
+    // worker; waiting on /api/me held a blank page for up to 20 s on bad
+    // wifi, then showed a sign-in form that needs the same server.
+    const cached = cachedCloudUser();
+    if (cached) {
+      cloudUser = cached;
+      authVerify = check;
+      return cached;
     }
+    const { user, error } = await check;
+    if (user) { cloudUser = user; return user; }
+    if (error && error.status === 401) {
+      forgetDeadSession();
+    } else {
+      authToken = null;
+      authCheckFailed = true;
+      console.warn("[auth] could not verify the saved session:", error && error.status, error && error.message);
+    }
+    return null;
+  }
+
+  // The background half of an optimistic start. A 401 sends the student
+  // back to the gate (or, mid-session, to the signed-out notice, so the
+  // question on screen is not thrown away). A slow or unreachable worker
+  // leaves them studying on the local copy with answers queued.
+  async function settleSessionCheck() {
+    if (!authVerify) return;
+    const { user, error } = await authVerify;
+    authVerify = null;
+    if (user) {
+      if (!cloudUser || user.id !== cloudUser.id) {
+        console.warn("[auth] token belongs to a different account than the cached one; reloading");
+        localStorage.removeItem(CHROME_KEY);
+        location.reload();
+        return;
+      }
+      Object.assign(cloudUser, user);
+      paintProfileChip();
+      return;
+    }
+    if (error && error.status === 401) {
+      console.warn("[auth] /api/me returned 401 after an optimistic start:", error.code || "", error.serverError || "");
+      forgetDeadSession();
+      if (!state.quiz) { location.reload(); return; }
+      onSessionExpired("/api/me");
+      return;
+    }
+    console.warn("[auth] could not verify the saved session:", error && error.status, error && error.message);
+    showAppNotice("Can't reach the server. Answers are kept on this device and sync when the connection returns.");
   }
   async function cloudSignIn(email, password) {
     const { token, user } = await apiFetch("/api/login", { method: "POST", body: JSON.stringify({ email, password }) });
@@ -317,6 +457,10 @@
     const drop = ids.slice(0, ids.length - OUTBOX_MAX);
     for (const id of drop) delete map[id];
     console.warn(`[sync] outbox over ${OUTBOX_MAX}: dropped ${drop.length} oldest pending ${what}`);
+    // The only real data loss in the sync path, so the student hears it.
+    const noun = what === "flags" ? "flag" : "answer";
+    showAppNotice(`Sorry, the ${drop.length === 1 ? `oldest unsynced ${noun}` : `${fmtNum(drop.length)} oldest unsynced ${noun}s`} ` +
+      `on this device couldn't be kept: it holds ${fmtNum(OUTBOX_MAX)} at most. Reconnect so the rest can sync.`);
   }
   // Read-modify-write against storage, not an in-memory copy, so two tabs
   // do not drop each other's pending writes.
@@ -504,15 +648,6 @@
     document.body.classList.toggle("is-cloud", !!cloudUser);
     refreshAdminAccountVisibility();
   }
-  // Deterministic per-user pill hue (one of 12 evenly-spaced hues around the
-  // wheel). The CSS defines saturation + lightness so the colour lands in a
-  // legible band in both light and dark themes.
-  function pillHueFor(seed) {
-    let h = 5381;
-    for (let i = 0; i < (seed || "").length; i++) h = ((h * 33) ^ seed.charCodeAt(i)) | 0;
-    const idx = Math.abs(h) % 12;
-    return idx * 30;
-  }
 
   // The legacy local-profile path is gone (2026-09-22). It shipped an
   // unsalted SHA-256 of a three-character password in public client
@@ -636,17 +771,16 @@
           body: JSON.stringify(body),
         });
       } catch (e) {
-        last = { ok: false, status: 0, error: (e && e.message) || "could not reach the server" };
+        last = { ok: false, status: 0, code: "unreachable", error: SERVER_UNREACHABLE };
         console.warn("[backend] POST", url, "network error:", e && e.message);
         continue;
       }
       if (r.ok) return await r.json().catch(() => ({ ok: true }));
       const data = await r.json().catch(() => ({}));
-      const ref = data.ref ? ` (ref ${data.ref})` : "";
-      console.warn("[backend] POST", url, r.status, data.error || "", data.ref || "");
-      return { ok: false, status: r.status, error: (data.error || `HTTP ${r.status}`) + ref, ref: data.ref };
+      console.warn("[backend] POST", url, r.status, data.code || "", data.error || "", data.ref || "");
+      return { ok: false, status: r.status, code: data.code || "", error: serverErrorText(data, r.status, "/" + path), ref: data.ref };
     }
-    return last || { ok: false, status: 0, error: "no backend configured" };
+    return last || { ok: false, status: 0, code: "unreachable", error: SERVER_UNREACHABLE };
   }
 
   // The stored value has to be the same kind of thing as the default.
@@ -951,17 +1085,22 @@
       const signInForm = document.getElementById("cloudSignInForm");
       const signInErr  = document.getElementById("cloudSignInErr");
       if (authCheckFailed && signInErr) {
-        signInErr.textContent = "Couldn't reach the server to restore your session. Reload to try again, or sign in.";
+        signInErr.textContent = "Can't reach the server to restore your session. Reload to try again, or sign in.";
         signInErr.hidden = false;
       }
+      // The forms are novalidate: the browser's own bubbles are US English,
+      // in a different voice, and never say the 8-character rule up front.
+      const say = (el, text) => { el.textContent = text; el.hidden = false; };
+      const emailProblem = v => !v ? "Enter your email." : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? SERVER_ERROR_TEXT.email_format : "";
       signInForm.addEventListener("submit", async e => {
         e.preventDefault();
         signInErr.hidden = true;
+        const email = document.getElementById("cloudSignInEmail").value.trim();
+        const pw = document.getElementById("cloudSignInPassword").value;
+        const problem = emailProblem(email) || (!pw ? "Enter your password." : "");
+        if (problem) return say(signInErr, problem);
         try {
-          await cloudSignIn(
-            document.getElementById("cloudSignInEmail").value.trim(),
-            document.getElementById("cloudSignInPassword").value
-          );
+          await cloudSignIn(email, pw);
           enterAccount();
         } catch (err) {
           signInErr.textContent = (err && err.message) || "Sign in failed.";
@@ -977,18 +1116,17 @@
         signUpErr.hidden = true;
         const pw  = document.getElementById("cloudSignUpPassword").value;
         const pw2 = (document.getElementById("cloudSignUpPassword2") || {}).value || "";
-        if (pw !== pw2) {
-          signUpErr.textContent = "Passwords don't match.";
-          signUpErr.hidden = false;
-          return;
-        }
+        const email = document.getElementById("cloudSignUpEmail").value.trim();
+        const name = document.getElementById("cloudSignUpName").value.trim();
+        const code = normaliseInviteCode((document.getElementById("cloudSignUpInvite") || {}).value || "");
+        const problem = !code ? SERVER_ERROR_TEXT.invite_required
+          : !name ? "Enter your first name."
+          : emailProblem(email)
+          || (pw.length < 8 ? SERVER_ERROR_TEXT.password_short
+          : pw !== pw2 ? "Passwords don't match." : "");
+        if (problem) return say(signUpErr, problem);
         try {
-          await cloudSignUp(
-            document.getElementById("cloudSignUpEmail").value.trim(),
-            pw,
-            document.getElementById("cloudSignUpName").value.trim(),
-            normaliseInviteCode((document.getElementById("cloudSignUpInvite") || {}).value || ""),
-          );
+          await cloudSignUp(email, pw, name, code);
           enterAccount(true);
         } catch (err) {
           signUpErr.textContent = (err && err.message) || "Sign up failed.";
@@ -1072,20 +1210,29 @@
     dataPromise.then(() => { dataSettled = true; }, () => { dataSettled = true; });
     await passGate();
     // The bank is several MB; on a slow link the page under the masthead
-    // was blank until it arrived. showHome() replaces this line.
-    if (!dataSettled) {
+    // was blank until it arrived. A local load finishes in under 100 ms,
+    // so the line waits 300 ms before appearing rather than flashing, and
+    // on a slow link it counts files so a long wait visibly moves.
+    // showHome() replaces it.
+    let loadingTick = null;
+    const loadingDelay = dataSettled ? null : setTimeout(() => {
       const app = document.getElementById("app");
-      if (app && !app.firstChild) {
-        const p = document.createElement("p");
-        p.id = "bankLoading";
-        p.className = "dim";
-        p.setAttribute("role", "status");
-        p.textContent = "Loading the question bank…";
-        p.style.padding = "24px 16px";
-        p.style.textAlign = "center";
-        app.appendChild(p);
-      }
-    }
+      if (dataSettled || !app || app.firstChild) return;
+      const p = document.createElement("p");
+      p.id = "bankLoading";
+      p.className = "dim";
+      p.setAttribute("role", "status");
+      p.style.padding = "24px 16px";
+      p.style.textAlign = "center";
+      const paint = () => {
+        p.textContent = bankProgress.listed && bankProgress.total
+          ? `Loading questions: ${fmtNum(bankProgress.done)} of ${fmtNum(bankProgress.total)} files`
+          : "Loading the question bank…";
+      };
+      paint();
+      app.appendChild(p);
+      loadingTick = setInterval(paint, 500);
+    }, 300);
     migrateLegacyIfNeeded();
     importLegacyHistoryIntoCloud();
     loadProfileState();
@@ -1093,17 +1240,23 @@
     // settings) and merge it with the local cache, the outbox deciding
     // who wins (see mergeRemoteState). Only when the fetch succeeded: a
     // network failure must not wipe a returning user's local cache.
+    // Not awaited: it usually lands while the bank is still downloading,
+    // and if the worker is slower than that, home paints from the local
+    // cache and is refreshed in place when the merge arrives.
+    let homeShown = false;
     if (cloudUser) {
-      const remote = await cloudFetchState();
-      if (remote) {
-        mergeRemoteState(remote);
-        save(ns(HISTORY_KEY), state.history);
-        save(ns(FLAGS_KEY),   state.flags);
-        save(ns(SETTINGS_KEY), state.settings);
-      }
-      // Drain anything queued by an earlier visit, a guest migration or a
-      // dead session. Not awaited: the home screen does not wait on it.
-      flushOutbox();
+      cloudFetchState().then(remote => {
+        if (remote) {
+          mergeRemoteState(remote);
+          save(ns(HISTORY_KEY), state.history);
+          save(ns(FLAGS_KEY),   state.flags);
+          save(ns(SETTINGS_KEY), state.settings);
+          if (homeShown) refreshHomeAfterSync();
+        }
+        // Drain anything queued by an earlier visit, a guest migration
+        // or a dead session.
+        flushOutbox();
+      });
     }
     try {
       await dataPromise;
@@ -1112,6 +1265,8 @@
       // An empty bank with a working shell at least says what happened.
       console.error("[boot] the question bank failed to load:", err && err.stack || err);
     }
+    if (loadingDelay) clearTimeout(loadingDelay);
+    if (loadingTick) clearInterval(loadingTick);
     mergeLocalQuestions();
     // Wire each subsystem defensively so a single throw in any wiring
     // function can't leave the home view unrendered (the symptom that
@@ -1133,7 +1288,20 @@
       try { fn(); } catch (e) { console.error("wire", name, "failed:", e); }
     }
     showHome();
+    homeShown = true;
+    storageNotice.ready = true;
+    if (storageNotice.pending) showStorageNotice();
+    settleSessionCheck();
   });
+
+  // Settings, flags and history merged from the server after home was
+  // drawn. Only the home controls read them before a session starts.
+  function refreshHomeAfterSync() {
+    if (document.body.getAttribute("data-screen") !== "home" || state.quiz) return;
+    applySettingsToOptions();
+    renderSubtopicChips();
+    onSettingsChange();
+  }
 
   // ── Stats modal ─────────────────────────────────────────────────────
   function wireStatsModal() {
@@ -1224,7 +1392,9 @@
    * person, states how many answers go with them, and requires their
    * email typed out. window.confirm can do none of that.
    */
-  function adminConfirm({ title, body, confirmLabel, typeToMatch, typeLabel }) {
+  // tone "primary" is for a confirm that loses nothing (finishing a
+  // test); everything else keeps the destructive style.
+  function adminConfirm({ title, body, confirmLabel, typeToMatch, typeLabel, tone }) {
     return new Promise(resolve => {
       const dlg = document.getElementById("confirmDialog");
       if (!dlg || !dlg.showModal) return resolve(window.confirm(body));
@@ -1236,6 +1406,7 @@
       document.getElementById("confirmTitle").textContent = title;
       document.getElementById("confirmBody").textContent = body;
       go.textContent = confirmLabel;
+      go.className = tone === "primary" ? "primary" : "danger-btn";
       err.hidden = true;
       if (typeToMatch) {
         wrap.hidden = false;
@@ -1374,8 +1545,20 @@
     }, 1000);
     return () => clearTimeout(t);
   }
-  function adminLoadError(root, what, retry) {
-    root.innerHTML = `<p class="admin-empty" role="alert">Could not load ${esc(what)}. ` +
+  // A retry cannot fix a dead session or a revoked admin flag, so those
+  // two say what happened and offer no button.
+  function adminLoadError(root, what, retry, err) {
+    const st = err && err.status, code = err && err.code;
+    if (code === "not_admin" || st === 403) {
+      root.innerHTML = `<p class="admin-empty" role="alert">${esc(SERVER_ERROR_TEXT.not_admin)}</p>`;
+      return;
+    }
+    if (st === 401) {
+      root.innerHTML = `<p class="admin-empty" role="alert">${esc(SERVER_ERROR_TEXT.session_expired)}</p>`;
+      onSessionExpired("admin: " + what);
+      return;
+    }
+    root.innerHTML = `<p class="admin-empty" role="alert">Couldn't load ${esc(what)}. ` +
       `<button type="button" class="link-btn" data-admin-retry>Try again</button></p>`;
     const b = root.querySelector("[data-admin-retry]");
     if (b) b.onclick = retry;
@@ -1411,12 +1594,12 @@
     const body = TOPICS.map(t => {
       const g = grid[t] || { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
       return `<tr><th scope="row">${esc(t)}</th>` +
-        [1, 2, 3, 4, 5].map(d => `<td>${g[d]}</td>`).join("") +
-        `<td class="num-strong">${byTopic[t] || 0}</td></tr>`;
+        [1, 2, 3, 4, 5].map(d => `<td>${fmtNum(g[d])}</td>`).join("") +
+        `<td class="num-strong">${fmtNum(byTopic[t] || 0)}</td></tr>`;
     }).join("");
     const totalsRow = `<tr class="tr-total"><th scope="row">All</th>` +
-      [1, 2, 3, 4, 5].map(d => `<td>${counts[d]}</td>`).join("") +
-      `<td class="num-strong">${total}</td></tr>`;
+      [1, 2, 3, 4, 5].map(d => `<td>${fmtNum(counts[d])}</td>`).join("") +
+      `<td class="num-strong">${fmtNum(total)}</td></tr>`;
     const shareRow = `<tr class="tr-quiet"><th scope="row">Share</th>` +
       [1, 2, 3, 4, 5].map(d => `<td>${pc(counts[d]).toFixed(1)}%</td>`).join("") +
       `<td></td></tr>`;
@@ -1429,12 +1612,22 @@
         return `<td${cls}>${g > 0 ? "+" : ""}${g.toFixed(1)}</td>`;
       }).join("") + `<td></td></tr>`;
 
+    // What the student's pool line leaves out: files that failed this
+    // load and questions dropped as unservable or shadowed by a reused id.
+    const bl = state.batchLoadStats || {};
+    const loadFacts = [
+      bl.failed ? `<b>${fmtNum(bl.failed)}</b> of ${plural(bl.total, "bank file")} failed to load this time.` : "",
+      bl.invalid ? `<b>${fmtNum(bl.invalid)}</b> malformed ${bl.invalid === 1 ? "question" : "questions"} skipped.` : "",
+      bl.shadowed ? `<b>${fmtNum(bl.shadowed)}</b> duplicate ${bl.shadowed === 1 ? "id" : "ids"} hidden behind an earlier copy.` : "",
+    ].join(" ");
+
     root.innerHTML = `
       <div class="admin-pane">
-        <p class="admin-fact">${total.toLocaleString()} questions.
+        <p class="admin-fact">${plural(total, "question")}.
           Last added ${esc(String(meta.last_added || meta.updated || "unknown"))}.
-          ${reportsOpen ? `<b>${reportsOpen}</b> open report${reportsOpen === 1 ? "" : "s"}.` : "No open reports."}
-          ${inboxCount ? `<b>${inboxCount}</b> batch${inboxCount === 1 ? "" : "es"} in the inbox.` : ""}</p>
+          ${reportsOpen ? `<b>${fmtNum(reportsOpen)}</b> open ${reportsOpen === 1 ? "report" : "reports"}.` : "No open reports."}
+          ${inboxCount ? `<b>${fmtNum(inboxCount)}</b> ${inboxCount === 1 ? "batch" : "batches"} in the inbox.` : ""}
+          ${loadFacts}</p>
 
         <section class="admin-pane-section">
           <h3>Difficulty by module</h3>
@@ -1465,7 +1658,7 @@
       if (adminRenderStale(token, qRoot)) return;
       const box = qRoot.querySelector(".admin-skeleton") || qRoot.appendChild(document.createElement("div"));
       box.outerHTML = "";
-      return adminLoadError(qRoot, "answer quality", () => renderAdminBankTab(root));
+      return adminLoadError(qRoot, "answer quality", () => renderAdminBankTab(root), e);
     }
     stop();
     if (adminRenderStale(token, qRoot)) return;
@@ -1479,9 +1672,9 @@
     const top = rows(q && q.top);
     qRoot.innerHTML = `
       <h3>Answer quality</h3>
-      <p class="admin-fact">${totals.users || 0} ${totals.users === 1 ? "person" : "people"},
-        ${(totals.answers || 0).toLocaleString()} answers across
-        ${(totals.qs || 0).toLocaleString()} questions.</p>
+      <p class="admin-fact">${plural(totals.users || 0, "person", "people")},
+        ${plural(totals.answers || 0, "answer")} across
+        ${plural(totals.qs || 0, "question")}.</p>
       <h4>Lowest correct rate</h4>
       ${worst ? `<table class="admin-table admin-table-num"><thead><tr>
           <th scope="col">Question</th><th scope="col">Answers</th><th scope="col">Correct</th>
@@ -1525,7 +1718,7 @@
       if (adminRenderStale(token, root)) return;
       // The old code swallowed this and rendered "0 accounts", which is
       // indistinguishable from a working empty instance.
-      return adminLoadError(root, "the user list", () => renderAdminUsersTab(root));
+      return adminLoadError(root, "the user list", () => renderAdminUsersTab(root), e);
     }
     stop();
     if (adminRenderStale(token, root)) return;
@@ -1564,8 +1757,8 @@
 
     root.innerHTML = `
       <div class="admin-pane">
-        <p class="admin-fact">${users.length} account${users.length === 1 ? "" : "s"},
-          ${adminCount} admin${adminCount === 1 ? "" : "s"}.</p>
+        <p class="admin-fact">${plural(users.length, "account")},
+          ${plural(adminCount, "admin")}.</p>
         ${users.length ? `
         <div class="admin-table-scroll">
           <table class="admin-table admin-users">
@@ -1600,7 +1793,8 @@
     const answers = parseInt(btn.dataset.answers || "0", 10);
     const run = async (path, ok, undo) => {
       btn.disabled = true;
-      const slow = setTimeout(() => { btn.textContent = act === "promote" ? "Promoting…" : "Demoting…"; }, 1000);
+      const busy = { promote: "Making admin…", demote: "Removing admin…", delete: "Deleting…" }[act];
+      const slow = setTimeout(() => { if (busy) btn.textContent = busy; }, 1000);
       try {
         await apiFetch(path, { method: "POST" });
         clearTimeout(slow);
@@ -1621,15 +1815,17 @@
       return run(`/api/admin/users/${encodeURIComponent(id)}/${to}`,
         act === "promote" ? `${name} is now an admin.` : `${name} is no longer an admin.`,
         () => apiFetch(`/api/admin/users/${encodeURIComponent(id)}/${back}`, { method: "POST" })
-          .then(() => { adminSay("ok", "Reverted."); renderAdminUsersTab(root); })
+          .then(() => {
+            adminSay("ok", act === "promote" ? `${name} is no longer an admin.` : `${name} is an admin again.`);
+            renderAdminUsersTab(root);
+          })
           .catch(e => adminSay("error", e.message || String(e))));
     }
 
     if (act === "delete") {
       const okd = await adminConfirm({
         title: `Delete ${name}'s account?`,
-        body: `This permanently deletes ${email} and ${answers} saved ` +
-              `${answers === 1 ? "answer" : "answers"}. It cannot be undone.`,
+        body: `This permanently deletes ${email} and ${plural(answers, "saved answer")}. It cannot be undone.`,
         confirmLabel: `Delete ${email} permanently`,
         typeToMatch: email,
         typeLabel: `Type ${email} to confirm`,
@@ -1637,7 +1833,7 @@
       if (!okd) return;
       // No undo offered, because there is none.
       return run(`/api/admin/users/${encodeURIComponent(id)}/delete`,
-        `Deleted ${email} and ${answers} ${answers === 1 ? "answer" : "answers"}.`);
+        `Deleted ${email} and ${plural(answers, "answer")}.`);
     }
   }
 
@@ -1717,7 +1913,7 @@
       stop();
       console.warn("[admin] /api/admin/invites failed:", e && e.status, e && (e.serverError || e.message));
       if (adminRenderStale(token, list)) return;
-      return adminLoadError(list, "invite codes", () => renderInvites(root, usersRoot));
+      return adminLoadError(list, "invite codes", () => renderInvites(root, usersRoot), e);
     }
     stop();
     if (adminRenderStale(token, list)) return;
@@ -1833,7 +2029,7 @@
           await apiFetch("/api/admin/invites/revoke", {
             method: "POST", body: JSON.stringify({ code_hash: b.dataset.revoke }),
           });
-          adminSay("ok", "Code revoked. It will not let anyone sign up, and it is off this list.");
+          adminSay("ok", "Code revoked.");
           renderInvites(root, usersRoot);
         } catch (e) { b.disabled = false; adminSay("error", e.message || String(e)); }
       };
@@ -1852,7 +2048,7 @@
 
       <section class="admin-pane-section">
         <h3>Change password</h3>
-        <form id="pwForm" class="admin-form" autocomplete="on">
+        <form id="pwForm" class="admin-form" autocomplete="on" novalidate>
           <label>Current password
             <input id="pwCurrent" type="password" required autocomplete="current-password" /></label>
           <label>New password
@@ -1875,18 +2071,7 @@
       <section class="admin-pane-section account-self-delete">
         <h3>Delete this account</h3>
         <p class="admin-note">Every answer, flag and setting goes with it. This cannot be undone.</p>
-        <button class="danger-btn" id="acctSelfDeleteOpen">Delete my account</button>
-        <div class="acct-delete-confirm" id="acctDeleteConfirm" hidden>
-          <label class="acct-delete-label" for="acctDeleteEmailInput">
-            Type <code>${esc(cloudUser.email || "")}</code> to confirm.
-          </label>
-          <input type="email" id="acctDeleteEmailInput" class="acct-delete-input" autocomplete="off" spellcheck="false" placeholder="${esc(cloudUser.email || "")}">
-          <div class="acct-delete-actions">
-            <button class="ghost-link" id="acctDeleteCancel" type="button">Cancel</button>
-            <button class="danger-btn" id="acctDeleteGo" type="button" disabled>Permanently delete</button>
-          </div>
-          <p class="acct-delete-status dim small" id="acctDeleteStatus" aria-live="polite"></p>
-        </div>
+        <button type="button" class="danger-btn" id="acctSelfDeleteOpen">Delete my account</button>
       </section>
       </div>`;
 
@@ -1895,7 +2080,9 @@
       const cur = document.getElementById("pwCurrent").value;
       const a = document.getElementById("pwNew").value;
       const b = document.getElementById("pwNew2").value;
-      if (a !== b) return adminSay("error", "The two new passwords do not match.");
+      if (!cur) return adminSay("error", "Enter your current password.");
+      if (a.length < 8) return adminSay("error", SERVER_ERROR_TEXT.password_short);
+      if (a !== b) return adminSay("error", "The new passwords don't match.");
       if (a === cur) return adminSay("error", "The new password is the same as the current one.");
       const btn = e.target.querySelector("button[type=submit]");
       btn.disabled = true;
@@ -1932,49 +2119,27 @@
         adminSay("error", err.message || String(err));
       } finally { ev.target.disabled = false; }
     };
-    const openBtn = document.getElementById("acctSelfDeleteOpen");
-    const confirmPane = document.getElementById("acctDeleteConfirm");
-    const emailInput = document.getElementById("acctDeleteEmailInput");
-    const cancelBtn = document.getElementById("acctDeleteCancel");
-    const goBtn = document.getElementById("acctDeleteGo");
-    const statusEl = document.getElementById("acctDeleteStatus");
-    if (openBtn && confirmPane) {
-      openBtn.onclick = () => {
-        confirmPane.hidden = false;
-        openBtn.hidden = true;
-        statusEl.textContent = "";
-        emailInput.value = "";
-        goBtn.disabled = true;
-        setTimeout(() => emailInput.focus(), 30);
-      };
-    }
-    if (cancelBtn && confirmPane && openBtn) {
-      cancelBtn.onclick = () => {
-        confirmPane.hidden = true;
-        openBtn.hidden = false;
-        statusEl.textContent = "";
-        emailInput.value = "";
-      };
-    }
-    if (emailInput && goBtn) {
-      emailInput.oninput = () => {
-        const target = (cloudUser.email || "").trim().toLowerCase();
-        const typed = emailInput.value.trim().toLowerCase();
-        goBtn.disabled = !target || typed !== target;
-        statusEl.textContent = "";
-      };
-      emailInput.onkeydown = e => {
-        if (e.key === "Enter" && !goBtn.disabled) { e.preventDefault(); goBtn.click(); }
-      };
-    }
+    // Same confirmation as an admin deleting someone else: the shared
+    // dialog, with the email typed out.
+    const goBtn = document.getElementById("acctSelfDeleteOpen");
     if (goBtn) {
       goBtn.onclick = async () => {
-        if (goBtn.disabled) return;
+        const email = (cloudUser && cloudUser.email) || "";
+        // A start from the cached account may not know the email yet.
+        if (!email) return adminSay("error", "Your account details haven't loaded yet. Reload, then try again.");
+        const okd = await adminConfirm({
+          title: "Delete your account?",
+          body: `Every answer, flag and setting on ${email} is deleted, here and on the server. This cannot be undone.`,
+          confirmLabel: "Delete my account",
+          typeToMatch: email,
+          typeLabel: `Type ${email} to confirm`,
+        });
+        if (!okd) return;
         goBtn.disabled = true;
-        statusEl.textContent = "Deleting…";
+        adminSay("ok", "Deleting…");
         try {
           await apiFetch("/api/account/delete", { method: "POST" });
-          statusEl.textContent = "Account deleted. Reloading…";
+          adminSay("ok", "Account deleted. Reloading…");
           // The dialog promises every answer, flag and setting goes with
           // the account. The server copy has; remove this device's copy
           // too, and the cached name, which the next guest here would
@@ -1993,7 +2158,8 @@
           cloudSignOut();
           setTimeout(() => location.reload(), 600);
         } catch (e) {
-          statusEl.textContent = "Could not delete: " + (e.message || e);
+          console.warn("[account] /api/account/delete failed:", e && e.status, e && e.code, e && e.serverError);
+          adminSay("error", `Not deleted. ${(e && e.message) || SERVER_UNREACHABLE}`);
           goBtn.disabled = false;
         }
       };
@@ -2004,11 +2170,13 @@
     const s = Math.max(0, Math.round(ms / 1000));
     const h = Math.floor(s / 3600);
     const m = Math.floor((s % 3600) / 60);
-    const sec = s % 60;
-    if (h) return `${h}h ${m}m`;
-    if (m) return `${m}m ${sec}s`;
-    return `${sec}s`;
+    if (h) return m ? `${h} h ${m} min` : `${h} h`;
+    if (m) return `${m} min`;
+    return `${s} s`;
   }
+  // Stats answer "where am I weak?", not "how much have I done?": a few
+  // facts in a sentence, then each table weakest first, with bars that
+  // show accuracy (the number printed beside them).
   function renderStats() {
     const body = document.getElementById("statsBody");
     if (!body) return;
@@ -2017,84 +2185,92 @@
     const bankById = {}; (state.questions || []).forEach(q => { bankById[q.id] = q; });
 
     // `lastCorrect` is the only correctness the server round-trips, so this
-    // is genuinely last-attempt accuracy, not first-attempt. The headline
-    // used to be labelled "first-time correct", which overstated a user who
-    // retried a question until they got it right.
+    // is last-attempt accuracy, not first-attempt.
     let answered = 0, lastAttemptCorrect = 0, totalMs = 0, timedCount = 0;
     const byTopic = {};
     const byDiff = {};
+    const byCell = {};
     let lastAt = 0;
+    const tally = (map, k, ok) => { const e = map[k] = map[k] || { n: 0, correct: 0 }; e.n++; if (ok) e.correct++; };
     for (const id of ids) {
       const h = history[id]; if (!h || !h.count) continue;
       const q = bankById[id]; if (!q) continue;
       answered++;
       if (h.lastCorrect) lastAttemptCorrect++;
-      // Only aggregate time for entries that actually recorded a duration.
-      // Legacy entries (pre-stats-panel) carry no time_ms_total - excluding
-      // them avoids skewing the average toward zero.
+      // Answers recorded before timing existed carry no time_ms_total;
+      // counting them would drag the average toward zero.
       if (h.time_ms_total && h.time_ms_total > 0) {
         totalMs += h.time_ms_total;
         timedCount++;
       }
       if ((h.last_at || 0) > lastAt) lastAt = h.last_at || 0;
       const t = q.topic || "Other";
-      byTopic[t] = byTopic[t] || { n: 0, correct: 0 };
-      byTopic[t].n++; if (h.lastCorrect) byTopic[t].correct++;
-      const d = String(q.difficulty || "?");
-      byDiff[d] = byDiff[d] || { n: 0, correct: 0 };
-      byDiff[d].n++; if (h.lastCorrect) byDiff[d].correct++;
+      tally(byTopic, t, h.lastCorrect);
+      tally(byDiff, `${q.difficulty} / 5`, h.lastCorrect);
+      tally(byCell, `${t} at ${q.difficulty} / 5`, h.lastCorrect);
     }
     const total = (state.questions || []).length;
-    const acc = answered ? Math.round((lastAttemptCorrect / answered) * 100) : 0;
-    const avg = timedCount ? Math.round(totalMs / timedCount / 1000) : 0;
+    const pctOf = e => e.n ? Math.round((e.correct / e.n) * 100) : 0;
+    const overall = pctOf({ n: answered, correct: lastAttemptCorrect });
 
     if (!answered) {
-      body.innerHTML = `<p class="stats-empty">Stats land here once you've answered a few questions.</p>`;
+      body.innerHTML = `<p class="stats-empty">Nothing answered yet. Accuracy by discipline and difficulty shows here after your first few questions.</p>`;
       return;
     }
 
-    const head = `
-      <div class="stats-head">
-        <div class="stats-num"><span class="stats-num-value">${answered}</span><span class="stats-num-label">questions answered (${Math.round(answered / total * 100) || 0}% of bank)</span></div>
-        <div class="stats-num"><span class="stats-num-value">${acc}%</span><span class="stats-num-label">correct on last attempt</span></div>
-        <div class="stats-num"><span class="stats-num-value">${timedCount ? formatDuration(totalMs) : '-'}</span><span class="stats-num-label">${timedCount ? `time studying · ${avg}s avg / q` : `time not recorded for ${answered} earlier ${answered === 1 ? 'answer' : 'answers'}`}</span></div>
-      </div>`;
+    // Below this many answers a percentage says more about luck than
+    // about the student, so those rows sink to the bottom, dimmed.
+    const FEW = 5;
+    const sorted = map => Object.keys(map).sort((a, b) => {
+      const A = map[a], B = map[b];
+      const fa = A.n < FEW, fb = B.n < FEW;
+      if (fa !== fb) return fa ? 1 : -1;
+      return pctOf(A) - pctOf(B) || B.n - A.n || a.localeCompare(b);
+    });
+    const rows = map => sorted(map).map(k => {
+      const e = map[k], pct = pctOf(e), few = e.n < FEW ? " stats-few" : "";
+      return `
+          <div class="stats-label${few}">${esc(k)}</div>
+          <div class="stats-count${few}">${fmtNum(e.correct)} of ${fmtNum(e.n)}</div>
+          <div class="stats-bar-wrap${few}"><span style="width:${pct}%"></span></div>
+          <div class="stats-pct-cell${few}">${pct}%</div>`;
+    }).join("");
 
-    function rows(map, order) {
-      const keys = order ? order.filter(k => map[k]) : Object.keys(map).sort();
-      const maxN = Math.max(1, ...keys.map(k => map[k].n));
-      return keys.map(k => {
-        const { n, correct } = map[k];
-        const pct = n ? Math.round((correct / n) * 100) : 0;
-        const widthPct = Math.round((n / maxN) * 100);
-        return `
-          <div class="stats-label">${esc(k)}</div>
-          <div class="stats-count">${correct} / ${n}</div>
-          <div class="stats-bar-wrap"><span style="width:${widthPct}%"></span></div>
-          <div class="stats-pct-cell">${pct}%</div>`;
-      }).join("");
+    const facts = [`${fmtNum(answered)} of ${plural(total, "question")} answered, ${overall}% right on the last attempt.`];
+    // The weakest discipline-and-difficulty pair with enough answers to
+    // mean something, named only when it is below the overall rate.
+    const cells = Object.keys(byCell).filter(k => byCell[k].n >= 10)
+      .sort((a, b) => pctOf(byCell[a]) - pctOf(byCell[b]) || byCell[b].n - byCell[a].n);
+    if (cells.length && pctOf(byCell[cells[0]]) < overall) {
+      const w = byCell[cells[0]];
+      facts.push(`Weakest: ${esc(cells[0])}, ${pctOf(w)}% over ${plural(w.n, "question")}.`);
     }
-
-    const topicOrder = ["Paediatrics","Obstetrics & Gynaecology","Psychiatry","Medicine"];
-    const diffOrder = ["1","2","3","4","5"];
-    const lastStr = lastAt ? new Date(lastAt).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }) : "-";
+    if (timedCount) {
+      facts.push(`About ${formatDuration(totalMs / timedCount)} a question, ${formatDuration(totalMs)} in all.`);
+    }
+    if (lastAt) {
+      const days = Math.round((new Date().setHours(0, 0, 0, 0) - new Date(lastAt).setHours(0, 0, 0, 0)) / 86400000);
+      facts.push(`Last studied ${days <= 0 ? "today" : days === 1 ? "yesterday"
+        : fmtDate(lastAt, new Date(lastAt).getFullYear() !== new Date().getFullYear())}.`);
+    }
+    const pending = cloudUser ? Object.keys(outboxRead().answers).length : 0;
+    if (pending) facts.push(`${plural(pending, "answer")} on this device not yet synced.`);
 
     body.innerHTML = `
-      ${head}
+      <p class="stats-facts">${facts.join(" ")}</p>
       <div class="stats-section">
         <h3>By discipline</h3>
-        <div class="stats-table">${rows(byTopic, topicOrder)}</div>
+        <div class="stats-table">${rows(byTopic)}</div>
       </div>
       <div class="stats-section">
         <h3>By difficulty</h3>
-        <div class="stats-table">${rows(byDiff, diffOrder)}</div>
-      </div>
-      <div class="stats-section">
-        <h3>Last activity</h3>
-        <p class="stats-empty" style="margin:0">${lastStr}</p>
+        <div class="stats-table">${rows(byDiff)}</div>
       </div>`;
   }
 
+  // Files settled out of files requested, for the boot loading line. The
+  // total is only final once the manifests are in (`listed`).
+  const bankProgress = { done: 0, total: 0, listed: false };
   async function loadData() {
     // Data JSON files don't carry the CSS/JS cache-bust query string, so a
     // browser-cached manifest can hide brand-new batches for hours after they
@@ -2123,11 +2299,13 @@
     // "paeds is not iterable", which rejected loadData, skipped showHome()
     // and left the page blank with nothing logged.
     let srcTotal = 0, srcFailed = 0;
+    bankProgress.done = 0; bankProgress.listed = false;
+    const settled = () => { bankProgress.done++; bankProgress.total = srcTotal; };
     const pullArray = (p) => {
       srcTotal++;
       return fetchJson(p).then(
-        d => { if (Array.isArray(d)) return d; srcFailed++; return []; },
-        () => { srcFailed++; return []; }
+        d => { settled(); if (Array.isArray(d)) return d; srcFailed++; return []; },
+        () => { settled(); srcFailed++; return []; }
       );
     };
     // Per-file content hashes from batches_manifest.json `hashes`
@@ -2144,6 +2322,7 @@
       srcTotal++;
       return fetchJson(p).then(
         d => {
+          settled();
           if (d && d.hashes && typeof d.hashes === "object" && !Array.isArray(d.hashes)) {
             batchHashes = Object.assign({}, batchHashes, d.hashes);
           }
@@ -2151,7 +2330,7 @@
           if (Array.isArray(list)) return list;
           srcFailed++; return [];
         },
-        () => { srcFailed++; return []; }
+        () => { settled(); srcFailed++; return []; }
       );
     };
     const [paeds, obgyn, psych, medicine, ranges, meta, batchPaths, inboxPaths, reportsFile] = await Promise.all([
@@ -2170,7 +2349,10 @@
     // Pull every staging batch listed in the manifests. Each is its own
     // JSON array of question objects matching the live schema.
     const allPaths = [...batchPaths, ...inboxPaths];
-    const extra = await Promise.all(allPaths.map(p => pullArray(batchUrl(p))));
+    const extraReq = allPaths.map(p => pullArray(batchUrl(p)));
+    bankProgress.total = srcTotal;
+    bankProgress.listed = true;
+    const extra = await Promise.all(extraReq);
     const extraQuestions = extra.flat();
     // The Bank tab's inbox count read this and it was never set.
     state.inboxManifest = { inbox: inboxPaths };
@@ -2298,16 +2480,19 @@
   }
 
   // Written after every resolved sign-in, read before the next one.
-  function rememberMastheadChrome(chip, nameEl, pillSeed) {
+  // It also carries the account itself, which is what lets the next boot
+  // go straight in without waiting for /api/me (cachedCloudUser).
+  function rememberMastheadChrome(chip, nameEl) {
     if (!chip || chip.hidden || !nameEl) return;
     try {
       localStorage.setItem(CHROME_KEY, JSON.stringify({
         name: nameEl.textContent || "",
         profileId: chip.dataset.profileId || "",
         pillStyle: chip.dataset.pillStyle || "",
-        hue: pillSeed ? pillHueFor(pillSeed) : null,
         admin: document.body.classList.contains("is-admin"),
         cloud: document.body.classList.contains("is-cloud"),
+        user: cloudUser ? { id: cloudUser.id, email: cloudUser.email || "",
+                            display_name: cloudUser.display_name || "" } : null,
       }));
     } catch (_) { /* private mode: the pop-in is the worst of it */ }
   }
@@ -2328,12 +2513,31 @@
     nameEl.textContent = cached.name;
     if (cached.profileId) chip.dataset.profileId = cached.profileId;
     if (cached.pillStyle) chip.dataset.pillStyle = cached.pillStyle;
-    if (cached.hue !== null && cached.hue !== undefined) {
-      chip.style.setProperty("--pill-hue", String(cached.hue));
-    }
     chip.hidden = false;
     document.body.classList.toggle("is-admin", !!cached.admin);
     document.body.classList.toggle("is-cloud", !!cached.cloud);
+  }
+
+  // The name pill is neutral for everyone. Gold is the one pill with a
+  // meaning (admin), so no other pill takes a colour.
+  function paintProfileChip() {
+    const chip = document.getElementById("profileChip");
+    const nameEl = document.getElementById("profileName");
+    if (!chip || !nameEl) return;
+    if (cloudUser) {
+      chip.hidden = false;
+      chip.dataset.profileId = "cloud-" + cloudUser.id;
+      if (cloudUser.is_admin) chip.dataset.pillStyle = "gold";
+      else delete chip.dataset.pillStyle;
+      nameEl.textContent = cloudUser.display_name || cloudUser.email;
+    } else if (guestUser) {
+      chip.hidden = false;
+      chip.dataset.profileId = "guest";
+      delete chip.dataset.pillStyle;
+      nameEl.textContent = "Guest";
+    }
+    refreshAdminBodyClass();
+    rememberMastheadChrome(chip, nameEl);
   }
 
   function wireMasthead() {
@@ -2345,41 +2549,13 @@
     };
     const brand = document.querySelector(".masthead .brand");
     if (brand) brand.onclick = goHome;
-    const chip = document.getElementById("profileChip");
-    const nameEl = document.getElementById("profileName");
-    let pillSeed = "";
-    if (chip && currentProfile) {
-      chip.hidden = false;
-      chip.dataset.profileId = currentProfile.id;
-      nameEl.textContent = currentProfile.name;
-      pillSeed = currentProfile.id;
-    } else if (chip && cloudUser) {
-      chip.hidden = false;
-      chip.dataset.profileId = "cloud-" + cloudUser.id;
-      // Admin cloud accounts wear the same gold metallic pill as the
-      // legacy admin so admin = gold across the whole site.
-      if (cloudUser.is_admin) chip.dataset.pillStyle = "gold";
-      else delete chip.dataset.pillStyle;
-      nameEl.textContent = cloudUser.display_name || cloudUser.email;
-      pillSeed = cloudUser.id;
-    } else if (chip && guestUser) {
-      chip.hidden = false;
-      chip.dataset.profileId = "guest";
-      delete chip.dataset.pillStyle;
-      nameEl.textContent = "Guest";
-      pillSeed = guestUser.id;
-    }
-    if (chip && pillSeed) {
-      chip.style.setProperty("--pill-hue", String(pillHueFor(pillSeed)));
-    }
-    refreshAdminBodyClass();
-    rememberMastheadChrome(chip, nameEl, pillSeed);
+    paintProfileChip();
     const signOutBtn = document.getElementById("signOutBtn");
     if (signOutBtn) {
       const isGuest = guestUser && !currentProfile && !cloudUser;
       if (isGuest) {
-        signOutBtn.textContent = "sign up";
-        signOutBtn.title = "Keeps your guest answers and flags";
+        signOutBtn.textContent = "create account";
+        signOutBtn.title = "Your guest answers and flags move into the new account";
       }
       signOutBtn.onclick = async e => {
         e.stopPropagation();
@@ -2392,12 +2568,18 @@
           location.reload();
           return;
         }
-        const label = currentProfile ? currentProfile.name : (cloudUser ? (cloudUser.display_name || cloudUser.email) : "");
-        if (await adminConfirm({
-              title: `Sign out ${label}?`,
-              body: "Your answers, flags and settings stay saved against this account.",
-              confirmLabel: "Sign out",
-            })) signOut();
+        // Signing out loses nothing the server has, so it only asks when
+        // this device still holds writes the server has not taken.
+        const o = cloudUser ? outboxRead() : null;
+        const nA = o ? Object.keys(o.answers).length : 0, nF = o ? Object.keys(o.flags).length : 0;
+        const unsynced = [nA && plural(nA, "answer"), nF && plural(nF, "flag")].filter(Boolean).join(" and ");
+        if (unsynced && !(await adminConfirm({
+              title: `Sign out with ${unsynced} not yet synced?`,
+              body: "They stay on this device and sync the next time you sign in here.",
+              confirmLabel: "Sign out anyway",
+              tone: "primary",
+            }))) return;
+        signOut();
       };
     }
   }
@@ -2619,12 +2801,12 @@
       c.dataset.value = k;
       const shared = disciplinesByName[e.name].size > 1;
       c.textContent = shared
-        ? `${e.name} · ${SUBTOPIC_TOPIC_SHORT[e.topic] || e.topic} (${e.n})`
-        : `${e.name} (${e.n})`;
+        ? `${e.name}, ${SUBTOPIC_TOPIC_SHORT[e.topic] || e.topic} (${fmtNum(e.n)})`
+        : `${e.name} (${fmtNum(e.n)})`;
       wrap.appendChild(c);
     });
     document.getElementById("tagCountLabel").textContent =
-      sorted.length ? `· ${sorted.length} areas` : "";
+      sorted.length ? `(${fmtNum(sorted.length)})` : "";
   }
 
   function applySettingsToOptions() {
@@ -2679,8 +2861,8 @@
     updatePool();
   }
 
-  function getPool() {
-    const s = state.settings;
+  function getPool(s) {
+    s = s || state.settings;
     return state.questions.filter(q => {
       // An empty list is an empty selection, in all three facets. It used
       // to mean "no filter" for disciplines and difficulties and "match
@@ -2697,6 +2879,28 @@
       return true;
     });
   }
+  // Name the setting that emptied the pool. The advice used to be "add a
+  // difficulty level" whatever the cause, including a Filter of Flagged
+  // with nothing flagged. Running out of Unseen is progress, not a miss.
+  function emptyPoolAdvice(s) {
+    if (!s.disciplines.length) return "No discipline selected.";
+    if (!(s.difficulties || []).length) return "No difficulty selected.";
+    if (s.subtopics && !s.subtopics.length) return "No learning area selected.";
+    if (s.filter && s.filter !== "all" && getPool(Object.assign({}, s, { filter: "all" })).length) {
+      if (s.filter === "unseen") {
+        return "You've answered every question in this selection. Set Filter to Previously incorrect, or add a discipline or difficulty.";
+      }
+      if (s.filter === "incorrect") {
+        return "Nothing in this selection was answered wrong on its last attempt. Set Filter to All or Unseen.";
+      }
+      if (s.filter === "flagged") return "Nothing flagged in this selection. Set Filter to All.";
+    }
+    if (s.subtopics && getPool(Object.assign({}, s, { subtopics: null, filter: "all" })).length) {
+      return "None of the selected learning areas has questions at this discipline and difficulty. Select more learning areas.";
+    }
+    return "No questions at this discipline and difficulty. Add a difficulty level or another discipline.";
+  }
+
   function updatePool() {
     const n = getPool().length;
     const el = document.getElementById("poolSize");
@@ -2704,22 +2908,20 @@
     if (!el || !startBtn) return;
     const s = state.settings;
     if (n === 0) {
-      el.textContent = "No questions match. Try adding a difficulty level, another discipline, or clearing the Learning-areas filter.";
+      el.textContent = emptyPoolAdvice(s);
     } else if (s.mode === "study") {
-      el.textContent = `${n} questions match · Study mode shuffles through them all - end whenever.`;
+      el.textContent = `${plural(n, "question")}. Study runs until you stop it.`;
     } else {
       const take = s.count === 0 ? n : Math.min(s.count, n);
-      const time = s.timer ? ` · ${s.timer} min` : " · untimed";
-      el.textContent = `${take} of ${n} matching questions${time}.`;
+      el.textContent = `${fmtNum(take)} of ${plural(n, "matching question")}, ${s.timer ? `${s.timer} min` : "untimed"}.`;
     }
-    // If any bank file failed to load, surface it once so the user knows
-    // the bank they're seeing is a subset. Non-blocking (Begin still works).
+    // A bank file that failed to load leaves the student on a subset, so
+    // say so. The file counts and any skipped malformed questions are
+    // author problems; they go to the console (loadData) and the admin
+    // Bank tab, not here.
     const bl = state.batchLoadStats;
     if (bl && bl.failed > 0) {
-      el.textContent += `  (${bl.failed} of ${bl.total} bank files unavailable this load; refresh to retry.)`;
-    }
-    if (bl && bl.invalid > 0) {
-      el.textContent += `  (${bl.invalid} malformed question${bl.invalid === 1 ? "" : "s"} skipped.)`;
+      el.textContent += " Some questions didn't load. Reload to get the full bank.";
     }
     startBtn.disabled = n === 0;
   }
@@ -2754,9 +2956,7 @@
     // is meaningful only in test mode).
     document.body.dataset.mode = s.mode;
     setScreen("quiz");
-    document.getElementById("sessionMeta").textContent =
-      (s.mode === "study" ? "Study session" : "Test session") +
-      " · " + new Date().toLocaleDateString(undefined, { day: "numeric", month: "short" });
+    document.getElementById("sessionMeta").textContent = s.mode === "study" ? "Study session" : "Test session";
     refreshGlucoseSuffix();
     renderQuiz();
     startSessionTimer();
@@ -2826,8 +3026,8 @@
     const mode = raw.mode === "test" ? "Test" : "Study";
     const left = raw.deadline ? Math.max(0, Math.round((raw.deadline - Date.now()) / 60000)) : null;
     document.getElementById("resumeLine").textContent =
-      `${mode} session in progress: question ${Math.min((raw.idx || 0) + 1, pool.length)} of ` +
-      `${pool.length}, ${answered} answered` +
+      `${mode} session in progress: question ${fmtNum(Math.min((raw.idx || 0) + 1, pool.length))}` +
+      (raw.mode === "test" ? ` of ${fmtNum(pool.length)}` : "") + `, ${fmtNum(answered)} answered` +
       (left !== null ? `, ${left} minute${left === 1 ? "" : "s"} left on the clock` : "") + ".";
     row.hidden = false;
     document.getElementById("resumeBtn").onclick = () => resumeSession(saved);
@@ -2891,6 +3091,7 @@
       // before the resume, the index alone lands on a different one.
       currentId: cur ? cur.id : null,
       idx: q.idx,
+      reached: q.reached,
       mode: q.mode,
       timerMins: q.timerMins,
       deadline: q.deadline,
@@ -2939,6 +3140,7 @@
       mode: raw.mode === "test" ? "test" : "study",
       timerMins: raw.timerMins || 0,
       deadline: raw.deadline || null,
+      reached: raw.reached,
       answers: raw.answers || {},
       revealed: raw.revealed || {},
       timeMs: raw.timeMs || {},
@@ -2950,20 +3152,19 @@
     document.body.dataset.mode = state.quiz.mode;
     setScreen("quiz");
     document.getElementById("sessionMeta").textContent =
-      (state.quiz.mode === "study" ? "Study session" : "Test session") + " · resumed";
+      (state.quiz.mode === "study" ? "Study session" : "Test session") + ", resumed";
     refreshGlucoseSuffix();
     renderQuiz();
     startSessionTimer();
   }
 
-  // The label said "Flag" in both states, so whether this question was
-  // already flagged came down to a colour shift on the glyph. The word
-  // changes with it now, and the button reports its own state.
+  // The word carries the state ("Flag" / "Flagged"), and the button
+  // reports it to assistive tech as pressed.
   function setFlagBtn(btn, on) {
     if (!btn) return;
     btn.classList.toggle("active", on);
     btn.classList.toggle("flag", on);
-    btn.textContent = on ? "⚑ Flagged" : "⚐ Flag";
+    btn.textContent = on ? "Flagged" : "Flag";
     btn.setAttribute("aria-pressed", on ? "true" : "false");
     btn.title = on ? "Remove the flag (F)" : "Flag for review (F)";
   }
@@ -3109,7 +3310,11 @@
   function renderTopbar() {
     const total = state.quiz.pool.length;
     const idx = state.quiz.idx;
-    document.getElementById("qtNumber").textContent = `Question ${idx + 1} of ${total}`;
+    const study = state.quiz.mode === "study";
+    // A study session is open-ended: "of 7,053" counted the whole bank as
+    // a debt. It gives the position only.
+    document.getElementById("qtNumber").textContent = study
+      ? `Question ${fmtNum(idx + 1)}` : `Question ${fmtNum(idx + 1)} of ${fmtNum(total)}`;
     // From 1200px up the rail is the navigator and this is a label, not
     // a control. The styling said so; the semantics still promised a
     // collapsed list that Enter would open.
@@ -3131,7 +3336,16 @@
       }
     }
     document.getElementById("qtPrev").disabled = navTarget(-1) < 0;
-    document.getElementById("qtNext").disabled = navTarget(+1) < 0;
+    const qtNext = document.getElementById("qtNext");
+    qtNext.disabled = navTarget(+1) < 0;
+    // Once a question is revealed the filled Next under it is the way on;
+    // a second Next in the topbar would be the same action in another
+    // style. Hidden rather than removed so the counter stays centred.
+    const cur = state.quiz.pool[idx];
+    qtNext.style.visibility = cur && state.quiz.revealed[cur.id] ? "hidden" : "";
+    // Progress along a whole-bank shuffle is a sliver that never moves.
+    const prog = document.getElementById("qtProgress");
+    if (prog) prog.hidden = study;
     const bar = document.querySelector("#qtProgress span");
     if (bar) bar.style.width = total ? `${((idx + 1) / total) * 100}%` : "0%";
     renderNavigator();
@@ -3159,9 +3373,31 @@
     return ok;
   }
 
+  // How far a study session has got. Its pool is every matching question
+  // in a shuffle, so only the questions reached so far belong on the rail
+  // or in the report; the rest are not a backlog. Sessions saved before
+  // this was recorded work it out once from their answers.
+  function studyReach(quiz) {
+    quiz = quiz || state.quiz;
+    if (quiz.reached == null) {
+      let r = 0;
+      quiz.pool.forEach((q, i) => { if (quiz.answers[q.id] || quiz.revealed[q.id] && !quiz.reviewing) r = i; });
+      quiz.reached = r;
+    }
+    if (!quiz.reviewing) quiz.reached = Math.max(quiz.reached, quiz.idx || 0);
+    return quiz.reached;
+  }
+  // The questions the navigator can show: a test's whole pool, or the
+  // part of a study pool reached so far.
+  function navSpan() {
+    const quiz = state.quiz;
+    return quiz.mode === "study" ? Math.min(quiz.pool.length, studyReach(quiz) + 1) : quiz.pool.length;
+  }
+
   function navigatorHtml() {
     const pool = state.quiz.pool;
-    const total = pool.length;
+    const study = state.quiz.mode === "study";
+    const total = navSpan();
     const midTest = state.quiz.mode === "test" && !state.quiz.finished;
 
     // Counts walk the answered set, not the pool. A pool can be the
@@ -3182,7 +3418,11 @@
       if (answerWasCorrect(q, state.quiz.answers[qid])) correct += 1; else incorrect += 1;
     }
     let flagged = 0;
-    for (const qid in state.flags) if (state.flags[qid] && byId[qid]) flagged += 1;
+    if (study) {
+      for (let i = 0; i < total; i++) if (state.flags[pool[i].id]) flagged += 1;
+    } else {
+      for (const qid in state.flags) if (state.flags[qid] && byId[qid]) flagged += 1;
+    }
 
     // Recentre only when the question itself moved out of the window.
     // Recentring on every render would snap the view straight back the
@@ -3228,30 +3468,37 @@
     const score = midTest
       ? ""
       : `, <b class="good">${correct}</b> right and <b class="bad">${incorrect}</b> wrong`;
-    const flag = flagged ? `, <b>${flagged}</b> flagged` : "";
+    const flag = flagged ? `, <b>${fmtNum(flagged)}</b> flagged` : "";
+    const tally = study
+      ? `<b>${fmtNum(answered)}</b> answered`
+      : `<b>${fmtNum(answered)}</b> of ${fmtNum(total)} answered`;
+    // In a test Enter only moves on; nothing is shown until the end.
+    const enterDoes = study ? "show answer, then next" : "next";
 
+    // Go to is for a test, where question 34 of 40 is a place to return
+    // to. In a study session every reached question is already a chip.
     return `
-      <p class="nav-stats"><b>${answered}</b> of ${total} answered${score}${flag}.</p>
+      <p class="nav-stats">${tally}${score}${flag}.</p>
       ${windowed ? `
         <div class="nav-window">
           <button type="button" class="nav-page" data-nav-page="-1" ${from === 0 ? "disabled" : ""}>‹</button>
-          <span class="nav-range">${from + 1} to ${to}</span>
+          <span class="nav-range">${fmtNum(from + 1)} to ${fmtNum(to)}</span>
           <button type="button" class="nav-page" data-nav-page="1" ${to >= total ? "disabled" : ""}>›</button>
         </div>` : ""}
       <div class="nav-chips">${chips}</div>
-      ${windowed ? `
+      ${windowed && !study ? `
         <form class="nav-jump">
           <label for="navJumpInput">Go to</label>
           <input id="navJumpInput" type="number" min="1" max="${total}" inputmode="numeric"
                  placeholder="${state.quiz.idx + 1}" />
           <button type="submit">Go</button>
         </form>` : ""}
-      <details class="nav-keys">
+      <details class="nav-keys kbd-only">
         <summary>Keyboard</summary>
         <dl>
-          <dt>1 to 5</dt><dd>choose an option</dd>
-          <dt>shift + 1 to 5</dt><dd>rule one out</dd>
-          <dt>Enter</dt><dd>submit, then next</dd>
+          <dt>1 to 5 or A to E</dt><dd>choose an option</dd>
+          <dt>shift + the same</dt><dd>rule it out</dd>
+          <dt>Enter</dt><dd>${enterDoes}</dd>
           <dt>Left / Right</dt><dd>previous / next</dd>
           <dt>F</dt><dd>flag</dd>
           <dt>L</dt><dd>reference values</dd>
@@ -3268,7 +3515,7 @@
     const list = document.getElementById("qtList");
     // The chip has to hold the highest number in the session. Four
     // digits do not fit the 30px square three digits were drawn in.
-    const digits = String(state.quiz.pool.length).length;
+    const digits = String(navSpan()).length;
     // 8px per digit, not 7: the narrow-screen panel draws these at
     // 12.5px, where five digits overflowed a floor tuned for 11.5px.
     const chipMin = Math.max(30, 10 + 8 * digits) + "px";
@@ -3300,7 +3547,7 @@
       if (page) {
         const dir = parseInt(page.dataset.navPage, 10);
         navWindowStart = Math.max(0, Math.min(
-          state.quiz.pool.length - navWindow, navWindowStart + dir * navWindow));
+          navSpan() - navWindow, navWindowStart + dir * navWindow));
         navFollowCurrent = false;
         renderNavigator();
       }
@@ -3370,11 +3617,12 @@
     const left = Math.max(0, total - answered);
     if (kind === "end") {
       return adminConfirm({
-        title: "Score the test now?",
+        title: "Finish the test now?",
         body: left
-          ? `${answered} of ${total} answered. The other ${left} count as unanswered.`
-          : `All ${total} answered.`,
-        confirmLabel: "Score it now",
+          ? `${fmtNum(answered)} of ${fmtNum(total)} answered. The other ${fmtNum(left)} count as unanswered.`
+          : `All ${fmtNum(total)} answered.`,
+        confirmLabel: "Finish test",
+        tone: "primary",
       });
     }
     const body = quiz && quiz.mode === "test"
@@ -3484,14 +3732,15 @@
     btn.title = state.paused ? "Resume" : "Pause";
   }
 
-  // End becomes "Back to results" while a scored session is being
-  // reviewed. The original label is read off the button once so the
-  // markup stays the one place it is written.
+  // The end control names what it does: a test is finished (and marked,
+  // after a dialog), a study session simply ends, and a review goes back
+  // to the results it came from.
   function paintColophon() {
     const end = document.getElementById("endNowBtn");
     if (!end) return;
-    if (!end.dataset.label) end.dataset.label = end.textContent;
-    end.textContent = state.quiz && state.quiz.reviewing ? "Back to results" : end.dataset.label;
+    const quiz = state.quiz;
+    end.textContent = quiz && quiz.reviewing ? "Back to results"
+      : quiz && quiz.mode === "test" ? "Finish test" : "End session";
   }
 
   // Screen-reader announcements. Cleared first so the same sentence
@@ -3691,11 +3940,26 @@
     ol.innerHTML = "";
     ol.setAttribute("role", "radiogroup");
     ol.setAttribute("aria-label", q.lead_in || "Answer options");
+    // One citation per source. Rationales end in "(Source: X)" and the
+    // option also carries X in source_refs, which printed it twice under
+    // every option and a third time in Sources. The trailing bracket is
+    // dropped in favour of the caption, and the caption itself is dropped
+    // when every option cites the same thing, since Sources already says it.
+    const refKey = o => (o.source_refs || []).join(", ");
+    const oneSource = !!(q.sources && q.sources.length) &&
+      shuffled.every(o => refKey(o) === refKey(shuffled[0]));
+    const SOURCE_TAIL = /\s*\(Sources?:(?:[^()]|\([^()]*\))*\)\s*\.?\s*$/i;
     shuffled.forEach((opt, i) => {
       const li = document.createElement("li");
       li.dataset.letter = opt.letter;
-      const cite = opt.source_refs && opt.source_refs.length
-        ? `<span class="cite">${esc(opt.source_refs.join(", "))}</span>` : "";
+      const hasRefs = !!(opt.source_refs && opt.source_refs.length);
+      const cite = hasRefs && !oneSource
+        ? `<span class="cite">${esc(refKey(opt))}</span>` : "";
+      let rationale = String(opt.rationale || "");
+      if (hasRefs && SOURCE_TAIL.test(rationale)) {
+        rationale = rationale.replace(SOURCE_TAIL, "");
+        if (rationale && !/[.!?]$/.test(rationale)) rationale += ".";
+      }
       // The row itself carries the radio semantics. The eliminate control
       // is a separate button inside it, so a screen reader hears one
       // choice and one toggle rather than two competing controls.
@@ -3706,7 +3970,7 @@
           <span class="opt-letter" aria-hidden="true">${opt.letter}</span>
           <span class="opt-body">
             <span class="opt-text">${esc(opt.text)}</span>
-            <span class="opt-rationale"><b>${opt.correct ? "Correct." : "Incorrect."}</b> ${esc(opt.rationale)}${cite}</span>
+            <span class="opt-rationale"><b>${opt.correct ? "Correct." : "Incorrect."}</b> ${esc(rationale)}${cite}</span>
           </span>
         </span>
         <button type="button" class="opt-strike" data-letter="${opt.letter}"
@@ -3755,11 +4019,11 @@
 
     const submitBtn = document.getElementById("submitBtn");
     submitBtn.onclick = onSubmit;
-    // A test reveals nothing: the button records the answer and moves on,
-    // and on the last question it ends the test.
+    // A test reveals nothing: the answer is kept as soon as it is chosen,
+    // so the button only moves on, and on the last question it finishes.
     if (state.quiz.mode === "test") {
       submitBtn.textContent = state.quiz.idx >= state.quiz.pool.length - 1
-        ? "Submit and finish" : "Submit";
+        ? "Finish test" : "Next";
     }
     document.getElementById("nextBtn").onclick = onNext;
     // A second Next at the foot of the commentary, so a reader who has
@@ -3841,9 +4105,10 @@
     const q = state.quiz.pool[state.quiz.idx];
     if (!state.quiz.answers[q.id]) return;
     // A test answer is recorded once, at scoring (commitTestAnswers), so
-    // Submit here only moves on. Going back to check an answer and
-    // pressing Enter no longer logs it a second time.
-    if (state.quiz.mode === "test") { maybeShowHouseQuote(); onNext(); return; }
+    // Next here only moves on. Going back to check an answer and pressing
+    // Enter does not log it a second time. No House quote in a test: it
+    // is a timed exam, and the quote belongs to study sessions.
+    if (state.quiz.mode === "test") { onNext(); return; }
     if (state.quiz.revealed[q.id]) return;
     const elapsedMs = state.questionStart ? Math.min(1000 * 60 * 30, Date.now() - state.questionStart) : 0;
     const { chosen, isC } = recordAttempt(q, state.quiz.answers[q.id], elapsedMs);
@@ -3879,18 +4144,19 @@
     const ex = document.getElementById("explainBlock");
     ex.hidden = false;
 
-    // The subtopic + difficulty + author model go on the commentary
-    // eyebrow now, where they can be seen AFTER the user has committed
-    // to an answer. `model` tags who/what produced the question so
-    // audits can spot patterns by LLM.
-    // Prefer the granular subtopic_detail (set during the broad-area
-    // consolidation) for the post-reveal eyebrow - the broad q.subtopic
-    // bucket is used for stats/grouping, not display.
-    const subLabel = q.subtopic_detail || q.subtopic;
-    const eb = ex.querySelector(".section-eyebrow");
-    eb.innerHTML = `Commentary` +
-      (subLabel ? `<span class="topic-tag">${esc(subLabel)}</span>` : "") +
-      (q.difficulty ? `<span class="difficulty-tag">Difficulty ${q.difficulty}/5</span>` : "");
+    // What the question was testing heads its commentary. It is only
+    // shown after the answer is committed, since before that it would
+    // give the answer away. subtopic_detail is the specific phrase; the
+    // broad q.subtopic is for grouping. Authors start it lowercase.
+    const subLabel = String(q.subtopic_detail || q.subtopic || "").trim();
+    const head = ex.querySelector(".comm-head");
+    if (head) head.textContent = subLabel
+      ? subLabel.charAt(0).toUpperCase() + subLabel.slice(1) : "Commentary";
+    const meta = ex.querySelector(".comm-meta");
+    if (meta) {
+      meta.textContent = q.difficulty ? `Difficulty ${q.difficulty} of 5` : "";
+      meta.hidden = !q.difficulty;
+    }
 
     // The Why-is-correct / Why-the-others-are-not commentary blocks are
     // intentionally NOT populated here - their content used to duplicate
@@ -3928,15 +4194,12 @@
     const rl = document.getElementById("explainRanges");
     rl.innerHTML = "";
     if (q.reference_ranges && q.reference_ranges.length) {
-      // Render relevant ranges inline so the user sees them without
-      // an extra click. The full Reference values panel remains
-      // available from the masthead button.
       // q.topic gates which panels may appear: a paediatric panel never
       // renders under an adult question even if the question asks for it.
       rl.innerHTML = renderInlineRanges(q.reference_ranges, q.topic);
       if (!rl.dataset.wired) {
         rl.addEventListener("click", e => {
-          const b = e.target.closest(".ir-more");
+          const b = e.target.closest(".ir-open");
           if (b) openRefs([b.dataset.refKey]);
         });
         rl.dataset.wired = "1";
@@ -3949,16 +4212,13 @@
     // breakdown in view. Enter still advances to the next question
     // because the button has keyboard focus.
     document.getElementById("nextBtn").focus({ preventScroll: true });
-    // Frame the post-submit state so both the answers panel and the
-    // Next button are visible without the user reaching for the wheel.
-    // Prefer the chosen option (or the correct one if the user got it
-    // wrong) as the anchor; fall back to the Next button. rAF defers
-    // until the explainBlock has reflowed.
+    // Frame the reveal on the correct answer: that row is what the reveal
+    // is about, and a wrong pick is already marked red where it sits.
+    // Instant, like every other question change; a smooth scroll of a
+    // phone-length rationale took over half a second. rAF defers until
+    // the explainBlock has reflowed.
     requestAnimationFrame(() => {
-      const ansLetter = state.quiz.answers[q.id];
-      const anchorLi =
-        (ansLetter && document.querySelector(`#qOptions li[data-letter="${ansLetter}"]`)) ||
-        document.querySelector("#qOptions li.revealed.correct");
+      const anchorLi = document.querySelector("#qOptions li.revealed.correct");
       const nextBtn = document.getElementById("nextBtn");
       if (anchorLi && nextBtn) {
         const aRect = anchorLi.getBoundingClientRect();
@@ -3970,10 +4230,20 @@
         const fits = aRect.top >= 0 && nRect.bottom <= vh;
         if (!fits) {
           const targetTop = window.scrollY + aRect.top - 80;
-          window.scrollTo({ top: Math.max(0, targetTop), behavior: scrollBehavior() });
+          window.scrollTo({ top: Math.max(0, targetTop), behavior: "instant" });
         }
       } else if (nextBtn) {
-        nextBtn.scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
+        nextBtn.scrollIntoView({ block: "nearest", behavior: "instant" });
+      }
+      // The Next at the foot of the commentary is for a reader who has
+      // scrolled past the one under the options. When both would sit on
+      // the same screen it is the same button twice, so it stays hidden.
+      const endBtn = document.getElementById("nextBtnEnd");
+      const endWrap = endBtn && endBtn.closest(".commentary-next");
+      if (endWrap && nextBtn) {
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const apart = endBtn.getBoundingClientRect().bottom - nextBtn.getBoundingClientRect().top;
+        endWrap.hidden = apart < vh;
       }
     });
   }
@@ -3994,12 +4264,13 @@
         const flagged = quiz.pool.filter(q => state.flags[q.id]).length;
         if (open || flagged) {
           const parts = [];
-          if (open) parts.push(`${open} unanswered`);
-          if (flagged) parts.push(`${flagged} flagged`);
+          if (open) parts.push(`${fmtNum(open)} unanswered`);
+          if (flagged) parts.push(`${fmtNum(flagged)} flagged`);
           const ok = await adminConfirm({
-            title: "Score the test now?",
+            title: "Finish the test now?",
             body: parts.join(", ") + ".",
-            confirmLabel: "Score it now",
+            confirmLabel: "Finish test",
+            tone: "primary",
           });
           if (!ok || state.quiz !== quiz || quiz.finished) return;
         }
@@ -4229,14 +4500,11 @@
   }
 
   // ── Keyboard ────────────────────────────────────────────────────────────
-  // Direction map normalises arrow keys + WASD into a single token
-  // ("up" / "down" / "left" / "right" / "submit") so the dispatch below
-  // doesn't repeat itself. WASD only fires outside form fields.
+  // Letters are not directions here: A to E name the options on screen,
+  // so they select like 1 to 5. Only the arrow keys navigate.
   const DIR_MAP = {
-    "arrowup": "up", "w": "up",
-    "arrowdown": "down", "s": "down",
-    "arrowleft": "left", "a": "left",
-    "arrowright": "right", "d": "right",
+    "arrowup": "up", "arrowdown": "down",
+    "arrowleft": "left", "arrowright": "right",
   };
   function bindQuizKeys() {
     document.onkeydown = e => {
@@ -4264,7 +4532,8 @@
       const codeDigit = /^(?:Digit|Numpad)([1-5])$/.exec(e.code || "");
       const digitIdx = codeDigit ? parseInt(codeDigit[1], 10) - 1
         : "!@#$%".indexOf(e.key) >= 0 && e.key.length === 1 ? "!@#$%".indexOf(e.key)
-        : /^[1-5]$/.test(e.key) ? parseInt(e.key, 10) - 1 : -1;
+        : /^[1-5]$/.test(e.key) ? parseInt(e.key, 10) - 1
+        : /^[a-e]$/i.test(e.key) ? "abcde".indexOf(e.key.toLowerCase()) : -1;
       const k = e.key.toLowerCase();
       const dir = DIR_MAP[k];
       const submitBtn = document.getElementById("submitBtn");
@@ -4281,9 +4550,8 @@
         if (li && !revealed) toggleStrike(q.id, letter, li);
         e.preventDefault();
       } else if (!e.shiftKey && digitIdx >= 0) {
-        // Number keys SELECT the corresponding option (A-E). They do NOT
-        // submit - the user still has to press Enter / Space / right /
-        // d / Submit to commit.
+        // A number or letter selects its option and never commits: Enter,
+        // a second Space on the selected row, or the button does that.
         const letter = "ABCDE"[digitIdx];
         const li = document.querySelector(`#qOptions li[data-letter="${letter}"]`);
         // Pressing the number of the option that is already selected
@@ -4294,9 +4562,10 @@
           else li.click();
         }
         e.preventDefault();
-      } else if (k === "enter" || k === " ") {
-        // Enter / Space: submit when an answer is selected, otherwise
-        // advance to the next question once revealed.
+      } else if (k === "enter" || (k === " " && t.closest && t.closest(".opt-choice"))) {
+        // Enter commits the selection, then moves on once revealed. Space
+        // does the same only on an option row (the second press on the
+        // selected row); elsewhere it is left to scroll the page.
         if (canNext) nextBtn.click();
         else if (canSubmit) submitBtn.click();
         e.preventDefault();
@@ -4308,17 +4577,12 @@
       } else if (k === "l") {
         toggleRefs();
       } else if (dir === "left") {
-        // Left / A = previous question (does not submit, even if an
-        // answer is selected).
         navOffset(-1);
         e.preventDefault();
       } else if (dir === "right") {
-        // Right / D is context-aware:
-        //   not-yet-submitted + answer selected -> submit
-        //   revealed                            -> advance to next
-        //   otherwise                           -> navigate forward
-        if (canSubmit) submitBtn.click();
-        else if (canNext) nextBtn.click();
+        // Navigation only. A selection is never committed by an arrow, so
+        // stepping back through a session and forward again changes nothing.
+        if (canNext) nextBtn.click();
         else navOffset(1);
         e.preventDefault();
       } else if (dir === "up" || dir === "down") {
@@ -4391,12 +4655,17 @@
       if (ans) byTopic[t].attempted++;
       if (isC) byTopic[t].c++;
     });
-    const denom = state.quiz.mode === "study" ? answered.length : pool.length;
+    // A study session is scored on what was answered; the rest of its
+    // pool was never reached and is not mentioned. A test is scored out
+    // of its full length, so its unanswered questions are named.
+    const study = state.quiz.mode === "study";
+    const denom = study ? answered.length : pool.length;
     const pct = denom ? Math.round(100 * correct / denom) : 0;
     document.getElementById("scorePct").textContent = `${pct}%`;
-    let line = `${correct} of ${denom} answered correctly`;
-    if (state.quiz.mode === "study" && answered.length < pool.length)
-      line += `, ${pool.length - answered.length} unanswered`;
+    let line = study && !denom ? "Nothing answered"
+      : `${fmtNum(correct)} of ${fmtNum(denom)} correct`;
+    if (!study && answered.length < pool.length)
+      line += `, ${fmtNum(pool.length - answered.length)} unanswered`;
     if (timeUp) line += " (time ran out)";
     line += ".";
     document.getElementById("scoreLine").textContent = line;
@@ -4404,8 +4673,10 @@
     const tb = document.getElementById("topicBreakdown");
     tb.innerHTML = "";
     Object.entries(byTopic).sort().forEach(([t, r]) => {
-      const d = state.quiz.mode === "study" ? r.attempted : r.n;
-      const p = d ? Math.round(100 * r.c / d) : 0;
+      const d = study ? r.attempted : r.n;
+      // A discipline the session never touched is not a result.
+      if (!d) return;
+      const p = Math.round(100 * r.c / d);
       const row = document.createElement("div");
       row.className = "topic-row";
       row.innerHTML =
@@ -4473,19 +4744,48 @@
 
   function reviewRows(filter) {
     const rows = [];
-    state.quiz.pool.forEach((q, i) => {
-      const ans = state.quiz.answers[q.id];
+    const quiz = state.quiz;
+    // A study session lists what it reached; a question flagged in some
+    // earlier session further down the shuffle is not part of this one.
+    const span = quiz.mode === "study" ? navSpan() : quiz.pool.length;
+    quiz.pool.slice(0, span).forEach((q, i) => {
+      const ans = quiz.answers[q.id];
       const isC = ans && _shuffledOptions(q).find(o => o.letter === ans)?.correct;
       const flagged = !!state.flags[q.id];
       if (filter === "incorrect" && (isC || !ans)) return;
       if (filter === "flagged" && !flagged) return;
-      // "All" means everything that happened, not every question that
-      // could have. An untouched question in a 7,000-question study pool
-      // is not a review row.
-      if (filter === "all" && !ans && !flagged) return;
+      // In a study session "All" is what was answered or flagged. A test
+      // is marked out of every question, so its unanswered ones are
+      // listed too.
+      if (filter === "all" && quiz.mode === "study" && !ans && !flagged) return;
       rows.push({ q, i, ans, isC, flagged });
     });
     return rows;
+  }
+
+  // A review row is identified by what the stem is about. Most stems
+  // open with the reader's role ("You are the general practitioner
+  // seeing a 71 year old man..."), which made every row start the same,
+  // so that clause is skipped.
+  function stemOpening(stem, max) {
+    let s = String(stem || "").replace(/\s+/g, " ").trim();
+    const WHO = "newborn|baby|infant|toddler|child|boy|girl|man|woman|teenager|adolescent|young|" +
+      "previously|healthy|term|preterm|primigravida|multigravida|primiparous|multiparous|" +
+      "nulliparous|pregnant|couple|mother|father|patient";
+    const role = new RegExp(`^You are [^.]*?\\b(?=(?:a|an|the) (?:\\d|G\\d|(?:${WHO})\\b))`, "i").exec(s);
+    if (role) s = s.slice(role[0].length);
+    else {
+      // "You are the doctor in a sexual health clinic. A 26 year old..."
+      // Only a first sentence that is about the setting alone is skipped.
+      const lead = /^You are (?:the|a|an) [^.]*\.\s+/i.exec(s);
+      if (lead && lead[0].length < s.length && !/\d/.test(lead[0]) &&
+          !new RegExp(`\\b(?:${WHO})\\b`, "i").test(lead[0])) s = s.slice(lead[0].length);
+    }
+    s = s.charAt(0).toUpperCase() + s.slice(1);
+    if (s.length <= max) return s;
+    const cut = s.slice(0, max);
+    const sp = cut.lastIndexOf(" ");
+    return (sp > max * 0.6 ? cut.slice(0, sp) : cut).replace(/[,;:.]+$/, "") + "…";
   }
 
   function renderReviewList(filter, shown) {
@@ -4501,12 +4801,11 @@
       // button. The glyph gets words, and flagged is written out rather
       // than left to the row tint.
       const said = (!ans ? "Unanswered" : (isC ? "Correct" : "Incorrect")) + (flagged ? ", flagged" : "");
-      return `<li class="${cls}" data-review-i="${i}" role="button" tabindex="0">` +
+      return `<li class="${cls}" data-review-i="${i}" data-qid="${esc(q.id)}" role="button" tabindex="0">` +
         `<span class="rv-status"><span aria-hidden="true">${glyph}</span>` +
         `<span class="visually-hidden">${said}.</span></span>` +
-        `<span class="rv-id">${esc(q.id)}</span>` +
         `<span class="rv-stem">${flagged ? '<b class="rv-flag">Flagged</b> ' : ""}` +
-        `${esc(q.stem.slice(0, 110))}${q.stem.length > 110 ? "…" : ""}</span></li>`;
+        `${esc(stemOpening(q.stem, 110))}</span></li>`;
     }).join("");
     const rest = rows.length - page.length;
     if (rows.length) {
@@ -4516,8 +4815,8 @@
         : "");
     } else {
       const EMPTY = {
-        incorrect: "Nothing wrong in this session. Switch to All to read back over the ones you got right.",
-        flagged: "You did not flag anything. Press F on a question to flag it for later.",
+        incorrect: "No incorrect answers this session. All shows the ones you got right.",
+        flagged: "Nothing was flagged in this session.",
       };
       ol.innerHTML = `<li class="rv-empty">${EMPTY[filter] || "Nothing was answered or flagged in this session."}</li>`;
     }
@@ -4653,13 +4952,13 @@
       }
       if (ok) {
         copyBtn.classList.add("copied");
-        copyBtn.textContent = "Copied  ✓";
+        copyBtn.textContent = "Copied";
         copyStatus.textContent = `Now paste it into ${auditLlmLabel()}.`;
         copyStatus.classList.add("ok");
       } else {
         copyBtn.classList.add("copy-failed");
-        copyBtn.textContent = "Select & copy manually";
-        copyStatus.textContent = "Clipboard blocked - the prompt is selected; press Cmd-C.";
+        copyBtn.textContent = "Copy manually";
+        copyStatus.textContent = "Clipboard blocked. The prompt is selected; copy it.";
       }
       clearTimeout(copyResetTimer);
       copyResetTimer = setTimeout(() => {
@@ -4712,8 +5011,10 @@
       // life"), so before the answer is shown the dialog gives the
       // position instead. The id still goes in the report itself.
       const shown = state.quiz.revealed[q.id] || state.quiz.finished;
+      // Study mode has no fixed length, so it names the position alone.
       openReportModal(q.id, q.model, shown ? null
-        : `Question ${state.quiz.idx + 1} of ${state.quiz.pool.length}`);
+        : `Question ${fmtNum(state.quiz.idx + 1)}` +
+          (state.quiz.mode === "test" ? ` of ${fmtNum(state.quiz.pool.length)}` : ""));
     });
   }
   function openReportModal(qid, model, label) {
@@ -4748,7 +5049,7 @@
     if (btn.disabled) return;
     status.className = "dim small";
     if (text.length < 3) {
-      status.textContent = "Add a short description of the issue.";
+      status.textContent = SERVER_ERROR_TEXT.report_short;
       status.classList.add("bad");
       return;
     }
@@ -4762,7 +5063,7 @@
     });
     btn.disabled = false;
     if (res && res.ok) {
-      status.textContent = "Sent. It goes into the next audit pass.";
+      status.textContent = "Sent. Thank you.";
       status.classList.remove("bad"); status.classList.add("ok");
       // Optimistically include in local in-memory list so the badge updates.
       state.reports.push({
@@ -4775,11 +5076,9 @@
       if (repBtn) repBtn.classList.add("has-report");
       setTimeout(closeReportModal, 1200);
     } else {
-      // Say what actually went wrong. "Check your connection" is wrong
-      // advice when the server answered with a reason.
-      status.textContent = (res && res.status > 0 && res.error)
-        ? `Not sent: ${res.error}`
-        : "Could not reach the server. Try again, or open an issue at github.com/mord58562/a-to-e/issues.";
+      // postBackend has already worded the reason; "check your connection"
+      // is wrong advice when the server answered with one.
+      status.textContent = `Not sent. ${(res && res.error) || SERVER_UNREACHABLE}`;
       status.classList.add("bad");
     }
   }
@@ -4832,7 +5131,7 @@
   function fillPromptText() {
     const promptText = document.getElementById("promptText");
     return loadPromptTemplate().then(t => {
-      if (promptText) promptText.textContent = t ? renderPrompt(t) : "Could not load the prompt template. Reopen the Content tab to retry.";
+      if (promptText) promptText.textContent = t ? renderPrompt(t) : "Couldn't load the prompt template. Reopen the Content tab to try again.";
       return t;
     });
   }
@@ -4942,15 +5241,15 @@
       li.className = "audit-row";
       const topicsCount = {};
       for (const q of b.questions) topicsCount[q.topic || "?"] = (topicsCount[q.topic || "?"] || 0) + 1;
-      const topicSummary = Object.entries(topicsCount).map(([t, n]) => `${esc(t)}=${n}`).join(", ");
+      const topicSummary = Object.entries(topicsCount).map(([t, n]) => `${esc(t)} ${fmtNum(n)}`).join(", ");
       const modelsCount = {};
       for (const q of b.questions) modelsCount[q.model || "unknown"] = (modelsCount[q.model || "unknown"] || 0) + 1;
-      const modelSummary = Object.entries(modelsCount).map(([m, n]) => `${esc(m)}×${n}`).join(", ");
+      const modelSummary = Object.entries(modelsCount).map(([m, n]) => `${esc(m)} ×${fmtNum(n)}`).join(", ");
       li.innerHTML = `
         <div class="audit-row-head">
           <div class="audit-row-text">
             <span class="audit-row-name">${esc(b.path)}</span>
-            <span class="audit-row-meta dim small">${b.questions.length} Q · ${topicSummary} · author(s): ${modelSummary}</span>
+            <span class="audit-row-meta dim small">${plural(b.questions.length, "question")} · ${topicSummary} · by ${modelSummary}</span>
           </div>
           <button class="link-btn audit-row-toggle">Audit this batch</button>
         </div>
@@ -5006,7 +5305,7 @@
         text = opts.buildPrompt();
       } catch (e) {
         console.warn("[audit] building the prompt failed:", e && e.message || e);
-        copyStatus.textContent = (e && e.message) || "Could not build the prompt.";
+        copyStatus.textContent = (e && e.message) || "Couldn't build the prompt.";
         copyStatus.className = "audit-copy-status small bad";
         return;
       }
@@ -5015,20 +5314,23 @@
         copyStatus.textContent = `Copied. Paste into ${auditLlmLabel()}.`;
         copyStatus.className = "audit-copy-status dim small ok";
       } catch {
-        // Fallback: drop into the response textarea reversed? No - put in a
-        // hidden textarea and select it.
+        // The async clipboard is refused (permissions, http): fall back to
+        // execCommand on a throwaway textarea, which reports its result.
         const ta = document.createElement("textarea");
         ta.value = text;
         document.body.appendChild(ta);
         ta.select();
-        try { document.execCommand("copy"); } catch {}
+        let copied = false;
+        try { copied = document.execCommand("copy"); } catch (e) { console.warn("[audit] execCommand copy threw:", e && e.message); }
         document.body.removeChild(ta);
-        copyStatus.textContent = "Clipboard blocked - copied via fallback. If it didn't take, hit copy again.";
+        copyStatus.textContent = copied
+          ? `Copied. Paste into ${auditLlmLabel()}.`
+          : "The clipboard is blocked in this browser. Allow clipboard access for this site, then copy again.";
         copyStatus.className = "audit-copy-status dim small";
       }
     };
     applyBtn.onclick = async () => {
-      applyStatus.textContent = "Validating…";
+      applyStatus.textContent = "Checking the reply…";
       applyStatus.className = "audit-apply-status dim small";
       const raw = (respEl.value || "").trim();
       if (!raw) {
@@ -5040,12 +5342,12 @@
       try {
         parsed = opts.parse(raw);
       } catch (e) {
-        applyStatus.textContent = "Validation failed: " + (e && e.message);
+        applyStatus.textContent = `The reply doesn't check out: ${((e && e.message) || "no detail").replace(/\.$/, "")}.`;
         applyStatus.classList.remove("dim", "ok"); applyStatus.classList.add("bad");
         return;
       }
       applyBtn.disabled = true;
-      applyStatus.textContent = "Applying via backend…";
+      applyStatus.textContent = "Saving to the repo…";
       try {
         const res = await opts.apply(parsed);
         if (res && res.ok) {
@@ -5057,11 +5359,12 @@
           if (opts.kind === "inbox") renderAuditInbox();
           else renderReportsAdminList("open");
         } else {
-          applyStatus.textContent = "Backend rejected: " + (res && res.error || "unknown");
+          applyStatus.textContent = `Not applied. ${(res && res.error) || "The server gave no reason."}`;
           applyStatus.classList.add("bad");
         }
       } catch (e) {
-        applyStatus.textContent = "Apply failed: " + (e && e.message);
+        console.warn("[audit] apply threw:", e && e.stack || e);
+        applyStatus.textContent = `Not applied. ${(e && e.message) || "No detail."}`;
         applyStatus.classList.add("bad");
       } finally {
         applyBtn.disabled = false;
@@ -5220,15 +5523,15 @@ because the site replaces the live entry wholesale on apply.`;
       const subjects = {};
       for (const q of f.questions) subjects[q.subtopic || q.topic || "?"] = (subjects[q.subtopic || q.topic || "?"] || 0) + 1;
       const topSubjects = Object.entries(subjects).sort((a,b) => b[1]-a[1]).slice(0, 3)
-        .map(([k, n]) => `${esc(k)}×${n}`).join(", ");
+        .map(([k, n]) => `${esc(k)} ${fmtNum(n)}`).join(", ");
       const models = {};
       for (const q of f.questions) models[q.model || "unknown"] = (models[q.model || "unknown"] || 0) + 1;
-      const modelSummary = Object.entries(models).map(([m, n]) => `${esc(m)}×${n}`).join(", ");
+      const modelSummary = Object.entries(models).map(([m, n]) => `${esc(m)} ×${fmtNum(n)}`).join(", ");
       li.innerHTML = `
         <div class="audit-row-head">
           <div class="audit-row-text">
             <span class="audit-row-name">${isMain ? "★ " : ""}${esc(f.path)}</span>
-            <span class="audit-row-meta dim small">${f.questions.length} Q · top: ${topSubjects} · author(s): ${modelSummary}</span>
+            <span class="audit-row-meta dim small">${plural(f.questions.length, "question")} · most: ${topSubjects} · by ${modelSummary}</span>
           </div>
           <button class="link-btn audit-row-toggle">Audit this file</button>
         </div>
@@ -5474,7 +5777,10 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
       const q = state.questions.find(x => x.id === r.question_id);
       const li = document.createElement("li");
       li.className = "report-row report-" + esc(r.status || "open");
-      const when = (r.created || "").replace("T", " ").slice(0, 16);
+      // Stored as UTC ISO; shown in the reader's own time.
+      const t = Date.parse(r.created || "");
+      const when = isNaN(t) ? "" : new Date(t).toLocaleString("en-AU",
+        { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" });
       const qStem = q ? esc(q.stem.slice(0, 140)) + (q.stem.length > 140 ? "…" : "") : "<em>question not found in current bank</em>";
       const qModel = q && q.model ? `<span class="model-tag">${esc(q.model)}</span>` : "";
       const open = (r.status || "open") === "open";
@@ -5596,7 +5902,7 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     const savedToInbox = res && res.ok ? (res.saved || true) : null;
     // A server that answered with a reason (401 admin session, 400 bad
     // field) is not "unreachable"; keep the reason for the status line.
-    const rejected = !savedToInbox && res && res.status > 0 ? (res.error || `HTTP ${res.status}`) : null;
+    const rejected = !savedToInbox && res && res.status > 0 ? res.error : null;
 
     if (!savedToInbox) {
       const existing = load(ns(LOCAL_QUESTIONS_KEY), []);
@@ -5606,16 +5912,16 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     box.value = "";
     btn.disabled = false;
 
-    let msg = `Added ${added.length} question${added.length === 1 ? "" : "s"}.`;
-    if (skipped.length) msg += ` Skipped ${skipped.length} duplicate ID${skipped.length === 1 ? "" : "s"}.`;
+    let msg = `Added ${plural(added.length, "question")}.`;
+    if (skipped.length) msg += ` Skipped ${plural(skipped.length, "duplicate id")}.`;
     if (savedToInbox && typeof savedToInbox === "string") {
       msg += ` Saved to the inbox at data/${savedToInbox}. It loads for everyone on next reload.`;
     } else if (savedToInbox) {
       msg += " Saved to the inbox.";
     } else if (rejected) {
-      msg += ` Not saved to the inbox: ${rejected}. Kept in this browser only; use 'Export local additions' to share.`;
+      msg += ` Not saved to the inbox. ${rejected} Kept in this browser only; use 'Export local additions' to share.`;
     } else {
-      msg += " Saved in this browser only (server unreachable). Use 'Export local additions' to share.";
+      msg += ` Saved in this browser only. ${SERVER_UNREACHABLE} Use 'Export local additions' to share.`;
     }
     status.textContent = msg;
     status.classList.remove("dim", "bad", "ok");
@@ -5675,7 +5981,7 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(url), 1000);
     const status = document.getElementById("pasteStatus");
-    status.textContent = `Exported ${local.length} question${local.length === 1 ? "" : "s"} to ${filename}. Drop into data/inbox/ for the next audit pass.`;
+    status.textContent = `Exported ${plural(local.length, "question")} to ${filename}. Drop it into data/inbox/ for the next audit.`;
     status.className = "dim small ok";
   }
 
@@ -5836,7 +6142,8 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     if (old) old.remove();
     const toast = document.createElement("div");
     toast.className = "house-toast";
-    toast.innerHTML = `<span class="hq-quote">"${esc(q)}"</span><span class="hq-attrib">- ${esc(who)}</span>`;
+    // Quote marks and the attribution dash come from the stylesheet.
+    toast.innerHTML = `<span class="hq-quote">${esc(q)}</span><span class="hq-attrib">${esc(who)}</span>`;
     document.body.appendChild(toast);
     requestAnimationFrame(() => toast.classList.add("show"));
     const dismiss = () => { toast.classList.remove("show"); setTimeout(() => toast.remove(), 320); };
@@ -5901,21 +6208,26 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
            `</div>`;
   }
 
+  // After the answer: the panels this question was tagged with, named in
+  // one line, each opening the reference panel at that panel. Printing
+  // the panels in full put several screens of often unrelated ranges
+  // between the commentary and Next on a phone.
   function renderInlineRanges(keys, topic) {
     const cats = (state.ranges && state.ranges.categories) || {};
-    const blocks = [];
+    const rows = [];
+    const links = [];
     const seen = new Set();
     // Panels the population guard held back, so a question that asked
     // for nothing but adult panels does not just render an empty space.
     const suppressed = [];
     (keys || []).forEach(rawKey => {
       // A handful of questions carry an inline {analyte, range} object
-      // instead of a library key. These used to throw a TypeError out of
-      // the loop and take the whole block down with them.
+      // instead of a library key. It is specific to the question and not
+      // in the panel, so it stays as a row.
       if (rawKey && typeof rawKey === "object") {
-        blocks.push(`<div class="ir-cat"><div class="rrs">${refRowHtml({
+        rows.push(refRowHtml({
           test: rawKey.analyte || rawKey.test, value: rawKey.range || rawKey.value, units: rawKey.units,
-        })}</div></div>`);
+        }));
         return;
       }
       if (typeof rawKey !== "string") return;
@@ -5924,24 +6236,18 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
       if (!categoryFitsTopic(cat, topic)) { suppressed.push(cat.label || rawKey); return; }
       if (seen.has(rawKey)) return;
       seen.add(rawKey);
-      const MAX = 10;
-      const shown = cat.ranges.slice(0, MAX);
-      const more = cat.ranges.length - shown.length;
-      blocks.push(
-        `<div class="ir-cat">` +
-        `<div class="ir-cat-head">${esc(cat.label || rawKey)}</div>` +
-        `<div class="rrs">${shown.map(refRowHtml).join("")}</div>` +
-        (more > 0 ? `<button type="button" class="ir-more" data-ref-key="${esc(rawKey)}">${more} more, open the full panel</button>` : "") +
-        `</div>`
-      );
+      links.push(`<button type="button" class="ir-open" data-ref-key="${esc(rawKey)}">` +
+        `${esc(cat.label || rawKey)}</button>`);
     });
-    if (!blocks.length && suppressed.length) {
-      blocks.push(`<p class="ir-none">` +
+    const out = [];
+    if (rows.length) out.push(`<div class="ir-cat"><div class="rrs">${rows.join("")}</div></div>`);
+    if (links.length) out.push(`<p class="ir-line">Reference values: ${links.join(", ")}</p>`);
+    else if (!rows.length && suppressed.length) {
+      out.push(`<p class="ir-none">` +
         `The library has no ${topic === "Paediatrics" ? "paediatric" : "matching"} values for ` +
-        `${esc(suppressed.slice(0, 3).join(", "))}. ` +
-        `Adult ranges are in the full panel, under L.</p>`);
+        `${esc(suppressed.slice(0, 3).join(", "))}.</p>`);
     }
-    return blocks.join("");
+    return out.join("");
   }
 
   // Render the stem, optionally highlighting authored clue phrases after
@@ -5976,8 +6282,11 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
   // current bank. Expand opportunistically as the question pool
   // grows. Keys are matched case-insensitively as whole words.
   const TERM_GLOSSARY = {
-    "DKA": "Diabetic ketoacidosis. Hyperglycaemia + ketonaemia + metabolic acidosis. Common precipitants: missed insulin, infection, new-onset T1DM. Mgmt: fluids first, then insulin, then K+.",
-    "PPH": "Postpartum haemorrhage. >=500 mL blood loss after vaginal delivery (>=1000 mL caesarean) or any loss causing haemodynamic compromise. 4 Ts: Tone, Trauma, Tissue, Thrombin.",
+    // DKA potassium: Queensland Health adult DKA guideline (2023) and SCHN
+    // paediatric DKA guideline 2015-9075 both start insulin only once K+
+    // is 3.5 mmol/L or more. RCH Melbourne uses 3.0 for children.
+    "DKA": "Diabetic ketoacidosis. Hyperglycaemia + ketonaemia + metabolic acidosis. Common precipitants: missed insulin, infection, new-onset T1DM. Management: fluids first; check K+ before starting insulin and hold insulin while K+ is below 3.5 mmol/L; replace K+ alongside insulin.",
+    "PPH": "Postpartum haemorrhage. ≥500 mL blood loss after vaginal delivery (≥1000 mL caesarean) or any loss causing haemodynamic compromise. 4 Ts: Tone, Trauma, Tissue, Thrombin.",
     "ACS": "Acute coronary syndrome. Umbrella for unstable angina, NSTEMI, STEMI. ECG + troponin + risk stratify.",
     "SSRI": "Selective serotonin reuptake inhibitor. First-line for moderate-severe depression and most anxiety disorders. Common: sertraline, escitalopram, fluoxetine.",
     "SNRI": "Serotonin-noradrenaline reuptake inhibitor. e.g. venlafaxine, duloxetine.",
@@ -5986,29 +6295,29 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     "CTG": "Cardiotocograph. Continuous fetal heart rate + uterine activity trace. Used antenatally and in labour.",
     "GBS": "Group B Streptococcus. Maternal carriage screened ~36 wk; intrapartum penicillin if positive or risk factors.",
     "PPROM": "Preterm pre-labour rupture of membranes (before 37 wk, before labour onset).",
-    "PROM": "Pre-labour rupture of membranes at term (>=37 wk, before labour onset).",
+    "PROM": "Pre-labour rupture of membranes at term (≥37 wk, before labour onset).",
     "HELLP": "Haemolysis, Elevated Liver enzymes, Low Platelets. Severe pre-eclampsia variant; deliver after stabilisation.",
     "CTPA": "CT pulmonary angiogram. First-line for suspected PE in non-pregnant adults.",
     "PE": "Pulmonary embolism. Clot in pulmonary arteries; sudden dyspnoea, pleuritic chest pain, tachycardia.",
     "DVT": "Deep vein thrombosis. Most commonly in the calf; risk factors via Wells / Caprini.",
-    "COPD": "Chronic obstructive pulmonary disease. Spirometry: post-bronchodilator FEV1/FVC < 0.7.",
-    "CKD": "Chronic kidney disease. eGFR < 60 mL/min/1.73m^2 OR markers of kidney damage for >=3 months.",
-    "AKI": "Acute kidney injury. Cr rise >=26 micromol/L in 48 h, or >=1.5× baseline in 7 d, or urine output <0.5 mL/kg/h x 6 h.",
+    "COPD": "Chronic obstructive pulmonary disease. Spirometry: post-bronchodilator FEV1/FVC <0.7.",
+    "CKD": "Chronic kidney disease. eGFR <60 mL/min/1.73 m² or markers of kidney damage for ≥3 months.",
+    "AKI": "Acute kidney injury. Cr rise ≥26 micromol/L in 48 h, or ≥1.5× baseline in 7 d, or urine output <0.5 mL/kg/h for 6 h.",
     "T1DM": "Type 1 diabetes mellitus. Autoimmune beta-cell destruction; lifelong insulin required.",
     "T2DM": "Type 2 diabetes mellitus. Insulin resistance + relative deficiency; lifestyle + metformin first-line.",
     "GTT": "Glucose tolerance test. 75 g oral glucose; fasting + 1 h + 2 h plasma glucose. Gestational diabetes screen.",
-    "HbA1c": "Glycated haemoglobin; reflects average plasma glucose over preceding ~3 months. Diabetes diagnostic threshold >=48 mmol/mol (6.5%).",
+    "HbA1c": "Glycated haemoglobin; reflects average plasma glucose over preceding ~3 months. Diabetes diagnostic threshold ≥48 mmol/mol (6.5%).",
     // ASD - see disambiguated entry below.
     "VSD": "Ventricular septal defect. Pansystolic murmur, lower-left sternal edge.",
-    "FBC": "Full blood count. Hb, WCC, platelets +/- differential.",
+    "FBC": "Full blood count. Hb, WCC, platelets ± differential.",
     "UEC": "Urea, electrolytes, creatinine. Renal function + Na/K screen.",
     "LFT": "Liver function tests. ALT, AST, ALP, GGT, bilirubin, albumin.",
-    "TFT": "Thyroid function tests. TSH +/- free T4 / free T3.",
+    "TFT": "Thyroid function tests. TSH ± free T4 and free T3.",
     "CRP": "C-reactive protein. Acute-phase reactant; rises hours after inflammatory stimulus.",
     "ESR": "Erythrocyte sedimentation rate. Slower-rising inflammatory marker.",
-    "eGFR": "Estimated glomerular filtration rate. Calculated from creatinine + age +/- sex.",
-    "BMI": "Body mass index. kg/m^2. AU adult cut-offs: <18.5 underweight, 25-29.9 overweight, >=30 obese.",
-    "GCS": "Glasgow Coma Scale. Eye/Verbal/Motor; range 3-15. <=8 = secure airway.",
+    "eGFR": "Estimated glomerular filtration rate. Calculated from creatinine + age ± sex.",
+    "BMI": "Body mass index, kg/m². AU adult cut-offs: <18.5 underweight, 25-29.9 overweight, ≥30 obese.",
+    "GCS": "Glasgow Coma Scale. Eye, verbal, motor; range 3-15. ≤8: secure the airway.",
     "BNP": "B-type natriuretic peptide. Marker of cardiac wall stretch; rises in heart failure.",
     "TSH": "Thyroid-stimulating hormone. First-line thyroid screen; raised in primary hypothyroidism.",
     "ICU": "Intensive care unit.",
@@ -6024,11 +6333,11 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     "MAOI": "Monoamine oxidase inhibitor.",
     "GORD": "Gastro-oesophageal reflux disease.",
     "IBS": "Irritable bowel syndrome.",
-    "IBD": "Inflammatory bowel disease - umbrella for Crohn's disease + ulcerative colitis.",
+    "IBD": "Inflammatory bowel disease. Covers Crohn's disease and ulcerative colitis.",
     "OCD": "Obsessive-compulsive disorder.",
     "PTSD": "Post-traumatic stress disorder.",
     "ADHD": "Attention-deficit hyperactivity disorder.",
-    "ASD": "Autism spectrum disorder (psych/paeds context) OR atrial septal defect (cardiac context).",
+    "ASD": "Autism spectrum disorder (psych/paeds context) or atrial septal defect (cardiac context).",
     "TIA": "Transient ischaemic attack. Stroke-like deficit resolving within 24 h (most <1 h).",
     "MI": "Myocardial infarction.",
     "CHF": "Congestive heart failure.",
@@ -6056,19 +6365,26 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     for (let i = 0; i < parts.length; i++) {
       if (parts[i].startsWith("<")) continue;
       parts[i] = parts[i].replace(TERM_REGEX, m =>
-        `<span class="term" data-term="${esc(m)}">${m}</span>`);
+        `<span class="term" data-term="${esc(m)}" tabindex="0" role="button">${m}</span>`);
     }
     return parts.join("");
   }
 
-  // Tooltip element is a singleton - created lazily, reparented as
-  // needed, positioned relative to the hovered span. Body-level click
-  // anywhere else dismisses it on touch devices.
+  // One popup element, created lazily and positioned against the term.
+  // Opening a definition is a deliberate act: a tap or click toggles it,
+  // keyboard focus opens it, and a mouse has to rest on the term for
+  // TERM_HOVER_MS first, so moving the pointer across a paragraph full of
+  // dotted terms does not flicker popups over the text being read. Once
+  // one is open, the next term under the mouse opens at once.
+  const TERM_HOVER_MS = 350;
   let _termPopup = null;
+  let _termOpenFor = null;
+  let _termHoverTimer = null;
   function getTermPopup() {
     if (_termPopup) return _termPopup;
     _termPopup = document.createElement("div");
     _termPopup.className = "term-popup";
+    _termPopup.id = "termPopup";
     _termPopup.setAttribute("role", "tooltip");
     _termPopup.hidden = true;
     document.body.appendChild(_termPopup);
@@ -6082,6 +6398,9 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     const pop = getTermPopup();
     pop.innerHTML = `<div class="term-popup-head">${esc(term)}</div><div class="term-popup-body">${esc(def)}</div>`;
     pop.hidden = false;
+    if (_termOpenFor && _termOpenFor !== span) _termOpenFor.removeAttribute("aria-describedby");
+    _termOpenFor = span;
+    span.setAttribute("aria-describedby", "termPopup");
     // Position below the span by default; flip above if it would
     // overflow the viewport bottom; clamp horizontally so the popup
     // never disappears off the left/right edges.
@@ -6100,22 +6419,56 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     pop.style.top  = `${top + window.scrollY}px`;
   }
   function hideTermPopup() {
+    clearTimeout(_termHoverTimer);
     if (_termPopup) _termPopup.hidden = true;
+    if (_termOpenFor) _termOpenFor.removeAttribute("aria-describedby");
+    _termOpenFor = null;
   }
-  // Delegated hover handler - attached once. Mouseover bubbles; mouseout
-  // fires when leaving the span.
-  document.addEventListener("mouseover", e => {
-    const t = e.target;
-    if (!(t instanceof HTMLElement)) return;
-    if (!t.classList.contains("term")) return;
-    showTermPopup(t);
+  const termAt = t => (t instanceof Element) ? t.closest(".term") : null;
+  // Pointer events carry the device, so hover logic applies to a mouse
+  // only; a tap arrives as the click below.
+  document.addEventListener("pointerover", e => {
+    const t = termAt(e.target);
+    if (!t || e.pointerType !== "mouse") return;
+    clearTimeout(_termHoverTimer);
+    if (_termOpenFor) showTermPopup(t);
+    else _termHoverTimer = setTimeout(() => showTermPopup(t), TERM_HOVER_MS);
   });
-  document.addEventListener("mouseout", e => {
-    const t = e.target;
-    if (!(t instanceof HTMLElement)) return;
-    if (!t.classList.contains("term")) return;
-    hideTermPopup();
+  document.addEventListener("pointerout", e => {
+    const t = termAt(e.target);
+    if (!t || e.pointerType !== "mouse" || t.contains(e.relatedTarget)) return;
+    clearTimeout(_termHoverTimer);
+    if (document.activeElement !== t) hideTermPopup();
   });
+  document.addEventListener("click", e => {
+    const t = termAt(e.target);
+    if (!t) { if (_termOpenFor && !(_termPopup && _termPopup.contains(e.target))) hideTermPopup(); return; }
+    clearTimeout(_termHoverTimer);
+    if (_termOpenFor === t && e.pointerType !== "mouse") hideTermPopup();
+    else showTermPopup(t);
+  });
+  // Keyboard focus only: a tap also focuses the term, and opening here
+  // would let the click that follows toggle it straight back shut.
+  document.addEventListener("focusin", e => {
+    const t = termAt(e.target);
+    let kb = false;
+    try { kb = !!(t && t.matches(":focus-visible")); } catch (_) { /* old engine */ }
+    if (kb) showTermPopup(t);
+  });
+  document.addEventListener("focusout", e => { if (termAt(e.target) === _termOpenFor) hideTermPopup(); });
+  // Capture phase on window, so Escape (or Enter/Space on a focused term)
+  // is spent here and does not also reach the quiz keys, which would
+  // clear the selection or move to the next question.
+  window.addEventListener("keydown", e => {
+    const t = termAt(e.target);
+    if (t && (e.key === "Enter" || e.key === " ")) {
+      e.preventDefault(); e.stopPropagation();
+      if (_termOpenFor === t) hideTermPopup(); else showTermPopup(t);
+      return;
+    }
+    if (e.key === "Escape" && _termOpenFor) { e.stopPropagation(); hideTermPopup(); }
+  }, true);
+  window.addEventListener("scroll", () => { if (_termOpenFor) hideTermPopup(); }, { passive: true });
 
   // Fisher-Yates shuffle. Uses crypto.getRandomValues when available so
   // the next-question stream is uniform across the eligible pool with

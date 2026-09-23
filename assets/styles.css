@@ -1,19 +1,17 @@
 /* ────────────────────────────────────────────────────────────────────
- * Y4 MCQ Bank
+ * A to E
  *
- * Restored aesthetic per the "best looking" reference: dark navy
- * canvas, cyan/teal accent, card-based question container, pill tags,
- * outlined teal action buttons, sans-serif throughout. SaaS-clinical
- * cleanliness without the cream-paper or scarlet-and-serif detours.
+ * A study instrument read for hours, on a phone or a laptop. Light
+ * theme by default, dark navy under [data-theme="dark"] (the :root
+ * values). One cyan/teal accent for selection and links; the primary
+ * button is filled (near-black in light, amber in dark).
  *
- * Functional rules preserved:
- *   - question column always centred
- *   - reference panel is a right-side fixed overlay, no scrim, the
- *     main pane stays fully interactable while open
- *   - subtopic / category never revealed pre-answer (spoiler bug)
- *   - difficulty pill is fine pre-answer (general signal)
- *   - no horizontal scrollbar anywhere
- *   - no hammers, no boxed-kbd component
+ * Layout rules:
+ *   - the question column is centred
+ *   - the reference panel is a fixed right-side overlay with no scrim;
+ *     the question stays usable while it is open
+ *   - the subtopic is never shown before the answer (it gives it away)
+ *   - no horizontal scroll anywhere
  * ──────────────────────────────────────────────────────────────────── */
 
 :root {
@@ -23,22 +21,15 @@
   --surface-2:   #16345a;
   --line:        #1f3556;
   --line-strong: #2b4570;
-  /* Outline of an unchecked control (the option radio ring). A line
-   * colour is too faint to carry state: --line-strong read 1.5:1.
-   * 3.3:1 on --surface, over the 3:1 WCAG 1.4.11 floor. */
+  /* Ring of an unchecked radio: 3.3:1 on --surface (WCAG 1.4.11). */
   --control-bd:  #62799e;
 
+  /* Three text levels: read, secondary, quiet. --ink-mute clears 4.5:1
+   * on every surface and on the good, bad and accent row tints, because
+   * 12.5px citations sit on those. */
   --ink:         #e8f1ff;
   --ink-2:       #c4d2e7;
-  /* Measured, not eyeballed. Both were raised 2026-09-23: at #8497b3 /
-   * #8598b8 they read 4.0 to 4.3 on --surface-2 and on the good, bad
-   * and accent row tints (11px citations, the selected row's key), and
-   * "faint" was the lighter of the two. Now mute 4.7 to 6.4 and faint
-   * 4.55 to 6.1 across surface, surface-2, bg-2 and all three tints,
-   * with faint below mute below --ink-3. Faint paints the rule-out
-   * control and the text of a ruled-out option. */
   --ink-mute:    #93a5c1;
-  --ink-faint:   #8ea1bd;
 
   --accent:      #0fcad4;
   --accent-2:    #5dd5df;
@@ -51,46 +42,27 @@
   --bad:         #ff7a85;
   --bad-bg:      rgba(255, 122, 133, 0.10);
   --bad-bd:      rgba(255, 122, 133, 0.40);
-  /* Yellower and cooler than --cta (#f0a25a): at #e8b34a the flag and
-   * the five-minute warning read as the same amber as Begin and Next. */
+  /* Warn means "needs your attention": a flag, the running-out timer,
+   * a page notice. Yellower than the dark primary button's amber so the
+   * two never read as one. */
   --warn:        #d9c36a;
   --warn-bg:     rgba(217, 195, 106, 0.10);
 
-  /* Type stack (rebuilt 2026-09-22).
+  /* Type faces.
    *
-   * The previous stack set --sans and --display to the same value, so
-   * one neutral grotesque did every job with weight as the only
-   * hierarchy. That, not the particular family, is what reads as
-   * machine-made: a page where nobody chose anything. Public Sans made
-   * it worse by design - its own brief asks it to "be strong and
-   * neutral" and "have as few quirks as possible", and it is metrically
-   * matched to SF Pro Text and Roboto. It is also unmaintained.
+   * --sans    IBM Plex Sans, for the interface. It separates l (tailed)
+   *           from I (crossbars), which the ACSQHC guidance on on-screen
+   *           medicines information asks for: in a dose, l and I
+   *           colliding is a safety problem. Its digits are tabular by
+   *           default, so a lab value is the same width in prose, in a
+   *           table and in code.
+   * --serif   Literata, for the clinical vignette only. It marks the stem
+   *           as the thing to read, against a sans interface that is the
+   *           thing to operate.
+   * --mono    IBM Plex Mono, for literal code and ids.
    *
-   * Three slots doing three jobs:
-   *
-   * --sans    IBM Plex Sans, for interface text. Chosen for its
-   *           numerals: it is the one open humanist sans on the
-   *           shortlist that disambiguates BOTH l (which gets a tail)
-   *           and I (which gets crossbars). The ACSQHC guidance on
-   *           on-screen display of medicines information asks for
-   *           exactly that, because in a dosing context l and I
-   *           colliding is a safety problem, not a nicety. Its digits
-   *           are tabular by default at the same advance as Plex Mono,
-   *           so a lab value occupies the same width in prose, in a
-   *           table and in a code span.
-   * --serif   Literata, for the clinical vignette. A serif for the
-   *           stem and a sans for the interface is mode separation,
-   *           not a legibility claim - the reading-speed evidence for
-   *           serif over sans on screen is null and it would be
-   *           dishonest to pretend otherwise. It marks the stem as the
-   *           thing to read rather than the thing to operate.
-   * --mono    IBM Plex Mono, same family, for literal code only.
-   *
-   * Via Google Fonts, which strips the `zero` feature from everything
-   * it serves, so there is no slashed zero here. Plex's l and I
-   * shapes are default glyphs rather than features, so the part that
-   * actually matters survives. Self-hosting would buy the slashed zero
-   * for about 14 KB more.
+   * Google Fonts strips the `zero` feature, so there is no slashed zero;
+   * Plex's l and I are default glyphs and survive.
    */
   --sans:        "IBM Plex Sans", -apple-system, BlinkMacSystemFont,
                  "Segoe UI", Helvetica, Arial, sans-serif;
@@ -101,27 +73,55 @@
   --mono:        "IBM Plex Mono", ui-monospace, "SF Mono", Menlo,
                  Consolas, monospace;
 
-  /* Three-radius system. Pills/badges -> chip, controls/options -> tight,
-   * cards/modals -> soft. Stops the radius-soup of 6/7/8/12/14.
-   * --r-soft moved from 10px to 8px on 2026-06-01: 10px is the shadcn
-   * default and reads as AI-template; 8px pairs better with current
-   * macOS/iOS reference radii and reads as deliberate. */
+  /* Type sizes. Each step is far enough from the next to read as a
+   * different level; nothing is set between them.
+   *   cap      11    uppercase tracked labels (record headings) and
+   *                  count badges, nothing in sentence case
+   *   meta     12.5  citations, counts, timers, notes, navigator cells
+   *   ui       14    controls, labels, tables, the record's values
+   *   read     16    options, explanations, the lead-in
+   *   stem     17    the vignette (16 on phones), the commentary heading
+   *   head     20    dialog titles, the wordmark
+   *   display  36    screen titles
+   *   figure   56    the session score */
+  --fs-cap:      11px;
+  --fs-meta:     12.5px;
+  --fs-ui:       14px;
+  --fs-read:     16px;
+  --fs-stem:     17px;
+  --fs-head:     20px;
+  --fs-display:  36px;
+  --fs-figure:   56px;
+  /* Uppercase labels need tracking to stay legible at 11px; large
+   * headings need a little less than the default. Nothing else is
+   * tracked. */
+  --track-caps:  0.07em;
+  --track-tight: -0.015em;
+
+  /* Radius follows containment: chip for pills, tight for small marks
+   * inside a control, control for buttons and inputs, soft for cards
+   * and dialogs. */
   --r-chip:      999px;
   --r-tight:     4px;
   --r-control:   6px;
   --r-soft:      8px;
 
-  /* Easing tokens (overhaul 2026-06-01). Single material-standard ease
-   * and two durations - replace every component-specific cubic-bezier. */
-  --ease:        cubic-bezier(0.2, 0, 0, 1);
-  --dur-fast:    120ms;
-  --dur-medium:  200ms;
+  /* Motion. Colour changes are quick and plain; the few things that
+   * move (toast, progress bar) share one curve. Page and panel changes
+   * are not animated: they happen hundreds of times a session. */
+  --t-colour:    120ms ease;
+  --t-move:      200ms cubic-bezier(0.2, 0, 0, 1);
 
-  /* Layout tokens for the quiz composition. The topbar, the reading
-   * card and the navigator rail derive their geometry from these,
-   * which is what keeps the three aligned instead of each carrying
-   * its own magic number. --masthead-h is measured by app.js; the
-   * value here is only the pre-measurement fallback. */
+  /* Elevation, by what floats: lift-1 for popovers (question list,
+   * term definition, toast), lift-2 for dialogs and the reference
+   * panel. Dark raises the alpha, since a shadow barely reads on navy. */
+  --lift-1:      0 1px 2px rgb(4 12 22 / 0.30), 0 10px 26px -8px rgb(4 12 22 / 0.55);
+  --lift-2:      0 2px 4px rgb(4 12 22 / 0.35), 0 18px 44px -12px rgb(4 12 22 / 0.65);
+  --scrim:       rgb(4 10 18 / 0.60);
+
+  /* Quiz layout. The topbar, the reading card, the navigator rail and
+   * the colophon take their geometry from these so they stay aligned.
+   * --masthead-h is measured by app.js; this value is the fallback. */
   --col:         820px;
   --col-pad:     24px;
   --rail-w:      244px;
@@ -133,14 +133,13 @@
   /* The reference panel's width, read by the panel itself and by the
    * inset that keeps the reading column clear of it. */
   --panel-w:     min(420px, 92vw);
+  /* How far the reading column sits left of centre: half the rail from
+   * 1200px, plus half the panel while it is open. The media queries
+   * below set it; the column, topbar and colophon all read it. */
+  --col-shift:   0px;
 
-  /* Two-tier secondary ink between body and faint, so headings, body,
-   * label-secondary, and faint each occupy a deliberate level. */
-  --ink-3:       #9fb0ca;
-
-  /* CTA accent split off the cyan selection accent so primary buttons
-   * stop sharing the "correct answer" hue. Warm amber on dark, deeper
-   * burnt orange on light. */
+  /* The primary button. A filled warm colour in dark, so "act" never
+   * shares the cyan that marks a selection. */
   --cta:         #f0a25a;
   --cta-2:       #f6b878;
   --cta-bg:      rgba(240, 162, 90, 0.10);
@@ -149,24 +148,20 @@
 }
 
 [data-theme="light"] {
-  /* Clinical-reference palette (overhaul 2026-06-01). Replaces the
-   * cream/sepia "tasteful AI" trap. Cool near-white surface, neutral
-   * lines, institutional teal-navy accent, near-black ink-as-CTA
-   * (Stripe / Linear / Notion move). Reads as reference / NHS digital,
-   * not as Wix template. Recommended palette from ai_tells_round2.md
-   * section C4. */
+  /* Daytime reading: a cool white page with neutral hairlines, so the
+   * vignette and the answer colours carry all the contrast. The primary
+   * button is ink itself. */
   --bg:          #fafbfc;
   --bg-2:        #ffffff;
   --surface:     #ffffff;
   --surface-2:   #f3f5f7;
   --line:        #dde2e8;
   --line-strong: #b6bec8;
-  --control-bd:  #808a96;   /* 3.5:1 on --surface; was 1.9 */
+  --control-bd:  #808a96;   /* 3.5:1 on --surface */
 
   --ink:         #0e1a26;
   --ink-2:       #2b3947;
   --ink-mute:    #5b6a7b;
-  --ink-faint:   #666f7c;   /* 4.65 to 5.09; was 2.75 to 3.01 */
 
   --accent:      #1a6e8e;
   --accent-2:    #135872;
@@ -182,7 +177,10 @@
   --warn:        #8a6608;
   --warn-bg:     rgba(138, 102, 8, 0.08);
 
-  --ink-3:       #46546a;
+  --lift-1:      0 1px 2px rgb(14 26 38 / 0.06), 0 10px 26px -8px rgb(14 26 38 / 0.18);
+  --lift-2:      0 2px 4px rgb(14 26 38 / 0.06), 0 18px 44px -12px rgb(14 26 38 / 0.26);
+  --scrim:       rgb(14 26 38 / 0.45);
+
   --cta:         #0e1a26;
   --cta-2:       #2b3947;
   --cta-bg:      rgba(14, 26, 38, 0.06);
@@ -198,32 +196,16 @@
 :root { color-scheme: dark; }
 :root[data-theme="light"] { color-scheme: light; }
 
-/* The hidden attribute has to beat author styling.
- *
- * The UA rule for [hidden] is display:none at the lowest specificity,
- * so any class rule that sets a display overrides it and the element
- * stays on screen with its `hidden` property set to true. That is what
- * kept the Content pane of the admin panel permanently mounted:
- * `.admin-pane { display: flex }` outranked it, so switching to Users
- * or Bank toggled the attribute, rendered the new pane underneath, and
- * left the old one sitting above it - the tab moved and the panel
- * appeared not to. Seven other elements in this file had the same
- * latent bug.
- *
- * One deliberate exception: .ref-panel[hidden] keeps the panel in the
- * layout so it can slide, and wins because it is also !important and
- * more specific. Specificity alone would not be enough - an important
- * declaration is only beaten by another important one. */
+/* The UA [hidden] rule has the lowest specificity, so any class that
+ * sets a display would otherwise keep a hidden element on screen. */
 [hidden] { display: none !important; }
 
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /* Lining figures site-wide. Tabular figures are NOT set here: tnum
-   * suppresses kerning in every run it touches, and a fixed-advance
-   * digit in running prose is a small ugliness repeated everywhere.
-   * Data surfaces opt in with font-variant-numeric: tabular-nums,
-   * which is where alignment actually matters. */
+  /* Lining figures everywhere. Plex digits are already tabular; the
+   * tabular-nums declarations on data surfaces cover the fallback
+   * faces, where proportional digits would break column alignment. */
   font-feature-settings: "lnum" 1;
 }
 body {
@@ -234,20 +216,11 @@ body {
 .t-long { display: inline; }
 
 /* ── Access gate ──────────────────────────────────────────────────── */
-/* Until the password is entered, the body is `.locked` and everything
- * except the gate is hidden. Pre-JS render therefore shows only the
- * gate, never the app behind it. */
-/* Pre-paint auth hint: if a saved auth token is detected by preauth.js,
- * skip the gate flash entirely and reveal the app shell immediately. The
- * JS unlock path still runs in parallel; if /api/me rejects the token,
- * the gate is re-shown by app.js.
- *
- * The reveal is written as "do not hide" rather than as a second rule
- * forcing `display: revert !important` back over the first. That rule
- * carried an id's worth of specificity through :not(#gate), so it beat
- * every hidden-state rule in this file and forced a display value onto
- * elements that were meant to stay hidden - which is why the admin
- * overlay painted for a frame on every load for a signed-in user. */
+/* While the body is `.locked` only the gate renders, so nothing behind
+ * it shows before sign-in. When preauth.js finds a saved token or guest
+ * id it sets .pre-authed and the gate never paints; app.js brings it
+ * back if the token is rejected. Written as "do not hide" rather than a
+ * forced display, so hidden elements stay hidden. */
 html:not(.pre-authed) body.locked > *:not(:where(#gate, script)) { display: none !important; }
 html.pre-authed #gate { display: none !important; }
 .gate {
@@ -255,9 +228,8 @@ html.pre-authed #gate { display: none !important; }
   background: var(--bg);
   z-index: 1000;
   display: grid;
-  /* Scrolls when the card is taller than the screen (sign-up on an
-   * iPhone SE, anything in landscape); plain center clipped the top and
-   * bottom and left Create account and the guest button unreachable. */
+  /* safe center: a card taller than the screen (sign-up on a small
+   * phone, landscape) scrolls instead of losing its ends. */
   place-items: safe center;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -270,41 +242,38 @@ html.pre-authed #gate { display: none !important; }
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--r-soft);
-  padding: 36px 36px 24px;
+  padding: 32px 32px 24px;
   display: flex;
   flex-direction: column;
   gap: 18px;
-  box-shadow: 0 10px 40px -20px rgba(0,0,0,0.25);
 }
-[data-theme="dark"] .gate-card { box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5); }
 
-.gate-head { text-align: left; display: flex; flex-direction: column; gap: 6px; margin-bottom: 4px; }
+.gate-head { text-align: left; display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; }
 .gate-brand-row {
   display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit;
 }
 .gate-wordmark {
   font-family: var(--display);
-  font-size: 30px;
+  font-size: var(--fs-head);
   font-weight: 600;
   color: var(--ink);
-  letter-spacing: -0.005em;
+  letter-spacing: var(--track-tight);
   line-height: 1;
 }
-.gate-wordmark .brand-glucose { font-size: 14px; font-weight: 500; color: var(--ink-mute); margin-left: 4px; letter-spacing: 0; font-style: italic; }
 .gate-tagline {
-  margin: 2px 0 0;
-  font-size: 13px;
-  color: var(--ink-mute);
+  margin: 0;
+  font-size: var(--fs-ui);
+  color: var(--ink-2);
   line-height: 1.45;
 }
 
 .gate-tabs {
   display: flex; gap: 0;
   border-bottom: 1px solid var(--line);
-  /* Matches .gate-card's 36px side padding so the hairline meets the
-   * card edge (it stopped 4px short at -32px). */
-  margin: 0 -36px;
-  padding: 0 36px;
+  /* Bleeds through the card's side padding so the hairline meets its
+   * edges. */
+  margin: 0 -32px;
+  padding: 0 32px;
 }
 .gate-tab {
   background: transparent;
@@ -314,117 +283,71 @@ html.pre-authed #gate { display: none !important; }
   padding: 8px 4px;
   margin-right: 20px;
   font-family: inherit;
-  font-size: 13.5px;
+  font-size: var(--fs-ui);
   font-weight: 500;
   color: var(--ink-mute);
   cursor: pointer;
-  transition: color 0.12s ease, border-color 0.12s ease;
+  transition: color var(--t-colour), border-color var(--t-colour);
 }
-.gate-tab:hover { color: var(--ink); }
+@media (hover: hover) { .gate-tab:hover { color: var(--ink); } }
 .gate-card[data-mode="signin"] .gate-tab[data-gate-switch="signin"],
 .gate-card[data-mode="signup"] .gate-tab[data-gate-switch="signup"] {
   color: var(--ink);
   border-bottom-color: var(--accent);
   font-weight: 600;
 }
-.gate-card[data-mode="legacy"] .gate-tabs { display: none; }
 
 .gate-pane { display: flex; flex-direction: column; gap: 14px; margin: 0; }
 
 .gate-field { display: flex; flex-direction: column; gap: 6px; }
 .gate-field > span {
-  font-size: 13px;
+  font-size: var(--fs-ui);
   font-weight: 500;
-  letter-spacing: 0;
   color: var(--ink-2);
 }
 .gate-field input {
   width: 100%;
-  padding: 11px 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-tight);
-  background: var(--surface-2);
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-control);
+  background: var(--bg-2);
   color: var(--ink);
   font-family: inherit;
-  font-size: 15px;
-  transition: border-color 0.12s ease, background 0.12s ease;
-  box-sizing: border-box;
+  font-size: var(--fs-read);
+  transition: border-color var(--t-colour);
 }
 .gate-field input:focus {
   outline: none;
   border-color: var(--accent);
-  background: var(--surface);
 }
-.gate-primary {
-  width: 100%;
-  margin-top: 2px;
-  padding: 11px 16px;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-}
+.gate-primary { width: 100%; margin-top: 2px; }
 .gate-err {
   color: var(--bad);
-  font-size: 12.5px;
+  font-size: var(--fs-meta);
   margin: -4px 0 0;
 }
 
-.gate-card[data-mode="legacy"] [data-hide-in-legacy] { display: none; }
-
-.gate-foot {
-  display: flex; justify-content: center; align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-  padding-top: 14px;
+/* Most visitors have no invite, so the guest path is a real button,
+ * below sign-in for the returning user. */
+.gate-guest {
+  display: flex; flex-direction: column; gap: 8px;
+  padding-top: 18px;
   border-top: 1px solid var(--line);
-  font-size: 12.5px;
 }
-.gate-foot-link {
-  background: transparent;
-  border: none;
-  font-family: inherit;
-  font-size: 12.5px;
-  color: var(--ink-mute);
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: var(--r-tight);
-  transition: color 0.12s ease, background 0.12s ease;
-}
-.gate-foot-link:hover { color: var(--ink); background: var(--surface-2); }
-.gate-foot-link.gate-foot-primary { color: var(--ink); font-weight: 500; }
-.gate-foot-sep { color: var(--ink-mute); opacity: 0.6; }
-.gate-card[data-mode="legacy"] .gate-foot-link:not([data-gate-back]) { display: none; }
-.gate-card[data-mode="legacy"] .gate-foot-link[data-gate-back] { display: inline-flex; }
-.gate-foot-note { color: var(--ink-mute); font-size: 12px; }
+.gate-guest .secondary { width: 100%; }
+.gate-note { margin: 0; font-size: var(--fs-meta); color: var(--ink-mute); line-height: 1.5; }
 #cloudSignUpInvite {
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
-.gate-card[data-mode="signin"] .gate-foot-link[data-gate-back],
-.gate-card[data-mode="signup"] .gate-foot-link[data-gate-back] { display: none; }
-
-/* Per-user stats modal */
+/* Stats modal */
 .stats-modal-card { max-width: 640px; }
-.stats-head {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
-  margin-bottom: 22px;
-}
-.stats-head .stats-num {
-  display: flex; flex-direction: column; gap: 6px;
-  padding: 14px 18px 14px 0;
-  border: none;
-  border-right: 1px solid var(--line);
-  border-radius: 0;
-  background: transparent;
-}
-.stats-head .stats-num:last-child { border-right: none; }
-.stats-num-value { font-family: var(--display); font-size: 28px; font-weight: 600; color: var(--ink); line-height: 1; font-variant-numeric: tabular-nums; }
-.stats-num-label { font-size: 13px; color: var(--ink-3); letter-spacing: 0; }
 .stats-section { margin-top: 22px; }
 .stats-section h3 {
   font-family: var(--display);
-  font-size: 15px; font-weight: 600; letter-spacing: 0;
+  font-size: var(--fs-read); font-weight: 600;
   color: var(--ink); margin: 0 0 10px;
 }
 .stats-table {
@@ -432,10 +355,10 @@ html.pre-authed #gate { display: none !important; }
   grid-template-columns: minmax(120px, 1.2fr) minmax(70px, auto) 1fr minmax(40px, auto);
   gap: 6px 12px;
   align-items: center;
-  font-size: 13px;
+  font-size: var(--fs-ui);
 }
 .stats-table .stats-label { color: var(--ink); }
-.stats-table .stats-count { color: var(--ink-mute); font-variant-numeric: tabular-nums; font-size: 12px; }
+.stats-table .stats-count { color: var(--ink-mute); font-variant-numeric: tabular-nums; font-size: var(--fs-meta); }
 .stats-table .stats-bar-wrap {
   position: relative; height: 6px; background: var(--surface-2); border-radius: var(--r-chip); overflow: hidden;
 }
@@ -444,8 +367,18 @@ html.pre-authed #gate { display: none !important; }
   background: var(--accent);
   border-radius: var(--r-chip);
 }
-.stats-table .stats-pct-cell { text-align: right; font-variant-numeric: tabular-nums; font-size: 12px; color: var(--ink-mute); }
-.stats-empty { color: var(--ink-mute); font-size: 13.5px; line-height: 1.5; }
+.stats-table .stats-pct-cell { text-align: right; font-variant-numeric: tabular-nums; font-size: var(--fs-meta); color: var(--ink-mute); }
+.stats-empty { color: var(--ink-mute); font-size: var(--fs-ui); line-height: 1.5; }
+/* The modal's lead: facts as a sentence, in the admin Bank tab's voice. */
+.stats-facts {
+  margin: 0 0 4px;
+  font-size: var(--fs-read); line-height: 1.55;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  max-width: 34em;
+}
+/* Rows with too few answers for the percentage to mean much. */
+.stats-table .stats-few { opacity: 0.55; }
 
 html, body {
   margin: 0;
@@ -453,7 +386,7 @@ html, body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--sans);
-  font-size: 16px;
+  font-size: var(--fs-read);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -462,11 +395,9 @@ html, body {
 main { overflow-x: hidden; }
 .stem, .lead-in, .comm-block p, .comm-block ul,
 .sources li, .opt-rationale {
-  /* overflow-wrap: anywhere reduces an element's min-content width to a
-   * single character. That is what we want for a long unbroken URL in a
-   * source line; it is ruinous inside a grid or flex row, where it lets
-   * the browser squeeze a label column down to "Sodiu / m". The range
-   * tables below opt out explicitly. */
+  /* anywhere lets a long URL break, but it also shrinks min-content to
+   * one character, which inside a grid squeezes a label column down to
+   * "Sodiu / m". The range tables opt out below. */
   overflow-wrap: anywhere;
   word-break: break-word;
 }
@@ -478,7 +409,7 @@ main { overflow-x: hidden; }
 ::selection { background: var(--accent-bg); color: var(--ink); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 a { color: var(--accent-2); text-decoration: none; }
-a:hover { text-decoration: underline; }
+@media (hover: hover) { a:hover { text-decoration: underline; } }
 
 /* ── Masthead ─────────────────────────────────────────────────────── */
 .masthead {
@@ -493,16 +424,11 @@ a:hover { text-decoration: underline; }
   border-bottom: 1px solid var(--line);
   position: sticky;
   top: 0;
-  /* Sit above the reference panel (z-index 110) so the trigger button
-   * stays at the same screen coordinates and remains clickable while
-   * the panel is open. Clicking the trigger then closes the panel
-   * without the user needing to move the cursor across the screen to
-   * the × button (Chrome-tab-style toggle). */
+  /* Above the reference panel (110), so the button that opened the
+   * panel stays under the cursor and closes it again. */
   z-index: 120;
-  /* Belt-and-braces against any host wrapper (PWA shell, SSB, Electron-
-   * style chrome-less window) that defaults the top of the page to a
-   * draggable region. Each interactive child explicitly opts back in to
-   * being clickable below via `.masthead *`. */
+  /* A host wrapper (PWA shell, chrome-less window) can make the top of
+   * the page a drag region, which swallows clicks on these controls. */
   -webkit-app-region: no-drag;
           app-region: no-drag;
 }
@@ -513,32 +439,22 @@ a:hover { text-decoration: underline; }
           app-region: no-drag;
 }
 .masthead-left { display: flex; align-items: center; gap: 18px; line-height: 1; }
-.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; line-height: 1; padding: 4px 6px; border-radius: var(--r-control); transition: background 0.12s ease; }
-.brand:hover { background: var(--surface); text-decoration: none; }
-.brand:hover .brand-title, .brand:hover .brand-sub, .brand:hover .brand-glucose { text-decoration: none; }
-/* "(+ glucose)" is revealed only when Paediatrics is the sole selected
- * module. app.js sets .has-paeds off state.settings.disciplines. */
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; line-height: 1; padding: 4px 6px; border-radius: var(--r-control); transition: background var(--t-colour); }
+@media (hover: hover) { .brand:hover { background: var(--surface); text-decoration: none; } }
+/* "(+ glucose)" shows only when Paediatrics is the sole discipline;
+ * app.js sets .has-paeds. */
 .masthead .brand-glucose { display: none; }
 body.has-paeds .masthead .brand-glucose { display: inline; }
 .brand-mark {
   width: 30px;
   height: 30px;
   border-radius: var(--r-tight);
-  /* Solid, not a two-colour diagonal: --cta exists so the primary
-   * action stops sharing the correct-answer hue, and the mark was
-   * mixing them back together. */
   background: var(--accent);
   display: grid;
   place-items: center;
   position: relative;
 }
-/* Stethoscope glyph (refinished).
-   Geometry: two earpieces at the top, tubing that drops a short
-   straight section then arches symmetrically around the chest to a
-   Y-junction at centre, single tube curling down-right to a diaphragm
-   with a clear bell + inner aperture. Stroke widths balanced so the
-   chest-piece doesn't dominate the tubing. White-on-teal via inline
-   SVG so the mark stays template-tint compatible. */
+/* Stethoscope, white on the accent square. */
 .brand-mark::before {
   content: "";
   display: block;
@@ -554,62 +470,43 @@ body.has-paeds .masthead .brand-glucose { display: inline; }
 .brand-title {
   font-family: var(--display);
   font-weight: 600;
-  font-size: 18px;
-  letter-spacing: -0.015em;
+  font-size: var(--fs-head);
+  letter-spacing: var(--track-tight);
   color: var(--ink);
   line-height: 1;
 }
 .brand-sub { display: none; }
 .session-meta {
-  font-size: 12px;
+  font-size: var(--fs-meta);
   line-height: 1;
-  letter-spacing: 0;
   color: var(--ink-mute);
   font-family: var(--sans);
   font-variant-numeric: tabular-nums;
-  /* Plain selectable text - the cursor should signal that, not the
-   * pointer that the surrounding clickable chrome uses. */
+  /* Selectable text inside clickable chrome. */
   cursor: text;
 }
-.profile-name { cursor: text; }
-.profile-chip { cursor: default; }
 .masthead-tools { display: flex; gap: 6px; align-items: center; line-height: 1; }
 .masthead-tools .link-btn { display: inline-flex; align-items: center; line-height: 1; }
+/* The name pill is neutral for everyone, so the only coloured pill is
+ * the admin's gold one and colour keeps its meaning. */
 .profile-chip {
   display: inline-flex; align-items: center; gap: 8px;
   margin-left: 12px;
-  padding: 5px 11px;
+  padding: 4px 4px 4px 12px;
   border: 1px solid var(--line);
   border-radius: var(--r-chip);
-  background: var(--surface-2, var(--surface));
-  font-size: 12.5px;
+  background: var(--surface-2);
+  font-size: var(--fs-meta);
   line-height: 1;
   color: var(--ink-2);
+  cursor: default;
 }
-.profile-name { font-weight: 600; color: var(--ink); letter-spacing: 0.01em; line-height: 1; }
-.profile-chip .ghost-link {
-  font-size: 11.5px;
-  color: var(--ink-mute);
-  line-height: 1;
-  text-decoration: none;
-  padding: 3px 7px;
-  border-radius: var(--r-control);
-  transition: background 0.12s ease, color 0.12s ease;
-}
-.profile-chip .ghost-link:hover {
-  color: var(--ink);
-  text-decoration: none;
-  background: color-mix(in srgb, currentColor 14%, transparent);
-}
+.profile-name { font-weight: 600; color: var(--ink); line-height: 1; cursor: text; }
+.profile-chip .ghost-link { padding: 3px 8px; border-radius: var(--r-chip); line-height: 1; }
 
-/* Per-profile colour. The admin chip is gold - a warm metallic look with
-   a subtle gradient + inner highlight so it reads as polished metal,
-   not just a yellow rectangle. Tuned separately for dark and light
-   themes (gold needs different chroma on each background to feel
-   "real"). Future profiles get their own block here. */
-.profile-chip[data-profile-id="rob"], .profile-chip[data-pill-style="gold"] {
-  --gold-1:  #ffd770;
-  --gold-2:  #d9a020;
+/* Admin pill: gold, drawn as metal with a gradient and inner highlight,
+ * tuned separately for each theme. */
+.profile-chip[data-pill-style="gold"] {
   --gold-bd: #c9941c;
   --gold-ink: #2a1d05;
   border-color: var(--gold-bd);
@@ -624,28 +521,24 @@ body.has-paeds .masthead .brand-glucose { display: inline; }
     inset 0 -1px 0 rgba(120, 80, 10, 0.35),
     0 1px 2px rgba(0, 0, 0, 0.25);
 }
-.profile-chip[data-profile-id="rob"] .profile-name,
 .profile-chip[data-pill-style="gold"] .profile-name {
   color: var(--gold-ink);
   text-shadow: 0 1px 0 rgba(255, 248, 220, 0.45);
 }
-.profile-chip[data-profile-id="rob"] .ghost-link,
 .profile-chip[data-pill-style="gold"] .ghost-link {
   color: var(--gold-ink);
   opacity: 0.75;
 }
-.profile-chip[data-profile-id="rob"] .ghost-link:hover,
-.profile-chip[data-pill-style="gold"] .ghost-link:hover {
-  color: var(--gold-ink);
-  opacity: 1;
-  text-decoration: none;
-  background: rgba(120, 80, 10, 0.18);
+@media (hover: hover) {
+  .profile-chip[data-pill-style="gold"] .ghost-link:hover {
+    color: var(--gold-ink);
+    opacity: 1;
+    background: rgba(120, 80, 10, 0.18);
+  }
 }
 
-[data-theme="light"] .profile-chip[data-profile-id="rob"],
+/* Deeper gold on white, or it washes out. */
 [data-theme="light"] .profile-chip[data-pill-style="gold"] {
-  /* Slightly deeper, more saturated gold on white so it doesn't wash
-     out. Keeps the same metallic gradient shape. */
   --gold-bd: #a67510;
   --gold-ink: #3a2604;
   background:
@@ -658,76 +551,66 @@ body.has-paeds .masthead .brand-glucose { display: inline; }
     inset 0 -1px 0 rgba(120, 80, 10, 0.30),
     0 1px 2px rgba(140, 100, 30, 0.20);
 }
-.link-btn {
+/* Buttons come in four kinds, by role:
+ *   .primary      commit (Begin, Show answer, Next, Send)
+ *   .secondary    the other choice in a pair, and the guest path
+ *   .danger-btn   the destructive action in a dialog
+ *   .opt          a choice or a toggle (setup chips, Flag, Report,
+ *                 navigator paging)
+ * and text buttons, which are everything else. Text buttons come in two
+ * sizes: .link-btn for chrome, .ghost-link for small inline actions. The
+ * hover tint is mixed from the text colour so it reads on any surface. */
+.link-btn, .ghost-link, .qt-step, .ghost-x {
   background: transparent;
   border: none;
+  font-family: inherit;
+  cursor: pointer;
+  border-radius: var(--r-control);
+  transition: background var(--t-colour), color var(--t-colour);
+}
+.link-btn, .qt-step {
   color: var(--ink-2);
-  font-family: inherit;
-  font-size: 13px;
+  font-size: var(--fs-ui);
   font-weight: 500;
-  padding: 6px 12px;
-  border-radius: var(--r-control);
-  cursor: pointer;
+  padding: 6px 10px;
 }
-.link-btn:hover { background: var(--surface); color: var(--ink); }
-.link-btn.active { color: var(--accent); }
-.link-btn[aria-pressed="true"] { color: var(--accent); }
 .ghost-link {
-  background: transparent;
-  border: none;
   color: var(--ink-mute);
-  font-family: inherit;
-  font-size: 12px;
-  cursor: pointer;
-  text-decoration: none;
-  padding: 2px 6px;
-  border-radius: var(--r-tight);
-  transition: background 0.12s ease, color 0.12s ease;
+  font-size: var(--fs-meta);
+  padding: 3px 6px;
 }
-.ghost-link:hover { background: var(--surface); color: var(--ink); }
 .ghost-x {
-  background: transparent;
-  border: none;
   color: var(--ink-mute);
-  font-size: 18px;
-  width: 28px;
-  height: 28px;
-  border-radius: var(--r-control);
-  cursor: pointer;
+  font-size: var(--fs-head);
+  width: 32px;
+  height: 32px;
   line-height: 1;
 }
-.ghost-x:hover { background: var(--surface); color: var(--ink); }
+@media (hover: hover) {
+  .link-btn:hover, .ghost-link:hover, .qt-step:hover:not(:disabled), .ghost-x:hover {
+    background: color-mix(in srgb, currentColor 10%, transparent);
+    color: var(--ink);
+  }
+}
+.link-btn.active, .link-btn[aria-pressed="true"] { color: var(--accent); }
 
 /* ── Main + question card ────────────────────────────────────────── */
 main { max-width: var(--col); margin: 0 auto; padding: 28px var(--col-pad) 80px; }
-body[data-screen="quiz"] main { padding-top: 16px; }
+/* The topbar and the reading card are one card split by a seam. */
+body[data-screen="quiz"] main { padding-top: 0; }
 
 .prose { padding: 0 4px; }
 .display {
   font-family: var(--display);
   font-weight: 600;
-  font-size: 36px;
-  letter-spacing: -0.015em;
+  font-size: var(--fs-display);
+  letter-spacing: var(--track-tight);
   margin: 0 0 28px;
   color: var(--ink);
   line-height: 1.05;
 }
-.greeting {
-  font-family: var(--display);
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  margin: 0 0 10px;
-}
-/* Generic .subhead retained for non-home use (e.g. #scoreLine on the
- * summary screen). The home-screen JMP / good-luck subheading was
- * deleted 2026-06-01 by request - removal is in index.html.
- * If a new home-screen subhead is added later, restyle without the
- * Plex Serif italic that read as AI-default. */
 .subhead {
-  font-size: 16px;
+  font-size: var(--fs-read);
   color: var(--ink-2);
   margin: 0 0 30px;
   max-width: 60ch;
@@ -735,9 +618,8 @@ body[data-screen="quiz"] main { padding-top: 16px; }
 }
 .rule { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
 .section-eyebrow {
-  font-size: 16px;
+  font-size: var(--fs-read);
   font-weight: 600;
-  letter-spacing: -0.005em;
   color: var(--ink);
   font-family: var(--display);
   margin: 0 0 14px;
@@ -747,36 +629,29 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   flex-wrap: wrap;
 }
 
-/* ── Quiz card (the "best looking" one) ──────────────────────────── */
+/* ── Quiz card ────────────────────────────────────────────────────── */
 .quiz-topbar {
   position: relative;
   background: var(--surface);
   border: 1px solid var(--line);
   border-bottom: none;
-  /* Top corners match the bottom of the reading card via --r-soft, so
-   * topbar + reading read as one continuous canvas with a flush seam. */
+  /* The top half of the reading card: square lower corners meet the
+   * card's square upper ones at the progress seam. */
   border-radius: var(--r-soft) var(--r-soft) 0 0;
-  /* Three fixed columns, not space-between. The counter is the middle
-   * cell, so it sits dead centre whatever the Previous / Next labels
-   * do - and, critically, the panel below is positioned out of flow
-   * instead of being a fourth flex item that shoved the counter
-   * sideways every time it opened. */
+  /* Three columns, so the counter stays centred whatever the Previous
+   * and Next labels say. */
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 11px 18px 13px;
-  /* The topbar is a sibling of <main>, not a child, so it has to be
-   * given the reading card's box explicitly. Without this it ran the
-   * full window width while the card it seams into was 820px wide,
-   * and the "one continuous canvas" above was only ever true in the
-   * comment. */
+  padding: 10px 14px 12px;
+  /* A sibling of <main>, so it is given the card's box explicitly. */
   width: min(100% - 2 * var(--col-pad), var(--col) - 2 * var(--col-pad));
   margin: 18px auto 0;
 }
 .quiz-topbar > #qtPrev { justify-self: start; }
 .quiz-topbar > #qtNext { justify-self: end; }
 
-/* Hairline progress bar along the bottom seam of the topbar. */
+/* Progress runs along the seam. */
 .qt-progress {
   position: absolute;
   left: 0; right: 0; bottom: 0;
@@ -790,58 +665,40 @@ body[data-screen="quiz"] main { padding-top: 16px; }
   height: 100%;
   width: 0;
   background: var(--accent);
-  transition: width var(--dur-medium) var(--ease);
+  transition: width var(--t-move);
 }
-.qt-step, .qt-counter {
+.qt-step:disabled { color: var(--ink-mute); cursor: not-allowed; }
+.qt-counter {
   background: transparent;
   border: none;
-  font-family: inherit;
-  font-size: 13px;
-  color: var(--ink-2);
-  cursor: pointer;
-  padding: 4px 8px;
   border-radius: var(--r-control);
-}
-.qt-step:hover, .qt-counter:hover { background: var(--surface-2); color: var(--ink); }
-.qt-step:disabled { color: var(--ink-faint); cursor: not-allowed; }
-.qt-counter {
+  padding: 6px 10px;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: var(--fs-ui);
   font-weight: 600;
   color: var(--ink);
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-variant-numeric: tabular-nums;
-  font-family: var(--sans);
+  transition: background var(--t-colour);
 }
-.qt-caret { font-size: 9px; color: var(--ink-mute); }
-/* ── Question navigator (rebuilt 2026-09-22) ──────────────────────
+@media (hover: hover) {
+  .qt-counter:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
+}
+.qt-caret { font-size: var(--fs-cap); color: var(--ink-mute); }
+/* ── Question navigator ───────────────────────────────────────────
  *
- * Previously this lived behind a click on the counter, which hid the
- * most useful thing on the screen and, because the panel was a sibling
- * flex item, shunted the counter sideways whenever you opened it.
- *
- * It is now a persistent right rail from 1200px up, where there is room
- * beside the reading column. Below that the same markup is reused as
- * the panel behind the counter, positioned absolutely so it changes
- * nothing about the row above it.
- *
- * The chip grid is a window, not the whole pool. A session can be the
- * entire bank and 7,000 buttons is neither drawable nor navigable, so
- * it shows a block around the current question with paging and a
- * jump-to-number box. Under the window size, the window is everything
- * and the controls are not rendered at all.
+ * A right rail from 1200px up, beside the reading column. Below that
+ * the same markup is the panel behind the counter, out of flow so the
+ * row above never moves.
  */
 .nav-rail {
-  /* Absolute, not fixed: the rail belongs to the page and scrolls with
-   * it. Fixed left it hanging in the same spot while the question moved
-   * underneath, which read as a separate surface pinned over the page. */
+  /* Absolute: the rail belongs to the page and scrolls with it. */
   position: absolute;
-  /* Top edge flush with the top of the topbar card, so the rail and
-   * the column start on the same horizontal. */
+  /* Level with the top of the topbar, a gutter right of the card. */
   top: calc(var(--masthead-h) + 18px);
-  /* Left edge a fixed gutter from the card's right edge, wherever the
-   * card is. Pinning it to the window edge instead left it stranded
-   * in the margin at wide widths. */
   left: calc(50% + (var(--col) - 2 * var(--col-pad)) / 2
              - var(--pair-shift) - var(--refs-shift, 0px) + var(--rail-gap));
   width: var(--rail-w);
@@ -855,8 +712,6 @@ body[data-screen="quiz"] main { padding-top: 16px; }
 body[data-screen="quiz"] .nav-rail { display: block; }
 
 .qt-list {
-  /* Same navigator, narrow-screen presentation. Out of flow, so the
-   * Previous / counter / Next row above never moves. */
   position: absolute;
   top: calc(100% - 1px);
   left: 0;
@@ -869,17 +724,15 @@ body[data-screen="quiz"] .nav-rail { display: block; }
   max-height: 62vh;
   overflow-y: auto;
   overscroll-behavior: contain;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+  box-shadow: var(--lift-1);
 }
 
-/* The rail's own heading and counter are gone: the topbar carries the
- * position at the same moment, larger, and a grid of numbered buttons
- * under a line of statistics does not need to announce itself. */
+/* No heading: the topbar already carries the position. */
 .nav-stats {
   margin: 0 0 12px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--line);
-  font-size: 12px;
+  font-size: var(--fs-meta);
   line-height: 1.5;
   color: var(--ink-mute);
 }
@@ -894,61 +747,42 @@ body[data-screen="quiz"] .nav-rail { display: block; }
   gap: 8px;
   margin-bottom: 8px;
 }
-.nav-range { font-size: 11.5px; color: var(--ink-mute); font-variant-numeric: tabular-nums; }
-.nav-page {
-  background: none;
-  border: 1px solid var(--line);
-  border-radius: var(--r-tight);
-  color: var(--ink-2);
-  font: inherit;
-  font-size: 13px;
-  line-height: 1;
-  padding: 4px 9px;
-  cursor: pointer;
-}
-.nav-page:hover:not(:disabled) { border-color: var(--line-strong); color: var(--ink); }
-.nav-page:disabled { color: var(--ink-faint); cursor: not-allowed; }
+.nav-range { font-size: var(--fs-meta); color: var(--ink-mute); font-variant-numeric: tabular-nums; }
 
 .nav-chips {
   display: grid;
-  /* The cell is as wide as the widest question number it has to hold.
-   * A fixed 30px square fitted three digits and clipped four, so a
-   * session covering the whole bank drew 1000-plus spilling out of its
-   * chip. app.js sets the floor from the pool size. */
+  /* A cell is as wide as the longest question number it holds; app.js
+   * sets the floor from the pool size. */
   grid-template-columns: repeat(auto-fill, minmax(var(--nav-chip-min, 30px), 1fr));
   gap: 4px;
 }
 .nav-chip {
   position: relative;
-  /* Square while the numbers are short, wider when they are not. An
-   * aspect ratio would have grown the height with the width instead,
-   * turning a four-digit session into a wall of large tiles. */
+  /* A fixed height, not an aspect ratio: long numbers widen the cell
+   * without making it taller. */
   height: var(--nav-chip-h, 30px);
   min-height: var(--nav-chip-h, 30px);
   padding: 0 3px;
   display: grid;
   place-items: center;
-  /* Square with a small radius, not a circle. A circle of digits reads
-   * as decoration; a square reads as a cell in a grid you can scan. */
   border-radius: var(--r-tight);
   border: 1px solid var(--line);
   background: var(--bg-2);
   color: var(--ink-mute);
   font: inherit;
-  font-size: 11.5px;
+  font-size: var(--fs-meta);
   font-variant-numeric: tabular-nums;
   cursor: pointer;
-  transition: border-color var(--dur-fast) var(--ease);
+  transition: border-color var(--t-colour);
 }
-.nav-chip:hover { border-color: var(--line-strong); color: var(--ink); }
+@media (hover: hover) { .nav-chip:hover { border-color: var(--line-strong); color: var(--ink); } }
 .nav-chip.answered { background: var(--accent-bg); border-color: var(--accent-bd); color: var(--ink); }
 .nav-chip.correct { background: var(--good-bg); border-color: var(--good-bd); color: var(--good); }
 .nav-chip.incorrect { background: var(--bad-bg); border-color: var(--bad-bd); color: var(--bad); }
-/* Right and wrong differed by hue alone. A dashed edge on wrong reads
- * without colour. */
+/* Wrong is dashed as well as red, so it reads without colour. */
 .nav-chip.incorrect { border-style: dashed; }
-/* Current is a ring plus a weight change, so it survives colour
- * blindness and does not compete with correct / incorrect. */
+/* Current is a ring and a weight, so it never competes with the
+ * right/wrong colours. */
 .nav-chip.current {
   box-shadow: 0 0 0 2px var(--accent);
   font-weight: 600;
@@ -969,7 +803,7 @@ body[data-screen="quiz"] .nav-rail { display: block; }
   align-items: center;
   gap: 6px;
   margin-top: 10px;
-  font-size: 11.5px;
+  font-size: var(--fs-meta);
   color: var(--ink-mute);
 }
 .nav-jump input {
@@ -977,37 +811,26 @@ body[data-screen="quiz"] .nav-rail { display: block; }
   min-width: 0;
   background: var(--bg-2);
   border: 1px solid var(--line);
-  border-radius: var(--r-tight);
+  border-radius: var(--r-control);
   color: var(--ink);
   font: inherit;
-  font-size: 12px;
-  padding: 4px 6px;
+  font-size: var(--fs-meta);
+  padding: 4px 8px;
   font-variant-numeric: tabular-nums;
 }
-.nav-jump button {
-  background: none;
-  border: 1px solid var(--line);
-  border-radius: var(--r-tight);
-  color: var(--ink-2);
-  font: inherit;
-  font-size: 12px;
-  padding: 4px 9px;
-  cursor: pointer;
-}
-.nav-jump button:hover { border-color: var(--line-strong); color: var(--ink); }
 
 .nav-keys {
   margin-top: 12px;
   padding-top: 10px;
   border-top: 1px solid var(--line);
-  font-size: 11.5px;
+  font-size: var(--fs-meta);
 }
 .nav-keys summary {
   cursor: pointer;
   color: var(--ink-mute);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 10.5px;
+  letter-spacing: var(--track-caps);
+  font-size: var(--fs-cap);
   font-weight: 600;
 }
 .nav-keys dl {
@@ -1019,36 +842,32 @@ body[data-screen="quiz"] .nav-rail { display: block; }
 .nav-keys dt { color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .nav-keys dd { margin: 0; color: var(--ink-mute); }
 
+/* The column moves left by --col-shift so column, gap and rail are
+ * centred as one composition (see --col-shift). A relative offset, not
+ * a transform: a transform would make each a containing block and put
+ * the question-list dropdown behind the reading card. */
+body[data-screen="quiz"] main,
+body[data-screen="quiz"] .quiz-topbar {
+  position: relative;
+  left: calc(-1 * var(--col-shift));
+}
 @media (min-width: 1200px) {
-  /* Shift the reading column left by half the rail so the pair reads
-   * as one centred composition rather than a column with something
-   * bolted to the side. */
-  body[data-screen="quiz"] main,
-  body[data-screen="quiz"] .quiz-topbar {
-    /* Relative offset rather than a transform: a transform would make
-     * each of these a stacking context and a containing block, which is
-     * what put the question-list dropdown behind the reading card. */
-    position: relative;
-    left: calc(-1 * (var(--pair-shift) + var(--refs-shift, 0px)));
-  }
+  body[data-screen="quiz"] { --col-shift: calc(var(--pair-shift) + var(--refs-shift, 0px)); }
   body[data-screen="quiz"] .qt-counter { cursor: default; }
   body[data-screen="quiz"] .qt-caret { display: none; }
 }
 @media (max-width: 1199px) {
   .nav-rail { display: none !important; }
-  /* From here down the dropdown is the only navigator, and it is
-   * touched rather than clicked, so the chips get a touch-sized box.
-   * This rule used to live in the 480px block, which left every tablet
-   * width tapping 30px targets. */
+  /* Here the dropdown is the navigator and it is tapped, so its cells
+   * get a touch-sized box. */
   .nav-chips {
     grid-template-columns: repeat(auto-fill, minmax(max(36px, var(--nav-chip-min, 36px)), 1fr));
     gap: 5px;
   }
-  .nav-chip { --nav-chip-h: 36px; font-size: 12.5px; }
+  .nav-chip { --nav-chip-h: 36px; }
 }
-/* Where the shift cannot clear the panel, the rail would sit underneath
- * it, so it stands down while the panel is open. Above this the pair
- * moves far enough left that both stay visible. */
+/* Below 1520px the rail cannot clear an open panel, so it stands down
+ * while the panel is open. */
 @media (max-width: 1519px) {
   body.refs-open .nav-rail { display: none !important; }
 }
@@ -1060,57 +879,40 @@ body[data-screen="quiz"] .nav-rail { display: block; }
   padding: 26px 28px 24px;
   margin-bottom: 24px;
 }
-/* When the topbar (the "n / YYY" header) is hidden - e.g. in study
- * mode without the test-mode meta row - the reading card is the sole
- * container and must round all four corners. Without this the top of
- * the reading card reads square while the bottom reads rounded,
- * which was flagged as the "pick one" inconsistency. The :has()
- * selector lets us key off topbar visibility from the body level. */
+/* With no topbar above it the card rounds all four corners. */
 body:has(.quiz-topbar[hidden]) .reading,
 body:has(#quizTopbar[hidden]) .reading {
   border-radius: var(--r-soft);
 }
 
-/* The folio line and its header were retired when the topbar took over
- * the position indicator. All three children were permanently hidden or
- * blank, and an empty inline-flex with padding and a border still
- * reserved a band above every stem. */
-
+/* Running text is set to a reading measure (about 70 characters), not
+ * to the card. Options, the record and tables keep the full width:
+ * they are rows to scan, and the space to their right is left open. */
+.stem, .lead-in, .comm-block p, .comm-block ul, .comm-block .pearl,
+.sources, .options li .opt-rationale {
+  max-width: 34em;
+}
 .stem {
-  /* The vignette is the thing to READ; everything around it is the
-   * thing to operate. Setting it in the serif marks that difference,
-   * which one family at three weights cannot. This is a mode signal,
-   * not a legibility claim - the evidence for serif beating sans on
-   * screen is null.
-   * white-space: pre-line preserves the \n\n paragraph breaks added
-   * by the 2026-06-01 paragraphing pass without needing multiple
-   * <p> elements. */
+  /* The serif marks the vignette as the thing to read. pre-line keeps
+   * the blank lines that separate its paragraphs. */
   font-family: var(--serif);
-  font-size: 17px;
+  font-size: var(--fs-stem);
   line-height: 1.62;
   color: var(--ink);
   margin: 4px 0 16px;
   white-space: pre-line;
 }
 .lead-in {
-  font-size: 15px;
+  font-size: var(--fs-read);
   font-weight: 600;
+  line-height: 1.5;
   margin: 18px 0 14px;
   color: var(--ink);
 }
 
-/* The clinical data block (rebuilt 2026-09-22).
- *
- * This is not narrative, it is the chart. Treating it as a plain
- * dt/dd grid with the same weight as body text is what made it read
- * as a generic key-value dump. It now reads as an extract from a
- * record: set back from the prose behind a rule, labels small and
- * quiet in a fixed column, values in tabular figures, and an
- * observation set broken into discrete readings rather than a
- * comma-joined sentence.
- *
- * Still no card: no border box, no fill, no radius. One rule does it.
- */
+/* The clinical data block is an extract from the chart, not prose: set
+ * back behind one rule, small quiet labels in a fixed column, values in
+ * tabular figures, and observations as separate readings. No box. */
 .patient-table {
   margin: 18px 0;
   padding: 2px 0 2px 16px;
@@ -1118,15 +920,15 @@ body:has(#quizTopbar[hidden]) .reading {
   display: grid;
   grid-template-columns: minmax(84px, max-content) 1fr;
   gap: 10px 20px;
-  font-size: 14px;
+  font-size: var(--fs-ui);
   line-height: 1.55;
 }
 .patient-table dt {
   color: var(--ink-mute);
-  font-size: 11px;
+  font-size: var(--fs-cap);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
+  letter-spacing: var(--track-caps);
   line-height: 1.5;
   padding-top: 2px;
   align-self: start;
@@ -1140,31 +942,24 @@ body:has(#quizTopbar[hidden]) .reading {
   min-width: 0;
 }
 
-/* An observation set: each reading is its own item, so a column of
- * numbers can be read off rather than parsed out of a sentence. */
-/* Readings are a two-column chart, not a run of inline pairs. Pairs
- * flowed inline broke inside themselves ("Pulse rate" on one line, the
- * reading on the next) and left the gaps between them uneven, because
- * every reading is a different width. In a column the names align, the
- * values align, and a long reading wraps inside its own cell. */
+/* An observation set is a two-column chart: names align, values align,
+ * and a long reading wraps inside its own cell. */
 .patient-table dd.obs-set {
   display: grid;
-  /* fit-content, not max-content: one long name (a comparator split
-   * that swallowed the reading) sized the name track past the dd and
-   * left the value track at 0px on phones. */
+  /* fit-content caps the name track, so one long name cannot squeeze
+   * the value track to nothing on a phone. */
   grid-template-columns: fit-content(45%) minmax(0, 1fr);
   gap: 3px 18px;
   align-items: baseline;
 }
-/* The pair is only a grouping for the markup; the two halves are the
- * grid items, which is what lets them line up across rows. */
+/* The pair groups the markup; its halves are the grid items. */
 .obs { display: contents; }
 .obs-name { align-self: baseline; min-width: 0; overflow-wrap: break-word; }
 .obs-value { min-width: 0; overflow-wrap: anywhere; }
 .obs-solo { grid-column: 1 / -1; color: var(--ink); min-width: 0; }
 .obs-name {
   color: var(--ink-mute);
-  font-size: 12.5px;
+  font-size: var(--fs-meta);
 }
 .obs-value {
   color: var(--ink);
@@ -1178,32 +973,19 @@ body:has(#quizTopbar[hidden]) .reading {
   gap: 4px 14px;
   margin: 0;
   padding: 0;
-  font-size: 13px;
+  font-size: var(--fs-ui);
 }
 .patient-subtable dt {
   color: var(--ink-mute);
-  font-size: 12px;
+  font-size: var(--fs-meta);
   font-weight: 400;
   align-self: baseline;
 }
 .patient-subtable dd { margin: 0; color: var(--ink); }
 
-/* Options (rebuilt 2026-09-22).
- *
- * The previous pass stripped these to hairline-separated rows with a
- * bare letter and a hover-only "x", on the theory that borders read as
- * AI-template. It overcorrected: with no marker, no container and no
- * rhythm, the list read as a wireframe, and the eliminate control was
- * invisible until you happened to hover the right row.
- *
- * What actually distinguishes a serious question bank is that the
- * option is a real target with a real radio marker, the eliminate
- * control is always visible and says which way it will go, and the
- * keyboard number is printed on the row instead of hidden in a legend.
- * Structure does the work here, not decoration: one hairline, one
- * marker, one accent rule on the selected row. No gradients, no
- * shadows, no pill buttons, no perfect circles for the letter.
- */
+/* Options. Each row is a real target with a radio marker; the rule-out
+ * control is always visible; the key number is printed on the row. One
+ * hairline between rows, one tint on the selected one. */
 .options {
   list-style: none;
   margin: 14px 0 0;
@@ -1217,12 +999,11 @@ body:has(#quizTopbar[hidden]) .reading {
   align-items: center;
   gap: 0 6px;
   border-bottom: 1px solid var(--line);
-  transition: background var(--dur-fast) var(--ease),
-              box-shadow var(--dur-fast) var(--ease);
+  transition: background var(--t-colour),
+              box-shadow var(--t-colour);
 }
 
-/* The choice is the whole left region, so the hit target is the row,
- * not the 20px marker. */
+/* The whole left region is the hit target, not the marker. */
 .options li .opt-choice {
   display: grid;
   grid-template-columns: 18px 20px 1fr;
@@ -1237,27 +1018,29 @@ body:has(#quizTopbar[hidden]) .reading {
   width: 15px; height: 15px;
   border: 1.5px solid var(--control-bd);
   border-radius: 50%;
-  align-self: center;
-  transition: border-color var(--dur-fast) var(--ease),
-              box-shadow var(--dur-fast) var(--ease);
+  /* Level with the option's first line, not the middle of the row,
+   * which after the reveal is a paragraph tall. */
+  align-self: start;
+  margin-top: 4px;
+  transition: border-color var(--t-colour),
+              box-shadow var(--t-colour);
 }
 .options li .opt-letter {
   font-weight: 600;
-  color: var(--ink-3);
-  font-size: 14px;
-  align-self: center;
+  color: var(--ink-2);
+  font-size: var(--fs-ui);
   font-variant-numeric: tabular-nums;
 }
 .options li .opt-body { min-width: 0; }
 .options li .opt-text {
   display: block;
   color: var(--ink);
-  font-size: 15px;
+  font-size: var(--fs-read);
   line-height: 1.45;
 }
 
-/* Rule-out control. Always visible - hover-only actions are invisible
- * to touch and to the keyboard, and this one is used constantly. */
+/* Rule-out control: always visible, because hover-only actions do not
+ * exist on touch or for the keyboard. */
 .options li .opt-strike {
   display: grid;
   place-items: center;
@@ -1265,56 +1048,52 @@ body:has(#quizTopbar[hidden]) .reading {
   background: none;
   border: 1px solid transparent;
   border-radius: var(--r-tight);
-  color: var(--ink-faint);
+  color: var(--ink-mute);
+  font: inherit;
+  font-size: var(--fs-ui);
   cursor: pointer;
-  transition: color var(--dur-fast) var(--ease),
-              border-color var(--dur-fast) var(--ease);
+  transition: color var(--t-colour),
+              border-color var(--t-colour);
 }
-.options li .opt-strike:hover {
-  color: var(--ink);
-  border-color: var(--line-strong);
+@media (hover: hover) {
+  .options li .opt-strike:hover {
+    color: var(--ink);
+    border-color: var(--line-strong);
+  }
 }
 .options li .opt-strike[aria-pressed="true"] { color: var(--ink-2); }
 
-/* Printed shortcut. Reads as a key legend, not as a badge: no fill,
- * no border, just a small tabular digit in the margin. */
+/* Printed shortcut: a key legend in the margin, no fill or border, in
+ * the same 30px box as the rule-out control so the two line up. */
 .options li .opt-key {
-  /* Same 30px box as the rule-out control beside it, centred the same
-   * way. Left to itself the digit sat on a text baseline inside a
-   * taller line box, so it rode a couple of pixels below the x it is
-   * meant to line up with. */
   display: grid;
   place-items: center;
   width: 30px;
   height: 30px;
   margin-right: 10px;
-  font-size: 11px;
+  font-size: var(--fs-meta);
   line-height: 1;
-  color: var(--ink-faint);
+  color: var(--ink-mute);
   font-variant-numeric: tabular-nums;
 }
 
-.options li:hover:not(.revealed) .opt-marker { border-color: var(--accent); }
-/* One state, not two. Arrow keys select rather than moving a cursor
- * around, so there is no position to indicate separately from the
- * choice: a selected row is tinted and its marker is filled, and an
- * unselected row is nothing. Focus that is not a selection - a Tab into
- * the list, or a row whose selection was just taken back off - borrows
- * the hover cue on the marker instead of inventing a third appearance. */
+@media (hover: hover) {
+  .options li:hover:not(.revealed) .opt-marker { border-color: var(--accent); }
+}
+/* One state. Arrow keys select, so there is no cursor position apart
+ * from the choice: a selected row is tinted with a filled marker. Focus
+ * without a selection borrows the hover cue on the marker. */
 .options li .opt-choice:focus-visible { outline: none; }
 .options li:has(.opt-choice:focus-visible):not(.selected) .opt-marker {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-bg);
 }
-/* A selected row that has focus had no cue at all: Tab back from its
- * rule-out button, or into a resumed selection, and focus vanished. */
+/* A focused selected row gets a ring in solid accent: --accent-bd is
+ * under the 3:1 a focus indicator needs against the selected tint. */
 .options li.selected:has(.opt-choice:focus-visible) {
-  /* Solid accent: --accent-bd read 2.0:1 against the selected tint, under
-   * the 3:1 a focus indicator needs. --accent reads 5.3 to 5.9. */
   box-shadow: inset 0 0 0 2px var(--accent);
 }
-/* Windows high contrast paints no background, so the ring comes back
- * there rather than leaving focus invisible. */
+/* High contrast mode paints no background, so the outline returns. */
 @media (forced-colors: active) {
   .options li .opt-choice:focus-visible { outline: 2px solid Highlight; outline-offset: -2px; }
 }
@@ -1326,20 +1105,21 @@ body:has(#quizTopbar[hidden]) .reading {
 }
 .options li.selected .opt-letter { color: var(--accent); }
 
-/* Ruled out: struck through AND dimmed, so it reads at a glance and
- * not only by colour. The marker hollows out so it cannot be mistaken
- * for a selection. */
+/* Ruled out: struck through and quieted, so it reads without colour.
+ * The marker fades so it cannot pass for a selection. */
 .options li.struck .opt-text {
   text-decoration: line-through;
   text-decoration-thickness: 1px;
-  color: var(--ink-faint);
+  color: var(--ink-mute);
 }
-.options li.struck .opt-letter { color: var(--ink-faint); }
+.options li.struck .opt-letter { color: var(--ink-mute); }
 .options li.struck .opt-marker { border-color: var(--line); opacity: 0.5; }
 .options li.struck { background: transparent; }
 
 .options li.revealed .opt-choice { cursor: default; }
-.options li.revealed .opt-strike, .options li.revealed .opt-key { visibility: hidden; }
+/* Gone rather than hidden, so the rationale takes the row's full width
+ * (the rule-out column is 44px on a phone). */
+.options li.revealed .opt-strike, .options li.revealed .opt-key { display: none; }
 .options li.revealed.correct {
   background: var(--good-bg);
   box-shadow: inset 3px 0 0 var(--good);
@@ -1354,8 +1134,8 @@ body:has(#quizTopbar[hidden]) .reading {
 .options li.revealed.wrong .opt-letter,
 .options li.revealed.wrong .opt-marker { color: var(--bad); border-color: var(--bad); }
 .options li.revealed.wrong .opt-marker { box-shadow: inset 0 0 0 3.5px var(--bad); }
-/* An option the user ruled out, once the answer is shown: keep the
- * strikethrough so they can see what they talked themselves out of. */
+/* After the reveal a ruled-out option keeps its strike, so the student
+ * sees what they talked themselves out of. */
 .options li.revealed.struck .opt-text {
   text-decoration: line-through;
   color: var(--ink-2);
@@ -1363,23 +1143,21 @@ body:has(#quizTopbar[hidden]) .reading {
 
 .options li .opt-rationale {
   display: none;
-  font-size: 13px;
+  font-size: var(--fs-ui);
   line-height: 1.6;
   color: var(--ink-2);
-  margin-top: 7px;
+  margin-top: 8px;
 }
 .options li.revealed .opt-rationale { display: block; }
 .options li.revealed .opt-rationale b { color: var(--ink); }
 .options li.revealed .opt-rationale .cite {
   display: block;
-  font-size: 11px;
+  font-size: var(--fs-meta);
   color: var(--ink-mute);
   margin-top: 4px;
 }
 
-/* Only 400/500/600 are loaded. A <b> or <strong> with no 600 face
- * available gets a synthesised bold, which on Plex is noticeably
- * coarser than the real semibold, so map them explicitly. */
+/* Only 400/500/600 are loaded; a synthesised bold on Plex is coarse. */
 b, strong { font-weight: 600; }
 
 .visually-hidden {
@@ -1399,33 +1177,22 @@ b, strong { font-weight: 600; }
   flex-wrap: wrap;
 }
 .action-row-spacer { flex: 1; }
-.action-link {
-  background: transparent;
-  border: 1px solid var(--line);
-  color: var(--ink-2);
-  font-family: inherit;
-  font-size: 12.5px;
-  cursor: pointer;
-  padding: 7px 12px;
-  border-radius: var(--r-control);
-}
-.action-link:hover { border-color: var(--accent-bd); color: var(--ink); }
-.action-link.active { color: var(--accent); border-color: var(--accent-bd); }
-.action-link.active.flag { color: var(--warn); border-color: var(--warn); }
 
+.primary, .secondary, .danger-btn {
+  font-family: inherit;
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  line-height: 1.3;
+  padding: 9px 18px;
+  cursor: pointer;
+  border-radius: var(--r-control);
+  transition: background var(--t-colour), border-color var(--t-colour), color var(--t-colour);
+}
 .primary {
   background: var(--cta);
   color: var(--cta-ink);
   border: 1px solid var(--cta);
-  font-family: inherit;
-  font-size: 13.5px;
-  font-weight: 600;
-  padding: 9px 18px;
-  cursor: pointer;
-  border-radius: var(--r-tight);
-  letter-spacing: 0;
 }
-.primary:hover { background: var(--cta-2); border-color: var(--cta-2); }
 .primary:disabled {
   background: var(--surface-2);
   color: var(--ink-mute);
@@ -1436,70 +1203,95 @@ b, strong { font-weight: 600; }
   background: transparent;
   color: var(--cta);
   border: 1px solid var(--cta-bd);
-  font-family: inherit;
-  font-size: 13.5px;
-  font-weight: 600;
-  padding: 9px 18px;
-  cursor: pointer;
-  border-radius: var(--r-tight);
 }
-.secondary:hover { background: var(--cta-bg); }
-/* The destructive action: same geometry as .primary/.secondary, drawn
- * in --bad. It was only styled inside .account-self-delete, so the
- * confirm dialog's action (#confirmGo) rendered as a UA grey button. */
 .danger-btn {
   background: transparent;
   color: var(--bad);
   border: 1px solid var(--bad-bd);
-  font-family: inherit;
-  font-size: 13.5px;
-  font-weight: 600;
-  padding: 9px 18px;
-  cursor: pointer;
-  border-radius: var(--r-tight);
 }
-.danger-btn:hover:not(:disabled) { background: var(--bad); border-color: var(--bad); color: var(--bg); }
 .danger-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-
-/* setup form (home) */
-.setup { display: flex; flex-direction: column; gap: 14px; margin-top: 22px; }
-.setup-row { display: grid; grid-template-columns: 120px 1fr; align-items: start; gap: 16px; }
-.setup-label {
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0;
-  padding-top: 9px;
-  color: var(--ink-3);
-  font-family: var(--display);
+@media (hover: hover) {
+  .primary:hover:not(:disabled) { background: var(--cta-2); border-color: var(--cta-2); }
+  .secondary:hover { background: var(--cta-bg); }
+  .danger-btn:hover:not(:disabled) { background: var(--bad); border-color: var(--bad); color: var(--bg); }
 }
-.setup-options { display: flex; flex-wrap: wrap; gap: 6px; }
-.setup-options.narrow .opt { padding: 6px 12px; }
-.opt {
-  background: var(--surface);
+
+/* Choice chips. .opt is the setup size; Flag, Report and the
+ * navigator's paging buttons are the compact size of the same control. */
+.opt, .action-link, .nav-page, .nav-jump button {
+  background: transparent;
   border: 1px solid var(--line);
   color: var(--ink-2);
-  padding: 7px 14px;
   font-family: inherit;
-  font-size: 13px;
-  line-height: 1.3;
   cursor: pointer;
   border-radius: var(--r-control);
+  transition: border-color var(--t-colour), color var(--t-colour);
+}
+.opt {
+  background: var(--surface);
+  padding: 7px 14px;
+  font-size: var(--fs-ui);
+  line-height: 1.3;
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
 }
-.opt:hover { border-color: var(--line-strong); color: var(--ink); }
-.opt.selected {
+.action-link, .nav-page, .nav-jump button {
+  font-size: var(--fs-meta);
+  line-height: 1.2;
+  padding: 6px 10px;
+}
+.nav-page:disabled { color: var(--ink-mute); cursor: not-allowed; }
+@media (hover: hover) {
+  .opt:hover, .action-link:hover, .nav-page:hover:not(:disabled), .nav-jump button:hover {
+    border-color: var(--line-strong); color: var(--ink);
+  }
+}
+.opt.selected, .action-link.active {
   background: var(--accent-bg);
   border-color: var(--accent-bd);
   color: var(--accent-2);
 }
+/* Flagged is a mark the student left for later, so it takes warn. */
+.action-link.active.flag { background: var(--warn-bg); color: var(--warn); border-color: var(--warn); }
+
+/* Setup form (home) */
+.setup { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
+.setup-row { display: grid; grid-template-columns: 120px 1fr; align-items: start; gap: 16px; }
+.setup-label {
+  font-size: var(--fs-ui);
+  font-weight: 500;
+  padding-top: 8px;
+  color: var(--ink-2);
+  font-family: var(--display);
+}
+.setup-options { display: flex; flex-wrap: wrap; gap: 6px; }
+.setup-options.narrow .opt { padding: 7px 12px; }
 .setup-options.multi .opt:not(.selected) { color: var(--ink-mute); }
+/* Rows that take several choices show a box on each chip, so they read
+ * differently from the rows that take one. */
+.setup-options.multi .opt {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.setup-options.multi .opt::before {
+  content: "";
+  flex: none;
+  width: 10px; height: 10px;
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+  opacity: 0.7;
+}
+.setup-options.multi .opt.selected::before {
+  background: currentColor;
+  opacity: 1;
+}
 .opt-head { font-weight: 600; }
 .opt-note {
   display: block;
-  font-size: 11px;
+  font-size: var(--fs-meta);
   color: var(--ink-mute);
   margin-top: 2px;
 }
@@ -1509,94 +1301,80 @@ b, strong { font-weight: 600; }
   border-bottom: 1px solid var(--line);
   margin-top: 6px;
 }
+/* Laid out like the other rows: the label in the left column, the
+ * count beside it, all/none at the far end. */
 .setup-collapse > summary {
   cursor: pointer;
   list-style: none;
   padding: 10px 0;
   display: flex;
-  justify-content: space-between;
-  font-size: 14px;
+  align-items: baseline;
+  gap: 8px;
+  font-size: var(--fs-ui);
   font-weight: 500;
-  letter-spacing: 0;
-  color: var(--ink-3);
+  color: var(--ink-2);
   font-family: var(--display);
 }
 .setup-collapse > summary::-webkit-details-marker { display: none; }
 .setup-collapse > summary::before {
-  content: "+"; display: inline-block; margin-right: 8px; color: var(--ink-mute);
+  content: "+"; flex: none; width: 1ch; color: var(--ink-mute);
   font-family: var(--sans);
 }
 .setup-collapse[open] > summary::before { content: "−"; }
-.setup-collapse-actions { display: flex; gap: 10px; }
+.setup-collapse-actions { display: flex; gap: 4px; margin-left: auto; }
 .tag-row { padding: 4px 0 14px; max-height: 240px; overflow-y: auto; }
 .dim { color: var(--ink-mute); }
-.small { font-size: 12px; }
+.small { font-size: var(--fs-meta); }
 
 .run-row { display: flex; align-items: baseline; gap: 18px; margin-top: 26px; }
 
-/* commentary (post-reveal) */
+/* Commentary (after the answer). The explanation is where the learning
+ * happens, so it is set at reading size, level with the options. */
 .commentary {
   margin-top: 24px;
   padding-top: 20px;
   border-top: 1px solid var(--line);
 }
 .commentary .section-eyebrow { margin-top: 0; margin-bottom: 18px; }
-/* Second Next at the foot of the commentary, for readers who scrolled
- * through it on a phone. */
+/* What the question was testing heads its commentary; the difficulty is
+ * a plain line under it. */
+.commentary .comm-head { display: block; margin-bottom: 4px; font-size: var(--fs-stem); line-height: 1.35; max-width: 34em; }
+.commentary .comm-head:has(+ .comm-meta[hidden]) { margin-bottom: 18px; }
+.commentary .comm-meta { margin: 0 0 18px; font-size: var(--fs-meta); color: var(--ink-mute); font-variant-numeric: tabular-nums; }
 .commentary-next { margin-top: 22px; }
-.commentary .section-eyebrow .topic-tag {
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: var(--accent-2);
-  padding: 2px 8px;
-  background: var(--accent-bg);
-  border-radius: var(--r-tight);
-}
-.commentary .section-eyebrow .difficulty-tag {
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  color: var(--ink-mute);
-  padding: 2px 8px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-tight);
-}
-.comm-block { margin-bottom: 20px; }
+.comm-block { margin-bottom: 22px; }
 .comm-block:last-child { margin-bottom: 0; }
-.comm-label {
-  font-size: 13.5px;
+.comm-block p { margin: 0 0 10px; font-size: var(--fs-read); line-height: 1.6; }
+.comm-block ul { padding-left: 20px; margin: 6px 0; font-size: var(--fs-read); line-height: 1.6; }
+.comm-block li { margin-bottom: 4px; }
+/* After the size rules above, which also match this <p>. */
+.comm-block .comm-label {
+  font-size: var(--fs-ui);
   font-weight: 600;
-  letter-spacing: 0;
-  color: var(--ink-2);
+  color: var(--ink);
   font-family: var(--display);
   margin: 0 0 6px;
 }
-.comm-block p { margin: 0 0 8px; font-size: 14.5px; line-height: 1.65; }
-.comm-block ul { padding-left: 18px; margin: 6px 0; font-size: 14.5px; line-height: 1.65; }
+/* A pearl is the line most worth keeping, not a warning: no tint and
+ * no stripe, the bold label does the work. */
 .comm-block .pearl {
-  background: var(--warn-bg);
-  border-left: 3px solid var(--warn);
-  padding: 10px 14px;
-  margin: 12px 0 0;
-  font-size: 14px;
-  border-radius: var(--r-tight);
+  margin: 14px 0 0;
+  font-size: var(--fs-read);
 }
-.comm-block .pearl b { color: var(--warn); }
+.comm-block .pearl b { color: var(--ink); }
 .comm-block .cite {
-  font-size: 11.5px;
+  font-size: var(--fs-meta);
   color: var(--ink-mute);
   margin-top: 4px;
   display: block;
 }
-.sources { margin: 0; padding-left: 22px; font-size: 13px; }
+.sources { margin: 0; padding-left: 22px; font-size: var(--fs-ui); }
 .sources li { margin-bottom: 4px; line-height: 1.5; }
-/* ── Reference panel (right slide-in, no scrim, no dim) ───────────── */
+/* ── Reference panel (fixed right overlay, no scrim) ──────────────── */
 .ref-panel {
   position: fixed;
-  /* Start below the masthead (sticky; its height is measured into
-   * --masthead-h) so the trigger button
-   * stays uncovered. The masthead also has a higher z-index now, so
-   * clicking the trigger again toggles the panel closed without
-   * moving the cursor to the × button. */
+  /* Below the sticky masthead, so the button that opened it stays
+   * uncovered and closes it again. */
   top: var(--masthead-h); right: 0;
   height: calc(100vh - var(--masthead-h));
   height: calc(100dvh - var(--masthead-h));
@@ -1606,42 +1384,17 @@ b, strong { font-weight: 600; }
   z-index: 110;
   display: flex;
   flex-direction: column;
-  transform: translateX(100%);
-  transition: transform 0.22s ease;
-  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.25);
-  /* No top inset: the panel starts at --masthead-h, which already
-   * includes it through the masthead's own padding. */
+  /* No slide: the panel is toggled many times a session, and the column
+   * beside it moves in the same frame. */
+  box-shadow: var(--lift-2);
   padding-bottom: env(safe-area-inset-bottom);
   padding-right: env(safe-area-inset-right);
 }
-.ref-panel[hidden] { display: flex !important; visibility: hidden; pointer-events: none; }
-.ref-panel:not([hidden]) { transform: translateX(0); visibility: visible; pointer-events: auto; }
 
-/* When the reference panel is open on a desktop-class viewport, shift
- * the reading column left by half the panel width so it stays centred
- * in the visible area to the left of the panel. The column doesn't
- * resize - just slides - so reading width and rhythm are preserved.
- * Below the threshold (1240px = 820 col + 420 panel) we don't shift,
- * since the overlap is unavoidable and the user can close the panel.
- */
-/* When the reference panel is open, shrink the available width of the
- * reading column so the whole question stays visible to the left of the
- * 420 px panel. Use padding-right on <body> (avoids the previous
- * translate-only approach which still overlapped content). Below 920 px
- * the panel takes the full screen and the content scroll is locked. */
-/* Opening the panel used to pad the body, which shrank the masthead with
- * it: the trigger button slid 420px left, out from under the cursor that
- * had just clicked it, and the masthead hairline stopped short of the
- * window edge. The inset now applies to the reading composition, through
- * a token the column and the rail both read, and only at widths that can
- * give up the space. */
+/* Above 920px the panel sits beside the content, so the column is
+ * re-centred in what is left (half the panel's width) and capped to fit
+ * there. Below that the panel covers the screen and the page is locked. */
 body.refs-open { --refs-shift: 0px; }
-/* Above 920px the panel sits beside the content rather than taking over
- * the screen, so the content has to be re-centred in what is left: half
- * the panel's width, which is the shift that centres a column of any
- * width in `100vw - panel`. The column also has to fit there, so it is
- * capped at the remaining width - otherwise the panel simply lands on
- * top of the text, which is what it did between 921 and 1519px. */
 @media (min-width: 921px) {
   body.refs-open { --refs-shift: calc(var(--panel-w) / 2); }
   body.refs-open[data-screen="quiz"] main,
@@ -1656,28 +1409,14 @@ body.refs-open { --refs-shift: 0px; }
     );
   }
 }
-/* Below 1200px there is no rail and so no pair shift, and the column
- * was capped but left centred in the full window: the panel covered
- * 194px of it at every width from 921 to 1199. The summary never had
- * a shift at any width. */
-@media (min-width: 921px) and (max-width: 1199px) {
-  body.refs-open[data-screen="quiz"] main,
-  body.refs-open .quiz-topbar {
-    position: relative;
-    left: calc(-1 * var(--refs-shift));
-  }
+/* With no rail (below 1200px, or while it stands down under 1520px) the
+ * shift is the panel's alone. */
+@media (min-width: 921px) and (max-width: 1519px) {
+  body.refs-open[data-screen="quiz"] { --col-shift: var(--refs-shift); }
 }
 @media (min-width: 921px) {
   body.refs-open[data-screen="summary"] main {
     position: relative;
-    left: calc(-1 * var(--refs-shift));
-  }
-}
-/* No rail to make room for while it is standing down, so the pair shift
- * that reserves its space would only push the column off the left. */
-@media (min-width: 1200px) and (max-width: 1519px) {
-  body.refs-open[data-screen="quiz"] main,
-  body.refs-open[data-screen="quiz"] .quiz-topbar {
     left: calc(-1 * var(--refs-shift));
   }
 }
@@ -1690,8 +1429,7 @@ body.refs-open { --refs-shift: 0px; }
   display: flex; justify-content: space-between; align-items: center;
 }
 .ref-title {
-  font-size: 16px; font-weight: 600;
-  letter-spacing: 0;
+  font-size: var(--fs-read); font-weight: 600;
   color: var(--ink);
   font-family: var(--display);
 }
@@ -1702,16 +1440,14 @@ body.refs-open { --refs-shift: 0px; }
   background: var(--surface-2);
   padding: 10px 12px;
   font-family: inherit;
-  font-size: 16px;
+  font-size: var(--fs-read);
   color: var(--ink);
   border-radius: var(--r-control);
 }
 .ref-search input:focus { outline: 1px solid var(--accent); outline-offset: -1px; }
-/* iOS Safari zooms the page into any focused text control under 16px,
- * and it stays zoomed after the gate. The search box above was already
- * 16px; this lifts the rest (sign-in fields, report box, jump-to, admin
- * and confirm inputs) on iOS only, leaving desktop sizes alone.
- * Specificity 0,2,1 beats every `.x input` rule in this file. */
+/* iOS Safari zooms into any focused text control under 16px and stays
+ * zoomed. This lifts every input on iOS only; 0,2,1 beats each
+ * `.x input` rule in this file. */
 @supports (-webkit-touch-callout: none) {
   :is(input, textarea, select):not([type="checkbox"]):not([type="radio"]) {
     font-size: max(16px, 1em);
@@ -1721,24 +1457,29 @@ body.refs-open { --refs-shift: 0px; }
 .ref-foot {
   padding: 10px 18px;
   border-top: 1px solid var(--line);
-  font-size: 10.5px;
+  font-size: var(--fs-meta);
   color: var(--ink-mute);
   margin: 0;
   line-height: 1.5;
 }
 
 /* ── Colophon ─────────────────────────────────────────────────────── */
+/* The bar runs the window width so it covers the page scrolling under
+ * it, but its controls line up with the edges of the reading card:
+ * Exit under the card's left edge, End under its right. */
 .colophon {
+  --card-half: calc((min(100vw, var(--col)) - 2 * var(--col-pad)) / 2);
   border-top: 1px solid var(--line);
   background: var(--bg);
-  padding: 11px 28px;
-  padding-bottom: calc(11px + env(safe-area-inset-bottom));
-  padding-left: max(28px, env(safe-area-inset-left));
-  padding-right: max(28px, env(safe-area-inset-right));
+  padding-top: 10px;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  padding-left: max(var(--col-pad), env(safe-area-inset-left), calc(50% - var(--card-half) - var(--col-shift)));
+  padding-right: max(var(--col-pad), env(safe-area-inset-right), calc(50% - var(--card-half) + var(--col-shift)));
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 8px;
   align-items: center;
-  font-size: 12.5px;
+  font-size: var(--fs-meta);
   position: sticky;
   bottom: 0;
   z-index: 40;
@@ -1746,9 +1487,9 @@ body.refs-open { --refs-shift: 0px; }
 .colophon-block { display: flex; align-items: center; gap: 10px; }
 .colophon-center { justify-content: center; }
 .colophon-right { justify-content: flex-end; }
-.colophon-sep { color: var(--line); }
+.colophon-sep { color: var(--line-strong); }
 #sessionTime, #questionTime {
-  font-family: var(--sans); font-size: 12px;
+  font-family: var(--sans); font-size: var(--fs-meta);
   color: var(--ink-2); font-variant-numeric: tabular-nums;
 }
 #questionTime.warn { color: var(--warn); }
@@ -1758,31 +1499,28 @@ body.refs-open { --refs-shift: 0px; }
 body[data-screen="summary"] main { max-width: 760px; }
 .score-strip { display: grid; grid-template-columns: 170px 1fr; gap: 28px; align-items: start; margin: 24px 0; }
 .score-figure {
-  background: transparent;
-  border: none;
   border-right: 1px solid var(--line);
-  border-radius: 0;
   padding: 6px 26px 6px 0;
   text-align: left;
 }
 .score-num {
   display: block;
   font-family: var(--display);
-  font-size: 56px;
+  font-size: var(--fs-figure);
   font-weight: 600;
   color: var(--ink);
   line-height: 1;
-  letter-spacing: -0.015em;
+  letter-spacing: var(--track-tight);
   font-variant-numeric: tabular-nums;
 }
 .score-cap {
-  font-size: 13px; letter-spacing: 0; color: var(--ink-3); font-family: var(--display);
+  font-size: var(--fs-ui); color: var(--ink-2); font-family: var(--display);
 }
 .score-breakdown { display: flex; flex-direction: column; gap: 8px; }
 .topic-row {
   display: grid; grid-template-columns: 1fr 80px 60px;
   gap: 12px; align-items: center;
-  font-size: 13px;
+  font-size: var(--fs-ui);
   border-bottom: 1px solid var(--line); padding-bottom: 5px;
 }
 .topic-row .bar-track { height: 3px; background: var(--line); border-radius: var(--r-chip); }
@@ -1798,43 +1536,34 @@ body[data-screen="summary"] main { max-width: 760px; }
   padding: 10px 4px;
   border-bottom: 1px solid var(--line);
   cursor: pointer;
-  font-size: 13px;
+  font-size: var(--fs-ui);
   display: grid;
-  grid-template-columns: 24px 100px 1fr;
+  grid-template-columns: 24px 1fr;
   gap: 12px;
 }
-.review-list li:hover { background: var(--surface-2); }
+@media (hover: hover) { .review-list li:not(.flagged):hover { background: var(--surface-2); } }
 .review-list .rv-status { font-family: var(--sans); font-weight: 600; }
 .review-list li.incorrect .rv-status { color: var(--bad); }
 .review-list li.correct   .rv-status { color: var(--good); }
 .review-list li.unanswered .rv-status { color: var(--ink-mute); }
 .review-list li.flagged { background: var(--warn-bg); }
-.review-list .rv-id { font-family: var(--sans); font-size: 11.5px; color: var(--ink-mute); }
-.review-list .rv-stem { color: var(--ink-2); }
-.review-list .rv-flag { font-family: var(--sans); font-size: 11.5px; font-weight: 600; color: var(--warn); margin-right: 4px; }
+/* The row is the opening of the vignette, so it keeps the stem's face. */
+.review-list .rv-stem { color: var(--ink-2); font-family: var(--serif); }
+.review-list .rv-flag { font-family: var(--sans); font-size: var(--fs-meta); font-weight: 600; color: var(--warn); margin-right: 4px; }
 .review-list li[data-review-i]:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
-/* Focus moved by script to announce a new question or the report: the
- * element is a landmark for assistive tech, not a control, so no ring. */
+/* Script moves focus here to announce a new question or the results;
+ * a landmark, not a control, so no ring. */
 #qStem:focus, .prose h1[tabindex="-1"]:focus { outline: none; }
-/* Five floating surfaces carried a pure-black shadow tuned for the light
- * theme. Over the navy canvas that is invisible, so they lost all
- * separation and relied on a 1px border. Same treatment the gate card
- * already had. */
-[data-theme="dark"] .qt-list { box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55); }
-[data-theme="dark"] .ref-panel { box-shadow: -10px 0 28px rgba(0, 0, 0, 0.6); }
-[data-theme="dark"] .term-popup { box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55); }
-[data-theme="dark"] .house-toast { box-shadow: 0 10px 28px -8px rgba(0, 0, 0, 0.6); }
-[data-theme="dark"] .confirm-dialog { box-shadow: 0 18px 44px rgba(0, 0, 0, 0.6); }
 
 .ir-none {
   margin: 0;
-  font-size: 12.5px;
+  font-size: var(--fs-meta);
   color: var(--ink-mute);
   line-height: 1.55;
 }
 
-/* Resume strip. Sits above the setup block because a session in
- * progress is the only thing on this screen that is time-sensitive. */
+/* A session in progress is the one time-sensitive thing on home, so it
+ * sits above the setup. */
 .resume-row {
   display: flex;
   align-items: center;
@@ -1847,23 +1576,23 @@ body[data-screen="summary"] main { max-width: 760px; }
   border-radius: var(--r-soft);
   background: var(--accent-bg);
 }
-.resume-line { margin: 0; font-size: 14px; color: var(--ink); }
+.resume-line { margin: 0; font-size: var(--fs-ui); color: var(--ink); }
 .resume-acts { display: flex; align-items: center; gap: 12px; }
 
 .review-list .rv-empty {
   grid-column: 1 / -1;
   padding: 14px 0;
-  font-size: 13px;
+  font-size: var(--fs-ui);
   color: var(--ink-mute);
   line-height: 1.55;
 }
 
-/* ── Modal (How-to) ───────────────────────────────────────────────── */
+/* ── Modals ───────────────────────────────────────────────────────── */
 .modal {
   position: fixed; inset: 0;
-  background: rgba(5, 10, 18, 0.65);
-  /* safe center + scroll: a card taller than a landscape phone was cut
-   * off at both ends with nothing able to scroll to "Send report". */
+  background: var(--scrim);
+  /* safe center: a card taller than a landscape phone scrolls instead
+   * of losing its ends. */
   display: grid; place-items: safe center;
   overflow-y: auto; overscroll-behavior: contain;
   z-index: 200; padding: 18px;
@@ -1874,6 +1603,7 @@ body[data-screen="summary"] main { max-width: 760px; }
   border-radius: var(--r-soft);
   max-width: 560px;
   width: 100%;
+  box-shadow: var(--lift-2);
 }
 .modal-card-wide { max-width: 760px; max-height: 86vh; display: flex; flex-direction: column; }
 .modal-card-wide .modal-body { overflow-y: auto; }
@@ -1885,13 +1615,14 @@ body[data-screen="summary"] main { max-width: 760px; }
 .modal-head h2 {
   margin: 0;
   font-family: var(--display);
-  font-size: 18px;
+  font-size: var(--fs-head);
   font-weight: 600;
+  letter-spacing: var(--track-tight);
 }
-.modal-body { padding: 18px 22px; font-size: 14.5px; line-height: 1.6; }
+.modal-body { padding: 18px 22px; font-size: var(--fs-ui); line-height: 1.6; }
 .modal-body code {
   font-family: var(--mono);
-  font-size: 12.5px; padding: 1px 4px;
+  font-size: var(--fs-meta); padding: 1px 4px;
   background: var(--surface-2);
   border: 1px solid var(--line);
   border-radius: var(--r-tight);
@@ -1907,12 +1638,11 @@ body[data-screen="summary"] main { max-width: 760px; }
   background: var(--bg);
   color: var(--ink-2);
   border: 1px solid var(--line);
-  border-radius: var(--r-tight);
+  border-radius: var(--r-control);
   padding: 10px 12px;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: var(--fs-meta);
   line-height: 1.5;
-  box-sizing: border-box;
 }
 .paste-box:focus {
   outline: none;
@@ -1931,7 +1661,6 @@ body[data-screen="summary"] main { max-width: 760px; }
   border-color: var(--good);
   color: var(--bg);
   box-shadow: 0 0 0 3px var(--good-bg);
-  transition: background 120ms ease, box-shadow 120ms ease;
 }
 #copyPromptBtn.copy-failed {
   background: var(--bad);
@@ -1939,26 +1668,23 @@ body[data-screen="summary"] main { max-width: 760px; }
   color: var(--bg);
 }
 
-/* "(+ glucose)" - the joke parenthetical, used only in the masthead
-   logo. The whole bit is the med-student joke about forgetting BSL on
-   the primary survey; we treat it like an aside, not a co-equal
-   wordmark. App title everywhere else is "A to E". */
+/* "(+ glucose)": the aside after A to E (the primary survey's
+ * forgotten BSL), set as an aside rather than part of the name. */
 .brand-glucose {
-  font-family: var(--serif, var(--display));
+  font-family: var(--serif);
   font-style: italic;
   font-weight: 400;
   color: var(--ink-mute);
   letter-spacing: 0;
-  font-size: 0.78em;
+  font-size: var(--fs-ui);
   margin-left: 6px;
-  vertical-align: baseline;
 }
 
 .prompt-pre {
   background: var(--bg);
   border: 1px solid var(--line);
   font-family: var(--mono);
-  font-size: 11.5px;
+  font-size: var(--fs-meta);
   line-height: 1.5;
   padding: 14px 16px;
   margin: 0;
@@ -1983,25 +1709,17 @@ body[data-screen="summary"] main { max-width: 760px; }
   .reading { padding: 18px 16px; border-radius: 0 0 var(--r-soft) var(--r-soft); }
   .setup-row { grid-template-columns: 1fr; gap: 8px; }
   .setup-label { padding-top: 0; }
-  .colophon {
-    padding: 10px 18px;
-    padding-bottom: calc(10px + env(safe-area-inset-bottom));
-    grid-template-columns: auto 1fr auto;
-    gap: 8px;
-  }
-  .colophon-center { justify-content: center; }
-  .colophon-right { justify-content: flex-end; }
-  /* Panel stops short of full-bleed so the question column stays visible
-     behind it -- matches the desktop "no scrim, question interactable" spec. */
+  /* Short of full width, so the question still shows beside it. */
   .ref-panel { width: 88vw; max-width: 88vw; }
-  .score-strip { grid-template-columns: 1fr; }
-  .quiz-topbar { border-radius: var(--r-soft) var(--r-soft) 0 0; padding: 10px 12px; }
+  .score-strip { grid-template-columns: 1fr; gap: 16px; }
+  /* Stacked, the divider would run beside nothing. */
+  .score-figure { border-right: none; padding-right: 0; }
+  .quiz-topbar { padding: 10px 12px; }
 }
 
-/* ── Phone-tight (iPhone 13 mini at 375pt and similar) ───────────── */
+/* ── Phones ───────────────────────────────────────────────────────── */
 @media (max-width: 480px) {
-  /* Compact masthead: keep the brand mark + a shorter title, give the
-     three tool buttons enough room without wrapping. */
+  /* Compact masthead: the mark and a short title, tools on one line. */
   .masthead { padding: 10px 14px; gap: 8px; }
   .masthead {
     padding-top: calc(10px + env(safe-area-inset-top));
@@ -2010,21 +1728,20 @@ body[data-screen="summary"] main { max-width: 760px; }
   }
   .masthead-left { gap: 10px; min-width: 0; flex: 0 1 auto; }
   .brand { gap: 9px; min-width: 0; }
-  /* Without these the title could not shrink: .masthead-left went to 0
-   * wide while "A to E" kept painting under the tools. */
+  /* min-width 0 lets the title shrink instead of painting under the
+   * tools. */
   .brand-words { min-width: 0; }
   .brand-mark { flex-shrink: 0; }
-  .brand-title { font-size: 15.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .brand-title { font-size: var(--fs-read); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .session-meta { display: none; }
   .t-long { display: none; }
   .t-short { display: inline; }
   .masthead-tools { gap: 0; flex-shrink: 0; flex-wrap: nowrap; }
-  .masthead-tools .link-btn { padding: 8px 6px; font-size: 12.5px; white-space: nowrap; }
-  .masthead-tools .profile-chip { margin-left: 4px; padding: 4px 8px; gap: 2px; white-space: nowrap; flex-shrink: 0; }
-  .masthead-tools .profile-chip .ghost-link { padding: 3px 4px; }
-  /* Backstop for signed-in admins, whose tool row is wider than a
-   * 320px screen: the row scrolls sideways (as .ref-jump does) instead
-   * of clipping "sign out" under body { overflow-x: hidden }. */
+  .masthead-tools .link-btn { padding: 8px 6px; font-size: var(--fs-meta); white-space: nowrap; }
+  .masthead-tools .profile-chip { margin-left: 4px; padding: 4px 4px 4px 8px; gap: 2px; white-space: nowrap; flex-shrink: 0; }
+  .masthead-tools .profile-chip .ghost-link { padding: 3px 6px; }
+  /* A signed-in admin's tool row is wider than 320px: it scrolls
+   * sideways rather than clipping "sign out". */
   .masthead-tools {
     min-width: 0; flex-shrink: 1;
     overflow-x: auto; scrollbar-width: none;
@@ -2033,15 +1750,9 @@ body[data-screen="summary"] main { max-width: 760px; }
 
   :root { --col-pad: 14px; }
   main { padding: 18px var(--col-pad) 56px; }
-  body[data-screen="quiz"] main { padding-top: 12px; }
 
-  .display { font-size: 26px; }
-  .subhead { font-size: 14px; margin-bottom: 22px; }
-
-  /* Quiz card: shrink margins, keep stems readable. */
   .reading { padding: 16px 14px; }
-  .stem { font-size: 16px; line-height: 1.6; }
-  .lead-in { font-size: 15px; }
+  .stem { font-size: var(--fs-read); line-height: 1.6; }
   .patient-table {
     grid-template-columns: 1fr;
     gap: 2px 0;
@@ -2051,28 +1762,21 @@ body[data-screen="summary"] main { max-width: 760px; }
   .patient-table dt:first-child { margin-top: 0; }
   .patient-table dd.obs-set { gap: 2px 12px; }
 
-  /* Options on a phone: the printed shortcut goes (there is no
-   * keyboard), and the rule-out control grows to a 44x44 tap target
-   * per WCAG 2.5.5 while the glyph stays small. */
-  .options li .opt-key { display: none; }
+  /* The rule-out control grows to a 44px tap target. */
   .options li .opt-choice {
     grid-template-columns: 18px 18px 1fr;
     gap: 0 10px;
     padding: 12px 2px 12px 10px;
   }
-  .options li .opt-text { font-size: 14.5px; }
   .options li .opt-strike { width: 44px; height: 44px; }
 
-  /* Buttons that act as primary tap targets need ~44pt height. */
   .primary, .secondary, .danger-btn {
     padding: 12px 18px;
-    font-size: 14px;
     min-height: 44px;
   }
 
-  /* Primary actions (Submit, Next, Begin, New session, Copy prompt,
-     etc.) live on the RIGHT of the screen on phones - right-thumb
-     reach when holding the phone one-handed. */
+  /* The committing button sits on the right, under the thumb of a
+   * phone held in the right hand. */
   .action-row { gap: 8px; flex-wrap: wrap; }
   .action-row #submitBtn,
   .action-row #nextBtn {
@@ -2082,7 +1786,6 @@ body[data-screen="summary"] main { max-width: 760px; }
   .action-row-spacer { flex-basis: 100%; height: 0; order: 0; }
   .action-link {
     padding: 10px 12px;
-    font-size: 12.5px;
     min-height: 40px;
     order: 1;
   }
@@ -2093,41 +1796,22 @@ body[data-screen="summary"] main { max-width: 760px; }
   .prompt-actions { flex-wrap: wrap; }
   .prompt-actions .primary { margin-left: auto; }
 
-  /* Quiz topbar: keep prev / counter / next legible, larger taps. */
   .quiz-topbar { padding: 8px 10px; }
-  .qt-step, .qt-counter { padding: 8px 10px; font-size: 13px; min-height: 40px; }
-  /* At 320px "‹ Previous" broke onto two lines beside a four-digit
-   * counter and made the bar taller on one side. */
-  .qt-step { white-space: nowrap; padding-left: 6px; padding-right: 6px; }
+  .qt-step, .qt-counter { padding: 8px 6px; min-height: 40px; white-space: nowrap; }
   .qt-counter { gap: 4px; }
-  #qtNumber { font-size: 13px; }
 
-  /* Question-list dropdown: single column, taller rows. */
   .qt-list { max-height: 58vh; padding: 12px 12px 10px; }
 
-
-  /* Setup: keep options easily tappable, prevent crowding. */
   .setup-options { gap: 7px; }
-  .opt { padding: 10px 14px; font-size: 13.5px; min-height: 40px; }
+  .opt { padding: 10px 14px; min-height: 40px; }
   .setup-options.narrow .opt { padding: 9px 14px; }
   .setup-collapse > summary { padding: 12px 0; }
 
-  /* Colophon: 3 columns at narrow widths is too much. Stack a
-     compact two-row layout: top row = exit + end, bottom = timers. */
-  .colophon {
-    padding: 8px 14px;
-    padding-bottom: calc(8px + env(safe-area-inset-bottom));
-    grid-template-columns: 1fr auto 1fr;
-    gap: 6px;
-  }
-  .colophon .link-btn { padding: 8px 10px; font-size: 12.5px; min-height: 40px; }
+  .colophon .link-btn { padding: 8px 10px; font-size: var(--fs-meta); min-height: 40px; }
   .colophon-block { gap: 8px; }
-  #sessionTime, #questionTime { font-size: 12px; }
 
-  /* Ghost-x bigger on touch. */
-  .ghost-x { width: 36px; height: 36px; font-size: 20px; }
+  .ghost-x { width: 36px; height: 36px; }
 
-  /* Modal: full-bleed on phones, scrollable. */
   .modal { padding: 0; align-items: stretch; }
   .modal-card, .modal-card-wide, .modal-card-xwide, .admin-modal-card {
     max-width: 100%;
@@ -2140,8 +1824,7 @@ body[data-screen="summary"] main { max-width: 760px; }
     display: flex;
     flex-direction: column;
   }
-  /* The admin card is height-locked on desktop so tab switches do not
-     reflow the chrome. On a phone that lock is what kept it floating. */
+  /* The desktop height lock would leave it floating on a phone. */
   .admin-modal-card { height: 100dvh; }
   .modal-card-wide .modal-body { flex: 1; }
   .modal-head,
@@ -2153,20 +1836,13 @@ body[data-screen="summary"] main { max-width: 760px; }
     padding: 16px;
     padding-bottom: calc(16px + env(safe-area-inset-bottom));
   }
-  .prompt-pre { font-size: 11px; max-height: 50vh; }
+  .prompt-pre { max-height: 50vh; }
 
-  /* Reference panel: full bleed, native-app feel. */
-  .ref-panel { box-shadow: none; }
-
-  /* Summary review rows: tighter, full-width stems. */
   .review-list li { grid-template-columns: 22px 1fr; gap: 10px; }
-  .review-list .rv-id { display: none; }
-  .score-num { font-size: 40px; }
 }
 
-/* Below 400px "A to E" cannot fit beside the tools and was clipped to a
- * sliver under them. The mark carries the brand alone; the words stay
- * in the accessibility tree as the link's name. */
+/* Below 400px "A to E" does not fit beside the tools. The mark carries
+ * the brand; the words stay as the link's accessible name. */
 @media (max-width: 400px) {
   .masthead .brand-words {
     position: absolute; width: 1px; height: 1px; overflow: hidden;
@@ -2189,16 +1865,16 @@ body[data-screen="summary"] main { max-width: 760px; }
 }
 .q-image-caption {
   margin-top: 6px;
-  font-size: 12.5px;
+  font-size: var(--fs-meta);
   color: var(--ink-mute);
 }
 
-/* ── Author / model tag (LLM attribution) ───────────────────────── */
+/* ── Author / model tag ─────────────────────────────────────────── */
 .model-tag {
   display: inline-block;
   margin-left: 8px;
   padding: 2px 8px;
-  font-size: 11px;
+  font-size: var(--fs-meta);
   font-weight: 500;
   border: 1px solid var(--line);
   border-radius: var(--r-chip);
@@ -2213,48 +1889,25 @@ body[data-screen="summary"] main { max-width: 760px; }
   min-height: 130px;
   resize: vertical;
   padding: 12px 14px;
-  border-radius: var(--r-soft);
-  border: 1px solid var(--line);
-  background: var(--surface);
+  border-radius: var(--r-control);
+  border: 1px solid var(--line-strong);
+  background: var(--bg-2);
   color: var(--ink);
   font: inherit;
-  font-size: 14px;
+  font-size: var(--fs-ui);
   line-height: 1.5;
 }
 
 /* ── Reports admin (admin only) ─────────────────────────────────── */
-/* Defence-in-depth: nothing class="admin-only" ever paints unless the body
-   has the is-admin class. Set/unset by app.js after auth resolves. */
+/* Nothing .admin-only paints unless app.js has set .is-admin on body. */
 body:not(.is-admin) .admin-only { display: none !important; }
-
-/* Per-user pill colour palette. Twelve hues chosen for legibility on both
-   the light and dark backgrounds. The chosen index is set via the
-   --pill-hue inline style at the .profile-chip element by app.js. */
-.profile-chip {
-  --pill-bg: hsl(var(--pill-hue, 200), 60%, 70%);
-  --pill-fg: #0e1421;
-  background: var(--pill-bg);
-  color: var(--pill-fg);
-  padding: 4px 12px;
-  border-radius: var(--r-chip);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-[data-theme="dark"] .profile-chip {
-  --pill-bg: hsl(var(--pill-hue, 200), 55%, 32%);
-  --pill-fg: #f3f6fb;
-}
-.profile-chip .profile-name { font-weight: 600; }
-.profile-chip .ghost-link { color: inherit; opacity: 0.7; }
-.profile-chip .ghost-link:hover { opacity: 1; }
 
 .badge {
   display: inline-block;
   min-width: 18px;
   padding: 1px 6px;
   margin-left: 4px;
-  font-size: 11px;
+  font-size: var(--fs-cap);
   line-height: 1.4;
   border-radius: var(--r-chip);
   background: var(--accent);
@@ -2284,49 +1937,46 @@ body:not(.is-admin) .admin-only { display: none !important; }
   border-radius: var(--r-soft);
   background: var(--surface);
 }
-.report-row:hover { background: var(--surface-2); }
 .report-head {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 6px;
-  font-size: 12.5px;
+  font-size: var(--fs-meta);
 }
 .report-id { font-family: var(--mono); color: var(--ink-mute); }
 .report-status {
   padding: 1px 8px;
   border-radius: var(--r-chip);
-  font-size: 11px;
+  font-size: var(--fs-cap);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: var(--track-caps);
 }
 .report-status.status-open      { background: var(--accent); color: var(--bg); }
 .report-status.status-fixed     { background: var(--good); color: var(--bg); }
 .report-status.status-dismissed { background: var(--ink-mute); color: var(--bg); }
 .report-status.status-dropped   { background: var(--line-strong); color: var(--ink); }
 
-/* Page-level notice under the masthead (showAppNotice in app.js). Keyed
- * on the id so it holds whether or not the element also carries inline
- * styles. */
+/* Page notice under the masthead (showAppNotice). Warn: it needs the
+ * student's attention. */
 #appNotice {
   display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
   padding: 10px max(16px, env(safe-area-inset-right)) 10px max(16px, env(safe-area-inset-left));
   margin: 0;
-  font-size: 13.5px; line-height: 1.4;
+  font-size: var(--fs-ui); line-height: 1.4;
   background: var(--warn-bg); color: var(--ink);
   border-bottom: 1px solid var(--warn);
 }
 #appNotice > span { flex: 1 1 auto; }
-.report-q { margin: 4px 0 6px; font-size: 13px; }
+.report-q { margin: 4px 0 6px; font-size: var(--fs-ui); }
 .report-issue {
   white-space: pre-wrap;
-  font-size: 13.5px;
+  font-size: var(--fs-ui);
   padding: 8px 10px;
-  border-left: 3px solid var(--accent);
   background: var(--surface-2);
-  border-radius: 0 var(--r-control) var(--r-control) 0;
+  border-radius: var(--r-control);
 }
 .report-resolution { margin-top: 6px; }
 
@@ -2377,7 +2027,7 @@ body:not(.is-admin) .admin-only { display: none !important; }
 }
 .audit-row-name {
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: var(--fs-meta);
   font-weight: 600;
   word-break: break-all;
 }
@@ -2395,7 +2045,7 @@ body:not(.is-admin) .admin-only { display: none !important; }
 }
 .audit-steps > li {
   margin-bottom: 14px;
-  font-size: 13.5px;
+  font-size: var(--fs-ui);
 }
 .audit-steps > li > b { margin-right: 8px; }
 .audit-copy, .audit-apply { margin-right: 8px; }
@@ -2404,7 +2054,7 @@ body:not(.is-admin) .admin-only { display: none !important; }
   min-height: 160px;
   margin-top: 8px;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: var(--fs-meta);
 }
 .audit-copy-status.ok, .audit-apply-status.ok { color: var(--accent); }
 .audit-copy-status.bad, .audit-apply-status.bad { color: var(--bad); }
@@ -2417,30 +2067,11 @@ body:not(.is-admin) .admin-only { display: none !important; }
   margin-bottom: 14px;
 }
 .report-select { cursor: pointer; transform: translateY(1px); }
-.report-audit-one, .report-jump { margin-left: auto; font-size: 12px; }
+.report-audit-one, .report-jump { margin-left: auto; font-size: var(--fs-meta); }
 
-/* ── Disable hover restyles on touch-only devices to prevent
-     "stuck" hover states after a tap. ─────────────────────── */
-@media (hover: none) {
-  /* Each reset is scoped to the resting state. A tapped element keeps
-   * :hover on touch, and an unscoped reset at equal or higher
-   * specificity wiped the selected / active / pressed look off the
-   * very chip that had just been tapped. */
-  .options li:hover:not(.revealed):not(.selected):not(.struck):not(:has(.opt-choice:focus-visible)) .opt-marker { border-color: var(--control-bd); }
-  .opt:not(.selected):hover { border-color: var(--line); color: var(--ink-2); }
-  .setup-options.multi .opt:not(.selected):hover { color: var(--ink-mute); }
-  .link-btn:not(.active):not([aria-pressed="true"]):hover { background: transparent; color: var(--ink-2); }
-  .qt-step:hover, .qt-counter:hover { background: transparent; color: var(--ink-2); }
-  .ghost-x:hover { background: transparent; color: var(--ink-mute); }
-  .ghost-link:hover { color: var(--ink-mute); }
-  .action-link:not(.active):not(.has-report):hover { border-color: var(--line); color: var(--ink-2); }
-  .review-list li:not(.flagged):hover { background: transparent; }
-}
-
-/* ── Anki-style term hover (post-reveal only) ────────────────────── */
+/* ── Term definitions (after the answer) ─────────────────────────── */
 .term {
-  /* Subtle hint that the term has a definition behind it; the dotted
-   * underline reads as "look me up" without screaming for attention. */
+  /* A dotted underline: there is a definition here, look it up. */
   border-bottom: 1px dotted color-mix(in srgb, var(--accent) 55%, transparent);
   cursor: help;
 }
@@ -2449,26 +2080,25 @@ body:not(.is-admin) .admin-only { display: none !important; }
   z-index: 1500;
   max-width: min(320px, calc(100vw - 16px));
   background: var(--surface);
-  border: 1px solid var(--accent-bd);
+  border: 1px solid var(--line-strong);
   border-radius: var(--r-soft);
   padding: 10px 12px;
-  font-size: 12.5px;
+  font-size: var(--fs-meta);
   line-height: 1.5;
   color: var(--ink);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+  box-shadow: var(--lift-1);
   pointer-events: none;
 }
 .term-popup-head {
   font-family: var(--display);
   font-weight: 600;
-  font-size: 13px;
-  color: var(--accent);
+  font-size: var(--fs-ui);
+  color: var(--ink);
   margin-bottom: 4px;
-  letter-spacing: 0.01em;
 }
 .term-popup-body { color: var(--ink-2); }
 
-/* ── Stem clue highlights (post-reveal) ──────────────────────────── */
+/* ── Stem clue highlights (after the answer) ─────────────────────── */
 mark.stem-clue {
   background: color-mix(in srgb, var(--accent) 18%, transparent);
   color: inherit;
@@ -2478,39 +2108,31 @@ mark.stem-clue {
   -webkit-box-decoration-break: clone;
 }
 
-/* ── Difficulty toggles (Section: Difficulty) ────────────────────── */
-.setup-options[data-name="difficulties"] .opt {
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
-}
+.setup-options[data-name="difficulties"] .opt { font-variant-numeric: tabular-nums; }
 
-/* ── House quote toast (every 50 questions) ──────────────────────── */
-/* Overhaul 2026-06-01: drop the italic-serif body, left accent stripe,
- * and heavy shadow (the three stacked AI tells per ai_tells_round2.md
- * C7). Sans body, no italic, no stripe. Serif glyph reserved for the
- * opening/closing curly quotes only - that's the editorial flag. */
+/* ── House quote toast (study mode, every 50 answers) ─────────────── */
+/* The serif appears only in the curly quotes around the line. */
 .house-toast {
   position: fixed;
   right: 20px;
-  /* Clear of the sticky colophon: the toast is dismissible, so sitting
-   * over "End now" meant a click there dismissed the toast instead of
-   * ending the session. */
+  /* Clear of the colophon: a click meant for its buttons must not land
+   * on the dismissible toast. */
   bottom: calc(62px + env(safe-area-inset-bottom));
   max-width: 320px;
   background: var(--surface);
   border: 1px solid var(--line);
   padding: 12px 14px;
   border-radius: var(--r-soft);
-  box-shadow: 0 8px 24px -8px rgba(0,0,0,0.18);
+  box-shadow: var(--lift-1);
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: var(--fs-ui);
   line-height: 1.5;
   color: var(--ink-2);
   z-index: 9999;
   opacity: 0;
   transform: translateY(8px);
-  transition: opacity var(--dur-medium) var(--ease),
-              transform var(--dur-medium) var(--ease);
+  transition: opacity var(--t-move),
+              transform var(--t-move);
   cursor: pointer;
 }
 .house-toast.show { opacity: 1; transform: translateY(0); }
@@ -2518,18 +2140,18 @@ mark.stem-clue {
 .house-toast .hq-quote::before {
   content: "\201C";
   margin-right: 2px;
-  color: var(--ink-faint);
+  color: var(--ink-mute);
   font-family: var(--serif);
-  font-size: 16px;
+  font-size: var(--fs-read);
   line-height: 0;
   vertical-align: -0.05em;
 }
 .house-toast .hq-quote::after {
   content: "\201D";
   margin-left: 1px;
-  color: var(--ink-faint);
+  color: var(--ink-mute);
   font-family: var(--serif);
-  font-size: 16px;
+  font-size: var(--fs-read);
   line-height: 0;
   vertical-align: -0.05em;
 }
@@ -2538,7 +2160,7 @@ mark.stem-clue {
   margin-top: 6px;
   font-style: normal;
   font-family: inherit;
-  font-size: 11.5px;
+  font-size: var(--fs-meta);
   color: var(--ink-mute);
   text-align: right;
 }
@@ -2547,11 +2169,10 @@ mark.stem-clue {
   .house-toast { right: 12px; left: 12px; max-width: none; }
 }
 
-/* Cloud-only elements show only when a cloud user is signed in. Set by
-   app.js refreshCloudBodyClass() based on the cloudUser state. */
+/* Shown only to a signed-in account (app.js sets .is-cloud). */
 body:not(.is-cloud) .cloud-only { display: none !important; }
 
-/* ── Account / admin tables (rendered into the unified Admin modal) ── */
+/* ── Account and admin (inside the Admin modal) ─────────────────── */
 .account-self-delete {
   margin-top: 14px;
   padding: 12px 14px;
@@ -2561,7 +2182,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 }
 .account-self-delete .danger-btn {
   margin-top: 8px;
-  font-size: 12px;
+  font-size: var(--fs-meta);
   padding: 6px 12px;
 }
 .acct-delete-confirm {
@@ -2573,15 +2194,15 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   gap: 8px;
 }
 .acct-delete-label {
-  font-size: 12px;
+  font-size: var(--fs-meta);
   color: var(--ink-mute);
   line-height: 1.4;
 }
 .acct-delete-label code {
-  background: var(--accent-bg);
+  background: var(--surface-2);
   padding: 1px 6px;
   border-radius: var(--r-tight);
-  font-size: 12px;
+  font-size: var(--fs-meta);
   color: var(--ink);
 }
 .acct-delete-input {
@@ -2589,9 +2210,9 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   padding: 8px 10px;
   border: 1px solid var(--line);
   border-radius: var(--r-control);
-  background: var(--bg);
+  background: var(--bg-2);
   color: var(--ink);
-  font-size: 13px;
+  font-size: var(--fs-ui);
   font-family: inherit;
 }
 .acct-delete-input:focus {
@@ -2610,11 +2231,10 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   min-height: 16px;
 }
 
-/* ── Inline reference ranges (post-reveal) ───────────────────────── */
-/* Reference rows, shared by the post-answer block and the side panel.
- * Two explicit tracks: the label gets a minimum it cannot be squeezed
- * below, the value is right-aligned with tabular figures so a column of
- * numbers lines up on the decimal. */
+/* ── Reference ranges ─────────────────────────────────────────────── */
+/* Rows shared by the side panel and the post-answer block. The label
+ * has a floor it cannot be squeezed below; values are right-aligned in
+ * tabular figures so a column lines up. */
 .rrs { display: grid; grid-template-columns: minmax(11ch, 1fr) fit-content(62%); }
 .rr {
   display: grid;
@@ -2623,7 +2243,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   gap: 4px 18px;
   padding: 5px 0;
   border-bottom: 1px solid var(--line);
-  font-size: 12.5px;
+  font-size: var(--fs-meta);
   line-height: 1.45;
   align-items: baseline;
 }
@@ -2633,35 +2253,31 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   color: var(--ink);
   text-align: right;
   font-variant-numeric: tabular-nums;
-  /* Wraps: a nowrap value sized the track to the longest line in the
-   * category (CSF patterns, paediatric Hb) and pushed every value past
-   * the panel edge. The track is capped at 62% above; the unit stays
-   * glued to its number. */
+  /* Long values (CSF patterns) wrap inside the 62% track rather than
+   * pushing past the panel edge. */
   white-space: normal;
 }
-.rr-unit { color: var(--ink-mute); font-size: 0.92em; margin-left: 0.25em; white-space: nowrap; }
+.rr-unit { color: var(--ink-mute); margin-left: 0.25em; white-space: nowrap; }
 .rr-note {
   display: block;
-  color: var(--ink-faint);
-  font-size: 11px;
+  color: var(--ink-mute);
   white-space: normal;
   margin-top: 1px;
 }
-/* No subgrid: fall back to a fixed label track rather than letting the
- * value column collapse. */
+/* Without subgrid, a fixed label track keeps the value column open. */
 @supports not (grid-template-columns: subgrid) {
   .rrs { display: block; }
   .rr { grid-template-columns: minmax(11ch, 1fr) fit-content(62%); }
 }
 
-/* ── Rebuilt reference panel (search-first, scrollable, dense) ───── */
+/* ── Reference panel contents (search first, dense) ───────────────── */
 .ref-search { position: relative; }
 .ref-search-hit {
   position: absolute;
   right: 28px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 11px;
+  font-size: var(--fs-meta);
   color: var(--ink-mute);
   font-variant-numeric: tabular-nums;
   pointer-events: none;
@@ -2682,13 +2298,15 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   border: 1px solid var(--line);
   border-radius: var(--r-chip);
   padding: 4px 10px;
-  font-size: 11.5px;
+  font-size: var(--fs-meta);
   font-family: inherit;
   color: var(--ink-mute);
   cursor: pointer;
-  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+  transition: background var(--t-colour), color var(--t-colour), border-color var(--t-colour);
 }
-.ref-pill:hover { background: var(--surface); color: var(--ink); border-color: var(--ink-mute); }
+@media (hover: hover) {
+  .ref-pill:hover { background: var(--surface); color: var(--ink); border-color: var(--ink-mute); }
+}
 .ref-body { padding: 10px 14px 24px; }
 .range-cat { margin: 0 0 16px; padding: 0 0 12px; border-bottom: 1px solid var(--line); }
 .range-cat:last-child { border-bottom: none; }
@@ -2698,21 +2316,20 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   margin: 0 0 6px;
   padding: 8px 0 6px;
   background: var(--bg-2);
-  font-size: 14px;
+  font-size: var(--fs-ui);
   font-weight: 600;
-  letter-spacing: 0;
   color: var(--ink);
   font-family: var(--display);
   z-index: 1;
 }
 .range-cat .rr.rr-hidden { display: none; }
-.range-cat .range-note { font-size: 11.5px; color: var(--ink-mute); margin: 8px 0 0; line-height: 1.5; }
+.range-cat .range-note { font-size: var(--fs-meta); color: var(--ink-mute); margin: 8px 0 0; line-height: 1.5; }
 .range-cat.hidden { display: none; }
 
-/* ── Unified Admin modal ─────────────────────────────────────────── */
+/* ── Admin modal ─────────────────────────────────────────────────── */
 .modal-card-xwide { max-width: 1080px; }
-/* Admin modal locks to a stable size so tab switches never reflow the
-   surrounding chrome. The content pane scrolls internally instead. */
+/* A fixed size, so switching tabs never reflows the chrome; the pane
+ * scrolls inside. */
 .admin-modal-card {
   display: flex;
   flex-direction: column;
@@ -2722,17 +2339,9 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   padding: 0;
 }
 .admin-modal-card .modal-head { flex: 0 0 auto; padding: 18px 24px; border-bottom: 1px solid var(--line); }
-/* ── Admin panel (rebuilt 2026-09-22) ────────────────────────────
- *
- * Was a 184px sidebar for four items, blank <p> elements as loading
- * states, window.confirm for irreversible deletes, alert() for errors,
- * and fourteen controls that did nothing. Now: a row of section links,
- * real tables, one status region, and a native dialog for the one
- * action that cannot be undone.
- *
- * No stat tiles, no charts, no avatars, no status pills, no icons in
- * the nav. Colour appears in exactly two places: the destructive
- * action and the status region.
+/* ── Admin panel ──────────────────────────────────────────────────
+ * A row of section links, plain tables, one status region, and a native
+ * dialog for the actions that cannot be undone.
  */
 .admin-layout {
   display: flex;
@@ -2746,9 +2355,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   gap: 2px;
   flex: 0 0 auto;
   padding: 0 22px;
-  /* The row's hairline runs the full width of the panel, and the
-   * active tab's rule sits on it. Before, the rule was the only line
-   * in the row, so it read as a mark floating under a word. */
+  /* A full-width hairline for the active tab's rule to sit on. */
   box-shadow: inset 0 -1px 0 var(--line);
   overflow-x: auto;
   scrollbar-width: none;
@@ -2761,16 +2368,15 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   border: none;
   padding: 9px 10px 10px;
   font: inherit;
-  font-size: 13px;
+  font-size: var(--fs-ui);
   color: var(--ink-mute);
   text-decoration: none;
   cursor: pointer;
   white-space: nowrap;
 }
-.admin-tab:hover { color: var(--ink); text-decoration: none; }
-/* Selected state is weight plus a rule, not colour alone. The rule is
- * drawn as a pseudo-element inset to the label rather than as a border
- * on the whole cell, so it underlines the word and not the padding. */
+@media (hover: hover) { .admin-tab:hover { color: var(--ink); text-decoration: none; } }
+/* Selected is weight plus a rule under the word (not the padding), not
+ * colour alone. */
 .admin-tab.active { color: var(--ink); font-weight: 600; }
 .admin-tab.active::after {
   content: "";
@@ -2781,8 +2387,8 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   height: 2px;
   background: var(--accent);
 }
-/* The label carries the selected weight, so the row must not re-flow
- * when the selection moves. Reserve the bold width up front. */
+/* Reserves the bold width, so the row does not reflow when the
+ * selection moves. */
 .admin-tab::before {
   content: attr(data-label);
   display: block;
@@ -2801,20 +2407,19 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 }
 .admin-main h3 {
   margin: 0;
-  font-size: 14.5px;
+  font-size: var(--fs-read);
   font-weight: 600;
   color: var(--ink);
 }
 .admin-main h4 {
   margin: 14px 0 0;
-  font-size: 12.5px;
+  font-size: var(--fs-meta);
   font-weight: 600;
   color: var(--ink-2);
 }
 
+/* No pane heading: the selected tab is the heading. */
 .admin-pane { display: flex; flex-direction: column; }
-/* No per-pane heading: the selected tab is the heading, and it sat
- * under a modal already titled Admin. */
 .admin-pane-section {
   margin-top: 22px;
   padding-top: 18px;
@@ -2822,21 +2427,21 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 }
 .admin-pane-section:first-of-type { margin-top: 18px; }
 
-/* Status region. One per panel, directly under the section nav, never
- * auto-dismissed. A toast an admin misses leaves no record that the
- * action happened, and auto-dismissal runs into WCAG 2.2.1. */
+/* Status region: one per panel, under the section nav, never
+ * auto-dismissed, so an admin who looks away still has the record
+ * (and WCAG 2.2.1 holds). */
 .admin-status {
   display: flex;
   align-items: baseline;
   gap: 8px;
   margin: 0 0 16px;
   padding: 9px 12px;
-  border-left: 3px solid var(--good);
+  border-radius: var(--r-control);
   background: var(--good-bg);
-  font-size: 13px;
+  font-size: var(--fs-ui);
   color: var(--ink);
 }
-.admin-status.is-error { border-left-color: var(--bad); background: var(--bad-bg); }
+.admin-status.is-error { background: var(--bad-bg); }
 .admin-status-head { font-weight: 600; flex: 0 0 auto; }
 .admin-status.is-error .admin-status-head { color: var(--bad); }
 .admin-status-msg { flex: 1 1 auto; }
@@ -2850,33 +2455,33 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   padding: 0 2px;
 }
 .admin-status-undo { text-decoration: underline; text-underline-offset: 2px; }
-.admin-status-undo:hover, .admin-status-x:hover { color: var(--ink); }
-.admin-status-x { font-size: 15px; line-height: 1; }
+@media (hover: hover) { .admin-status-undo:hover, .admin-status-x:hover { color: var(--ink); } }
+.admin-status-x { font-size: var(--fs-read); line-height: 1; }
 
+/* The pane's first line: facts in a sentence. */
 .admin-fact {
   margin: 0 0 14px;
-  /* First line of the pane now that the heading has gone. */
-  font-size: 14px;
+  font-size: var(--fs-ui);
   color: var(--ink-2);
   font-variant-numeric: tabular-nums;
 }
 .admin-fact b { color: var(--ink); font-weight: 600; }
-.admin-note { margin: 6px 0 0; font-size: 12px; color: var(--ink-mute); line-height: 1.5; }
+.admin-note { margin: 6px 0 0; font-size: var(--fs-meta); color: var(--ink-mute); line-height: 1.5; }
 .admin-empty {
   margin: 8px 0 0;
   padding: 14px 0;
-  font-size: 13px;
+  font-size: var(--fs-ui);
   color: var(--ink-mute);
   line-height: 1.55;
 }
 
-/* Tables. Left-aligned text, right-aligned numbers in tabular figures,
- * one hairline per row, no zebra, no vertical rules, no outer border. */
+/* Tables: text left, numbers right in tabular figures, one hairline per
+ * row, nothing else. */
 .admin-table-scroll { overflow-x: auto; }
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: var(--fs-ui);
 }
 .admin-table th, .admin-table td {
   text-align: left;
@@ -2885,7 +2490,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   vertical-align: baseline;
 }
 .admin-table thead th {
-  font-size: 12px;
+  font-size: var(--fs-meta);
   font-weight: 600;
   color: var(--ink-mute);
   border-bottom: 2px solid var(--line-strong);
@@ -2895,7 +2500,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 .admin-table tbody th { font-weight: 500; color: var(--ink); }
 .admin-table tbody tr:last-child th,
 .admin-table tbody tr:last-child td { border-bottom: none; }
-.admin-table tbody tr:hover { background: var(--surface-2); }
+@media (hover: hover) { .admin-table tbody tr:hover { background: var(--surface-2); } }
 .admin-table td, .admin-table .num { font-variant-numeric: tabular-nums; }
 .admin-table .num, .admin-table th.num { text-align: right; padding-right: 18px; }
 .admin-table-num td:not(:first-child),
@@ -2913,11 +2518,10 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   padding-bottom: 3px;
 }
 .admin-table .gap-wide { color: var(--cta); font-weight: 600; }
-/* The class is named for the face it was not setting. */
 .admin-table .mono-id {
   font-family: var(--mono);
   font-variant-numeric: tabular-nums;
-  font-size: 11.5px;
+  font-size: var(--fs-meta);
   color: var(--ink-2);
   font-weight: 400;
 }
@@ -2925,22 +2529,21 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 .admin-table tr.is-spent { color: var(--ink-mute); }
 .admin-users tbody tr.is-self { background: var(--accent-bg); }
 .admin-you {
-  font-size: 10.5px;
+  font-size: var(--fs-cap);
   color: var(--ink-mute);
   text-transform: uppercase;
-  letter-spacing: 0.07em;
+  letter-spacing: var(--track-caps);
   margin-left: 5px;
 }
 
-/* Row actions: always visible, text-labelled. Hover-reveal is
- * invisible to touch and to the keyboard, and an icon-only round
- * button says nothing about what it does. */
+/* Row actions: always visible and labelled in words, since hover-reveal
+ * does not exist on touch or for the keyboard. */
 .cell-actions { white-space: nowrap; text-align: right; padding-right: 0 !important; }
 .row-act {
   background: none;
   border: none;
   font: inherit;
-  font-size: 12.5px;
+  font-size: var(--fs-meta);
   color: var(--ink-2);
   cursor: pointer;
   padding: 6px 8px;
@@ -2948,28 +2551,30 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-.row-act:hover { color: var(--ink); background: var(--surface); }
 .row-act.danger { color: var(--bad); }
-.row-act.danger:hover { color: var(--bad); background: var(--bad-bg); }
-.row-act:disabled { color: var(--ink-faint); cursor: progress; text-decoration: none; }
-/* A blocked action is plain text with the reason, not a disabled
- * button: a tooltip on a disabled control is unreachable by keyboard. */
-.admin-noact { font-size: 12px; color: var(--ink-faint); }
+@media (hover: hover) {
+  .row-act:hover { color: var(--ink); background: var(--surface-2); }
+  .row-act.danger:hover { color: var(--bad); background: var(--bad-bg); }
+}
+.row-act:disabled { color: var(--ink-mute); cursor: progress; text-decoration: none; }
+/* A blocked action is plain text giving the reason: a tooltip on a
+ * disabled button cannot be reached by keyboard. */
+.admin-noact { font-size: var(--fs-meta); color: var(--ink-mute); }
 
-/* Loading. Nothing for the first second, then placeholder rows rather
- * than a spinner, so the layout does not jump when data lands. */
+/* Loading: nothing for the first second, then placeholder rows, so the
+ * layout does not jump when data lands. */
 .admin-skeleton { display: flex; flex-direction: column; gap: 8px; padding: 6px 0; }
 .sk-row { height: 38px; border-radius: var(--r-tight); background: var(--surface-2); }
 
 .admin-form { display: flex; flex-direction: column; gap: 10px; max-width: 340px; }
-.admin-form label { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: var(--ink-mute); }
+.admin-form label { display: flex; flex-direction: column; gap: 4px; font-size: var(--fs-meta); color: var(--ink-mute); }
 .admin-form input {
   background: var(--bg-2);
   border: 1px solid var(--line);
-  border-radius: var(--r-tight);
+  border-radius: var(--r-control);
   color: var(--ink);
   font: inherit;
-  font-size: 13.5px;
+  font-size: var(--fs-ui);
   padding: 8px 10px;
 }
 .admin-form input:focus-visible { outline: 2px solid var(--accent); outline-offset: -1px; }
@@ -2983,19 +2588,18 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   gap: 10px 14px;
   margin: 10px 0 14px;
 }
-.invite-new label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--ink-mute); }
+.invite-new label { display: flex; flex-direction: column; gap: 4px; font-size: var(--fs-meta); color: var(--ink-mute); }
 .invite-new input, .invite-new select {
   background: var(--bg-2);
   border: 1px solid var(--line);
-  border-radius: var(--r-tight);
+  border-radius: var(--r-control);
   color: var(--ink);
   font: inherit;
-  font-size: 13px;
+  font-size: var(--fs-ui);
   padding: 7px 9px;
 }
-/* The code cell in the list. The code is the thing to read there, so
- * it gets the mono face and the copy control sits next to it rather
- * than in the actions column at the far side of the row. */
+/* The code is what is read in this cell, so it is mono with its copy
+ * control beside it. */
 .admin-table .cell-code {
   display: flex;
   align-items: center;
@@ -3004,7 +2608,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 }
 .admin-table .cell-code code {
   font-family: var(--mono);
-  font-size: 12.5px;
+  font-size: var(--fs-meta);
   letter-spacing: 0.05em;
   color: var(--ink);
 }
@@ -3013,25 +2617,25 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 .invite-fresh {
   margin: 0 0 14px;
   padding: 12px 14px;
-  border-left: 3px solid var(--accent);
-  background: var(--accent-bg);
-  font-size: 13px;
+  border-radius: var(--r-control);
+  background: var(--surface-2);
+  font-size: var(--fs-ui);
 }
 .invite-fresh p { margin: 0 0 8px; color: var(--ink-2); }
 .invite-code-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .invite-code-row a.secondary { text-decoration: none; line-height: normal; }
 .invite-code-row code {
   font-family: var(--mono);
-  font-size: 15px;
-  letter-spacing: 0.06em;
+  font-size: var(--fs-read);
+  letter-spacing: 0.05em;
   color: var(--ink);
   background: var(--bg-2);
   border: 1px solid var(--line);
-  border-radius: var(--r-tight);
+  border-radius: var(--r-control);
   padding: 6px 10px;
 }
 
-/* Confirmation dialog. Native <dialog>, ~97% support. */
+/* Confirmation dialog (native <dialog>). */
 .confirm-dialog {
   border: 1px solid var(--line);
   border-radius: var(--r-soft);
@@ -3039,23 +2643,23 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   color: var(--ink);
   padding: 0;
   width: min(440px, calc(100vw - 32px));
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.30);
+  box-shadow: var(--lift-2);
 }
-.confirm-dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+.confirm-dialog::backdrop { background: var(--scrim); }
 .confirm-form { padding: 20px 22px 18px; display: flex; flex-direction: column; gap: 12px; }
-.confirm-form h2 { margin: 0; font-size: 16px; font-weight: 600; }
-.confirm-body { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--ink-2); }
-.confirm-type { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; color: var(--ink-mute); }
+.confirm-form h2 { margin: 0; font-size: var(--fs-read); font-weight: 600; }
+.confirm-body { margin: 0; font-size: var(--fs-ui); line-height: 1.55; color: var(--ink-2); }
+.confirm-type { display: flex; flex-direction: column; gap: 5px; font-size: var(--fs-meta); color: var(--ink-mute); }
 .confirm-type input {
   background: var(--bg-2);
   border: 1px solid var(--line);
-  border-radius: var(--r-tight);
+  border-radius: var(--r-control);
   color: var(--ink);
   font: inherit;
-  font-size: 13.5px;
+  font-size: var(--fs-ui);
   padding: 8px 10px;
 }
-.confirm-err { margin: 0; font-size: 12.5px; color: var(--bad); }
+.confirm-err { margin: 0; font-size: var(--fs-meta); color: var(--bad); }
 .confirm-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 2px; flex-wrap: wrap; }
 .confirm-actions button { flex: 0 1 auto; }
 #confirmGo:disabled { opacity: 0.45; cursor: not-allowed; }
@@ -3063,46 +2667,41 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 @media (max-width: 760px) {
   .admin-nav { padding: 0 14px; }
   .admin-main { padding: 16px 14px 22px; }
-  /* The users table has seven columns; below this width it scrolls
-     horizontally inside its own container rather than crushing the
-     name and email columns to nothing. */
+  /* Seven columns: the table scrolls inside its box rather than
+   * crushing name and email. */
   .admin-table { min-width: 620px; }
   .invite-new { gap: 8px 10px; }
   .admin-form { max-width: none; }
 }
 
-/* ── Legacy-admin migration affordances ──────────────────────────── */
-
-/* Admins see the Admin masthead button. Hide the Account duplicate
-   for them - the Account tab inside the admin modal covers the same
-   surface. Non-admin cloud users keep the Account button. */
+/* An admin reaches Account as a tab inside Admin. */
 body.is-admin #accountBtn { display: none !important; }
 
-/* Inline-ranges category blocks (post-reveal, in the rationale area) */
+/* Reference values after the answer */
 .ir-cat { margin-top: 14px; }
-.ir-cat-head {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--ink-mute);
-  margin-bottom: 6px;
-}
 .ir-cat .rrs { border-top: 1px solid var(--line); padding-top: 2px; }
-.ir-more {
-  background: none; border: none; padding: 6px 0 0;
-  font: inherit; font-size: 11.5px; color: var(--ink-mute);
+/* One line naming the question's reference panels; each name opens the
+ * panel there. */
+.comm-block .ir-line { margin: 14px 0 0; font-size: var(--fs-meta); color: var(--ink-mute); line-height: 1.55; }
+.ir-open {
+  background: none; border: none; padding: 0;
+  font: inherit; color: var(--ink-2);
   cursor: pointer; text-decoration: underline; text-underline-offset: 2px;
 }
-.ir-more:hover { color: var(--accent); }
+@media (hover: hover) { .ir-open:hover { color: var(--accent); } }
+
+/* Keyboard shortcuts only where a keyboard is likely. On a touch screen
+ * the legend and the printed option numbers describe keys that are not
+ * there. */
+@media (hover: none), (pointer: coarse) {
+  .kbd-only, .options li .opt-key { display: none; }
+}
 
 
-/* Respect prefers-reduced-motion */
+/* Reduced motion: nothing travels. Colour changes and the toast's fade
+ * stay, because they move nothing and still say what happened. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  html { scroll-behavior: auto; }
+  .house-toast, .house-toast.show { transform: none; transition: opacity var(--t-colour); }
+  .qt-progress span { transition: none; }
 }

@@ -1,7 +1,6 @@
-// Pre-paint auth probe. If an auth token is in localStorage we assume the
-// gate will pass and pre-hide it before first paint - otherwise the gate
-// flashes for one frame on every saved-login refresh. If the token is
-// later rejected by /api/me the JS path un-hides the gate again.
+// Pre-paint auth probe. With a saved token (or guest id) the gate is
+// hidden before first paint, so it does not flash on every reload. If
+// /api/me later rejects the token, app.js shows the gate again.
 //
 // This lives in its own file rather than inline so the page can ship
 // script-src 'self' with no 'unsafe-inline'. With the session token in
@@ -18,10 +17,9 @@
   } catch (_) {}
 })();
 
-// Theme before first paint. :root holds the dark palette and app.js
-// (deferred) applies data-theme only on DOMContentLoaded, so every
-// light-theme load, the default, painted a navy frame first. Same key
-// and default as app.js applyTheme.
+// Theme before first paint. :root holds the dark palette and app.js is
+// deferred, so without this a light-theme load (the default) would paint
+// one navy frame first. Same key and default as app.js applyTheme.
 //
 // The browser-chrome colour follows the app's theme, not the OS scheme:
 // one theme-color meta, rewritten whenever data-theme changes, so a
