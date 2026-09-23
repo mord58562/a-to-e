@@ -6,6 +6,11 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 **Live: <https://mord58562.github.io/a-to-e/>** - guest mode, no signup required.
 
+## What's new in 1.6.12
+
+- Pressing the number of the option you already picked takes it back off, so the key that chose it undoes it.
+- Choosing an option with the keyboard looks the same as clicking it. It used to draw a box around the row that a click never produced.
+
 ## What's new in 1.6.11
 
 - A revoked invite code disappears from the admin panel instead of sitting there as a row that cannot do anything.

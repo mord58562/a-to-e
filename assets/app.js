@@ -2283,6 +2283,19 @@
     document.getElementById("submitBtn").disabled = false;
   }
 
+  // Undo a not-yet-submitted selection. Escape had its own inline copy
+  // of this that forgot aria-checked, so the row stayed "selected" to a
+  // screen reader after it had visibly cleared.
+  function deselectOption(q, li) {
+    if (!li || state.quiz.revealed[q.id]) return;
+    li.classList.remove("selected");
+    const choice = li.querySelector(".opt-choice");
+    if (choice) { choice.setAttribute("aria-checked", "false"); }
+    delete state.quiz.answers[q.id];
+    const submitBtn = document.getElementById("submitBtn");
+    if (submitBtn) submitBtn.disabled = true;
+  }
+
   // A clinical vignette hands you an observation set, not a sentence.
   // The data came in as one comma-joined string per row ("Pulse
   // 128/min, blood pressure 158/94 mmHg, respiratory rate 22/min,
@@ -3276,7 +3289,13 @@
         // d / Submit to commit.
         const letter = "ABCDE"[parseInt(k, 10) - 1];
         const li = document.querySelector(`#qOptions li[data-letter="${letter}"]`);
-        if (li && !revealed) li.click();
+        // Pressing the number of the option that is already selected
+        // takes it back off, so the key that chose it is the key that
+        // undoes it.
+        if (li && !revealed) {
+          if (li.classList.contains("selected")) deselectOption(q, li);
+          else li.click();
+        }
         e.preventDefault();
       } else if (k === "enter" || k === " ") {
         // Enter / Space: submit when an answer is selected, otherwise
@@ -3289,9 +3308,7 @@
         // back out of a tentative choice without striking it). Post-
         // reveal, Escape is owned by the ref-panel / modal handlers.
         if (!revealed && selected) {
-          selected.classList.remove("selected");
-          delete state.quiz.answers[q.id];
-          if (submitBtn) submitBtn.disabled = true;
+          deselectOption(q, selected);
           e.preventDefault();
         }
       } else if (k === "f") {

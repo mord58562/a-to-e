@@ -1265,6 +1265,15 @@ body:has(#quizTopbar[hidden]) .reading {
   outline-offset: -2px;
   border-radius: var(--r-tight);
 }
+/* Choosing an option with its number key focuses the row, which drew a
+ * box around it that a mouse click never produced, so the same choice
+ * looked like two different states. A selected row is already marked by
+ * its tint and its filled marker; the focus cue tightens to a ring on
+ * the marker rather than a box around everything. */
+.options li.selected .opt-choice:focus-visible { outline: none; }
+.options li.selected .opt-choice:focus-visible .opt-marker {
+  box-shadow: inset 0 0 0 3.5px var(--accent), 0 0 0 3px var(--accent-bd);
+}
 
 .options li.selected { background: var(--accent-bg); }
 .options li.selected .opt-marker {
