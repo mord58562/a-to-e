@@ -9,7 +9,7 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 ## What's new in 1.6.12
 
 - Pressing the number of the option you already picked takes it back off, so the key that chose it undoes it.
-- Choosing an option with the keyboard looks the same as clicking it. The tint says which row you are on, the filled marker says which answer you have chosen, and neither leaves a box behind.
+- Choosing an option with the keyboard looks the same as clicking it: one tinted row with a filled marker, and nothing left behind when you take the choice back off.
 
 ## What's new in 1.6.11
 

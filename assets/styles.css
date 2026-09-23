@@ -1260,13 +1260,16 @@ body:has(#quizTopbar[hidden]) .reading {
 }
 
 .options li:hover:not(.revealed) .opt-marker { border-color: var(--accent); }
-/* Two states, two signals, and they stack rather than compete: the tint
- * says where you are, the filled marker says what you have chosen. A
- * focus ring drawn as a box around the row said neither - it appeared
- * on a keyboard choice and never on a click, and it stayed behind after
- * the choice was taken back off. */
+/* One state, not two. Arrow keys select rather than moving a cursor
+ * around, so there is no position to indicate separately from the
+ * choice: a selected row is tinted and its marker is filled, and an
+ * unselected row is nothing. Focus that is not a selection - a Tab into
+ * the list, or a row whose selection was just taken back off - borrows
+ * the hover cue on the marker instead of inventing a third appearance. */
 .options li .opt-choice:focus-visible { outline: none; }
-.options li:has(.opt-choice:focus-visible) { background: var(--accent-bg); }
+.options li:has(.opt-choice:focus-visible):not(.selected) .opt-marker {
+  border-color: var(--line-strong);
+}
 /* Windows high contrast paints no background, so the ring comes back
  * there rather than leaving focus invisible. */
 @media (forced-colors: active) {
