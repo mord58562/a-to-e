@@ -28,8 +28,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://a-to-e-inbox.mord58562.workers.dev">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260923n" />
-<script src="assets/preauth.js?v=20260923n"></script>
+<link rel="stylesheet" href="assets/styles.css?v=20260924a" />
+<!-- Both scripts are requested with the stylesheets. app.js is deferred,
+     so it still runs after parsing; in the head it downloads alongside
+     the CSS instead of after it. preauth.js blocks the parser, so it goes
+     last: ahead of the stylesheets it would hold back their requests
+     and the first paint. -->
+<script src="assets/app.js?v=20260924a" defer></script>
+<script src="assets/preauth.js?v=20260924a"></script>
 </head>
 <body data-screen="home" class="locked">
 
@@ -37,18 +43,18 @@
   <div class="gate-card" data-mode="signin">
     <header class="gate-head">
       <a class="gate-brand-row" aria-label="A to E">
-        <span class="brand-mark"><span class="cross"></span></span>
+        <span class="brand-mark"></span>
         <span class="gate-wordmark">A to E</span>
       </a>
       <p class="gate-tagline">Practice for Australian medical students in their clinical years.</p>
     </header>
 
-    <nav class="gate-tabs" role="tablist">
-      <button type="button" class="gate-tab" data-gate-switch="signin" role="tab" aria-selected="true">Sign in</button>
-      <button type="button" class="gate-tab" data-gate-switch="signup" role="tab" aria-selected="false">Create account</button>
-    </nav>
+    <div class="gate-tabs" role="tablist" aria-label="Account">
+      <button type="button" class="gate-tab" id="gateTabSignIn" data-gate-switch="signin" role="tab" aria-selected="true" aria-controls="cloudSignInForm">Sign in</button>
+      <button type="button" class="gate-tab" id="gateTabSignUp" data-gate-switch="signup" role="tab" aria-selected="false" aria-controls="cloudSignUpForm" tabindex="-1">Create account</button>
+    </div>
 
-    <form id="cloudSignInForm" class="gate-pane" autocomplete="on" novalidate>
+    <form id="cloudSignInForm" class="gate-pane" role="tabpanel" aria-labelledby="gateTabSignIn" autocomplete="on" novalidate>
       <label class="gate-field">
         <span>Email</span>
         <input id="cloudSignInEmail" type="email" required autocomplete="email" autocapitalize="off" spellcheck="false" />
@@ -58,10 +64,10 @@
         <input id="cloudSignInPassword" type="password" required autocomplete="current-password" />
       </label>
       <button class="primary gate-primary" type="submit">Sign in</button>
-      <p id="cloudSignInErr" class="gate-err" hidden></p>
+      <p id="cloudSignInErr" class="gate-err" role="alert" hidden></p>
     </form>
 
-    <form id="cloudSignUpForm" class="gate-pane" autocomplete="on" novalidate hidden>
+    <form id="cloudSignUpForm" class="gate-pane" role="tabpanel" aria-labelledby="gateTabSignUp" autocomplete="on" novalidate hidden>
       <label class="gate-field">
         <span>Invite code</span>
         <input id="cloudSignUpInvite" type="text" required autocomplete="off"
@@ -85,7 +91,7 @@
         <input id="cloudSignUpPassword2" type="password" required minlength="8" autocomplete="new-password" />
       </label>
       <button class="primary gate-primary" type="submit">Create account</button>
-      <p id="cloudSignUpErr" class="gate-err" hidden></p>
+      <p id="cloudSignUpErr" class="gate-err" role="alert" hidden></p>
     </form>
 
     <div class="gate-guest">
@@ -98,13 +104,12 @@
 <header class="masthead">
   <div class="masthead-left">
     <a class="brand" href="#">
-      <span class="brand-mark"><span class="cross"></span></span>
+      <span class="brand-mark"></span>
       <span class="brand-words">
         <span class="brand-title">
           <span class="t-long">A to E <span class="brand-glucose">(+ glucose)</span></span>
           <span class="t-short">A to E</span>
         </span>
-        <span class="brand-sub">A practice MCQ bank</span>
       </span>
     </a>
     <span class="session-meta" id="sessionMeta"></span>
@@ -148,7 +153,7 @@
 
 <footer class="colophon" id="colophon" hidden>
   <span class="colophon-block">
-    <button class="link-btn" id="exitBtn">Leave session</button>
+    <button class="link-btn" id="exitBtn">Leave test</button>
   </span>
   <span class="colophon-block colophon-center">
     <span id="sessionTime" aria-live="off"></span>
@@ -253,11 +258,13 @@
       <details class="setup-collapse" id="tagSection">
         <summary>
           <span>Learning areas <span class="dim" id="tagCountLabel"></span></span>
-          <span class="setup-collapse-actions">
-            <button class="ghost-link" id="tagsAll">all</button>
-            <button class="ghost-link" id="tagsNone">none</button>
-          </span>
         </summary>
+        <div class="tag-tools">
+          <input id="tagFilter" class="tag-filter" type="search" placeholder="Find an area"
+                 aria-label="Find a learning area" aria-controls="subtopicChips"
+                 autocomplete="off" autocapitalize="off" spellcheck="false" />
+          <button type="button" class="ghost-link" id="tagsAll" hidden>All areas</button>
+        </div>
         <div class="setup-options multi tag-row" data-name="subtopics" id="subtopicChips"></div>
       </details>
 
@@ -275,7 +282,7 @@
 
     <div class="run-row">
       <button id="startBtn" class="primary">Begin</button>
-      <span class="dim small" id="poolSize"></span>
+      <span class="dim small" id="poolSize" role="status"></span>
     </div>
 
   </section>
@@ -370,10 +377,10 @@
 
 <!-- ── REPORT ISSUE ─────────────────────────────────────────────────── -->
 
-<div id="reportModal" class="modal" hidden>
+<dialog id="reportModal" class="modal" aria-labelledby="reportTitle" hidden>
   <div class="modal-card">
     <div class="modal-head">
-      <h2>Report an issue</h2>
+      <h2 id="reportTitle">Report an issue</h2>
       <button id="reportCancel" class="ghost-x" aria-label="Close">×</button>
     </div>
     <div class="modal-body">
@@ -382,25 +389,25 @@
       <textarea id="reportText" class="report-text" placeholder="e.g. 'The answer says first line is amoxicillin, but Therapeutic Guidelines recommends amoxicillin with clavulanic acid here because...'" rows="6" maxlength="4000"></textarea>
       <div class="prompt-actions">
         <button id="reportSubmit" class="primary">Send report</button>
-        <span id="reportStatus" class="dim small"></span>
+        <span id="reportStatus" class="dim small" role="status"></span>
       </div>
     </div>
   </div>
-</div>
+</dialog>
 
 <!-- ── AUDIT DASHBOARD (admin only) ─────────────────────────────────── -->
 
 <!-- ── HOW-TO ───────────────────────────────────────────────────────── -->
 
-<div id="statsModal" class="modal" hidden>
+<dialog id="statsModal" class="modal" aria-labelledby="statsTitle" hidden>
   <div class="modal-card modal-card-wide stats-modal-card">
     <div class="modal-head">
-      <h2>Stats</h2>
+      <h2 id="statsTitle">Stats</h2>
       <button id="statsClose" class="ghost-x" aria-label="Close">×</button>
     </div>
     <div class="modal-body" id="statsBody"></div>
   </div>
-</div>
+</dialog>
 
 <!-- Destructive-action confirmation. A native <dialog> rather than
      window.confirm, because confirm() cannot name what is about to be
@@ -426,7 +433,7 @@
 </dialog>
 
 <!-- ── UNIFIED ADMIN INTERFACE ──────────────────────────────────────── -->
-<div id="adminModal" class="modal" hidden>
+<dialog id="adminModal" class="modal" aria-labelledby="adminTitle" hidden>
   <div class="modal-card modal-card-xwide admin-modal-card">
     <div class="modal-head">
       <h2 id="adminTitle">Admin</h2>
@@ -522,9 +529,7 @@
       </div>
     </div>
   </div>
-</div>
+</dialog>
 
-
-<script src="assets/app.js?v=20260923n" defer></script>
 </body>
 </html>

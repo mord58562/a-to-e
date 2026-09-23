@@ -17,6 +17,43 @@
   } catch (_) {}
 })();
 
+// The bank's first two requests. meta.json keys the data files and the
+// batch manifest lists them. app.js is deferred, so starting them here
+// saves waiting for it to download and run. loadData takes the promises
+// once; a null result means it fetches that file itself.
+(function () {
+  try {
+    if (!window.fetch) return;
+    var get = function (url, init) {
+      return fetch(url, init)
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; });
+    };
+    window.__bankHead = {
+      meta: get("data/meta.json?t=" + Date.now()),
+      manifest: get("data/batches_manifest.json", { cache: "no-cache" })
+    };
+  } catch (_) {}
+})();
+
+// The gate is static HTML and paints before app.js has wired it. A tap
+// on "Continue as guest" or a pane switch in that gap is recorded for
+// passGate to replay. A form submit is held: sent natively, it would
+// reload the page and drop what was typed.
+(function () {
+  var inGate = function (el) { return !!(el && el.closest && el.closest("#gate")); };
+  document.addEventListener("click", function (e) {
+    if (window.__gateWired) return;
+    var t = e.target && e.target.closest && e.target.closest("#gateGuestBtn, [data-gate-switch]");
+    if (t && inGate(t)) window.__gateEarly = { kind: "click", el: t };
+  }, true);
+  document.addEventListener("submit", function (e) {
+    if (window.__gateWired || !inGate(e.target)) return;
+    e.preventDefault();
+    window.__gateEarly = { kind: "submit", el: e.target };
+  }, true);
+})();
+
 // Theme before first paint. :root holds the dark palette and app.js is
 // deferred, so without this a light-theme load (the default) would paint
 // one navy frame first. Same key and default as app.js applyTheme.

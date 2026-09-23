@@ -378,7 +378,8 @@ html.pre-authed #gate { display: none !important; }
   max-width: 34em;
 }
 /* Rows with too few answers for the percentage to mean much. */
-.stats-table .stats-few { opacity: 0.55; }
+.stats-table .stats-label.stats-few { color: var(--ink-mute); }
+.stats-table .stats-bar-wrap.stats-few { opacity: 0.45; }
 
 html, body {
   margin: 0;
@@ -390,9 +391,15 @@ html, body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  /* clip, not hidden: hidden on both html and body makes body its own
+   * scroll container, and the sticky masthead and colophon then stick
+   * to a box that never scrolls. */
+  overflow-x: clip;
 }
-main { overflow-x: hidden; }
+/* Keyboard scrolling (scrollIntoView) stops short of the sticky
+ * masthead and colophon instead of parking a row underneath them. */
+html { scroll-padding-top: 76px; scroll-padding-bottom: 76px; }
+main { overflow-x: clip; }
 .stem, .lead-in, .comm-block p, .comm-block ul,
 .sources li, .opt-rationale {
   /* anywhere lets a long URL break, but it also shrinks min-content to
@@ -465,7 +472,6 @@ body.has-paeds .masthead .brand-glucose { display: inline; }
   background-position: center;
   background-size: contain;
 }
-.brand-mark .cross { display: none; }
 .brand-words { display: flex; flex-direction: column; line-height: 1; }
 .brand-title {
   font-family: var(--display);
@@ -475,7 +481,6 @@ body.has-paeds .masthead .brand-glucose { display: inline; }
   color: var(--ink);
   line-height: 1;
 }
-.brand-sub { display: none; }
 .session-meta {
   font-size: var(--fs-meta);
   line-height: 1;
@@ -486,6 +491,25 @@ body.has-paeds .masthead .brand-glucose { display: inline; }
   cursor: text;
 }
 .masthead-tools { display: flex; gap: 6px; align-items: center; line-height: 1; }
+/* Every masthead item is one line at every width; narrower windows
+ * swap in the short labels instead of wrapping "A / to / E". */
+.brand-title, .session-meta, .masthead-tools > * { white-space: nowrap; }
+@media (max-width: 720px) {
+  .t-long { display: none; }
+  .t-short { display: inline; }
+}
+/* Split-screen tablets and landscape phones: the tools close up and the
+ * session line goes (the topbar already says where you are). */
+@media (max-width: 600px) {
+  .session-meta { display: none; }
+  .masthead-tools { gap: 0; }
+  .masthead-tools .link-btn { padding: 8px 5px; font-size: var(--fs-meta); }
+  .masthead-tools .profile-chip { margin-left: 4px; padding: 4px 4px 4px 8px; gap: 2px; }
+  /* The guest pill is the sign-up link alone; "Guest" says nothing the
+   * link does not. */
+  .profile-chip[data-profile-id="guest"] .profile-name { display: none; }
+  .masthead-tools .profile-chip[data-profile-id="guest"] { padding: 4px; }
+}
 .masthead-tools .link-btn { display: inline-flex; align-items: center; line-height: 1; }
 /* The name pill is neutral for everyone, so the only coloured pill is
  * the admin's gold one and colour keeps its meaning. */
@@ -872,11 +896,21 @@ body[data-screen="quiz"] .quiz-topbar {
   body.refs-open .nav-rail { display: none !important; }
 }
 
+/* The reading column is sized by its text, not by the window: every
+ * block in the card runs to one measure (about 70 characters of the
+ * stem), and the card is that measure plus its padding. The topbar,
+ * colophon and rail read --col, so they follow the card. The results
+ * screen keeps the same column, so the review list reads at the same
+ * width as the questions it lists. */
+:root { --measure: 36rem; --card-pad-x: 28px; }
+body[data-screen="quiz"], body[data-screen="summary"] {
+  --col: calc(var(--measure) + 2 * (var(--card-pad-x) + 1px) + 2 * var(--col-pad));
+}
 .reading {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 0 0 var(--r-soft) var(--r-soft);
-  padding: 26px 28px 24px;
+  padding: 26px var(--card-pad-x) 24px;
   margin-bottom: 24px;
 }
 /* With no topbar above it the card rounds all four corners. */
@@ -885,13 +919,6 @@ body:has(#quizTopbar[hidden]) .reading {
   border-radius: var(--r-soft);
 }
 
-/* Running text is set to a reading measure (about 70 characters), not
- * to the card. Options, the record and tables keep the full width:
- * they are rows to scan, and the space to their right is left open. */
-.stem, .lead-in, .comm-block p, .comm-block ul, .comm-block .pearl,
-.sources, .options li .opt-rationale {
-  max-width: 34em;
-}
 .stem {
   /* The serif marks the vignette as the thing to read. pre-line keeps
    * the blank lines that separate its paragraphs. */
@@ -1037,6 +1064,9 @@ body:has(#quizTopbar[hidden]) .reading {
   color: var(--ink);
   font-size: var(--fs-read);
   line-height: 1.45;
+  /* break-word, not anywhere: a long drug list still breaks, and the
+   * row's min-content is left alone. */
+  overflow-wrap: break-word;
 }
 
 /* Rule-out control: always visible, because hover-only actions do not
@@ -1080,18 +1110,17 @@ body:has(#quizTopbar[hidden]) .reading {
 @media (hover: hover) {
   .options li:hover:not(.revealed) .opt-marker { border-color: var(--accent); }
 }
-/* One state. Arrow keys select, so there is no cursor position apart
- * from the choice: a selected row is tinted with a filled marker. Focus
- * without a selection borrows the hover cue on the marker. */
+/* A selected row is tinted with a filled marker. Focus is a solid
+ * accent ring on the row, selected or not (--accent-bd is under the
+ * 3:1 a focus indicator needs); an unselected focused row also gets
+ * the hover cue on its marker. */
 .options li .opt-choice:focus-visible { outline: none; }
+.options li:has(.opt-choice:focus-visible) {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
 .options li:has(.opt-choice:focus-visible):not(.selected) .opt-marker {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-bg);
-}
-/* A focused selected row gets a ring in solid accent: --accent-bd is
- * under the 3:1 a focus indicator needs against the selected tint. */
-.options li.selected:has(.opt-choice:focus-visible) {
-  box-shadow: inset 0 0 0 2px var(--accent);
 }
 /* High contrast mode paints no background, so the outline returns. */
 @media (forced-colors: active) {
@@ -1288,6 +1317,20 @@ b, strong { font-weight: 600; }
   background: currentColor;
   opacity: 1;
 }
+/* The tint marks a decision. A row with every chip on is the untouched
+ * default, so its chips stay plain with a filled box; the tint appears
+ * once the student narrows the row. */
+.setup-options.multi:not(:has(.opt:not(.selected))) .opt.selected {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--ink-2);
+}
+/* A chip that is one choice of several has no box, so the chosen one
+ * also gets a 2px accent edge: selection is not shown by colour alone. */
+.opt.selected:not(.multi .opt) {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
 .opt-head { font-weight: 600; }
 .opt-note {
   display: block;
@@ -1323,6 +1366,29 @@ b, strong { font-weight: 600; }
 .setup-collapse[open] > summary::before { content: "−"; }
 .setup-collapse-actions { display: flex; gap: 4px; margin-left: auto; }
 .tag-row { padding: 4px 0 14px; max-height: 240px; overflow-y: auto; }
+/* Learning areas: a find box, then the chips grouped by discipline. The
+ * box matches the reference panel's search; 16px so iOS does not zoom. */
+.tag-tools { display: flex; align-items: center; gap: 12px; padding: 2px 0 8px; }
+.tag-filter {
+  flex: 0 1 280px; min-width: 0;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  padding: 7px 10px;
+  font: inherit; font-size: 16px;
+  color: var(--ink);
+  border-radius: var(--r-control);
+}
+.tag-filter:focus { outline: 1px solid var(--accent); outline-offset: -1px; }
+.tag-tools .ghost-link { min-height: 32px; white-space: nowrap; }
+.tag-row { flex-direction: column; flex-wrap: nowrap; gap: 0; }
+.tag-group { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag-group + .tag-group { margin-top: 14px; }
+.tag-group-head {
+  flex: 0 0 100%;
+  margin: 0 0 2px;
+  font-size: var(--fs-meta);
+  color: var(--ink-mute);
+}
 .dim { color: var(--ink-mute); }
 .small { font-size: var(--fs-meta); }
 
@@ -1338,7 +1404,7 @@ b, strong { font-weight: 600; }
 .commentary .section-eyebrow { margin-top: 0; margin-bottom: 18px; }
 /* What the question was testing heads its commentary; the difficulty is
  * a plain line under it. */
-.commentary .comm-head { display: block; margin-bottom: 4px; font-size: var(--fs-stem); line-height: 1.35; max-width: 34em; }
+.commentary .comm-head { display: block; margin-bottom: 4px; font-size: var(--fs-stem); line-height: 1.35; }
 .commentary .comm-head:has(+ .comm-meta[hidden]) { margin-bottom: 18px; }
 .commentary .comm-meta { margin: 0 0 18px; font-size: var(--fs-meta); color: var(--ink-mute); font-variant-numeric: tabular-nums; }
 .commentary-next { margin-top: 22px; }
@@ -1408,6 +1474,12 @@ body.refs-open { --refs-shift: 0px; }
       calc(100vw - var(--panel-w) - 32px)
     );
   }
+  /* The colophon's controls follow the capped card, not the full one. */
+  body.refs-open .colophon {
+    --card-half: calc(min(var(--col) - 2 * var(--col-pad), 100vw - var(--panel-w) - 32px) / 2);
+    /* The capped card can start 16px in, inside the usual 24px floor. */
+    padding-left: max(16px, env(safe-area-inset-left), calc(50% - var(--card-half) - var(--col-shift)));
+  }
 }
 /* With no rail (below 1200px, or while it stands down under 1520px) the
  * shift is the panel's alone. */
@@ -1421,7 +1493,10 @@ body.refs-open { --refs-shift: 0px; }
   }
 }
 @media (max-width: 920px) {
-  body.refs-open { overflow: hidden; }
+  /* Short of full width, so the question still shows beside it. */
+  :root { --panel-w: 88vw; }
+  /* html is the scroller; a lock on body alone lets the page move. */
+  html:has(body.refs-open) { overflow: hidden; }
 }
 .ref-head {
   padding: 14px 18px;
@@ -1462,6 +1537,15 @@ body.refs-open { --refs-shift: 0px; }
   margin: 0;
   line-height: 1.5;
 }
+/* Only the list gives up height; the rows above it keep theirs. */
+.ref-head, .ref-search, .ref-jump, .ref-foot { flex-shrink: 0; }
+/* A landscape phone: the masthead scrolls away and the panel takes the
+ * full height, with its close button, so the list is more than a row. */
+@media (max-height: 500px) {
+  .masthead { position: static; }
+  .ref-panel { top: 0; height: 100vh; height: 100dvh; padding-top: env(safe-area-inset-top); }
+  .ref-foot { display: none; }
+}
 
 /* ── Colophon ─────────────────────────────────────────────────────── */
 /* The bar runs the window width so it covers the page scrolling under
@@ -1496,7 +1580,6 @@ body.refs-open { --refs-shift: 0px; }
 #questionTime.danger { color: var(--bad); }
 
 /* ── Summary ──────────────────────────────────────────────────────── */
-body[data-screen="summary"] main { max-width: 760px; }
 .score-strip { display: grid; grid-template-columns: 170px 1fr; gap: 28px; align-items: start; margin: 24px 0; }
 .score-figure {
   border-right: 1px solid var(--line);
@@ -1541,14 +1624,17 @@ body[data-screen="summary"] main { max-width: 760px; }
   grid-template-columns: 24px 1fr;
   gap: 12px;
 }
-@media (hover: hover) { .review-list li:not(.flagged):hover { background: var(--surface-2); } }
+@media (hover: hover) { .review-list li:not(.flagged):not(.rv-empty):hover { background: var(--surface-2); } }
 .review-list .rv-status { font-family: var(--sans); font-weight: 600; }
 .review-list li.incorrect .rv-status { color: var(--bad); }
 .review-list li.correct   .rv-status { color: var(--good); }
 .review-list li.unanswered .rv-status { color: var(--ink-mute); }
 .review-list li.flagged { background: var(--warn-bg); }
-/* The row is the opening of the vignette, so it keeps the stem's face. */
-.review-list .rv-stem { color: var(--ink-2); font-family: var(--serif); }
+/* A row is titled by what the question tested; the vignette's opening
+   sits under it in the stem's face, quieter, to tell two alike apart. */
+.review-list .rv-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.review-list .rv-title { color: var(--ink); font-weight: 500; }
+.review-list .rv-stem { color: var(--ink-mute); font-family: var(--serif); font-size: var(--fs-meta); }
 .review-list .rv-flag { font-family: var(--sans); font-size: var(--fs-meta); font-weight: 600; color: var(--warn); margin-right: 4px; }
 .review-list li[data-review-i]:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 /* Script moves focus here to announce a new question or the results;
@@ -1579,8 +1665,10 @@ body[data-screen="summary"] main { max-width: 760px; }
 .resume-line { margin: 0; font-size: var(--fs-ui); color: var(--ink); }
 .resume-acts { display: flex; align-items: center; gap: 12px; }
 
-.review-list .rv-empty {
-  grid-column: 1 / -1;
+/* Not a question row: one block across the width, and nothing to open. */
+.review-list li.rv-empty {
+  display: block;
+  cursor: default;
   padding: 14px 0;
   font-size: var(--fs-ui);
   color: var(--ink-mute);
@@ -1597,6 +1685,16 @@ body[data-screen="summary"] main { max-width: 760px; }
   overflow-y: auto; overscroll-behavior: contain;
   z-index: 200; padding: 18px;
 }
+/* Stats, Report and Admin are <dialog>s in the top layer. The dialog box
+ * is the whole viewport and carries the scrim itself, so the UA's box,
+ * border and size caps come off and the backdrop stays clear. */
+dialog.modal {
+  width: 100%; height: 100%;
+  max-width: none; max-height: none;
+  margin: 0; border: 0;
+  color: inherit;
+}
+dialog.modal::backdrop { background: transparent; }
 .modal-card {
   background: var(--surface);
   border: 1px solid var(--line);
@@ -1706,11 +1804,10 @@ body[data-screen="summary"] main { max-width: 760px; }
   }
   :root { --col-pad: 16px; }
   main { padding: 22px var(--col-pad) 60px; }
-  .reading { padding: 18px 16px; border-radius: 0 0 var(--r-soft) var(--r-soft); }
+  :root { --card-pad-x: 16px; }
+  .reading { padding: 18px var(--card-pad-x); border-radius: 0 0 var(--r-soft) var(--r-soft); }
   .setup-row { grid-template-columns: 1fr; gap: 8px; }
   .setup-label { padding-top: 0; }
-  /* Short of full width, so the question still shows beside it. */
-  .ref-panel { width: 88vw; max-width: 88vw; }
   .score-strip { grid-template-columns: 1fr; gap: 16px; }
   /* Stacked, the divider would run beside nothing. */
   .score-figure { border-right: none; padding-right: 0; }
@@ -1732,13 +1829,9 @@ body[data-screen="summary"] main { max-width: 760px; }
    * tools. */
   .brand-words { min-width: 0; }
   .brand-mark { flex-shrink: 0; }
-  .brand-title { font-size: var(--fs-read); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .session-meta { display: none; }
-  .t-long { display: none; }
-  .t-short { display: inline; }
-  .masthead-tools { gap: 0; flex-shrink: 0; flex-wrap: nowrap; }
-  .masthead-tools .link-btn { padding: 8px 6px; font-size: var(--fs-meta); white-space: nowrap; }
-  .masthead-tools .profile-chip { margin-left: 4px; padding: 4px 4px 4px 8px; gap: 2px; white-space: nowrap; flex-shrink: 0; }
+  .brand-title { font-size: var(--fs-read); overflow: hidden; text-overflow: ellipsis; }
+  .masthead-tools { flex-shrink: 0; flex-wrap: nowrap; }
+  .masthead-tools .profile-chip { flex-shrink: 0; }
   .masthead-tools .profile-chip .ghost-link { padding: 3px 6px; }
   /* A signed-in admin's tool row is wider than 320px: it scrolls
    * sideways rather than clipping "sign out". */
@@ -1751,7 +1844,8 @@ body[data-screen="summary"] main { max-width: 760px; }
   :root { --col-pad: 14px; }
   main { padding: 18px var(--col-pad) 56px; }
 
-  .reading { padding: 16px 14px; }
+  :root { --card-pad-x: 14px; }
+  .reading { padding: 16px var(--card-pad-x); }
   .stem { font-size: var(--fs-read); line-height: 1.6; }
   .patient-table {
     grid-template-columns: 1fr;
@@ -1764,9 +1858,10 @@ body[data-screen="summary"] main { max-width: 760px; }
 
   /* The rule-out control grows to a 44px tap target. */
   .options li .opt-choice {
-    grid-template-columns: 18px 18px 1fr;
-    gap: 0 10px;
-    padding: 12px 2px 12px 10px;
+    /* A to E are each under 12px wide at this size. */
+    grid-template-columns: 18px 12px 1fr;
+    gap: 0 8px;
+    padding: 12px 2px 12px 8px;
   }
   .options li .opt-strike { width: 44px; height: 44px; }
 
@@ -1840,9 +1935,9 @@ body[data-screen="summary"] main { max-width: 760px; }
   .review-list li { grid-template-columns: 22px 1fr; gap: 10px; }
 }
 
-/* Below 400px "A to E" does not fit beside the tools. The mark carries
+/* Below 375px "A to E" does not fit beside the tools. The mark carries
  * the brand; the words stay as the link's accessible name. */
-@media (max-width: 400px) {
+@media (max-width: 374px) {
   .masthead .brand-words {
     position: absolute; width: 1px; height: 1px; overflow: hidden;
     clip-path: inset(50%); white-space: nowrap;
@@ -2204,7 +2299,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   align-items: baseline;
 }
 .rr:last-child { border-bottom: none; }
-.rr-test { color: var(--ink-mute); hyphens: none; }
+.rrs .rr-test { color: var(--ink-mute); hyphens: none; overflow-wrap: break-word; }
 .rr-value {
   color: var(--ink);
   text-align: right;
@@ -2238,6 +2333,9 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   font-variant-numeric: tabular-nums;
   pointer-events: none;
 }
+/* While the count shows, the text and the field's clear control end
+ * short of it rather than running underneath. */
+.ref-search:has(.ref-search-hit:not([hidden])) input { padding-right: 92px; }
 .ref-jump {
   display: flex;
   gap: 6px;
@@ -2289,12 +2387,20 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 .admin-modal-card {
   display: flex;
   flex-direction: column;
-  width: min(1080px, 96vw);
-  height: min(820px, 88vh);
-  max-height: 88vh;
   padding: 0;
+  /* A wide table scrolls inside its pane; it never sizes the card. */
+  min-width: 0;
 }
-.admin-modal-card .modal-head { flex: 0 0 auto; padding: 18px 24px; border-bottom: 1px solid var(--line); }
+.admin-modal-card .modal-head { flex: 0 0 auto; border-bottom: 1px solid var(--line); }
+/* Above phone width only; the phone block makes it full screen. */
+@media (min-width: 481px) {
+  .admin-modal-card {
+    width: min(1080px, 96vw);
+    height: min(820px, 88vh);
+    max-height: 88vh;
+  }
+  .admin-modal-card .modal-head { padding: 18px 24px; }
+}
 /* ── Admin panel ──────────────────────────────────────────────────
  * A row of section links, plain tables, one status region, and a native
  * dialog for the actions that cannot be undone.
@@ -2433,7 +2539,17 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 
 /* Tables: text left, numbers right in tabular figures, one hairline per
  * row, nothing else. */
-.admin-table-scroll { overflow-x: auto; }
+/* Positioned, so the visually hidden spans in its buttons are clipped
+ * here and do not widen the dialog. */
+.admin-table-scroll { overflow-x: auto; position: relative; }
+/* Joined and Last seen read as one unit each. */
+.admin-users td:nth-child(4), .admin-users td:nth-child(5) { white-space: nowrap; }
+/* The Bank tables have no scroll wrapper. On a phone the columns close
+ * up, and a table still too wide scrolls on its own, not the pane. */
+@media (max-width: 480px) {
+  .admin-table-num { display: block; overflow-x: auto; }
+  .admin-main .admin-table-num :is(th, td) { padding-right: 8px; }
+}
 .admin-table {
   width: 100%;
   border-collapse: collapse;
@@ -2625,7 +2741,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   .admin-main { padding: 16px 14px 22px; }
   /* Seven columns: the table scrolls inside its box rather than
    * crushing name and email. */
-  .admin-table { min-width: 620px; }
+  .admin-table-scroll .admin-table { min-width: 620px; }
   .invite-new { gap: 8px 10px; }
   .admin-form { max-width: none; }
 }
@@ -2651,6 +2767,8 @@ body.is-admin #accountBtn { display: none !important; }
  * there. */
 @media (hover: none), (pointer: coarse) {
   .kbd-only, .options li .opt-key { display: none; }
+  /* No key column, so no gap for one either: the option text gets it. */
+  .options li { grid-template-columns: 1fr auto; }
 }
 
 
@@ -2660,4 +2778,27 @@ body.is-admin #accountBtn { display: none !important; }
   html { scroll-behavior: auto; }
   .house-toast, .house-toast.show { transform: none; transition: opacity var(--t-colour); }
   .qt-progress span { transition: none; }
+}
+
+/* Print: the question and its commentary on white, in either theme.
+ * The app's chrome and controls stay on screen. */
+@media print {
+  :root, :root[data-theme] {
+    color-scheme: light;
+    --bg: #fff; --bg-2: #fff; --surface: #fff; --surface-2: #fff;
+    --line: #ccc; --line-strong: #888; --control-bd: #666;
+    --ink: #000; --ink-2: #222; --ink-mute: #444;
+    --accent: #1a6e8e; --accent-bg: transparent; --accent-bd: #1a6e8e;
+    --good: #1f6d3b; --good-bg: transparent; --good-bd: #1f6d3b;
+    --bad: #9b2a32; --bad-bg: transparent; --bad-bd: #9b2a32;
+    --warn: #8a6608; --warn-bg: transparent;
+  }
+  .masthead, .quiz-topbar, .nav-rail, .colophon, .ref-panel,
+  .action-row, .commentary-next, .opt-strike, .opt-key,
+  .house-toast, #appNotice { display: none !important; }
+  main { padding: 0; }
+  body[data-screen="quiz"] main { left: 0; }
+  .reading { border: none; padding: 0; margin: 0; }
+  .options li, .patient-table, .comm-block .pearl { break-inside: avoid; }
+  .comm-head, .comm-label { break-after: avoid; }
 }

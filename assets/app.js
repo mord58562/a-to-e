@@ -175,18 +175,26 @@
     self_target:         "You can't do that to your own account here. Your own account is under Account.",
     password_rate:       "Too many password attempts. Try again in 15 minutes.",
     password_wrong:      "The current password is wrong.",
+    password_required:   "Enter your password.",
     invite_spent:        "That code has already been used or revoked.",
     settings_too_large:  "Your settings are too large to save.",
     report_short:        "Add a few words about what's wrong.",
     report_long:         "Keep the report under 4,000 characters.",
     report_rate:         "You've sent a lot of reports this hour. Try again later.",
     report_daily:        "The report box is full for today. Try again tomorrow.",
-    report_queue_full:   "The report box is full until the open reports are reviewed.",
+    // "size": the report file hit its byte cap, which clears as reports
+    // are closed and archived; "count" (and older workers): too many open.
+    report_queue_full:   d => (d && d.reason === "size")
+      ? "The report box is out of room for now. Try again later."
+      : "The report box is full until the open reports are reviewed.",
     batch_too_large:     "Too many at once. Apply them in smaller groups.",
     audit_mismatch:      "The file has changed since this audit was built. Copy the prompt again and redo the audit.",
     github_read_failed:  "Couldn't read the bank from GitHub. Nothing was changed.",
     reports_not_closed:  "The question edits were saved, but the reports weren't closed.",
     bad_request:         "The server couldn't use that request.",
+    // A client newer than the deployed worker calling a route it lacks.
+    not_found:           "The server doesn't have this yet. It may need redeploying.",
+    method_not_allowed:  "The server couldn't use that request. It may need redeploying.",
   };
   // For these the worker's own text names the failing field or the ids
   // that no longer match, which the admin needs to act on.
@@ -241,19 +249,24 @@
     if (!WORKER_URL) throw new Error("Cloud backend not configured");
     const headers = { "Content-Type": "application/json", ...(options && options.headers || {}) };
     if (authToken) headers["Authorization"] = `Bearer ${authToken}`;
-    let r;
+    let r, data;
     try {
-      r = await timedFetch(WORKER_URL.replace(/\/$/, "") + path, { ...options, headers }, API_TIMEOUT_MS);
+      // The body is read under the same timer: a connection that stalls
+      // mid-body would otherwise leave the caller waiting for good.
+      ({ r, data } = await timedFetch(WORKER_URL.replace(/\/$/, "") + path, { ...options, headers }, API_TIMEOUT_MS,
+        async res => ({ r: res, data: await res.json().catch(e => (e && e.name === "AbortError") ? Promise.reject(e) : {}) })));
     } catch (netErr) {
       // Offline, DNS, TLS and timeout failures, as distinct from a server
-      // 4xx/5xx. The sign-up and sign-in forms show this to the user.
-      console.warn("[api]", path, "network error:", netErr && (netErr.name + ": " + netErr.message));
+      // 4xx/5xx. The sign-up and sign-in forms show this to the user. A
+      // timeout is kept apart: the request may have reached the worker
+      // and done its work, which a sign-up retry needs to know.
+      const timedOut = !!(netErr && netErr.name === "AbortError");
+      console.warn("[api]", path, timedOut ? "timed out:" : "network error:", netErr && (netErr.name + ": " + netErr.message));
       const e = new Error(SERVER_UNREACHABLE);
       e.status = 0;
-      e.code = "unreachable";
+      e.code = timedOut ? "timeout" : "unreachable";
       throw e;
     }
-    const data = await r.json().catch(() => ({}));
     if (!r.ok || data.ok === false) {
       const e = new Error(serverErrorText(data, r.status, path));
       e.status = r.status;
@@ -268,6 +281,12 @@
   // waiting for /api/me. Resolves to { user } or { error }; boot reads it
   // in settleSessionCheck() once the home screen is up.
   let authVerify = null;
+  // False until /api/me has confirmed that the stored token belongs to
+  // cloudUser. Until then nothing is merged from /api/state or flushed
+  // from the outbox: a token another tab swapped in (a different account)
+  // would otherwise receive this account's queued writes and hand back
+  // its own history.
+  let identityConfirmed = false;
 
   // The account last confirmed on this browser, kept with the masthead
   // chrome. Caches written before `user` was stored carry the id only in
@@ -286,14 +305,25 @@
   // connection at page load keeps the token, so the student stays in
   // their account instead of answering into a guest namespace. The
   // cached name and admin chrome go with the token, or a guest on this
-  // browser would see them.
+  // browser would see them. Another tab may have signed in since this
+  // tab read the token; its newer session and chrome stay.
   function forgetDeadSession() {
+    const failed = authToken;
     authToken = null;
+    identityConfirmed = false;
+    const stored = localStorage.getItem(AUTH_TOKEN_KEY);
+    if (stored && stored !== failed) {
+      console.warn("[auth] dead session was not the stored one; another tab has signed in since, keeping its token");
+      return false;
+    }
     localStorage.removeItem(AUTH_TOKEN_KEY);
     localStorage.removeItem(CHROME_KEY);
+    return true;
   }
 
-  async function cloudCheckAuth() {
+  // `waitForServer` skips the optimistic start: an invite link needs to
+  // know whether the session is alive before choosing the sign-up form.
+  async function cloudCheckAuth(waitForServer) {
     if (!WORKER_URL) return null;
     const t = localStorage.getItem(AUTH_TOKEN_KEY);
     if (!t) return null;
@@ -304,14 +334,17 @@
     // A returning student with a known account goes straight in. The
     // bank, the local history and the outbox all work without the
     // worker, and /api/me can take the full 20 s timeout on bad wifi.
-    const cached = cachedCloudUser();
+    const cached = waitForServer ? null : cachedCloudUser();
     if (cached) {
       cloudUser = cached;
-      authVerify = check;
+      authVerify = check.then(v => {
+        if (v.user && cloudUser && v.user.id === cloudUser.id) identityConfirmed = true;
+        return v;
+      });
       return cached;
     }
     const { user, error } = await check;
-    if (user) { cloudUser = user; return user; }
+    if (user) { cloudUser = user; identityConfirmed = true; return user; }
     if (error && error.status === 401) {
       forgetDeadSession();
     } else {
@@ -349,11 +382,59 @@
       return;
     }
     console.warn("[auth] could not verify the saved session:", error && error.status, error && error.message);
-    showAppNotice("Can't reach the server. Answers are kept on this device and sync when the connection returns.");
+    showAppNotice("Can't reach the server. Answers are kept on this device and sync when the connection returns.",
+                  null, null, "offline");
+    scheduleRecheck();
   }
+
+  // After an unverified start: try /api/me again when the connection
+  // returns (the `online` event) and once a minute meanwhile, since a
+  // worker outage never fires `online`. On success the server state that
+  // boot could not merge is pulled, the queue drains and the notice goes.
+  let _recheckTimer = null, _rechecking = null;
+  function scheduleRecheck() {
+    if (_recheckTimer || !cloudUser) return;
+    _recheckTimer = setTimeout(() => { _recheckTimer = null; recheckSession(); }, 60000);
+  }
+  function recheckSession() {
+    if (!cloudUser || !authToken || _sessionExpired) return Promise.resolve(false);
+    if (_rechecking) return _rechecking;
+    _rechecking = (async () => {
+      if (!identityConfirmed) {
+        let r;
+        try { r = await apiFetch("/api/me", { method: "GET" }); }
+        catch (e) {
+          console.warn("[auth] session recheck failed:", e && e.status, e && (e.code || e.message));
+          if (e && e.status === 401) {
+            forgetDeadSession();
+            if (!state.quiz) location.reload(); else onSessionExpired("/api/me");
+          } else scheduleRecheck();
+          return false;
+        }
+        const user = r && r.user;
+        if (!user || !cloudUser || user.id !== cloudUser.id) {
+          console.warn("[auth] recheck: token belongs to", user && user.id, "not", cloudUser && cloudUser.id, "; reloading");
+          localStorage.removeItem(CHROME_KEY);
+          location.reload();
+          return false;
+        }
+        identityConfirmed = true;
+        Object.assign(cloudUser, user);
+        paintProfileChip();
+      }
+      return pullServerState(Promise.resolve(true));
+    })().finally(() => { _rechecking = null; });
+    return _rechecking;
+  }
+  window.addEventListener("online", () => {
+    if (!cloudUser) return;
+    if (!identityConfirmed || !_stateMerged) recheckSession();
+    else flushOutbox();
+  });
+
   async function cloudSignIn(email, password) {
     const { token, user } = await apiFetch("/api/login", { method: "POST", body: JSON.stringify({ email, password }) });
-    authToken = token; cloudUser = user;
+    authToken = token; cloudUser = user; identityConfirmed = true;
     localStorage.setItem(AUTH_TOKEN_KEY, token);
     return user;
   }
@@ -369,7 +450,7 @@
   async function cloudSignUp(email, password, displayName, inviteCode) {
     const payload = { email, password, display_name: displayName, invite_code: inviteCode };
     const { token, user } = await apiFetch("/api/register", { method: "POST", body: JSON.stringify(payload) });
-    authToken = token; cloudUser = user;
+    authToken = token; cloudUser = user; identityConfirmed = true;
     localStorage.setItem(AUTH_TOKEN_KEY, token);
     return user;
   }
@@ -384,7 +465,7 @@
       apiFetch("/api/logout", { method: "POST", keepalive: true })
         .catch(e => console.warn("[auth] /api/logout failed:", e && e.status, e && e.message));
     }
-    authToken = null; cloudUser = null;
+    authToken = null; cloudUser = null; identityConfirmed = false;
     localStorage.removeItem(AUTH_TOKEN_KEY);
   }
   // Pull the signed-in user's full state (answers + flags + settings)
@@ -434,13 +515,19 @@
     const obj = v => (v && typeof v === "object" && !Array.isArray(v)) ? v : {};
     return { answers: obj(o.answers), flags: obj(o.flags), settings: Number(o.settings) || 0 };
   }
+  // Set once the student has been told the outbox is full; cleared when it
+  // has room again, so a long offline session says it once, not per answer.
+  const _outboxFullTold = { answers: false, flags: false };
   function outboxCap(map, what) {
     const ids = Object.keys(map);
+    if (ids.length < OUTBOX_MAX) _outboxFullTold[what] = false;
     if (ids.length <= OUTBOX_MAX) return;
     ids.sort((a, b) => ((map[a] && map[a].at) || 0) - ((map[b] && map[b].at) || 0));
     const drop = ids.slice(0, ids.length - OUTBOX_MAX);
     for (const id of drop) delete map[id];
     console.warn(`[sync] outbox over ${OUTBOX_MAX}: dropped ${drop.length} oldest pending ${what}`);
+    if (_outboxFullTold[what]) return;
+    _outboxFullTold[what] = true;
     // The only real data loss in the sync path, so the student hears it.
     const noun = what === "flags" ? "flag" : "answer";
     showAppNotice(`Sorry, the ${drop.length === 1 ? `oldest unsynced ${noun}` : `${fmtNum(drop.length)} oldest unsynced ${noun}s`} ` +
@@ -461,42 +548,81 @@
   }
 
   function cloudPostAnswer(qid, sourceLetter, correct) {
+    return cloudPostAnswers([[qid, sourceLetter, correct]]);
+  }
+  // Every answer enters the outbox in one storage write before any POST,
+  // so a test scored and then closed a second later has all of its
+  // answers queued for the next visit, not only the ones already sent.
+  function cloudPostAnswers(list) {
     if (!cloudUser) return Promise.resolve(null);
     // A single letter, not a substring: "ABCDE".includes is true for ""
     // and "AB" too. Guest answers carry no letter and stay local.
-    if (typeof sourceLetter !== "string" || sourceLetter.length !== 1 ||
-        !"ABCDE".includes(sourceLetter)) return Promise.resolve(null);
+    const valid = list.filter(([, l]) => typeof l === "string" && l.length === 1 && "ABCDE".includes(l));
+    if (valid.length < list.length) console.warn(`[sync] ${list.length - valid.length} answer(s) with no source letter not queued`);
+    if (!valid.length) return Promise.resolve(null);
     const at = Date.now();
     outboxUpdate(o => {
-      const prev = o.answers[qid];
-      // n counts attempts not yet on the server, so a question answered
-      // twice offline still adds two to attempt_count when it lands.
-      o.answers[qid] = { l: sourceLetter, c: !!correct, at, n: ((prev && prev.n) || 0) + 1 };
+      for (const [qid, l, correct] of valid) {
+        noteTouched("answers", qid);
+        const prev = o.answers[qid];
+        // n counts attempts not yet on the server, so a question answered
+        // twice offline still adds two to attempt_count when it lands.
+        o.answers[qid] = { l, c: !!correct, at, n: ((prev && prev.n) || 0) + 1 };
+      }
     });
     return flushOutbox();
   }
   function cloudPostFlag(qid, on) {
     if (!cloudUser) return Promise.resolve(false);
+    noteTouched("flags", qid);
     outboxUpdate(o => { o.flags[qid] = { on: !!on, at: Date.now() }; });
     return flushOutbox();
   }
   function markSettingsDirty() {
+    noteTouched("settings");
     outboxUpdate(o => { o.settings = Math.max(Date.now(), o.settings + 1); });
+  }
+  // Every tab writes the settings it changes to storage straight away, so
+  // the stored copy is the newest. A tab's in-memory copy can be older
+  // than a change made in another tab.
+  function storedSettings() { return normaliseSettings(load(ns(SETTINGS_KEY), {})); }
+
+  // Writes made while a GET /api/state is in flight. Its body was read
+  // before them, so the merge keeps the local value for each of these even
+  // after the write has left the outbox.
+  let _touched = null;
+  function noteTouched(kind, qid) {
+    if (!_touched) return;
+    if (kind === "settings") _touched.settings = true;
+    else _touched[kind].add(qid);
   }
 
   // One POST. "sent" and "drop" both clear the entry: a 4xx other than
   // 401/408/429 means the worker refused this write for good (bad id,
   // too large), and resending it forever would block the queue.
+  const _dropTold = new Set();
   async function syncSend(path, body) {
     try {
       await apiFetch(path, { method: "POST", body: JSON.stringify(body) });
       return "sent";
     } catch (e) {
       const st = e && e.status;
-      console.warn(`[sync] POST ${path} failed:`, st || "network", (e && (e.serverError || e.message)) || e,
-                   body && body.question_id ? `qid=${body.question_id}` : "");
+      const drop = st !== 401 && st >= 400 && st < 500 && st !== 408 && st !== 429;
+      console.warn(`[sync] POST ${path} failed:`, st || "network", e && e.code || "",
+                   (e && (e.serverError || e.message)) || e,
+                   body && body.question_id ? `qid=${body.question_id}` : "",
+                   drop ? "- dropped, the server refused it for good" : st === 401 ? "- kept for after sign-in" : "- kept, will retry");
       if (st === 401) { onSessionExpired(path); return "retry"; }
-      if (st >= 400 && st < 500 && st !== 408 && st !== 429) return "drop";
+      if (drop) {
+        // Answers and flags refused one by one are single bad ids; a
+        // refused settings write means settings stop syncing, which the
+        // student should hear once.
+        if (path === "/api/settings" && !_dropTold.has(path)) {
+          _dropTold.add(path);
+          showAppNotice(`${e.message} Settings stay on this device but won't reach your other devices.`);
+        }
+        return "drop";
+      }
       scheduleOutboxRetry();
       return "retry";
     }
@@ -507,27 +633,41 @@
     _flushRetryTimer = setTimeout(() => { _flushRetryTimer = null; flushOutbox(); }, 60000);
   }
   // One POST at a time: a guest signing up with 100 flags must not open
-  // 100 requests at once.
+  // 100 requests at once. The outbox is shared by every tab on the
+  // account, so the flush also holds a Web Lock: two tabs that both see
+  // `online` would otherwise post the same entries twice, and the
+  // worker adds each answer's n to attempt_count. Browsers without Web
+  // Locks flush unserialised; re-reading each entry before its POST
+  // narrows the overlap to the entry in flight.
   function flushOutbox() {
     if (!cloudUser || !WORKER_URL || !authToken || _sessionExpired) return Promise.resolve(false);
+    // Unconfirmed identity: the queue waits for recheckSession/boot.
+    if (!identityConfirmed) return Promise.resolve(false);
     if (_flushing) { _flushAgain = true; return _flushing; }
-    _flushing = (async () => {
+    const run = async () => {
       let ok;
       do { _flushAgain = false; ok = await _flushOnce(); } while (ok && _flushAgain);
       return ok;
-    })().catch(e => { console.warn("[sync] outbox flush threw:", e && e.stack || e); return false; })
+    };
+    const locks = navigator.locks;
+    _flushing = (locks && typeof locks.request === "function"
+      ? locks.request(`y4mcq-outbox-${cloudUser.id}`, run)
+      : run())
+      .catch(e => { console.warn("[sync] outbox flush threw:", e && e.stack || e); return false; })
       .finally(() => { _flushing = null; });
     return _flushing;
   }
   async function _flushOnce() {
-    const o = outboxRead();
-    for (const qid of Object.keys(o.flags)) {
-      const e = o.flags[qid];
-      if (await syncSend("/api/flag", { question_id: qid, on: !!(e && e.on) }) === "retry") return false;
-      outboxUpdate(x => { if (x.flags[qid] && x.flags[qid].at === (e && e.at)) delete x.flags[qid]; });
+    for (const qid of Object.keys(outboxRead().flags)) {
+      // Another tab may have sent or replaced it since the list was read.
+      const e = outboxRead().flags[qid];
+      if (!e) continue;
+      if (await syncSend("/api/flag", { question_id: qid, on: !!e.on }) === "retry") return false;
+      outboxUpdate(x => { if (x.flags[qid] && x.flags[qid].at === e.at) delete x.flags[qid]; });
     }
-    for (const qid of Object.keys(o.answers)) {
-      const e = o.answers[qid] || {};
+    for (const qid of Object.keys(outboxRead().answers)) {
+      const e = outboxRead().answers[qid];
+      if (!e) continue;
       // `at` lets the worker keep the newer of two rows for a question.
       const body = { question_id: qid, source_letter: e.l, correct: !!e.c, at: e.at, n: e.n || 1 };
       if (await syncSend("/api/answer", body) === "retry") return false;
@@ -538,30 +678,96 @@
         else cur.n = Math.max(1, (cur.n || 1) - (e.n || 1));
       });
     }
-    if (o.settings) {
-      if (await syncSend("/api/settings", { settings: state.settings }) === "retry") return false;
-      outboxUpdate(x => { if (x.settings === o.settings) x.settings = 0; });
+    const gen = outboxRead().settings;
+    if (gen) {
+      if (await syncSend("/api/settings", { settings: storedSettings() }) === "retry") return false;
+      outboxUpdate(x => { if (x.settings === gen) x.settings = 0; });
     }
     return true;
   }
-  window.addEventListener("online", () => { flushOutbox(); });
 
   // A 401 on a sync write means this device's session is gone: another
   // device used "Sign out everywhere else", the password changed, or the
-  // 90-day cap passed.
+  // 90-day cap passed. Or another tab here signed in again or deleted the
+  // account, which the stored token and the deletion mark tell apart.
   function onSessionExpired(path) {
     if (_sessionExpired) return;
     _sessionExpired = true;
-    console.warn(`[auth] ${path} returned 401; token cleared, local progress kept in the outbox`);
-    authToken = null;
-    localStorage.removeItem(AUTH_TOKEN_KEY);
+    if (cloudUser && accountDeletedHere(cloudUser.id)) return;
+    const signedInElsewhere = !forgetDeadSession();
+    console.warn(`[auth] ${path} returned 401; local progress kept in the outbox`,
+                 signedInElsewhere ? "(another tab holds a newer session)" : "(token cleared)");
+    if (signedInElsewhere) {
+      showAppNotice("This browser has signed in again in another tab. Reload to continue there.",
+                    "Reload", () => location.reload());
+      return;
+    }
     showAppNotice("Signed out on this device. Answers stay here and sync after you sign in again.",
                   "Sign in", () => location.reload());
   }
 
+  // Deleting an account removes its keys on this browser, but another tab
+  // still holds the account in memory and would write it all back with its
+  // next answer. The deleting tab leaves a mark; every tab checks it on
+  // the storage event, on focus and on a 401. The mark holds only the
+  // time, and boot removes it after a day.
+  const ACCOUNT_DELETED_PREFIX = "y4mcq.deleted.";
+  const ACCOUNT_DELETED_KEEP_MS = 24 * 60 * 60 * 1000;
+  function purgeAccountKeys(id) {
+    const suffix = `.cloud-${id}`;
+    const doomed = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k || !k.startsWith("y4mcq.")) continue;
+      if (k.endsWith(suffix) || k === `y4mcq.cloud.imported.${id}` ||
+          k.startsWith(`y4mcq.cloud.guestmigrated.${id}.`)) doomed.push(k);
+    }
+    doomed.forEach(k => localStorage.removeItem(k));
+    const c = cachedCloudUser();
+    if (c && c.id === id) localStorage.removeItem(CHROME_KEY);
+    return doomed.length;
+  }
+  let _accountGone = false;
+  function accountDeletedHere(id) {
+    if (_accountGone) return true;
+    if (!id || localStorage.getItem(ACCOUNT_DELETED_PREFIX + id) == null) return false;
+    _accountGone = true;
+    const n = purgeAccountKeys(id);
+    console.warn(`[account] ${id} was deleted in another tab; removed ${n} local key(s), reloading`);
+    showAppNotice("This account was deleted in another tab.", "Reload", () => location.reload());
+    setTimeout(() => location.reload(), 1500);
+    return true;
+  }
+  function sweepDeletionMarks() {
+    const now = Date.now();
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const k = localStorage.key(i);
+      if (!k || !k.startsWith(ACCOUNT_DELETED_PREFIX)) continue;
+      const id = k.slice(ACCOUNT_DELETED_PREFIX.length);
+      purgeAccountKeys(id);
+      if (!(now - Number(localStorage.getItem(k)) < ACCOUNT_DELETED_KEEP_MS)) localStorage.removeItem(k);
+    }
+  }
+  window.addEventListener("storage", e => {
+    if (!cloudUser) return;
+    if (e.key === ACCOUNT_DELETED_PREFIX + cloudUser.id && e.newValue != null) { accountDeletedHere(cloudUser.id); return; }
+    // Settings changed in another tab: adopt them, so this tab neither
+    // shows nor later posts the older copy.
+    if (e.key === ns(SETTINGS_KEY) && e.newValue != null && !_accountGone) {
+      state.settings = storedSettings();
+      refreshHomeAfterSync();
+    }
+  });
+  window.addEventListener("focus", () => { if (cloudUser) accountDeletedHere(cloudUser.id); });
+
   // One notice line under the masthead, for problems that belong to the
-  // whole page rather than a dialog.
-  function showAppNotice(message, actionLabel, action) {
+  // whole page rather than a dialog. `kind` tags a notice that a later
+  // event clears (the offline notice, once the server answers).
+  function clearAppNotice(kind) {
+    const el = document.getElementById("appNotice");
+    if (el && el.dataset.kind === kind) el.remove();
+  }
+  function showAppNotice(message, actionLabel, action, kind) {
     let el = document.getElementById("appNotice");
     if (!el) {
       el = document.createElement("div");
@@ -572,6 +778,7 @@
       else document.body.insertBefore(el, document.body.firstChild);
     }
     el.textContent = "";
+    if (kind) el.dataset.kind = kind; else delete el.dataset.kind;
     const msg = document.createElement("span");
     msg.textContent = message;
     el.appendChild(msg);
@@ -773,7 +980,40 @@
     if (out.subtopics !== null && !Array.isArray(out.subtopics)) out.subtopics = null;
     return out;
   }
-  function save(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
+  // Nothing is written once the account has been deleted in another tab:
+  // this tab's in-memory copy would put it back.
+  function save(k, v) { if (!_accountGone) localStorage.setItem(k, JSON.stringify(v)); }
+  // History is the largest key (about 1.6 MB once a student has worked
+  // through the bank), and stringifying it on every submit costs the main
+  // thread in proportion. A submit marks it instead; one write follows at
+  // idle within a second, and leaving or hiding the page writes it at
+  // once. The key is taken when marked, so a namespace change in between
+  // cannot send it to the wrong account.
+  let _historySaveKey = null, _historySaveTimer = null;
+  function saveHistorySoon() {
+    const k = ns(HISTORY_KEY);
+    if (_historySaveKey && _historySaveKey !== k) flushHistorySave();
+    _historySaveKey = k;
+    if (_historySaveTimer) return;
+    _historySaveTimer = typeof requestIdleCallback === "function"
+      ? { idle: requestIdleCallback(flushHistorySave, { timeout: 1000 }) }
+      : { t: setTimeout(flushHistorySave, 1000) };
+  }
+  function flushHistorySave() {
+    if (_historySaveTimer) {
+      if (_historySaveTimer.idle != null) cancelIdleCallback(_historySaveTimer.idle);
+      else clearTimeout(_historySaveTimer.t);
+      _historySaveTimer = null;
+    }
+    if (!_historySaveKey) return;
+    const k = _historySaveKey;
+    _historySaveKey = null;
+    save(k, state.history);
+  }
+  window.addEventListener("pagehide", flushHistorySave);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") flushHistorySave();
+  });
   // Local save is immediate; the POST waits for 600 ms of quiet. The
   // dirty mark is written at once, so a change made offline or just
   // before the tab closes is re-posted at the next boot rather than
@@ -793,10 +1033,10 @@
   // lets the request outlive the page. The dirty mark stays; the next
   // boot re-posts the same settings, which is harmless.
   window.addEventListener("pagehide", () => {
-    if (!_settingsSyncTimer || !cloudUser || !authToken || _sessionExpired) return;
+    if (!_settingsSyncTimer || !cloudUser || !authToken || _sessionExpired || !identityConfirmed || _accountGone) return;
     clearTimeout(_settingsSyncTimer);
     _settingsSyncTimer = null;
-    apiFetch("/api/settings", { method: "POST", keepalive: true, body: JSON.stringify({ settings: state.settings }) })
+    apiFetch("/api/settings", { method: "POST", keepalive: true, body: JSON.stringify({ settings: storedSettings() }) })
       .catch(e => console.warn("[sync] pagehide settings post failed:", e && e.status, e && e.message));
   });
 
@@ -820,8 +1060,11 @@
   // Flags: the server's set, then pending flag/unflag ops applied on
   //   top, so an unflag made on another device holds here too.
   // Settings: the server's copy, unless a local change is still dirty.
+  // `touched` lists writes made while the GET was in flight: they may
+  // already have left the outbox, but the body predates them.
   const FLAGSYNC_KEY = "y4mcq.flagsync.v1";
-  function mergeRemoteState(remote) {
+  function mergeRemoteState(remote, touched) {
+    touched = touched || { answers: new Set(), flags: new Set(), settings: false };
     const LOCAL_ONLY = ["time_ms_total", "first_correct"];
     const prevHistory = state.history || {};
     const remoteHistory = remote.history || {};
@@ -844,7 +1087,7 @@
     const history = { ...prevHistory };
     for (const qid in remoteHistory) {
       const prev = prevHistory[qid];
-      if (prev && pending.answers[qid]) continue;
+      if (prev && (pending.answers[qid] || touched.answers.has(qid))) continue;
       const row = { ...remoteHistory[qid] };
       delete row.updated_at;   // never read on the client
       if (prev) {
@@ -860,9 +1103,14 @@
       if (pending.flags[qid] && pending.flags[qid].on) flags[qid] = true;
       else delete flags[qid];
     }
+    const localFlags = state.flags || {};
+    for (const qid of touched.flags) {
+      if (pending.flags[qid]) continue;
+      if (localFlags[qid]) flags[qid] = true; else delete flags[qid];
+    }
     state.flags = flags;
 
-    if (remote.settings && typeof remote.settings === "object" && !pending.settings) {
+    if (remote.settings && typeof remote.settings === "object" && !pending.settings && !touched.settings) {
       state.settings = normaliseSettings(remote.settings);
     }
   }
@@ -954,16 +1202,41 @@
       };
       if (!gate) { document.body.classList.remove("locked"); return resolve(); }
 
-      // Pane switcher.
-      const switchPane = (mode) => {
+      // Pane switcher. The two buttons are a tablist: the selected tab is
+      // the one Tab stop, and the arrow keys, Home and End move between
+      // them (and switch, since each pane is cheap to show).
+      const gateTabs = Array.from(document.querySelectorAll(".gate-tab[data-gate-switch]"));
+      const switchPane = (mode, focusField = true) => {
         if (card) card.dataset.mode = mode;
+        gateTabs.forEach(t => {
+          const on = t.dataset.gateSwitch === mode;
+          t.setAttribute("aria-selected", on ? "true" : "false");
+          t.tabIndex = on ? 0 : -1;
+        });
         document.querySelectorAll(".gate-pane").forEach(p => p.hidden = true);
         const map = { signin: "cloudSignInForm", signup: "cloudSignUpForm" };
         const el = document.getElementById(map[mode] || "cloudSignInForm");
-        if (el) { el.hidden = false; const f = el.querySelector("input"); if (f) setTimeout(() => f.focus(), 50); }
+        if (el) {
+          el.hidden = false;
+          const f = el.querySelector("input");
+          if (f && focusField) setTimeout(() => f.focus(), 50);
+        }
       };
       document.querySelectorAll("[data-gate-switch]").forEach(b => {
         b.addEventListener("click", () => switchPane(b.dataset.gateSwitch));
+      });
+      const tablist = document.querySelector(".gate-tabs");
+      if (tablist) tablist.addEventListener("keydown", e => {
+        const i = gateTabs.indexOf(e.target);
+        if (i < 0) return;
+        const n = gateTabs.length;
+        const to = e.key === "ArrowRight" || e.key === "ArrowDown" ? (i + 1) % n
+          : e.key === "ArrowLeft" || e.key === "ArrowUp" ? (i - 1 + n) % n
+          : e.key === "Home" ? 0 : e.key === "End" ? n - 1 : -1;
+        if (to < 0) return;
+        e.preventDefault();
+        switchPane(gateTabs[to].dataset.gateSwitch, false);
+        gateTabs[to].focus();
       });
 
       // 0. Guest-to-signup intent: a guest just clicked "sign up" in the
@@ -977,6 +1250,24 @@
       // server log, and it comes off the address bar straight away so a
       // bookmark or a shared screenshot does not carry it.
       const invite = readInviteLink();
+      const fillInvite = inv => {
+        switchPane("signup");
+        document.getElementById("cloudSignUpInvite").value = inv.code;
+        if (inv.email) document.getElementById("cloudSignUpEmail").value = inv.email;
+        // switchPane focuses the first field, which is now filled.
+        setTimeout(() => document.getElementById("cloudSignUpName").focus(), 60);
+      };
+      // An invite link pasted into this tab while the gate is up changes
+      // only the fragment, so no reload follows. Fill the form in place.
+      // Once past the gate the page-wide handler (onInviteHashChange)
+      // takes over.
+      const onGateHash = () => {
+        if (!gate.hidden) {
+          const inv = readInviteLink();
+          if (inv) fillInvite(inv);
+        }
+      };
+      window.addEventListener("hashchange", onGateHash);
 
       // 1. Already signed in? Skip the gate.
       // Every way into an account (restored session, sign-in, sign-up)
@@ -995,10 +1286,16 @@
         guestUser = null;
         unlock();
       };
-      const cloudCheck = await cloudCheckAuth();
+      // With an invite in hand the stored session is checked with the
+      // server first: a dead one must lead to the sign-up form, not to an
+      // optimistic start that reloads to an empty gate a moment later.
+      const cloudCheck = await cloudCheckAuth(!!invite);
       if (cloudCheck) {
         enterAccount();
-        if (invite) showAppNotice("That invite link is for a new account. You're already signed in, so it wasn't used. Sign out first to create another account with it.");
+        if (invite) {
+          clearPendingInvite();
+          showAppNotice(ALREADY_SIGNED_IN_INVITE);
+        }
         return;
       }
       // preauth.js hid the gate before first paint because a token or a
@@ -1020,6 +1317,7 @@
       // Guest button: continue without an account; data lives in localStorage.
       const guestBtn = document.getElementById("gateGuestBtn");
       if (guestBtn) guestBtn.addEventListener("click", () => {
+        clearPendingInvite();
         activateGuest();
         unlock();
       });
@@ -1044,6 +1342,7 @@
         if (problem) return say(signInErr, problem);
         try {
           await cloudSignIn(email, pw);
+          clearPendingInvite();
           enterAccount();
         } catch (err) {
           signInErr.textContent = (err && err.message) || "Sign in failed.";
@@ -1054,6 +1353,7 @@
       // 4. Sign-up form.
       const signUpForm = document.getElementById("cloudSignUpForm");
       const signUpErr  = document.getElementById("cloudSignUpErr");
+      let signUpTimedOut = false;
       signUpForm.addEventListener("submit", async e => {
         e.preventDefault();
         signUpErr.hidden = true;
@@ -1070,19 +1370,46 @@
         if (problem) return say(signUpErr, problem);
         try {
           await cloudSignUp(email, pw, name, code);
+          clearPendingInvite();
           enterAccount(true);
         } catch (err) {
-          signUpErr.textContent = (err && err.message) || "Sign up failed.";
-          signUpErr.hidden = false;
+          const code = err && err.code;
+          console.warn("[gate] sign-up failed:", err && err.status, code || "", err && err.serverError || "",
+                       signUpTimedOut ? "(an earlier attempt timed out)" : "");
+          // A timed-out /api/register may have created the account and
+          // spent the invite, so a retry is refused with invite_invalid or
+          // email_taken. Neither is the real story; say what probably
+          // happened and offer sign-in with the email carried over.
+          if (code === "timeout" || (signUpTimedOut && (code === "invite_invalid" || code === "email_taken"))) {
+            signUpTimedOut = true;
+            say(signUpErr, code === "timeout"
+              ? "The server didn't answer in time. The account may already exist, so try signing in before creating it again."
+              : "The first attempt may have gone through before the server stopped answering, which would have used the invite.");
+            const b = document.createElement("button");
+            b.type = "button"; b.className = "link-btn"; b.textContent = "Sign in with this email";
+            b.onclick = () => {
+              document.getElementById("cloudSignInEmail").value = email;
+              switchPane("signin", false);
+              document.getElementById("cloudSignInPassword").focus();
+            };
+            signUpErr.append(" ", b);
+            return;
+          }
+          say(signUpErr, (err && err.message) || "Sign up failed.");
         }
       });
 
       switchPane(signupIntent || invite ? "signup" : "signin");
-      if (invite) {
-        document.getElementById("cloudSignUpInvite").value = invite.code;
-        if (invite.email) document.getElementById("cloudSignUpEmail").value = invite.email;
-        // switchPane focuses the first field, which is now filled.
-        setTimeout(() => document.getElementById("cloudSignUpName").focus(), 60);
+      if (invite) fillInvite(invite);
+      // A tap or submit made before this ran (recorded by preauth.js).
+      const early = window.__gateEarly;
+      window.__gateWired = true;
+      window.__gateEarly = null;
+      if (early && early.el && early.el.isConnected) {
+        console.info(`[gate] replaying an early ${early.kind} on #${early.el.id || early.el.dataset.gateSwitch}`);
+        if (early.kind === "click") early.el.click();
+        else if (typeof early.el.requestSubmit === "function") early.el.requestSubmit();
+        else early.el.dispatchEvent(new Event("submit", { cancelable: true }));
       }
       } catch (err) {
         console.error("[gate] failed to initialise:", err && err.stack || err);
@@ -1094,13 +1421,44 @@
     });
   }
 
+  // The invite comes off the address bar at once, but is kept in
+  // sessionStorage until it is used, so a reload (the one after a dead
+  // stored session, or the student's own) does not lose it.
+  const PENDING_INVITE_KEY = "y4mcq.invite.pending";
+  const ALREADY_SIGNED_IN_INVITE = "That invite link is for a new account. You're already signed in, so it wasn't used. Sign out first to create another account with it.";
   function readInviteLink() {
     const params = new URLSearchParams(location.hash.replace(/^#/, ""));
     const code = normaliseInviteCode(params.get("invite") || "");
-    if (!code) return null;
+    if (!code) {
+      try {
+        const kept = JSON.parse(sessionStorage.getItem(PENDING_INVITE_KEY) || "null");
+        if (kept && kept.code) return { code: kept.code, email: kept.email || "" };
+      } catch (_) { /* unreadable: no invite */ }
+      return null;
+    }
+    const inv = { code, email: (params.get("email") || "").trim() };
+    try { sessionStorage.setItem(PENDING_INVITE_KEY, JSON.stringify(inv)); } catch (_) { /* private mode */ }
     try { history.replaceState(null, "", location.pathname + location.search); } catch (_) { /* file:// */ }
-    return { code, email: (params.get("email") || "").trim() };
+    return inv;
   }
+  function clearPendingInvite() {
+    try { sessionStorage.removeItem(PENDING_INVITE_KEY); } catch (_) { /* nothing kept */ }
+  }
+  // An invite link pasted into a tab already past the gate: a guest is
+  // taken to the sign-up form (the reload runs the gate with the invite
+  // kept above); a signed-in student is told it was not used.
+  window.addEventListener("hashchange", () => {
+    if (!/(^#|&)invite=/.test(location.hash)) return;
+    const gate = document.getElementById("gate");
+    if (gate && !gate.hidden) return;   // passGate fills the form in place
+    if (cloudUser) {
+      try { history.replaceState(null, "", location.pathname + location.search); } catch (_) { /* file:// */ }
+      showAppNotice(ALREADY_SIGNED_IN_INVITE);
+      return;
+    }
+    readInviteLink();
+    location.reload();
+  });
 
   function inviteLink(code, email) {
     const params = new URLSearchParams({ invite: code });
@@ -1139,6 +1497,7 @@
 
   document.addEventListener("DOMContentLoaded", async () => {
     applyTheme(localStorage.getItem(THEME_KEY) || "light");
+    sweepDeletionMarks();
     paintCachedMastheadChrome();
     trackMastheadHeight();
     // The bank does not depend on who signs in, so its download overlaps
@@ -1171,24 +1530,16 @@
     migrateLegacyIfNeeded();
     importLegacyHistoryIntoCloud();
     loadProfileState();
-    // Merge the account's server state into the local cache (see
-    // mergeRemoteState), only when the fetch succeeded. Not awaited: if
-    // the worker is slower than the bank, home paints from the local
-    // cache and is refreshed in place when the merge arrives.
-    let homeShown = false;
+    // Merge the account's server state into the local cache. Not awaited:
+    // if the worker is slower than the bank, home paints from the local
+    // cache and is refreshed in place when the merge arrives. After an
+    // optimistic start /api/state is fetched alongside /api/me but used
+    // only once /api/me names the same account.
     if (cloudUser) {
-      cloudFetchState().then(remote => {
-        if (remote) {
-          mergeRemoteState(remote);
-          save(ns(HISTORY_KEY), state.history);
-          save(ns(FLAGS_KEY),   state.flags);
-          save(ns(SETTINGS_KEY), state.settings);
-          if (homeShown) refreshHomeAfterSync();
-        }
-        // Drain anything queued by an earlier visit, a guest migration
-        // or a dead session.
-        flushOutbox();
-      });
+      const verified = authVerify
+        ? authVerify.then(v => !!(v.user && cloudUser && v.user.id === cloudUser.id))
+        : Promise.resolve(identityConfirmed);
+      pullServerState(verified);
     }
     try {
       await dataPromise;
@@ -1218,19 +1569,85 @@
       try { fn(); } catch (e) { console.error("wire", name, "failed:", e); }
     }
     showHome();
-    homeShown = true;
+    _homeShown = true;
+    announceBankGaps(true);
     storageNotice.ready = true;
     if (storageNotice.pending) showStorageNotice();
     settleSessionCheck();
   });
 
+  // GET /api/state, merged once `verified` resolves true. Writes made
+  // while the GET is in flight are kept over its older body (_touched).
+  // Then the outbox drains: answers queued by an earlier visit, a guest
+  // migration or a dead session.
+  let _stateMerged = false, _homeShown = false;
+  function pullServerState(verified) {
+    const touched = { answers: new Set(), flags: new Set(), settings: false };
+    _touched = touched;
+    return Promise.all([verified, cloudFetchState()]).then(([ok, remote]) => {
+      if (_touched === touched) _touched = null;
+      if (!ok || !cloudUser || _accountGone) return false;
+      if (!remote) { scheduleRecheck(); flushOutbox(); return false; }
+      mergeRemoteState(remote, touched);
+      save(ns(HISTORY_KEY), state.history);
+      save(ns(FLAGS_KEY),   state.flags);
+      save(ns(SETTINGS_KEY), state.settings);
+      _stateMerged = true;
+      clearAppNotice("offline");
+      refreshHomeAfterSync();
+      flushOutbox();
+      return true;
+    });
+  }
+
   // Settings, flags and history merged from the server after home was
   // drawn. Only the home controls read them before a session starts.
   function refreshHomeAfterSync() {
-    if (document.body.getAttribute("data-screen") !== "home" || state.quiz) return;
+    if (!_homeShown || document.body.getAttribute("data-screen") !== "home" || state.quiz) return;
     applySettingsToOptions();
     renderSubtopicChips();
     onSettingsChange();
+  }
+
+  // ── Modal dialogs ───────────────────────────────────────────────────
+  // Stats, Report and Admin are native <dialog>s opened with showModal():
+  // the page behind is inert, Tab stays inside, and Escape closes them
+  // through the dialog's own cancel. The `hidden` attribute mirrors the
+  // closed state, which is what the quiz key handler and the tests read.
+  // Focus goes back to whatever opened the dialog.
+  function wireModalDialog(dlg, onClosed) {
+    if (!dlg || dlg._wired) return;
+    dlg._wired = true;
+    const closed = () => {
+      if (dlg.hidden) return;
+      dlg.hidden = true;
+      if (onClosed) onClosed();
+      const back = dlg._opener;
+      dlg._opener = null;
+      if (back && back.isConnected && typeof back.focus === "function") back.focus({ preventScroll: true });
+    };
+    dlg.addEventListener("close", closed);
+    // A click on the scrim, the dialog box itself outside its card.
+    dlg.addEventListener("click", e => { if (e.target === dlg) closeModalDialog(dlg); });
+    dlg._closed = closed;
+  }
+  function openModalDialog(dlg, focusEl) {
+    if (!dlg) return;
+    if (dlg.hidden) dlg._opener = document.activeElement;
+    dlg.hidden = false;
+    if (!dlg.open) {
+      if (typeof dlg.showModal === "function") dlg.showModal();
+      else dlg.setAttribute("open", "");
+    }
+    if (focusEl) focusEl.focus({ preventScroll: true });
+  }
+  function closeModalDialog(dlg) {
+    if (!dlg) return;
+    if (dlg.open && typeof dlg.close === "function") dlg.close();
+    else dlg.removeAttribute("open");
+    // Browsers fire `close` asynchronously; the state is settled now so a
+    // caller that reads `hidden` straight after sees it closed.
+    if (dlg._closed) dlg._closed(); else dlg.hidden = true;
   }
 
   // ── Stats modal ─────────────────────────────────────────────────────
@@ -1239,9 +1656,9 @@
     const modal = document.getElementById("statsModal");
     const close = document.getElementById("statsClose");
     if (!btn || !modal || !close) return;
-    btn.onclick = () => { renderStats(); modal.hidden = false; };
-    close.onclick = () => { modal.hidden = true; };
-    modal.addEventListener("click", e => { if (e.target.id === "statsModal") modal.hidden = true; });
+    wireModalDialog(modal);
+    btn.onclick = () => { renderStats(); openModalDialog(modal, close); };
+    close.onclick = () => closeModalDialog(modal);
   }
 
   function wireAccountModal() {
@@ -1315,7 +1732,9 @@
   // email typed out. window.confirm can do none of that.
   // tone "primary" is for a confirm that loses nothing (finishing a
   // test); everything else keeps the destructive style.
-  function adminConfirm({ title, body, confirmLabel, typeToMatch, typeLabel, tone }) {
+  // `askPassword` asks for the account's current password instead of a
+  // typed match, and resolves with it (false on cancel).
+  function adminConfirm({ title, body, confirmLabel, typeToMatch, typeLabel, tone, askPassword }) {
     return new Promise(resolve => {
       const dlg = document.getElementById("confirmDialog");
       if (!dlg || !dlg.showModal) return resolve(window.confirm(body));
@@ -1329,14 +1748,17 @@
       go.textContent = confirmLabel;
       go.className = tone === "primary" ? "primary" : "danger-btn";
       err.hidden = true;
-      if (typeToMatch) {
+      input.type = askPassword ? "password" : "text";
+      input.autocomplete = askPassword ? "current-password" : "off";
+      if (typeToMatch || askPassword) {
         wrap.hidden = false;
         document.getElementById("confirmTypeLabel").textContent =
-          typeLabel || `Type ${typeToMatch} to confirm`;
+          askPassword ? "Your password" : (typeLabel || `Type ${typeToMatch} to confirm`);
         input.value = "";
         go.disabled = true;
         input.oninput = () => {
-          go.disabled = input.value.trim().toLowerCase() !== typeToMatch.toLowerCase();
+          go.disabled = askPassword ? !input.value
+            : input.value.trim().toLowerCase() !== typeToMatch.toLowerCase();
         };
         // Enter in the field would submit the dialog's form through its
         // first submit button, which is Cancel: typing the email and
@@ -1359,9 +1781,11 @@
         go.onclick = null;
         dlg.onclose = null;
         if (dlg.open) dlg.close();
+        // A password must not stay in the DOM after the dialog closes.
+        if (askPassword) input.value = "";
         resolve(v);
       };
-      go.onclick = () => finish(true);
+      go.onclick = () => finish(askPassword ? input.value : true);
       dlg.onclose = () => finish(false);
       dlg.showModal();
       // Initial focus on the least destructive control.
@@ -1373,9 +1797,8 @@
     const modal = document.getElementById("adminModal");
     const close = document.getElementById("adminClose");
     if (!modal || !close) return;
-    const shut = () => { modal.hidden = true; adminClear(); };
-    close.onclick = shut;
-    modal.addEventListener("click", e => { if (e.target.id === "adminModal") shut(); });
+    wireModalDialog(modal, adminClear);
+    close.onclick = () => closeModalDialog(modal);
     const nav = document.getElementById("adminSidebar");
     if (nav) {
       nav.addEventListener("click", e => {
@@ -1403,7 +1826,8 @@
     ).join("");
     nav.hidden = tabs.length < 2;
     selectAdminTab(tabs.some(t => t.id === initialTab) ? initialTab : tabs[0].id);
-    modal.hidden = false;
+    wireModalDialog(modal, adminClear);
+    openModalDialog(modal, document.getElementById("adminClose"));
     adminClear();
   }
 
@@ -1462,16 +1886,28 @@
     return () => clearTimeout(t);
   }
   // A retry cannot fix a dead session or a revoked admin flag, so those
-  // two say what happened and offer no button.
-  function adminLoadError(root, what, retry, err) {
+  // two say what happened, and a dead session offers sign-in. The worker
+  // answers a dead session with 401 session_expired; builds before that
+  // split answered it with not_admin, so not_admin is checked against
+  // /api/me before it is believed.
+  async function adminLoadError(root, what, retry, err) {
     const st = err && err.status, code = err && err.code;
-    if (code === "not_admin" || st === 403) {
-      root.innerHTML = `<p class="admin-empty" role="alert">${esc(SERVER_ERROR_TEXT.not_admin)}</p>`;
-      return;
-    }
-    if (st === 401) {
-      root.innerHTML = `<p class="admin-empty" role="alert">${esc(SERVER_ERROR_TEXT.session_expired)}</p>`;
+    const sessionDead = () => {
+      root.innerHTML = `<p class="admin-empty" role="alert">${esc(SERVER_ERROR_TEXT.session_expired)} ` +
+        `<button type="button" class="link-btn" data-admin-signin>Sign in</button></p>`;
+      const b = root.querySelector("[data-admin-signin]");
+      if (b) b.onclick = () => location.reload();
       onSessionExpired("admin: " + what);
+    };
+    if (st === 401 || code === "session_expired") return sessionDead();
+    if (code === "not_admin" || st === 403) {
+      let alive = true;
+      try { await apiFetch("/api/me", { method: "GET" }); }
+      catch (e) { if (e && e.status === 401) alive = false; }
+      console.warn(`[admin] ${what}: not_admin; /api/me says the session is ${alive ? "live" : "dead"}`);
+      if (!root.isConnected) return;
+      if (!alive) return sessionDead();
+      root.innerHTML = `<p class="admin-empty" role="alert">${esc(SERVER_ERROR_TEXT.not_admin)}</p>`;
       return;
     }
     root.innerHTML = `<p class="admin-empty" role="alert">Couldn't load ${esc(what)}. ` +
@@ -1524,14 +1960,20 @@
       [1, 2, 3, 4, 5].map(d => {
         const g = pc(counts[d]) - TARGET[d];
         const cls = Math.abs(g) >= 8 ? ' class="gap-wide"' : "";
-        return `<td${cls}>${g > 0 ? "+" : ""}${g.toFixed(1)}</td>`;
+        // Rounded first, so a gap of -0.04 prints 0.0, not "-0.0".
+        const r = Math.round(g * 10) / 10 || 0;
+        return `<td${cls}>${r > 0 ? "+" : ""}${r.toFixed(1)}</td>`;
       }).join("") + `<td></td></tr>`;
 
     // What the student's pool line leaves out: files that failed this
     // load and questions dropped as unservable or shadowed by a reused id.
     const bl = state.batchLoadStats || {};
     const loadFacts = [
-      bl.failed ? `<b>${fmtNum(bl.failed)}</b> of ${plural(bl.total, "bank file")} failed to load this time.` : "",
+      bl.failed ? `<b>${fmtNum(bl.failed)}</b> of ${plural(bl.total, "bank file")} failed to load this time` +
+        (Array.isArray(bl.failedNames) && bl.failedNames.length
+          ? `: ${bl.failedNames.slice(0, 6).map(n => `<code>${esc(n)}</code>`).join(", ")}` +
+            (bl.failedNames.length > 6 ? ` and ${fmtNum(bl.failedNames.length - 6)} more` : "") + "."
+          : ".") : "",
       bl.invalid ? `<b>${fmtNum(bl.invalid)}</b> malformed ${bl.invalid === 1 ? "question" : "questions"} skipped.` : "",
       bl.shadowed ? `<b>${fmtNum(bl.shadowed)}</b> duplicate ${bl.shadowed === 1 ? "id" : "ids"} hidden behind an earlier copy.` : "",
     ].join(" ");
@@ -1912,10 +2354,12 @@
     list.querySelectorAll("[data-reissue]").forEach(b => {
       b.onclick = async () => {
         b.disabled = true;
+        let revoked = false;
         try {
           await apiFetch("/api/admin/invites/revoke", {
             method: "POST", body: JSON.stringify({ code_hash: b.dataset.reissue }),
           });
+          revoked = true;
           const r = await apiFetch("/api/admin/invites", {
             method: "POST",
             body: JSON.stringify({ label: b.dataset.label || "", expires_days: 30 }),
@@ -1924,8 +2368,16 @@
           adminSay("ok", "Old code revoked, new one issued.");
           renderInvites(root, usersRoot);
         } catch (err) {
-          b.disabled = false;
-          adminSay("error", err.message || String(err));
+          console.warn("[admin] reissue failed", revoked ? "after the revoke" : "at the revoke", err && err.status, err && err.code);
+          if (!revoked) {
+            b.disabled = false;
+            adminSay("error", err.message || String(err));
+            return;
+          }
+          // The old code is gone either way; the row must not offer a
+          // Reissue that can only fail with invite_spent.
+          adminSay("error", `The old code was revoked, but no new one was issued. ${err.message || String(err)} Create a new code below.`);
+          renderInvites(root, usersRoot);
         }
       };
     });
@@ -2027,41 +2479,38 @@
         adminSay("error", err.message || String(err));
       } finally { ev.target.disabled = false; }
     };
-    // Same confirmation as an admin deleting someone else: the shared
-    // dialog, with the email typed out.
+    // The shared confirm dialog, with the current password as the
+    // deliberate step: the worker requires it, so a token copied off
+    // this device cannot delete the account.
     const goBtn = document.getElementById("acctSelfDeleteOpen");
     if (goBtn) {
       goBtn.onclick = async () => {
-        const email = (cloudUser && cloudUser.email) || "";
         // A start from the cached account may not know the email yet.
-        if (!email) return adminSay("error", "Your account details haven't loaded yet. Reload, then try again.");
-        const okd = await adminConfirm({
+        const who = (cloudUser && cloudUser.email) || "this account";
+        const password = await adminConfirm({
           title: "Delete your account?",
-          body: `Every answer, flag and setting on ${email} is deleted, here and on the server. This cannot be undone.`,
+          body: `Every answer, flag and setting on ${who} is deleted, here and on the server. This cannot be undone.`,
           confirmLabel: "Delete my account",
-          typeToMatch: email,
-          typeLabel: `Type ${email} to confirm`,
+          askPassword: true,
         });
-        if (!okd) return;
+        if (!password) return;
         goBtn.disabled = true;
         adminSay("ok", "Deleting…");
         try {
-          await apiFetch("/api/account/delete", { method: "POST" });
+          await apiFetch("/api/account/delete", { method: "POST", body: JSON.stringify({ password }) });
           adminSay("ok", "Account deleted. Reloading…");
           // The dialog promises every answer, flag and setting goes with
           // the account. The server copy has; remove this device's copy
           // too, and the cached name, which the next guest here would
-          // otherwise see in the masthead.
-          const suffix = cloudUser ? `.cloud-${cloudUser.id}` : null;
-          if (suffix) {
-            const doomed = [];
-            for (let i = 0; i < localStorage.length; i++) {
-              const k = localStorage.key(i);
-              if (k && k.startsWith("y4mcq.") && k.endsWith(suffix)) doomed.push(k);
-            }
-            doomed.forEach(k => localStorage.removeItem(k));
-            console.info(`[account] deleted; removed ${doomed.length} local key(s) for ${suffix.slice(1)}`);
+          // otherwise see in the masthead. The deletion mark tells other
+          // open tabs to drop the account instead of writing it back.
+          const id = cloudUser && cloudUser.id;
+          if (id) {
+            localStorage.setItem(ACCOUNT_DELETED_PREFIX + id, String(Date.now()));
+            const n = purgeAccountKeys(id);
+            console.info(`[account] deleted; removed ${n} local key(s) for cloud-${id}`);
           }
+          _accountGone = true;
           localStorage.removeItem(CHROME_KEY);
           cloudSignOut();
           setTimeout(() => location.reload(), 600);
@@ -2173,107 +2622,167 @@
       <div class="stats-section">
         <h3>By difficulty</h3>
         <div class="stats-table">${rows(byDiff)}</div>
-      </div>`;
+      </div>` +
+      // The faint bar is the only mark on a small-sample row, so it is
+      // named once, and only when such a row is on screen.
+      ([byTopic, byDiff].some(m => Object.values(m).some(e => e.n < FEW))
+        ? `<p class="dim small">Faint bars: fewer than ${FEW} answers.</p>` : "");
   }
 
   // Files settled out of files requested, for the boot loading line. The
   // total is only final once the manifests are in (`listed`).
   const bankProgress = { done: 0, total: 0, listed: false };
+  // Every bank file in bank order: base files, then batches, then the
+  // inbox. dedupeById keeps the first copy of an id, so the order is the
+  // precedence. A file that fails keeps its place with `failed` set and
+  // retryBankFiles fetches it again in the background; `permanent` marks
+  // a failure a retry cannot change (a 4xx, a body that is not an array),
+  // which is counted for the admin and not retried. `manifests` holds a
+  // manifest that failed, since it hides every file it lists.
+  const bankGroups = { base: [], batches: [], inbox: [], manifests: [], bust: null };
+  const FILE_TOPICS = [[/paeds/, "Paediatrics"], [/obgyn/, "Obstetrics & Gynaecology"],
+                       [/psych/, "Psychiatry"], [/medicine/, "Medicine"]];
+  const bankSourceList = () => [...bankGroups.base, ...bankGroups.batches, ...bankGroups.inbox];
+  const bankPending = () => bankSourceList().filter(s => s.failed && !s.permanent).length
+    + bankGroups.manifests.filter(m => !m.permanent).length;
+
+  function bankSource(path, hash) {
+    return {
+      path,
+      topic: (FILE_TOPICS.find(([re]) => re.test(path)) || [])[1] || "",
+      // Per-file content hashes from batches_manifest.json `hashes`
+      // ({path: sha1 prefix}, written by scripts/manifest_hashes.py). A
+      // batch with a hash is keyed on it, so a release that bumps
+      // `updated` does not re-download every unchanged file. A file with
+      // no hash (one the worker appended, say) falls back to the ?v= key.
+      hash: typeof hash === "string" && /^[0-9a-f]{6,64}$/.test(hash) ? hash : "",
+      questions: [], failed: false, permanent: false,
+    };
+  }
+  // A failure a retry could fix (stall, network, 5xx) is tried once more
+  // after a second; a 4xx is the same answer every time.
+  async function fetchBankFile(url, init) {
+    try { return await fetchJson(url, init); }
+    catch (e) {
+      if (e && e.status >= 400 && e.status < 500) throw e;
+      await new Promise(r => setTimeout(r, 1000));
+      return fetchJson(url, init);
+    }
+  }
+  async function pullSource(src, retry) {
+    const url = src.path + (src.hash ? "?h=" + src.hash : await bankGroups.bust);
+    try {
+      const d = await (retry ? fetchBankFile(url) : fetchJson(url));
+      if (Array.isArray(d)) { src.questions = d; src.failed = false; return; }
+      console.warn(`[data] ${url} is not a JSON array (${d === null ? "null" : typeof d}); skipped`);
+      src.permanent = true;
+    } catch (e) {
+      console.warn(`[data] ${url} failed${retry ? " twice" : ""}: ${e && e.message}`);
+      src.permanent = !!(e && e.status >= 400 && e.status < 500);
+    }
+    src.failed = true;
+  }
+  async function pullManifest(m, retry) {
+    let d;
+    try { d = await m.fetch(retry); }
+    catch (e) {
+      console.warn(`[data] ${m.name} failed: ${e && e.message}`);
+      m.permanent = !!(e && e.status >= 400 && e.status < 500);
+      return false;
+    }
+    const list = d && d[m.key];
+    if (!Array.isArray(list)) {
+      console.warn(`[data] ${m.name} has no "${m.key}" list; skipped`);
+      m.permanent = true;
+      return false;
+    }
+    const hashes = d.hashes && typeof d.hashes === "object" && !Array.isArray(d.hashes) ? d.hashes : {};
+    bankGroups[m.group] = list.map(p => bankSource("data/" + p, hashes[p]));
+    // Read by the Bank tab's inbox count.
+    if (m.group === "inbox") state.inboxManifest = { inbox: list };
+    return true;
+  }
+
   async function loadData() {
+    // preauth.js starts meta.json and the batch manifest while app.js is
+    // still downloading. The first load takes those requests; one that
+    // failed, or is still silent after the stall window, is fetched here.
+    const head = window.__bankHead || {};
+    window.__bankHead = null;
+    const early = (pre, url, init) =>
+      (pre ? Promise.race([pre.catch(() => null), new Promise(r => setTimeout(r, FETCH_STALL_MS))]) : Promise.resolve(null))
+        .then(d => d || fetchBankFile(url, init));
     // Data files don't carry the CSS/JS cache-bust string, so meta.json
-    // (fetched fresh) supplies the key for everything downstream: a
-    // routine push then reaches students without a code release.
-    const metaPre = await fetchJson("data/meta.json?t=" + Date.now()).catch(() => ({}));
+    // (fetched fresh) supplies the key for every file not keyed by hash:
+    // a routine push then reaches students without a code release.
+    const metaP = early(head.meta, "data/meta.json?t=" + Date.now()).catch(() => ({}));
     // `last_added` is part of the key because a routine push can bump only
-    // that field; keyed on `updated` alone, the manifest would stay
-    // cached under the same URL all day.
-    const v = metaPre && metaPre.updated
-      ? (String(metaPre.updated) + (metaPre.last_added ? "-" + String(metaPre.last_added) : "")).replace(/[^0-9-]/g, "")
-      : String(Math.floor(Date.now()/3600000));
-    const bust = "?v=" + v;
-    // Every bank source is counted the same way. A fetch that fails, a body
-    // that is not JSON, and a body that is valid JSON but not an array all
-    // mean "this file contributed nothing", and all of them have to reach
-    // the count the home screen shows. A manifest that fails hides every
-    // batch it lists, so it counts too. Anything that is not an array
-    // becomes [], or the spread below would throw and leave the page
-    // blank.
-    let srcTotal = 0, srcFailed = 0;
-    bankProgress.done = 0; bankProgress.listed = false;
-    const settled = () => { bankProgress.done++; bankProgress.total = srcTotal; };
-    const pullArray = (p) => {
-      srcTotal++;
-      return fetchJson(p).then(
-        d => { settled(); if (Array.isArray(d)) return d; srcFailed++; return []; },
-        () => { settled(); srcFailed++; return []; }
-      );
+    // that field; keyed on `updated` alone, a file would stay cached under
+    // the same URL all day.
+    bankGroups.bust = metaP.then(m => "?v=" + (m && m.updated
+      ? (String(m.updated) + (m.last_added ? "-" + String(m.last_added) : "")).replace(/[^0-9-]/g, "")
+      : String(Math.floor(Date.now()/3600000))));
+    bankGroups.base = ["paeds", "obgyn", "psych", "medicine"].map(n => bankSource(`data/questions_${n}.json`));
+    bankGroups.batches = []; bankGroups.inbox = []; bankGroups.manifests = [];
+    state.inboxManifest = { inbox: [] };
+    bankProgress.done = 0; bankProgress.total = 0; bankProgress.listed = false;
+    const pullAll = srcs => Promise.all(srcs.map(s => {
+      bankProgress.total++;
+      return pullSource(s, true).then(() => { bankProgress.done++; });
+    }));
+    // The batch manifest is revalidated on every load (no-cache) rather
+    // than keyed on meta.json, so the batches can start without waiting
+    // for meta: their URLs are keyed by content hash.
+    const manifests = [
+      { name: "data/batches_manifest.json", key: "batches", group: "batches",
+        fetch: retry => retry ? early(head.manifest, "data/batches_manifest.json", NO_CACHE)
+                              : fetchJson("data/batches_manifest.json", NO_CACHE) },
+      { name: "data/inbox_manifest.json", key: "inbox", group: "inbox",
+        fetch: retry => bankGroups.bust.then(b => (retry ? fetchBankFile : fetchJson)("data/inbox_manifest.json" + b)) },
+    ];
+    let manifestsOut = manifests.length;
+    const listThenPull = async m => {
+      bankProgress.total++;
+      const ok = await pullManifest(m, true);
+      bankProgress.done++;
+      if (!ok) bankGroups.manifests.push(m);
+      const files = pullAll(bankGroups[m.group]);
+      if (--manifestsOut === 0) bankProgress.listed = true;
+      await files;
     };
-    // Per-file content hashes from batches_manifest.json `hashes`
-    // ({path: sha1 prefix}, written by scripts/manifest_hashes.py). A
-    // batch with a hash is keyed on it, so a release that bumps `updated`
-    // does not re-download every unchanged file. A batch
-    // with no hash (one the worker appended, say) falls back to `bust`.
-    let batchHashes = {};
-    const batchUrl = p => {
-      const h = batchHashes[p];
-      return "data/" + p + (typeof h === "string" && /^[0-9a-f]{6,64}$/.test(h) ? "?h=" + h : bust);
-    };
-    const pullManifest = (p, key) => {
-      srcTotal++;
-      return fetchJson(p).then(
-        d => {
-          settled();
-          if (d && d.hashes && typeof d.hashes === "object" && !Array.isArray(d.hashes)) {
-            batchHashes = Object.assign({}, batchHashes, d.hashes);
-          }
-          const list = d && d[key];
-          if (Array.isArray(list)) return list;
-          srcFailed++; return [];
-        },
-        () => { settled(); srcFailed++; return []; }
-      );
-    };
-    const [paeds, obgyn, psych, medicine, ranges, meta, batchPaths, inboxPaths, reportsFile] = await Promise.all([
-      pullArray("data/questions_paeds.json" + bust),
-      pullArray("data/questions_obgyn.json" + bust),
-      pullArray("data/questions_psych.json" + bust),
-      pullArray("data/questions_medicine.json" + bust),
-      fetchJson("data/reference_ranges.json" + bust).catch(() => null),
-      Promise.resolve(metaPre),
-      pullManifest("data/batches_manifest.json" + bust, "batches"),
-      pullManifest("data/inbox_manifest.json" + bust, "inbox"),
-      fetchJson("data/reports.json" + bust).catch(() => ({ reports: [] })),
+    const [ranges, reportsFile, meta] = await Promise.all([
+      bankGroups.bust.then(b => fetchJson("data/reference_ranges.json" + b)).catch(() => null),
+      bankGroups.bust.then(b => fetchJson("data/reports.json" + b)).catch(() => ({ reports: [] })),
+      metaP,
+      pullAll(bankGroups.base),
+      ...manifests.map(listThenPull),
     ]);
     state.reports = (reportsFile && reportsFile.reports) || [];
+    state.ranges = ranges;
+    state.meta = meta;
+    assembleBank();
+    keepFetchingBank();
+  }
 
-    // Pull every staging batch listed in the manifests. Each is its own
-    // JSON array of question objects matching the live schema.
-    const allPaths = [...batchPaths, ...inboxPaths];
-    const extraReq = allPaths.map(p => pullArray(batchUrl(p)));
-    bankProgress.total = srcTotal;
-    bankProgress.listed = true;
-    const extra = await Promise.all(extraReq);
-    const extraQuestions = extra.flat();
-    // Read by the Bank tab's inbox count.
-    state.inboxManifest = { inbox: inboxPaths };
+  // Builds the live bank from the files that have arrived. loadData calls
+  // it once; retryBankFiles calls it again whenever a missing file lands.
+  function assembleBank() {
+    const srcs = bankSourceList();
+    const failedNames = [...bankGroups.manifests.map(m => m.name), ...srcs.filter(s => s.failed).map(s => s.path)];
+    // The two manifests are bank requests too.
+    const total = srcs.length + 2;
+    state.batchLoadStats = { total, failed: failedNames.length, failedNames };
+    if (failedNames.length) {
+      console.warn(`[a-to-e] ${failedNames.length} of ${total} bank files failed to load: ${failedNames.join(", ")}`);
+    }
     // Per-file view of the live bank for the admin Content tab: the same
     // arrays, not a second download or copy.
-    state.bankFiles = [
-      { path: "data/questions_paeds.json",    questions: paeds },
-      { path: "data/questions_obgyn.json",    questions: obgyn },
-      { path: "data/questions_psych.json",    questions: psych },
-      { path: "data/questions_medicine.json", questions: medicine },
-      ...batchPaths.map((p, i) => ({ path: "data/" + p, questions: extra[i] })),
-    ];
-    state.batchLoadStats = { total: srcTotal, failed: srcFailed };
-    if (srcFailed > 0) {
-      console.warn(`[a-to-e] ${srcFailed} of ${srcTotal} bank files failed to load`);
-    }
+    state.bankFiles = [...bankGroups.base, ...bankGroups.batches].map(s => ({ path: s.path, questions: s.questions }));
 
     // A question the quiz cannot render or grade is dropped and counted,
     // so the admin sees the number rather than a student meeting an empty
     // quiz screen or a question with no right answer.
-    const raw = [...paeds, ...obgyn, ...psych, ...medicine, ...extraQuestions];
+    const raw = srcs.flatMap(s => s.questions);
     const bad = raw.filter(q => q && q.id && !isServable(q));
     state.bankQuestions = raw.filter(q => !q || !q.id || isServable(q));
     state.batchLoadStats.invalid = bad.length;
@@ -2293,8 +2802,7 @@
         console.warn(`[a-to-e] ${shadowed.length} duplicate id(s) hidden behind an earlier copy: ${shadowed.slice(0, 20).join(", ")}`);
       }
     }
-    state.ranges = ranges;
-    state.meta = meta;
+    state.batchLoadStats.missing = bankGaps();
     // The first loadData() runs in parallel with the gate, so it usually
     // finishes before anyone is signed in. The boot path merges the local
     // questions again once the gate resolves; this call covers later
@@ -2302,6 +2810,82 @@
     if (cloudUser || guestUser) mergeLocalQuestions();
     else state.questions = dedupeById(state.bankQuestions);
   }
+
+  // Disciplines with a file still to come: [{topic, none}], `none` when
+  // not one of its questions has arrived. A failed manifest could hold
+  // any discipline, so it names all four; a file whose name matches no
+  // discipline (an inbox file) is topic "".
+  function bankGaps() {
+    const pending = bankSourceList().filter(s => s.failed && !s.permanent);
+    const topics = new Set(pending.map(s => s.topic));
+    if (bankGroups.manifests.some(m => !m.permanent)) SERVABLE_TOPICS.forEach(t => topics.add(t));
+    const have = {};
+    for (const q of state.bankQuestions || []) if (q) have[q.topic] = (have[q.topic] || 0) + 1;
+    const out = SERVABLE_TOPICS.filter(t => topics.has(t)).map(t => ({ topic: t, none: !have[t] }));
+    if (topics.has("")) out.push({ topic: "", none: false });
+    return out;
+  }
+  function bankGapText(gaps) {
+    const names = gaps.map(g => !g.topic ? "a few other questions" : g.none ? g.topic : `part of ${g.topic}`);
+    const list = names.length > 1 ? names.slice(0, -1).join(", ") + " and " + names[names.length - 1] : names[0];
+    return `Not loaded yet: ${list}. Still trying; the questions join the bank as they arrive.`;
+  }
+  // Boot shows the gaps once, after home. Later changes update the notice
+  // only while it is still on screen, so a student who dismissed it is
+  // not told again; the pool line carries the state either way.
+  let _bankNoticeText = "";
+  function announceBankGaps(atBoot) {
+    const gaps = (state.batchLoadStats && state.batchLoadStats.missing) || [];
+    const el = document.getElementById("appNotice");
+    const showing = !!(el && !el.hidden && _bankNoticeText && el.firstChild && el.firstChild.textContent === _bankNoticeText);
+    if (!atBoot && !showing) return;
+    if (gaps.length) _bankNoticeText = bankGapText(gaps);
+    else if (showing) _bankNoticeText = "The rest of the question bank has loaded.";
+    else return;
+    showAppNotice(_bankNoticeText);
+  }
+  // Missing files are fetched again at 5, 10, 20, 40, then every 60 s
+  // while the page is open, and at once when the browser comes back
+  // online. Each arrival goes straight into the bank.
+  const bankRetry = { timer: null, delay: 0, running: false };
+  function keepFetchingBank() {
+    if (bankRetry.timer || bankRetry.running || !bankPending()) return;
+    bankRetry.delay = Math.min(60000, bankRetry.delay ? bankRetry.delay * 2 : 5000);
+    bankRetry.timer = setTimeout(retryBankFiles, bankRetry.delay);
+  }
+  async function retryBankFiles() {
+    clearTimeout(bankRetry.timer);
+    bankRetry.timer = null;
+    if (bankRetry.running) return;
+    bankRetry.running = true;
+    try {
+      const before = (state.bankQuestions || []).length;
+      for (const m of bankGroups.manifests.filter(x => !x.permanent)) {
+        if (!(await pullManifest(m, false))) continue;
+        bankGroups.manifests = bankGroups.manifests.filter(x => x !== m);
+        // Its files are new to this page: mark them missing so the pass
+        // below fetches them.
+        for (const s of bankGroups[m.group]) s.failed = true;
+      }
+      const pending = bankSourceList().filter(s => s.failed && !s.permanent);
+      await Promise.all(pending.map(s => pullSource(s, false)));
+      assembleBank();
+      const added = state.bankQuestions.length - before;
+      console.info(`[data] background fetch: ${pending.length} file(s) tried, ${added} question(s) added, ${bankPending()} file(s) still missing`);
+      if (added) refreshHomeAfterSync();
+      announceBankGaps(false);
+    } catch (e) {
+      console.error("[data] background fetch failed:", e && e.stack || e);
+    } finally {
+      bankRetry.running = false;
+    }
+    keepFetchingBank();
+  }
+  window.addEventListener("online", () => {
+    if (!bankPending()) return;
+    bankRetry.delay = 0;
+    retryBankFiles();
+  });
 
   // Locally pasted questions live only in this browser's localStorage,
   // per user, and merge into the bank the same way as inbox files.
@@ -2336,29 +2920,93 @@
     });
   }
   // The browser's own HTTP cache, keyed by loadData's ?v= or ?h= on each
-  // URL. Boot waits on these before showHome(), so the timer covers the
-  // body as well as the headers; a timeout rejects, and the bank loader
-  // counts it as a failed file like any other.
+  // URL. The bank is about 10 MB on the wire, so a single clock per file
+  // would cut off a slow link that is still delivering. Two limits
+  // instead: at most FETCH_CONCURRENCY files in flight, so a file's
+  // clock starts when its request goes out rather than behind 40 others;
+  // and a stall timer that restarts on every chunk, so only a link that
+  // has gone quiet for FETCH_STALL_MS is abandoned. FETCH_CAP_MS, counted
+  // from the response headers, bounds a file that trickles forever.
   const FETCH_JSON_TIMEOUT_MS = 30000;
-  function fetchJson(p) {
-    return timedFetch(p, {}, FETCH_JSON_TIMEOUT_MS, r => {
-      // A 404 from GitHub Pages serves an HTML page, so r.json() would
-      // reject anyway, but a proxy or an error page can return valid JSON
+  const FETCH_CONCURRENCY = 6;
+  const FETCH_STALL_MS = 20000;
+  const FETCH_CAP_MS = 180000;
+  const NO_CACHE = { cache: "no-cache" };
+  let _fetchSlotsBusy = 0;
+  const _fetchSlotQueue = [];
+  async function withFetchSlot(fn) {
+    // A finished request hands its slot straight to the next in line, so
+    // the count never overshoots between the release and the wake-up.
+    if (_fetchSlotsBusy < FETCH_CONCURRENCY) _fetchSlotsBusy++;
+    else await new Promise(r => _fetchSlotQueue.push(r));
+    try { return await fn(); }
+    finally {
+      const next = _fetchSlotQueue.shift();
+      if (next) next(); else _fetchSlotsBusy--;
+    }
+  }
+  function fetchJson(p, init) {
+    return withFetchSlot(() => fetchJsonNow(p, init));
+  }
+  async function fetchJsonNow(p, init) {
+    const ctl = new AbortController();
+    const t0 = Date.now();
+    let bytes = 0, why = "no response", stall = null, cap = null;
+    const arm = () => {
+      clearTimeout(stall);
+      stall = setTimeout(() => ctl.abort(), FETCH_STALL_MS);
+    };
+    arm();
+    try {
+      const r = await fetch(p, { ...(init || {}), signal: ctl.signal });
+      // A 404 from GitHub Pages serves an HTML page, so parsing would
+      // fail anyway, but a proxy or an error page can return valid JSON
       // of the wrong shape and that must not be mistaken for bank content.
-      if (!r.ok) throw new Error(`${r.status} fetching ${p}`);
-      return r.json();
-    }).catch(e => {
+      if (!r.ok) {
+        const e = new Error(`${r.status} fetching ${p}`);
+        e.status = r.status;
+        throw e;
+      }
+      why = "stalled";
+      arm();
+      cap = setTimeout(() => { why = "over the time cap"; ctl.abort(); }, FETCH_CAP_MS);
+      const reader = r.body && typeof r.body.getReader === "function" && typeof TextDecoder === "function"
+        ? r.body.getReader() : null;
+      if (!reader) return JSON.parse(await r.text());
+      const dec = new TextDecoder(), parts = [];
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        bytes += value.byteLength;
+        arm();
+        parts.push(dec.decode(value, { stream: true }));
+      }
+      parts.push(dec.decode());
+      return JSON.parse(parts.join(""));
+    } catch (e) {
       if (e && e.name === "AbortError") {
-        console.warn(`[data] ${p} timed out after ${FETCH_JSON_TIMEOUT_MS / 1000}s`);
-        throw new Error(`timed out fetching ${p}`);
+        const detail = `${why} after ${((Date.now() - t0) / 1000).toFixed(1)}s, ${bytes} bytes received`;
+        console.warn(`[data] ${p} ${detail}`);
+        throw new Error(`${p} ${detail}`);
       }
       throw e;
-    });
+    } finally {
+      clearTimeout(stall);
+      clearTimeout(cap);
+    }
   }
 
   function applyTheme(t) {
     document.documentElement.setAttribute("data-theme", t);
     localStorage.setItem(THEME_KEY, t);
+    // Visibly "Theme"; to assistive tech a "Dark theme" toggle whose
+    // pressed state says which one is on.
+    const btn = document.getElementById("themeBtn");
+    if (btn) {
+      btn.setAttribute("aria-label", "Dark theme");
+      btn.setAttribute("aria-pressed", t === "dark" ? "true" : "false");
+      btn.title = t === "dark" ? "Switch to the light theme" : "Switch to the dark theme";
+    }
   }
   function toggleTheme() {
     const cur = document.documentElement.getAttribute("data-theme") || "light";
@@ -2559,6 +3207,9 @@
     document.addEventListener("click", e => {
       const list = document.getElementById("qtList");
       if (!list || list.hidden) return;
+      // A page button inside the list is replaced by the rebuild before
+      // the click reaches here, so a detached target was inside the list.
+      if (!e.target.isConnected) return;
       if (!list.contains(e.target) && !e.target.closest("#qtCounter")) closeQtList();
     });
   }
@@ -2602,25 +3253,35 @@
     document.querySelectorAll('.setup-options.multi').forEach(row => {
       row.addEventListener("click", e => {
         const opt = e.target.closest(".opt"); if (!opt) return;
-        opt.classList.toggle("selected");
+        // Learning areas number in the hundreds, and nobody means "all but
+        // this one", so the first tap from the untouched state narrows to
+        // the tapped area. Later taps add and remove. Disciplines and
+        // difficulties, four and five chips, keep plain toggling.
+        if (row.dataset.name === "subtopics" && !state.settings.subtopics) {
+          row.querySelectorAll(".opt").forEach(c => c.classList.toggle("selected", c === opt));
+        } else {
+          opt.classList.toggle("selected");
+        }
         readMulti(row);
         onSettingsChange();
       });
     });
     renderSubtopicChips();
-    const stop = e => { e.preventDefault(); e.stopPropagation(); };
-    document.getElementById("tagsAll").onclick = e => {
-      stop(e);
-      document.querySelectorAll("#subtopicChips .opt").forEach(c => c.classList.add("selected"));
-      readMulti(document.getElementById("subtopicChips"));
+    const tagsAll = document.getElementById("tagsAll");
+    if (tagsAll) tagsAll.onclick = () => {
+      state.settings.subtopics = null;
+      saveSettings();
+      renderSubtopicChips();
       onSettingsChange();
     };
-    document.getElementById("tagsNone").onclick = e => {
-      stop(e);
-      document.querySelectorAll("#subtopicChips .opt").forEach(c => c.classList.remove("selected"));
-      readMulti(document.getElementById("subtopicChips"));
-      onSettingsChange();
-    };
+    const tagFilter = document.getElementById("tagFilter");
+    if (tagFilter) {
+      let t = null;
+      tagFilter.oninput = () => {
+        clearTimeout(t);
+        t = setTimeout(() => filterAreaChips(tagFilter.value), 120);
+      };
+    }
     // A saved session is replaced only after the user confirms: Begin sits
     // beside the Resume strip, and one misclick would end a half-done test.
     document.getElementById("startBtn").onclick = async () => {
@@ -2642,48 +3303,115 @@
     "Paediatrics": "Paeds", "Obstetrics & Gynaecology": "O&G",
     "Psychiatry": "Psych", "Medicine": "Medicine",
   };
-  function subtopicName(q) { return q.subtopic || "Other"; }
-  function subtopicKey(q) { return `${q.topic}::${subtopicName(q)}`; }
-  // True when a learning-area selection admits this question. Accepts
-  // the discipline-keyed form and the bare area name older saved
-  // settings carry.
-  function subtopicSelected(list, q) {
-    return list.includes(subtopicKey(q)) || list.includes(subtopicName(q));
+  // Learning areas are the authored subtopic strings, which spell one area
+  // several ways ("Antenatal care", "antenatal Care", "Acid-base" /
+  // "Acid base", "Addiction" / "Addictions"). They are grouped under a
+  // folded form: lower case, punctuation as spaces, "&" as "and", each
+  // word singular. The chip shows the spelling most questions use.
+  const _areaFold = new Map();
+  function foldArea(raw) {
+    const s = String(raw || "");
+    let f = _areaFold.get(s);
+    if (f === undefined) {
+      f = s.toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").trim()
+        .split(" ").map(w => w.length > 4 && /ies$/.test(w) ? w.slice(0, -3) + "y"
+          : w.length > 3 && /[^su]s$/.test(w) ? w.slice(0, -1) : w).join(" ");
+      _areaFold.set(s, f);
+    }
+    return f;
   }
+  function subtopicName(q) { return foldArea(q.subtopic || "Other"); }
+  function subtopicKey(q) { return `${q.topic}::${subtopicName(q)}`; }
+  // True when a learning-area selection admits this question. A saved
+  // entry is folded before comparing, so selections saved with a raw
+  // spelling, or as a bare area name (older settings), still match.
+  const _areaSelSets = new WeakMap();
+  function subtopicSelected(list, q) {
+    let set = _areaSelSets.get(list);
+    if (!set) {
+      set = new Set(list.map(v => {
+        const i = String(v).indexOf("::");
+        return i < 0 ? foldArea(v) : `${String(v).slice(0, i)}::${foldArea(String(v).slice(i + 2))}`;
+      }));
+      _areaSelSets.set(list, set);
+    }
+    return set.has(subtopicKey(q)) || set.has(subtopicName(q));
+  }
+  // Chips for the selected disciplines only, grouped under each
+  // discipline, keyed by discipline plus folded area so "Respiratory" in
+  // Paediatrics and in Medicine turn off separately. Untouched, the
+  // setting is null (every area) and every chip is on.
   function renderSubtopicChips() {
     const wrap = document.getElementById("subtopicChips");
     if (!wrap) return;
-    // Only show subtopic chips for currently-selected disciplines so the
-    // list doesn't bloat to 70+ chips when filters are narrow.
     const visible = new Set(state.settings.disciplines);
-    // Chips are keyed by discipline plus area, so "Respiratory" in
-    // Paediatrics and in Medicine are two chips that turn off separately.
     const counts = {};
-    const disciplinesByName = {};
     state.questions.forEach(q => {
       if (!visible.has(q.topic)) return;
       const k = subtopicKey(q);
-      if (!counts[k]) counts[k] = { name: subtopicName(q), topic: q.topic, n: 0 };
-      counts[k].n++;
-      (disciplinesByName[counts[k].name] = disciplinesByName[counts[k].name] || new Set()).add(q.topic);
+      const e = counts[k] || (counts[k] = { topic: q.topic, n: 0, spellings: {} });
+      e.n++;
+      const raw = String(q.subtopic || "Other").trim();
+      e.spellings[raw] = (e.spellings[raw] || 0) + 1;
     });
-    const sorted = Object.entries(counts).sort((a, b) =>
-      a[1].name.localeCompare(b[1].name) || a[1].topic.localeCompare(b[1].topic));
-    wrap.innerHTML = "";
+    const label = e => {
+      // Most used spelling; on a tie, the one with a capital first letter.
+      const [best] = Object.entries(e.spellings).sort((a, b) =>
+        b[1] - a[1] || (/^[A-Z]/.test(b[0]) - /^[A-Z]/.test(a[0])) || a[0].localeCompare(b[0]));
+      return best[0].charAt(0).toUpperCase() + best[0].slice(1);
+    };
     const selected = state.settings.subtopics;
-    sorted.forEach(([k, e]) => {
-      const c = document.createElement("button");
-      const on = !selected || subtopicSelected(selected, { topic: e.topic, subtopic: e.name });
-      c.className = "opt" + (on ? " selected" : "");
-      c.dataset.value = k;
-      const shared = disciplinesByName[e.name].size > 1;
-      c.textContent = shared
-        ? `${e.name}, ${SUBTOPIC_TOPIC_SHORT[e.topic] || e.topic} (${fmtNum(e.n)})`
-        : `${e.name} (${fmtNum(e.n)})`;
-      wrap.appendChild(c);
+    wrap.innerHTML = "";
+    const topics = SERVABLE_TOPICS.filter(t => visible.has(t));
+    let total = 0, on = 0;
+    for (const topic of topics) {
+      const entries = Object.entries(counts).filter(([, e]) => e.topic === topic)
+        .map(([k, e]) => [k, e, label(e)])
+        .sort((a, b) => a[2].localeCompare(b[2]));
+      if (!entries.length) continue;
+      const group = document.createElement("div");
+      group.className = "tag-group";
+      if (topics.length > 1) {
+        const h = document.createElement("p");
+        h.className = "tag-group-head";
+        h.textContent = topic;
+        group.appendChild(h);
+      }
+      for (const [k, e, name] of entries) {
+        const c = document.createElement("button");
+        const isOn = !selected || subtopicSelected(selected, { topic: e.topic, subtopic: name });
+        c.className = "opt" + (isOn ? " selected" : "");
+        c.dataset.value = k;
+        c.dataset.find = foldArea(name);
+        c.textContent = `${name} (${fmtNum(e.n)})`;
+        group.appendChild(c);
+        total++; if (isOn) on++;
+      }
+      wrap.appendChild(group);
+    }
+    const narrowed = !!selected && on < total;
+    document.getElementById("tagCountLabel").textContent = !total ? ""
+      : narrowed ? `(${fmtNum(on)} of ${fmtNum(total)})` : `(all ${fmtNum(total)})`;
+    const reset = document.getElementById("tagsAll");
+    if (reset) reset.hidden = !narrowed;
+    const find = document.getElementById("tagFilter");
+    if (find && find.value) filterAreaChips(find.value);
+  }
+  // Hides the chips whose name does not contain the typed text, and any
+  // discipline left with none. Selection is untouched.
+  function filterAreaChips(text) {
+    const wrap = document.getElementById("subtopicChips");
+    if (!wrap) return;
+    const t = foldArea(text);
+    wrap.querySelectorAll(".tag-group").forEach(g => {
+      let any = false;
+      g.querySelectorAll(".opt").forEach(c => {
+        const hit = !t || c.dataset.find.includes(t);
+        c.hidden = !hit;
+        if (hit) any = true;
+      });
+      g.hidden = !any;
     });
-    document.getElementById("tagCountLabel").textContent =
-      sorted.length ? `(${fmtNum(sorted.length)})` : "";
   }
 
   function applySettingsToOptions() {
@@ -2717,8 +3445,15 @@
     } else if (name === "difficulties") {
       state.settings.difficulties = values.map(v => parseInt(v, 10)).filter(n => !isNaN(n));
     } else if (name === "subtopics") {
+      // None left, or all back on, is the untouched "every area".
       const total = row.querySelectorAll(".opt").length;
-      state.settings.subtopics = values.length === total ? null : values;
+      state.settings.subtopics = values.length === total || !values.length ? null : values;
+      if (!state.settings.subtopics) row.querySelectorAll(".opt").forEach(c => c.classList.add("selected"));
+      const on = state.settings.subtopics ? values.length : total;
+      const label = document.getElementById("tagCountLabel");
+      if (label && total) label.textContent = state.settings.subtopics ? `(${fmtNum(on)} of ${fmtNum(total)})` : `(all ${fmtNum(total)})`;
+      const reset = document.getElementById("tagsAll");
+      if (reset) reset.hidden = !state.settings.subtopics;
     }
     saveSettings();
   }
@@ -2795,7 +3530,9 @@
     // author problems; they go to the console (loadData) and the admin
     // Bank tab, not here.
     const bl = state.batchLoadStats;
-    if (bl && bl.failed > 0) {
+    if (bl && bl.missing && bl.missing.length) {
+      el.textContent += " Some questions are still loading.";
+    } else if (bl && bl.failed > 0) {
       el.textContent += " Some questions didn't load. Reload to get the full bank.";
     }
     startBtn.disabled = n === 0;
@@ -2821,6 +3558,7 @@
       struck: {},
       revealed: {},
       finished: false,
+      salt: newShuffleSalt(),
     };
     if (state.quiz.timerMins > 0) {
       state.quiz.deadline = Date.now() + state.quiz.timerMins * 60000;
@@ -2867,7 +3605,21 @@
     const choice = li.querySelector(".opt-choice");
     if (choice) { choice.setAttribute("aria-checked", "true"); choice.tabIndex = 0; choice.focus(); }
     state.quiz.answers[q.id] = opt.letter;
-    document.getElementById("submitBtn").disabled = false;
+    paintSubmitBtn(q);
+  }
+
+  // Study reveals, so the button waits for a pick. A test only moves on,
+  // and a student must be able to leave a question unanswered from under
+  // the options: the button reads Skip until something is chosen, and
+  // Finish test on the last question either way.
+  function paintSubmitBtn(q) {
+    const btn = document.getElementById("submitBtn");
+    const quiz = state.quiz;
+    if (!btn || !quiz) return;
+    const picked = !!quiz.answers[q.id];
+    if (quiz.mode !== "test") { btn.disabled = !picked; return; }
+    btn.disabled = false;
+    btn.textContent = quiz.idx >= quiz.pool.length - 1 ? "Finish test" : picked ? "Next" : "Skip";
   }
 
   // Undo a not-yet-submitted selection, aria-checked included, so a
@@ -2878,8 +3630,7 @@
     const choice = li.querySelector(".opt-choice");
     if (choice) { choice.setAttribute("aria-checked", "false"); }
     delete state.quiz.answers[q.id];
-    const submitBtn = document.getElementById("submitBtn");
-    if (submitBtn) submitBtn.disabled = true;
+    paintSubmitBtn(q);
   }
 
   // A session survives a reload, so the home screen has to say so. It
@@ -2914,6 +3665,8 @@
       commitTestAnswers({
         mode: "test", pool: saved.pool,
         answers: saved.raw.answers || {}, timeMs: saved.raw.timeMs || {},
+        preRecorded: saved.raw.preRecorded || null,
+        salt: saved.raw.salt || "", retry: !!saved.raw.retry,
       });
     }
     clearSavedSession();
@@ -2967,6 +3720,9 @@
       answers: q.answers,
       revealed: q.revealed,
       timeMs: q.timeMs || {},
+      preRecorded: q.preRecorded || undefined,
+      salt: q.salt || undefined,
+      retry: q.retry || undefined,
       struck: Object.fromEntries(Object.entries(q.struck || {}).map(([k, v]) => [k, [...v]])),
       sessionStart: state.sessionStart,
       savedAt: Date.now(),
@@ -2985,13 +3741,20 @@
       else console.warn("[session] saved session has no matching id list; discarding", raw.poolTag, stored && stored.tag);
     }
     if (!ids || !ids.length) return null;
-    if (!raw.savedAt || Date.now() - raw.savedAt > SESSION_MAX_AGE_MS) {
-      clearSavedSession();
-      return null;
-    }
+    // The build before 1.7.1 wrote each test answer to history at submit
+    // and saved no timeMs; those answers must not be recorded again.
+    if (raw.mode === "test" && !raw.timeMs && !raw.preRecorded) raw.preRecorded = { ...(raw.answers || {}) };
     const byId = Object.create(null);
     for (const q of state.questions) byId[q.id] = q;
     const pool = ids.map(id => byId[id]).filter(Boolean);
+    if (!raw.savedAt || Date.now() - raw.savedAt > SESSION_MAX_AGE_MS) {
+      // Too old to resume, but a test's answers still count. With the bank
+      // not loaded yet the ids cannot be resolved, so wait for a later call.
+      if (!state.questions.length) return null;
+      console.warn("[session] saved session older than 24 h; closing it", raw.mode, pool.length);
+      discardSavedSession({ raw, pool });
+      return null;
+    }
     if (!pool.length) return null;
     if (raw.currentId) {
       const at = pool.findIndex(q => q.id === raw.currentId);
@@ -3013,6 +3776,9 @@
       answers: raw.answers || {},
       revealed: raw.revealed || {},
       timeMs: raw.timeMs || {},
+      preRecorded: raw.preRecorded || null,
+      salt: typeof raw.salt === "string" ? raw.salt : "",
+      retry: !!raw.retry,
       struck: Object.fromEntries(Object.entries(raw.struck || {})
         .map(([k, v]) => [k, new Set(Array.isArray(v) ? v : [])])),
       finished: false,
@@ -3047,8 +3813,11 @@
   const MEASUREMENT_ROWS = /^(vital signs|vitals|observations?|obs|obs on arrival|investigations?|bloods?|blood tests|pathology|examination findings|urine|urinalysis|urine dipstick|dipstick|blood gas|arterial blood gas|venous blood gas|abg|vbg)$/i;
   // Readings whose value is a word rather than a number ("C3 normal").
   // They get the same name and value treatment as the numeric readings
-  // beside them.
-  const QUALITATIVE = /^(.*?)\s+(normal|nil|absent|present|positive|negative|clear|raised|reduced|elevated|low|high|trace|detected|not detected|pending|sinus rhythm|regular|irregular)\b(.*)$/i;
+  // beside them. "Within normal limits" is one value, listed ahead of
+  // "normal" so "creatinine within normal limits" does not read as a
+  // reading called "creatinine within"; a linking "is" / "are" belongs
+  // to neither column.
+  const QUALITATIVE = /^(.*?)\s+(?:(?:is|are|was|were)\s+)?(within (?:normal limits|the normal range|the reference range|normal range|range)|normal|nil|absent|present|positive|negative|clear|raised|reduced|elevated|low|high|trace|detected|not detected|pending|sinus rhythm|regular|irregular)\b(.*)$/i;
   // Batch authors capitalise the first reading of a row and not the
   // rest, so a column of names read "Pulse rate / blood pressure /
   // respiratory rate". Lower the first letter only where the word is
@@ -3223,7 +3992,7 @@
   // be the correct one. Keyed by question id, filled lazily.
   const _correctCache = Object.create(null);
   function answerWasCorrect(q, letter) {
-    const key = q.id + ":" + letter;
+    const key = q.id + ":" + ((state.quiz && state.quiz.salt) || "") + ":" + letter;
     if (key in _correctCache) return _correctCache[key];
     const ok = !!_shuffledOptions(q).find(o => o.letter === letter)?.correct;
     _correctCache[key] = ok;
@@ -3335,9 +4104,9 @@
       <p class="nav-stats">${tally}${score}${flag}.</p>
       ${windowed ? `
         <div class="nav-window">
-          <button type="button" class="nav-page" data-nav-page="-1" ${from === 0 ? "disabled" : ""}>‹</button>
+          <button type="button" class="nav-page" data-nav-page="-1" aria-label="Previous ${navWindow}" ${from === 0 ? "disabled" : ""}>‹</button>
           <span class="nav-range">${fmtNum(from + 1)} to ${fmtNum(to)}</span>
-          <button type="button" class="nav-page" data-nav-page="1" ${to >= total ? "disabled" : ""}>›</button>
+          <button type="button" class="nav-page" data-nav-page="1" aria-label="Next ${navWindow}" ${to >= total ? "disabled" : ""}>›</button>
         </div>` : ""}
       <div class="nav-chips">${chips}</div>
       ${windowed && !study ? `
@@ -3402,7 +4171,15 @@
         navWindowStart = Math.max(0, Math.min(
           navSpan() - navWindow, navWindowStart + dir * navWindow));
         navFollowCurrent = false;
+        const hadFocus = root.contains(document.activeElement);
         renderNavigator();
+        // The rebuild destroyed the button that was pressed; focus goes
+        // to its replacement, or to the other one at the end of the range.
+        if (hadFocus) {
+          const again = root.querySelector(`[data-nav-page="${dir}"]:not([disabled])`) ||
+            root.querySelector("[data-nav-page]:not([disabled])");
+          if (again) again.focus();
+        }
       }
     });
     root.addEventListener("submit", e => {
@@ -3438,9 +4215,14 @@
   }
   function closeQtList() {
     const list = document.getElementById("qtList");
-    if (list) list.hidden = true;
     const btn = document.getElementById("qtCounter");
-    if (btn) btn.setAttribute("aria-expanded", "false");
+    // Focus left inside a hidden list would fall to <body>.
+    const hadFocus = !!(list && list.contains(document.activeElement));
+    if (list) list.hidden = true;
+    if (btn) {
+      btn.setAttribute("aria-expanded", "false");
+      if (hadFocus) btn.focus();
+    }
   }
 
   // What counts as answered. A test answer is whatever is selected when
@@ -3484,7 +4266,9 @@
         " The test is not scored and cannot be resumed."
       : (answered ? `${answered} answered, already saved to your history.` : "Nothing answered yet.") +
         " This session cannot be resumed.";
-    return adminConfirm({ title: "Leave this session?", body, confirmLabel: "Leave session" });
+    const test = !!(quiz && quiz.mode === "test");
+    return adminConfirm({ title: test ? "Leave this test?" : "Leave this session?", body,
+      confirmLabel: test ? "Leave test" : "Leave session" });
   }
 
   // One path home from a session, for the Exit button and the brand. A
@@ -3498,7 +4282,7 @@
       stopSessionTimer();
       // Only a session being left takes the saved copy with it; the brand
       // on the home screen must not clear the session Resume is offering.
-      if (quiz) clearSavedSession();
+      if (quiz && !quiz.ephemeral) clearSavedSession();
     }
     showHome();
   }
@@ -3543,12 +4327,17 @@
 
   // One history row per attempt. The caller saves: a test commit writes
   // many rows and should stringify history once, not once per question.
-  function recordAttempt(q, letter, elapsedMs) {
-    const chosen = _shuffledOptions(q).find(o => o.letter === letter);
+  // `quiz` is the session the answer belongs to, which for a saved test
+  // being discarded is not state.quiz.
+  function recordAttempt(q, letter, elapsedMs, quiz = state.quiz) {
+    const chosen = _shuffledOptions(q, (quiz && quiz.salt) || "").find(o => o.letter === letter);
     const isC = !!(chosen && chosen.correct);
     const prev = state.history[q.id] || {};
     state.history[q.id] = {
-      lastCorrect: isC,
+      // A retry follows the report by seconds, so a right answer there is
+      // recall of what was just read; the miss stays on Previously
+      // incorrect until the question is got right in another session.
+      lastCorrect: quiz && quiz.retry && prev.lastCorrect === false ? false : isC,
       count: (prev.count || 0) + 1,
       last_at: Date.now(),
       time_ms_total: (prev.time_ms_total || 0) + (elapsedMs || 0),
@@ -3568,14 +4357,14 @@
     for (const q of quiz.pool) {
       const letter = quiz.answers[q.id];
       if (!letter) continue;
-      const { chosen, isC } = recordAttempt(q, letter, (quiz.timeMs || {})[q.id] || 0);
+      if (quiz.preRecorded && quiz.preRecorded[q.id] === letter) continue;
+      const { chosen, isC } = recordAttempt(q, letter, (quiz.timeMs || {})[q.id] || 0, quiz);
       if (chosen && chosen.sourceLetter) posts.push([q.id, chosen.sourceLetter, isC]);
     }
     if (!posts.length) return;
     save(ns(HISTORY_KEY), state.history);
-    // One at a time: a whole-bank test would otherwise open thousands
-    // of requests at once.
-    if (cloudUser) (async () => { for (const p of posts) await cloudPostAnswer(...p); })();
+    // Queued together, then sent one POST at a time by the flush.
+    cloudPostAnswers(posts);
   }
 
   // Pause is global state, so each new session resets it; otherwise
@@ -3603,6 +4392,14 @@
     const quiz = state.quiz;
     end.textContent = quiz && quiz.reviewing ? "Back to results"
       : quiz && quiz.mode === "test" ? "Finish test" : "End session";
+    // Only a live test has two ways out: finished and marked, or left
+    // unscored. Study keeps every answer either way, so End is its one
+    // control; the brand still goes home.
+    const exit = document.getElementById("exitBtn");
+    if (exit) {
+      exit.hidden = !(quiz && quiz.mode === "test" && !quiz.finished && !quiz.reviewing);
+      exit.textContent = "Leave test";
+    }
   }
 
   // Screen-reader announcements. Cleared first so the same sentence
@@ -3659,9 +4456,9 @@
 
   // Per-question deterministic option shuffle. Many batches were written
   // with the correct answer always at letter A, which trivialises the bank.
-  // We re-letter options at render time using a seeded shuffle so the same
-  // question always shows the same order across reopens but the correct
-  // answer is rarely at A.
+  // Options are re-lettered at render time with a seeded shuffle, so a
+  // question keeps its order across reopens within a session but the
+  // correct answer is rarely at A.
   function _seededOrder(seedStr, n) {
     let h = 2166136261;
     for (let i = 0; i < seedStr.length; i++) h = Math.imul(h ^ seedStr.charCodeAt(i), 16777619);
@@ -3677,11 +4474,19 @@
   // property would ride along when a question is serialised into an
   // audit prompt, and a model that echoed it back would have apply-report
   // write the shuffled copy into the bank.
+  //
+  // Each session carries its own salt, saved with it, so a question met
+  // again (a retry straight after the report, above all) does not keep
+  // its key on the letter the student has just seen. Saved answers are
+  // displayed letters, so the salt never changes within a session. No
+  // salt (an admin review, a session saved before salts) is the plain
+  // per-question order.
   const _shuffleCache = new WeakMap();
-  function _shuffledOptions(q) {
+  function _shuffledOptions(q, salt = (state.quiz && state.quiz.salt) || "") {
     const hit = _shuffleCache.get(q);
-    if (hit) return hit;
-    const order = _seededOrder(q.id || JSON.stringify(q.options.map(o => o.text)), q.options.length);
+    if (hit && hit.salt === salt) return hit.out;
+    const seed = q.id || JSON.stringify(q.options.map(o => o.text));
+    const order = _seededOrder(salt ? `${seed}:${salt}` : seed, q.options.length);
     const letters = ["A", "B", "C", "D", "E", "F", "G"];
     const out = order.map((origIdx, newIdx) => {
       const o = q.options[origIdx];
@@ -3689,9 +4494,10 @@
       // cross-user stats can aggregate by the unchanging source label.
       return Object.assign({}, o, { letter: letters[newIdx], sourceLetter: o.letter });
     });
-    _shuffleCache.set(q, out);
+    _shuffleCache.set(q, { salt, out });
     return out;
   }
+  function newShuffleSalt() { return Math.random().toString(36).slice(2, 8); }
 
   // An explanation is an object with summary / pearls / why_not. Some
   // batches write it as a plain string, which is taken as the summary.
@@ -3798,23 +4604,36 @@
     ol.innerHTML = "";
     ol.setAttribute("role", "radiogroup");
     ol.setAttribute("aria-label", q.lead_in || "Answer options");
-    // One citation per source. Rationales end in "(Source: X)" and the
-    // option also carries X in source_refs, so the trailing bracket is
-    // dropped in favour of the caption, and the caption itself is dropped
-    // when every option cites the same thing, since Sources already says it.
-    const refKey = o => (o.source_refs || []).join(", ");
-    const oneSource = !!(q.sources && q.sources.length) &&
-      shuffled.every(o => refKey(o) === refKey(shuffled[0]));
+    // One citation per source. The Sources list under the commentary
+    // names the question's main source (the refs most options share), so
+    // an option's caption carries only what it adds to that. A rationale's
+    // closing "(Source: X)", or a bare "(X)." naming one of the question's
+    // sources, is dropped for the same reason. Other closing brackets hold
+    // clinical content ("(RCH target)") and stay.
+    const hasSources = !!(q.sources && q.sources.length);
+    const refUse = new Map();
+    for (const o of shuffled) for (const r of new Set(o.source_refs || [])) refUse.set(r, (refUse.get(r) || 0) + 1);
+    const topUse = Math.max(0, ...refUse.values());
+    const mainRefs = new Set(hasSources ? [...refUse].filter(([, n]) => n === topUse).map(([r]) => r) : []);
     const SOURCE_TAIL = /\s*\(Sources?:(?:[^()]|\([^()]*\))*\)\s*\.?\s*$/i;
+    const BARE_TAIL = /\s*\(([^()]{3,80})\)\s*\.?\s*$/;
+    const labels = (q.sources || []).map(s => String((s && s.label) || "")).filter(Boolean);
+    const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    // "(RANZCOG)" names "RANZCOG C-Obs 3", and "(Family Planning
+    // Australia)" names "Family Planning Australia - LARC": one is the
+    // other's opening words.
+    const namesSource = (b, refs) => labels.concat(refs).some(l =>
+      new RegExp(`^${reEsc(b)}(?![\\w])`, "i").test(l) || new RegExp(`^${reEsc(l)}(?![\\w])`, "i").test(b));
     shuffled.forEach((opt, i) => {
       const li = document.createElement("li");
       li.dataset.letter = opt.letter;
-      const hasRefs = !!(opt.source_refs && opt.source_refs.length);
-      const cite = hasRefs && !oneSource
-        ? `<span class="cite">${esc(refKey(opt))}</span>` : "";
+      const refs = opt.source_refs || [];
+      const own = refs.filter(r => !mainRefs.has(r));
+      const cite = own.length ? `<span class="cite">${esc(own.join(", "))}</span>` : "";
       let rationale = String(opt.rationale || "");
-      if (hasRefs && SOURCE_TAIL.test(rationale)) {
-        rationale = rationale.replace(SOURCE_TAIL, "");
+      const bare = BARE_TAIL.exec(rationale);
+      if ((refs.length && SOURCE_TAIL.test(rationale)) || (bare && namesSource(bare[1].trim(), refs))) {
+        rationale = rationale.replace(SOURCE_TAIL.test(rationale) ? SOURCE_TAIL : BARE_TAIL, "");
         if (rationale && !/[.!?]$/.test(rationale)) rationale += ".";
       }
       // The row itself carries the radio semantics. The eliminate control
@@ -3827,7 +4646,7 @@
           <span class="opt-letter" aria-hidden="true">${opt.letter}</span>
           <span class="opt-body">
             <span class="opt-text">${esc(opt.text)}</span>
-            <span class="opt-rationale"><b>${opt.correct ? "Correct." : "Incorrect."}</b> ${esc(rationale)}${cite}</span>
+            <span class="opt-rationale">${opt.correct ? "<b>Correct.</b> " : ""}${esc(rationale)}${cite}</span>
           </span>
         </span>
         <button type="button" class="opt-strike" data-letter="${opt.letter}"
@@ -3871,17 +4690,10 @@
           if (c2 !== c) c2.tabIndex = -1;
         });
       }
-      document.getElementById("submitBtn").disabled = false;
     }
 
-    const submitBtn = document.getElementById("submitBtn");
-    submitBtn.onclick = onSubmit;
-    // A test reveals nothing: the answer is kept as soon as it is chosen,
-    // so the button only moves on, and on the last question it finishes.
-    if (state.quiz.mode === "test") {
-      submitBtn.textContent = state.quiz.idx >= state.quiz.pool.length - 1
-        ? "Finish test" : "Next";
-    }
+    document.getElementById("submitBtn").onclick = onSubmit;
+    paintSubmitBtn(q);
     document.getElementById("nextBtn").onclick = onNext;
     // A second Next at the foot of the commentary, so a reader who has
     // scrolled through it on a phone does not have to scroll back up.
@@ -3926,7 +4738,7 @@
         li.classList.remove("selected");
         const c = li.querySelector(".opt-choice");
         if (c) c.setAttribute("aria-checked", "false");
-        document.getElementById("submitBtn").disabled = true;
+        paintSubmitBtn(state.quiz.pool[state.quiz.idx]);
       }
     } else {
       state.quiz.struck[id].delete(letter);
@@ -3955,16 +4767,17 @@
 
   function onSubmit() {
     const q = state.quiz.pool[state.quiz.idx];
-    if (!state.quiz.answers[q.id]) return;
     // A test answer is recorded once, at scoring (commitTestAnswers), so
-    // Next here only moves on. Going back to check an answer and pressing
-    // Enter does not log it a second time. No House quote in a test: it
-    // is a timed exam, and the quote belongs to study sessions.
+    // Next here only moves on, answered or not. Going back to check an
+    // answer and pressing Enter does not log it a second time. No House
+    // quote in a test: it is a timed exam, and the quote belongs to study
+    // sessions.
     if (state.quiz.mode === "test") { onNext(); return; }
+    if (!state.quiz.answers[q.id]) return;
     if (state.quiz.revealed[q.id]) return;
     const elapsedMs = state.questionStart ? Math.min(1000 * 60 * 30, Date.now() - state.questionStart) : 0;
     const { chosen, isC } = recordAttempt(q, state.quiz.answers[q.id], elapsedMs);
-    save(ns(HISTORY_KEY), state.history);
+    saveHistorySoon();
     state.quiz.revealed[q.id] = true;
     saveSession();
     maybeShowHouseQuote();
@@ -3989,7 +4802,13 @@
       li.classList.add("revealed");
       li.classList.remove("selected");
       if (opt.correct) li.classList.add("correct");
-      else if (state.quiz.answers[q.id] === letter) li.classList.add("wrong");
+      else if (state.quiz.answers[q.id] === letter) {
+        li.classList.add("wrong");
+        // The key and the student's own wrong pick are named in words, so
+        // neither rests on the tint alone; the other three need no label.
+        const r = li.querySelector(".opt-rationale");
+        if (r && !r.querySelector(".opt-yours")) r.insertAdjacentHTML("afterbegin", '<b class="opt-yours">Your answer.</b> ');
+      }
     });
     renderStemWithClues(q);
 
@@ -4061,24 +4880,29 @@
     // breakdown in view. Enter still advances to the next question
     // because the button has keyboard focus.
     document.getElementById("nextBtn").focus({ preventScroll: true });
-    // Frame the reveal on the correct answer: that row is what the reveal
-    // is about, and a wrong pick is already marked red where it sits.
-    // Instant, like every other question change; a smooth scroll of a
-    // phone-length rationale takes over half a second. rAF defers until
-    // the explainBlock has reflowed.
+    // Frame the reveal from the higher of the student's wrong pick and the
+    // correct answer, so both are on screen: why the pick was wrong is
+    // the first thing read after a miss. querySelector returns the first
+    // match in document order. Instant, like every other question change;
+    // a smooth scroll of a phone-length rationale takes over half a
+    // second. rAF defers until the explainBlock has reflowed.
     requestAnimationFrame(() => {
-      const anchorLi = document.querySelector("#qOptions li.revealed.correct");
+      const anchorLi = document.querySelector("#qOptions li.revealed.wrong, #qOptions li.revealed.correct");
       const nextBtn = document.getElementById("nextBtn");
       if (anchorLi && nextBtn) {
         const aRect = anchorLi.getBoundingClientRect();
         const nRect = nextBtn.getBoundingClientRect();
-        const vh = window.innerHeight || document.documentElement.clientHeight;
+        // The masthead and colophon are sticky, so the readable band is
+        // the viewport less both bars.
+        const bar = sel => { const el = document.querySelector(sel); return el && el.offsetParent ? el.getBoundingClientRect().height : 0; };
+        const topBar = bar(".masthead"), bottomBar = bar(".colophon");
+        const vh = (window.innerHeight || document.documentElement.clientHeight) - bottomBar;
         // If both already fit, do nothing. Otherwise scroll so the
-        // answer row is near the top and the Next button is in view
-        // (or as close as the document allows).
-        const fits = aRect.top >= 0 && nRect.bottom <= vh;
+        // answer row sits just under the masthead and the Next button is
+        // in view (or as close as the document allows).
+        const fits = aRect.top >= topBar && nRect.bottom <= vh;
         if (!fits) {
-          const targetTop = window.scrollY + aRect.top - 80;
+          const targetTop = window.scrollY + aRect.top - topBar - 16;
           window.scrollTo({ top: Math.max(0, targetTop), behavior: "instant" });
         }
       } else if (nextBtn) {
@@ -4147,7 +4971,17 @@
   }
   function toggleRefs() {
     if (state.refsOpen) return closeRefs();
-    return openRefs();
+    openRefs();
+    // Opened from a question, the full list starts at the first panel the
+    // question names that its population may see (the same gate as the
+    // panels under the answer). Nothing is hidden, so nothing is given away.
+    const q = state.quiz && state.quiz.pool[state.quiz.idx];
+    const cats = (state.ranges && state.ranges.categories) || {};
+    const key = q && (q.reference_ranges || []).find(k =>
+      typeof k === "string" && cats[k] && categoryFitsTopic(cats[k], q.topic));
+    const body = document.getElementById("rangesBody");
+    const sec = key && body && body.querySelector(`.range-cat[data-key="${CSS.escape(key)}"]`);
+    if (sec) body.scrollTop += sec.getBoundingClientRect().top - body.getBoundingClientRect().top;
   }
   function openRefs(restrictKeys) {
     state.refsOpen = true;
@@ -4156,7 +4990,10 @@
     panel.hidden = false;
     panel.setAttribute("aria-hidden", "false");
     document.body.classList.add("refs-open");
+    // A search left from the last visit would keep its count and its
+    // hidden jump pills over an empty box.
     document.getElementById("rangesSearch").value = "";
+    filterRanges("");
     // No focus theft - the user keeps interacting with the question.
   }
   function closeRefs() {
@@ -4287,7 +5124,12 @@
     }
     if (state.paused) return;
     const sessMs = Date.now() - state.sessionStart;
-    document.getElementById("sessionTime").textContent = "session " + fmtClock(sessMs);
+    // A test shows one clock, the one it is run by: the countdown, or time
+    // on this question. Elapsed session time beside it is noise, and on a
+    // phone it pushes Leave test and Finish test onto two lines.
+    const sessEl = document.getElementById("sessionTime");
+    sessEl.hidden = state.quiz.mode === "test";
+    sessEl.textContent = "session " + fmtClock(sessMs);
     const qEl = document.getElementById("questionTime");
     const sep = document.getElementById("qTimerSep");
     if (state.quiz.deadline) {
@@ -4295,7 +5137,7 @@
       if (remain <= 0) {
         qEl.textContent = "time up";
         qEl.classList.add("danger");
-        sep.hidden = false;
+        sep.hidden = sessEl.hidden;
         stopSessionTimer();
         showSummary(true);
         return;
@@ -4303,7 +5145,7 @@
       qEl.textContent = fmtClock(remain) + " left";
       qEl.classList.toggle("warn",   remain < 5 * 60000 && remain >= 60000);
       qEl.classList.toggle("danger", remain < 60000);
-      sep.hidden = false;
+      sep.hidden = sessEl.hidden;
       // The clock itself is not a live region (it would be read out every
       // second), so crossing a threshold is announced once instead.
       const level = remain < 60000 ? 2 : remain < 5 * 60000 ? 1 : 0;
@@ -4315,7 +5157,7 @@
       // Test mode without countdown: time on the current question. Study
       // mode shows none; nothing there is being timed.
       qEl.textContent = "Q " + fmtClock(Date.now() - state.questionStart);
-      sep.hidden = false;
+      sep.hidden = sessEl.hidden;
     } else {
       qEl.textContent = "";
       sep.hidden = true;
@@ -4480,7 +5322,12 @@
     if (timeUp) quiz.timeUp = true;
     timeUp = !!quiz.timeUp;
     state.quiz.finished = true;
-    clearSavedSession();
+    // A report review from the admin panel was never the saved session.
+    if (!quiz.ephemeral) clearSavedSession();
+    // The clock can run out while "Finish the test now?" is still open;
+    // closing it settles that confirm as cancel, which then does nothing.
+    const confirmD = document.getElementById("confirmDialog");
+    if (confirmD && confirmD.open) confirmD.close();
     document.onkeydown = null;
     setScreen("summary");
     const app = document.getElementById("app");
@@ -4556,12 +5403,14 @@
 
     // Say how many, and do not offer the button when there are none.
     const retryBtn = document.getElementById("retryBtn");
-    const wrongCount = pool.filter(q => {
-      const a = state.quiz.answers[q.id];
-      return a && !_shuffledOptions(q).find(o => o.letter === a)?.correct;
-    }).length;
-    retryBtn.textContent = `Retry ${wrongCount} incorrect`;
-    retryBtn.hidden = wrongCount === 0;
+    const { wrong, open } = retryTargets(state.quiz);
+    retryBtn.textContent = "Retry " + [
+      wrong.length ? `${fmtNum(wrong.length)} incorrect` : "",
+      open.length ? `${fmtNum(open.length)} unanswered` : "",
+    ].filter(Boolean).join(" and ");
+    // A retry is saved as the session to resume, which a one-question
+    // report review must not overwrite.
+    retryBtn.hidden = !(wrong.length + open.length) || !!quiz.ephemeral;
     retryBtn.onclick = retryIncorrect;
     document.getElementById("newQuizBtn").onclick = showHome;
 
@@ -4607,7 +5456,17 @@
     return rows;
   }
 
-  // A review row is identified by what the stem is about. Most stems
+  // A scored question's row is titled by what it tested, the same phrase
+  // that heads its commentary: ten stems that open "A 28-year-old woman"
+  // cannot be told apart. The report comes after scoring, so the subtopic
+  // gives nothing away. Without one, the stem opening is the title.
+  function hasReviewTitle(q) { return !!String(q.subtopic_detail || q.subtopic || "").trim(); }
+  function reviewTitle(q) {
+    const t = String(q.subtopic_detail || q.subtopic || "").trim();
+    return t ? t.charAt(0).toUpperCase() + t.slice(1) : stemOpening(q.stem, 110);
+  }
+
+  // Otherwise a row is identified by what the stem is about. Most stems
   // open with the reader's role ("You are the general practitioner
   // seeing a 71 year old man..."), which made every row start the same,
   // so that clause is skipped.
@@ -4648,8 +5507,10 @@
       return `<li class="${cls}" data-review-i="${i}" data-qid="${esc(q.id)}" role="button" tabindex="0">` +
         `<span class="rv-status"><span aria-hidden="true">${glyph}</span>` +
         `<span class="visually-hidden">${said}.</span></span>` +
-        `<span class="rv-stem">${flagged ? '<b class="rv-flag">Flagged</b> ' : ""}` +
-        `${esc(stemOpening(q.stem, 110))}</span></li>`;
+        `<span class="rv-body"><span class="rv-title">${flagged ? '<b class="rv-flag">Flagged</b> ' : ""}` +
+        `${esc(reviewTitle(q))}</span>` +
+        (hasReviewTitle(q) ? `<span class="rv-stem">${esc(stemOpening(q.stem, 90))}</span>` : "") +
+        `</span></li>`;
     }).join("");
     const rest = rows.length - page.length;
     if (rows.length) {
@@ -4707,19 +5568,29 @@
     showSummary(false);
   }
 
+  // What Retry replays: answered and wrong, plus a test's unanswered
+  // questions when it was finished early. In a study session a question
+  // never reached is not a miss: its pool is the whole bank.
+  function retryTargets(quiz) {
+    const wrong = [], open = [];
+    for (const q of quiz.pool) {
+      const ans = quiz.answers[q.id];
+      if (!ans) { if (quiz.mode === "test") open.push(q); }
+      else if (!_shuffledOptions(q).find(o => o.letter === ans)?.correct) wrong.push(q);
+    }
+    return { wrong, open };
+  }
+
   function retryIncorrect() {
-    // Answered and wrong. A question never reached is not incorrect: a
-    // study pool is the whole bank.
-    const wrong = state.quiz.pool.filter(q => {
-      const ans = state.quiz.answers[q.id];
-      return ans && !_shuffledOptions(q).find(o => o.letter === ans)?.correct;
-    });
-    if (!wrong.length) { showHome(); return; }
+    const { wrong, open } = retryTargets(state.quiz);
+    const pool = wrong.concat(open);
+    if (!pool.length) { showHome(); return; }
     resetNavigator();
     state.quiz = {
-      pool: shuffle(wrong), idx: 0, mode: state.quiz.mode,
+      pool: shuffle(pool), idx: 0, mode: state.quiz.mode,
       timerMins: 0, deadline: null,
       answers: {}, struck: {}, revealed: {}, finished: false,
+      salt: newShuffleSalt(), retry: true,
     };
     state.sessionStart = Date.now();
     setScreen("quiz");
@@ -4735,18 +5606,9 @@
   function wireEscapeAndContentPane() {
     document.addEventListener("keydown", e => {
       if (e.key !== "Escape") return;
-      // Close whichever overlay is topmost. Order matches z-stacking so a
-      // report opened from within the admin modal closes first. The
-      // confirm dialog is a native <dialog>, which handles its own
-      // Escape, so it is deliberately absent here.
-      const reportM = document.getElementById("reportModal");
-      const statsM  = document.getElementById("statsModal");
-      const adminM  = document.getElementById("adminModal");
-      const confirmD = document.getElementById("confirmDialog");
-      if (confirmD && confirmD.open)  { return; }
-      if (reportM && !reportM.hidden) { closeReportModal(); return; }
-      if (statsM && !statsM.hidden)   { statsM.hidden = true; return; }
-      if (adminM && !adminM.hidden)   { adminM.hidden = true; adminClear(); return; }
+      // The dialogs (confirm, report, stats, admin) are native <dialog>s
+      // and close themselves on Escape; nothing behind them may react.
+      if (document.querySelector("dialog[open]")) return;
       const qtList = document.getElementById("qtList");
       if (qtList && !qtList.hidden)   { closeQtList(); return; }
       if (state.refsOpen)             { closeRefs(); return; }
@@ -4829,8 +5691,8 @@
   }
   function wireReportModal() {
     const m = document.getElementById("reportModal"); if (!m) return;
+    wireModalDialog(m);
     document.getElementById("reportCancel").onclick = closeReportModal;
-    m.addEventListener("click", e => { if (e.target.id === "reportModal") closeReportModal(); });
     document.getElementById("reportSubmit").onclick = submitReport;
     // Delegated click handler. The Report button lives inside the
     // tpl-quiz template that gets re-cloned on each question render,
@@ -4841,14 +5703,17 @@
       e.preventDefault();
       const q = state.quiz && state.quiz.pool && state.quiz.pool[state.quiz.idx];
       if (!q) return;
-      // Ids name the topic and sometimes the answer ("...-naloxone-half-
-      // life"), so before the answer is shown the dialog gives the
-      // position instead. The id still goes in the report itself.
+      // The dialog names the question by its position, never by id: ids
+      // name the topic, sometimes the answer ("...-naloxone-half-life"),
+      // and how the bank is made. After the answer the subtopic is safe
+      // and says which question it was. The id still goes in the report.
       const shown = state.quiz.revealed[q.id] || state.quiz.finished;
+      const sub = shown ? String(q.subtopic_detail || q.subtopic || "").trim() : "";
       // Study mode has no fixed length, so it names the position alone.
-      openReportModal(q.id, q.model, shown ? null
-        : `Question ${fmtNum(state.quiz.idx + 1)}` +
-          (state.quiz.mode === "test" ? ` of ${fmtNum(state.quiz.pool.length)}` : ""));
+      openReportModal(q.id, q.model,
+        `Question ${fmtNum(state.quiz.idx + 1)}` +
+        (state.quiz.mode === "test" ? ` of ${fmtNum(state.quiz.pool.length)}` : "") +
+        (sub ? `: ${sub.charAt(0).toUpperCase() + sub.slice(1)}` : ""));
     });
   }
   function openReportModal(qid, model, label) {
@@ -4859,7 +5724,9 @@
     ta.value = "";
     document.getElementById("reportStatus").textContent = "";
     document.getElementById("reportStatus").className = "dim small";
-    document.getElementById("reportModal").hidden = false;
+    const m = document.getElementById("reportModal");
+    wireModalDialog(m);
+    openModalDialog(m, ta);
     // Ctrl/Cmd + Enter submits the report from inside the textarea so the
     // whole flow is keyboard-completable. Wired once per open to avoid
     // handler accumulation.
@@ -4869,10 +5736,9 @@
         submitReport();
       }
     };
-    setTimeout(() => ta.focus(), 50);
   }
   function closeReportModal() {
-    document.getElementById("reportModal").hidden = true;
+    closeModalDialog(document.getElementById("reportModal"));
   }
   async function submitReport() {
     const text = (document.getElementById("reportText").value || "").trim();
@@ -5651,7 +6517,8 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
         // session in progress: ask first, and stay put on Cancel.
         if (!(await jumpToQuestionStandalone(q))) return;
         const am = document.getElementById("adminModal");
-        if (am) { am.hidden = true; adminClear(); }
+        // Focus stays with the question now on screen, not the opener.
+        if (am) { am._opener = null; closeModalDialog(am); }
       };
       list.appendChild(li);
     }
@@ -6121,7 +6988,11 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     "CRP": "C-reactive protein. Acute-phase reactant; rises hours after inflammatory stimulus.",
     "ESR": "Erythrocyte sedimentation rate. Slower-rising inflammatory marker.",
     "eGFR": "Estimated glomerular filtration rate. Calculated from creatinine + age ± sex.",
-    "BMI": "Body mass index, kg/m². AU adult cut-offs: <18.5 underweight, 25-29.9 overweight, ≥30 obese.",
+    // Entries written as functions read the question on screen: the adult
+    // BMI bands are wrong for a child, and AED names two different things.
+    "BMI": q => (q && q.topic === "Paediatrics")
+      ? "Body mass index, kg/m². In children and adolescents it is read on a BMI-for-age centile chart, not against the adult cut-offs."
+      : "Body mass index, kg/m². Adult cut-offs: under 18.5 underweight, 25 to 29.9 overweight, 30 or more obese. Under 18, use BMI-for-age centiles.",
     "GCS": "Glasgow Coma Scale. Eye, verbal, motor; range 3-15. ≤8: secure the airway.",
     "BNP": "B-type natriuretic peptide. Marker of cardiac wall stretch; rises in heart failure.",
     "TSH": "Thyroid-stimulating hormone. First-line thyroid screen; raised in primary hypothyroidism.",
@@ -6133,7 +7004,14 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     "MSU": "Midstream urine sample.",
     "CPAP": "Continuous positive airway pressure. Non-invasive ventilation; first-line in obstructive sleep apnoea.",
     "BiPAP": "Bilevel positive airway pressure. Non-invasive ventilation with distinct inspiratory + expiratory pressures.",
-    "AED": "Antiepileptic drug.",
+    "AED": q => {
+      const text = q ? `${q.stem || ""} ${q.lead_in || ""}` : "";
+      const defib = /defibrillat|cardiac arrest|\bCPR\b|pulseless|shockable|\bVF\b|resuscitat/i.test(text);
+      const seizure = /seizure|epilep|convuls|anticonvuls/i.test(text);
+      if (defib && !seizure) return "Automated external defibrillator.";
+      if (seizure && !defib) return "Antiepileptic drug.";
+      return "Antiepileptic drug (seizure context) or automated external defibrillator (resuscitation context).";
+    },
     "TCA": "Tricyclic antidepressant. e.g. amitriptyline, nortriptyline.",
     "MAOI": "Monoamine oxidase inhibitor.",
     "GORD": "Gastro-oesophageal reflux disease.",
@@ -6198,7 +7076,11 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
   function showTermPopup(span) {
     const term = span.getAttribute("data-term");
     if (!term) return;
-    const def = TERM_GLOSSARY[term] || TERM_GLOSSARY[term.toUpperCase()];
+    let def = TERM_GLOSSARY[term] || TERM_GLOSSARY[term.toUpperCase()];
+    if (typeof def === "function") {
+      const q = state.quiz && state.quiz.pool && state.quiz.pool[state.quiz.idx];
+      def = def(q);
+    }
     if (!def) return;
     const pop = getTermPopup();
     pop.innerHTML = `<div class="term-popup-head">${esc(term)}</div><div class="term-popup-body">${esc(def)}</div>`;

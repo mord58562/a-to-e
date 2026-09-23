@@ -6,18 +6,20 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 **Live at <https://mord58562.github.io/a-to-e/>.** No account is needed: continue as a guest and your progress stays in that browser.
 
-## What's new in 1.7.2
+## What's new in 1.7.3
 
-- Study mode shows the questions you have reached, not a numbered grid of the whole bank. The counter reads "Question 12", and the results count only what you answered.
-- A to E on the keyboard pick an option, the same as 1 to 5. Right arrow moves on without committing; Enter commits.
-- After a wrong answer the page lands on the correct option.
-- A test uses one set of words from start to finish: Next, Finish test, Results.
-- The explanation opens with the subtopic as its heading, sits at a comfortable reading width, and cites each source once. Reference panels the question depends on are a line of links that open the panel.
-- Stats reads as a couple of sentences and a table, weakest areas first, with bars that show accuracy.
-- If the server is slow or down, a signed-in student goes straight to the questions and syncs later.
-- Error messages say what happened and what to do, in the same voice everywhere.
-- Counts and dates are written the Australian way: 7,053 questions, 23 Sept.
-- Abbreviation definitions open on tap as well as hover.
+- A finished test reaches the server whole, even if the tab closes straight away. A test left unfinished for a day is recorded when it expires, not dropped.
+- The test clock and the masthead stay on screen as you scroll.
+- In a test you can skip a question and come back, or finish from one you haven't answered.
+- Retry incorrect shuffles the options again, and getting a missed question right on the retry doesn't take it off your "Previously incorrect" list.
+- After a wrong answer the page shows your pick and the correct option together. Your pick is marked "Your answer."; the other rationales speak for themselves.
+- The question card is one reading width, with every line ending at the same edge.
+- Learning areas are grouped by discipline, with near-duplicate names merged and a box to find one.
+- Stats, Report and Admin are proper dialogs: Tab stays inside them and focus returns where it was.
+- On a slow connection the whole bank loads before you start, or the app says which discipline is still coming and keeps fetching it.
+- Two tabs open at once no longer double-count answers or undo each other's settings.
+- An invite link works when pasted into a tab that already has the site open.
+- Deleting your account asks for your password.
 
 Earlier releases are in [CHANGELOG.md](CHANGELOG.md).
 
