@@ -259,10 +259,11 @@ Hard constraints
 - ONE batch per run, EXACTLY 30 questions. Do not bundle multiple clusters.
 - **Module choice is determined by the algorithm in STEP 4, applied against LIVE totals each run.** Do not hardcode which module to target.
 - Long-term target: 500 of each module (2000 total). After hitting that, KEEP GENERATING with equal distribution across all four modules; the bank does not have a stop point until the maintainer disables the routine.
-- ZERO em-dashes (U+2014). Audit by `grep -P '\\x{{2014}}'` on every generated file.
+- Write in the register set by the VOICE section of `assets/prompt-template.txt`: one Australian registrar's teaching notes, ward abbreviations, digits for quantities, hyphenated compound modifiers, ordinary punctuation. The prompt vocabulary listed in its section 5 (near pair, anti-pattern, discriminator, candidate...) never appears in a question.
+- ZERO em-dashes (U+2014). Audit by `grep -P '\\x{{2014}}'` on every generated file. Rewrite the sentence rather than dropping ` - ` into the same slot.
 - NEVER the four-letter abbreviation of 'Aboriginal and Torres Strait Islander' (spelled A-T-S-I). NEVER 'the c-word' (spelled c-a-n-o-n-i-c-a-l). NEVER uni-specific framing (UNE, JMP, MEDI6101).
 - Mandatory `model` field on every question = your specific model version string (e.g. 'Claude Opus 5').
-- Australian sources first; AU SI units; AU spellings (paediatric, gynaecology, foetal, oesophagus, oedema, anaemia, leukaemia, caesarean, dyspnoea, diarrhoea). Exception: drug INN 'magnesium sulfate' per AMH.
+- Australian sources first; AU SI units; AU spellings (paediatric, gynaecology, fetal, oesophagus, oedema, anaemia, leukaemia, caesarean, dyspnoea, diarrhoea). Exception: drug INN 'magnesium sulfate' per AMH.
 - Every option's `source_refs` must match a label in the question's `sources` array exactly.
 - Rate difficulty DOWN if unsure. Past agents inflated by 1-2 levels.
 - No weight-based dose arithmetic in lead-ins. Test reasoning, not multiplication.

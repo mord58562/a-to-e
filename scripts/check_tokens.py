@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # would itself violate the rule.
 RULES = [
     ("EMDASH", "em-dash (U+2014)", re.compile("—"),
-     "use a spaced hyphen, ' - '"),
+     "rewrite with the mark the sentence needs: full stop, comma, colon or parentheses"),
     ("A1", "initialism standing in for Aboriginal and Torres Strait Islander",
      re.compile(r"\b" + "".join(chr(c) for c in (65, 84, 83, 73)) + r"\b"),
      "spell the phrase out, or name only the applicable half"),
