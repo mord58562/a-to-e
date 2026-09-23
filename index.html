@@ -113,13 +113,13 @@
   </div>
   <nav class="masthead-tools">
     <button id="rangesBtn" class="link-btn" title="Reference values (L)"><span class="t-long">Reference values</span><span class="t-short">Values</span></button>
-    <button id="statsBtn" class="link-btn" title="Your stats">Stats</button>
-    <button id="accountBtn" class="link-btn cloud-only" title="Admin / account settings" hidden>Account</button>
-    <button id="adminMastheadBtn" class="link-btn admin-only" title="Admin dashboard">Admin</button>
-    <button id="themeBtn" class="link-btn" title="Toggle theme">Theme</button>
+    <button id="statsBtn" class="link-btn" title="Accuracy by discipline and difficulty">Stats</button>
+    <button id="accountBtn" class="link-btn cloud-only" title="Password, sessions, delete account" hidden>Account</button>
+    <button id="adminMastheadBtn" class="link-btn admin-only" title="Users, invite codes, bank health">Admin</button>
+    <button id="themeBtn" class="link-btn">Theme</button>
     <span class="profile-chip" id="profileChip" data-profile-id="" hidden>
       <span class="profile-name" id="profileName"></span>
-      <button id="signOutBtn" class="ghost-link" title="Sign out">sign out</button>
+      <button id="signOutBtn" class="ghost-link">sign out</button>
     </span>
   </nav>
 </header>
@@ -166,7 +166,7 @@
     <button class="ghost-x" id="refClose" aria-label="Close">×</button>
   </div>
   <div class="ref-search">
-    <input id="rangesSearch" type="search" placeholder="search tests, conditions, units..." autocomplete="off" spellcheck="false" />
+    <input id="rangesSearch" type="search" placeholder="search tests, conditions, units…" autocomplete="off" spellcheck="false" />
     <span id="rangesSearchHit" class="ref-search-hit" hidden></span>
   </div>
   <div id="refJump" class="ref-jump"></div>
@@ -365,10 +365,10 @@
     </div>
     <div class="modal-body">
       <p class="dim small" id="reportQId"></p>
-      <p>Describe what is wrong with this question. Be specific.</p>
+      <p>Reports go into the next audit pass with the question id attached.</p>
       <textarea id="reportText" class="report-text" placeholder="e.g. 'The answer says first line is amoxicillin, but Therapeutic Guidelines recommends amoxicillin with clavulanic acid here because...'" rows="6" maxlength="4000"></textarea>
       <div class="prompt-actions">
-        <button id="reportSubmit" class="primary">Submit report</button>
+        <button id="reportSubmit" class="primary">Send report</button>
         <span id="reportStatus" class="dim small"></span>
       </div>
     </div>
@@ -450,13 +450,13 @@
             <h3>Paste the JSON</h3>
             <textarea id="pasteBox" class="paste-box" placeholder='[ { "id": "paeds-renal-001", "topic": "Paediatrics", ... } ]' spellcheck="false" autocomplete="off"></textarea>
             <div class="prompt-actions">
-              <button id="pasteAddBtn" class="primary">Submit to bank</button>
-              <button id="pasteDownloadBtn" class="link-btn" title="Download the current paste as a .json file">Save as .json</button>
+              <button id="pasteAddBtn" class="primary">Add to bank</button>
+              <button id="pasteDownloadBtn" class="link-btn" >Save as .json</button>
               <span id="pasteStatus" class="dim small"></span>
             </div>
             <div class="local-bank-row" id="localBankRow" hidden>
               <span id="localBankSummary" class="dim small"></span>
-              <button id="localBankExport" class="ghost-link" title="Download all local additions">Export local additions</button>
+              <button id="localBankExport" class="ghost-link" >Export local additions</button>
               <button id="localBankClear" class="ghost-link">Discard local additions</button>
             </div>
           </section>

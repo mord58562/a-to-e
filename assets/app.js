@@ -406,6 +406,11 @@
     targets.push("api/" + endpoint.replace(/^\//, ""));
     const headers = { "Content-Type": "application/json" };
     if (authToken) headers["Authorization"] = `Bearer ${authToken}`;
+    // The reason the last target failed. Returning a bare null for every
+    // failure told the user to check their connection when the server had
+    // in fact answered with something specific - a 429, or a 400 naming
+    // the problem - and left a TLS or CORS failure with no trace at all.
+    let last = null;
     for (const url of targets) {
       try {
         const r = await fetch(url, {
@@ -414,9 +419,15 @@
           body: JSON.stringify(body),
         });
         if (r.ok) return await r.json().catch(() => ({ ok: true }));
-      } catch (_) { /* try next */ }
+        const data = await r.json().catch(() => ({}));
+        last = { ok: false, status: r.status, error: data.error || `HTTP ${r.status}` };
+        console.warn("[backend]", url, r.status, data.error || "");
+      } catch (e) {
+        last = { ok: false, status: 0, error: (e && e.message) || "could not reach the server" };
+        console.warn("[backend]", url, e && e.message);
+      }
     }
-    return null;
+    return last;
   }
 
   // The stored value has to be the same kind of thing as the default.
@@ -439,7 +450,10 @@
   function normaliseSettings(s) {
     const out = Object.assign({}, DEFAULT_SETTINGS, (s && typeof s === "object" && !Array.isArray(s)) ? s : {});
     for (const f of ["disciplines", "difficulties"]) {
-      if (!Array.isArray(out[f])) out[f] = DEFAULT_SETTINGS[f].slice();
+      // An empty stored list would now mean "nothing matches", and a
+      // saved session should never open on an empty bank, so an empty
+      // one resets to everything.
+      if (!Array.isArray(out[f]) || !out[f].length) out[f] = DEFAULT_SETTINGS[f].slice();
     }
     if (out.subtopics !== null && !Array.isArray(out.subtopics)) out.subtopics = null;
     return out;
@@ -677,8 +691,13 @@
   function trackMastheadHeight() {
     const masthead = document.querySelector(".masthead");
     if (!masthead) return;
-    const set = () => document.documentElement.style.setProperty(
-      "--masthead-h", `${Math.round(masthead.getBoundingClientRect().height)}px`);
+    const set = () => {
+      const h = Math.round(masthead.getBoundingClientRect().height);
+      // Zero means it is not on screen yet: behind the gate the whole app
+      // shell is display:none, and writing 0px here overrode the
+      // stylesheet's fallback and dropped the rail under the topbar.
+      if (h > 0) document.documentElement.style.setProperty("--masthead-h", `${h}px`);
+    };
     set();
     if (typeof ResizeObserver === "function") new ResizeObserver(set).observe(masthead);
     else window.addEventListener("resize", set);
@@ -721,8 +740,16 @@
         // of truth for everything it actually knows about.
         const LOCAL_ONLY = ["time_ms_total", "first_correct"];
         const prevHistory = state.history || {};
-        state.history = remote.history || {};
-        for (const qid in state.history) {
+        const remoteHistory = remote.history || {};
+        // The server wins for every question it knows about, and rows it
+        // has never seen are kept rather than dropped. Replacing the map
+        // wholesale destroyed a guest's answers the moment they signed
+        // up: the migration merges them into the cloud key during
+        // passGate, and this ran a few lines later against an empty
+        // server history. It also silently discarded anything answered
+        // while the worker was unreachable, since those posts fail quietly.
+        state.history = { ...prevHistory, ...remoteHistory };
+        for (const qid in remoteHistory) {
           const prev = prevHistory[qid];
           if (!prev) continue;
           for (const f of LOCAL_ONLY) {
@@ -731,7 +758,9 @@
             }
           }
         }
-        state.flags   = remote.flags   || {};
+        // Flags are a small set and the server is authoritative, but the
+        // same argument applies to one flagged locally and not yet synced.
+        state.flags   = { ...(state.flags || {}), ...(remote.flags || {}) };
         if (remote.settings && typeof remote.settings === "object") {
           state.settings = normaliseSettings(remote.settings);
         }
@@ -936,7 +965,16 @@
     adminClear();
   }
 
+  // Bumped on every tab activation. An async renderer captures it before
+  // its first await and stops if it no longer matches, so a response that
+  // arrives after the user has moved on paints nothing.
+  let _adminRenderSeq = 0;
+  const adminRenderToken = () => ++_adminRenderSeq;
+  const adminRenderStale = (token, root) =>
+    token !== _adminRenderSeq || !root || !root.isConnected;
+
   function selectAdminTab(id) {
+    adminRenderToken();
     document.querySelectorAll(".admin-tab").forEach(b => {
       const on = b.dataset.adminTab === id;
       b.classList.toggle("active", on);
@@ -993,6 +1031,7 @@
    * question the numbers exist to answer.
    */
   async function renderAdminBankTab(root) {
+    const token = _adminRenderSeq;
     const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
     const byTopic = {};
     const grid = {};
@@ -1071,6 +1110,7 @@
       return adminLoadError(qRoot, "answer quality", () => renderAdminBankTab(root));
     }
     stop();
+    if (adminRenderStale(token, qRoot)) return;
     const totals = (q && q.totals) || {};
     const rows = arr => (arr || []).slice(0, 25).map(r => {
       const pct = r.n ? Math.round((100 * (r.c || 0)) / r.n) : 0;
@@ -1115,6 +1155,7 @@
   }
 
   async function renderAdminUsersTab(root) {
+    const token = _adminRenderSeq;
     const stop = adminLoading(root, 4);
     let users = [];
     try {
@@ -1127,6 +1168,7 @@
       return adminLoadError(root, "the user list", () => renderAdminUsersTab(root));
     }
     stop();
+    if (adminRenderStale(token, root)) return;
 
     const meId = cloudUser && cloudUser.id;
     const adminCount = users.filter(u => u.is_admin).length;
@@ -1199,7 +1241,7 @@
     const answers = parseInt(btn.dataset.answers || "0", 10);
     const run = async (path, ok, undo) => {
       btn.disabled = true;
-      const slow = setTimeout(() => { btn.textContent = "Working..."; }, 1000);
+      const slow = setTimeout(() => { btn.textContent = act === "promote" ? "Promoting…" : "Demoting…"; }, 1000);
       try {
         await apiFetch(path, { method: "POST" });
         clearTimeout(slow);
@@ -1265,6 +1307,7 @@
 
   async function renderInvites(root, usersRoot) {
     if (!root) return;
+    const token = _adminRenderSeq;
     const head = `<h3>Invite codes</h3>
       <p class="admin-fact">Registration is invite only. A code works once.</p>
       <form class="invite-new" id="inviteNew">
@@ -1291,6 +1334,7 @@
       return adminLoadError(list, "invite codes", () => renderInvites(root, usersRoot));
     }
     stop();
+    if (adminRenderStale(token, list)) return;
     const now = Math.floor(Date.now() / 1000);
     const statusOf = i => i.used_at ? `Used by ${i.used_by_name || "someone"}`
       : i.revoked_at ? "Revoked"
@@ -1326,7 +1370,9 @@
       </div>`
       : `<p class="admin-empty">No codes yet. Create one to let someone sign up.</p>`;
 
-    document.getElementById("inviteNew").onsubmit = async e => {
+    const inviteForm = root.querySelector("#inviteNew");
+    if (!inviteForm) return;
+    inviteForm.onsubmit = async e => {
       e.preventDefault();
       const btn = e.target.querySelector("button[type=submit]");
       btn.disabled = true;
@@ -1535,10 +1581,10 @@
       goBtn.onclick = async () => {
         if (goBtn.disabled) return;
         goBtn.disabled = true;
-        statusEl.textContent = "Deleting...";
+        statusEl.textContent = "Deleting…";
         try {
           await apiFetch("/api/account/delete", { method: "POST" });
-          statusEl.textContent = "Account deleted. Reloading...";
+          statusEl.textContent = "Account deleted. Reloading…";
           cloudSignOut();
           setTimeout(() => location.reload(), 600);
         } catch (e) {
@@ -2073,8 +2119,13 @@
   function getPool() {
     const s = state.settings;
     return state.questions.filter(q => {
-      if (s.disciplines.length && !s.disciplines.includes(q.topic)) return false;
-      if (s.difficulties && s.difficulties.length && !s.difficulties.includes(q.difficulty)) return false;
+      // An empty list is an empty selection, in all three facets. It used
+      // to mean "no filter" for disciplines and difficulties and "match
+      // nothing" for learning areas, so switching off every difficulty
+      // chip left the pool at the full bank and started a session with
+      // the levels the user had just turned off.
+      if (!s.disciplines.includes(q.topic)) return false;
+      if (!(s.difficulties || []).includes(q.difficulty)) return false;
       if (s.subtopics && !s.subtopics.includes(q.subtopic || "Other")) return false;
       const h = state.history[q.id];
       if (s.filter === "unseen" && h) return false;
@@ -2112,6 +2163,7 @@
 
   // ── Quiz ────────────────────────────────────────────────────────────────
   function startQuiz() {
+    resetNavigator();
     const s = state.settings;
     const pool = shuffle(getPool());
     if (!pool.length) return;
@@ -2502,6 +2554,14 @@
     });
   }
 
+  // Called when a session starts: the window and the follow flag are
+  // module state, and a new quiz that inherited "301 to 400" showed a
+  // page with no current chip in it.
+  function resetNavigator() {
+    navWindowStart = 0;
+    navFollowCurrent = true;
+  }
+
   function jumpTo(i) {
     if (i === state.quiz.idx) return;
     state.quiz.idx = i;
@@ -2530,8 +2590,15 @@
     }
     return order;
   }
+  // Keyed off the question rather than written onto it. As an ordinary
+  // property the cache was enumerable, so a question serialised into an
+  // audit prompt carried a second, post-shuffle copy of its own options
+  // under an instruction to return every field - and if the model echoed
+  // it back, apply-report wrote it into the bank.
+  const _shuffleCache = new WeakMap();
   function _shuffledOptions(q) {
-    if (q._shuffledOptions) return q._shuffledOptions;
+    const hit = _shuffleCache.get(q);
+    if (hit) return hit;
     const order = _seededOrder(q.id || JSON.stringify(q.options.map(o => o.text)), q.options.length);
     const letters = ["A", "B", "C", "D", "E", "F", "G"];
     const out = order.map((origIdx, newIdx) => {
@@ -2540,8 +2607,18 @@
       // cross-user stats can aggregate by the unchanging source label.
       return Object.assign({}, o, { letter: letters[newIdx], sourceLetter: o.letter });
     });
-    q._shuffledOptions = out;
+    _shuffleCache.set(q, out);
     return out;
+  }
+
+  // An explanation is an object with summary / pearls / why_not. Some
+  // batches wrote it as a plain string, and reading `.summary` off a
+  // string gives undefined, so the commentary block opened empty on a
+  // question that had a perfectly good explanation.
+  function explanationOf(q) {
+    const e = q && q.explanation;
+    if (typeof e === "string") return { summary: e };
+    return e || {};
   }
 
   function renderReadingPane() {
@@ -2834,7 +2911,7 @@
     // in HTML. "In context" (explainSummary) is the differentiating
     // explanation - condition background, key points, pearls.
 
-    const sum = q.explanation || {};
+    const sum = explanationOf(q);
     const sumWrap = document.getElementById("explainSummary");
     sumWrap.innerHTML = "";
     if (sum.summary) sumWrap.innerHTML += `<p>${esc(sum.summary)}</p>`;
@@ -3310,7 +3387,15 @@
       };
       ol.appendChild(li);
     });
-    if (!ol.children.length) ol.innerHTML = `<li class="dim small" style="grid-column:1/-1;">Nothing in this filter.</li>`;
+    if (!ol.children.length) {
+      // One string for three different situations said nothing about any
+      // of them. Each filter empties for its own reason.
+      const EMPTY = {
+        incorrect: "Nothing wrong in this session. Switch to All to read back over the ones you got right.",
+        flagged: "You did not flag anything. Press F on a question to flag it for later.",
+      };
+      ol.innerHTML = `<li class="rv-empty">${EMPTY[filter] || "This session had no questions."}</li>`;
+    }
   }
 
   function retryIncorrect() {
@@ -3319,6 +3404,7 @@
       return !ans || !_shuffledOptions(q).find(o => o.letter === ans)?.correct;
     });
     if (!wrong.length) { showHome(); return; }
+    resetNavigator();
     state.quiz = {
       pool: shuffle(wrong), idx: 0, mode: state.quiz.mode,
       timerMins: 0, deadline: null,
@@ -3375,7 +3461,7 @@
     let copyResetTimer = null;
     if (copyBtn) copyBtn.onclick = async () => {
       // Re-render so the live bank counts are current at copy time.
-      promptText.textContent = renderPrompt(promptTpl.textContent.trim());
+      promptText.textContent = renderPrompt((await loadPromptTemplate()) || "");
       let ok = false;
       try {
         await navigator.clipboard.writeText(promptText.textContent);
@@ -3481,7 +3567,7 @@
       return;
     }
     btn.disabled = true;
-    status.textContent = "Submitting…";
+    status.textContent = "Sending…";
     const res = await postBackend("report", {
       question_id: _reportingQId,
       issue: text,
@@ -3490,7 +3576,7 @@
     });
     btn.disabled = false;
     if (res && res.ok) {
-      status.textContent = "Submitted. Thanks - this gets checked on the next audit pass.";
+      status.textContent = "Sent. It goes into the next audit pass.";
       status.classList.remove("bad"); status.classList.add("ok");
       // Optimistically include in local in-memory list so the badge updates.
       state.reports.push({
@@ -3503,7 +3589,11 @@
       if (repBtn) repBtn.classList.add("has-report");
       setTimeout(closeReportModal, 1200);
     } else {
-      status.textContent = "Couldn't reach the backend. Try again, or screenshot it and open an issue at github.com/mord58562/a-to-e/issues.";
+      // Say what actually went wrong. "Check your connection" is wrong
+      // advice when the server answered with a reason.
+      status.textContent = (res && res.error)
+        ? `Not sent: ${res.error}`
+        : "Could not reach the server. Try again, or open an issue at github.com/mord58562/a-to-e/issues.";
       status.classList.add("bad");
     }
   }
@@ -4182,6 +4272,7 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
   }
   function jumpToQuestionStandalone(q) {
     // Start a tiny single-question study session for review.
+    resetNavigator();
     state.quiz = {
       pool: [q], idx: 0, mode: "study",
       timerMins: 0, deadline: null,
