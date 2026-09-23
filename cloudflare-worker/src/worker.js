@@ -10,10 +10,6 @@
  *   GITHUB_BRANCH    "main"
  *   ALLOW_ORIGIN     "https://mord58562.github.io"  (or "*" for dev)
  *
- * /commit-batch and its ROUTINE_TOKEN were removed 2026-09-23: the
- * scheduled routine publishes through the GitHub MCP, nothing called the
- * endpoint, and its meta.json patch could rewrite the file from {}.
- *
  * Encryption secrets (REQUIRED for /api/register, /api/login, /api/me;
  * the worker refuses to handle account routes if any are missing):
  *   EMAIL_HMAC_KEY   32+ bytes of base64-encoded entropy. Drives the
@@ -58,16 +54,16 @@ export default {
       const raw = request.headers.get("Content-Length");
       const len = raw === null ? NaN : Number(raw);
       if (len > MAX_BODY_BYTES) {
-        return json({ ok: false, error: "payload too large" }, 413, cors);
+        return fail("payload_too_large", "Request body too large.", 413, cors);
       }
       // A chunked request has no Content-Length and a junk header parses
-      // to NaN, and both used to sail past the check above, so
-      // request.json() would buffer whatever was sent. Without a usable
-      // length, read the body here with the cap applied as it streams.
+      // to NaN; both pass the check above. Without a usable length, read
+      // the body here with the cap applied as it streams, so
+      // request.json() never buffers an unbounded body.
       if (!Number.isFinite(len) && request.body) {
         const capped = await readCapped(request.body, MAX_BODY_BYTES);
         if (capped === null) {
-          return json({ ok: false, error: "payload too large" }, 413, cors);
+          return fail("payload_too_large", "Request body too large.", 413, cors);
         }
         request = new Request(request.url, { method: request.method, headers: request.headers, body: capped });
       }
@@ -105,14 +101,14 @@ export default {
       if (url.pathname === "/api/admin/invites/revoke" && request.method === "POST") return await handleAdminRevokeInvite(request, env, cors);
       // Existing GitHub-write endpoints (POST only).
       if (request.method !== "POST") {
-        return json({ ok: false, error: "POST only" }, 405, cors);
+        return fail("method_not_allowed", "POST only.", 405, cors);
       }
       if (url.pathname === "/paste")        return await handlePaste(request, env, cors);
       if (url.pathname === "/report")       return await handleReport(request, env, cors);
       if (url.pathname === "/apply-audit")           return await handleApplyAudit(request, env, cors);
       if (url.pathname === "/apply-live-audit") return await handleApplyLiveAudit(request, env, cors);
       if (url.pathname === "/apply-report")          return await handleApplyReport(request, env, cors);
-      return json({ ok: false, error: "not found" }, 404, cors);
+      return fail("not_found", "Not found.", 404, cors);
     } catch (e) {
       // Never hand the caller the raw message: requireEncryptionEnv names
       // exactly which secrets are missing, and D1 throws raw SQL. The
@@ -120,13 +116,13 @@ export default {
       // matched to a line in `wrangler tail`.
       const ref = randomHex(4);
       console.error("[" + ref + "]", e && e.stack || e);
-      return json({ ok: false, error: "server error", ref }, 500, cors);
+      return fail("server_error", "Server error.", 500, cors, { ref });
     }
   },
 
-  /* Cron sweeper. Nothing ever deleted expired sessions or the
-   * rate-limit ledger, so both tables grew without bound. Scheduled in
-   * wrangler.toml; safe to run as often as you like.
+  /* Cron sweeper. Deletes expired sessions, old rate-limit rows and
+   * long-expired unused invites; nothing else removes them. Scheduled
+   * in wrangler.toml; safe to run as often as you like.
    */
   async scheduled(event, env, ctx) {
     if (!env.DB) return;
@@ -185,9 +181,8 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Argon2id parameters. RFC 9106 "SECOND RECOMMENDED" profile (m=19456 KB,
 // t=2, p=1) lands well inside a Cloudflare Worker invocation budget while
-// remaining infeasible to brute-force GPU-side. Memory is the load-bearing
-// cost; iteration count is intentionally low so login latency stays under
-// ~500 ms even on cold-start.
+// remaining infeasible to brute-force GPU-side. Memory is the expensive
+// part; iterations stay low so a cold-start login finishes under ~500 ms.
 const ARGON2_PARAMS = { m: 19456, t: 2, p: 1, dkLen: 32, version: 0x13 };
 const ARGON2_ALGO_LABEL = "argon2id-v19-m19456-t2-p1";
 const LEGACY_PBKDF2_LABEL = "pbkdf2-sha256-100k";
@@ -408,10 +403,10 @@ async function noteAttempt(env, key) {
 // ── invite codes ───────────────────────────────────────────────────────
 // Registration is invite-only. Codes are stored hashed with the session
 // pepper, so a database dump does not yield working codes.
-// Codes are issued as XXXX-XXXX-XXXX. A code pasted without the dashes,
-// or with spaces, used to hash differently and be refused as invalid.
-// Twelve alphanumerics are put back into the issued shape; anything else
-// is hashed as typed (upper-cased), which is what matched before.
+// Codes are issued as XXXX-XXXX-XXXX. So that a code pasted without the
+// dashes, or with spaces, still matches, twelve alphanumerics are put
+// back into the issued shape; anything else is hashed as typed
+// (upper-cased).
 function normaliseInviteCode(code) {
   const s = String(code || "").trim().toUpperCase();
   const bare = s.replace(/[^A-Z0-9]/g, "");
@@ -437,15 +432,15 @@ function generateInviteCode() {
 }
 
 // Every field the auth endpoints read has to be a string before it is
-// trimmed or measured. A number threw a TypeError out of the handler as
-// a 500, and an object slipped past `password.length < 8` and registered
-// an account whose real secret was the string "[object Object]".
+// trimmed or measured. Otherwise a number throws a TypeError (a 500) and
+// an object passes `password.length < 8` and registers an account whose
+// real secret is the string "[object Object]".
 function str(v) {
   return typeof v === "string" ? v : "";
 }
 
 async function handleRegister(request, env, cors) {
-  if (!env.DB) return json({ ok: false, error: "DB not bound" }, 500, cors);
+  if (!env.DB) return fail("server_unconfigured", "D1 database not bound.", 500, cors);
   requireEncryptionEnv(env);
   const body = await request.json().catch(() => null);
   const email = str(body && body.email).trim().toLowerCase();
@@ -456,14 +451,14 @@ async function handleRegister(request, env, cors) {
   // Per-IP budget first, before the email lookup and long before Argon2id.
   const regIpKey = "reg:" + await ipHash(request, env);
   if (await overBudget(env, regIpKey, REG_IP_WINDOW_SEC, REG_IP_MAX)) {
-    return json({ ok: false, error: "too many sign-up attempts, try again later" }, 429, cors);
+    return fail("signup_rate", "Too many sign-up attempts from this address. Try again later.", 429, cors);
   }
   await noteAttempt(env, regIpKey);
 
-  if (!EMAIL_RE.test(email)) return json({ ok: false, error: "invalid email" }, 400, cors);
-  if (password.length < 8) return json({ ok: false, error: "password must be 8+ characters" }, 400, cors);
-  if (password.length > 1024) return json({ ok: false, error: "password too long" }, 400, cors);
-  if (!inviteRaw) return json({ ok: false, error: "an invite code is required" }, 400, cors);
+  if (!EMAIL_RE.test(email)) return fail("email_format", "Email address is not in a valid format.", 400, cors);
+  if (password.length < 8) return fail("password_short", "Password needs at least 8 characters.", 400, cors);
+  if (password.length > 1024) return fail("password_long", "Password is over 1024 characters.", 400, cors);
+  if (!inviteRaw) return fail("invite_required", "An invite code is required.", 400, cors);
 
   // Redeem the invite before touching the users table. One generic error
   // for every failure mode, so a stranger cannot probe which codes exist.
@@ -473,13 +468,12 @@ async function handleRegister(request, env, cors) {
     "SELECT code_hash, expires_at, used_by, used_at, revoked_at FROM invite_codes WHERE code_hash = ?"
   ).bind(inviteHash).first();
   // used_at as well as used_by: the used_by foreign key is ON DELETE SET
-  // NULL, so deleting the account a code created put the code back into
-  // circulation. An invited user could delete and re-register on the same
-  // code indefinitely, or hand it on. used_at is the tombstone that
-  // survives the cascade.
+  // NULL, so deleting the account a code created would put the code back
+  // into circulation, to be re-registered or handed on. used_at is the
+  // tombstone that survives the cascade.
   if (!invite || invite.used_by || invite.used_at || invite.revoked_at ||
       (invite.expires_at && invite.expires_at < nowTs)) {
-    return json({ ok: false, error: "that invite code is not valid" }, 403, cors);
+    return fail("invite_invalid", "That invite code is not valid.", 403, cors);
   }
 
   let isAdmin = 0;
@@ -490,7 +484,7 @@ async function handleRegister(request, env, cors) {
   const existing = await env.DB.prepare(
     "SELECT id FROM users WHERE email_lookup = ? OR email = ?"
   ).bind(lookup, email).first();
-  if (existing) return json({ ok: false, error: "email already registered" }, 409, cors);
+  if (existing) return fail("email_taken", "An account already uses that email.", 409, cors);
 
   const id = crypto.randomUUID();
   const saltBytes = randomBytes(16);
@@ -504,14 +498,10 @@ async function handleRegister(request, env, cors) {
   // line can be removed.
   // Create the account, burn the code and open the session as ONE batch
   // (a single D1 transaction), with the user INSERT itself conditional on
-  // the code still being redeemable at that instant.
-  //
-  // This used to be three separate writes: insert the user, then a
-  // guarded burn, then on a lost race a compensating DELETE of the user.
-  // If that DELETE failed (a D1 error, the isolate dying after the Argon2
-  // pass) the loser got a 500 but kept a committed account it could sign
-  // in to, so one code yielded two accounts. Now a registration that
-  // loses the race writes nothing at all, and there is nothing to undo.
+  // the code still being redeemable at that instant. A registration that
+  // loses a race for the same code writes nothing, so there is no
+  // compensating delete that could fail and leave one code with two
+  // accounts.
   //
   // The WHERE repeats every validity test, not just used_by, so a code
   // revoked or expired between the SELECT above and this write cannot
@@ -524,8 +514,8 @@ async function handleRegister(request, env, cors) {
   // A UNIQUE violation on email_lookup means someone registered the same
   // address in the window between the SELECT above and this write - a
   // double-tapped sign-up button is enough, because Argon2id sits in the
-  // middle of it. That aborts the batch and used to surface as a 500 for
-  // an account that does in fact exist.
+  // middle of it. That aborts the batch; answer email_taken, not a 500,
+  // because the account does exist.
   let results;
   try {
     results = await env.DB.batch([
@@ -547,13 +537,13 @@ async function handleRegister(request, env, cors) {
     ]);
   } catch (e) {
     if (/UNIQUE|constraint/i.test(String(e && e.message))) {
-      return json({ ok: false, error: "that email is already registered" }, 409, cors);
+      return fail("email_taken", "An account already uses that email.", 409, cors);
     }
     throw e;
   }
   const changed = (r) => (r && r.meta && r.meta.changes) || 0;
   if (changed(results[0]) !== 1 || changed(results[1]) !== 1 || changed(results[2]) !== 1) {
-    return json({ ok: false, error: "that invite code is not valid" }, 403, cors);
+    return fail("invite_invalid", "That invite code is not valid.", 403, cors);
   }
 
   return json({ ok: true, token: tokenHex, user: publicUser({ id, email, display_name: displayName, is_admin: isAdmin }) }, 200, cors);
@@ -561,13 +551,13 @@ async function handleRegister(request, env, cors) {
 
 
 async function handleLogin(request, env, cors) {
-  if (!env.DB) return json({ ok: false, error: "DB not bound" }, 500, cors);
+  if (!env.DB) return fail("server_unconfigured", "D1 database not bound.", 500, cors);
   requireEncryptionEnv(env);
   const body = await request.json().catch(() => null);
   const email = str(body && body.email).trim().toLowerCase();
   const password = str(body && body.password);
-  if (!email || !password) return json({ ok: false, error: "email + password required" }, 400, cors);
-  if (password.length > 1024) return json({ ok: false, error: "password too long" }, 400, cors);
+  if (!email || !password) return fail("credentials_missing", "Email and password are required.", 400, cors);
+  if (password.length > 1024) return fail("password_long", "Password is over 1024 characters.", 400, cors);
 
   // Per-IP budget before the email lookup. The per-email lockout below
   // is bypassed entirely by rotating addresses, and the miss path runs
@@ -575,14 +565,15 @@ async function handleLogin(request, env, cors) {
   // script pinning the isolate.
   const loginIpKey = "ip:" + await ipHash(request, env);
   if (await overBudget(env, loginIpKey, LOGIN_IP_WINDOW_SEC, LOGIN_IP_MAX)) {
-    return json({ ok: false, error: "too many attempts, try again later" }, 429, cors);
+    return fail("login_rate", "Too many sign-in attempts from this address. Try again later.", 429, cors);
   }
   await noteAttempt(env, loginIpKey);
 
   const lookup = await emailLookup(env, email);
   const lockSecondsLeft = await isLockedOut(env, lookup);
   if (lockSecondsLeft > 0) {
-    return json({ ok: false, error: `too many failed attempts; try again in ${Math.ceil(lockSecondsLeft / 60)} min` }, 429, cors);
+    return fail("login_locked", `Too many failed attempts. Try again in ${Math.ceil(lockSecondsLeft / 60)} min.`, 429, cors,
+      { retry_after: lockSecondsLeft });
   }
   const ipH = await ipHash(request, env);
 
@@ -609,17 +600,17 @@ async function handleLogin(request, env, cors) {
 
   if (!row || !ok) {
     await recordAttempt(env, lookup, false, ipH);
-    return json({ ok: false, error: "invalid credentials" }, 401, cors);
+    return fail("credentials_wrong", "Email or password is wrong.", 401, cors);
   }
 
   await recordAttempt(env, lookup, true, ipH);
   // A correct password clears this address's failures. isLockedOut counts
   // ok = 0 rows only, so without this, 7 typos then a success then one
-  // retry from a device still holding the old password locked the
+  // retry from a device still holding the old password would lock the
   // account for 15 minutes straight after a good sign-in.
   //
   // The per-IP budget is refunded only for this address's own failures
-  // from this IP, never wiped. Wiping it let anyone holding one valid
+  // from this IP, never wiped. A wipe would let anyone holding one valid
   // account spray 29 guesses across other addresses, sign in to their own,
   // and get the full budget back. The refund is bounded by the per-email
   // lockout, so it cannot be farmed into extra guesses at other accounts.
@@ -650,7 +641,8 @@ async function handleLogin(request, env, cors) {
       ).bind(newHash, bytesToHex(newSaltBytes), ARGON2_ALGO_LABEL, lookup, emailEnc, "enc:" + lookup.slice(0, 32), row.id).run();
       row.email_enc = emailEnc;
     } else if (!row.email_enc) {
-      // Argon2-hashed but missing email encryption (shouldn't happen post-002, but defensive).
+      // Argon2-hashed but no encrypted email: not expected after schema_002;
+      // encrypt it now while the plaintext is in hand.
       const emailEnc = await fieldEncrypt(env, email);
       await env.DB.prepare(
         "UPDATE users SET email_lookup = ?, email_enc = ?, email = ? WHERE id = ?"
@@ -677,7 +669,7 @@ async function handleLogin(request, env, cors) {
 
 async function handleMe(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
   // Sliding session: bump the current token's expiry on every /api/me call.
   const auth = request.headers.get("Authorization") || "";
   const m = auth.match(/^Bearer\s+([a-f0-9]{32,})$/i);
@@ -711,17 +703,16 @@ async function handleLogout(request, env, cors) {
 
 async function handleAccountDelete(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
-  // Admin delete and demote already refused to remove the last admin;
-  // self-delete did not, and registration is invite-only, so the last
-  // admin deleting their own account left nobody able to let anyone in.
+  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
+  // Registration is invite-only, so if the last admin deletes their own
+  // account nobody can let anyone in. Same guard as admin delete/demote.
   const lastAdminMsg = "You are the last admin. Promote someone else before deleting this account.";
   if (user.is_admin && !(await hasAnotherAdmin(env, user.id))) {
-    return json({ ok: false, error: lastAdminMsg }, 409, cors);
+    return fail("last_admin", lastAdminMsg, 409, cors);
   }
   if (!(await deleteUserGuarded(env, user.id))) {
     // The guard in the DELETE lost a race with another admin removal.
-    return json({ ok: false, error: lastAdminMsg }, 409, cors);
+    return fail("last_admin", lastAdminMsg, 409, cors);
   }
   return json({ ok: true }, 200, cors);
 }
@@ -750,7 +741,7 @@ async function deleteUserGuarded(env, id) {
 
 async function handleAdminListUsers(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
+  if (!user || !user.is_admin) return fail("not_admin", "Admin only.", 403, cors);
   const { results } = await env.DB.prepare(
     "SELECT u.id, u.email, u.email_enc, u.display_name, u.is_admin, u.created_at, " +
     "u.last_seen_at, u.invited_via, COUNT(a.question_id) AS answers " +
@@ -763,11 +754,14 @@ async function handleAdminListUsers(request, env, cors) {
   for (const r of (results || [])) {
     let email = r.email;
     if (r.email_enc) {
-      try { email = await fieldDecrypt(env, r.email_enc); } catch {}
+      try {
+        email = await fieldDecrypt(env, r.email_enc);
+      } catch (e) {
+        // The row keeps its placeholder email; a failure here usually
+        // means EMAIL_ENC_KEY changed or the ciphertext is damaged.
+        console.warn("admin users: email decrypt failed for", r.id, e && e.message);
+      }
     }
-    // last_seen_at is written on every /api/me but was never selected,
-    // so the panel showed "never" for an account that signed in a
-    // minute ago.
     out.push({ id: r.id, email, display_name: r.display_name, is_admin: r.is_admin,
                created_at: r.created_at, last_seen_at: r.last_seen_at,
                invited_via: r.invited_via, answers: r.answers });
@@ -777,36 +771,36 @@ async function handleAdminListUsers(request, env, cors) {
 
 async function handleAdminDeleteUser(request, env, cors, targetId) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
-  if (!targetId || typeof targetId !== "string") return json({ ok: false, error: "missing user id" }, 400, cors);
-  if (targetId === user.id) return json({ ok: false, error: "use /api/account/delete to remove your own account" }, 400, cors);
+  if (!user || !user.is_admin) return fail("not_admin", "Admin only.", 403, cors);
+  if (!targetId || typeof targetId !== "string") return fail("bad_request", "Missing user id.", 400, cors);
+  if (targetId === user.id) return fail("self_target", "Use /api/account/delete to remove your own account.", 400, cors);
   // Refuse to remove the last remaining admin, so the instance cannot be
   // left with nobody who can administer it.
   const target = await env.DB.prepare("SELECT is_admin FROM users WHERE id = ?").bind(targetId).first();
-  if (!target) return json({ ok: false, error: "no such user" }, 404, cors);
+  if (!target) return fail("user_not_found", "No such user.", 404, cors);
   if (target.is_admin && !(await hasAnotherAdmin(env, targetId))) {
-    return json({ ok: false, error: "that is the last admin account" }, 409, cors);
+    return fail("last_admin", "That is the last admin account.", 409, cors);
   }
   if (!(await deleteUserGuarded(env, targetId))) {
     // Gone already, or a concurrent removal took the other admin.
     const still = await env.DB.prepare("SELECT is_admin FROM users WHERE id = ?").bind(targetId).first();
-    if (!still) return json({ ok: false, error: "no such user" }, 404, cors);
-    return json({ ok: false, error: "that is the last admin account" }, 409, cors);
+    if (!still) return fail("user_not_found", "No such user.", 404, cors);
+    return fail("last_admin", "That is the last admin account.", 409, cors);
   }
   return json({ ok: true }, 200, cors);
 }
 
 async function handleAdminPromote(request, env, cors, targetId, makeAdmin) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
-  if (!targetId) return json({ ok: false, error: "missing user id" }, 400, cors);
-  if (targetId === user.id && !makeAdmin) return json({ ok: false, error: "cannot demote yourself" }, 400, cors);
+  if (!user || !user.is_admin) return fail("not_admin", "Admin only.", 403, cors);
+  if (!targetId) return fail("bad_request", "Missing user id.", 400, cors);
+  if (targetId === user.id && !makeAdmin) return fail("self_target", "You cannot demote your own account.", 400, cors);
   if (!makeAdmin && !(await hasAnotherAdmin(env, targetId))) {
-    return json({ ok: false, error: "that is the last admin account" }, 409, cors);
+    return fail("last_admin", "That is the last admin account.", 409, cors);
   }
   if (makeAdmin) {
     const res = await env.DB.prepare("UPDATE users SET is_admin = 1 WHERE id = ?").bind(targetId).run();
-    if (!res.meta || res.meta.changes !== 1) return json({ ok: false, error: "no such user" }, 404, cors);
+    if (!res.meta || res.meta.changes !== 1) return fail("user_not_found", "No such user.", 404, cors);
     return json({ ok: true }, 200, cors);
   }
   // The check above is advisory. Two admins demoting each other at once
@@ -817,8 +811,8 @@ async function handleAdminPromote(request, env, cors, targetId, makeAdmin) {
   ).bind(targetId, targetId).run();
   if (!res.meta || res.meta.changes !== 1) {
     const still = await env.DB.prepare("SELECT is_admin FROM users WHERE id = ?").bind(targetId).first();
-    if (!still) return json({ ok: false, error: "no such user" }, 404, cors);
-    return json({ ok: false, error: "that is the last admin account" }, 409, cors);
+    if (!still) return fail("user_not_found", "No such user.", 404, cors);
+    return fail("last_admin", "That is the last admin account.", 409, cors);
   }
   return json({ ok: true }, 200, cors);
 }
@@ -842,22 +836,22 @@ async function hasAnotherAdmin(env, exceptId) {
  */
 async function handlePasswordChange(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
   const body = await request.json().catch(() => null);
   // str(), as on register and login: `{"new_password": {}}` passed the
   // length check (undefined < 8 is false) and set the password to the
   // literal "[object Object]".
   const current = str(body && body.current_password);
   const next = str(body && body.new_password);
-  if (next.length < 8) return json({ ok: false, error: "new password must be 8+ characters" }, 400, cors);
-  if (next.length > 1024 || current.length > 1024) return json({ ok: false, error: "password too long" }, 400, cors);
+  if (next.length < 8) return fail("password_short", "New password needs at least 8 characters.", 400, cors);
+  if (next.length > 1024 || current.length > 1024) return fail("password_long", "Password is over 1024 characters.", 400, cors);
 
   // Budget before the Argon2id pass. With none, a stolen bearer token
   // could guess the current password as fast as the worker answered,
   // each guess costing a full Argon2id run.
   const pwKey = "pw:" + user.id;
   if (await overBudget(env, pwKey, PW_CHANGE_WINDOW_SEC, PW_CHANGE_MAX)) {
-    return json({ ok: false, error: "too many attempts, try again later" }, 429, cors);
+    return fail("password_rate", "Too many password-change attempts. Try again later.", 429, cors);
   }
   await noteAttempt(env, pwKey);
 
@@ -865,7 +859,7 @@ async function handlePasswordChange(request, env, cors) {
     "SELECT password_hash, password_salt, pw_algo FROM users WHERE id = ?"
   ).bind(user.id).first();
   if (!row || !(await verifyPassword(current, row))) {
-    return json({ ok: false, error: "current password is wrong" }, 403, cors);
+    return fail("password_wrong", "Current password is wrong.", 403, cors);
   }
 
   const saltBytes = randomBytes(16);
@@ -891,13 +885,13 @@ async function handlePasswordChange(request, env, cors) {
  */
 async function handleRevokeSessions(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
   const m = (request.headers.get("Authorization") || "").match(/^Bearer\s+([a-f0-9]{32,})$/i);
   const keep = m ? await hashSessionToken(env, m[1]) : "";
   const res = await env.DB.prepare(
     // token_hash IS NULL too: pre-schema_002 rows have no hash, and in SQL
-    // NULL != 'x' is NULL, not true, so they survived and the count
-    // reported back was short.
+    // NULL != 'x' is NULL, not true, so without it they survive and the
+    // count reported back is short.
     "DELETE FROM sessions WHERE user_id = ? AND (token_hash IS NULL OR token_hash != ?)"
   ).bind(user.id, keep).run();
   return json({ ok: true, revoked: (res.meta && res.meta.changes) || 0 }, 200, cors);
@@ -908,7 +902,7 @@ async function handleRevokeSessions(request, env, cors) {
  */
 async function handleAdminListInvites(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
+  if (!user || !user.is_admin) return fail("not_admin", "Admin only.", 403, cors);
   const rows = await env.DB.prepare(
     `SELECT i.code_hash, i.code_hint, i.code_enc, i.label, i.created_at, i.expires_at,
             i.used_at, i.revoked_at, u.display_name AS used_by_name
@@ -936,7 +930,7 @@ async function handleAdminListInvites(request, env, cors) {
 
 async function handleAdminCreateInvite(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
+  if (!user || !user.is_admin) return fail("not_admin", "Admin only.", 403, cors);
   requireEncryptionEnv(env);
   const body = await request.json().catch(() => null);
   const label = str(body && body.label).trim().slice(0, 80);
@@ -957,21 +951,21 @@ async function handleAdminCreateInvite(request, env, cors) {
 
 async function handleAdminRevokeInvite(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
+  if (!user || !user.is_admin) return fail("not_admin", "Admin only.", 403, cors);
   const body = await request.json().catch(() => null);
   const codeHash = (body && body.code_hash) || "";
-  if (!/^[a-f0-9]{64}$/.test(codeHash)) return json({ ok: false, error: "bad code" }, 400, cors);
+  if (!/^[a-f0-9]{64}$/.test(codeHash)) return fail("bad_request", "code_hash must be 64 hex characters.", 400, cors);
   const res = await env.DB.prepare(
     "UPDATE invite_codes SET revoked_at = ?, code_enc = NULL " +
     "WHERE code_hash = ? AND used_by IS NULL AND used_at IS NULL AND revoked_at IS NULL"
   ).bind(Math.floor(Date.now() / 1000), codeHash).run();
-  if (!res.meta || res.meta.changes !== 1) return json({ ok: false, error: "already used or revoked" }, 409, cors);
+  if (!res.meta || res.meta.changes !== 1) return fail("invite_spent", "That invite is already used or revoked.", 409, cors);
   return json({ ok: true }, 200, cors);
 }
 
 async function handleAdminQuality(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
+  if (!user || !user.is_admin) return fail("not_admin", "Admin only.", 403, cors);
   // Worst-performing questions: at least 5 answers, lowest correct-rate first.
   const { results: worst } = await env.DB.prepare(
     "SELECT question_id, COUNT(*) AS n, SUM(correct) AS c FROM answers GROUP BY question_id HAVING n >= 5 ORDER BY (1.0 * c / n) ASC, n DESC LIMIT 50"
@@ -986,26 +980,26 @@ async function handleAdminQuality(request, env, cors) {
 
 async function handleAnswer(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
   const body = await request.json().catch(() => null);
   const qid = body && body.question_id;
   const srcLetter = body && body.source_letter;
   const correct = body && body.correct ? 1 : 0;
   if (typeof qid !== "string" || !/^[A-Za-z0-9_\-]+$/.test(qid) || qid.length > 200) {
-    return json({ ok: false, error: "bad question_id" }, 400, cors);
+    return fail("bad_request", "Bad question_id.", 400, cors);
   }
-  // String.includes is a SUBSTRING test, so the old check passed "",
-  // "AB", "BCD" and "ABCDE" straight into a TEXT NOT NULL column that
-  // exists so cross-user aggregates compare like for like. The rows are
-  // upserted, so a junk value stuck until the user answered again.
+  // Length 1 first: String.includes is a substring test, so "", "AB" and
+  // "ABCDE" would pass on their own. The column exists so cross-user
+  // aggregates compare like for like, and an upserted junk value stays
+  // until the user answers again.
   if (typeof srcLetter !== "string" || srcLetter.length !== 1 || !"ABCDE".includes(srcLetter)) {
-    return json({ ok: false, error: "source_letter must be a single letter A-E" }, 400, cors);
+    return fail("bad_request", "source_letter must be a single letter A-E.", 400, cors);
   }
   const now = Math.floor(Date.now() / 1000);
-  // A client replaying its offline outbox sends `at` (ms, when the answer
-  // was given) and `n` (attempts not yet posted). Clamped: never in the
-  // future, never older than 90 days, n between 1 and 50. A live post
-  // sends neither and behaves as before.
+  // `at` (ms, when the answer was given) and `n` (attempts since the last
+  // successful post) come from the client outbox, which every answer goes
+  // through. Clamped: not in the future, not older than 90 days, n in
+  // 1-50. Missing values default to now and 1.
   const atRaw = Number(body && body.at);
   const at = Number.isFinite(atRaw) && atRaw > 0
     ? Math.max(now - 90 * 86400, Math.min(now, Math.floor(atRaw / 1000)))
@@ -1038,7 +1032,7 @@ async function handleAnswer(request, env, cors) {
  * incorrect filters AND per-Q attempt counters survive a fresh browser. */
 async function handleHistory(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
   const history = await readHistory(env, user.id);
   return json({ ok: true, history }, 200, cors);
 }
@@ -1060,9 +1054,7 @@ async function readHistory(env, userId) {
       lastCorrect: !!r.correct,
       count: r.attempt_count || 1,
       last_at: (r.ts || 0) * 1000,
-      // Milliseconds, like last_at. It was seconds, sitting next to a
-      // millisecond field in the same record, which is a trap for the
-      // first caller that compares them.
+      // Milliseconds, like last_at, so the two compare directly.
       updated_at: (r.updated_at || r.ts || 0) * 1000,
     };
   }
@@ -1074,7 +1066,7 @@ async function readHistory(env, userId) {
  * first paint. */
 async function handleState(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
   const [history, flags, settings] = await Promise.all([
     readHistory(env, user.id),
     readFlags(env, user.id),
@@ -1104,12 +1096,12 @@ async function readSettings(env, userId) {
 /* /api/flag: body { question_id, on } - toggles a per-user star. */
 async function handleFlag(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
   const body = await request.json().catch(() => null);
   const qid = body && body.question_id;
   const on  = !!(body && body.on);
   if (typeof qid !== "string" || !/^[A-Za-z0-9_\-]+$/.test(qid) || qid.length > 200) {
-    return json({ ok: false, error: "bad question_id" }, 400, cors);
+    return fail("bad_request", "Bad question_id.", 400, cors);
   }
   const now = Math.floor(Date.now() / 1000);
   if (on) {
@@ -1131,15 +1123,15 @@ async function handleFlag(request, env, cors) {
  * partial updates would race in multi-device scenarios. */
 async function handleSettings(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
+  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
   const body = await request.json().catch(() => null);
   const settings = body && body.settings;
   if (!settings || typeof settings !== "object" || Array.isArray(settings)) {
-    return json({ ok: false, error: "settings object required" }, 400, cors);
+    return fail("bad_request", "A settings object is required.", 400, cors);
   }
   const serialized = JSON.stringify(settings);
   if (serialized.length > 10000) {
-    return json({ ok: false, error: "settings too large" }, 400, cors);
+    return fail("settings_too_large", "Settings are too large.", 400, cors);
   }
   const now = Math.floor(Date.now() / 1000);
   await env.DB.prepare(
@@ -1172,18 +1164,64 @@ function json(obj, status, extraHeaders) {
   });
 }
 
+/* Error responses: { ok: false, code, error, ...extra }. `code` is stable
+ * and is what the client maps to its own wording; `error` is a plain
+ * English line for logs, curl and older clients. Codes:
+ *
+ *   payload_too_large    413  body over MAX_BODY_BYTES
+ *   method_not_allowed   405  GET on a POST-only route
+ *   not_found            404  unknown route
+ *   server_error         500  unhandled throw; `ref` matches a log line
+ *   server_unconfigured  500  D1 binding missing
+ *   signup_rate          429  too many sign-ups from this address (1 h window)
+ *   email_format         400  email fails the format check
+ *   password_short       400  under 8 characters (sign-up, password change)
+ *   password_long        400  over 1024 characters
+ *   invite_required      400  sign-up without an invite code
+ *   invite_invalid       403  code unknown, used, revoked or expired
+ *   email_taken          409  an account already uses the email
+ *   credentials_missing  400  sign-in without email or password
+ *   login_rate           429  too many sign-ins from this address (15 min window)
+ *   login_locked         429  too many failures for this email; `retry_after` = seconds
+ *   credentials_wrong    401  email or password wrong
+ *   session_expired      401  no valid session token (signed out, expired, revoked)
+ *   not_admin            401/403  admin-only route without an admin session
+ *   last_admin           409  would leave no admin (delete, demote, self-delete)
+ *   user_not_found       404  admin action on an id that does not exist
+ *   self_target          400  admin delete/demote aimed at the caller's own account
+ *   password_rate        429  too many password-change attempts (15 min window)
+ *   password_wrong       403  current password wrong on password change
+ *   invite_spent         409  revoking an invite already used or revoked
+ *   settings_too_large   400  settings blob over the size cap
+ *   bad_request          400  malformed body or field; `error` names the field
+ *   report_short         400  report text under 3 characters
+ *   report_long          413  report text over REPORT_ISSUE_MAX
+ *   report_rate          429  too many reports from this address (1 h window)
+ *   report_daily         429  global daily report budget spent
+ *   report_queue_full    413/429  open-report count or file size cap reached
+ *   batch_too_large      400  more than MAX_REPORT_RESOLUTIONS resolutions
+ *   audit_mismatch       409  audited ids no longer match the file on GitHub
+ *   github_read_failed   502  could not read the bank from GitHub; nothing changed
+ *   reports_not_closed   500  question edits landed, reports.json did not; `ref`, `outcomes`
+ */
+function fail(code, error, status, cors, extra) {
+  return json({ ok: false, code, error, ...(extra || {}) }, status, cors);
+}
+
 /* ── /paste ──────────────────────────────────────────────────────────── */
 
 async function handlePaste(request, env, cors) {
   const user = await authUser(request, env);
   if (!user || !user.is_admin) {
-    return json({ ok: false, error: "admin session required" }, 401, cors);
+    return fail("not_admin", "Admin only.", 401, cors);
   }
   const body = await request.json().catch(() => null);
   const questions = body && body.questions;
   if (!Array.isArray(questions) || !questions.length) {
-    return json({ ok: false, error: "expected non-empty `questions` array" }, 400, cors);
+    return fail("bad_request", "Expected a non-empty `questions` array.", 400, cors);
   }
+  const unservable = unservableResponse(questions, cors);
+  if (unservable) return unservable;
   // Stamp every pasted question with the user-supplied model attribution
   // (best-effort - the user picks from a dropdown in the paste UI).
   if (body.model) {
@@ -1228,7 +1266,7 @@ async function handleReport(request, env, cors) {
       "SELECT COUNT(*) AS n FROM login_attempts WHERE email_lookup = ? AND ts > ?"
     ).bind(key, now - windowSec).first();
     if (row && row.n >= limit) {
-      return json({ ok: false, error: "too many reports, try later" }, 429, cors);
+      return fail("report_rate", "Too many reports from this address this hour. Try again later.", 429, cors);
     }
     await env.DB.prepare(
       "INSERT INTO login_attempts (email_lookup, ts, ok, ip_hash) VALUES (?, ?, 1, ?)"
@@ -1239,20 +1277,20 @@ async function handleReport(request, env, cors) {
   const qid = body && body.question_id;
   const issue = body && body.issue;
   if (!qid || typeof qid !== "string") {
-    return json({ ok: false, error: "missing question_id" }, 400, cors);
+    return fail("bad_request", "Missing question_id.", 400, cors);
   }
   if (!issue || typeof issue !== "string" || issue.trim().length < 3) {
-    return json({ ok: false, error: "issue text too short" }, 400, cors);
+    return fail("report_short", "Report text is too short.", 400, cors);
   }
   if (issue.length > REPORT_ISSUE_MAX) {
-    return json({ ok: false, error: `Report is too long. Keep it under ${REPORT_ISSUE_MAX} characters.` }, 413, cors);
+    return fail("report_long", `Report is too long. Keep it under ${REPORT_ISSUE_MAX} characters.`, 413, cors);
   }
-  // The per-IP limit alone let a handful of addresses grow reports.json
+  // The per-IP limit alone lets a handful of addresses grow reports.json
   // past the Contents API's 1 MB inline limit, after which every /report
-  // and /apply-report failed until the file was trimmed by hand. A global
+  // and /apply-report fails until the file is trimmed by hand. A global
   // daily budget and the open-count and size caps below bound it.
   if (await overBudget(env, "report:global", 86400, REPORT_GLOBAL_DAY_MAX)) {
-    return json({ ok: false, error: "Too many reports today. Try again tomorrow." }, 429, cors);
+    return fail("report_daily", "Too many reports today. Try again tomorrow.", 429, cors);
   }
 
   const entry = {
@@ -1260,9 +1298,8 @@ async function handleReport(request, env, cors) {
     question_id:  qid.slice(0, 200),
     issue:        issue,
     profile:      (str(body.profile) || "guest").slice(0, 40),
-    // The only field here that was neither type-checked nor capped, in
-    // the one endpoint that takes an unauthenticated body and commits it
-    // to a file in the repo.
+    // Type-checked and capped like every other field: this endpoint takes
+    // an unauthenticated body and commits it to a file in the repo.
     model:        str(body.model).slice(0, 80) || null,
     created:      new Date().toISOString(),
     status:       "open",
@@ -1282,7 +1319,7 @@ async function handleReport(request, env, cors) {
     if (!(e instanceof ReportsFull)) throw e;
   });
   if (full) {
-    return json({ ok: false, error: "The report queue is full. Try again once the open reports have been reviewed." },
+    return fail("report_queue_full", "The report queue is full. Try again once the open reports have been reviewed.",
       full === "size" ? 413 : 429, cors);
   }
   await noteAttempt(env, "report:global");
@@ -1319,22 +1356,25 @@ const TOPIC_TO_FILE = {
 async function handleApplyAudit(request, env, cors) {
   const user = await authUser(request, env);
   if (!user || !user.is_admin) {
-    return json({ ok: false, error: "admin session required" }, 401, cors);
+    return fail("not_admin", "Admin only.", 401, cors);
   }
   const body = await request.json().catch(() => null);
   const audit = body && body.audit;
   const batchPath = body && body.batch_path;   // e.g. "inbox/pasted-...json"
   if (!audit || !Array.isArray(audit.kept) || !Array.isArray(audit.dropped)) {
-    return json({ ok: false, error: "expected { batch_path, audit: { kept[], dropped[] } }" }, 400, cors);
+    return fail("bad_request", "Expected { batch_path, audit: { kept[], dropped[] } }.", 400, cors);
   }
   // batch_path is written to as `data/<batch_path>` with "[]" below, so it
-  // needs the same allowlist its sibling /apply-live-audit already has.
-  // Unvalidated, `"questions_paeds.json"` emptied the live paediatrics
-  // bank in one commit, and `"../.github/workflows/x.yml"` survived
+  // needs an allowlist: `"questions_paeds.json"` would empty the live
+  // paediatrics bank, and `"../.github/workflows/x.yml"` survives
   // ghPutFile's encoder (encodeURIComponent leaves "." alone).
   if (batchPath && !/^inbox\/[a-zA-Z0-9._-]+\.json$/.test(batchPath)) {
-    return json({ ok: false, error: "batch_path must be inbox/<name>.json" }, 400, cors);
+    return fail("bad_request", "batch_path must be inbox/<name>.json.", 400, cors);
   }
+  // The inbox file is emptied below, so a kept question that fails here
+  // (an unknown topic included) would be lost rather than promoted.
+  const unservable = unservableResponse(audit.kept, cors);
+  if (unservable) return unservable;
   const moved = { Paediatrics: 0, "Obstetrics & Gynaecology": 0, Psychiatry: 0, Medicine: 0, _unknown: 0 };
 
   // Bucket kept questions by topic.
@@ -1386,22 +1426,17 @@ async function handleApplyAudit(request, env, cors) {
  *    is authoritative for that file's contents).
  *  - Appends summary + dropped[] to data/audit_log.md.
  */
-const ALLOWED_LIVE_FILES = new Set([
-  "data/questions_paeds.json",
-  "data/questions_obgyn.json",
-  "data/questions_psych.json",
-  "data/questions_medicine.json",
-]);
+const ALLOWED_LIVE_FILES = new Set(Object.values(TOPIC_TO_FILE));
 async function handleApplyLiveAudit(request, env, cors) {
   const user = await authUser(request, env);
   if (!user || !user.is_admin) {
-    return json({ ok: false, error: "admin session required" }, 401, cors);
+    return fail("not_admin", "Admin only.", 401, cors);
   }
   const body = await request.json().catch(() => null);
   const filePath = body && body.file_path;
   const audit = body && body.audit;
   if (!filePath || typeof filePath !== "string") {
-    return json({ ok: false, error: "missing file_path" }, 400, cors);
+    return fail("bad_request", "Missing file_path.", 400, cors);
   }
   // Strict allowlist regex for batch paths: only a flat filename directly
   // under data/batches/, alphanumerics + . _ -, ending in .json. Blocks any
@@ -1410,15 +1445,17 @@ async function handleApplyLiveAudit(request, env, cors) {
                   && !filePath.startsWith("data/batches/_");
   const isMain = ALLOWED_LIVE_FILES.has(filePath);
   if (!isBatch && !isMain) {
-    return json({ ok: false, error: "file_path must be data/batches/*.json or a main questions file" }, 400, cors);
+    return fail("bad_request", "file_path must be data/batches/*.json or a main questions file.", 400, cors);
   }
   if (!audit || !Array.isArray(audit.kept) || !Array.isArray(audit.dropped)) {
-    return json({ ok: false, error: "expected audit.kept[] and audit.dropped[]" }, 400, cors);
+    return fail("bad_request", "Expected audit.kept[] and audit.dropped[].", 400, cors);
   }
+  const unservable = unservableResponse(audit.kept, cors);
+  if (unservable) return unservable;
   // The audit replaces the whole file, so it has to account for every
-  // question in it. A model that returned a truncated or partial kept[]
-  // used to delete every question it left out, with no drop reason and
-  // no log line. Checked against the file as it is at write time.
+  // question in it; otherwise a truncated kept[] from the model deletes
+  // every question it left out, with no drop reason. Checked against the
+  // file as it is at write time.
   let mismatch = null;
   let text;
   try {
@@ -1436,7 +1473,7 @@ async function handleApplyLiveAudit(request, env, cors) {
       throw e;
     }
   }
-  if (mismatch) return json({ ok: false, error: mismatch }, 409, cors);
+  if (mismatch) return fail("audit_mismatch", mismatch, 409, cors);
   await refreshManifestHashes(env, new Map([[filePath, text]]));
 
   const stamp = new Date().toISOString();
@@ -1487,13 +1524,11 @@ function auditIdMismatch(original, kept, dropped) {
  *  - Looks for each fix/drop question in every file loadData() in
  *    app.js serves the bank from: the four main files, then every file
  *    listed in batches_manifest.json and inbox_manifest.json. The main
- *    files hold under 1% of the bank, and they were the only place this
- *    used to look.
+ *    files hold under 1% of the bank.
  *  - Replaces (fix) or removes (drop) it in every file that holds it, so
  *    a duplicate further down the load order cannot resurface.
  *  - Only then writes reports.json, closing a report only when its edit
- *    landed or it was dismissed. It used to close every report first, so
- *    a fix that matched nothing still read "fixed" and left the open list.
+ *    landed or it was dismissed, so a fix that matched nothing stays open.
  *  - Returns counts, missed_ids, and one entry per resolution in
  *    `outcomes` (fixed | dropped | dismissed | missed | failed | invalid).
  */
@@ -1503,15 +1538,15 @@ class NoChange extends Error {}
 async function handleApplyReport(request, env, cors) {
   const user = await authUser(request, env);
   if (!user || !user.is_admin) {
-    return json({ ok: false, error: "admin session required" }, 401, cors);
+    return fail("not_admin", "Admin only.", 401, cors);
   }
   const body = await request.json().catch(() => null);
   const resolutions = body && body.resolutions;
   if (!Array.isArray(resolutions) || !resolutions.length) {
-    return json({ ok: false, error: "expected non-empty `resolutions` array" }, 400, cors);
+    return fail("bad_request", "Expected a non-empty `resolutions` array.", 400, cors);
   }
   if (resolutions.length > MAX_REPORT_RESOLUTIONS) {
-    return json({ ok: false, error: `Too many resolutions. Apply at most ${MAX_REPORT_RESOLUTIONS} at a time.` }, 400, cors);
+    return fail("batch_too_large", `Too many resolutions. Apply at most ${MAX_REPORT_RESOLUTIONS} at a time.`, 400, cors);
   }
 
   // One outcome per resolution, in request order.
@@ -1547,7 +1582,7 @@ async function handleApplyReport(request, env, cors) {
       paths = await bankFilePaths(env);
     } catch (e) {
       console.error("apply-report manifest read failed:", e && e.stack || e);
-      return json({ ok: false, error: `Could not read the bank from GitHub (${e && e.message}). Nothing was changed.` }, 502, cors);
+      return fail("github_read_failed", `Could not read the bank from GitHub (${e && e.message}). Nothing was changed.`, 502, cors);
     }
     const known = new Set(paths);
     const hinted = new Map();   // path -> Set of question ids
@@ -1568,7 +1603,7 @@ async function handleApplyReport(request, env, cors) {
       } catch (e) {
         console.error("apply-report scan failed:", e && e.stack || e);
         if (!edits.some(x => x.o.files.length)) {
-          return json({ ok: false, error: `Could not read the bank from GitHub (${e && e.message}). Nothing was changed.` }, 502, cors);
+          return fail("github_read_failed", `Could not read the bank from GitHub (${e && e.message}). Nothing was changed.`, 502, cors);
         }
         for (const x of rest) x.o.failedFiles = ["(bank scan failed)"];
         where = new Map();
@@ -1657,8 +1692,9 @@ async function closeReports(env, cors, resolutions, outcomes) {
     } catch (e) {
       const ref = randomHex(4);
       console.error("[" + ref + "] apply-report reports.json write failed:", e && e.stack || e);
-      return json({ ok: false, ref, outcomes,
-        error: "The question edits landed, but reports.json could not be updated. Close those reports by hand." }, 500, cors);
+      return fail("reports_not_closed",
+        "The question edits landed, but reports.json could not be updated. Close those reports by hand.", 500, cors,
+        { ref, outcomes });
     }
   }
 
@@ -1673,12 +1709,34 @@ async function closeReports(env, cors, resolutions, outcomes) {
   }, 200, cors);
 }
 
-// The same test loadData() applies before it will serve a question.
+// isServable() in assets/app.js, rule for rule: the client drops any
+// question that fails it, so a write that accepts one loses it silently.
+// Returns the first failing rule, or null when the question is servable.
+const SERVABLE_TOPICS = Object.keys(TOPIC_TO_FILE);
+function servableProblem(q) {
+  if (!q || !q.id) return "no id";
+  if (typeof q.stem !== "string") return "no stem";
+  if (!SERVABLE_TOPICS.includes(q.topic)) return "topic not one of " + SERVABLE_TOPICS.join(", ");
+  if (!Number.isInteger(q.difficulty) || q.difficulty < 1 || q.difficulty > 5) return "difficulty not an integer 1-5";
+  if (!Array.isArray(q.options) || q.options.length < 2) return "fewer than 2 options";
+  if (!q.options.every(o => o && typeof o === "object")) return "an option is not an object";
+  if (q.options.filter(o => o.correct === true).length !== 1) return "not exactly one correct option";
+  return null;
+}
 function isServableQuestion(q) {
-  return !!(q && typeof q === "object" && typeof q.id === "string" && q.id &&
-    typeof q.stem === "string" && Array.isArray(q.options) && q.options.length >= 2 &&
-    q.options.every(o => o && typeof o === "object") &&
-    q.options.filter(o => o.correct === true).length === 1);
+  return servableProblem(q) === null;
+}
+// A 400 naming the first few questions that would not be served, or null.
+function unservableResponse(questions, cors) {
+  const bad = [];
+  questions.forEach((q, i) => {
+    const why = servableProblem(q);
+    if (why) bad.push(`${(q && q.id) || "#" + (i + 1)}: ${why}`);
+  });
+  if (!bad.length) return null;
+  return fail("bad_request",
+    `${bad.length} question(s) would not be served. Nothing was written: ` +
+    bad.slice(0, 5).join("; ") + (bad.length > 5 ? `; +${bad.length - 5} more` : "") + ".", 400, cors);
 }
 
 // Every file the client loads the bank from, in its load order.
@@ -1742,10 +1800,9 @@ async function ghReadRaw(env, path) {
 async function ghMutateJson(env, path, mutator, message) {
   for (let attempt = 0; attempt < 3; attempt++) {
     const branch = env.GITHUB_BRANCH || "main";
-    // A 200 we cannot parse used to leave `data` null while `sha` was
-    // already set, so the mutator ran against [] and the PUT succeeded
-    // with a valid sha - replacing the entire file with whatever the
-    // mutator produced. Fail closed: a 404 still creates the file, but a
+    // A 200 we cannot parse would leave `data` null with `sha` set, so
+    // the mutator would run against [] and the PUT would replace the
+    // whole file. Fail closed: a 404 still creates the file, but a
     // file that exists must read in full and parse before we overwrite
     // it. ghReadFile fetches blobs over 1 MB by sha (every consolidated
     // batch file is about 2 MB) and throws on anything short of that.
@@ -1951,7 +2008,8 @@ async function ghPutFile(env, path, content, message) {
 // day. Every helper below reads a file, changes it, and PUTs it back
 // with the sha it just fetched, so a read that quietly yields nothing
 // does not fail: it replaces the file with a one-entry version of
-// itself. ghMutateJson already refuses that; these did not.
+// itself. ghMutateJson refuses that through ghReadFile; these helpers
+// refuse it here.
 function ghInlineText(meta, path) {
   if (meta.encoding !== "base64" || !meta.content) {
     throw new Error(`refusing to rewrite ${path}: GitHub did not inline the content (blob over 1 MB?)`);

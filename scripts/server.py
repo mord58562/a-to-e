@@ -57,10 +57,10 @@ class Handler(SimpleHTTPRequestHandler):
     def _handle_paste(self):
         payload, err = self._read_json()
         if err:
-            return self._json(400, {"ok": False, "error": err})
+            return self._json(400, {"ok": False, "code": "bad_request", "error": err})
         questions = payload.get("questions")
         if not isinstance(questions, list) or not questions:
-            return self._json(400, {"ok": False, "error": "expected non-empty `questions` array"})
+            return self._json(400, {"ok": False, "code": "bad_request", "error": "expected non-empty `questions` array"})
         model = payload.get("model")
         if model:
             for q in questions:
@@ -97,13 +97,13 @@ class Handler(SimpleHTTPRequestHandler):
     def _handle_report(self):
         payload, err = self._read_json()
         if err:
-            return self._json(400, {"ok": False, "error": err})
+            return self._json(400, {"ok": False, "code": "bad_request", "error": err})
         qid = payload.get("question_id")
         issue = payload.get("issue")
         if not isinstance(qid, str) or not qid:
-            return self._json(400, {"ok": False, "error": "missing question_id"})
+            return self._json(400, {"ok": False, "code": "bad_request", "error": "missing question_id"})
         if not isinstance(issue, str) or len(issue.strip()) < 3:
-            return self._json(400, {"ok": False, "error": "issue text too short"})
+            return self._json(400, {"ok": False, "code": "report_short", "error": "issue text too short"})
         import secrets
         entry = {
             "id":           f"report-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}-{secrets.token_hex(2)}",
@@ -149,13 +149,13 @@ class Handler(SimpleHTTPRequestHandler):
     def _handle_apply_audit(self):
         payload, err = self._read_json()
         if err:
-            return self._json(400, {"ok": False, "error": err})
+            return self._json(400, {"ok": False, "code": "bad_request", "error": err})
         audit = payload.get("audit") or {}
         batch_path = payload.get("batch_path")    # "inbox/...json" or None
         kept = audit.get("kept") or []
         dropped = audit.get("dropped") or []
         if not isinstance(kept, list) or not isinstance(dropped, list):
-            return self._json(400, {"ok": False, "error": "audit.kept and audit.dropped must be arrays"})
+            return self._json(400, {"ok": False, "code": "bad_request", "error": "audit.kept and audit.dropped must be arrays"})
 
         moved = {"Paediatrics": 0, "Obstetrics & Gynaecology": 0, "Psychiatry": 0, "Medicine": 0, "_unknown": 0}
         buckets = {}
@@ -210,7 +210,7 @@ class Handler(SimpleHTTPRequestHandler):
     def _handle_apply_live_audit(self):
         payload, err = self._read_json()
         if err:
-            return self._json(400, {"ok": False, "error": err})
+            return self._json(400, {"ok": False, "code": "bad_request", "error": err})
         file_path = payload.get("file_path") or ""
         audit = payload.get("audit") or {}
         allowed_main = {
@@ -223,11 +223,11 @@ class Handler(SimpleHTTPRequestHandler):
                     and "/_" not in file_path)
         is_main = file_path in allowed_main
         if not (is_batch or is_main):
-            return self._json(400, {"ok": False, "error": "file_path must be data/batches/*.json or a main questions file"})
+            return self._json(400, {"ok": False, "code": "bad_request", "error": "file_path must be data/batches/*.json or a main questions file"})
         kept = audit.get("kept") or []
         dropped = audit.get("dropped") or []
         if not isinstance(kept, list) or not isinstance(dropped, list):
-            return self._json(400, {"ok": False, "error": "audit.kept and audit.dropped must be arrays"})
+            return self._json(400, {"ok": False, "code": "bad_request", "error": "audit.kept and audit.dropped must be arrays"})
         full = os.path.join(ROOT, file_path)
         # The audit replaces the whole file, so it must account for every
         # id in it (mirrors /apply-live-audit in the worker).
@@ -239,7 +239,7 @@ class Handler(SimpleHTTPRequestHandler):
         mismatch = (self._audit_mismatch(original, kept, dropped) if isinstance(original, list)
                     else "That file is missing or is not a question array.")
         if mismatch:
-            return self._json(409, {"ok": False, "error": mismatch})
+            return self._json(409, {"ok": False, "code": "audit_mismatch", "error": mismatch})
         with open(full, "w", encoding="utf-8") as f:
             json.dump(kept, f, indent=2, ensure_ascii=False)
             f.write("\n")
@@ -256,10 +256,10 @@ class Handler(SimpleHTTPRequestHandler):
     def _handle_apply_report(self):
         payload, err = self._read_json()
         if err:
-            return self._json(400, {"ok": False, "error": err})
+            return self._json(400, {"ok": False, "code": "bad_request", "error": err})
         resolutions = payload.get("resolutions") or []
         if not isinstance(resolutions, list) or not resolutions:
-            return self._json(400, {"ok": False, "error": "expected non-empty resolutions array"})
+            return self._json(400, {"ok": False, "code": "bad_request", "error": "expected non-empty resolutions array"})
 
         # Mirrors /apply-report in cloudflare-worker/src/worker.js: search
         # every file loadData() serves, edit every copy, and close a report
