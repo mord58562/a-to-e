@@ -1,0 +1,104 @@
+[
+ {
+  "id": "paeds-l4depth-002",
+  "topic": "Paediatrics",
+  "subtopic": "Endocrine",
+  "subtopic_detail": "Paediatric DKA: fluid plan and cerebral oedema",
+  "difficulty": 3,
+  "model": "Claude Opus 4.7 (1M context)",
+  "tags": [
+   "DKA",
+   "type 1 diabetes",
+   "fluid resuscitation"
+  ],
+  "stem": "A 9-year-old girl presents to a regional emergency department with 36 hours of vomiting, polyuria and progressive drowsiness. She is newly diagnosed with type 1 diabetes mellitus. She weighs 28 kg and is judged to be 8 percent dehydrated clinically. The closest paediatric endocrinology service is 4 hours away by road. The intern asks you to prescribe her IV fluid regimen for the first 48 hours.",
+  "data_table": {
+   "Vital signs": "HR 132, BP 96/58, RR 32 (Kussmaul), SpO2 99% room air, temperature 36.8 degrees C, GCS 14",
+   "Examination": "Dry mucous membranes, sunken eyes, capillary refill 3 seconds, peripheries cool, no focal neurology",
+   "Investigations": "Glucose 28 mmol/L, Na 138 mmol/L (corrected 142), K 4.1, urea 9.1, bicarbonate 6, pH 7.06, ketones 5.4 mmol/L"
+  },
+  "lead_in": "What is the most appropriate initial fluid plan?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Bolus 20 mL/kg 0.9% sodium chloride then maintenance plus 8% deficit over 24 hours",
+    "correct": false,
+    "rationale": "Replacing the deficit over 24 hours and giving a 20 mL/kg bolus delivers fluid too rapidly in paediatric DKA and is linked to cerebral oedema; the deficit should be spread over 48 hours and boluses limited. (Source: ISPAD 2022; RCH CPG: Diabetic ketoacidosis)",
+    "source_refs": [
+     "ISPAD 2022",
+     "RCH CPG: Diabetic ketoacidosis"
+    ]
+   },
+   {
+    "letter": "B",
+    "text": "Bolus 10 mL/kg 4% albumin then maintenance plus 5% deficit over 24 hours",
+    "correct": false,
+    "rationale": "Colloid offers no benefit over crystalloid in paediatric DKA and using a 5% deficit underestimates her clinically assessed 8% dehydration. (Source: ISPAD 2022)",
+    "source_refs": [
+     "ISPAD 2022"
+    ]
+   },
+   {
+    "letter": "C",
+    "text": "Bolus 20 mL/kg Hartmann's then 1.5 times maintenance with no deficit calculation",
+    "correct": false,
+    "rationale": "Failing to calculate the deficit underestimates volume needs and the large bolus carries the same cerebral oedema risk; Hartmann's is acceptable but the rate is wrong. (Source: ISPAD 2022)",
+    "source_refs": [
+     "ISPAD 2022"
+    ]
+   },
+   {
+    "letter": "D",
+    "text": "Start an insulin infusion at 0.1 unit/kg/hour with no separate fluid prescription",
+    "correct": false,
+    "rationale": "Insulin should not be started before adequate fluid resuscitation and not in the first hour; starting insulin alone fails to address hypoperfusion and risks rapid osmolar shift. (Source: ISPAD 2022; AMH Children's Dosing Companion)",
+    "source_refs": [
+     "ISPAD 2022",
+     "AMH Children's Dosing Companion"
+    ]
+   },
+   {
+    "letter": "E",
+    "text": "Bolus 10 mL/kg 0.9% sodium chloride then maintenance plus 8% deficit over 48 hours",
+    "correct": true,
+    "rationale": "A single 10 mL/kg bolus restores perfusion without precipitating cerebral oedema; the remaining deficit plus maintenance is run evenly over 48 hours per Australian and international paediatric DKA protocols. (Source: ISPAD 2022; RCH CPG: Diabetic ketoacidosis)",
+    "source_refs": [
+     "ISPAD 2022",
+     "RCH CPG: Diabetic ketoacidosis"
+    ]
+   }
+  ],
+  "explanation": {
+   "summary": "Paediatric DKA management balances rehydration against cerebral oedema risk. Australian and ISPAD protocols favour modest initial bolus volumes (10 mL/kg), spreading remaining deficit over 48 hours rather than 24, delaying insulin by at least an hour after fluids commence, and starting at 0.05 to 0.1 unit/kg/hour. Cerebral oedema risk factors include age under 5 years, new-onset diabetes, severe acidosis (pH under 7.1), low pCO2 and elevated urea. Recognising signs (headache, bradycardia, hypertension, falling GCS) and treating with hypertonic saline 3% 2.5 to 5 mL/kg are essential.",
+   "key_points": [
+    "Bolus 10 mL/kg only - repeat only if perfusion still inadequate",
+    "Spread deficit + maintenance over 48 hours, not 24",
+    "Start insulin at 0.05 to 0.1 unit/kg/hour, at least 1 hour after fluids",
+    "Monitor neurologically every hour for cerebral oedema",
+    "Hypertonic saline 3% 2.5 to 5 mL/kg is the first-line treatment for cerebral oedema"
+   ],
+   "pearls": "If pH is under 7.1, age under 5 years, or pCO2 under 18 mmHg, the cerebral oedema risk is roughly doubled - 2-hourly neuro obs are mandatory and hypertonic saline 3% must be drawn up at the bedside."
+  },
+  "sources": [
+   {
+    "label": "RCH CPG: Diabetic ketoacidosis",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/Diabetic_Ketoacidosis/"
+   },
+   {
+    "label": "AMH Children's Dosing Companion"
+   },
+   {
+    "label": "ISPAD 2022",
+    "url": "https://www.ispad.org/page/ISPADGuidelines2022"
+   }
+  ],
+  "reference_ranges": [
+   "bsl_paeds",
+   "uec",
+   "vbg",
+   "ketones"
+  ],
+  "created": "2026-05-21",
+  "difficulty_prior_v3": 4
+ }
+]

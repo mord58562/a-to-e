@@ -1,0 +1,275 @@
+[
+ {
+  "id": "sched-2026-09-05-p1-007",
+  "topic": "Psychiatry",
+  "subtopic": "Emergency psychiatry",
+  "subtopic_detail": "Tricyclic antidepressant overdose management",
+  "difficulty": 4,
+  "model": "Claude Opus 4.7 (1M context)",
+  "tags": [
+   "overdose",
+   "self-harm"
+  ],
+  "stem": "You are the emergency medicine registrar seeing a 32 year old man who took an unknown quantity of amitriptyline 3 hours ago after a relationship breakdown. He is drowsy but rousable, has warm dry skin, and dilated pupils. On arrival his pulse is 132, blood pressure 92/58 mmHg, respiratory rate 18, SpO2 98% room air, temperature 37.4. Venous blood gas shows pH 7.28, bicarbonate 18 mmol/L, potassium 3.6 mmol/L. Serum paracetamol is not detected.\n\nA 12 lead ECG shows sinus tachycardia at 132 with QRS duration 118 ms and a prominent terminal R wave in aVR of 4 mm. He becomes more difficult to rouse over the next 5 minutes. Intravenous access is established and cardiac monitoring is in place.",
+  "data_table": {
+   "Vital signs": "Pulse 132, BP 92/58, RR 18, SpO2 98% RA, temp 37.4",
+   "ECG": "Sinus tachycardia; QRS 118 ms; R wave aVR 4 mm",
+   "Venous gas": "pH 7.28; bicarbonate 18 mmol/L; potassium 3.6 mmol/L",
+   "Toxicology": "Paracetamol not detected; amitriptyline overdose 3 hours ago"
+  },
+  "lead_in": "What is the single most important immediate management step?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Administer intravenous flumazenil 0.2 mg to reverse tricyclic mediated central nervous system depression",
+    "correct": false,
+    "rationale": "Flumazenil reverses benzodiazepines, not tricyclics, and may precipitate seizures in the context of co-ingestion or established TCA toxicity (Source: eviQ Poisons Information / Toxicology Guidance).",
+    "source_refs": [
+     "eviQ Poisons Information / Toxicology Guidance"
+    ]
+   },
+   {
+    "letter": "B",
+    "text": "Give intravenous phenytoin 15 mg per kg over 30 minutes as prophylaxis against seizures and arrhythmia",
+    "correct": false,
+    "rationale": "Phenytoin is a sodium channel blocker in its own right and worsens tricyclic mediated conduction slowing; it is contraindicated in TCA toxicity (Source: Australian Toxicology Handbook - Murray, Little, Pascu).",
+    "source_refs": [
+     "Australian Toxicology Handbook - Murray, Little, Pascu"
+    ]
+   },
+   {
+    "letter": "C",
+    "text": "Perform gastric lavage now to remove residual amitriptyline from the stomach 3 hours post-ingestion",
+    "correct": false,
+    "rationale": "Gastric lavage is not recommended more than 1 to 2 hours after ingestion of most agents and its use in TCA overdose has never shown mortality benefit (Source: Australian Toxicology Handbook - Murray, Little, Pascu).",
+    "source_refs": [
+     "Australian Toxicology Handbook - Murray, Little, Pascu"
+    ]
+   },
+   {
+    "letter": "D",
+    "text": "Commence noradrenaline infusion titrated to mean arterial pressure above 65 mmHg via central access",
+    "correct": false,
+    "rationale": "Pressors have a role but only after correction of acidosis and sodium channel blockade; jumping to noradrenaline without sodium bicarbonate misses the primary toxicological intervention (Source: Australian Toxicology Handbook - Murray, Little, Pascu).",
+    "source_refs": [
+     "Australian Toxicology Handbook - Murray, Little, Pascu"
+    ]
+   },
+   {
+    "letter": "E",
+    "text": "Give intravenous sodium bicarbonate 100 mmol as a bolus and repeat guided by QRS narrowing and pH",
+    "correct": true,
+    "rationale": "QRS above 100 ms with R wave in aVR above 3 mm predicts arrhythmia and seizures in tricyclic toxicity; sodium bicarbonate boluses (1 to 2 mmol per kg) target QRS narrowing and blood pH of 7.45 to 7.55 by overcoming sodium channel blockade and alkalinising the plasma (Source: Australian Toxicology Handbook - Murray, Little, Pascu).",
+    "source_refs": [
+     "Australian Toxicology Handbook - Murray, Little, Pascu"
+    ]
+   }
+  ],
+  "explanation": {
+   "summary": "Tricyclic overdose kills through sodium channel blockade producing wide complex arrhythmia and seizures. QRS duration above 100 ms and an R wave in aVR above 3 mm both predict serious complications. Immediate management is sodium bicarbonate 1 to 2 mmol per kg boluses aiming to narrow QRS and lift plasma pH to 7.45 to 7.55, followed by intubation for airway protection, benzodiazepines for seizure prophylaxis, and vasopressors only after sodium loading has been optimised. Phenytoin, flumazenil, and gastric lavage are contraindicated or unhelpful. Intralipid is second line for cardiovascular collapse refractory to bicarbonate and pressors.",
+   "key_points": [
+    "QRS above 100 ms or R wave in aVR above 3 mm predict arrhythmia",
+    "Sodium bicarbonate 1 to 2 mmol per kg boluses target pH 7.45 to 7.55",
+    "Avoid phenytoin, class Ia and Ic antiarrhythmics, and flumazenil"
+   ],
+   "pearls": "In TCA cardiac arrest, hyperventilation and continuous sodium bicarbonate infusion form the mainstay; intralipid 20 percent 1.5 mL per kg bolus is reserved for arrest refractory to standard resuscitation and bicarbonate."
+  },
+  "sources": [
+   {
+    "label": "Australian Toxicology Handbook - Murray, Little, Pascu",
+    "url": "https://www.elsevier.com.au"
+   },
+   {
+    "label": "eviQ Poisons Information / Toxicology Guidance",
+    "url": "https://www.eviq.org.au"
+   }
+  ],
+  "reference_ranges": [
+   "abg",
+   "vbg"
+  ],
+  "created": "2026-09-05"
+ },
+ {
+  "id": "sched-2026-09-05-p1-020",
+  "topic": "Psychiatry",
+  "subtopic": "Anxiety disorders",
+  "subtopic_detail": "PTSD trauma-focused psychotherapy selection",
+  "difficulty": 3,
+  "model": "Claude Opus 4.7 (1M context)",
+  "tags": [
+   "PTSD",
+   "psychotherapy"
+  ],
+  "stem": "You are the general practice registrar seeing a 38 year old firefighter with 8 months of intrusive daily flashbacks and nightmares following a motor vehicle accident he attended where three people died. He avoids driving past the accident site, is hypervigilant to sirens, has developed insomnia, and lost interest in weekend sport. His PCL-5 score is 46. He drinks 6 standard drinks on Friday and Saturday evenings only; he has no personal or family history of psychotic illness or bipolar disorder.\n\nHis Clinician Administered PTSD Scale confirms DSM-5 PTSD diagnosis. Vital signs are within normal limits. Full blood count, TSH, and fasting glucose are unremarkable. His wife has separated from him and they have two young children he sees on weekends. He is currently on no psychotropic medication and asks specifically about talking therapies rather than tablets. He can commit to weekly attendance for 3 months.",
+  "data_table": {
+   "PTSD scores": "PCL-5 46; CAPS-5 confirms DSM-5 PTSD",
+   "Symptom duration": "8 months of intrusive daily flashbacks and nightmares",
+   "Alcohol": "6 standard drinks Friday and Saturday only",
+   "Comorbidities": "Insomnia; anhedonia; hypervigilance"
+  },
+  "lead_in": "Which is the single most appropriate primary psychological intervention to recommend now?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Non directive supportive counselling delivered weekly by a Medicare mental health social worker for 12 sessions",
+    "correct": false,
+    "rationale": "Supportive counselling has limited efficacy for established PTSD; trauma focused therapies achieve larger effect sizes and are the recommended first line (Source: Phoenix Australia Australian Guidelines for PTSD).",
+    "source_refs": [
+     "Phoenix Australia Australian Guidelines for PTSD"
+    ]
+   },
+   {
+    "letter": "B",
+    "text": "Psychoanalytic psychotherapy exploring childhood attachment patterns over 6 to 12 months of weekly sessions",
+    "correct": false,
+    "rationale": "Psychoanalytic psychotherapy is not a recommended first line treatment for PTSD; Phoenix Australia recommends short focused trauma work over longer non focused approaches (Source: Phoenix Australia Australian Guidelines for PTSD).",
+    "source_refs": [
+     "Phoenix Australia Australian Guidelines for PTSD"
+    ]
+   },
+   {
+    "letter": "C",
+    "text": "Trauma focused cognitive behaviour therapy or eye movement desensitisation and reprocessing across 8 to 12 sessions",
+    "correct": true,
+    "rationale": "Phoenix Australia's Australian Guidelines for PTSD recommend trauma focused CBT (including prolonged exposure and cognitive processing therapy) and EMDR as first line psychological treatments for PTSD, delivered by trained clinicians (Source: Phoenix Australia Australian Guidelines for PTSD).",
+    "source_refs": [
+     "Phoenix Australia Australian Guidelines for PTSD"
+    ]
+   },
+   {
+    "letter": "D",
+    "text": "Group debriefing single session for critical incident stress delivered within 72 hours of a related trauma trigger",
+    "correct": false,
+    "rationale": "Single session critical incident debriefing does not prevent PTSD and may worsen outcomes in some studies; it has no role in established PTSD management (Source: Phoenix Australia Australian Guidelines for PTSD).",
+    "source_refs": [
+     "Phoenix Australia Australian Guidelines for PTSD"
+    ]
+   },
+   {
+    "letter": "E",
+    "text": "Mindfulness only meditation practice via a downloadable app self directed for 8 weeks without clinician contact",
+    "correct": false,
+    "rationale": "App based mindfulness alone is not sufficient for established PTSD; it may be a helpful adjunct but not the primary intervention (Source: Phoenix Australia Australian Guidelines for PTSD).",
+    "source_refs": [
+     "Phoenix Australia Australian Guidelines for PTSD"
+    ]
+   }
+  ],
+  "explanation": {
+   "summary": "Phoenix Australia's Australian Guidelines for the Prevention and Treatment of Acute Stress Disorder, PTSD, and Complex PTSD recommend trauma focused cognitive behaviour therapy (including prolonged exposure, cognitive processing therapy) and eye movement desensitisation and reprocessing (EMDR) as first line psychological treatments for adults with PTSD, delivered by trained clinicians typically over 8 to 12 weekly sessions. Pharmacotherapy with sertraline, paroxetine, or venlafaxine is a first line pharmacological option and is considered when trauma focused therapy is not accessible, declined, or partially effective. Non specific supportive counselling and single session debriefing have limited or negative evidence.",
+   "key_points": [
+    "First line: TF-CBT (prolonged exposure, CPT) or EMDR",
+    "Typical course 8 to 12 weekly sessions by trained clinician",
+    "SSRI or SNRI first line pharmacotherapy where indicated"
+   ],
+   "pearls": "Alcohol use commonly complicates PTSD; brief intervention on hazardous drinking should accompany the trauma focused work rather than delay it."
+  },
+  "sources": [
+   {
+    "label": "Phoenix Australia Australian Guidelines for PTSD",
+    "url": "https://www.phoenixaustralia.org/australian-guidelines-for-ptsd/"
+   },
+   {
+    "label": "Therapeutic Guidelines: Psychotropic",
+    "url": "https://tgldcdp.tg.org.au"
+   }
+  ],
+  "reference_ranges": [
+   "thyroid"
+  ],
+  "created": "2026-09-05"
+ },
+ {
+  "id": "sched-2026-09-07-p1a-017",
+  "topic": "Psychiatry",
+  "subtopic": "Anxiety and trauma",
+  "subtopic_detail": "First line therapy selection in established post traumatic stress disorder",
+  "difficulty": 3,
+  "model": "Claude Opus 5",
+  "tags": [
+   "PTSD",
+   "SSRI"
+  ],
+  "stem": "You are the general practitioner reviewing a 32 year old delivery driver eight months after a highway collision in which a passenger died. He re experiences the crash as intrusive images several times daily, avoids the highway entirely, sleeps four hours a night and startles at car horns.\n\nHe has taken no medication, drinks two standard drinks weekly and uses no other substances. He works reduced hours and his employer is supportive. He has no suicidal ideation, head injury or prior psychiatric history. He asks what treatment gives him the best chance of getting back on the highway.",
+  "data_table": {
+   "Examination": "Mental state: anxious, hypervigilant to noise in the corridor, no psychotic features, no cognitive impairment",
+   "Investigations": "Full blood count, electrolytes, liver function and thyroid function within normal limits"
+  },
+  "lead_in": "What would you first recommend?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Commence sertraline 50 mg daily and titrate over four weeks according to response",
+    "correct": false,
+    "rationale": "Medication is recommended when trauma focused therapy is declined, unavailable or has failed, or where severe comorbid depression prevents engagement, none of which applies here (Source: Australian Guidelines for the Prevention and Treatment of Acute Stress Disorder, PTSD and Complex PTSD).",
+    "source_refs": [
+     "Australian Guidelines for the Prevention and Treatment of Acute Stress Disorder, PTSD and Complex PTSD"
+    ]
+   },
+   {
+    "letter": "B",
+    "text": "Prescribe a short course of temazepam nightly to restore sleep before starting therapy",
+    "correct": false,
+    "rationale": "Benzodiazepines are specifically advised against in post traumatic stress disorder because they impair the extinction learning that trauma focused therapy depends on (Source: Australian Guidelines for the Prevention and Treatment of Acute Stress Disorder, PTSD and Complex PTSD).",
+    "source_refs": [
+     "Australian Guidelines for the Prevention and Treatment of Acute Stress Disorder, PTSD and Complex PTSD"
+    ]
+   },
+   {
+    "letter": "C",
+    "text": "Arrange single session psychological debriefing focused on retelling the collision narrative",
+    "correct": false,
+    "rationale": "Single session debriefing has no benefit and may worsen outcomes, and it is a different intervention from the structured multi session trauma focused therapies that do work (Source: Australian Guidelines for the Prevention and Treatment of Acute Stress Disorder, PTSD and Complex PTSD).",
+    "source_refs": [
+     "Australian Guidelines for the Prevention and Treatment of Acute Stress Disorder, PTSD and Complex PTSD"
+    ]
+   },
+   {
+    "letter": "D",
+    "text": "Refer for trauma focused cognitive behavioural therapy delivered over eight to twelve sessions",
+    "correct": true,
+    "rationale": "Individual trauma focused psychological therapy, either trauma focused cognitive behavioural therapy or eye movement desensitisation and reprocessing, is the first line recommendation for adults with post traumatic stress disorder ahead of pharmacotherapy (Source: Australian Guidelines for the Prevention and Treatment of Acute Stress Disorder, PTSD and Complex PTSD).",
+    "source_refs": [
+     "Australian Guidelines for the Prevention and Treatment of Acute Stress Disorder, PTSD and Complex PTSD"
+    ]
+   },
+   {
+    "letter": "E",
+    "text": "Commence prazosin at night for nightmares and review the sleep pattern in six weeks",
+    "correct": false,
+    "rationale": "Prazosin targets nightmares specifically and is an adjunct considered after first line therapy is underway, not an initial treatment for the whole syndrome (Source: Therapeutic Guidelines: Psychotropic).",
+    "source_refs": [
+     "Therapeutic Guidelines: Psychotropic"
+    ]
+   }
+  ],
+  "explanation": {
+   "summary": "Australian guidance places individual trauma focused psychological therapy ahead of medication for adults with post traumatic stress disorder, with roughly eight to twelve sessions as the standard course and more where there is multiple or prolonged trauma. Pharmacotherapy is reserved for those who decline or cannot access therapy, who have not responded, or whose comorbid depression is too severe to allow engagement. Benzodiazepines are actively discouraged because they blunt the emotional processing that exposure based work relies on. Recovery is measured functionally, and returning to avoided situations such as the highway is a core therapy target rather than an incidental outcome.",
+   "key_points": [
+    "Trauma focused cognitive behavioural therapy and eye movement desensitisation and reprocessing are equal first line",
+    "Sertraline, paroxetine, fluoxetine and venlafaxine are the medication options when therapy is not the chosen route",
+    "Benzodiazepines are advised against because they impair extinction learning",
+    "Single session debriefing after trauma is not recommended and may cause harm"
+   ],
+   "pearls": "Prazosin for trauma related nightmares starts at 1 mg at night and needs a lying and standing blood pressure check before each increase, as first dose hypotension is the main reason patients stop it."
+  },
+  "sources": [
+   {
+    "label": "Australian Guidelines for the Prevention and Treatment of Acute Stress Disorder, PTSD and Complex PTSD",
+    "url": "https://www.phoenixaustralia.org"
+   },
+   {
+    "label": "Therapeutic Guidelines: Psychotropic",
+    "url": "https://www.tg.org.au"
+   }
+  ],
+  "reference_ranges": [
+   "fbc",
+   "uec",
+   "lfts",
+   "thyroid"
+  ],
+  "created": "2026-09-07"
+ }
+]
