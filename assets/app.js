@@ -1786,10 +1786,10 @@
   function wireMasthead() {
     document.getElementById("rangesBtn").onclick = () => toggleRefs();
     document.getElementById("themeBtn").onclick = toggleTheme;
-    const goHome = e => {
+    const goHome = async e => {
       if (e) e.preventDefault();
-      if (state.quiz && !state.quiz.finished &&
-          !confirm("End this session and return to the index?")) return;
+      if (state.quiz && !state.quiz.finished && !(await confirmLeaveSession(
+            "Leave this session?", "Back to the home screen"))) return;
       stopSessionTimer();
       showHome();
     };
@@ -1830,7 +1830,7 @@
         signOutBtn.textContent = "sign up";
         signOutBtn.title = "Create a cloud account and migrate your guest progress automatically";
       }
-      signOutBtn.onclick = e => {
+      signOutBtn.onclick = async e => {
         e.stopPropagation();
         if (isGuest) {
           // Reload into the gate's signup pane WITHOUT clearing the
@@ -1842,7 +1842,11 @@
           return;
         }
         const label = currentProfile ? currentProfile.name : (cloudUser ? (cloudUser.display_name || cloudUser.email) : "");
-        if (confirm(`Sign out ${label}? Your progress stays saved against this account.`)) signOut();
+        if (await adminConfirm({
+              title: `Sign out ${label}?`,
+              body: "Your answers, flags and settings stay saved against this account.",
+              confirmLabel: "Sign out",
+            })) signOut();
       };
     }
   }
@@ -1892,16 +1896,16 @@
   }
 
   function wireColophon() {
-    document.getElementById("exitBtn").onclick = () => {
+    document.getElementById("exitBtn").onclick = async () => {
       if (!state.quiz) return;
-      if (confirm("Exit this session?")) {
+      if (await confirmLeaveSession("Leave this session?", "Leave the session")) {
         stopSessionTimer();
         showHome();
       }
     };
-    document.getElementById("endNowBtn").onclick = () => {
+    document.getElementById("endNowBtn").onclick = async () => {
       if (!state.quiz) return;
-      if (confirm("End this session and see results?")) {
+      if (await confirmLeaveSession("Score the session now?", "Score it now")) {
         stopSessionTimer();
         showSummary(false);
       }
@@ -1912,7 +1916,14 @@
   function wireQuizTopbar() {
     document.getElementById("qtPrev").onclick = () => navOffset(-1);
     document.getElementById("qtNext").onclick = () => navOffset(+1);
-    document.getElementById("qtCounter").onclick = e => { e.stopPropagation(); toggleQtList(); };
+    document.getElementById("qtCounter").onclick = e => {
+      e.stopPropagation();
+      // The rail is the navigator from 1200px up, and the styling at
+      // that width already says the counter is not a control. Only the
+      // handler disagreed.
+      if (window.matchMedia && window.matchMedia("(min-width: 1200px)").matches) return;
+      toggleQtList();
+    };
     document.addEventListener("click", e => {
       const list = document.getElementById("qtList");
       if (!list || list.hidden) return;
@@ -2402,7 +2413,9 @@
     // The chip has to hold the highest number in the session. Four
     // digits do not fit the 30px square three digits were drawn in.
     const digits = String(state.quiz.pool.length).length;
-    const chipMin = Math.max(30, 10 + 7 * digits) + "px";
+    // 8px per digit, not 7: the narrow-screen panel draws these at
+    // 12.5px, where five digits overflowed a floor tuned for 11.5px.
+    const chipMin = Math.max(30, 10 + 8 * digits) + "px";
     if (rail) rail.style.setProperty("--nav-chip-min", chipMin);
     if (list) list.style.setProperty("--nav-chip-min", chipMin);
     // The panel behind the counter is the same navigator, for widths
@@ -2474,6 +2487,21 @@
     if (btn) btn.setAttribute("aria-expanded", "false");
   }
 
+  // Leaving or ending a session throws away what has not been answered,
+  // and how much that is depends on where you are. Name it.
+  function confirmLeaveSession(title, confirmLabel) {
+    const answered = Object.keys((state.quiz && state.quiz.answers) || {}).length;
+    const total = state.quiz ? state.quiz.pool.length : 0;
+    const left = Math.max(0, total - answered);
+    return adminConfirm({
+      title,
+      body: left
+        ? `${answered} of ${total} answered. The remaining ${left} score as unanswered.`
+        : `All ${total} answered. Nothing is lost.`,
+      confirmLabel,
+    });
+  }
+
   function jumpTo(i) {
     if (i === state.quiz.idx) return;
     state.quiz.idx = i;
@@ -2519,16 +2547,9 @@
   function renderReadingPane() {
     const q = state.quiz.pool[state.quiz.idx];
     const shuffled = _shuffledOptions(q);
-    // Pre-answer folio: just the question number. NO subtopic, NO discipline,
-    // NO subject category - those would spoil the diagnosis.
-    document.getElementById("folio").textContent =
-      `§ ${String(state.quiz.idx + 1).padStart(2, "0")} of ${state.quiz.pool.length}`;
-    // Hide the subject element until reveal.
-    const fs = document.getElementById("folioSubject");
-    if (fs) fs.textContent = "";
-    const fSep = document.querySelector(".folio-sep");
-    if (fSep) fSep.style.display = "none";
-
+    // No folio line: the topbar carries the position, and the pre-answer
+    // view must not name the subtopic or the discipline, which is what
+    // the rest of that header was for.
     renderStemWithClues(q);
 
     // Optional question image (e.g. from a referenced AU image bank).
@@ -4112,7 +4133,9 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
       .filter(r => filter === "all" ? true : r.status === filter)
       .slice().reverse();   // newest first
     if (!reports.length) {
-      list.innerHTML = `<li class="dim small">No ${esc(filter)} reports.</li>`;
+      list.innerHTML = `<li class="dim small">${filter === "all"
+        ? "No reports have been filed."
+        : `No ${esc(filter)} reports.`}</li>`;
       return;
     }
     for (const r of reports) {
@@ -4297,10 +4320,15 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     status.className = "dim small ok";
   }
 
-  function clearLocalBank() {
+  async function clearLocalBank() {
     const existing = load(ns(LOCAL_QUESTIONS_KEY), []);
     if (!existing.length) return;
-    if (!confirm(`Remove all ${existing.length} locally-pasted question${existing.length === 1 ? "" : "s"} from this browser? File-shipped questions are untouched.`)) return;
+    if (!await adminConfirm({
+          title: `Remove ${existing.length} pasted question${existing.length === 1 ? "" : "s"}?`,
+          body: "They are only in this browser, so this cannot be undone from here. "
+              + "Questions that ship with the bank are untouched.",
+          confirmLabel: "Remove them",
+        })) return;
     const removedIds = new Set(existing.map(q => q.id));
     save(ns(LOCAL_QUESTIONS_KEY), []);
     state.questions = state.questions.filter(q => !removedIds.has(q.id));

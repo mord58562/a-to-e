@@ -174,6 +174,12 @@
 
 * { box-sizing: border-box; }
 
+/* Scrollbars, autofill, date pickers and number spinners are painted by
+ * the browser, and without this they stay light-on-light over the dark
+ * canvas. */
+:root { color-scheme: dark; }
+:root[data-theme="light"] { color-scheme: light; }
+
 /* The hidden attribute has to beat author styling.
  *
  * The UA rule for [hidden] is display:none at the lowest specificity,
@@ -223,7 +229,7 @@ body {
  * every hidden-state rule in this file and forced a display value onto
  * elements that were meant to stay hidden - which is why the admin
  * overlay painted for a frame on every load for a signed-in user. */
-html:not(.pre-authed) body.locked > *:not(#gate):not(script) { display: none !important; }
+html:not(.pre-authed) body.locked > *:not(:where(#gate, script)) { display: none !important; }
 html.pre-authed #gate { display: none !important; }
 .gate {
   position: fixed; inset: 0;
@@ -813,7 +819,7 @@ body[data-screen="quiz"] main { padding-top: 16px; }
    * card is. Pinning it to the window edge instead left it stranded
    * in the margin at wide widths. */
   left: calc(50% + (var(--col) - 2 * var(--col-pad)) / 2
-             - var(--pair-shift) + var(--rail-gap));
+             - var(--pair-shift) - var(--refs-shift, 0px) + var(--rail-gap));
   width: var(--rail-w);
   background: var(--surface);
   border: 1px solid var(--line);
@@ -1012,13 +1018,28 @@ body[data-screen="quiz"] .nav-rail { display: block; }
    * bolted to the side. */
   body[data-screen="quiz"] main,
   body[data-screen="quiz"] .quiz-topbar {
-    transform: translateX(calc(-1 * var(--pair-shift)));
+    /* Relative offset rather than a transform: a transform would make
+     * each of these a stacking context and a containing block, which is
+     * what put the question-list dropdown behind the reading card. */
+    position: relative;
+    left: calc(-1 * (var(--pair-shift) + var(--refs-shift, 0px)));
   }
   body[data-screen="quiz"] .qt-counter { cursor: default; }
   body[data-screen="quiz"] .qt-caret { display: none; }
 }
 @media (max-width: 1199px) {
   .nav-rail { display: none !important; }
+  /* From here down the dropdown is the only navigator, and it is
+   * touched rather than clicked, so the chips get a touch-sized box.
+   * This rule used to live in the 480px block, which left every tablet
+   * width tapping 30px targets. */
+  .nav-chips { gap: 5px; }
+  .nav-chip { --nav-chip-h: 36px; font-size: 12.5px; }
+}
+/* Narrower than that, the panel lands on top of the rail rather than
+ * beside it, so the rail stands down while the panel is open. */
+@media (max-width: 1519px) {
+  body.refs-open .nav-rail { display: none !important; }
 }
 
 .reading {
@@ -1046,8 +1067,10 @@ body:has(#quizTopbar[hidden]) .reading {
   flex-wrap: wrap;
   margin-bottom: 14px;
 }
-.folio { display: none; }
-.folio-sep { display: none; }
+/* The folio line was retired when the topbar took over the position
+ * indicator. Its three children were left in the markup, and an empty
+ * inline-flex with padding and a border still reserves a band above
+ * every stem, so the header goes too - see index.html. */
 .folio-subject {
   display: inline-flex;
   align-items: center;
@@ -1537,13 +1560,14 @@ b, strong { font-weight: 600; }
 /* ── Reference panel (right slide-in, no scrim, no dim) ───────────── */
 .ref-panel {
   position: fixed;
-  /* Start below the masthead (sticky, ~56 px) so the trigger button
+  /* Start below the masthead (sticky; its height is measured into
+   * --masthead-h) so the trigger button
    * stays uncovered. The masthead also has a higher z-index now, so
    * clicking the trigger again toggles the panel closed without
    * moving the cursor to the × button. */
-  top: 56px; right: 0;
-  height: calc(100vh - 56px);
-  height: calc(100dvh - 56px);
+  top: var(--masthead-h); right: 0;
+  height: calc(100vh - var(--masthead-h));
+  height: calc(100dvh - var(--masthead-h));
   width: 420px;
   max-width: 92vw;
   background: var(--bg-2);
@@ -1573,12 +1597,18 @@ b, strong { font-weight: 600; }
  * 420 px panel. Use padding-right on <body> (avoids the previous
  * translate-only approach which still overlapped content). Below 920 px
  * the panel takes the full screen and the content scroll is locked. */
-body.refs-open {
-  padding-right: min(420px, 92vw);
-  transition: padding-right 0.22s ease;
+/* Opening the panel used to pad the body, which shrank the masthead with
+ * it: the trigger button slid 420px left, out from under the cursor that
+ * had just clicked it, and the masthead hairline stopped short of the
+ * window edge. The inset now applies to the reading composition, through
+ * a token the column and the rail both read, and only at widths that can
+ * give up the space. */
+body.refs-open { --refs-shift: 0px; }
+@media (min-width: 1520px) {
+  body.refs-open { --refs-shift: calc(min(420px, 92vw) / 2); }
 }
 @media (max-width: 920px) {
-  body.refs-open { padding-right: 0; overflow: hidden; }
+  body.refs-open { overflow: hidden; }
 }
 .ref-head {
   padding: 14px 18px;
@@ -1925,8 +1955,7 @@ body[data-screen="summary"] main { max-width: 760px; }
 
   /* Question-list dropdown: single column, taller rows. */
   .qt-list { max-height: 58vh; padding: 12px 12px 10px; }
-  .nav-chips { gap: 5px; }
-  .nav-chip { --nav-chip-h: 36px; font-size: 12.5px; }
+
 
   /* Setup: keep options easily tappable, prevent crowding. */
   .setup-options { gap: 7px; }
@@ -2062,7 +2091,7 @@ body:not(.is-admin) .admin-only { display: none !important; }
 .profile-chip .ghost-link { color: inherit; opacity: 0.7; }
 .profile-chip .ghost-link:hover { opacity: 1; }
 
-.admin-only .badge {
+.badge {
   display: inline-block;
   min-width: 18px;
   padding: 1px 6px;
@@ -2075,7 +2104,7 @@ body:not(.is-admin) .admin-only { display: none !important; }
   text-align: center;
   font-weight: 600;
 }
-.admin-only .badge:empty { display: none; }
+.badge:empty { display: none; }
 
 .reports-filters {
   display: flex;
@@ -2106,7 +2135,7 @@ body:not(.is-admin) .admin-only { display: none !important; }
   margin-bottom: 6px;
   font-size: 12.5px;
 }
-.report-id { font-family: var(--font-mono, monospace); color: var(--ink-mute); }
+.report-id { font-family: var(--mono); color: var(--ink-mute); }
 .report-status {
   padding: 1px 8px;
   border-radius: 999px;
@@ -2223,7 +2252,7 @@ body:not(.is-admin) .admin-only { display: none !important; }
   flex: 1 1 auto;
 }
 .audit-row-name {
-  font-family: var(--font-mono, monospace);
+  font-family: var(--mono);
   font-size: 13px;
   font-weight: 600;
   word-break: break-all;
@@ -2250,7 +2279,7 @@ body:not(.is-admin) .admin-only { display: none !important; }
   width: 100%;
   min-height: 160px;
   margin-top: 8px;
-  font-family: var(--font-mono, monospace);
+  font-family: var(--mono);
   font-size: 12px;
 }
 .audit-copy-status.ok, .audit-apply-status.ok { color: var(--accent); }
@@ -2336,7 +2365,10 @@ mark.stem-clue {
 .house-toast {
   position: fixed;
   right: 20px;
-  bottom: 20px;
+  /* Clear of the sticky colophon: the toast is dismissible, so sitting
+   * over "End now" meant a click there dismissed the toast instead of
+   * ending the session. */
+  bottom: calc(62px + env(safe-area-inset-bottom));
   max-width: 320px;
   background: var(--surface);
   border: 1px solid var(--line);
@@ -2427,7 +2459,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   line-height: 1.4;
 }
 .acct-delete-label code {
-  background: var(--surface-alt, rgba(15, 202, 212, 0.08));
+  background: var(--accent-bg);
   padding: 1px 6px;
   border-radius: 4px;
   font-size: 12px;
@@ -2759,7 +2791,14 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   padding-bottom: 3px;
 }
 .admin-table .gap-wide { color: var(--cta); font-weight: 600; }
-.admin-table .mono-id { font-size: 11.5px; color: var(--ink-2); font-weight: 400; }
+/* The class is named for the face it was not setting. */
+.admin-table .mono-id {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 11.5px;
+  color: var(--ink-2);
+  font-weight: 400;
+}
 .admin-table .cell-email { color: var(--ink-2); }
 .admin-table tr.is-spent { color: var(--ink-mute); }
 .admin-users tbody tr.is-self { background: var(--accent-bg); }
