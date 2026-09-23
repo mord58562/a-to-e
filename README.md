@@ -4,143 +4,73 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 7,053 questions, the four disciplines held at parity: Paediatrics 1,765, Obstetrics & Gynaecology 1,766, Psychiatry 1,760, Medicine 1,762.
 
-**Live: <https://mord58562.github.io/a-to-e/>** - guest mode, no signup required.
+**Live at <https://mord58562.github.io/a-to-e/>.** No account is needed: continue as a guest and your progress stays in that browser.
 
-## What's new in 1.7.1
+## What's new in 1.7.2
 
-- A test records each answer once, when it is scored or left. Going back to check a question used to log it again every time, and an answer you moved on from with Next, a navigator number or the clock never reached your history at all.
-- In study mode an answer counts when you reveal it. Picking an option and moving away no longer turns its navigator number green or red.
-- Keys meant for the question stay out of dialogs. Enter on Cancel cancels; it used to answer the question behind it. Space on an option selects it, and a second press submits.
-- Pausing a timed test and leaving no longer freezes the clock of the next one.
-- Opening a question from the results steps through the list you were looking at, and "Back to results" goes straight there.
-- Answers, flags and settings that fail to reach the server wait and retry, instead of being lost and then overwritten by the older copy. Unflagging on your phone unflags on your laptop.
-- If the worker refuses something, you see its reason, not "HTTP 405".
-- Readings with commas inside brackets stay on one line, Hb and Na keep their capitals, and a reference range in brackets is no longer shown as the value.
-- On a phone, reference values wrap instead of running off the panel, lab values keep a column wide enough to read, and the header buttons no longer sit on the title.
-- Screen readers hear whether a revealed answer was right, and no longer hear the clock every second.
-- An invite is now a link. Opening it goes straight to Create account with the code, and the email if one was given, already filled in. From the admin panel it can be copied, or sent from your own mail app.
+- Study mode shows the questions you have reached, not a numbered grid of the whole bank. The counter reads "Question 12", and the results count only what you answered.
+- A to E on the keyboard pick an option, the same as 1 to 5. Right arrow moves on without committing; Enter commits.
+- After a wrong answer the page lands on the correct option.
+- A test uses one set of words from start to finish: Next, Finish test, Results.
+- The explanation opens with the subtopic as its heading, sits at a comfortable reading width, and cites each source once. Reference panels the question depends on are a line of links that open the panel.
+- Stats reads as a couple of sentences and a table, weakest areas first, with bars that show accuracy.
+- If the server is slow or down, a signed-in student goes straight to the questions and syncs later.
+- Error messages say what happened and what to do, in the same voice everywhere.
+- Counts and dates are written the Australian way: 7,053 questions, 23 Sept.
+- Abbreviation definitions open on tap as well as hover.
 
-## What's new in 1.7.0
-
-- **A session survives a reload.** Close the tab forty minutes into a test, or let a phone evict it, and the home screen offers to resume: same questions in the same order, same position, same rule-outs, same clock. Sessions older than a day are dropped.
-- "Retry incorrect" retries the ones you got wrong, not everything you never reached, and says how many.
-- The session report loads instantly instead of building a row for every question in the bank, and the score strip is four disciplines rather than 700-odd subtopics.
-- Escape while the reference panel is open closes the panel and leaves your answer alone. It used to do both at once.
-- The flag button says "Flagged" when the question is flagged.
-- The rule-out control and ruled-out option text were too faint to read against their backgrounds; both now clear the contrast bar in either theme.
-- The reference panel no longer covers the question it was opened from at laptop widths.
-- Readings in a data block stay in their columns when one of them cannot be split into a name and a value.
-
-## What's new in 1.6.16
-
-- Reference values now appear on perinatal questions in psychiatry and medicine, and on paediatric questions that were pointing at the adult panel. Where the library genuinely has no paediatric values for a panel, the question says so instead of showing an empty space.
-- A failure while the gate is on screen no longer leaves the page stuck behind it.
-
-## What's new in 1.6.12
-
-- Pressing the number of the option you already picked takes it back off, so the key that chose it undoes it.
-- Choosing an option with the keyboard looks the same as clicking it: one tinted row with a filled marker, and nothing left behind when you take the choice back off.
-
-## What's new in 1.6.11
-
-- A revoked invite code disappears from the admin panel instead of sitting there as a row that cannot do anything.
-- The name pill and the Admin button are painted with the rest of the masthead instead of arriving a few hundred milliseconds later and shoving the row sideways.
-
-## What's new in 1.6.10
-
-- The reference panel no longer drags the masthead sideways when it opens, and the reading column can no longer be pushed off the left edge of the window on a laptop. The navigator moves with the column instead of being left behind under the panel.
-- The admin panel's section tabs, the question-list dropdown, the admin count pills and the "Copy prompt" button all work again.
-- Signing up as a guest no longer loses the answers you gave as a guest.
-- Seventeen questions were rendering no explanation at all.
-- A new session starts the navigator at question 1 rather than wherever the last session left it.
-- Every question card starts at the stem; an empty header band above it has gone.
-- Ending or leaving a session asks in the app's own dialog, and says how many questions are still unanswered.
-- Reference values: five rows that shared a label with a different threshold now say which is which.
-
-## What's new in 1.6.9
-
-- Navigator chips are sized to the highest question number in the session, so a four-digit number sits inside its cell instead of spilling out of it.
-
-## What's new in 1.6.8
-
-- The admin overlay no longer flashes for a frame when the page loads. The rule that revealed the app for a signed-in user forced a display value onto every top-level element, including the ones meant to stay hidden.
-- The navigator scrolls with the page instead of hanging in the same spot, and pages a round hundred at a time.
-- Readings in a data block are laid out as a two-column chart, so names line up, values line up, and a long reading wraps inside its own cell instead of breaking a pair in half. A panel of laboratory results renders the same way as a set of vital signs rather than falling back to a paragraph.
-
-## What's new in 1.6.7
-
-- The question navigator draws as many chips as fit the rail, so it no longer has a scrollbar of its own. The page has one scroll.
-- The keyboard number on an option row lines up with the rule-out control beside it.
-- Invite codes can be read back. A live code is shown in full in the admin panel with a copy control, and the code shown when you create one stays on screen until you dismiss it instead of being wiped by the refresh a moment later. Needs the worker deployed with `schema_005_invite_reveal.sql`; codes issued before that can only be replaced, which the panel offers as Reissue.
-
-## What's new in 1.6.6
-
-- The admin panel's section tabs switch panes again. The Content pane was pinned open by a stylesheet rule that outranked the `hidden` attribute, so selecting another section rendered it underneath. Seven other elements carried the same latent bug.
-- The question navigator is anchored to the reading column instead of the window edge, so it no longer drifts into the margin as the window widens, and it starts level with the topbar.
-- The topbar is the width of the card it seams into, rather than the width of the window.
-- Readings in a data block sit on a grid and all split into name and value, including ones whose value is a word rather than a number.
+Earlier releases are in [CHANGELOG.md](CHANGELOG.md).
 
 ## What it is
 
-- A growing library of single-best-answer clinical vignettes calibrated to the upper end of Australian undergraduate clinical-years standard.
-- Four disciplines: Paediatrics, Obstetrics & Gynaecology, Psychiatry, adult Medicine.
-- Five difficulty tiers, each individually selectable on the home screen:
+Questions are pitched at the upper end of the Australian clinical years. Every option has its own rationale, and most rationales cite a source. The sources are Australian references where one exists, most available through a university subscription: RCH Melbourne CPG, Therapeutic Guidelines and eTG, Australian Medicines Handbook, RANZCOG, RANZCP clinical practice guidelines, DSM-5-TR, KEMH, SOMANZ, Queensland Clinical Guidelines, Australian Immunisation Handbook, Australian Asthma Handbook, ASCIA, ASHM, Cancer Council Australia, KHA-CARI, ANZICS, GESA, TSANZ, Family Planning Australia, Phoenix Australia, NSW Poisons Information Centre, NSW Mental Health Act 2007, RACGP, NHMRC, NHFA/CSANZ, COPE, Surviving Sepsis Campaign, NICE, BMJ Best Practice, StatPearls, and Cochrane. Units are Australian SI throughout (mmol/L, micromol/L, g/L, x10^9/L, mmHg, °C, kg).
 
-  | Level | Questions | Share |
-  | --- | ---: | ---: |
-  | 1/5 | 70 | 1.0% |
-  | 2/5 | 1,702 | 24.1% |
-  | 3/5 | 2,745 | 38.9% |
-  | 4/5 | 2,217 | 31.4% |
-  | 5/5 | 319 | 4.5% |
+Difficulty is set by how many reasoning steps the answer takes, not by how rare the topic is, so a common presentation can sit at 5/5.
 
-  Difficulty tracks the amount of clinical reasoning a question demands, not the rarity of the topic. A common presentation reaches 5/5 when the answer turns on a disconfirming finding, a calculation under uncertainty, or a cut-off choice between competing guidelines.
-- Every option carries a per-option rationale, most of them carrying a source citation. The sources are published, citable Australian references, most of them accessible through a university subscription: RCH Melbourne CPG, Therapeutic Guidelines and eTG, Australian Medicines Handbook, RANZCOG, RANZCP clinical practice guidelines, DSM-5-TR, KEMH, SOMANZ, Queensland Clinical Guidelines, Australian Immunisation Handbook, Australian Asthma Handbook, ASCIA, ASHM, Cancer Council Australia, KHA-CARI, ANZICS, GESA, TSANZ, Family Planning Australia, Phoenix Australia, NSW Poisons Information Centre, NSW Mental Health Act 2007, RACGP, NHMRC, NHFA/CSANZ, COPE, Surviving Sepsis Campaign, NICE, BMJ Best Practice, StatPearls, and Cochrane.
-- Australian SI units throughout (mmol/L, micromol/L, g/L, x10^9/L, mmHg, °C, kg).
-- Built-in **Reference values** panel: 24 categories and 232 rows of Australian normal ranges (paediatric age bands, pregnancy-trimester ranges, ADIPS OGTT, urinalysis dipstick + quantitative, and more) toggleable with the **L** key. Sticky category headers, quick-jump pills, row-level search, and inline rendering of question-relevant ranges after you reveal the answer.
+| Level | What it asks | Questions | Share |
+| --- | --- | ---: | ---: |
+| 1/5 | Recall one fact | 70 | 1.0% |
+| 2/5 | Put two or three findings together | 1,702 | 24.1% |
+| 3/5 | Several steps, or an Australian cut-off | 2,745 | 38.9% |
+| 4/5 | An atypical presentation, or a finding that points the wrong way | 2,217 | 31.4% |
+| 5/5 | A calculation, a finding that argues against the obvious answer, or guidelines that disagree | 319 | 4.5% |
 
-## Features
+## Using it
 
-- **Question navigator.** A persistent side rail on a wide screen, and a panel behind the question counter on a narrow one. Numbered chips show unanswered, correct, incorrect, current or flagged, and jump straight to that question. A session can be the whole bank, so the grid is a window with paging and a jump-to-number box. In test mode chips read only as answered until the session ends.
-- **Deterministic option re-lettering.** Source batches frequently place the correct answer at A. Each question's options are shuffled by a seeded Fisher-Yates keyed on the question id, so the order is stable for you across reloads and identical for every user. Each option keeps its `sourceLetter`, which is what the answer aggregates are recorded against, so cross-user statistics still compare like for like.
-- **Stem-clue highlighting.** After you reveal the answer, the discriminating phrases in the stem are marked, so you can see which words were doing the work.
-- **Hover glossary.** Around 60 clinical abbreviations in the revealed stem carry a hover definition (DKA, PPH, ACS, SSRI, HELLP, CTPA and the rest).
-- **Inline reference ranges.** When a question is keyed to a pathology panel, the relevant normal ranges render under the explanation without opening the full panel.
-- **Rule out and flag.** Rule out options you have discounted, with shift and the option number or the control on the row; the control becomes a restore arrow so a second press puts the option back. Flag questions for review; flags persist and can be used as a session filter.
-- **Pause and resume.** Timed sessions pause; the countdown, session clock and per-question clock all resume where they left off rather than running on in the background.
-- **Retry incorrect.** The summary screen rebuilds an untimed session from the questions you answered wrong, and says how many. It is not offered when there are none.
-- **Session report.** Score, unanswered count, a per-discipline breakdown, and a review list filterable to all, incorrect or flagged. A row opens its question with the answer shown; Previous and Next then step through the rows the list was showing, and "Back to results" returns to the list where you left it, without a dialog.
-- **Stats modal.** Questions answered and what proportion of the bank that is, correctness, total time studying and average seconds per question, plus tables by discipline and by difficulty.
-- **Report an issue.** A per-question report box that reaches the maintainer.
-- **Light and dark themes.**
+The home screen sets up a session. Study mode shows the explanation after each answer and runs until you end it. Test mode holds every answer until you finish and can run against a timer. Pick any of the four disciplines, then narrow by learning area, difficulty, or a filter: unseen, previously incorrect or flagged. A session is saved as you go, so a closed tab or an evicted phone page can be resumed from the home screen for up to a day.
 
-## How to use
+Options are shuffled per question with a seed taken from its id, so the order survives a reload and is the same for every user. Each option keeps its original letter, and that is the letter stored with your answer. You can rule out an option you have discounted, and flag a question to come back to; flags also work as a session filter. Pausing a timed session stops the countdown, the session clock and the question clock together.
 
-1. Pick a **mode**: *Study* (continuous, instant explanation after each question, end whenever) or *Test* (no answers until the end, optional countdown timer). A study answer counts once it is revealed; a pick you change or leave before submitting is not recorded. A test's answers go to your history once, when the test is scored or left.
-2. Pick a **discipline** (any combination of Paediatrics, O&G, Psychiatry, Medicine) and optionally narrow by **learning area**, **difficulty** (L1 / L2 / L3 / L4 / L5), or **filter** (All / Unseen / Previously incorrect / Flagged).
-3. **Begin** and work through.
+A study answer counts once it is revealed; a pick you change or leave unrevealed is not recorded. A test's answers reach your history once, when the test is finished or left.
 
-### Keyboard
+After the reveal, the phrases in the stem that decided the answer are highlighted and about 60 abbreviations (DKA, PPH, HELLP, CTPA and so on) show a definition on hover or tap. Each option has its own rationale, followed by the sources. When a question depends on a reference panel, a line under the explanation names it and opens the panel there.
 
-- `1`-`5` select option A-E. Selecting does not submit.
-- `↑`/`↓` or `W`/`S` move the selection through the options, wrapping at either end
-- `←` or `A` previous question, without submitting
-- `→` or `D` submit, then advance once the answer is showing
-- `↵` or `Space` submit, then next
-- `Esc` clear an unsubmitted selection; with an overlay open, close the topmost one
-- `F` flag for review
-- `Shift` + `1`-`5` rule an option out, and press again to put it back
-- `X` rule out the selected option
-- `L` toggle reference values
-- `Cmd`/`Ctrl` + `↵` submit a bug report from inside the report box
+The navigator sits beside the question on a wide screen and opens from the question counter on a phone. In a test it shows every question, numbered, marked only as answered until the end, with paging and a box to jump to a number. In study mode it shows the questions you have reached, marked right or wrong.
+
+Results give the score and a line per discipline, then a list you can filter to incorrect or flagged. A row opens its question with the answer showing; Previous and Next step through the list, and Back to results returns to it. Retry incorrect starts an untimed session from the ones you got wrong. Stats, in the top bar, shows your accuracy by discipline and by difficulty. Report, under each question, sends a note to the maintainer.
+
+Reference values (the button in the top bar, or L) holds 34 categories and 396 rows of Australian normal ranges, including paediatric age bands, pregnancy trimester ranges, the ADIPS OGTT and urinalysis, with a jump to each category and a search.
+
+## Keyboard
+
+- `1`-`5` or `A`-`E` select an option; the same key again clears it. Selecting never submits.
+- `Enter` submits, then goes to the next question. `Space` on a focused option selects it, and on the selected option submits.
+- `↑` / `↓` move the selection through the options, skipping ruled-out ones.
+- `←` / `→` previous and next question. `→` never submits.
+- `Shift` + `1`-`5` or `A`-`E` rules an option out, and back in.
+- `X` rules out the selected option.
+- `F` flags the question.
+- `L` opens or closes reference values.
+- `Esc` closes the topmost panel or dialog, or with nothing open clears an unsubmitted selection.
+- `Cmd`/`Ctrl` + `Enter` sends a report from the report box.
 
 ## Privacy
 
-You can use A to E without an account. In **guest mode** the site is fully client-side: question history, flags, theme preference, and locally-pasted questions live only in your browser's `localStorage`. Nothing is sent to any server unless you file an issue report.
+You can use A to E without an account. As a guest, question history, flags and settings live only in your browser's `localStorage`, and nothing is sent to any server unless you file an issue report.
 
 Signing up or in on a browser used as a guest moves that guest progress into the account. Guest flags sync; guest answers stay in that browser, because they were recorded without the option letter the server stores.
 
-If you **create a cloud account** to sync progress across devices, the following is stored in a Cloudflare D1 database behind a Cloudflare Worker at `a-to-e-inbox.mord58562.workers.dev`:
+An account keeps your progress in step across devices. For that, the following is stored in a Cloudflare D1 database behind a Cloudflare Worker at `a-to-e-inbox.mord58562.workers.dev`:
 
 - Your email, encrypted at rest with AES-256-GCM. Lookups run against a separate HMAC-SHA256 column, so sign-in never needs to decrypt the address.
 - Your password, hashed with Argon2id (RFC 9106, m=19456 KiB, t=2, p=1). Accounts created before the 2026-05-25 migration are verified against their old PBKDF2 hash once and rehashed to Argon2id on that login.
@@ -155,60 +85,30 @@ Registration is invite only. Sign-ins are rate limited to 8 failures per
 to 5 per hour per address, and the client IP is recorded only as a truncated
 salted hash. Sessions last 30 days, slide on use, and expire absolutely at
 90 days. You can change your password or sign out every other device from
-the Account tab.
+Account in the top bar.
 
 Nothing you do is shown to any other user. Per-question timing stays in your browser and is never sent.
 
-You can permanently delete your account and every associated row from the Account tab, or via `POST /api/account/delete`. Deletion removes the session, answer, flag, settings and user rows outright; there is no soft delete.
+You can permanently delete your account and every associated row from Account in the top bar, or with `POST /api/account/delete`. Deletion removes the session, answer, flag, settings and user rows outright; there is no soft delete.
 
 The reference-ranges panel, the questions themselves, and the per-batch JSON are static assets served from GitHub Pages. There are no cookies, no analytics and no third-party trackers.
 
-The paste flow is admin-gated server-side. Questions pasted by anyone else stay in that browser's `localStorage` and are merged into their own bank on load; they are never committed to the public repo.
+Only an admin can add questions or change files in the repo, and the worker checks for an admin session on each of those requests, not just the page.
 
 ## Project structure
 
-```
-a-to-e/
-├── index.html
-├── assets/
-│   ├── styles.css
-│   ├── app.js
-│   └── favicon.svg
-├── data/
-│   ├── questions_{paeds,obgyn,psych,medicine}.json
-│   ├── reference_ranges.json
-│   ├── meta.json
-│   ├── batches_manifest.json
-│   ├── inbox_manifest.json
-│   ├── reports.json
-│   ├── framework_{paeds,obgyn,psych,medicine}_topics.md
-│   ├── batches/*.json
-│   ├── inbox/
-│   ├── _audited_main/
-│   └── _archived_dupes/
-├── cloudflare-worker/
-│   ├── src/worker.js
-│   ├── schema.sql
-│   ├── DEPLOY.md
-│   └── wrangler.toml
-├── scripts/
-│   ├── start.sh
-│   ├── server.py
-│   ├── add-questions.sh
-│   ├── merge_batches.sh
-│   ├── merge_inbox.sh
-│   ├── check_tokens.py
-│   ├── dupe_gate.py
-│   ├── manifest_hashes.py
-│   └── sync_routine_counts.py
-└── assets/prompt-template.txt
-```
+- `index.html`, `assets/` - the app: one page, one script, one stylesheet. `assets/preauth.js` runs before first paint, so a returning user sees neither the sign-in gate nor the wrong theme for a frame.
+- `data/questions_*.json` - the four main discipline files. `questions_paeds.json` and `questions_obgyn.json` hold 23 and 21 questions; the Psychiatry and Medicine files are empty.
+- `data/batches/` - everything else, listed in `data/batches_manifest.json` with a content hash per file.
+- `data/reference_ranges.json` - the reference values panel. `data/reports.json` holds issue reports.
+- `data/framework_*_topics.md` - the curriculum topic list each discipline is written against.
+- `data/_audited_main/`, `data/_archived_dupes/` - promoted post-audit copies of the main files, and batches withdrawn from the manifest.
+- `assets/prompt-template.txt` - the generation prompt. The admin Content tab fetches it.
+- `scripts/` - `start.sh` and `server.py` serve the site locally. `check_tokens.py` is the banned-token gate and the list of record for what the prompt bans; `dupe_gate.py` compares a new batch with the published bank and with itself; `manifest_hashes.py` writes the manifest hashes.
+- `cloudflare-worker/` - accounts, sync, reports and the admin write endpoints. See its README.
+- `tests/` - `smoke.js` drives 25 questions as a guest; `admin.js` drives the admin panel against a fake worker.
 
-`questions_psych.json` and `questions_medicine.json` are empty arrays: all Psychiatry and Medicine content is manifest-driven and lives in `data/batches/`. `questions_paeds.json` and `questions_obgyn.json` hold 23 and 21 questions respectively, with the rest of both disciplines also in batches.
-
-`data/framework_*_topics.md` are the per-discipline curriculum topic lists that generation draws against. `data/_audited_main/` holds the promoted post-audit copies of the main files, and `data/_archived_dupes/` batches withdrawn from the manifest.
-
-`assets/prompt-template.txt` is the generation prompt, fetched only when the admin Content tab is open. `scripts/check_tokens.py` is the banned-token gate and the list of record for what the prompt bans; `scripts/dupe_gate.py` compares a new batch against the published bank and against itself. Internal working notes, audit records and the scheduled routine's brief are deliberately not in this repo: GitHub Pages serves the root, so anything committed here is publicly fetchable.
+Internal working notes, audit records and the scheduled routine's brief are kept out of this repo: GitHub Pages serves the root, so anything committed here can be fetched by anyone.
 
 ## Run locally
 
@@ -230,7 +130,7 @@ cd a-to-e
 
 Serves the site at `http://127.0.0.1:8765/` and, on macOS, opens it; elsewhere, open the address by hand. Any modern browser.
 
-The worker is optional locally. With it unreachable, sign-in and sync are unavailable, so use guest mode; issue reports and pasted questions go to the local `scripts/server.py` instead. To run or deploy the worker you need Node.js 22+ and wrangler:
+The worker is optional locally. With it unreachable, sign-in and sync are unavailable, so use guest mode; issue reports go to the local `scripts/server.py` instead. To run or deploy the worker you need Node.js 22+ and wrangler:
 
 ```sh
 # macOS
@@ -246,7 +146,19 @@ npm install -g wrangler
 cd cloudflare-worker && npm install && wrangler dev
 ```
 
-See `cloudflare-worker/DEPLOY.md` for the one-time D1 setup.
+`wrangler dev` also needs the worker's secrets and a local database; `cloudflare-worker/README.md` covers both, and the one-time Cloudflare setup.
+
+### Tests
+
+With the local server running on port 8765:
+
+```sh
+npm install --no-save jsdom
+REPO=$PWD node tests/smoke.js
+REPO=$PWD node tests/admin.js
+```
+
+Each exits 0 when clean.
 
 ### How data loads
 
@@ -262,4 +174,4 @@ MIT. Question content is original, written against the cited public sources. Ref
 
 ## Caveat
 
-This is an exam-prep practice bank, not clinical advice. Clinical decisions belong with the patient in front of you, their treating team, and current local guidelines.
+Exam practice, not clinical advice. Before acting on anything here, check the current local guideline.
