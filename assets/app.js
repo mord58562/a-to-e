@@ -2399,6 +2399,12 @@
     if (railBody) railBody.innerHTML = html;
     if (rail) rail.hidden = false;
     const list = document.getElementById("qtList");
+    // The chip has to hold the highest number in the session. Four
+    // digits do not fit the 30px square three digits were drawn in.
+    const digits = String(state.quiz.pool.length).length;
+    const chipMin = Math.max(30, 10 + 7 * digits) + "px";
+    if (rail) rail.style.setProperty("--nav-chip-min", chipMin);
+    if (list) list.style.setProperty("--nav-chip-min", chipMin);
     // The panel behind the counter is the same navigator, for widths
     // with no room for the rail. Only rebuild it while it is open.
     if (list && !list.hidden) list.innerHTML = html;

@@ -6,6 +6,10 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 **Live: <https://mord58562.github.io/a-to-e/>** - guest mode, no signup required.
 
+## What's new in 1.6.9
+
+- Navigator chips are sized to the highest question number in the session, so a four-digit number sits inside its cell instead of spilling out of it.
+
 ## What's new in 1.6.8
 
 - The admin overlay no longer flashes for a frame when the page loads. The rule that revealed the app for a signed-in user forced a display value onto every top-level element, including the ones meant to stay hidden.

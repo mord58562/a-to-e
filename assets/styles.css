@@ -901,13 +901,21 @@ body[data-screen="quiz"] .nav-rail { display: block; }
 
 .nav-chips {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
+  /* The cell is as wide as the widest question number it has to hold.
+   * A fixed 30px square fitted three digits and clipped four, so a
+   * session covering the whole bank drew 1000-plus spilling out of its
+   * chip. app.js sets the floor from the pool size. */
+  grid-template-columns: repeat(auto-fill, minmax(var(--nav-chip-min, 30px), 1fr));
   gap: 4px;
 }
 .nav-chip {
   position: relative;
-  aspect-ratio: 1;
-  min-height: 30px;
+  /* Square while the numbers are short, wider when they are not. An
+   * aspect ratio would have grown the height with the width instead,
+   * turning a four-digit session into a wall of large tiles. */
+  height: var(--nav-chip-h, 30px);
+  min-height: var(--nav-chip-h, 30px);
+  padding: 0 3px;
   display: grid;
   place-items: center;
   /* Square with a small radius, not a circle. A circle of digits reads
@@ -1917,8 +1925,8 @@ body[data-screen="summary"] main { max-width: 760px; }
 
   /* Question-list dropdown: single column, taller rows. */
   .qt-list { max-height: 58vh; padding: 12px 12px 10px; }
-  .nav-chips { grid-template-columns: repeat(auto-fill, minmax(36px, 1fr)); gap: 5px; }
-  .nav-chip { min-height: 36px; font-size: 12.5px; }
+  .nav-chips { gap: 5px; }
+  .nav-chip { --nav-chip-h: 36px; font-size: 12.5px; }
 
   /* Setup: keep options easily tappable, prevent crowding. */
   .setup-options { gap: 7px; }
