@@ -36,6 +36,8 @@ import re
 import sys
 from collections import defaultdict
 
+import check_tokens  # same directory; owns the truncation rules
+
 # Spelling variants that keyword matching treats as different words. AU spelling
 # is the house style; these fold to a comparison form only, nothing is rewritten.
 SPELLING = [
@@ -487,7 +489,17 @@ def main():
                 new_paths.append(path)
         new_records = load(new_paths)
         old_records = load(bank_paths(exclude=new_paths))
-        return run_gate(new_records, old_records, args.show_review, args.json)
+        code = run_gate(new_records, old_records, args.show_review, args.json)
+        # Text cut off mid-word passes every duplicate test, so the gate the
+        # routine already runs checks for it too (rules in check_tokens.py).
+        print("\n=== text cut off mid-word ===")
+        cut = check_tokens.report_truncation(
+            check_tokens.truncation_hits(new_paths, bank_paths(exclude=new_paths)))
+        if cut:
+            print("FAIL: rewrite the cut fields in full before publishing.")
+        else:
+            print("PASS: no text cut off mid-word.")
+        return 1 if code or cut else 0
 
     records = load(bank_paths())
     print(f"auditing {len(records)} questions")

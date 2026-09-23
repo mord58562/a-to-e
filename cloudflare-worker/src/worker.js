@@ -448,17 +448,21 @@ async function handleRegister(request, env, cors) {
   const displayName = str(body && body.display_name).trim().slice(0, 60) || email.split("@")[0];
   const inviteRaw = str(body && body.invite_code).trim().toUpperCase();
 
-  // Per-IP budget first, before the email lookup and long before Argon2id.
+  // Field checks cost nothing and touch no table, so they run before the
+  // budget: a few typos on a shared campus or carrier address must not
+  // lock sign-up for everyone behind it for an hour.
+  if (!EMAIL_RE.test(email)) return fail("email_format", "Email address is not in a valid format.", 400, cors);
+  if (password.length < 8) return fail("password_short", "Password needs at least 8 characters.", 400, cors);
+  if (password.length > 1024) return fail("password_long", "Password is over 1024 characters.", 400, cors);
+  if (!inviteRaw) return fail("invite_required", "An invite code is required.", 400, cors);
+
+  // Per-IP budget before the invite and email lookups and long before
+  // Argon2id, so it still caps invite-code guessing.
   const regIpKey = "reg:" + await ipHash(request, env);
   if (await overBudget(env, regIpKey, REG_IP_WINDOW_SEC, REG_IP_MAX)) {
     return fail("signup_rate", "Too many sign-up attempts from this address. Try again later.", 429, cors);
   }
   await noteAttempt(env, regIpKey);
-
-  if (!EMAIL_RE.test(email)) return fail("email_format", "Email address is not in a valid format.", 400, cors);
-  if (password.length < 8) return fail("password_short", "Password needs at least 8 characters.", 400, cors);
-  if (password.length > 1024) return fail("password_long", "Password is over 1024 characters.", 400, cors);
-  if (!inviteRaw) return fail("invite_required", "An invite code is required.", 400, cors);
 
   // Redeem the invite before touching the users table. One generic error
   // for every failure mode, so a stranger cannot probe which codes exist.
@@ -614,20 +618,20 @@ async function handleLogin(request, env, cors) {
   // account spray 29 guesses across other addresses, sign in to their own,
   // and get the full budget back. The refund is bounded by the per-email
   // lockout, so it cannot be farmed into extra guesses at other accounts.
+  // The successful attempt itself is refunded too (the +1): a lecture
+  // theatre of students signing in behind one address must not spend the
+  // budget that exists to stop guessing.
   const nowSec = Math.floor(Date.now() / 1000);
   const own = await env.DB.prepare(
     "SELECT COUNT(*) AS n FROM login_attempts WHERE email_lookup = ? AND ok = 0 AND ip_hash = ? AND ts > ?"
   ).bind(lookup, ipH, nowSec - LOGIN_IP_WINDOW_SEC).first();
-  const refund = Math.min((own && own.n) || 0, FAIL_THRESHOLD);
-  const clears = [
+  const refund = Math.min((own && own.n) || 0, FAIL_THRESHOLD) + 1;
+  await env.DB.batch([
     env.DB.prepare("DELETE FROM login_attempts WHERE email_lookup = ? AND ok = 0").bind(lookup),
-  ];
-  if (refund > 0) {
-    clears.push(env.DB.prepare(
+    env.DB.prepare(
       "DELETE FROM login_attempts WHERE rowid IN (SELECT rowid FROM login_attempts WHERE email_lookup = ? AND ts > ? ORDER BY ts DESC LIMIT ?)"
-    ).bind("ip:" + ipH, nowSec - LOGIN_IP_WINDOW_SEC, refund));
-  }
-  await env.DB.batch(clears);
+    ).bind("ip:" + ipH, nowSec - LOGIN_IP_WINDOW_SEC, refund),
+  ]);
 
   // Lazy migration: if this account is still on legacy hashing /
   // plaintext email, upgrade it now that we have the password in hand.
@@ -710,6 +714,25 @@ async function handleAccountDelete(request, env, cors) {
   if (user.is_admin && !(await hasAnotherAdmin(env, user.id))) {
     return fail("last_admin", lastAdminMsg, 409, cors);
   }
+  // The current password is required, as on password change: a copied
+  // token alone must not be able to destroy the account and its history.
+  // Shares the password-change budget, so the token cannot be used to
+  // guess the password through this route either.
+  const body = await request.json().catch(() => null);
+  const password = str(body && body.password);
+  if (!password) return fail("password_required", "Enter your password to delete the account.", 400, cors);
+  if (password.length > 1024) return fail("password_long", "Password is over 1024 characters.", 400, cors);
+  const pwKey = "pw:" + user.id;
+  if (await overBudget(env, pwKey, PW_CHANGE_WINDOW_SEC, PW_CHANGE_MAX)) {
+    return fail("password_rate", "Too many password attempts. Try again later.", 429, cors);
+  }
+  await noteAttempt(env, pwKey);
+  const row = await env.DB.prepare(
+    "SELECT password_hash, password_salt, pw_algo FROM users WHERE id = ?"
+  ).bind(user.id).first();
+  if (!row || !(await verifyPassword(password, row))) {
+    return fail("password_wrong", "Password is wrong.", 403, cors);
+  }
   if (!(await deleteUserGuarded(env, user.id))) {
     // The guard in the DELETE lost a race with another admin removal.
     return fail("last_admin", lastAdminMsg, 409, cors);
@@ -741,7 +764,8 @@ async function deleteUserGuarded(env, id) {
 
 async function handleAdminListUsers(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) return fail("not_admin", "Admin only.", 403, cors);
+  const denied = adminDenied(user, cors);
+  if (denied) return denied;
   const { results } = await env.DB.prepare(
     "SELECT u.id, u.email, u.email_enc, u.display_name, u.is_admin, u.created_at, " +
     "u.last_seen_at, u.invited_via, COUNT(a.question_id) AS answers " +
@@ -771,7 +795,8 @@ async function handleAdminListUsers(request, env, cors) {
 
 async function handleAdminDeleteUser(request, env, cors, targetId) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) return fail("not_admin", "Admin only.", 403, cors);
+  const denied = adminDenied(user, cors);
+  if (denied) return denied;
   if (!targetId || typeof targetId !== "string") return fail("bad_request", "Missing user id.", 400, cors);
   if (targetId === user.id) return fail("self_target", "Use /api/account/delete to remove your own account.", 400, cors);
   // Refuse to remove the last remaining admin, so the instance cannot be
@@ -792,7 +817,8 @@ async function handleAdminDeleteUser(request, env, cors, targetId) {
 
 async function handleAdminPromote(request, env, cors, targetId, makeAdmin) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) return fail("not_admin", "Admin only.", 403, cors);
+  const denied = adminDenied(user, cors);
+  if (denied) return denied;
   if (!targetId) return fail("bad_request", "Missing user id.", 400, cors);
   if (targetId === user.id && !makeAdmin) return fail("self_target", "You cannot demote your own account.", 400, cors);
   if (!makeAdmin && !(await hasAnotherAdmin(env, targetId))) {
@@ -902,7 +928,8 @@ async function handleRevokeSessions(request, env, cors) {
  */
 async function handleAdminListInvites(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) return fail("not_admin", "Admin only.", 403, cors);
+  const denied = adminDenied(user, cors);
+  if (denied) return denied;
   const rows = await env.DB.prepare(
     `SELECT i.code_hash, i.code_hint, i.code_enc, i.label, i.created_at, i.expires_at,
             i.used_at, i.revoked_at, u.display_name AS used_by_name
@@ -930,7 +957,8 @@ async function handleAdminListInvites(request, env, cors) {
 
 async function handleAdminCreateInvite(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) return fail("not_admin", "Admin only.", 403, cors);
+  const denied = adminDenied(user, cors);
+  if (denied) return denied;
   requireEncryptionEnv(env);
   const body = await request.json().catch(() => null);
   const label = str(body && body.label).trim().slice(0, 80);
@@ -951,7 +979,8 @@ async function handleAdminCreateInvite(request, env, cors) {
 
 async function handleAdminRevokeInvite(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) return fail("not_admin", "Admin only.", 403, cors);
+  const denied = adminDenied(user, cors);
+  if (denied) return denied;
   const body = await request.json().catch(() => null);
   const codeHash = (body && body.code_hash) || "";
   if (!/^[a-f0-9]{64}$/.test(codeHash)) return fail("bad_request", "code_hash must be 64 hex characters.", 400, cors);
@@ -965,7 +994,8 @@ async function handleAdminRevokeInvite(request, env, cors) {
 
 async function handleAdminQuality(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) return fail("not_admin", "Admin only.", 403, cors);
+  const denied = adminDenied(user, cors);
+  if (denied) return denied;
   // Worst-performing questions: at least 5 answers, lowest correct-rate first.
   const { results: worst } = await env.DB.prepare(
     "SELECT question_id, COUNT(*) AS n, SUM(correct) AS c FROM answers GROUP BY question_id HAVING n >= 5 ORDER BY (1.0 * c / n) ASC, n DESC LIMIT 50"
@@ -1010,6 +1040,12 @@ async function handleAnswer(request, env, cors) {
   // attempt counter and advances updated_at, so an answer given on
   // another device syncs. A replayed answer older than the stored one
   // adds its attempts but does not overwrite the newer correctness.
+  // An outbox entry whose POST committed but whose response was lost is
+  // sent again unchanged; the client's `at` identifies it. A post with the
+  // stored ts, letter and correctness is that replay and adds no attempts.
+  // Only when the client sent `at`: without it ts is the server clock,
+  // and two real answers inside one second would look the same.
+  const hasAt = Number.isFinite(atRaw) && atRaw > 0 ? 1 : 0;
   await env.DB.prepare(
     `INSERT INTO answers (user_id, question_id, source_letter, correct, ts, updated_at, attempt_count)
      VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -1018,8 +1054,12 @@ async function handleAnswer(request, env, cors) {
        correct       = CASE WHEN excluded.ts >= answers.ts THEN excluded.correct ELSE answers.correct END,
        ts            = MAX(answers.ts, excluded.ts),
        updated_at    = excluded.updated_at,
-       attempt_count = answers.attempt_count + excluded.attempt_count`
-  ).bind(user.id, qid, srcLetter, correct, at, now, n).run();
+       attempt_count = CASE
+         WHEN ? = 1 AND excluded.ts = answers.ts AND excluded.source_letter = answers.source_letter
+              AND excluded.correct = answers.correct
+         THEN answers.attempt_count
+         ELSE answers.attempt_count + excluded.attempt_count END`
+  ).bind(user.id, qid, srcLetter, correct, at, now, n, hasAt).run();
 
   return json({ ok: true }, 200, cors);
 }
@@ -1183,12 +1223,13 @@ function json(obj, status, extraHeaders) {
  *   login_locked         429  too many failures for this email; `retry_after` = seconds
  *   credentials_wrong    401  email or password wrong
  *   session_expired      401  no valid session token (signed out, expired, revoked)
- *   not_admin            401/403  admin-only route without an admin session
+ *   not_admin            403  signed in, but the account is not an admin
  *   last_admin           409  would leave no admin (delete, demote, self-delete)
  *   user_not_found       404  admin action on an id that does not exist
  *   self_target          400  admin delete/demote aimed at the caller's own account
- *   password_rate        429  too many password-change attempts (15 min window)
- *   password_wrong       403  current password wrong on password change
+ *   password_rate        429  too many password attempts, change or self-delete (15 min window)
+ *   password_wrong       403  current password wrong (password change, self-delete)
+ *   password_required    400  self-delete without the current password
  *   invite_spent         409  revoking an invite already used or revoked
  *   settings_too_large   400  settings blob over the size cap
  *   bad_request          400  malformed body or field; `error` names the field
@@ -1196,7 +1237,7 @@ function json(obj, status, extraHeaders) {
  *   report_long          413  report text over REPORT_ISSUE_MAX
  *   report_rate          429  too many reports from this address (1 h window)
  *   report_daily         429  global daily report budget spent
- *   report_queue_full    413/429  open-report count or file size cap reached
+ *   report_queue_full    413/429  open-report count (429, reason "count") or file size cap (413, reason "size") reached
  *   batch_too_large      400  more than MAX_REPORT_RESOLUTIONS resolutions
  *   audit_mismatch       409  audited ids no longer match the file on GitHub
  *   github_read_failed   502  could not read the bank from GitHub; nothing changed
@@ -1206,13 +1247,21 @@ function fail(code, error, status, cors, extra) {
   return json({ ok: false, code, error, ...(extra || {}) }, status, cors);
 }
 
+// Guard for every admin route. A missing or dead session is 401
+// session_expired, so the client offers sign-in; a live session without
+// admin rights is 403 not_admin. Returns null when the caller is an admin.
+function adminDenied(user, cors) {
+  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
+  if (!user.is_admin) return fail("not_admin", "Admin only.", 403, cors);
+  return null;
+}
+
 /* ── /paste ──────────────────────────────────────────────────────────── */
 
 async function handlePaste(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) {
-    return fail("not_admin", "Admin only.", 401, cors);
-  }
+  const denied = adminDenied(user, cors);
+  if (denied) return denied;
   const body = await request.json().catch(() => null);
   const questions = body && body.questions;
   if (!Array.isArray(questions) || !questions.length) {
@@ -1310,15 +1359,21 @@ async function handleReport(request, env, cors) {
     const reports = (data && Array.isArray(data.reports)) ? data.reports : [];
     const open = reports.filter(r => r && (r.status || "open") === "open").length;
     if (open >= REPORTS_OPEN_MAX) { full = "count"; throw new ReportsFull(); }
-    const out = { ...(data && typeof data === "object" ? data : {}), reports: reports.concat([entry]) };
+    const out = { ...(data && typeof data === "object" ? data : {}),
+                  reports: pruneResolvedReports(reports, entry).concat([entry]) };
     if (new TextEncoder().encode(JSON.stringify(out, null, 2)).length > REPORTS_FILE_MAX_BYTES) { full = "size"; throw new ReportsFull(); }
     return out;
   }, `Add report for ${entry.question_id} via web`).catch(e => {
     if (!(e instanceof ReportsFull)) throw e;
   });
-  if (full) {
+  if (full === "count") {
     return fail("report_queue_full", "The report queue is full. Try again once the open reports have been reviewed.",
-      full === "size" ? 413 : 429, cors);
+      429, cors, { reason: "count" });
+  }
+  if (full === "size") {
+    // Resolved reports are pruned first, so only open ones are left.
+    console.warn("report refused: reports.json over the size cap with resolved reports pruned");
+    return fail("report_queue_full", "The report file is full. Try again later.", 413, cors, { reason: "size" });
   }
   await noteAttempt(env, "report:global");
 
@@ -1332,7 +1387,32 @@ const REPORT_ISSUE_MAX = 4000;          // matches the textarea maxlength
 const REPORTS_OPEN_MAX = 200;
 const REPORTS_FILE_MAX_BYTES = 800_000;
 const REPORT_GLOBAL_DAY_MAX = 100;
+const REPORTS_RESOLVED_KEEP_DAYS = 30;
 class ReportsFull extends Error {}
+
+// Resolved reports stay in the file for REPORTS_RESOLVED_KEEP_DAYS so the
+// admin list can show recent outcomes, then go (git history keeps them).
+// If the file with `entry` added would still pass the size cap, the oldest
+// resolved reports go first, so only open reports can fill it.
+function pruneResolvedReports(reports, entry) {
+  const cutoff = Date.now() - REPORTS_RESOLVED_KEEP_DAYS * 86400 * 1000;
+  const isOpen = (r) => !r || (r.status || "open") === "open";
+  const when = (r) => Date.parse(r.resolved_at || r.created || "") || 0;
+  let kept = reports.filter(r => isOpen(r) || when(r) >= cutoff);
+  const size = (list) => new TextEncoder().encode(JSON.stringify({ reports: list.concat([entry]) }, null, 2)).length;
+  if (size(kept) > REPORTS_FILE_MAX_BYTES) {
+    const oldestFirst = kept.filter(r => !isOpen(r)).sort((a, b) => when(a) - when(b));
+    const drop = new Set();
+    let bytes = size(kept);
+    for (const r of oldestFirst) {
+      if (bytes <= REPORTS_FILE_MAX_BYTES) break;
+      drop.add(r);
+      bytes -= new TextEncoder().encode(JSON.stringify(r, null, 2)).length;
+    }
+    kept = kept.filter(r => !drop.has(r));
+  }
+  return kept;
+}
 
 /* ── /apply-audit ────────────────────────────────────────────────────
  *  body: { batch_path, audit: { summary, kept[], dropped[] } }
@@ -1355,9 +1435,8 @@ const TOPIC_TO_FILE = {
 
 async function handleApplyAudit(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) {
-    return fail("not_admin", "Admin only.", 401, cors);
-  }
+  const denied = adminDenied(user, cors);
+  if (denied) return denied;
   const body = await request.json().catch(() => null);
   const audit = body && body.audit;
   const batchPath = body && body.batch_path;   // e.g. "inbox/pasted-...json"
@@ -1375,6 +1454,9 @@ async function handleApplyAudit(request, env, cors) {
   // (an unknown topic included) would be lost rather than promoted.
   const unservable = unservableResponse(audit.kept, cors);
   if (unservable) return unservable;
+  // Checked before any write: the log line reads d.id and d.reason.
+  const badDrop = droppedEntryError(audit.dropped);
+  if (badDrop) return fail("bad_request", badDrop, 400, cors);
   const moved = { Paediatrics: 0, "Obstetrics & Gynaecology": 0, Psychiatry: 0, Medicine: 0, _unknown: 0 };
 
   // Bucket kept questions by topic.
@@ -1413,10 +1495,28 @@ async function handleApplyAudit(request, env, cors) {
     (audit.dropped.length
       ? "**Dropped:**\n" + audit.dropped.map(d => `- \`${d.id}\` - ${d.reason}`).join("\n") + "\n"
       : "");
-  await ghAppendText(env, "data/audit_log.md", summaryLine,
-    `Append audit log entry`);
+  const logWritten = await appendAuditLog(env, summaryLine, "Append audit log entry");
 
-  return json({ ok: true, moved, dropped: audit.dropped.length }, 200, cors);
+  return json({ ok: true, moved, dropped: audit.dropped.length, log_written: logWritten }, 200, cors);
+}
+
+// Null when every dropped[] entry is an object with a string id.
+function droppedEntryError(dropped) {
+  const i = dropped.findIndex(d => !d || typeof d !== "object" || typeof d.id !== "string" || !d.id);
+  return i === -1 ? null : `audit.dropped[${i}] needs a string id.`;
+}
+
+// The audit log is written after the questions. By then the edit has
+// landed, so a log failure is reported (log_written: false) instead of
+// turning the response into a 500 that invites a retry of a done job.
+async function appendAuditLog(env, text, message) {
+  try {
+    await ghAppendText(env, "data/audit_log.md", text, message);
+    return true;
+  } catch (e) {
+    console.error("audit log append failed after the edit landed:", e && e.stack || e);
+    return false;
+  }
 }
 
 /* ── /apply-live-audit ──────────────────────────────────────────
@@ -1430,9 +1530,8 @@ async function handleApplyAudit(request, env, cors) {
 const ALLOWED_LIVE_FILES = new Set(Object.values(TOPIC_TO_FILE));
 async function handleApplyLiveAudit(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) {
-    return fail("not_admin", "Admin only.", 401, cors);
-  }
+  const denied = adminDenied(user, cors);
+  if (denied) return denied;
   const body = await request.json().catch(() => null);
   const filePath = body && body.file_path;
   const audit = body && body.audit;
@@ -1485,9 +1584,9 @@ async function handleApplyLiveAudit(request, env, cors) {
     (audit.dropped.length
       ? "**Dropped:**\n" + audit.dropped.map(d => `- \`${d.id}\` - ${d.reason}`).join("\n") + "\n"
       : "");
-  await ghAppendText(env, "data/audit_log.md", summary, "Append live-audit log entry");
+  const logWritten = await appendAuditLog(env, summary, "Append live-audit log entry");
 
-  return json({ ok: true, kept: audit.kept.length, dropped: audit.dropped.length }, 200, cors);
+  return json({ ok: true, kept: audit.kept.length, dropped: audit.dropped.length, log_written: logWritten }, 200, cors);
 }
 
 class AuditMismatch extends Error {}
@@ -1522,7 +1621,9 @@ function auditIdMismatch(original, kept, dropped) {
  *  body: { resolutions: [ { report_id, question_id, action, resolution, fixed_question?, files? } ] }
  *  - `files` is the client's hint of which bank files hold the question.
  *    Hinted files are edited directly (about 7 GitHub requests for one
- *    fix); only ids not found there trigger the full scan below.
+ *    fix), and inbox files are always checked for a second copy; only
+ *    ids not found in the hinted files trigger the full scan below.
+ *  - A fix whose fixed_question.id differs from question_id is invalid.
  *  - Looks for each fix/drop question in every file loadData() in
  *    app.js serves the bank from: the four main files, then every file
  *    listed in batches_manifest.json and inbox_manifest.json. The main
@@ -1539,9 +1640,8 @@ class NoChange extends Error {}
 
 async function handleApplyReport(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user || !user.is_admin) {
-    return fail("not_admin", "Admin only.", 401, cors);
-  }
+  const denied = adminDenied(user, cors);
+  if (denied) return denied;
   const body = await request.json().catch(() => null);
   const resolutions = body && body.resolutions;
   if (!Array.isArray(resolutions) || !resolutions.length) {
@@ -1561,6 +1661,10 @@ async function handleApplyReport(request, env, cors) {
     else if (o.action !== "dismiss" && !o.question_id) { o.outcome = "invalid"; o.reason = "missing question_id"; }
     else if (o.action === "fix" && !isServableQuestion(r.fixed_question)) {
       o.outcome = "invalid"; o.reason = "fixed_question is not a complete question";
+    } else if (o.action === "fix" && r.fixed_question.id !== o.question_id) {
+      // A bulk audit can pair one case's JSON with another case's id; the
+      // replace would then delete this question and duplicate the other.
+      o.outcome = "invalid"; o.reason = "fixed_question.id does not match question_id";
     } else if (o.action !== "dismiss") {
       const prev = firstEdit.get(o.question_id);
       if (!prev) { firstEdit.set(o.question_id, { o, r }); }
@@ -1597,6 +1701,21 @@ async function handleApplyReport(request, env, cors) {
       }
     }
     for (const p of paths) if (hinted.has(p)) await applyReportEdits(env, p, hinted.get(p), edits, written);
+    // The client's hints cover the files it loaded a question from, which
+    // can miss a second copy in an inbox file; that copy would be served
+    // again after the batch copy was fixed or dropped. Inbox files are
+    // small, so they are always scanned for ids the hints resolved.
+    const landed = edits.filter(e => e.o.files.length && !e.o.failedFiles);
+    const inboxPaths = paths.filter(p => p.startsWith("data/inbox/") && !hinted.has(p));
+    if (landed.length && inboxPaths.length) {
+      try {
+        const where = await locateQuestions(env, new Set(landed.map(e => e.o.question_id)), inboxPaths);
+        for (const [path, ids] of where) await applyReportEdits(env, path, ids, landed, written);
+      } catch (e) {
+        console.error("apply-report inbox scan failed:", e && e.stack || e);
+        for (const x of landed) x.o.failedFiles = (x.o.failedFiles || []).concat("(inbox scan failed)");
+      }
+    }
     const rest = edits.filter(e => !e.o.files.length && !e.o.failedFiles);
     if (rest.length) {
       let where;
@@ -1952,17 +2071,11 @@ async function ghRemoveFromManifest(env, path, key, value) {
 async function ghAppendText(env, path, text, message) {
   for (let attempt = 0; attempt < 3; attempt++) {
     const branch = env.GITHUB_BRANCH || "main";
-    const url = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}?ref=${encodeURIComponent(branch)}`;
-    const r = await fetch(url, { headers: ghHeaders(env) });
-    let existing = "";
-    let sha;
-    if (r.status === 200) {
-      const meta = await r.json();
-      sha = meta.sha;
-      existing = ghInlineText(meta, path);
-    } else if (r.status !== 404) {
-      throw new Error(`GET ${path} (${r.status})`);
-    }
+    // ghReadFile falls back to the blob endpoint, so the log keeps
+    // appending once it passes the Contents API's 1 MB inline limit.
+    const cur = await ghReadFile(env, path);
+    const existing = cur.exists ? cur.text : "";
+    const sha = cur.sha;
     const put = await fetch(`https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}`, {
       method: "PUT",
       headers: { ...ghHeaders(env), "Content-Type": "application/json" },

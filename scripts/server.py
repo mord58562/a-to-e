@@ -39,6 +39,9 @@ class Handler(SimpleHTTPRequestHandler):
         sys.stderr.write("[y4mcq] " + (fmt % args) + "\n")
 
     def do_POST(self):
+        refused = self._refuse_foreign_request()
+        if refused:
+            return refused
         if self.path == "/api/paste":
             return self._handle_paste()
         if self.path == "/api/report":
@@ -51,13 +54,44 @@ class Handler(SimpleHTTPRequestHandler):
             return self._handle_apply_report()
         self.send_error(404, "Not found")
 
+    def _refuse_foreign_request(self):
+        """Answer 403/415 unless the request comes from this server's own page.
+
+        Every POST route writes to the working tree. A page on any other site
+        can send a "simple" cross-origin POST (text/plain, no preflight), and
+        a DNS-rebinding page arrives with a foreign Host. Requiring
+        application/json forces a preflight this server never grants;
+        checking Host and Origin covers the rest. Returns None when allowed.
+        """
+        local = {f"127.0.0.1:{PORT}", f"localhost:{PORT}"}
+        host = self.headers.get("Host") or ""
+        origin = self.headers.get("Origin")
+        ctype = (self.headers.get("Content-Type") or "").split(";")[0].strip().lower()
+        if host not in local:
+            sys.stderr.write(f"[y4mcq] refused POST {self.path}: Host {host!r}\n")
+            return self._json(403, {"ok": False, "code": "forbidden", "error": "Requests must come from this server's own page."})
+        if origin is not None and origin not in {"http://" + h for h in local}:
+            sys.stderr.write(f"[y4mcq] refused POST {self.path}: Origin {origin!r}\n")
+            return self._json(403, {"ok": False, "code": "forbidden", "error": "Requests must come from this server's own page."})
+        if ctype != "application/json":
+            sys.stderr.write(f"[y4mcq] refused POST {self.path}: Content-Type {ctype!r}\n")
+            return self._json(415, {"ok": False, "code": "bad_request", "error": "Content-Type must be application/json."})
+        return None
+
     def _read_json(self):
-        length = int(self.headers.get("Content-Length") or 0)
+        """(payload, error). Every route takes a JSON object; anything else is an error."""
+        try:
+            length = int(self.headers.get("Content-Length") or 0)
+        except ValueError:
+            return None, "bad Content-Length"
         body = self.rfile.read(length).decode("utf-8", errors="replace")
         try:
-            return json.loads(body), None
+            payload = json.loads(body)
         except json.JSONDecodeError as e:
             return None, f"invalid JSON: {e}"
+        if not isinstance(payload, dict):
+            return None, "body must be a JSON object"
+        return payload, None
 
     def _handle_paste(self):
         payload, err = self._read_json()
@@ -76,10 +110,12 @@ class Handler(SimpleHTTPRequestHandler):
                     q["model"] = model
 
         os.makedirs(INBOX_DIR, exist_ok=True)
+        # The random suffix keeps two pastes in the same second apart, and
+        # "x" refuses to overwrite should a name ever repeat.
         stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d-%H%M%S")
-        filename = f"pasted-{stamp}.json"
+        filename = f"pasted-{stamp}-{secrets.token_hex(2)}.json"
         path = os.path.join(INBOX_DIR, filename)
-        with open(path, "w", encoding="utf-8") as f:
+        with open(path, "x", encoding="utf-8") as f:
             json.dump(questions, f, indent=2, ensure_ascii=False)
             f.write("\n")
 
@@ -112,12 +148,17 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json(400, {"ok": False, "code": "bad_request", "error": "missing question_id"})
         if not isinstance(issue, str) or len(issue.strip()) < 3:
             return self._json(400, {"ok": False, "code": "report_short", "error": "issue text too short"})
+        if len(issue) > 4000:
+            return self._json(413, {"ok": False, "code": "report_long", "error": "Report is too long. Keep it under 4000 characters."})
+
+        def s(v):
+            return v if isinstance(v, str) else ""
         entry = {
             "id":           f"report-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}-{secrets.token_hex(2)}",
             "question_id":  qid[:200],
-            "issue":        issue[:4000],
-            "profile":      (payload.get("profile") or "guest")[:40],
-            "model":        payload.get("model"),
+            "issue":        issue,
+            "profile":      (s(payload.get("profile")) or "guest")[:40],
+            "model":        s(payload.get("model"))[:80] or None,
             "created":      datetime.now(timezone.utc).isoformat(),
             "status":       "open",
             "resolution":   None,
@@ -163,9 +204,23 @@ class Handler(SimpleHTTPRequestHandler):
         dropped = audit.get("dropped") or []
         if not isinstance(kept, list) or not isinstance(dropped, list):
             return self._json(400, {"ok": False, "code": "bad_request", "error": "audit.kept and audit.dropped must be arrays"})
+        # batch_path is overwritten with "[]" below. Same allowlist as the
+        # worker, plus a resolved-path check: os.path.join discards ROOT for
+        # an absolute path, and ".." would climb out of data/inbox.
+        if batch_path not in (None, ""):
+            inbox_real = os.path.realpath(INBOX_DIR)
+            if (not isinstance(batch_path, str)
+                    or not re.fullmatch(r"inbox/[A-Za-z0-9._-]+\.json", batch_path)
+                    or os.path.dirname(os.path.realpath(os.path.join(ROOT, "data", batch_path))) != inbox_real):
+                sys.stderr.write(f"[y4mcq] refused apply-audit batch_path {batch_path!r}\n")
+                return self._json(400, {"ok": False, "code": "bad_request", "error": "batch_path must be inbox/<name>.json."})
         unservable = unservable_message(kept)
         if unservable:
             return self._json(400, {"ok": False, "code": "bad_request", "error": unservable})
+        bad_drop = next((i for i, d in enumerate(dropped)
+                         if not isinstance(d, dict) or not isinstance(d.get("id"), str) or not d.get("id")), None)
+        if bad_drop is not None:
+            return self._json(400, {"ok": False, "code": "bad_request", "error": f"audit.dropped[{bad_drop}] needs a string id."})
 
         moved = {"Paediatrics": 0, "Obstetrics & Gynaecology": 0, "Psychiatry": 0, "Medicine": 0, "_unknown": 0}
         buckets = {}
@@ -292,6 +347,8 @@ class Handler(SimpleHTTPRequestHandler):
                 o.update(outcome="invalid", reason="missing question_id")
             elif o["action"] == "fix" and not is_servable(r.get("fixed_question")):
                 o.update(outcome="invalid", reason="fixed_question is not a complete question")
+            elif o["action"] == "fix" and r["fixed_question"].get("id") != o["question_id"]:
+                o.update(outcome="invalid", reason="fixed_question.id does not match question_id")
             elif o["action"] != "dismiss":
                 prev = first_edit.get(o["question_id"])
                 if prev is None:
@@ -312,6 +369,12 @@ class Handler(SimpleHTTPRequestHandler):
                 if isinstance(h, str) and h in rel:
                     hinted.setdefault(rel[h], set()).add(qid)
         written = [p for p in bank if self._apply_edits(p, hinted.get(p), first_edit)]
+        # Inbox files are always checked for a second copy of a hinted id,
+        # which would otherwise be served again (mirrors the worker).
+        landed = {qid for qid, (o, r) in first_edit.items() if o["files"]}
+        inbox_real = os.path.realpath(INBOX_DIR) + os.sep
+        written += [p for p in bank if p not in hinted and os.path.realpath(p).startswith(inbox_real)
+                    and self._apply_edits(p, landed, first_edit)]
         rest = {qid for qid, (o, r) in first_edit.items() if not o["files"]}
         written += [p for p in bank if self._apply_edits(p, rest, first_edit)]
         if written:
