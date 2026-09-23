@@ -10,7 +10,16 @@ Usage:
 import json, os, re, sys, subprocess, collections
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CTX  = os.path.join(REPO, '.routine-context.md')
+# The routine's context file left the repo on 2026-09-21: this repo is
+# public and Pages serves its root, so an internal file at a guessable
+# path was fetchable and returned 200. It sits beside the repo now. This
+# script kept reading the old location and had been dying on
+# FileNotFoundError at every call since, which is a silent failure: the
+# routine's snapshot simply stopped being updated.
+PRIVATE = os.path.join(os.path.dirname(REPO), 'private-notes')
+CTX = next((p for p in (os.path.join(PRIVATE, '.routine-context.md'),
+                        os.path.join(REPO, '.routine-context.md'))
+            if os.path.exists(p)), None)
 
 def live_totals():
     """Count unique served question ids across the four main files and every
@@ -101,6 +110,9 @@ def update_difficulty(tiers):
             line += ' (target 15-20% of bank)'
         lines.append(line)
     block = '\n'.join(lines) + '\n'
+    if not CTX:
+        print('WARNING: .routine-context.md not found; difficulty snapshot not synced')
+        return False
     text = open(CTX).read()
     pattern = r'Live distribution snapshot \(.*?\n(?:- L\d: [^\n]*\n){5}'
     if not re.search(pattern, text, flags=re.DOTALL):
@@ -126,6 +138,10 @@ def update_meta(totals):
 
 def update_context(totals):
     """Rewrite Section 2's 'Current snapshot' block with fresh numbers."""
+    if not CTX:
+        print('WARNING: .routine-context.md not found; snapshot not synced. '
+              'Expected it in ' + PRIVATE)
+        return False
     text = open(CTX).read()
     block = (
         "Current snapshot (autosynced by scripts/sync_routine_counts.py; "
