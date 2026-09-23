@@ -52,9 +52,21 @@ export default {
     // Body-size cap for POSTs. Not a substitute for per-endpoint rate limits
     // but it prevents an unauth POST from tying up the isolate for seconds.
     if (request.method === "POST") {
-      const len = parseInt(request.headers.get("Content-Length") || "0", 10);
+      const raw = request.headers.get("Content-Length");
+      const len = raw === null ? NaN : Number(raw);
       if (len > MAX_BODY_BYTES) {
         return json({ ok: false, error: "payload too large" }, 413, cors);
+      }
+      // A chunked request has no Content-Length and a junk header parses
+      // to NaN, and both used to sail past the check above, so
+      // request.json() would buffer whatever was sent. Without a usable
+      // length, read the body here with the cap applied as it streams.
+      if (!Number.isFinite(len) && request.body) {
+        const capped = await readCapped(request.body, MAX_BODY_BYTES);
+        if (capped === null) {
+          return json({ ok: false, error: "payload too large" }, 413, cors);
+        }
+        request = new Request(request.url, { method: request.method, headers: request.headers, body: capped });
       }
     }
     try {
@@ -122,10 +134,33 @@ export default {
       env.DB.prepare("DELETE FROM sessions WHERE created_at + ? < ?").bind(SESSION_MAX_AGE_SEC, now),
       // Keep a day of rate-limit history; the longest window is one hour.
       env.DB.prepare("DELETE FROM login_attempts WHERE ts < ?").bind(now - 86400),
-      env.DB.prepare("DELETE FROM invite_codes WHERE used_by IS NULL AND revoked_at IS NULL AND expires_at IS NOT NULL AND expires_at < ?").bind(now - 86400 * 30),
+      // used_at IS NULL: a redeemed code whose account was later deleted
+      // has used_by nulled by the foreign key, and is a record, not junk.
+      env.DB.prepare("DELETE FROM invite_codes WHERE used_by IS NULL AND used_at IS NULL AND revoked_at IS NULL AND expires_at IS NOT NULL AND expires_at < ?").bind(now - 86400 * 30),
     ]));
   },
 };
+
+// Read a request body stream, giving up (null) once it passes `max` bytes.
+async function readCapped(stream, max) {
+  const reader = stream.getReader();
+  const chunks = [];
+  let total = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.byteLength;
+    if (total > max) {
+      try { await reader.cancel(); } catch {}
+      return null;
+    }
+    chunks.push(value);
+  }
+  const out = new Uint8Array(total);
+  let off = 0;
+  for (const c of chunks) { out.set(c, off); off += c.byteLength; }
+  return out;
+}
 
 function corsHeaders(env) {
   return {
@@ -242,6 +277,9 @@ const REG_IP_WINDOW_SEC = 60 * 60;
 const REG_IP_MAX = 5;
 const LOGIN_IP_WINDOW_SEC = 15 * 60;
 const LOGIN_IP_MAX = 30;
+// POST /api/password, per account: every attempt runs Argon2id.
+const PW_CHANGE_WINDOW_SEC = 15 * 60;
+const PW_CHANGE_MAX = 10;
 
 function bytesToHex(bytes) {
   return Array.from(new Uint8Array(bytes)).map(b => b.toString(16).padStart(2, "0")).join("");
@@ -482,9 +520,14 @@ async function handleRegister(request, env, cors) {
   const inviteHash = await hashInviteCode(env, inviteRaw);
   const nowTs = Math.floor(Date.now() / 1000);
   const invite = await env.DB.prepare(
-    "SELECT code_hash, expires_at, used_by, revoked_at FROM invite_codes WHERE code_hash = ?"
+    "SELECT code_hash, expires_at, used_by, used_at, revoked_at FROM invite_codes WHERE code_hash = ?"
   ).bind(inviteHash).first();
-  if (!invite || invite.used_by || invite.revoked_at ||
+  // used_at as well as used_by: the used_by foreign key is ON DELETE SET
+  // NULL, so deleting the account a code created put the code back into
+  // circulation. An invited user could delete and re-register on the same
+  // code indefinitely, or hand it on. used_at is the tombstone that
+  // survives the cascade.
+  if (!invite || invite.used_by || invite.used_at || invite.revoked_at ||
       (invite.expires_at && invite.expires_at < nowTs)) {
     return json({ ok: false, error: "that invite code is not valid" }, 403, cors);
   }
@@ -509,25 +552,44 @@ async function handleRegister(request, env, cors) {
   // populated with the deterministic lookup hash so it stays unique
   // without storing plaintext. Once schema_003 drops the column this
   // line can be removed.
-  await env.DB.prepare(
-    "INSERT INTO users (id, email, email_lookup, email_enc, password_hash, password_salt, pw_algo, display_name, is_admin, created_at, invited_via, last_seen_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-  ).bind(id, "enc:" + lookup.slice(0, 32), lookup, emailEnc, hash, saltHex, ARGON2_ALGO_LABEL, displayName, isAdmin, now, invite.code_hash, now).run();
-
-  // Burn the code. Guarded on used_by IS NULL so two simultaneous
-  // registrations cannot both redeem it.
-  const burn = await env.DB.prepare(
-    "UPDATE invite_codes SET used_by = ?, used_at = ? WHERE code_hash = ? AND used_by IS NULL"
-  ).bind(id, now, invite.code_hash).run();
-  if (!burn.meta || burn.meta.changes !== 1) {
-    await env.DB.prepare("DELETE FROM users WHERE id = ?").bind(id).run();
-    return json({ ok: false, error: "that invite code is not valid" }, 403, cors);
-  }
-
+  // Create the account, burn the code and open the session as ONE batch
+  // (a single D1 transaction), with the user INSERT itself conditional on
+  // the code still being redeemable at that instant.
+  //
+  // This used to be three separate writes: insert the user, then a
+  // guarded burn, then on a lost race a compensating DELETE of the user.
+  // If that DELETE failed (a D1 error, the isolate dying after the Argon2
+  // pass) the loser got a 500 but kept a committed account it could sign
+  // in to, so one code yielded two accounts. Now a registration that
+  // loses the race writes nothing at all, and there is nothing to undo.
+  //
+  // The WHERE repeats every validity test, not just used_by, so a code
+  // revoked or expired between the SELECT above and this write cannot
+  // still be redeemed by the in-flight registration.
+  const INVITE_REDEEMABLE =
+    "code_hash = ? AND used_by IS NULL AND used_at IS NULL AND revoked_at IS NULL " +
+    "AND (expires_at IS NULL OR expires_at >= ?)";
   const tokenHex = randomHex(32);
   const tokenH = await hashSessionToken(env, tokenHex);
-  await env.DB.prepare(
-    "INSERT INTO sessions (token, token_hash, user_id, created_at, expires_at) VALUES (?, ?, ?, ?, ?)"
-  ).bind("h:" + tokenH.slice(0, 24), tokenH, id, now, now + SESSION_TTL_SEC).run();
+  const results = await env.DB.batch([
+    env.DB.prepare(
+      "INSERT INTO users (id, email, email_lookup, email_enc, password_hash, password_salt, pw_algo, display_name, is_admin, created_at, invited_via, last_seen_at) " +
+      "SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? WHERE EXISTS (SELECT 1 FROM invite_codes WHERE " + INVITE_REDEEMABLE + ")"
+    ).bind(id, "enc:" + lookup.slice(0, 32), lookup, emailEnc, hash, saltHex, ARGON2_ALGO_LABEL, displayName, isAdmin, now, invite.code_hash, now,
+           invite.code_hash, nowTs),
+    env.DB.prepare(
+      "UPDATE invite_codes SET used_by = ?, used_at = ? WHERE " + INVITE_REDEEMABLE +
+      " AND EXISTS (SELECT 1 FROM users WHERE id = ?)"
+    ).bind(id, now, invite.code_hash, nowTs, id),
+    env.DB.prepare(
+      "INSERT INTO sessions (token, token_hash, user_id, created_at, expires_at) " +
+      "SELECT ?, ?, ?, ?, ? WHERE EXISTS (SELECT 1 FROM users WHERE id = ?)"
+    ).bind("h:" + tokenH.slice(0, 24), tokenH, id, now, now + SESSION_TTL_SEC, id),
+  ]);
+  const changed = (r) => (r && r.meta && r.meta.changes) || 0;
+  if (changed(results[0]) !== 1 || changed(results[1]) !== 1 || changed(results[2]) !== 1) {
+    return json({ ok: false, error: "that invite code is not valid" }, 403, cors);
+  }
 
   return json({ ok: true, token: tokenHex, user: publicUser({ id, email, display_name: displayName, is_admin: isAdmin }) }, 200, cors);
 }
@@ -586,6 +648,13 @@ async function handleLogin(request, env, cors) {
   }
 
   await recordAttempt(env, lookup, true, ipH);
+  // A correct password clears this address's failures. isLockedOut counts
+  // ok = 0 rows only, so without this, 7 typos then a success then one
+  // retry from a device still holding the old password locked the
+  // account for 15 minutes straight after a good sign-in.
+  await env.DB.prepare(
+    "DELETE FROM login_attempts WHERE email_lookup = ? AND ok = 0"
+  ).bind(lookup).run();
 
   // Lazy migration: if this account is still on legacy hashing /
   // plaintext email, upgrade it now that we have the password in hand.
@@ -757,6 +826,15 @@ async function handlePasswordChange(request, env, cors) {
   if (next.length < 8) return json({ ok: false, error: "new password must be 8+ characters" }, 400, cors);
   if (next.length > 1024 || current.length > 1024) return json({ ok: false, error: "password too long" }, 400, cors);
 
+  // Budget before the Argon2id pass. With none, a stolen bearer token
+  // could guess the current password as fast as the worker answered,
+  // each guess costing a full Argon2id run.
+  const pwKey = "pw:" + user.id;
+  if (await overBudget(env, pwKey, PW_CHANGE_WINDOW_SEC, PW_CHANGE_MAX)) {
+    return json({ ok: false, error: "too many attempts, try again later" }, 429, cors);
+  }
+  await noteAttempt(env, pwKey);
+
   const row = await env.DB.prepare(
     "SELECT password_hash, password_salt, pw_algo FROM users WHERE id = ?"
   ).bind(user.id).first();
@@ -791,7 +869,10 @@ async function handleRevokeSessions(request, env, cors) {
   const m = (request.headers.get("Authorization") || "").match(/^Bearer\s+([a-f0-9]{32,})$/i);
   const keep = m ? await hashSessionToken(env, m[1]) : "";
   const res = await env.DB.prepare(
-    "DELETE FROM sessions WHERE user_id = ? AND token_hash != ?"
+    // token_hash IS NULL too: pre-schema_002 rows have no hash, and in SQL
+    // NULL != 'x' is NULL, not true, so they survived and the count
+    // reported back was short.
+    "DELETE FROM sessions WHERE user_id = ? AND (token_hash IS NULL OR token_hash != ?)"
   ).bind(user.id, keep).run();
   return json({ ok: true, revoked: (res.meta && res.meta.changes) || 0 }, 200, cors);
 }
@@ -866,8 +947,12 @@ async function handleAnswer(request, env, cors) {
   if (typeof qid !== "string" || !/^[A-Za-z0-9_\-]+$/.test(qid) || qid.length > 200) {
     return json({ ok: false, error: "bad question_id" }, 400, cors);
   }
-  if (!"ABCDE".includes(srcLetter)) {
-    return json({ ok: false, error: "source_letter must be A-E" }, 400, cors);
+  // String.includes is a SUBSTRING test, so the old check passed "",
+  // "AB", "BCD" and "ABCDE" straight into a TEXT NOT NULL column that
+  // exists so cross-user aggregates compare like for like. The rows are
+  // upserted, so a junk value stuck until the user answered again.
+  if (typeof srcLetter !== "string" || srcLetter.length !== 1 || !"ABCDE".includes(srcLetter)) {
+    return json({ ok: false, error: "source_letter must be a single letter A-E" }, 400, cors);
   }
   const now = Math.floor(Date.now() / 1000);
   // UPSERT: re-attempts MUST update the latest correctness + bump the
@@ -1135,6 +1220,14 @@ async function handleApplyAudit(request, env, cors) {
   if (!audit || !Array.isArray(audit.kept) || !Array.isArray(audit.dropped)) {
     return json({ ok: false, error: "expected { batch_path, audit: { kept[], dropped[] } }" }, 400, cors);
   }
+  // batch_path is written to as `data/<batch_path>` with "[]" below, so it
+  // needs the same allowlist its sibling /apply-live-audit already has.
+  // Unvalidated, `"questions_paeds.json"` emptied the live paediatrics
+  // bank in one commit, and `"../.github/workflows/x.yml"` survived
+  // ghPutFile's encoder (encodeURIComponent leaves "." alone).
+  if (batchPath && !/^inbox\/[a-zA-Z0-9._-]+\.json$/.test(batchPath)) {
+    return json({ ok: false, error: "batch_path must be inbox/<name>.json" }, 400, cors);
+  }
   const moved = { Paediatrics: 0, "Obstetrics & Gynaecology": 0, Psychiatry: 0, Medicine: 0, _unknown: 0 };
 
   // Bucket kept questions by topic.
@@ -1338,7 +1431,22 @@ async function ghMutateJson(env, path, mutator, message) {
     if (r.status === 200) {
       const meta = await r.json();
       sha = meta.sha;
-      try { data = JSON.parse(base64ToUtf8(meta.content)); } catch {}
+      // A 200 we cannot parse used to leave `data` null while `sha` was
+      // already set, so the mutator ran against [] and the PUT succeeded
+      // with a valid sha - replacing the entire file with whatever the
+      // mutator produced. That is a total loss of a live question file,
+      // and it has two live triggers: a transient truncated body, and the
+      // Contents API declining to inline a blob over 1 MB (it answers 200
+      // with encoding "none" and empty content). Fail closed: a 404 still
+      // creates the file, but a 200 must parse before we overwrite it.
+      if (meta.encoding !== "base64" || !meta.content) {
+        throw new Error(`refusing to rewrite ${path}: GitHub did not inline the content (blob over 1 MB?)`);
+      }
+      try {
+        data = JSON.parse(base64ToUtf8(meta.content));
+      } catch {
+        throw new Error(`refusing to rewrite ${path}: the existing content did not parse as JSON`);
+      }
     }
     const next = mutator(data);
     const put = await fetch(`https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}`, {

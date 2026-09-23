@@ -21,6 +21,13 @@ def hash_password(password: str, salt_hex: str) -> str:
     pw_bytes   = password.encode("utf-8")
     return hashlib.pbkdf2_hmac("sha256", pw_bytes, salt_bytes, 100000, 32).hex()
 
+def sql_str(s: str) -> str:
+    # SQL string literal. shlex.quote is SHELL quoting: it returns a bare
+    # word when nothing needs escaping, so the default display name came
+    # out as an unquoted identifier ("no such column: rob"), and an email
+    # with an apostrophe broke the statement.
+    return "'" + str(s).replace("'", "''") + "'"
+
 def main():
     if len(sys.argv) < 3:
         sys.exit("usage: seed_dummy_user.py <email> <password> [display_name] [admin|user]")
@@ -38,8 +45,8 @@ def main():
     sql = (
         "INSERT INTO users (id, email, password_hash, password_salt, "
         "display_name, is_admin, created_at) VALUES ("
-        f"'{uid}', '{email}', '{pw_hash}', '{salt}', "
-        f"{shlex.quote(display)}, {is_admin}, {now});"
+        f"{sql_str(uid)}, {sql_str(email)}, {sql_str(pw_hash)}, {sql_str(salt)}, "
+        f"{sql_str(display)}, {is_admin}, {now});"
     )
     cmd = f"wrangler d1 execute a-to-e --remote --command {shlex.quote(sql)}"
     print(cmd)
