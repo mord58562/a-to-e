@@ -670,8 +670,23 @@
     location.reload();
   }
 
+  // The masthead is sticky, and the navigator rail is fixed beneath it.
+  // The rail's top used to be a hand-tuned 84px, which sat a few pixels
+  // inside the topbar band and drifted with any change of font size or
+  // safe-area inset. Measure it instead and let CSS read the number.
+  function trackMastheadHeight() {
+    const masthead = document.querySelector(".masthead");
+    if (!masthead) return;
+    const set = () => document.documentElement.style.setProperty(
+      "--masthead-h", `${Math.round(masthead.getBoundingClientRect().height)}px`);
+    set();
+    if (typeof ResizeObserver === "function") new ResizeObserver(set).observe(masthead);
+    else window.addEventListener("resize", set);
+  }
+
   document.addEventListener("DOMContentLoaded", async () => {
     applyTheme(localStorage.getItem(THEME_KEY) || "light");
+    trackMastheadHeight();
     // Kick off the data load in parallel with the gate. The bank JSON does
     // not depend on which user is signed in, so we can overlap the ~54
     // file fetches with the /api/me round-trip + any password entry. On a
@@ -909,7 +924,10 @@
     const title = document.getElementById("adminTitle");
     if (title) title.textContent = isAdmin ? "Admin" : "Account";
     nav.innerHTML = tabs.map(t =>
-      `<a href="#admin-${t.id}" class="admin-tab" data-admin-tab="${t.id}">${esc(t.label)}</a>`
+      // data-label feeds the CSS width reservation, so the row does not
+      // re-flow when the selected label switches to 600 weight.
+      `<a href="#admin-${t.id}" class="admin-tab" data-admin-tab="${t.id}" ` +
+      `data-label="${esc(t.label)}">${esc(t.label)}</a>`
     ).join("");
     nav.hidden = tabs.length < 2;
     const want = ADMIN_TAB_ALIASES[initialTab] || initialTab;
@@ -2103,10 +2121,15 @@
   // key-value dump. Where a row is clearly a list of measurements we
   // break it into discrete items so the numbers can be read off the
   // way they would be off a chart.
-  const MEASUREMENT_ROWS = /^(vital signs|vitals|observations|obs|investigations|bloods|examination findings)$/i;
+  const MEASUREMENT_ROWS = /^(vital signs|vitals|observations?|obs|obs on arrival|investigations?|bloods?|blood tests|pathology|examination findings|urine|urinalysis|urine dipstick|dipstick|blood gas|arterial blood gas|venous blood gas|abg|vbg)$/i;
+  // Readings whose value is a word rather than a number. Without these
+  // "C3 normal" and "SpO2 99% on room air" fell through the numeric
+  // split and rendered as unemphasised grey text beside readings that
+  // had a bold value, so one block carried two different treatments.
+  const QUALITATIVE = /^(.*?)\s+(normal|nil|absent|present|positive|negative|clear|raised|reduced|elevated|low|high|trace|detected|not detected|pending|sinus rhythm|regular|irregular)\b(.*)$/i;
   function renderClinicalValue(dd, label, value) {
     const parts = value.split(/,\s+/).map(x => x.trim()).filter(Boolean);
-    const numeric = parts.filter(x => /\d/.test(x)).length;
+    const numeric = parts.filter(x => /\d/.test(x) || QUALITATIVE.test(x)).length;
     // Only split when it genuinely is a list: at least three items, most
     // of them carrying a number, and none of them a full clause. A
     // narrative examination finding stays as prose.
@@ -2118,8 +2141,15 @@
     dd.classList.add("obs-set");
     for (const part of parts) {
       // "blood pressure 158/94 mmHg" -> name "blood pressure",
-      // reading "158/94 mmHg". Split at the first number.
-      const m = part.match(/^(.*?[A-Za-z)])\s+([<>=]?\s*[\d.].*)$/);
+      // reading "158/94 mmHg". Split at the first whitespace-delimited
+      // token that opens with a digit or a comparator, which is what
+      // lets "SpO2 99% on room air" split at the 99 rather than at the
+      // 2 in SpO2. Failing that, split at a qualitative value word.
+      let m = part.match(/^(.*?)\s+([<>=]?\s*[\d.].*)$/);
+      if (!m) {
+        const q = part.match(QUALITATIVE);
+        if (q && q[1]) m = [part, q[1], (q[2] + q[3]).trim()];
+      }
       const item = document.createElement("span");
       item.className = "obs";
       if (m) {
