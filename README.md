@@ -9,6 +9,7 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 ## What's new in 1.6.11
 
 - A revoked invite code disappears from the admin panel instead of sitting there as a row that cannot do anything.
+- The name pill and the Admin button are painted with the rest of the masthead instead of arriving a few hundred milliseconds later and shoving the row sideways.
 
 ## What's new in 1.6.10
 

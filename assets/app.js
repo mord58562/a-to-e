@@ -78,6 +78,12 @@
   const PROFILE_CURRENT_KEY  = "y4mcq.profile.current";
   const PROFILE_MIGRATED_KEY = "y4mcq.profile.migrated.v1";
   const AUTH_TOKEN_KEY       = "y4mcq.auth.token";
+  // Last known masthead identity, so the name pill and the Admin button
+  // can be painted with the rest of the row instead of arriving after
+  // the round-trip that confirms them. Cosmetic only: every admin
+  // surface is gated on the server, and the real answer overwrites this
+  // as soon as /api/me lands.
+  const CHROME_KEY           = "y4mcq.chrome.v1";
   const GUEST_KEY            = "y4mcq.guest.v1";
 
   // Cloud account state. Populated by checkAuth() on startup if a token
@@ -678,6 +684,9 @@
   function signOut() {
     localStorage.removeItem(PROFILE_CURRENT_KEY);
     localStorage.removeItem(GUEST_KEY);
+    // The cached name goes with the session, or the gate would paint the
+    // last user's pill on the next load.
+    localStorage.removeItem(CHROME_KEY);
     cloudSignOut();
     guestUser = null;
     // Hard reload so all in-memory state resets to the gate flow.
@@ -705,6 +714,7 @@
 
   document.addEventListener("DOMContentLoaded", async () => {
     applyTheme(localStorage.getItem(THEME_KEY) || "light");
+    paintCachedMastheadChrome();
     trackMastheadHeight();
     // Kick off the data load in parallel with the gate. The bank JSON does
     // not depend on which user is signed in, so we can overlap the ~54
@@ -1828,6 +1838,45 @@
     applyTheme(cur === "light" ? "dark" : "light");
   }
 
+  // Written after every resolved sign-in, read before the next one.
+  function rememberMastheadChrome(chip, nameEl, pillSeed) {
+    if (!chip || chip.hidden || !nameEl) return;
+    try {
+      localStorage.setItem(CHROME_KEY, JSON.stringify({
+        name: nameEl.textContent || "",
+        profileId: chip.dataset.profileId || "",
+        pillStyle: chip.dataset.pillStyle || "",
+        hue: pillSeed ? pillHueFor(pillSeed) : null,
+        admin: document.body.classList.contains("is-admin"),
+        cloud: document.body.classList.contains("is-cloud"),
+      }));
+    } catch (_) { /* private mode: the pop-in is the worst of it */ }
+  }
+
+  // Paint that cached identity before the network answers. Only for a
+  // visitor who already has a token or a guest id: a signed-out browser
+  // must never be shown a name.
+  function paintCachedMastheadChrome() {
+    let cached = null;
+    try {
+      if (!localStorage.getItem(AUTH_TOKEN_KEY) && !localStorage.getItem(GUEST_KEY)) return;
+      cached = JSON.parse(localStorage.getItem(CHROME_KEY) || "null");
+    } catch (_) { return; }
+    if (!cached || !cached.name) return;
+    const chip = document.getElementById("profileChip");
+    const nameEl = document.getElementById("profileName");
+    if (!chip || !nameEl) return;
+    nameEl.textContent = cached.name;
+    if (cached.profileId) chip.dataset.profileId = cached.profileId;
+    if (cached.pillStyle) chip.dataset.pillStyle = cached.pillStyle;
+    if (cached.hue !== null && cached.hue !== undefined) {
+      chip.style.setProperty("--pill-hue", String(cached.hue));
+    }
+    chip.hidden = false;
+    document.body.classList.toggle("is-admin", !!cached.admin);
+    document.body.classList.toggle("is-cloud", !!cached.cloud);
+  }
+
   function wireMasthead() {
     document.getElementById("rangesBtn").onclick = () => toggleRefs();
     document.getElementById("themeBtn").onclick = toggleTheme;
@@ -1868,6 +1917,7 @@
       chip.style.setProperty("--pill-hue", String(pillHueFor(pillSeed)));
     }
     refreshAdminBodyClass();
+    rememberMastheadChrome(chip, nameEl, pillSeed);
     const signOutBtn = document.getElementById("signOutBtn");
     if (signOutBtn) {
       const isGuest = guestUser && !currentProfile && !cloudUser;
