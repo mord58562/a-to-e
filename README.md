@@ -6,6 +6,17 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 **Live: <https://mord58562.github.io/a-to-e/>** - guest mode, no signup required.
 
+## What's new in 1.6.10
+
+- The reference panel no longer drags the masthead sideways when it opens, and the reading column can no longer be pushed off the left edge of the window on a laptop. The navigator moves with the column instead of being left behind under the panel.
+- The admin panel's section tabs, the question-list dropdown, the admin count pills and the "Copy prompt" button all work again.
+- Signing up as a guest no longer loses the answers you gave as a guest.
+- Seventeen questions were rendering no explanation at all.
+- A new session starts the navigator at question 1 rather than wherever the last session left it.
+- Every question card starts at the stem; an empty header band above it has gone.
+- Ending or leaving a session asks in the app's own dialog, and says how many questions are still unanswered.
+- Reference values: five rows that shared a label with a different threshold now say which is which.
+
 ## What's new in 1.6.9
 
 - Navigator chips are sized to the highest question number in the session, so a four-digit number sits inside its cell instead of spilling out of it.

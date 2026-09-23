@@ -1074,7 +1074,6 @@
 
     root.innerHTML = `
       <div class="admin-pane">
-        <header class="admin-pane-head"><h2>Bank</h2></header>
         <p class="admin-fact">${total.toLocaleString()} questions.
           Last added ${esc(String(meta.last_added || meta.updated || "unknown"))}.
           ${reportsOpen ? `<b>${reportsOpen}</b> open report${reportsOpen === 1 ? "" : "s"}.` : "No open reports."}
@@ -1204,7 +1203,6 @@
 
     root.innerHTML = `
       <div class="admin-pane">
-        <header class="admin-pane-head"><h2>Users</h2></header>
         <p class="admin-fact">${users.length} account${users.length === 1 ? "" : "s"},
           ${adminCount} admin${adminCount === 1 ? "" : "s"}.</p>
         ${users.length ? `
@@ -1456,7 +1454,6 @@
     }
     root.innerHTML = `
       <div class="admin-pane">
-      <header class="admin-pane-head"><h2>Account</h2></header>
       <p class="admin-fact">${esc(cloudUser.display_name || cloudUser.email)} ·
         ${esc(cloudUser.email)}${cloudUser.is_admin ? ' · admin' : ''}</p>
 
@@ -1482,9 +1479,9 @@
         <button type="button" class="secondary" id="revokeSessions">Sign out everywhere else</button>
       </section>
 
-      <div class="account-self-delete">
-        <strong>Delete this account.</strong>
-        <p class="dim small" style="margin:4px 0">All your answers, flags and progress will be permanently removed. This cannot be undone.</p>
+      <section class="admin-pane-section account-self-delete">
+        <h3>Delete this account</h3>
+        <p class="admin-note">Every answer, flag and setting goes with it. This cannot be undone.</p>
         <button class="danger-btn" id="acctSelfDeleteOpen">Delete my account</button>
         <div class="acct-delete-confirm" id="acctDeleteConfirm" hidden>
           <label class="acct-delete-label" for="acctDeleteEmailInput">
@@ -1497,7 +1494,7 @@
           </div>
           <p class="acct-delete-status dim small" id="acctDeleteStatus" aria-live="polite"></p>
         </div>
-      </div>
+      </section>
       </div>`;
 
     document.getElementById("pwForm").onsubmit = async e => {
@@ -2423,10 +2420,6 @@
     const flag = flagged ? `, <b>${flagged}</b> flagged` : "";
 
     return `
-      <div class="nav-head">
-        <h2 class="nav-title">Navigator</h2>
-        <span class="nav-count">${state.quiz.idx + 1} / ${total}</span>
-      </div>
       <p class="nav-stats"><b>${answered}</b> of ${total} answered${score}${flag}.</p>
       ${windowed ? `
         <div class="nav-window">
