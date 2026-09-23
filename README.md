@@ -6,6 +6,19 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 **Live: <https://mord58562.github.io/a-to-e/>** - guest mode, no signup required.
 
+## What's new in 1.7.1
+
+- A test records each answer once, when it is scored or left. Going back to check a question used to log it again every time, and an answer you moved on from with Next, a navigator number or the clock never reached your history at all.
+- In study mode an answer counts when you reveal it. Picking an option and moving away no longer turns its navigator number green or red.
+- Keys meant for the question stay out of dialogs. Enter on Cancel cancels; it used to answer the question behind it. Space on an option selects it, and a second press submits.
+- Pausing a timed test and leaving no longer freezes the clock of the next one.
+- Opening a question from the results steps through the list you were looking at, and "Back to results" goes straight there.
+- Answers, flags and settings that fail to reach the server wait and retry, instead of being lost and then overwritten by the older copy. Unflagging on your phone unflags on your laptop.
+- If the worker refuses something, you see its reason, not "HTTP 405".
+- Readings with commas inside brackets stay on one line, Hb and Na keep their capitals, and a reference range in brackets is no longer shown as the value.
+- On a phone, reference values wrap instead of running off the panel, lab values keep a column wide enough to read, and the header buttons no longer sit on the title.
+- Screen readers hear whether a revealed answer was right, and no longer hear the clock every second.
+
 ## What's new in 1.7.0
 
 - **A session survives a reload.** Close the tab forty minutes into a test, or let a phone evict it, and the home screen offers to resume: same questions in the same order, same position, same rule-outs, same clock. Sessions older than a day are dropped.
@@ -90,19 +103,19 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 - **Question navigator.** A persistent side rail on a wide screen, and a panel behind the question counter on a narrow one. Numbered chips show unanswered, correct, incorrect, current or flagged, and jump straight to that question. A session can be the whole bank, so the grid is a window with paging and a jump-to-number box. In test mode chips read only as answered until the session ends.
 - **Deterministic option re-lettering.** Source batches frequently place the correct answer at A. Each question's options are shuffled by a seeded Fisher-Yates keyed on the question id, so the order is stable for you across reloads and identical for every user. Each option keeps its `sourceLetter`, which is what the answer aggregates are recorded against, so cross-user statistics still compare like for like.
 - **Stem-clue highlighting.** After you reveal the answer, the discriminating phrases in the stem are marked, so you can see which words were doing the work.
-- **Hover glossary.** Around 40 clinical abbreviations in the revealed stem carry a hover definition (DKA, PPH, ACS, SSRI, HELLP, CTPA and the rest).
+- **Hover glossary.** Around 60 clinical abbreviations in the revealed stem carry a hover definition (DKA, PPH, ACS, SSRI, HELLP, CTPA and the rest).
 - **Inline reference ranges.** When a question is keyed to a pathology panel, the relevant normal ranges render under the explanation without opening the full panel.
 - **Rule out and flag.** Rule out options you have discounted, with shift and the option number or the control on the row; the control becomes a restore arrow so a second press puts the option back. Flag questions for review; flags persist and can be used as a session filter.
 - **Pause and resume.** Timed sessions pause; the countdown, session clock and per-question clock all resume where they left off rather than running on in the background.
-- **Retry incorrect.** The summary screen rebuilds a fresh untimed session from everything you got wrong or never answered.
-- **Session report.** Score, unanswered count, a per-subtopic breakdown, and a reviewable list filterable to all, incorrect, or flagged, with each row jumping back into the question with the answer shown.
+- **Retry incorrect.** The summary screen rebuilds an untimed session from the questions you answered wrong, and says how many. It is not offered when there are none.
+- **Session report.** Score, unanswered count, a per-discipline breakdown, and a review list filterable to all, incorrect or flagged. A row opens its question with the answer shown; Previous and Next then step through the rows the list was showing, and "Back to results" returns to the list where you left it, without a dialog.
 - **Stats modal.** Questions answered and what proportion of the bank that is, correctness, total time studying and average seconds per question, plus tables by discipline and by difficulty.
 - **Report an issue.** A per-question report box that reaches the maintainer.
 - **Light and dark themes.**
 
 ## How to use
 
-1. Pick a **mode**: *Study* (continuous, instant explanation after each question, end whenever) or *Test* (no answers until the end, optional countdown timer).
+1. Pick a **mode**: *Study* (continuous, instant explanation after each question, end whenever) or *Test* (no answers until the end, optional countdown timer). A study answer counts once it is revealed; a pick you change or leave before submitting is not recorded. A test's answers go to your history once, when the test is scored or left.
 2. Pick a **discipline** (any combination of Paediatrics, O&G, Psychiatry, Medicine) and optionally narrow by **learning area**, **difficulty** (L1 / L2 / L3 / L4 / L5), or **filter** (All / Unseen / Previously incorrect / Flagged).
 3. **Begin** and work through.
 
@@ -122,15 +135,19 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 ## Privacy
 
-You can use A to E without an account. In **guest mode** the site is fully client-side: question history, flags, theme preference, and locally-pasted questions live only in your browser's `localStorage` and nothing is sent to any server.
+You can use A to E without an account. In **guest mode** the site is fully client-side: question history, flags, theme preference, and locally-pasted questions live only in your browser's `localStorage`. Nothing is sent to any server unless you file an issue report.
 
-If you **create a cloud account** to sync progress across devices across devices, the following is stored in a Cloudflare D1 database behind a Cloudflare Worker at `a-to-e-inbox.mord58562.workers.dev`:
+Signing up or in on a browser used as a guest moves that guest progress into the account. Guest flags sync; guest answers stay in that browser, because they were recorded without the option letter the server stores.
+
+If you **create a cloud account** to sync progress across devices, the following is stored in a Cloudflare D1 database behind a Cloudflare Worker at `a-to-e-inbox.mord58562.workers.dev`:
 
 - Your email, encrypted at rest with AES-256-GCM. Lookups run against a separate HMAC-SHA256 column, so sign-in never needs to decrypt the address.
 - Your password, hashed with Argon2id (RFC 9106, m=19456 KiB, t=2, p=1). Accounts created before the 2026-05-25 migration are verified against their old PBKDF2 hash once and rehashed to Argon2id on that login.
 - An opaque session token, stored only as a peppered SHA-256 hash. The token itself never touches the database.
 - Per question: which source option-letter you chose, whether it was correct, how many times you have attempted it, and when it last changed.
 - Your flagged questions, and your session settings blob (mode, question count, timer, selected disciplines, difficulties, learning areas and seen-filter).
+
+An answer, flag or settings change is queued in `localStorage` before it is sent and leaves the queue only when the worker accepts it, so a write made offline or on a dropped connection is retried (after a minute, when the connection returns, and on the next load) rather than lost. Removing a flag on one device removes it on the others.
 
 Registration is invite only. Sign-ins are rate limited to 8 failures per
 15 minutes per account and 30 attempts per 15 minutes per address, sign-ups
@@ -181,11 +198,12 @@ a-to-e/
 │   ├── merge_inbox.sh
 │   ├── check_tokens.py
 │   ├── dupe_gate.py
+│   ├── manifest_hashes.py
 │   └── sync_routine_counts.py
 └── assets/prompt-template.txt
 ```
 
-`questions_psych.json` and `questions_medicine.json` are empty arrays: all Psychiatry and Medicine content is manifest-driven and lives in `data/batches/`. `questions_paeds.json` and `questions_obgyn.json` hold 24 and 21 questions respectively, with the rest of both disciplines also in batches.
+`questions_psych.json` and `questions_medicine.json` are empty arrays: all Psychiatry and Medicine content is manifest-driven and lives in `data/batches/`. `questions_paeds.json` and `questions_obgyn.json` hold 23 and 21 questions respectively, with the rest of both disciplines also in batches.
 
 `data/framework_*_topics.md` are the per-discipline curriculum topic lists that generation draws against. `data/_audited_main/` holds the promoted post-audit copies of the main files, and `data/_archived_dupes/` batches withdrawn from the manifest.
 
@@ -209,12 +227,20 @@ cd a-to-e
 ./scripts/start.sh
 ```
 
-Opens `http://127.0.0.1:8765/`. Any modern browser.
+Serves the site at `http://127.0.0.1:8765/` and, on macOS, opens it; elsewhere, open the address by hand. Any modern browser.
 
-The worker is optional locally. With the worker off, cloud features (signup, answer distribution, paste-to-bank) degrade to in-browser fallbacks; everything else works. To run or deploy the worker you need Node.js 18+ and wrangler:
+The worker is optional locally. With it unreachable, sign-in and sync are unavailable, so use guest mode; issue reports and pasted questions go to the local `scripts/server.py` instead. To run or deploy the worker you need Node.js 22+ and wrangler:
 
 ```sh
-brew install node                 # or: sudo apt install -y nodejs npm
+# macOS
+brew install node
+
+# Debian / Ubuntu (the distribution nodejs package is older than 22)
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt install -y nodejs
+```
+
+```sh
 npm install -g wrangler
 cd cloudflare-worker && npm install && wrangler dev
 ```
@@ -223,9 +249,9 @@ See `cloudflare-worker/DEPLOY.md` for the one-time D1 setup.
 
 ### How data loads
 
-`data/meta.json` is fetched first with a `?t=<timestamp>` query, so it is never served from cache. Its `updated` field becomes the `?v=` token on every other JSON request. A content push therefore invalidates every cached data file on its own, with no code release.
+`data/meta.json` is fetched first with a `?t=<timestamp>` query, so it is never served from cache. Its `updated` and `last_added` fields become the `?v=` token on the main files, the manifests, `reference_ranges.json` and `reports.json`. A content push therefore invalidates those on its own, with no code release.
 
-The four main discipline files then load concurrently with `reference_ranges.json`, both manifests, and `reports.json`, followed by every path listed in `batches_manifest.json` and `inbox_manifest.json`. That is currently 555 batch files, so a cold load is about 564 requests. They are all cached hard after the first visit, and an individual failure is counted and non-fatal rather than blocking the bank, but the request count is the sharpest edge in the project and the obvious thing to fix next.
+The four main discipline files then load concurrently with `reference_ranges.json`, both manifests, and `reports.json`, followed by every path listed in `batches_manifest.json` and `inbox_manifest.json`. That is currently 36 batch files, so a cold load is about 45 requests. Each batch is requested with `?h=` set to its content hash from the manifest's `hashes` map (written by `scripts/manifest_hashes.py`), so a release re-downloads only the batches that changed; a batch with no hash falls back to the `?v=` token. A failed file is counted and non-fatal rather than blocking the bank.
 
 Everything is then deduplicated by question `id`, with the main-file entry winning over any batch that republishes the same id.
 

@@ -54,7 +54,15 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
   });
   const { window } = dom;
   // jsdom ships no fetch, no layout and no dialog methods.
-  window.fetch = (u, o) => fetch(new URL(u, ORIGIN).href, o);
+  // Node's fetch refuses jsdom's AbortSignal (the app bounds its fetches
+  // with one), so bridge it to a Node signal.
+  const bridgeSignal = o => {
+    if (!o || !o.signal) return o;
+    const c = new AbortController();
+    if (o.signal.aborted) c.abort(); else o.signal.addEventListener("abort", () => c.abort());
+    return { ...o, signal: c.signal };
+  };
+  window.fetch = (u, o) => fetch(new URL(u, ORIGIN).href, bridgeSignal(o));
   window.scrollTo = () => {};
   window.matchMedia = q => ({ matches: false, media: q, addListener() {},
     removeListener() {}, addEventListener() {}, removeEventListener() {} });

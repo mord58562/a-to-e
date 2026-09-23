@@ -3,8 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5" />
-<meta name="theme-color" content="#0a1929" media="(prefers-color-scheme: dark)" />
-<meta name="theme-color" content="#f3f6fa" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#fafbfc" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="A to E" />
@@ -29,8 +28,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://a-to-e-inbox.mord58562.workers.dev">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260923i" />
-<script src="assets/preauth.js?v=20260923i"></script>
+<link rel="stylesheet" href="assets/styles.css?v=20260923j" />
+<script src="assets/preauth.js?v=20260923j"></script>
 </head>
 <body data-screen="home" class="locked">
 
@@ -90,7 +89,7 @@
     </form>
 
     <footer class="gate-foot" data-hide-in-legacy>
-      <button type="button" id="gateGuestBtn" class="gate-foot-link gate-foot-primary">Skip - try without saving</button>
+      <button type="button" id="gateGuestBtn" class="gate-foot-link gate-foot-primary">Continue as guest - progress stays on this device</button>
       <span class="gate-foot-sep">·</span>
       <span class="gate-foot-note">Accounts are invite only.</span>
     </footer>
@@ -144,6 +143,9 @@
 </aside>
 
 <main id="app"></main>
+<!-- Quiz announcements (study-mode result, countdown thresholds). Outside
+     #app so it survives the per-question re-render. -->
+<div id="quizStatus" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
 
 <footer class="colophon" id="colophon" hidden>
   <span class="colophon-block">
@@ -152,7 +154,7 @@
   <span class="colophon-block colophon-center">
     <span id="sessionTime" aria-live="off"></span>
     <span class="colophon-sep" id="qTimerSep" hidden>·</span>
-    <span id="questionTime" aria-live="polite" aria-atomic="true"></span>
+    <span id="questionTime" aria-live="off"></span>
     <button class="ghost-x" id="pauseBtn" title="Pause" aria-label="Pause session">⏸</button>
   </span>
   <span class="colophon-block colophon-right">
@@ -327,6 +329,10 @@
       </div>
 
       <div id="explainRanges" class="comm-block comm-aside"></div>
+
+      <div class="commentary-next">
+        <button id="nextBtnEnd" class="primary" type="button">Next →</button>
+      </div>
     </section>
   </article>
 </template>
@@ -520,6 +526,6 @@
 </div>
 
 
-<script src="assets/app.js?v=20260923i" defer></script>
+<script src="assets/app.js?v=20260923j" defer></script>
 </body>
 </html>

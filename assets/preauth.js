@@ -14,3 +14,28 @@
     if (pre) document.documentElement.classList.add("pre-authed");
   } catch (_) {}
 })();
+
+// Theme before first paint. :root holds the dark palette and app.js
+// (deferred) applies data-theme only on DOMContentLoaded, so every
+// light-theme load, the default, painted a navy frame first. Same key
+// and default as app.js applyTheme.
+//
+// The browser-chrome colour follows the app's theme, not the OS scheme:
+// one theme-color meta, rewritten whenever data-theme changes, so a
+// light-theme user on a dark-mode phone does not get a navy status bar
+// over a white page.
+(function () {
+  var root = document.documentElement;
+  var theme = "light";
+  try { theme = localStorage.getItem("y4mcq.theme.v1") || "light"; } catch (_) {}
+  root.setAttribute("data-theme", theme);
+  var BAR = { light: "#fafbfc", dark: "#0a1929" };  // --bg in each palette
+  function syncBar() {
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute("content", BAR[root.getAttribute("data-theme")] || BAR.light);
+  }
+  syncBar();
+  if (window.MutationObserver) {
+    new MutationObserver(syncBar).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  }
+})();

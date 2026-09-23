@@ -23,15 +23,22 @@
   --surface-2:   #16345a;
   --line:        #1f3556;
   --line-strong: #2b4570;
+  /* Outline of an unchecked control (the option radio ring). A line
+   * colour is too faint to carry state: --line-strong read 1.5:1.
+   * 3.3:1 on --surface, over the 3:1 WCAG 1.4.11 floor. */
+  --control-bd:  #62799e;
 
   --ink:         #e8f1ff;
   --ink-2:       #c4d2e7;
-  --ink-mute:    #8497b3;
-  /* Measured, not eyeballed: the old value read 2.5 to 3.3 against the
-   * three surfaces it sits on, and it paints the rule-out control and
-   * the whole text of a ruled-out option - the two things a reader
-   * working by elimination looks at most. 4.6 to 6.1 now. */
-  --ink-faint:   #8598b8;
+  /* Measured, not eyeballed. Both were raised 2026-09-23: at #8497b3 /
+   * #8598b8 they read 4.0 to 4.3 on --surface-2 and on the good, bad
+   * and accent row tints (11px citations, the selected row's key), and
+   * "faint" was the lighter of the two. Now mute 4.7 to 6.4 and faint
+   * 4.55 to 6.1 across surface, surface-2, bg-2 and all three tints,
+   * with faint below mute below --ink-3. Faint paints the rule-out
+   * control and the text of a ruled-out option. */
+  --ink-mute:    #93a5c1;
+  --ink-faint:   #8ea1bd;
 
   --accent:      #0fcad4;
   --accent-2:    #5dd5df;
@@ -44,8 +51,10 @@
   --bad:         #ff7a85;
   --bad-bg:      rgba(255, 122, 133, 0.10);
   --bad-bd:      rgba(255, 122, 133, 0.40);
-  --warn:        #e8b34a;
-  --warn-bg:     rgba(232, 179, 74, 0.10);
+  /* Yellower and cooler than --cta (#f0a25a): at #e8b34a the flag and
+   * the five-minute warning read as the same amber as Begin and Next. */
+  --warn:        #d9c36a;
+  --warn-bg:     rgba(217, 195, 106, 0.10);
 
   /* Type stack (rebuilt 2026-09-22).
    *
@@ -152,6 +161,7 @@
   --surface-2:   #f3f5f7;
   --line:        #dde2e8;
   --line-strong: #b6bec8;
+  --control-bd:  #808a96;   /* 3.5:1 on --surface; was 1.9 */
 
   --ink:         #0e1a26;
   --ink-2:       #2b3947;
@@ -217,7 +227,7 @@ html {
   font-feature-settings: "lnum" 1;
 }
 body {
-  -webkit-tap-highlight-color: rgba(15, 202, 212, 0.18);
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--accent) 18%, transparent);
 }
 .brand { cursor: pointer; }
 .t-short { display: none; }
@@ -245,7 +255,12 @@ html.pre-authed #gate { display: none !important; }
   background: var(--bg);
   z-index: 1000;
   display: grid;
-  place-items: center;
+  /* Scrolls when the card is taller than the screen (sign-up on an
+   * iPhone SE, anything in landscape); plain center clipped the top and
+   * bottom and left Create account and the guest button unreachable. */
+  place-items: safe center;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: max(20px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right))
            max(20px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
 }
@@ -286,8 +301,10 @@ html.pre-authed #gate { display: none !important; }
 .gate-tabs {
   display: flex; gap: 0;
   border-bottom: 1px solid var(--line);
-  margin: 0 -32px;
-  padding: 0 32px;
+  /* Matches .gate-card's 36px side padding so the hairline meets the
+   * card edge (it stopped 4px short at -32px). */
+  margin: 0 -36px;
+  padding: 0 36px;
 }
 .gate-tab {
   background: transparent;
@@ -927,6 +944,9 @@ body[data-screen="quiz"] .nav-rail { display: block; }
 .nav-chip.answered { background: var(--accent-bg); border-color: var(--accent-bd); color: var(--ink); }
 .nav-chip.correct { background: var(--good-bg); border-color: var(--good-bd); color: var(--good); }
 .nav-chip.incorrect { background: var(--bad-bg); border-color: var(--bad-bd); color: var(--bad); }
+/* Right and wrong differed by hue alone. A dashed edge on wrong reads
+ * without colour. */
+.nav-chip.incorrect { border-style: dashed; }
 /* Current is a ring plus a weight change, so it survives colour
  * blindness and does not compete with correct / incorrect. */
 .nav-chip.current {
@@ -1129,14 +1149,17 @@ body:has(#quizTopbar[hidden]) .reading {
  * values align, and a long reading wraps inside its own cell. */
 .patient-table dd.obs-set {
   display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
+  /* fit-content, not max-content: one long name (a comparator split
+   * that swallowed the reading) sized the name track past the dd and
+   * left the value track at 0px on phones. */
+  grid-template-columns: fit-content(45%) minmax(0, 1fr);
   gap: 3px 18px;
   align-items: baseline;
 }
 /* The pair is only a grouping for the markup; the two halves are the
  * grid items, which is what lets them line up across rows. */
 .obs { display: contents; }
-.obs-name { align-self: baseline; }
+.obs-name { align-self: baseline; min-width: 0; overflow-wrap: break-word; }
 .obs-value { min-width: 0; overflow-wrap: anywhere; }
 .obs-solo { grid-column: 1 / -1; color: var(--ink); min-width: 0; }
 .obs-name {
@@ -1212,7 +1235,7 @@ body:has(#quizTopbar[hidden]) .reading {
 }
 .options li .opt-marker {
   width: 15px; height: 15px;
-  border: 1.5px solid var(--line-strong);
+  border: 1.5px solid var(--control-bd);
   border-radius: 50%;
   align-self: center;
   transition: border-color var(--dur-fast) var(--ease),
@@ -1282,6 +1305,13 @@ body:has(#quizTopbar[hidden]) .reading {
 .options li:has(.opt-choice:focus-visible):not(.selected) .opt-marker {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-bg);
+}
+/* A selected row that has focus had no cue at all: Tab back from its
+ * rule-out button, or into a resumed selection, and focus vanished. */
+.options li.selected:has(.opt-choice:focus-visible) {
+  /* Solid accent: --accent-bd read 2.0:1 against the selected tint, under
+   * the 3:1 a focus indicator needs. --accent reads 5.3 to 5.9. */
+  box-shadow: inset 0 0 0 2px var(--accent);
 }
 /* Windows high contrast paints no background, so the ring comes back
  * there rather than leaving focus invisible. */
@@ -1414,6 +1444,22 @@ b, strong { font-weight: 600; }
   border-radius: var(--r-tight);
 }
 .secondary:hover { background: var(--cta-bg); }
+/* The destructive action: same geometry as .primary/.secondary, drawn
+ * in --bad. It was only styled inside .account-self-delete, so the
+ * confirm dialog's action (#confirmGo) rendered as a UA grey button. */
+.danger-btn {
+  background: transparent;
+  color: var(--bad);
+  border: 1px solid var(--bad-bd);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 9px 18px;
+  cursor: pointer;
+  border-radius: var(--r-tight);
+}
+.danger-btn:hover:not(:disabled) { background: var(--bad); border-color: var(--bad); color: var(--bg); }
+.danger-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
 /* setup form (home) */
 .setup { display: flex; flex-direction: column; gap: 14px; margin-top: 22px; }
@@ -1495,6 +1541,9 @@ b, strong { font-weight: 600; }
   border-top: 1px solid var(--line);
 }
 .commentary .section-eyebrow { margin-top: 0; margin-bottom: 18px; }
+/* Second Next at the foot of the commentary, for readers who scrolled
+ * through it on a phone. */
+.commentary-next { margin-top: 22px; }
 .commentary .section-eyebrow .topic-tag {
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -1560,7 +1609,8 @@ b, strong { font-weight: 600; }
   transform: translateX(100%);
   transition: transform 0.22s ease;
   box-shadow: -8px 0 24px rgba(0, 0, 0, 0.25);
-  padding-top: env(safe-area-inset-top);
+  /* No top inset: the panel starts at --masthead-h, which already
+   * includes it through the masthead's own padding. */
   padding-bottom: env(safe-area-inset-bottom);
   padding-right: env(safe-area-inset-right);
 }
@@ -1606,6 +1656,23 @@ body.refs-open { --refs-shift: 0px; }
     );
   }
 }
+/* Below 1200px there is no rail and so no pair shift, and the column
+ * was capped but left centred in the full window: the panel covered
+ * 194px of it at every width from 921 to 1199. The summary never had
+ * a shift at any width. */
+@media (min-width: 921px) and (max-width: 1199px) {
+  body.refs-open[data-screen="quiz"] main,
+  body.refs-open .quiz-topbar {
+    position: relative;
+    left: calc(-1 * var(--refs-shift));
+  }
+}
+@media (min-width: 921px) {
+  body.refs-open[data-screen="summary"] main {
+    position: relative;
+    left: calc(-1 * var(--refs-shift));
+  }
+}
 /* No rail to make room for while it is standing down, so the pair shift
  * that reserves its space would only push the column off the left. */
 @media (min-width: 1200px) and (max-width: 1519px) {
@@ -1640,7 +1707,17 @@ body.refs-open { --refs-shift: 0px; }
   border-radius: var(--r-control);
 }
 .ref-search input:focus { outline: 1px solid var(--accent); outline-offset: -1px; }
-.ref-body { flex: 1; overflow-y: auto; padding: 14px 18px 24px; }
+/* iOS Safari zooms the page into any focused text control under 16px,
+ * and it stays zoomed after the gate. The search box above was already
+ * 16px; this lifts the rest (sign-in fields, report box, jump-to, admin
+ * and confirm inputs) on iOS only, leaving desktop sizes alone.
+ * Specificity 0,2,1 beats every `.x input` rule in this file. */
+@supports (-webkit-touch-callout: none) {
+  :is(input, textarea, select):not([type="checkbox"]):not([type="radio"]) {
+    font-size: max(16px, 1em);
+  }
+}
+.ref-body { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 14px 18px 24px; }
 .ref-foot {
   padding: 10px 18px;
   border-top: 1px solid var(--line);
@@ -1734,6 +1811,11 @@ body[data-screen="summary"] main { max-width: 760px; }
 .review-list li.flagged { background: var(--warn-bg); }
 .review-list .rv-id { font-family: var(--sans); font-size: 11.5px; color: var(--ink-mute); }
 .review-list .rv-stem { color: var(--ink-2); }
+.review-list .rv-flag { font-family: var(--sans); font-size: 11.5px; font-weight: 600; color: var(--warn); margin-right: 4px; }
+.review-list li[data-review-i]:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+/* Focus moved by script to announce a new question or the report: the
+ * element is a landmark for assistive tech, not a control, so no ring. */
+#qStem:focus, .prose h1[tabindex="-1"]:focus { outline: none; }
 /* Five floating surfaces carried a pure-black shadow tuned for the light
  * theme. Over the navy canvas that is invisible, so they lost all
  * separation and relied on a 1px border. Same treatment the gate card
@@ -1780,7 +1862,10 @@ body[data-screen="summary"] main { max-width: 760px; }
 .modal {
   position: fixed; inset: 0;
   background: rgba(5, 10, 18, 0.65);
-  display: grid; place-items: center;
+  /* safe center + scroll: a card taller than a landscape phone was cut
+   * off at both ends with nothing able to scroll to "Send report". */
+  display: grid; place-items: safe center;
+  overflow-y: auto; overscroll-behavior: contain;
   z-index: 200; padding: 18px;
 }
 .modal-card {
@@ -1925,12 +2010,26 @@ body[data-screen="summary"] main { max-width: 760px; }
   }
   .masthead-left { gap: 10px; min-width: 0; flex: 0 1 auto; }
   .brand { gap: 9px; min-width: 0; }
+  /* Without these the title could not shrink: .masthead-left went to 0
+   * wide while "A to E" kept painting under the tools. */
+  .brand-words { min-width: 0; }
+  .brand-mark { flex-shrink: 0; }
   .brand-title { font-size: 15.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .session-meta { display: none; }
   .t-long { display: none; }
   .t-short { display: inline; }
   .masthead-tools { gap: 0; flex-shrink: 0; flex-wrap: nowrap; }
-  .masthead-tools .link-btn { padding: 8px 9px; font-size: 12.5px; white-space: nowrap; }
+  .masthead-tools .link-btn { padding: 8px 6px; font-size: 12.5px; white-space: nowrap; }
+  .masthead-tools .profile-chip { margin-left: 4px; padding: 4px 8px; gap: 2px; white-space: nowrap; flex-shrink: 0; }
+  .masthead-tools .profile-chip .ghost-link { padding: 3px 4px; }
+  /* Backstop for signed-in admins, whose tool row is wider than a
+   * 320px screen: the row scrolls sideways (as .ref-jump does) instead
+   * of clipping "sign out" under body { overflow-x: hidden }. */
+  .masthead-tools {
+    min-width: 0; flex-shrink: 1;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .masthead-tools::-webkit-scrollbar { display: none; }
 
   :root { --col-pad: 14px; }
   main { padding: 18px var(--col-pad) 56px; }
@@ -1965,7 +2064,7 @@ body[data-screen="summary"] main { max-width: 760px; }
   .options li .opt-strike { width: 44px; height: 44px; }
 
   /* Buttons that act as primary tap targets need ~44pt height. */
-  .primary, .secondary {
+  .primary, .secondary, .danger-btn {
     padding: 12px 18px;
     font-size: 14px;
     min-height: 44px;
@@ -1997,6 +2096,9 @@ body[data-screen="summary"] main { max-width: 760px; }
   /* Quiz topbar: keep prev / counter / next legible, larger taps. */
   .quiz-topbar { padding: 8px 10px; }
   .qt-step, .qt-counter { padding: 8px 10px; font-size: 13px; min-height: 40px; }
+  /* At 320px "‹ Previous" broke onto two lines beside a four-digit
+   * counter and made the bar taller on one side. */
+  .qt-step { white-space: nowrap; padding-left: 6px; padding-right: 6px; }
   .qt-counter { gap: 4px; }
   #qtNumber { font-size: 13px; }
 
@@ -2062,6 +2164,17 @@ body[data-screen="summary"] main { max-width: 760px; }
   .score-num { font-size: 40px; }
 }
 
+/* Below 400px "A to E" cannot fit beside the tools and was clipped to a
+ * sliver under them. The mark carries the brand alone; the words stay
+ * in the accessibility tree as the link's name. */
+@media (max-width: 400px) {
+  .masthead .brand-words {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap;
+  }
+  .masthead .brand { gap: 0; padding: 4px; }
+}
+
 /* ── Question image (optional, e.g. dermatology / radiology) ────── */
 .q-image {
   margin: 16px 0;
@@ -2110,8 +2223,6 @@ body[data-screen="summary"] main { max-width: 760px; }
 }
 
 /* ── Reports admin (admin only) ─────────────────────────────────── */
-.admin-only.has-pending { color: var(--accent); }
-
 /* Defence-in-depth: nothing class="admin-only" ever paints unless the body
    has the is-admin class. Set/unset by app.js after auth resolves. */
 body:not(.is-admin) .admin-only { display: none !important; }
@@ -2192,8 +2303,22 @@ body:not(.is-admin) .admin-only { display: none !important; }
   letter-spacing: 0.3px;
 }
 .report-status.status-open      { background: var(--accent); color: var(--bg); }
-.report-status.status-fixed     { background: #2a7d44; color: #fff; }
+.report-status.status-fixed     { background: var(--good); color: var(--bg); }
 .report-status.status-dismissed { background: var(--ink-mute); color: var(--bg); }
+.report-status.status-dropped   { background: var(--line-strong); color: var(--ink); }
+
+/* Page-level notice under the masthead (showAppNotice in app.js). Keyed
+ * on the id so it holds whether or not the element also carries inline
+ * styles. */
+#appNotice {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
+  padding: 10px max(16px, env(safe-area-inset-right)) 10px max(16px, env(safe-area-inset-left));
+  margin: 0;
+  font-size: 13.5px; line-height: 1.4;
+  background: var(--warn-bg); color: var(--ink);
+  border-bottom: 1px solid var(--warn);
+}
+#appNotice > span { flex: 1 1 auto; }
 .report-q { margin: 4px 0 6px; font-size: 13px; }
 .report-issue {
   white-space: pre-wrap;
@@ -2206,16 +2331,6 @@ body:not(.is-admin) .admin-only { display: none !important; }
 .report-resolution { margin-top: 6px; }
 
 /* ── Audit dashboard ────────────────────────────────────────────── */
-.audit-intro {
-  padding: 10px 14px;
-  margin-bottom: 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-soft);
-  background: var(--surface-2);
-  font-size: 13px;
-  line-height: 1.55;
-}
-.audit-intro p { margin: 0; }
 .audit-llm-picker {
   display: flex;
   align-items: center;
@@ -2232,44 +2347,6 @@ body:not(.is-admin) .admin-only { display: none !important; }
   background: var(--surface);
   color: inherit;
 }
-
-.audit-tabs {
-  display: flex;
-  gap: 4px;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 14px;
-}
-.audit-tab {
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid transparent;
-  padding: 8px 14px;
-  font: inherit;
-  font-size: 13.5px;
-  color: var(--ink-mute);
-  cursor: pointer;
-  margin-bottom: -1px;
-}
-.audit-tab:hover { color: var(--ink-2); }
-.audit-tab.selected {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-  font-weight: 600;
-}
-.audit-tab .badge {
-  display: inline-block;
-  min-width: 18px;
-  padding: 1px 6px;
-  margin-left: 4px;
-  font-size: 11px;
-  line-height: 1.4;
-  border-radius: var(--r-chip);
-  background: var(--accent);
-  color: var(--bg);
-  text-align: center;
-  font-weight: 600;
-}
-.audit-tab .badge:empty { display: none; }
 
 .audit-list {
   list-style: none;
@@ -2330,7 +2407,7 @@ body:not(.is-admin) .admin-only { display: none !important; }
   font-size: 12px;
 }
 .audit-copy-status.ok, .audit-apply-status.ok { color: var(--accent); }
-.audit-copy-status.bad, .audit-apply-status.bad { color: #c44; }
+.audit-copy-status.bad, .audit-apply-status.bad { color: var(--bad); }
 
 .audit-bulk { margin-left: auto; }
 .audit-live-filters {
@@ -2345,15 +2422,19 @@ body:not(.is-admin) .admin-only { display: none !important; }
 /* ── Disable hover restyles on touch-only devices to prevent
      "stuck" hover states after a tap. ─────────────────────── */
 @media (hover: none) {
-  .options li:hover:not(.revealed) .opt-marker { border-color: var(--line-strong); }
-  .opt:hover { border-color: var(--line); color: var(--ink-2); }
+  /* Each reset is scoped to the resting state. A tapped element keeps
+   * :hover on touch, and an unscoped reset at equal or higher
+   * specificity wiped the selected / active / pressed look off the
+   * very chip that had just been tapped. */
+  .options li:hover:not(.revealed):not(.selected):not(.struck):not(:has(.opt-choice:focus-visible)) .opt-marker { border-color: var(--control-bd); }
+  .opt:not(.selected):hover { border-color: var(--line); color: var(--ink-2); }
   .setup-options.multi .opt:not(.selected):hover { color: var(--ink-mute); }
-  .link-btn:hover { background: transparent; color: var(--ink-2); }
+  .link-btn:not(.active):not([aria-pressed="true"]):hover { background: transparent; color: var(--ink-2); }
   .qt-step:hover, .qt-counter:hover { background: transparent; color: var(--ink-2); }
   .ghost-x:hover { background: transparent; color: var(--ink-mute); }
   .ghost-link:hover { color: var(--ink-mute); }
-  .action-link:hover { border-color: var(--line); color: var(--ink-2); }
-  .review-list li:hover { background: transparent; }
+  .action-link:not(.active):not(.has-report):hover { border-color: var(--line); color: var(--ink-2); }
+  .review-list li:not(.flagged):hover { background: transparent; }
 }
 
 /* ── Anki-style term hover (post-reveal only) ────────────────────── */
@@ -2366,7 +2447,7 @@ body:not(.is-admin) .admin-only { display: none !important; }
 .term-popup {
   position: absolute;
   z-index: 1500;
-  max-width: 320px;
+  max-width: min(320px, calc(100vw - 16px));
   background: var(--surface);
   border: 1px solid var(--accent-bd);
   border-radius: var(--r-soft);
@@ -2482,15 +2563,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   margin-top: 8px;
   font-size: 12px;
   padding: 6px 12px;
-  border: 1px solid #c0392b;
-  background: transparent;
-  color: #c0392b;
-  border-radius: var(--r-control);
-  cursor: pointer;
 }
-.account-self-delete .danger-btn:hover { background: #c0392b; color: white; }
-.account-self-delete .danger-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.account-self-delete .danger-btn:disabled:hover { background: transparent; color: #c0392b; }
 .acct-delete-confirm {
   margin-top: 12px;
   padding-top: 12px;
@@ -2523,8 +2596,8 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 }
 .acct-delete-input:focus {
   outline: none;
-  border-color: #c0392b;
-  box-shadow: 0 0 0 2px rgba(192, 57, 43, 0.18);
+  border-color: var(--bad);
+  box-shadow: 0 0 0 2px var(--bad-bg);
 }
 .acct-delete-actions {
   display: flex;
@@ -2542,7 +2615,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
  * Two explicit tracks: the label gets a minimum it cannot be squeezed
  * below, the value is right-aligned with tabular figures so a column of
  * numbers lines up on the decimal. */
-.rrs { display: grid; grid-template-columns: minmax(11ch, 1fr) auto; }
+.rrs { display: grid; grid-template-columns: minmax(11ch, 1fr) fit-content(62%); }
 .rr {
   display: grid;
   grid-template-columns: subgrid;
@@ -2560,9 +2633,13 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   color: var(--ink);
   text-align: right;
   font-variant-numeric: tabular-nums;
-  white-space: nowrap;
+  /* Wraps: a nowrap value sized the track to the longest line in the
+   * category (CSF patterns, paediatric Hb) and pushed every value past
+   * the panel edge. The track is capped at 62% above; the unit stays
+   * glued to its number. */
+  white-space: normal;
 }
-.rr-unit { color: var(--ink-mute); font-size: 0.92em; margin-left: 0.25em; }
+.rr-unit { color: var(--ink-mute); font-size: 0.92em; margin-left: 0.25em; white-space: nowrap; }
 .rr-note {
   display: block;
   color: var(--ink-faint);
@@ -2574,7 +2651,7 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
  * value column collapse. */
 @supports not (grid-template-columns: subgrid) {
   .rrs { display: block; }
-  .rr { grid-template-columns: minmax(11ch, 1fr) auto; }
+  .rr { grid-template-columns: minmax(11ch, 1fr) fit-content(62%); }
 }
 
 /* ── Rebuilt reference panel (search-first, scrollable, dense) ───── */
@@ -2982,10 +3059,6 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 .confirm-actions button { flex: 0 1 auto; }
 #confirmGo:disabled { opacity: 0.45; cursor: not-allowed; }
 
-/* Suppress legacy modal padding inside admin panes; the admin frame
-   already provides it. */
-.admin-main .audit-tab-panel { padding: 0; display: block !important; }
-
 @media (max-width: 760px) {
   .admin-nav { padding: 0 14px; }
   .admin-main { padding: 16px 14px 22px; }
@@ -3022,11 +3095,6 @@ body.is-admin #accountBtn { display: none !important; }
 }
 .ir-more:hover { color: var(--accent); }
 
-/* Keyboard focus indicator on option rows (role=button + tabindex=0) */
-#qOptions li:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
 
 /* Respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {

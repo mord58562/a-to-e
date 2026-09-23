@@ -52,6 +52,12 @@ const API = {
       if (href.includes(p)) return new Response(JSON.stringify(body),{status:200,headers:{'content-type':'application/json'}});
     }
     if (href.includes('/api/')) return new Response(JSON.stringify({ok:true}),{status:200,headers:{'content-type':'application/json'}});
+    // Node's fetch refuses jsdom's AbortSignal; bridge it to a Node one.
+    if (o && o.signal) {
+      const c = new AbortController(), s = o.signal;
+      if (s.aborted) c.abort(); else s.addEventListener('abort', () => c.abort());
+      o = { ...o, signal: c.signal };
+    }
     return fetch(href,o);
   };
   window.scrollTo=()=>{}; window.matchMedia=q=>({matches:false,media:q,addListener(){},removeListener(){},addEventListener(){},removeEventListener(){}});

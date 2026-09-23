@@ -141,17 +141,27 @@
     guestUser = g;
   }
 
+  const API_TIMEOUT_MS = 20000;
   async function apiFetch(path, options) {
     if (!WORKER_URL) throw new Error("Cloud backend not configured");
     const headers = { "Content-Type": "application/json", ...(options && options.headers || {}) };
     if (authToken) headers["Authorization"] = `Bearer ${authToken}`;
     let r;
+    // A half-open connection (captive portal, a phone changing networks)
+    // never settles on its own; bound it so callers and the sync queue
+    // get a failure they can act on instead of waiting forever.
+    const ctl = (!options || !options.signal) && typeof AbortController === "function" ? new AbortController() : null;
+    const timer = ctl ? setTimeout(() => ctl.abort(), API_TIMEOUT_MS) : null;
     try {
-      r = await fetch(WORKER_URL.replace(/\/$/, "") + path, { ...(options || {}), headers });
+      r = await fetch(WORKER_URL.replace(/\/$/, "") + path,
+                      { ...(options || {}), headers, ...(ctl ? { signal: ctl.signal } : {}) });
     } catch (netErr) {
       // Distinguish offline / DNS / TLS failures from a well-formed server
       // 4xx/5xx. The signup + signin forms surface this straight to the user.
+      console.warn("[api]", path, "network error:", netErr && (netErr.name + ": " + netErr.message));
       throw new Error("Can't reach the server. Check your connection.");
+    } finally {
+      if (timer) clearTimeout(timer);
     }
     const data = await r.json().catch(() => ({}));
     if (!r.ok || data.ok === false) {
@@ -195,8 +205,12 @@
       // or the network dropped at page load; if they then carried on as
       // a guest, that session's answers landed outside their account.
       // Keep the token so the next load can restore the session.
-      if (e && e.status === 401) localStorage.removeItem(AUTH_TOKEN_KEY);
-      else {
+      if (e && e.status === 401) {
+        localStorage.removeItem(AUTH_TOKEN_KEY);
+        // The cached name and admin chrome belong to the dead session; a
+        // guest on this browser would otherwise see them until boot ends.
+        localStorage.removeItem(CHROME_KEY);
+      } else {
         authCheckFailed = true;
         console.warn("[auth] could not verify the saved session:", e && e.message || e);
       }
@@ -208,6 +222,15 @@
     authToken = token; cloudUser = user;
     localStorage.setItem(AUTH_TOKEN_KEY, token);
     return user;
+  }
+  // Codes are issued as XXXX-XXXX-XXXX. One pasted without the dashes,
+  // or with spaces, hashed differently and was refused as invalid, and
+  // each refusal spent one of the five sign-up attempts per hour. The
+  // worker applies the same rule, so either side alone is enough.
+  function normaliseInviteCode(raw) {
+    const s = String(raw || "").trim().toUpperCase();
+    const bare = s.replace(/[^A-Z0-9]/g, "");
+    return bare.length === 12 ? bare.replace(/(.{4})(?=.)/g, "$1-") : s;
   }
   async function cloudSignUp(email, password, displayName, inviteCode) {
     const payload = { email, password, display_name: displayName, invite_code: inviteCode };
@@ -223,7 +246,11 @@
     // never traps a user in a signed-in state locally.
     const wasToken = authToken;
     if (wasToken) {
-      apiFetch("/api/logout", { method: "POST" }).catch(() => {});
+      // keepalive: signOut() reloads the page straight after this, and a
+      // plain fetch is aborted by the navigation before it reaches the
+      // worker, which left the token live on the server.
+      apiFetch("/api/logout", { method: "POST", keepalive: true })
+        .catch(e => console.warn("[auth] /api/logout failed:", e && e.status, e && e.message));
     }
     authToken = null; cloudUser = null;
     localStorage.removeItem(AUTH_TOKEN_KEY);
@@ -257,43 +284,218 @@
     const s = await cloudFetchState();
     return (s && s.history) || {};
   }
-  async function cloudPostAnswer(qid, sourceLetter, correct) {
-    if (!cloudUser) return null;
+  // ── Sync outbox ─────────────────────────────────────────────────────
+  // Every answer, flag and settings write for a signed-in user goes into
+  // a small per-account outbox in localStorage BEFORE it is posted, and
+  // leaves it only when the worker has accepted it. Failed posts used to
+  // be logged and dropped, and the next boot let the older server row
+  // overwrite the newer local one, so an answer given on bad hospital
+  // wifi, or after the session died, was lost on every device.
+  //
+  // The outbox is also what the boot merge trusts: a question with a
+  // pending answer keeps its local row, a pending flag or unflag beats
+  // the server's set, and dirty settings are kept and re-posted. Nothing
+  // compares clocks across devices.
+  //
+  // Shape: { answers: {qid: {l, c, at, n}}, flags: {qid: {on, at}},
+  //          settings: <generation, 0 = clean> }. Bounded to OUTBOX_MAX
+  // entries per map, oldest dropped first (logged).
+  const OUTBOX_KEY = "y4mcq.outbox.v1";
+  const OUTBOX_MAX = 500;
+  let _sessionExpired = false;
+  function outboxKey() { return cloudUser ? `${OUTBOX_KEY}.cloud-${cloudUser.id}` : null; }
+  function outboxRead() {
+    const k = outboxKey();
+    const o = k ? load(k, {}) : {};
+    const obj = v => (v && typeof v === "object" && !Array.isArray(v)) ? v : {};
+    return { answers: obj(o.answers), flags: obj(o.flags), settings: Number(o.settings) || 0 };
+  }
+  function outboxCap(map, what) {
+    const ids = Object.keys(map);
+    if (ids.length <= OUTBOX_MAX) return;
+    ids.sort((a, b) => ((map[a] && map[a].at) || 0) - ((map[b] && map[b].at) || 0));
+    const drop = ids.slice(0, ids.length - OUTBOX_MAX);
+    for (const id of drop) delete map[id];
+    console.warn(`[sync] outbox over ${OUTBOX_MAX}: dropped ${drop.length} oldest pending ${what}`);
+  }
+  // Read-modify-write against storage, not an in-memory copy, so two tabs
+  // do not drop each other's pending writes.
+  function outboxUpdate(fn) {
+    const k = outboxKey();
+    if (!k) return null;
+    const o = outboxRead();
+    fn(o);
+    outboxCap(o.answers, "answers");
+    outboxCap(o.flags, "flags");
+    if (!Object.keys(o.answers).length && !Object.keys(o.flags).length && !o.settings) localStorage.removeItem(k);
+    else save(k, o);
+    return o;
+  }
+
+  function cloudPostAnswer(qid, sourceLetter, correct) {
+    if (!cloudUser) return Promise.resolve(null);
     // Skip the round-trip when we don't have a real source letter, and
     // check for a single letter rather than a substring: "ABCDE".includes
     // is true for "", "AB" and "BCD" too. Guest-import replay hits this
     // path with sourceLetter=""; those answers are pre-account and
     // intentionally don't join the per-user server history.
     if (typeof sourceLetter !== "string" || sourceLetter.length !== 1 ||
-        !"ABCDE".includes(sourceLetter)) return null;
+        !"ABCDE".includes(sourceLetter)) return Promise.resolve(null);
+    const at = Date.now();
+    outboxUpdate(o => {
+      const prev = o.answers[qid];
+      // n counts attempts not yet on the server, so a question answered
+      // twice offline still adds two to attempt_count when it lands.
+      o.answers[qid] = { l: sourceLetter, c: !!correct, at, n: ((prev && prev.n) || 0) + 1 };
+    });
+    return flushOutbox();
+  }
+  function cloudPostFlag(qid, on) {
+    if (!cloudUser) return Promise.resolve(false);
+    outboxUpdate(o => { o.flags[qid] = { on: !!on, at: Date.now() }; });
+    return flushOutbox();
+  }
+  function markSettingsDirty() {
+    outboxUpdate(o => { o.settings = Math.max(Date.now(), o.settings + 1); });
+  }
+
+  // One POST. "sent" and "drop" both clear the entry: a 4xx other than
+  // 401/408/429 means the worker refused this write for good (bad id,
+  // too large), and resending it forever would block the queue.
+  async function syncSend(path, body) {
     try {
-      await apiFetch("/api/answer", { method: "POST", body: JSON.stringify({ question_id: qid, source_letter: sourceLetter, correct }) });
-      return true;
+      await apiFetch(path, { method: "POST", body: JSON.stringify(body) });
+      return "sent";
     } catch (e) {
-      console.warn("[sync] cloudPostAnswer failed:", e && e.message || e);
-      return null;
+      const st = e && e.status;
+      console.warn(`[sync] POST ${path} failed:`, st || "network", (e && (e.serverError || e.message)) || e,
+                   body && body.question_id ? `qid=${body.question_id}` : "");
+      if (st === 401) { onSessionExpired(path); return "retry"; }
+      if (st >= 400 && st < 500 && st !== 408 && st !== 429) return "drop";
+      scheduleOutboxRetry();
+      return "retry";
     }
   }
-  async function cloudPostFlag(qid, on) {
-    if (!cloudUser) return false;
-    try {
-      await apiFetch("/api/flag", { method: "POST", body: JSON.stringify({ question_id: qid, on: !!on }) });
-      return true;
-    } catch (e) {
-      console.warn("[sync] cloudPostFlag failed:", e && e.message || e);
-      return false;
-    }
+  let _flushing = null, _flushAgain = false, _flushRetryTimer = null;
+  function scheduleOutboxRetry() {
+    if (_flushRetryTimer) return;
+    _flushRetryTimer = setTimeout(() => { _flushRetryTimer = null; flushOutbox(); }, 60000);
   }
-  async function cloudPostSettings(settings) {
-    if (!cloudUser) return false;
-    try {
-      await apiFetch("/api/settings", { method: "POST", body: JSON.stringify({ settings }) });
-      return true;
-    } catch (e) {
-      console.warn("[sync] cloudPostSettings failed:", e && e.message || e);
-      return false;
-    }
+  // Sequential on purpose: a guest who signs up with 100 flags used to
+  // fire 100 simultaneous POSTs; now they drain one at a time.
+  function flushOutbox() {
+    if (!cloudUser || !WORKER_URL || !authToken || _sessionExpired) return Promise.resolve(false);
+    if (_flushing) { _flushAgain = true; return _flushing; }
+    _flushing = (async () => {
+      let ok;
+      do { _flushAgain = false; ok = await _flushOnce(); } while (ok && _flushAgain);
+      return ok;
+    })().catch(e => { console.warn("[sync] outbox flush threw:", e && e.stack || e); return false; })
+      .finally(() => { _flushing = null; });
+    return _flushing;
   }
+  async function _flushOnce() {
+    const o = outboxRead();
+    for (const qid of Object.keys(o.flags)) {
+      const e = o.flags[qid];
+      if (await syncSend("/api/flag", { question_id: qid, on: !!(e && e.on) }) === "retry") return false;
+      outboxUpdate(x => { if (x.flags[qid] && x.flags[qid].at === (e && e.at)) delete x.flags[qid]; });
+    }
+    for (const qid of Object.keys(o.answers)) {
+      const e = o.answers[qid] || {};
+      // `at` and `n` let a redeployed worker keep the newer of two rows
+      // and count every attempt; the current worker ignores both fields.
+      const body = { question_id: qid, source_letter: e.l, correct: !!e.c, at: e.at, n: e.n || 1 };
+      if (await syncSend("/api/answer", body) === "retry") return false;
+      outboxUpdate(x => {
+        const cur = x.answers[qid];
+        if (!cur) return;
+        if (cur.at === e.at) delete x.answers[qid];
+        else cur.n = Math.max(1, (cur.n || 1) - (e.n || 1));
+      });
+    }
+    if (o.settings) {
+      if (await syncSend("/api/settings", { settings: state.settings }) === "retry") return false;
+      outboxUpdate(x => { if (x.settings === o.settings) x.settings = 0; });
+    }
+    return true;
+  }
+  window.addEventListener("online", () => { flushOutbox(); });
+
+  // A 401 on a sync write means this device's session is gone: another
+  // device used "Sign out everywhere else", the password changed, or the
+  // 90-day cap passed. It used to fail silently on every later write.
+  function onSessionExpired(path) {
+    if (_sessionExpired) return;
+    _sessionExpired = true;
+    console.warn(`[auth] ${path} returned 401; token cleared, local progress kept in the outbox`);
+    authToken = null;
+    localStorage.removeItem(AUTH_TOKEN_KEY);
+    showAppNotice("Signed out on this device. Answers stay here and sync after you sign in again.",
+                  "Sign in", () => location.reload());
+  }
+
+  // One notice line under the masthead, for problems that belong to the
+  // whole page rather than a dialog. Styled inline from the theme tokens
+  // so it needs no stylesheet change.
+  function showAppNotice(message, actionLabel, action) {
+    let el = document.getElementById("appNotice");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "appNotice";
+      el.setAttribute("role", "alert");
+      Object.assign(el.style, {
+        display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px 12px",
+        padding: "10px 16px", margin: "0", fontSize: "0.9rem", lineHeight: "1.4",
+        background: "var(--warn-bg)", color: "var(--ink)",
+        borderBottom: "1px solid var(--warn)",
+      });
+      const masthead = document.querySelector(".masthead");
+      if (masthead && masthead.parentNode) masthead.parentNode.insertBefore(el, masthead.nextSibling);
+      else document.body.insertBefore(el, document.body.firstChild);
+    }
+    el.textContent = "";
+    const msg = document.createElement("span");
+    msg.textContent = message;
+    msg.style.flex = "1 1 auto";
+    el.appendChild(msg);
+    if (actionLabel && action) {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "link-btn"; b.textContent = actionLabel;
+      b.onclick = action;
+      el.appendChild(b);
+    }
+    const x = document.createElement("button");
+    x.type = "button"; x.className = "link-btn"; x.textContent = "×";
+    x.setAttribute("aria-label", "Dismiss");
+    x.onclick = () => el.remove();
+    el.appendChild(x);
+    el.hidden = false;
+  }
+
+  // Last-resort handler. A throw in a click handler or a render path used
+  // to leave a half-drawn screen with no message and nothing in the log
+  // but the browser's own line. Log the stack with the question on screen,
+  // and tell the user once per page what to do.
+  let _uncaughtShown = false;
+  function reportUncaught(kind, err, where) {
+    const msg = String((err && err.message) || err || "");
+    if (/ResizeObserver loop/.test(msg)) return;   // benign browser notice
+    let q = null;
+    try { q = state.quiz && state.quiz.pool && state.quiz.pool[state.quiz.idx]; } catch (_) { /* before state exists */ }
+    console.error(`[a-to-e] uncaught ${kind}:`, (err && err.stack) || msg, where || "", q ? `question=${q.id}` : "");
+    if (_uncaughtShown) return;
+    _uncaughtShown = true;
+    showAppNotice(q
+      ? `Something failed on this screen. Reload to continue; if it repeats, report question ${q.id}.`
+      : "Something failed on this screen. Reload to continue.", "Reload", () => location.reload());
+  }
+  window.addEventListener("error", e => {
+    // Scripts from elsewhere (extensions) are not ours to report.
+    if (e.filename && !e.filename.startsWith(location.origin)) return;
+    reportUncaught("error", e.error || e.message, e.filename ? `${e.filename}:${e.lineno}:${e.colno}` : "");
+  });
+  window.addEventListener("unhandledrejection", e => reportUncaught("rejection", e.reason));
 
   // Admin is a server-side fact (users.is_admin), re-checked by the worker
   // on every admin endpoint. The client class below only controls chrome.
@@ -409,36 +611,49 @@
       .replace(/\{\{BANK_STATE\}\}/g, bankStateBlock());
   }
 
-  // POST to the remote worker first, then local backend, then null.
-  // Returns the parsed response on success, or null if both failed.
+  // The local Python backend (scripts/server.py) only exists on a dev
+  // machine. On GitHub Pages the same relative path answers every POST
+  // with 405, so trying it there sent a second copy of the body and the
+  // bearer token to the wrong host and replaced the worker's real reason.
+  const IS_LOCAL_DEV = /^(localhost|127\.0\.0\.1|\[::1\]|0\.0\.0\.0)$/.test(location.hostname || "") ||
+                       location.protocol === "file:";
+
+  // POST to the remote worker. The local dev backend is tried only on a
+  // dev host, and only when the worker could not be reached at all: any
+  // HTTP answer from the worker is final, because a 400 or 429 is the
+  // reason the user needs to see and must not be retried elsewhere.
+  // Returns the parsed response on success, or { ok:false, status, error }.
   async function postBackend(endpoint, body) {
+    const path = endpoint.replace(/^\//, "");
     const targets = [];
-    if (WORKER_URL) targets.push(WORKER_URL.replace(/\/$/, "") + "/" + endpoint.replace(/^\//, ""));
-    targets.push("api/" + endpoint.replace(/^\//, ""));
+    if (WORKER_URL) targets.push(WORKER_URL.replace(/\/$/, "") + "/" + path);
+    if (IS_LOCAL_DEV || !WORKER_URL) targets.push("api/" + path);
     const headers = { "Content-Type": "application/json" };
     if (authToken) headers["Authorization"] = `Bearer ${authToken}`;
-    // The reason the last target failed. Returning a bare null for every
-    // failure told the user to check their connection when the server had
-    // in fact answered with something specific - a 429, or a 400 naming
-    // the problem - and left a TLS or CORS failure with no trace at all.
+    // Returning a bare null for every failure told the user to check
+    // their connection when the server had in fact answered with
+    // something specific, and left a TLS or CORS failure with no trace.
     let last = null;
     for (const url of targets) {
+      let r;
       try {
-        const r = await fetch(url, {
+        r = await fetch(url, {
           method: "POST",
           headers,
           body: JSON.stringify(body),
         });
-        if (r.ok) return await r.json().catch(() => ({ ok: true }));
-        const data = await r.json().catch(() => ({}));
-        last = { ok: false, status: r.status, error: data.error || `HTTP ${r.status}` };
-        console.warn("[backend]", url, r.status, data.error || "");
       } catch (e) {
         last = { ok: false, status: 0, error: (e && e.message) || "could not reach the server" };
-        console.warn("[backend]", url, e && e.message);
+        console.warn("[backend] POST", url, "network error:", e && e.message);
+        continue;
       }
+      if (r.ok) return await r.json().catch(() => ({ ok: true }));
+      const data = await r.json().catch(() => ({}));
+      const ref = data.ref ? ` (ref ${data.ref})` : "";
+      console.warn("[backend] POST", url, r.status, data.error || "", data.ref || "");
+      return { ok: false, status: r.status, error: (data.error || `HTTP ${r.status}`) + ref, ref: data.ref };
     }
-    return last;
+    return last || { ok: false, status: 0, error: "no backend configured" };
   }
 
   // The stored value has to be the same kind of thing as the default.
@@ -473,16 +688,30 @@
   // Settings sync is debounced so rapid setting flips (e.g. clicking
   // through difficulty options) collapse into one POST per ~600ms idle
   // window. Local save is immediate.
+  // The dirty mark is written at once, so a change made offline, or in
+  // the 600ms before the tab closes, is kept at the next boot and
+  // re-posted instead of being replaced by the server's older copy.
   let _settingsSyncTimer = null;
   function saveSettings() {
     save(ns(SETTINGS_KEY), state.settings);
     if (!cloudUser) return;
+    markSettingsDirty();
     if (_settingsSyncTimer) clearTimeout(_settingsSyncTimer);
     _settingsSyncTimer = setTimeout(() => {
       _settingsSyncTimer = null;
-      cloudPostSettings(state.settings);
+      flushOutbox();
     }, 600);
   }
+  // Leaving inside the debounce window: send the settings now. keepalive
+  // lets the request outlive the page. The dirty mark stays; the next
+  // boot re-posts the same settings, which is harmless.
+  window.addEventListener("pagehide", () => {
+    if (!_settingsSyncTimer || !cloudUser || !authToken || _sessionExpired) return;
+    clearTimeout(_settingsSyncTimer);
+    _settingsSyncTimer = null;
+    apiFetch("/api/settings", { method: "POST", keepalive: true, body: JSON.stringify({ settings: state.settings }) })
+      .catch(e => console.warn("[sync] pagehide settings post failed:", e && e.status, e && e.message));
+  });
 
   // Hydrate per-profile state after the gate has set currentProfile.
   // Pre-gate, state.history/flags/settings are empty defaults.
@@ -490,6 +719,66 @@
     state.history  = load(ns(HISTORY_KEY), {});
     state.flags    = load(ns(FLAGS_KEY), {});
     state.settings = normaliseSettings(load(ns(SETTINGS_KEY), {}));
+  }
+
+  // Boot merge of /api/state into the local cache. The outbox (writes
+  // not yet accepted by the worker) decides every conflict; clocks are
+  // never compared across devices.
+  //
+  // History: the server row wins for each question it knows, EXCEPT a
+  //   question with a pending answer, whose local row is newer by
+  //   definition. Rows the server has never seen (guest answers with no
+  //   source letter, anything still queued) are kept. time_ms_total and
+  //   first_correct are local-only fields and are carried across.
+  // Flags: the server's set is the truth, then pending flag/unflag ops
+  //   are applied on top. The old union could never remove a flag, so
+  //   an unflag on another device came back here on every load.
+  // Settings: the server's copy, unless a local change is still dirty.
+  const FLAGSYNC_KEY = "y4mcq.flagsync.v1";
+  function mergeRemoteState(remote) {
+    const LOCAL_ONLY = ["time_ms_total", "first_correct"];
+    const prevHistory = state.history || {};
+    const remoteHistory = remote.history || {};
+    const flagMarker = ns(FLAGSYNC_KEY);
+    // First boot under this rule: local flags the server lacks are
+    // ambiguous (never synced, or removed elsewhere). The old code kept
+    // them, so queue them as pending rather than silently deleting them.
+    if (!localStorage.getItem(flagMarker)) {
+      const localOnly = Object.keys(state.flags || {})
+        .filter(qid => state.flags[qid] && !(remote.flags || {})[qid]);
+      if (localOnly.length) {
+        const at = Date.now();
+        outboxUpdate(o => { for (const qid of localOnly) if (!o.flags[qid]) o.flags[qid] = { on: true, at }; });
+        console.warn(`[sync] flag rule upgrade: re-posting ${localOnly.length} local-only flag(s)`);
+      }
+      localStorage.setItem(flagMarker, "1");
+    }
+    const pending = outboxRead();
+
+    const history = { ...prevHistory };
+    for (const qid in remoteHistory) {
+      const prev = prevHistory[qid];
+      if (prev && pending.answers[qid]) continue;
+      const row = { ...remoteHistory[qid] };
+      delete row.updated_at;   // never read on the client
+      if (prev) {
+        for (const f of LOCAL_ONLY) if (prev[f] !== undefined && row[f] === undefined) row[f] = prev[f];
+      }
+      history[qid] = row;
+    }
+    state.history = history;
+
+    const flags = {};
+    for (const qid in (remote.flags || {})) if (remote.flags[qid]) flags[qid] = true;
+    for (const qid in pending.flags) {
+      if (pending.flags[qid] && pending.flags[qid].on) flags[qid] = true;
+      else delete flags[qid];
+    }
+    state.flags = flags;
+
+    if (remote.settings && typeof remote.settings === "object" && !pending.settings) {
+      state.settings = normaliseSettings(remote.settings);
+    }
   }
 
   // One-time legacy migration. Older builds used unscoped keys (one
@@ -523,10 +812,23 @@
   // follows them. The profile path itself is gone; only the orphaned
   // localStorage it left behind is read here.
   const LEGACY_PROFILE_IDS = ["rob"];
+  // One import per browser, not per account: keyed per account, every
+  // account that ever signed in here (a test account, a classmate on
+  // the maintainer's machine) had the legacy history merged into its cache.
+  const LEGACY_IMPORTED_KEY = "y4mcq.legacy.imported";
   function importLegacyHistoryIntoCloud() {
     if (!cloudUser) return;
     const importedFlag = "y4mcq.cloud.imported." + cloudUser.id;
-    if (localStorage.getItem(importedFlag)) return;
+    if (localStorage.getItem(importedFlag) || localStorage.getItem(LEGACY_IMPORTED_KEY)) return;
+    // A browser where some account already took the import under the
+    // old per-account key counts as done.
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith("y4mcq.cloud.imported.")) {
+        localStorage.setItem(LEGACY_IMPORTED_KEY, "1");
+        return;
+      }
+    }
     for (const profileId of LEGACY_PROFILE_IDS) {
       const profile = { id: profileId };
       const legHist = load(`${HISTORY_KEY}.${profile.id}`, null);
@@ -547,6 +849,7 @@
       }
     }
     localStorage.setItem(importedFlag, "1");
+    localStorage.setItem(LEGACY_IMPORTED_KEY, "1");
   }
 
   // The gate. Note it is not a security boundary and never was: the
@@ -592,12 +895,27 @@
 
       // 1. Already signed in via cloud? Skip the gate AND clear any stale
       // legacy profile token so ns() never shadows the cloud namespace.
-      const cloudCheck = await cloudCheckAuth();
-      if (cloudCheck) {
+      // Every way into an account (restored session, sign-in, sign-up)
+      // folds any guest progress on this browser into it and retires the
+      // guest id. A guest id left beside a valid token used to send a
+      // signed-in user into guest mode on the next network blip at boot,
+      // and signing in (rather than up) from guest dropped the guest's
+      // answers, which the next guest on the machine then inherited.
+      const enterAccount = (freshAccount) => {
+        let prevGuestId = null;
+        try {
+          const g = localStorage.getItem(GUEST_KEY);
+          if (g) prevGuestId = JSON.parse(g).id;
+        } catch (_) {}
+        if (prevGuestId) migrateGuestHistoryIntoCloud(prevGuestId, !!freshAccount);
         localStorage.removeItem(PROFILE_CURRENT_KEY);
         currentProfile = null;
-        return unlock();
-      }
+        localStorage.removeItem(GUEST_KEY);
+        guestUser = null;
+        unlock();
+      };
+      const cloudCheck = await cloudCheckAuth();
+      if (cloudCheck) return enterAccount();
       // preauth.js hid the gate before first paint because a token or a
       // guest id was stored. If the token has just failed (expired,
       // revoked, or the server unreachable) nothing un-hid it, so the
@@ -613,8 +931,11 @@
       // 3. Already in guest mode? Skip the gate (UNLESS the guest asked
       // to sign up, in which case we keep them at the gate so they can
       // create a cloud account that inherits their guest progress).
+      // Not when a stored session could not be checked: that user has an
+      // account, and dropping them into guest mode without a word sent
+      // their answers to the guest namespace. The gate says why instead.
       const savedGuest = localStorage.getItem(GUEST_KEY);
-      if (savedGuest && !signupIntent) { activateGuest(); return unlock(); }
+      if (savedGuest && !signupIntent && !authCheckFailed) { activateGuest(); return unlock(); }
 
       // Guest button: continue without an account; data lives in localStorage.
       const guestBtn = document.getElementById("gateGuestBtn");
@@ -638,11 +959,7 @@
             document.getElementById("cloudSignInEmail").value.trim(),
             document.getElementById("cloudSignInPassword").value
           );
-          localStorage.removeItem(PROFILE_CURRENT_KEY);
-          currentProfile = null;
-          localStorage.removeItem(GUEST_KEY);
-          guestUser = null;
-          unlock();
+          enterAccount();
         } catch (err) {
           signInErr.textContent = (err && err.message) || "Sign in failed.";
           signInErr.hidden = false;
@@ -667,21 +984,9 @@
             document.getElementById("cloudSignUpEmail").value.trim(),
             pw,
             document.getElementById("cloudSignUpName").value.trim(),
-            (document.getElementById("cloudSignUpInvite") || {}).value || "",
+            normaliseInviteCode((document.getElementById("cloudSignUpInvite") || {}).value || ""),
           );
-          // Capture any pre-existing guest id BEFORE we clear it so we
-          // can fold guest progress into the new cloud account.
-          let prevGuestId = null;
-          try {
-            const g = localStorage.getItem(GUEST_KEY);
-            if (g) prevGuestId = JSON.parse(g).id;
-          } catch (_) {}
-          if (prevGuestId) migrateGuestHistoryIntoCloud(prevGuestId);
-          localStorage.removeItem(PROFILE_CURRENT_KEY);
-          currentProfile = null;
-          localStorage.removeItem(GUEST_KEY);
-          guestUser = null;
-          unlock();
+          enterAccount(true);
         } catch (err) {
           signUpErr.textContent = (err && err.message) || "Sign up failed.";
           signUpErr.hidden = false;
@@ -740,62 +1045,42 @@
     // returning signed-in user this overlaps roughly 100-400ms of /api/me
     // latency with the dominant data download.
     const dataPromise = loadData();
+    let dataSettled = false;
+    dataPromise.then(() => { dataSettled = true; }, () => { dataSettled = true; });
     await passGate();
+    // The bank is several MB; on a slow link the page under the masthead
+    // was blank until it arrived. showHome() replaces this line.
+    if (!dataSettled) {
+      const app = document.getElementById("app");
+      if (app && !app.firstChild) {
+        const p = document.createElement("p");
+        p.id = "bankLoading";
+        p.className = "dim";
+        p.setAttribute("role", "status");
+        p.textContent = "Loading the question bank…";
+        p.style.padding = "24px 16px";
+        p.style.textAlign = "center";
+        app.appendChild(p);
+      }
+    }
     migrateLegacyIfNeeded();
     importLegacyHistoryIntoCloud();
     loadProfileState();
-    // Cloud user: SERVER IS THE SOURCE OF TRUTH. On every session start
-    // we pull the full per-user state (history + flags + settings) and
-    // REPLACE the local cache. Merge-bias-toward-local lost newer
-    // updates from other devices; this replacement model can't.
-    //
-    // Defensive: only overwrite when the fetch actually succeeded. A
-    // transient network failure must NOT wipe a returning user's local
-    // cache - they can keep working offline against the last-known
-    // server snapshot and we'll re-hydrate on the next reload.
+    // Cloud user: pull the full per-user state (history + flags +
+    // settings) and merge it with the local cache, the outbox deciding
+    // who wins (see mergeRemoteState). Only when the fetch succeeded: a
+    // network failure must not wipe a returning user's local cache.
     if (cloudUser) {
       const remote = await cloudFetchState();
       if (remote) {
-        // The server's answers table has no time column, so its history rows
-        // carry lastCorrect / count / last_at and nothing else. Replacing the
-        // local row wholesale therefore destroyed time_ms_total on every
-        // reload, and the stats panel flipped to "time not recorded" for a
-        // user who had been timed all along.
-        //
-        // These fields are LOCAL-ONLY: they are never posted anywhere, so
-        // the local copy is the only copy and there is no cross-device
-        // update to lose. Carrying them across keeps the server the source
-        // of truth for everything it actually knows about.
-        const LOCAL_ONLY = ["time_ms_total", "first_correct"];
-        const prevHistory = state.history || {};
-        const remoteHistory = remote.history || {};
-        // The server wins for every question it knows about, and rows it
-        // has never seen are kept rather than dropped. Replacing the map
-        // wholesale destroyed a guest's answers the moment they signed
-        // up: the migration merges them into the cloud key during
-        // passGate, and this ran a few lines later against an empty
-        // server history. It also silently discarded anything answered
-        // while the worker was unreachable, since those posts fail quietly.
-        state.history = { ...prevHistory, ...remoteHistory };
-        for (const qid in remoteHistory) {
-          const prev = prevHistory[qid];
-          if (!prev) continue;
-          for (const f of LOCAL_ONLY) {
-            if (prev[f] !== undefined && state.history[qid][f] === undefined) {
-              state.history[qid][f] = prev[f];
-            }
-          }
-        }
-        // Flags are a small set and the server is authoritative, but the
-        // same argument applies to one flagged locally and not yet synced.
-        state.flags   = { ...(state.flags || {}), ...(remote.flags || {}) };
-        if (remote.settings && typeof remote.settings === "object") {
-          state.settings = normaliseSettings(remote.settings);
-        }
+        mergeRemoteState(remote);
         save(ns(HISTORY_KEY), state.history);
         save(ns(FLAGS_KEY),   state.flags);
         save(ns(SETTINGS_KEY), state.settings);
       }
+      // Drain anything queued by an earlier visit, a guest migration or a
+      // dead session. Not awaited: the home screen does not wait on it.
+      flushOutbox();
     }
     try {
       await dataPromise;
@@ -938,10 +1223,19 @@
         input.oninput = () => {
           go.disabled = input.value.trim().toLowerCase() !== typeToMatch.toLowerCase();
         };
+        // Enter in the field would submit the dialog's form through its
+        // first submit button, which is Cancel: the user typed the email,
+        // pressed Enter, and the delete was silently cancelled.
+        input.onkeydown = e => {
+          if (e.key !== "Enter") return;
+          e.preventDefault();
+          if (!go.disabled) go.click();
+        };
       } else {
         wrap.hidden = true;
         go.disabled = false;
         input.oninput = null;
+        input.onkeydown = null;
       }
       let settled = false;
       const finish = v => {
@@ -1022,7 +1316,7 @@
     if (id === "content") {
       if (addaudit) addaudit.hidden = false;
       native.hidden = true;
-      loadPromptTemplate();
+      fillPromptText();
       if (typeof refreshLocalBankSummary === "function") refreshLocalBankSummary();
       if (typeof refreshAuditInboxList === "function") {
         refreshAuditInboxList().then(() => {
@@ -1044,7 +1338,13 @@
   // flashes for 40ms is worse than no skeleton - then placeholder rows
   // rather than a spinner, so the layout does not jump when data lands.
   function adminLoading(root, rows) {
+    // Renderers call this straight after capturing their token, so the
+    // current sequence number is theirs. A slow load the user has left
+    // behind must not paint placeholder rows over the tab now on screen
+    // (#adminNative is shared by every tab).
+    const seq = _adminRenderSeq;
     const t = setTimeout(() => {
+      if (adminRenderStale(seq, root)) return;
       root.innerHTML = `<div class="admin-skeleton">` +
         Array.from({ length: rows || 3 }, () => `<div class="sk-row"></div>`).join("") +
         `</div>`;
@@ -1138,6 +1438,8 @@
     try { q = await apiFetch("/api/admin/quality"); }
     catch (e) {
       stop();
+      console.warn("[admin] /api/admin/quality failed:", e && e.status, e && (e.serverError || e.message));
+      if (adminRenderStale(token, qRoot)) return;
       const box = qRoot.querySelector(".admin-skeleton") || qRoot.appendChild(document.createElement("div"));
       box.outerHTML = "";
       return adminLoadError(qRoot, "answer quality", () => renderAdminBankTab(root));
@@ -1196,6 +1498,8 @@
       users = (r && r.users) || [];
     } catch (e) {
       stop();
+      console.warn("[admin] /api/admin/users failed:", e && e.status, e && (e.serverError || e.message));
+      if (adminRenderStale(token, root)) return;
       // The old code swallowed this and rendered "0 accounts", which is
       // indistinguishable from a working empty instance.
       return adminLoadError(root, "the user list", () => renderAdminUsersTab(root));
@@ -1366,6 +1670,8 @@
       invites = ((r && r.invites) || []).filter(i => !i.revoked_at);
     } catch (e) {
       stop();
+      console.warn("[admin] /api/admin/invites failed:", e && e.status, e && (e.serverError || e.message));
+      if (adminRenderStale(token, list)) return;
       return adminLoadError(list, "invite codes", () => renderInvites(root, usersRoot));
     }
     stop();
@@ -1618,6 +1924,21 @@
         try {
           await apiFetch("/api/account/delete", { method: "POST" });
           statusEl.textContent = "Account deleted. Reloading…";
+          // The dialog promises every answer, flag and setting goes with
+          // the account. The server copy has; remove this device's copy
+          // too, and the cached name, which the next guest here would
+          // otherwise see in the masthead.
+          const suffix = cloudUser ? `.cloud-${cloudUser.id}` : null;
+          if (suffix) {
+            const doomed = [];
+            for (let i = 0; i < localStorage.length; i++) {
+              const k = localStorage.key(i);
+              if (k && k.startsWith("y4mcq.") && k.endsWith(suffix)) doomed.push(k);
+            }
+            doomed.forEach(k => localStorage.removeItem(k));
+            console.info(`[account] deleted; removed ${doomed.length} local key(s) for ${suffix.slice(1)}`);
+          }
+          localStorage.removeItem(CHROME_KEY);
           cloudSignOut();
           setTimeout(() => location.reload(), 600);
         } catch (e) {
@@ -1731,7 +2052,12 @@
     // downstream, so a new deploy or a scheduled routine push invalidates the
     // JSON caches even without a code release.
     const metaPre = await fetchJson("data/meta.json?t=" + Date.now()).catch(() => ({}));
-    const v = metaPre && metaPre.updated ? String(metaPre.updated).replace(/[^0-9-]/g, "") : String(Math.floor(Date.now()/3600000));
+    // `last_added` is part of the key because /commit-batch bumps only
+    // that field; keyed on `updated` alone, a routine push left the
+    // manifest cached under the same URL all day.
+    const v = metaPre && metaPre.updated
+      ? (String(metaPre.updated) + (metaPre.last_added ? "-" + String(metaPre.last_added) : "")).replace(/[^0-9-]/g, "")
+      : String(Math.floor(Date.now()/3600000));
     const bust = "?v=" + v;
     // Every bank source is counted the same way. A fetch that fails, a body
     // that is not JSON, and a body that is valid JSON but not an array all
@@ -1753,10 +2079,23 @@
         () => { srcFailed++; return []; }
       );
     };
+    // Per-file content hashes from batches_manifest.json `hashes`
+    // ({path: sha1 prefix}, written by scripts/manifest_hashes.py). A
+    // batch with a hash is keyed on it, so a release that bumps `updated`
+    // no longer re-downloads every unchanged consolidated file. A batch
+    // with no hash (one the worker appended, say) falls back to `bust`.
+    let batchHashes = {};
+    const batchUrl = p => {
+      const h = batchHashes[p];
+      return "data/" + p + (typeof h === "string" && /^[0-9a-f]{6,64}$/.test(h) ? "?h=" + h : bust);
+    };
     const pullManifest = (p, key) => {
       srcTotal++;
       return fetchJson(p).then(
         d => {
+          if (d && d.hashes && typeof d.hashes === "object" && !Array.isArray(d.hashes)) {
+            batchHashes = Object.assign({}, batchHashes, d.hashes);
+          }
           const list = d && d[key];
           if (Array.isArray(list)) return list;
           srcFailed++; return [];
@@ -1780,8 +2119,20 @@
     // Pull every staging batch listed in the manifests. Each is its own
     // JSON array of question objects matching the live schema.
     const allPaths = [...batchPaths, ...inboxPaths];
-    const extra = await Promise.all(allPaths.map(p => pullArray("data/" + p + bust)));
+    const extra = await Promise.all(allPaths.map(p => pullArray(batchUrl(p))));
     const extraQuestions = extra.flat();
+    // The Bank tab's inbox count read this and it was never set.
+    state.inboxManifest = { inbox: inboxPaths };
+    // Per-file view of the live bank for the admin Content tab, which
+    // used to download all ~40 files again (without the cache-bust, so a
+    // full miss) and hold a second copy. Same arrays, no copy.
+    state.bankFiles = [
+      { path: "data/questions_paeds.json",    questions: paeds },
+      { path: "data/questions_obgyn.json",    questions: obgyn },
+      { path: "data/questions_psych.json",    questions: psych },
+      { path: "data/questions_medicine.json", questions: medicine },
+      ...batchPaths.map((p, i) => ({ path: "data/" + p, questions: extra[i] })),
+    ];
     state.batchLoadStats = { total: srcTotal, failed: srcFailed };
     if (srcFailed > 0 && console && console.warn) {
       console.warn(`[a-to-e] ${srcFailed} of ${srcTotal} bank files failed to load`);
@@ -1797,6 +2148,19 @@
     state.batchLoadStats.invalid = bad.length;
     if (bad.length) {
       console.warn(`[a-to-e] ${bad.length} malformed question(s) skipped: ${bad.slice(0, 20).map(q => q.id).join(", ")}`);
+    }
+    // dedupeById keeps the first copy of an id. A second file reusing a
+    // published id is otherwise hidden with nothing said anywhere.
+    {
+      const seenIds = new Set(), shadowed = [];
+      for (const q of state.bankQuestions) {
+        if (!q || !q.id) continue;
+        if (seenIds.has(q.id)) shadowed.push(q.id); else seenIds.add(q.id);
+      }
+      state.batchLoadStats.shadowed = shadowed.length;
+      if (shadowed.length) {
+        console.warn(`[a-to-e] ${shadowed.length} duplicate id(s) hidden behind an earlier copy: ${shadowed.slice(0, 20).join(", ")}`);
+      }
     }
     state.ranges = ranges;
     state.meta = meta;
@@ -1821,8 +2185,14 @@
     const local = load(ns(LOCAL_QUESTIONS_KEY), []).filter(isServable);
     state.questions = dedupeById([...(state.bankQuestions || []), ...local]);
   }
+  // A question outside the four disciplines or the 1-5 scale loads but
+  // no filter can ever reach it (getPool matches both exactly), so it is
+  // as unservable as one with no stem.
+  const SERVABLE_TOPICS = ["Paediatrics", "Obstetrics & Gynaecology", "Psychiatry", "Medicine"];
   function isServable(q) {
     return !!(q && q.id && typeof q.stem === "string" &&
+      SERVABLE_TOPICS.includes(q.topic) &&
+      Number.isInteger(q.difficulty) && q.difficulty >= 1 && q.difficulty <= 5 &&
       Array.isArray(q.options) && q.options.length >= 2 &&
       q.options.every(o => o && typeof o === "object") &&
       q.options.filter(o => o.correct === true).length === 1);
@@ -1843,14 +2213,28 @@
   // are pulled relative to that page, so a fresh release picks up new data
   // without needing to revalidate every fetch on every page load (which
   // previously cost ~54 conditional GETs even when nothing changed).
+  //
+  // Bounded: one stalled request (captive portal, half-open connection)
+  // held boot before showHome() forever with a blank page. The timer
+  // covers the body as well as the headers; a timeout rejects, and the
+  // bank loader counts it as a failed file like any other.
+  const FETCH_JSON_TIMEOUT_MS = 30000;
   function fetchJson(p) {
-    return fetch(p).then(r => {
+    const ctl = typeof AbortController === "function" ? new AbortController() : null;
+    const timer = ctl ? setTimeout(() => ctl.abort(), FETCH_JSON_TIMEOUT_MS) : null;
+    return fetch(p, ctl ? { signal: ctl.signal } : undefined).then(r => {
       // A 404 from GitHub Pages serves an HTML page, so r.json() would
       // reject anyway, but a proxy or an error page can return valid JSON
       // of the wrong shape and that must not be mistaken for bank content.
       if (!r.ok) throw new Error(`${r.status} fetching ${p}`);
       return r.json();
-    });
+    }).catch(e => {
+      if (e && e.name === "AbortError") {
+        console.warn(`[data] ${p} timed out after ${FETCH_JSON_TIMEOUT_MS / 1000}s`);
+        throw new Error(`timed out fetching ${p}`);
+      }
+      throw e;
+    }).finally(() => { if (timer) clearTimeout(timer); });
   }
 
   function applyTheme(t) {
@@ -1904,13 +2288,9 @@
   function wireMasthead() {
     document.getElementById("rangesBtn").onclick = () => toggleRefs();
     document.getElementById("themeBtn").onclick = toggleTheme;
-    const goHome = async e => {
+    const goHome = e => {
       if (e) e.preventDefault();
-      if (state.quiz && !state.quiz.finished && !(await confirmLeaveSession(
-            "Leave this session?", "Back to the home screen"))) return;
-      stopSessionTimer();
-      clearSavedSession();
-      showHome();
+      leaveSession();
     };
     const brand = document.querySelector(".masthead .brand");
     if (brand) brand.onclick = goHome;
@@ -1948,7 +2328,7 @@
       const isGuest = guestUser && !currentProfile && !cloudUser;
       if (isGuest) {
         signOutBtn.textContent = "sign up";
-        signOutBtn.title = "Create a cloud account and migrate your guest progress automatically";
+        signOutBtn.title = "Keeps your guest answers and flags";
       }
       signOutBtn.onclick = async e => {
         e.stopPropagation();
@@ -1972,17 +2352,24 @@
   }
 
   // Migrate localStorage progress from the guest namespace into the
-  // signed-in cloud user's namespace. Called once immediately after
-  // a successful signup while a guest token still exists. After
-  // migration the guest token is cleared so the user never sees the
-  // guest identity again.
-  function migrateGuestHistoryIntoCloud(prevGuestId) {
+  // signed-in cloud user's namespace, on every way into an account while
+  // a guest id is stored (see enterAccount in passGate). The guest keys
+  // are removed afterwards, so the next guest on a shared browser does
+  // not adopt this person's answers.
+  //
+  // Guest-history rows don't carry a sourceLetter (the original shuffle
+  // wasn't recorded), so they stay local: the worker requires a letter.
+  // Flags go through the outbox, which drains one POST at a time after
+  // boot. Settings are adopted only by a new account (freshAccount); an
+  // existing account keeps its own.
+  function migrateGuestHistoryIntoCloud(prevGuestId, freshAccount) {
     if (!cloudUser || !prevGuestId) return;
-    const importedFlag = "y4mcq.cloud.guestmigrated." + cloudUser.id;
+    const g = `guest-${prevGuestId}`, c = `cloud-${cloudUser.id}`;
+    const importedFlag = `y4mcq.cloud.guestmigrated.${cloudUser.id}.${prevGuestId}`;
     if (localStorage.getItem(importedFlag)) return;
-    const guestHist = load(`${HISTORY_KEY}.guest-${prevGuestId}`, null);
+    const guestHist = load(`${HISTORY_KEY}.${g}`, null);
     if (guestHist) {
-      const cloudKey = `${HISTORY_KEY}.cloud-${cloudUser.id}`;
+      const cloudKey = `${HISTORY_KEY}.${c}`;
       const existing = load(cloudKey, {});
       for (const qid in guestHist) {
         if (!existing[qid] || (guestHist[qid].count > (existing[qid].count || 0))) {
@@ -1990,47 +2377,49 @@
         }
       }
       save(cloudKey, existing);
-      localStorage.removeItem(`${HISTORY_KEY}.guest-${prevGuestId}`);
     }
-    const guestFlags = load(`${FLAGS_KEY}.guest-${prevGuestId}`, null);
-    if (guestFlags) {
-      const cloudFlagsKey = `${FLAGS_KEY}.cloud-${cloudUser.id}`;
-      save(cloudFlagsKey, Object.assign({}, guestFlags, load(cloudFlagsKey, {})));
-      localStorage.removeItem(`${FLAGS_KEY}.guest-${prevGuestId}`);
+    const guestFlags = load(`${FLAGS_KEY}.${g}`, null);
+    const flagged = guestFlags ? Object.keys(guestFlags).filter(qid => guestFlags[qid]) : [];
+    if (flagged.length) {
+      const cloudFlagsKey = `${FLAGS_KEY}.${c}`;
+      const ef = load(cloudFlagsKey, {});
+      for (const qid of flagged) ef[qid] = true;
+      save(cloudFlagsKey, ef);
+      const at = Date.now();
+      outboxUpdate(o => { for (const qid of flagged) o.flags[qid] = { on: true, at }; });
+    }
+    const guestSettings = load(`${SETTINGS_KEY}.${g}`, null);
+    if (guestSettings && freshAccount) {
+      save(`${SETTINGS_KEY}.${c}`, normaliseSettings(guestSettings));
+      markSettingsDirty();
+    }
+    // A session in progress, and questions pasted as a guest.
+    const guestSession = localStorage.getItem(`${SESSION_KEY}.${g}`);
+    if (guestSession && localStorage.getItem(`${SESSION_KEY}.${c}`) == null) {
+      localStorage.setItem(`${SESSION_KEY}.${c}`, guestSession);
+      const ids = localStorage.getItem(`${SESSION_IDS_KEY}.${g}`);
+      if (ids != null) localStorage.setItem(`${SESSION_IDS_KEY}.${c}`, ids);
+    }
+    const guestLocalQs = load(`${LOCAL_QUESTIONS_KEY}.${g}`, []);
+    if (guestLocalQs.length) {
+      const mine = load(`${LOCAL_QUESTIONS_KEY}.${c}`, []);
+      const have = new Set(mine.map(q => q && q.id));
+      save(`${LOCAL_QUESTIONS_KEY}.${c}`, mine.concat(guestLocalQs.filter(q => q && !have.has(q.id))));
     }
     localStorage.setItem(importedFlag, "1");
-    // Guest-history rows don't carry a sourceLetter (the original
-    // shuffle wasn't recorded), so the per-user server answers table
-    // intentionally doesn't receive them - cloudPostAnswer rejects
-    // empty letters and the worker would too. Local cache still shows
-    // these as answered so the user's filter view is preserved.
-    //
-    // Flags ARE pushable, and so are settings - both are by-id state.
-    if (guestFlags && cloudUser) {
-      for (const qid in guestFlags) {
-        if (guestFlags[qid]) cloudPostFlag(qid, true);
-      }
+    for (const base of [HISTORY_KEY, FLAGS_KEY, SETTINGS_KEY, SESSION_KEY, SESSION_IDS_KEY,
+                        LOCAL_QUESTIONS_KEY, REMINDER_DISMISS_KEY]) {
+      localStorage.removeItem(`${base}.${g}`);
     }
-    const guestSettings = load(`${SETTINGS_KEY}.guest-${prevGuestId}`, null);
-    if (guestSettings && cloudUser) cloudPostSettings(guestSettings);
+    console.info(`[sync] guest ${prevGuestId} merged into account: ${guestHist ? Object.keys(guestHist).length : 0} answers, ` +
+                 `${flagged.length} flags${guestSettings && freshAccount ? ", settings" : ""}`);
   }
 
   function wireColophon() {
-    document.getElementById("exitBtn").onclick = async () => {
-      if (!state.quiz) return;
-      if (await confirmLeaveSession("Leave this session?", "Leave the session")) {
-        stopSessionTimer();
-        clearSavedSession();
-        showHome();
-      }
+    document.getElementById("exitBtn").onclick = () => {
+      if (state.quiz) leaveSession();
     };
-    document.getElementById("endNowBtn").onclick = async () => {
-      if (!state.quiz) return;
-      if (await confirmLeaveSession("Score the session now?", "Score it now")) {
-        stopSessionTimer();
-        showSummary(false);
-      }
-    };
+    document.getElementById("endNowBtn").onclick = endSession;
     document.getElementById("pauseBtn").onclick = togglePause;
   }
 
@@ -2119,8 +2508,34 @@
       readMulti(document.getElementById("subtopicChips"));
       onSettingsChange();
     };
-    document.getElementById("startBtn").onclick = startQuiz;
+    // Begin used to overwrite a resumable session without a word, so one
+    // misclick beside the Resume strip ended a half-done test.
+    document.getElementById("startBtn").onclick = async () => {
+      const saved = loadSavedSession();
+      if (saved) {
+        const ok = await adminConfirm({
+          title: "Replace the saved session?",
+          body: "The session in progress will be discarded. Answers so far are kept in your history.",
+          confirmLabel: "Start new session",
+        });
+        if (!ok || state.quiz) return;
+        discardSavedSession(saved);
+      }
+      startQuiz();
+    };
     onSettingsChange();
+  }
+  const SUBTOPIC_TOPIC_SHORT = {
+    "Paediatrics": "Paeds", "Obstetrics & Gynaecology": "O&G",
+    "Psychiatry": "Psych", "Medicine": "Medicine",
+  };
+  function subtopicName(q) { return q.subtopic || "Other"; }
+  function subtopicKey(q) { return `${q.topic}::${subtopicName(q)}`; }
+  // True when a learning-area selection admits this question. Accepts
+  // the discipline-keyed form and the bare area name older saved
+  // settings carry.
+  function subtopicSelected(list, q) {
+    return list.includes(subtopicKey(q)) || list.includes(subtopicName(q));
   }
   function renderSubtopicChips() {
     const wrap = document.getElementById("subtopicChips");
@@ -2128,20 +2543,33 @@
     // Only show subtopic chips for currently-selected disciplines so the
     // list doesn't bloat to 70+ chips when filters are narrow.
     const visible = new Set(state.settings.disciplines);
+    // Chips are keyed by discipline plus area. Keyed on the area name
+    // alone, "Respiratory" in Paediatrics and in Medicine merged into one
+    // chip, and turning it off removed both.
     const counts = {};
+    const disciplinesByName = {};
     state.questions.forEach(q => {
       if (!visible.has(q.topic)) return;
-      const k = q.subtopic || "Other";
-      counts[k] = (counts[k] || 0) + 1;
+      const k = subtopicKey(q);
+      if (!counts[k]) counts[k] = { name: subtopicName(q), topic: q.topic, n: 0 };
+      counts[k].n++;
+      (disciplinesByName[counts[k].name] = disciplinesByName[counts[k].name] || new Set()).add(q.topic);
     });
-    const sorted = Object.entries(counts).sort((a, b) => a[0].localeCompare(b[0]));
+    const sorted = Object.entries(counts).sort((a, b) =>
+      a[1].name.localeCompare(b[1].name) || a[1].topic.localeCompare(b[1].topic));
     wrap.innerHTML = "";
     const selected = state.settings.subtopics;
-    sorted.forEach(([k, n]) => {
+    sorted.forEach(([k, e]) => {
       const c = document.createElement("button");
-      c.className = "opt" + (!selected || selected.includes(k) ? " selected" : "");
+      // A settings list saved before the keying holds bare area names;
+      // those still select every discipline's chip of that name.
+      const on = !selected || selected.includes(k) || selected.includes(e.name);
+      c.className = "opt" + (on ? " selected" : "");
       c.dataset.value = k;
-      c.textContent = `${k} (${n})`;
+      const shared = disciplinesByName[e.name].size > 1;
+      c.textContent = shared
+        ? `${e.name} · ${SUBTOPIC_TOPIC_SHORT[e.topic] || e.topic} (${e.n})`
+        : `${e.name} (${e.n})`;
       wrap.appendChild(c);
     });
     document.getElementById("tagCountLabel").textContent =
@@ -2189,6 +2617,11 @@
     document.querySelectorAll('[data-show-for="test"]').forEach(r => {
       r.hidden = state.settings.mode !== "test";
     });
+    // Every setup choice reports its own state. Selection was carried by
+    // the .selected class alone, which a screen reader cannot see. Every
+    // click on the home screen ends here, so this one pass covers them.
+    document.querySelectorAll(".setup-options .opt").forEach(o =>
+      o.setAttribute("aria-pressed", o.classList.contains("selected") ? "true" : "false"));
     // Track the discipline picker live, not just at session start, so
     // the wordmark matches what is selected on the home screen.
     refreshGlucoseSuffix();
@@ -2205,7 +2638,7 @@
       // the levels the user had just turned off.
       if (!s.disciplines.includes(q.topic)) return false;
       if (!(s.difficulties || []).includes(q.difficulty)) return false;
-      if (s.subtopics && !s.subtopics.includes(q.subtopic || "Other")) return false;
+      if (s.subtopics && !subtopicSelected(s.subtopics, q)) return false;
       const h = state.history[q.id];
       if (s.filter === "unseen" && h) return false;
       if (s.filter === "incorrect" && (!h || h.lastCorrect !== false)) return false;
@@ -2336,7 +2769,9 @@
     const saved = loadSavedSession();
     if (!saved) { row.hidden = true; return; }
     const { raw, pool } = saved;
-    const answered = Object.keys(raw.answers || {}).length;
+    // A study pick that was never revealed is not an answer.
+    const answered = Object.keys(raw.answers || {}).filter(id =>
+      raw.mode === "test" || (raw.revealed || {})[id]).length;
     const mode = raw.mode === "test" ? "Test" : "Study";
     const left = raw.deadline ? Math.max(0, Math.round((raw.deadline - Date.now()) / 60000)) : null;
     document.getElementById("resumeLine").textContent =
@@ -2346,29 +2781,71 @@
     row.hidden = false;
     document.getElementById("resumeBtn").onclick = () => resumeSession(saved);
     document.getElementById("resumeDiscardBtn").onclick = () => {
-      try { localStorage.removeItem(ns(SESSION_KEY)); } catch (_) {}
+      discardSavedSession(saved);
       row.hidden = true;
     };
+  }
+
+  // A test's answers reach history when it is scored or left, not one by
+  // one, so throwing away a saved test commits what it holds first. A
+  // study session's revealed answers are already in history.
+  function discardSavedSession(saved) {
+    if (saved && saved.raw && saved.raw.mode === "test") {
+      commitTestAnswers({
+        mode: "test", pool: saved.pool,
+        answers: saved.raw.answers || {}, timeMs: saved.raw.timeMs || {},
+      });
+    }
+    clearSavedSession();
   }
 
   // Written on every mutation that would be painful to lose, read once at
   // boot. Only ids are stored, not questions: the bank is fetched fresh
   // and a question that has since been retired simply drops out.
+  //
+  // The pool's id list lives under its own key and is written only when
+  // the pool itself changes. A study session's pool is the whole bank
+  // (about 7,000 ids, ~150 KB), and rewriting it on every answer, strike
+  // and Prev/Next was a synchronous stringify plus setItem each time.
+  // The small per-mutation blob carries a tag that must match the id
+  // list's tag, so a list left over from another session is never used.
+  const SESSION_IDS_KEY = "y4mcq.session.ids.v1";
+  let _savedPool = null, _savedPoolNs = null, _savedPoolTag = null;
   function clearSavedSession() {
     try { localStorage.removeItem(ns(SESSION_KEY)); } catch (_) {}
+    try { localStorage.removeItem(ns(SESSION_IDS_KEY)); } catch (_) {}
+    _savedPool = null; _savedPoolTag = null;
   }
 
   function saveSession() {
     const q = state.quiz;
+    // A one-question report review from the admin panel is never the
+    // session to resume.
+    if (q && q.ephemeral) return;
     if (!q || q.finished) { clearSavedSession(); return; }
-    save(ns(SESSION_KEY), {
-      ids: q.pool.map(x => x.id),
+    const key = ns(SESSION_KEY);
+    // Another tab may have replaced the stored list since; a prefix check
+    // on the raw string is enough and costs no parse.
+    const listIsOurs = () => (localStorage.getItem(ns(SESSION_IDS_KEY)) || "")
+      .startsWith(`{"tag":${JSON.stringify(_savedPoolTag)}`);
+    if (q.pool !== _savedPool || key !== _savedPoolNs || !_savedPoolTag || !listIsOurs()) {
+      _savedPoolTag = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+      save(ns(SESSION_IDS_KEY), { tag: _savedPoolTag, ids: q.pool.map(x => x.id) });
+      _savedPool = q.pool; _savedPoolNs = key;
+    }
+    const cur = q.pool[q.idx];
+    save(key, {
+      poolTag: _savedPoolTag,
+      // The id as well as the index: if an earlier question is retired
+      // before the resume, the index alone lands on a different one.
+      currentId: cur ? cur.id : null,
       idx: q.idx,
       mode: q.mode,
       timerMins: q.timerMins,
       deadline: q.deadline,
       answers: q.answers,
       revealed: q.revealed,
+      timeMs: q.timeMs || {},
       struck: Object.fromEntries(Object.entries(q.struck || {}).map(([k, v]) => [k, [...v]])),
       sessionStart: state.sessionStart,
       savedAt: Date.now(),
@@ -2377,15 +2854,28 @@
 
   function loadSavedSession() {
     const raw = load(ns(SESSION_KEY), {});
-    if (!raw || !Array.isArray(raw.ids) || !raw.ids.length) return null;
+    if (!raw) return null;
+    // Sessions saved before the id list moved to its own key still carry
+    // `ids` inline; read either shape.
+    let ids = Array.isArray(raw.ids) ? raw.ids : null;
+    if (!ids && raw.poolTag) {
+      const stored = load(ns(SESSION_IDS_KEY), {});
+      if (stored && stored.tag === raw.poolTag && Array.isArray(stored.ids)) ids = stored.ids;
+      else console.warn("[session] saved session has no matching id list; discarding", raw.poolTag, stored && stored.tag);
+    }
+    if (!ids || !ids.length) return null;
     if (!raw.savedAt || Date.now() - raw.savedAt > SESSION_MAX_AGE_MS) {
-      try { localStorage.removeItem(ns(SESSION_KEY)); } catch (_) {}
+      clearSavedSession();
       return null;
     }
     const byId = Object.create(null);
     for (const q of state.questions) byId[q.id] = q;
-    const pool = raw.ids.map(id => byId[id]).filter(Boolean);
+    const pool = ids.map(id => byId[id]).filter(Boolean);
     if (!pool.length) return null;
+    if (raw.currentId) {
+      const at = pool.findIndex(q => q.id === raw.currentId);
+      if (at >= 0) raw.idx = at;
+    }
     return { raw, pool };
   }
 
@@ -2400,6 +2890,7 @@
       deadline: raw.deadline || null,
       answers: raw.answers || {},
       revealed: raw.revealed || {},
+      timeMs: raw.timeMs || {},
       struck: Object.fromEntries(Object.entries(raw.struck || {})
         .map(([k, v]) => [k, new Set(Array.isArray(v) ? v : [])])),
       finished: false,
@@ -2447,12 +2938,35 @@
   function obsName(name) {
     // Any capital further along means the word is not ordinary prose:
     // SpO2, HbA1c, eGFR, C reactive protein all keep what they came with.
-    const prose = /^[A-Z][a-z]/.test(name) && !/[A-Z]/.test(name.slice(1));
+    // A first word of three letters or fewer is a symbol, not prose: Hb,
+    // Na, Cr, Mg, Cl, Ca, Plt and Hct were being lowered to "hb", "na"
+    // and "mg", and "mg 0.6" reads as milligrams.
+    const first = name.split(/\s/)[0];
+    const prose = first.length > 3 && /^[A-Z][a-z]+$/.test(first) && !/[A-Z]/.test(name.slice(1));
     return prose ? name[0].toLowerCase() + name.slice(1) : name;
   }
 
+  // Split a row at ", " only outside brackets. A plain split broke
+  // "bilirubin 305 micromol/L (unconjugated 295, conjugated 10)" into two
+  // readings, "...(unconjugated 295" and "conjugated 10)".
+  function splitTopLevel(value) {
+    const parts = [];
+    let depth = 0, start = 0;
+    for (let i = 0; i < value.length; i++) {
+      const c = value[i];
+      if (c === "(" || c === "[") depth++;
+      else if ((c === ")" || c === "]") && depth > 0) depth--;
+      else if (c === "," && depth === 0 && /\s/.test(value[i + 1] || "")) {
+        parts.push(value.slice(start, i));
+        start = i + 1;
+      }
+    }
+    parts.push(value.slice(start));
+    return parts.map(x => x.trim()).filter(Boolean);
+  }
+
   function renderClinicalValue(dd, label, value) {
-    const parts = value.split(/,\s+/).map(x => x.trim()).filter(Boolean);
+    const parts = splitTopLevel(value);
     const numeric = parts.filter(x => /\d/.test(x) || QUALITATIVE.test(x)).length;
     // Only split when it genuinely is a list: at least three items, most
     // of them carrying a number, and none of them a full clause. A
@@ -2478,8 +2992,15 @@
       // 2 in SpO2. Failing that, split at a qualitative value word.
       // "less than 0.01" and "greater than 30" are readings, not part of
       // the analyte's name, so the split goes in front of them.
-      let m = part.match(/^(.*?)\s+((?:less than|greater than|under|over|up to)\s+[\d.].*)$/i)
-           || part.match(/^(.*?)\s+([<>=]?\s*[\d.].*)$/);
+      // The comparator split only applies when the name half is still a
+      // bare name. If it already holds a reading or an open bracket, the
+      // comparator belongs to a duration or a reference range ("urine
+      // output 0.4 mL/kg/hour over 6 hours", "HbA1c 8.5% (RR under 7.0%)")
+      // and the numeric split below finds the real value.
+      let m = part.match(/^(.*?)\s+((?:less than|greater than|under|over|up to)\s+[\d.].*)$/i);
+      if (m && (/(^|\s)[\d.<>=]/.test(m[1]) ||
+                (m[1].match(/\(/g) || []).length > (m[1].match(/\)/g) || []).length)) m = null;
+      m = m || part.match(/^(.*?)\s+([<>=]?\s*[\d.].*)$/);
       if (!m) {
         const q = part.match(QUALITATIVE);
         if (q && q[1]) m = [part, q[1], (q[2] + q[3]).trim()];
@@ -2501,13 +3022,26 @@
   }
 
   function renderQuiz() {
+    chargeQuestionTime();
     const app = document.getElementById("app");
     app.innerHTML = "";
     app.appendChild(document.getElementById("tpl-quiz").content.cloneNode(true));
     renderTopbar();
     renderReadingPane();
+    paintColophon();
     state.questionStart = Date.now();
+    state.quiz._timingId = state.quiz.pool[state.quiz.idx].id;
     bindQuizKeys();
+    // Replacing #app took the focused control with it, which drops focus
+    // to <body>: a keyboard or screen-reader user was not told a new
+    // question had loaded. Land on the stem instead, unless something
+    // outside #app (the topbar, a revealed question's Next) holds focus.
+    const act = document.activeElement;
+    const stem = document.getElementById("qStem");
+    if (stem && (!act || act === document.body || !act.isConnected)) {
+      stem.tabIndex = -1;
+      stem.focus({ preventScroll: true });
+    }
     // Always start a new question (or a re-rendered one after navigation)
     // at the top of the page so the full stem is in view. Use instant
     // behaviour - a smooth scroll feels laggy when paging through quickly.
@@ -2545,8 +3079,8 @@
         if (!counter.hasAttribute("aria-expanded")) counter.setAttribute("aria-expanded", "false");
       }
     }
-    document.getElementById("qtPrev").disabled = idx === 0;
-    document.getElementById("qtNext").disabled = idx >= total - 1;
+    document.getElementById("qtPrev").disabled = navTarget(-1) < 0;
+    document.getElementById("qtNext").disabled = navTarget(+1) < 0;
     const bar = document.querySelector("#qtProgress span");
     if (bar) bar.style.width = total ? `${((idx + 1) / total) * 100}%` : "0%";
     renderNavigator();
@@ -2588,6 +3122,10 @@
     for (const qid in state.quiz.answers) {
       const q = byId[qid];
       if (!q) continue;
+      // A study pick is not an answer until it is revealed. Grading it
+      // here turned the chip green or red before submit, which gave the
+      // key away to anyone who flagged or paged off first.
+      if (!isAnswerCounted(qid)) continue;
       answered += 1;
       if (midTest) continue;
       if (answerWasCorrect(q, state.quiz.answers[qid])) correct += 1; else incorrect += 1;
@@ -2615,15 +3153,18 @@
       const i = from + n;
       const ans = state.quiz.answers[q.id];
       let st = "unanswered";
-      if (ans) st = midTest ? "answered" : (answerWasCorrect(q, ans) ? "correct" : "incorrect");
+      if (ans && !isAnswerCounted(q.id)) st = "pending";
+      else if (ans) st = midTest ? "answered" : (answerWasCorrect(q, ans) ? "correct" : "incorrect");
       return { st, flagged: !!state.flags[q.id], i };
     });
 
     const chips = states.map(x => {
-      const cls = ["nav-chip", x.st];
+      // A pending study pick draws like an answered test chip: something
+      // was chosen, nothing is graded.
+      const cls = ["nav-chip", x.st === "pending" ? "answered" : x.st];
       if (x.i === state.quiz.idx) cls.push("current");
       if (x.flagged) cls.push("flagged");
-      const label = `Question ${x.i + 1}, ${x.st === "unanswered" ? "unanswered" : x.st}` +
+      const label = `Question ${x.i + 1}, ${x.st === "pending" ? "selected, not submitted" : x.st}` +
                     (x.i === state.quiz.idx ? ", current" : "") + (x.flagged ? ", flagged" : "");
       return `<button type="button" class="${cls.join(" ")}" data-nav-i="${x.i}" ` +
              `aria-label="${label}"${x.i === state.quiz.idx ? ' aria-current="true"' : ""}>${x.i + 1}</button>`;
@@ -2751,19 +3292,170 @@
     if (btn) btn.setAttribute("aria-expanded", "false");
   }
 
-  // Leaving or ending a session throws away what has not been answered,
-  // and how much that is depends on where you are. Name it.
-  function confirmLeaveSession(title, confirmLabel) {
-    const answered = Object.keys((state.quiz && state.quiz.answers) || {}).length;
-    const total = state.quiz ? state.quiz.pool.length : 0;
+  // What counts as answered. A test answer is whatever is selected when
+  // the test is scored. A study pick counts only once it is revealed:
+  // before that it can still be changed, and grading it anywhere (chips,
+  // tallies, the report, Retry) gave the key away.
+  function isAnswerCounted(qid, quiz) {
+    quiz = quiz || state.quiz;
+    if (!quiz || !quiz.answers[qid]) return false;
+    return quiz.mode === "test" || !!quiz.revealed[qid];
+  }
+  function answeredCount(quiz) {
+    quiz = quiz || state.quiz;
+    if (!quiz) return 0;
+    return Object.keys(quiz.answers).filter(id => isAnswerCounted(id, quiz)).length;
+  }
+
+  // Leaving and ending do different things, and the dialog used to
+  // describe End for both. Leave scores nothing and cannot be undone
+  // (the saved copy goes); End scores a test, and in a test anything
+  // unanswered counts against it. Study End has nothing to lose, so it
+  // skips the dialog altogether (see endSession).
+  function confirmLeaveSession(kind) {
+    const quiz = state.quiz;
+    const total = quiz ? quiz.pool.length : 0;
+    const answered = answeredCount(quiz);
     const left = Math.max(0, total - answered);
-    return adminConfirm({
-      title,
-      body: left
-        ? `${answered} of ${total} answered. The remaining ${left} score as unanswered.`
-        : `All ${total} answered. Nothing is lost.`,
-      confirmLabel,
-    });
+    if (kind === "end") {
+      return adminConfirm({
+        title: "Score the test now?",
+        body: left
+          ? `${answered} of ${total} answered. The other ${left} count as unanswered.`
+          : `All ${total} answered.`,
+        confirmLabel: "Score it now",
+      });
+    }
+    const body = quiz && quiz.mode === "test"
+      ? `${answered} of ${total} answered.` +
+        (answered ? " Those answers are saved to your history." : "") +
+        " The test is not scored and cannot be resumed."
+      : (answered ? `${answered} answered, already saved to your history.` : "Nothing answered yet.") +
+        " This session cannot be resumed.";
+    return adminConfirm({ title: "Leave this session?", body, confirmLabel: "Leave session" });
+  }
+
+  // One path home from a session, for the Exit button and the brand. A
+  // scored session (the report, or a review from it) leaves without a
+  // dialog: there is nothing left to lose.
+  async function leaveSession() {
+    const quiz = state.quiz;
+    const live = !!quiz && !quiz.finished;
+    if (live && !(await confirmLeaveSession("leave"))) return;
+    // The clock can run out while the dialog is open; that session is
+    // scored and on the report now, so stay there.
+    if (live && (state.quiz !== quiz || quiz.finished)) return;
+    stopSessionTimer();
+    if (quiz) {
+      if (live) { chargeQuestionTime(); commitTestAnswers(quiz); }
+      // Only a session being left takes the saved copy with it. The
+      // brand on the home screen used to clear it too, so clicking the
+      // logo there silently threw away the session the Resume strip
+      // was offering.
+      clearSavedSession();
+    }
+    showHome();
+  }
+
+  async function endSession() {
+    const quiz = state.quiz;
+    if (!quiz) return;
+    if (quiz.reviewing) { backToResults(); return; }
+    if (quiz.finished) return;
+    if (quiz.mode === "test" && !(await confirmLeaveSession("end"))) return;
+    if (state.quiz !== quiz || quiz.finished) return;
+    stopSessionTimer();
+    showSummary(false);
+  }
+
+  // Time on a question is charged when you leave it, so a test answer
+  // committed at scoring carries the time spent on it across every
+  // visit, not the time since the last one.
+  function chargeQuestionTime() {
+    const quiz = state.quiz;
+    if (!quiz || !quiz._timingId || !state.questionStart) return;
+    quiz.timeMs = quiz.timeMs || {};
+    const ms = Math.max(0, Date.now() - state.questionStart);
+    quiz.timeMs[quiz._timingId] = Math.min(30 * 60000, (quiz.timeMs[quiz._timingId] || 0) + ms);
+    quiz._timingId = null;
+  }
+
+  // One history row per attempt. The caller saves: a test commit writes
+  // many rows and should stringify history once, not once per question.
+  function recordAttempt(q, letter, elapsedMs) {
+    const chosen = _shuffledOptions(q).find(o => o.letter === letter);
+    const isC = !!(chosen && chosen.correct);
+    const prev = state.history[q.id] || {};
+    state.history[q.id] = {
+      lastCorrect: isC,
+      count: (prev.count || 0) + 1,
+      last_at: Date.now(),
+      time_ms_total: (prev.time_ms_total || 0) + (elapsedMs || 0),
+      first_correct: prev.first_correct ?? (prev.count ? prev.first_correct : isC),
+    };
+    return { chosen, isC };
+  }
+
+  // A test is recorded once, with its final answers, when it is scored or
+  // left. Recording at each submit logged a question again every time the
+  // reader went back to check it and pressed Enter, and never logged an
+  // answer left with Next, a chip or the clock running out.
+  function commitTestAnswers(quiz) {
+    if (!quiz || quiz.mode !== "test" || quiz.committed) return;
+    quiz.committed = true;
+    const posts = [];
+    for (const q of quiz.pool) {
+      const letter = quiz.answers[q.id];
+      if (!letter) continue;
+      const { chosen, isC } = recordAttempt(q, letter, (quiz.timeMs || {})[q.id] || 0);
+      if (chosen && chosen.sourceLetter) posts.push([q.id, chosen.sourceLetter, isC]);
+    }
+    if (!posts.length) return;
+    save(ns(HISTORY_KEY), state.history);
+    // One at a time: a whole-bank test would otherwise open thousands
+    // of requests at once.
+    if (cloudUser) (async () => { for (const p of posts) await cloudPostAnswer(...p); })();
+  }
+
+  // Pause is global state. Nothing reset it, so pausing a test and then
+  // leaving started the next session paused: a frozen clock, and a
+  // countdown that could never run out.
+  function resetPause() {
+    state.paused = false;
+    if (state.quiz) state.quiz._pausedAt = null;
+    paintPauseBtn();
+  }
+  function paintPauseBtn() {
+    const btn = document.getElementById("pauseBtn");
+    if (!btn) return;
+    btn.textContent = state.paused ? "▶" : "⏸";
+    btn.setAttribute("aria-label", state.paused ? "Resume session" : "Pause session");
+    btn.title = state.paused ? "Resume" : "Pause";
+  }
+
+  // End becomes "Back to results" while a scored session is being
+  // reviewed. The original label is read off the button once so the
+  // markup stays the one place it is written.
+  function paintColophon() {
+    const end = document.getElementById("endNowBtn");
+    if (!end) return;
+    if (!end.dataset.label) end.dataset.label = end.textContent;
+    end.textContent = state.quiz && state.quiz.reviewing ? "Back to results" : end.dataset.label;
+  }
+
+  // Screen-reader announcements. Cleared first so the same sentence
+  // twice in a row is still read out.
+  function announce(text) {
+    const el = document.getElementById("quizStatus");
+    if (!el) return;
+    el.textContent = "";
+    setTimeout(() => { el.textContent = text; }, 50);
+  }
+
+  // Smooth scrolling passed from script overrides the reduced-motion CSS.
+  function scrollBehavior() {
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? "auto" : "smooth";
   }
 
   // Called when a session starts: the window and the follow flag are
@@ -2781,9 +3473,25 @@
     renderQuiz();
     saveSession();
   }
+  // Where Previous / Next go. In a review opened from the report they
+  // step through the rows the report listed (the Incorrect filter, say),
+  // not through the whole pool, which was mostly questions already right.
+  function navTarget(d) {
+    const quiz = state.quiz;
+    if (quiz.reviewing && Array.isArray(quiz.reviewList) && quiz.reviewList.length) {
+      const pos = quiz.reviewList.indexOf(quiz.idx);
+      // Off the list (a chip took you elsewhere): the nearest row that way.
+      const j = pos >= 0 ? pos + d
+        : d > 0 ? quiz.reviewList.findIndex(i => i > quiz.idx)
+        : quiz.reviewList.length - 1 - [...quiz.reviewList].reverse().findIndex(i => i < quiz.idx);
+      return j >= 0 && j < quiz.reviewList.length ? quiz.reviewList[j] : -1;
+    }
+    const i = quiz.idx + d;
+    return i >= 0 && i < quiz.pool.length ? i : -1;
+  }
   function navOffset(d) {
-    const i = state.quiz.idx + d;
-    if (i < 0 || i >= state.quiz.pool.length) return;
+    const i = navTarget(d);
+    if (i < 0) return;
     jumpTo(i);
   }
 
@@ -2963,7 +3671,15 @@
       });
       li.addEventListener("click", () => selectOption(q, opt, li));
       li.querySelector(".opt-choice").addEventListener("keydown", e => {
-        if (e.key === " " || e.key === "Enter") { e.preventDefault(); selectOption(q, opt, li); }
+        if (e.key !== " " && e.key !== "Enter") return;
+        // Radio pattern: the first press selects and stops there. It used
+        // to bubble on to the quiz handler, which saw Submit enabled and
+        // committed the answer in the same keystroke. A second press on
+        // the selected row does go through, and submits.
+        if (li.classList.contains("selected")) return;
+        e.preventDefault();
+        e.stopPropagation();
+        selectOption(q, opt, li);
       });
       ol.appendChild(li);
     });
@@ -2986,8 +3702,19 @@
       document.getElementById("submitBtn").disabled = false;
     }
 
-    document.getElementById("submitBtn").onclick = onSubmit;
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.onclick = onSubmit;
+    // A test reveals nothing: the button records the answer and moves on,
+    // and on the last question it ends the test.
+    if (state.quiz.mode === "test") {
+      submitBtn.textContent = state.quiz.idx >= state.quiz.pool.length - 1
+        ? "Submit and finish" : "Submit";
+    }
     document.getElementById("nextBtn").onclick = onNext;
+    // A second Next at the foot of the commentary, so a reader who has
+    // scrolled through it on a phone does not have to scroll back up.
+    const nextEnd = document.getElementById("nextBtnEnd");
+    if (nextEnd) nextEnd.onclick = onNext;
     // classList.toggle throws SyntaxError on a token containing whitespace,
     // so we must toggle each class separately. The CSS rule that paints the
     // active-flagged state is `.action-link.active.flag` - both classes
@@ -3062,30 +3789,28 @@
   function onSubmit() {
     const q = state.quiz.pool[state.quiz.idx];
     if (!state.quiz.answers[q.id]) return;
-    const chosen = _shuffledOptions(q).find(o => o.letter === state.quiz.answers[q.id]);
-    const isC = !!(chosen && chosen.correct);
+    // A test answer is recorded once, at scoring (commitTestAnswers), so
+    // Submit here only moves on. Going back to check an answer and
+    // pressing Enter no longer logs it a second time.
+    if (state.quiz.mode === "test") { maybeShowHouseQuote(); onNext(); return; }
+    if (state.quiz.revealed[q.id]) return;
     const elapsedMs = state.questionStart ? Math.min(1000 * 60 * 30, Date.now() - state.questionStart) : 0;
-    const prev = state.history[q.id] || {};
-    state.history[q.id] = {
-      lastCorrect: isC,
-      count: (prev.count || 0) + 1,
-      last_at: Date.now(),
-      time_ms_total: (prev.time_ms_total || 0) + elapsedMs,
-      first_correct: prev.first_correct ?? (prev.count ? prev.first_correct : isC),
-    };
+    const { chosen, isC } = recordAttempt(q, state.quiz.answers[q.id], elapsedMs);
     save(ns(HISTORY_KEY), state.history);
+    state.quiz.revealed[q.id] = true;
     saveSession();
     maybeShowHouseQuote();
     // Sync this answer to the server (fire-and-forget) so history, attempt
     // counts and the Unseen / Previously-incorrect filters survive a device
-    // change. Test mode also logs; reveal happens at session end.
+    // change.
     if (cloudUser && chosen && chosen.sourceLetter) {
       cloudPostAnswer(q.id, chosen.sourceLetter, isC);
     }
-    if (state.quiz.mode === "test") { onNext(); return; }
-    state.quiz.revealed[q.id] = true;
     revealAnswer(q);
     renderTopbar();
+    // Study mode only: a test must not say whether an answer was right.
+    const key = _shuffledOptions(q).find(o => o.correct);
+    announce(isC ? "Correct." : `Incorrect. The answer is ${key ? key.letter : "not marked"}.`);
   }
 
 
@@ -3126,15 +3851,27 @@
     const sum = explanationOf(q);
     const sumWrap = document.getElementById("explainSummary");
     sumWrap.innerHTML = "";
-    if (sum.summary) sumWrap.innerHTML += `<p>${esc(sum.summary)}</p>`;
+    // A summary can carry blank-line paragraph breaks (the "In context:"
+    // paragraph of the -d2 pass); each one becomes its own <p> rather than
+    // collapsing into one run-on block.
+    const paras = t => String(t).split(/\n\s*\n/).map(x => x.trim()).filter(Boolean)
+      .map(x => `<p>${esc(x)}</p>`).join("");
+    if (sum.summary) sumWrap.innerHTML += paras(sum.summary);
     if (sum.key_points && sum.key_points.length) {
       sumWrap.innerHTML += `<ul>${sum.key_points.map(p => `<li>${esc(p)}</li>`).join("")}</ul>`;
     }
+    // Some Medicine questions carry a `context` paragraph in place of
+    // pearls; it was never rendered.
+    if (sum.context) sumWrap.innerHTML += paras(sum.context);
     if (sum.pearls) sumWrap.innerHTML += `<div class="pearl"><b>Pearl.</b> ${esc(sum.pearls)}</div>`;
 
+    // Only an absolute http(s) URL becomes a link. Anything else (a
+    // markdown-wrapped URL, an empty string) resolved against the Pages
+    // origin and 404ed, so it renders as the plain label instead.
     document.getElementById("explainSources").innerHTML = (q.sources || []).map(s =>
-      s.url ? `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`
-            : `<li>${esc(s.label)}</li>`
+      s && typeof s.url === "string" && /^https?:\/\//i.test(s.url)
+        ? `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`
+        : `<li>${esc(s && s.label)}</li>`
     ).join("");
 
     const rl = document.getElementById("explainRanges");
@@ -3182,22 +3919,50 @@
         const fits = aRect.top >= 0 && nRect.bottom <= vh;
         if (!fits) {
           const targetTop = window.scrollY + aRect.top - 80;
-          window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+          window.scrollTo({ top: Math.max(0, targetTop), behavior: scrollBehavior() });
         }
       } else if (nextBtn) {
-        nextBtn.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        nextBtn.scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
       }
     });
   }
 
-  function onNext() {
-    if (state.quiz.idx + 1 >= state.quiz.pool.length) {
+  async function onNext() {
+    const quiz = state.quiz;
+    if (quiz.reviewing) {
+      // The last row of a review goes back to the report.
+      const i = navTarget(+1);
+      if (i < 0) backToResults(); else jumpTo(i);
+      return;
+    }
+    if (quiz.idx + 1 >= quiz.pool.length) {
+      // Submitting the last question of a test used to score it on the
+      // spot, skipped and flagged questions included.
+      if (quiz.mode === "test" && !quiz.finished) {
+        const open = quiz.pool.filter(q => !quiz.answers[q.id]).length;
+        const flagged = quiz.pool.filter(q => state.flags[q.id]).length;
+        if (open || flagged) {
+          const parts = [];
+          if (open) parts.push(`${open} unanswered`);
+          if (flagged) parts.push(`${flagged} flagged`);
+          const ok = await adminConfirm({
+            title: "Score the test now?",
+            body: parts.join(", ") + ".",
+            confirmLabel: "Score it now",
+          });
+          if (!ok || state.quiz !== quiz || quiz.finished) return;
+        }
+      }
       stopSessionTimer();
       showSummary(false);
       return;
     }
-    state.quiz.idx += 1;
+    quiz.idx += 1;
+    navFollowCurrent = true;
     renderQuiz();
+    // Saved after the move, not before it: a reload used to resume on the
+    // question just answered, one behind.
+    saveSession();
   }
 
   // ── Reference panel (fixed side overlay; no scrim, no dim) ──────────────
@@ -3328,8 +4093,11 @@
   }
 
   // ── Timers ──────────────────────────────────────────────────────────────
+  // Every session start and review entry comes through here, so this is
+  // where a pause left over from the last session is cleared.
   function startSessionTimer() {
     stopSessionTimer();
+    resetPause();
     // 1-second precision is enough for both the session clock and any
     // countdown; halving from 500ms cuts tick work by 50% over long sessions.
     state.timerInterval = setInterval(tick, 1000);
@@ -3365,6 +4133,13 @@
       qEl.classList.toggle("warn",   remain < 5 * 60000 && remain >= 60000);
       qEl.classList.toggle("danger", remain < 60000);
       sep.hidden = false;
+      // The clock itself is not a live region (it would be read out every
+      // second), so crossing a threshold is announced once instead.
+      const level = remain < 60000 ? 2 : remain < 5 * 60000 ? 1 : 0;
+      if (level > (state.quiz._timeLevel || 0)) {
+        state.quiz._timeLevel = level;
+        announce(level === 2 ? "1 minute left." : "5 minutes left.");
+      }
     } else if (state.quiz.mode === "test") {
       // Test mode without countdown: show stopwatch-style elapsed time
       // for the current question. By design we do NOT show a Q
@@ -3379,7 +4154,7 @@
   }
   function togglePause() {
     state.paused = !state.paused;
-    document.getElementById("pauseBtn").textContent = state.paused ? "▶" : "⏸";
+    paintPauseBtn();
     if (state.quiz && state.quiz.deadline && state.paused) {
       state.quiz._pausedAt = Date.now();
     } else if (state.quiz && state.quiz.deadline && state.quiz._pausedAt) {
@@ -3388,6 +4163,9 @@
       state.sessionStart += off;
       state.questionStart += off;
       state.quiz._pausedAt = null;
+      // The shifted deadline lived in memory only, so a reload after an
+      // unpause charged the paused minutes to the clock.
+      saveSession();
     }
   }
   function fmtClock(ms) {
@@ -3411,13 +4189,31 @@
   };
   function bindQuizKeys() {
     document.onkeydown = e => {
-      if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable) return;
+      if (e.defaultPrevented) return;
+      const t = e.target;
+      if (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable) return;
+      // Nothing here may act on the question behind an open dialog or
+      // modal. Enter on the confirm dialog's Cancel used to submit the
+      // answer underneath and leave the dialog open.
+      if (document.querySelector("dialog[open], .modal:not([hidden])")) return;
+      // Enter and Space belong to whatever control has focus: a button,
+      // a link in the commentary, the Keyboard <summary>. Taking them
+      // here cancelled the control and submitted or advanced instead.
+      if ((e.key === "Enter" || e.key === " ") && t.closest &&
+          t.closest("button, a[href], summary, [role=button]")) return;
       // Modifier-key shortcuts belong to the browser / OS. Shift is the
       // exception: shift+number is the qbank convention for ruling an
       // option out, handled below.
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       const q = state.quiz && state.quiz.pool[state.quiz.idx];
       if (!q) return;
+      // Which option a number key means, read off the physical key. Shift
+      // turns 1 into " or § on UK, German and French layouts, and AZERTY
+      // needs Shift for the digits at all, so e.key alone missed them.
+      const codeDigit = /^(?:Digit|Numpad)([1-5])$/.exec(e.code || "");
+      const digitIdx = codeDigit ? parseInt(codeDigit[1], 10) - 1
+        : "!@#$%".indexOf(e.key) >= 0 && e.key.length === 1 ? "!@#$%".indexOf(e.key)
+        : /^[1-5]$/.test(e.key) ? parseInt(e.key, 10) - 1 : -1;
       const k = e.key.toLowerCase();
       const dir = DIR_MAP[k];
       const submitBtn = document.getElementById("submitBtn");
@@ -3427,21 +4223,17 @@
       const canSubmit = !revealed && submitBtn && !submitBtn.disabled;
       const canNext   = revealed && nextBtn && !nextBtn.hidden;
 
-      if (e.shiftKey && ["!","@","#","$","%","1","2","3","4","5"].includes(e.key)) {
+      if (e.shiftKey && digitIdx >= 0) {
         // shift+1..5 rules out the matching option, and rules it back in.
-        // Shift rewrites the digit on most layouts, so match both.
-        const idx = "!@#$%".indexOf(e.key) >= 0
-          ? "!@#$%".indexOf(e.key)
-          : parseInt(e.key, 10) - 1;
-        const letter = "ABCDE"[idx];
+        const letter = "ABCDE"[digitIdx];
         const li = document.querySelector(`#qOptions li[data-letter="${letter}"]`);
         if (li && !revealed) toggleStrike(q.id, letter, li);
         e.preventDefault();
-      } else if (["1","2","3","4","5"].includes(k)) {
+      } else if (!e.shiftKey && digitIdx >= 0) {
         // Number keys SELECT the corresponding option (A-E). They do NOT
         // submit - the user still has to press Enter / Space / right /
         // d / Submit to commit.
-        const letter = "ABCDE"[parseInt(k, 10) - 1];
+        const letter = "ABCDE"[digitIdx];
         const li = document.querySelector(`#qOptions li[data-letter="${letter}"]`);
         // Pressing the number of the option that is already selected
         // takes it back off, so the key that chose it is the key that
@@ -3484,17 +4276,23 @@
         if (!items.length) { e.preventDefault(); return; }
         const n = items.length;
         const cur = items.findIndex(li => li.classList.contains("selected"));
-        let nextIdx;
-        if (cur === -1) {
-          nextIdx = dir === "down" ? 0 : n - 1;
-        } else {
-          nextIdx = dir === "down" ? (cur + 1) % n : (cur - 1 + n) % n;
+        // Step over ruled-out rows. Clicking one restores it, so arrowing
+        // past an eliminated option used to undo the elimination.
+        const step = dir === "down" ? 1 : -1;
+        let nextIdx = -1;
+        for (let s = 1; s <= n; s++) {
+          const j = ((cur === -1 ? (step > 0 ? -1 : n) : cur) + step * s + n * 2) % n;
+          if (j === cur) break;
+          if (!items[j].classList.contains("struck")) { nextIdx = j; break; }
         }
+        if (nextIdx < 0) { e.preventDefault(); return; }
         items[nextIdx].click();
         // Keep the newly-selected option in view so keyboard browsing
         // works on short viewports without the user reaching for the
         // wheel. `block: nearest` won't scroll if already in view.
-        items[nextIdx].scrollIntoView({ block: "nearest", behavior: "smooth" });
+        if (items[nextIdx].scrollIntoView) {
+          items[nextIdx].scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
+        }
         e.preventDefault();
       }
     };
@@ -3502,6 +4300,24 @@
 
   // ── Summary ─────────────────────────────────────────────────────────────
   function showSummary(timeUp) {
+    const quiz = state.quiz;
+    // Back from a review: the report is drawn again from the same state,
+    // so nothing below may run twice (the test commit, above all).
+    const returning = !!quiz.reviewing;
+    const returnIdx = quiz.idx;
+    quiz.reviewing = false;
+    quiz.reviewList = null;
+    if (!quiz.finished) {
+      chargeQuestionTime();
+      // A study pick that was never revealed is not an answer: it never
+      // reached history, and scoring it here disagreed with Stats.
+      if (quiz.mode === "study") {
+        for (const id of Object.keys(quiz.answers)) if (!quiz.revealed[id]) delete quiz.answers[id];
+      }
+      commitTestAnswers(quiz);
+    }
+    if (timeUp) quiz.timeUp = true;
+    timeUp = !!quiz.timeUp;
     state.quiz.finished = true;
     clearSavedSession();
     document.onkeydown = null;
@@ -3548,15 +4364,27 @@
       tb.appendChild(row);
     });
 
-    renderReviewList("all");
+    // Back from a review, the list comes back as it was left: the same
+    // filter, paged far enough to hold the row just read, and focus on
+    // that row. It used to reset to All at the top.
+    const filter = returning ? _reviewFilter : "all";
+    let shown;
+    if (returning) {
+      const pos = reviewRows(filter).findIndex(r => r.i === returnIdx);
+      shown = Math.max(_reviewShown, Math.ceil((pos + 1) / REVIEW_PAGE) * REVIEW_PAGE);
+    }
+    renderReviewList(filter, shown);
+    const paintFilters = f => document.querySelectorAll("#reviewFilters .opt").forEach(x => {
+      x.classList.toggle("selected", x.dataset.review === f);
+      x.setAttribute("aria-pressed", x.dataset.review === f ? "true" : "false");
+    });
     document.querySelectorAll("#reviewFilters .opt").forEach(c => {
       c.onclick = () => {
-        document.querySelectorAll("#reviewFilters .opt").forEach(x => x.classList.remove("selected"));
-        c.classList.add("selected");
+        paintFilters(c.dataset.review);
         renderReviewList(c.dataset.review);
       };
     });
-    document.querySelector('#reviewFilters .opt[data-review="all"]').classList.add("selected");
+    paintFilters(filter);
 
     // Say how many, and do not offer the button when there are none:
     // "Retry incorrect" on a clean sheet used to start a session of
@@ -3570,6 +4398,17 @@
     retryBtn.hidden = wrongCount === 0;
     retryBtn.onclick = retryIncorrect;
     document.getElementById("newQuizBtn").onclick = showHome;
+
+    // Focus follows the screen change: the reviewed row when coming back
+    // from it, otherwise the report heading.
+    const back = returning && document.querySelector(`#reviewList li[data-review-i="${returnIdx}"]`);
+    if (back) {
+      back.focus({ preventScroll: true });
+      if (back.scrollIntoView) back.scrollIntoView({ block: "center" });
+    } else {
+      const h = app.querySelector("h1");
+      if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); }
+    }
   }
 
   // The review list is built as one string and delegated, not 7,000
@@ -3607,10 +4446,16 @@
     const html = page.map(({ q, i, ans, isC, flagged }) => {
       const cls = (!ans ? "unanswered" : (isC ? "correct" : "incorrect")) + (flagged ? " flagged" : "");
       const glyph = !ans ? "·" : (isC ? "✓" : "✗");
-      return `<li class="${cls}" data-review-i="${i}">` +
-        `<span class="rv-status">${glyph}</span>` +
+      // A row opens its question, so it takes focus and Enter like a
+      // button. The glyph gets words, and flagged is written out rather
+      // than left to the row tint.
+      const said = (!ans ? "Unanswered" : (isC ? "Correct" : "Incorrect")) + (flagged ? ", flagged" : "");
+      return `<li class="${cls}" data-review-i="${i}" role="button" tabindex="0">` +
+        `<span class="rv-status"><span aria-hidden="true">${glyph}</span>` +
+        `<span class="visually-hidden">${said}.</span></span>` +
         `<span class="rv-id">${esc(q.id)}</span>` +
-        `<span class="rv-stem">${esc(q.stem.slice(0, 110))}${q.stem.length > 110 ? "…" : ""}</span></li>`;
+        `<span class="rv-stem">${flagged ? '<b class="rv-flag">Flagged</b> ' : ""}` +
+        `${esc(q.stem.slice(0, 110))}${q.stem.length > 110 ? "…" : ""}</span></li>`;
     }).join("");
     const rest = rows.length - page.length;
     if (rows.length) {
@@ -3629,9 +4474,7 @@
     if (more) more.onclick = () => renderReviewList(_reviewFilter, _reviewShown + REVIEW_PAGE);
     if (!ol.dataset.reviewWired) {
       ol.dataset.reviewWired = "1";
-      ol.addEventListener("click", e => {
-        const li = e.target.closest("li[data-review-i]");
-        if (!li) return;
+      const open = li => {
         state.quiz.idx = parseInt(li.dataset.reviewI, 10);
         // The session has been scored, so review is read-only. Revealing
         // only the clicked question left every other one answerable: in
@@ -3642,12 +4485,35 @@
         // the summary, so no question from it could ever be reviewed.
         for (const p of state.quiz.pool) state.quiz.revealed[p.id] = true;
         state.quiz.deadline = null;
-        state.quiz.finished = false;
+        // A review is its own state, not an unfinished session. Clearing
+        // `finished` instead made the scored session resumable again on
+        // the next save, and hid right / wrong on a test's navigator.
+        state.quiz.reviewing = true;
+        // Next and Previous walk the rows the report was showing.
+        state.quiz.reviewList = reviewRows(_reviewFilter).map(r => r.i);
+        resetNavigator();
         setScreen("quiz");
         renderQuiz();
         startSessionTimer();
+      };
+      ol.addEventListener("click", e => {
+        const li = e.target.closest("li[data-review-i]");
+        if (li) open(li);
+      });
+      ol.addEventListener("keydown", e => {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        const li = e.target.closest("li[data-review-i]");
+        if (!li || e.target !== li) return;
+        e.preventDefault();
+        open(li);
       });
     }
+  }
+
+  function backToResults() {
+    if (!state.quiz) return;
+    stopSessionTimer();
+    showSummary(false);
   }
 
   function retryIncorrect() {
@@ -3669,6 +4535,8 @@
     setScreen("quiz");
     renderQuiz();
     startSessionTimer();
+    // A retry is a session like any other and survives a reload.
+    saveSession();
   }
 
   // ── Content pane wiring ─────────────────────────────────────────────
@@ -3712,12 +4580,8 @@
     // placeholders ({{FOCUS_DIRECTIVE}}, {{BANK_STATE}}) substituted
     // at copy time so the directive and the live bank counts are
     // always current.
+    // Filled by fillPromptText() when the admin Content tab opens.
     const promptText = document.getElementById("promptText");
-    if (promptText) {
-      loadPromptTemplate().then(t => {
-        promptText.textContent = t ? renderPrompt(t) : "Could not load the prompt template.";
-      });
-    }
     const copyBtn = document.getElementById("copyPromptBtn");
     const copyStatus = document.getElementById("copyPromptStatus");
     const COPY_LABEL = copyBtn ? copyBtn.textContent : "";
@@ -3793,13 +4657,18 @@
       e.preventDefault();
       const q = state.quiz && state.quiz.pool && state.quiz.pool[state.quiz.idx];
       if (!q) return;
-      openReportModal(q.id, q.model);
+      // Ids name the topic and sometimes the answer ("...-naloxone-half-
+      // life"), so before the answer is shown the dialog gives the
+      // position instead. The id still goes in the report itself.
+      const shown = state.quiz.revealed[q.id] || state.quiz.finished;
+      openReportModal(q.id, q.model, shown ? null
+        : `Question ${state.quiz.idx + 1} of ${state.quiz.pool.length}`);
     });
   }
-  function openReportModal(qid, model) {
+  function openReportModal(qid, model, label) {
     _reportingQId = qid;
     _reportingModel = model || null;
-    document.getElementById("reportQId").textContent = `Question: ${qid}`;
+    document.getElementById("reportQId").textContent = label || `Question: ${qid}`;
     const ta = document.getElementById("reportText");
     ta.value = "";
     document.getElementById("reportStatus").textContent = "";
@@ -3823,6 +4692,9 @@
     const text = (document.getElementById("reportText").value || "").trim();
     const status = document.getElementById("reportStatus");
     const btn = document.getElementById("reportSubmit");
+    // Ctrl/Cmd+Enter reaches here directly, not through the button, so
+    // the disabled button alone did not stop a second report being filed.
+    if (btn.disabled) return;
     status.className = "dim small";
     if (text.length < 3) {
       status.textContent = "Add a short description of the issue.";
@@ -3854,7 +4726,7 @@
     } else {
       // Say what actually went wrong. "Check your connection" is wrong
       // advice when the server answered with a reason.
-      status.textContent = (res && res.error)
+      status.textContent = (res && res.status > 0 && res.error)
         ? `Not sent: ${res.error}`
         : "Could not reach the server. Try again, or open an issue at github.com/mord58562/a-to-e/issues.";
       status.classList.add("bad");
@@ -3880,19 +4752,38 @@
    * admin-only content, it is 15 KB, and nothing outside the Content
    * tab reads it. Fetched once, on demand, and cached.
    */
+  // A failed fetch is not cached: caching "" meant one blip poisoned the
+  // tab until a full reload, while the error text said to reopen the
+  // Content tab. Concurrent callers share one request.
   let _promptTemplate = null;
-  async function loadPromptTemplate() {
-    if (_promptTemplate !== null) return _promptTemplate;
-    try {
-      const r = await fetch("assets/prompt-template.txt?v=" + encodeURIComponent(
-        (state.meta && state.meta.updated) || "1"));
-      if (!r.ok) throw new Error("HTTP " + r.status);
-      _promptTemplate = (await r.text()).trim();
-    } catch (e) {
-      console.warn("[prompt] template fetch failed:", e && e.message || e);
-      _promptTemplate = "";
-    }
-    return _promptTemplate;
+  let _promptTemplateReq = null;
+  function loadPromptTemplate() {
+    if (_promptTemplate !== null) return Promise.resolve(_promptTemplate);
+    if (_promptTemplateReq) return _promptTemplateReq;
+    const url = "assets/prompt-template.txt?v=" + encodeURIComponent((state.meta && state.meta.updated) || "1");
+    _promptTemplateReq = (async () => {
+      try {
+        const r = await fetch(url);
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        _promptTemplate = (await r.text()).trim();
+        return _promptTemplate;
+      } catch (e) {
+        console.warn("[prompt] template fetch failed:", url, e && e.message || e);
+        return "";
+      } finally {
+        _promptTemplateReq = null;
+      }
+    })();
+    return _promptTemplateReq;
+  }
+  // Fills the Content tab's prompt block. Admin-only surface, so it is
+  // fetched when that tab opens, not at boot for every visitor.
+  function fillPromptText() {
+    const promptText = document.getElementById("promptText");
+    return loadPromptTemplate().then(t => {
+      if (promptText) promptText.textContent = t ? renderPrompt(t) : "Could not load the prompt template. Reopen the Content tab to retry.";
+      return t;
+    });
   }
 
   const AUDIT_LLM_KEY = "y4mcq.audit.llm.v1";
@@ -4056,7 +4947,18 @@
     const applyBtn = flowEl.querySelector(".audit-apply");
     const applyStatus = flowEl.querySelector(".audit-apply-status");
     copyBtn.onclick = async () => {
-      const text = opts.buildPrompt();
+      let text;
+      try {
+        // Throws when the prompt template is missing. Outside a try this
+        // was an unhandled rejection: the click did nothing visible.
+        if (!_promptTemplate) await loadPromptTemplate();
+        text = opts.buildPrompt();
+      } catch (e) {
+        console.warn("[audit] building the prompt failed:", e && e.message || e);
+        copyStatus.textContent = (e && e.message) || "Could not build the prompt.";
+        copyStatus.className = "audit-copy-status small bad";
+        return;
+      }
       try {
         await navigator.clipboard.writeText(text);
         copyStatus.textContent = `Copied. Paste into ${auditLlmLabel()}.`;
@@ -4216,19 +5118,28 @@ because the site replaces the live entry wholesale on apply.`;
   // ── Live content tab (audit any already-promoted file in place) ───────
   let _liveFiles = [];   // [{ path, questions }]
   async function loadAndRenderAuditLive() {
-    const manifest = await fetchJson("data/batches_manifest.json").catch(() => ({ batches: [] }));
-    const batchPaths = ((manifest && manifest.batches) || []).map(p => "data/" + p);
-    const mainPaths = [
-      "data/questions_paeds.json",
-      "data/questions_obgyn.json",
-      "data/questions_psych.json",
-      "data/questions_medicine.json",
-    ];
-    const all = mainPaths.concat(batchPaths);
-    _liveFiles = await Promise.all(all.map(async (p) => {
-      const qs = await fetchJson(p).catch(() => []);
-      return { path: p, questions: Array.isArray(qs) ? qs : [] };
-    }));
+    if (Array.isArray(state.bankFiles) && state.bankFiles.length) {
+      // Already in memory from loadData (refreshed after every apply).
+      _liveFiles = state.bankFiles.map(f => ({ path: f.path, questions: Array.isArray(f.questions) ? f.questions : [] }));
+    } else {
+      const token = _adminRenderSeq;
+      const manifest = await fetchJson("data/batches_manifest.json").catch(() => ({ batches: [] }));
+      const batchPaths = ((manifest && manifest.batches) || []).map(p => "data/" + p);
+      const mainPaths = [
+        "data/questions_paeds.json",
+        "data/questions_obgyn.json",
+        "data/questions_psych.json",
+        "data/questions_medicine.json",
+      ];
+      const all = mainPaths.concat(batchPaths);
+      const files = await Promise.all(all.map(async (p) => {
+        const qs = await fetchJson(p).catch(() => []);
+        return { path: p, questions: Array.isArray(qs) ? qs : [] };
+      }));
+      // A quick tab flip started a second download; only the latest paints.
+      if (token !== _adminRenderSeq) return;
+      _liveFiles = files;
+    }
     _liveFiles = _liveFiles.filter(f => f.questions.length > 0);
     const c = document.getElementById("auditLiveCount");
     if (c) c.textContent = _liveFiles.length ? String(_liveFiles.length) : "";
@@ -4472,10 +5383,24 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     return obj;
   }
   async function applyReportAudit(parsed) {
-    const res = await postBackend("apply-report", { resolutions: parsed.resolutions });
+    // Tell the worker which bank files hold each question, so it edits
+    // those directly instead of scanning all ~40 files on GitHub.
+    const want = new Set(parsed.resolutions.map(r => r.question_id));
+    const where = {};
+    for (const f of state.bankFiles || []) {
+      for (const q of f.questions || []) {
+        if (q && want.has(q.id)) (where[q.id] = where[q.id] || []).includes(f.path) || where[q.id].push(f.path);
+      }
+    }
+    const resolutions = parsed.resolutions.map(r => ({ ...r, files: where[r.question_id] || [] }));
+    const res = await postBackend("apply-report", { resolutions });
     if (!res) return { ok: false, error: "backend unreachable" };
     if (res.ok) {
-      return { ok: true, note: `Fixed: ${res.fixed || 0}, dropped: ${res.dropped || 0}, dismissed: ${res.dismissed || 0}.` };
+      // Reports that did not land stay open; say which, and why.
+      const left = (res.outcomes || []).filter(o => !["fixed", "dropped", "dismissed"].includes(o.outcome));
+      const why = left.map(o => `${o.question_id || o.report_id} (${o.outcome}${o.reason ? ": " + o.reason : ""})`).join("; ");
+      return { ok: true, note: `Fixed: ${res.fixed || 0}, dropped: ${res.dropped || 0}, dismissed: ${res.dismissed || 0}.` +
+        (left.length ? ` ${left.length} not applied, reports left open: ${why}.` : "") };
     }
     return res;
   }
@@ -4526,29 +5451,47 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
       const auditBtn = li.querySelector(".report-audit-one");
       if (auditBtn) auditBtn.onclick = (e) => { e.stopPropagation(); showReportAuditFlow([r]); };
       const jumpBtn = li.querySelector(".report-jump");
-      if (jumpBtn && q) jumpBtn.onclick = (e) => {
+      if (jumpBtn && q) jumpBtn.onclick = async (e) => {
         e.stopPropagation();
-        // Jumping to a question means leaving the admin panel.
+        // Jumping to a question means leaving the admin panel, and any
+        // session in progress: ask first, and stay put on Cancel.
+        if (!(await jumpToQuestionStandalone(q))) return;
         const am = document.getElementById("adminModal");
-        if (am) am.hidden = true;
-        jumpToQuestionStandalone(q);
+        if (am) { am.hidden = true; adminClear(); }
       };
       list.appendChild(li);
     }
   }
-  function jumpToQuestionStandalone(q) {
-    // Start a tiny single-question study session for review.
+  // Returns false when the user chose to stay in their session.
+  async function jumpToQuestionStandalone(q) {
+    // Admins are full users: this used to replace a running session with
+    // no warning, and the review's first save overwrote its resumable
+    // copy. Same dialog and the same exit steps as leaving by Exit.
+    const live = state.quiz && !state.quiz.finished && !state.quiz.ephemeral ? state.quiz : null;
+    if (live) {
+      if (!(await confirmLeaveSession("leave"))) return false;
+      if (state.quiz === live && !live.finished) {
+        stopSessionTimer();
+        if (typeof chargeQuestionTime === "function") chargeQuestionTime();
+        if (typeof commitTestAnswers === "function") commitTestAnswers(live);
+      }
+      clearSavedSession();
+    }
+    // Start a tiny single-question study session for review. Ephemeral:
+    // saveSession skips it, so it never becomes the resumable session.
     resetNavigator();
     state.quiz = {
       pool: [q], idx: 0, mode: "study",
       timerMins: 0, deadline: null,
       answers: {}, struck: {}, revealed: {}, finished: false,
+      ephemeral: true,
     };
     state.sessionStart = Date.now();
     setScreen("quiz");
     document.getElementById("sessionMeta").textContent = "Report review";
     renderQuiz();
     startSessionTimer();
+    return true;
   }
 
   // ── Paste questions ─────────────────────────────────────────────────────
@@ -4600,6 +5543,9 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     // localStorage only if both fail (offline / no backend / no worker).
     const res = await postBackend("paste", { questions: added });
     const savedToInbox = res && res.ok ? (res.saved || true) : null;
+    // A server that answered with a reason (401 admin session, 400 bad
+    // field) is not "unreachable"; keep the reason for the status line.
+    const rejected = !savedToInbox && res && res.status > 0 ? (res.error || `HTTP ${res.status}`) : null;
 
     if (!savedToInbox) {
       const existing = load(ns(LOCAL_QUESTIONS_KEY), []);
@@ -4612,14 +5558,19 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     let msg = `Added ${added.length} question${added.length === 1 ? "" : "s"}.`;
     if (skipped.length) msg += ` Skipped ${skipped.length} duplicate ID${skipped.length === 1 ? "" : "s"}.`;
     if (savedToInbox && typeof savedToInbox === "string") {
-      msg += ` Saved to the live bank at data/${savedToInbox}. Everyone sees these on next reload.`;
+      msg += ` Saved to the inbox at data/${savedToInbox}. It loads for everyone on next reload.`;
     } else if (savedToInbox) {
-      msg += " Saved to the live bank inbox.";
+      msg += " Saved to the inbox.";
+    } else if (rejected) {
+      msg += ` Not saved to the inbox: ${rejected}. Kept in this browser only; use 'Export local additions' to share.`;
     } else {
-      msg += " Saved in this browser only (backend unreachable - hit 'Export for audit' to share).";
+      msg += " Saved in this browser only (server unreachable). Use 'Export local additions' to share.";
     }
     status.textContent = msg;
-    status.classList.remove("dim", "bad"); status.classList.add("ok");
+    status.classList.remove("dim", "bad", "ok");
+    // A browser-only save is a warning: it must stay on screen, so it
+    // does not take the auto-clearing "ok" class.
+    status.classList.add(savedToInbox ? "ok" : "bad");
     refreshLocalBankSummary();
     setTimeout(() => { if (status.classList.contains("ok")) status.textContent = ""; }, 7000);
   }
@@ -4743,6 +5694,14 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
       if (correct.length !== 1)
         return problems.push(`${tag}: exactly one option must have \`correct: true\` (found ${correct.length})`);
       if (typeof q.difficulty !== "number") q.difficulty = 3;
+      // Same rule the loader applies, so a paste cannot be accepted here
+      // and then dropped (or made unreachable) on the next reload.
+      if (typeof q.stem !== "string" || !q.stem.trim()) return problems.push(`${tag}: missing \`stem\``);
+      if (!SERVABLE_TOPICS.includes(q.topic))
+        return problems.push(`${tag}: \`topic\` must be one of ${SERVABLE_TOPICS.join(", ")}`);
+      if (!Number.isInteger(q.difficulty) || q.difficulty < 1 || q.difficulty > 5)
+        return problems.push(`${tag}: \`difficulty\` must be an integer 1-5`);
+      if (!isServable(q)) return problems.push(`${tag}: every option must be an object`);
     });
     if (problems.length) {
       return { error: "Validation failed:\n  - " + problems.slice(0, 6).join("\n  - ") + (problems.length > 6 ? `\n  - ...and ${problems.length - 6} more` : "") };
