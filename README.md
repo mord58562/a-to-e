@@ -2,7 +2,7 @@
 
 A free, open practice MCQ bank for Australian medical students in their clinical years. Single-best-answer clinical reasoning across paediatrics, obstetrics & gynaecology, psychiatry, and adult medicine, with Australian units and Australian guideline sources throughout.
 
-7,053 questions, the four disciplines held at parity: Paediatrics 1,765, Obstetrics & Gynaecology 1,766, Psychiatry 1,760, Medicine 1,762.
+7,052 questions, the four disciplines held at parity: Paediatrics 1,765, Obstetrics & Gynaecology 1,766, Psychiatry 1,759, Medicine 1,762.
 
 **Live at <https://mord58562.github.io/a-to-e/>.** No account is needed: continue as a guest and your progress stays in that browser.
 
@@ -33,9 +33,9 @@ Difficulty is set by how many reasoning steps the answer takes, not by how rare 
 | --- | --- | ---: | ---: |
 | 1/5 | Recall one fact | 70 | 1.0% |
 | 2/5 | Put two or three findings together | 1,702 | 24.1% |
-| 3/5 | Several steps, or an Australian cut-off | 2,745 | 38.9% |
-| 4/5 | An atypical presentation, or a finding that points the wrong way | 2,217 | 31.4% |
-| 5/5 | A calculation, a finding that argues against the obvious answer, or guidelines that disagree | 319 | 4.5% |
+| 3/5 | Several steps, or an Australian cut-off | 2,744 | 38.9% |
+| 4/5 | An atypical presentation, or a finding that points the wrong way | 2,218 | 31.5% |
+| 5/5 | A calculation, a finding that argues against the obvious answer, or guidelines that disagree | 318 | 4.5% |
 
 ## Using it
 
