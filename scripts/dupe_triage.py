@@ -336,10 +336,75 @@ def cmd_apply(args):
     return 0
 
 
+# Cases the validator has to keep catching. A differentiation rewrite is
+# the one edit that deliberately changes the keyed answer, so the usual
+# content validator cannot gate it and this one is the only thing
+# standing between a "rewrite" and the same question with a new id.
+def _fake(qid, replaces, detail, answer, **over):
+    q = {
+        "id": qid, "replaces": replaces, "topic": "Paediatrics",
+        "subtopic": "Respiratory", "subtopic_detail": detail, "difficulty": 3,
+        "stem": "A 6 year old presents to the emergency department.",
+        "lead_in": "What is the most appropriate next step?",
+        "explanation": {"summary": "Because."}, "sources": ["Therapeutic Guidelines"],
+        "options": [{"letter": "ABCDE"[i], "text": (answer if i == 0 else f"A plausible alternative number {i}"),
+                     "correct": i == 0, "rationale": "Because.",
+                     "source_refs": ["Therapeutic Guidelines"]} for i in range(5)],
+    }
+    q.update(over)
+    return q
+
+
+def selftest():
+    """Every case here is a way a rewrite has actually gone wrong."""
+    original = _fake("paeds-1", None, "acute asthma, intravenous escalation",
+                     "Intravenous magnesium sulfate 50 mg/kg over 20 minutes")
+    original.pop("replaces")
+    served = {"paeds-1": (original, ROOT / "data/batches/selftest.json")}
+
+    def check(q):
+        problems = []
+        check_one(q, served, problems)
+        return problems
+
+    cases = [
+        ("an unchanged copy under a new id",
+         _fake("paeds-1-d2", "paeds-1", "acute asthma, intravenous escalation",
+               "Intravenous magnesium sulfate 50 mg/kg over 20 minutes"), True),
+        ("no `replaces` field",
+         _fake("paeds-1-d2", None, "oxygen target in acute asthma",
+               "Titrate oxygen to 92 to 95 per cent"), True),
+        ("keeping the original id",
+         _fake("paeds-1", "paeds-1", "oxygen target in acute asthma",
+               "Titrate oxygen to 92 to 95 per cent"), True),
+        ("an id with no lineage",
+         _fake("something-else", "paeds-1", "oxygen target in acute asthma",
+               "Titrate oxygen to 92 to 95 per cent"), True),
+        ("an option-length parity breach",
+         _fake("paeds-1-d2", "paeds-1", "oxygen target in acute asthma",
+               "Titrate the inspired oxygen to a saturation of 92 to 95 per cent and reassess"), True),
+        ("a genuine differentiation",
+         _fake("paeds-1-d2", "paeds-1", "oxygen target in acute asthma",
+               "Titrate oxygen to 92 to 95 per cent"), False),
+    ]
+
+    failures = 0
+    for name, q, should_fail in cases:
+        problems = check(q)
+        if bool(problems) != should_fail:
+            failures += 1
+            print(f"FAIL: {name} -> {'rejected' if problems else 'accepted'}, expected "
+                  f"{'rejected' if should_fail else 'accepted'}"
+                  + (f"\n      {problems[0][1]}" if problems else ""))
+    print(f"{len(cases) - failures}/{len(cases)} validator cases pass")
+    return 1 if failures else 0
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
+    sub.add_parser("selftest")
     p = sub.add_parser("plan")
     p.add_argument("--pairs", required=True, help="JSON from dupe_gate --all --json")
     p.add_argument("-o", "--out", default="dupe_plan.json")
@@ -350,6 +415,8 @@ def main():
         p = sub.add_parser(name)
         p.add_argument("file")
     args = ap.parse_args()
+    if args.cmd == "selftest":
+        return selftest()
     return {"plan": cmd_plan, "retire": cmd_retire,
             "validate": cmd_validate, "apply": cmd_apply}[args.cmd](args) or 0
 
