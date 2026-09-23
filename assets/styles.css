@@ -1040,30 +1040,10 @@ body:has(#quizTopbar[hidden]) .reading {
   border-radius: var(--r-soft);
 }
 
-.reading-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 14px;
-}
-/* The folio line was retired when the topbar took over the position
- * indicator. Its three children were left in the markup, and an empty
- * inline-flex with padding and a border still reserves a band above
- * every stem, so the header goes too - see index.html. */
-.folio-subject {
-  display: inline-flex;
-  align-items: center;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-  padding: 3px 9px;
-  border-radius: var(--r-tight);
-  border: 1px solid transparent;
-  font-family: var(--sans);
-  white-space: nowrap;
-}
+/* The folio line and its header were retired when the topbar took over
+ * the position indicator. All three children were permanently hidden or
+ * blank, and an empty inline-flex with padding and a border still
+ * reserved a band above every stem. */
 
 .stem {
   /* The vignette is the thing to READ; everything around it is the
