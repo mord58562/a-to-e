@@ -674,6 +674,17 @@
   // The rail's top used to be a hand-tuned 84px, which sat a few pixels
   // inside the topbar band and drifted with any change of font size or
   // safe-area inset. Measure it instead and let CSS read the number.
+  // A resize changes how many chips fit, and the rail is the only thing
+  // that depends on it. Debounced so a drag does not redraw per frame.
+  function trackViewportForNavigator() {
+    let t = null;
+    window.addEventListener("resize", () => {
+      if (document.body.dataset.screen !== "quiz") return;
+      clearTimeout(t);
+      t = setTimeout(() => { if (state.quiz) renderNavigator(); }, 120);
+    });
+  }
+
   function trackMastheadHeight() {
     const masthead = document.querySelector(".masthead");
     if (!masthead) return;
@@ -687,6 +698,7 @@
   document.addEventListener("DOMContentLoaded", async () => {
     applyTheme(localStorage.getItem(THEME_KEY) || "light");
     trackMastheadHeight();
+    trackViewportForNavigator();
     // Kick off the data load in parallel with the gate. The bank JSON does
     // not depend on which user is signed in, so we can overlap the ~54
     // file fetches with the /api/me round-trip + any password entry. On a
@@ -1245,6 +1257,24 @@
    * in. The plaintext code exists exactly once, in the response to the
    * create call, so it is shown until dismissed rather than flashed.
    */
+  // A code the admin has just created. renderInvites() rebuilds the whole
+  // section, and it is called immediately after a create, which used to
+  // wipe the reveal within the same tick - the code was on screen for
+  // less time than it takes to read. Holding it here means the refresh
+  // repaints it instead of destroying it.
+  let freshInvite = null;
+
+  function freshInviteHtml() {
+    if (!freshInvite) return "";
+    return `<div class="invite-fresh">
+      <p>New code for ${esc(freshInvite.label || "no one in particular")}. Send it to one person.</p>
+      <div class="invite-code-row">
+        <code>${esc(freshInvite.code)}</code>
+        <button type="button" class="secondary" data-copy-code="${esc(freshInvite.code)}">Copy</button>
+        <button type="button" class="link-btn" id="inviteFreshDismiss">Dismiss</button>
+      </div></div>`;
+  }
+
   async function renderInvites(root, usersRoot) {
     if (!root) return;
     const head = `<h3>Invite codes</h3>
@@ -1260,7 +1290,7 @@
           </select></label>
         <button type="submit" class="primary">Create code</button>
       </form>
-      <div id="inviteFresh"></div>`;
+      <div id="inviteFresh">${freshInviteHtml()}</div>`;
     root.innerHTML = head + `<div id="inviteList"></div>`;
     const list = document.getElementById("inviteList");
     const stop = adminLoading(list, 2);
@@ -1280,8 +1310,16 @@
       : "Unused";
     const rows = invites.map(i => {
       const st = statusOf(i);
+      // A live code comes back in full; a spent one, and any code issued
+      // before codes were stored recoverably, has only its hint.
+      const cell = i.code
+        ? `<code>${esc(i.code)}</code>` +
+          `<button type="button" class="row-act" data-copy-code="${esc(i.code)}">Copy</button>`
+        : `${esc(i.code_hint)}...` + (st === "Unused"
+            ? `<button type="button" class="row-act" data-reissue="${esc(i.code_hash)}"` +
+              ` data-label="${esc(i.label || "")}">Reissue</button>` : "");
       return `<tr class="${st === "Unused" ? "" : "is-spent"}">
-        <th scope="row" class="mono-id">${esc(i.code_hint)}...</th>
+        <th scope="row" class="mono-id cell-code">${cell}</th>
         <td>${esc(i.label || "")}</td>
         <td>${esc(st)}</td>
         <td>${i.expires_at ? esc(new Date(i.expires_at * 1000).toLocaleDateString("en-AU", { day: "numeric", month: "short" })) : "-"}</td>
@@ -1312,24 +1350,56 @@
             expires_days: parseInt(document.getElementById("inviteDays").value, 10),
           }),
         });
-        // Shown once and only once: the server stores a hash.
-        document.getElementById("inviteFresh").innerHTML =
-          `<div class="invite-fresh"><p>Give this to one person. It is shown
-             once, so copy it now.</p>
-           <div class="invite-code-row"><code>${esc(r.code)}</code>
-             <button type="button" id="inviteCopy" class="secondary">Copy</button></div></div>`;
-        document.getElementById("inviteCopy").onclick = ev => {
-          navigator.clipboard.writeText(r.code).then(() => {
-            ev.target.textContent = "Copied";
-            setTimeout(() => { ev.target.textContent = "Copy"; }, 2000);
-          }).catch(() => adminSay("error", "Could not reach the clipboard. Select the code and copy it."));
-        };
+        freshInvite = { code: r.code, label: document.getElementById("inviteLabel").value };
         document.getElementById("inviteLabel").value = "";
         renderInvites(root, usersRoot);
       } catch (err) {
         adminSay("error", err.message || String(err));
       } finally { btn.disabled = false; }
     };
+
+    root.querySelectorAll("[data-copy-code]").forEach(b => {
+      b.onclick = () => {
+        const code = b.dataset.copyCode;
+        const done = () => {
+          const was = b.textContent;
+          b.textContent = "Copied";
+          setTimeout(() => { b.textContent = was; }, 2000);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(code).then(done).catch(() =>
+            adminSay("error", "Could not reach the clipboard. Select the code and copy it."));
+        } else {
+          adminSay("error", "Could not reach the clipboard. Select the code and copy it.");
+        }
+      };
+    });
+    const dismiss = document.getElementById("inviteFreshDismiss");
+    if (dismiss) dismiss.onclick = () => { freshInvite = null; renderInvites(root, usersRoot); };
+
+    // Codes issued before the server kept a readable copy cannot be
+    // shown, so the way to get a usable code out of one is to replace
+    // it: revoke, then issue a fresh code carrying the same label.
+    list.querySelectorAll("[data-reissue]").forEach(b => {
+      b.onclick = async () => {
+        b.disabled = true;
+        try {
+          await apiFetch("/api/admin/invites/revoke", {
+            method: "POST", body: JSON.stringify({ code_hash: b.dataset.reissue }),
+          });
+          const r = await apiFetch("/api/admin/invites", {
+            method: "POST",
+            body: JSON.stringify({ label: b.dataset.label || "", expires_days: 30 }),
+          });
+          freshInvite = { code: r.code, label: b.dataset.label || "" };
+          adminSay("ok", "Old code revoked, new one issued.");
+          renderInvites(root, usersRoot);
+        } catch (err) {
+          b.disabled = false;
+          adminSay("error", err.message || String(err));
+        }
+      };
+    });
 
     list.querySelectorAll("[data-revoke]").forEach(b => {
       b.onclick = async () => {
@@ -2198,7 +2268,14 @@
   // and 7,000 buttons is neither drawable nor navigable, so the grid is
   // a window onto the pool with the current question inside it. Below
   // this size the window is the whole pool and the controls disappear.
-  const NAV_WINDOW = 120;
+  // The window is sized to the rail, not fixed at a round number. A
+  // rail with its own scrollbar puts a second scrolling region on a
+  // page that already has one, and the two move independently, which
+  // is the thing that reads as bolted on. Drawing only as many chips
+  // as fit means the rail never scrolls and the page has one scroll.
+  const NAV_WINDOW_MIN = 24;
+  const NAV_WINDOW_FALLBACK = 120;
+  let navWindow = NAV_WINDOW_FALLBACK;
   let navWindowStart = 0;
   // Set when the current question changes, cleared once the window has
   // been repositioned. Paging leaves it false so the view stays put.
@@ -2239,16 +2316,17 @@
     // Recentre only when the question itself moved out of the window.
     // Recentring on every render would snap the view straight back the
     // moment you paged away to look somewhere else.
-    if (total <= NAV_WINDOW) navWindowStart = 0;
+    if (total <= navWindow) navWindowStart = 0;
     else if (navFollowCurrent &&
              (state.quiz.idx < navWindowStart ||
-              state.quiz.idx >= navWindowStart + NAV_WINDOW)) {
+              state.quiz.idx >= navWindowStart + navWindow)) {
       navWindowStart = Math.max(0, Math.min(
-        total - NAV_WINDOW, state.quiz.idx - Math.floor(NAV_WINDOW / 2)));
+        total - navWindow, state.quiz.idx - Math.floor(navWindow / 2)));
     }
     navFollowCurrent = false;
-    const from = total <= NAV_WINDOW ? 0 : navWindowStart;
-    const to = Math.min(total, from + NAV_WINDOW);
+    const from = total <= navWindow ? 0 : Math.min(navWindowStart, Math.max(0, total - navWindow));
+    navWindowStart = from;
+    const to = Math.min(total, from + navWindow);
 
     // Chip state is computed for the visible window only.
     const states = pool.slice(from, to).map((q, n) => {
@@ -2269,7 +2347,7 @@
              `aria-label="${label}"${x.i === state.quiz.idx ? ' aria-current="true"' : ""}>${x.i + 1}</button>`;
     }).join("");
 
-    const windowed = total > NAV_WINDOW;
+    const windowed = total > navWindow;
     // One line, read as a sentence. A stack of "N correct / N
     // incorrect / N flagged" is the generic stat-panel shape, and at
     // this size the numbers are small enough to sit inline.
@@ -2323,7 +2401,39 @@
     if (list && !list.hidden) list.innerHTML = html;
     wireNavigator(rail);
     if (list && !list.hidden) wireNavigator(list);
+    if (fitNavWindow(rail)) return renderNavigator();
     scrollCurrentChipIntoView(rail);
+  }
+
+  // Measure the rail and return true when the window size changed, so
+  // the caller redraws once at the new size. Everything is read off the
+  // rendered rail rather than hard-coded, so a theme or type change
+  // cannot put the numbers out of step with the stylesheet.
+  let navFitting = false;
+  function fitNavWindow(rail) {
+    if (navFitting || !rail || rail.hidden || !state.quiz) return false;
+    const chips = rail.querySelector(".nav-chips");
+    const chip = chips && chips.firstElementChild;
+    if (!chip) return false;
+    const cs = getComputedStyle(chips);
+    const cols = cs.gridTemplateColumns.split(" ").filter(Boolean).length;
+    const rowGap = parseFloat(cs.rowGap) || 0;
+    const chipH = chip.getBoundingClientRect().height;
+    if (!cols || !chipH) return false;
+    // Everything in the rail that is not the chip grid: the heading,
+    // the one-line stats, the pager and the jump form.
+    const chrome = rail.scrollHeight - chips.getBoundingClientRect().height;
+    const room = window.innerHeight - rail.getBoundingClientRect().top - 24 - chrome;
+    const rows = Math.floor((room + rowGap) / (chipH + rowGap));
+    const size = Math.max(NAV_WINDOW_MIN, Math.min(state.quiz.pool.length, rows * cols));
+    if (size === navWindow) return false;
+    navWindow = size;
+    // Held for this tick only: the redraw the caller is about to do
+    // measures the same rail again, and without the guard a rail that
+    // sits a pixel either side of a row boundary would redraw forever.
+    navFitting = true;
+    setTimeout(() => { navFitting = false; }, 0);
+    return true;
   }
 
   function wireNavigator(root) {
@@ -2341,7 +2451,7 @@
       if (page) {
         const dir = parseInt(page.dataset.navPage, 10);
         navWindowStart = Math.max(0, Math.min(
-          state.quiz.pool.length - NAV_WINDOW, navWindowStart + dir * NAV_WINDOW));
+          state.quiz.pool.length - navWindow, navWindowStart + dir * navWindow));
         navFollowCurrent = false;
         renderNavigator();
       }

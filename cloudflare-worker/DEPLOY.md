@@ -83,3 +83,12 @@ You'll see the **Audit** button in the masthead and the "how to add" banner appe
   rather than INSERT-OR-IGNORE. Apply with:
   `wrangler d1 execute a-to-e --file=schema_003_sync.sql --remote`
   then `wrangler deploy`.
+- 2026-09-23: Readable invite codes - `schema_005_invite_reveal.sql` adds
+  `invite_codes.code_enc`, an AES-256-GCM copy of the code under the
+  existing `EMAIL_ENC_KEY`. The hash stays and redemption still matches
+  on it; the encrypted copy is what lets the admin panel show a code that
+  was issued earlier, and it is cleared when a code is redeemed or
+  revoked. Codes issued before this migration have no encrypted copy and
+  can only be replaced, which the panel offers as Reissue. Apply with:
+  `wrangler d1 execute a-to-e --file=schema_005_invite_reveal.sql --remote`
+  then `wrangler deploy`.

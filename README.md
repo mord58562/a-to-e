@@ -6,6 +6,12 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 **Live: <https://mord58562.github.io/a-to-e/>** - guest mode, no signup required.
 
+## What's new in 1.6.7
+
+- The question navigator draws as many chips as fit the rail, so it no longer has a scrollbar of its own. The page has one scroll.
+- The keyboard number on an option row lines up with the rule-out control beside it.
+- Invite codes can be read back. A live code is shown in full in the admin panel with a copy control, and the code shown when you create one stays on screen until you dismiss it instead of being wiped by the refresh a moment later. Needs the worker deployed with `schema_005_invite_reveal.sql`; codes issued before that can only be replaced, which the panel offers as Reissue.
+
 ## What's new in 1.6.6
 
 - The admin panel's section tabs switch panes again. The Content pane was pinned open by a stylesheet rule that outranked the `hidden` attribute, so selecting another section rendered it underneath. Seven other elements carried the same latent bug.

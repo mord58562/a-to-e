@@ -1246,10 +1246,17 @@ body:has(#quizTopbar[hidden]) .reading {
 /* Printed shortcut. Reads as a key legend, not as a badge: no fill,
  * no border, just a small tabular digit in the margin. */
 .options li .opt-key {
-  width: 18px;
-  padding-right: 12px;
-  text-align: right;
+  /* Same 30px box as the rule-out control beside it, centred the same
+   * way. Left to itself the digit sat on a text baseline inside a
+   * taller line box, so it rode a couple of pixels below the x it is
+   * meant to line up with. */
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
   font-size: 11px;
+  line-height: 1;
   color: var(--ink-faint);
   font-variant-numeric: tabular-nums;
 }
@@ -2813,6 +2820,23 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   font-size: 13px;
   padding: 7px 9px;
 }
+/* The code cell in the list. The code is the thing to read there, so
+ * it gets the mono face and the copy control sits next to it rather
+ * than in the actions column at the far side of the row. */
+.admin-table .cell-code {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.admin-table .cell-code code {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+}
+.admin-table tr.is-spent .cell-code code { color: var(--ink-mute); }
+
 .invite-fresh {
   margin: 0 0 14px;
   padding: 12px 14px;

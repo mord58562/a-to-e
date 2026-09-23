@@ -367,20 +367,20 @@ async function emailLookup(env, emailLower) {
   const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(emailLower));
   return bytesToHex(sig);
 }
-async function emailEncrypt(env, emailLower) {
+async function fieldEncrypt(env, plaintext) {
   // AES-256-GCM with random 12-byte IV. Output = base64(iv || ct || tag).
   const keyBytes = base64ToBytes(env.EMAIL_ENC_KEY);
   if (keyBytes.length !== 32) throw new Error("EMAIL_ENC_KEY must decode to exactly 32 bytes");
   const key = await crypto.subtle.importKey("raw", keyBytes, { name: "AES-GCM" }, false, ["encrypt"]);
   const iv = randomBytes(12);
   const ct = new Uint8Array(await crypto.subtle.encrypt(
-    { name: "AES-GCM", iv }, key, new TextEncoder().encode(emailLower)
+    { name: "AES-GCM", iv }, key, new TextEncoder().encode(plaintext)
   ));
   const packed = new Uint8Array(iv.length + ct.length);
   packed.set(iv, 0); packed.set(ct, iv.length);
   return bytesToBase64(packed);
 }
-async function emailDecrypt(env, packedB64) {
+async function fieldDecrypt(env, packedB64) {
   if (!packedB64) return null;
   const keyBytes = base64ToBytes(env.EMAIL_ENC_KEY);
   const key = await crypto.subtle.importKey("raw", keyBytes, { name: "AES-GCM" }, false, ["decrypt"]);
@@ -414,7 +414,7 @@ async function authUser(request, env) {
   // Prefer the decrypted email; fall back to legacy plaintext column
   // for accounts that haven't logged in since the migration.
   try {
-    if (row.email_enc) row.email = await emailDecrypt(env, row.email_enc);
+    if (row.email_enc) row.email = await fieldDecrypt(env, row.email_enc);
   } catch { /* fall through to legacy plaintext */ }
   return row;
 }
@@ -546,7 +546,7 @@ async function handleRegister(request, env, cors) {
   const saltBytes = randomBytes(16);
   const saltHex = bytesToHex(saltBytes);
   const hash = await hashPasswordArgon2(password, saltBytes);
-  const emailEnc = await emailEncrypt(env, email);
+  const emailEnc = await fieldEncrypt(env, email);
   const now = Math.floor(Date.now() / 1000);
   // The legacy `email` column still has a UNIQUE constraint; we keep it
   // populated with the deterministic lookup hash so it stays unique
@@ -578,7 +578,9 @@ async function handleRegister(request, env, cors) {
     ).bind(id, "enc:" + lookup.slice(0, 32), lookup, emailEnc, hash, saltHex, ARGON2_ALGO_LABEL, displayName, isAdmin, now, invite.code_hash, now,
            invite.code_hash, nowTs),
     env.DB.prepare(
-      "UPDATE invite_codes SET used_by = ?, used_at = ? WHERE " + INVITE_REDEEMABLE +
+      // code_enc goes with the redemption: a spent code has nothing left
+      // to show an admin, so it should not stay recoverable.
+      "UPDATE invite_codes SET used_by = ?, used_at = ?, code_enc = NULL WHERE " + INVITE_REDEEMABLE +
       " AND EXISTS (SELECT 1 FROM users WHERE id = ?)"
     ).bind(id, now, invite.code_hash, nowTs, id),
     env.DB.prepare(
@@ -662,14 +664,14 @@ async function handleLogin(request, env, cors) {
     if (row.pw_algo !== ARGON2_ALGO_LABEL) {
       const newSaltBytes = randomBytes(16);
       const newHash = await hashPasswordArgon2(password, newSaltBytes);
-      const emailEnc = await emailEncrypt(env, email);
+      const emailEnc = await fieldEncrypt(env, email);
       await env.DB.prepare(
         "UPDATE users SET password_hash = ?, password_salt = ?, pw_algo = ?, email_lookup = ?, email_enc = ?, email = ? WHERE id = ?"
       ).bind(newHash, bytesToHex(newSaltBytes), ARGON2_ALGO_LABEL, lookup, emailEnc, "enc:" + lookup.slice(0, 32), row.id).run();
       row.email_enc = emailEnc;
     } else if (!row.email_enc) {
       // Argon2-hashed but missing email encryption (shouldn't happen post-002, but defensive).
-      const emailEnc = await emailEncrypt(env, email);
+      const emailEnc = await fieldEncrypt(env, email);
       await env.DB.prepare(
         "UPDATE users SET email_lookup = ?, email_enc = ?, email = ? WHERE id = ?"
       ).bind(lookup, emailEnc, "enc:" + lookup.slice(0, 32), row.id).run();
@@ -758,7 +760,7 @@ async function handleAdminListUsers(request, env, cors) {
   for (const r of (results || [])) {
     let email = r.email;
     if (r.email_enc) {
-      try { email = await emailDecrypt(env, r.email_enc); } catch {}
+      try { email = await fieldDecrypt(env, r.email_enc); } catch {}
     }
     out.push({ id: r.id, email, display_name: r.display_name, is_admin: r.is_admin, created_at: r.created_at, answers: r.answers });
   }
@@ -884,12 +886,26 @@ async function handleAdminListInvites(request, env, cors) {
   const user = await authUser(request, env);
   if (!user || !user.is_admin) return json({ ok: false, error: "admin required" }, 403, cors);
   const rows = await env.DB.prepare(
-    `SELECT i.code_hash, i.code_hint, i.label, i.created_at, i.expires_at,
+    `SELECT i.code_hash, i.code_hint, i.code_enc, i.label, i.created_at, i.expires_at,
             i.used_at, i.revoked_at, u.display_name AS used_by_name
      FROM invite_codes i LEFT JOIN users u ON u.id = i.used_by
      ORDER BY i.created_at DESC LIMIT 200`
   ).all();
-  return json({ ok: true, invites: rows.results || [] }, 200, cors);
+  // A code the admin cannot read is a code they cannot send. It is held
+  // encrypted rather than hashed for exactly this, and only a live code
+  // is ever decrypted: a spent or revoked one has nothing to give and no
+  // reason to leave the database.
+  const now = Math.floor(Date.now() / 1000);
+  const invites = [];
+  for (const r of rows.results || []) {
+    const live = !r.used_at && !r.revoked_at && (!r.expires_at || r.expires_at >= now);
+    const { code_enc, ...rest } = r;
+    if (live && code_enc) {
+      try { rest.code = await fieldDecrypt(env, code_enc); } catch (_) { /* older key, hint only */ }
+    }
+    invites.push(rest);
+  }
+  return json({ ok: true, invites }, 200, cors);
 }
 
 async function handleAdminCreateInvite(request, env, cors) {
@@ -902,10 +918,14 @@ async function handleAdminCreateInvite(request, env, cors) {
   const code = generateInviteCode();
   const now = Math.floor(Date.now() / 1000);
   await env.DB.prepare(
-    "INSERT INTO invite_codes (code_hash, code_hint, label, created_by, created_at, expires_at) VALUES (?, ?, ?, ?, ?, ?)"
-  ).bind(await hashInviteCode(env, code), code.slice(0, 4), label, user.id, now, now + days * 86400).run();
-  // The plaintext code is returned exactly once. Only its hash is stored,
-  // so if the admin loses it they revoke and issue another.
+    "INSERT INTO invite_codes (code_hash, code_hint, code_enc, label, created_by, created_at, expires_at) " +
+    "VALUES (?, ?, ?, ?, ?, ?, ?)"
+  ).bind(await hashInviteCode(env, code), code.slice(0, 4), await fieldEncrypt(env, code),
+         label, user.id, now, now + days * 86400).run();
+  // Redemption still matches on the hash, so a database dump on its own
+  // redeems nothing without the worker's pepper. The encrypted copy is
+  // what lets the admin read back a code they issued last week, and it
+  // needs the encryption key, which is not in the database either.
   return json({ ok: true, code, expires_at: now + days * 86400 }, 200, cors);
 }
 
@@ -916,7 +936,8 @@ async function handleAdminRevokeInvite(request, env, cors) {
   const codeHash = (body && body.code_hash) || "";
   if (!/^[a-f0-9]{64}$/.test(codeHash)) return json({ ok: false, error: "bad code" }, 400, cors);
   const res = await env.DB.prepare(
-    "UPDATE invite_codes SET revoked_at = ? WHERE code_hash = ? AND used_by IS NULL AND revoked_at IS NULL"
+    "UPDATE invite_codes SET revoked_at = ?, code_enc = NULL " +
+    "WHERE code_hash = ? AND used_by IS NULL AND revoked_at IS NULL"
   ).bind(Math.floor(Date.now() / 1000), codeHash).run();
   if (!res.meta || res.meta.changes !== 1) return json({ ok: false, error: "already used or revoked" }, 409, cors);
   return json({ ok: true }, 200, cors);
