@@ -229,9 +229,21 @@ class Handler(SimpleHTTPRequestHandler):
         if not isinstance(kept, list) or not isinstance(dropped, list):
             return self._json(400, {"ok": False, "error": "audit.kept and audit.dropped must be arrays"})
         full = os.path.join(ROOT, file_path)
+        # The audit replaces the whole file, so it must account for every
+        # id in it (mirrors /apply-live-audit in the worker).
+        try:
+            with open(full, "r", encoding="utf-8") as f:
+                original = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            original = None
+        mismatch = (self._audit_mismatch(original, kept, dropped) if isinstance(original, list)
+                    else "That file is missing or is not a question array.")
+        if mismatch:
+            return self._json(409, {"ok": False, "error": mismatch})
         with open(full, "w", encoding="utf-8") as f:
             json.dump(kept, f, indent=2, ensure_ascii=False)
             f.write("\n")
+        self._refresh_manifest_hashes([full])
         stamp = datetime.now(timezone.utc).isoformat()
         with open(os.path.join(ROOT, "data", "audit_log.md"), "a", encoding="utf-8") as f:
             f.write(f"\n## {stamp} - live audit of {file_path} by {payload.get('profile') or 'rob'}\n\n")
@@ -249,62 +261,211 @@ class Handler(SimpleHTTPRequestHandler):
         if not isinstance(resolutions, list) or not resolutions:
             return self._json(400, {"ok": False, "error": "expected non-empty resolutions array"})
 
-        # 1. Update reports.json statuses.
-        try:
-            with open(REPORTS, "r", encoding="utf-8") as f:
-                rdata = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
-            rdata = {"reports": []}
-        rdata.setdefault("reports", [])
-        rep_by_id = {r["id"]: r for r in rdata["reports"]}
-        now = datetime.now(timezone.utc).isoformat()
+        # Mirrors /apply-report in cloudflare-worker/src/worker.js: search
+        # every file loadData() serves, edit every copy, and close a report
+        # only once its edit has landed (or it was dismissed).
+        def s(v):
+            return v if isinstance(v, str) else ""
+        outcomes, first_edit = [], {}
         for r in resolutions:
-            rep = rep_by_id.get(r.get("report_id"))
-            if rep:
-                action = r.get("action", "dismiss")
-                rep["status"] = "fixed" if action == "fix" else ("dropped" if action == "drop" else "dismissed")
-                rep["resolution"] = r.get("resolution", "")
-                rep["resolved_at"] = now
-        with open(REPORTS, "w", encoding="utf-8") as f:
-            json.dump(rdata, f, indent=2, ensure_ascii=False)
-            f.write("\n")
+            r = r if isinstance(r, dict) else {}
+            o = {"report_id": s(r.get("report_id")), "question_id": s(r.get("question_id")),
+                 "action": s(r.get("action")), "outcome": None, "files": []}
+            if not o["report_id"]:
+                o.update(outcome="invalid", reason="missing report_id")
+            elif o["action"] not in ("fix", "drop", "dismiss"):
+                o.update(outcome="invalid", reason="unknown action")
+            elif o["action"] != "dismiss" and not o["question_id"]:
+                o.update(outcome="invalid", reason="missing question_id")
+            elif o["action"] == "fix" and not self._servable(r.get("fixed_question")):
+                o.update(outcome="invalid", reason="fixed_question is not a complete question")
+            elif o["action"] != "dismiss":
+                prev = first_edit.get(o["question_id"])
+                if prev is None:
+                    first_edit[o["question_id"]] = (o, r)
+                elif prev[0]["action"] != o["action"]:
+                    o.update(outcome="invalid", reason="conflicts with another resolution for this question")
+                else:
+                    o["_same"] = prev[0]
+            outcomes.append(o)
 
-        # 2. Apply fix/drop to question files.
-        result = {"fixed": 0, "dropped": 0, "dismissed": sum(1 for r in resolutions if r.get("action") == "dismiss")}
-        # Build qid -> file lookup across all main files.
-        qid_to_path = {}
-        files_cache = {}
-        for path in self.TOPIC_TO_FILE.values():
-            arr = self._read_main(path)
-            files_cache[path] = arr
-            for q in arr:
-                if q.get("id"):
-                    qid_to_path[q["id"]] = path
+        # Hinted files (the client's `files` per resolution) first; only ids
+        # none of them held fall back to scanning every bank file.
+        bank = self._bank_paths()
+        rel = {os.path.relpath(p, ROOT): p for p in bank}
+        hinted = {}
+        for qid, (o, r) in first_edit.items():
+            for h in (r.get("files") if isinstance(r.get("files"), list) else [])[:10]:
+                if isinstance(h, str) and h in rel:
+                    hinted.setdefault(rel[h], set()).add(qid)
+        written = [p for p in bank if self._apply_edits(p, hinted.get(p), first_edit)]
+        rest = {qid for qid, (o, r) in first_edit.items() if not o["files"]}
+        written += [p for p in bank if self._apply_edits(p, rest, first_edit)]
+        self._refresh_manifest_hashes(written)
 
-        for r in resolutions:
-            action = r.get("action")
-            if action not in ("fix", "drop"):
+        for o in outcomes:
+            if o["outcome"]:
                 continue
-            qid = r.get("question_id")
-            fq = r.get("fixed_question")
-            path = (fq and self.TOPIC_TO_FILE.get(fq.get("topic"))) or qid_to_path.get(qid)
-            if not path:
-                continue
-            arr = files_cache.setdefault(path, self._read_main(path))
-            idx = next((i for i, q in enumerate(arr) if q.get("id") == qid), -1)
-            if action == "fix" and fq:
-                if idx >= 0: arr[idx] = fq
-                else: arr.append(fq)
-                result["fixed"] += 1
-            elif action == "drop":
-                if idx >= 0:
-                    del arr[idx]
-                    result["dropped"] += 1
+            src = o.pop("_same", None) or o
+            if o["action"] == "dismiss":
+                o["outcome"] = "dismissed"
+            elif src["files"]:
+                o["outcome"] = "fixed" if o["action"] == "fix" else "dropped"
+                o["files"] = list(src["files"])
+            else:
+                o.update(outcome="missed", reason="question not found in the bank")
+        return self._close_reports(resolutions, outcomes, s)
 
-        for path, arr in files_cache.items():
+    def _apply_edits(self, path, ids, first_edit):
+        """Apply the edits for `ids` to one file; record the file on each hit.
+        Returns True when the file was rewritten."""
+        if not ids:
+            return False
+        arr = self._read_main(path)
+        if not isinstance(arr, list):
+            return False
+        changed = False
+        for qid, (o, r) in first_edit.items():
+            if qid not in ids or not any(isinstance(q, dict) and q.get("id") == qid for q in arr):
+                continue
+            if o["action"] == "fix":
+                arr = [r["fixed_question"] if isinstance(q, dict) and q.get("id") == qid else q for q in arr]
+            else:
+                arr = [q for q in arr if not (isinstance(q, dict) and q.get("id") == qid)]
+            o["files"].append(os.path.relpath(path, ROOT))
+            changed = True
+        if changed:
             self._write_main(path, arr)
+        return changed
 
-        return self._json(200, {"ok": True, **result})
+    def _refresh_manifest_hashes(self, paths):
+        """Update manifest `hashes` for rewritten files, as manifest_hashes.py
+        would: sha1 of the file bytes, first 12 hex, only for paths the
+        manifest lists, same json.dumps formatting. A hash that cannot be
+        computed is deleted so the loader falls back to ?v=."""
+        import hashlib
+        for manifest, key in ((os.path.join(ROOT, "data", "batches_manifest.json"), "batches"), (MANIFEST, "inbox")):
+            try:
+                with open(manifest, encoding="utf-8") as f:
+                    data = json.load(f)
+            except (FileNotFoundError, json.JSONDecodeError):
+                continue
+            hashes = data.get("hashes") if isinstance(data, dict) else None
+            if not isinstance(hashes, dict) or not isinstance(data.get(key), list):
+                continue
+            changed = False
+            for full in paths:
+                rel = os.path.relpath(full, os.path.join(ROOT, "data")).replace(os.sep, "/")
+                if rel not in data[key]:
+                    continue
+                try:
+                    with open(full, "rb") as f:
+                        h = hashlib.sha1(f.read()).hexdigest()[:12]
+                except OSError:
+                    h = None
+                if h and hashes.get(rel) != h:
+                    hashes[rel] = h
+                    changed = True
+                elif not h and rel in hashes:
+                    del hashes[rel]
+                    changed = True
+            if changed:
+                tmp = manifest + ".tmp"
+                with open(tmp, "w", encoding="utf-8") as f:
+                    f.write(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
+                os.replace(tmp, manifest)
+
+    def _close_reports(self, resolutions, outcomes, s):
+        """Close the reports whose edit landed (or were dismissed), then answer."""
+        for o in outcomes:
+            o.pop("_same", None)
+        closing = {}
+        for r, o in zip(resolutions, outcomes):
+            if o["outcome"] in ("fixed", "dropped", "dismissed"):
+                res_text = r.get("resolution") if isinstance(r, dict) else ""
+                closing[o["report_id"]] = (o["outcome"], s(res_text)[:4000])
+        unmatched = []
+        if closing:
+            try:
+                with open(REPORTS, "r", encoding="utf-8") as f:
+                    rdata = json.load(f)
+            except (FileNotFoundError, json.JSONDecodeError):
+                rdata = {"reports": []}
+            rdata.setdefault("reports", [])
+            now = datetime.now(timezone.utc).isoformat()
+            seen = set()
+            for rep in rdata["reports"]:
+                c = closing.get(rep.get("id")) if isinstance(rep, dict) else None
+                if c:
+                    rep["status"], rep["resolution"], rep["resolved_at"] = c[0], c[1], now
+                    seen.add(rep["id"])
+            unmatched = [k for k in closing if k not in seen]
+            with open(REPORTS, "w", encoding="utf-8") as f:
+                json.dump(rdata, f, indent=2, ensure_ascii=False)
+                f.write("\n")
+
+        def count(k):
+            return sum(1 for o in outcomes if o["outcome"] == k)
+        missed_ids = list(dict.fromkeys(o["question_id"] for o in outcomes if o["outcome"] == "missed"))
+        return self._json(200, {
+            "ok": True, "fixed": count("fixed"), "dropped": count("dropped"),
+            "dismissed": count("dismissed"), "missed": count("missed"),
+            "failed": count("failed"), "invalid": count("invalid"),
+            "missed_ids": missed_ids, "unmatched_reports": unmatched, "outcomes": outcomes,
+        })
+
+    @staticmethod
+    def _servable(q):
+        return (isinstance(q, dict) and isinstance(q.get("id"), str) and q["id"]
+                and isinstance(q.get("stem"), str) and isinstance(q.get("options"), list)
+                and len(q["options"]) >= 2 and all(isinstance(o, dict) for o in q["options"])
+                and sum(1 for o in q["options"] if o.get("correct") is True) == 1)
+
+    def _bank_paths(self):
+        """Every file loadData() in app.js serves the bank from, in load order."""
+        import re
+        paths = list(self.TOPIC_TO_FILE.values())
+        for manifest, key in ((os.path.join(ROOT, "data", "batches_manifest.json"), "batches"), (MANIFEST, "inbox")):
+            try:
+                with open(manifest, "r", encoding="utf-8") as f:
+                    listed = json.load(f).get(key) or []
+            except (FileNotFoundError, json.JSONDecodeError, AttributeError):
+                continue
+            for p in listed:
+                if isinstance(p, str) and re.fullmatch(r"(batches|inbox)/[A-Za-z0-9._-]+\.json", p):
+                    full = os.path.join(ROOT, "data", p)
+                    if full not in paths:
+                        paths.append(full)
+        return paths
+
+    @staticmethod
+    def _audit_mismatch(original, kept, dropped):
+        """None when kept + dropped name every id in original exactly once."""
+        def id_of(x):
+            return x.get("id") if isinstance(x, dict) and isinstance(x.get("id"), str) else None
+        want = {i for i in map(id_of, original) if i}
+        seen, dupes, unknown, no_id = set(), [], [], 0
+        for x in list(kept) + list(dropped):
+            i = id_of(x)
+            if not i:
+                no_id += 1
+                continue
+            if i in seen:
+                dupes.append(i)
+            elif i not in want:
+                unknown.append(i)
+            seen.add(i)
+        missing = [i for i in want if i not in seen]
+        if not (no_id or dupes or unknown or missing):
+            return None
+        def lst(a):
+            return ", ".join(a[:5]) + (f", +{len(a) - 5} more" if len(a) > 5 else "")
+        parts = []
+        if missing: parts.append(f"{len(missing)} in the file but in neither list ({lst(missing)})")
+        if unknown: parts.append(f"{len(unknown)} not in the file ({lst(unknown)})")
+        if dupes: parts.append(f"{len(dupes)} listed twice ({lst(dupes)})")
+        if no_id: parts.append(f"{no_id} without an id")
+        return "Audit does not match the file. Nothing was written: " + "; ".join(parts) + "."
 
     def _json(self, status, obj):
         data = json.dumps(obj).encode("utf-8")

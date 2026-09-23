@@ -9,7 +9,10 @@
  *   GITHUB_REPO      "a-to-e"
  *   GITHUB_BRANCH    "main"
  *   ALLOW_ORIGIN     "https://mord58562.github.io"  (or "*" for dev)
- *   ROUTINE_TOKEN    bearer for the scheduled remote-agent /commit-batch caller
+ *
+ * /commit-batch and its ROUTINE_TOKEN were removed 2026-09-23: the
+ * scheduled routine publishes through the GitHub MCP, nothing called the
+ * endpoint, and its meta.json patch could rewrite the file from {}.
  *
  * Encryption secrets (REQUIRED for /api/register, /api/login, /api/me;
  * the worker refuses to handle account routes if any are missing):
@@ -109,7 +112,6 @@ export default {
       if (url.pathname === "/apply-audit")           return await handleApplyAudit(request, env, cors);
       if (url.pathname === "/apply-live-audit") return await handleApplyLiveAudit(request, env, cors);
       if (url.pathname === "/apply-report")          return await handleApplyReport(request, env, cors);
-      if (url.pathname === "/commit-batch")          return await handleCommitBatch(request, env, cors);
       return json({ ok: false, error: "not found" }, 404, cors);
     } catch (e) {
       // Never hand the caller the raw message: requireEncryptionEnv names
@@ -169,82 +171,6 @@ function corsHeaders(env) {
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Access-Control-Max-Age":       "86400",
   };
-}
-
-/* ── /commit-batch ───────────────────────────────────────────────────
- *  body: { batch_name: "<snake_case>", questions: [...] }
- *  header: Authorization: Bearer <ROUTINE_TOKEN>
- *
- *  Writes data/batches/<batch_name>.json, appends to
- *  data/batches_manifest.json, and bumps data/meta.json last_added.
- *  Used by the scheduled remote agent so it can publish a batch
- *  without needing git push credentials inside the ephemeral
- *  container - the worker is the credentialed boundary.
- */
-async function handleCommitBatch(request, env, cors) {
-  const expected = env.ROUTINE_TOKEN;
-  if (!expected) return json({ ok: false, error: "ROUTINE_TOKEN not set on worker" }, 500, cors);
-  const auth = request.headers.get("Authorization") || "";
-  const m = auth.match(/^Bearer\s+(.+)$/);
-  if (!m || m[1].length !== expected.length || !constantTimeEq(m[1], expected)) {
-    return json({ ok: false, error: "unauthorised" }, 401, cors);
-  }
-
-  const body = await request.json().catch(() => null);
-  const name = body && body.batch_name;
-  const questions = body && body.questions;
-  if (typeof name !== "string" || !/^[a-z0-9_]{4,80}$/.test(name)) {
-    return json({ ok: false, error: "batch_name must be snake_case, 4-80 chars" }, 400, cors);
-  }
-  if (!Array.isArray(questions) || questions.length < 5 || questions.length > 50) {
-    return json({ ok: false, error: "questions must be array of 5-50 items" }, 400, cors);
-  }
-  const filename = `${name}.json`;
-  const batchPath = `data/batches/${filename}`;
-  const manifestEntry = `batches/${filename}`;
-  const today = new Date().toISOString().slice(0, 10);
-  const content = JSON.stringify(questions, null, 2) + "\n";
-
-  // 1. Write the batch file.
-  await ghPutFile(env, batchPath, content,
-    `Add ${filename} batch (${questions.length} Qs) via scheduled remote agent`);
-
-  // 2. Append to batches_manifest.json (idempotent: skip if already there).
-  await ghAppendManifest(env, "data/batches_manifest.json", "batches", manifestEntry);
-
-  // 3. Bump meta.json last_added to today.
-  await ghPatchMeta(env, "data/meta.json", { last_added: today });
-
-  return json({ ok: true, path: batchPath, count: questions.length }, 200, cors);
-}
-
-async function ghPatchMeta(env, path, patch) {
-  // A null here used to mean "start from {}", so a rate-limited or
-  // truncated read replaced meta.json with just the patch, dropping the
-  // version and the counts the site renders.
-  const cur = await ghGetFileJson(env, path);
-  if (cur === null) throw new Error(`refusing to patch ${path}: could not read the current file`);
-  Object.assign(cur, patch);
-  const content = JSON.stringify(cur, null, 2) + "\n";
-  await ghPutFile(env, path, content, `Bump meta.json (${Object.keys(patch).join(', ')})`);
-}
-
-async function ghGetFileJson(env, path) {
-  // Minimal Contents-API read so we can re-write with merged content.
-  const url = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${encodeURIComponent(path)}?ref=${env.GITHUB_BRANCH || 'main'}`;
-  const r = await fetch(url, {
-    headers: {
-      "Authorization": `Bearer ${env.GITHUB_TOKEN}`,
-      "Accept": "application/vnd.github+json",
-      "User-Agent": "a-to-e-worker",
-    },
-  });
-  // 404 is "no file yet", which is a legitimate empty start. Anything
-  // else is a failed read, and the caller must not treat it as empty.
-  if (r.status === 404) return {};
-  if (!r.ok) return null;
-  const j = await r.json();
-  try { return ghInlineJson(j, path); } catch { return null; }
 }
 
 /* ── Account + stats API ────────────────────────────────────────────── */
@@ -482,8 +408,17 @@ async function noteAttempt(env, key) {
 // ── invite codes ───────────────────────────────────────────────────────
 // Registration is invite-only. Codes are stored hashed with the session
 // pepper, so a database dump does not yield working codes.
+// Codes are issued as XXXX-XXXX-XXXX. A code pasted without the dashes,
+// or with spaces, used to hash differently and be refused as invalid.
+// Twelve alphanumerics are put back into the issued shape; anything else
+// is hashed as typed (upper-cased), which is what matched before.
+function normaliseInviteCode(code) {
+  const s = String(code || "").trim().toUpperCase();
+  const bare = s.replace(/[^A-Z0-9]/g, "");
+  return bare.length === 12 ? bare.replace(/(.{4})(?=.)/g, "$1-") : s;
+}
 async function hashInviteCode(env, code) {
-  const data = new TextEncoder().encode(code.trim().toUpperCase() + ":invite:" + env.SESSION_PEPPER);
+  const data = new TextEncoder().encode(normaliseInviteCode(code) + ":invite:" + env.SESSION_PEPPER);
   return bytesToHex(await crypto.subtle.digest("SHA-256", data));
 }
 
@@ -682,14 +617,26 @@ async function handleLogin(request, env, cors) {
   // ok = 0 rows only, so without this, 7 typos then a success then one
   // retry from a device still holding the old password locked the
   // account for 15 minutes straight after a good sign-in.
-  await env.DB.batch([
+  //
+  // The per-IP budget is refunded only for this address's own failures
+  // from this IP, never wiped. Wiping it let anyone holding one valid
+  // account spray 29 guesses across other addresses, sign in to their own,
+  // and get the full budget back. The refund is bounded by the per-email
+  // lockout, so it cannot be farmed into extra guesses at other accounts.
+  const nowSec = Math.floor(Date.now() / 1000);
+  const own = await env.DB.prepare(
+    "SELECT COUNT(*) AS n FROM login_attempts WHERE email_lookup = ? AND ok = 0 AND ip_hash = ? AND ts > ?"
+  ).bind(lookup, ipH, nowSec - LOGIN_IP_WINDOW_SEC).first();
+  const refund = Math.min((own && own.n) || 0, FAIL_THRESHOLD);
+  const clears = [
     env.DB.prepare("DELETE FROM login_attempts WHERE email_lookup = ? AND ok = 0").bind(lookup),
-    // And the per-IP budget with it. Clearing only the address left a
-    // successful sign-in still spending down the budget its own failed
-    // attempts had opened, which locks out the one person we just
-    // confirmed is who they say they are.
-    env.DB.prepare("DELETE FROM login_attempts WHERE email_lookup = ? AND ok = 0").bind("ip:" + ipH),
-  ]);
+  ];
+  if (refund > 0) {
+    clears.push(env.DB.prepare(
+      "DELETE FROM login_attempts WHERE rowid IN (SELECT rowid FROM login_attempts WHERE email_lookup = ? AND ts > ? ORDER BY ts DESC LIMIT ?)"
+    ).bind("ip:" + ipH, nowSec - LOGIN_IP_WINDOW_SEC, refund));
+  }
+  await env.DB.batch(clears);
 
   // Lazy migration: if this account is still on legacy hashing /
   // plaintext email, upgrade it now that we have the password in hand.
@@ -765,19 +712,40 @@ async function handleLogout(request, env, cors) {
 async function handleAccountDelete(request, env, cors) {
   const user = await authUser(request, env);
   if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
-  // Delete in order: sessions, answers, flags, user_settings, user.
-  // D1 ignores SQLite ON DELETE CASCADE unless PRAGMA foreign_keys is
-  // explicitly set, so each per-user table is cleared by hand.
-  // One batch, so a mid-sequence failure cannot leave orphaned answers
-  // behind a deleted account.
-  await env.DB.batch([
-    env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(user.id),
-    env.DB.prepare("DELETE FROM answers WHERE user_id = ?").bind(user.id),
-    env.DB.prepare("DELETE FROM flags WHERE user_id = ?").bind(user.id),
-    env.DB.prepare("DELETE FROM user_settings WHERE user_id = ?").bind(user.id),
-    env.DB.prepare("DELETE FROM users WHERE id = ?").bind(user.id),
-  ]);
+  // Admin delete and demote already refused to remove the last admin;
+  // self-delete did not, and registration is invite-only, so the last
+  // admin deleting their own account left nobody able to let anyone in.
+  const lastAdminMsg = "You are the last admin. Promote someone else before deleting this account.";
+  if (user.is_admin && !(await hasAnotherAdmin(env, user.id))) {
+    return json({ ok: false, error: lastAdminMsg }, 409, cors);
+  }
+  if (!(await deleteUserGuarded(env, user.id))) {
+    // The guard in the DELETE lost a race with another admin removal.
+    return json({ ok: false, error: lastAdminMsg }, 409, cors);
+  }
   return json({ ok: true }, 200, cors);
+}
+
+// Deletes a user and every per-user row in one batch. The users row goes
+// first, and only while another admin remains if this one is an admin:
+// the check sits inside the DELETE, so two admins removing each other at
+// the same moment cannot both pass it, which a SELECT-then-DELETE allowed.
+// The per-user deletes run only once the users row is gone, so a refused
+// delete leaves the account intact. D1 ignores ON DELETE CASCADE unless
+// PRAGMA foreign_keys is set, so each table is cleared by hand.
+// Returns true when the account was deleted.
+async function deleteUserGuarded(env, id) {
+  const gone = "NOT EXISTS (SELECT 1 FROM users WHERE id = ?)";
+  const res = await env.DB.batch([
+    env.DB.prepare(
+      "DELETE FROM users WHERE id = ? AND (is_admin = 0 OR EXISTS (SELECT 1 FROM users WHERE is_admin = 1 AND id != ?))"
+    ).bind(id, id),
+    env.DB.prepare(`DELETE FROM sessions WHERE user_id = ? AND ${gone}`).bind(id, id),
+    env.DB.prepare(`DELETE FROM answers WHERE user_id = ? AND ${gone}`).bind(id, id),
+    env.DB.prepare(`DELETE FROM flags WHERE user_id = ? AND ${gone}`).bind(id, id),
+    env.DB.prepare(`DELETE FROM user_settings WHERE user_id = ? AND ${gone}`).bind(id, id),
+  ]);
+  return !!(res && res[0] && res[0].meta && res[0].meta.changes === 1);
 }
 
 async function handleAdminListUsers(request, env, cors) {
@@ -819,13 +787,12 @@ async function handleAdminDeleteUser(request, env, cors, targetId) {
   if (target.is_admin && !(await hasAnotherAdmin(env, targetId))) {
     return json({ ok: false, error: "that is the last admin account" }, 409, cors);
   }
-  await env.DB.batch([
-    env.DB.prepare("DELETE FROM sessions WHERE user_id = ?").bind(targetId),
-    env.DB.prepare("DELETE FROM answers WHERE user_id = ?").bind(targetId),
-    env.DB.prepare("DELETE FROM flags WHERE user_id = ?").bind(targetId),
-    env.DB.prepare("DELETE FROM user_settings WHERE user_id = ?").bind(targetId),
-    env.DB.prepare("DELETE FROM users WHERE id = ?").bind(targetId),
-  ]);
+  if (!(await deleteUserGuarded(env, targetId))) {
+    // Gone already, or a concurrent removal took the other admin.
+    const still = await env.DB.prepare("SELECT is_admin FROM users WHERE id = ?").bind(targetId).first();
+    if (!still) return json({ ok: false, error: "no such user" }, 404, cors);
+    return json({ ok: false, error: "that is the last admin account" }, 409, cors);
+  }
   return json({ ok: true }, 200, cors);
 }
 
@@ -837,15 +804,29 @@ async function handleAdminPromote(request, env, cors, targetId, makeAdmin) {
   if (!makeAdmin && !(await hasAnotherAdmin(env, targetId))) {
     return json({ ok: false, error: "that is the last admin account" }, 409, cors);
   }
-  const res = await env.DB.prepare("UPDATE users SET is_admin = ? WHERE id = ?")
-    .bind(makeAdmin ? 1 : 0, targetId).run();
-  if (!res.meta || res.meta.changes !== 1) return json({ ok: false, error: "no such user" }, 404, cors);
+  if (makeAdmin) {
+    const res = await env.DB.prepare("UPDATE users SET is_admin = 1 WHERE id = ?").bind(targetId).run();
+    if (!res.meta || res.meta.changes !== 1) return json({ ok: false, error: "no such user" }, 404, cors);
+    return json({ ok: true }, 200, cors);
+  }
+  // The check above is advisory. Two admins demoting each other at once
+  // both passed it and both writes landed, leaving no admin; the guard
+  // inside this UPDATE is evaluated atomically, so the second one fails.
+  const res = await env.DB.prepare(
+    "UPDATE users SET is_admin = 0 WHERE id = ? AND (is_admin = 0 OR EXISTS (SELECT 1 FROM users WHERE is_admin = 1 AND id != ?))"
+  ).bind(targetId, targetId).run();
+  if (!res.meta || res.meta.changes !== 1) {
+    const still = await env.DB.prepare("SELECT is_admin FROM users WHERE id = ?").bind(targetId).first();
+    if (!still) return json({ ok: false, error: "no such user" }, 404, cors);
+    return json({ ok: false, error: "that is the last admin account" }, 409, cors);
+  }
   return json({ ok: true }, 200, cors);
 }
 
 // True when at least one admin exists other than `exceptId`. Every
-// demote and every admin delete goes through this, so the instance can
-// never be left with zero administrators.
+// demote and every admin or self delete checks this first for a clear
+// answer; the writes themselves carry the same guard (deleteUserGuarded,
+// the demote UPDATE), so a race cannot leave zero administrators.
 async function hasAnotherAdmin(env, exceptId) {
   const row = await env.DB.prepare(
     "SELECT COUNT(*) AS n FROM users WHERE is_admin = 1 AND id != ?"
@@ -863,8 +844,11 @@ async function handlePasswordChange(request, env, cors) {
   const user = await authUser(request, env);
   if (!user) return json({ ok: false, error: "not authenticated" }, 401, cors);
   const body = await request.json().catch(() => null);
-  const current = body && body.current_password || "";
-  const next = body && body.new_password || "";
+  // str(), as on register and login: `{"new_password": {}}` passed the
+  // length check (undefined < 8 is false) and set the password to the
+  // literal "[object Object]".
+  const current = str(body && body.current_password);
+  const next = str(body && body.new_password);
   if (next.length < 8) return json({ ok: false, error: "new password must be 8+ characters" }, 400, cors);
   if (next.length > 1024 || current.length > 1024) return json({ ok: false, error: "password too long" }, 400, cors);
 
@@ -1018,20 +1002,32 @@ async function handleAnswer(request, env, cors) {
     return json({ ok: false, error: "source_letter must be a single letter A-E" }, 400, cors);
   }
   const now = Math.floor(Date.now() / 1000);
+  // A client replaying its offline outbox sends `at` (ms, when the answer
+  // was given) and `n` (attempts not yet posted). Clamped: never in the
+  // future, never older than 90 days, n between 1 and 50. A live post
+  // sends neither and behaves as before.
+  const atRaw = Number(body && body.at);
+  const at = Number.isFinite(atRaw) && atRaw > 0
+    ? Math.max(now - 90 * 86400, Math.min(now, Math.floor(atRaw / 1000)))
+    : now;
+  const nRaw = parseInt(body && body.n, 10);
+  const n = Number.isFinite(nRaw) ? Math.max(1, Math.min(50, nRaw)) : 1;
   // UPSERT: re-attempts MUST update the latest correctness + bump the
   // attempt counter + advance updated_at. INSERT-OR-IGNORE froze every
   // (user, question) at its first attempt and broke cross-device sync
-  // when the user re-answered on another device.
+  // when the user re-answered on another device. A replayed answer older
+  // than the stored one adds its attempts but does not overwrite the
+  // newer correctness.
   await env.DB.prepare(
     `INSERT INTO answers (user_id, question_id, source_letter, correct, ts, updated_at, attempt_count)
-     VALUES (?, ?, ?, ?, ?, ?, 1)
+     VALUES (?, ?, ?, ?, ?, ?, ?)
      ON CONFLICT(user_id, question_id) DO UPDATE SET
-       source_letter = excluded.source_letter,
-       correct       = excluded.correct,
-       ts            = excluded.ts,
+       source_letter = CASE WHEN excluded.ts >= answers.ts THEN excluded.source_letter ELSE answers.source_letter END,
+       correct       = CASE WHEN excluded.ts >= answers.ts THEN excluded.correct ELSE answers.correct END,
+       ts            = MAX(answers.ts, excluded.ts),
        updated_at    = excluded.updated_at,
-       attempt_count = attempt_count + 1`
-  ).bind(user.id, qid, srcLetter, correct, now, now).run();
+       attempt_count = answers.attempt_count + excluded.attempt_count`
+  ).bind(user.id, qid, srcLetter, correct, at, now, n).run();
 
   return json({ ok: true }, 200, cors);
 }
@@ -1248,11 +1244,21 @@ async function handleReport(request, env, cors) {
   if (!issue || typeof issue !== "string" || issue.trim().length < 3) {
     return json({ ok: false, error: "issue text too short" }, 400, cors);
   }
+  if (issue.length > REPORT_ISSUE_MAX) {
+    return json({ ok: false, error: `Report is too long. Keep it under ${REPORT_ISSUE_MAX} characters.` }, 413, cors);
+  }
+  // The per-IP limit alone let a handful of addresses grow reports.json
+  // past the Contents API's 1 MB inline limit, after which every /report
+  // and /apply-report failed until the file was trimmed by hand. A global
+  // daily budget and the open-count and size caps below bound it.
+  if (await overBudget(env, "report:global", 86400, REPORT_GLOBAL_DAY_MAX)) {
+    return json({ ok: false, error: "Too many reports today. Try again tomorrow." }, 429, cors);
+  }
 
   const entry = {
     id:           `report-${utcStamp()}-${randomId(4)}`,
     question_id:  qid.slice(0, 200),
-    issue:        issue.slice(0, 4000),
+    issue:        issue,
     profile:      (str(body.profile) || "guest").slice(0, 40),
     // The only field here that was neither type-checked nor capped, in
     // the one endpoint that takes an unauthenticated body and commits it
@@ -1263,11 +1269,35 @@ async function handleReport(request, env, cors) {
     resolution:   null,
   };
 
-  await ghAppendArray(env, "data/reports.json", "reports", entry,
-    `Add report for ${entry.question_id} via web`);
+  let full = null;
+  await ghMutateJson(env, "data/reports.json", (data) => {
+    full = null;
+    const reports = (data && Array.isArray(data.reports)) ? data.reports : [];
+    const open = reports.filter(r => r && (r.status || "open") === "open").length;
+    if (open >= REPORTS_OPEN_MAX) { full = "count"; throw new ReportsFull(); }
+    const out = { ...(data && typeof data === "object" ? data : {}), reports: reports.concat([entry]) };
+    if (new TextEncoder().encode(JSON.stringify(out, null, 2)).length > REPORTS_FILE_MAX_BYTES) { full = "size"; throw new ReportsFull(); }
+    return out;
+  }, `Add report for ${entry.question_id} via web`).catch(e => {
+    if (!(e instanceof ReportsFull)) throw e;
+  });
+  if (full) {
+    return json({ ok: false, error: "The report queue is full. Try again once the open reports have been reviewed." },
+      full === "size" ? 413 : 429, cors);
+  }
+  await noteAttempt(env, "report:global");
 
   return json({ ok: true, id: entry.id }, 200, cors);
 }
+
+// Caps on data/reports.json, which is committed to the public repo and
+// written by an unauthenticated endpoint. The file stays well under the
+// Contents API's 1 MB inline limit.
+const REPORT_ISSUE_MAX = 4000;          // matches the textarea maxlength
+const REPORTS_OPEN_MAX = 200;
+const REPORTS_FILE_MAX_BYTES = 800_000;
+const REPORT_GLOBAL_DAY_MAX = 100;
+class ReportsFull extends Error {}
 
 /* ── /apply-audit ────────────────────────────────────────────────────
  *  body: { batch_path, audit: { summary, kept[], dropped[] }, profile }
@@ -1385,9 +1415,29 @@ async function handleApplyLiveAudit(request, env, cors) {
   if (!audit || !Array.isArray(audit.kept) || !Array.isArray(audit.dropped)) {
     return json({ ok: false, error: "expected audit.kept[] and audit.dropped[]" }, 400, cors);
   }
-  await ghPutFile(env, filePath,
-    JSON.stringify(audit.kept, null, 2) + "\n",
-    `Live-audit ${filePath}: ${audit.kept.length} kept, ${audit.dropped.length} dropped`);
+  // The audit replaces the whole file, so it has to account for every
+  // question in it. A model that returned a truncated or partial kept[]
+  // used to delete every question it left out, with no drop reason and
+  // no log line. Checked against the file as it is at write time.
+  let mismatch = null;
+  let text;
+  try {
+    text = await ghMutateJson(env, filePath, (data) => {
+      mismatch = Array.isArray(data)
+        ? auditIdMismatch(data, audit.kept, audit.dropped)
+        : "That file is missing or is not a question array.";
+      if (mismatch) throw new AuditMismatch();
+      return audit.kept;
+    }, `Live-audit ${filePath}: ${audit.kept.length} kept, ${audit.dropped.length} dropped`);
+  } catch (e) {
+    if (!(e instanceof AuditMismatch)) {
+      // The PUT may have landed; drop the file's cache hash to be safe.
+      await refreshManifestHashes(env, new Map([[filePath, null]]));
+      throw e;
+    }
+  }
+  if (mismatch) return json({ ok: false, error: mismatch }, 409, cors);
+  await refreshManifestHashes(env, new Map([[filePath, text]]));
 
   const stamp = new Date().toISOString();
   const summary = `\n## ${stamp} - live audit of ${filePath} by ${body.profile || "rob"}\n\n` +
@@ -1401,12 +1451,55 @@ async function handleApplyLiveAudit(request, env, cors) {
   return json({ ok: true, kept: audit.kept.length, dropped: audit.dropped.length }, 200, cors);
 }
 
+class AuditMismatch extends Error {}
+
+// Null when kept[] and dropped[] together name every id in `original`
+// exactly once and nothing else; otherwise a short message for the admin.
+function auditIdMismatch(original, kept, dropped) {
+  const idOf = (x) => (x && typeof x.id === "string") ? x.id : null;
+  const want = new Set(original.map(idOf).filter(Boolean));
+  const seen = new Set();
+  const dupes = [], unknown = [];
+  let noId = 0;
+  for (const x of [...kept, ...dropped]) {
+    const id = idOf(x);
+    if (!id) { noId++; continue; }
+    if (seen.has(id)) dupes.push(id);
+    else if (!want.has(id)) unknown.push(id);
+    seen.add(id);
+  }
+  const missing = [...want].filter(id => !seen.has(id));
+  if (!noId && !dupes.length && !unknown.length && !missing.length) return null;
+  const list = (a) => a.slice(0, 5).join(", ") + (a.length > 5 ? `, +${a.length - 5} more` : "");
+  const parts = [];
+  if (missing.length) parts.push(`${missing.length} in the file but in neither list (${list(missing)})`);
+  if (unknown.length) parts.push(`${unknown.length} not in the file (${list(unknown)})`);
+  if (dupes.length) parts.push(`${dupes.length} listed twice (${list(dupes)})`);
+  if (noId) parts.push(`${noId} without an id`);
+  return "Audit does not match the file. Nothing was written: " + parts.join("; ") + ".";
+}
+
 /* ── /apply-report ───────────────────────────────────────────────────
- *  body: { resolutions: [ { report_id, question_id, action, resolution, fixed_question? } ] }
- *  - For each resolution: edit reports.json (status + resolution),
- *    and if action=='fix' replace the question in its containing file,
- *    or if action=='drop' remove the question.
+ *  body: { resolutions: [ { report_id, question_id, action, resolution, fixed_question?, files? } ] }
+ *  - `files` is the client's hint of which bank files hold the question.
+ *    Hinted files are edited directly (about 7 GitHub requests for one
+ *    fix); only ids not found there trigger the full scan below.
+ *  - Looks for each fix/drop question in every file loadData() in
+ *    app.js serves the bank from: the four main files, then every file
+ *    listed in batches_manifest.json and inbox_manifest.json. The main
+ *    files hold under 1% of the bank, and they were the only place this
+ *    used to look.
+ *  - Replaces (fix) or removes (drop) it in every file that holds it, so
+ *    a duplicate further down the load order cannot resurface.
+ *  - Only then writes reports.json, closing a report only when its edit
+ *    landed or it was dismissed. It used to close every report first, so
+ *    a fix that matched nothing still read "fixed" and left the open list.
+ *  - Returns counts, missed_ids, and one entry per resolution in
+ *    `outcomes` (fixed | dropped | dismissed | missed | failed | invalid).
  */
+const MAX_REPORT_RESOLUTIONS = 100;
+class NoChange extends Error {}
+
 async function handleApplyReport(request, env, cors) {
   const user = await authUser(request, env);
   if (!user || !user.is_admin) {
@@ -1417,88 +1510,229 @@ async function handleApplyReport(request, env, cors) {
   if (!Array.isArray(resolutions) || !resolutions.length) {
     return json({ ok: false, error: "expected non-empty `resolutions` array" }, 400, cors);
   }
-
-  // 1. Update reports.json by report_id - one pass.
-  await ghMutateJson(env, "data/reports.json", (data) => {
-    const reports = (data && data.reports) || [];
-    for (const r of resolutions) {
-      const found = reports.find(x => x.id === r.report_id);
-      if (found) {
-        found.status = r.action === "fix" ? "fixed"
-                     : r.action === "drop" ? "dropped"
-                     : "dismissed";
-        found.resolution = r.resolution || "";
-        found.resolved_at = new Date().toISOString();
-      }
-    }
-    return { reports };
-  }, `Resolve ${resolutions.length} report(s)`);
-
-  // 2. Apply fixes / drops per resolution. To avoid re-reading every
-  //    main file once per resolution, bucket by file path.
-  const byPath = {};
-  for (const r of resolutions) {
-    if (r.action !== "fix" && r.action !== "drop") continue;
-    const target = r.fixed_question && r.fixed_question.topic && TOPIC_TO_FILE[r.fixed_question.topic];
-    // For drops we don't know the topic from the resolution alone; we
-    // look it up by question_id below.
-    const path = target || null;
-    byPath[path || "_lookup"] = byPath[path || "_lookup"] || [];
-    byPath[path || "_lookup"].push(r);
+  if (resolutions.length > MAX_REPORT_RESOLUTIONS) {
+    return json({ ok: false, error: `Too many resolutions. Apply at most ${MAX_REPORT_RESOLUTIONS} at a time.` }, 400, cors);
   }
 
-  // For "_lookup" entries (mostly drops + fixes without topic), search
-  // each main file for the id.
-  const allMainFiles = Object.values(TOPIC_TO_FILE);
-  const lookups = byPath["_lookup"] || [];
-  delete byPath["_lookup"];
-  if (lookups.length) {
-    // Pull each main file once, find the resolutions whose ids are in
-    // it, then route them to that path's bucket.
-    for (const path of allMainFiles) {
-      const r = await fetch(`https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}?ref=${env.GITHUB_BRANCH || "main"}`,
-        { headers: ghHeaders(env) });
-      if (r.status === 404) continue;
-      if (r.status !== 200) {
-        throw new Error(`could not read ${path} (${r.status}); no resolutions were applied`);
-      }
-      const meta = await r.json();
-      const arr = ghInlineJson(meta, path);
-      if (!Array.isArray(arr)) throw new Error(`${path} is not a JSON array`);
-      const idSet = new Set(arr.map(q => q.id));
-      const here = lookups.filter(rr => idSet.has(rr.question_id));
-      if (here.length) {
-        byPath[path] = (byPath[path] || []).concat(here);
+  // One outcome per resolution, in request order.
+  const firstEdit = new Map();   // question_id -> the first fix/drop for it
+  const outcomes = resolutions.map((r) => {
+    const o = { report_id: str(r && r.report_id), question_id: str(r && r.question_id),
+                action: str(r && r.action), outcome: null, files: [] };
+    if (!o.report_id) { o.outcome = "invalid"; o.reason = "missing report_id"; }
+    else if (!["fix", "drop", "dismiss"].includes(o.action)) { o.outcome = "invalid"; o.reason = "unknown action"; }
+    else if (o.action !== "dismiss" && !o.question_id) { o.outcome = "invalid"; o.reason = "missing question_id"; }
+    else if (o.action === "fix" && !isServableQuestion(r.fixed_question)) {
+      o.outcome = "invalid"; o.reason = "fixed_question is not a complete question";
+    } else if (o.action !== "dismiss") {
+      const prev = firstEdit.get(o.question_id);
+      if (!prev) { firstEdit.set(o.question_id, { o, r }); }
+      else if (prev.o.action !== o.action) {
+        o.outcome = "invalid"; o.reason = "conflicts with another resolution for this question";
+      } else { o.sameAs = prev.o; }   // two reports on one question, same verdict
+    }
+    return o;
+  });
+  const edits = [...firstEdit.values()];
+  const written = new Map();   // "data/..." path -> text written, or null
+
+  // Write each file that holds a question once. The client sends
+  // `files` per resolution: the bank files it loaded that question from
+  // (state.bankFiles). Hinted files are tried first; only ids none of
+  // them held fall back to scanning the whole bank. A hint is used only
+  // if it names a file the bank is actually served from.
+  if (edits.length) {
+    let paths;
+    try {
+      paths = await bankFilePaths(env);
+    } catch (e) {
+      console.error("apply-report manifest read failed:", e && e.stack || e);
+      return json({ ok: false, error: `Could not read the bank from GitHub (${e && e.message}). Nothing was changed.` }, 502, cors);
+    }
+    const known = new Set(paths);
+    const hinted = new Map();   // path -> Set of question ids
+    for (const e of edits) {
+      const hint = Array.isArray(e.r.files) ? e.r.files.slice(0, 10) : [];
+      for (const p of hint) {
+        if (typeof p !== "string" || !known.has(p)) continue;
+        if (!hinted.has(p)) hinted.set(p, new Set());
+        hinted.get(p).add(e.o.question_id);
       }
     }
-  }
-
-  // Now mutate each main file once.
-  const result = { fixed: 0, dropped: 0, missed: 0,
-                   dismissed: resolutions.filter(r => r.action === "dismiss").length };
-  for (const [path, items] of Object.entries(byPath)) {
-    await ghMutateJsonArray(env, path, (arr) => {
-      const out = arr.slice();
-      for (const r of items) {
-        const idx = out.findIndex(q => q.id === r.question_id);
-        // A resolution for a question this file no longer holds is a
-        // miss, not a write: counting it told the admin the bank had
-        // been changed, and the fix branch went further and added a
-        // question that had never been in the file.
-        if (idx < 0) { result.missed++; continue; }
-        if (r.action === "fix" && r.fixed_question) {
-          out[idx] = r.fixed_question;
-          result.fixed++;
-        } else if (r.action === "drop") {
-          out.splice(idx, 1);
-          result.dropped++;
+    for (const p of paths) if (hinted.has(p)) await applyReportEdits(env, p, hinted.get(p), edits, written);
+    const rest = edits.filter(e => !e.o.files.length && !e.o.failedFiles);
+    if (rest.length) {
+      let where;
+      try {
+        where = await locateQuestions(env, new Set(rest.map(e => e.o.question_id)), paths);
+      } catch (e) {
+        console.error("apply-report scan failed:", e && e.stack || e);
+        if (!edits.some(x => x.o.files.length)) {
+          return json({ ok: false, error: `Could not read the bank from GitHub (${e && e.message}). Nothing was changed.` }, 502, cors);
         }
+        for (const x of rest) x.o.failedFiles = ["(bank scan failed)"];
+        where = new Map();
       }
+      for (const [path, ids] of where) await applyReportEdits(env, path, ids, rest, written);
+    }
+    await refreshManifestHashes(env, written);
+  }
+
+  for (const o of outcomes) {
+    if (o.outcome) continue;
+    const src = o.sameAs || o;
+    if (o.action === "dismiss") o.outcome = "dismissed";
+    else if (src.failedFiles) { o.outcome = "failed"; o.reason = "write failed: " + src.failedFiles.join(", "); o.files = src.files; }
+    else if (src.files.length) { o.outcome = o.action === "fix" ? "fixed" : "dropped"; o.files = src.files; }
+    else { o.outcome = "missed"; o.reason = "question not found in the bank"; }
+  }
+  for (const o of outcomes) delete o.sameAs;
+  return await closeReports(env, cors, resolutions, outcomes);
+}
+
+// Apply the fix/drop edits whose ids are in `ids` to one file, in one
+// commit. Records the path on each edit that landed, or on failedFiles.
+// `written` collects path -> new text (or null if unknown) for
+// refreshManifestHashes.
+async function applyReportEdits(env, path, ids, edits, written) {
+  const items = edits.filter(e => ids.has(e.o.question_id));
+  if (!items.length) return;
+  let hits = new Set();
+  try {
+    const text = await ghMutateJsonArray(env, path, (arr) => {
+      hits = new Set();
+      let out = arr;
+      for (const { o, r } of items) {
+        const qid = o.question_id;
+        if (!out.some(q => q && q.id === qid)) continue;
+        out = o.action === "fix"
+          ? out.map(q => (q && q.id === qid) ? r.fixed_question : q)
+          : out.filter(q => !(q && q.id === qid));
+        hits.add(qid);
+      }
+      // A stale hint, or the file changed since the scan; writing it back
+      // unchanged would only add an empty commit.
+      if (!hits.size) throw new NoChange();
       return out;
     }, `Apply ${items.length} report resolution(s) to ${path}`);
+    written.set(path, text);
+    for (const { o } of items) if (hits.has(o.question_id)) o.files.push(path);
+  } catch (e) {
+    if (e instanceof NoChange) return;
+    written.set(path, null);   // the PUT may or may not have landed
+    console.error(`apply-report write to ${path} failed:`, e && e.stack || e);
+    for (const { o } of items) { o.failedFiles = (o.failedFiles || []).concat(path); }
+  }
+}
+
+// Write reports.json for the resolutions whose outcome is final, then
+// answer the /apply-report call.
+async function closeReports(env, cors, resolutions, outcomes) {
+  // Close only the reports whose outcome is final.
+  const closing = new Map();
+  resolutions.forEach((r, i) => {
+    const o = outcomes[i];
+    if (o.outcome === "fixed" || o.outcome === "dropped" || o.outcome === "dismissed") {
+      closing.set(o.report_id, { status: o.outcome, resolution: str(r.resolution).slice(0, 4000) });
+    }
+  });
+  let unmatchedReports = [];
+  if (closing.size) {
+    try {
+      await ghMutateJson(env, "data/reports.json", (data) => {
+        const reports = (data && Array.isArray(data.reports)) ? data.reports : [];
+        const now = new Date().toISOString();
+        const seen = new Set();
+        for (const found of reports) {
+          const c = found && closing.get(found.id);
+          if (!c) continue;
+          found.status = c.status;
+          found.resolution = c.resolution;
+          found.resolved_at = now;
+          seen.add(found.id);
+        }
+        unmatchedReports = [...closing.keys()].filter(id => !seen.has(id));
+        return { ...(data && typeof data === "object" ? data : {}), reports };
+      }, `Resolve ${closing.size} report(s)`);
+    } catch (e) {
+      const ref = randomHex(4);
+      console.error("[" + ref + "] apply-report reports.json write failed:", e && e.stack || e);
+      return json({ ok: false, ref, outcomes,
+        error: "The question edits landed, but reports.json could not be updated. Close those reports by hand." }, 500, cors);
+    }
   }
 
-  return json({ ok: true, ...result }, 200, cors);
+  const count = (k) => outcomes.filter(o => o.outcome === k).length;
+  return json({
+    ok: true,
+    fixed: count("fixed"), dropped: count("dropped"), dismissed: count("dismissed"),
+    missed: count("missed"), failed: count("failed"), invalid: count("invalid"),
+    missed_ids: [...new Set(outcomes.filter(o => o.outcome === "missed").map(o => o.question_id))],
+    unmatched_reports: unmatchedReports,
+    outcomes,
+  }, 200, cors);
+}
+
+// The same test loadData() applies before it will serve a question.
+function isServableQuestion(q) {
+  return !!(q && typeof q === "object" && typeof q.id === "string" && q.id &&
+    typeof q.stem === "string" && Array.isArray(q.options) && q.options.length >= 2 &&
+    q.options.every(o => o && typeof o === "object") &&
+    q.options.filter(o => o.correct === true).length === 1);
+}
+
+// Every file the client loads the bank from, in its load order.
+async function bankFilePaths(env) {
+  const paths = Object.values(TOPIC_TO_FILE);
+  for (const [manifest, key] of [["data/batches_manifest.json", "batches"], ["data/inbox_manifest.json", "inbox"]]) {
+    const f = await ghReadFile(env, manifest);
+    if (!f.exists) continue;
+    let list;
+    try { list = JSON.parse(f.text)[key]; } catch { throw new Error(`${manifest} did not parse`); }
+    if (!Array.isArray(list)) continue;
+    for (const p of list) {
+      if (typeof p !== "string" || !/^(batches|inbox)\/[a-zA-Z0-9._-]+\.json$/.test(p)) continue;
+      if (!paths.includes("data/" + p)) paths.push("data/" + p);
+    }
+  }
+  return paths;
+}
+
+// Map of path -> Set of the wanted ids that file holds, in load order.
+// Files are read raw (one request each, any size up to 100 MB) and only
+// parsed when the text contains a wanted id, so a scan of the whole bank
+// costs about 40 fetches and a couple of parses.
+async function locateQuestions(env, wanted, paths) {
+  const needles = [...wanted].map(id => [id, JSON.stringify(id)]);
+  const found = new Map();
+  const CONCURRENCY = 6;
+  for (let i = 0; i < paths.length; i += CONCURRENCY) {
+    const chunk = paths.slice(i, i + CONCURRENCY);
+    const hits = await Promise.all(chunk.map(async (path) => {
+      const text = await ghReadRaw(env, path);
+      if (text === null) return null;
+      if (!needles.some(([, n]) => text.includes(n))) return null;
+      let arr;
+      try { arr = JSON.parse(text); } catch { throw new Error(`${path} did not parse`); }
+      if (!Array.isArray(arr)) return null;
+      const ids = new Set();
+      for (const q of arr) if (q && wanted.has(q.id)) ids.add(q.id);
+      return ids.size ? ids : null;
+    }));
+    chunk.forEach((path, j) => { if (hits[j]) found.set(path, hits[j]); });
+  }
+  return found;
+}
+
+// Raw file text at the branch head, or null on 404. For scanning only:
+// it carries no sha, so writes go through ghMutateJson.
+async function ghReadRaw(env, path) {
+  const branch = env.GITHUB_BRANCH || "main";
+  const r = await fetch(`${ghContentsUrl(env, path)}?ref=${encodeURIComponent(branch)}`,
+    { headers: { ...ghHeaders(env), "Accept": "application/vnd.github.raw+json" } });
+  if (r.status === 404) return null;
+  if (!r.ok) throw new Error(`GET ${path} (${r.status})`);
+  return await r.text();
 }
 
 /* ── GitHub helpers (Contents API; one PUT per file with optimistic
@@ -1508,45 +1742,121 @@ async function handleApplyReport(request, env, cors) {
 async function ghMutateJson(env, path, mutator, message) {
   for (let attempt = 0; attempt < 3; attempt++) {
     const branch = env.GITHUB_BRANCH || "main";
-    const url = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}?ref=${encodeURIComponent(branch)}`;
-    const r = await fetch(url, { headers: ghHeaders(env) });
+    // A 200 we cannot parse used to leave `data` null while `sha` was
+    // already set, so the mutator ran against [] and the PUT succeeded
+    // with a valid sha - replacing the entire file with whatever the
+    // mutator produced. Fail closed: a 404 still creates the file, but a
+    // file that exists must read in full and parse before we overwrite
+    // it. ghReadFile fetches blobs over 1 MB by sha (every consolidated
+    // batch file is about 2 MB) and throws on anything short of that.
+    const file = await ghReadFile(env, path);
     let data = null;
-    let sha;
-    if (r.status === 200) {
-      const meta = await r.json();
-      sha = meta.sha;
-      // A 200 we cannot parse used to leave `data` null while `sha` was
-      // already set, so the mutator ran against [] and the PUT succeeded
-      // with a valid sha - replacing the entire file with whatever the
-      // mutator produced. That is a total loss of a live question file,
-      // and it has two live triggers: a transient truncated body, and the
-      // Contents API declining to inline a blob over 1 MB (it answers 200
-      // with encoding "none" and empty content). Fail closed: a 404 still
-      // creates the file, but a 200 must parse before we overwrite it.
-      if (meta.encoding !== "base64" || !meta.content) {
-        throw new Error(`refusing to rewrite ${path}: GitHub did not inline the content (blob over 1 MB?)`);
-      }
+    const sha = file.sha;
+    if (file.exists) {
       try {
-        data = JSON.parse(base64ToUtf8(meta.content));
+        data = JSON.parse(file.text);
       } catch {
         throw new Error(`refusing to rewrite ${path}: the existing content did not parse as JSON`);
       }
     }
     const next = mutator(data);
+    const text = JSON.stringify(next, null, 2) + "\n";
     const put = await fetch(`https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}`, {
       method: "PUT",
       headers: { ...ghHeaders(env), "Content-Type": "application/json" },
       body: JSON.stringify({
         message,
         branch,
-        content: utf8ToBase64(JSON.stringify(next, null, 2) + "\n"),
+        content: utf8ToBase64(text),
         ...(sha ? { sha } : {}),
       }),
     });
-    if (put.ok) return;
+    // The exact text written, so a caller can hash the new bytes.
+    if (put.ok) return text;
     if (put.status !== 409) throw new Error(`PUT ${path} (${put.status}): ${await put.text()}`);
   }
   throw new Error(`mutate ${path}: too many SHA collisions`);
+}
+
+// Keep batches_manifest.json / inbox_manifest.json `hashes` in step with
+// files this call rewrote. The loader fetches a listed file as ?h=<hash>,
+// so a stale hash keeps serving the old bytes from cache. Same rule as
+// scripts/manifest_hashes.py: sha1 of the file bytes, first 12 hex, and
+// only for paths the manifest lists. `written` maps "data/..." paths to
+// the text written, or to null when the outcome is unknown (a failed
+// PUT); a null entry, or any hash that cannot be computed, is deleted so
+// the loader falls back to ?v=. One GET and PUT per manifest touched.
+const MANIFEST_HASH_LEN = 12;
+async function refreshManifestHashes(env, written) {
+  for (const [manifest, key] of [["data/batches_manifest.json", "batches"], ["data/inbox_manifest.json", "inbox"]]) {
+    const prefix = key + "/";
+    const mine = [...written.keys()].filter(p => p.startsWith("data/" + prefix));
+    if (!mine.length) continue;
+    const want = new Map();
+    for (const p of mine) {
+      let h = null;
+      const text = written.get(p);
+      if (typeof text === "string") {
+        try {
+          const d = await crypto.subtle.digest("SHA-1", new TextEncoder().encode(text));
+          h = bytesToHex(d).slice(0, MANIFEST_HASH_LEN);
+        } catch { h = null; }
+      }
+      want.set(p.slice("data/".length), h);
+    }
+    try {
+      await ghMutateJson(env, manifest, (data) => {
+        if (!data || typeof data !== "object" || !Array.isArray(data[key])) throw new NoChange();
+        const hashes = (data.hashes && typeof data.hashes === "object" && !Array.isArray(data.hashes)) ? data.hashes : null;
+        if (!hashes) throw new NoChange();   // this manifest is not hashed yet
+        let changed = false;
+        for (const [rel, h] of want) {
+          if (!data[key].includes(rel)) continue;
+          if (h && hashes[rel] !== h) { hashes[rel] = h; changed = true; }
+          else if (!h && rel in hashes) { delete hashes[rel]; changed = true; }
+        }
+        if (!changed) throw new NoChange();
+        return data;
+      }, `Refresh ${manifest} hashes`);
+    } catch (e) {
+      if (!(e instanceof NoChange)) console.error(`manifest hash refresh for ${manifest} failed:`, e && e.stack || e);
+    }
+  }
+}
+
+function ghContentsUrl(env, path) {
+  return `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${encodeURIComponent(path).replace(/%2F/g, "/")}`;
+}
+
+// Read a file with the sha a PUT must quote. Returns { exists, sha, text }.
+// The Contents API inlines only blobs under 1 MB; above that it answers
+// 200 with encoding "none" and no content. Those are read from the blob
+// endpoint by the same sha, so the text and the sha always describe the
+// same version, and the byte count is checked against the listed size.
+async function ghReadFile(env, path) {
+  const branch = env.GITHUB_BRANCH || "main";
+  const r = await fetch(`${ghContentsUrl(env, path)}?ref=${encodeURIComponent(branch)}`, { headers: ghHeaders(env) });
+  if (r.status === 404) return { exists: false, sha: undefined, text: null };
+  if (r.status !== 200) throw new Error(`GET ${path} (${r.status})`);
+  const meta = await r.json();
+  if (!meta || meta.type !== "file" || !meta.sha) {
+    throw new Error(`refusing to rewrite ${path}: not a file`);
+  }
+  if (meta.encoding === "base64" && meta.content) {
+    return { exists: true, sha: meta.sha, text: ghInlineText(meta, path) };
+  }
+  if (meta.encoding === "none" || !meta.content) {
+    const b = await fetch(
+      `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/git/blobs/${meta.sha}`,
+      { headers: { ...ghHeaders(env), "Accept": "application/vnd.github.raw+json" } });
+    if (!b.ok) throw new Error(`refusing to rewrite ${path}: blob read failed (${b.status})`);
+    const bytes = new Uint8Array(await b.arrayBuffer());
+    if (typeof meta.size === "number" && bytes.length !== meta.size) {
+      throw new Error(`refusing to rewrite ${path}: read ${bytes.length} of ${meta.size} bytes`);
+    }
+    return { exists: true, sha: meta.sha, text: new TextDecoder("utf-8", { fatal: true }).decode(bytes) };
+  }
+  throw new Error(`refusing to rewrite ${path}: unexpected encoding ${meta.encoding}`);
 }
 
 // Specialisation: same as ghMutateJson but the file is a top-level
@@ -1694,39 +2004,6 @@ async function ghAppendManifest(env, path, key, value) {
       throw new Error(`GitHub append ${path} failed (${put.status}): ${await put.text()}`);
     }
     // Race: someone else updated. Retry.
-  }
-  throw new Error(`GitHub append ${path}: too many SHA collisions`);
-}
-
-async function ghAppendArray(env, path, key, entry, message) {
-  for (let attempt = 0; attempt < 3; attempt++) {
-    const branch = env.GITHUB_BRANCH || "main";
-    const url = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}?ref=${encodeURIComponent(branch)}`;
-    const r = await fetch(url, { headers: ghHeaders(env) });
-    let obj = { [key]: [] };
-    let sha;
-    if (r.status === 200) {
-      const meta = await r.json();
-      sha = meta.sha;
-      obj = ghInlineJson(meta, path);
-      if (!Array.isArray(obj[key])) obj[key] = [];
-    }
-    obj[key].push(entry);
-    const putUrl = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}`;
-    const put = await fetch(putUrl, {
-      method: "PUT",
-      headers: { ...ghHeaders(env), "Content-Type": "application/json" },
-      body: JSON.stringify({
-        message,
-        branch,
-        content: utf8ToBase64(JSON.stringify(obj, null, 2) + "\n"),
-        ...(sha ? { sha } : {}),
-      }),
-    });
-    if (put.ok) return;
-    if (put.status !== 409) {
-      throw new Error(`GitHub append ${path} failed (${put.status}): ${await put.text()}`);
-    }
   }
   throw new Error(`GitHub append ${path}: too many SHA collisions`);
 }
