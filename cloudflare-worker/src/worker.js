@@ -682,9 +682,14 @@ async function handleLogin(request, env, cors) {
   // ok = 0 rows only, so without this, 7 typos then a success then one
   // retry from a device still holding the old password locked the
   // account for 15 minutes straight after a good sign-in.
-  await env.DB.prepare(
-    "DELETE FROM login_attempts WHERE email_lookup = ? AND ok = 0"
-  ).bind(lookup).run();
+  await env.DB.batch([
+    env.DB.prepare("DELETE FROM login_attempts WHERE email_lookup = ? AND ok = 0").bind(lookup),
+    // And the per-IP budget with it. Clearing only the address left a
+    // successful sign-in still spending down the budget its own failed
+    // attempts had opened, which locks out the one person we just
+    // confirmed is who they say they are.
+    env.DB.prepare("DELETE FROM login_attempts WHERE email_lookup = ? AND ok = 0").bind("ip:" + ipH),
+  ]);
 
   // Lazy migration: if this account is still on legacy hashing /
   // plaintext email, upgrade it now that we have the password in hand.
@@ -1042,17 +1047,27 @@ async function handleHistory(request, env, cors) {
   return json({ ok: true, history }, 200, cors);
 }
 
+// One row per question the user has answered. Capped well above the size
+// of the bank: without a limit, a client that posted fabricated question
+// ids could grow this past what /api/state can serialise inside the
+// isolate's memory, and take its own account down with it.
+const MAX_HISTORY_ROWS = 20000;
+
 async function readHistory(env, userId) {
   const rows = await env.DB.prepare(
-    "SELECT question_id, correct, ts, attempt_count, updated_at FROM answers WHERE user_id = ?"
-  ).bind(userId).all();
+    "SELECT question_id, correct, ts, attempt_count, updated_at FROM answers " +
+    "WHERE user_id = ? ORDER BY ts DESC LIMIT ?"
+  ).bind(userId, MAX_HISTORY_ROWS).all();
   const history = {};
   for (const r of (rows.results || [])) {
     history[r.question_id] = {
       lastCorrect: !!r.correct,
       count: r.attempt_count || 1,
       last_at: (r.ts || 0) * 1000,
-      updated_at: r.updated_at || r.ts || 0,
+      // Milliseconds, like last_at. It was seconds, sitting next to a
+      // millisecond field in the same record, which is a trap for the
+      // first caller that compares them.
+      updated_at: (r.updated_at || r.ts || 0) * 1000,
     };
   }
   return history;
@@ -1074,8 +1089,9 @@ async function handleState(request, env, cors) {
 
 async function readFlags(env, userId) {
   const rows = await env.DB.prepare(
-    "SELECT question_id, updated_at FROM flags WHERE user_id = ?"
-  ).bind(userId).all();
+    "SELECT question_id, updated_at FROM flags WHERE user_id = ? " +
+    "ORDER BY updated_at DESC LIMIT ?"
+  ).bind(userId, MAX_HISTORY_ROWS).all();
   const out = {};
   for (const r of (rows.results || [])) out[r.question_id] = true;
   return out;

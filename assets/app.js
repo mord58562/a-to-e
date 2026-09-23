@@ -552,6 +552,12 @@
 
   async function passGate() {
     return new Promise(async resolve => {
+      // Everything below runs inside a promise executor, where a throw
+      // is not an error anyone sees: it is a promise that never settles,
+      // which presents as a page stuck behind the gate with no message
+      // and no way on. On a throw, unlock and carry on - the rest of
+      // boot copes with an unauthenticated session.
+      try {
       const gate = document.getElementById("gate");
       const card = gate ? gate.querySelector(".gate-card") : null;
       const unlock = () => {
@@ -678,6 +684,13 @@
       });
 
       switchPane(signupIntent ? "signup" : "signin");
+      } catch (err) {
+        console.error("[gate] failed to initialise:", err && err.stack || err);
+        document.body.classList.remove("locked");
+        const g = document.getElementById("gate");
+        if (g) g.hidden = true;
+        resolve();
+      }
     });
   }
 
@@ -779,7 +792,13 @@
         save(ns(SETTINGS_KEY), state.settings);
       }
     }
-    await dataPromise;
+    try {
+      await dataPromise;
+    } catch (err) {
+      // A failed bank load used to stop boot dead, before showHome().
+      // An empty bank with a working shell at least says what happened.
+      console.error("[boot] the question bank failed to load:", err && err.stack || err);
+    }
     mergeLocalQuestions();
     // Wire each subsystem defensively so a single throw in any wiring
     // function can't leave the home view unrendered (the symptom that
@@ -4173,8 +4192,11 @@ the file is replaced wholesale on apply.`;
     showReportAuditFlow(reports);
   }
   function showReportAuditFlow(reports) {
-    // Build an inline flow row at the top of the reports list.
+    // Build an inline flow row at the top of the reports list. One at a
+    // time: clicking Audit twice used to stack a second identical pane
+    // on top of the first, each with its own half-finished state.
     const list = document.getElementById("reportsAdminList");
+    list.querySelectorAll(".audit-row").forEach(r => r.remove());
     const wrap = document.createElement("li");
     wrap.className = "audit-row";
     wrap.innerHTML = `
