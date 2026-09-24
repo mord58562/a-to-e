@@ -3,143 +3,170 @@
  * The smoke test enters as a guest, so it never touches the admin
  * surfaces. This one stands up a fake worker, signs in as an admin
  * against it, and drives every tab and every destructive control.
+ * The fake answers only the exact method and path each call should use;
+ * any other worker call fails the test.
  *
  *   python3 -m http.server 8765 --bind 127.0.0.1 &
  *   npm i --no-save jsdom
- *   REPO=$PWD node tests/admin.js
+ *   node tests/admin.js        (or tests/run.sh for every test)
  *
  * It asserts the things that were broken: the panel opens on Users,
  * the table renders real rows with a last-seen column, the admin's own
  * row offers no destructive action, delete opens a type-to-confirm
  * dialog that names the person and how many answers go with them
- * rather than window.confirm, promote acts immediately and reports
- * with an Undo, and every tab renders without a console error.
+ * rather than window.confirm, promote acts immediately on the right
+ * endpoint and reports with an Undo that posts the reverse, every tab
+ * renders its content without a console error or warning, deleting
+ * your own account asks for the password and says when it is wrong,
+ * and an expired session reads as expired, not as "not an admin".
  */
-let JSDOM, VirtualConsole;
-try { ({ JSDOM, VirtualConsole } = require('jsdom')); }
-catch (_) { ({ JSDOM, VirtualConsole } = require('/tmp/node_modules/jsdom')); }
-const fs=require('fs'), path=require('path');
-const errs=[]; const vc=new VirtualConsole();
-// jsdom implements no layout and not every form method; neither is a
-// bug in the page.
-const JSDOM_GAPS = /Not implemented|Could not parse CSS/i;
-vc.on('jsdomError',e=>{const m=e.stack||e.message; if(!JSDOM_GAPS.test(m)) errs.push('jsdomError: '+m);});
-vc.on('error',(...a)=>errs.push('console.error: '+a.join(' ')));
+const { boot, runner, main, wait, waitFor, userRoutes, SIGNED_IN } = require("./harness");
 
-// A fake worker, so the admin surfaces run against real-shaped data.
-const API = {
-  '/api/me': { ok:true, user:{id:'u1',email:'admin@example.com',display_name:'Admin',is_admin:1} },
-  '/api/state': { ok:true, answers:[], flags:[], settings:null },
-  '/api/admin/users': { ok:true, users:[
-    {id:'u1',email:'admin@example.com',display_name:'Admin',is_admin:1,answers:312,created_at:1747000000,last_seen_at:Math.floor(Date.now()/1000)},
-    {id:'u2',email:'carter@example.com',display_name:'Carter',is_admin:0,answers:20,created_at:1755000000,last_seen_at:1758000000},
-    {id:'u3',email:'ming@example.com',display_name:'Ming',is_admin:0,answers:6,created_at:1757000000,last_seen_at:null},
-  ]},
-  '/api/admin/invites': { ok:true, invites:[
-    {code_hash:'a'.repeat(64),code_hint:'QK4M',label:'Rachel',created_at:1757000000,expires_at:1790000000,used_at:null,revoked_at:null,used_by_name:null},
-    {code_hash:'b'.repeat(64),code_hint:'TP9X',label:'Carter',created_at:1755000000,expires_at:1780000000,used_at:1755500000,revoked_at:null,used_by_name:'Carter'},
-  ]},
-  '/api/admin/quality': { ok:true, worst:[{question_id:'paeds-001',n:12,c:3}], top:[{question_id:'psych-004',n:40,c:31}], totals:{users:3,answers:338,qs:210} },
-};
-(async()=>{
-  const html = await (await fetch('http://127.0.0.1:8765/')).text();
-  const dom = new JSDOM(html,{url:'http://127.0.0.1:8765/',runScripts:'outside-only',
-    resources:'usable',pretendToBeVisual:true,virtualConsole:vc});
-  const {window}=dom;
-  window.fetch = async (u,o)=>{
-    const href = new URL(typeof u==='string'?u:u.url, 'http://127.0.0.1:8765/').href;
-    for (const [p,body] of Object.entries(API)) {
-      if (href.includes(p)) return new Response(JSON.stringify(body),{status:200,headers:{'content-type':'application/json'}});
-    }
-    if (href.includes('/api/')) return new Response(JSON.stringify({ok:true}),{status:200,headers:{'content-type':'application/json'}});
-    // Node's fetch refuses jsdom's AbortSignal; bridge it to a Node one.
-    if (o && o.signal) {
-      const c = new AbortController(), s = o.signal;
-      if (s.aborted) c.abort(); else s.addEventListener('abort', () => c.abort());
-      o = { ...o, signal: c.signal };
-    }
-    return fetch(href,o);
-  };
-  window.scrollTo=()=>{}; window.matchMedia=q=>({matches:false,media:q,addListener(){},removeListener(){},addEventListener(){},removeEventListener(){}});
-  if(!window.crypto.subtle) window.crypto.subtle=require('crypto').webcrypto.subtle;
-  if(!window.HTMLDialogElement.prototype.showModal){
-    window.HTMLDialogElement.prototype.showModal=function(){this.open=true;};
-    window.HTMLDialogElement.prototype.close=function(){this.open=false;this.dispatchEvent(new window.Event('close'));};
-  }
-  window.localStorage.setItem('y4mcq.auth.token','f'.repeat(64));
-  for(const s of ['assets/preauth.js','assets/app.js'])
-    window.eval(fs.readFileSync(path.join(process.env.REPO,s),'utf8'));
-  window.document.dispatchEvent(new window.Event('DOMContentLoaded',{bubbles:true}));
-  const wait=ms=>new Promise(r=>setTimeout(r,ms));
-  const $=s=>window.document.querySelector(s);
-  await wait(4500);
+const now = Math.floor(Date.now() / 1000);
+const ADMIN = { id: "u1", email: "admin@example.com", display_name: "Admin", is_admin: 1 };
+const USERS = [
+  { id: "u1", email: "admin@example.com", display_name: "Admin", is_admin: 1, answers: 312, created_at: 1747000000, last_seen_at: now },
+  { id: "u2", email: "carter@example.com", display_name: "Carter", is_admin: 0, answers: 20, created_at: 1755000000, last_seen_at: 1758000000 },
+  { id: "u3", email: "ming@example.com", display_name: "Ming", is_admin: 0, answers: 6, created_at: 1757000000, last_seen_at: null },
+];
+const INVITES = [
+  { code_hash: "a".repeat(64), code_hint: "QK4M", label: "Rachel", created_at: 1757000000, expires_at: 1790000000, used_at: null, revoked_at: null, used_by_name: null },
+  { code_hash: "b".repeat(64), code_hint: "TP9X", label: "Carter", created_at: 1755000000, expires_at: 1780000000, used_at: 1755500000, revoked_at: null, used_by_name: "Carter" },
+];
+const QUALITY = { ok: true, worst: [{ question_id: "paeds-001", n: 12, c: 3 }], top: [{ question_id: "psych-004", n: 40, c: 31 }], totals: { users: 3, answers: 338, qs: 210 } };
 
-  const r={};
-  r.screen = window.document.body.dataset.screen;
-  r.isAdminClass = window.document.body.classList.contains('is-admin');
-  const btn = window.document.getElementById('adminMastheadBtn');
-  r.adminBtnVisible = !!btn && !btn.hidden;
-  if (!r.adminBtnVisible) { console.log(JSON.stringify(r,null,2)); console.log('errors',errs.length); errs.slice(0,8).forEach(e=>console.log(e.slice(0,200))); process.exit(1); }
-  btn.click(); await wait(1400);
-  r.modalOpen = !$('#adminModal').hidden;
-  r.tabs = [...window.document.querySelectorAll('.admin-tab')].map(b=>b.textContent.trim());
-  r.activeTab = ($('.admin-tab.active')||{}).textContent;
+main(async () => {
+  const T = runner("admin");
+  const t = await boot({ storage: { "y4mcq.auth.token": SIGNED_IN },
+    warnOk: /^\[account\] \/api\/account\/delete failed: 403 password_wrong/,
+    routes: userRoutes(ADMIN, {
+      "GET /api/admin/users": { body: { ok: true, users: USERS } },
+      "GET /api/admin/invites": { body: { ok: true, invites: INVITES } },
+      "GET /api/admin/quality": { body: QUALITY },
+      "POST /api/admin/users/u2/promote": { body: { ok: true } },
+      "POST /api/admin/users/u2/demote": { body: { ok: true } },
+      "POST /api/account/delete": { status: 403, body: { ok: false, code: "password_wrong", error: "RAW" } },
+    }) });
+  const { $, $$ } = t;
+  const txt = () => (($("#adminNative") || {}).textContent || "").replace(/\s+/g, " ").trim();
+  const tab = name => $$(".admin-tab").find(b => b.textContent.trim() === name);
 
-  const txt = () => (($('#adminNative')||{}).textContent||'').replace(/\s+/g,' ').trim();
-  r.usersRows = window.document.querySelectorAll('.admin-users tbody tr').length;
-  r.usersFact = txt().slice(0,60);
-  r.hasLastSeen = /days ago|today|never/.test(txt());
-  r.selfRowProtected = /Use the Account tab/.test(txt());
-  r.inviteRows = window.document.querySelectorAll('#inviteList tbody tr').length;
-  r.hasInviteForm = !!$('#inviteNew');
+  // The button is in the static HTML (CSS hides it for non-admins), so
+  // wait for is-admin and for its handler, not for the element.
+  const adminReady = p => p.document.body.classList.contains("is-admin") && p.$("#adminMastheadBtn") && p.$("#adminMastheadBtn").onclick;
+  await waitFor(() => adminReady(t), 20000, "the admin button").catch(() => {});
+  await T.booted(t);
+  T.ok(t.document.body.classList.contains("is-admin"), "body carries is-admin");
+  const btn = $("#adminMastheadBtn");
+  if (!T.ok(btn && !btn.hidden, "the admin button is shown")) return T.done(t);
+  btn.click();
+  await waitFor(() => $$(".admin-users tbody tr").length, 5000, "the users table").catch(() => {});
+  await waitFor(() => $$("#inviteList tbody tr").length, 5000, "the invite list").catch(() => {});
+
+  T.ok(!$("#adminModal").hidden, "the panel opens");
+  T.eq($$(".admin-tab").map(b => b.textContent.trim()).join(","), "Users,Bank,Content,Account", "the four tabs, in order");
+  T.eq(($(".admin-tab.active") || {}).textContent, "Users", "opens on Users");
+  T.eq($$(".admin-users tbody tr").length, 3, "renders every user row");
+  T.ok(/^3 accounts, 1 admin\./.test(txt()), `the fact line counts accounts and admins (${txt().slice(0, 40)})`);
+  T.ok(/days ago|today|never/.test(txt()), "a last-seen column");
+  T.ok(/Use the Account tab/.test(txt()), "the admin's own row offers no destructive action");
+  T.eq($$("#inviteList tbody tr").length, 2, "renders every invite row");
+  T.ok(!!$("#inviteNew"), "the invite form is there");
 
   // Delete must open the type-to-confirm dialog, not window.confirm.
-  const del = [...window.document.querySelectorAll('.row-act.danger')].find(b=>b.dataset.act==='delete');
-  r.foundDeleteAction = !!del;
-  if (del) {
+  const del = $$(".row-act.danger").find(b => b.dataset.act === "delete" && b.dataset.email === "carter@example.com");
+  if (T.ok(!!del, "Carter's row offers delete")) {
     del.click(); await wait(200);
-    r.dialogOpened = $('#confirmDialog').open;
-    r.dialogNamesUser = /carter@example\.com/.test($('#confirmBody').textContent);
-    r.dialogStatesCount = /\d+ saved answers?/.test($('#confirmBody').textContent);
-    r.confirmDisabled = $('#confirmGo').disabled;
-    r.confirmLabel = $('#confirmGo').textContent;
-    $('#confirmTypeInput').value='carter@example.com';
-    $('#confirmTypeInput').dispatchEvent(new window.Event('input'));
+    T.ok($("#confirmDialog").open, "delete opens the confirm dialog");
+    T.ok(/carter@example\.com/.test($("#confirmBody").textContent), "the dialog names the user");
+    T.ok(/\b20 saved answers\b/.test($("#confirmBody").textContent), "the dialog states the answer count");
+    T.ok($("#confirmGo").disabled, "confirm starts disabled");
+    T.eq($("#confirmGo").textContent, "Delete carter@example.com permanently", "the confirm label names the account");
+    $("#confirmTypeInput").value = "carter@example.com";
+    $("#confirmTypeInput").dispatchEvent(new t.window.Event("input"));
     await wait(50);
-    r.confirmEnabledAfterTyping = !$('#confirmGo').disabled;
-    $('#confirmCancel').click(); $('#confirmDialog').close(); await wait(150);
+    T.ok(!$("#confirmGo").disabled, "typing the email enables confirm");
+    // Cancel submits the dialog's method="dialog" form, which jsdom does
+    // not implement; close() is what the browser does with it.
+    $("#confirmCancel").click(); $("#confirmDialog").close(); await wait(150);
+    T.eq(t.calls.filter(c => /\/delete$/.test(c.path)).length, 0, "cancel deletes nothing");
   }
-  // Promote acts immediately and reports with an Undo.
-  const prom = [...window.document.querySelectorAll('.row-act')].find(b=>b.dataset.act==='promote');
-  if (prom) { prom.click(); await wait(900);
-    r.statusShown = !$('#adminStatus').hidden;
-    r.statusText = ($('#adminStatus').textContent||'').replace(/\s+/g,' ').trim().slice(0,70);
-    r.offersUndo = !!$('.admin-status-undo');
-  }
-  for (const t of ['Bank','Content','Account']) {
-    const tb=[...window.document.querySelectorAll('.admin-tab')].find(b=>b.textContent.trim()===t);
-    tb.click(); await wait(1000);
-    r['tab_'+t] = t==='Content'
-      ? $('#adminAddAuditPane').textContent.replace(/\s+/g,' ').trim().slice(0,40)
-      : txt().slice(0,55);
-  }
-  r.pwForm = !!$('#pwForm'); r.revokeBtn = !!$('#revokeSessions'); r.selfDelete = !!$('#acctSelfDeleteOpen');
-  const bankTab=[...window.document.querySelectorAll('.admin-tab')].find(b=>b.textContent.trim()==='Bank');
-  bankTab.click(); await wait(1200);
-  r.bankTableRows = window.document.querySelectorAll('.admin-table-num tbody tr').length;
-  r.bankHasGap = /Gap/.test(txt());
 
-  const must = ['modalOpen','adminBtnVisible','hasLastSeen','selfRowProtected',
-    'hasInviteForm','foundDeleteAction','dialogOpened','dialogNamesUser',
-    'dialogStatesCount','confirmDisabled','confirmEnabledAfterTyping',
-    'statusShown','offersUndo','pwForm','revokeBtn','selfDelete','bankHasGap'];
-  const missing = must.filter(k => !r[k]);
-  if (r.activeTab !== 'Users') missing.push('opens on Users');
-  if (r.usersRows !== 3) missing.push('renders every user row');
-  if (r.inviteRows !== 2) missing.push('renders every invite row');
-  console.log(JSON.stringify(r,null,2));
-  if (missing.length) console.log('\nFAILED assertions: ' + missing.join(', '));
-  console.log('\nerrors: '+errs.length);
-  errs.slice(0,12).forEach(e=>console.log('  '+e.slice(0,260)));
-  process.exit(missing.length ? 1 : (errs.length ? 2 : 0));
-})().catch(e=>{console.log('HARNESS:',e.stack);process.exit(1)});
+  // Promote acts immediately, on the right endpoint, and offers Undo.
+  const prom = $$(".row-act").find(b => b.dataset.act === "promote" && b.dataset.id === "u2");
+  if (T.ok(!!prom, "Carter's row offers promote")) {
+    prom.click();
+    await waitFor(() => !$("#adminStatus").hidden, 3000, "the status line").catch(() => {});
+    T.eq(t.callsTo("POST", "/api/admin/users/u2/promote").length, 1, "promote posts /api/admin/users/u2/promote once");
+    T.ok(/Carter is now an admin\./.test($("#adminStatus").textContent), "the status says so");
+    const undo = $(".admin-status-undo");
+    if (T.ok(!!undo, "the status offers Undo")) {
+      undo.click();
+      await waitFor(() => t.callsTo("POST", "/api/admin/users/u2/demote").length, 3000, "the undo").catch(() => {});
+      await wait(150);
+      T.eq(t.callsTo("POST", "/api/admin/users/u2/demote").length, 1, "Undo posts /api/admin/users/u2/demote once");
+      T.ok(/Carter is no longer an admin\./.test($("#adminStatus").textContent), "the status reports the undo");
+    }
+  }
+
+  const open = async name => {
+    const b = tab(name);
+    if (!b) return false;
+    b.click();
+    await wait(300);
+    return true;
+  };
+  if (T.ok(await open("Bank"), "Bank tab")) {
+    await waitFor(() => $$(".admin-table-num tbody tr").length, 5000, "the bank table").catch(() => {});
+    T.ok(/^[\d,]+ questions\. Last added \d{4}-\d\d-\d\d\./.test(txt()), `Bank: the fact line (${txt().slice(0, 50)})`);
+    T.ok($$(".admin-table-num tbody tr").length > 0, "Bank: the table has rows");
+    T.ok($$(".admin-table-num th").some(th => th.textContent.trim() === "Gap"), "Bank: the table has a Gap column");
+    T.ok(/paeds-001/.test(txt()) || /Most answered/.test(txt()), "Bank: the quality lists render");
+  }
+  if (T.ok(await open("Content"), "Content tab")) {
+    const pane = $("#adminAddAuditPane");
+    await waitFor(() => pane && /Copy prompt/.test(pane.textContent), 5000, "the prompt pane").catch(() => {});
+    const c = pane ? pane.textContent.replace(/\s+/g, " ") : "";
+    T.ok(/Generation prompt/.test(c) && /Copy prompt/.test(c), "Content: the generation prompt and Copy prompt");
+  }
+  if (T.ok(await open("Account"), "Account tab")) {
+    T.ok(/admin@example\.com/.test(txt()), "Account: names the signed-in account");
+    T.ok(!!$("#pwForm"), "Account: change-password form");
+    T.ok(!!$("#revokeSessions"), "Account: sign out everywhere else");
+    const sd = $("#acctSelfDeleteOpen");
+    if (T.ok(!!sd, "Account: delete my account")) {
+      sd.click(); await wait(150);
+      T.eq($("#confirmTypeInput").type, "password", "self-delete asks for the password");
+      T.ok($("#confirmGo").disabled, "self-delete confirm starts disabled");
+      $("#confirmTypeInput").value = "not-my-password";
+      $("#confirmTypeInput").dispatchEvent(new t.window.Event("input"));
+      await wait(50);
+      $("#confirmGo").click();
+      await waitFor(() => t.callsTo("POST", "/api/account/delete").length, 3000, "the delete call").catch(() => {});
+      await wait(200);
+      const d = t.callsTo("POST", "/api/account/delete");
+      T.ok(d.length === 1 && d[0].body && d[0].body.password === "not-my-password", "the password goes in the delete body");
+      T.ok(/Not deleted\. The current password is wrong\./.test($("#adminStatus").textContent), "a wrong password is worded and nothing is deleted");
+      T.eq(t.window.localStorage.getItem("y4mcq.auth.token"), SIGNED_IN, "the session is kept");
+    }
+  }
+  T.ok(!/Couldn't load/.test(t.document.body.textContent), "no tab says Couldn't load");
+
+  // An admin read on a session that has ended elsewhere reads as ended,
+  // with Sign in, not as "doesn't have admin access".
+  const x = await boot({ storage: { "y4mcq.auth.token": SIGNED_IN },
+    warnOk: /^\[admin\] \/api\/admin\/(users|invites|quality) failed: 401|^\[auth\] admin: .* returned 401/,
+    routes: userRoutes(ADMIN, {
+      "GET /api/admin/users": { status: 401, body: { ok: false, code: "session_expired", error: "Not signed in." } },
+      "GET /api/admin/invites": { status: 401, body: { ok: false, code: "session_expired", error: "Not signed in." } },
+      "GET /api/admin/quality": { status: 401, body: { ok: false, code: "session_expired", error: "Not signed in." } },
+    }) });
+  await waitFor(() => adminReady(x), 20000, "the admin button").catch(() => {});
+  x.$("#adminMastheadBtn").click();
+  await waitFor(() => x.$("[data-admin-signin]"), 5000, "the Sign in button").catch(() => {});
+  const xt = ((x.$("#adminNative") || {}).textContent || "").replace(/\s+/g, " ");
+  T.ok(/Your session has ended\. Sign in again\./.test(xt) && !!x.$("[data-admin-signin]"), "expired: the Users tab says the session ended, with Sign in");
+  T.ok(!/doesn't have admin access/.test(xt), "expired: not worded as a non-admin");
+  T.eq(x.window.localStorage.getItem("y4mcq.auth.token"), null, "expired: the dead token is cleared");
+  T.done(t, x);
+});
