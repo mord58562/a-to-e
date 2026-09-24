@@ -7,9 +7,11 @@ email on the first successful login. This keeps the seeding tool
 runnable without porting Argon2id to Python.
 
 Usage:
-    python3 scripts/seed_dummy_user.py <email> <password> [display_name] [admin|user]
+    python3 scripts/seed_dummy_user.py [--local] <email> <password> [display_name] [admin|user]
 
-Prints the wrangler one-liner; pipe through `sh` or copy-paste.
+Prints the wrangler one-liner (the remote database, or the `wrangler dev`
+copy with --local); run it from cloudflare-worker/, piped through `sh` or
+copy-pasted.
 """
 import hashlib, secrets, sys, uuid, time, shlex
 
@@ -24,13 +26,17 @@ def hash_password(password: str, salt_hex: str) -> str:
 def sql_str(s: str) -> str:
     # SQL string literal. shlex.quote is SHELL quoting: it returns a bare
     # word when nothing needs escaping, so the default display name came
-    # out as an unquoted identifier ("no such column: rob"), and an email
+    # out as an unquoted identifier ("no such column: alex"), and an email
     # with an apostrophe broke the statement.
     return "'" + str(s).replace("'", "''") + "'"
 
 def main():
+    target = "--remote"
+    if "--local" in sys.argv[1:]:
+        sys.argv.remove("--local")
+        target = "--local"
     if len(sys.argv) < 3:
-        sys.exit("usage: seed_dummy_user.py <email> <password> [display_name] [admin|user]")
+        sys.exit("usage: seed_dummy_user.py [--local] <email> <password> [display_name] [admin|user]")
     email = sys.argv[1].lower()
     password = sys.argv[2]
     display = sys.argv[3] if len(sys.argv) > 3 and sys.argv[3] not in ("admin","user") else email.split("@")[0]
@@ -48,7 +54,7 @@ def main():
         f"{sql_str(uid)}, {sql_str(email)}, {sql_str(pw_hash)}, {sql_str(salt)}, "
         f"{sql_str(display)}, {is_admin}, {now});"
     )
-    cmd = f"wrangler d1 execute a-to-e --remote --command {shlex.quote(sql)}"
+    cmd = f"npx wrangler d1 execute a-to-e {target} --command {shlex.quote(sql)}"
     print(cmd)
 
 if __name__ == "__main__":

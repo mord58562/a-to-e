@@ -136,6 +136,10 @@ export default {
       // has used_by nulled by the foreign key, and is a record, not junk.
       env.DB.prepare("DELETE FROM invite_codes WHERE used_by IS NULL AND used_at IS NULL AND revoked_at IS NULL AND expires_at IS NOT NULL AND expires_at < ?").bind(now - 86400 * 30),
     ]).catch(err => console.error("scheduled sweep failed:", err && err.stack || err)));
+    // Separate from the batch: the table arrives with schema_007, and a
+    // missing table must not stop the sweep above.
+    ctx.waitUntil(env.DB.prepare("DELETE FROM deleted_sessions WHERE deleted_at < ?").bind(now - DELETED_SESSION_KEEP_SEC).run()
+      .catch(err => console.error("scheduled sweep of deleted_sessions failed:", err && err.message || err)));
   },
 };
 
@@ -193,7 +197,8 @@ const LEGACY_PBKDF2_ITER = 100000;
 // LOCKOUT_SEC seconds. ok=1 rows do not count toward the threshold but
 // are still kept so we can purge cleanly.
 const ATTEMPT_WINDOW_SEC = 15 * 60;
-const FAIL_THRESHOLD = 8;
+const FAIL_THRESHOLD = 8;           // per (email, address)
+const FAIL_ALL_ADDRESSES = 64;      // per email, across addresses
 const LOCKOUT_SEC = 15 * 60;
 
 // Per-IP budgets, checked BEFORE any Argon2id work. The email-keyed
@@ -353,10 +358,30 @@ function publicUser(u) {
 
 async function ipHash(request, env) {
   // Best-effort attacker fingerprint, stored only as a salted hash.
-  const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+  const ip = ipBucket(request.headers.get("CF-Connecting-IP") || "unknown");
   const data = new TextEncoder().encode(ip + ":" + (env.SESSION_PEPPER || ""));
   const h = await crypto.subtle.digest("SHA-256", data);
   return bytesToHex(h).slice(0, 32);
+}
+
+// The unit every per-address budget counts. An IPv4 address as is; for
+// IPv6 its /64, since one subscriber is handed at least a /64 and can
+// rotate through it freely. An IPv4-mapped address counts as the IPv4.
+function ipBucket(ip) {
+  const s = String(ip).trim().toLowerCase().split("%")[0];
+  if (!s.includes(":")) return s;
+  const tail = s.slice(s.lastIndexOf(":") + 1);
+  if (tail.includes(".")) return tail;
+  let parts;
+  if (s.includes("::")) {
+    const [head, rest] = s.split("::");
+    const h = head ? head.split(":") : [];
+    const t = rest ? rest.split(":") : [];
+    parts = h.concat(Array(Math.max(0, 8 - h.length - t.length)).fill("0"), t);
+  } else {
+    parts = s.split(":");
+  }
+  return parts.slice(0, 4).map(p => (parseInt(p, 16) || 0).toString(16)).join(":") + "::/64";
 }
 
 async function recordAttempt(env, emailLookupHash, ok, ipH) {
@@ -370,14 +395,22 @@ async function recordAttempt(env, emailLookupHash, ok, ipH) {
   ).bind(emailLookupHash, now - ATTEMPT_WINDOW_SEC).run();
 }
 
-async function isLockedOut(env, emailLookupHash) {
+// Failures count per (email, address): someone who knows a student's
+// email cannot lock them out from another network by typing wrong
+// passwords. FAIL_ALL_ADDRESSES bounds guessing spread across many
+// addresses, at a cost far above a handful of typos.
+async function isLockedOut(env, emailLookupHash, ipH) {
   const now = Math.floor(Date.now() / 1000);
   const row = await env.DB.prepare(
-    "SELECT COUNT(*) AS n, MAX(ts) AS last_ts FROM login_attempts WHERE email_lookup = ? AND ok = 0 AND ts > ?"
-  ).bind(emailLookupHash, now - ATTEMPT_WINDOW_SEC).first();
-  if (!row || row.n < FAIL_THRESHOLD) return 0;
-  const unlockAt = row.last_ts + LOCKOUT_SEC;
-  return unlockAt > now ? unlockAt - now : 0;
+    "SELECT SUM(ip_hash = ?) AS here, MAX(CASE WHEN ip_hash = ? THEN ts END) AS here_ts, " +
+    "COUNT(*) AS n, MAX(ts) AS last_ts FROM login_attempts WHERE email_lookup = ? AND ok = 0 AND ts > ?"
+  ).bind(ipH, ipH, emailLookupHash, now - ATTEMPT_WINDOW_SEC).first();
+  if (!row) return 0;
+  let last = 0;
+  if (row.here >= FAIL_THRESHOLD) last = row.here_ts;
+  if (row.n >= FAIL_ALL_ADDRESSES) last = Math.max(last, row.last_ts);
+  const unlockAt = last + LOCKOUT_SEC;
+  return last && unlockAt > now ? unlockAt - now : 0;
 }
 
 // Generic sliding-window counter over login_attempts, keyed by an
@@ -567,19 +600,19 @@ async function handleLogin(request, env, cors) {
   // is bypassed entirely by rotating addresses, and the miss path runs
   // a full Argon2id pass on purpose, so this guard is what stops a
   // script pinning the isolate.
-  const loginIpKey = "ip:" + await ipHash(request, env);
+  const ipH = await ipHash(request, env);
+  const loginIpKey = "ip:" + ipH;
   if (await overBudget(env, loginIpKey, LOGIN_IP_WINDOW_SEC, LOGIN_IP_MAX)) {
     return fail("login_rate", "Too many sign-in attempts from this address. Try again later.", 429, cors);
   }
   await noteAttempt(env, loginIpKey);
 
   const lookup = await emailLookup(env, email);
-  const lockSecondsLeft = await isLockedOut(env, lookup);
+  const lockSecondsLeft = await isLockedOut(env, lookup, ipH);
   if (lockSecondsLeft > 0) {
     return fail("login_locked", `Too many failed attempts. Try again in ${Math.ceil(lockSecondsLeft / 60)} min.`, 429, cors,
       { retry_after: lockSecondsLeft });
   }
-  const ipH = await ipHash(request, env);
 
   // Try the migrated column first; fall back to legacy plaintext email
   // for rows that pre-date schema_002.
@@ -673,7 +706,7 @@ async function handleLogin(request, env, cors) {
 
 async function handleMe(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
+  if (!user) return noSession(request, env, cors);
   // Sliding session: bump the current token's expiry on every /api/me call.
   const auth = request.headers.get("Authorization") || "";
   const m = auth.match(/^Bearer\s+([a-f0-9]{32,})$/i);
@@ -707,7 +740,7 @@ async function handleLogout(request, env, cors) {
 
 async function handleAccountDelete(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
+  if (!user) return noSession(request, env, cors);
   // Registration is invite-only, so if the last admin deletes their own
   // account nobody can let anyone in. Same guard as admin delete/demote.
   const lastAdminMsg = "You are the last admin. Promote someone else before deleting this account.";
@@ -716,11 +749,22 @@ async function handleAccountDelete(request, env, cors) {
   }
   // The current password is required, as on password change: a copied
   // token alone must not be able to destroy the account and its history.
-  // Shares the password-change budget, so the token cannot be used to
-  // guess the password through this route either.
   const body = await request.json().catch(() => null);
+  const denied = await passwordDenied(env, user, body, "Enter your password to delete the account.", cors);
+  if (denied) return denied;
+  if (!(await deleteUserGuarded(env, user.id))) {
+    // The guard in the DELETE lost a race with another admin removal.
+    return fail("last_admin", lastAdminMsg, 409, cors);
+  }
+  return json({ ok: true }, 200, cors);
+}
+
+// Checks `body.password` against the caller's own account; null when it
+// matches, else the error response. Shares the password-change budget, so
+// a copied token cannot guess the password through any route that asks.
+async function passwordDenied(env, user, body, requiredMsg, cors) {
   const password = str(body && body.password);
-  if (!password) return fail("password_required", "Enter your password to delete the account.", 400, cors);
+  if (!password) return fail("password_required", requiredMsg, 400, cors);
   if (password.length > 1024) return fail("password_long", "Password is over 1024 characters.", 400, cors);
   const pwKey = "pw:" + user.id;
   if (await overBudget(env, pwKey, PW_CHANGE_WINDOW_SEC, PW_CHANGE_MAX)) {
@@ -733,11 +777,7 @@ async function handleAccountDelete(request, env, cors) {
   if (!row || !(await verifyPassword(password, row))) {
     return fail("password_wrong", "Password is wrong.", 403, cors);
   }
-  if (!(await deleteUserGuarded(env, user.id))) {
-    // The guard in the DELETE lost a race with another admin removal.
-    return fail("last_admin", lastAdminMsg, 409, cors);
-  }
-  return json({ ok: true }, 200, cors);
+  return null;
 }
 
 // Deletes a user and every per-user row in one batch. The users row goes
@@ -748,18 +788,53 @@ async function handleAccountDelete(request, env, cors) {
 // delete leaves the account intact. D1 ignores ON DELETE CASCADE unless
 // PRAGMA foreign_keys is set, so each table is cleared by hand.
 // Returns true when the account was deleted.
+// The account's session hashes move to deleted_sessions first, so its
+// other devices hear account_deleted rather than session_expired.
 async function deleteUserGuarded(env, id) {
   const gone = "NOT EXISTS (SELECT 1 FROM users WHERE id = ?)";
-  const res = await env.DB.batch([
+  const now = Math.floor(Date.now() / 1000);
+  const run = (tombstones) => env.DB.batch([
     env.DB.prepare(
       "DELETE FROM users WHERE id = ? AND (is_admin = 0 OR EXISTS (SELECT 1 FROM users WHERE is_admin = 1 AND id != ?))"
     ).bind(id, id),
+    ...(tombstones ? [env.DB.prepare(
+      `INSERT OR IGNORE INTO deleted_sessions (token_hash, deleted_at)
+       SELECT token_hash, ? FROM sessions WHERE user_id = ? AND token_hash IS NOT NULL AND ${gone}`
+    ).bind(now, id, id)] : []),
     env.DB.prepare(`DELETE FROM sessions WHERE user_id = ? AND ${gone}`).bind(id, id),
     env.DB.prepare(`DELETE FROM answers WHERE user_id = ? AND ${gone}`).bind(id, id),
     env.DB.prepare(`DELETE FROM flags WHERE user_id = ? AND ${gone}`).bind(id, id),
     env.DB.prepare(`DELETE FROM user_settings WHERE user_id = ? AND ${gone}`).bind(id, id),
   ]);
+  let res;
+  try {
+    res = await run(true);
+  } catch (e) {
+    // The batch is one transaction, so nothing landed; run it again
+    // without the record until schema_007 is applied.
+    if (!/no such table/i.test(String(e && e.message))) throw e;
+    console.warn("delete user: deleted_sessions table missing, sessions dropped without a record (schema_007 not applied)");
+    res = await run(false);
+  }
   return !!(res && res[0] && res[0].meta && res[0].meta.changes === 1);
+}
+
+// The 401 for a request without a live session: account_deleted when
+// the token belonged to an account deleted in the last 30 days (see
+// deleteUserGuarded), else session_expired.
+const DELETED_SESSION_KEEP_SEC = 30 * 86400;
+async function noSession(request, env, cors) {
+  const m = (request.headers.get("Authorization") || "").match(/^Bearer\s+([a-f0-9]{32,})$/i);
+  if (m && env.DB) {
+    try {
+      const hit = await env.DB.prepare("SELECT deleted_at FROM deleted_sessions WHERE token_hash = ?")
+        .bind(await hashSessionToken(env, m[1])).first();
+      if (hit && hit.deleted_at > Math.floor(Date.now() / 1000) - DELETED_SESSION_KEEP_SEC) return fail("account_deleted", "This account has been deleted.", 401, cors);
+    } catch (e) {
+      if (!/no such table/i.test(String(e && e.message))) throw e;
+    }
+  }
+  return fail("session_expired", "Not signed in.", 401, cors);
 }
 
 async function handleAdminListUsers(request, env, cors) {
@@ -799,6 +874,10 @@ async function handleAdminDeleteUser(request, env, cors, targetId) {
   if (denied) return denied;
   if (!targetId || typeof targetId !== "string") return fail("bad_request", "Missing user id.", 400, cors);
   if (targetId === user.id) return fail("self_target", "Use /api/account/delete to remove your own account.", 400, cors);
+  // A copied admin token alone must not be able to erase students.
+  const body = await request.json().catch(() => null);
+  const pwDenied = await passwordDenied(env, user, body, "Enter your password to delete this account.", cors);
+  if (pwDenied) return pwDenied;
   // Refuse to remove the last remaining admin, so the instance cannot be
   // left with nobody who can administer it.
   const target = await env.DB.prepare("SELECT is_admin FROM users WHERE id = ?").bind(targetId).first();
@@ -825,6 +904,11 @@ async function handleAdminPromote(request, env, cors, targetId, makeAdmin) {
     return fail("last_admin", "That is the last admin account.", 409, cors);
   }
   if (makeAdmin) {
+    // A copied admin token alone must not be able to mint a second admin
+    // that outlives a password change and a sign-out everywhere.
+    const body = await request.json().catch(() => null);
+    const pwDenied = await passwordDenied(env, user, body, "Enter your password to make this account an admin.", cors);
+    if (pwDenied) return pwDenied;
     const res = await env.DB.prepare("UPDATE users SET is_admin = 1 WHERE id = ?").bind(targetId).run();
     if (!res.meta || res.meta.changes !== 1) return fail("user_not_found", "No such user.", 404, cors);
     return json({ ok: true }, 200, cors);
@@ -862,7 +946,7 @@ async function hasAnotherAdmin(env, exceptId) {
  */
 async function handlePasswordChange(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
+  if (!user) return noSession(request, env, cors);
   const body = await request.json().catch(() => null);
   // str(), as on register and login: `{"new_password": {}}` passed the
   // length check (undefined < 8 is false) and set the password to the
@@ -911,7 +995,7 @@ async function handlePasswordChange(request, env, cors) {
  */
 async function handleRevokeSessions(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
+  if (!user) return noSession(request, env, cors);
   const m = (request.headers.get("Authorization") || "").match(/^Bearer\s+([a-f0-9]{32,})$/i);
   const keep = m ? await hashSessionToken(env, m[1]) : "";
   const res = await env.DB.prepare(
@@ -1010,7 +1094,7 @@ async function handleAdminQuality(request, env, cors) {
 
 async function handleAnswer(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
+  if (!user) return noSession(request, env, cors);
   const body = await request.json().catch(() => null);
   const qid = body && body.question_id;
   const srcLetter = body && body.source_letter;
@@ -1035,23 +1119,67 @@ async function handleAnswer(request, env, cors) {
     ? Math.max(now - 90 * 86400, Math.min(now, Math.floor(atRaw / 1000)))
     : now;
   const nRaw = parseInt(body && body.n, 10);
-  const n = Number.isFinite(nRaw) ? Math.max(1, Math.min(50, nRaw)) : 1;
+  let n = Number.isFinite(nRaw) ? Math.max(1, Math.min(50, nRaw)) : 1;
+  const ids = attemptIds(body);
+  if (ids === false) return fail("bad_request", "attempt_ids must be 1-500 ids of 8-64 letters, digits, - or _.", 400, cors);
+  // Retry mode (retry: true) never turns a stored wrong answer right: the
+  // student got it wrong first, and Retry keeps it in the incorrect pile.
+  const retry = body && body.retry === true ? 1 : 0;
   // UPSERT: a re-attempt updates the latest correctness, bumps the
   // attempt counter and advances updated_at, so an answer given on
   // another device syncs. A replayed answer older than the stored one
   // adds its attempts but does not overwrite the newer correctness.
-  // An outbox entry whose POST committed but whose response was lost is
-  // sent again unchanged; the client's `at` identifies it. A post with the
-  // stored ts, letter and correctness is that replay and adds no attempts.
-  // Only when the client sent `at`: without it ts is the server clock,
-  // and two real answers inside one second would look the same.
+  const correctSql = `CASE WHEN excluded.ts < answers.ts THEN answers.correct
+                           WHEN ${retry} = 1 AND answers.correct = 0 THEN 0
+                           ELSE excluded.correct END`;
+  if (ids) {
+    // An outbox entry whose POST committed but whose response was lost is
+    // sent again with the same attempt ids. Ids up to the stored newest
+    // one were counted already; nothing new means a pure replay.
+    let stored;
+    try {
+      stored = await env.DB.prepare(
+        "SELECT last_attempt_id FROM answers WHERE user_id = ? AND question_id = ?"
+      ).bind(user.id, qid).first();
+    } catch (e) {
+      if (!/no such column/i.test(String(e && e.message))) throw e;
+      console.warn("answer: last_attempt_id column missing, replay check falls back to ts (schema_007 not applied)");
+      stored = undefined;
+    }
+    if (stored !== undefined) {
+      const seen = stored && stored.last_attempt_id ? ids.lastIndexOf(stored.last_attempt_id) : -1;
+      const fresh = ids.length - (seen + 1);
+      if (fresh === 0) return json({ ok: true, duplicate: true }, 200, cors);
+      // The WHERE makes two concurrent posts of the same entry count once.
+      const res = await env.DB.prepare(
+        `INSERT INTO answers (user_id, question_id, source_letter, correct, ts, updated_at, attempt_count, last_attempt_id)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+         ON CONFLICT(user_id, question_id) DO UPDATE SET
+           source_letter   = CASE WHEN excluded.ts >= answers.ts THEN excluded.source_letter ELSE answers.source_letter END,
+           correct         = ${correctSql},
+           ts              = MAX(answers.ts, excluded.ts),
+           updated_at      = excluded.updated_at,
+           attempt_count   = answers.attempt_count + excluded.attempt_count,
+           last_attempt_id = excluded.last_attempt_id
+         WHERE answers.last_attempt_id IS NOT excluded.last_attempt_id`
+      ).bind(user.id, qid, srcLetter, correct, at, now, fresh, ids[ids.length - 1]).run();
+      if (res.meta && res.meta.changes === 0) return json({ ok: true, duplicate: true }, 200, cors);
+      return json({ ok: true }, 200, cors);
+    }
+    n = ids.length;
+  }
+  // Without attempt ids (older clients, or schema_007 not applied) the
+  // client's `at` identifies a replay: a post with the stored ts, letter
+  // and correctness adds no attempts. Only when the client sent `at`:
+  // without it ts is the server clock, and two real answers inside one
+  // second would look the same.
   const hasAt = Number.isFinite(atRaw) && atRaw > 0 ? 1 : 0;
   await env.DB.prepare(
     `INSERT INTO answers (user_id, question_id, source_letter, correct, ts, updated_at, attempt_count)
      VALUES (?, ?, ?, ?, ?, ?, ?)
      ON CONFLICT(user_id, question_id) DO UPDATE SET
        source_letter = CASE WHEN excluded.ts >= answers.ts THEN excluded.source_letter ELSE answers.source_letter END,
-       correct       = CASE WHEN excluded.ts >= answers.ts THEN excluded.correct ELSE answers.correct END,
+       correct       = ${correctSql},
        ts            = MAX(answers.ts, excluded.ts),
        updated_at    = excluded.updated_at,
        attempt_count = CASE
@@ -1064,13 +1192,25 @@ async function handleAnswer(request, env, cors) {
   return json({ ok: true }, 200, cors);
 }
 
+// The attempt ids of an /api/answer body, oldest first, capped at the
+// newest 50. Null when none were sent; false when they are malformed.
+const ATTEMPT_ID_RE = /^[A-Za-z0-9_-]{8,64}$/;
+function attemptIds(body) {
+  let ids = body && body.attempt_ids;
+  if (ids === undefined && body && body.attempt_id !== undefined) ids = [body.attempt_id];
+  if (ids === undefined || ids === null) return null;
+  if (!Array.isArray(ids) || ids.length === 0 || ids.length > 500) return false;
+  if (!ids.every(id => typeof id === "string" && ATTEMPT_ID_RE.test(id))) return false;
+  return ids.slice(-50);
+}
+
 /* /api/history: returns the signed-in user's answered question_ids so
  * the client can hydrate cross-device. Each row carries the last-seen
  * correctness, attempt count, and timestamp so the Unseen / Previously-
  * incorrect filters AND per-Q attempt counters survive a fresh browser. */
 async function handleHistory(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
+  if (!user) return noSession(request, env, cors);
   const history = await readHistory(env, user.id);
   return json({ ok: true, history }, 200, cors);
 }
@@ -1104,7 +1244,7 @@ async function readHistory(env, userId) {
  * first paint. */
 async function handleState(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
+  if (!user) return noSession(request, env, cors);
   const [history, flags, settings] = await Promise.all([
     readHistory(env, user.id),
     readFlags(env, user.id),
@@ -1134,7 +1274,7 @@ async function readSettings(env, userId) {
 /* /api/flag: body { question_id, on } - toggles a per-user star. */
 async function handleFlag(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
+  if (!user) return noSession(request, env, cors);
   const body = await request.json().catch(() => null);
   const qid = body && body.question_id;
   const on  = !!(body && body.on);
@@ -1161,7 +1301,7 @@ async function handleFlag(request, env, cors) {
  * partial updates would race in multi-device scenarios. */
 async function handleSettings(request, env, cors) {
   const user = await authUser(request, env);
-  if (!user) return fail("session_expired", "Not signed in.", 401, cors);
+  if (!user) return noSession(request, env, cors);
   const body = await request.json().catch(() => null);
   const settings = body && body.settings;
   if (!settings || typeof settings !== "object" || Array.isArray(settings)) {
@@ -1223,13 +1363,15 @@ function json(obj, status, extraHeaders) {
  *   login_locked         429  too many failures for this email; `retry_after` = seconds
  *   credentials_wrong    401  email or password wrong
  *   session_expired      401  no valid session token (signed out, expired, revoked)
+ *   account_deleted      401  the token belonged to an account since deleted (kept 30 days);
+ *                             the client purges local data for it and says the account is gone
  *   not_admin            403  signed in, but the account is not an admin
  *   last_admin           409  would leave no admin (delete, demote, self-delete)
  *   user_not_found       404  admin action on an id that does not exist
  *   self_target          400  admin delete/demote aimed at the caller's own account
- *   password_rate        429  too many password attempts, change or self-delete (15 min window)
- *   password_wrong       403  current password wrong (password change, self-delete)
- *   password_required    400  self-delete without the current password
+ *   password_rate        429  too many password attempts: change, self-delete, promote, admin delete (15 min window)
+ *   password_wrong       403  current password wrong (password change, self-delete, promote, admin delete)
+ *   password_required    400  self-delete, promote or admin delete without the caller's current password
  *   invite_spent         409  revoking an invite already used or revoked
  *   settings_too_large   400  settings blob over the size cap
  *   bad_request          400  malformed body or field; `error` names the field
@@ -1242,6 +1384,34 @@ function json(obj, status, extraHeaders) {
  *   audit_mismatch       409  audited ids no longer match the file on GitHub
  *   github_read_failed   502  could not read the bank from GitHub; nothing changed
  *   reports_not_closed   500  question edits landed, reports.json did not; `ref`, `outcomes`
+ *
+ * Request fields beyond the obvious ones:
+ *
+ *   POST /api/answer  { question_id, source_letter, correct, at, n,
+ *                       attempt_ids, retry }
+ *     attempt_ids  array of client-made ids, oldest first, one per
+ *                  attempt folded into this outbox entry; each matches
+ *                  /^[A-Za-z0-9_-]{8,64}$/. At most 500; the newest 50
+ *                  count. When present it replaces `n` (n = its length). The server keeps the newest applied
+ *                  id per (user, question): ids up to and including it
+ *                  are skipped, so a replay adds nothing and a replay
+ *                  that gained later attempts adds only those. A replay
+ *                  with nothing new answers { ok: true, duplicate: true }.
+ *                  `attempt_id` (one string) is accepted as [attempt_id].
+ *                  `at` orders answers only; it no longer detects replays
+ *                  when ids are sent.
+ *     retry        true when the answer was given in Retry mode: a stored
+ *                  correct = 0 stays 0 (the attempt still counts). With
+ *                  no stored row the posted `correct` stands.
+ *   POST /report      { question_id, issue, model }
+ *     question_id must match the /api/answer rule. `profile` is ignored:
+ *     the published entry says "account" when a valid Bearer token is
+ *     sent, else "guest". Signed-in reports have their own per-account
+ *     budget (report_rate) outside the per-address and daily limits.
+ *   POST /api/admin/users/<id>/promote, /api/admin/users/<id>/delete
+ *     { password }: the calling admin's current password. Demote needs
+ *     none. Errors: password_required, password_long, password_rate,
+ *     password_wrong.
  */
 function fail(code, error, status, cors, extra) {
   return json({ ok: false, code, error, ...(extra || {}) }, status, cors);
@@ -1299,32 +1469,31 @@ async function handlePaste(request, env, cors) {
 /* ── /report ─────────────────────────────────────────────────────────── */
 
 async function handleReport(request, env, cors) {
-  // Public endpoint: rate-limit per-IP to stop reports.json growing without
-  // bound. 10 reports/hour/IP is generous for legitimate use and cheap to
-  // check against the existing login_attempts table (reused as a general
-  // sliding-window counter keyed by a synthetic "ip:report" identifier).
+  // Public endpoint: rate-limited so reports.json cannot grow without
+  // bound. A signed-in reporter spends a per-account budget and nothing
+  // else, so anonymous flooding cannot lock students out of reporting.
+  // Anyone else spends the per-address budget (an IPv6 /64 counts as one
+  // address, see ipBucket) and the global daily one below. The published
+  // entry names neither: reports.json is public, so it says only
+  // "account" or "guest".
+  const user = await authUser(request, env);
   if (env.DB) {
-    const ipH = await ipHash(request, env);
-    const key = "report:" + ipH;
-    const now = Math.floor(Date.now() / 1000);
-    const windowSec = 3600;
-    const limit = 10;
-    const row = await env.DB.prepare(
-      "SELECT COUNT(*) AS n FROM login_attempts WHERE email_lookup = ? AND ts > ?"
-    ).bind(key, now - windowSec).first();
-    if (row && row.n >= limit) {
-      return fail("report_rate", "Too many reports from this address this hour. Try again later.", 429, cors);
+    const key = user ? "report:user:" + user.id : "report:" + await ipHash(request, env);
+    if (await overBudget(env, key, 3600, REPORT_HOUR_MAX)) {
+      return fail("report_rate", user
+        ? "Too many reports from this account this hour. Try again later."
+        : "Too many reports from this address this hour. Try again later.", 429, cors);
     }
-    await env.DB.prepare(
-      "INSERT INTO login_attempts (email_lookup, ts, ok, ip_hash) VALUES (?, ?, 1, ?)"
-    ).bind(key, now, ipH).run();
+    await noteAttempt(env, key);
   }
 
   const body = await request.json().catch(() => null);
   const qid = body && body.question_id;
   const issue = body && body.issue;
-  if (!qid || typeof qid !== "string") {
-    return fail("bad_request", "Missing question_id.", 400, cors);
+  // Same rule as /api/answer. The id goes into a commit message, so a
+  // newline here would forge trailers such as Co-authored-by.
+  if (typeof qid !== "string" || !/^[A-Za-z0-9_\-]+$/.test(qid) || qid.length > 200) {
+    return fail("bad_request", "Bad question_id.", 400, cors);
   }
   if (!issue || typeof issue !== "string" || issue.trim().length < 3) {
     return fail("report_short", "Report text is too short.", 400, cors);
@@ -1335,19 +1504,23 @@ async function handleReport(request, env, cors) {
   // The per-IP limit alone lets a handful of addresses grow reports.json
   // past the Contents API's 1 MB inline limit, after which every /report
   // and /apply-report fails until the file is trimmed by hand. A global
-  // daily budget and the open-count and size caps below bound it.
-  if (await overBudget(env, "report:global", 86400, REPORT_GLOBAL_DAY_MAX)) {
+  // daily budget for anonymous reports and the open-count and size caps
+  // below bound it.
+  if (!user && await overBudget(env, "report:global", 86400, REPORT_GLOBAL_DAY_MAX)) {
     return fail("report_daily", "Too many reports today. Try again tomorrow.", 429, cors);
   }
 
   const entry = {
     id:           `report-${utcStamp()}-${randomId(4)}`,
-    question_id:  qid.slice(0, 200),
+    question_id:  qid,
     issue:        issue,
-    profile:      (str(body.profile) || "guest").slice(0, 40),
+    profile:      user ? "account" : "guest",
     // Type-checked and capped like every other field: this endpoint takes
     // an unauthenticated body and commits it to a file in the repo.
     model:        str(body.model).slice(0, 80) || null,
+    // The option order the reporter saw, as source letters ("CEABD"), so
+    // "C is right" in the issue text can be read against the stored order.
+    shown:        /^[A-G]{2,7}$/.test(str(body.shown)) ? str(body.shown) : null,
     created:      new Date().toISOString(),
     status:       "open",
     resolution:   null,
@@ -1375,7 +1548,7 @@ async function handleReport(request, env, cors) {
     console.warn("report refused: reports.json over the size cap with resolved reports pruned");
     return fail("report_queue_full", "The report file is full. Try again later.", 413, cors, { reason: "size" });
   }
-  await noteAttempt(env, "report:global");
+  if (!user) await noteAttempt(env, "report:global");
 
   return json({ ok: true, id: entry.id }, 200, cors);
 }
@@ -1387,6 +1560,7 @@ const REPORT_ISSUE_MAX = 4000;          // matches the textarea maxlength
 const REPORTS_OPEN_MAX = 200;
 const REPORTS_FILE_MAX_BYTES = 800_000;
 const REPORT_GLOBAL_DAY_MAX = 100;
+const REPORT_HOUR_MAX = 10;             // per address, or per signed-in account
 const REPORTS_RESOLVED_KEEP_DAYS = 30;
 class ReportsFull extends Error {}
 
@@ -1918,6 +2092,11 @@ async function ghReadRaw(env, path) {
  *    SHA-based retry on 409). ─────────────────────────────────────────── */
 
 // Read JSON, run mutator, write back. Retries on SHA collision.
+function jsonLayout(text) {
+  const m = text ? /\n( +)\S/.exec(text) : null;
+  return { indent: m ? m[1].length : 2, newline: text ? text.endsWith("\n") : true };
+}
+
 async function ghMutateJson(env, path, mutator, message) {
   for (let attempt = 0; attempt < 3; attempt++) {
     const branch = env.GITHUB_BRANCH || "main";
@@ -1938,7 +2117,10 @@ async function ghMutateJson(env, path, mutator, message) {
       }
     }
     const next = mutator(data);
-    const text = JSON.stringify(next, null, 2) + "\n";
+    // Write in the file's own layout (the scripts use indent 1 with no
+    // trailing newline for batches), so an edit changes only its lines.
+    const { indent, newline } = jsonLayout(file.exists ? file.text : "");
+    const text = JSON.stringify(next, null, indent) + (newline ? "\n" : "");
     const put = await fetch(`https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${path}`, {
       method: "PUT",
       headers: { ...ghHeaders(env), "Content-Type": "application/json" },

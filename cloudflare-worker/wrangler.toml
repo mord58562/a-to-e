@@ -3,7 +3,7 @@ main = "src/worker.js"
 compatibility_date = "2025-01-01"
 
 # Public-facing vars (non-secret). Set GITHUB_TOKEN via
-#   wrangler secret put GITHUB_TOKEN
+#   npx wrangler secret put GITHUB_TOKEN
 [vars]
 GITHUB_OWNER  = "mord58562"
 GITHUB_REPO   = "a-to-e"
@@ -11,8 +11,9 @@ GITHUB_BRANCH = "main"
 ALLOW_ORIGIN  = "https://mord58562.github.io"
 
 # D1 database binding (accounts + answer aggregates).
-# Create the DB once with `wrangler d1 create a-to-e`, paste the printed
-# database_id below, then `wrangler d1 execute a-to-e --file=schema.sql --remote`.
+# Create the DB once with `npx wrangler d1 create a-to-e`, paste the printed
+# database_id below, then apply schema.sql and every schema_0*.sql in order
+# (README.md, One-time setup).
 [[d1_databases]]
 binding       = "DB"
 database_name = "a-to-e"
