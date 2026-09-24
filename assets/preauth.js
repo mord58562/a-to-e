@@ -39,13 +39,19 @@
 // The gate is static HTML and paints before app.js has wired it. A tap
 // on "Continue as guest" or a pane switch in that gap is recorded for
 // passGate to replay. A form submit is held: sent natively, it would
-// reload the page and drop what was typed.
+// reload the page and drop what was typed. Only the last of these is
+// replayed, and a tab tap never displaces a held submit: a student whose
+// Sign in seemed to do nothing, and who then taps the Sign in tab, still
+// gets signed in.
 (function () {
   var inGate = function (el) { return !!(el && el.closest && el.closest("#gate")); };
   document.addEventListener("click", function (e) {
     if (window.__gateWired) return;
     var t = e.target && e.target.closest && e.target.closest("#gateGuestBtn, [data-gate-switch]");
-    if (t && inGate(t)) window.__gateEarly = { kind: "click", el: t };
+    if (!t || !inGate(t)) return;
+    var held = window.__gateEarly;
+    if (held && held.kind === "submit" && t.id !== "gateGuestBtn") return;
+    window.__gateEarly = { kind: "click", el: t };
   }, true);
   document.addEventListener("submit", function (e) {
     if (window.__gateWired || !inGate(e.target)) return;

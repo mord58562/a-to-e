@@ -2,6 +2,11 @@
 
 User-visible changes to A to E, newest first.
 
+## 1.7.4
+
+- The first visit starts about twice as fast on a slow connection. Questions load first and the explanations follow in the background; if one hasn't arrived when you reveal an answer, it fills in as soon as it does.
+- Tapping Sign in and then a gate tab before the page has finished loading no longer loses the sign-in.
+
 ## 1.7.3
 
 - A finished test reaches the server whole, even if the tab closes straight away. A test left unfinished for a day is recorded when it expires, not dropped.

@@ -16,17 +16,26 @@ keeps working. A path with no hash, or a stale one, is harmless: the loader
 falls back, and Pages' max-age bounds how long a stale key can serve old
 bytes.
 
+The batches manifest also records `split`: the question-only and
+commentary files that scripts/split_bank.py derives from each batch, and
+the source hash each pair was built from. refresh() rebuilds a pair
+whenever its batch's hash moves, so every caller below keeps the split in
+step without knowing about it, and --check reports a stale split.
+
 Run it after anything that rewrites a served file. merge_batches.sh,
 merge_inbox.sh, content_pass.py apply and dupe_triage.py apply call it.
 
 Usage:
     python3 scripts/manifest_hashes.py            # rewrite the manifests
-    python3 scripts/manifest_hashes.py --check    # exit 1 if any hash is stale
+    python3 scripts/manifest_hashes.py --check    # exit 1 if any hash or split is stale
 """
 import hashlib
 import json
 import os
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import split_bank  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MANIFESTS = (("data/batches_manifest.json", "batches"),
@@ -68,7 +77,13 @@ def refresh(check=False, quiet=False):
         stale_total += len(stale)
         if not quiet:
             print(f"{rel_manifest}: {len(want)} hashed, {len(stale)} changed")
-        if check or not stale:
+        before_split = json.dumps(manifest.get("split"), sort_keys=True)
+        if key == "batches":
+            # Built from the new hashes, so a rewritten batch gets a fresh
+            # pair in the same run.
+            stale_total += split_bank.sync(manifest, want, check=check, quiet=quiet)
+        split_moved = json.dumps(manifest.get("split"), sort_keys=True) != before_split
+        if check or not (stale or split_moved):
             continue
         if want:
             manifest["hashes"] = want
@@ -82,14 +97,14 @@ def refresh(check=False, quiet=False):
     return stale_total
 
 
-def main():
-    args = sys.argv[1:]
+def main(args=None):
+    args = sys.argv[1:] if args is None else args
     if args not in ([], ["--check"]):
         print(__doc__)
         return 2
     stale = refresh(check=bool(args))
     if args and stale:
-        print(f"{stale} stale hash(es); run python3 scripts/manifest_hashes.py")
+        print(f"{stale} stale hash(es) or split(s); run python3 scripts/manifest_hashes.py")
         return 1
     return 0
 

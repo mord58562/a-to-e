@@ -6,20 +6,10 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 **Live at <https://mord58562.github.io/a-to-e/>.** No account is needed: continue as a guest and your progress stays in that browser.
 
-## What's new in 1.7.3
+## What's new in 1.7.4
 
-- A finished test reaches the server whole, even if the tab closes straight away. A test left unfinished for a day is recorded when it expires, not dropped.
-- The test clock and the masthead stay on screen as you scroll.
-- In a test you can skip a question and come back, or finish from one you haven't answered.
-- Retry incorrect shuffles the options again, and getting a missed question right on the retry doesn't take it off your "Previously incorrect" list.
-- After a wrong answer the page shows your pick and the correct option together. Your pick is marked "Your answer."; the other rationales speak for themselves.
-- The question card is one reading width, with every line ending at the same edge.
-- Learning areas are grouped by discipline, with near-duplicate names merged and a box to find one.
-- Stats, Report and Admin are proper dialogs: Tab stays inside them and focus returns where it was.
-- On a slow connection the whole bank loads before you start, or the app says which discipline is still coming and keeps fetching it.
-- Two tabs open at once no longer double-count answers or undo each other's settings.
-- An invite link works when pasted into a tab that already has the site open.
-- Deleting your account asks for your password.
+- The first visit starts about twice as fast on a slow connection. Questions load first and the explanations follow in the background; if one hasn't arrived when you reveal an answer, it fills in as soon as it does.
+- Tapping Sign in and then a gate tab before the page has finished loading no longer loses the sign-in.
 
 Earlier releases are in [CHANGELOG.md](CHANGELOG.md).
 
@@ -108,7 +98,7 @@ Only an admin can add questions or change files in the repo, and the worker chec
 - `assets/prompt-template.txt` - the generation prompt. The admin Content tab fetches it.
 - `scripts/` - `start.sh` and `server.py` serve the site locally. `check_tokens.py` is the banned-token gate and the list of record for what the prompt bans; `dupe_gate.py` compares a new batch with the published bank and with itself; `manifest_hashes.py` writes the manifest hashes.
 - `cloudflare-worker/` - accounts, sync, reports and the admin write endpoints. See its README.
-- `tests/` - `smoke.js` drives 25 questions as a guest; `admin.js` drives the admin panel against a fake worker.
+- `tests/` - jsdom tests of the real page against a fake worker (`harness.js`): `smoke.js` drives 25 questions as a guest, `admin.js` the admin panel, and the rest one behaviour each. `run.sh` runs them all.
 
 Internal working notes, audit records and the scheduled routine's brief are kept out of this repo: GitHub Pages serves the root, so anything committed here can be fetched by anyone.
 
@@ -156,11 +146,10 @@ With the local server running on port 8765:
 
 ```sh
 npm install --no-save jsdom
-REPO=$PWD node tests/smoke.js
-REPO=$PWD node tests/admin.js
+tests/run.sh
 ```
 
-Each exits 0 when clean.
+It runs every test and exits non-zero if any fails. One test runs on its own with `node tests/<name>.js`.
 
 ### How data loads
 

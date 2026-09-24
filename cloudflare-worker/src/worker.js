@@ -1987,11 +1987,19 @@ async function refreshManifestHashes(env, written) {
         if (!data || typeof data !== "object" || !Array.isArray(data[key])) throw new NoChange();
         const hashes = (data.hashes && typeof data.hashes === "object" && !Array.isArray(data.hashes)) ? data.hashes : null;
         if (!hashes) throw new NoChange();   // this manifest is not hashed yet
+        // `split` names the question-only / commentary pair that
+        // scripts/split_bank.py built from a batch. The worker does not
+        // rebuild it, so a rewritten batch loses its pair and loads whole
+        // until the next manifest_hashes.py run. The loader would also
+        // skip a pair built from an older hash; dropping it keeps the
+        // manifest saying what is served.
+        const split = (data.split && typeof data.split === "object" && !Array.isArray(data.split)) ? data.split : null;
         let changed = false;
         for (const [rel, h] of want) {
           if (!data[key].includes(rel)) continue;
           if (h && hashes[rel] !== h) { hashes[rel] = h; changed = true; }
           else if (!h && rel in hashes) { delete hashes[rel]; changed = true; }
+          if (split && rel in split && (!h || (split[rel] || {}).from !== h)) { delete split[rel]; changed = true; }
         }
         if (!changed) throw new NoChange();
         return data;

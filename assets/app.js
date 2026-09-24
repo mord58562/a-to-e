@@ -2646,7 +2646,9 @@
   const bankPending = () => bankSourceList().filter(s => s.failed && !s.permanent).length
     + bankGroups.manifests.filter(m => !m.permanent).length;
 
-  function bankSource(path, hash) {
+  const HASH_RE = /^[0-9a-f]{6,64}$/;
+  function bankSource(path, hash, split) {
+    hash = typeof hash === "string" && HASH_RE.test(hash) ? hash : "";
     return {
       path,
       topic: (FILE_TOPICS.find(([re]) => re.test(path)) || [])[1] || "",
@@ -2655,8 +2657,19 @@
       // batch with a hash is keyed on it, so a release that bumps
       // `updated` does not re-download every unchanged file. A file with
       // no hash (one the worker appended, say) falls back to the ?v= key.
-      hash: typeof hash === "string" && /^[0-9a-f]{6,64}$/.test(hash) ? hash : "",
+      hash,
+      // The question-only / commentary pair scripts/split_bank.py built
+      // from this batch, used only while it was built from the batch's
+      // current hash. An edit that moved the hash without a rebuild loads
+      // the whole file instead, so commentary is never stale.
+      split: hash && split && typeof split === "object" && split.from === hash &&
+        typeof split.questions === "string" && typeof split.commentary === "string" &&
+        HASH_RE.test(String(split.questions_hash)) && HASH_RE.test(String(split.commentary_hash)) ? split : null,
       questions: [], failed: false, permanent: false,
+      // Commentary state for a split source: the in-flight load, done
+      // once every question has its commentary, and a prefetch failure
+      // that waits for demand or the next `online` before trying again.
+      commentaryP: null, commentaryDone: false, prefetchFailed: false,
     };
   }
   // A failure a retry could fix (stall, network, 5xx) is tried once more
@@ -2670,15 +2683,28 @@
     }
   }
   async function pullSource(src, retry) {
-    const url = src.path + (src.hash ? "?h=" + src.hash : await bankGroups.bust);
+    const split = src.split;
+    const url = split ? `data/${split.questions}?h=${split.questions_hash}`
+      : src.path + (src.hash ? "?h=" + src.hash : await bankGroups.bust);
     try {
       const d = await (retry ? fetchBankFile(url) : fetchJson(url));
-      if (Array.isArray(d)) { src.questions = d; src.failed = false; return; }
+      if (Array.isArray(d)) {
+        src.questions = d; src.failed = false;
+        src.commentaryP = null; src.commentaryDone = !split; src.prefetchFailed = false;
+        if (split) for (const q of d) if (q && typeof q === "object") _awaitingCommentary.set(q, src);
+        return;
+      }
       console.warn(`[data] ${url} is not a JSON array (${d === null ? "null" : typeof d}); skipped`);
       src.permanent = true;
     } catch (e) {
       console.warn(`[data] ${url} failed${retry ? " twice" : ""}: ${e && e.message}`);
       src.permanent = !!(e && e.status >= 400 && e.status < 500);
+    }
+    // A question file that is missing or malformed (a split pushed
+    // without its files) is not the batch: load the whole file instead.
+    if (split && src.permanent) {
+      src.split = null; src.permanent = false;
+      return pullSource(src, retry);
     }
     src.failed = true;
   }
@@ -2696,8 +2722,9 @@
       m.permanent = true;
       return false;
     }
-    const hashes = d.hashes && typeof d.hashes === "object" && !Array.isArray(d.hashes) ? d.hashes : {};
-    bankGroups[m.group] = list.map(p => bankSource("data/" + p, hashes[p]));
+    const obj = x => x && typeof x === "object" && !Array.isArray(x) ? x : {};
+    const hashes = obj(d.hashes), split = obj(d.split);
+    bankGroups[m.group] = list.map(p => bankSource("data/" + p, hashes[p], split[p]));
     // Read by the Bank tab's inbox count.
     if (m.group === "inbox") state.inboxManifest = { inbox: list };
     return true;
@@ -2762,6 +2789,7 @@
     state.meta = meta;
     assembleBank();
     keepFetchingBank();
+    scheduleCommentaryPrefetch();
   }
 
   // Builds the live bank from the files that have arrived. loadData calls
@@ -2874,6 +2902,7 @@
       console.info(`[data] background fetch: ${pending.length} file(s) tried, ${added} question(s) added, ${bankPending()} file(s) still missing`);
       if (added) refreshHomeAfterSync();
       announceBankGaps(false);
+      prefetchCommentary();
     } catch (e) {
       console.error("[data] background fetch failed:", e && e.stack || e);
     } finally {
@@ -2885,6 +2914,153 @@
     if (!bankPending()) return;
     bankRetry.delay = 0;
     retryBankFiles();
+  });
+
+  // ── Commentary ──────────────────────────────────────────────────────────
+  // A batch with a current split boots on its question-only file. Its
+  // commentary (explanation, sources, each option's rationale and
+  // source_refs) comes from the paired .c file and is merged into the
+  // same question objects, so every reader of q.explanation - the
+  // reveal, the review, the admin exports - sees a full question once
+  // it has landed. The keys match scripts/split_bank.py.
+  const COMMENTARY_KEYS = ["explanation", "sources"];
+  const OPTION_COMMENTARY_KEYS = ["rationale", "source_refs"];
+  // Question object -> its bank source, while its commentary is still to
+  // come. Keyed off the object for the same reason as _shuffleCache.
+  const _awaitingCommentary = new WeakMap();
+  function hasCommentary(q) { return !q || typeof q !== "object" || !_awaitingCommentary.has(q); }
+
+  function applyCommentary(q, c) {
+    for (const k of COMMENTARY_KEYS) if (k in c) q[k] = c[k];
+    if (Array.isArray(q.options) && Array.isArray(c.options)) {
+      q.options.forEach((o, i) => {
+        if (!o || typeof o !== "object") return;
+        let co = c.options[i];
+        if (!co || co.letter !== o.letter) co = c.options.find(x => x && x.letter === o.letter);
+        if (co) for (const k of OPTION_COMMENTARY_KEYS) if (k in co) o[k] = co[k];
+      });
+    }
+    _awaitingCommentary.delete(q);
+    // Its shuffled copies were taken before the rationales arrived.
+    _shuffleCache.delete(q);
+  }
+  // `list` is the .c file (entries in question order) or, on the
+  // fallback, the full batch file; either lines up by index and id.
+  function applyCommentaryList(src, list) {
+    const byId = new Map();
+    for (const c of list) if (c && c.id && !byId.has(c.id)) byId.set(c.id, c);
+    src.questions.forEach((q, i) => {
+      if (!q || _awaitingCommentary.get(q) !== src) return;
+      let c = list[i];
+      if (!c || c.id !== q.id) c = byId.get(q.id);
+      if (c && typeof c === "object") applyCommentary(q, c);
+    });
+  }
+  const awaitingIn = src => src.questions.filter(q => q && _awaitingCommentary.get(q) === src);
+
+  async function fetchCommentary(src) {
+    const split = src.split;
+    let list = null;
+    if (split) {
+      try { list = await fetchBankFile(`data/${split.commentary}?h=${split.commentary_hash}`); }
+      catch (e) {
+        // Offline or a stall: the caller says so and tries again. A 4xx
+        // means the pair is not there, and the full file below serves.
+        if (!(e && e.status >= 400 && e.status < 500)) throw e;
+        console.warn(`[data] ${split.commentary} failed (${e.status}); taking commentary from ${src.path}`);
+      }
+    }
+    if (Array.isArray(list)) applyCommentaryList(src, list);
+    if (!awaitingIn(src).length) return;
+    // No pair, or one that does not line up with the question file: the
+    // batch file itself carries the commentary.
+    const url = src.path + (src.hash ? "?h=" + src.hash : await bankGroups.bust);
+    const full = await fetchBankFile(url);
+    if (!Array.isArray(full)) throw new Error(`${url} is not a JSON array`);
+    applyCommentaryList(src, full);
+    const left = awaitingIn(src);
+    if (left.length) {
+      // Not in the batch file either: nothing to wait for, so the reveal
+      // shows what the question has rather than loading forever.
+      console.warn(`[data] no commentary for ${left.length} question(s) in ${src.path}: ${left.slice(0, 5).map(q => q.id).join(", ")}`);
+      for (const q of left) _awaitingCommentary.delete(q);
+    }
+  }
+  // One load per source at a time; a failure clears it so the next ask
+  // tries again.
+  function loadCommentary(src) {
+    if (src.commentaryDone) return Promise.resolve();
+    if (!src.commentaryP) {
+      const p = fetchCommentary(src).then(() => {
+        src.commentaryDone = true;
+        src.prefetchFailed = false;
+      }, e => {
+        if (src.commentaryP === p) src.commentaryP = null;
+        throw e;
+      });
+      src.commentaryP = p;
+    }
+    return src.commentaryP;
+  }
+  // Resolves once every question given has its commentary (at once when
+  // they all do). Rejects when a load fails; asking again retries.
+  function commentaryFor(qs) {
+    const srcs = new Set();
+    for (const q of qs) {
+      const src = q && typeof q === "object" && _awaitingCommentary.get(q);
+      if (src) srcs.add(src);
+    }
+    return Promise.all([...srcs].map(loadCommentary));
+  }
+  // Starts the load for questions about to be needed, without waiting.
+  function warmCommentary(qs) {
+    commentaryFor(qs.filter(Boolean)).catch(e => console.info("[data] commentary not loaded yet:", e && e.message));
+  }
+
+  // After the bank loads, the commentary files download in the
+  // background, COMMENTARY_PREFETCH at a time so they never crowd out a
+  // question file or a reveal's own request. The batches the current
+  // session is about to reach go first.
+  const COMMENTARY_PREFETCH = 2;
+  let _prefetchBusy = 0;
+  let _prefetchTimer = null;
+  function commentaryCandidate(src) {
+    return !!(src && src.split && !src.commentaryDone && !src.commentaryP && !src.prefetchFailed && !src.failed);
+  }
+  function nextCommentarySource() {
+    const quiz = state.quiz;
+    if (quiz && Array.isArray(quiz.pool)) {
+      const ahead = quiz.pool.slice(quiz.idx || 0, (quiz.idx || 0) + 30);
+      for (const q of ahead.concat(quiz.pool.filter(x => x && quiz.answers && quiz.answers[x.id]))) {
+        const src = q && typeof q === "object" && _awaitingCommentary.get(q);
+        if (commentaryCandidate(src)) return src;
+      }
+    }
+    return bankGroups.batches.find(commentaryCandidate) || null;
+  }
+  function prefetchCommentary() {
+    while (_prefetchBusy < COMMENTARY_PREFETCH) {
+      const src = nextCommentarySource();
+      if (!src) return;
+      _prefetchBusy++;
+      loadCommentary(src)
+        .catch(e => {
+          src.prefetchFailed = true;
+          console.info(`[data] commentary prefetch for ${src.path} failed: ${e && e.message}`);
+        })
+        .finally(() => { _prefetchBusy--; prefetchCommentary(); });
+    }
+  }
+  // Idle after the bank lands, so the home screen paints first.
+  function scheduleCommentaryPrefetch() {
+    if (_prefetchTimer) return;
+    const go = () => { _prefetchTimer = null; prefetchCommentary(); };
+    _prefetchTimer = typeof requestIdleCallback === "function"
+      ? requestIdleCallback(go, { timeout: 2000 }) : setTimeout(go, 500);
+  }
+  window.addEventListener("online", () => {
+    for (const s of bankGroups.batches) s.prefetchFailed = false;
+    prefetchCommentary();
   });
 
   // Locally pasted questions live only in this browser's localStorage,
@@ -4507,6 +4683,44 @@
     return e || {};
   }
 
+  // Each option's caption after the reveal, by displayed letter, as HTML.
+  // One citation per source. The Sources list under the commentary
+  // names the question's main source (the refs most options share), so
+  // an option's caption carries only what it adds to that. A rationale's
+  // closing "(Source: X)", or a bare "(X)." naming one of the question's
+  // sources, is dropped for the same reason. Other closing brackets hold
+  // clinical content ("(RCH target)") and stay.
+  function rationaleHtml(q, shuffled) {
+    const hasSources = !!(q.sources && q.sources.length);
+    const refUse = new Map();
+    for (const o of shuffled) for (const r of new Set(o.source_refs || [])) refUse.set(r, (refUse.get(r) || 0) + 1);
+    const topUse = Math.max(0, ...refUse.values());
+    const mainRefs = new Set(hasSources ? [...refUse].filter(([, n]) => n === topUse).map(([r]) => r) : []);
+    const SOURCE_TAIL = /\s*\(Sources?:(?:[^()]|\([^()]*\))*\)\s*\.?\s*$/i;
+    const BARE_TAIL = /\s*\(([^()]{3,80})\)\s*\.?\s*$/;
+    const labels = (q.sources || []).map(s => String((s && s.label) || "")).filter(Boolean);
+    const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    // "(RANZCOG)" names "RANZCOG C-Obs 3", and "(Family Planning
+    // Australia)" names "Family Planning Australia - LARC": one is the
+    // other's opening words.
+    const namesSource = (b, refs) => labels.concat(refs).some(l =>
+      new RegExp(`^${reEsc(b)}(?![\\w])`, "i").test(l) || new RegExp(`^${reEsc(l)}(?![\\w])`, "i").test(b));
+    const out = new Map();
+    for (const opt of shuffled) {
+      const refs = opt.source_refs || [];
+      const own = refs.filter(r => !mainRefs.has(r));
+      const cite = own.length ? `<span class="cite">${esc(own.join(", "))}</span>` : "";
+      let rationale = String(opt.rationale || "");
+      const bare = BARE_TAIL.exec(rationale);
+      if ((refs.length && SOURCE_TAIL.test(rationale)) || (bare && namesSource(bare[1].trim(), refs))) {
+        rationale = rationale.replace(SOURCE_TAIL.test(rationale) ? SOURCE_TAIL : BARE_TAIL, "");
+        if (rationale && !/[.!?]$/.test(rationale)) rationale += ".";
+      }
+      out.set(opt.letter, `${opt.correct ? "<b>Correct.</b> " : ""}${esc(rationale)}${cite}`);
+    }
+    return out;
+  }
+
   function renderReadingPane() {
     const q = state.quiz.pool[state.quiz.idx];
     const shuffled = _shuffledOptions(q);
@@ -4604,38 +4818,13 @@
     ol.innerHTML = "";
     ol.setAttribute("role", "radiogroup");
     ol.setAttribute("aria-label", q.lead_in || "Answer options");
-    // One citation per source. The Sources list under the commentary
-    // names the question's main source (the refs most options share), so
-    // an option's caption carries only what it adds to that. A rationale's
-    // closing "(Source: X)", or a bare "(X)." naming one of the question's
-    // sources, is dropped for the same reason. Other closing brackets hold
-    // clinical content ("(RCH target)") and stay.
-    const hasSources = !!(q.sources && q.sources.length);
-    const refUse = new Map();
-    for (const o of shuffled) for (const r of new Set(o.source_refs || [])) refUse.set(r, (refUse.get(r) || 0) + 1);
-    const topUse = Math.max(0, ...refUse.values());
-    const mainRefs = new Set(hasSources ? [...refUse].filter(([, n]) => n === topUse).map(([r]) => r) : []);
-    const SOURCE_TAIL = /\s*\(Sources?:(?:[^()]|\([^()]*\))*\)\s*\.?\s*$/i;
-    const BARE_TAIL = /\s*\(([^()]{3,80})\)\s*\.?\s*$/;
-    const labels = (q.sources || []).map(s => String((s && s.label) || "")).filter(Boolean);
-    const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    // "(RANZCOG)" names "RANZCOG C-Obs 3", and "(Family Planning
-    // Australia)" names "Family Planning Australia - LARC": one is the
-    // other's opening words.
-    const namesSource = (b, refs) => labels.concat(refs).some(l =>
-      new RegExp(`^${reEsc(b)}(?![\\w])`, "i").test(l) || new RegExp(`^${reEsc(l)}(?![\\w])`, "i").test(b));
+    const rationales = rationaleHtml(q, shuffled);
+    // Fetched while the stem is read, so the reveal rarely waits; the
+    // next question's batch is warmed too.
+    warmCommentary([q, state.quiz.pool[state.quiz.idx + 1]]);
     shuffled.forEach((opt, i) => {
       const li = document.createElement("li");
       li.dataset.letter = opt.letter;
-      const refs = opt.source_refs || [];
-      const own = refs.filter(r => !mainRefs.has(r));
-      const cite = own.length ? `<span class="cite">${esc(own.join(", "))}</span>` : "";
-      let rationale = String(opt.rationale || "");
-      const bare = BARE_TAIL.exec(rationale);
-      if ((refs.length && SOURCE_TAIL.test(rationale)) || (bare && namesSource(bare[1].trim(), refs))) {
-        rationale = rationale.replace(SOURCE_TAIL.test(rationale) ? SOURCE_TAIL : BARE_TAIL, "");
-        if (rationale && !/[.!?]$/.test(rationale)) rationale += ".";
-      }
       // The row itself carries the radio semantics. The eliminate control
       // is a separate button inside it, so a screen reader hears one
       // choice and one toggle rather than two competing controls.
@@ -4646,7 +4835,7 @@
           <span class="opt-letter" aria-hidden="true">${opt.letter}</span>
           <span class="opt-body">
             <span class="opt-text">${esc(opt.text)}</span>
-            <span class="opt-rationale">${opt.correct ? "<b>Correct.</b> " : ""}${esc(rationale)}${cite}</span>
+            <span class="opt-rationale">${rationales.get(opt.letter)}</span>
           </span>
         </span>
         <button type="button" class="opt-strike" data-letter="${opt.letter}"
@@ -4795,6 +4984,104 @@
   }
 
 
+  // The commentary half of the reveal: the summary, the sources, and the
+  // option captions and stem clues when they arrive after the reveal.
+  // Commentary not yet loaded is fetched and painted when it lands, if
+  // the question is still the one revealed on screen; a failed fetch is
+  // said in its place and tried again.
+  const commentaryRetry = { timer: null, delay: 0, q: null };
+  function commentaryOnScreen(q) {
+    return !!(state.quiz && state.quiz.pool && state.quiz.pool[state.quiz.idx] === q &&
+      state.quiz.revealed[q.id] && document.body.dataset.screen === "quiz" &&
+      document.getElementById("explainSummary"));
+  }
+  function paintCommentary(q) {
+    const ex = document.getElementById("explainBlock");
+    const sumWrap = document.getElementById("explainSummary");
+    const srcList = document.getElementById("explainSources");
+    if (!sumWrap || !srcList) return;
+    if (commentaryRetry.q !== q) {
+      clearTimeout(commentaryRetry.timer);
+      commentaryRetry.timer = null; commentaryRetry.delay = 0; commentaryRetry.q = q;
+    }
+    if (!hasCommentary(q)) {
+      if (ex) ex.setAttribute("aria-busy", "true");
+      // After a failure the failure line stays up through the retries.
+      if (!commentaryRetry.delay) {
+        sumWrap.innerHTML = `<p class="comm-status dim">Loading the commentary…</p>`;
+        srcList.innerHTML = "";
+      }
+      commentaryFor([q]).then(() => {
+        if (commentaryOnScreen(q)) paintCommentary(q);
+      }, e => {
+        if (!commentaryOnScreen(q) || commentaryRetry.q !== q) return;
+        console.info(`[data] commentary for ${q.id} did not load: ${e && e.message}`);
+        commentaryRetry.delay = Math.min(30000, commentaryRetry.delay ? commentaryRetry.delay * 2 : 3000);
+        sumWrap.innerHTML = `<p class="comm-status dim">${navigator.onLine === false
+          ? "You're offline, so the commentary can't load. It will appear here once you're back online."
+          : "The commentary didn't load. Trying again…"}</p>`;
+        clearTimeout(commentaryRetry.timer);
+        commentaryRetry.timer = setTimeout(() => {
+          commentaryRetry.timer = null;
+          if (commentaryOnScreen(q)) paintCommentary(q);
+        }, commentaryRetry.delay);
+      });
+      return;
+    }
+    clearTimeout(commentaryRetry.timer);
+    commentaryRetry.timer = null; commentaryRetry.delay = 0;
+    if (ex) ex.removeAttribute("aria-busy");
+
+    // Captions and clues rendered before the commentary arrived are
+    // filled in now; "Your answer." stays on the student's wrong pick.
+    const rationales = rationaleHtml(q, _shuffledOptions(q));
+    document.querySelectorAll("#qOptions li").forEach(li => {
+      const r = li.querySelector(".opt-rationale");
+      const html = rationales.get(li.dataset.letter);
+      if (!r || html === undefined || r.dataset.filled === "1") return;
+      r.innerHTML = html;
+      r.dataset.filled = "1";
+      if (li.classList.contains("wrong")) r.insertAdjacentHTML("afterbegin", '<b class="opt-yours">Your answer.</b> ');
+    });
+    renderStemWithClues(q);
+
+    // The Why-is-correct block in the HTML stays hidden and empty: every
+    // option shows its own rationale after the reveal. "In context"
+    // (explainSummary) is what adds to them: condition background, key
+    // points, pearls.
+    const sum = explanationOf(q);
+    sumWrap.innerHTML = "";
+    // A summary can carry blank-line paragraph breaks; each one becomes
+    // its own <p> rather than collapsing into one run-on block.
+    const paras = t => String(t).split(/\n\s*\n/).map(x => x.trim()).filter(Boolean)
+      .map(x => `<p>${esc(x)}</p>`).join("");
+    if (sum.summary) sumWrap.innerHTML += paras(sum.summary);
+    if (sum.key_points && sum.key_points.length) {
+      sumWrap.innerHTML += `<ul>${sum.key_points.map(p => `<li>${esc(p)}</li>`).join("")}</ul>`;
+    }
+    // Some Medicine questions carry a `context` paragraph in place of
+    // pearls.
+    if (sum.context) sumWrap.innerHTML += paras(sum.context);
+    if (sum.pearls) sumWrap.innerHTML += `<div class="pearl"><b>Pearl.</b> ${esc(sum.pearls)}</div>`;
+
+    // Only an absolute http(s) URL becomes a link. Anything else (a
+    // markdown-wrapped URL, an empty string) would resolve against the
+    // Pages origin and 404, so it renders as the plain label instead.
+    srcList.innerHTML = (q.sources || []).map(s =>
+      s && typeof s.url === "string" && /^https?:\/\//i.test(s.url)
+        ? `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`
+        : `<li>${esc(s && s.label)}</li>`
+    ).join("");
+  }
+  window.addEventListener("online", () => {
+    const q = commentaryRetry.q;
+    if (!q || !commentaryRetry.delay || !commentaryOnScreen(q)) return;
+    clearTimeout(commentaryRetry.timer);
+    commentaryRetry.timer = null;
+    commentaryRetry.delay = 0;
+    paintCommentary(q);
+  });
+
   function revealAnswer(q) {
     document.querySelectorAll("#qOptions li").forEach(li => {
       const letter = li.dataset.letter;
@@ -4829,35 +5116,7 @@
       meta.hidden = !q.difficulty;
     }
 
-    // The Why-is-correct block in the HTML stays hidden and empty: every
-    // option shows its own rationale after the reveal. "In context"
-    // (explainSummary) is what adds to them: condition background, key
-    // points, pearls.
-
-    const sum = explanationOf(q);
-    const sumWrap = document.getElementById("explainSummary");
-    sumWrap.innerHTML = "";
-    // A summary can carry blank-line paragraph breaks; each one becomes
-    // its own <p> rather than collapsing into one run-on block.
-    const paras = t => String(t).split(/\n\s*\n/).map(x => x.trim()).filter(Boolean)
-      .map(x => `<p>${esc(x)}</p>`).join("");
-    if (sum.summary) sumWrap.innerHTML += paras(sum.summary);
-    if (sum.key_points && sum.key_points.length) {
-      sumWrap.innerHTML += `<ul>${sum.key_points.map(p => `<li>${esc(p)}</li>`).join("")}</ul>`;
-    }
-    // Some Medicine questions carry a `context` paragraph in place of
-    // pearls.
-    if (sum.context) sumWrap.innerHTML += paras(sum.context);
-    if (sum.pearls) sumWrap.innerHTML += `<div class="pearl"><b>Pearl.</b> ${esc(sum.pearls)}</div>`;
-
-    // Only an absolute http(s) URL becomes a link. Anything else (a
-    // markdown-wrapped URL, an empty string) would resolve against the
-    // Pages origin and 404, so it renders as the plain label instead.
-    document.getElementById("explainSources").innerHTML = (q.sources || []).map(s =>
-      s && typeof s.url === "string" && /^https?:\/\//i.test(s.url)
-        ? `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`
-        : `<li>${esc(s && s.label)}</li>`
-    ).join("");
+    paintCommentary(q);
 
     const rl = document.getElementById("explainRanges");
     rl.innerHTML = "";
@@ -5389,6 +5648,9 @@
       shown = Math.max(_reviewShown, Math.ceil((pos + 1) / REVIEW_PAGE) * REVIEW_PAGE);
     }
     renderReviewList(filter, shown);
+    // Opening a row reveals its question: the answered questions'
+    // batches are next in the background queue.
+    prefetchCommentary();
     const paintFilters = f => document.querySelectorAll("#reviewFilters .opt").forEach(x => {
       x.classList.toggle("selected", x.dataset.review === f);
       x.setAttribute("aria-pressed", x.dataset.review === f ? "true" : "false");
@@ -5971,6 +6233,18 @@
     }
   }
 
+  // Audit prompts export whole questions, so a question still without
+  // its commentary has it loaded first. A load that fails stops the copy
+  // rather than handing the model a question with no explanation.
+  async function withCommentaryStatus(flowEl, qs) {
+    const list = qs.filter(Boolean);
+    if (list.every(hasCommentary)) return;
+    const status = flowEl.querySelector(".audit-copy-status");
+    if (status) { status.textContent = "Loading the commentary…"; status.className = "audit-copy-status dim small"; }
+    try { await commentaryFor(list); }
+    catch (e) { throw new Error(`The commentary didn't load (${(e && e.message) || "no detail"}). Copy again to retry.`); }
+  }
+
   function auditFlowMarkup(_keyHint) {
     return `
       <ol class="audit-steps">
@@ -6000,7 +6274,7 @@
         // Throws when the prompt template is missing; the status line
         // says so.
         if (!_promptTemplate) await loadPromptTemplate();
-        text = opts.buildPrompt();
+        text = await opts.buildPrompt();
       } catch (e) {
         console.warn("[audit] building the prompt failed:", e && e.message || e);
         copyStatus.textContent = (e && e.message) || "Couldn't build the prompt.";
@@ -6248,10 +6522,16 @@ because the site replaces the live entry wholesale on apply.`;
       toggle.onclick = () => {
         flow.hidden = !flow.hidden;
         toggle.textContent = flow.hidden ? "Audit this file" : "Hide";
+        // The prompt carries whole questions, commentary included; loading
+        // it on open keeps Copy inside the click's clipboard permission.
+        if (!flow.hidden) warmCommentary(f.questions);
       };
       wireAuditFlow(flow, {
         kind: "live",
-        buildPrompt: () => buildLiveAuditPrompt(f),
+        buildPrompt: async () => {
+          await withCommentaryStatus(flow, f.questions);
+          return buildLiveAuditPrompt(f);
+        },
         parse: validateInboxAuditResponse,   // same shape as inbox audit
         apply: async (parsed) => applyLiveAudit(f.path, parsed),
       });
@@ -6362,9 +6642,14 @@ the file is replaced wholesale on apply.`;
     const flow = wrap.querySelector(".audit-flow");
     // Override placeholder for reports response shape.
     flow.querySelector(".audit-response").placeholder = '{ "summary": "...", "resolutions": [ { "report_id": "...", "question_id": "...", "action": "fix|dismiss|drop", "resolution": "...", "fixed_question": { ... } | null } ] }';
+    const reported = () => reports.map(r => state.questions.find(x => x.id === r.question_id));
+    warmCommentary(reported());
     wireAuditFlow(flow, {
       kind: "reports",
-      buildPrompt: () => buildReportAuditPrompt(reports),
+      buildPrompt: async () => {
+        await withCommentaryStatus(flow, reported());
+        return buildReportAuditPrompt(reports);
+      },
       parse: validateReportAuditResponse,
       apply: applyReportAudit,
     });
