@@ -2,6 +2,18 @@
 
 User-visible changes to A to E, newest first.
 
+## 1.7.5
+
+- After you reveal an answer, Next sits in the bar at the bottom of the screen, so it is always one tap away on a phone.
+- Results and the home screen open at the top.
+- Getting a missed question right on a retry keeps it on your "Previously incorrect" list on every device, not just this one.
+- Two tabs open at once no longer double-count a test or delete each other's saved session, and a guest's answers from both tabs are kept.
+- A study session resumed the next day counts only the time you spent, and a session that expires tells you so.
+- Switching a discipline back on brings its learning areas with it, and finding an area also searches what each question covers.
+- Single-key shortcuts can be turned off from the Keyboard list.
+- Selections stay visible in Windows High Contrast mode, and the setup rows name their groups for screen readers.
+- Reports are published without your name or account. Making someone an admin or deleting an account asks for your password.
+
 ## 1.7.4
 
 - The first visit starts about twice as fast on a slow connection. Questions load first and the explanations follow in the background; if one hasn't arrived when you reveal an answer, it fills in as soon as it does.

@@ -18,6 +18,9 @@ main(async () => {
     const reports = () => t.callsTo("POST", "/report");
     t.$("#reportBtn").click(); await wait(80);
     T.ok(!t.$("#reportModal").hidden, `${mode}: report dialog opens`);
+    const ta = t.$("#reportText");
+    T.ok(ta.getAttribute("aria-labelledby") === "reportTitle" && t.$("#" + ta.getAttribute("aria-describedby")),
+      `${mode}: the report field is labelled by the title and described by the instruction, not the placeholder`);
     const pre = label();
     T.ok(mode === "test" ? /^Question 1 of \d[\d,]*$/.test(pre) : pre === "Question 1", `${mode}: pre-reveal label is the position (${pre})`);
     T.ok(!/[a-z]+-[a-z0-9-]{3,}/.test(pre), `${mode}: pre-reveal label carries no id`);

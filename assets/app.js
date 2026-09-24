@@ -17,18 +17,38 @@
   // `window.localStorage` throws SecurityError; with a full quota every
   // setItem throws. A failed write is kept in memory for this tab and
   // logged once. A guest is told once, after home is up (the gate would
-  // cover it); signed-in answers still reach the server.
-  const storageNotice = { ready: false, pending: false, quota: false, shown: false };
+  // cover it). A signed-in student is told only when the sync outbox
+  // could not be written (`outbox`): answers the server has already taken
+  // are safe, but ones queued offline live only in this tab.
+  const storageNotice = { ready: false, pending: false, quota: false, shown: false, outbox: false };
   function showStorageNotice() {
     storageNotice.pending = false;
-    if (storageNotice.shown || cloudUser) return;
+    if (storageNotice.shown || (cloudUser && !storageNotice.outbox)) return;
     storageNotice.shown = true;
+    if (cloudUser) {
+      showAppNotice(storageNotice.quota
+        ? "Sorry, this browser's storage for this site is full, so answers given while offline won't be kept after this tab closes. Free some browser storage to keep them."
+        : "Sorry, this browser is blocking storage for this site, so answers given while offline will be lost when this tab closes. Allow site data for this site to keep them.");
+      return;
+    }
     showAppNotice(storageNotice.quota
       ? "Sorry, this browser's storage for this site is full, so answers from this tab won't be kept after it closes. Free some browser storage to keep them."
       : "Sorry, this browser is blocking storage for this site, so answers from this tab will be lost when it closes. Allow site data for this site to keep them.");
   }
   const localStorage = _safeStorage("localStorage");
   const sessionStorage = _safeStorage("sessionStorage");
+  // 32 hex characters. randomUUID needs a secure context; getRandomValues
+  // does not.
+  function randomToken() {
+    try {
+      const b = crypto.getRandomValues(new Uint8Array(16));
+      return Array.from(b, x => x.toString(16).padStart(2, "0")).join("");
+    } catch (_) {
+      return (Date.now().toString(16) + Math.random().toString(16).slice(2) + Math.random().toString(16).slice(2)).slice(0, 32);
+    }
+  }
+  // This tab, for the saved session: which tab holds it (see saveSession).
+  const TAB_ID = randomToken();
   function _safeStorage(name) {
     let real = null;
     try { real = window[name]; real.getItem("y4mcq.probe"); } catch (_) { real = null; }
@@ -54,7 +74,8 @@
           if (!real) throw new Error("no storage");
           real.setItem(k, v);
           mem.delete(k);
-        } catch (e) { warnOnce(e); mem.set(k, v); }
+          return true;
+        } catch (e) { warnOnce(e); mem.set(k, v); return false; }
       },
       removeItem(k) {
         k = String(k);
@@ -80,7 +101,6 @@
   const SETTINGS_KEY = "y4mcq.settings.v3";
   const REMINDER_DISMISS_KEY = "y4mcq.reminder.dismissed";
   const LOCAL_QUESTIONS_KEY  = "y4mcq.local_questions.v1";
-  const PROFILE_MIGRATED_KEY = "y4mcq.profile.migrated.v1";
   const AUTH_TOKEN_KEY       = "y4mcq.auth.token";
   // Last known masthead identity, so the name pill and the Admin button
   // can be painted with the rest of the row instead of arriving after
@@ -93,6 +113,9 @@
   // back to a half-finished test two weeks later is not resuming, it is
   // being ambushed by one.
   const SESSION_MAX_AGE_MS   = 24 * 60 * 60 * 1000;
+  // The id of the last saved session another tab ended, so the tab that
+  // was running it stops instead of recording its answers a second time.
+  const SESSION_CLOSED_KEY   = "y4mcq.session.closed.v1";
   const GUEST_KEY            = "y4mcq.guest.v1";
 
   // Cloud account state. Populated by checkAuth() on startup if a token
@@ -107,6 +130,8 @@
   // Set when a saved session could not be checked (network or server
   // error, not a 401), so the gate can say why it is showing.
   let authCheckFailed = false;
+  // Set when the saved session's account turned out to be deleted.
+  let authAccountDeleted = false;
 
   function activateGuest() {
     let g = null;
@@ -169,7 +194,8 @@
     },
     credentials_wrong:   "Wrong email or password.",
     session_expired:     "Your session has ended. Sign in again.",
-    not_admin:           "This account doesn't have admin access.",
+    account_deleted:     "This account has been deleted.",
+    not_admin:          "This account doesn't have admin access.",
     last_admin:          "You're the last admin. Make someone else an admin first.",
     user_not_found:      "That account no longer exists.",
     self_target:         "You can't do that to your own account here. Your own account is under Account.",
@@ -345,7 +371,11 @@
     }
     const { user, error } = await check;
     if (user) { cloudUser = user; identityConfirmed = true; return user; }
-    if (error && error.status === 401) {
+    if (error && error.status === 401 && error.code === "account_deleted") {
+      const known = cachedCloudUser();
+      accountDeletedRemotely(known && known.id, "/api/me");
+      authAccountDeleted = true;
+    } else if (error && error.status === 401) {
       forgetDeadSession();
     } else {
       authToken = null;
@@ -376,6 +406,7 @@
     }
     if (error && error.status === 401) {
       console.warn("[auth] /api/me returned 401 after an optimistic start:", error.code || "", error.serverError || "");
+      if (error.code === "account_deleted") { accountDeletedRemotely(cloudUser && cloudUser.id, "/api/me"); return; }
       forgetDeadSession();
       if (!state.quiz) { location.reload(); return; }
       onSessionExpired("/api/me");
@@ -405,7 +436,9 @@
         try { r = await apiFetch("/api/me", { method: "GET" }); }
         catch (e) {
           console.warn("[auth] session recheck failed:", e && e.status, e && (e.code || e.message));
-          if (e && e.status === 401) {
+          if (e && e.status === 401 && e.code === "account_deleted") {
+            accountDeletedRemotely(cloudUser && cloudUser.id, "/api/me");
+          } else if (e && e.status === 401) {
             forgetDeadSession();
             if (!state.quiz) location.reload(); else onSessionExpired("/api/me");
           } else scheduleRecheck();
@@ -502,11 +535,14 @@
   // the server's set, and dirty settings are kept and re-posted. Nothing
   // compares clocks across devices.
   //
-  // Shape: { answers: {qid: {l, c, at, n}}, flags: {qid: {on, at}},
-  //          settings: <generation, 0 = clean> }. Bounded to OUTBOX_MAX
-  // entries per map, oldest dropped first (logged).
+  // Shape: { answers: {qid: {l, c, at, n, ids}}, flags: {qid: {on, at}},
+  //          settings: <generation, 0 = clean> }. `ids` holds one
+  // attempt id per unsent attempt (n = ids.length). Bounded to the bank
+  // size (OUTBOX_MAX at least) per map, oldest dropped first (logged).
   const OUTBOX_KEY = "y4mcq.outbox.v1";
   const OUTBOX_MAX = 500;
+  // The worker reads the newest 50 ids of a post.
+  const ATTEMPT_IDS_MAX = 50;
   let _sessionExpired = false;
   function outboxKey() { return cloudUser ? `${OUTBOX_KEY}.cloud-${cloudUser.id}` : null; }
   function outboxRead() {
@@ -518,20 +554,26 @@
   // Set once the student has been told the outbox is full; cleared when it
   // has room again, so a long offline session says it once, not per answer.
   const _outboxFullTold = { answers: false, flags: false };
+  // Both maps are keyed by question id, so the bank bounds them: a scored
+  // "All" test queues thousands of answers in one write, online or not,
+  // and none of them may be dropped. OUTBOX_MAX is the floor for a boot
+  // before the bank has loaded.
   function outboxCap(map, what) {
     const ids = Object.keys(map);
-    if (ids.length < OUTBOX_MAX) _outboxFullTold[what] = false;
-    if (ids.length <= OUTBOX_MAX) return;
+    const max = Math.max(OUTBOX_MAX, (state.questions || []).length, (state.bankQuestions || []).length);
+    if (ids.length < max) _outboxFullTold[what] = false;
+    if (ids.length <= max) return;
     ids.sort((a, b) => ((map[a] && map[a].at) || 0) - ((map[b] && map[b].at) || 0));
-    const drop = ids.slice(0, ids.length - OUTBOX_MAX);
+    const drop = ids.slice(0, ids.length - max);
     for (const id of drop) delete map[id];
-    console.warn(`[sync] outbox over ${OUTBOX_MAX}: dropped ${drop.length} oldest pending ${what}`);
+    console.warn(`[sync] outbox over ${max}: dropped ${drop.length} oldest pending ${what}; online=${navigator.onLine}`);
     if (_outboxFullTold[what]) return;
     _outboxFullTold[what] = true;
     // The only real data loss in the sync path, so the student hears it.
     const noun = what === "flags" ? "flag" : "answer";
     showAppNotice(`Sorry, the ${drop.length === 1 ? `oldest unsynced ${noun}` : `${fmtNum(drop.length)} oldest unsynced ${noun}s`} ` +
-      `on this device couldn't be kept: it holds ${fmtNum(OUTBOX_MAX)} at most. Reconnect so the rest can sync.`);
+      `on this device couldn't be kept: it holds ${fmtNum(max)} at most.` +
+      (navigator.onLine === false ? " Reconnect so the rest can sync." : ""));
   }
   // Read-modify-write against storage, not an in-memory copy, so two tabs
   // do not drop each other's pending writes.
@@ -543,12 +585,18 @@
     outboxCap(o.answers, "answers");
     outboxCap(o.flags, "flags");
     if (!Object.keys(o.answers).length && !Object.keys(o.flags).length && !o.settings) localStorage.removeItem(k);
-    else save(k, o);
+    else if (!save(k, o) && !_accountGone && !storageNotice.outbox) {
+      // Held in this tab's memory only. The flush that follows every
+      // queued write may still land it; the student hears it either way.
+      console.warn(`[sync] outbox could not be written to storage; ${Object.keys(o.answers).length} answer(s), ${Object.keys(o.flags).length} flag(s) held in this tab only`);
+      storageNotice.outbox = true;
+      if (storageNotice.ready) showStorageNotice(); else storageNotice.pending = true;
+    }
     return o;
   }
 
-  function cloudPostAnswer(qid, sourceLetter, correct) {
-    return cloudPostAnswers([[qid, sourceLetter, correct]]);
+  function cloudPostAnswer(qid, sourceLetter, correct, retry) {
+    return cloudPostAnswers([[qid, sourceLetter, correct, retry]]);
   }
   // Every answer enters the outbox in one storage write before any POST,
   // so a test scored and then closed a second later has all of its
@@ -562,12 +610,23 @@
     if (!valid.length) return Promise.resolve(null);
     const at = Date.now();
     outboxUpdate(o => {
-      for (const [qid, l, correct] of valid) {
+      for (const [qid, l, correct, retry] of valid) {
         noteTouched("answers", qid);
         const prev = o.answers[qid];
-        // n counts attempts not yet on the server, so a question answered
-        // twice offline still adds two to attempt_count when it lands.
-        o.answers[qid] = { l, c: !!correct, at, n: ((prev && prev.n) || 0) + 1 };
+        // `r` asks the worker to keep a stored wrong answer wrong (a right
+        // answer in Retry). A wrong answer still queued here has not reached
+        // it yet, so that one is sent as the wrong it is.
+        const c = !!correct && !(retry && prev && prev.c === false);
+        // One random id per attempt not yet on the server, oldest first,
+        // so a question answered twice offline still adds two to
+        // attempt_count, and a POST re-sent after its response was lost
+        // adds nothing: the worker keeps the newest id it applied.
+        // Entries queued before ids existed get ids for their attempts.
+        const ids = prev && Array.isArray(prev.ids) ? prev.ids.slice()
+          : Array.from({ length: (prev && prev.n) || 0 }, randomToken);
+        ids.push(randomToken());
+        o.answers[qid] = { l, c, at, n: ids.length, ids: ids.slice(-ATTEMPT_IDS_MAX) };
+        if (retry) o.answers[qid].r = 1;
       }
     });
     return flushOutbox();
@@ -589,12 +648,14 @@
 
   // Writes made while a GET /api/state is in flight. Its body was read
   // before them, so the merge keeps the local value for each of these even
-  // after the write has left the outbox.
-  let _touched = null;
+  // after the write has left the outbox. Two pulls can overlap (boot and
+  // a reconnect), so each keeps its own list and every write goes on all.
+  const _touched = new Set();
   function noteTouched(kind, qid) {
-    if (!_touched) return;
-    if (kind === "settings") _touched.settings = true;
-    else _touched[kind].add(qid);
+    for (const t of _touched) {
+      if (kind === "settings") t.settings = true;
+      else t[kind].add(qid);
+    }
   }
 
   // One POST. "sent" and "drop" both clear the entry: a 4xx other than
@@ -612,7 +673,7 @@
                    (e && (e.serverError || e.message)) || e,
                    body && body.question_id ? `qid=${body.question_id}` : "",
                    drop ? "- dropped, the server refused it for good" : st === 401 ? "- kept for after sign-in" : "- kept, will retry");
-      if (st === 401) { onSessionExpired(path); return "retry"; }
+      if (st === 401) { onSessionExpired(path, e.code); return "retry"; }
       if (drop) {
         // Answers and flags refused one by one are single bad ids; a
         // refused settings write means settings stop syncing, which the
@@ -670,10 +731,22 @@
       if (!e) continue;
       // `at` lets the worker keep the newer of two rows for a question.
       const body = { question_id: qid, source_letter: e.l, correct: !!e.c, at: e.at, n: e.n || 1 };
+      if (e.r) body.retry = true;
+      const sentIds = Array.isArray(e.ids) && e.ids.length ? e.ids : null;
+      if (sentIds) body.attempt_ids = sentIds;
       if (await syncSend("/api/answer", body) === "retry") return false;
       outboxUpdate(x => {
         const cur = x.answers[qid];
         if (!cur) return;
+        // A re-answer while the POST was out appended its own id; only
+        // the ids just sent leave the entry.
+        if (sentIds && Array.isArray(cur.ids)) {
+          const sent = new Set(sentIds);
+          cur.ids = cur.ids.filter(id => !sent.has(id));
+          if (!cur.ids.length) delete x.answers[qid];
+          else cur.n = cur.ids.length;
+          return;
+        }
         if (cur.at === e.at) delete x.answers[qid];
         else cur.n = Math.max(1, (cur.n || 1) - (e.n || 1));
       });
@@ -690,10 +763,11 @@
   // device used "Sign out everywhere else", the password changed, or the
   // 90-day cap passed. Or another tab here signed in again or deleted the
   // account, which the stored token and the deletion mark tell apart.
-  function onSessionExpired(path) {
+  function onSessionExpired(path, code) {
     if (_sessionExpired) return;
     _sessionExpired = true;
     if (cloudUser && accountDeletedHere(cloudUser.id)) return;
+    if (code === "account_deleted") { accountDeletedRemotely(cloudUser && cloudUser.id, path); return; }
     const signedInElsewhere = !forgetDeadSession();
     console.warn(`[auth] ${path} returned 401; local progress kept in the outbox`,
                  signedInElsewhere ? "(another tab holds a newer session)" : "(token cleared)");
@@ -738,6 +812,20 @@
     setTimeout(() => location.reload(), 1500);
     return true;
   }
+  // The account was deleted on another device: the worker answers this
+  // device's token with 401 account_deleted. Its keys go the same way as
+  // a deletion here, and the mark tells this browser's other tabs.
+  function accountDeletedRemotely(id, path) {
+    if (!id) { console.warn(`[account] ${path} returned account_deleted with no account id known; nothing purged`); return; }
+    _accountGone = true;
+    _sessionExpired = true;
+    forgetDeadSession();
+    const n = purgeAccountKeys(id);
+    localStorage.setItem(ACCOUNT_DELETED_PREFIX + id, String(Date.now()));
+    console.warn(`[account] ${path} returned 401 account_deleted for ${id}; removed ${n} local key(s)`);
+    if (_homeShown) showAppNotice(ACCOUNT_DELETED_TEXT, "Reload", () => location.reload());
+  }
+  const ACCOUNT_DELETED_TEXT = "This account was deleted, so its data has been removed from this browser.";
   function sweepDeletionMarks() {
     const now = Date.now();
     for (let i = localStorage.length - 1; i >= 0; i--) {
@@ -851,6 +939,7 @@
     difficulties: [1, 2, 3, 4, 5],
     filter: "all",
     subtopics: null,   // null = all on; array of strings = subset
+    shortcuts: true,   // single-key quiz shortcuts (1-5, A-E, F, X, L)
   };
 
   const state = {
@@ -978,11 +1067,13 @@
       if (!Array.isArray(out[f]) || !out[f].length) out[f] = DEFAULT_SETTINGS[f].slice();
     }
     if (out.subtopics !== null && !Array.isArray(out.subtopics)) out.subtopics = null;
+    out.shortcuts = out.shortcuts !== false;
     return out;
   }
   // Nothing is written once the account has been deleted in another tab:
   // this tab's in-memory copy would put it back.
-  function save(k, v) { if (!_accountGone) localStorage.setItem(k, JSON.stringify(v)); }
+  // True when the write reached the browser's storage.
+  function save(k, v) { return _accountGone ? false : localStorage.setItem(k, JSON.stringify(v)); }
   // History is the largest key (about 1.6 MB once a student has worked
   // through the bank), and stringifying it on every submit costs the main
   // thread in proportion. A submit marks it instead; one write follows at
@@ -1014,6 +1105,57 @@
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") flushHistorySave();
   });
+
+  // Every tab of an account holds its own history and flags and writes
+  // the whole of each, so a write here would drop answers another tab
+  // gave. Another tab's write arrives as a storage event and is merged:
+  // per question, the row with more attempts, or on a tie the later one.
+  // Rows only this tab has are written back. Flags are written the moment
+  // they change, so the stored copy is taken as it is. A tab that was
+  // frozen in the background missed the events and reads storage when it
+  // is shown again.
+  function isNewerRow(a, b) {
+    const ca = (a && a.count) || 0, cb = (b && b.count) || 0;
+    return ca > cb || (ca === cb && ((a && a.last_at) || 0) > ((b && b.last_at) || 0));
+  }
+  function mergeHistoryFromStorage(raw) {
+    let other;
+    try { other = JSON.parse(raw); } catch (e) { console.warn("[sync] another tab's history did not parse:", e && e.message); return; }
+    if (!other || typeof other !== "object" || Array.isArray(other)) return;
+    const h = state.history || {};
+    let took = 0, ours = 0;
+    for (const qid in other) {
+      const row = other[qid];
+      if (row && typeof row === "object" && isNewerRow(row, h[qid])) { h[qid] = row; took++; }
+    }
+    for (const qid in h) if (isNewerRow(h[qid], other[qid])) ours++;
+    state.history = h;
+    if (ours) saveHistorySoon();
+    if (took) refreshHomeAfterSync();
+  }
+  function adoptStoredFlags(raw) {
+    let f;
+    try { f = JSON.parse(raw); } catch (_) { return; }
+    if (!f || typeof f !== "object" || Array.isArray(f)) return;
+    state.flags = f;
+    const quiz = state.quiz, q = quiz && quiz.pool[quiz.idx];
+    if (q && document.body.getAttribute("data-screen") === "quiz") setFlagBtn(document.getElementById("flagBtn"), !!f[q.id]);
+  }
+  window.addEventListener("storage", e => {
+    if (e.newValue == null || _accountGone || (!cloudUser && !guestUser)) return;
+    if (e.key === ns(HISTORY_KEY)) mergeHistoryFromStorage(e.newValue);
+    else if (e.key === ns(FLAGS_KEY)) adoptStoredFlags(e.newValue);
+  });
+  let _hiddenAt = 0;
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") { _hiddenAt = Date.now(); return; }
+    if (!_hiddenAt || Date.now() - _hiddenAt < 30000 || _accountGone || (!cloudUser && !guestUser)) return;
+    _hiddenAt = 0;
+    const h = localStorage.getItem(ns(HISTORY_KEY));
+    if (h != null) mergeHistoryFromStorage(h);
+    const f = localStorage.getItem(ns(FLAGS_KEY));
+    if (f != null) adoptStoredFlags(f);
+  });
   // Local save is immediate; the POST waits for 600 ms of quiet. The
   // dirty mark is written at once, so a change made offline or just
   // before the tab closes is re-posted at the next boot rather than
@@ -1030,14 +1172,22 @@
     }, 600);
   }
   // Leaving inside the debounce window: send the settings now. keepalive
-  // lets the request outlive the page. The dirty mark stays; the next
-  // boot re-posts the same settings, which is harmless.
+  // lets the request outlive the page, but not its callbacks, so the
+  // dirty mark is cleared here when the device is online. Left set, the
+  // next boot would keep this device's copy and post it over a change
+  // made since on another device. Offline, the mark stays and the next
+  // boot posts it. A failure the page lives to see marks it dirty again.
   window.addEventListener("pagehide", () => {
     if (!_settingsSyncTimer || !cloudUser || !authToken || _sessionExpired || !identityConfirmed || _accountGone) return;
     clearTimeout(_settingsSyncTimer);
     _settingsSyncTimer = null;
+    const gen = outboxRead().settings;
+    if (gen && navigator.onLine !== false) outboxUpdate(x => { if (x.settings === gen) x.settings = 0; });
     apiFetch("/api/settings", { method: "POST", keepalive: true, body: JSON.stringify({ settings: storedSettings() }) })
-      .catch(e => console.warn("[sync] pagehide settings post failed:", e && e.status, e && e.message));
+      .catch(e => {
+        console.warn("[sync] pagehide settings post failed:", e && e.status, e && e.message);
+        if (gen) outboxUpdate(x => { if (!x.settings) x.settings = gen; });
+      });
   });
 
   // Hydrate the account's or guest's state once the gate has set who it
@@ -1092,6 +1242,14 @@
       delete row.updated_at;   // never read on the client
       if (prev) {
         for (const f of LOCAL_ONLY) if (prev[f] !== undefined && row[f] === undefined) row[f] = prev[f];
+        // A right answer in Retry keeps the question wrong here. A worker
+        // that ignores `retry` stores it as right, so a server row no newer
+        // than that attempt (its `at` is whole seconds) does not undo it;
+        // a later answer from any device does.
+        if (prev.retry_held && prev.lastCorrect === false && row.lastCorrect && (row.last_at || 0) <= (prev.last_at || 0) + 1000) {
+          row.lastCorrect = false;
+          row.retry_held = true;
+        }
       }
       history[qid] = row;
     }
@@ -1115,75 +1273,6 @@
     }
   }
 
-  // One-time legacy migration. Older builds used unscoped keys (one
-  // profile per browser). Leftover unscoped data moves into the first
-  // account that signs in on this browser, so its history, flags,
-  // settings and questions don't appear lost.
-  function migrateLegacyIfNeeded() {
-    if (!cloudUser) return;
-    if (localStorage.getItem(PROFILE_MIGRATED_KEY)) return;
-    const legacy = [
-      HISTORY_KEY, FLAGS_KEY, SETTINGS_KEY,
-      REMINDER_DISMISS_KEY, LOCAL_QUESTIONS_KEY,
-    ];
-    for (const base of legacy) {
-      const raw = localStorage.getItem(base);
-      if (raw == null) continue;
-      const scoped = ns(base);
-      if (localStorage.getItem(scoped) == null) {
-        localStorage.setItem(scoped, raw);
-      }
-      localStorage.removeItem(base);
-    }
-    localStorage.removeItem("y4mcq.gate.passed");
-    localStorage.setItem(PROFILE_MIGRATED_KEY, "1");
-  }
-
-  // When a cloud user signs in for the first time on a browser that
-  // previously stored progress under the retired local profile, fold
-  // that history into the cloud namespace so their existing progress
-  // follows them. The profile path itself is gone; only the orphaned
-  // localStorage it left behind is read here.
-  const LEGACY_PROFILE_IDS = ["rob"];
-  // One import per browser, not per account, or every account that ever
-  // signs in here (a test account, a classmate on the same machine)
-  // would get the legacy history merged into its cache.
-  const LEGACY_IMPORTED_KEY = "y4mcq.legacy.imported";
-  function importLegacyHistoryIntoCloud() {
-    if (!cloudUser) return;
-    const importedFlag = "y4mcq.cloud.imported." + cloudUser.id;
-    if (localStorage.getItem(importedFlag) || localStorage.getItem(LEGACY_IMPORTED_KEY)) return;
-    // A browser where some account already took the import under the
-    // old per-account key counts as done.
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i);
-      if (k && k.startsWith("y4mcq.cloud.imported.")) {
-        localStorage.setItem(LEGACY_IMPORTED_KEY, "1");
-        return;
-      }
-    }
-    for (const profileId of LEGACY_PROFILE_IDS) {
-      const legHist = load(`${HISTORY_KEY}.${profileId}`, null);
-      if (!legHist) continue;
-      const cloudKey = `${HISTORY_KEY}.cloud-${cloudUser.id}`;
-      const existing = load(cloudKey, {});
-      for (const qid in legHist) {
-        if (!existing[qid] || (legHist[qid].count > (existing[qid].count || 0))) {
-          existing[qid] = legHist[qid];
-        }
-      }
-      save(cloudKey, existing);
-      const legFlags = load(`${FLAGS_KEY}.${profileId}`, null);
-      if (legFlags) {
-        const cloudFlagsKey = `${FLAGS_KEY}.cloud-${cloudUser.id}`;
-        const ef = load(cloudFlagsKey, {});
-        save(cloudFlagsKey, Object.assign({}, legFlags, ef));
-      }
-    }
-    localStorage.setItem(importedFlag, "1");
-    localStorage.setItem(LEGACY_IMPORTED_KEY, "1");
-  }
-
   // The gate is not a security boundary: the question JSON is public. It
   // routes a visitor to an account, a guest session or an invite; the
   // worker enforces everything else against the bearer token.
@@ -1196,8 +1285,13 @@
       const gate = document.getElementById("gate");
       const card = gate ? gate.querySelector(".gate-card") : null;
       const unlock = () => {
+        // Focus on a gate control would fall to <body> once the gate
+        // hides; it goes to the home heading instead, now or when home
+        // is drawn.
+        const fromGate = !!(gate && gate.contains(document.activeElement));
         if (gate) gate.hidden = true;
         document.body.classList.remove("locked");
+        if (fromGate) { _focusHomeHeading = true; focusHomeHeading(); }
         resolve();
       };
       if (!gate) { document.body.classList.remove("locked"); return resolve(); }
@@ -1327,6 +1421,9 @@
       const signInErr  = document.getElementById("cloudSignInErr");
       if (authCheckFailed && signInErr) {
         signInErr.textContent = "Can't reach the server to restore your session. Reload to try again, or sign in.";
+        signInErr.hidden = false;
+      } else if (authAccountDeleted && signInErr) {
+        signInErr.textContent = ACCOUNT_DELETED_TEXT;
         signInErr.hidden = false;
       }
       // The forms are novalidate: the browser's own bubbles are US English,
@@ -1527,8 +1624,6 @@
       app.appendChild(p);
       loadingTick = setInterval(paint, 500);
     }, 300);
-    migrateLegacyIfNeeded();
-    importLegacyHistoryIntoCloud();
     loadProfileState();
     // Merge the account's server state into the local cache. Not awaited:
     // if the worker is slower than the bank, home paints from the local
@@ -1580,14 +1675,24 @@
   // while the GET is in flight are kept over its older body (_touched).
   // Then the outbox drains: answers queued by an earlier visit, a guest
   // migration or a dead session.
+  // A body read before one already merged is older than it, and merging
+  // it would put back rows the newer merge replaced: pulls are numbered
+  // and a late one is dropped.
   let _stateMerged = false, _homeShown = false;
+  let _pullSeq = 0, _mergedPullSeq = 0;
   function pullServerState(verified) {
     const touched = { answers: new Set(), flags: new Set(), settings: false };
-    _touched = touched;
+    const seq = ++_pullSeq;
+    _touched.add(touched);
     return Promise.all([verified, cloudFetchState()]).then(([ok, remote]) => {
-      if (_touched === touched) _touched = null;
+      _touched.delete(touched);
       if (!ok || !cloudUser || _accountGone) return false;
       if (!remote) { scheduleRecheck(); flushOutbox(); return false; }
+      if (seq < _mergedPullSeq) {
+        console.warn(`[sync] /api/state pull ${seq} arrived after pull ${_mergedPullSeq} merged; ignored`);
+        return false;
+      }
+      _mergedPullSeq = seq;
       mergeRemoteState(remote, touched);
       save(ns(HISTORY_KEY), state.history);
       save(ns(FLAGS_KEY),   state.flags);
@@ -1627,8 +1732,15 @@
       if (back && back.isConnected && typeof back.focus === "function") back.focus({ preventScroll: true });
     };
     dlg.addEventListener("close", closed);
-    // A click on the scrim, the dialog box itself outside its card.
-    dlg.addEventListener("click", e => { if (e.target === dlg) closeModalDialog(dlg); });
+    // A click on the scrim, the dialog box itself outside its card. The
+    // press must start there too: a text selection dragged out of the
+    // card ends with a click on the dialog box.
+    let downOnScrim = false;
+    dlg.addEventListener("pointerdown", e => { downOnScrim = e.target === dlg; });
+    dlg.addEventListener("click", e => {
+      if (e.target === dlg && downOnScrim) closeModalDialog(dlg);
+      downOnScrim = false;
+    });
     dlg._closed = closed;
   }
   function openModalDialog(dlg, focusEl) {
@@ -1725,11 +1837,12 @@
   }
 
   // ── Confirmation ───────────────────────────────────────────────────
-  // Friction proportional to the blast radius. A role change is
-  // instantly reversible, so it gets none. Deleting an account destroys
-  // data that cannot be recovered, so it gets a dialog that names the
-  // person, states how many answers go with them, and requires their
-  // email typed out. window.confirm can do none of that.
+  // Friction proportional to the blast radius. Deleting an account
+  // destroys data that cannot be recovered, so it gets a dialog that
+  // names the person and states how many answers go with them.
+  // window.confirm can do none of that. Where the worker requires the
+  // caller's password (self-delete, admin delete, making an admin) the
+  // dialog asks for it.
   // tone "primary" is for a confirm that loses nothing (finishing a
   // test); everything else keeps the destructive style.
   // `askPassword` asks for the account's current password instead of a
@@ -2143,49 +2256,85 @@
     const { act, id, name } = btn.dataset;
     const email = btn.dataset.email || "";
     const answers = parseInt(btn.dataset.answers || "0", 10);
-    const run = async (path, ok, undo) => {
+    // Making an admin and deleting an account take the caller's current
+    // password, so a copied admin token alone can do neither. Removing
+    // admin takes none.
+    const askPromote = () => adminConfirm({
+      title: `Make ${name} an admin?`,
+      body: `${name} will see every account and can delete students, issue invites and change the bank.`,
+      confirmLabel: "Make admin",
+      tone: "primary",
+      askPassword: true,
+    });
+    const post = (to, password) => apiFetch(`/api/admin/users/${encodeURIComponent(id)}/${to}`,
+      password ? { method: "POST", body: JSON.stringify({ password }) } : { method: "POST" });
+    // The table is rebuilt under the pressed button, so focus goes to the
+    // same row's control, else to Undo, else to the status line.
+    const refocus = () => {
+      const target = Array.from(root.querySelectorAll("[data-act]")).find(b => b.dataset.id === id)
+        || document.querySelector("#adminStatus .admin-status-undo")
+        || document.getElementById("adminStatus");
+      if (!target) return;
+      if (target.id === "adminStatus") target.tabIndex = -1;
+      target.focus({ preventScroll: true });
+    };
+    const run = async (to, password, ok, undo) => {
       btn.disabled = true;
       const busy = { promote: "Making admin…", demote: "Removing admin…", delete: "Deleting…" }[act];
       const slow = setTimeout(() => { if (busy) btn.textContent = busy; }, 1000);
       try {
-        await apiFetch(path, { method: "POST" });
+        await post(to, password);
         clearTimeout(slow);
         adminSay("ok", ok, undo);
         await renderAdminUsersTab(root);
+        refocus();
       } catch (e) {
         clearTimeout(slow);
         btn.disabled = false;
         // Nothing was optimistic, so the row is still correct as shown.
         adminSay("error", e.message || String(e));
+        if (btn.isConnected) btn.focus({ preventScroll: true });
       }
     };
 
     if (act === "promote" || act === "demote") {
-      // Instantly reversible, so no dialog. Undo is offered instead.
-      const to = act === "promote" ? "promote" : "demote";
-      const back = act === "promote" ? "demote" : "promote";
-      return run(`/api/admin/users/${encodeURIComponent(id)}/${to}`,
+      let password = null;
+      if (act === "promote") {
+        password = await askPromote();
+        if (!password) return;
+      }
+      // Reversible, so Undo is offered. Undoing a removal makes an admin
+      // again, which asks for the password.
+      return run(act, password,
         act === "promote" ? `${name} is now an admin.` : `${name} is no longer an admin.`,
-        () => apiFetch(`/api/admin/users/${encodeURIComponent(id)}/${back}`, { method: "POST" })
-          .then(() => {
+        async () => {
+          const back = act === "promote" ? "demote" : "promote";
+          let pw = null;
+          if (back === "promote") {
+            pw = await askPromote();
+            if (!pw) return refocus();
+          }
+          try {
+            await post(back, pw);
             adminSay("ok", act === "promote" ? `${name} is no longer an admin.` : `${name} is an admin again.`);
-            renderAdminUsersTab(root);
-          })
-          .catch(e => adminSay("error", e.message || String(e))));
+            await renderAdminUsersTab(root);
+          } catch (e) {
+            adminSay("error", e.message || String(e));
+          }
+          refocus();
+        });
     }
 
     if (act === "delete") {
-      const okd = await adminConfirm({
+      const password = await adminConfirm({
         title: `Delete ${name}'s account?`,
         body: `This permanently deletes ${email} and ${plural(answers, "saved answer")}. It cannot be undone.`,
         confirmLabel: `Delete ${email} permanently`,
-        typeToMatch: email,
-        typeLabel: `Type ${email} to confirm`,
+        askPassword: true,
       });
-      if (!okd) return;
+      if (!password) return;
       // No undo offered, because there is none.
-      return run(`/api/admin/users/${encodeURIComponent(id)}/delete`,
-        `Deleted ${email} and ${plural(answers, "answer")}.`);
+      return run("delete", password, `Deleted ${email} and ${plural(answers, "answer")}.`);
     }
   }
 
@@ -2430,7 +2579,6 @@
 
       <section class="admin-pane-section account-self-delete">
         <h3>Delete this account</h3>
-        <p class="admin-note">Every answer, flag and setting goes with it. This cannot be undone.</p>
         <button type="button" class="danger-btn" id="acctSelfDeleteOpen">Delete my account</button>
       </section>
       </div>`;
@@ -2532,8 +2680,9 @@
     return `${s} s`;
   }
   // Stats answer "where am I weak?", not "how much have I done?": a few
-  // facts in a sentence, then each table weakest first, with bars that
-  // show accuracy (the number printed beside them).
+  // facts in a sentence, then disciplines weakest first and difficulty in
+  // scale order, so a fall in accuracy with difficulty reads down the
+  // table. Bars show accuracy (the number printed beside them).
   function renderStats() {
     const body = document.getElementById("statsBody");
     if (!body) return;
@@ -2584,7 +2733,7 @@
       if (fa !== fb) return fa ? 1 : -1;
       return pctOf(A) - pctOf(B) || B.n - A.n || a.localeCompare(b);
     });
-    const rows = map => sorted(map).map(k => {
+    const rows = (map, keys) => (keys || sorted(map)).map(k => {
       const e = map[k], pct = pctOf(e), few = e.n < FEW ? " stats-few" : "";
       return `
           <div class="stats-label${few}">${esc(k)}</div>
@@ -2621,7 +2770,7 @@
       </div>
       <div class="stats-section">
         <h3>By difficulty</h3>
-        <div class="stats-table">${rows(byDiff)}</div>
+        <div class="stats-table">${rows(byDiff, Object.keys(byDiff).sort((a, b) => parseInt(a, 10) - parseInt(b, 10)))}</div>
       </div>` +
       // The faint bar is the only mark on a small-sample row, so it is
       // named once, and only when such a row is on screen.
@@ -2674,12 +2823,15 @@
   }
   // A failure a retry could fix (stall, network, 5xx) is tried once more
   // after a second; a 4xx is the same answer every time.
-  async function fetchBankFile(url, init) {
-    try { return await fetchJson(url, init); }
+  // `now` skips the slot queue, for a small file that must not wait
+  // behind the batches.
+  async function fetchBankFile(url, init, now) {
+    const get = now ? fetchJsonNow : fetchJson;
+    try { return await get(url, init); }
     catch (e) {
       if (e && e.status >= 400 && e.status < 500) throw e;
       await new Promise(r => setTimeout(r, 1000));
-      return fetchJson(url, init);
+      return get(url, init);
     }
   }
   async function pullSource(src, retry) {
@@ -2765,7 +2917,11 @@
         fetch: retry => retry ? early(head.manifest, "data/batches_manifest.json", NO_CACHE)
                               : fetchJson("data/batches_manifest.json", NO_CACHE) },
       { name: "data/inbox_manifest.json", key: "inbox", group: "inbox",
-        fetch: retry => bankGroups.bust.then(b => (retry ? fetchBankFile : fetchJson)("data/inbox_manifest.json" + b)) },
+        // Outside the slot queue: the loading line counts files only once
+        // both lists are in, and queued, this 150-byte list arrives after
+        // every batch.
+        fetch: retry => bankGroups.bust.then(b => retry ? fetchBankFile("data/inbox_manifest.json" + b, undefined, true)
+                                                       : fetchJson("data/inbox_manifest.json" + b)) },
     ];
     let manifestsOut = manifests.length;
     const listThenPull = async m => {
@@ -3036,7 +3192,11 @@
         if (commentaryCandidate(src)) return src;
       }
     }
-    return bankGroups.batches.find(commentaryCandidate) || null;
+    // Before a session exists, the disciplines selected on home are the
+    // ones the first reveal will need.
+    const chosen = (state.settings && state.settings.disciplines) || [];
+    return bankGroups.batches.find(s => chosen.includes(s.topic) && commentaryCandidate(s))
+      || bankGroups.batches.find(commentaryCandidate) || null;
   }
   function prefetchCommentary() {
     while (_prefetchBusy < COMMENTARY_PREFETCH) {
@@ -3264,7 +3424,7 @@
     if (signOutBtn) {
       const isGuest = guestUser && !cloudUser;
       if (isGuest) {
-        signOutBtn.textContent = "create account";
+        signOutBtn.textContent = "Create account";
         signOutBtn.title = "Your guest answers and flags move into the new account";
       }
       signOutBtn.onclick = async e => {
@@ -3350,7 +3510,7 @@
       save(`${LOCAL_QUESTIONS_KEY}.${c}`, mine.concat(guestLocalQs.filter(q => q && !have.has(q.id))));
     }
     localStorage.setItem(importedFlag, "1");
-    for (const base of [HISTORY_KEY, FLAGS_KEY, SETTINGS_KEY, SESSION_KEY, SESSION_IDS_KEY,
+    for (const base of [HISTORY_KEY, FLAGS_KEY, SETTINGS_KEY, SESSION_KEY, SESSION_IDS_KEY, SESSION_CLOSED_KEY,
                         LOCAL_QUESTIONS_KEY, REMINDER_DISMISS_KEY]) {
       localStorage.removeItem(`${base}.${g}`);
     }
@@ -3363,6 +3523,7 @@
       if (state.quiz) leaveSession();
     };
     document.getElementById("endNowBtn").onclick = endSession;
+    document.getElementById("nextBtn").onclick = () => { if (state.quiz) onNext(); };
     document.getElementById("pauseBtn").onclick = togglePause;
   }
 
@@ -3391,6 +3552,18 @@
   }
 
   function setScreen(name) {
+    // A new screen opens at its top, not at the scroll position the last
+    // one was left at. Its h1 takes focus once the caller has drawn it,
+    // unless the caller has already put focus somewhere (a review row).
+    if (document.body.getAttribute("data-screen") !== name) {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      queueMicrotask(() => {
+        const act = document.activeElement;
+        if (act && act !== document.body && act.isConnected && !act.closest("[hidden]")) return;
+        const h = document.querySelector("#app h1");
+        if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); }
+      });
+    }
     document.body.setAttribute("data-screen", name);
     document.getElementById("colophon").hidden = name !== "quiz";
     document.getElementById("quizTopbar").hidden = name !== "quiz";
@@ -3401,6 +3574,18 @@
 
 
   // ── Home ────────────────────────────────────────────────────────────────
+  // Set when the gate hands over with focus inside it; spent on the first
+  // home heading drawn. A heading drawn later than that (a sync refresh)
+  // keeps whatever the student has focused since.
+  let _focusHomeHeading = false;
+  function focusHomeHeading() {
+    if (!_focusHomeHeading) return;
+    const h = document.querySelector("#app h1");
+    if (!h) return;
+    _focusHomeHeading = false;
+    h.tabIndex = -1;
+    h.focus({ preventScroll: true });
+  }
   function showHome() {
     setScreen("home");
     state.quiz = null;
@@ -3409,6 +3594,7 @@
     const app = document.getElementById("app");
     app.innerHTML = "";
     app.appendChild(document.getElementById("tpl-home").content.cloneNode(true));
+    focusHomeHeading();
     document.getElementById("sessionMeta").textContent = "";
 
     offerSavedSession();
@@ -3433,7 +3619,7 @@
         // this one", so the first tap from the untouched state narrows to
         // the tapped area. Later taps add and remove. Disciplines and
         // difficulties, four and five chips, keep plain toggling.
-        if (row.dataset.name === "subtopics" && !state.settings.subtopics) {
+        if (row.dataset.name === "subtopics" && !row.querySelector(".opt:not(.selected)")) {
           row.querySelectorAll(".opt").forEach(c => c.classList.toggle("selected", c === opt));
         } else {
           opt.classList.toggle("selected");
@@ -3449,6 +3635,9 @@
       saveSettings();
       renderSubtopicChips();
       onSettingsChange();
+      // The button hides itself; the section's summary is beside it.
+      const sum = document.querySelector("#tagSection > summary");
+      if (sum) sum.focus();
     };
     const tagFilter = document.getElementById("tagFilter");
     if (tagFilter) {
@@ -3460,16 +3649,25 @@
     }
     // A saved session is replaced only after the user confirms: Begin sits
     // beside the Resume strip, and one misclick would end a half-done test.
+    // A session open in another tab is left to that tab, which records it.
     document.getElementById("startBtn").onclick = async () => {
       const saved = loadSavedSession();
       if (saved) {
-        const ok = await adminConfirm({
+        const elsewhere = heldByOtherTab(saved.raw);
+        const ok = await adminConfirm(elsewhere ? {
+          title: "Start a new session?",
+          body: "A session is open in another tab. It carries on there, but only the new one can be resumed later.",
+          confirmLabel: "Start new session",
+        } : {
           title: "Replace the saved session?",
           body: "The session in progress will be discarded. Answers so far are kept in your history.",
           confirmLabel: "Start new session",
         });
         if (!ok || state.quiz) return;
-        discardSavedSession(saved);
+        // Read again: the dialog may have been open while the session
+        // was finished, resumed or ended in another tab.
+        const now = loadSavedSession();
+        if (now && sameSavedSession(now.raw, saved.raw) && !heldByOtherTab(now.raw)) discardSavedSession(now);
       }
       startQuiz();
     };
@@ -3525,10 +3723,11 @@
     state.questions.forEach(q => {
       if (!visible.has(q.topic)) return;
       const k = subtopicKey(q);
-      const e = counts[k] || (counts[k] = { topic: q.topic, n: 0, spellings: {} });
+      const e = counts[k] || (counts[k] = { topic: q.topic, n: 0, spellings: {}, details: new Set() });
       e.n++;
       const raw = String(q.subtopic || "Other").trim();
       e.spellings[raw] = (e.spellings[raw] || 0) + 1;
+      if (q.subtopic_detail) e.details.add(foldArea(q.subtopic_detail));
     });
     const label = e => {
       // Most used spelling; on a tie, the one with a capital first letter.
@@ -3548,17 +3747,24 @@
       const group = document.createElement("div");
       group.className = "tag-group";
       if (topics.length > 1) {
+        // 40 area names recur across disciplines, so each group is named.
         const h = document.createElement("p");
         h.className = "tag-group-head";
+        h.id = "tagHead-" + SERVABLE_TOPICS.indexOf(topic);
         h.textContent = topic;
         group.appendChild(h);
+        group.setAttribute("role", "group");
+        group.setAttribute("aria-labelledby", h.id);
       }
       for (const [k, e, name] of entries) {
         const c = document.createElement("button");
         const isOn = !selected || subtopicSelected(selected, { topic: e.topic, subtopic: name });
         c.className = "opt" + (isOn ? " selected" : "");
         c.dataset.value = k;
-        c.dataset.find = foldArea(name);
+        // Area names are fragmented (351 of 701 hold one question), so
+        // Find also searches the specific topic of each question in the
+        // area: "asthma" finds Respiratory.
+        _chipFind.set(c, { name: foldArea(name), details: [...e.details].map(d => "\n " + d).join(""), i: total });
         c.textContent = `${name} (${fmtNum(e.n)})`;
         group.appendChild(c);
         total++; if (isOn) on++;
@@ -3570,24 +3776,47 @@
       : narrowed ? `(${fmtNum(on)} of ${fmtNum(total)})` : `(all ${fmtNum(total)})`;
     const reset = document.getElementById("tagsAll");
     if (reset) reset.hidden = !narrowed;
+    syncAreaPressed(wrap, narrowed);
     const find = document.getElementById("tagFilter");
     if (find && find.value) filterAreaChips(find.value);
   }
-  // Hides the chips whose name does not contain the typed text, and any
-  // discipline left with none. Selection is untouched.
+  // Hides the chips whose name does not contain the typed text and whose
+  // questions have no topic with a word starting with it, and any
+  // discipline left with none. Name matches come first in each group, so
+  // "resp" puts Respiratory ahead of the areas that only hold a
+  // respiratory question. Selection is untouched.
+  const _chipFind = new WeakMap();
   function filterAreaChips(text) {
     const wrap = document.getElementById("subtopicChips");
     if (!wrap) return;
     const t = foldArea(text);
+    let shown = 0;
     wrap.querySelectorAll(".tag-group").forEach(g => {
-      let any = false;
-      g.querySelectorAll(".opt").forEach(c => {
-        const hit = !t || c.dataset.find.includes(t);
-        c.hidden = !hit;
-        if (hit) any = true;
+      const ranked = Array.from(g.querySelectorAll(".opt")).map(c => {
+        const f = _chipFind.get(c) || { name: "", details: "", i: 0 };
+        const rank = !t || f.name.includes(t) ? 0 : f.details.includes(" " + t) ? 1 : 2;
+        c.hidden = rank === 2;
+        if (rank < 2) shown++;
+        return { c, rank: t ? rank : 0, i: f.i };
       });
-      g.hidden = !any;
+      // Moved in the DOM rather than by CSS order, so Tab follows what
+      // is on screen.
+      ranked.sort((a, b) => a.rank - b.rank || a.i - b.i).forEach(x => g.appendChild(x.c));
+      g.hidden = ranked.every(x => x.c.hidden);
     });
+    const none = document.getElementById("tagNone");
+    if (none) none.textContent = t && !shown ? `No learning area matches "${String(text).trim()}".` : "";
+  }
+  // Untouched, every area is included and every chip shows its box
+  // filled, but none has been chosen: the first tap narrows to that
+  // area. Pressed is reported only for chips the student chose.
+  function syncAreaPressed(wrap, narrowed) {
+    wrap = wrap || document.getElementById("subtopicChips");
+    if (!wrap) return;
+    wrap.querySelectorAll(".opt").forEach(o =>
+      o.setAttribute("aria-pressed", narrowed && o.classList.contains("selected") ? "true" : "false"));
+    if (narrowed) wrap.removeAttribute("aria-describedby");
+    else wrap.setAttribute("aria-describedby", "tagHint");
   }
 
   function applySettingsToOptions() {
@@ -3615,8 +3844,16 @@
     const name = row.dataset.name;
     const values = Array.from(row.querySelectorAll(".opt.selected")).map(o => o.dataset.value);
     if (name === "disciplines") {
+      const added = values.filter(v => !state.settings.disciplines.includes(v));
       state.settings.disciplines = values;
-      // Re-render the subtopic chips so they reflect the new discipline set.
+      // A discipline switched on while areas are narrowed comes back with
+      // all its areas; otherwise it adds nothing to the pool.
+      const sel = state.settings.subtopics;
+      if (sel && added.length) {
+        const keys = new Set(sel);
+        for (const q of state.questions) if (added.includes(q.topic)) keys.add(subtopicKey(q));
+        state.settings.subtopics = [...keys];
+      }
       renderSubtopicChips();
     } else if (name === "difficulties") {
       state.settings.difficulties = values.map(v => parseInt(v, 10)).filter(n => !isNaN(n));
@@ -3630,6 +3867,7 @@
       if (label && total) label.textContent = state.settings.subtopics ? `(${fmtNum(on)} of ${fmtNum(total)})` : `(all ${fmtNum(total)})`;
       const reset = document.getElementById("tagsAll");
       if (reset) reset.hidden = !state.settings.subtopics;
+      syncAreaPressed(row, !!state.settings.subtopics);
     }
     saveSettings();
   }
@@ -3640,8 +3878,8 @@
     });
     // aria-pressed mirrors .selected, which a screen reader cannot see.
     // Every click on the home screen ends here, so this one pass covers
-    // them all.
-    document.querySelectorAll(".setup-options .opt").forEach(o =>
+    // them all. Learning areas keep their own rule (syncAreaPressed).
+    document.querySelectorAll(".setup-options:not(#subtopicChips) .opt").forEach(o =>
       o.setAttribute("aria-pressed", o.classList.contains("selected") ? "true" : "false"));
     // Track the discipline picker live, not just at session start, so
     // the wordmark matches what is selected on the home screen.
@@ -3826,9 +4064,27 @@
       (raw.mode === "test" ? ` of ${fmtNum(pool.length)}` : "") + `, ${fmtNum(answered)} answered` +
       (left !== null ? `, ${left} minute${left === 1 ? "" : "s"} left on the clock` : "") + ".";
     row.hidden = false;
-    document.getElementById("resumeBtn").onclick = () => resumeSession(saved);
+    // The row was drawn earlier; the stored session is read again before
+    // acting, since another tab may have finished or replaced it since.
+    const current = () => {
+      const now = loadSavedSession();
+      if (now && sameSavedSession(now.raw, raw)) return now;
+      console.warn("[session] the saved session on this row changed in another tab; redrawing the row");
+      offerSavedSession();
+      return null;
+    };
+    document.getElementById("resumeBtn").onclick = () => {
+      const now = current();
+      if (now) resumeSession(now);
+    };
     document.getElementById("resumeDiscardBtn").onclick = () => {
-      discardSavedSession(saved);
+      const now = current();
+      if (!now) return;
+      if (heldByOtherTab(now.raw)) {
+        showAppNotice("This session is open in another tab. Finish or leave it there.");
+        return;
+      }
+      discardSavedSession(now);
       row.hidden = true;
     };
   }
@@ -3842,10 +4098,13 @@
         mode: "test", pool: saved.pool,
         answers: saved.raw.answers || {}, timeMs: saved.raw.timeMs || {},
         preRecorded: saved.raw.preRecorded || null,
-        salt: saved.raw.salt || "", retry: !!saved.raw.retry,
+        salt: saved.raw.salt || "",
+        retry: Array.isArray(saved.raw.retry) ? saved.raw.retry : !!saved.raw.retry,
       });
     }
-    clearSavedSession();
+    clearSavedSession(saved && saved.raw && saved.raw.sid);
+    // The tab that was running it, if any, stops without recording it.
+    if (saved && saved.raw && saved.raw.sid) save(ns(SESSION_CLOSED_KEY), { sid: saved.raw.sid, at: Date.now() });
   }
 
   // Written on every mutation that would be painful to lose, read once at
@@ -3860,18 +4119,137 @@
   // list's tag, so a list left over from another session is never used.
   const SESSION_IDS_KEY = "y4mcq.session.ids.v1";
   let _savedPool = null, _savedPoolNs = null, _savedPoolTag = null;
-  function clearSavedSession() {
-    localStorage.removeItem(ns(SESSION_KEY));
-    localStorage.removeItem(ns(SESSION_IDS_KEY));
+  // Removes the saved session `sid`. Another tab's session in the slot is
+  // left alone: finishing here must not throw away a test open there.
+  function clearSavedSession(sid) {
+    const raw = load(ns(SESSION_KEY), null);
+    if (raw && raw.sid && raw.sid !== sid) {
+      console.info("[session] the saved session is another tab's; left in place", raw.sid, sid);
+    } else {
+      localStorage.removeItem(ns(SESSION_KEY));
+      localStorage.removeItem(ns(SESSION_IDS_KEY));
+    }
     _savedPool = null; _savedPoolTag = null;
   }
 
-  function saveSession() {
+  // Several tabs share one saved-session slot per account. Each saved
+  // session carries an id (`sid`), the tab that holds it (`owner`) and a
+  // heartbeat (`beat`) that tab refreshes while it is open. A session
+  // whose holder beat within SESSION_LIVE_MS is live: other tabs may
+  // resume it (it moves to them) but never discard or record it. A tab
+  // that finds its session moved or ended elsewhere stops it unrecorded;
+  // one whose session was replaced by a new one carries on unsaved and
+  // records its test when it finishes, is left or the tab closes.
+  // Background tabs get timers about once a minute, hence the margin.
+  const SESSION_BEAT_MS = 30000;
+  const SESSION_LIVE_MS = 3 * 60000;
+  function heldByOtherTab(raw) {
+    return !!(raw && raw.owner && raw.owner !== TAB_ID && Date.now() - (Number(raw.beat) || 0) < SESSION_LIVE_MS);
+  }
+  // Sessions saved before ids existed are told apart by their pool tag.
+  function sameSavedSession(a, b) {
+    if (!a || !b) return false;
+    return a.sid || b.sid ? a.sid === b.sid : a.poolTag === b.poolTag;
+  }
+  // "ours", "free" (nothing saved), "moved" (resumed in another tab),
+  // "closed" (ended in another tab) or "replaced" (another session saved).
+  function sessionStanding(q) {
+    if (!q || !q.sid) return "ours";
+    const raw = load(ns(SESSION_KEY), null);
+    if (raw && raw.sid === q.sid) return !raw.owner || raw.owner === TAB_ID ? "ours" : "moved";
+    const closed = load(ns(SESSION_CLOSED_KEY), null);
+    if (closed && closed.sid === q.sid) return "closed";
+    return raw && (raw.sid || raw.poolTag) ? "replaced" : "free";
+  }
+  function checkSessionStanding() {
+    const q = state.quiz;
+    if (!q || q.finished || q.ephemeral || q.detached || !q.sid) return;
+    const st = sessionStanding(q);
+    if (st !== "ours" && st !== "free") detachSession(q, st);
+  }
+  function detachSession(q, st) {
+    q.detached = st;
+    console.warn(`[session] ${q.sid} was ${st} in another tab;`,
+                 st === "replaced" ? "carrying on here unsaved" : "stopping here without recording it");
+    if (st === "replaced") {
+      showAppNotice("A new session was started in another tab, so this one can't be resumed after this tab closes. Its answers still count.");
+      return;
+    }
+    // The other tab records it now, or already has.
+    q.committed = true;
+    stopSessionTimer();
+    setTimeout(() => {
+      if (state.quiz !== q) return;
+      showHome();
+      showAppNotice(st === "moved" ? "This session was resumed in another tab." : "This session was ended in another tab.");
+    }, 0);
+  }
+  function sessionHeartbeat() {
+    const q = state.quiz;
+    if (!q || q.finished || q.ephemeral || q.detached || !q.sid) return;
+    const raw = load(ns(SESSION_KEY), null);
+    if (!raw || raw.sid !== q.sid || raw.owner !== TAB_ID) { checkSessionStanding(); return; }
+    raw.beat = Date.now();
+    save(ns(SESSION_KEY), raw);
+  }
+  setInterval(sessionHeartbeat, SESSION_BEAT_MS);
+  window.addEventListener("pageshow", e => {
+    if (!e.persisted) return;
+    const q = state.quiz;
+    // Back from the back/forward cache after the close below recorded
+    // the test: what was recorded is not recorded again at the end.
+    if (q && q._committedOnHide) {
+      q._committedOnHide = false;
+      q.committed = false;
+      q.preRecorded = { ...(q.preRecorded || {}), ...q.answers };
+    }
+    checkSessionStanding();
+    sessionHeartbeat();
+  });
+  window.addEventListener("pagehide", () => {
+    const q = state.quiz;
+    if (!q || q.finished || q.ephemeral || !q.sid) return;
+    // A replaced test is not saved anywhere, so closing the tab is leaving
+    // it: its answers go to history now.
+    if (q.detached === "replaced") {
+      if (q.mode === "test" && !q.committed) {
+        chargeQuestionTime();
+        commitTestAnswers(q);
+        q._committedOnHide = true;
+        flushHistorySave();
+      }
+      return;
+    }
+    // Held by no one once this tab is gone: another tab can end it now
+    // rather than after SESSION_LIVE_MS.
+    const raw = load(ns(SESSION_KEY), null);
+    if (raw && raw.sid === q.sid && raw.owner === TAB_ID) { raw.beat = 0; save(ns(SESSION_KEY), raw); }
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") checkSessionStanding();
+  });
+  window.addEventListener("storage", e => {
+    if (!e.key || (!cloudUser && !guestUser)) return;
+    if (e.key !== ns(SESSION_KEY) && e.key !== ns(SESSION_CLOSED_KEY)) return;
+    checkSessionStanding();
+    // The resume row on home follows the stored session.
+    if (!state.quiz && document.body.getAttribute("data-screen") === "home") offerSavedSession();
+  });
+
+  // `claim` takes the slot for this tab without asking whose it is: a
+  // resume moves the session here.
+  function saveSession(claim) {
     const q = state.quiz;
     // A one-question report review from the admin panel is never the
     // session to resume.
     if (q && q.ephemeral) return;
-    if (!q || q.finished) { clearSavedSession(); return; }
+    if (!q || q.finished) { clearSavedSession(q && q.sid); return; }
+    if (q.detached) return;
+    if (claim !== true) {
+      const st = sessionStanding(q);
+      if (st !== "ours" && st !== "free") { detachSession(q, st); return; }
+    }
+    if (!q.sid) q.sid = randomToken();
     const key = ns(SESSION_KEY);
     // Another tab may have replaced the stored list since; a prefix check
     // on the raw string is enough and costs no parse.
@@ -3885,6 +4263,9 @@
     const cur = q.pool[q.idx];
     save(key, {
       poolTag: _savedPoolTag,
+      sid: q.sid,
+      owner: TAB_ID,
+      beat: Date.now(),
       // The id as well as the index: if an earlier question is retired
       // before the resume, the index alone lands on a different one.
       currentId: cur ? cur.id : null,
@@ -3923,12 +4304,14 @@
     const byId = Object.create(null);
     for (const q of state.questions) byId[q.id] = q;
     const pool = ids.map(id => byId[id]).filter(Boolean);
-    if (!raw.savedAt || Date.now() - raw.savedAt > SESSION_MAX_AGE_MS) {
+    // A session still open in another tab is that tab's to close.
+    if ((!raw.savedAt || Date.now() - raw.savedAt > SESSION_MAX_AGE_MS) && !heldByOtherTab(raw)) {
       // Too old to resume, but a test's answers still count. With the bank
       // not loaded yet the ids cannot be resolved, so wait for a later call.
       if (!state.questions.length) return null;
       console.warn("[session] saved session older than 24 h; closing it", raw.mode, pool.length);
       discardSavedSession({ raw, pool });
+      tellExpiredSession(raw, pool);
       return null;
     }
     if (!pool.length) return null;
@@ -3937,6 +4320,33 @@
       if (at >= 0) raw.idx = at;
     }
     return { raw, pool };
+  }
+
+  // A session closed for age is said, not dropped in silence: when it was
+  // left, and for a test the score it was marked with, since that test
+  // never reached a results screen.
+  function tellExpiredSession(raw, pool) {
+    const answers = raw.answers || {};
+    const when = raw.savedAt ? new Date(raw.savedAt).toLocaleString("en-AU",
+      { weekday: "long", hour: "numeric", minute: "2-digit" }) : "";
+    const from = when ? ` from ${when}` : "";
+    if (raw.mode === "test") {
+      let answered = 0, correct = 0;
+      for (const q of pool) {
+        const l = answers[q.id];
+        if (!l) continue;
+        answered++;
+        if (_shuffledOptions(q, raw.salt || "").find(o => o.letter === l)?.correct) correct++;
+      }
+      const open = pool.length - answered;
+      showAppNotice(`Your test${from} was left for over a day, so it has been marked: ` +
+        `${fmtNum(correct)} of ${fmtNum(pool.length)} correct` + (open ? `, ${fmtNum(open)} unanswered` : "") +
+        ". The answers are in your history and Stats.");
+      return;
+    }
+    const n = Object.keys(answers).filter(id => (raw.revealed || {})[id]).length;
+    showAppNotice(`Your study session${from} was left for over a day, so it has been closed.` +
+      (n ? ` Its ${fmtNum(n)} answer${n === 1 ? " is" : "s are"} in your history.` : ""));
   }
 
   function resumeSession(saved) {
@@ -3954,12 +4364,20 @@
       timeMs: raw.timeMs || {},
       preRecorded: raw.preRecorded || null,
       salt: typeof raw.salt === "string" ? raw.salt : "",
-      retry: !!raw.retry,
+      retry: Array.isArray(raw.retry) ? raw.retry.filter(id => typeof id === "string") : !!raw.retry,
       struck: Object.fromEntries(Object.entries(raw.struck || {})
         .map(([k, v]) => [k, new Set(Array.isArray(v) ? v : [])])),
       finished: false,
+      sid: typeof raw.sid === "string" && raw.sid ? raw.sid : randomToken(),
     };
-    state.sessionStart = raw.sessionStart || Date.now();
+    // The session clock counts time spent in the session, up to its last
+    // save, not the night between leaving and resuming. A countdown runs
+    // off its own absolute deadline.
+    state.sessionStart = Date.now() -
+      (raw.sessionStart && raw.savedAt ? Math.max(0, raw.savedAt - raw.sessionStart) : 0);
+    // Held by this tab from now on (a reload is a new tab id); a tab that
+    // had it open stops.
+    saveSession(true);
     document.body.dataset.mode = state.quiz.mode;
     setScreen("quiz");
     document.getElementById("sessionMeta").textContent =
@@ -4093,9 +4511,11 @@
     // <body>, so a keyboard or screen-reader user would not hear that a
     // new question loaded. Land on the stem instead, unless something
     // outside #app (the topbar, a revealed question's Next) holds focus.
+    // The colophon's Next hides for a question not yet answered, and a
+    // hidden control keeps focus until the browser notices.
     const act = document.activeElement;
     const stem = document.getElementById("qStem");
-    if (stem && (!act || act === document.body || !act.isConnected)) {
+    if (stem && (!act || act === document.body || !act.isConnected || act.closest("[hidden]"))) {
       stem.tabIndex = -1;
       stem.focus({ preventScroll: true });
     }
@@ -4140,7 +4560,7 @@
     document.getElementById("qtPrev").disabled = navTarget(-1) < 0;
     const qtNext = document.getElementById("qtNext");
     qtNext.disabled = navTarget(+1) < 0;
-    // Once a question is revealed the filled Next under it is the way on;
+    // Once a question is revealed the filled Next in the colophon is the way on;
     // a second Next in the topbar would be the same action in another
     // style. Hidden rather than removed so the counter stays centred.
     const cur = state.quiz.pool[idx];
@@ -4163,6 +4583,9 @@
   // Set when the current question changes, cleared once the window has
   // been repositioned. Paging leaves it false so the view stays put.
   let navFollowCurrent = true;
+  // The Keyboard legend stays open across the rebuild on every question
+  // once the student has opened it.
+  let navKeysOpen = false;
 
   // Memoised per question: did the letter the user picked turn out to
   // be the correct one. Keyed by question id, filled lazily.
@@ -4273,6 +4696,7 @@
       : `<b>${fmtNum(answered)}</b> of ${fmtNum(total)} answered`;
     // In a test Enter only moves on; nothing is shown until the end.
     const enterDoes = study ? "show answer, then next" : "next";
+    const keysOn = state.settings.shortcuts !== false;
 
     // Go to is for a test, where question 34 of 40 is a place to return
     // to. In a study session every reached question is already a chip.
@@ -4292,16 +4716,20 @@
                  placeholder="${state.quiz.idx + 1}" />
           <button type="submit">Go</button>
         </form>` : ""}
-      <details class="nav-keys kbd-only">
+      <details class="nav-keys kbd-only"${navKeysOpen ? " open" : ""}>
         <summary>Keyboard</summary>
         <dl>
-          <dt>1 to 5 or A to E</dt><dd>choose an option</dd>
-          <dt>shift + the same</dt><dd>rule it out</dd>
+          ${keysOn ? `<dt>1 to 5 or A to E</dt><dd>choose an option</dd>
+          <dt>shift + the same</dt><dd>rule it out</dd>` : ""}
           <dt>Enter</dt><dd>${enterDoes}</dd>
           <dt>Left / Right</dt><dd>previous / next</dd>
-          <dt>F</dt><dd>flag</dd>
-          <dt>L</dt><dd>reference values</dd>
+          ${keysOn ? `<dt>F</dt><dd>flag</dd>
+          <dt>L</dt><dd>reference values</dd>` : ""}
         </dl>
+        <label class="nav-keys-switch">
+          <input type="checkbox" data-keys-switch${keysOn ? " checked" : ""} />
+          Single-key shortcuts
+        </label>
       </details>`;
   }
 
@@ -4364,6 +4792,19 @@
       e.preventDefault();
       const n = parseInt(form.querySelector("input").value, 10);
       if (n >= 1 && n <= state.quiz.pool.length) jumpTo(n - 1);
+    });
+    // `toggle` does not bubble, so it is caught on the way down.
+    root.addEventListener("toggle", e => {
+      if (e.target.classList && e.target.classList.contains("nav-keys")) navKeysOpen = e.target.open;
+    }, true);
+    root.addEventListener("change", e => {
+      if (!e.target.matches || !e.target.matches("[data-keys-switch]")) return;
+      state.settings.shortcuts = e.target.checked;
+      saveSettings();
+      renderNavigator();
+      const again = root.querySelector("[data-keys-switch]");
+      if (again) again.focus();
+      announce(e.target.checked ? "Single-key shortcuts on." : "Single-key shortcuts off.");
     });
   }
 
@@ -4458,7 +4899,7 @@
       stopSessionTimer();
       // Only a session being left takes the saved copy with it; the brand
       // on the home screen must not clear the session Resume is offering.
-      if (quiz && !quiz.ephemeral) clearSavedSession();
+      if (quiz && !quiz.ephemeral) clearSavedSession(quiz.sid);
     }
     showHome();
   }
@@ -4474,7 +4915,7 @@
     stopSessionTimer();
     chargeQuestionTime();
     commitTestAnswers(quiz);
-    if (!quiz.ephemeral) clearSavedSession();
+    if (!quiz.ephemeral) clearSavedSession(quiz.sid);
     return true;
   }
 
@@ -4509,17 +4950,31 @@
     const chosen = _shuffledOptions(q, (quiz && quiz.salt) || "").find(o => o.letter === letter);
     const isC = !!(chosen && chosen.correct);
     const prev = state.history[q.id] || {};
+    // A retry follows the report by seconds, so a right answer there is
+    // recall of what was just read; the miss stays on Previously
+    // incorrect until the question is got right in another session. Only
+    // the questions answered wrong are held; one merely left unanswered
+    // was never read about. A retry saved before the list existed is
+    // `true` and holds them all.
+    const retry = isRetryMiss(quiz, q.id);
+    const held = retry && prev.lastCorrect === false && isC;
     state.history[q.id] = {
-      // A retry follows the report by seconds, so a right answer there is
-      // recall of what was just read; the miss stays on Previously
-      // incorrect until the question is got right in another session.
-      lastCorrect: quiz && quiz.retry && prev.lastCorrect === false ? false : isC,
+      lastCorrect: held ? false : isC,
       count: (prev.count || 0) + 1,
       last_at: Date.now(),
       time_ms_total: (prev.time_ms_total || 0) + (elapsedMs || 0),
       first_correct: prev.first_correct ?? (prev.count ? prev.first_correct : isC),
     };
-    return { chosen, isC };
+    // Marks a row whose server copy may say right (a worker that does not
+    // know about retries); the merge keeps it wrong. See mergeRemoteState.
+    if (held) state.history[q.id].retry_held = true;
+    return { chosen, isC, retry };
+  }
+  function isRetryMiss(quiz, qid) {
+    if (!quiz || !quiz.retry) return false;
+    if (!Array.isArray(quiz.retry)) return true;
+    if (!quiz._retrySet) Object.defineProperty(quiz, "_retrySet", { value: new Set(quiz.retry) });
+    return quiz._retrySet.has(qid);
   }
 
   // A test is recorded once, with its final answers, when it is scored or
@@ -4528,14 +4983,17 @@
   // answer left with Next, a chip or the clock running out.
   function commitTestAnswers(quiz) {
     if (!quiz || quiz.mode !== "test" || quiz.committed) return;
+    // A test resumed or ended in another tab is recorded there.
+    if (quiz === state.quiz && !quiz.detached) checkSessionStanding();
+    if (quiz.committed) return;
     quiz.committed = true;
     const posts = [];
     for (const q of quiz.pool) {
       const letter = quiz.answers[q.id];
       if (!letter) continue;
       if (quiz.preRecorded && quiz.preRecorded[q.id] === letter) continue;
-      const { chosen, isC } = recordAttempt(q, letter, (quiz.timeMs || {})[q.id] || 0, quiz);
-      if (chosen && chosen.sourceLetter) posts.push([q.id, chosen.sourceLetter, isC]);
+      const { chosen, isC, retry } = recordAttempt(q, letter, (quiz.timeMs || {})[q.id] || 0, quiz);
+      if (chosen && chosen.sourceLetter) posts.push([q.id, chosen.sourceLetter, isC, retry]);
     }
     if (!posts.length) return;
     save(ns(HISTORY_KEY), state.history);
@@ -4562,20 +5020,41 @@
   // The end control names what it does: a test is finished (and marked,
   // after a dialog), a study session simply ends, and a review goes back
   // to the results it came from.
+  //
+  // The bar reads left to right as out, clock, on. A live test's way on
+  // is Finish test, so it holds the right end. In study and review the
+  // way on is Next, which appears there once the answer is shown, so it
+  // is one tap away however far down the commentary the reader is; End
+  // then sits on the left. On the last question Next and End would be
+  // the same action, so the primary takes End's name and End stands down.
   function paintColophon() {
     const end = document.getElementById("endNowBtn");
     if (!end) return;
     const quiz = state.quiz;
-    end.textContent = quiz && quiz.reviewing ? "Back to results"
+    const liveTest = !!(quiz && quiz.mode === "test" && !quiz.finished && !quiz.reviewing);
+    const endLabel = quiz && quiz.reviewing ? "Back to results"
       : quiz && quiz.mode === "test" ? "Finish test" : "End session";
+    end.textContent = endLabel;
     // Only a live test has two ways out: finished and marked, or left
     // unscored. Study keeps every answer either way, so End is its one
     // control; the brand still goes home.
     const exit = document.getElementById("exitBtn");
     if (exit) {
-      exit.hidden = !(quiz && quiz.mode === "test" && !quiz.finished && !quiz.reviewing);
+      exit.hidden = !liveTest;
       exit.textContent = "Leave test";
     }
+    const next = document.getElementById("nextBtn");
+    const left = exit && exit.parentNode, right = next && next.parentNode;
+    if (left && right) {
+      const home = liveTest ? right : left;
+      if (end.parentNode !== home) home.insertBefore(end, liveTest ? next : null);
+    }
+    const q = quiz && quiz.pool && quiz.pool[quiz.idx];
+    const shown = !!(q && quiz.revealed[q.id]) && !liveTest;
+    if (next) next.hidden = !shown;
+    const last = shown && navTarget(+1) < 0;
+    if (next) next.textContent = last ? endLabel : "Next";
+    end.hidden = last;
   }
 
   // Screen-reader announcements. Cleared first so the same sentence
@@ -4662,7 +5141,10 @@
     const hit = _shuffleCache.get(q);
     if (hit && hit.salt === salt) return hit.out;
     const seed = q.id || JSON.stringify(q.options.map(o => o.text));
-    const order = _seededOrder(salt ? `${seed}:${salt}` : seed, q.options.length);
+    // "=CEABD" is an order given outright, by source letter: the order a
+    // reporter saw, replayed for the admin reading the report.
+    const given = salt.charAt(0) === "=" ? shownOrder(q, salt.slice(1)) : null;
+    const order = given || _seededOrder(salt ? `${seed}:${salt}` : seed, q.options.length);
     const letters = ["A", "B", "C", "D", "E", "F", "G"];
     const out = order.map((origIdx, newIdx) => {
       const o = q.options[origIdx];
@@ -4674,6 +5156,20 @@
     return out;
   }
   function newShuffleSalt() { return Math.random().toString(36).slice(2, 8); }
+  // Option indexes for a displayed order written as source letters, or
+  // null when it is not a full arrangement of this question's options
+  // (edited since the report, say).
+  function shownOrder(q, letters) {
+    const src = q.options.map(o => o.letter);
+    const order = String(letters || "").split("").map(l => src.indexOf(l));
+    return order.length === src.length && order.every(i => i >= 0) && new Set(order).size === order.length
+      ? order : null;
+  }
+  // "CEABD" as "A=C, B=E, C=A, D=B, E=D": displayed letter = source letter.
+  function shownLetters(shown) {
+    if (typeof shown !== "string" || !/^[A-G]{2,7}$/.test(shown)) return "";
+    return shown.split("").map((src, i) => `${"ABCDEFG"[i]}=${src}`).join(", ");
+  }
 
   // An explanation is an object with summary / pearls / why_not. Some
   // batches write it as a plain string, which is taken as the summary.
@@ -4835,7 +5331,7 @@
           <span class="opt-letter" aria-hidden="true">${opt.letter}</span>
           <span class="opt-body">
             <span class="opt-text">${esc(opt.text)}</span>
-            <span class="opt-rationale">${rationales.get(opt.letter)}</span>
+            <span class="opt-rationale" id="optWhy${opt.letter}">${rationales.get(opt.letter)}</span>
           </span>
         </span>
         <button type="button" class="opt-strike" data-letter="${opt.letter}"
@@ -4883,11 +5379,9 @@
 
     document.getElementById("submitBtn").onclick = onSubmit;
     paintSubmitBtn(q);
-    document.getElementById("nextBtn").onclick = onNext;
-    // A second Next at the foot of the commentary, so a reader who has
-    // scrolled through it on a phone does not have to scroll back up.
-    const nextEnd = document.getElementById("nextBtnEnd");
-    if (nextEnd) nextEnd.onclick = onNext;
+    // The colophon's Next outlives the question; it comes back with the
+    // reveal.
+    document.getElementById("nextBtn").hidden = true;
     const flagBtn = document.getElementById("flagBtn");
     flagBtn.onclick = () => {
       const on = !state.flags[q.id];
@@ -4965,7 +5459,7 @@
     if (!state.quiz.answers[q.id]) return;
     if (state.quiz.revealed[q.id]) return;
     const elapsedMs = state.questionStart ? Math.min(1000 * 60 * 30, Date.now() - state.questionStart) : 0;
-    const { chosen, isC } = recordAttempt(q, state.quiz.answers[q.id], elapsedMs);
+    const { chosen, isC, retry } = recordAttempt(q, state.quiz.answers[q.id], elapsedMs);
     saveHistorySoon();
     state.quiz.revealed[q.id] = true;
     saveSession();
@@ -4974,7 +5468,7 @@
     // counts and the Unseen / Previously-incorrect filters survive a device
     // change.
     if (cloudUser && chosen && chosen.sourceLetter) {
-      cloudPostAnswer(q.id, chosen.sourceLetter, isC);
+      cloudPostAnswer(q.id, chosen.sourceLetter, isC, retry);
     }
     revealAnswer(q);
     renderTopbar();
@@ -4989,37 +5483,68 @@
   // Commentary not yet loaded is fetched and painted when it lands, if
   // the question is still the one revealed on screen; a failed fetch is
   // said in its place and tried again.
-  const commentaryRetry = { timer: null, delay: 0, q: null };
+  // `said` is set once the wait has been announced, so the arrival is
+  // announced too; a load under a second stays silent.
+  const commentaryRetry = { timer: null, delay: 0, q: null, sayT: null, said: false, t0: 0 };
+  const COMMENTARY_SAY_MS = 1000;
   function commentaryOnScreen(q) {
     return !!(state.quiz && state.quiz.pool && state.quiz.pool[state.quiz.idx] === q &&
       state.quiz.revealed[q.id] && document.body.dataset.screen === "quiz" &&
       document.getElementById("explainSummary"));
   }
   function paintCommentary(q) {
-    const ex = document.getElementById("explainBlock");
     const sumWrap = document.getElementById("explainSummary");
     const srcList = document.getElementById("explainSources");
     if (!sumWrap || !srcList) return;
+    const srcBlock = srcList.closest(".comm-block");
     if (commentaryRetry.q !== q) {
       clearTimeout(commentaryRetry.timer);
+      clearTimeout(commentaryRetry.sayT);
       commentaryRetry.timer = null; commentaryRetry.delay = 0; commentaryRetry.q = q;
+      commentaryRetry.sayT = null; commentaryRetry.said = false;
     }
+    // Busy marks only the parts still to come, so the Next button in the
+    // same section stays readable.
+    const busy = on => [sumWrap, srcList].forEach(el => on ? el.setAttribute("aria-busy", "true") : el.removeAttribute("aria-busy"));
     if (!hasCommentary(q)) {
-      if (ex) ex.setAttribute("aria-busy", "true");
+      busy(true);
       // After a failure the failure line stays up through the retries.
       if (!commentaryRetry.delay) {
         sumWrap.innerHTML = `<p class="comm-status dim">Loading the commentary…</p>`;
         srcList.innerHTML = "";
+        if (srcBlock) srcBlock.hidden = true;
+        if (!commentaryRetry.sayT && !commentaryRetry.said) {
+          commentaryRetry.t0 = Date.now();
+          commentaryRetry.sayT = setTimeout(() => {
+            commentaryRetry.sayT = null;
+            if (commentaryRetry.q !== q || hasCommentary(q) || !commentaryOnScreen(q)) return;
+            commentaryRetry.said = true;
+            announce("Loading the commentary.");
+          }, COMMENTARY_SAY_MS);
+        }
       }
       commentaryFor([q]).then(() => {
         if (commentaryOnScreen(q)) paintCommentary(q);
       }, e => {
         if (!commentaryOnScreen(q) || commentaryRetry.q !== q) return;
         console.info(`[data] commentary for ${q.id} did not load: ${e && e.message}`);
+        const first = !commentaryRetry.delay;
         commentaryRetry.delay = Math.min(30000, commentaryRetry.delay ? commentaryRetry.delay * 2 : 3000);
-        sumWrap.innerHTML = `<p class="comm-status dim">${navigator.onLine === false
+        const line = navigator.onLine === false
           ? "You're offline, so the commentary can't load. It will appear here once you're back online."
-          : "The commentary didn't load. Trying again…"}</p>`;
+          : "The commentary didn't load. Trying again…";
+        sumWrap.innerHTML = `<p class="comm-status dim">${line}</p>`;
+        // Said once per question, and not inside the first second, where
+        // it would cut off the verdict.
+        if (first) {
+          clearTimeout(commentaryRetry.sayT);
+          commentaryRetry.sayT = setTimeout(() => {
+            commentaryRetry.sayT = null;
+            if (commentaryRetry.q !== q || hasCommentary(q) || !commentaryOnScreen(q)) return;
+            commentaryRetry.said = true;
+            announce(line.replace(/…$/, "."));
+          }, Math.max(0, commentaryRetry.t0 + COMMENTARY_SAY_MS - Date.now()));
+        }
         clearTimeout(commentaryRetry.timer);
         commentaryRetry.timer = setTimeout(() => {
           commentaryRetry.timer = null;
@@ -5029,8 +5554,13 @@
       return;
     }
     clearTimeout(commentaryRetry.timer);
-    commentaryRetry.timer = null; commentaryRetry.delay = 0;
-    if (ex) ex.removeAttribute("aria-busy");
+    clearTimeout(commentaryRetry.sayT);
+    commentaryRetry.timer = null; commentaryRetry.delay = 0; commentaryRetry.sayT = null;
+    busy(false);
+    if (commentaryRetry.said) {
+      commentaryRetry.said = false;
+      announce("Commentary loaded.");
+    }
 
     // Captions and clues rendered before the commentary arrived are
     // filled in now; "Your answer." stays on the student's wrong pick.
@@ -5072,6 +5602,7 @@
         ? `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`
         : `<li>${esc(s && s.label)}</li>`
     ).join("");
+    if (srcBlock) srcBlock.hidden = !srcList.children.length;
   }
   window.addEventListener("online", () => {
     const q = commentaryRetry.q;
@@ -5096,6 +5627,11 @@
         const r = li.querySelector(".opt-rationale");
         if (r && !r.querySelector(".opt-yours")) r.insertAdjacentHTML("afterbegin", '<b class="opt-yours">Your answer.</b> ');
       }
+      // The radio's name is fixed by aria-label, so the caption (which
+      // opens "Correct." or "Your answer.") is its description: tabbing
+      // back to an option says whether it was right, and why.
+      const choice = li.querySelector(".opt-choice");
+      if (choice) choice.setAttribute("aria-describedby", "optWhy" + letter);
     });
     renderStemWithClues(q);
 
@@ -5104,12 +5640,9 @@
 
     // What the question was testing heads its commentary. It is only
     // shown after the answer is committed, since before that it would
-    // give the answer away. subtopic_detail is the specific phrase; the
-    // broad q.subtopic is for grouping. Authors start it lowercase.
-    const subLabel = String(q.subtopic_detail || q.subtopic || "").trim();
+    // give the answer away.
     const head = ex.querySelector(".comm-head");
-    if (head) head.textContent = subLabel
-      ? subLabel.charAt(0).toUpperCase() + subLabel.slice(1) : "Commentary";
+    if (head) head.textContent = testedLabel(q) || "Commentary";
     const meta = ex.querySelector(".comm-meta");
     if (meta) {
       meta.textContent = q.difficulty ? `Difficulty ${q.difficulty} of 5` : "";
@@ -5134,49 +5667,29 @@
     }
 
     document.getElementById("submitBtn").hidden = true;
-    document.getElementById("nextBtn").hidden = false;
-    // Focus without scrolling so the user keeps the rationale + option
-    // breakdown in view. Enter still advances to the next question
-    // because the button has keyboard focus.
+    paintColophon();
+    // Next is in the colophon, on screen wherever the page is scrolled.
+    // Focused without scrolling so the rationales stay in view, and so
+    // Enter moves on.
     document.getElementById("nextBtn").focus({ preventScroll: true });
     // Frame the reveal from the higher of the student's wrong pick and the
-    // correct answer, so both are on screen: why the pick was wrong is
-    // the first thing read after a miss. querySelector returns the first
-    // match in document order. Instant, like every other question change;
-    // a smooth scroll of a phone-length rationale takes over half a
-    // second. rAF defers until the explainBlock has reflowed.
+    // correct answer, so both are on screen when they fit: why the pick
+    // was wrong is the first thing read after a miss. Instant, like every
+    // other question change; a smooth scroll of a phone-length rationale
+    // takes over half a second. rAF defers until the explainBlock has
+    // reflowed.
     requestAnimationFrame(() => {
-      const anchorLi = document.querySelector("#qOptions li.revealed.wrong, #qOptions li.revealed.correct");
-      const nextBtn = document.getElementById("nextBtn");
-      if (anchorLi && nextBtn) {
-        const aRect = anchorLi.getBoundingClientRect();
-        const nRect = nextBtn.getBoundingClientRect();
-        // The masthead and colophon are sticky, so the readable band is
-        // the viewport less both bars.
-        const bar = sel => { const el = document.querySelector(sel); return el && el.offsetParent ? el.getBoundingClientRect().height : 0; };
-        const topBar = bar(".masthead"), bottomBar = bar(".colophon");
-        const vh = (window.innerHeight || document.documentElement.clientHeight) - bottomBar;
-        // If both already fit, do nothing. Otherwise scroll so the
-        // answer row sits just under the masthead and the Next button is
-        // in view (or as close as the document allows).
-        const fits = aRect.top >= topBar && nRect.bottom <= vh;
-        if (!fits) {
-          const targetTop = window.scrollY + aRect.top - topBar - 16;
-          window.scrollTo({ top: Math.max(0, targetTop), behavior: "instant" });
-        }
-      } else if (nextBtn) {
-        nextBtn.scrollIntoView({ block: "nearest", behavior: "instant" });
-      }
-      // The Next at the foot of the commentary is for a reader who has
-      // scrolled past the one under the options. When both would sit on
-      // the same screen it is the same button twice, so it stays hidden.
-      const endBtn = document.getElementById("nextBtnEnd");
-      const endWrap = endBtn && endBtn.closest(".commentary-next");
-      if (endWrap && nextBtn) {
-        const vh = window.innerHeight || document.documentElement.clientHeight;
-        const apart = endBtn.getBoundingClientRect().bottom - nextBtn.getBoundingClientRect().top;
-        endWrap.hidden = apart < vh;
-      }
+      const marked = document.querySelectorAll("#qOptions li.revealed.wrong, #qOptions li.revealed.correct");
+      if (!marked.length) return;
+      const first = marked[0].getBoundingClientRect();
+      const lastBottom = marked[marked.length - 1].getBoundingClientRect().bottom;
+      // The masthead and colophon are sticky, so the readable band is
+      // the viewport less both bars.
+      const bar = sel => { const el = document.querySelector(sel); return el && el.offsetParent ? el.getBoundingClientRect().height : 0; };
+      const topBar = bar(".masthead");
+      const vh = (window.innerHeight || document.documentElement.clientHeight) - bar(".colophon");
+      if (first.top >= topBar && lastBottom <= vh) return;
+      window.scrollTo({ top: Math.max(0, window.scrollY + first.top - topBar - 16), behavior: "instant" });
     });
   }
 
@@ -5387,7 +5900,9 @@
     // on this question. Elapsed session time beside it is noise, and on a
     // phone it pushes Leave test and Finish test onto two lines.
     const sessEl = document.getElementById("sessionTime");
-    sessEl.hidden = state.quiz.mode === "test";
+    // A review reads a session already scored: nothing in it is timed.
+    const over = !!(state.quiz.reviewing || state.quiz.finished);
+    sessEl.hidden = state.quiz.mode === "test" || over;
     sessEl.textContent = "session " + fmtClock(sessMs);
     const qEl = document.getElementById("questionTime");
     const sep = document.getElementById("qTimerSep");
@@ -5412,10 +5927,10 @@
         state.quiz._timeLevel = level;
         announce(level === 2 ? "1 minute left." : "5 minutes left.");
       }
-    } else if (state.quiz.mode === "test") {
+    } else if (state.quiz.mode === "test" && !over) {
       // Test mode without countdown: time on the current question. Study
       // mode shows none; nothing there is being timed.
-      qEl.textContent = "Q " + fmtClock(Date.now() - state.questionStart);
+      qEl.textContent = "this question " + fmtClock(Date.now() - state.questionStart);
       sep.hidden = sessEl.hidden;
     } else {
       qEl.textContent = "";
@@ -5482,6 +5997,10 @@
         : /^[1-5]$/.test(e.key) ? parseInt(e.key, 10) - 1
         : /^[a-e]$/i.test(e.key) ? "abcde".indexOf(e.key.toLowerCase()) : -1;
       const k = e.key.toLowerCase();
+      // Printable-key shortcuts can be switched off in the Keyboard legend
+      // (WCAG 2.1.4): speech input and a tremor type them by accident.
+      // Enter and the arrows stay.
+      if (state.settings.shortcuts === false && e.key.length === 1 && e.key !== " ") return;
       const dir = DIR_MAP[k];
       const submitBtn = document.getElementById("submitBtn");
       const nextBtn   = document.getElementById("nextBtn");
@@ -5582,7 +6101,7 @@
     timeUp = !!quiz.timeUp;
     state.quiz.finished = true;
     // A report review from the admin panel was never the saved session.
-    if (!quiz.ephemeral) clearSavedSession();
+    if (!quiz.ephemeral) clearSavedSession(quiz.sid);
     // The clock can run out while "Finish the test now?" is still open;
     // closing it settles that confirm as cancel, which then does nothing.
     const confirmD = document.getElementById("confirmDialog");
@@ -5722,10 +6241,28 @@
   // that heads its commentary: ten stems that open "A 28-year-old woman"
   // cannot be told apart. The report comes after scoring, so the subtopic
   // gives nothing away. Without one, the stem opening is the title.
-  function hasReviewTitle(q) { return !!String(q.subtopic_detail || q.subtopic || "").trim(); }
-  function reviewTitle(q) {
-    const t = String(q.subtopic_detail || q.subtopic || "").trim();
-    return t ? t.charAt(0).toUpperCase() + t.slice(1) : stemOpening(q.stem, 110);
+  function hasReviewTitle(q) { return !!testedLabel(q); }
+  function reviewTitle(q) { return testedLabel(q) || stemOpening(q.stem, 110); }
+
+  // What a question tested, capitalised, or "" when there is nothing
+  // specific to say. subtopic_detail is the specific phrase; the broad
+  // subtopic stands in only when it names more than a grouping bucket
+  // ("Other") or a whole specialty ("Cardiology"), which would title ten
+  // unrelated questions alike. Authors start it lowercase.
+  const BROAD_SUBTOPICS = new Set([
+    "other", "general", "miscellaneous", "mixed",
+    "medicine", "paediatrics", "psychiatry", "obstetrics & gynaecology", "obstetrics and gynaecology",
+    "obstetrics", "gynaecology", "neonatology", "cardiology", "respiratory", "neurology", "toxicology",
+    "gastroenterology", "endocrinology", "renal", "nephrology", "haematology", "oncology",
+    "infectious diseases", "rheumatology", "dermatology", "surgery",
+  ]);
+  function testedLabel(q) {
+    let t = String(q.subtopic_detail || "").trim();
+    if (!t) {
+      t = String(q.subtopic || "").trim();
+      if (BROAD_SUBTOPICS.has(t.toLowerCase()) || t.toLowerCase() === String(q.topic || "").trim().toLowerCase()) t = "";
+    }
+    return t ? t.charAt(0).toUpperCase() + t.slice(1) : "";
   }
 
   // Otherwise a row is identified by what the stem is about. Most stems
@@ -5830,14 +6367,17 @@
     showSummary(false);
   }
 
-  // What Retry replays: answered and wrong, plus a test's unanswered
-  // questions when it was finished early. In a study session a question
-  // never reached is not a miss: its pool is the whole bank.
+  // What Retry replays: answered and wrong, plus a test's questions that
+  // were opened and left unanswered. A question never opened is not a
+  // miss: an "All" test finished after one answer would otherwise offer
+  // the rest of the bank. Time is charged to every question left, so
+  // timeMs lists the ones opened.
   function retryTargets(quiz) {
     const wrong = [], open = [];
+    const seen = quiz.timeMs || {};
     for (const q of quiz.pool) {
       const ans = quiz.answers[q.id];
-      if (!ans) { if (quiz.mode === "test") open.push(q); }
+      if (!ans) { if (quiz.mode === "test" && seen[q.id] !== undefined) open.push(q); }
       else if (!_shuffledOptions(q).find(o => o.letter === ans)?.correct) wrong.push(q);
     }
     return { wrong, open };
@@ -5852,7 +6392,9 @@
       pool: shuffle(pool), idx: 0, mode: state.quiz.mode,
       timerMins: 0, deadline: null,
       answers: {}, struck: {}, revealed: {}, finished: false,
-      salt: newShuffleSalt(), retry: true,
+      // The ids answered wrong: only those stay on Previously incorrect
+      // when got right here (see recordAttempt).
+      salt: newShuffleSalt(), retry: wrong.map(q => q.id),
     };
     state.sessionStart = Date.now();
     setScreen("quiz");
@@ -5943,6 +6485,11 @@
   // ── Report modal (per-question issue submission) ───────────────────────
   let _reportingQId = null;
   let _reportingModel = null;
+  // The option order the reporter saw, as source letters ("CEABD": their
+  // A was source C). Each session shuffles with its own salt, so "B is
+  // also right" means nothing to the admin without it.
+  let _reportingShown = null;
+  let _reportDraftFor = null;
   // Who a report is filed under. Reports land in a public file, so this is
   // an opaque id (never an email) and mirrors the ns() precedence so a
   // report can be traced back to the same namespace that raised it.
@@ -5970,20 +6517,24 @@
       // and how the bank is made. After the answer the subtopic is safe
       // and says which question it was. The id still goes in the report.
       const shown = state.quiz.revealed[q.id] || state.quiz.finished;
-      const sub = shown ? String(q.subtopic_detail || q.subtopic || "").trim() : "";
+      const sub = shown ? testedLabel(q) : "";
       // Study mode has no fixed length, so it names the position alone.
       openReportModal(q.id, q.model,
         `Question ${fmtNum(state.quiz.idx + 1)}` +
         (state.quiz.mode === "test" ? ` of ${fmtNum(state.quiz.pool.length)}` : "") +
-        (sub ? `: ${sub.charAt(0).toUpperCase() + sub.slice(1)}` : ""));
+        (sub ? `: ${sub}` : ""), q);
     });
   }
-  function openReportModal(qid, model, label) {
+  function openReportModal(qid, model, label, q) {
+    _reportingShown = q && q.options ? _shuffledOptions(q).map(o => o.sourceLetter).join("") : null;
+    // An unsent draft survives a close and reopen on the same question.
+    const keepDraft = _reportDraftFor === qid;
+    _reportDraftFor = qid;
     _reportingQId = qid;
     _reportingModel = model || null;
     document.getElementById("reportQId").textContent = label || `Question: ${qid}`;
     const ta = document.getElementById("reportText");
-    ta.value = "";
+    if (!keepDraft) ta.value = "";
     document.getElementById("reportStatus").textContent = "";
     document.getElementById("reportStatus").className = "dim small";
     const m = document.getElementById("reportModal");
@@ -6022,16 +6573,18 @@
       issue: text,
       profile: reporterId(),
       model: _reportingModel,
+      shown: _reportingShown,
     });
     btn.disabled = false;
     if (res && res.ok) {
       status.textContent = "Sent. Thank you.";
       status.classList.remove("bad"); status.classList.add("ok");
+      _reportDraftFor = null;
       // Optimistically include in local in-memory list so the badge updates.
       state.reports.push({
         id: res.id, question_id: _reportingQId, issue: text,
         profile: reporterId(),
-        model: _reportingModel, created: new Date().toISOString(),
+        model: _reportingModel, shown: _reportingShown, created: new Date().toISOString(),
         status: "open", resolution: null,
       });
       const repBtn = document.getElementById("reportBtn");
@@ -6659,7 +7212,10 @@ the file is replaced wholesale on apply.`;
     // Pair each report with its current question so Claude has context.
     const cases = reports.map((r, i) => {
       const q = state.questions.find(x => x.id === r.question_id);
-      return `### Case ${i + 1}\n\nQUESTION (currently live):\n${q ? JSON.stringify(q, null, 2) : '(question not found in current bank - probably dropped already; resolution should be "dismiss" with note)'}\n\nREPORT:\n${JSON.stringify({ id: r.id, profile: r.profile, created: r.created, issue: r.issue, model: r.model }, null, 2)}`;
+      // The reporter's letters are their shuffled order, not the JSON's.
+      const saw = shownLetters(r.shown);
+      const order = saw ? `\n\nThe reporter saw the options shuffled; a letter in the issue means their order. Displayed = source letter: ${saw}.` : "";
+      return `### Case ${i + 1}\n\nQUESTION (currently live):\n${q ? JSON.stringify(q, null, 2) : '(question not found in current bank - probably dropped already; resolution should be "dismiss" with note)'}\n\nREPORT:\n${JSON.stringify({ id: r.id, profile: r.profile, created: r.created, issue: r.issue, model: r.model }, null, 2)}${order}`;
     }).join("\n\n");
     return `You are auditing user-submitted reports on questions in the
 A to E Australian Y4 MCQ bank.
@@ -6784,6 +7340,7 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
         </div>
         <div class="report-q"><b>Q: ${esc(r.question_id)}</b> - ${qStem}</div>
         <div class="report-issue">${esc(r.issue)}</div>
+        ${shownLetters(r.shown) ? `<div class="report-order dim small">Letters as the reporter saw them: ${esc(shownLetters(r.shown))}. Open Q shows the same order.</div>` : ""}
         ${r.resolution ? `<div class="report-resolution dim small">Resolution: ${esc(r.resolution)}</div>` : ""}
       `;
       const cb = li.querySelector(".report-select");
@@ -6800,7 +7357,7 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
         e.stopPropagation();
         // Jumping to a question means leaving the admin panel, and any
         // session in progress: ask first, and stay put on Cancel.
-        if (!(await jumpToQuestionStandalone(q))) return;
+        if (!(await jumpToQuestionStandalone(q, r.shown))) return;
         const am = document.getElementById("adminModal");
         // Focus stays with the question now on screen, not the opener.
         if (am) { am._opener = null; closeModalDialog(am); }
@@ -6809,19 +7366,22 @@ Output ONLY this JSON object. Start with \`{\`. End with \`}\`.
     }
   }
   // Returns false when the user chose to stay in their session.
-  async function jumpToQuestionStandalone(q) {
+  async function jumpToQuestionStandalone(q, shown) {
     // Admins are full users, so a session of their own in progress is
     // left the same way as by Exit.
     const live = state.quiz && !state.quiz.finished && !state.quiz.ephemeral ? state.quiz : null;
     if (live && !(await closeLiveSession(live))) return false;
     // Start a tiny single-question study session for review. Ephemeral:
     // saveSession skips it, so it never becomes the resumable session.
+    // In the reporter's option order when the report carries it, so the
+    // letters in the report point at the options on screen.
     resetNavigator();
     state.quiz = {
       pool: [q], idx: 0, mode: "study",
       timerMins: 0, deadline: null,
       answers: {}, struck: {}, revealed: {}, finished: false,
       ephemeral: true,
+      salt: shown && shownOrder(q, shown) ? "=" + shown : "",
     };
     state.sessionStart = Date.now();
     setScreen("quiz");

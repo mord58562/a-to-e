@@ -504,19 +504,19 @@ body.has-paeds .masthead .brand-glucose { display: inline; }
   .session-meta { display: none; }
   .masthead-tools { gap: 0; }
   .masthead-tools .link-btn { padding: 8px 5px; font-size: var(--fs-meta); }
-  .masthead-tools .profile-chip { margin-left: 4px; padding: 4px 4px 4px 8px; gap: 2px; }
+  .masthead-tools .profile-chip { margin-left: 4px; padding-left: 8px; gap: 0; }
   /* The guest pill is the sign-up link alone; "Guest" says nothing the
    * link does not. */
   .profile-chip[data-profile-id="guest"] .profile-name { display: none; }
-  .masthead-tools .profile-chip[data-profile-id="guest"] { padding: 4px; }
+  .masthead-tools .profile-chip[data-profile-id="guest"] { padding: 0; }
 }
 .masthead-tools .link-btn { display: inline-flex; align-items: center; line-height: 1; }
 /* The name pill is neutral for everyone, so the only coloured pill is
  * the admin's gold one and colour keeps its meaning. */
 .profile-chip {
-  display: inline-flex; align-items: center; gap: 8px;
+  display: inline-flex; align-items: center; gap: 2px;
   margin-left: 12px;
-  padding: 4px 4px 4px 12px;
+  padding: 0 0 0 12px;
   border: 1px solid var(--line);
   border-radius: var(--r-chip);
   background: var(--surface-2);
@@ -526,7 +526,8 @@ body.has-paeds .masthead .brand-glucose { display: inline; }
   cursor: default;
 }
 .profile-name { font-weight: 600; color: var(--ink); line-height: 1; cursor: text; }
-.profile-chip .ghost-link { padding: 3px 8px; border-radius: var(--r-chip); line-height: 1; }
+/* The button fills the pill's height: a 24px target at least. */
+.profile-chip .ghost-link { padding: 7px 10px; border-radius: var(--r-chip); line-height: 1; }
 
 /* Admin pill: gold, drawn as metal with a gradient and inner highlight,
  * tuned separately for each theme. */
@@ -865,6 +866,12 @@ body[data-screen="quiz"] .nav-rail { display: block; }
 }
 .nav-keys dt { color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .nav-keys dd { margin: 0; color: var(--ink-mute); }
+.nav-keys-switch {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 10px; min-height: 24px;
+  color: var(--ink-2); cursor: pointer;
+}
+.nav-keys-switch input { margin: 0; accent-color: var(--accent); }
 
 /* The column moves left by --col-shift so column, gap and rail are
  * centred as one composition (see --col-shift). A relative offset, not
@@ -1122,11 +1129,6 @@ body:has(#quizTopbar[hidden]) .reading {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-bg);
 }
-/* High contrast mode paints no background, so the outline returns. */
-@media (forced-colors: active) {
-  .options li .opt-choice:focus-visible { outline: 2px solid Highlight; outline-offset: -2px; }
-}
-
 .options li.selected { background: var(--accent-bg); }
 .options li.selected .opt-marker {
   border-color: var(--accent);
@@ -1365,7 +1367,10 @@ b, strong { font-weight: 600; }
 }
 .setup-collapse[open] > summary::before { content: "−"; }
 .setup-collapse-actions { display: flex; gap: 4px; margin-left: auto; }
-.tag-row { padding: 4px 0 14px; max-height: 240px; overflow-y: auto; }
+/* No top padding: a sticky head stops that far down, and chips would
+ * show through the gap. contain: reaching the end of the list does not
+ * carry on into the page. */
+.tag-row { padding: 0 0 14px; max-height: 240px; overflow-y: auto; overscroll-behavior: contain; }
 /* Learning areas: a find box, then the chips grouped by discipline. The
  * box matches the reference panel's search; 16px so iOS does not zoom. */
 .tag-tools { display: flex; align-items: center; gap: 12px; padding: 2px 0 8px; }
@@ -1379,15 +1384,30 @@ b, strong { font-weight: 600; }
   border-radius: var(--r-control);
 }
 .tag-filter:focus { outline: 1px solid var(--accent); outline-offset: -1px; }
-.tag-tools .ghost-link { min-height: 32px; white-space: nowrap; }
-.tag-row { flex-direction: column; flex-wrap: nowrap; gap: 0; }
+/* The reset sits on the summary line, so a narrowing is visible and
+ * undone without opening the section. */
+.tag-section { position: relative; margin-top: 6px; }
+.tag-section > .setup-collapse { margin-top: 0; }
+.tags-all {
+  position: absolute; right: 0; top: 5px; z-index: 2;
+  min-height: 32px; white-space: nowrap;
+}
+.tag-none { margin: 0 0 8px; }
+.tag-none:empty { display: none; }
+/* A phone gets a taller box, and the discipline head stays in view while
+ * its chips scroll under it. */
+.tag-row { flex-direction: column; flex-wrap: nowrap; gap: 0; max-height: min(50vh, 420px); }
 .tag-group { display: flex; flex-wrap: wrap; gap: 6px; }
 .tag-group + .tag-group { margin-top: 14px; }
 .tag-group-head {
   flex: 0 0 100%;
   margin: 0 0 2px;
+  padding: 6px 0 4px;
+  position: sticky; top: 0; z-index: 1;
+  background: var(--bg);
   font-size: var(--fs-meta);
-  color: var(--ink-mute);
+  font-weight: 600;
+  color: var(--ink-2);
 }
 .dim { color: var(--ink-mute); }
 .small { font-size: var(--fs-meta); }
@@ -1407,7 +1427,6 @@ b, strong { font-weight: 600; }
 .commentary .comm-head { display: block; margin-bottom: 4px; font-size: var(--fs-stem); line-height: 1.35; }
 .commentary .comm-head:has(+ .comm-meta[hidden]) { margin-bottom: 18px; }
 .commentary .comm-meta { margin: 0 0 18px; font-size: var(--fs-meta); color: var(--ink-mute); font-variant-numeric: tabular-nums; }
-.commentary-next { margin-top: 22px; }
 .comm-block { margin-bottom: 22px; }
 .comm-block:last-child { margin-bottom: 0; }
 .comm-block p { margin: 0 0 10px; font-size: var(--fs-read); line-height: 1.6; }
@@ -1545,6 +1564,17 @@ body.refs-open { --refs-shift: 0px; }
   .masthead { position: static; }
   .ref-panel { top: 0; height: 100vh; height: 100dvh; padding-top: env(safe-area-inset-top); }
   .ref-foot { display: none; }
+  /* The title row goes and its close button sits at the end of the
+   * search row, which gives the list about twice the height. */
+  .ref-head { padding: 0; border-bottom: 0; }
+  .ref-title {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap;
+  }
+  .ref-head .ghost-x { position: absolute; top: calc(8px + env(safe-area-inset-top)); right: 10px; z-index: 1; }
+  .ref-search { padding: 8px 52px 8px 12px; }
+  .ref-search input { padding: 7px 10px; }
+  .ref-panel .ref-jump { padding: 6px 12px; }
 }
 
 /* ── Colophon ─────────────────────────────────────────────────────── */
@@ -1578,6 +1608,25 @@ body.refs-open { --refs-shift: 0px; }
 }
 #questionTime.warn { color: var(--warn); }
 #questionTime.danger { color: var(--bad); }
+/* Next, once the answer is shown. The bar's one filled control, held
+ * to the bar's own height so it does not grow when it appears; the
+ * minimum width keeps a four-letter word from reading as a chip. */
+.colophon .colophon-next {
+  min-width: 104px;
+  min-height: 34px;
+  padding: 6px 20px;
+  white-space: nowrap;
+}
+@media (max-width: 480px), (pointer: coarse) {
+  .colophon .colophon-next { min-height: 40px; padding: 8px 20px; }
+}
+/* Every colophon control is one line, so the bar keeps one height. At
+ * 320 "Back to results", the clock and Next only fit with Next at its
+ * natural width. */
+.colophon .link-btn { white-space: nowrap; }
+@media (max-width: 359px) {
+  .colophon .colophon-next { min-width: 0; padding: 8px 18px; }
+}
 
 /* ── Summary ──────────────────────────────────────────────────────── */
 .score-strip { display: grid; grid-template-columns: 170px 1fr; gap: 28px; align-items: start; margin: 24px 0; }
@@ -1824,15 +1873,26 @@ dialog.modal::backdrop { background: transparent; }
     padding-right: max(14px, env(safe-area-inset-right));
   }
   .masthead-left { gap: 10px; min-width: 0; flex: 0 1 auto; }
-  .brand { gap: 9px; min-width: 0; }
+  .brand { gap: 9px; min-width: 0; padding: 4px 2px; }
   /* min-width 0 lets the title shrink instead of painting under the
    * tools. */
   .brand-words { min-width: 0; }
   .brand-mark { flex-shrink: 0; }
   .brand-title { font-size: var(--fs-read); overflow: hidden; text-overflow: ellipsis; }
   .masthead-tools { flex-shrink: 0; flex-wrap: nowrap; }
-  .masthead-tools .profile-chip { flex-shrink: 0; }
-  .masthead-tools .profile-chip .ghost-link { padding: 3px 6px; }
+  .masthead-tools .link-btn { padding: 8px 4px; }
+  .masthead-tools .profile-chip { flex-shrink: 0; padding: 0; }
+  .masthead-tools .profile-chip .ghost-link { padding: 7px 8px; }
+  /* Signed in, the name would push the tools off the screen; the
+   * Account view shows it. Sign out then stands as one more tool. */
+  body.is-cloud .masthead-tools .profile-chip {
+    margin-left: 0; border-color: transparent; background: none; box-shadow: none;
+  }
+  body.is-cloud .masthead-tools .profile-name { display: none; }
+  body.is-cloud .masthead-tools .profile-chip .ghost-link {
+    padding: 8px 4px; border-radius: var(--r-control);
+    color: var(--ink-2); font-weight: 500; opacity: 1; text-shadow: none;
+  }
   /* A signed-in admin's tool row is wider than 320px: it scrolls
    * sideways rather than clipping "sign out". */
   .masthead-tools {
@@ -1873,8 +1933,7 @@ dialog.modal::backdrop { background: transparent; }
   /* The committing button sits on the right, under the thumb of a
    * phone held in the right hand. */
   .action-row { gap: 8px; flex-wrap: wrap; }
-  .action-row #submitBtn,
-  .action-row #nextBtn {
+  .action-row #submitBtn {
     order: -1;
     margin-left: auto;
   }
@@ -2269,18 +2328,9 @@ mark.stem-clue {
 body:not(.is-cloud) .cloud-only { display: none !important; }
 
 /* ── Account and admin (inside the Admin modal) ─────────────────── */
-.account-self-delete {
-  margin-top: 14px;
-  padding: 12px 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-soft);
-  background: var(--surface);
-}
-.account-self-delete .danger-btn {
-  margin-top: 8px;
-  font-size: var(--fs-meta);
-  padding: 6px 12px;
-}
+/* The dialog it opens states the consequence; the section is the
+ * heading and the button. */
+.account-self-delete .danger-btn { margin-top: 10px; }
 
 /* ── Reference ranges ─────────────────────────────────────────────── */
 /* Rows shared by the side panel and the post-answer block. The label
@@ -2488,6 +2538,8 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
   border-top: 1px solid var(--line);
 }
 .admin-pane-section:first-of-type { margin-top: 18px; }
+/* Straight under the tab bar, its rule would double the bar's. */
+.admin-pane > .admin-pane-section:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
 
 /* Status region: one per panel, under the section nav, never
  * auto-dismissed, so an admin who looks away still has the record
@@ -2542,6 +2594,16 @@ body:not(.is-cloud) .cloud-only { display: none !important; }
 /* Positioned, so the visually hidden spans in its buttons are clipped
  * here and do not widen the dialog. */
 .admin-table-scroll { overflow-x: auto; position: relative; }
+/* A shade on the edge that still has columns past it. The two covers
+ * scroll with the table and hide the shade once that edge is reached. */
+.admin-table-scroll {
+  --edge: color-mix(in srgb, var(--ink) 16%, transparent);
+  background:
+    linear-gradient(to right, var(--surface) 40%, transparent) left / 28px 100% no-repeat local,
+    linear-gradient(to left, var(--surface) 40%, transparent) right / 28px 100% no-repeat local,
+    linear-gradient(to right, var(--edge), transparent) left / 12px 100% no-repeat scroll,
+    linear-gradient(to left, var(--edge), transparent) right / 12px 100% no-repeat scroll;
+}
 /* Joined and Last seen read as one unit each. */
 .admin-users td:nth-child(4), .admin-users td:nth-child(5) { white-space: nowrap; }
 /* The Bank tables have no scroll wrapper. On a phone the columns close
@@ -2774,10 +2836,64 @@ body.is-admin #accountBtn { display: none !important; }
 
 /* Reduced motion: nothing travels. Colour changes and the toast's fade
  * stay, because they move nothing and still say what happened. */
+/* ── Text fields ─────────────────────────────────────────────────── */
+/* A text field is known only by its edge, so the edge takes the control
+ * colour (3:1 on every surface, WCAG 1.4.11) and focus is a 2px ring.
+ * Last in the file so it settles each field's own rule above. */
+:is(.gate-field input, .ref-search input, .tag-filter, .report-text,
+    .nav-jump input, .admin-form input, .invite-new input, .invite-new select,
+    .confirm-type input, .paste-box) {
+  border-color: var(--control-bd);
+}
+:is(.gate-field input, .ref-search input, .tag-filter, .report-text,
+    .nav-jump input, .admin-form input, .invite-new input, .invite-new select,
+    .confirm-type input, .paste-box):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+  border-color: var(--accent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .house-toast, .house-toast.show { transform: none; transition: opacity var(--t-colour); }
   .qt-progress span { transition: none; }
+}
+
+/* Forced colours (Windows contrast themes) drop box shadows and replace
+ * backgrounds, which is where most selection cues above live. Here each
+ * one becomes a system-colour fill, a border or an outline: Highlight
+ * for what the student has chosen, CanvasText for what the app marks. */
+@media (forced-colors: active) {
+  .options li .opt-choice:focus-visible { outline: 2px solid Highlight; outline-offset: -2px; }
+  .options li .opt-marker { forced-color-adjust: none; background: Canvas; border-color: CanvasText; box-shadow: none; }
+  .options li.selected .opt-marker { background: Highlight; border-color: Highlight; box-shadow: inset 0 0 0 3px Canvas; }
+  .options li.struck .opt-marker { border-color: GrayText; }
+  /* After the reveal: the key is ringed solid, a wrong pick dashed. The
+   * rationale's "Correct." / "Your answer." says which is which. */
+  .options li.revealed.correct,
+  .options li.revealed.wrong { outline: 2px solid CanvasText; outline-offset: -2px; }
+  .options li.revealed.wrong { outline-style: dashed; }
+  .options li.revealed.correct .opt-marker,
+  .options li.revealed.wrong .opt-marker { background: CanvasText; border-color: CanvasText; box-shadow: inset 0 0 0 3px Canvas; }
+
+  /* One-of-several chips fill like a selected list item; many-of chips
+   * keep their box, filled. */
+  .opt.selected:not(.multi .opt) { forced-color-adjust: none; background: Highlight; border-color: Highlight; color: HighlightText; }
+  .opt.selected:not(.multi .opt) .opt-note { color: HighlightText; }
+  .setup-options.multi .opt::before { forced-color-adjust: none; border-color: ButtonText; opacity: 1; }
+  .setup-options.multi .opt.selected::before { background: ButtonText; }
+  .action-link.active { border-width: 2px; border-color: Highlight; }
+
+  .nav-chip.current { outline: 2px solid Highlight; outline-offset: 1px; }
+  .nav-chip.answered, .nav-chip.correct, .nav-chip.incorrect { border-width: 2px; }
+  .nav-chip.flagged::after, .qt-progress span, .admin-tab.active::after,
+  .stats-table .stats-bar-wrap > span, .topic-row .bar-fill { forced-color-adjust: none; background: CanvasText; }
+  .stats-table .stats-bar-wrap, .topic-row .bar-track { border: 1px solid CanvasText; }
+  .gate-card[data-mode="signin"] .gate-tab[data-gate-switch="signin"],
+  .gate-card[data-mode="signup"] .gate-tab[data-gate-switch="signup"] { border-bottom-color: Highlight; }
+  .review-list li.flagged { outline: 1px solid CanvasText; outline-offset: -1px; }
+  /* The mark is a white glyph on its own square: keep both. */
+  .brand-mark { forced-color-adjust: none; }
 }
 
 /* Print: the question and its commentary on white, in either theme.
@@ -2794,7 +2910,7 @@ body.is-admin #accountBtn { display: none !important; }
     --warn: #8a6608; --warn-bg: transparent;
   }
   .masthead, .quiz-topbar, .nav-rail, .colophon, .ref-panel,
-  .action-row, .commentary-next, .opt-strike, .opt-key,
+  .action-row, .opt-strike, .opt-key,
   .house-toast, #appNotice { display: none !important; }
   main { padding: 0; }
   body[data-screen="quiz"] main { left: 0; }

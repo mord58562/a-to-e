@@ -12,10 +12,11 @@
  *
  * It asserts the things that were broken: the panel opens on Users,
  * the table renders real rows with a last-seen column, the admin's own
- * row offers no destructive action, delete opens a type-to-confirm
+ * row offers no destructive action, delete opens a password-confirm
  * dialog that names the person and how many answers go with them
- * rather than window.confirm, promote acts immediately on the right
- * endpoint and reports with an Undo that posts the reverse, every tab
+ * rather than window.confirm, promote asks for the password, posts it
+ * to the right endpoint, keeps focus in the rebuilt table and reports
+ * with an Undo that posts the reverse, every tab
  * renders its content without a console error or warning, deleting
  * your own account asks for the password and says when it is wrong,
  * and an expired session reads as expired, not as "not an admin".
@@ -57,6 +58,7 @@ main(async () => {
   await waitFor(() => adminReady(t), 20000, "the admin button").catch(() => {});
   await T.booted(t);
   T.ok(t.document.body.classList.contains("is-admin"), "body carries is-admin");
+  T.eq($("#signOutBtn").textContent, "Sign out", "Sign out is cased like the tools beside it");
   const btn = $("#adminMastheadBtn");
   if (!T.ok(btn && !btn.hidden, "the admin button is shown")) return T.done(t);
   btn.click();
@@ -78,27 +80,42 @@ main(async () => {
   if (T.ok(!!del, "Carter's row offers delete")) {
     del.click(); await wait(200);
     T.ok($("#confirmDialog").open, "delete opens the confirm dialog");
+    T.eq($("#confirmDialog").getAttribute("aria-describedby"), "confirmBody", "the confirm dialog is described by its body");
     T.ok(/carter@example\.com/.test($("#confirmBody").textContent), "the dialog names the user");
     T.ok(/\b20 saved answers\b/.test($("#confirmBody").textContent), "the dialog states the answer count");
     T.ok($("#confirmGo").disabled, "confirm starts disabled");
     T.eq($("#confirmGo").textContent, "Delete carter@example.com permanently", "the confirm label names the account");
-    $("#confirmTypeInput").value = "carter@example.com";
+    T.eq($("#confirmTypeInput").type, "password", "admin delete asks for the admin's password");
+    $("#confirmTypeInput").value = "admin-password";
     $("#confirmTypeInput").dispatchEvent(new t.window.Event("input"));
     await wait(50);
-    T.ok(!$("#confirmGo").disabled, "typing the email enables confirm");
+    T.ok(!$("#confirmGo").disabled, "a password enables confirm");
     // Cancel submits the dialog's method="dialog" form, which jsdom does
     // not implement; close() is what the browser does with it.
     $("#confirmCancel").click(); $("#confirmDialog").close(); await wait(150);
     T.eq(t.calls.filter(c => /\/delete$/.test(c.path)).length, 0, "cancel deletes nothing");
   }
 
-  // Promote acts immediately, on the right endpoint, and offers Undo.
+  // Promote asks for the admin's password, posts it to the right
+  // endpoint, and offers Undo. Focus stays in the rebuilt table.
   const prom = $$(".row-act").find(b => b.dataset.act === "promote" && b.dataset.id === "u2");
   if (T.ok(!!prom, "Carter's row offers promote")) {
-    prom.click();
+    prom.focus();
+    prom.click(); await wait(200);
+    T.ok($("#confirmDialog").open, "promote opens the confirm dialog");
+    T.eq($("#confirmTypeInput").type, "password", "promote asks for the admin's password");
+    $("#confirmTypeInput").value = "admin-password";
+    $("#confirmTypeInput").dispatchEvent(new t.window.Event("input"));
+    $("#confirmGo").click();
     await waitFor(() => !$("#adminStatus").hidden, 3000, "the status line").catch(() => {});
-    T.eq(t.callsTo("POST", "/api/admin/users/u2/promote").length, 1, "promote posts /api/admin/users/u2/promote once");
+    await wait(150);
+    const p = t.callsTo("POST", "/api/admin/users/u2/promote");
+    T.eq(p.length, 1, "promote posts /api/admin/users/u2/promote once");
+    T.ok(p[0] && p[0].body && p[0].body.password === "admin-password", "the password goes in the promote body");
     T.ok(/Carter is now an admin\./.test($("#adminStatus").textContent), "the status says so");
+    const f = t.document.activeElement;
+    T.ok(f && f !== t.document.body && f.dataset && f.dataset.id === "u2",
+      `focus lands on Carter's row after the rebuild (${f && f.tagName}${f && f.dataset && f.dataset.act ? " " + f.dataset.act : ""})`);
     const undo = $(".admin-status-undo");
     if (T.ok(!!undo, "the status offers Undo")) {
       undo.click();
@@ -135,6 +152,7 @@ main(async () => {
     T.ok(!!$("#revokeSessions"), "Account: sign out everywhere else");
     const sd = $("#acctSelfDeleteOpen");
     if (T.ok(!!sd, "Account: delete my account")) {
+      T.ok(!sd.closest("section").querySelector(".admin-note"), "Account: the delete section leaves the warning to its dialog");
       sd.click(); await wait(150);
       T.eq($("#confirmTypeInput").type, "password", "self-delete asks for the password");
       T.ok($("#confirmGo").disabled, "self-delete confirm starts disabled");

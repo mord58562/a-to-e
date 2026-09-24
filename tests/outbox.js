@@ -38,6 +38,9 @@ main(async () => {
     T.eq(body.question_id, qids[0], "posted body names the same question");
     T.eq(body.source_letter, e.l, "posted body carries the source letter");
     T.eq(body.n, 1, "posted body carries n");
+    T.ok(Array.isArray(e.ids) && e.ids.length === 1 && /^[0-9a-f]{32}$/.test(e.ids[0]), "outbox entry holds one attempt id");
+    T.ok(Array.isArray(body.attempt_ids) && body.attempt_ids.length === 1 && body.attempt_ids[0] === (e.ids || [])[0],
+      "posted body carries the entry's attempt id");
   }
   T.ok(!t.$("#appNotice"), "a transient 500 raises no notice");
 
@@ -45,6 +48,8 @@ main(async () => {
   t.window.dispatchEvent(new t.window.Event("online"));
   await waitFor(() => posts().length === 2, 3000, "the re-send").catch(() => {}); await wait(100);
   T.eq(posts().length, 2, "coming back online re-sends");
+  T.eq(JSON.stringify(posts()[1] && posts()[1].body.attempt_ids), JSON.stringify(posts()[0].body.attempt_ids),
+    "the re-send carries the same attempt id, so the worker can ignore a replay");
   T.eq(outbox(), null, "the outbox is empty once the worker accepts");
 
   // 401: kept, token cleared, notice with Sign in.

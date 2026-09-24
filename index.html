@@ -28,14 +28,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://a-to-e-inbox.mord58562.workers.dev">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260924b" />
+<link rel="stylesheet" href="assets/styles.css?v=20260924c" />
 <!-- Both scripts are requested with the stylesheets. app.js is deferred,
      so it still runs after parsing; in the head it downloads alongside
      the CSS instead of after it. preauth.js blocks the parser, so it goes
      last: ahead of the stylesheets it would hold back their requests
      and the first paint. -->
-<script src="assets/app.js?v=20260924b" defer></script>
-<script src="assets/preauth.js?v=20260924b"></script>
+<script src="assets/app.js?v=20260924c" defer></script>
+<script src="assets/preauth.js?v=20260924c"></script>
 </head>
 <body data-screen="home" class="locked">
 
@@ -122,7 +122,7 @@
     <button id="themeBtn" class="link-btn">Theme</button>
     <span class="profile-chip" id="profileChip" data-profile-id="" hidden>
       <span class="profile-name" id="profileName"></span>
-      <button id="signOutBtn" class="ghost-link">sign out</button>
+      <button id="signOutBtn" class="ghost-link">Sign out</button>
     </span>
   </nav>
 </header>
@@ -163,6 +163,7 @@
   </span>
   <span class="colophon-block colophon-right">
     <button class="link-btn" id="endNowBtn">End session</button>
+    <button class="primary colophon-next" id="nextBtn" type="button" hidden>Next</button>
   </span>
 </footer>
 
@@ -196,8 +197,8 @@
 
     <div class="setup">
       <div class="setup-row">
-        <span class="setup-label">Mode</span>
-        <div class="setup-options" data-name="mode">
+        <span class="setup-label" id="lblMode">Mode</span>
+        <div class="setup-options" data-name="mode" role="group" aria-labelledby="lblMode">
           <button class="opt" data-value="study">
             <span class="opt-head">Study</span>
             <span class="opt-note">explanation after each answer</span>
@@ -210,8 +211,8 @@
       </div>
 
       <div class="setup-row" data-show-for="test" hidden>
-        <span class="setup-label">Questions</span>
-        <div class="setup-options narrow" data-name="count">
+        <span class="setup-label" id="lblCount">Questions</span>
+        <div class="setup-options narrow" data-name="count" role="group" aria-labelledby="lblCount">
           <button class="opt" data-value="10">10</button>
           <button class="opt" data-value="20">20</button>
           <button class="opt" data-value="40">40</button>
@@ -222,8 +223,8 @@
       </div>
 
       <div class="setup-row" data-show-for="test" hidden>
-        <span class="setup-label">Timer</span>
-        <div class="setup-options narrow" data-name="timer">
+        <span class="setup-label" id="lblTimer">Timer<span class="visually-hidden">, minutes</span></span>
+        <div class="setup-options narrow" data-name="timer" role="group" aria-labelledby="lblTimer">
           <button class="opt" data-value="0">Off</button>
           <button class="opt" data-value="15">15</button>
           <button class="opt" data-value="30">30</button>
@@ -235,8 +236,8 @@
       </div>
 
       <div class="setup-row">
-        <span class="setup-label">Discipline</span>
-        <div class="setup-options multi" data-name="disciplines">
+        <span class="setup-label" id="lblDisc">Discipline</span>
+        <div class="setup-options multi" data-name="disciplines" role="group" aria-labelledby="lblDisc">
           <button class="opt" data-value="Paediatrics">Paediatrics</button>
           <button class="opt" data-value="Obstetrics &amp; Gynaecology">Obstetrics &amp; Gynaecology</button>
           <button class="opt" data-value="Psychiatry">Psychiatry</button>
@@ -245,8 +246,8 @@
       </div>
 
       <div class="setup-row">
-        <span class="setup-label">Difficulty</span>
-        <div class="setup-options multi narrow" data-name="difficulties">
+        <span class="setup-label" id="lblDiff">Difficulty</span>
+        <div class="setup-options multi narrow" data-name="difficulties" role="group" aria-labelledby="lblDiff">
           <button class="opt" data-value="1" title="Recall one fact">1 / 5</button>
           <button class="opt" data-value="2" title="Put two or three findings together">2 / 5</button>
           <button class="opt" data-value="3" title="Several steps, or an Australian cut-off">3 / 5</button>
@@ -255,22 +256,28 @@
         </div>
       </div>
 
-      <details class="setup-collapse" id="tagSection">
-        <summary>
-          <span>Learning areas <span class="dim" id="tagCountLabel"></span></span>
-        </summary>
-        <div class="tag-tools">
-          <input id="tagFilter" class="tag-filter" type="search" placeholder="Find an area"
-                 aria-label="Find a learning area" aria-controls="subtopicChips"
-                 autocomplete="off" autocapitalize="off" spellcheck="false" />
-          <button type="button" class="ghost-link" id="tagsAll" hidden>All areas</button>
-        </div>
-        <div class="setup-options multi tag-row" data-name="subtopics" id="subtopicChips"></div>
-      </details>
+      <div class="tag-section">
+        <!-- Ahead of the details in the DOM so it is reachable before
+             hundreds of chips, and shown on the summary line open or shut. -->
+        <button type="button" class="ghost-link tags-all" id="tagsAll" hidden>All areas</button>
+        <details class="setup-collapse" id="tagSection">
+          <summary>
+            <span><span id="tagSectionLabel">Learning areas</span> <span class="dim" id="tagCountLabel"></span></span>
+          </summary>
+          <div class="tag-tools">
+            <input id="tagFilter" class="tag-filter" type="search" placeholder="Find an area or condition"
+                   aria-label="Find a learning area or condition" aria-controls="subtopicChips"
+                   autocomplete="off" autocapitalize="off" spellcheck="false" />
+          </div>
+          <p class="tag-none dim small" id="tagNone" role="status"></p>
+          <p class="visually-hidden" id="tagHint">With every area included, choosing one narrows to it.</p>
+          <div class="setup-options multi tag-row" data-name="subtopics" id="subtopicChips" role="group" aria-labelledby="tagSectionLabel" aria-describedby="tagHint"></div>
+        </details>
+      </div>
 
       <div class="setup-row">
-        <span class="setup-label">Filter</span>
-        <div class="setup-options narrow" data-name="filter">
+        <span class="setup-label" id="lblFilter">Filter</span>
+        <div class="setup-options narrow" data-name="filter" role="group" aria-labelledby="lblFilter">
           <button class="opt" data-value="all">All</button>
           <button class="opt" data-value="unseen">Unseen</button>
           <button class="opt" data-value="incorrect">Previously incorrect</button>
@@ -304,7 +311,6 @@
 
     <div class="action-row">
       <button id="submitBtn" class="primary" disabled>Show answer</button>
-      <button id="nextBtn" class="primary" hidden>Next</button>
       <span class="action-row-spacer"></span>
       <button id="flagBtn" class="action-link" title="Flag for review (F)">Flag</button>
       <button id="reportBtn" class="action-link" title="Report an issue with this question">Report</button>
@@ -335,10 +341,6 @@
       </div>
 
       <div id="explainRanges" class="comm-block comm-aside"></div>
-
-      <div class="commentary-next">
-        <button id="nextBtnEnd" class="primary" type="button">Next</button>
-      </div>
     </section>
   </article>
 </template>
@@ -385,8 +387,9 @@
     </div>
     <div class="modal-body">
       <p class="dim small" id="reportQId"></p>
-      <p>Say what's wrong and, if you can, what your source says instead. The question is attached.</p>
-      <textarea id="reportText" class="report-text" placeholder="e.g. 'The answer says first line is amoxicillin, but Therapeutic Guidelines recommends amoxicillin with clavulanic acid here because...'" rows="6" maxlength="4000"></textarea>
+      <p id="reportHint">Say what's wrong and, if you can, what your source says instead. The question is attached.</p>
+      <p class="dim small">Reports are published publicly, without your name or account.</p>
+      <textarea id="reportText" class="report-text" aria-labelledby="reportTitle" aria-describedby="reportHint" placeholder="e.g. 'The answer says first line is amoxicillin, but Therapeutic Guidelines recommends amoxicillin with clavulanic acid here because...'" rows="6" maxlength="4000"></textarea>
       <div class="prompt-actions">
         <button id="reportSubmit" class="primary">Send report</button>
         <span id="reportStatus" class="dim small" role="status"></span>
@@ -395,9 +398,7 @@
   </div>
 </dialog>
 
-<!-- ── AUDIT DASHBOARD (admin only) ─────────────────────────────────── -->
-
-<!-- ── HOW-TO ───────────────────────────────────────────────────────── -->
+<!-- ── STATS ────────────────────────────────────────────────────────── -->
 
 <dialog id="statsModal" class="modal" aria-labelledby="statsTitle" hidden>
   <div class="modal-card modal-card-wide stats-modal-card">
@@ -415,7 +416,7 @@
      sure?" trains people to hit Enter without reading. Cancel comes
      first in the DOM and holds initial focus; the confirm button is
      labelled with the action, never "OK". -->
-<dialog id="confirmDialog" class="confirm-dialog" aria-labelledby="confirmTitle">
+<dialog id="confirmDialog" class="confirm-dialog" aria-labelledby="confirmTitle" aria-describedby="confirmBody">
   <form method="dialog" class="confirm-form">
     <h2 id="confirmTitle">Are you sure?</h2>
     <p id="confirmBody" class="confirm-body"></p>

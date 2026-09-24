@@ -6,10 +6,17 @@ A free, open practice MCQ bank for Australian medical students in their clinical
 
 **Live at <https://mord58562.github.io/a-to-e/>.** No account is needed: continue as a guest and your progress stays in that browser.
 
-## What's new in 1.7.4
+## What's new in 1.7.5
 
-- The first visit starts about twice as fast on a slow connection. Questions load first and the explanations follow in the background; if one hasn't arrived when you reveal an answer, it fills in as soon as it does.
-- Tapping Sign in and then a gate tab before the page has finished loading no longer loses the sign-in.
+- After you reveal an answer, Next sits in the bar at the bottom of the screen, so it is always one tap away on a phone.
+- Results and the home screen open at the top.
+- Getting a missed question right on a retry keeps it on your "Previously incorrect" list on every device, not just this one.
+- Two tabs open at once no longer double-count a test or delete each other's saved session, and a guest's answers from both tabs are kept.
+- A study session resumed the next day counts only the time you spent, and a session that expires tells you so.
+- Switching a discipline back on brings its learning areas with it, and finding an area also searches what each question covers.
+- Single-key shortcuts can be turned off from the Keyboard list.
+- Selections stay visible in Windows High Contrast mode, and the setup rows name their groups for screen readers.
+- Reports are published without your name or account. Making someone an admin or deleting an account asks for your password.
 
 Earlier releases are in [CHANGELOG.md](CHANGELOG.md).
 
@@ -23,8 +30,8 @@ Difficulty is set by how many reasoning steps the answer takes, not by how rare 
 | --- | --- | ---: | ---: |
 | 1/5 | Recall one fact | 70 | 1.0% |
 | 2/5 | Put two or three findings together | 1,702 | 24.1% |
-| 3/5 | Several steps, or an Australian cut-off | 2,744 | 38.9% |
-| 4/5 | An atypical presentation, or a finding that points the wrong way | 2,218 | 31.5% |
+| 3/5 | Several steps, or an Australian cut-off | 2,745 | 38.9% |
+| 4/5 | An atypical presentation, or a finding that points the wrong way | 2,217 | 31.4% |
 | 5/5 | A calculation, a finding that argues against the obvious answer, or guidelines that disagree | 318 | 4.5% |
 
 ## Using it
@@ -39,7 +46,7 @@ After the reveal, the phrases in the stem that decided the answer are highlighte
 
 The navigator sits beside the question on a wide screen and opens from the question counter on a phone. In a test it shows every question, numbered, marked only as answered until the end, with paging and a box to jump to a number. In study mode it shows the questions you have reached, marked right or wrong.
 
-Results give the score and a line per discipline, then a list you can filter to incorrect or flagged. A row opens its question with the answer showing; Previous and Next step through the list, and Back to results returns to it. Retry incorrect starts an untimed session from the ones you got wrong. Stats, in the top bar, shows your accuracy by discipline and by difficulty. Report, under each question, sends a note to the maintainer.
+Results give the score and a line per discipline, then a list you can filter to incorrect or flagged. A row opens its question with the answer showing; Previous and Next step through the list, and Back to results returns to it. Retry incorrect starts an untimed session from the ones you got wrong. Stats, in the top bar, shows your accuracy by discipline and by difficulty. Report, under each question, sends a note to the maintainer; reports are public (see Privacy).
 
 Reference values (the button in the top bar, or L) holds 34 categories and 396 rows of Australian normal ranges, including paediatric age bands, pregnancy trimester ranges, the ADIPS OGTT and urinalysis, with a jump to each category and a search.
 
@@ -83,7 +90,9 @@ Nothing you do is shown to any other user. Per-question timing stays in your bro
 
 You can permanently delete your account and every associated row from Account in the top bar, or with `POST /api/account/delete`. Deletion removes the session, answer, flag, settings and user rows outright; there is no soft delete.
 
-The reference-ranges panel, the questions themselves, and the per-batch JSON are static assets served from GitHub Pages. There are no cookies, no analytics and no third-party trackers.
+An issue report is published with its resolution in `data/reports.json`, in this public repository. It holds the question id, your text and whether you were signed in, never which account, so leave your name and email out of it.
+
+The reference-ranges panel, the questions themselves, and the per-batch JSON are static assets served from GitHub Pages. The fonts come from Google Fonts, which sees your IP address and browser; nothing else loads from a third party. There are no cookies, no analytics and no trackers.
 
 Only an admin can add questions or change files in the repo, and the worker checks for an admin session on each of those requests, not just the page.
 
@@ -91,16 +100,27 @@ Only an admin can add questions or change files in the repo, and the worker chec
 
 - `index.html`, `assets/` - the app: one page, one script, one stylesheet. `assets/preauth.js` runs before first paint, so a returning user sees neither the sign-in gate nor the wrong theme for a frame.
 - `data/questions_*.json` - the four main discipline files. `questions_paeds.json` and `questions_obgyn.json` hold 23 and 21 questions; the Psychiatry and Medicine files are empty.
-- `data/batches/` - everything else, listed in `data/batches_manifest.json` with a content hash per file.
+- `data/batches/*.json` listed in `data/batches_manifest.json` - the rest of the bank, and the files to edit. An unlisted file is not served.
+- `data/split/` - generated from each listed batch by `scripts/manifest_hashes.py`: `<name>.q.json` holds what is needed before answering, `<name>.c.json` the explanations, rationales and sources. Never edit these.
+- `data/inbox/` - staging for new questions; see its README.
 - `data/reference_ranges.json` - the reference values panel. `data/reports.json` holds issue reports.
 - `data/framework_*_topics.md` - the curriculum topic list each discipline is written against.
-- `data/_audited_main/`, `data/_archived_dupes/` - promoted post-audit copies of the main files, and batches withdrawn from the manifest.
+- `data/_audited_main/`, `data/_archived_dupes/`, `data/batches/_*/` - history: promoted post-audit copies of the main files, batches withdrawn from the manifest, and the originals of the consolidated batches. Not served.
 - `assets/prompt-template.txt` - the generation prompt. The admin Content tab fetches it.
-- `scripts/` - `start.sh` and `server.py` serve the site locally. `check_tokens.py` is the banned-token gate and the list of record for what the prompt bans; `dupe_gate.py` compares a new batch with the published bank and with itself; `manifest_hashes.py` writes the manifest hashes.
+- `scripts/` - `start.sh` and `server.py` serve the site locally. `check_tokens.py` is the banned-token gate and the list of record for what the prompt bans; `dupe_gate.py` compares a new batch with the published bank and with itself; `manifest_hashes.py` writes the manifest hashes and rebuilds `data/split/` (`split_bank.py` does the splitting); `rebuild_bank.sh` runs both and the gates; `merge_inbox.sh` promotes inbox files; `dupe_triage.py` and `content_pass.py` retire and rewrite questions across the bank; `sync_routine_counts.py` refreshes `meta.json` counts.
+- `.github/workflows/rebuild-bank.yml` - on every push to main that touches the bank, rebuilds the hashes and `data/split/` and commits the result.
 - `cloudflare-worker/` - accounts, sync, reports and the admin write endpoints. See its README.
-- `tests/` - jsdom tests of the real page against a fake worker (`harness.js`): `smoke.js` drives 25 questions as a guest, `admin.js` the admin panel, and the rest one behaviour each. `run.sh` runs them all.
+- `tests/` - jsdom tests of the real page against a fake worker (`harness.js`): `smoke.js` drives 25 questions as a guest, `admin.js` the admin panel, and the rest one behaviour each. `run.sh` runs the data gates and all of them.
 
 Internal working notes, audit records and the scheduled routine's brief are kept out of this repo: GitHub Pages serves the root, so anything committed here can be fetched by anyone.
+
+## Adding or editing questions
+
+New questions: follow `data/inbox/README.md` (generate, `check_tokens.py`, `dupe_gate.py --new` from the repo root, `merge_inbox.sh`).
+
+Editing a question: change it in its file under `data/batches/`, then run `./scripts/rebuild_bank.sh` and commit the batch, `data/batches_manifest.json` and `data/split/` together. The site serves a batch's split pair only while the manifest says the pair was built from the batch as it stands, so a batch committed without its rebuilt split keeps serving the old question. The rebuild workflow repairs that on main after any push, but a local commit that includes the split is right from the start.
+
+A question whose stem, options or answer change materially gets a new id (`-v2`, or `-v3` if that exists), so earlier answers to it don't count against the new version.
 
 ## Run locally
 
@@ -122,7 +142,7 @@ cd a-to-e
 
 Serves the site at `http://127.0.0.1:8765/` and, on macOS, opens it; elsewhere, open the address by hand. Any modern browser.
 
-The worker is optional locally. With it unreachable, sign-in and sync are unavailable, so use guest mode; issue reports go to the local `scripts/server.py` instead. To run or deploy the worker you need Node.js 22+ and wrangler:
+The worker is optional locally. With it unreachable, sign-in and sync are unavailable, so use guest mode; issue reports go to the local `scripts/server.py` instead. The live worker accepts only the github.io origin, so the admin panel needs a local worker. To run or deploy one you need Node.js 22+:
 
 ```sh
 # macOS
@@ -134,28 +154,27 @@ sudo apt install -y nodejs
 ```
 
 ```sh
-npm install -g wrangler
-cd cloudflare-worker && npm install && wrangler dev
+cd cloudflare-worker && npm install && npm run dev
 ```
 
-`wrangler dev` also needs the worker's secrets and a local database; `cloudflare-worker/README.md` covers both, and the one-time Cloudflare setup.
+`npm run dev` uses the wrangler version pinned in `package.json`. The worker also needs its secrets, `ALLOW_ORIGIN=http://127.0.0.1:8765` and a local database, and the page needs `WORKER_URL` and its CSP pointed at it; `cloudflare-worker/README.md` (Local development) covers each, and the one-time Cloudflare setup.
 
 ### Tests
 
-With the local server running on port 8765:
+Requires Node.js and `curl`. With the local server running on port 8765:
 
 ```sh
 npm install --no-save jsdom
 tests/run.sh
 ```
 
-It runs every test and exits non-zero if any fails. One test runs on its own with `node tests/<name>.js`.
+It runs the data gates (`manifest_hashes.py --check`, `split_bank.py --verify`, `check_tokens.py`), then every test, and exits non-zero if any fails. `ORIGIN=http://127.0.0.1:<port>/ tests/run.sh` tests a server on another port. One test runs on its own with `node tests/<name>.js`.
 
 ### How data loads
 
-`data/meta.json` is fetched first with a `?t=<timestamp>` query, so it is never served from cache. Its `updated` and `last_added` fields become the `?v=` token on the main files, the manifests, `reference_ranges.json` and `reports.json`. A content push therefore invalidates those on its own, with no code release.
+`data/meta.json` is fetched first with a `?t=<timestamp>` query, so it is never served from cache, and `batches_manifest.json` alongside it with `cache: "no-cache"`, so it is revalidated on every load. Meta's `updated` and `last_added` fields become the `?v=` token on the main files, `inbox_manifest.json`, `reference_ranges.json` and `reports.json`. A content push therefore invalidates those on its own, with no code release.
 
-The four main discipline files then load concurrently with `reference_ranges.json`, both manifests, and `reports.json`, followed by every path listed in `batches_manifest.json` and `inbox_manifest.json`. That is currently 36 batch files, so a cold load is about 45 requests. Each batch is requested with `?h=` set to its content hash from the manifest's `hashes` map (written by `scripts/manifest_hashes.py`), so a release re-downloads only the batches that changed; a batch with no hash falls back to the `?v=` token. A failed file is counted and non-fatal rather than blocking the bank.
+The four main discipline files load concurrently with `reference_ranges.json`, the inbox manifest and `reports.json`. Each listed batch loads as its question file, `data/split/<name>.q.json`, and its commentary file, `<name>.c.json`, follows in the background, so a question can be shown before its explanation arrives. Both are requested with `?h=` set to their content hash from the manifest's `split` map, so a release re-downloads only what changed. The pair is used only while its recorded `from` hash equals the batch's hash in `hashes`; otherwise, or if either file is missing, the whole batch loads with `?h=` set to its own hash (or the `?v=` token when it has none). With 36 batches a cold load is about 81 requests. A failed file is counted and non-fatal rather than blocking the bank.
 
 Everything is then deduplicated by question `id`, with the main-file entry winning over any batch that republishes the same id.
 
