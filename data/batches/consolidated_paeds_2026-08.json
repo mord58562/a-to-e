@@ -1192,94 +1192,96 @@
   "created": "2026-08-28"
  },
  {
-  "id": "ropu828b-006",
+  "id": "ropu828b-006-v2",
   "topic": "Paediatrics",
   "subtopic": "Emergency",
-  "subtopic_detail": "Anaphylaxis adrenaline dose selection",
-  "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
+  "subtopic_detail": "Anaphylaxis adrenaline dose, route and concentration",
+  "difficulty": 3,
+  "model": "Claude Opus 5.5",
   "tags": [
    "anaphylaxis",
    "adrenaline"
   ],
-  "stem": "A 4-year-old boy weighing 18 kg is brought to a metropolitan emergency department 10 minutes after eating a cashew biscuit at a birthday party. He has a known peanut allergy but has not previously reacted to tree nuts. He developed generalised urticaria within 5 minutes and now has audible wheeze, hoarse voice, and a swollen tongue.\n\nOn arrival he is anxious with generalised urticaria, marked lip and periorbital swelling, biphasic stridor, and audible wheeze. He speaks in short phrases. There is no cyanosis and pulses are palpable. IV access has not yet been obtained. There is no known cardiac history and he has never used an adrenaline autoinjector.",
+  "stem": "A 4-year-old boy weighing 18 kg is brought to a metropolitan emergency department 10 minutes after eating a cashew biscuit at a birthday party. He has a known peanut allergy but has not reacted to tree nuts before. Hives appeared within 5 minutes, followed by a hoarse voice and noisy breathing.\n\nHe has no adrenaline autoinjector with him and IV access has not yet been obtained. Adrenaline 1 mg/mL (1:1000) and 0.1 mg/mL (1:10 000) ampoules are on the resuscitation trolley.",
   "data_table": {
-   "Vital signs": "HR 148, BP 78/44, RR 40, SpO2 93% on room air, temp 36.7 C",
-   "Examination": "Anxious; generalised urticaria; periorbital and lip swelling; biphasic stridor; audible expiratory wheeze; speaking in short phrases; capillary refill 3 seconds; peripheries cool",
-   "Investigations": "Not indicated in the acute setting"
+   "Vital signs": "Pulse 148 /min, blood pressure 78/44 mmHg, respiratory rate 40 /min, SpO2 93% on room air, temperature 36.7°C",
+   "Examination": "Anxious, speaking in short phrases; generalised urticaria; lip and periorbital swelling; biphasic stridor; audible expiratory wheeze; capillary refill 3 seconds with cool peripheries"
   },
   "lead_in": "What is the most appropriate first dose of adrenaline?",
   "options": [
    {
     "letter": "A",
-    "text": "Intramuscular adrenaline 150 micrograms of 1:1000 to the anterolateral thigh with cardiac monitoring throughout and preparation to repeat",
+    "text": "IM adrenaline 1 mg/mL, 0.1 mg/kg (1.8 mL), into the anterolateral thigh",
     "correct": false,
-    "rationale": "The 150 microgram dose covers the 10-20 kg band; this child at 18 kg sits at the top of that band with severe features, but the ASCIA banded table in the 20+ kg space would be 300 mcg. RCH aligns with ASCIA using 150 mcg for 10-20 kg and 300 mcg for over 20 kg. (Source: RCH CPG: Anaphylaxis)",
+    "rationale": "This is a tenfold overdose: ASCIA sets IM adrenaline at 0.01 mg/kg of the 1 mg/mL solution to a maximum of 0.5 mg, which is 0.01 mL/kg. Confusing mg/kg with mL/kg, or 1:1000 with 1:10 000, is the classic adrenaline drawing-up error, and a second person checking the volume prevents it. (Source: ASCIA Guidelines: Acute management of anaphylaxis)",
     "source_refs": [
-     "RCH CPG: Anaphylaxis"
+     "ASCIA Guidelines: Acute management of anaphylaxis"
     ]
    },
    {
     "letter": "B",
-    "text": "Intramuscular adrenaline calculated at 10 micrograms per kilogram giving 180 micrograms of 1:1000 to the anterolateral thigh with cardiac monitoring",
+    "text": "SC adrenaline 1 mg/mL, 0.01 mg/kg (0.18 mL), into the deltoid of the upper arm",
     "correct": false,
-    "rationale": "Weight-based 10 mcg/kg calculation is not the ASCIA or RCH first-line pathway in a school-age paediatric anaphylaxis. Banded IM dosing avoids maths errors under pressure and is the AU standard. (Source: ASCIA anaphylaxis guidelines)",
+    "rationale": "The dose is right but the route is not: ASCIA and RCH give adrenaline by IM injection into the outer mid-thigh, and neither endorses the subcutaneous route. A deltoid IM injection is used only when the thigh cannot be reached. (Source: ASCIA Guidelines: Acute management of anaphylaxis; RCH CPG: Anaphylaxis)",
     "source_refs": [
-     "ASCIA anaphylaxis guidelines"
+     "ASCIA Guidelines: Acute management of anaphylaxis",
+     "RCH CPG: Anaphylaxis"
     ]
    },
    {
     "letter": "C",
-    "text": "Intramuscular adrenaline 300 micrograms of 1:1000 to the anterolateral thigh with cardiac monitoring throughout and prepare to repeat every 5 minutes",
+    "text": "IM adrenaline 1 mg/mL, 0.01 mg/kg (0.18 mL), into the anterolateral thigh",
     "correct": true,
-    "rationale": "This child weighs 18 kg (10-20 kg band = 150 mcg) but severity plus wheeze and stridor mandate escalation; some hospital algorithms use 300 mcg for children approaching 20 kg with severe airway involvement. In practice the ASCIA table shifts to 300 mcg at 20 kg and above; several AU EDs allow rounding upward at high-band weight with severe features. (Source: RCH CPG: Anaphylaxis)",
+    "rationale": "Stridor, wheeze, hypotension and cool peripheries after a nut exposure are severe anaphylaxis, and the first drug is IM adrenaline 0.01 mg/kg of 1 mg/mL (1:1000) to a maximum of 0.5 mg. At 18 kg that is 0.18 mg (0.18 mL), repeated if there is no response; in the community a 150 microgram autoinjector covers the 7.5 to 20 kg band. (Source: ASCIA Guidelines: Acute management of anaphylaxis; RCH CPG: Anaphylaxis)",
     "source_refs": [
+     "ASCIA Guidelines: Acute management of anaphylaxis",
      "RCH CPG: Anaphylaxis"
     ]
    },
    {
     "letter": "D",
-    "text": "Intravenous adrenaline 10 micrograms of 1:10000 as an initial bolus after IV access with cardiac monitoring and repeated titration to response",
+    "text": "IV adrenaline 0.1 mg/mL, 0.01 mg/kg (1.8 mL), as a bolus once IV access is gained",
     "correct": false,
-    "rationale": "IV adrenaline in paediatric anaphylaxis is reserved for refractory shock after two IM doses; jumping to IV first risks arrhythmia and delays effective early IM treatment during airway compromise. IM is first-line even when IV access will be needed later. (Source: RCH CPG: Anaphylaxis)",
+    "rationale": "RCH states that IV bolus adrenaline is not recommended except in the peri-arrest setting; 0.01 mg/kg IV is the cardiac arrest dose. Anaphylaxis that persists after 2 appropriate IM doses is treated with an adrenaline infusion (1 mL of 1:1000 in 1000 mL sodium chloride 0.9%, starting at 5 mL/kg/hour). (Source: RCH CPG: Anaphylaxis)",
     "source_refs": [
      "RCH CPG: Anaphylaxis"
     ]
    },
    {
     "letter": "E",
-    "text": "Nebulised adrenaline 5 millilitres of 1:1000 with high flow oxygen and 200 milligrams of hydrocortisone as first-line pharmacotherapy while awaiting IV access",
+    "text": "Nebulised adrenaline 1 mg/mL, 5 mL, by mask, deferring IM until the stridor settles",
     "correct": false,
-    "rationale": "Nebulised adrenaline treats upper airway oedema symptoms but is not a substitute for IM adrenaline in anaphylaxis, which acts systemically. Steroids do not treat the acute reaction and are second-line. (Source: ASCIA anaphylaxis guidelines)",
+    "rationale": "ASCIA lists nebulised adrenaline 5 mL of 1:1000 as something to consider for upper airway obstruction, but only alongside IM adrenaline. Nebulised adrenaline alone suits croup, where there is no systemic reaction and no hypotension. (Source: ASCIA Guidelines: Acute management of anaphylaxis)",
     "source_refs": [
-     "ASCIA anaphylaxis guidelines"
+     "ASCIA Guidelines: Acute management of anaphylaxis"
     ]
    }
   ],
   "explanation": {
-   "summary": "This is severe paediatric anaphylaxis with airway compromise. ASCIA and RCH advise IM adrenaline into the anterolateral thigh using a banded dose table rather than weight-based arithmetic to avoid dosing errors under pressure. The 10-20 kg band is 150 mcg (EpiPen Jr equivalent) and the 20+ kg band is 300 mcg (EpiPen). At 18 kg with severe airway features, several AU EDs allow rounding to the 300 mcg dose to reflect the severity and proximity to the 20 kg cutoff. IV adrenaline is reserved for refractory shock and nebulised adrenaline treats upper airway symptoms but does not replace IM.",
+   "summary": "Anaphylaxis is a severe allergic reaction with respiratory or cardiovascular involvement, and IM adrenaline is the first and most important treatment. ASCIA doses it at 0.01 mg/kg of the 1 mg/mL (1:1000) solution to a maximum of 0.5 mg, given into the outer mid-thigh and repeated if there is no response. Autoinjectors come in fixed doses (150 microgram for 7.5 to 20 kg, 300 microgram above 20 kg), whereas in hospital the ampoule dose is drawn up by weight. The patient lies flat or with legs raised, and IV access is for fluid boluses of 20 mL/kg sodium chloride 0.9% and, if needed, an adrenaline infusion. Refractory anaphylaxis is persisting respiratory or cardiovascular compromise despite 2 appropriate IM doses.",
    "key_points": [
-    "ASCIA banded IM adrenaline: 10-20 kg is 150 mcg; over 20 kg is 300 mcg",
-    "IM anterolateral thigh route first-line; repeat every 5 min",
-    "IV adrenaline only after 2 IM doses fail (refractory shock)",
-    "Steroids and antihistamines are adjuncts not first-line for anaphylaxis"
+    "IM adrenaline 0.01 mg/kg of 1 mg/mL (1:1000) to a maximum of 0.5 mg is 0.01 mL/kg.",
+    "The IM injection goes into the outer mid-thigh.",
+    "IV bolus adrenaline is not recommended except peri-arrest; refractory anaphylaxis gets an infusion.",
+    "Nebulised adrenaline for upper airway obstruction is an adjunct to IM adrenaline, not a substitute."
    ],
-   "pearls": "Do not calculate adrenaline in mg/kg during a paediatric anaphylaxis; grab the ASCIA band and give 150 mcg or 300 mcg IM into the thigh without pausing to do sums."
+   "pearls": "ASCIA advises laying the patient flat or with the legs slightly raised to improve venous return, and placing a pregnant woman in the left lateral position."
   },
   "sources": [
    {
-    "label": "RCH CPG: Anaphylaxis",
-    "url": "https://www.rch.org.au/clinicalguide/guideline_index/anaphylaxis/"
+    "label": "ASCIA Guidelines: Acute management of anaphylaxis",
+    "url": "https://www.allergy.org.au/hp/anaphylaxis/acute-management-guidelines"
    },
    {
-    "label": "ASCIA anaphylaxis guidelines",
-    "url": "https://www.allergy.org.au/hp/papers/acute-management-of-anaphylaxis-guidelines"
+    "label": "RCH CPG: Anaphylaxis",
+    "url": "https://www.rch.org.au/clinicalguide/guideline_index/anaphylaxis/"
    }
   ],
   "reference_ranges": [
    "paeds_vitals_child"
   ],
-  "created": "2026-08-28"
+  "created": "2026-09-24",
+  "revised_from": "ropu828b-006"
  },
  {
   "id": "ropu828b-007",
