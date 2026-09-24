@@ -8133,94 +8133,97 @@
   "l4_promoted_2026-06-01": true
  },
  {
-  "id": "psych-metmon-004",
+  "id": "psych-metmon-004-v2",
   "topic": "Psychiatry",
   "subtopic": "Psychopharmacology",
   "subtopic_detail": "Metabolic monitoring schedule",
-  "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "difficulty": 2,
+  "model": "Claude Opus 5.5",
   "tags": [
    "antipsychotic",
    "metabolic syndrome"
   ],
-  "stem": "A 22-year-old man has been started on quetiapine 400 mg daily for a first episode of psychosis 6 weeks ago. He had normal baseline metabolic parameters. He presents for his scheduled 6-week metabolic review with no symptoms and feels well.",
+  "stem": "A 22-year-old man was started on quetiapine 400 mg daily for a first episode of psychosis 6 weeks ago. His baseline metabolic screen was normal. He attends a scheduled review at the community mental health service, feels well and wants to know how often he will need blood tests.",
   "data_table": {
    "Vital signs": "BP 124/78 mmHg, HR 72 bpm",
    "Investigations": "Weight 79 kg (baseline 76 kg), BMI 25.8 kg/m2, fasting glucose 5.1 mmol/L, total cholesterol 4.8 mmol/L, triglycerides 1.4 mmol/L, HDL 1.2 mmol/L"
   },
-  "lead_in": "When should the next comprehensive metabolic assessment be performed?",
+  "lead_in": "What is the most appropriate metabolic monitoring plan from here?",
   "options": [
    {
     "letter": "A",
-    "text": "At 8 weeks from initiation given the early weight gain trajectory observed",
+    "text": "Full screen (weight, waist, BP, fasting glucose and lipids) at 12 months, then yearly while results stay within the reference range",
     "correct": false,
-    "rationale": "While 3 kg gain in 6 weeks is concerning, bringing forward review to 8 weeks is not part of standard monitoring. The 12-week timepoint is the next standard assessment. (Source: RANZCP Metabolic Monitoring Guidelines)",
+    "rationale": "A yearly first repeat leaves the first months of treatment, when weight and metabolic change are most likely, unmonitored. NSW Health repeats the measures 3-monthly, and Orygen screens at least every 3 months after the first month. (Source: NSW Health IB2012_024: Metabolic monitoring; Orygen: Positive cardiometabolic health)",
     "source_refs": [
-     "RANZCP Metabolic Monitoring Guidelines"
+     "NSW Health IB2012_024: Metabolic monitoring",
+     "Orygen: Positive cardiometabolic health"
     ]
    },
    {
     "letter": "B",
-    "text": "At 3 months from initiation as per standard monitoring protocol schedule",
+    "text": "Full screen (weight, waist, BP, fasting glucose and lipids) at 6 months, with only his weight checked at monthly reviews in between",
     "correct": false,
-    "rationale": "The standard Australian protocol specifies 12 weeks from initiation as the next assessment after 6 weeks. While the difference from 3 months is minor, 12 weeks is the specific RANZCP timepoint. (Source: RANZCP Metabolic Monitoring Guidelines)",
+    "rationale": "Weight alone misses changes in glucose, lipids, waist and blood pressure, which NSW Health lists for repeat every 3 months. A 6-monthly full screen falls short of that schedule. (Source: NSW Health IB2012_024: Metabolic monitoring)",
     "source_refs": [
-     "RANZCP Metabolic Monitoring Guidelines"
+     "NSW Health IB2012_024: Metabolic monitoring"
     ]
    },
    {
     "letter": "C",
-    "text": "At 6 months from initiation with weight checks monthly in between",
+    "text": "No further scheduled screening, because his baseline and 6-week glucose, lipids and blood pressure are all within the reference range",
     "correct": false,
-    "rationale": "Skipping the 12-week assessment misses the critical early weight gain window. Monthly weight does not replace the full metabolic panel at 12 weeks. (Source: RANZCP Metabolic Monitoring Guidelines)",
+    "rationale": "Normal early results do not end monitoring; NSW Health continues measurements 3-monthly after baseline, and more often if abnormalities appear. (Source: NSW Health IB2012_024: Metabolic monitoring)",
     "source_refs": [
-     "RANZCP Metabolic Monitoring Guidelines"
+     "NSW Health IB2012_024: Metabolic monitoring"
     ]
    },
    {
     "letter": "D",
-    "text": "At 12 weeks from initiation with weight measured at each clinical contact",
+    "text": "Full screen (weight, waist, BP, fasting glucose and lipids) at 3 months, then at least 3-monthly, sooner if abnormal or the dose changes",
     "correct": true,
-    "rationale": "The RANZCP metabolic monitoring framework specifies full metabolic assessment at baseline, 6 weeks, 12 weeks, then 6-monthly. Weight should be recorded at every clinical contact. This 6-week review shows 3 kg gain warranting vigilance but not schedule alteration. (Source: RANZCP Metabolic Monitoring Guidelines)",
+    "rationale": "NSW Health states that measurements occur at baseline, three-monthly, and more frequently when abnormalities are identified or the medication or dose is changed; its table repeats glucose, waist, triglyceride/HDL and blood pressure 3-monthly. Orygen likewise screens at least every 3 months after the first month. (Source: NSW Health IB2012_024: Metabolic monitoring; Orygen: Positive cardiometabolic health)",
     "source_refs": [
-     "RANZCP Metabolic Monitoring Guidelines"
+     "NSW Health IB2012_024: Metabolic monitoring",
+     "Orygen: Positive cardiometabolic health"
     ]
    },
    {
     "letter": "E",
-    "text": "At 12 months from initiation if these 6-week parameters remain within range",
+    "text": "Fasting glucose alone every 3 months, with weight, waist, blood pressure and lipids deferred until the 12-month review",
     "correct": false,
-    "rationale": "Deferring the next assessment to 12 months is inappropriate. Metabolic changes can develop rapidly in the first 3 months of antipsychotic treatment. (Source: RANZCP Metabolic Monitoring Guidelines)",
+    "rationale": "The interval is right but the content is not: NSW Health repeats waist, triglyceride/HDL and blood pressure 3-monthly alongside glucose, because each tracks a different part of metabolic risk. (Source: NSW Health IB2012_024: Metabolic monitoring)",
     "source_refs": [
-     "RANZCP Metabolic Monitoring Guidelines"
+     "NSW Health IB2012_024: Metabolic monitoring"
     ]
    }
   ],
   "explanation": {
-   "summary": "The RANZCP metabolic monitoring schedule follows baseline, 6 weeks, 12 weeks, then every 6 months ongoing. The first 12 weeks represent the highest-risk period for metabolic deterioration. Weight gain exceeding 7% of baseline within 6 weeks is a red flag for intervention discussion, though it does not alter the monitoring schedule. Weight should be measured at every clinical contact regardless of the formal metabolic review schedule.",
+   "summary": "Second-generation antipsychotics such as quetiapine can cause weight gain, dyslipidaemia and raised glucose, so monitoring is built into treatment. NSW Health metabolic monitoring measures weight, waist, blood pressure, fasting glucose and lipids at baseline (drug-naive if possible), then three-monthly, and more often when abnormalities appear or the medication or dose changes. Orygen gives the same pattern for young people: a repeat at 1 month, then at least every 3 months. His 3 kg gain from 76 kg is about 4% of baseline, which calls for lifestyle intervention and continued monitoring rather than a longer interval.",
    "key_points": [
-    "RANZCP metabolic monitoring: baseline, 6 weeks, 12 weeks, then 6-monthly",
-    "Full panel includes weight, waist, fasting glucose, fasting lipids and blood pressure",
-    "Weight gain >7% of baseline in 6 weeks warrants early intervention discussion",
-    "Weight measured at every clinical contact regardless of formal review schedule"
+    "NSW Health: metabolic measures at baseline, then 3-monthly",
+    "Sooner when a result becomes abnormal or the medication or dose changes",
+    "The screen covers weight, waist, blood pressure, fasting glucose and lipids, not glucose alone",
+    "Normal early results do not end monitoring"
    ],
-   "pearls": "The majority of antipsychotic-associated weight gain occurs in the first 12 weeks - gaining more than 5% of baseline weight by 6 weeks has a positive predictive value exceeding 70% for clinically significant long-term weight gain."
+   "pearls": "NSW Health asks for the baseline set drug-naive if possible, because every later result is judged against it."
   },
   "sources": [
    {
-    "label": "RANZCP Metabolic Monitoring Guidelines",
-    "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library"
+    "label": "NSW Health IB2012_024: Metabolic monitoring",
+    "url": "https://www1.health.nsw.gov.au/pds/ActivePDSDocuments/IB2012_024.pdf"
    },
    {
-    "label": "Therapeutic Guidelines: Psychotropic"
+    "label": "Orygen: Positive cardiometabolic health",
+    "url": "https://www.orygen.org.au/Campus/Expert-Network/Resources/Free/Clinical-Practice/How-to-screen-and-intervene-for-positive-cardiomet/Positive-cardiometabolic-health?ext="
    }
   ],
   "reference_ranges": [
    "lipids",
    "glucose_hba1c"
   ],
-  "created": "2026-05-24",
-  "difficulty_prior_v3": 4
+  "created": "2026-09-24",
+  "revised_from": "psych-metmon-004"
  },
  {
   "id": "psych-metmon-005",

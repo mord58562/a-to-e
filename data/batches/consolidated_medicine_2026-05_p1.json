@@ -23777,78 +23777,80 @@
   "difficulty_prior_v3": 3
  },
  {
-  "id": "ctb-p44-006",
+  "id": "ctb-p44-006-v2",
   "topic": "Medicine",
   "subtopic": "Infectious disease",
   "subtopic_detail": "Oseltamivir initiation in frail nursing home resident with confirmed influenza A",
-  "difficulty": 2,
-  "model": "Claude Opus 4.7 (1M context)",
+  "difficulty": 3,
+  "model": "Claude Opus 5.5",
   "tags": [
    "influenza",
    "oseltamivir"
   ],
-  "stem": "An 84-year-old woman in residential aged care develops fevers, cough and lethargy 36 hours ago, during a documented influenza outbreak in her facility. Point-of-care PCR is positive for influenza A. She has chronic obstructive pulmonary disease and ischaemic heart disease but no liver or significant renal disease (eGFR 58). She has been vaccinated against influenza this season.",
+  "stem": "An 84-year-old woman in residential aged care develops fevers, cough and lethargy 36 hours ago, during a documented influenza outbreak in her facility. Point-of-care PCR is positive for influenza A. She has chronic obstructive pulmonary disease, ischaemic heart disease and chronic kidney disease, and no liver disease. She has been vaccinated against influenza this season.",
   "data_table": {
    "Vital signs": "BP 132/78, HR 96, RR 22, SpO2 91% on room air, Temp 38.4 degrees Celsius",
    "Examination": "Mildly tachypnoeic, scattered wheeze, no focal consolidation; alert and orientated",
-   "Investigations": "Influenza A PCR positive; CXR mild bibasal atelectasis, no consolidation; troponin negative; creatinine 96 micromol/L"
+   "Investigations": "Influenza A PCR positive; CXR mild bibasal atelectasis, no consolidation; troponin negative; creatinine 96 micromol/L (45-90), eGFR 58 mL/min/1.73 m2 (>90); weight 58 kg"
   },
   "lead_in": "Which is the single most appropriate antiviral plan?",
   "options": [
    {
     "letter": "A",
     "text": "Oral oseltamivir 75 mg twice daily for 5 days, started today, alongside symptomatic measures and watchful escalation for hypoxia",
-    "correct": true,
-    "rationale": "AU CDNA recommends neuraminidase inhibitor therapy for high-risk individuals such as frail aged-care residents within 48 hours of symptom onset; 75 mg twice daily for 5 days is standard at eGFR above 30. (Source: CDNA influenza national guidelines for public health units)",
+    "correct": false,
+    "rationale": "75 mg twice daily is the dose only when creatinine clearance is above 60 mL/min. Her Cockcroft-Gault creatinine clearance is about 35 mL/min ((140 - 84) x 58 / (0.815 x 96) x 0.85), so the full dose over-exposes her. (Source: Tamiflu (oseltamivir) Australian Product Information)",
     "source_refs": [
-     "CDNA influenza national guidelines for public health units"
+     "Tamiflu (oseltamivir) Australian Product Information"
     ]
    },
    {
     "letter": "B",
-    "text": "Oral oseltamivir 150 mg twice daily for 10 days as an extended high-dose regimen for an outbreak setting in residential aged care",
-    "correct": false,
-    "rationale": "Standard adult dose is 75 mg twice daily for 5 days; routine doubling is not recommended for non-immunocompromised hosts. (Source: CDNA influenza national guidelines for public health units)",
+    "text": "Oral oseltamivir 30 mg twice daily for 5 days, started today, alongside symptomatic measures and watchful escalation for hypoxia",
+    "correct": true,
+    "rationale": "CDNA recommends neuraminidase inhibitor treatment for high-risk people such as frail aged-care residents, and she is within 48 hours of onset. The Australian PI reduces the dose to 30 mg twice daily for 5 days when creatinine clearance is above 30 and up to 60 mL/min; hers is about 35 mL/min. (Source: CDNA influenza national guidelines for public health units; Tamiflu (oseltamivir) Australian Product Information)",
     "source_refs": [
-     "CDNA influenza national guidelines for public health units"
+     "CDNA influenza national guidelines for public health units",
+     "Tamiflu (oseltamivir) Australian Product Information"
     ]
    },
    {
     "letter": "C",
     "text": "Withhold all antiviral therapy and provide only supportive care, given that symptom onset was more than 24 hours ago in a vaccinated individual",
     "correct": false,
-    "rationale": "Antivirals retain benefit beyond 48 hours in severe or high-risk influenza; vaccination does not preclude treatment. (Source: CDNA influenza national guidelines for public health units)",
+    "rationale": "Antivirals retain benefit beyond 48 hours in severe or high-risk influenza, and vaccination does not preclude treatment. (Source: CDNA influenza national guidelines for public health units)",
     "source_refs": [
      "CDNA influenza national guidelines for public health units"
     ]
    },
    {
     "letter": "D",
-    "text": "Intravenous peramivir as the first-line antiviral on the basis of mild renal impairment and the convenience of single-dose intravenous therapy",
+    "text": "Intravenous peramivir as the first-line antiviral on the basis of her renal impairment and the convenience of single-dose intravenous therapy",
     "correct": false,
-    "rationale": "Peramivir is reserved for patients unable to take or tolerate oseltamivir; eGFR 58 does not preclude oral therapy. (Source: CDNA influenza national guidelines for public health units)",
+    "rationale": "Peramivir is reserved for patients unable to take or tolerate oseltamivir; moderate renal impairment is handled by reducing the oral oseltamivir dose, not by changing drug. (Source: CDNA influenza national guidelines for public health units; Tamiflu (oseltamivir) Australian Product Information)",
     "source_refs": [
-     "CDNA influenza national guidelines for public health units"
+     "CDNA influenza national guidelines for public health units",
+     "Tamiflu (oseltamivir) Australian Product Information"
     ]
    },
    {
     "letter": "E",
     "text": "Oral amantadine 100 mg twice daily for 5 days as first-line cover against an A subtype influenza outbreak in this residential setting",
     "correct": false,
-    "rationale": "Amantadine is no longer recommended due to widespread resistance in circulating influenza A strains. (Source: CDNA influenza national guidelines for public health units)",
+    "rationale": "Amantadine is no longer recommended because of widespread resistance in circulating influenza A strains. (Source: CDNA influenza national guidelines for public health units)",
     "source_refs": [
      "CDNA influenza national guidelines for public health units"
     ]
    }
   ],
   "explanation": {
-   "summary": "Frail older adults in aged care with confirmed influenza receive oseltamivir 75 mg twice daily for 5 days, started as soon as possible after symptom onset. Treatment remains worthwhile beyond 48 hours in severe or high-risk disease. Renal dose adjustment applies at eGFR below 30. Amantadine is obsolete due to resistance. Outbreak control includes droplet precautions, cohort isolation and post-exposure prophylaxis for residents and staff per CDNA guidance.",
+   "summary": "Frail older adults in aged care with confirmed influenza receive oseltamivir for 5 days, started as soon as possible after symptom onset, and treatment remains worthwhile beyond 48 hours in severe or high-risk disease. The dose is set by creatinine clearance, not by the eGFR label alone: the Australian PI gives 75 mg twice daily above 60 mL/min, 30 mg twice daily above 30 and up to 60 mL/min, and 30 mg once daily at 10 to 30 mL/min. Older, lighter women often have a creatinine clearance well below their eGFR, so calculate it. Amantadine is obsolete because of resistance. Outbreak control includes droplet precautions, cohorting and post-exposure prophylaxis for residents and staff per CDNA guidance.",
    "key_points": [
-    "Oseltamivir 75 mg twice daily for 5 days is first-line for high-risk influenza A",
-    "Renal dose adjustment of oseltamivir applies at eGFR below 30",
-    "Amantadine is no longer used due to resistance"
+    "Oseltamivir for 5 days is first-line for high-risk influenza A in aged care",
+    "Dose reduction starts at creatinine clearance 60 mL/min or less: 30 mg twice daily above 30 to 60 mL/min, 30 mg daily at 10 to 30 mL/min",
+    "Amantadine is no longer used because of resistance"
    ],
-   "pearls": "Oseltamivir 75 mg twice daily for 5 days started within 48 hours of symptoms reduces complications and length of illness in high-risk adults including frail aged-care residents."
+   "pearls": "Cockcroft-Gault creatinine clearance, not eGFR, is what the oseltamivir PI dose bands use; in an 84-year-old 58 kg woman with a creatinine of 96 micromol/L it is about 35 mL/min."
   },
   "sources": [
    {
@@ -23856,12 +23858,16 @@
     "url": "https://www.health.gov.au"
    },
    {
+    "label": "Tamiflu (oseltamivir) Australian Product Information",
+    "url": "https://rss.medsinfo.com.au/ro/pi.cfm?product=roptamif"
+   },
+   {
     "label": "AMH: oseltamivir"
    }
   ],
   "reference_ranges": [],
-  "created": "2026-05-31",
-  "difficulty_prior_v3": 3
+  "created": "2026-09-24",
+  "revised_from": "ctb-p44-006"
  },
  {
   "id": "ctb-p44-007",

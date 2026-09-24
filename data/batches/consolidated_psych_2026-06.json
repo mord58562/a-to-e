@@ -1809,91 +1809,98 @@
   "created": "2026-06-01"
  },
  {
-  "id": "rabe50-020",
+  "id": "rabe50-020-v2",
   "topic": "Psychiatry",
   "subtopic": "Acute behavioural emergency",
   "subtopic_detail": "Rapid tranquillisation choice",
   "difficulty": 4,
-  "model": "Claude Opus 4.7 (1M context)",
+  "model": "Claude Opus 5.5",
   "tags": [
    "acute behavioural disturbance"
   ],
-  "stem": "A 26-year-old man brought in by police is shouting, threatening staff, and pacing in the assessment room. He has known schizophrenia and has had two previous similar presentations. De-escalation by an experienced clinician and offer of oral medication have failed. He has been started on a section under the Mental Health Act. He has no known cardiac history. He has not received any medication tonight. Body weight is approximately 80 kg. He is medication-naive in the last 24 hours.\n\nThe team has the safe area set up and four trained staff present.",
+  "stem": "A 26-year-old man brought to the emergency department by police is shouting, threatening staff, and pacing in the assessment room. He has known schizophrenia and has had two previous similar presentations. De-escalation by an experienced clinician and an offer of oral medication have failed. He is detained under the Mental Health Act 2007 (NSW). He has no known cardiac history, weighs approximately 80 kg and has had no medication in the last 24 hours.\n\nThe team has the safe area set up and four trained staff present.",
   "data_table": {
    "Vital signs": "Pulse 118, BP 148/92 mmHg, RR 22, SpO2 98%, temperature 37.0°C",
    "Examination": "Hyperaroused, pacing, shouting, no focal neurology",
    "Investigations": "ECG and bloods not yet obtainable",
    "Medications": "Nil today"
   },
-  "lead_in": "What is the most appropriate intramuscular regimen?",
+  "lead_in": "What is the most appropriate first parenteral sedation?",
   "options": [
    {
     "letter": "A",
-    "text": "Olanzapine 10 mg IM as a single dose, repeated once at 30 minutes",
-    "correct": true,
-    "rationale": "AU acute behavioural disturbance guidelines list IM olanzapine 10 mg as first-line monotherapy when ECG is not available and oral medication declined; midazolam adds respiratory risk. (Source: Therapeutic Guidelines: Acute Behavioural Disturbance)",
+    "text": "Olanzapine 10 mg IM, with a second dose after 30 minutes if he has not settled",
+    "correct": false,
+    "rationale": "IM olanzapine is an option, but the label states that 10 mg injections given more often than 2 hours after the first dose have not been evaluated, so a 30 minute repeat is outside labelled use. It is not the NSW first-line parenteral agent. (Source: Zyprexa IntraMuscular product label; NSW Health GL2015_007)",
     "source_refs": [
-     "Therapeutic Guidelines: Acute Behavioural Disturbance"
+     "Zyprexa IntraMuscular product label",
+     "NSW Health GL2015_007: Management of patients with acute severe behavioural disturbance in emergency departments"
     ]
    },
    {
     "letter": "B",
-    "text": "Olanzapine 10 mg IM plus midazolam 10 mg IM simultaneously",
+    "text": "Olanzapine 10 mg IM together with midazolam 10 mg IM given as one regimen",
     "correct": false,
-    "rationale": "Combining IM olanzapine with parenteral benzodiazepines is contraindicated by the manufacturer because of risk of cardiorespiratory depression. (Source: Therapeutic Guidelines: Acute Behavioural Disturbance)",
+    "rationale": "The manufacturer does not recommend giving IM olanzapine with a parenteral benzodiazepine because of excessive sedation and cardiorespiratory depression. (Source: Zyprexa IntraMuscular product label)",
     "source_refs": [
-     "Therapeutic Guidelines: Acute Behavioural Disturbance"
+     "Zyprexa IntraMuscular product label"
     ]
    },
    {
     "letter": "C",
-    "text": "Droperidol 10 mg IM combined with IM midazolam 5 mg as primary regimen",
-    "correct": false,
-    "rationale": "Droperidol monotherapy is an alternative but routine combination with midazolam is reserved for refractory cases; ECG cannot be obtained safely. (Source: Therapeutic Guidelines: Acute Behavioural Disturbance)",
+    "text": "Droperidol 10 mg IM, with a second dose after 15 minutes if he has not settled",
+    "correct": true,
+    "rationale": "The NSW adult algorithm gives droperidol 10 mg IM as the first parenteral dose and a second 10 mg IM or IV if the patient has not settled in 15 minutes, to a maximum of 20 mg per event. Droperidol causes fewer adverse events and less need for repeat sedation than midazolam, and GL2015_007 does not require an ECG before the first dose. (Source: NSW Health GL2015_007)",
     "source_refs": [
-     "Therapeutic Guidelines: Acute Behavioural Disturbance"
+     "NSW Health GL2015_007: Management of patients with acute severe behavioural disturbance in emergency departments"
     ]
    },
    {
     "letter": "D",
-    "text": "Haloperidol 5 mg IM combined with promethazine 25 mg IM dose",
+    "text": "Haloperidol 5 mg IM together with promethazine 25 mg IM given as one regimen",
     "correct": false,
-    "rationale": "This is the UK NICE preferred combination but in AU droperidol or olanzapine is preferred because of haloperidol QT and EPSE risks. (Source: Therapeutic Guidelines: Acute Behavioural Disturbance)",
+    "rationale": "This is a UK combination (NICE). It is not part of the NSW GL2015_007 adult algorithm, which starts with droperidol and keeps midazolam or ketamine for the third line. (Source: NSW Health GL2015_007)",
     "source_refs": [
-     "Therapeutic Guidelines: Acute Behavioural Disturbance"
+     "NSW Health GL2015_007: Management of patients with acute severe behavioural disturbance in emergency departments"
     ]
    },
    {
     "letter": "E",
-    "text": "Ketamine 200 mg IM as first-line chemical restraint dose",
+    "text": "Ketamine 350 mg IM (about 4.4 mg/kg) as the first parenteral sedative",
     "correct": false,
-    "rationale": "Ketamine is reserved for pre-hospital agitated delirium under retrieval physician oversight, not first-line for ED behavioural emergency. (Source: Therapeutic Guidelines: Acute Behavioural Disturbance)",
+    "rationale": "NSW lists ketamine 4 to 5 mg/kg IM as a third-line ED agent after senior medical consultation, not as the first parenteral dose. (Source: NSW Health GL2015_007)",
     "source_refs": [
-     "Therapeutic Guidelines: Acute Behavioural Disturbance"
+     "NSW Health GL2015_007: Management of patients with acute severe behavioural disturbance in emergency departments"
     ]
    }
   ],
   "explanation": {
-   "summary": "Australian acute behavioural disturbance guidelines (eTG and most state mental health pathways) list IM droperidol 10 mg or IM olanzapine 10 mg as first-line single-agent rapid tranquillisation when oral medication has been declined. IM olanzapine and parenteral benzodiazepines should not be combined because of respiratory depression. Continuous monitoring with pulse oximetry is required. ECG is performed when feasible to detect QT prolongation. Reassessment at 30 minutes guides repeat dosing.",
+   "summary": "When de-escalation and oral medication fail in acute severe behavioural disturbance, NSW Health GL2015_007 gives droperidol 10 mg IM as the first parenteral dose, a second 10 mg if the patient has not settled in 15 minutes, and a maximum of 20 mg per event. Third-line options are midazolam 5 to 10 mg IM/IV or, after senior medical consultation, ketamine 4 to 5 mg/kg IM. IM olanzapine is an alternative but has a 2 hour labelled minimum before a repeat 10 mg dose and should not be combined with a parenteral benzodiazepine. Every sedated patient needs continuous observation and monitoring in line with the ANZCA guideline for sedated ABD patients.",
    "key_points": [
-    "AU first-line: IM olanzapine 10 mg or IM droperidol 10 mg",
-    "Do not combine IM olanzapine with parenteral benzodiazepines",
-    "Continuous monitoring including SpO2"
+    "NSW first parenteral agent: droperidol 10 mg IM, repeat once at 15 minutes, maximum 20 mg",
+    "Third line: midazolam, or ketamine after senior medical consultation",
+    "IM olanzapine repeats sooner than 2 hours are unevaluated; do not combine it with a parenteral benzodiazepine",
+    "Monitor every sedated patient continuously"
    ],
-   "pearls": "Patients with intoxication, hypovolaemia, or significant medical illness need lower starting doses (e.g. 5 mg olanzapine) and individual airway plans; the standard 10 mg is for a fit adult."
+   "pearls": "GL2015_007 describes droperidol QT prolongation as rarely clinically significant: an Australian study of 1009 patients given 10 mg or more found no torsades de pointes, so a pre-dose ECG is not required."
   },
   "sources": [
    {
-    "label": "Therapeutic Guidelines: Acute Behavioural Disturbance",
-    "url": "https://www.tg.org.au/"
+    "label": "NSW Health GL2015_007: Management of patients with acute severe behavioural disturbance in emergency departments",
+    "url": "https://www1.health.nsw.gov.au/pds/ActivePDSDocuments/GL2015_007.pdf"
    },
    {
-    "label": "RANZCP Acute Behavioural Disturbance Position Statement",
-    "url": "https://www.ranzcp.org/"
+    "label": "Zyprexa IntraMuscular product label",
+    "url": "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=b418946a-1ab4-4d89-a012-d94fc361a3c4"
+   },
+   {
+    "label": "ANZCA guideline on care of sedated ABD patients (RANZCP-endorsed)",
+    "url": "https://www.ranzcp.org/clinical-guidelines-publications/clinical-guidelines-publications-library/care-of-sedated-abd-patients"
    }
   ],
   "reference_ranges": [],
-  "created": "2026-06-01"
+  "created": "2026-09-24",
+  "revised_from": "rabe50-020"
  },
  {
   "id": "rabe50-021",

@@ -1,20 +1,20 @@
 [
  {
-  "id": "medicine-cardio-core-001",
+  "id": "medicine-cardio-core-001-v2",
   "topic": "Medicine",
   "subtopic": "Acute coronary syndromes",
   "subtopic_detail": "STEMI ECG criteria - posterior MI recognition",
   "difficulty": 3,
-  "model": "Claude Opus 4.7 (1M context)",
+  "model": "Claude Opus 5.5",
   "tags": [
    "ECG",
    "ACS"
   ],
-  "stem": "A 58-year-old man presents to a regional emergency department with 90 minutes of crushing central chest pain radiating to the left arm, associated with nausea and diaphoresis. He has a history of hypertension and is an ex-smoker. He took two of his wife's GTN sprays without relief. The nearest primary PCI centre is 45 minutes away by road. Vital signs show HR 92, BP 138/86, SpO2 98% on room air, RR 18.\n\nHe is in distress but mentating well. The initial 12-lead ECG shows 1.5 mm ST depression in V1 to V3 with prominent R waves in V2, upright T waves in V1 to V3, and 1 mm ST depression in II, III and aVF. There is no anterior ST elevation. A right-sided and posterior lead ECG is performed and shows 1 mm ST elevation in V7, V8 and V9. High-sensitivity troponin returns at 320 ng/L (reference <14). He has no contraindications to fibrinolysis.",
+  "stem": "A 58-year-old man presents to a regional emergency department with 90 minutes of crushing central chest pain radiating to the left arm, associated with nausea and diaphoresis. He has a history of hypertension and is an ex-smoker. He took two of his wife's GTN sprays without relief.\n\nHe is in distress but mentating well. The 12-lead ECG at arrival shows 1.5 mm ST depression in V1 to V3 with prominent R waves in V2, upright T waves in V1 to V3, and 1 mm ST depression in II, III and aVF. There is no anterior ST elevation. Posterior leads recorded straight away show 1 mm ST elevation in V7, V8 and V9. The nearest primary PCI centre is 3 hours away by road, and aeromedical retrieval is unavailable for at least 2 hours because of weather. He has no contraindications to fibrinolysis.",
   "data_table": {
-   "Vital signs": "HR 92, BP 138/86, SpO2 98% room air, RR 18, afebrile.",
+   "Vital signs": "Pulse 92/min, BP 138/86 mmHg, RR 18/min, SpO2 98% on room air, afebrile",
    "ECG": "ST depression 1.5 mm V1 to V3, dominant R in V2, upright T V1 to V3. Posterior leads V7 to V9 show 1 mm ST elevation. Inferior leads show 1 mm depression.",
-   "Investigations": "hs-troponin 320 ng/L (<14). FBC, UEC, glucose, lipids pending."
+   "Investigations": "hs-troponin, FBC, UEC, glucose and lipids sent, results pending"
   },
   "lead_in": "Which is the single most appropriate immediate reperfusion strategy?",
   "options": [
@@ -22,27 +22,27 @@
     "letter": "A",
     "text": "Conservative medical management with aspirin, ticagrelor and enoxaparin only, with serial troponins",
     "correct": false,
-    "rationale": "Posterior STEMI is a STEMI equivalent and mandates emergent reperfusion. Managing this as NSTE-ACS misses a posterior MI that shows no anterior ST elevation; an NSTE-ACS pathway would only be correct if anterior changes were purely reciprocal in a confirmed non-STEMI presentation with negative posterior leads (Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline).",
+    "rationale": "Posterior ST elevation in V7 to V9 makes this a STEMI equivalent that needs immediate reperfusion. Managing it as NSTE-ACS would only be correct if the anterior changes were reciprocal in a confirmed non-STEMI presentation with negative posterior leads. (Source: NHFA/CSANZ Australian clinical guideline for acute coronary syndromes 2025)",
     "source_refs": [
-     "Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline"
+     "NHFA/CSANZ Australian clinical guideline for acute coronary syndromes 2025"
     ]
    },
    {
     "letter": "B",
-    "text": "Transfer for primary PCI without giving fibrinolysis, accepting the 45 minute transfer delay plus catheter-lab activation time, with full anticoagulation en route",
+    "text": "Transfer for primary PCI without giving fibrinolysis, accepting the 3 hour road transfer plus catheter-lab activation time, with full anticoagulation en route",
     "correct": false,
-    "rationale": "Primary PCI is preferred only when first medical contact to balloon is achievable within 120 minutes for transferred patients. With a 45 minute road transfer plus catheter-lab activation, that target will be breached. This would be the correct strategy if the PCI centre were <60 minutes away or onsite, in which case fibrinolysis is avoided (Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline).",
+    "rationale": "Primary PCI is preferred over fibrinolysis only if it can be performed within 120 minutes of first medical contact. A 3 hour road transfer with no retrieval available cannot meet that, so withholding lysis only delays reperfusion. With a transfer that fits inside 120 minutes, this would be the preferred strategy. (Source: NHFA/CSANZ Australian clinical guideline for acute coronary syndromes 2025)",
     "source_refs": [
-     "Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline"
+     "NHFA/CSANZ Australian clinical guideline for acute coronary syndromes 2025"
     ]
    },
    {
     "letter": "C",
-    "text": "Administer fibrinolysis with tenecteplase now, plus aspirin, clopidogrel and enoxaparin, then transfer for pharmaco-invasive PCI within 3 to 24 hours",
+    "text": "Administer fibrinolysis with tenecteplase now, plus aspirin, clopidogrel and enoxaparin, then transfer for pharmaco-invasive PCI within 2 to 24 hours",
     "correct": true,
-    "rationale": "Posterior STEMI confirmed by V7 to V9 ST elevation is a STEMI equivalent requiring immediate reperfusion. When primary PCI cannot occur within 120 minutes of first medical contact, the Heart Foundation/CSANZ pharmaco-invasive pathway is fibrinolysis (tenecteplase weight-banded), antiplatelets (aspirin + clopidogrel preferred with lysis), and anticoagulation (enoxaparin), followed by transfer for angiography within 3 to 24 hours regardless of clinical course.",
+    "rationale": "Posterior STEMI confirmed by V7 to V9 ST elevation needs immediate reperfusion. When primary PCI cannot be delivered within 120 minutes of first medical contact, the guideline recommends fibrinolysis (tenecteplase, weight-banded, full dose under 70 years), antiplatelet therapy with aspirin and clopidogrel, and anticoagulation, then transfer for angiography within 2 to 24 hours. (Source: NHFA/CSANZ Australian clinical guideline for acute coronary syndromes 2025; Therapeutic Guidelines: Cardiovascular - ACS)",
     "source_refs": [
-     "Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline",
+     "NHFA/CSANZ Australian clinical guideline for acute coronary syndromes 2025",
      "Therapeutic Guidelines: Cardiovascular - ACS"
     ]
    },
@@ -50,35 +50,35 @@
     "letter": "D",
     "text": "Treat the changes as non-ST-elevation, give aspirin, ticagrelor and fondaparinux, and refer for angiography within 72 hours",
     "correct": false,
-    "rationale": "The 72 hour invasive window is the NSTE-ACS pathway and does not apply to STEMI equivalents. This would be correct only if posterior leads were negative and the troponin/ECG profile fitted intermediate-risk NSTE-ACS rather than transmural posterior infarction (Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline).",
+    "rationale": "The 72 hour invasive window belongs to the NSTE-ACS pathway and does not apply to STEMI equivalents. It would be correct only if the posterior leads were negative and the profile fitted intermediate-risk NSTE-ACS. (Source: NHFA/CSANZ Australian clinical guideline for acute coronary syndromes 2025)",
     "source_refs": [
-     "Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline"
+     "NHFA/CSANZ Australian clinical guideline for acute coronary syndromes 2025"
     ]
    },
    {
     "letter": "E",
     "text": "Repeat ECG in 30 minutes and reassess; if persistent changes, then consider fibrinolysis",
     "correct": false,
-    "rationale": "Diagnosis is already established by V7 to V9 ST elevation and positive troponin; further serial ECGs add no information. Treating posterior STEMI as an evolving NSTEMI delays reperfusion, and delay costs myocardium (time-is-muscle). Serial ECGs are appropriate only when initial ECG is non-diagnostic and troponin is pending (Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline).",
+    "rationale": "The diagnosis is already made by V7 to V9 ST elevation, and the STEMI pathway does not wait for troponin or serial ECGs. Serial ECGs are for an initial ECG that is non-diagnostic. (Source: NHFA/CSANZ Australian clinical guideline for acute coronary syndromes 2025)",
     "source_refs": [
-     "Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline"
+     "NHFA/CSANZ Australian clinical guideline for acute coronary syndromes 2025"
     ]
    }
   ],
   "explanation": {
-   "summary": "Posterior STEMI presents with ST depression and tall R waves in V1 to V3 and is confirmed with posterior leads V7 to V9 showing >=0.5 mm ST elevation. It is a STEMI equivalent. When primary PCI is not achievable within 120 minutes of first medical contact, the Heart Foundation/CSANZ pharmaco-invasive pathway (fibrinolysis then transfer for angiography 3 to 24 hours) is indicated.",
+   "summary": "Posterior STEMI presents with ST depression and tall R waves in V1 to V3 and is confirmed with posterior leads V7 to V9 (ST elevation of 0.5 mm or more in women and in men aged 40 or over, 1 mm or more in men under 40). It is a STEMI equivalent. Primary PCI is preferred if it can be performed within 120 minutes of first medical contact; when it cannot, fibrinolysis is given and the patient is transferred for angiography within 2 to 24 hours (pharmaco-invasive strategy). Half-dose tenecteplase is recommended from age 70.",
    "key_points": [
-    "Posterior STEMI = ST depression V1 to V3 with dominant R, confirmed by V7 to V9 elevation >=0.5 mm",
-    "STEMI equivalents (posterior, de Winter, Wellens evolution, LBBB with Sgarbossa) need urgent reperfusion",
-    "Primary PCI within 120 min FMC-to-balloon; otherwise lyse then transfer 3 to 24 h",
-    "Clopidogrel (not ticagrelor) is preferred with fibrinolysis to limit bleeding"
+    "Posterior STEMI = ST depression V1 to V3 with dominant R, confirmed by V7 to V9 elevation",
+    "STEMI equivalents need urgent reperfusion without waiting for troponin",
+    "Primary PCI if achievable within 120 min of first medical contact; otherwise lyse, then angiography within 2 to 24 h",
+    "Clopidogrel is the P2Y12 inhibitor given with fibrinolysis; a switch to ticagrelor after PCI is safe"
    ],
-   "pearls": "Always do posterior and right-sided leads when you see V1 to V3 ST depression with upright T waves and dominant R in V2 (Heart Foundation/CSANZ)."
+   "pearls": "The 120 minute limit runs from first medical contact, so it is the whole journey (door-in-door-out, transport and lab activation) that has to fit, not the road time alone (NHFA/CSANZ 2025)."
   },
   "sources": [
    {
-    "label": "Heart Foundation/CSANZ 2016 Australian ACS Clinical Guideline",
-    "url": "https://www.heartfoundation.org.au/getmedia/4342a380-2eaf-4b86-91c8-bf3a08e9d6e3/ACS_Clinical_Guidelines2016.pdf"
+    "label": "NHFA/CSANZ Australian clinical guideline for acute coronary syndromes 2025",
+    "url": "https://www.heartfoundation.org.au/for-professionals/acs-guideline"
    },
    {
     "label": "Therapeutic Guidelines: Cardiovascular - ACS",
@@ -89,8 +89,8 @@
    "fbc",
    "uec"
   ],
-  "created": "2026-05-20",
-  "difficulty_prior_v3": 4
+  "created": "2026-09-24",
+  "revised_from": "medicine-cardio-core-001"
  },
  {
   "id": "medicine-cardio-core-002",
@@ -17095,7 +17095,7 @@
   "data_table": {
    "Vital signs": "Pulse 124 /min, blood pressure 102/64 mmHg, respiratory rate 34 /min, SpO2 98% on 2 L/min oxygen, temperature 36.8°C",
    "Examination": "GCS 13; very dry mucous membranes; mildly tender abdomen",
-   "Investigations": "Sodium 132 mmol/L (135-145), potassium 5.2 mmol/L (3.5-5.2), chloride 88 mmol/L (95-110), bicarbonate 6 mmol/L (22-32), albumin 36 g/L (35-50), glucose 32 mmol/L, beta-hydroxybutyrate 7.8 mmol/L (<0.6), lactate 1.8 mmol/L (<2.0); arterial gas pH 7.06 (7.35-7.45), PaCO2 16 mmHg (35-45)"
+   "Investigations": "Sodium 132 mmol/L (135-145), potassium 5.2 mmol/L (3.5-5.2), chloride 88 mmol/L (95-110), bicarbonate 6 mmol/L (22-32), albumin 36 g/L (35-50), glucose 32 mmol/L, beta-hydroxybutyrate 7.8 mmol/L (<0.6), lactate 1.8 mmol/L (<2.0); arterial gas pH 7.19 (7.35-7.45), PaCO2 16 mmHg (35-45)"
   },
   "lead_in": "Which is the most accurate description of her acid-base disorder?",
   "options": [
@@ -17131,7 +17131,7 @@
     "letter": "D",
     "text": "Primary respiratory alkalosis with secondary metabolic compensation through bicarbonate loss",
     "correct": false,
-    "rationale": "A primary respiratory alkalosis needs an alkalaemic pH; a pH of 7.06 with a bicarbonate of 6 mmol/L makes the acidosis primary and the low PaCO2 compensatory. Primary respiratory alkalosis fits a patient with a pH above 7.45 and a low PaCO2, such as early sepsis or anxiety. (Source: BMJ Best Practice - Acid-base interpretation)",
+    "rationale": "A primary respiratory alkalosis needs an alkalaemic pH; a pH of 7.19 with a bicarbonate of 6 mmol/L makes the acidosis primary and the low PaCO2 compensatory. Primary respiratory alkalosis fits a patient with a pH above 7.45 and a low PaCO2, such as early sepsis or anxiety. (Source: BMJ Best Practice - Acid-base interpretation)",
     "source_refs": [
      "BMJ Best Practice - Acid-base interpretation"
     ]

@@ -17980,12 +17980,12 @@
   "created": "2026-09-16"
  },
  {
-  "id": "sched-0916f-med-010",
+  "id": "sched-0916f-med-010-v2",
   "topic": "Medicine",
   "subtopic": "Endocrinology",
   "subtopic_detail": "preparing a patient for aldosterone to renin ratio testing when their current antihypertensives interfere with the result",
   "difficulty": 3,
-  "model": "Claude Opus 5",
+  "model": "Claude Opus 5.5",
   "tags": [
    "hypertension",
    "endocrine",
@@ -18002,29 +18002,30 @@
   "options": [
    {
     "letter": "A",
-    "text": "Replace potassium, continue all current agents and interpret the ratio against drug adjusted ranges",
+    "text": "Measure the ratio now on her current three agents without first correcting the potassium",
     "correct": false,
-    "rationale": "Amlodipine has a modest effect and could be continued, but a thiazide and an angiotensin converting enzyme inhibitor together push the ratio down strongly enough that no adjusted range rescues the interpretation. Correcting potassium alone leaves the dominant interference in place. (Source: Endocrine Society of Australia: Primary Aldosteronism)",
+    "rationale": "Hypokalaemia suppresses aldosterone secretion, so a ratio drawn while her potassium is 3.2 mmol/L can be falsely low; potassium is corrected first. Her current agents are less of a barrier: the 2025 guideline allows screening on most antihypertensives other than mineralocorticoid receptor antagonists. (Source: Endocrine Society 2025: Primary aldosteronism clinical practice guideline; CCJM 2026: The 2025 Endocrine Society primary aldosteronism guideline)",
     "source_refs": [
-     "Endocrine Society of Australia: Primary Aldosteronism"
+     "Endocrine Society 2025: Primary aldosteronism clinical practice guideline",
+     "CCJM 2026: The 2025 Endocrine Society primary aldosteronism guideline"
     ]
    },
    {
     "letter": "B",
     "text": "Start spironolactone for the hypokalaemia and measure the ratio once the potassium has normalised",
     "correct": false,
-    "rationale": "Mineralocorticoid receptor blockade is the single most powerful confounder of this test and must be withheld for at least six weeks beforehand, so starting it destroys the investigation you are planning. It is the correct treatment once the diagnosis and subtype are settled. (Source: Endocrine Society of Australia: Primary Aldosteronism)",
+    "rationale": "Mineralocorticoid receptor blockade is the most powerful confounder of this test and is withdrawn for 4 to 6 weeks before definitive testing, so starting it now undermines the investigation you are planning. It is the correct treatment once the diagnosis and subtype are settled. (Source: CCJM 2026: The 2025 Endocrine Society primary aldosteronism guideline)",
     "source_refs": [
-     "Endocrine Society of Australia: Primary Aldosteronism"
+     "CCJM 2026: The 2025 Endocrine Society primary aldosteronism guideline"
     ]
    },
    {
     "letter": "C",
     "text": "Proceed to adrenal vein sampling first since the biochemical picture already indicates the diagnosis",
     "correct": false,
-    "rationale": "Adrenal vein sampling is a subtype study performed after screening and confirmatory testing establish the diagnosis, not a substitute for them. Sampling comes later, in a confirmed case with a unilateral nodule on imaging, where it determines whether adrenalectomy will cure. (Source: Endocrine Society of Australia: Primary Aldosteronism)",
+    "rationale": "Adrenal vein sampling is a subtype study performed after screening and confirmatory testing establish the diagnosis, not a substitute for them. It comes later, in a confirmed case being considered for adrenalectomy. (Source: Endocrine Society 2025: Primary aldosteronism clinical practice guideline)",
     "source_refs": [
-     "Endocrine Society of Australia: Primary Aldosteronism"
+     "Endocrine Society 2025: Primary aldosteronism clinical practice guideline"
     ]
    },
    {
@@ -18040,27 +18041,32 @@
     "letter": "E",
     "text": "Replace potassium, stop the thiazide for four weeks and substitute verapamil or prazosin for control",
     "correct": true,
-    "rationale": "Thiazides raise renin and so lower the ratio, generating false negatives, and hypokalaemia itself suppresses aldosterone secretion, so both must be corrected before sampling. Slow release verapamil, prazosin and hydralazine have minimal effect on the ratio and are the substitutions used to keep the pressure controlled during the washout. (Source: Endocrine Society of Australia: Primary Aldosteronism)",
+    "rationale": "Hypokalaemia suppresses aldosterone and is corrected first. Thiazides raise renin and so lower the ratio; swapping the thiazide for verapamil or prazosin, which have minimal effect on the ratio, is the minimal-withdrawal option in the 2025 tiered approach (no, minimal or full withdrawal), with full withdrawal the ideal for accuracy. Perindopril and amlodipine also raise renin, so a raised ratio with suppressed renin on them is still a valid positive screen; a negative screen would need further withdrawal before primary aldosteronism is excluded. (Source: Endocrine Society 2025: Primary aldosteronism clinical practice guideline; CCJM 2026: The 2025 Endocrine Society primary aldosteronism guideline)",
     "source_refs": [
-     "Endocrine Society of Australia: Primary Aldosteronism"
+     "Endocrine Society 2025: Primary aldosteronism clinical practice guideline",
+     "CCJM 2026: The 2025 Endocrine Society primary aldosteronism guideline"
     ]
    }
   ],
   "explanation": {
-   "summary": "Resistant hypertension on three agents with unprovoked hypokalaemia and a high normal sodium is a strong indication to screen for primary aldosteronism. The aldosterone to renin ratio is exquisitely sensitive to medication, and the two changes that must happen before sampling are correcting the potassium and withdrawing the drugs that distort renin most. Thiazides and mineralocorticoid receptor antagonists raise renin and generate false negatives, while beta blockers suppress renin and generate false positives. Verapamil, prazosin and hydralazine are the interim agents that leave the ratio interpretable while keeping the patient safe during washout.",
+   "summary": "Resistant hypertension on three agents with hypokalaemia out of proportion to thiazide use, despite a concurrent ACE inhibitor, and a high-normal sodium is a strong indication to screen for primary aldosteronism. The 2025 Endocrine Society guideline allows screening with no, minimal or full withdrawal of interfering drugs to balance feasibility against interpretability, with full withdrawal the ideal for diagnostic accuracy. Two things are not negotiable: potassium is corrected first, because hypokalaemia falsely lowers aldosterone, and mineralocorticoid receptor antagonists are not started before testing. Drugs that raise renin (thiazides, ACE inhibitors, dihydropyridine calcium channel blockers) can produce false negatives, so a raised ratio with suppressed renin while on them is still a positive screen. Non-dihydropyridine calcium channel blockers, alpha-1 blockers, hydralazine with verapamil, and moxonidine are the substitutes used when drugs are withdrawn.",
    "key_points": [
-    "Screen for primary aldosteronism in resistant hypertension, unprovoked hypokalaemia or an adrenal incidentaloma",
-    "Hypokalaemia suppresses aldosterone and must be corrected before the ratio is measured",
-    "Thiazides and mineralocorticoid receptor antagonists cause false negatives by raising renin",
-    "Beta blockers cause false positives by suppressing renin",
-    "Adrenal vein sampling is a subtype study and follows confirmatory testing, never precedes it"
+    "Correct hypokalaemia before measuring the ratio",
+    "2025 Endocrine Society: screening with no, minimal or full withdrawal of interfering drugs; full withdrawal is ideal",
+    "A raised ratio with suppressed renin on renin-raising drugs is still a positive screen",
+    "Do not start a mineralocorticoid receptor antagonist before the work-up",
+    "Adrenal vein sampling is a subtype study and follows confirmatory testing"
    ],
-   "pearls": "Withhold mineralocorticoid receptor antagonists for six weeks and thiazides for four weeks before sampling, and take the sample mid-morning after the patient has been upright for at least two hours and seated for five to fifteen minutes. Roughly half of people with primary aldosteronism have a normal potassium, so never let normokalaemia talk you out of screening resistant hypertension."
+   "pearls": "Low renin on a drug that should raise it is itself a strong pointer to primary aldosteronism."
   },
   "sources": [
    {
-    "label": "Endocrine Society of Australia: Primary Aldosteronism",
-    "url": "https://www.endocrinesociety.org.au/"
+    "label": "Endocrine Society 2025: Primary aldosteronism clinical practice guideline",
+    "url": "https://academic.oup.com/jcem/article/110/9/2453/8196671"
+   },
+   {
+    "label": "CCJM 2026: The 2025 Endocrine Society primary aldosteronism guideline",
+    "url": "https://www.ccjm.org/content/93/9/515"
    },
    {
     "label": "Therapeutic Guidelines: Endocrinology",
@@ -18070,7 +18076,8 @@
   "reference_ranges": [
    "uec"
   ],
-  "created": "2026-09-16"
+  "created": "2026-09-24",
+  "revised_from": "sched-0916f-med-010"
  },
  {
   "id": "sched-0916f-med-011",
