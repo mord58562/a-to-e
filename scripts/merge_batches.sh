@@ -1,18 +1,21 @@
 #!/usr/bin/env bash
-# Y4 MCQ Bank - merge staged batch files in data/batches/ into the four main
+# Y4 MCQ Bank - fold named batch files from data/batches/ into the four main
 # questions_*.json files (Paediatrics, Obstetrics & Gynaecology, Psychiatry,
 # Medicine).
 #
-# Idempotent: only merges entries whose id isn't already served. Moves merged
-# batches to data/batches/_merged/ so they're not re-imported, and drops the
-# moved paths from data/batches_manifest.json.
+# Usage:  ./scripts/merge_batches.sh [--dry-run] data/batches/<name>.json ...
 #
-# Usage:  ./scripts/merge_batches.sh [--dry-run]
+# The batches are where the bank lives. Each listed batch is served as a
+# question file plus a commentary file from data/split/, under a content
+# hash, while the main files are loaded whole and re-downloaded on every
+# meta.json date bump. Moving a batch into them undoes both, so this merges
+# only the files it is given, and refuses any batch that has a split pair
+# in data/batches_manifest.json (after the rebuild workflow runs, that is
+# every listed batch). It is for folding a small listed batch that has not
+# been split yet.
 #
-# This is a manual sync step. The site loader already pulls live from
-# data/batches/ via batches_manifest.json, so questions are visible even
-# before merging - but merging cleans up the staging area and locks the IDs
-# into the primary main files.
+# Only entries whose id isn't already served are merged. Merged batches move
+# to data/batches/_merged/ and their paths leave data/batches_manifest.json.
 #
 # SAFETY CONTRACT
 # ---------------
@@ -26,9 +29,11 @@
 #   * If that invariant cannot be computed - a main file missing, any served
 #     file unparseable, a manifest unreadable, a question with no id, a topic
 #     that maps to no main file - it refuses to run and writes nothing.
-#   * Batch files sitting in data/batches/ that are NOT listed in the manifest
-#     are not served, so merging them would change the bank. They are skipped
-#     and reported, never moved.
+#   * A named batch that is NOT listed in the manifest is not served, so
+#     merging it would change the bank. The run refuses it.
+#   * data/split/ is copied aside before the manifest is refreshed and put
+#     back on failure, so a rollback never leaves the manifest naming split
+#     files that were deleted.
 #
 # A previous version of this script loaded only the Paediatrics and Obstetrics
 # main files and branched on topic.startswith('Paed')/('Obstet'), so every
@@ -42,18 +47,26 @@ cd "$(dirname "$0")/.."
 
 python3 - "$@" << 'PY'
 import datetime
-import glob
 import json
 import os
 import shutil
 import sys
+import tempfile
 
+USAGE = "usage: merge_batches.sh [--dry-run] data/batches/<name>.json ..."
 DRY_RUN = "--dry-run" in sys.argv[1:]
+NAMED = []
 for arg in sys.argv[1:]:
-    if arg != "--dry-run":
-        print(f"ABORT: unknown argument {arg!r} (usage: merge_batches.sh [--dry-run])",
-              file=sys.stderr)
+    if arg == "--dry-run":
+        continue
+    if arg.startswith("-"):
+        print(f"ABORT: unknown option {arg!r} ({USAGE})", file=sys.stderr)
         raise SystemExit(2)
+    NAMED.append(arg)
+if not NAMED:
+    print(f"{USAGE}\nName the batch files to merge; nothing is merged by default.",
+          file=sys.stderr)
+    raise SystemExit(2)
 
 # Exact topic strings as they appear in the data. Verified against the bank;
 # anything outside this map aborts the run rather than being dropped.
@@ -70,6 +83,7 @@ MANIFEST = "data/batches_manifest.json"
 INBOX_MANIFEST = "data/inbox_manifest.json"
 META = "data/meta.json"
 MERGED_DIR = "data/batches/_merged"
+SPLIT_DIR = "data/split"
 
 
 def abort(msg):
@@ -158,23 +172,23 @@ active_full = {os.path.normpath(os.path.join("data", rel)) for rel in active_rel
 before = served_ids()
 print(f"served before merge: {len(before)} unique ids")
 
-on_disk = sorted(glob.glob("data/batches/*.json"))
-candidates, unregistered = [], []
-for path in on_disk:
-    if os.path.normpath(path) in active_full:
-        candidates.append(path)
-    else:
-        unregistered.append(path)
-
-if unregistered:
-    print(f"\nskipping {len(unregistered)} batch file(s) not listed in the manifest "
-          f"(not served, so merging them would change the bank):")
-    for path in unregistered:
-        print(f"  {os.path.basename(path)}")
-
-if not candidates:
-    print("\nNo manifest-active batches to merge.")
-    raise SystemExit(0)
+# Paths are taken relative to the repo root (the cwd here), with or without
+# the leading data/.
+split_entries = manifest_obj.get("split") if isinstance(manifest_obj.get("split"), dict) else {}
+candidates = []
+for arg in NAMED:
+    rel = os.path.normpath(arg if arg.startswith("data" + os.sep) else os.path.join("data", arg))
+    rel_manifest = os.path.relpath(rel, "data")
+    if not os.path.exists(rel):
+        abort(f"no such batch file: {arg}")
+    if rel not in active_full:
+        abort(f"{rel} is not listed in {MANIFEST}, so it is not served and merging "
+              f"it would change the bank")
+    if rel_manifest in split_entries:
+        abort(f"{rel} is served as a split pair ({split_entries[rel_manifest].get('questions')}); "
+              f"batches are its permanent home, so it is not merged")
+    if rel not in candidates:
+        candidates.append(rel)
 
 # Validate every batch before touching anything. Two phases on purpose: a bad
 # topic or a missing id must stop the run while the tree is still untouched.
@@ -230,7 +244,14 @@ if DRY_RUN:
 # Everything from here is undone in full if the invariant fails.
 
 backups = {}
+split_backup = None
 try:
+    # refresh() below rewrites or deletes split files; keep a copy so a
+    # rollback restores them with the manifest.
+    if os.path.isdir(SPLIT_DIR):
+        split_backup = tempfile.mkdtemp(prefix="merge_batches_split_")
+        shutil.copytree(SPLIT_DIR, os.path.join(split_backup, "split"))
+
     os.makedirs(MERGED_DIR, exist_ok=True)
 
     for path in MAIN_ORDER + [MANIFEST, META]:
@@ -284,8 +305,15 @@ except BaseException as exc:
     for path, bak in backups.items():
         shutil.copy2(bak, path)
         os.remove(bak)
+    if split_backup:
+        shutil.rmtree(SPLIT_DIR, ignore_errors=True)
+        shutil.copytree(os.path.join(split_backup, "split"), SPLIT_DIR)
+        shutil.rmtree(split_backup, ignore_errors=True)
     print("Restored. The bank is exactly as it was.", file=sys.stderr)
     raise SystemExit(1)
+
+if split_backup:
+    shutil.rmtree(split_backup, ignore_errors=True)
 
 print(f"\nserved after merge:  {len(after)} unique ids - invariant holds")
 print(f"pre-merge copies kept at {', '.join(sorted(backups.values()))} (gitignored)")

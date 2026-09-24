@@ -38,6 +38,8 @@ from collections import defaultdict
 
 import check_tokens  # same directory; owns the truncation rules
 
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 # Spelling variants that keyword matching treats as different words. AU spelling
 # is the house style; these fold to a comparison form only, nothing is rewritten.
 SPELLING = [
@@ -475,20 +477,37 @@ def main():
         ap.error("pass --new <files> to gate a batch, --all to audit the bank, "
                  "or --selftest to check the dose comparison")
 
+    # The bank is found relative to the repo root; an empty bank would pass
+    # every question. Paths given on the command line are read from the cwd
+    # they were typed in.
+    cwd = os.getcwd()
+    if args.json:
+        args.json = os.path.join(cwd, args.json)
+    new_patterns = [os.path.join(cwd, p) for p in (args.new or [])]
+    os.chdir(ROOT)
+
     if args.new:
         # Deduplicate the path list: overlapping globs would otherwise load the
         # same file twice and the new-vs-new pass would flag every question in
         # it as a duplicate of itself.
         new_paths, seen_paths = [], set()
-        for pattern in args.new:
+        for pattern in new_patterns:
             for path in (sorted(glob.glob(pattern)) or [pattern]):
-                key = os.path.normpath(path)
-                if key in seen_paths:
+                path = os.path.normpath(path)
+                if path.startswith(ROOT + os.sep):
+                    path = os.path.relpath(path, ROOT)
+                if path in seen_paths:
                     continue
-                seen_paths.add(key)
+                seen_paths.add(path)
                 new_paths.append(path)
         new_records = load(new_paths)
         old_records = load(bank_paths(exclude=new_paths))
+        if not new_records:
+            print(f"ABORT: no questions read from {', '.join(new_paths)}")
+            return 2
+        if not old_records:
+            print(f"ABORT: the bank under {ROOT}/data loaded empty")
+            return 2
         code = run_gate(new_records, old_records, args.show_review, args.json)
         # Text cut off mid-word passes every duplicate test, so the gate the
         # routine already runs checks for it too (rules in check_tokens.py).
@@ -502,6 +521,9 @@ def main():
         return 1 if code or cut else 0
 
     records = load(bank_paths())
+    if not records:
+        print(f"ABORT: the bank under {ROOT}/data loaded empty")
+        return 2
     print(f"auditing {len(records)} questions")
     duplicates, bands, _reviews = self_compare(records)
     for band in ("0.90+", "0.80-0.90", "0.70-0.80", "0.62-0.70"):

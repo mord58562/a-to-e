@@ -1,0 +1,56 @@
+# Keeps data/split/ and the manifest hashes in step with the batch files on
+# main. The site serves a batch's split pair while the manifest says it was
+# built from the batch's current hash, so any writer that changes a batch
+# without rebuilding (a hand edit, a commit that left data/split/ out, a
+# routine push carrying an older manifest) would otherwise serve the old
+# questions indefinitely. See scripts/rebuild_bank.sh.
+#
+# The rebuild commit is pushed with GITHUB_TOKEN, and pushes made with
+# GITHUB_TOKEN do not start workflows, so this cannot trigger itself.
+name: Rebuild bank
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/batches/**"
+      - "data/batches_manifest.json"
+      - "data/inbox/**"
+      - "data/inbox_manifest.json"
+      - "data/questions_*.json"
+      - "data/split/**"
+      - "scripts/manifest_hashes.py"
+      - "scripts/split_bank.py"
+      - "scripts/rebuild_bank.sh"
+      - ".github/workflows/rebuild-bank.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+# One rebuild at a time; a push that lands mid-run queues the next one.
+concurrency:
+  group: rebuild-bank
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+      - name: Rebuild, check and push
+        id: rebuild
+        env:
+          BRANCH: main
+        run: sh scripts/rebuild_bank.sh --push
+      # A push made with GITHUB_TOKEN may not start a Pages build on its
+      # own, so ask for one; a failure here leaves the next push to do it.
+      - name: Request a Pages build
+        if: always() && steps.rebuild.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || echo "Pages build request failed; the next push rebuilds the site"

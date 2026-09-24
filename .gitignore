@@ -5,8 +5,12 @@ data/batches/_rejected*
 data/batches/_merged/
 node_modules/
 __pycache__/
-/tmp
-.routine_prompt_latest.txt
+*.tmp
+# Written by merge_inbox.sh and scripts/server.py; audit records stay out
+# of the public repo.
+data/inbox/_merged/
+data/inbox/_rejected/
+data/audit_log.md
 cloudflare-worker/.wrangler/
 cloudflare-worker/.dev.vars
 .env
@@ -21,11 +25,9 @@ SYNC_DIAGNOSIS_*.md
 *_PLAN_*.md
 data/_audit/session_*/_imgs_tmp/
 
-# Internal working material. Lives in ~/private-notes, outside the
-# repo, because this repo is public and GitHub Pages serves its root:
-# .routine-context.md was fetchable at a guessable URL and
-# returned 200. Keep it that way.
-.routine-context.md
+# Internal working material lives outside the repo: it is public and
+# GitHub Pages serves its root, so anything committed is fetchable.
+.remote-*.md
 .routine_prompt_latest.txt
 RESEARCH_*.md
 data/_audit/

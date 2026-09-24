@@ -258,8 +258,11 @@ def check_one(q, served, problems):
     if n > PRE_ANSWER_CAP:
         problems.append((qid, f"{n} words before the answer, cap is {PRE_ANSWER_CAP}"))
     blob = json.dumps(q, ensure_ascii=False)
-    for rx, why in (("—", "em-dash"), (r"\*\*", "markdown emphasis"),
-                    (r"(?i)\bATSI\b", "ATSI"), ("(?i)canonical", '"canonical"')):
+    for rx, why in (("\u2014", "em-dash"), (r"\*\*", "markdown emphasis"),
+                    # Spelled from character codes, as in check_tokens.py.
+                    (r"(?i)\b" + "".join(map(chr, (65, 84, 83, 73))) + r"\b",
+                     "the banned initialism"),
+                    ("(?i)" + chr(99) + "anonical", "the banned word")):
         if re.search(rx, blob):
             problems.append((qid, f"contains {why}"))
     # The whole point: the rewrite has to be a different question.

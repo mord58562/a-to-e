@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # Patterns are built from character codes where writing the token out
 # would itself violate the rule.
 RULES = [
-    ("EMDASH", "em-dash (U+2014)", re.compile("—"),
+    ("EMDASH", "em-dash (U+2014)", re.compile("\u2014"),
      "rewrite with the mark the sentence needs: full stop, comma, colon or parentheses"),
     ("A1", "initialism standing in for Aboriginal and Torres Strait Islander",
      re.compile(r"\b" + "".join(chr(c) for c in (65, 84, 83, 73)) + r"\b"),
@@ -228,7 +228,7 @@ def report_truncation(hits):
 
 
 def selftest():
-    cases = [("a — b", "EMDASH"), ("the " + chr(99) + "anonical form", "C1"),
+    cases = [("a \u2014 b", "EMDASH"), ("the " + chr(99) + "anonical form", "C1"),
              ("**bold**", "MD"), ("foetal heart", "FOET"),
              ("magnesium sulphate", "SULPH"), ("clean text", None)]
     ok = True

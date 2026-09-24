@@ -22,8 +22,11 @@ the source hash each pair was built from. refresh() rebuilds a pair
 whenever its batch's hash moves, so every caller below keeps the split in
 step without knowing about it, and --check reports a stale split.
 
-Run it after anything that rewrites a served file. merge_batches.sh,
-merge_inbox.sh, content_pass.py apply and dupe_triage.py apply call it.
+Run it after anything that rewrites a served file, and commit data/split/
+with the manifest. merge_batches.sh, merge_inbox.sh, content_pass.py apply
+and dupe_triage.py apply call it, and .github/workflows/rebuild-bank.yml
+runs it on main after every push that touches the bank, which repairs a
+batch committed without it.
 
 Usage:
     python3 scripts/manifest_hashes.py            # rewrite the manifests

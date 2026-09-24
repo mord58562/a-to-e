@@ -254,7 +254,7 @@ def cmd_validate(args):
             lost_numbers.append((qid, gone))
 
         blob = json.dumps(q, ensure_ascii=False)
-        for rx, why in (("—", "em-dash"), (r"\*\*", "markdown emphasis")):
+        for rx, why in (("\u2014", "em-dash"), (r"\*\*", "markdown emphasis")):
             if re.search(rx, blob):
                 problems.append((qid, f"contains {why}"))
 

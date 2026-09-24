@@ -1,32 +1,22 @@
-# Inbox - drop new question batches here
+# Inbox
 
-Any JSON file dropped into this directory that conforms to the schema
-will be automatically loaded by the site on next page refresh.
+Staging for new questions. A file here is served only once it is listed in `data/inbox_manifest.json`.
 
-## Workflow
+## Adding a batch
 
-1. **External generation**. Use any LLM with the copy-paste prompt from
-   the in-app "How to add" modal (or `scripts/add-questions.sh`).
-2. **Drop the resulting JSON array** here as `<descriptive-name>.json`.
-3. **Append its filename** to `data/inbox_manifest.json`:
-   ```json
-   { "inbox": ["inbox/your-new-file.json", ...] }
+1. Generate with `assets/prompt-template.txt` (the admin Content tab shows it with the live bank state filled in).
+2. Save the JSON array as `data/inbox/<name>.json`.
+3. From the repo root:
+   ```sh
+   python3 scripts/check_tokens.py data/inbox/<name>.json
+   python3 scripts/dupe_gate.py --new data/inbox/<name>.json
    ```
-4. **Commit + push**. GitHub Pages will serve it within a minute.
+   Both must exit 0.
+4. `./scripts/merge_inbox.sh --dry-run`, then without the flag. Passing files move to `_merged/`, failing ones to `_rejected/` with the reason beside them.
+5. Commit `data/`. The rebuild workflow refreshes the manifest hashes and `data/split/` on push.
+
+A paste in the admin Content tab lands here and in the manifest on its own.
 
 ## Schema
 
-Each file is a JSON array of question objects matching the schema in
-the in-app "How to add" prompt (id, topic, subtopic, difficulty, tags,
-stem, data_table, lead_in, options[5], explanation, sources[],
-reference_ranges[], created).
-
-## Audit
-
-When the project maintainer is next asked to add more questions, they
-will audit every file in this inbox: bell distribution, stem-length
-floors, source-citation completeness, distractor hooks, length-balanced
-options, correct-letter randomisation, em-dash count, no uni
-references. Passing batches are moved to `_merged/`; rejected files
-move to `_rejected/` with a note.
-
+A JSON array of question objects: `id`, `topic`, `subtopic`, `subtopic_detail`, `difficulty`, `model`, `tags`, `stem`, `data_table`, `lead_in`, `options` (five, each with `letter`, `text`, `correct`, `rationale`, `source_refs`), `explanation`, `sources`, `reference_ranges`, `created`. `assets/prompt-template.txt` is the full specification.
